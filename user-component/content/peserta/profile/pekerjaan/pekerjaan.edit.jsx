@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Col, Row } from "react-bootstrap";
 import Select from "react-select";
 import Swal from "sweetalert2";
 import SimpleReactValidator from "simple-react-validator";
@@ -74,43 +74,51 @@ const PekerjaanEdit = () => {
           </Form.Group>
         </div>
         <div className="kontak-darurat mt-6">
-          <h3 className="font-weight-bolder mb-5">Status Pekerjaan</h3>
-          <Form.Group className="mb-3" controlId="formGridAddress1">
-            <Form.Label>Pekerjaan</Form.Label>
-            <Form.Control
-              placeholder="Silahkan Masukan Pekerjaan"
-              value={pekerjaan}
-              onChange={(e) => setPekerjaan(e.target.value)}
-              onBlur={() => simpleValidator.current.showMessageFor("pekerjaan")}
-            />
-            {simpleValidator.current.message(
-              "pekerjaan",
-              pekerjaan,
-              "required",
-              {
-                className: "text-danger",
-              }
-            )}
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formGridAddress1">
-            <Form.Label>Perusahaan / Institut Tempat Bekerja</Form.Label>
-            <Form.Control
-              placeholder="Silahkan Masukan Perusahaan"
-              value={perusahaan}
-              onChange={(e) => setPerusahaan(e.target.value)}
-              onBlur={() =>
-                simpleValidator.current.showMessageFor("perusahaan")
-              }
-            />
-            {simpleValidator.current.message(
-              "perusahaan",
-              perusahaan,
-              "required",
-              {
-                className: "text-danger",
-              }
-            )}
-          </Form.Group>
+          <Row>
+            <Col md={6}>
+              <Form.Group className="mb-3" controlId="formGridAddress1">
+                <Form.Label>Pekerjaan</Form.Label>
+                <Form.Control
+                  placeholder="Silahkan Masukan Pekerjaan"
+                  value={pekerjaan}
+                  onChange={(e) => setPekerjaan(e.target.value)}
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("pekerjaan")
+                  }
+                />
+                {simpleValidator.current.message(
+                  "pekerjaan",
+                  pekerjaan,
+                  "required",
+                  {
+                    className: "text-danger",
+                  }
+                )}
+              </Form.Group>
+            </Col>
+            <Col md={6}>
+              <Form.Group className="mb-3" controlId="formGridAddress1">
+                <Form.Label>Perusahaan / Institut Tempat Bekerja</Form.Label>
+                <Form.Control
+                  placeholder="Silahkan Masukan Perusahaan"
+                  value={perusahaan}
+                  onChange={(e) => setPerusahaan(e.target.value)}
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("perusahaan")
+                  }
+                />
+                {simpleValidator.current.message(
+                  "perusahaan",
+                  perusahaan,
+                  "required",
+                  {
+                    className: "text-danger",
+                  }
+                )}
+              </Form.Group>
+            </Col>
+          </Row>
+
           <Form.Group className="mb-3" controlId="formGridAddress1">
             <Form.Label>Penghasilan</Form.Label>
             <Form.Control
@@ -133,37 +141,50 @@ const PekerjaanEdit = () => {
         </div>
         <div className="unggah-berkas-pribadi mt-6">
           <h3 className="font-weight-bolder">Status Pelajar Mahasiswa</h3>
-          <Form.Group className="mb-3" controlId="formGridAddress1">
-            <Form.Label>Sekolah / Perguruan Tinggi</Form.Label>
-            <Form.Control
-              placeholder="Silahkan Masukan Sekolah"
-              value={sekolah}
-              onChange={(e) => setSekolah(e.target.value)}
-              onBlur={() => simpleValidator.current.showMessageFor("sekolah")}
-            />
-            {simpleValidator.current.message("sekolah", sekolah, "required", {
-              className: "text-danger",
-            })}
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formGridAddress1">
-            <Form.Label>Tahun Masuk</Form.Label>
-            <Form.Control
-              placeholder="Silahkan Masukan Tahun Masuk"
-              value={tahunMasuk}
-              onChange={(e) => setTahunMasuk(e.target.value)}
-              onBlur={() =>
-                simpleValidator.current.showMessageFor("tahun masuk")
-              }
-            />
-            {simpleValidator.current.message(
-              "tahun masuk",
-              tahunMasuk,
-              "required",
-              {
-                className: "text-danger",
-              }
-            )}
-          </Form.Group>
+          <Row>
+            <Col md={6}>
+              <Form.Group className="mb-3" controlId="formGridAddress1">
+                <Form.Label>Sekolah / Perguruan Tinggi</Form.Label>
+                <Form.Control
+                  placeholder="Silahkan Masukan Sekolah"
+                  value={sekolah}
+                  onChange={(e) => setSekolah(e.target.value)}
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("sekolah")
+                  }
+                />
+                {simpleValidator.current.message(
+                  "sekolah",
+                  sekolah,
+                  "required",
+                  {
+                    className: "text-danger",
+                  }
+                )}
+              </Form.Group>
+            </Col>
+            <Col md={6}>
+              <Form.Group className="mb-3" controlId="formGridAddress1">
+                <Form.Label>Tahun Masuk</Form.Label>
+                <Form.Control
+                  placeholder="Silahkan Masukan Tahun Masuk"
+                  value={tahunMasuk}
+                  onChange={(e) => setTahunMasuk(e.target.value)}
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("tahun masuk")
+                  }
+                />
+                {simpleValidator.current.message(
+                  "tahun masuk",
+                  tahunMasuk,
+                  "required",
+                  {
+                    className: "text-danger",
+                  }
+                )}
+              </Form.Group>
+            </Col>
+          </Row>
         </div>
         <div className="button-aksi mt-5 float-right">
           <Button className="btn-outline-primary rounded-pill mr-3">

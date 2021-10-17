@@ -5,31 +5,30 @@ import LoadingSkeleton from "../../../../../components/LoadingSkeleton";
 import PesertaWrapper from "../../../../components/wrapper/Peserta.wrapper";
 import ProfileWrapper from "../../components/wrapper/Profile.wapper";
 
-const Pendidikan = dynamic(() => import("./pendidikan"), {
+const Pekerjaan = dynamic(() => import("./pekerjaan"), {
+  loading: function loadingNow() {
+    return <LoadingSkeleton />;
+  },
+  ssr: false,
+});
+const PekerjaanEdit = dynamic(() => import("./pekerjaan.edit"), {
   loading: function loadingNow() {
     return <LoadingSkeleton />;
   },
   ssr: false,
 });
 
-const PendidikanEdit = dynamic(() => import("./pendidikan.edit"), {
-  loading: function loadingNow() {
-    return <LoadingSkeleton />;
-  },
-  ssr: false,
-});
-
-const ProfilePendidikan = ({ session }) => {
+const ProfilePekerjaan = ({ session }) => {
   const [viewProfile, setViewProfile] = useState(1);
   const [viewEdit, setViewEdit] = useState(false);
 
   const handleViewProfile = () => {
     switch (viewProfile) {
       case 1:
-        return viewEdit ? <PendidikanEdit /> : <Pendidikan />;
+        return viewEdit ? <PekerjaanEdit /> : <Pekerjaan />;
         break;
       default:
-        return <Pendidikan />;
+        return <Pekerjaan />;
         break;
     }
   };
@@ -52,4 +51,4 @@ const ProfilePendidikan = ({ session }) => {
   );
 };
 
-export default ProfilePendidikan;
+export default ProfilePekerjaan;

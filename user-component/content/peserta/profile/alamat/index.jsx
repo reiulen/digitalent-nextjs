@@ -39,7 +39,10 @@ const Profile = ({ session }) => {
     <>
       <PesertaWrapper>
         <Row>
-          <ProfileWrapper />
+          <ProfileWrapper
+            propsEdit={viewEdit}
+            funcViewEdit={(val) => setViewEdit(val)}
+          />
           <Col md={12}>
             <Card className="card-custom gutter-b">
               <Card.Body>{handleViewProfile()}</Card.Body>

@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import {
   Col,
   Card,
@@ -12,9 +13,12 @@ import {
 } from "react-bootstrap";
 import style from "./style.module.css";
 
-const ProfileWrapper = () => {
+const ProfileWrapper = ({ propsEdit, funcViewEdit }) => {
+  const router = useRouter();
+  const [viewEdit, setViewEdit] = useState(propsEdit);
   return (
     <>
+      {console.log(router.pathname)}
       <Col md={12} className="mb-5">
         <Card>
           <Card.Body>
@@ -45,6 +49,10 @@ const ProfileWrapper = () => {
                 <div className="button ml-auto">
                   <Button
                     className={`${style.button_profile_wrapper} rounded-xl btn-block`}
+                    onClick={() => {
+                      setViewEdit(!viewEdit);
+                      funcViewEdit(!viewEdit);
+                    }}
                   >
                     Ubah Data
                   </Button>
@@ -61,18 +69,55 @@ const ProfileWrapper = () => {
               <Container>
                 <Nav className={`${style.navbar_profile_wrapper}`}>
                   <Link href="/peserta/profile" passHref>
-                    <Nav.Link className={`mr-9 ${style.navbar_profile_active}`}>
+                    <Nav.Link
+                      className={`mr-9 ${
+                        router.pathname === "/peserta/profile" &&
+                        style.navbar_profile_active
+                      }`}
+                    >
                       Informasi Pribadi
                     </Nav.Link>
                   </Link>
                   <Link href="/peserta/profile/alamat" passHref>
-                    <Nav.Link className="mr-9 pb-3">Alamat</Nav.Link>
+                    <Nav.Link
+                      className={`mr-9 ${
+                        router.pathname === "/peserta/profile/alamat" &&
+                        style.navbar_profile_active
+                      }`}
+                    >
+                      Alamat
+                    </Nav.Link>
                   </Link>
                   <Link href="/peserta/profile/pendidikan" passHref>
-                    <Nav.Link className="mr-9 pb-3">Pendidikan</Nav.Link>
+                    <Nav.Link
+                      className={`mr-9 ${
+                        router.pathname === "/peserta/profile/pendidikan" &&
+                        style.navbar_profile_active
+                      }`}
+                    >
+                      Pendidikan
+                    </Nav.Link>
                   </Link>
-                  <Nav.Link className="mr-9 pb-3">Keterampilan</Nav.Link>
-                  <Nav.Link className="mr-9 pb-3">Pekerjaan</Nav.Link>
+                  <Link href="/peserta/profile/keterampilan" passHref>
+                    <Nav.Link
+                      className={`mr-9 ${
+                        router.pathname === "/peserta/profile/keterampilan" &&
+                        style.navbar_profile_active
+                      }`}
+                    >
+                      Keterampilan
+                    </Nav.Link>
+                  </Link>
+                  <Link href="/peserta/profile/pekerjaan" passHref>
+                    <Nav.Link
+                      className={`mr-9 ${
+                        router.pathname === "/peserta/profile/pekerjaan" &&
+                        style.navbar_profile_active
+                      }`}
+                    >
+                      Pekerjaan
+                    </Nav.Link>
+                  </Link>
                 </Nav>
               </Container>
             </Navbar>
