@@ -49,6 +49,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
           session.user.user.data.token
         )
       );
+      console.log(query);
       await store.dispatch(
         getDetailParticipant(
           //   query.nama_pelatihan_id,

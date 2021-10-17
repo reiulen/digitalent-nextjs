@@ -22,8 +22,6 @@ export default function KelolasertifikatID({ token }) {
     state => state.singleCertificate
   );
 
-  // console.log(certificate);
-
   const handleResetError = () => {
     if (error) {
       dispatch(clearErrors());
