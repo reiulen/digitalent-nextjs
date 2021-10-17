@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Swal from "sweetalert2";
+import styles from "../../../../styles/previewGaleri.module.css";
 
 import Pagination from "react-js-pagination";
 import DatePicker from "react-datepicker";
@@ -329,12 +330,12 @@ const Kategori = ({ token }) => {
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3 className="card-title font-weight-bolder text-dark">
+            <h3 className={`${styles.headTitle}`}>
               Kategori
             </h3>
             <div className="card-toolbar">
               <Link href="/publikasi/kategori/tambah">
-                <a className="btn btn-primary-rounded-full px-6 font-weight-bold btn-block ">
+                <a className={`${styles.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bold btn-block`}>
                   <i className="ri-add-fill pb-1 text-white mr-2 "></i>
                   Tambah Kategori
                 </a>
@@ -369,11 +370,11 @@ const Kategori = ({ token }) => {
                     </button>
                   </div>
                 </div>
-                <div className=" col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                <div className="col-sm-6 col-md-6 col-lg-6 col-xl-6">
                   <div className="d-flex flex-wrap align-items-center justify-content-end mt-2">
                     {/* sortir by modal */}
                     <button
-                      className="col-sm-6 avatar item-rtl btn border d-flex align-items-center justify-content-between mt-2"
+                      className="col-sm-12 col-md-6 avatar item-rtl btn border d-flex align-items-center justify-content-between mt-2"
                       data-toggle="modal"
                       data-target="#exampleModalCenter"
                       style={{ color: "#464646", minWidth: "230px" }}

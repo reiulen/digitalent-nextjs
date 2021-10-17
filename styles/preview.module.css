@@ -10,6 +10,7 @@
     justify-content: center;
     flex-direction: column;
     height: 450px;
+    margin-top: 20px;
 }
 
 .playVideo{
@@ -18,7 +19,8 @@
     text-align: right;
     margin-top: -20px;
     width: 700px;
-    height: 300px;
+    height: 270px;
+    margin-bottom: 20px;
 }
 
 .isiVideoPrev{
@@ -36,12 +38,13 @@
 }
 
 .iconBorder{
-    background-color: #007CFF;
+    /* background-color: #007CFF; */
+    border: 2px solid gray;
     border-radius: 50%;
     width: 35px;
     height: 35px;
     text-align: center;
-    line-height: 39px;
+    line-height: 35px;
     margin-right: 3px;
 }
 
@@ -64,13 +67,13 @@
     .modal-body{
         height: 400px;
         width: 600px;
+        margin-top: 35px;
     }
     .playVideo{
         width: 100%;
         height: 60%;
     }
     .isiVideoPrev{
-        /* margin: 30px; */
         flex-wrap: wrap;
         /* border: 1px solid black; */
         width: 10px;
@@ -92,19 +95,16 @@
 
 @media only screen and (max-width: 768px) {
     .modal-body{
-        height: 400px;
-        width: 400px;
+        /* border: 1px solid black; */
+        height: 100%;
+        width: 100%;
     }
     .playVideo{
-        width: 125%;
+        width: 100%;
         height: 60%;
     }
-    .isiVideoPrev{
-        /* margin: 30px; */
-        flex-wrap: wrap;
-        /* border: 1px solid black; */
-        width: 10px;
-        font-size: 7px;
+    .isiBerita{
+        font-size: 8px;
     }
 }
 
@@ -127,13 +127,4 @@
         width: 90%;
         font-size: 8px;
     }
-    /* .iconBorder{
-        background-color: #215480;
-        border-radius: 50%;
-        width: 35px;
-        height: 35px;
-        text-align: center;
-        line-height: 39px;
-        margin-right: 3px;
-    } */
 }
