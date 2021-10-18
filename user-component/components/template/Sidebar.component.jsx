@@ -6,11 +6,11 @@ import {
   SidebarHeader,
 } from "react-pro-sidebar";
 import "react-pro-sidebar/dist/css/styles.css";
-import Logo from "../../../../public/assets/logo/mainlogo.png";
-import Simonas from "../../../../public/assets/logo/image 10.png";
-import Beasiswa from "../../../../public/assets/logo/Logo besiswa fix  3.png";
+import Logo from "/public/assets/logo/mainlogo.png";
+import Simonas from "/public/assets/logo/image 10.png";
+import Beasiswa from "/public/assets/logo/Logo besiswa fix  3.png";
 import Image from "next/dist/client/image";
-import styles from "./sidebar.module.css";
+import styles from "./Sidebar.module.css";
 
 const Sidebar = () => {
   return (

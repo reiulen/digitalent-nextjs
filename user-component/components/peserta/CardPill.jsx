@@ -4,10 +4,10 @@ import { Col, Card } from "react-bootstrap";
 
 const CardPill = ({ background, backgroundImg, icon, color, value, title }) => {
   return (
-    <Col>
+    <Col className="px-2">
       <Card
         border="transparent"
-        className={`${background} px-6 py-8 rounded-xl mb-7`}
+        className={`${background} px-6 py-8 rounded-xl mb-4`}
         style={{
           backgroundImage:
             "url('/assets/icon/new-card-icon/" + backgroundImg + "')",
