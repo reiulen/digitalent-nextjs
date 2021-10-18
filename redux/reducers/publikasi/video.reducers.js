@@ -29,15 +29,25 @@ import {
     CLEAR_ERRORS,
 } from '../../types/publikasi/video.type'
 
+// const INITIAL_STATE = {
+//     page: 1,
+//     limit: 5,
+//     card: "",
+//     keyword: "",
+//     startdate: null,
+//     enddate: null
+// }
+
 export const allVideoReducer = (state = { video: [] }, action) => {
     switch (action.type) {
         case VIDEO_REQUEST:
             return {
                 loading: true
             }
-
-        case VIDEO_SUCCESS:
-            return {
+            
+            case VIDEO_SUCCESS:
+                return {
+                // ...state,
                 loading: false,
                 video: action.payload.data
             }
@@ -157,7 +167,7 @@ export const updateVideoReducer = (state = {}, action) => {
             return {
                 loading: true
             }
-        
+
         case UPDATE_VIDEO_SUCCESS:
             return {
                 loading: false,
@@ -196,7 +206,7 @@ export const playVideoReducer = (state = {}, action) => {
             return {
                 loading: true
             }
-        
+
         case PLAY_VIDEO_SUCCESS:
             return {
                 loading: false,

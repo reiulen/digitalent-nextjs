@@ -1212,9 +1212,7 @@ const Galeri = ({ token }) => {
                                                                 </div>
                                                                 <span className="ml-2">
                                                                     Publish:{" "}
-                                                                    {moment(
-                                                                        galeri.gallery[index_galleri].tanggal_publish
-                                                                    ).format("LL")}
+                                                                    {moment(galeri.gallery[index_galleri].tanggal_publish).format("LL")}
                                                                 </span>
                                                             </div>
 
