@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useSelector } from 'react-redux';
 import Image from "next/image";
 import moment from "moment";
+import IconFilter from "../../../assets/icon/Filter";
 
 // import PageWrapper from "../../../wrapper/page.wrapper";
 import PreviewWrapper from "../../../wrapper/preview.wrapper";
@@ -35,14 +36,14 @@ const Preview = () => {
             </div> */}
             <PreviewWrapper title="Pratinjau Berita - Publikasi">
 
-            <div className="col-lg-12 order-1 px-0 position-relative">
+                <div className="col-lg-12 order-1 px-0 position-relative">
                     <div className="" style={{ height: '100%' }}>
 
                         <nav aria-label="breadcrumb">
-                            <ol class="breadcrumb bg-transparent my-5 ps-5" style={{border:'1px solid gray', borderRadius:'20px'}}>
-                                <li class="breadcrumb-item" style={{color:'blue'}}><a href="#">Beranda</a></li>
-                                <li class="breadcrumb-item" style={{color:'blue'}}><a href="#">Berita</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Detail Berita</li>
+                            <ol className="breadcrumb bg-transparent my-5 ps-5" style={{ border: '1px solid gray', borderRadius: '20px' }}>
+                                <li className="breadcrumb-item" style={{ color: 'blue' }}><a href="#">Beranda</a></li>
+                                <li className="breadcrumb-item" style={{ color: 'blue' }}><a href="#">Berita</a></li>
+                                <li className="breadcrumb-item active" aria-current="page">Detail Berita</li>
                             </ol>
                         </nav>
 
