@@ -160,7 +160,7 @@ const LoginUser = () => {
                   )}
                 </div>
 
-                <div className="capcha">
+                <div className="g-recaptcha">
                   <ReCAPTCHA
                     sitekey={process.env.CAPTCHA_SITE_KEY}
                     onChange={setCaptcha}

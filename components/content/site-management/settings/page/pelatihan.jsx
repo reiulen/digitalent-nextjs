@@ -39,7 +39,7 @@ export default function Pelatihan({ token }) {
 
   return (
     <PageWrapper>
-      <div className="order-1 px-0">
+      <div className="order-1 px-0 sub-menu-pelatihan">
         <div className="card">
           <div className="card-body py-0">
             <div className="row">
@@ -59,7 +59,7 @@ export default function Pelatihan({ token }) {
                         }}
                       >
                         <Image
-                          src={"/assets/icon/sitemanagement/Prompt.svg"}
+                          src={page === "Prompt" ? "/assets/icon/sitemanagement/Prompt.svg" : "/assets/icon/sitemanagement/PromptNon.svg"}
                           width={24}
                           height={24}
                           alt="Prompt Icon"
@@ -79,7 +79,7 @@ export default function Pelatihan({ token }) {
                         }}
                       >
                         <Image
-                          src={"/assets/icon/sitemanagement/Email.svg"}
+                          src={page === "Template" ? "/assets/icon/sitemanagement/TemplateActive.svg" : "/assets/icon/sitemanagement/Email.svg"}
                           width={24}
                           height={24}
                           alt="Prompt Icon"
@@ -99,7 +99,7 @@ export default function Pelatihan({ token }) {
                         }}
                       >
                         <Image
-                          src={"/assets/icon/sitemanagement/SUBM.svg"}
+                          src={page === "SUBM" ? "/assets/icon/sitemanagement/SUBMActive.svg" : "/assets/icon/sitemanagement/SUBM.svg"}
                           width={24}
                           height={24}
                           alt="Prompt Icon"
@@ -119,7 +119,7 @@ export default function Pelatihan({ token }) {
                         }}
                       >
                         <Image
-                          src={"/assets/icon/sitemanagement/FileSize.svg"}
+                          src={page === "File Size" ? "/assets/icon/sitemanagement/FileSizeActive.svg" : "/assets/icon/sitemanagement/FileSize.svg"}
                           width={24}
                           height={24}
                           alt="Prompt Icon"
@@ -139,7 +139,7 @@ export default function Pelatihan({ token }) {
                         }}
                       >
                         <Image
-                          src={"/assets/icon/sitemanagement/Ketentuan.svg"}
+                          src={page === "Ketentuan Pelatihan" ? "/assets/icon/sitemanagement/KetentuanActive.svg" : "/assets/icon/sitemanagement/Ketentuan.svg"}
                           width={24}
                           height={24}
                           alt="Prompt Icon"

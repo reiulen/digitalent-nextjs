@@ -15,16 +15,42 @@ import { GET_DROPDOWN_KABUPATEN } from "../../../../../redux/types/pelatihan/fun
 const Tambah = ({ token }) => {
   const router = useRouter();
   let selectRefProvinsi = null;
+  let selectRefKabupaten = null;
 
   const drowpdownProvinsi = useSelector((state) => state.drowpdownProvinsi);
-  let tempOptionsProvinsi = drowpdownProvinsi.data.data;
+  let tempOptionsProvinsi = drowpdownProvinsi?.data?.data;
   const [provinsi, setProvinsi] = useState([]);
   const [idProvinsi, setIdProvinsi] = useState("");
-  console.log("idProvinsi", idProvinsi);
   const [kabupaten, setKabupaten] = useState([]);
+  const [valKabupaten, setValKabupaten] = useState([])
+  const [namaZonation, setNamaZonation] = useState("")
+
+  const [formInput, setFormInput] = useState([
+    {
+      provinces:provinsi,
+      kabupaten:kabupaten,
+    },
+  ])
+
+
+
+
+
+  // filter data just region show
+  const changeListKabupaten = (e) => {
+    const datas = e.map((items)=>items.label)
+    setValKabupaten(datas)
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+
+    
+  }
+
 
   useEffect(() => {
-    let optionProvinsi = tempOptionsProvinsi.map((items) => {
+    let optionProvinsi = tempOptionsProvinsi?.map((items) => {
       return { ...items, label: items.value };
     });
     setProvinsi(optionProvinsi);
@@ -35,14 +61,20 @@ const Tambah = ({ token }) => {
       async function getKabupaten(idProvinsi, token) {
         try {
           let { data } = await axios.get(
-            `${process.env.END_POINT_API_SITE_MANAGEMENT}api/reference/detail/${idProvinsi}`,
+            `${process.env.END_POINT_API_SITE_MANAGEMENT}api/reference/choose-provinsi/${idProvinsi}`,
             {
               headers: {
                 authorization: `Bearer ${token}`,
               },
             }
           );
-          console.log("data get kabupaten", data);
+          console.log("data get kabupaten", data.data);
+
+          let optionProvinsiKab = data.data.map((items) => {
+            return { ...items, label: items.value };
+          });
+
+          setKabupaten(optionProvinsiKab);
         } catch (error) {
           console.log("error get kabupaten", error.response.data.message);
         }
@@ -71,35 +103,27 @@ const Tambah = ({ token }) => {
                 </label>
                 <input
                   required
+                  onChange={(e)=>setNamaZonation(e.target.value)}
                   placeholder="Provinsi"
                   type="text"
                   name="category_cooperation"
                   className="form-control"
-                  // onChange={e => setCategoryCooporation(e.target.value)}
                 />
               </div>
 
-              {/*  */}
-              
-              <div className="row">
+              {formInput.map((items,index)=>{
+                return(
+
+              <div className="row" key={index}>
                 <div className="col-12 col-sm-6">
                   <div className="form-group mt-4">
                     <label htmlFor="exampleSelect1">Provinsi</label>
-                    {/* <select className="form-control" id="exampleSelect1">
-                      <option>Pilih Provinsi</option>
-                      {drowpdownProvinsi.data.data.map((items,index)=>{
-                        return(
-                          <option>{items.value}</option>
-                        )
-                      })}
-                    </select> */}
 
                     <Select
                       ref={(ref) => (selectRefProvinsi = ref)}
                       className="basic-single"
                       classNamePrefix="select"
                       placeholder="Pilih provinsi"
-                      // defaultValue={allMK.stateListMitra[0]}
                       isDisabled={false}
                       isLoading={false}
                       isClearable={false}
@@ -107,12 +131,9 @@ const Tambah = ({ token }) => {
                       isSearchable={true}
                       name="color"
                       onChange={(e) => setIdProvinsi(e?.id)}
-                      options={provinsi}
+                      // options={provinsi}
+                      options={items.provinces}
                     />
-
-                    {/* <span className="form-text text-muted">
-                      Please enter your full name
-                    </span> */}
                   </div>
                 </div>
                 <div className="col-12 col-sm-6">
@@ -120,9 +141,22 @@ const Tambah = ({ token }) => {
                     <div className="position-relative d-flex align-items-center w-100">
                       <div className="form-group w-100 mr-6 mb-1">
                         <label htmlFor="exampleSelect1">Kota / Kabupaten</label>
-                        <select className="form-control" id="exampleSelect1">
-                          <option>Jawa Barat</option>
-                        </select>
+                        <Select
+                      ref={(ref) => (selectRefKabupaten = ref)}
+                      className="basic-single"
+                      classNamePrefix="select"
+                      placeholder="Pilih kabupaten"
+                      isMulti
+                      isDisabled={false}
+                      isLoading={false}
+                      isClearable={false}
+                      isRtl={false}
+                      isSearchable={true}
+                      name="color"
+                      onChange={(e) => changeListKabupaten(e)}
+                      // options={kabupaten}
+                      options={items.kabupaten}
+                    />
                         <span className="form-text text-muted">
                           Please enter your full name
                         </span>
@@ -139,6 +173,9 @@ const Tambah = ({ token }) => {
                   </div>
                 </div>
               </div>
+                )
+              })}
+
 
               <div className="d-flex align-items-center justify-content-end">
                 <div className="form-group">
@@ -172,7 +209,7 @@ const Tambah = ({ token }) => {
                   <button
                     type="button"
                     className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
-                    // onClick={e => handleSubmit(e)}
+                    onClick={e => handleSubmit(e)}
                   >
                     Simpan
                   </button>

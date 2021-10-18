@@ -264,12 +264,27 @@ a {
   background: #fdeaec;
 }
 
-.box-hide-arrow{
-      position: absolute;
-      height: 77%;
-      width: 3rem;
-      right: 4px;
-      top: 50%;
-      background-color: white;
-      transform: translateY(-50%);
+.box-hide-arrow {
+  position: absolute;
+  height: 77%;
+  width: 3rem;
+  right: 4px;
+  top: 50%;
+  background-color: white;
+  transform: translateY(-50%);
+}
+.not-found-page {
+  position: fixed;
+  inset: 0;
+  background-color: white;
+  z-index: 9999;
+}
+
+@media screen and (max-width: 575px) {
+  .g-recaptcha {
+    transform: scale(0.77);
+    -webkit-transform: scale(0.77);
+    transform-origin: 0 0;
+    -webkit-transform-origin: 0 0;
+  }
 }

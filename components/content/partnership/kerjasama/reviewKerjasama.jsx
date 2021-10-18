@@ -238,7 +238,6 @@ const ReviewKerjasama = ({ token }) => {
                     Tanggal
                   </label>
                   <input
-                    readOnly
                     type="date"
                     required
                     value={dateView && dateView}
@@ -266,7 +265,7 @@ const ReviewKerjasama = ({ token }) => {
                   <select
                     name=""
                     id=""
-                    className="form-control border-0"
+                    className="form-control border-0 remove-icon-default"
                     readOnly
                     value={cooperationIDView.id}
                   >
@@ -284,13 +283,13 @@ const ReviewKerjasama = ({ token }) => {
                         required
                         readOnly
                         type="number"
-                        className="form-control mt-2"
+                        className="form-control mt-2 border-0"
                         onChange={(e) => setPeriod(e.target.value)}
                         value={periodView}
                       />
                     </div>
                     <div className="col-12 col-sm-6">
-                      <div className="form-control mt-2">Tahun</div>
+                      <div className="form-control mt-2 border-0">Tahun</div>
                     </div>
                   </div>
                 </div>
@@ -315,7 +314,7 @@ const ReviewKerjasama = ({ token }) => {
                                 id={i}
                                 cols="30"
                                 rows="5"
-                                className="form-control"
+                                className="form-control border-0"
                               ></textarea>
                             </div>
                           </div>
@@ -334,7 +333,7 @@ const ReviewKerjasama = ({ token }) => {
                                 id={i}
                                 cols="30"
                                 rows="5"
-                                className="form-control"
+                                className="form-control border-0"
                               ></textarea>
                             </div>
                           </div>
@@ -351,11 +350,12 @@ const ReviewKerjasama = ({ token }) => {
                       onChange={(e) => setNote(e.target.value)}
                       name="cooperation"
                       id=""
+                      style={{backgroundColor:"transparent"}}
                       disabled
                       value={noteView && noteView}
                       cols="30"
                       rows="5"
-                      className="form-control"
+                      className="form-control border-0"
                       placeholder="Tuliskan Catatan Tambahan"
                     ></textarea>
                   </div>

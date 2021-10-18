@@ -46,7 +46,7 @@ function Pembahasan({token}) {
             <h3 className="card-title fz-20 fw-500 text-dark">Pembahasan</h3>
           </div>
           <div className="card-body pb-28">
-            <div className="row mt-8 mb-10">
+            <div className="row mt-8 mb-10 position-relative">
               <div className="col-2 p-0">
                 <div className="progress-items">
                   {/* <div className="line-progress"></div> */}
@@ -67,7 +67,7 @@ function Pembahasan({token}) {
                 <div className="progress-items">
                   <div className="line-progress active-line"></div>
                   <div className="circle-progress active-circle">
-                    <span className="title-progress">Pembahasan</span>
+                    <span className="title-progress active">Pembahasan</span>
                   </div>
                 </div>
               </div>
@@ -125,9 +125,9 @@ function Pembahasan({token}) {
                 </div>
 
                 <div className="form-group row">
-                  <div className="col-sm-12 d-flex justify-content-end">
+                  <div className="col-sm-12 d-flex flex-wrap justify-content-end">
                     <Link href="/partnership/user/tanda-tangan-digital" passHref>
-                      <a className="btn bg-blue-secondary btn-rounded-full text-white mr-5">
+                      <a className="btn bg-blue-secondary btn-rounded-full text-white mr-5 mt-3" style={{whiteSpace:"nowrap"}}>
                         Tanda Tangan Digital
                       </a>
                     </Link>
@@ -142,17 +142,11 @@ function Pembahasan({token}) {
                         }}
                         passHref
                       >
-                        <a className="btn btn-rounded-full bg-blue-primary text-white">
+                        <a className="btn btn-rounded-full bg-blue-primary text-white mt-3" style={{whiteSpace:"nowrap"}}>
                           Submit Dokumen Kerjasama
                         </a>
                       </Link>
                     ) : (
-                      // <button
-                      //   type="submit"
-                      //   className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
-                      // >
-
-                      // </button>
 
                       ""
                     )}

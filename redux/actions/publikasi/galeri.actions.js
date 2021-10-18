@@ -155,7 +155,7 @@ export const updateGaleri = (galeriData, token) => async (dispatch) => {
         let link = process.env.END_POINT_API_PUBLIKASI + `api/gallery/${galeriData.id}`
         
         const { data } = await axios.post(link, galeriData, config)
-        console.log("Action Update Galeri : ", data)
+        // console.log("Action Update Galeri : ", data)
 
         dispatch({
             type: UPDATE_GALERI_SUCCESS,

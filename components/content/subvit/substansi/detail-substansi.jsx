@@ -16,6 +16,8 @@ import {
   clearErrors,
   getAllSubtanceQuestionDetail,
 } from "../../../../redux/actions/subvit/subtance-question-detail.action";
+import axios from "axios";
+import { get } from "js-cookie";
 
 const DetailSubstansi = ({ token }) => {
   const dispatch = useDispatch();
@@ -114,11 +116,23 @@ const DetailSubstansi = ({ token }) => {
   };
 
   const handleFilter = () => {
-    let link = `${router.pathname}?id=${id}&page=${1}`;
-    if (status) link = link.concat(`&status=${status}`);
-    if (kategori) link = link.concat(`&categori=${kategori}`);
-    if (pelatihan) link = link.concat(`&pelatihan=${pelatihan}`);
-    router.push(link);
+    dispatch(
+      getAllSubtanceQuestionDetail(
+        id,
+        1,
+        "",
+        5,
+        status,
+        kategori,
+        pelatihan,
+        token
+      )
+    );
+    // let link = `${router.pathname}?id=${id}&page=${1}`;
+    // if (status) link = link.concat(`&status=${status}`);
+    // if (kategori) link = link.concat(`&kategori=${kategori}`);
+    // if (pelatihan) link = link.concat(`&pelatihan=${pelatihan}`);
+    // router.push(link);
   };
 
   const handleSearch = () => {
@@ -663,7 +677,7 @@ const DetailSubstansi = ({ token }) => {
                 subtance_question_type &&
                 subtance_question_type.list_types.map((row) => {
                   return (
-                    <option key={row.id} value={row.name}>
+                    <option key={row.id} value={row.id}>
                       {row.name}
                     </option>
                   );

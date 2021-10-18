@@ -1,9 +1,17 @@
 import React from "react";
 import dynamic from "next/dynamic";
 import Head from "next/head";
+import { ToastContainer } from "react-toastify";
+import { Row, Col } from "react-bootstrap";
 
 const Navbar = dynamic(() =>
   import("../../../user-component/components/template/Navbar.component")
+);
+const Header = dynamic(() =>
+  import("../../../user-component/components/template/Header.component")
+);
+const Sidebar = dynamic(() =>
+  import("../../../user-component/components/template/Sidebar.component")
 );
 
 const Layout = ({ title = "Peserta - Pelatihan", session, children }) => {
@@ -15,7 +23,16 @@ const Layout = ({ title = "Peserta - Pelatihan", session, children }) => {
         <meta name="viewport" content="initial-scale=1.0,width=device-width" />
       </Head>
       <Navbar session={session} />
-      {children}
+      <Header session={session} />
+      <ToastContainer position="top-right" />
+      <div className="container-fluid py-5">
+        <Row>
+          <Col md={3}>
+            <Sidebar />
+          </Col>
+          {children}
+        </Row>
+      </div>
     </>
   );
 };

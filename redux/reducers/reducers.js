@@ -91,6 +91,7 @@ import {
 } from "./subvit/subtance-question-type.reducers";
 import {
   allSubtanceQuestionDetailReducer,
+  randomSubtanceQuestionDetailReducer,
   newSubtanceQuestionDetailReducer,
   deleteSubtanceQuestionDetailReducer,
   detailSubtanceQuestionDetailReducer,
@@ -282,11 +283,18 @@ import {
   tolakReviewReducer,
 } from "./pelatihan/review.reducers";
 // =================== rekap pelatihan ==================
+import {
+  getFormBuilderReducer,
+  getPelatihanReducer,
+  newPendaftaranPelatihanReducer,
+} from "./pelatihan/register-training.reducers";
+// ================ pendaftaran pelatihan ===============
 import { allSummaryReducer } from "./pelatihan/summary.reducers";
 //END PELATIHAN
 
 // functional reducer
 import {
+  getDataPribadiReducer,
   trainingStep1Reducer,
   registrationStep2Reducer,
   commitmentStep3Reducer,
@@ -303,13 +311,12 @@ import {
 import { allProvinsiReducer, allKotaReducer } from "./utils/utils.reducers";
 import { reducerFunctionals } from "./utils/functionals.reducer";
 
-
 // BERANDA
 import {
   allAkademiReducer,
   temaByAkademiReducer,
   pelatihanByTemaReducer,
-} from "../reducers/beranda/beranda.reducers"
+} from "../reducers/beranda/beranda.reducers";
 //END BERANDA
 
 const reducer = combineReducers({
@@ -390,6 +397,7 @@ const reducer = combineReducers({
   updateSubtanceQuestionType: updateSubtanceQuestionTypeReducer,
 
   allSubtanceQuestionDetail: allSubtanceQuestionDetailReducer,
+  randomSubtanceQuestionDetail: randomSubtanceQuestionDetailReducer,
   newSubtanceQuestionDetail: newSubtanceQuestionDetailReducer,
   detailSubtanceQuestionDetail: detailSubtanceQuestionDetailReducer,
   updateSubtanceQuestionDetail: updateSubtanceQuestionDetailReducer,
@@ -550,6 +558,12 @@ const reducer = combineReducers({
   // ========== rekap pelatihan ========
   allSummary: allSummaryReducer,
 
+  // ========== pendaftaran pelatihan ========
+  getFormBuilder: getFormBuilderReducer,
+  getPelatihan: getPelatihanReducer,
+  newPendaftaranPelatihan: newPendaftaranPelatihanReducer,
+
+  getDataPribadi: getDataPribadiReducer,
   trainingStep1: trainingStep1Reducer,
   registrationStep2: registrationStep2Reducer,
   commitmentStep3: commitmentStep3Reducer,
@@ -568,7 +582,7 @@ const reducer = combineReducers({
   //BERANDA
   allAkademi: allAkademiReducer,
   temaByAkademi: temaByAkademiReducer,
-  pelatihanByTema:pelatihanByTemaReducer
+  pelatihanByTema: pelatihanByTemaReducer,
   //END BERANDA
 });
 

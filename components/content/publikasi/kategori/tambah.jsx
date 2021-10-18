@@ -95,7 +95,7 @@ const TambahKategori = ({ token }) => {
                 {loading ? <LoadingPage loading={loading} /> : ""}
                 <div className="card card-custom card-stretch gutter-b">
                     <div className="card-header border-0">
-                        <h3 className="card-title font-weight-bolder text-dark">Tambah Kategori</h3>
+                        <h3 className="col-sm-4 card-title font-weight-bolder text-dark">Tambah Kategori</h3>
                     </div>
                     <div className="card-body">
                         <form onSubmit={onSubmit}>
@@ -114,7 +114,7 @@ const TambahKategori = ({ token }) => {
                                         success ?
                                             null
                                             :
-                                            simpleValidator.current.message("nama kategori", nama, "required|min:1|max:100|string", { className: "text-danger" })
+                                            simpleValidator.current.message("nama kategori", nama, "required|min:1|max:200|string", { className: "text-danger" })
                                     }
                                 </div>
                             </div>

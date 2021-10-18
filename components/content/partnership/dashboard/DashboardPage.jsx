@@ -14,13 +14,13 @@ import Image from "next/image";
 import { PieChart, Pie, Cell } from "recharts";
 import { getSession } from "next-auth/client";
 
-
 import axios from "axios";
 
 export default function DashboardPage({ token }) {
   let dispatch = useDispatch();
   const allDashboard = useSelector((state) => state.allDashboard);
-  const [user, setUser] = useState("")
+  console.log("allDashboard", allDashboard);
+  const [user, setUser] = useState("");
 
   const colors = ["#215480", "#4299E1", "#357AB4"];
   const [dataPieChartStatusPengajuan, setDataPieChartStatusPengajuan] =
@@ -31,51 +31,49 @@ export default function DashboardPage({ token }) {
   const [errorGetData, setErrorGetData] = useState("");
 
   useEffect(() => {
-    async function fetchDashboards(){
+    async function fetchDashboards() {
       try {
-      let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}api/dashbord`,
-        {
-          headers: {
-            authorization: `Bearer ${token}`,
+        let { data } = await axios.get(
+          `${process.env.END_POINT_API_PARTNERSHIP}api/dashbord`,
+          {
+            headers: {
+              authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setDataPieChartPengajuanDisetujui([
+          {
+            name: "Akan Berakhir",
+            value: data.data.cooperation_will_expired,
           },
-        }
-      );
-      setDataPieChartPengajuanDisetujui([
-        {
-          name: "Akan Berakhir",
-          value: data.data.cooperation_will_expired,
-        },
-        {
-          name: "Ditolak",
-          value: data.data.cooperation_rejected,
-        },
-      ]);
-      setDataPieChartStatusPengajuan([
-        {
-          name: "Aktif",
-          value: data.data.cooperation_active,
-        },
-        {
-          name: "Disetujui",
-          value: data.data.cooperation_approved,
-        },
-      ]);
-    } catch (error) {
-      setErrorGetData(error);
-    }
+          {
+            name: "Ditolak",
+            value: data.data.cooperation_rejected,
+          },
+        ]);
+        setDataPieChartStatusPengajuan([
+          {
+            name: "Aktif",
+            value: data.data.cooperation_active,
+          },
+          {
+            name: "Disetujui",
+            value: data.data.cooperation_approved,
+          },
+        ]);
+      } catch (error) {
+        setErrorGetData(error);
+      }
     }
     fetchDashboards();
-    dispatch(fetchDashboard(token));
+    // dispatch(fetchDashboard(token));
     getSession().then((session) => {
       setUser(session.user.user.data.user);
     });
-  }, [dispatch,token]);
+  }, [dispatch, token]);
   return (
     <PageWrapper>
       {/* head content */}
-
-      
 
       <div
         className="position-relative br-12 bg-white py-10 px-6 overflow-hidden"
@@ -89,9 +87,12 @@ export default function DashboardPage({ token }) {
           <Image src={ImagePlants} alt="imagehero" />
         </div>
 
-        <h5 className="text-blue-secondary fw-600 fz-24">Hallo {user.name} !</h5>
+        <h5 className="text-blue-secondary fw-600 fz-24">
+          Hallo {user.name} !
+        </h5>
         <p className="text-gray-primary fw-600 fz-16">
-          Selamat Datang di Dashboard Partnership, yuk cek pengajuan kerjasama mitra hari ini.
+          Selamat Datang di Dashboard Partnership, yuk cek pengajuan kerjasama
+          mitra hari ini.
         </p>
       </div>
       {/* sec 1 */}
@@ -211,9 +212,7 @@ export default function DashboardPage({ token }) {
             <div className="wrapper-chart-pie">
               <span className="center-absolute fw-700 fz-24">
                 {allDashboard.data_dashboard.data?.cooperation_will_expired +
-                    allDashboard.data_dashboard.data?.cooperation_rejected}
-
-                    
+                  allDashboard.data_dashboard.data?.cooperation_rejected}
               </span>
 
               <PieChart width={450} height={350}>

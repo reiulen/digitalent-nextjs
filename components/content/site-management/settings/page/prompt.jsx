@@ -7,6 +7,7 @@ import {loadDataPrompt, putDataPrompt} from '../../../../../redux/actions/site-m
 export default function Prompt(props) {
 
       const [notification, setNotification] = useState(0);
+      const [email, setEmail] = useState(0);
     
       let dispatch = useDispatch()
     
@@ -19,22 +20,23 @@ export default function Prompt(props) {
             },
           }
         ).then(items => {
-          console.log(items.data.data.training_rules)
-          setNotification(items.data.data.training_rules.notification.status)
+          setNotification(items.data.data.training_rules.notification[0].status)
+          setEmail(items.data.data.training_rules.email[0].status)
         })
       }, [props.token])
 
       const handleSubmit = (e) => {
         e.preventDefault()
-        dispatch(putDataPrompt(props.token, notification ? 1 : 0, email ? 1 : 0))
+        dispatch(putDataPrompt(props.token, notification || notification === 1 ? 1 : 0, email || email === 1 ? 1 : 0))
       };
 
       const onChange = (e) => {
         setNotification(e.target.checked)
       };
 
-
-    //   console.log(allPrompt.notification)
+      const onChangeEmail = (e) => {
+        setEmail(e.target.checked)
+      };
     
   return (
     <div className="col-xl-8 styling-content-pelatihan">
@@ -56,7 +58,7 @@ export default function Prompt(props) {
               />
               <span className="email-check"></span>
             </label>
-            <span>Aktif</span>
+            <span className="isAktif">{notification === 1 || notification === true ? "Aktif" : "Tidak Aktif"}</span>
           </span>
         </div>
         <div className="email">
@@ -69,10 +71,12 @@ export default function Prompt(props) {
                 type="checkbox"
                 name="select"
                 id="email-check"
+                checked={email}
+                onChange={onChangeEmail}
               />
               <span></span>
             </label>
-            <span>Aktif</span>
+            <span className="isAktif">{email === 1 || email === true ? "Aktif" : "Tidak Aktif"}</span>
           </span>
         </div>
         <div className="button-submit-notif ">

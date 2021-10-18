@@ -45,7 +45,7 @@ function Hasil({ token }) {
             <h3 className="card-title fz-20 fw-500 text-dark">Hasil</h3>
           </div>
           <div className="card-body pb-28">
-            <div className="row mt-8 mb-10">
+            <div className="row mt-8 mb-10 position-relative">
               <div className="col-2 p-0">
                 <div className="progress-items">
                   {/* <div className="line-progress"></div> */}
@@ -94,7 +94,7 @@ function Hasil({ token }) {
                 <div className="progress-items">
                   <div className="line-progress active-line"></div>
                   <div className="circle-progress active-circle">
-                    <span className="title-progress">Hasil</span>
+                    <span className="title-progress active">Hasil</span>
                   </div>
                 </div>
               </div>
