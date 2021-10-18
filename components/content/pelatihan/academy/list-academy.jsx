@@ -223,7 +223,7 @@ const ListAcademy = ({ token }) => {
                   <table className="table table-separate table-head-custom table-checkable">
                     <thead
                       style={{ background: "#F3F6F9" }}
-                      className="font-weight-bolder"
+                      className="font-weight-bolder w-100"
                     >
                       <tr>
                         <th className="text-center">No</th>

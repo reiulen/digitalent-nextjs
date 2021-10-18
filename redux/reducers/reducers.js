@@ -298,6 +298,7 @@ import {
   trainingStep1Reducer,
   registrationStep2Reducer,
   commitmentStep3Reducer,
+  statusUpdateProfileReducer,
   drowpdownAkademiReducers,
   drowpdownTemaReducers,
   drowpdownPelatihanReducers,
