@@ -94,11 +94,7 @@ const Tambah = ({ token }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    let sendData = {
-      name: namaZonation,
-      status: status,
-      data: valueForm,
-    };
+   
     try {
       let sendData = {
         name: namaZonation,
