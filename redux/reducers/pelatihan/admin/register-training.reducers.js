@@ -8,7 +8,7 @@ import {
   PENDAFTARAN_PELATIHAN_RESET,
   PENDAFTARAN_PELATIHAN_FAIL,
   CLEAR_ERRORS,
-} from "../../types/pelatihan/register-training.type";
+} from "../../../types/pelatihan/register-training.type";
 
 export const getFormBuilderReducer = (state = { formBuilder: [] }, action) => {
   switch (action.type) {
