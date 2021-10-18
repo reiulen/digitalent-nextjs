@@ -20,7 +20,7 @@ export default function Pages(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <Pelatihan />
+        <Pelatihan token={session.token} />
       </div>
     </>
   );

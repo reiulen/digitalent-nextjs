@@ -349,7 +349,7 @@ const TambahImagetron = ({ token }) => {
               <div className="form-group">
                 <label
                   htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label font-weight-bolder"
+                  className="col-sm-4 col-form-label font-weight-bolder"
                 >
                   Upload Thumbnail
                 </label>
@@ -408,7 +408,7 @@ const TambahImagetron = ({ token }) => {
                   }
                 </div>
 
-                <div className="mt-3 col-sm-3 text-muted">
+                <div className="mt-3 col-sm-6 col-md-6 col-lg-3 text-muted">
                   <p>
                     Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar
                   </p>

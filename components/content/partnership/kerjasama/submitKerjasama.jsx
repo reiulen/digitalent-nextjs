@@ -73,25 +73,25 @@ const SubmitKerjasama = ({ token }) => {
         ...error,
         period_date_start: "Harus isi tanggal priode kerjasama",
       });
-      notify("Harus isi tanggal priode kerjasama");
+      // notify("Harus isi tanggal priode kerjasama");
     } else if (agreement_number_partner === "") {
       setError({
         ...error,
         agreement_number_partner: "Harus isi nomor perjanjian lembaga",
       });
-      notify("Harus isi nomor perjanjian lembaga");
+      // notify("Harus isi nomor perjanjian lembaga");
     } else if (agreement_number_kemkominfo === "") {
       setError({
         ...error,
         agreement_number_kemkominfo: "Harus isi nomor perjanjian kemkominfo",
       });
-      notify("Harus isi nomor perjanjian kemkominfo");
+      // notify("Harus isi nomor perjanjian kemkominfo");
     } else if (signing_date === "") {
-      setError({ ...error, signing_date: "Harus isi tanggal penandantangan" });
-      notify("Harus isi tanggal penandantangan");
+      setError({ ...error, signing_date: "Harus isi tanggal penandatangan" });
+      // notify("Harus isi tanggal penandantangan");
     } else if (document === "") {
       setError({ ...error, document: "Harus unggah file" });
-      notify("Harus unggah file");
+      // notify("Harus unggah file");
     } else {
       Swal.fire({
         title: "Apakah anda yakin ?",
@@ -141,11 +141,15 @@ const SubmitKerjasama = ({ token }) => {
             );
             sessionStorage.removeItem("dataBefore");
             router.push({
-              pathname: `/partnership/kerjasama/view/${data.data.id}`,
-              query: { success: true },
+              pathname: `/partnership/kerjasama/detail-kerjasama`,
+              query: { id:data.data.id,success: true },
             });
+            // router.push({
+            //   pathname: `/partnership/kerjasama/view/${data.data.id}`,
+            //   query: { success: true },
+            // });
           } catch (error) {
-            alert("gagal menambahkan data tipe file harus pdf");
+            notify(error.response.data.message);
           }
         }
       });
@@ -189,7 +193,7 @@ const SubmitKerjasama = ({ token }) => {
   };
 
   const notify = (value) =>
-    toast.info(`🦄 ${value}`, {
+    toast.info(`${value}`, {
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,
@@ -352,7 +356,7 @@ const SubmitKerjasama = ({ token }) => {
 
               <div className="form-group">
                 <label htmlFor="staticEmail" className="col-form-label">
-                  Tanggal Penandantangan
+                  Tanggal Penandatangan
                 </label>
                 <div className="d-flex align-items-center position-relative datepicker-w w-100">
                   <DatePicker

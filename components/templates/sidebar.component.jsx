@@ -547,12 +547,11 @@ const Sidebar = ({ session }) => {
             height={53}
           />
         </a>
-        <button className="brand-toggle btn btn-sm px-0" id="kt_aside_toggle">
+        {/* <button className="brand-toggle btn btn-sm px-0" id="kt_aside_toggle">
           <span className="svg-icon svg-icon svg-icon-xl">
-            {/* icon header right */}
             icon
           </span>
-        </button>
+        </button> */}
       </div>
       <div
         className="aside-menu-wrapper flex-column-fluid"
@@ -564,7 +563,7 @@ const Sidebar = ({ session }) => {
           className="aside-menu my-4"
           data-menu-vertical="1"
           data-menu-scroll="1"
-          data-menu-dropdown-timeout="500"
+          // data-menu-dropdown-timeout="500"
         >
           {!session ? (
             ""
