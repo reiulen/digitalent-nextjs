@@ -6,7 +6,7 @@ import { wrapper } from "../../../../redux/store";
 import Layout from "../../../../user-component/components/template/Layout.component";
 
 const SubtansiUser = dynamic(
-  () => import("../../../../user-component/content/subvit/subtansi"),
+  () => import("../../../../user-component/content/subvit/substansi"),
   {
     loading: function loadingNow() {
       return <LoadingSkeleton />;

@@ -23,7 +23,7 @@ const Layout = ({ children, title }) => {
 
             <NavigationBar />
 
-            <div className="d-flex flex-column-fluid" style={{backgroundColor:"#E5E5E5"}}>
+            <div className="d-flex flex-column-fluid" style={{backgroundColor:"#FFFFFF"}}>
                 <div className="container">
                     {children}
                 </div>

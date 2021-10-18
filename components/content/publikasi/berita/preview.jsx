@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
 import Image from "next/image";
 import moment from "moment";
 
 // import PageWrapper from "../../../wrapper/page.wrapper";
 import PreviewWrapper from "../../../wrapper/preview.wrapper";
-import Backdrop from "../../../../public/assets/media/backdrop.svg"
-import styles from '../../../../styles/preview.module.css'
+import Backdrop from "../../../../public/assets/media/backdrop.svg";
+import styles from '../../../../styles/preview.module.css';
 
 const Preview = () => {
     const { berita } = useSelector(state => state.detailBerita)
