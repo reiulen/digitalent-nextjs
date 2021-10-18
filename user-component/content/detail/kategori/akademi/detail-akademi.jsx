@@ -1,6 +1,7 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import Link from "next/link";
 import Image from "next/image";
+import { useDispatch, useSelector } from "react-redux";
 
 import { 
     Card,
@@ -18,37 +19,67 @@ import TrainingReminder from "../../../../components/TrainingReminder";
 // import "../../../../../styles/beranda.module.css"
 
 const DetailAkademi = () => {
+    const {
+        akademi,
+    } = useSelector((state) => state.detailAkademi);
+
+    const {
+        pelatihan,
+    } = useSelector((state) => state.allPelatihan);
+
+
+    const [ akademiId, setAkademiId ] = useState (akademi.id)
+    const [ akademiLogo, setAkademiLogo ] = useState (akademi.logo)
+    const [ akademiName, setAkademiName ] = useState (akademi.name)
+    const [ akademiSlug, setAkademiSlug ] = useState (akademi.slug)
+    const [ akademiDeskripsi, setAkademiDeskripsi ] = useState (akademi.deskripsi)
+
     return (
         <Layout title="Detail Akademi">
+            {
+                console.log (akademi)
+            }
+
+            {
+                console.log (pelatihan)
+            }
             <SubHeaderComponent />
+            
+            {
+                akademi ?
+                    <div className="my-5 bg-white rounded border">
+                        <div className="row ">
+                            <div className="col-2 py-3 ml-4">
+                                <Image 
+                                    // src={`/assets/media/logo-vsga-1.svg`}
+                                    src={`https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/${akademiLogo}`}
+                                    width={150}
+                                    height={150}
+                                />
+                            </div>
 
-            <div className="my-5 bg-white rounded border">
-                <div className="row ">
-                    <div className="col-2 py-3 ml-4">
-                        <Image 
-                            src={`/assets/media/logo-vsga-1.svg`}
-                            width={150}
-                            height={150}
-                        />
-                    </div>
+                            <div className="col-9">
+                                
+                                <h3 className="font-weight-bolder mt-5">
+                                    {akademiName} ({akademiSlug})
+                                </h3>
+                                
+                                <div dangerouslySetInnerHTML={{ __html: akademiDeskripsi}}></div>
 
-                    <div className="col-9">
-                        <h3 className="font-weight-bolder mt-5">
-                            Vocational School Graduate Academy (VSGA)
-                        </h3>
-                        <div>
-                            Program Vocational School Graduate Academy (VSGA) merupakan program pelatihan dan sertifikasi berbasis kompetensi nasional yang bertujuan untuk mempersiapkan para lulusan lulusan SMK/sederajat serta Diploma 3 dan 4 bidang Sciences, Technology, Engineering, dan Math (STEM) yang belum bekerja atau tidak sedang bekerja agar memiliki kompetensi profesional sesuai dengan perkembangan ilmu pengetahuan dan teknologi di era revolusi industri 4.0 sehingga dapat bersaing baik di...
-                        </div>
-                        <div className="my-2 text-info font-italic" style={{cursor:"pointer"}}>
-                            <Link href="#home"> 
-                                <u>
-                                    Lihat Selengkapnya
-                                </u>
-                            </Link>
+                                <div className="my-2 text-info font-italic" style={{cursor:"pointer"}}>
+                                    <Link href="#home"> 
+                                        <u>
+                                            Lihat Selengkapnya
+                                        </u>
+                                    </Link>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                :
+                    null
+            }
+            
             
             <FilterBar />
             
