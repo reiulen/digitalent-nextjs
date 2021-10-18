@@ -294,6 +294,7 @@ import {
   trainingStep1Reducer,
   registrationStep2Reducer,
   commitmentStep3Reducer,
+  statusUpdateProfileReducer,
   drowpdownAkademiReducers,
   drowpdownTemaReducers,
   drowpdownPelatihanReducers,
@@ -557,6 +558,7 @@ const reducer = combineReducers({
   getPelatihan: getPelatihanReducer,
   newPendaftaranPelatihan: newPendaftaranPelatihanReducer,
 
+  statusUpdateProfile: statusUpdateProfileReducer,
   getDataPribadi: getDataPribadiReducer,
   trainingStep1: trainingStep1Reducer,
   registrationStep2: registrationStep2Reducer,

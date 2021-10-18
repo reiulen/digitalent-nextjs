@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Row, Col, Card } from "react-bootstrap";
 import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../../../components/LoadingSkeleton";
@@ -26,7 +26,7 @@ const Profile = ({ session }) => {
   const handleViewProfile = () => {
     switch (viewProfile) {
       case 1:
-        return viewEdit ? <InformasiEdit /> : <Informasi />;
+        return viewEdit ? <InformasiEdit updated={viewEdit} /> : <Informasi />;
         break;
       default:
         return <Informasi />;

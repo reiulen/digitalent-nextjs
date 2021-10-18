@@ -1,10 +1,10 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
 import Select from "react-select";
 import Swal from "sweetalert2";
 import SimpleReactValidator from "simple-react-validator";
 
-const InformasiEdit = () => {
+const InformasiEdit = ({ updated }) => {
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
 
@@ -68,8 +68,7 @@ const InformasiEdit = () => {
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = () => {
     if (simpleValidator.current.allValid()) {
       const data = {
         name,
@@ -99,7 +98,7 @@ const InformasiEdit = () => {
 
   return (
     <>
-      <Form onSubmit={handleSubmit}>
+      <Form>
         <div className="informasi-pribadi">
           <h3 className="font-weight-bolder mb-5">Informasi Pribadi</h3>
           <Form.Group className="mb-3" controlId="formGridAddress1">
@@ -398,18 +397,6 @@ const InformasiEdit = () => {
               }
             )}
           </Form.Group>
-        </div>
-        <div className="button-aksi mt-5 float-right">
-          <Button className="btn-outline-primary rounded-pill mr-3">
-            Kembali
-          </Button>
-          <Button
-            className="btn-primary-rounded-full bg-blue-primary"
-            variant="transparent"
-            type="submit"
-          >
-            Simpan
-          </Button>
         </div>
       </Form>
     </>
