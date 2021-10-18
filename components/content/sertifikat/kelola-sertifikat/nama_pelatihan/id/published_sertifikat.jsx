@@ -95,7 +95,7 @@ export default function KelolasertifikatID({ token }) {
               <div className="text-dark">Nama Sertifikat :</div>
               <div className="mx-6">
                 <div type="text" className="form-control w-100 h-100">
-                  {certificate?.data?.name || "Nama Sertifikat"}
+                  {certificate?.data?.certificate?.name || "Nama Sertifikat"}
                 </div>
               </div>
             </div>
