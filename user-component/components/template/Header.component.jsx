@@ -50,7 +50,7 @@ const Header = () => {
   return (
     <>
       <Container fluid className={styles.back}>
-        <Container className={styles.body}>
+        <Container fluid className={styles.body}>
           <Row>
             <Col
               sm={3}
