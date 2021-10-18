@@ -244,19 +244,28 @@ const Beranda = () => {
         }
     }
 
-    const renderButton = (metode, status) => {
+    const renderButton = (status, daftar_mulai, daftar_selesai, quota, id) => {
         if (status === true){
             return (
                 <div>
-                    <Button className="btn btn-outline-info rounded">
-                        Quick View
-                    </Button>
+                    <Link href={`/detail/kategori/${id}`}>
+                        <Button className="btn btn-outline-info rounded-pill col-12">
+                            Quick View
+                        </Button>
+                    </Link>
                 </div>
             )
         } else {
             return (
                 <div>
-
+                    <div className="d-flex align-content-center">
+                        <i className="ri-time-line mr-2"></i>
+                        <span className="mt-1">Registrasi: {new Date (daftar_mulai).toLocaleDateString("en-GB")} - {new Date (daftar_selesai).toLocaleDateString("en-GB")}</span>
+                    </div>
+                    <div className="d-flex align-content-center">
+                        <i className="ri-group-line mr-2"></i>
+                        <span className="mt-1">Kuota {quota} Peserta</span>
+                    </div> 
                 </div>
             )
         }
@@ -368,7 +377,7 @@ const Beranda = () => {
                 }
 
                 {
-                    // console.log (tema)
+                    console.log (tema)
                 }
 
                 {
@@ -495,7 +504,7 @@ const Beranda = () => {
                                             </h1>
                                         </div>
                                         <div className="text-primary">
-                                            <Link href="#">
+                                            <Link href={`/detail/akademi/${el.id}`}>
                                                 <div className="font-weight-bolder d-flex justify-content-center" style={{cursor:"pointer"}}>
                                                     <span className="mt-1">
                                                         Lihat Semua
@@ -578,7 +587,7 @@ const Beranda = () => {
                                                                 </div>
                                                                 
                                                                 {
-                                                                    renderButton()
+                                                                    renderButton(show[i].pelatihan[ind].hover, row.pendaftaran_mulai, row.pendaftaran_selesai, row.kuota_peserta, el.id)
                                                                 }
                                                                 {/* <div className="d-flex align-content-center">
                                                                     <i className="ri-time-line mr-2"></i>
