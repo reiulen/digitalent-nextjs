@@ -3,13 +3,15 @@
   font-family: Poppins;
   font-style: normal;
   font-weight: normal;
-  font-size: 14px !important;
+  font-size: 16px !important;
   line-height: 160%;
   /* identical to box height, or 26px */
 
   /* Neutral/Heading */
 
-  color: #fff;
+  color: #1f1f1f;
+  padding: 10px 0px;
+  cursor: pointer;
 }
 .titleAkun {
   font-family: Poppins;
@@ -23,6 +25,7 @@
   /* Neutral/Body */
 
   color: #6c6c6c;
+  padding: 10px 0px;
 }
 .titlePlatform {
   font-family: Poppins;
@@ -35,6 +38,7 @@
   /* Neutral/Body */
   margin-bottom: 10px;
   color: #6c6c6c;
+  padding: 5px 0px;
 }
 .subMenuTitle {
   font-family: Poppins;
@@ -46,7 +50,9 @@
 
   /* Neutral/Heading */
 
-  color: #fff;
+  color: #1f1f1f;
+  cursor: pointer;
+  padding: 10px 0px;
 }
 .menuItem {
   font-family: Poppins;
@@ -61,7 +67,52 @@
   /* Neutral/Body */
 
   color: #6c6c6c;
+  padding: 0px 40px !important ;
+  cursor: pointer;
 }
 .proSidebar {
   background-color: #fff !important;
+}
+.subMenuTitle :hover,
+.akunMenu :hover {
+  background-color: #e6f2ff !important;
+  border-radius: 8px;
+  color: #007cff;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 160%;
+}
+.menuItem:hover {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 160%;
+  /* or 22px */
+
+  letter-spacing: 0.015em;
+
+  /* Brand/Primary/Primary */
+
+  color: #007cff;
+}
+.iconMenu {
+  font-size: 20px !important;
+}
+.iconMenu:hover {
+  color: #007cff !important;
+}
+.active {
+  background-color: #e6f2ff !important;
+  border-radius: 8px;
+  color: #007cff;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 160%;
+  cursor: pointer;
+  padding: 10px 0px;
 }
