@@ -161,9 +161,7 @@ const TambahBerita = ({ token }) => {
                 }
             }
         }
-
         setTag(data)
-
     }
 
     const onSubmit = (e) => {
@@ -220,6 +218,7 @@ const TambahBerita = ({ token }) => {
                             // }
 
                             dispatch(newBerita(data, token))
+                            // console.log("UNPUBLISH :", data)
                         }
                     });
             } else {
@@ -253,6 +252,7 @@ const TambahBerita = ({ token }) => {
                             // }
 
                             dispatch(newBerita(data, token))
+                            // console.log("PUBLISH :", data)
                         }
                     });
             }

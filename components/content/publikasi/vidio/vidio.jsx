@@ -22,7 +22,7 @@ import IconClose from "../../../assets/icon/Close";
 import IconFilter from "../../../assets/icon/Filter";
 
 import { useDispatch, useSelector } from 'react-redux'
-import { deleteVideo, playVideo, clearErrors } from '../../../../redux/actions/publikasi/video.actions'
+import { deleteVideo, playVideo, clearErrors, changeStatusCard, filterCard } from '../../../../redux/actions/publikasi/video.actions'
 import { DELETE_VIDEO_RESET } from '../../../../redux/types/publikasi/video.type'
 import { viewGaleri } from '../../../../redux/actions/publikasi/galeri.actions';
 
@@ -62,6 +62,19 @@ const Vidio = ({ token }) => {
     }
 
     page = Number(page)
+
+    // useEffect(()=>{
+    //     dispatch(filterCard(token));
+    // },[
+    //     dispatch,
+    //     allFilter.page,
+    //     allFilter.card,
+    //     allFilter.limit,
+    //     allFilter.keyword,
+    //     allFilter.startdate,
+    //     allFilter.enddate,
+    //     token
+    // ])
 
     useEffect(() => {
         // if (limit) {
@@ -382,11 +395,13 @@ const Vidio = ({ token }) => {
                         color='#ffffff'
                         // icon='mail-purple.svg' 
                         // color='#8A50FC' 
+                        // value={video}
                         value={video && video.publish != "" ? video.publish : 0}
                         titleValue='Video'
                         title='Total Publish'
                         publishedVal="1"
-                        routePublish={() => handlePublish("1")}
+                        routePublish={() => handlePublish(changeStatusCard("1"))}
+                    // routePublish={() => handlePublish("1")}
                     />
                     <CardPage
                         background='bg-light-warning'
@@ -899,7 +914,7 @@ const Vidio = ({ token }) => {
                                                     <div style={{ background: "#fff", border: '1px solid #d7e1ea' }}
                                                         className="mr-2 px-3 py-1 rounded"
                                                         key={i}>
-                                                        <div className="text-center" style={{fontSize:'10px'}}>
+                                                        <div className="text-center" style={{ fontSize: '10px' }}>
                                                             #{el.toUpperCase()}
                                                         </div>
                                                     </div>
@@ -908,7 +923,7 @@ const Vidio = ({ token }) => {
                                         }
                                     </div>
                                 </div>
-                                <div className="col-3" style={{textAlign:'center'}}>
+                                <div className="col-3" style={{ textAlign: 'center' }}>
                                     <span className="p-2 label label-inline label-light-success font-weight-bold">
                                         {kategori}
                                     </span>
