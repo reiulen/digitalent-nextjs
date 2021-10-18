@@ -369,4 +369,5 @@ const DetailAkademi = () => {
     )
 }
 
+
 export default DetailAkademi
