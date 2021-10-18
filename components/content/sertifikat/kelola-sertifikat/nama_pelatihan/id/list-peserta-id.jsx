@@ -31,7 +31,9 @@ export default function ListPesertaID({ token }) {
     participant,
   } = useSelector(state => state.detailParticipant);
 
-  const [type, setType] = useState(certificate.data.certificate_type);
+  const [type, setType] = useState(
+    certificate.data.certificate.certificate_type
+  );
 
   const handleResetError = () => {
     if (error) {
@@ -60,8 +62,6 @@ export default function ListPesertaID({ token }) {
       router.reload();
     }
   };
-
-  console.log(certificate);
 
   const handleDownloadSyllabus = async () => {
     const data = await convertDivToPng(divReferenceSyllabus.current);
@@ -112,7 +112,7 @@ export default function ListPesertaID({ token }) {
               <div className="text-dark ">Nama Sertifikat :</div>
               <div className="mx-6">
                 <div type="text" className="form-control w-100 h-100">
-                  {certificate?.data?.name || "Nama sertifikat"}
+                  {certificate?.data?.certificate?.name || "Nama sertifikat"}
                 </div>
               </div>
             </div>
@@ -137,11 +137,12 @@ export default function ListPesertaID({ token }) {
                 ref={divReference}
               >
                 <Image
-                  src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-images/${certificate?.data?.certificate_result}`}
-                  alt={`image ${certificate.data.certificate_result}`}
+                  src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-images/${certificate.data.certificate.certificate_result}`}
+                  alt={`image ${certificate.data.certificate.certificate_result}`}
                   objectFit="fill"
                   width={842}
                   height={595}
+                  key={certificate.data.certificate.certificate_result}
                 />
                 <div
                   className={`position-absolute w-100 text-center responsive-margin-publish`}
@@ -154,15 +155,13 @@ export default function ListPesertaID({ token }) {
               {/* END COL */}
             </div>
             <div className="row mx-0 mt-10 col-12">
-              <div className="position-relative col-12 col-md-2 btn bg-blue-secondary text-white rounded-full font-weight-bolder px-10 py-4">
-                <a
-                  className="text-center"
-                  onClick={e => {
-                    handleDownload(e);
-                  }}
-                >
-                  Unduh
-                </a>
+              <div
+                onClick={e => {
+                  handleDownload(e);
+                }}
+                className="position-relative text-center col-12 col-md-2 btn bg-blue-secondary text-white rounded-full font-weight-bolder px-10 py-4"
+              >
+                <a>Unduh</a>
               </div>
             </div>
           </div>
@@ -179,24 +178,26 @@ export default function ListPesertaID({ token }) {
                   ref={divReferenceSyllabus}
                 >
                   <Image
-                    src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-syllabus-images/${certificate?.data?.certificate_result_syllabus}`}
-                    alt="fitur"
+                    src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-syllabus-images/${certificate.data.certificate.certificate_result_syllabus}`}
+                    alt={`image ${certificate.data.certificate.certificate_result_syllabus}`}
                     width={842}
                     height={595}
                     objectFit="fill"
+                    key={
+                      certificate.data.certificate.certificate_result_syllabus
+                    }
                   />
                 </div>
                 {/* END COL */}
               </div>
               <div className="row mt-10 col-12">
-                <div className="position-relative col-12 col-md-2 btn bg-blue-secondary text-white rounded-full font-weight-bolder px-10 py-4">
-                  <a
-                    onClick={e => {
-                      handleDownloadSyllabus(e);
-                    }}
-                  >
-                    Unduh
-                  </a>
+                <div
+                  onClick={e => {
+                    handleDownloadSyllabus(e);
+                  }}
+                  className="position-relative col-12 col-md-2 btn bg-blue-secondary text-white rounded-full font-weight-bolder px-10 py-4"
+                >
+                  <a>Unduh</a>
                 </div>
               </div>
             </div>
