@@ -57,6 +57,7 @@ export default function ListPesertaID({ token }) {
       link.download = `Sertifikat - ${query.name}.png`;
       link.href = data;
       link.click();
+      router.reload();
     }
   };
 
@@ -67,6 +68,7 @@ export default function ListPesertaID({ token }) {
       link.download = `Syllabus - ${query.name}.png`;
       link.href = data;
       link.click();
+      router.reload();
     }
   };
 

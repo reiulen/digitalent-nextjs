@@ -154,6 +154,7 @@ export default function KelolasertifikatID({ token }) {
               </div>
               {/* END COL */}
             </div>
+
             <div className="row mt-10 mx-0 col-12">
               <button
                 onClick={e => handleDownload(e)}

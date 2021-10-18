@@ -25,6 +25,8 @@ const SubtansiUser = () => {
   const [minute, setMinute] = useState(0);
   const [second, setSecond] = useState(0);
 
+  const [totalSecond, setTotalSecond] = useState(0);
+
   const handleModalSoal = () => {
     setModalSoal(true);
   };
@@ -33,12 +35,12 @@ const SubtansiUser = () => {
     // loading: allLoading,
     // error: allError,
     random_subtance_question_detail,
-  } = useSelector((state) => state.randomSubtanceQuestionDetail);
+  } = useSelector(state => state.randomSubtanceQuestionDetail);
 
   const handleCloseModal = () => {
     setModalSoal(false);
   };
-  const handleNumber = (val) => {
+  const handleNumber = val => {
     console.log(val);
     // e.preventDefault();
     setNumberPage(val);
@@ -72,17 +74,16 @@ const SubtansiUser = () => {
   //   }, 1000);
   // }
   useEffect(() => {
-    console.log(random_subtance_question_detail);
-    console.log(data);
-    // window.onload = function () {
-    //   var fiveMinutes = 1 * 60,
-    //     display = document.querySelector("#time");
-    //   startTimer(fiveMinutes, display);
-    // };
+    const date = new Date();
+    console.log(date);
+    // setTotalSecond(prev => (prev += 1));
+    // console.log(totalSecond, "ini detik");
+  }, []);
 
+  useEffect(() => {
     if (count >= 0) {
       const secondsLeft = setInterval(() => {
-        setCount((c) => c - 1);
+        setCount(c => c - 1);
         let timeLeftVar = secondsToTime(count);
         console.log(timeLeftVar);
         setHour(timeLeftVar.h);
@@ -91,6 +92,7 @@ const SubtansiUser = () => {
         sessionStorage.setItem("minute", minute);
         setSecond(timeLeftVar.s);
         sessionStorage.setItem("second", second);
+        console.log(count);
       }, 1000);
       return () => clearInterval(secondsLeft);
     } else {
@@ -98,9 +100,12 @@ const SubtansiUser = () => {
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
+    return () => {
+      setCount(count);
+    };
   }, [count]);
 
-  const secondsToTime = (secs) => {
+  const secondsToTime = secs => {
     var hours = Math.floor(secs / (60 * 60));
     var divisor_for_minutes = secs % (60 * 60);
     var minutes = Math.floor(divisor_for_minutes / 60);
@@ -114,7 +119,7 @@ const SubtansiUser = () => {
   };
 
   let list = [];
-  const handleAnswer = (e) => {
+  const handleAnswer = e => {
     console.log(e);
 
     setAnswer(e.option);
