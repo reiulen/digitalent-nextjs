@@ -8,6 +8,9 @@ const InformasiEdit = () => {
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
 
+  const [deskripsi, setDeskripsi] = useState(
+    "Saya adalah seorang Marketing dengan track record berhasil meningkatkan penjualan secara konsisten. Berhasil menciptakan strategi marketing baru dengan sistem yang lebih modern dan dapat menganalisis kebutuhan konsumen secara mendetail. Bekerja cekatan dengan menerapkan target tinggi pada diri sendiri, untuk memkasimalkan laba penjualan."
+  );
   const [name, setName] = useState("Lala depok");
   const [email, setEmail] = useState("lala@gmail.com");
   const [kelamin, setKelamin] = useState({ value: "0", label: "Laki - Laki" });
@@ -24,6 +27,12 @@ const InformasiEdit = () => {
   const [ktpName, setKtpName] = useState("Belum ada file");
   const [ktp, setKtp] = useState("");
   const [ktpPreview, setKtpPreview] = useState("");
+
+  const [cvName, setCvName] = useState("Belum ada file");
+  const [cv, setCv] = useState("");
+  const [cvPreview, setCvPreview] = useState("");
+
+  const [link, setLink] = useState("");
 
   const optionsKelamin = [
     { value: "0", label: "Laki - Laki" },
@@ -93,6 +102,22 @@ const InformasiEdit = () => {
       <Form onSubmit={handleSubmit}>
         <div className="informasi-pribadi">
           <h3 className="font-weight-bolder mb-5">Informasi Pribadi</h3>
+          <Form.Group className="mb-3" controlId="formGridAddress1">
+            <Form.Label>Deskripsi Diri</Form.Label>
+            <Form.Control
+              as="textarea"
+              rows={6}
+              placeholder="Masukan Deskripsi Diri"
+              value={deskripsi}
+              onChange={(e) => setDeskripsi(e.target.value)}
+              onBlur={() =>
+                simpleValidator.current.showMessageFor("nama lengkap")
+              }
+            />
+            {simpleValidator.current.message("nama lengkap", name, "required", {
+              className: "text-danger",
+            })}
+          </Form.Group>
           <Form.Group className="mb-3" controlId="formGridAddress1">
             <Form.Label>Nama Lengkap</Form.Label>
             <Form.Control
@@ -302,7 +327,7 @@ const InformasiEdit = () => {
         </div>
         <div className="unggah-berkas-pribadi mt-6">
           <h3 className="font-weight-bolder">Upload Berkas Pribadi</h3>
-          <div className="form-group">
+          <div className="form-group mb-1">
             <label className="col-form-label">KTP</label>
             <div className="d-flex">
               <div className="custom-file">
@@ -325,9 +350,54 @@ const InformasiEdit = () => {
               </div>
             </div>
             <small className="text-muted">
-              Format File (.png/.jpg/.pdf) & Max 2 mb
+              * JPG/PNG/PDF (Maksimal ukuran file 2 MB)
             </small>
           </div>
+          <div className="form-group mb-1">
+            <label className="col-form-label">CV</label>
+            <div className="d-flex">
+              <div className="custom-file">
+                <input
+                  type="file"
+                  className="custom-file-input"
+                  name="question_image"
+                  accept="application/pdf"
+                  onChange={onChangeKtp}
+                  onBlur={() => simpleValidator.current.showMessageFor("cv")}
+                />
+                <label className="custom-file-label" htmlFor="customFile">
+                  {cvName}
+                </label>
+                <label style={{ marginTop: "15px" }}>
+                  {simpleValidator.current.message("cv", cv, "required", {
+                    className: "text-danger",
+                  })}
+                </label>
+              </div>
+            </div>
+            <small className="text-muted">
+              * PDF (Maksimal ukuran file 2 MB)
+            </small>
+          </div>
+          <Form.Group className="mb-3" controlId="formGridAddress1">
+            <Form.Label>Link Portofolio</Form.Label>
+            <Form.Control
+              placeholder="Belum Ada link porfofolio"
+              value={link}
+              onChange={(e) => setLink(e.target.value)}
+              onBlur={() =>
+                simpleValidator.current.showMessageFor("link portofolio")
+              }
+            />
+            {simpleValidator.current.message(
+              "link portofolio",
+              link,
+              "required",
+              {
+                className: "text-danger",
+              }
+            )}
+          </Form.Group>
         </div>
         <div className="button-aksi mt-5 float-right">
           <Button className="btn-outline-primary rounded-pill mr-3">

@@ -1,10 +1,14 @@
 /* Modals Preview Publikasi - Galeri */
 
-/* .modal-content{
-    height: 500px;
-    background: #fff;
-    border-radius: 5px;
-} */
+.headTitle{
+    font-size: 25px;
+    font-weight: 600;
+    margin-top: 18px;
+}
+
+.btnTambah{
+    margin-top: 10px;
+}
 
 .modal-dialog{
     /* border: 1px solid yellow; */
@@ -13,23 +17,29 @@
 }
 
 .modal-body{
-    width: 770px;
-    height: 100%;
+    /* width: 770px;
+    height: 100%; */
 }
 
 .posModal{
     display: flex;
-    background: #fff;
+    /* background: #fff; */
 }
 
 .img-left{
-    width: 380px;
+    width: 350px;
+}
+
+.fullBar{
+    margin: -23px;
+}
+
+.rightSideBar{
+    width: 700px;
 }
 
 .img-prevModal{
-    /* border: 1px solid blue; */
-    height: 236px;
-    /* position: relative; */
+    height: 459px;
 }
 
 .subMenuPreview{
@@ -46,24 +56,41 @@
     overflow-wrap: break-word;
 }
 
+.iconBorderGaleri{
+    background-color: #007CFF;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    text-align: center;
+    line-height: 39px;
+    margin-right: 3px;
+}
+
 .strip{
     width: 390px;
     margin-left: -35px;
 }
 
+.listTagGaleri{
+    display: flex;
+}
+
+@media only screen and (max-width: 1200px) {
+    .img-prevModal{
+        height: 460px;
+    }
+}
 @media only screen and (max-width: 1024px) {
     .modal-body{
         height: 400px;
         width: 650px;
         margin-left: -75px;
     }
-    .img-left{
-        width: 320px;
-        margin-left: -2px;
-    }
     .img-prevModal{
-        height: 227px;
-        /* width: 310px; */
+        height: 424px;
+    }
+    .rightSideBar{
+        margin-left: -90px;
     }
     .description-img{
         height: 235px;
@@ -76,28 +103,38 @@
 }
 
 @media only screen and (max-width: 768px) {
-    /* .modal-body{
-        height: 400px;
-        width: 550px;
-        margin-left: -30px;
-    } */
-    .img-left{
+    /* .img-left{
         width: 320px;
-    }
+    } */
     .subMenuPreview{
         font-size: 9px;
         margin-left: -10px;
     }
+    .rightSideBar{
+        width: 660px;
+    }
+    .rightSide{
+        /* width: 100%; */
+    }
+    .img-left{
+        width: 330px;
+    }
     .img-prevModal{
-        height: 218px;        
+        height: 425px;        
     }
     .description-img{
         height: 235px;
         overflow-y: auto;
     }
+    .headTitle{
+        font-size: 22px;
+    }
+    .btnTambah{
+        font-size: 12px;
+    }
 }
 
-@media only screen and (max-width: 556px) {
+@media only screen and (max-width: 576px) {
     .modal-body{
         /* border: 1px solid red; */
         width: 333px;
@@ -105,11 +142,18 @@
         margin-left: 15px;
     }
     .img-left{
-        width: 168px;
-        /* margin-left: 0; */
+        height: 180px;
+        /* width: 168px; */
     }
     .img-prevModal{
-        height: 160px;        
+        height: 200px;        
+    }
+    .rightSideBar{
+        width: 330px;
+        margin-left: 15px;
+    }
+    .rightSide{
+        height: 200px;
     }
     .subMenuPreview{
         font-size: 6px;
@@ -128,5 +172,11 @@
     }
     .hideTitle{
         display: none;
+    }
+    .headTitle{
+        font-size: 17px;
+    }
+    .btnTambah{
+        font-size: 9px;
     }
 }

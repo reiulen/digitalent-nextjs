@@ -344,7 +344,7 @@ const EditImagetron = ({ token }) => {
             <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
                 <div className="card card-custom card-stretch gutter-b">
                     <div className="card-header">
-                        <h3 className="card-title font-weight-bolder text-dark">Ubah Imagetron</h3>
+                        <h3 className="col-sm-4 card-title font-weight-bolder text-dark">Ubah Imagetron</h3>
                     </div>
                     <div className="card-body">
                         <form onSubmit={onSubmit}>
@@ -371,7 +371,7 @@ const EditImagetron = ({ token }) => {
                                             -- Kategori --
                                         </option>
                                         {!kategori || (kategori && kategori.length === 0) ? (
-                                            <option value="">Data kosong</option>
+                                            <option value="">Data Tidak Ditemukan</option>
                                         ) : (
                                             kategori &&
                                             kategori.kategori &&
@@ -404,14 +404,14 @@ const EditImagetron = ({ token }) => {
                                     {simpleValidator.current.message(
                                         "judul",
                                         judul,
-                                        "required||min:5|max:50",
+                                        "required||min:5|max:200",
                                         { className: "text-danger" }
                                     )}
                                 </div>
                             </div>
 
                             <div className="form-group">
-                                <label className='col-sm-2 col-form-label font-weight-bolder'>Link URL</label>
+                                <label className='col-sm-4 col-form-label font-weight-bolder'>Link URL</label>
                                 <div className="col-sm-12">
                                     <div className="input-group">
                                         {/* <div className="input-group-prepend">
@@ -491,7 +491,7 @@ const EditImagetron = ({ token }) => {
                                     }
                                 </div>
 
-                                <div className="mt-3 col-sm-6 col-md-6 col-lg-3 text-muted">
+                                <div className="mt-3 col-sm-6 col-md-6 col-lg-7 col-xl-3 text-muted">
                                     <p>
                                         Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar
                                     </p>

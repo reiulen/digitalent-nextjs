@@ -543,7 +543,7 @@ const TambahGaleri = ({ token }) => {
                                     {simpleValidator.current.message(
                                         "judul",
                                         judul,
-                                        "required|min:5|max:50",
+                                        "required|min:5|max:200",
                                         { className: "text-danger" }
                                     )}
                                 </div>
@@ -556,7 +556,7 @@ const TambahGaleri = ({ token }) => {
                                     {simpleValidator.current.message(
                                         "judul",
                                         judul,
-                                        "required|min:5|max:50",
+                                        "required|min:5|max:5000",
                                         { className: "text-danger" }
                                     )}
                                     {/* <small className='text-danger'>*Maksimal 160 Karakter</small> */}
@@ -1699,7 +1699,7 @@ const TambahGaleri = ({ token }) => {
                                         </button>
                                     </div>
 
-                                    <div className="mt-3 col-sm-6 col-md-6 col-lg-3 text-muted">
+                                    <div className="mt-3 col-sm-6 col-md-6 col-lg-7 col-xl-3 text-muted">
                                         <p>Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar.</p>
                                     </div>
                                 </div>
@@ -1737,7 +1737,7 @@ const TambahGaleri = ({ token }) => {
                                             -- Galeri --
                                         </option>
                                         {!kategori || (kategori && kategori.length === 0) ? (
-                                            <option value="">Data kosong</option>
+                                            <option value="">Data Tidak Ditemukan</option>
                                         ) : (
                                             kategori &&
                                             kategori.kategori &&

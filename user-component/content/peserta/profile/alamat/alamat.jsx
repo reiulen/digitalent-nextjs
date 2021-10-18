@@ -35,6 +35,8 @@ const Alamat = () => {
             <p>44576</p>
           </Col>
         </Row>
+        <hr />
+        <h3 className="font-weight-bolder mb-3">Alamat Domisili</h3>
         <Row>
           <Col md={12}>
             <p className="text-neutral-body my-1">
