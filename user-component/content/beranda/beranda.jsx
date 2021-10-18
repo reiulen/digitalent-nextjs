@@ -244,11 +244,21 @@ const Beranda = () => {
         }
     }
 
-    const renderButton = (reg, quota, status) => {
+    const renderButton = (metode, status) => {
         if (status === true){
-
+            return (
+                <div>
+                    <Button className="btn btn-outline-info rounded">
+                        Quick View
+                    </Button>
+                </div>
+            )
         } else {
+            return (
+                <div>
 
+                </div>
+            )
         }
     }
 
