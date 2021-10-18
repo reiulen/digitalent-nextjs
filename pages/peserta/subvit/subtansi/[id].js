@@ -6,7 +6,7 @@ import { wrapper } from "../../../../redux/store";
 import Layout from "../../../../user-component/components/template/Layout.component";
 
 const SubtansiUser = dynamic(
-  () => import("../../../../user-component/content/subvit/subtansi"),
+  () => import("../../../../user-component/content/subvit/substansi"),
   {
     loading: function loadingNow() {
       return <LoadingSkeleton />;
@@ -32,7 +32,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
-      // console.log(session.user.user.data); untuk cek role user
       if (!session) {
         return {
           redirect: {
@@ -41,7 +40,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
-      console.log(store);
 
       await store.dispatch(
         getRandomSubtanceQuestionDetail(
@@ -51,6 +49,15 @@ export const getServerSideProps = wrapper.getServerSideProps(
           session.user.user.data.token
         )
       );
+      const data = session.user.user.data;
+      if (data.user.roles[0] !== "user") {
+        return {
+          redirect: {
+            destination: "/login",
+            permanent: false,
+          },
+        };
+      }
       return {
         props: {
           data: "auth",

@@ -20,14 +20,8 @@ const AlamatEdit = () => {
   const [kodePosKtp, setKodePosKtp] = useState("78978");
 
   const [alamatDomisili, setAlamatDomisili] = useState();
-  const [provinsiDomisili, setProvinsiDomisili] = useState({
-    value: "",
-    label: "",
-  });
-  const [kotaDomisili, setKotaDomisili] = useState({
-    value: "",
-    label: "",
-  });
+  const [provinsiDomisili, setProvinsiDomisili] = useState(null);
+  const [kotaDomisili, setKotaDomisili] = useState(null);
   const [kecamatanDomisili, setKecamatanDomisili] = useState();
   const [kodePosDomisili, setKodePosDomisili] = useState();
 
@@ -218,7 +212,9 @@ const AlamatEdit = () => {
               />
               {simpleValidator.current.message(
                 "provinsi domisili",
-                provinsiDomisili.value,
+                provinsiDomisili !== null
+                  ? provinsiDomisili.value
+                  : provinsiDomisili,
                 "required",
                 {
                   className: "text-danger",
@@ -241,7 +237,7 @@ const AlamatEdit = () => {
               />
               {simpleValidator.current.message(
                 "kota domisili",
-                kotaDomisili.value,
+                kotaDomisili !== null ? kotaDomisili.value : kotaDomisili,
                 "required",
                 {
                   className: "text-danger",
@@ -364,7 +360,7 @@ const AlamatEdit = () => {
               />
               {simpleValidator.current.message(
                 "provinsi ktp",
-                provinsiKtp.value,
+                provinsiKtp !== null ? provinsiKtp.value : provinsiKtp,
                 "required",
                 {
                   className: "text-danger",
@@ -384,7 +380,7 @@ const AlamatEdit = () => {
               />
               {simpleValidator.current.message(
                 "kota ktp",
-                kotaKtp.value,
+                kotaKtp !== null ? kotaKtp.value : kotaKtp,
                 "required",
                 {
                   className: "text-danger",

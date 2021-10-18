@@ -119,32 +119,55 @@ export const postZonasi = (sendData, token) => {
   };
 };
 
-export const getDetailZonasi = (id, token) => async (dispatch) => {
-  try {
+// export const getDetailZonasi = (id, token) => async (dispatch) => {
+//   try {
+//     dispatch({
+//       type: DETAIL_ZONASI_REQUEST,
+//     });
+//     const config = {
+//       headers: {
+//         Authorization: "Bearer " + token,
+//       },
+//     };
+
+//     let link =
+//       process.env.END_POINT_API_SITE_MANAGEMENT + `api/zonasi/detail/${id}`;
+
+//     const { data } = await axios.get(link, config);
+
+//     dispatch({
+//       type: DETAIL_ZONASI_SUCCESS,
+//       payload: data,
+//     });
+//   } catch (error) {
+//     dispatch({
+//       type: DETAIL_ZONASI_FAIL,
+//     });
+//   }
+// };
+
+export const getDetailZonasi = (id, token) => {
+  return async (dispatch) => {
     dispatch({
       type: DETAIL_ZONASI_REQUEST,
     });
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
-
-    let link =
-      process.env.END_POINT_API_SITE_MANAGEMENT + `api/zonasi/detail/${id}`;
-
-    const { data } = await axios.get(link, config);
-
-    dispatch({
-      type: DETAIL_ZONASI_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: DETAIL_ZONASI_FAIL,
-      payload: error.response.data.message,
-    });
-  }
+    try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/zonasi/detail/${id}`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      dispatch({
+        type: DETAIL_ZONASI_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch(failGetSingleCooporation(error.response.data.message));
+    }
+  };
 };
 
 export const updateZonasi = (sendData, id, token) => async (dispatch) => {

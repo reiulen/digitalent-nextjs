@@ -166,7 +166,7 @@ console.log("allDataReference",allDataReference)
                                   className="status-div-red mb-0"
                                   style={{ width: "max-content" }}
                                 >
-                                  {items.status}
+                                 {items.status === 1 ? "Aktif" : "Nonaktif"}
                                 </p>
                               </td>
                               <td className="align-middle text-left">

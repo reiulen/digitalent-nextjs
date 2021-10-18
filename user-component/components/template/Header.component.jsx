@@ -80,7 +80,7 @@ const Header = () => {
               {" "}
               <Card className={styles.cardBody}>
                 <Row>
-                  <Col sm={6} xs={6} className={styles.textCardLeft}>
+                  <Col sm={6} xs={4} className={styles.textCardLeft}>
                     <div className="d-flex flex-row " style={{ float: "left" }}>
                       <div className="p-1">
                         {router.pathname.includes("subtansi")
@@ -93,7 +93,7 @@ const Header = () => {
                       </div>
                     </div>
                   </Col>
-                  <Col sm={6} xs={6} className={styles.textCardRight}>
+                  <Col sm={6} xs={7} className={styles.textCardRight}>
                     <div
                       className="d-flex flex-row "
                       style={{ float: "right" }}

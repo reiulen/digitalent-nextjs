@@ -4,8 +4,21 @@ import { Row, Col } from "react-bootstrap";
 const Informasi = () => {
   return (
     <>
-      <div className="mt-5 informasi-pribadi">
-        <h3 className="font-weight-bolder mb-5">Informasi Pribadi</h3>
+      <div className="informasi-pribadi">
+        <h3 className="font-weight-bolder mb-5">Data Pribadi</h3>
+        <Row>
+          <Col md={12}>
+            <p className="text-neutral-body my-1">Deskripsi Diri</p>
+            <p>
+              Saya adalah seorang Marketing dengan track record berhasil
+              meningkatkan penjualan secara konsisten. Berhasil menciptakan
+              strategi marketing baru dengan sistem yang lebih modern dan dapat
+              menganalisis kebutuhan konsumen secara mendetail. Bekerja cekatan
+              dengan menerapkan target tinggi pada diri sendiri, untuk
+              memkasimalkan laba penjualan.
+            </p>
+          </Col>
+        </Row>
         <Row>
           <Col md={6}>
             <p className="text-neutral-body my-1">Nama Lengkap</p>
@@ -69,11 +82,23 @@ const Informasi = () => {
         <hr />
       </div>
       <div className="mt-5 berkas-darurat">
-        <h3 className="font-weight-bolder mb-3">Berkas Darurat</h3>
+        <h3 className="font-weight-bolder mb-3">Berkas Pribadi</h3>
         <Row>
-          <Col md={6}>
+          <Col md={12}>
             <p className="text-neutral-body my-1">KTP</p>
-            <p>90829398209323</p>
+            <p>ScanKtp.pdf</p>
+          </Col>
+        </Row>
+        <Row>
+          <Col md={12}>
+            <p className="text-neutral-body my-1">CV</p>
+            <p>CV-me.pdf</p>
+          </Col>
+        </Row>
+        <Row>
+          <Col md={12}>
+            <p className="text-neutral-body my-1">Link Portofolio</p>
+            <p>google.com</p>
           </Col>
         </Row>
       </div>

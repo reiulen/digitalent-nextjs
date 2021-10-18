@@ -1,0 +1,47 @@
+.image_profile_wrapper {
+  border-radius: 50%;
+}
+
+.name_profile_wrapper {
+  font-size: 24px;
+  font-weight: 500;
+  color: #1f1f1f;
+  letter-spacing: 0.015em;
+}
+
+.muted_profile_wrapper {
+  color: #6c6c6c;
+  font-size: 14px;
+}
+
+.button_profile_wrapper {
+  background-color: #ffffff !important;
+  border: 1px solid #007cff !important;
+  color: #007cff !important;
+  box-sizing: border-box;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.button_profile_wrapper:hover {
+  background-color: #007cff !important;
+  border: none !important;
+  color: #ffffff !important;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.navbar_profile_wrapper {
+  color: #6c6c6c;
+  font-size: 14px;
+}
+
+.navbar_profile_active {
+  color: #007cff;
+  font-weight: 600;
+  border-bottom: 2px solid #007cff;
+}
+
+.navbar_responsive {
+  overflow-x: auto;
+}
