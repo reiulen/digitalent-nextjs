@@ -6,9 +6,11 @@ import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
 
-const InformasiPribadi = dynamic(
+const Keterampilan = dynamic(
   () =>
-    import("../../../user-component/content/peserta/profile/informasi/index"),
+    import(
+      "../../../user-component/content/peserta/profile/keterampilan/index"
+    ),
   {
     loading: function loadingNow() {
       return <LoadingSkeleton />;
@@ -21,12 +23,12 @@ const Layout = dynamic(() =>
   import("../../../user-component/components/template/Layout.component")
 );
 
-export default function InformasiPribadiPage(props) {
+export default function KeterampilanPage(props) {
   const session = props.session.user.user.data.user;
   return (
     <>
-      <Layout title="Informasi Pribadi Peserta - Pelatihan" session={session}>
-        <InformasiPribadi session={session} />
+      <Layout title="Keterampilan Peserta - Pelatihan" session={session}>
+        <Keterampilan session={session} />
       </Layout>
     </>
   );

@@ -12,7 +12,7 @@ import Breadcrumb from "../breadcrumb";
 
 // import Cookies from "js-cookie";
 
-const SubtansiUser = () => {
+const SubtansiUser = ({ token }) => {
   const router = useRouter();
   const [data] = useState(random_subtance_question_detail);
   const [answer, setAnswer] = useState("");
@@ -20,10 +20,15 @@ const SubtansiUser = () => {
   const [numberPage, setNumberPage] = useState("");
   const [numberAnswer, setNumberAnswer] = useState(false);
   const [modalSoal, setModalSoal] = useState(false);
-  const [count, setCount] = useState(3600);
+  const [count, setCount] = useState(
+    parseInt(sessionStorage.getItem("targetDate"))
+  );
   const [hour, setHour] = useState(0);
   const [minute, setMinute] = useState(0);
   const [second, setSecond] = useState(0);
+  const [timeLeft, setTimeLeft] = useState(
+    sessionStorage.getItem("targetDate")
+  );
 
   const handleModalSoal = () => {
     setModalSoal(true);
@@ -72,8 +77,8 @@ const SubtansiUser = () => {
   //   }, 1000);
   // }
   useEffect(() => {
-    console.log(random_subtance_question_detail);
-    console.log(data);
+    console.log(timeLeft, "ini Time Left ");
+    sessionStorage.setItem("setTime", count);
     // window.onload = function () {
     //   var fiveMinutes = 1 * 60,
     //     display = document.querySelector("#time");
@@ -83,7 +88,7 @@ const SubtansiUser = () => {
     if (count >= 0) {
       const secondsLeft = setInterval(() => {
         setCount((c) => c - 1);
-        let timeLeftVar = secondsToTime(count);
+        let timeLeftVar = secondsToTime(sessionStorage.getItem("setItem"));
         console.log(timeLeftVar);
         setHour(timeLeftVar.h);
         sessionStorage.setItem("hours", hour);
@@ -91,13 +96,18 @@ const SubtansiUser = () => {
         sessionStorage.setItem("minute", minute);
         setSecond(timeLeftVar.s);
         sessionStorage.setItem("second", second);
+        console.log(secondsLeft);
       }, 1000);
+
       return () => clearInterval(secondsLeft);
     } else {
       console.log("time out");
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // return () => {
+    //   sessionStorage.setItem("cTimer", count);
+    // };
   }, [count]);
 
   const secondsToTime = (secs) => {
