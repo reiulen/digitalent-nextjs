@@ -20,7 +20,7 @@ module.exports = {
     // END_POINT_API_PUBLIKASI: "http://dts-publikasi-dev.majapahit.id/",
     END_POINT_API_PUBLIKASI: "http://api-dts-dev.majapahit.id/publikasi/",
     END_POINT_API_IMAGE_PUBLIKASI:
-      "http://dts-publikasi-dev.s3.ap-southeast-1.amazonaws.com/",
+      "https://dts-publikasi-dev.s3.ap-southeast-1.amazonaws.com/",
 
     //subvit
     END_POINT_API_SUBVIT: "http://dts-subvit-dev.majapahit.id/",

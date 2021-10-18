@@ -4,7 +4,7 @@ import { getSession } from "next-auth/client";
 // import Layout from "../../../components/templates/layout.component";
 // import Vidio from "../../../components/content/publikasi/vidio/vidio";
 
-import { getAllVideo } from "../../../redux/actions/publikasi/video.actions";
+import { filterCard, getAllVideo } from "../../../redux/actions/publikasi/video.actions";
 import { wrapper } from "../../../redux/store";
 
 // import LoadingPage from "../../../components/LoadingPage";
@@ -61,6 +61,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
           session.user.user.data.token
         )
       );
+      // await store.dispatch(filterCard(session.user.user.data.token))
       // await store.dispatch(getAllKategori(session.user.user.data.token))
       return {
         props: { session, title: "Video - Publikasi" },
