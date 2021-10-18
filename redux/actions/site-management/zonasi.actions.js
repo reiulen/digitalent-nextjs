@@ -58,7 +58,6 @@ export const getAllZonasi = (token) => async (dispatch, getState) => {
     console.log(error.response);
     dispatch({
       type: ZONASI_FAIL,
-      payload: error.response.data.message,
     });
   }
 };

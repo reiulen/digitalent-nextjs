@@ -15,6 +15,7 @@ import IconArrow from "../../../../../assets/icon/Arrow";
 import IconClose from "../../../../../assets/icon/Close";
 import IconFilter from "../../../../../assets/icon/Filter";
 import { useSelector } from "react-redux";
+import { clearErrors } from "../../../../../../redux/actions/sertifikat/kelola-sertifikat.action";
 
 export default function ListPeserta() {
   const router = useRouter();
@@ -52,9 +53,40 @@ export default function ListPeserta() {
     router.push(link);
   };
 
+  const handleResetError = () => {
+    if (error) {
+      dispatch(clearErrors());
+    }
+  };
   return (
     <PageWrapper>
       {/* error START */}
+      {error ? (
+        <div
+          className="alert alert-custom alert-light-danger fade show mb-5"
+          role="alert"
+        >
+          <div className="alert-icon">
+            <i className="flaticon-warning"></i>
+          </div>
+          <div className="alert-text">{error}</div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={handleResetError}
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
       {/* error END */}
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
@@ -168,7 +200,7 @@ export default function ListPeserta() {
                                     <>
                                       <Link
                                         // href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${query.nama_pelatihan_id}/list-peserta/${participant.name}`}
-                                        href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/sertifikat-peserta/${participant.name}?id=${participant.training.theme.id}`}
+                                        href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/sertifikat-peserta/${participant.name}?id=${query.id}`}
                                         // ?id=${certificate.id}
                                       >
                                         <a

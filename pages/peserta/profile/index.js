@@ -6,8 +6,9 @@ import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
 
-const Profile = dynamic(
-  () => import("../../../user-component/content/peserta/profile"),
+const InformasiPribadi = dynamic(
+  () =>
+    import("../../../user-component/content/peserta/profile/informasi/index"),
   {
     loading: function loadingNow() {
       return <LoadingSkeleton />;
@@ -20,12 +21,12 @@ const Layout = dynamic(() =>
   import("../../../user-component/components/template/Layout.component")
 );
 
-export default function ProfilePage(props) {
+export default function InformasiPribadiPage(props) {
   const session = props.session.user.user.data.user;
   return (
     <>
-      <Layout title="Profile Peserta - Pelatihan" session={session}>
-        <Profile />
+      <Layout title="Informasi Pribadi Peserta - Pelatihan" session={session}>
+        <InformasiPribadi session={session} />
       </Layout>
     </>
   );

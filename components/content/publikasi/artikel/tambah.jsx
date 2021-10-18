@@ -447,7 +447,7 @@ const TambahArtikel = ({ token }) => {
                     {simpleValidator.current.message(
                       "judul_artikel",
                       judul_artikel,
-                      "required|min:5|max:50",
+                      "required|min:5|max:200",
                       { className: "text-danger" }
                     )}
                   </div>
@@ -646,7 +646,7 @@ const TambahArtikel = ({ token }) => {
                       {simpleValidator.current.message(
                         "isi_artikel",
                         isi_artikel,
-                        "required|min:100|max:2500",
+                        "required|min:100|max:12000",
                         { className: "text-danger" }
                       )}
                     </div>
@@ -745,7 +745,7 @@ const TambahArtikel = ({ token }) => {
                     }
                   </div>
 
-                  <div className="mt-3 col-sm-6 col-md-6 col-lg-3 text-muted">
+                  <div className="mt-3 col-sm-6 col-md-6 col-lg-7 col-xl-3 text-muted">
                     <p>
                       Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar.
                     </p>
@@ -835,7 +835,7 @@ const TambahArtikel = ({ token }) => {
                         -- Artikel --
                       </option>
                       {!kategori || (kategori && kategori.length === 0) ? (
-                        <option value="">Data kosong</option>
+                        <option value="">Data Tidak Ditemukan</option>
                       ) : (
                         kategori &&
                         kategori.kategori &&
@@ -881,7 +881,7 @@ const TambahArtikel = ({ token }) => {
                     {
                       disableTag === true ?
                         <p className="text-danger">
-                          Tag tidak bisa terdiri dari 1 character "SPACE"
+                          Tag tidak bisa terdiri dari "SPACE" character saja
                         </p>
                         :
                         null

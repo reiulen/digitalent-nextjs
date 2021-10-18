@@ -27,8 +27,33 @@ import {
   ERROR_DROPDOWN_KABUPATEN,
   GET_DROPDOWN_PENYELENGGARA,
   ERROR_DROPDOWN_PENYELENGGARA,
+  GET_DATA_PRIBADI_SUCCESS,
+  GET_DATA_PRIBADI_FAIL,
   CLEAR_ERRORS,
 } from "../../types/pelatihan/function.type";
+
+export const getDataPribadiReducer = (state = { dataPribadi: {} }, action) => {
+  switch (action.type) {
+    case GET_DATA_PRIBADI_SUCCESS:
+      return {
+        dataPribadi: action.payload.data,
+      };
+
+    case GET_DATA_PRIBADI_FAIL:
+      return {
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
 
 export const trainingStep1Reducer = (state = { trainingData: {} }, action) => {
   switch (action.type) {

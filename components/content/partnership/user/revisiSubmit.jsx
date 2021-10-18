@@ -174,7 +174,7 @@ const RevisiSubmit = ({token}) => {
           </div>
 
           <div className="card-body">
-            <div className="row mt-8 mb-10">
+            <div className="row mt-8 mb-10 relative-progress">
               <div className="col-2 p-0">
                 <div className="progress-items">
                   {/* <div className="line-progress"></div> */}
@@ -187,7 +187,7 @@ const RevisiSubmit = ({token}) => {
                 <div className="progress-items">
                   <div className="line-progress active-line"></div>
                   <div className="circle-progress active-circle">
-                    <span className="title-progress">Review Kerjasama</span>
+                    <span className="title-progress active">Review Kerjasama</span>
                   </div>
                 </div>
               </div>
@@ -384,7 +384,7 @@ const RevisiSubmit = ({token}) => {
               <div className="form-group row">
                 <div className="col-sm-12 d-flex justify-content-end">
                   <Link href={{
-                    pathname:"/partnership/user/kerjasama/review-kerjasama-2",
+                    pathname:"/partnership/user/kerjasama/review-list-kerjasama",
                     query:{id:router.query.id}
                   }}>
                     <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">

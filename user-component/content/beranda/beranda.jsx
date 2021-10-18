@@ -8,25 +8,34 @@ import { useDispatch, useSelector } from "react-redux";
 import { 
     Card,
     Carousel,
-    Badge
+    Badge,
+    Button
 } from "react-bootstrap";
+
+import ReactPlayer from 'react-player/youtube'
 
 // import Slider from "react-slick";
 // import CarouselMulti from "react-multi-carousel";
 
-import ImagetronCarousel from "../../components/ImagetronCarousel";
+// import ImagetronCarousel from "../../components/ImagetronCarousel";
 // import AkademiCarousel from "../../components/AkademiCarousel";
-import Footer from "../../../components/templates/footer.component"
+import Footer from "../../../components/templates/footer.component";
 import BerandaWrapper from "../../../components/wrapper/beranda.wrapper";
 
-import "../../../styles/beranda.module.css"
+import "../../../styles/beranda.module.css";
 // import "react-multi-carousel/lib/styles.css";
 // import "slick-carousel/slick/slick.css";
 // import "slick-carousel/slick/slick-theme.css";
 
+import { Splide, SplideSlide } from "@splidejs/react-splide";
+import "@splidejs/splide/dist/css/splide.min.css";
+import IconArrow from "../../../components/assets/icon/Arrow2";
+import CardsBeranda from "../../components/CardBeranda"
+
 const Navigationbar = dynamic(() => import("../../../components/templates/navbar.component"), {
     ssr: false,
-  });
+  }
+);
 
 const Beranda = () => {
     const {
@@ -41,21 +50,162 @@ const Beranda = () => {
         pelatihan,
     } = useSelector((state) => state.pelatihanByTema);
     
-    const [activeTab, setActiveTab] = useState ("VSGA")
+    // const [activeTab, setActiveTab] = useState (1)
+    const [activeAcademy, setActiveAcademy] = useState (1)
     const [indexTab, setIndexTab] = useState (0)
-    const [show,setShow] = useState(false)
+    const [show,setShow] = useState(null)
     const [showDetail, setShowDetail] = useState(false)
     const [akademiItem, setAkademiItem] = useState (null)
-    const [trainingItem, setTrainingItem] = useState (null)
+    const [pelatihanItem, setPelatihanItem] = useState (null)
     const [slideAkademiToShow, setSlideAkademiToShow] = useState(4)
-    const [slideTrainingToShow, setSlideTrainingToShow] = useState(3)
+    const [slidePelatihanToShow, setSlidePelatihanToShow] = useState(3)
+
+    const optionsSliderImagetron = {
+        type: "loop",
+        gap: "1rem",
+        autoplay: true,
+        padding: "5rem",
+        height: "600px",
+        breakpoints: {
+            1669: {
+            height: "500px",
+            },
+            1262: {
+            height: "400px",
+            },
+            1062: {
+            height: "300px",
+            },
+            833: {
+            height: "270px",
+            },
+            726: {
+            height: "230px",
+            },
+            629: {
+            height: "210px",
+            },
+            590: {
+            height: "180px",
+            padding: "0",
+            gap: "0",
+            },
+            514: {
+            height: "160px",
+            padding: "0",
+            gap: "0",
+            },
+            450: {
+            height: "160px",
+            padding: "0",
+            gap: "0",
+            },
+            425: {
+            height: "160px",
+            padding: "0",
+            gap: "0",
+            },
+            320: {
+            height: "150px",
+            padding: "0",
+            gap: "0",
+            },
+        },
+                        
+    }
+    const optionsSliderAcademy = {
+            gap: "1rem",
+            drag: "free",
+            perPage: 4,
+            height: "200px",
+            type: "loop",
+            breakpoints: {
+                1262: {
+                height: "200px",
+                },
+                1062: {
+                height: "200px",
+                perPage: 3,
+                },
+                833: {
+                height: "150px",
+                perPage: 2,
+                },
+                726: {
+                height: "150px",
+                perPage: 2,
+                },
+                629: {
+                height: "130px",
+                perPage: 1,
+                },
+                590: {
+                height: "180px",
+                padding: "0",
+                gap: "0",
+                },
+                514: {
+                height: "160px",
+                padding: "0",
+                gap: "0",
+                perPage: 1,
+                },
+                450: {
+                height: "150px",
+                padding: "0",
+                gap: "0",
+                perPage: 1,
+                },
+                425: {
+                height: "150px",
+                padding: "0",
+                gap: "0",
+                perPage: 1,
+                },
+                320: {
+                height: "100px",
+                padding: "0",
+                gap: "0",
+                perPage: 1,
+                },
+            },
+        }
 
     useEffect(() => {
-        handleIndexShow ()
-        handleAkademiCarousel()
+        handleHoverCard()
+        // handleIndexShow ()
+        // handleAkademiCarousel()
+        // handlePelatihanCarousel()
     }, [])
 
-    const handleDragStart = (e) => e.preventDefault();
+    // const handleDragStart = (e) => e.preventDefault();
+
+    const handleHoverCard = () => {
+        let arr = []
+
+        if (tema.length !== 0 && pelatihan.length !== 0){
+            for (let i = 0; i < tema.length; i++){
+                let obj = {
+                    id: tema[i].id,
+                    name: tema[i].Name,
+                    pelatihan: []
+                }
+
+                for (let j = 0; j < pelatihan.length; j++){
+                    let objPelatihan = {
+                        id: pelatihan[j].id,
+                        name: pelatihan[j].name,
+                        hover: false,
+                        showDetail: false
+                    }
+
+                    obj.pelatihan.push (objPelatihan)
+                }
+                arr.push (obj)
+            }
+            setShow(arr)
+        }
+    }
 
     const handleAkademiCarousel = () => {
         let arr = []
@@ -70,357 +220,454 @@ const Beranda = () => {
         // console.log (arr)
     }
 
-    const handleTrainingCarousel = () => {
+    const handlePelatihanCarousel = () => {
         let arr = []
 
-        if (training.length !== 0) {
-            for (let i = 0; i < training.length; i+= slideTrainingToShow){
-                arr.push (training.slice (i, i + slideTrainingToShow))
+        if (pelatihan.length !== 0) {
+            for (let i = 0; i < pelatihan.length; i+= slidePelatihanToShow){
+                arr.push (pelatihan.slice (i, i + slidePelatihanToShow))
             }
 
-            setTrainingItem(arr)
+            setPelatihanItem(arr)
         }
         // console.log (arr)
     }
 
-    const handleIndexShow = () => {
-        let arrPelatihan = []
+  useEffect(() => {
+    handleIndexShow();
+    handleAkademiCarousel();
+  }, []);
 
-        if (pelatihan.length !== 0){
-            for (let i = 0; i < pelatihan.length; i++){
-                let obj = {
-                    id: pelatihan[i].id,
-                    name: pelatihan[i].name,
-                    showButton: false,
-                    showDetail: false
-                }
-                arrPelatihan.push (obj)
-            }
-        }
+  const handleDragStart = (e) => e.preventDefault();
 
-        setShow (arrPelatihan)
-        // console.log (arrPelatihan)
+    const handleActiveAcademy= (i) => {
+        setActiveAcademy (i)
     }
 
-    const handleMouseEnter = (index) =>{
+    const handleMouseEnter = (indexTema, indexPelatihan) =>{
         let obj = show
+        // console.log (obj)
+        // console.log (indexTema)
+        // console.log (indexPelatihan)
 
         for (let i = 0; i < obj.length; i++){
-            if (i == index){
-                obj[i].showButton = true
+            for (let j = 0; j < obj[i].pelatihan.length; j++){
+                if ( i === indexTema && j === indexPelatihan){
+                    obj[i].pelatihan[j].hover = true
+                    console.log ('check 1')
+                    console.log (obj[i].pelatihan[j].hover)
+                }
             }
+            setShow(obj)
+            // console.log (obj)
         }
-
-        setShow(obj)
-        // console.log ("mouseOver")
+        // setShow(obj)
+        console.log ("mouseOver")
     }
+    // console.log (arr)
+  
 
-    const handleMouseLeave = (index) =>{
+  const handleTrainingCarousel = () => {
+    let arr = [];
+
+    const handleMouseLeave = (indexTema, indexPelatihan) =>{
         let obj = show
+        // console.log (obj)
+        // console.log (indexTema)
+        // console.log (indexPelatihan)
 
         for (let i = 0; i < obj.length; i++){
-            if (i == index){
-                obj[i].showButton = false
+            for (let j = 0; j < obj[i].pelatihan.length; j++){
+                if ( i === indexTema && j === indexPelatihan){
+                    obj[i].pelatihan[j].hover = false
+                    console.log ('check 2')
+                    console.log (obj[i].pelatihan[j].hover)
+                }
             }
+            setShow(obj)
+            // console.log (obj)
         }
-        setShow(obj)
-        // console.log ("mouseOut")
+        // setShow(obj)
+        console.log ("mouseOut")
     }
-    
-    const handleActive = (tab, index) => {
-        setActiveTab (tab)
-        setIndexTab (index)
+    // console.log (arr)
+  };
+
+  const handleIndexShow = () => {
+    let arrPelatihan = [];
+
+    if (pelatihan.length !== 0) {
+      for (let i = 0; i < pelatihan.length; i++) {
+        let obj = {
+          id: pelatihan[i].id,
+          name: pelatihan[i].name,
+          showButton: false,
+          showDetail: false,
+        };
+        arrPelatihan.push(obj);
+      }
     }
 
-    const handleQuickView = () => {
-        setShowDetail (true)
-        // console.log ("open")
+    setShow(arrPelatihan);
+    // console.log (arrPelatihan)
+  };
+
+  // const handleMouseEnter = (index) => {
+  //   let obj = show;
+
+  //   for (let i = 0; i < obj.length; i++) {
+  //     if (i == index) {
+  //       obj[i].showButton = true;
+  //     }
+  //   }
+
+  //   setShow(obj);
+  // };
+
+  const handleMouseLeave = (index) => {
+    let obj = show;
+
+    for (let i = 0; i < obj.length; i++) {
+      if (i == index) {
+        obj[i].showButton = false;
+      }
     }
+    setShow(obj);
+    // console.log ("mouseOut")
+  };
 
-    const handleCloseQuickView = () => {
-        setShowDetail (false)
-        // console.log ("close")
-    }
+  const handleActive = (tab, index) => {
+    setActiveTab(tab);
+    setIndexTab(index);
+  };
 
-    return (
-        <BerandaWrapper title= "Digitalent">
-            <div className="bg-white">
-                {
-                    console.log (akademi)
-                }
+  const handleQuickView = () => {
+    setShowDetail(true);
+    // console.log ("open")
+  };
 
-                {
-                    console.log (tema)
-                }
+  const handleCloseQuickView = () => {
+    setShowDetail(false);
+    // console.log ("close")
+  };
 
-                {
-                    console.log (pelatihan)
-                }
+  return (
+    <BerandaWrapper title="Digitalent">
+      <div className="bg-white container-fluid pb-20">
+        <Navigationbar />
 
-                {
-                    console.log (show)
-                }
+        {/* <ImagetronCarousel /> */}
 
-                {
-                    console.log (showDetail)
-                }
+        {/* Carousel 1 */}
+        <div className="carousel-primarys">
+          <Splide
+            options={{
+              type: "loop",
+              gap: "1rem",
+              autoplay: true,
+              padding: "5rem",
+              height: "600px",
+              breakpoints: {
+                1669: {
+                  height: "500px",
+                },
+                1262: {
+                  height: "400px",
+                },
+                1062: {
+                  height: "300px",
+                },
+                833: {
+                  height: "270px",
+                },
+                726: {
+                  height: "230px",
+                },
+                629: {
+                  height: "210px",
+                },
+                590: {
+                  height: "180px",
+                  padding: "0",
+                  gap: "0",
+                },
+                514: {
+                  height: "160px",
+                  padding: "0",
+                  gap: "0",
+                },
+                450: {
+                  height: "160px",
+                  padding: "0",
+                  gap: "0",
+                },
+                425: {
+                  height: "160px",
+                  padding: "0",
+                  gap: "0",
+                },
+                320: {
+                  height: "150px",
+                  padding: "0",
+                  gap: "0",
+                },
+              },
+            }}
+            hasSliderWrapper
+          >
+            <SplideSlide>
+              <Image
+                layout="fill"
+                objectFit="fill"
+                src={`/assets/media/carousel-01.svg`}
+                alt="First slide"
+                className="mx-5"
+              />
+            </SplideSlide>
+            <SplideSlide>
+              <Image
+                layout="fill"
+                objectFit="fill"
+                src={`/assets/media/carousel-01.svg`}
+                alt="First slide"
+                className="mx-5"
+              />
+            </SplideSlide>
+            <SplideSlide>
+              <Image
+                layout="fill"
+                objectFit="fill"
+                src={`/assets/media/carousel-01.svg`}
+                alt="First slide"
+                className="mx-5"
+              />
+            </SplideSlide>
+          </Splide>
+        </div>
 
-                <Navigationbar />
-
-                <ImagetronCarousel />
-
-                {/* Akademi */}
-                {
-                    akademiItem ? 
-                        <div className="my-5">
-                            <Carousel
-                                indicators={false}
-                            >
-                                {
-                                    akademiItem.map ((el, i) => {
-                                        return (
-                                            <Carousel.Item key={i}>
-                                                <div className="row d-flex justify-content-around mx-5 px-5">
-                                                    {
-                                                        el.map ((element, index) => {
-                                                            return (
-                                                                <div key={i} className="row bg-secondary text-white rounded d-flex align-content-center" style={{height: "8vh"}}>
-                                                                    <div className="col-6 text-center">
-                                                                        <h1 className="font-weight-bolder">
-                                                                            {element.slug}
-                                                                        </h1>
-                                                                    </div>
-                                                                    <div className="col-6">
-                                                                        {element.name}
-                                                                    </div>
-                                                                </div>
-                                                            )
-                                                        })
-                                                    }
-                                                </div>
-                                                
-                                            </Carousel.Item>
-                                        )
-                                    })
-                                }
-                            </Carousel>
-                        </div>
-                    :
-                        null
-                }
-                
-                    
-                {/* Tema */}
-                {
-                    tema && pelatihan && trainingItem ?
-                        
-                        tema.map ((el, i) => {
-                            return (
-                                <div key={i} > 
-                                    <div className="my-5 mx-5 row d-flex justify-content-between">
-                                        <div>
-                                            <h1 className="font-weight-bolder">
-                                                {el.Name}
-                                            </h1>
-                                        </div>
-                                        <div className="text-primary">
-                                            <Link href="#">
-                                                Lihat Semua
-                                            </Link>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <Carousel
-                                            indicators={false}
-                                        >
-                                            {
-                                                trainingItem.map ((elemen, index) => {
-                                                    return (
-                                                        <Carousel.Item key={i}>
-                                                            <Card style={{ width: '18rem' }}>
-                                                                <Card.Img variant="top" src="holder.js/100px180" />
-                                                                <Card.Body>
-                                                                    <Card.Title>Card Title</Card.Title>
-                                                                    <Card.Text>
-                                                                        Some quick example text to build on the card title and make up the bulk of
-                                                                        the card's content.
-                                                                    </Card.Text>
-                                                                    <Button variant="primary">Go somewhere</Button>
-                                                                </Card.Body>
-                                                            </Card>
-                                                        </Carousel.Item>
-                                                    )
-                                                })
-                                            }
-
-                                        </Carousel>
-                                    </div>
-                                </div>
-                                
-                            )
-                        })
-                        
-                       
-                    :
-                        null
-                }
-
-                <div className="col-12 text-center my-5">
-                    <button className="btn btn-outline-primary rounded-pill ">
-                        <div className="font-weight-bolder">
-                            Muat Lebih Banyak
-                        </div>
-                    </button>
+        {/* Carousel 2 */}
+        <div className="carousel-secondarys">
+          <Splide
+            options={{
+              gap: "1rem",
+              drag: "free",
+              perPage: 4,
+              height: "200px",
+              type: "loop",
+              breakpoints: {
+                1262: {
+                  height: "200px",
+                },
+                1062: {
+                  height: "200px",
+                  perPage: 3,
+                },
+                833: {
+                  height: "150px",
+                  perPage: 2,
+                },
+                726: {
+                  height: "150px",
+                  perPage: 2,
+                },
+                629: {
+                  height: "130px",
+                  perPage: 1,
+                },
+                590: {
+                  height: "180px",
+                  padding: "0",
+                  gap: "0",
+                },
+                514: {
+                  height: "160px",
+                  padding: "0",
+                  gap: "0",
+                  perPage: 1,
+                },
+                450: {
+                  height: "150px",
+                  padding: "0",
+                  gap: "0",
+                  perPage: 1,
+                },
+                425: {
+                  height: "150px",
+                  padding: "0",
+                  gap: "0",
+                  perPage: 1,
+                },
+                320: {
+                  height: "100px",
+                  padding: "0",
+                  gap: "0",
+                  perPage: 1,
+                },
+              },
+            }}
+            hasSliderWrapper
+            // hasAutoplayControls
+            // hasAutoplayProgress
+          >
+            <SplideSlide>
+              <div className="d-flex align-items-center h-100">
+                <div className="card-1">
+                  <h1 className="mb-0 mr-2 fw-700">VSGA</h1>
+                  <div>
+                    <p className="mb-0">
+                      Vocational School
+                      <br />
+                      Graduate Academy
+                    </p>
+                  </div>
                 </div>
-
-                {/* H-Banner 01*/}
-                <Image 
-                    src={`/assets/media/tahapan-pendaftaran-new.svg`}
-                    width={1500}
-                    height={580}
-                    className="my-5"
-                />
-
-                {/* H-Banner 02*/}
-                <div className="my-5">
-
-                    <div className="text-center mt-5 mb-3">
-                        <h1 className="font-weight-bolder">
-                            Rilis Media dan Informasi
-                        </h1>
-                    </div>
-                    
-                    {/* Card */}
-                    <div className="d-flex justify-content-around my-5">
-
-                        <Card style={{ width: '30rem', height: "35rem" }}>
-                            <Card.Img variant="top" src={`/assets/media/image-29.svg`} />
-
-                            <div className="ml-3" style={{marginTop:"-35px"}}> 
-                                <Image 
-                                    src={`/assets/media/VSGA-tag.svg`}
-                                    width={50}
-                                    height={25}
-                                />
-                            </div>
-                            
-                            <Card.Body>
-                                
-                                <Card.Text>
-                                    12 Mei 2021
-                                </Card.Text>
-
-                                <Card.Title>
-                                    Pengumuman Kelulusan Peserta Pelatihan Daring Gelombang 1 Program VSGA DTS 2021
-                                </Card.Title>
-
-                                <div>
-                                    <Link href="#home">
-                                        <a className=" d-flex alignment-content-center justify-content-end">
-                                            <div className="pt-1 font-weight-bolder text-muted"> 
-                                                Lihat Detail
-                                            </div>
-                                            <i className="ri-arrow-right-line  ml-2 font-weight-bolder"></i>
-                                        </a>
-                                    </Link>
-                                </div>
-
-                            </Card.Body>
-                        </Card>
-
-                        <Card style={{ width: '30rem', height: "35rem" }}>
-                            <Card.Img variant="top" src={`/assets/media/image-29.svg`} />
-
-                            <div className="ml-3" style={{marginTop:"-35px"}}> 
-                                <Image 
-                                    src={`/assets/media/VSGA-tag.svg`}
-                                    width={50}
-                                    height={25}
-                                />
-                            </div>
-                            
-                            <Card.Body>
-                                
-                                <Card.Text>
-                                    12 Mei 2021
-                                </Card.Text>
-
-                                <Card.Title>
-                                    Pengumuman Kelulusan Peserta Pelatihan Daring Gelombang 1 Program VSGA DTS 2021
-                                </Card.Title>
-
-                                <div>
-                                    <Link href="#home">
-                                        <a className=" d-flex alignment-content-center justify-content-end">
-                                            <div className="pt-1 font-weight-bolder text-muted"> 
-                                                Lihat Detail
-                                            </div>
-                                            <i className="ri-arrow-right-line  ml-2 font-weight-bolder"></i>
-                                        </a>
-                                    </Link>
-                                </div>
-
-                            </Card.Body>
-                        </Card>
-
-                        <Card style={{ width: '30rem', height: "35rem" }}>
-                            <Card.Img variant="top" src={`/assets/media/image-29.svg`} />
-
-                            <div className="ml-3" style={{marginTop:"-35px"}}> 
-                                <Image 
-                                    src={`/assets/media/VSGA-tag.svg`}
-                                    width={50}
-                                    height={25}
-                                />
-                            </div>
-                            
-                            <Card.Body>
-                                
-                                <Card.Text>
-                                    12 Mei 2021
-                                </Card.Text>
-
-                                <Card.Title>
-                                    Pengumuman Kelulusan Peserta Pelatihan Daring Gelombang 1 Program VSGA DTS 2021
-                                </Card.Title>
-
-                                <div>
-                                    <Link href="#home">
-                                        <a className=" d-flex alignment-content-center justify-content-end">
-                                            <div className="pt-1 font-weight-bolder text-muted"> 
-                                                Lihat Detail
-                                            </div>
-                                            <i className="ri-arrow-right-line  ml-2 font-weight-bolder"></i>
-                                        </a>
-                                    </Link>
-                                </div>
-
-                            </Card.Body>
-                        </Card>
-
-                    </div>
-
-                    <div className="text-center">
-                        <button className="btn btn-outline-primary rounded-pill">
-                            <div className="font-weight-bolder">
-                                Lihat Selengkapnya
-                            </div>
-                        </button>
-                    </div>
+              </div>
+            </SplideSlide>
+            <SplideSlide>
+              <div className="d-flex align-items-center h-100">
+                <div className="card-1 active-card-1">
+                  <h1 className="mb-0 mr-2 fw-700">VSGA</h1>
+                  <div>
+                    <p className="mb-0">
+                      Vocational School
+                      <br />
+                      Graduate Academy
+                    </p>
+                  </div>
                 </div>
+              </div>
+            </SplideSlide>
+            <SplideSlide>
+              <div className="d-flex align-items-center h-100">
+                <div className="card-1">
+                  <h1 className="mb-0 mr-2 fw-700">VSGA</h1>
+                  <div>
+                    <p className="mb-0">
+                      Vocational School
+                      <br />
+                      Graduate Academy
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </SplideSlide>
+            <SplideSlide>
+              <div className="d-flex align-items-center h-100">
+                <div className="card-1">
+                  <h1 className="mb-0 mr-2 fw-700">VSGA</h1>
+                  <div>
+                    <p className="mb-0">
+                      Vocational School
+                      <br />
+                      Graduate Academy
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </SplideSlide>
+            <SplideSlide>
+              <div className="d-flex align-items-center h-100">
+                <div className="card-1">
+                  <h1 className="mb-0 mr-2 fw-700">VSGA</h1>
+                  <div>
+                    <p className="mb-0">
+                      Vocational School
+                      <br />
+                      Graduate Academy
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </SplideSlide>
+            <SplideSlide>
+              <div className="d-flex align-items-center h-100">
+                <div className="card-1">
+                  <h1 className="mb-0 mr-2 fw-700">VSGA</h1>
+                  <div>
+                    <p className="mb-0">
+                      Vocational School
+                      <br />
+                      Graduate Academy
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </SplideSlide>
+            <SplideSlide>
+              <div className="d-flex align-items-center h-100">
+                <div className="card-1">
+                  <h1 className="mb-0 mr-2 fw-700">VSGA</h1>
+                  <div>
+                    <p className="mb-0">
+                      Vocational School
+                      <br />
+                      Graduate Academy
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </SplideSlide>
+          </Splide>
+        </div>
 
-                <Image 
-                    src={`/assets/media/banner-02.svg`}
-                    width={1500}
-                    height={380}
-                />
-                
-                <Footer />
-
+        {/* Card row */}
+        <div className="card-rows">
+          {/*  */}
+          <div className="d-flex align-items-center justify-content-between">
+            <h1 className="mb-0 fw-600 fz-20">Multimedia Designer</h1>
+            <div className="d-flex align-items-center">
+              <p className="mb-0 fz-14 fw-600" style={{ color: "#0063CC" }}>
+                Lihat Semua
+              </p>
+              <IconArrow
+                width="8"
+                height="10"
+                fill="#0063CC"
+                className="ml-2"
+                style={{ transform: "rotate(0)" }}
+              />
             </div>
-        </BerandaWrapper>
-        
-    )
-}
+          </div>
+          {/* card  */}
+          <div className="row mt-10">
+            <div className="col-12 col-sm-4">
+              {/* <Cardss /> */}
+            </div>
+            <div className="col-12 col-sm-4">
+              {/* <Cardss /> */}
+            </div>
+            <div className="col-12 col-sm-4">
+              {/* <Cardss /> */}
+            </div>
+            <div className="col-12 col-sm-4">
+              {/* <Cardss /> */}
+            </div>
+            <div className="col-12 col-sm-4">
+              {/* <Cardss /> */}
+            </div>
+          </div>
 
-export default Beranda
+          <div className="row d-flex justify-content-center mt-10">
+              <Link href="/login">
+                <a>
+                  <button className="btn btn-sm btn-login-peserta">
+                    Lebih Banyak Tema
+                   <IconArrow
+                width="8"
+                height="10"
+                fill="#0063CC"
+                className="ml-2"
+                style={{ transform: "rotate(0)" }}
+              />
+                  </button>
+                </a>
+              </Link>
+          </div>
+
+        </div>
+      </div>
+    </BerandaWrapper>
+  );
+};
+
+export default Beranda;
