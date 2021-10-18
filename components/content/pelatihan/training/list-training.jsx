@@ -609,7 +609,7 @@ const ListTraining = ({ token }) => {
                 <LoadingTable loading={loading} />
                 {loading === false && (
                   <table className="table table-separate table-head-custom table-checkable">
-                    <thead style={{ background: "#F3F6F9" }}>
+                    <thead className="w-100" style={{ background: "#F3F6F9" }}>
                       <tr>
                         <th className="text-center ">No</th>
                         <th>ID Pelatihan</th>
