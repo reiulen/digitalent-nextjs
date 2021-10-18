@@ -58,6 +58,7 @@ export default function ListPeserta() {
       dispatch(clearErrors());
     }
   };
+  console.log(participant);
   return (
     <PageWrapper>
       {/* error START */}
@@ -92,7 +93,7 @@ export default function ListPeserta() {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark">
-              Kelola Sertifikat
+              Sertifikat - {participant.training}
             </h3>
           </div>
 

@@ -4,6 +4,7 @@ import React, {
   useRef,
   createRef,
   useCallback,
+  Fragment,
 } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -15,6 +16,7 @@ import { useSelector } from "react-redux";
 import PageWrapper from "../../../../../wrapper/page.wrapper";
 import { clearErrors } from "../../../../../../redux/actions/sertifikat/kelola-sertifikat.action";
 import { toPng, toJpeg } from "html-to-image";
+import html2canvas from "html2canvas";
 // #Icon
 
 export default function ListPesertaID({ token }) {
@@ -53,24 +55,22 @@ export default function ListPesertaID({ token }) {
   };
 
   const handleDownload = async () => {
+    // const data = await convertDivToPng(divReference.current);
     const data = await convertDivToPng(divReference.current);
     if (data) {
+      console.log(data);
       const link = document.createElement("a");
       link.download = `Sertifikat - ${query.name}.png`;
       link.href = data;
       link.click();
-      router.reload();
+      // router.reload();
     }
-  };
-
-  const handleDownloadSyllabus = async () => {
-    const data = await convertDivToPng(divReferenceSyllabus.current);
-    if (data) {
+    if (type == "2 lembar") {
+      const image = document.getElementById("image2").getAttribute("src");
       const link = document.createElement("a");
-      link.download = `Syllabus - ${query.name}.png`;
-      link.href = data;
+      link.href = image;
+      link.download = "tes 123";
       link.click();
-      router.reload();
     }
   };
 
@@ -134,8 +134,10 @@ export default function ListPesertaID({ token }) {
               {/* START COL */}
               <div
                 className={`position-relative p-0 d-flex`}
+                id="sertifikat1"
                 ref={divReference}
               >
+                {/* {data1()} */}
                 <Image
                   src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-images/${certificate.data.certificate.certificate_result}`}
                   alt={`image ${certificate.data.certificate.certificate_result}`}
@@ -154,16 +156,19 @@ export default function ListPesertaID({ token }) {
               </div>
               {/* END COL */}
             </div>
-            <div className="row mx-0 mt-10 col-12">
-              <div
-                onClick={e => {
-                  handleDownload(e);
-                }}
-                className="position-relative text-center col-12 col-md-2 btn bg-blue-secondary text-white rounded-full font-weight-bolder px-10 py-4"
-              >
-                <a>Unduh</a>
+            {type == "1 lembar" && (
+              <div className="row mx-0 mt-10 col-12">
+                <div className="position-relative text-center col-12 col-md-2 btn bg-blue-secondary text-white rounded-full font-weight-bolder px-10 py-4">
+                  <a
+                    onClick={e => {
+                      handleDownload(e);
+                    }}
+                  >
+                    Unduh
+                  </a>
+                </div>
               </div>
-            </div>
+            )}
           </div>
           {/* END BODY */}
         </div>
@@ -186,14 +191,15 @@ export default function ListPesertaID({ token }) {
                     key={
                       certificate.data.certificate.certificate_result_syllabus
                     }
+                    id="image2"
                   />
                 </div>
                 {/* END COL */}
               </div>
-              <div className="row mt-10 col-12">
+              <div className="row mt-10 col-12 p-0 m-0">
                 <div
                   onClick={e => {
-                    handleDownloadSyllabus(e);
+                    handleDownload();
                   }}
                   className="position-relative col-12 col-md-2 btn bg-blue-secondary text-white rounded-full font-weight-bolder px-10 py-4"
                 >
