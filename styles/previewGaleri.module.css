@@ -32,6 +32,8 @@
 
 .fullBar{
     margin: -23px;
+    width: 700px;
+    /* border: 1px solid black; */
 }
 
 .rightSideBar{
@@ -39,7 +41,7 @@
 }
 
 .img-prevModal{
-    height: 459px;
+    height: 460px;
 }
 
 .subMenuPreview{
@@ -87,7 +89,7 @@
         margin-left: -75px;
     }
     .img-prevModal{
-        height: 424px;
+        height: 435px;
     }
     .rightSideBar{
         margin-left: -90px;
@@ -143,6 +145,7 @@
     }
     .img-left{
         height: 180px;
+        margin-left: 2px;
         /* width: 168px; */
     }
     .img-prevModal{
