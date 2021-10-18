@@ -263,7 +263,7 @@ const Beranda = () => {
         }
         setShow(obj)
         
-        console.log ("mouseOver")
+        // console.log ("mouseOver")
     }
 
     const handleMouseLeave = (indexTema, indexPelatihan) =>{
