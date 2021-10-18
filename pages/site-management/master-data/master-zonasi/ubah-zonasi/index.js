@@ -4,6 +4,8 @@ import { getSession } from "next-auth/client";
 import { wrapper } from "../../../../../redux/store";
 import LoadingPage from "../../../../../components/LoadingPage";
 
+import { dropdownProvinsi } from "../../../../../redux/actions/pelatihan/function.actions";
+
 const DetailRole = dynamic(
   () =>
     import(
@@ -30,7 +32,7 @@ export default function DetailRoles(props) {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
-    async ({ query, req }) => {
+    async ({ req }) => {
       const session = await getSession({ req });
       if (!session) {
         return {
@@ -41,17 +43,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
-      // await store.dispatch(
-      //   getAllArtikel(
-      //     query.page,
-      //     query.keyword,
-      //     query.limit,
-      //     query.publish,
-      //     query.startdate,
-      //     query.enddate,
-      //     session.user.user.data.token
-      //   )
-      // );
+      await store.dispatch(dropdownProvinsi(session.user.user.data.token));
+
       return {
         props: { session, title: "Ubah Zonasi - Site Management" },
       };

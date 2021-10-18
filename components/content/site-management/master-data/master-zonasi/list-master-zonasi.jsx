@@ -141,13 +141,19 @@ const Table = ({ token }) => {
                                   className="status-div-red mb-0"
                                   style={{ width: "max-content" }}
                                 >
-                                  {items.value === 1 ? "Aktif" : "Nonaktif"}
+                                  {items.status === "1" ? "Aktif" : "Nonaktif"}
                                 </p>
                               </td>
                               <td className="align-middle text-left">
                                 <div className="d-flex align-items-center">
                                   <Link
-                                    href={`/site-management/master-data/master-zonasi/ubah-zonasi/${items.id}`}
+
+                                    href={{
+                                      pathname:"/site-management/master-data/master-zonasi/ubah-zonasi/",
+                                      query:{id:items.value}
+                                    }}
+
+
                                   >
                                     <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
                                       <IconPencil width="16" height="16" />
@@ -158,7 +164,10 @@ const Table = ({ token }) => {
                                   </Link>
 
                                   <Link
-                                    href={`/site-management/master-data/master-zonasi/detail-zonasi`}
+                                    href={{
+                                      pathname:"/site-management/master-data/master-zonasi/detail-zonasi",
+                                      query:{id:items.value}
+                                    }}
                                   >
                                     <a className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete">
                                       <IconEye width="16" height="16" />
