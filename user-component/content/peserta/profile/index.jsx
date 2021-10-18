@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Row, Col, Card, Figure, Button, ButtonGroup } from "react-bootstrap";
 import Image from "next/image";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
 import style from "../../../../styles/peserta/profile.module.css";
 import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
@@ -73,25 +74,47 @@ const PekerjaanEdit = dynamic(() => import("./pekerjaan/pekerjaan.edit"), {
 });
 
 const Profile = ({ session }) => {
+  const router = useRouter();
+
   const [viewProfile, setViewProfile] = useState(1);
   const [viewEdit, setViewEdit] = useState(false);
 
   const handleViewProfile = () => {
     switch (viewProfile) {
       case 1:
-        return viewEdit ? <InformasiEdit /> : <Informasi />;
+        return viewEdit ? (
+          <InformasiEdit funcViewEdit={(val) => setViewEdit(val)} />
+        ) : (
+          <Informasi funcViewEdit={(val) => setViewEdit(val)} />
+        );
         break;
       case 2:
-        return viewEdit ? <AlamatEdit /> : <Alamat />;
+        return viewEdit ? (
+          <AlamatEdit funcViewEdit={(val) => setViewEdit(val)} />
+        ) : (
+          <Alamat />
+        );
         break;
       case 3:
-        return viewEdit ? <PendidikanEdit /> : <Pendidikan />;
+        return viewEdit ? (
+          <PendidikanEdit funcViewEdit={(val) => setViewEdit(val)} />
+        ) : (
+          <Pendidikan />
+        );
         break;
       case 4:
-        return viewEdit ? <KeterampilanEdit /> : <Keterampilan />;
+        return viewEdit ? (
+          <KeterampilanEdit funcViewEdit={(val) => setViewEdit(val)} />
+        ) : (
+          <Keterampilan />
+        );
         break;
       case 5:
-        return viewEdit ? <PekerjaanEdit /> : <Pekerjaan />;
+        return viewEdit ? (
+          <PekerjaanEdit funcViewEdit={(val) => setViewEdit(val)} />
+        ) : (
+          <Pekerjaan />
+        );
         break;
       default:
         return <Informasi />;
@@ -103,12 +126,23 @@ const Profile = ({ session }) => {
     <>
       <PesertaWrapper>
         <Row>
-          <ProfileWrapper
-            propsEdit={viewEdit}
-            propsViewProfile={viewProfile}
-            funcViewEdit={(val) => setViewEdit(val)}
-            funcViewProfile={(val) => setViewProfile(val)}
-          />
+          {viewEdit ? (
+            <ProfileWrapper
+              key={1}
+              propsEdit={true}
+              propsViewProfile={viewProfile}
+              funcViewEdit={(val) => setViewEdit(val)}
+              funcViewProfile={(val) => setViewProfile(val)}
+            />
+          ) : (
+            <ProfileWrapper
+              key={2}
+              propsEdit={false}
+              propsViewProfile={viewProfile}
+              funcViewEdit={(val) => setViewEdit(val)}
+              funcViewProfile={(val) => setViewProfile(val)}
+            />
+          )}
           <Col md={12}>
             <Card className="card-custom gutter-b">
               <Card.Body>{handleViewProfile()}</Card.Body>

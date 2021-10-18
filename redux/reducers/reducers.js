@@ -309,11 +309,18 @@ import { allProvinsiReducer, allKotaReducer } from "./utils/utils.reducers";
 import { reducerFunctionals } from "./utils/functionals.reducer";
 
 // BERANDA
+// ========== beranda ========
 import {
   allAkademiReducer,
   temaByAkademiReducer,
   pelatihanByTemaReducer,
 } from "../reducers/beranda/beranda.reducers";
+
+// ========== detail akademi ========
+import {
+  detailAkademiReducer,
+  allPelatihanReducer,
+} from "../reducers/beranda/detail-akademi.reducers"
 //END BERANDA
 
 const reducer = combineReducers({
@@ -558,7 +565,6 @@ const reducer = combineReducers({
   getPelatihan: getPelatihanReducer,
   newPendaftaranPelatihan: newPendaftaranPelatihanReducer,
 
-  statusUpdateProfile: statusUpdateProfileReducer,
   getDataPribadi: getDataPribadiReducer,
   trainingStep1: trainingStep1Reducer,
   registrationStep2: registrationStep2Reducer,
@@ -576,9 +582,14 @@ const reducer = combineReducers({
   //END PELATIHAN
 
   //BERANDA
+  // ========== beranda ========
   allAkademi: allAkademiReducer,
   temaByAkademi: temaByAkademiReducer,
   pelatihanByTema: pelatihanByTemaReducer,
+
+  // ========== detail akademi ========
+  detailAkademi: detailAkademiReducer,
+  allPelatihan: allPelatihanReducer,
   //END BERANDA
 });
 

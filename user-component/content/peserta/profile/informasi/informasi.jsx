@@ -1,7 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Row, Col } from "react-bootstrap";
 
-const Informasi = () => {
+const Informasi = ({ funcViewEdit }) => {
+  useEffect(() => {
+    // console.log(propsViewEdit);
+
+    return function cleanup() {
+      funcViewEdit(true);
+    };
+  }, []);
+
   return (
     <>
       <div className="informasi-pribadi">

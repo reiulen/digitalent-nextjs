@@ -118,11 +118,11 @@ const FilterSide = () => {
 
             <div className="my-5 p-3">
                 <div className="row d-flex justify-content-around">
-                    <button className="btn btn-outline-primary">
+                    <button className="btn btn-white-ghost-rounded-full">
                         Reset Filter
                     </button>
 
-                    <button className="btn btn-primary-new">
+                    <button className="btn btn-primary rounded-pill">
                         Tampilkan
                     </button>
                 </div>

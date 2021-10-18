@@ -25,7 +25,7 @@
 
 .button_profile_wrapper:hover {
   background-color: #007cff !important;
-  border: none !important;
+  border: 1px solid #007cff !important;
   color: #ffffff !important;
   font-weight: 600;
   font-size: 14px;

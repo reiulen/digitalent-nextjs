@@ -162,24 +162,26 @@ export const newZonasiReducer = (state = { zonasi: {} }, action) => {
   }
 };
 
-export const detailZonasiReducer = (state = { zonasi: {} }, action) => {
+export const detailZonasiReducer = (state = initialState, action) => {
   switch (action.type) {
     case DETAIL_ZONASI_REQUEST:
       return {
-        loading: true,
+        ...state,
+        status: statuslist.process,
       };
 
     case DETAIL_ZONASI_SUCCESS:
       return {
-        loading: false,
-        success: action.payload.message,
-        zonasi: action.payload.data,
+        ...state,
+        status: statuslist.success,
+        data: action.payload,
       };
 
     case DETAIL_ZONASI_FAIL:
       return {
-        loading: false,
-        error: action.payload,
+        ...state,
+        status: statuslist.error,
+        error: null,
       };
 
     case DETAIL_ZONASI_RESET:

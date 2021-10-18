@@ -23,6 +23,8 @@ const ProfileWrapper = ({
   const [viewEdit, setViewEdit] = useState(propsEdit);
   const [viewProvile, setViewProfile] = useState(propsViewProfile);
 
+  console.log("wrapper " + viewEdit);
+
   return (
     <>
       <Col md={12} className="mb-5">
@@ -53,19 +55,17 @@ const ProfileWrapper = ({
               </Col>
               <Col md={2}>
                 <div className="button ml-auto">
-                  <Button
-                    className={`${
-                      viewEdit
-                        ? style.button_profile_edit
-                        : style.button_profile_wrapper
-                    } rounded-xl btn-block`}
-                    onClick={() => {
-                      setViewEdit(!viewEdit);
-                      funcViewEdit(!viewEdit);
-                    }}
-                  >
-                    {viewEdit ? "Simpan" : "Ubah Data"}
-                  </Button>
+                  {viewEdit !== true && (
+                    <Button
+                      className={`${style.button_profile_wrapper} rounded-xl btn-block`}
+                      onClick={() => {
+                        setViewEdit(!viewEdit);
+                        funcViewEdit(!viewEdit);
+                      }}
+                    >
+                      Ubah Data
+                    </Button>
+                  )}
                 </div>
               </Col>
             </Row>

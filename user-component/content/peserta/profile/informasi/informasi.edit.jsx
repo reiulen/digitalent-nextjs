@@ -3,8 +3,9 @@ import { Row, Col, Form, Button } from "react-bootstrap";
 import Select from "react-select";
 import Swal from "sweetalert2";
 import SimpleReactValidator from "simple-react-validator";
+import style from "../style.module.css";
 
-const InformasiEdit = ({ updated }) => {
+const InformasiEdit = ({ funcViewEdit }) => {
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
 
@@ -98,7 +99,7 @@ const InformasiEdit = ({ updated }) => {
 
   return (
     <>
-      <Form>
+      <Form onSubmit={handleSubmit}>
         <div className="informasi-pribadi">
           <h3 className="font-weight-bolder mb-5">Informasi Pribadi</h3>
           <Form.Group className="mb-3" controlId="formGridAddress1">
@@ -397,6 +398,22 @@ const InformasiEdit = ({ updated }) => {
               }
             )}
           </Form.Group>
+
+          <div className="button-aksi mt-5 float-right">
+            <Button
+              className={`${style.button_profile_batal} rounded-xl mr-2`}
+              type="button"
+              onClick={() => funcViewEdit(false)}
+            >
+              Batal
+            </Button>
+            <Button
+              className={`${style.button_profile_simpan} rounded-xl`}
+              type="submit"
+            >
+              Submit
+            </Button>
+          </div>
         </div>
       </Form>
     </>
