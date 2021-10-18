@@ -12,7 +12,7 @@ import {
 const NamaPelatihanID = dynamic(
   () =>
     import(
-      "../../../../../components/content/sertifikat/kelola-sertifikat/nama_pelatihan/id/single_sertifikat"
+      "../../../../../components/content/sertifikat/kelola-sertifikat/nama_pelatihan/id/single_sertifikat_draft"
     ),
   {
     loading: function loadingNow() {

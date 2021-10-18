@@ -33,11 +33,11 @@ export default function NamaPelatihan({ token }) {
   const [dataAcademy, setDataAcademy] = useState([]);
   let { page = 1, keyword } = router.query;
 
-  const resetValueSort = () => {
-    setAcademy("");
-    setDisable(true);
-    setTemaPelatihan("");
+  const resetValueSort = e => {
     router.push(`${router.pathname}?page=${page}`);
+    setTemaPelatihan("");
+    setDisable(true);
+    setAcademy("");
   };
   // #DatePicker
 
@@ -65,7 +65,6 @@ export default function NamaPelatihan({ token }) {
   };
 
   const handleFilter = e => {
-    e.preventDefault();
     if (!academy && !temaPelatihan) {
       Swal.fire(
         "Oops !",
@@ -83,6 +82,7 @@ export default function NamaPelatihan({ token }) {
 
   useEffect(() => {
     let arr = [];
+    arr.push({ value: "", label: "Semua" });
     certificate.list_certificate.forEach((el, i) => {
       arr.push({
         value: el.theme.academy.name,
@@ -93,13 +93,15 @@ export default function NamaPelatihan({ token }) {
   }, [certificate.list_certificate]);
 
   const handleSelectAcademy = e => {
+    // console.log(e.target.value);
+    // setAcademy(e.target.value);
     setAcademy(e.value);
     setTemaPelatihan("");
     setDisable(false);
     let arr = certificate.list_certificate;
-    const test = arr.filter(el => el.theme.academy.name == e.value);
+    const filteredTheme = arr.filter(el => el.theme.academy.name == e.value);
     const newArr = [{}];
-    test.forEach((el, i) => {
+    filteredTheme.forEach((el, i) => {
       newArr[i]["value"]
         ? (newArr[i]["value"] = el.theme.name)
         : (newArr[i] = {
@@ -110,13 +112,13 @@ export default function NamaPelatihan({ token }) {
     });
     setDataTemaPelatihan(newArr);
   };
+
   const handleResetError = () => {
     if (error) {
       dispatch(clearErrors);
     }
   };
 
-  console.log(certificate);
   return (
     <PageWrapper>
       {/* error START */}
@@ -254,6 +256,26 @@ export default function NamaPelatihan({ token }) {
                                   }}
                                   options={dataAcademy}
                                 />
+                                {/* <select
+                                  className="form-control"
+                                  onChange={e => {
+                                    handleSelectAcademy(e);
+                                  }}
+                                  defaultValue={"Semua"}
+                                > */}
+                                {/* <option selected>Menu</option> */}
+                                {dataAcademy.map((item, i) => {
+                                  // return (
+                                  // <option
+                                  //   key={i}
+                                  //   selected={i == 0}
+                                  //   value={item.value}
+                                  // >
+                                  //   {item.label}
+                                  // </option>
+                                  // );
+                                })}
+                                {/* </select> */}
                               </div>
                               <div className="fv-row mb-10">
                                 <label className="required fw-bold fs-6 mb-2">
@@ -284,7 +306,7 @@ export default function NamaPelatihan({ token }) {
                                   type="button"
                                   data-dismiss="modal"
                                   aria-label="Close"
-                                  onClick={() => resetValueSort()}
+                                  onClick={e => resetValueSort(e)}
                                 >
                                   Reset
                                 </button>
@@ -405,7 +427,7 @@ export default function NamaPelatihan({ token }) {
                 )}
                 {certificate && certificate.total ? (
                   <div className="table-total ml-auto">
-                    <div className="row mt-3">
+                    <div className="row mt-4">
                       <div className="col-4 mr-0 p-0 my-auto">
                         <select
                           className="form-control"
@@ -421,8 +443,9 @@ export default function NamaPelatihan({ token }) {
                         >
                           <option>5</option>
                           <option>10</option>
-                          <option>15</option>
-                          <option>20</option>
+                          <option>30</option>
+                          <option>40</option>
+                          <option>50</option>
                         </select>
                       </div>
                       <div className="col-8 my-auto">

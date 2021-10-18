@@ -58,7 +58,7 @@ export default function TambahMasterSertifikat({ token }) {
         },
       });
     }
-  }, [newCertificate]);
+  }, [newCertificate, query.theme_name, query.theme_id, router]);
 
   // #Redux state
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
@@ -758,6 +758,7 @@ export default function TambahMasterSertifikat({ token }) {
                                   //   style={{
                                   //     height: "400px",
                                   //   }}
+                                  id="sertifikat-ck-editor"
                                 >
                                   <div className="font-size-h5 mb-5">
                                     Penanda Tangan
@@ -1134,7 +1135,7 @@ export default function TambahMasterSertifikat({ token }) {
                     {background_syllabus ? (
                       <Image
                         src={background_syllabus}
-                        alt="Background Syllabus"
+                        alt="Background Silabus"
                         layout="fill"
                         objectFit="fill"
                       />
@@ -1330,7 +1331,7 @@ export default function TambahMasterSertifikat({ token }) {
                       </select>
                     </div>
                     <label className=" col-form-label font-weight-bold">
-                      Syllabus
+                      Silabus
                     </label>
                     <div
                       className="card-toolbar"
@@ -1338,7 +1339,7 @@ export default function TambahMasterSertifikat({ token }) {
                       data-toggle="modal"
                     >
                       <a className="btn bg-blue-secondary text-white rounded-full font-weight-bolder px-15 py-3">
-                        Atur Syllabus
+                        Atur Silabus
                       </a>
                     </div>
                   </div>
@@ -1400,6 +1401,7 @@ export default function TambahMasterSertifikat({ token }) {
                                     //   style={{
                                     //     height: "400px",
                                     //   }}
+                                    id="syllabus-ck-editor"
                                   >
                                     <div className="font-size-h5 mb-5">
                                       Penanda Tangan
@@ -1836,7 +1838,7 @@ export default function TambahMasterSertifikat({ token }) {
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title" id="exampleModalLongTitle">
-                  Syllabus
+                  Silabus
                 </h5>
                 <button
                   type="button"
@@ -1856,9 +1858,7 @@ export default function TambahMasterSertifikat({ token }) {
                           <input
                             required
                             placeholder={
-                              index === 0
-                                ? "Syllabus 1"
-                                : `Syllabus ${index + 1}`
+                              index === 0 ? "Silabus 1" : `Silabus ${index + 1}`
                             }
                             name={`cooperation${index}`}
                             type="text"
@@ -1904,7 +1904,7 @@ export default function TambahMasterSertifikat({ token }) {
                       onClick={() => handleAddInput()}
                     >
                       <i className="ri-add-fill mr-2 p-0 text-primary"></i>
-                      Tambah Syllabus
+                      Tambah Silabus
                     </div>
                   </div>
                 )}

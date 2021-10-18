@@ -61,6 +61,8 @@ export default function ListPesertaID({ token }) {
     }
   };
 
+  console.log(certificate);
+
   const handleDownloadSyllabus = async () => {
     const data = await convertDivToPng(divReferenceSyllabus.current);
     if (data) {
@@ -110,7 +112,7 @@ export default function ListPesertaID({ token }) {
               <div className="text-dark ">Nama Sertifikat :</div>
               <div className="mx-6">
                 <div type="text" className="form-control w-100 h-100">
-                  {certificate?.data?.certificate?.name || "Nama sertifikat"}
+                  {certificate?.data?.name || "Nama sertifikat"}
                 </div>
               </div>
             </div>
