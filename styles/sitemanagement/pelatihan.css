@@ -165,9 +165,8 @@
     border-radius: 8px;
     color: #215480;
     background-color: #F2F7FC;
-    width: 38px;
-    height: 38px;
     font-weight: 600;
+    padding: 8px 15px 8px 15px;
 }
 
 .data-daerah{

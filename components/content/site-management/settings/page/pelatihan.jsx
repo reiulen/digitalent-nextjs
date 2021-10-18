@@ -154,7 +154,7 @@ export default function Pelatihan({ token }) {
               {page === "Prompt" && <Prompt token={token} />}
 
               {page === "Template" && (
-                <div className="col-lg-4 styling-content-pelatihan">
+                <div className="col-xl-8 styling-content-pelatihan">
                   <form action="">
                     <div className="notification-title">
                       <h1>Template Email</h1>

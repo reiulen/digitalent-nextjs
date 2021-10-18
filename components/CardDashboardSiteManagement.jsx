@@ -19,7 +19,7 @@ const CardDashboardSiteManagement = ({
           backgroundImage: `url("${backgroundImage}")`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "contain",
-          height: "85%",
+          height: "100%",
         }}
       >
         <div className="bungkus">
