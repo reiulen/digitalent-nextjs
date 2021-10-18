@@ -26,32 +26,22 @@ export default function KelolasertifikatID({ token }) {
     }
   };
 
-  const handleDownloadSyllabus = async e => {
-    try {
-      const dataSyllabus = await convertDivToPng2(divReferenceSyllabus.current);
-      console.log(dataSyllabus);
-      if (dataSyllabus) {
-        const link = document.createElement("a");
-        link.href = dataSyllabus;
-        link.download = "Syllabus.png";
-        link.click();
-        router.reload();
-      }
-    } catch (e) {
-      console.log(e, "ini errornya");
-    }
-  };
-
   const handleDownload = async e => {
     try {
       const data = await convertDivToPng(divReference.current);
-      console.log(data);
       if (data) {
         const link = document.createElement("a");
         link.href = data;
         link.download = "Sertifikat.png";
         link.click();
-        router.reload();
+      }
+
+      if (certificate.data.certificate.certificate_type == "2 lembar") {
+        const image = document.getElementById("image2").getAttribute("src");
+        const link = document.createElement("a");
+        link.href = image;
+        link.download = "tes 123";
+        link.click();
       }
     } catch (e) {
       console.log(e, "ini error sertifikat");
@@ -59,15 +49,6 @@ export default function KelolasertifikatID({ token }) {
   };
 
   async function convertDivToPng(div) {
-    const data = await toPng(div, {
-      cacheBust: true,
-      canvasWidth: 842,
-      canvasHeight: 595,
-    });
-    return data;
-  }
-
-  async function convertDivToPng2(div) {
     const data = await toPng(div, {
       cacheBust: true,
       canvasWidth: 842,
@@ -140,8 +121,8 @@ export default function KelolasertifikatID({ token }) {
                 id="sertifikat"
               >
                 <Image
-                  src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-images/${certificate.data.certificate_result}`}
-                  alt={`image ${certificate.data.certificate_result}`}
+                  src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-images/${certificate.data.certificate.certificate_result}`}
+                  alt={`image ${certificate.data.certificate.certificate_result}`}
                   objectFit="fill"
                   width={842}
                   height={595}
@@ -154,21 +135,22 @@ export default function KelolasertifikatID({ token }) {
               </div>
               {/* END COL */}
             </div>
-
-            <div className="row mt-10 mx-0 col-12">
-              <button
-                onClick={e => handleDownload(e)}
-                className="position-relative col-12 col-md-2 btn bg-blue-secondary text-white rounded-full font-weight-bolder px-10 py-4"
-              >
-                Unduh
-              </button>
-            </div>
+            {certificate.data.certificate_type == "1 lembar" && (
+              <div className="row mt-10 mx-0 col-12">
+                <button
+                  onClick={e => handleDownload(e)}
+                  className="position-relative col-12 col-md-2 btn bg-blue-secondary text-white rounded-full font-weight-bolder px-10 py-4"
+                >
+                  Unduh
+                </button>
+              </div>
+            )}
           </div>
           {/* END BODY */}
         </div>
         {/* START SECTION 2 */}
-        {certificate.data.certificate_type == "2 lembar" &&
-        certificate.data.certificate_type ? (
+        {certificate.data.certificate.certificate_type == "2 lembar" &&
+        certificate.data.certificate.certificate_type ? (
           <div className="card card-custom card-stretch gutter-b">
             <div className="card-body border-top">
               <div
@@ -178,11 +160,12 @@ export default function KelolasertifikatID({ token }) {
               >
                 <div className="position-relative p-0">
                   <Image
-                    src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-syllabus-images/${certificate.data.certificate_result_syllabus}`}
+                    src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-syllabus-images/${certificate.data.certificate.certificate_result_syllabus}`}
                     alt={`image`}
                     objectFit="fill"
                     width={842}
                     height={595}
+                    id="image2"
                   />
                 </div>
                 <div></div>
@@ -190,7 +173,7 @@ export default function KelolasertifikatID({ token }) {
               </div>
               <div className="row mt-10 col-12">
                 <button
-                  onClick={e => handleDownloadSyllabus(e)}
+                  onClick={e => handleDownload(e)}
                   className="position-relative col-12 col-md-2 btn bg-blue-secondary text-white rounded-full font-weight-bolder px-10 py-4"
                 >
                   Unduh
