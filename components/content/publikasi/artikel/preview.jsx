@@ -1,13 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux';
 import Image from "next/image";
 import moment from "moment";
 import IconFilter from "../../../assets/icon/Filter";
 
 // import PageWrapper from "../../../wrapper/page.wrapper";
 import PreviewWrapper from "../../../wrapper/preview.wrapper";
-import Backdrop from "../../../../public/assets/media/backdrop.svg"
-import styles from "../../../../styles/preview.module.css"
+import Backdrop from "../../../../public/assets/media/backdrop.svg";
+import styles from "../../../../styles/preview.module.css";
 
 const Preview = () => {
     // const editorRef = useRef();
@@ -73,10 +73,10 @@ const Preview = () => {
                     <div className="" style={{ height: '100%' }}>
 
                         <nav aria-label="breadcrumb">
-                            <ol class="breadcrumb bg-transparent my-5 ps-5" style={{border:'1px solid gray', borderRadius:'20px'}}>
-                                <li class="breadcrumb-item" style={{color:'blue'}}><a href="#">Beranda</a></li>
-                                <li class="breadcrumb-item" style={{color:'blue'}}><a href="#">Artikel</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Detail Artikel</li>
+                            <ol className="breadcrumb bg-transparent my-5 ps-5" style={{border:'1px solid gray', borderRadius:'20px'}}>
+                                <li className="breadcrumb-item" style={{color:'blue'}}><a href="#">Beranda</a></li>
+                                <li className="breadcrumb-item" style={{color:'blue'}}><a href="#">Artikel</a></li>
+                                <li className="breadcrumb-item active" aria-current="page">Detail Artikel</li>
                             </ol>
                         </nav>
 
