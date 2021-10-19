@@ -2,7 +2,7 @@ import Link from "next/link";
 import IconArrow from "../../../components/assets/icon/Arrow2";
 export default function infoVideos() {
   return (
-    <div style={{backgroundColor:"white"}} className="py-0 py-xl-30 info-video">
+    <div style={{backgroundColor:"white"}} className="py-0 py-xl-30 info-video max-container">
       <div className="container-fluid">
             <div className="row">
               <div className="col-12 col-sm-6">

@@ -2,16 +2,17 @@ import React from "react";
 import IconTime from "../../../components/assets/icon-dashboard-peserta/Time";
 import IconPeserta from "../../../components/assets/icon-dashboard-peserta/Time";
 
-export default function card() {
+export default function card({children,label}) {
   return (
     <div className="cards-items">
       <div className="top">
-        <label>PELATIHAN ONLINE</label>
+        {label}
       </div>
       <div className="rounded"></div>
 
       <div className="bottom">
-        <div className="rounded"></div>
+        {children}
+        {/* <div className="rounded"></div>
         <div className="d-flex align-items-center justify-content-between pl-24">
           <p className="fw-600" style={{ color: "#6C6C6C" }}>
             Gojek
@@ -26,7 +27,6 @@ export default function card() {
         </h3>
         <hr />
 
-        {/* regis and kuota */}
         <div className="mt-2">
           <div className="d-flex align-items-center">
             <IconTime className="mr-2" />
@@ -36,7 +36,7 @@ export default function card() {
             <IconPeserta className="mr-2" />
             Kuota: 1000 Peserta
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -7,6 +7,11 @@
   color: #6C6C6C;
 }
 
+.max-container{
+  max-width: 1440px;
+  margin: auto;
+}
+
 .btn-login-peserta {
   display: flex;
   align-items: center;
@@ -191,6 +196,12 @@
     /* height: 100px !important; */
     min-height: 20rem !important;
   
+  }
+
+  .step-registers .images-shapes,
+  .galery-update .images-shapes {
+    width: 100% !important;
+
   }
 
   .image-steps-dashboard {

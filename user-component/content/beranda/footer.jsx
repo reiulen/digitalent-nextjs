@@ -7,7 +7,7 @@ import ImageWhiteLogo from "../../../components/assets/icon-dashboard-peserta/wh
 
 export default function footer() {
   return (
-    <div style={{ backgroundColor: "#203E80" }}>
+    <div style={{ backgroundColor: "#203E80" }} className="max-container">
       <div className="container-fluid">
         <div className="row w-100 px-0 py-10 m-0">
           <div className="col-12 col-sm-3">

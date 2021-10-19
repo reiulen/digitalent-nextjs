@@ -153,7 +153,7 @@ const Beranda = () => {
         {/* <ImagetronCarousel /> */}
 
         {/* Carousel 1 */}
-        <div className="container-fluid">
+        <div className="container-fluid max-container">
           <div className="carousel-primarys">
             <Splide
               options={{
@@ -242,7 +242,7 @@ const Beranda = () => {
         </div>
 
         {/* Carousel 2 */}
-        <div className="container-fluid">
+        <div className="container-fluid max-container">
           <div className="carousel-secondarys">
             <Splide
               options={{
@@ -311,7 +311,7 @@ const Beranda = () => {
                   <div className="card-1">
                     <h1 className="mb-0 mr-2 fw-700">VSGA</h1>
                     <div>
-                      <p className="mb-0" style={{whiteSpace:"nowrap"}}>
+                      <p className="mb-0" style={{ whiteSpace: "nowrap" }}>
                         Vocational School
                         <br />
                         Graduate Academy
@@ -325,7 +325,7 @@ const Beranda = () => {
                   <div className="card-1 active-card-1">
                     <h1 className="mb-0 mr-2 fw-700">VSGA</h1>
                     <div>
-                      <p className="mb-0" style={{whiteSpace:"nowrap"}}>
+                      <p className="mb-0" style={{ whiteSpace: "nowrap" }}>
                         Vocational School
                         <br />
                         Graduate Academy
@@ -337,64 +337,96 @@ const Beranda = () => {
             </Splide>
           </div>
         </div>
-        
-        <div className="container-fluid">
-        {/* Card row */}
-        <div className="card-rows">
-          {/*  */}
-          <div className="d-flex align-items-center justify-content-between px-10">
-            <h1 className="mb-0 fw-600 fz-20">Multimedia Designer</h1>
-            <div className="d-flex align-items-center">
-              <p className="mb-0 fz-14 fw-600" style={{ color: "#0063CC" }}>
-                Lihat Semua
-              </p>
-              <IconArrow
-                width="8"
-                height="10"
-                fill="#0063CC"
-                className="ml-2"
-                style={{ transform: "rotate(0)" }}
-              />
-            </div>
-          </div>
-          {/* card  */}
-          <div className="container-fluid">
-            <div className="row mt-10">
-              <div className="col-12 col-sm-6 col-xl-4">
-                <Cardss />
-              </div>
-              <div className="col-12 col-sm-6 col-xl-4">
-                <Cardss />
-              </div>
-              <div className="col-12 col-sm-6 col-xl-4">
-                <Cardss />
-              </div>
-              <div className="col-12 col-sm-6 col-xl-4">
-                <Cardss />
-              </div>
-              <div className="col-12 col-sm-6 col-xl-4">
-                <Cardss />
-              </div>
-            </div>
-          </div>
 
-          <div className="d-flex justify-content-center mt-10">
-            <Link href="/login">
-              <a>
-                <button className="btn btn-sm btn-login-peserta px-12 py-3">
-                  Lebih Banyak Tema
-                  <IconArrow
-                    width="8"
-                    height="10"
-                    fill="#0063CC"
-                    className="ml-2"
-                    style={{ transform: "rotate(0)" }}
-                  />
-                </button>
-              </a>
-            </Link>
+        <div className="container-fluid max-container">
+          {/* Card row */}
+          <div className="card-rows">
+            {/*  */}
+            <div className="d-flex align-items-center justify-content-between px-10">
+              <h1 className="mb-0 fw-600 fz-20">Multimedia Designer</h1>
+              <div className="d-flex align-items-center">
+                <p className="mb-0 fz-14 fw-600" style={{ color: "#0063CC" }}>
+                  Lihat Semua
+                </p>
+                <IconArrow
+                  width="8"
+                  height="10"
+                  fill="#0063CC"
+                  className="ml-2"
+                  style={{ transform: "rotate(0)" }}
+                />
+              </div>
+            </div>
+            {/* card  */}
+            <div className="container-fluid">
+              <div className="row mt-10">
+                <div className="col-12 col-sm-6 col-xl-4">
+                  <Cardss label={<label>PELATIHAN ONLINE</label>}>
+                    <div className="rounded"></div>
+                    <div className="d-flex align-items-center justify-content-between pl-24">
+                      <p className="fw-600" style={{ color: "#6C6C6C" }}>
+                        Gojek
+                      </p>
+                      <button className="btn btn-green-rounded">OPEN</button>
+                    </div>
+                    <h1
+                      className="fz-18 fw-600 mt-4"
+                      style={{ color: "#1F1F1F" }}
+                    >
+                      Intermediate Multimedia Designer
+                    </h1>
+                    <h3
+                      className="mb-0 fz-18 fw-400 mt-4"
+                      style={{ color: "#6C6C6C" }}
+                    >
+                      Vocational School Graduate Academy
+                    </h3>
+                    <hr />
+
+                    <div className="mt-2">
+                      <div className="d-flex align-items-center">
+                        {/* <IconTime className="mr-2" /> */}
+                        Registrasi: 05 Juli 2021 - 21 Juli 2021
+                      </div>
+                      <div className="d-flex align-items-center mt-2">
+                        {/* <IconPeserta className="mr-2" /> */}
+                        Kuota: 1000 Peserta
+                      </div>
+                    </div>
+                  </Cardss>
+                </div>
+                <div className="col-12 col-sm-6 col-xl-4">
+                  <Cardss />
+                </div>
+                <div className="col-12 col-sm-6 col-xl-4">
+                  <Cardss />
+                </div>
+                <div className="col-12 col-sm-6 col-xl-4">
+                  <Cardss />
+                </div>
+                <div className="col-12 col-sm-6 col-xl-4">
+                  <Cardss />
+                </div>
+              </div>
+            </div>
+
+            <div className="d-flex justify-content-center mt-10">
+              <Link href="/login">
+                <a>
+                  <button className="btn btn-sm btn-login-peserta px-12 py-3">
+                    Lebih Banyak Tema
+                    <IconArrow
+                      width="8"
+                      height="10"
+                      fill="#0063CC"
+                      className="ml-2"
+                      style={{ transform: "rotate(0)" }}
+                    />
+                  </button>
+                </a>
+              </Link>
+            </div>
           </div>
-        </div>
         </div>
 
         {/* tahapan pendaftaran */}

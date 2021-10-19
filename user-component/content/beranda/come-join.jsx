@@ -3,7 +3,7 @@ import BgComeJoin from "../../../components/assets/icon-dashboard-peserta/bg-com
 import Image from 'next/image'
 export default function comeJoin() {
   return (
-    <div style={{background: "#FAFAFB"}} className="py-20 come-join position-relative">
+    <div style={{background: "#FAFAFB"}} className="py-20 come-join position-relative max-container">
 
       <div>
         <Image src={BgComeJoin} objectFit="fill" layout="fill"/>

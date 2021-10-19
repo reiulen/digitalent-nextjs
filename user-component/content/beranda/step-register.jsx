@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function stepRegister() {
   return (
-    <div className="position-relative step-registers">
+    <div className="position-relative step-registers max-container">
       <div className="images-shapes">
         <Image src={ImageShapes}  layout="fill" objectFit="fill"/>
       </div>
