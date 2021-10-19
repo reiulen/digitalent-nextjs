@@ -38,9 +38,6 @@ const Table = ({ token }) => {
   }, [dispatch, allUnitWork.cari, allUnitWork.page, allUnitWork.limit, token]);
 
 
-
-
-
   return (
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">

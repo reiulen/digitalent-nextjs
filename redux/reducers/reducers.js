@@ -186,6 +186,8 @@ import {
   detailPageReducer,
   updatePageReducer,
 } from "./site-management/settings/page.reducers";
+// ============== provinces site ===============
+import { allProvincesSiteReducer } from "./site-management/option/option-provinces.reducers";
 // ============== api ===============
 import {
   allApiReducer,
@@ -196,6 +198,13 @@ import {
   listApiReducer,
   listFieldReducer,
 } from "./site-management/settings/api.reducers";
+// ============== mitra site ===============
+import {
+  allMitraSiteReducer,
+  newMitraSiteReducer,
+  updateMitraSiteReducer,
+  detailMitraSiteReducer,
+} from "./site-management/user/mitra-site.reducers";
 // ============== data reference ===============
 import {
   allDataReferenceReducer,
@@ -240,7 +249,7 @@ import {
 } from "./site-management/unit-work.reducers";
 
 // ============== pelatihan ===============
-import {allPromptReducer} from './site-management/settings/pelatihan.reducers'
+import { allPromptReducer } from "./site-management/settings/pelatihan.reducers";
 
 // End Site Management
 
@@ -324,7 +333,7 @@ import {
 import {
   detailAkademiReducer,
   allPelatihanReducer,
-} from "../reducers/beranda/detail-akademi.reducers"
+} from "../reducers/beranda/detail-akademi.reducers";
 //END BERANDA
 
 const reducer = combineReducers({
@@ -493,12 +502,19 @@ const reducer = combineReducers({
   updatePage: updatePageReducer,
   listApi: listApiReducer,
   listField: listFieldReducer,
+  // ============ PAGE =======
+  allProvincesSite: allProvincesSiteReducer,
   // ============ API =======
   allApi: allApiReducer,
   deleteApi: deleteApiReducer,
   newApi: newApiReducer,
   detailApi: detailApiReducer,
   updateApi: updateApiReducer,
+  // ============ MITRA SITE =======
+  allMitraSite: allMitraSiteReducer,
+  newMitraSite: newMitraSiteReducer,
+  detailMitraSite: detailMitraSiteReducer,
+  updateMitraSite: updateMitraSiteReducer,
   // ============ DATA REFERENCE =======
   allDataReference: allDataReferenceReducer,
   deleteDataReference: deleteDataReferenceReducer,

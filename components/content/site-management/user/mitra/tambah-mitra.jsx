@@ -13,15 +13,84 @@ import IconSearch from "../../../../assets/icon/Search";
 import Image from "next/image";
 import IconPlus from "../../../../../public/assets/icon/Plus.svg";
 import IconMinus from "../../../../../public/assets/icon/Minus.svg";
-
+import axios from "axios";
+import Swal from "sweetalert2";
 const TambahApi = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
+  const [nameCooperation, setNameCooperation] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [status, setStatus] = useState("");
 
-  const onNewReset = () => {
-    router.replace("/site-management/api", undefined, {
-      shallow: true,
-    });
+  const [hidePassword, setHidePassword] = useState(true);
+  const [hidePasswordConfirm, setHidePasswordConfirm] = useState(true);
+
+  const handlerShowPassword = (value) => {
+    setHidePassword(value);
+    var input = document.getElementById("input-password");
+    if (input.type === "password") {
+      input.type = "text";
+    } else {
+      input.type = "password";
+    }
+  };
+
+  const handlerShowPasswordConfirm = (value) => {
+    setHidePasswordConfirm(value);
+    var input = document.getElementById("confirm-input-password");
+    if (input.type === "password") {
+      input.type = "text";
+    } else {
+      input.type = "password";
+    }
+  };
+
+  const submit = async (e) => {
+    e.preventDefault();
+    if (nameCooperation === "") {
+      Swal.fire(
+        "Gagal simpan",
+        "Form Nama Lembaga tidak boleh kosong",
+        "error"
+      );
+    } else if (email === "") {
+      Swal.fire("Gagal simpan", "Form Email tidak boleh kosong", "error");
+    } else if (password === "") {
+      Swal.fire("Gagal simpan", "Form Password tidak boleh kosong", "error");
+    } else if (confirmPassword === "") {
+      Swal.fire(
+        "Gagal simpan",
+        "Form Konfirmasi Password tidak boleh kosong",
+        "error"
+      );
+    } else if (status === "") {
+      Swal.fire("Gagal simpan", "Form Status tidak boleh kosong", "error");
+    } else {
+      let formData = new FormData();
+      formData.append("name", nameCooperation);
+      formData.append("email", email);
+      formData.append("password", password);
+      formData.append("password_confirmation", confirmPassword);
+      formData.append("status", status);
+      try {
+        let { data } = await axios.post(
+          `${process.env.END_POINT_API_SITE_MANAGEMENT}api/user-mitra/store`,
+          formData,
+          {
+            headers: {
+              authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        Swal.fire("Berhasil", "Data berhasil disimpan", "success").then(() => {
+          router.push(`/site-management/user/mitra/`);
+        });
+      } catch (error) {
+        Swal.fire("Gagal simpan", `${error.response.data.message}`, "error");
+      }
+    }
   };
 
   const btnIconPlus = {
@@ -61,58 +130,82 @@ const TambahApi = ({ token }) => {
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Placeholder"
+                  placeholder="Masukan nama lengkap"
+                  onChange={(e) => setNameCooperation(e.target.value)}
                 />
-                <span className="form-text text-muted">
-                  Please enter your full name
-                </span>
               </div>
               <div className="form-group">
                 <label>Email</label>
                 <input
+                  onChange={(e) => setEmail(e.target.value)}
                   type="email"
                   className="form-control"
-                  placeholder="Placeholder"
+                  placeholder="Masukan email"
                 />
-                <span className="form-text text-muted">
-                  Please enter your full name
-                </span>
               </div>
               <div className="form-group">
                 <label>Password</label>
-                <input
-                  type="password"
-                  className="form-control"
-                  placeholder="Placeholder"
-                />
-                <span className="form-text text-muted">
-                  Please enter your full name
-                </span>
+                <div className="position-relative">
+                  <input
+                    onChange={(e) => setPassword(e.target.value)}
+                    type="password"
+                    id="input-password"
+                    className="form-control"
+                    placeholder="Masukan password"
+                  />
+                  {hidePassword === true ? (
+                    <i
+                      className="ri-eye-fill right-center-absolute cursor-pointer"
+                      style={{ right: "10px" }}
+                      onClick={() => handlerShowPassword(false)}
+                    />
+                  ) : (
+                    <i
+                      className="ri-eye-off-fill right-center-absolute cursor-pointer"
+                      style={{ right: "10px" }}
+                      onClick={() => handlerShowPassword(true)}
+                    />
+                  )}
+                </div>
               </div>
               <div className="form-group">
                 <label>Konfirmasi Password</label>
-                <input
-                  type="password"
-                  className="form-control"
-                  placeholder="Placeholder"
-                />
-                <span className="form-text text-muted">
-                  Please enter your full name
-                </span>
+                <div className="position-relative">
+                  <input
+                    id="confirm-input-password"
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    type="password"
+                    className="form-control"
+                    placeholder="Masukan konfirmasi password"
+                  />
+                  {hidePasswordConfirm === true ? (
+                    <i
+                      className="ri-eye-fill right-center-absolute cursor-pointer"
+                      style={{ right: "10px" }}
+                      onClick={() => handlerShowPasswordConfirm(false)}
+                    />
+                  ) : (
+                    <i
+                      className="ri-eye-off-fill right-center-absolute cursor-pointer"
+                      style={{ right: "10px" }}
+                      onClick={() => handlerShowPasswordConfirm(true)}
+                    />
+                  )}
+                </div>
               </div>
-              
+
               <div className="form-group">
-                <label htmlFor="exampleSelect1">Status</label>
-                <select className="form-control" id="exampleSelect1">
-                  <option>Placeholder</option>
+                <label>Status</label>
+                <select
+                  className="form-control"
+                  onChange={(e) => setStatus(e.target.value)}
+                >
+                  <option value="">Pilih status</option>
+                  <option value="1">Aktif</option>
+                  <option value="1">Tidak Aktif</option>
                 </select>
-                <span className="form-text text-muted">
-                  Please enter your full name
-                </span>
               </div>
-              
-              
-              </form>
+            </form>
             <div className="form-group row">
               <div className="col-sm-12 d-flex justify-content-end">
                 <Link href="/site-management/user/mitra" passHref>
@@ -122,6 +215,7 @@ const TambahApi = ({ token }) => {
                 </Link>
                 <button
                   type="button"
+                  onClick={(e) => submit(e)}
                   className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
                 >
                   Simpan

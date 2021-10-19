@@ -17,29 +17,7 @@ const Table = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
 
-  // function delete
-  const roleDelete = (id) => {
-    Swal.fire({
-      title: "Apakah anda yakin ingin menghapus data ?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      cancelButtonText: "Batal",
-      confirmButtonText: "Ya !",
-      dismissOnDestroy: false,
-    }).then(async (result) => {
-      if (result.value) {
-        // dispatch delete
-      }
-    });
-  };
-
-  const onNewReset = () => {
-    router.replace("/site-management/user/administrator", undefined, {
-      shallow: true,
-    });
-  };
+  
   return (
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">
