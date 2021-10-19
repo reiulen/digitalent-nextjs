@@ -341,7 +341,7 @@ const SubtansiUser = ({ token }) => {
       </Container>
 
       <Modal show={modalSoal} onHide={handleCloseModal} centered size="lg">
-        <ModalHeader>
+        <ModalHeader className={styles.headerModal}>
           Panduan{" "}
           {router.pathname.includes("substansi")
             ? "Test Substansi"
@@ -356,7 +356,7 @@ const SubtansiUser = ({ token }) => {
         </ModalHeader>
         <ModalBody>
           {router.pathname.includes("substansi") ? (
-            <Card style={{ padding: "10px", marginTop: "10px" }}>
+            <Card className={styles.cardPanduan}>
               <table>
                 <tr>
                   <td style={{ position: "absolute" }}>1.</td>
@@ -426,7 +426,7 @@ const SubtansiUser = ({ token }) => {
                   </td>
                 </tr>
                 <tr>
-                  <td>5.</td>
+                  <td style={{ verticalAlign: "top" }}>5.</td>
                   <td>&nbsp;</td>
                   <td>
                     Skor untuk soal yang sudah dijawab tetap terhitung walaupun

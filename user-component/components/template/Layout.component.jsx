@@ -30,9 +30,9 @@ const Layout = ({ title = "Peserta - Pelatihan", session, children }) => {
       <div className="container-fluid py-5">
         <Row>
           <Col md={3}>
-            {!router.pathname.includes("substansi" || "survey" || "trivia") && (
-              <Sidebar />
-            )}
+            {!router.pathname.includes(
+              "substansi" || "survey" || "trivia" || "form-pemdaftaran"
+            ) && <Sidebar />}
             {/* <Sidebar /> */}
           </Col>
           {children}

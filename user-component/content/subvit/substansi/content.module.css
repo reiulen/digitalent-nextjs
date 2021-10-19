@@ -422,3 +422,39 @@
   margin-left: 30px;
   padding: 5px 15px;
 }
+.cardPanduan {
+  background: #ffffff;
+  /* Neutral/Border */
+
+  border: 1px solid #d7e1ea;
+  box-sizing: border-box;
+  border-radius: 12px;
+  padding: 10px 20px;
+  margin-top: 20px;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 200%;
+  /* or 32px */
+
+  letter-spacing: 0.015em;
+
+  /* Neutral/Heading */
+
+  color: #1f1f1f;
+}
+.headerModal {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 160%;
+  /* or 38px */
+
+  letter-spacing: 0.015em;
+
+  /* Neutral/Heading */
+
+  color: #1f1f1f;
+}
