@@ -49,6 +49,7 @@ const EditArtikel = ({ token }) => {
     error: allError,
     kategori,
   } = useSelector(state => state.allKategori);
+  const { setting } = useSelector(state => state.allSettingPublikasi)
   // const session = getSession({ req });
 
   // if (!session) {
@@ -144,9 +145,9 @@ const EditArtikel = ({ token }) => {
     // console.log ("check")
 
     if (type.includes(e.target.files[0].type)) {
-      if (e.target.files[0].size > 5000000) {
+      if (e.target.files[0].size > parseInt(setting[0].max_size) + '000000') {
         e.target.value = null;
-        Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
+        Swal.fire("Oops !", "Data Image Melebihi Ketentuan", "error");
       } else {
         const reader = new FileReader();
         reader.onload = () => {
@@ -581,7 +582,7 @@ const EditArtikel = ({ token }) => {
       <PageWrapper>
         {/* {console.log(artikel)} */}
         {/* {
-          console.log (kategori)
+          console.log (setting)
         } */}
 
         {error ? (
