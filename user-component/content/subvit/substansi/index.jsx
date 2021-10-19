@@ -7,6 +7,7 @@ import {
   Modal,
   Row,
   Button,
+  ModalBody,
 } from "react-bootstrap";
 import styles from "./content.module.css";
 import Footer from "../footer/index";
@@ -17,6 +18,7 @@ import axios from "axios";
 import Image from "next/dist/client/image";
 import { useSelector } from "react-redux";
 import Breadcrumb from "../breadcrumb";
+import ModalHeader from "react-bootstrap/esm/ModalHeader";
 
 // import Cookies from "js-cookie";
 
@@ -177,7 +179,11 @@ const SubtansiUser = ({ token }) => {
               </table>
             </Col>
             <Col style={{ textAlign: "right" }}>
-              <Button className={styles.btnHelp} variant="link">
+              <Button
+                className={styles.btnHelp}
+                variant="link"
+                onClick={handleModalSoal}
+              >
                 <div className="d-flex flex-row">
                   <div className="p-2">
                     <i
@@ -277,7 +283,13 @@ const SubtansiUser = ({ token }) => {
                       >
                         <i
                           className="ri-arrow-left-s-line"
-                          style={{ color: "#007CFF" }}
+                          style={
+                            parseInt(router.query.id) === 1
+                              ? {
+                                  color: "#000",
+                                }
+                              : { color: "#007CFF", cursor: "pointer" }
+                          }
                         ></i>
                       </div>
                       <div className={` p-2`}>Kembali</div>
@@ -327,6 +339,76 @@ const SubtansiUser = ({ token }) => {
           </Col>
         </Row>
       </Container>
+
+      <Modal show={modalSoal} onHide={handleCloseModal} centered size="lg">
+        <ModalHeader>
+          Panduan{" "}
+          {router.pathname.includes("substansi")
+            ? "Test Substansi"
+            : router.pathname.includes("substansi")
+            ? "Survey"
+            : router.pathname.includes("trivia")
+            ? "TRIVIA"
+            : "Test"}
+          <button type="button" className="close" onClick={handleCloseModal}>
+            <i className="ri-close-fill" style={{ fontSize: "25px" }}></i>
+          </button>
+        </ModalHeader>
+        <ModalBody>
+          {router.pathname.includes("substansi") ? (
+            <Card style={{ padding: "10px", marginTop: "10px" }}>
+              <table></table>
+              1. Sebelum mengerjakan test, harap perhatikan dan lakukan hal-hal
+              berikut :
+              <ul>
+                <li>
+                  Pastikan koneksi internet stabil (sangat disarankan
+                  menggunakan koneksi internet broadband dengan kecepatan akses
+                  download 384 kbps ke atas). Cek hal ini melalui
+                  https://www.speedtest.net/
+                </li>
+                <li>
+                  Gunakan browser : Mozilla Firefox atau Google Chrome versi
+                  terbaru
+                </li>
+                <li>
+                  Pastikan Javascript ACTIVE/ENABLED. Cek hal ini melalui
+                  https://www.whatismybrowser.com/detect/is-javascript-enabled
+                  atau baca terlebih dahulu Panduan Pengaktifan Javascript pada
+                  https://k-cloud.kominfo.go.id/s/jwFLJLrJfyFgbEo
+                </li>
+                <li>
+                  Pastikan Cookies ACTIVE/ENABLED. Baca Panduan Pengaktifan
+                  Cookie pada https://k-cloud.kominfo.go.id/s/XaJKPwL5PYWaXQo
+                </li>
+                <li>
+                  Pastikan keyboard dan mouse/trackpad Anda dalam keadaan baik.
+                </li>
+                <li>
+                  Siapkan kertas dan pensil/pulpen untuk mencoret-coret jika
+                  diperlukan.
+                </li>
+              </ul>
+              2.Alokasi waktu yang diberikan untuk mengerjakan Test Substansi
+              sesuai dengan masing-masing tema pelatihan. Informasi tersebut
+              dapat di akses pada dashboard Test Substansi.Peserta wajib
+              menjawab seluruh soal Test Substansi dan jumlah soal sesuai dengan
+              masing-masing tema pelatihan. Tidak ada nilai negatif untuk
+              jawaban yang salah.Setelah Test Substansi dimulai, waktu tes tidak
+              dapat diberhentikan dan tes tidak dapat diulang. Setelah waktu
+              habis, halaman soal akan tertutup secara otomatis.Skor untuk soal
+              yang sudah dijawab tetap terhitung walaupun peserta belum menekan
+              tombol submit atau peserta mengalami force majeure.
+            </Card>
+          ) : router.pathname.includes("substansi") ? (
+            "Survey"
+          ) : router.pathname.includes("trivia") ? (
+            "TRIVIA"
+          ) : (
+            "Test"
+          )}
+        </ModalBody>
+      </Modal>
     </>
   );
 };

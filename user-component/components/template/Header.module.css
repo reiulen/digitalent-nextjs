@@ -1,9 +1,9 @@
 .back {
-  background: rgb(0, 124, 255);
+  background: rgb(67, 158, 255);
   background: linear-gradient(
     0deg,
-    rgba(0, 124, 255, 1) 15%,
-    rgba(67, 158, 255, 1) 44%
+    rgba(67, 158, 255, 1) 0%,
+    rgba(0, 124, 255, 1) 35%
   );
 }
 
