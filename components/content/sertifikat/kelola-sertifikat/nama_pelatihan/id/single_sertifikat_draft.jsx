@@ -122,7 +122,7 @@ export default function KelolasertifikatID({ token }) {
                         style={{ marginTop: "-20px" }}
                       >
                         <label
-                          className="font-weight-boldest w-100 futura"
+                          className="font-weight-boldest w-100 "
                           style={{ fontSize: "200%" }}
                         >
                           SERTIFIKAT

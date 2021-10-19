@@ -111,11 +111,6 @@ const SubtansiUser = ({ token }) => {
     }
   }, [count]);
 
-  let number = [];
-  for (let i = 0; i < random_subtance_question_detail.total_questions; i++) {
-    number.push(i + 1);
-  }
-
   const secondsToTime = (secs) => {
     var hours = Math.floor(secs / (60 * 60));
     var divisor_for_minutes = secs % (60 * 60);
@@ -147,7 +142,10 @@ const SubtansiUser = ({ token }) => {
     }
     console.log(list);
   };
-
+  let number = [];
+  for (let i = 0; i < random_subtance_question_detail.total_questions; i++) {
+    number.push[i];
+  }
   return (
     <>
       <Container className={styles.baseAll} fluid>
@@ -457,4 +455,5 @@ const SubtansiUser = ({ token }) => {
     </>
   );
 };
+
 export default SubtansiUser;
