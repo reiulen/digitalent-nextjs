@@ -7,6 +7,12 @@ import Default from "../../../public/assets/media/logos/default.png";
 
 const Header = () => {
   const router = useRouter();
+  let routerPath;
+  if (router.pathname.includes("form-pendaftaran"))
+    routerPath = "form-pendaftaran";
+  if (router.pathname.includes("substansi")) routerPath = "substansi";
+  if (router.pathname.includes("trivia")) routerPath = "trivia";
+  if (router.pathname.includes("survey")) routerPath = "survey";
 
   var date = new Date();
 
@@ -75,20 +81,13 @@ const Header = () => {
     <>
       <Container fluid className={styles.back}>
         <Container
-          fluid={!router.pathname.includes("substansi" || "survey" || "trivia")}
+          fluid
           className={
-            router.pathname.includes("substansi" || "survey" || "trivia")
-              ? styles.testBody
-              : styles.body
+            router.pathname.includes(routerPath) ? styles.testBody : styles.body
           }
         >
           <Row>
-            <Col
-              sm={3}
-              hidden={router.pathname.includes(
-                "substansi" || "survey" || "trivia"
-              )}
-            >
+            <Col sm={3} hidden={router.pathname.includes(routerPath)}>
               <center>
                 <Image
                   src={Default}

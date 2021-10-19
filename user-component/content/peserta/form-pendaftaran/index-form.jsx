@@ -92,7 +92,7 @@ const IndexForm = ({ token }) => {
   return (
     <>
       {/* <LoadingPage loading={true} /> */}
-      <Container>
+      <Container fluid>
         <Card className="card-custom card-stretch gutter-b">
           {showViewForm()}
         </Card>

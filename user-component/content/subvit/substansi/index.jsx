@@ -164,7 +164,7 @@ const SubtansiUser = ({ token }) => {
 
   return (
     <>
-      <Container className={styles.baseAll}>
+      <Container className={styles.baseAll} fluid>
         <Card className={styles.cardTop}>
           <Row>
             <Col style={{ marginTop: "8px" }}>
@@ -340,6 +340,7 @@ const SubtansiUser = ({ token }) => {
         </Row>
       </Container>
 
+      {/* Modal bantuan */}
       <Modal show={modalSoal} onHide={handleCloseModal} centered size="lg">
         <ModalHeader className={styles.headerModal}>
           Panduan{" "}
@@ -368,23 +369,32 @@ const SubtansiUser = ({ token }) => {
                       <li>
                         Pastikan koneksi internet stabil (sangat disarankan
                         menggunakan koneksi internet broadband dengan kecepatan
-                        akses download 384 kbps ke atas). Cek hal ini melalui
-                        https://www.speedtest.net/
+                        akses download 384 kbps ke atas). Cek hal ini melalui{" "}
+                        <a href="https://www.speedtest.net/">
+                          https://www.speedtest.net/
+                        </a>
                       </li>
                       <li>
                         Gunakan browser : Mozilla Firefox atau Google Chrome
                         versi terbaru
                       </li>
                       <li>
-                        Pastikan Javascript ACTIVE/ENABLED. Cek hal ini melalui
-                        https://www.whatismybrowser.com/detect/is-javascript-enabled
+                        Pastikan Javascript ACTIVE/ENABLED. Cek hal ini melalui{" "}
+                        <a href="https://www.whatismybrowser.com/detect/is-javascript-enabled">
+                          https://www.whatismybrowser.com/detect/is-javascript-enabled
+                        </a>{" "}
                         atau baca terlebih dahulu Panduan Pengaktifan Javascript
-                        pada https://k-cloud.kominfo.go.id/s/jwFLJLrJfyFgbEo
+                        pada{" "}
+                        <a href="https://k-cloud.kominfo.go.id/s/jwFLJLrJfyFgbEo">
+                          https://k-cloud.kominfo.go.id/s/jwFLJLrJfyFgbEo
+                        </a>
                       </li>
                       <li>
                         Pastikan Cookies ACTIVE/ENABLED. Baca Panduan
-                        Pengaktifan Cookie pada
-                        https://k-cloud.kominfo.go.id/s/XaJKPwL5PYWaXQo
+                        Pengaktifan Cookie pada{" "}
+                        <a href="https://k-cloud.kominfo.go.id/s/XaJKPwL5PYWaXQo">
+                          https://k-cloud.kominfo.go.id/s/XaJKPwL5PYWaXQo
+                        </a>
                       </li>
                       <li>
                         Pastikan keyboard dan mouse/trackpad Anda dalam keadaan
