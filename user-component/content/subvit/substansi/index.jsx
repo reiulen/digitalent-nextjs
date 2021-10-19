@@ -22,14 +22,19 @@ import ModalHeader from "react-bootstrap/esm/ModalHeader";
 // import Cookies from "js-cookie";
 
 const SubtansiUser = ({ token }) => {
+  const {
+    // loading: allLoading,
+    // error: allError,
+    random_subtance_question_detail,
+  } = useSelector((state) => state.randomSubtanceQuestionDetail);
   const router = useRouter();
-  const [data] = useState(random_subtance_question_detail);
+  const [data] = useState(JSON.parse(localStorage.getItem("data")));
   const [answer, setAnswer] = useState("");
   const [listAnswer, setListAnswer] = useState([]);
   const [numberPage, setNumberPage] = useState("");
   const [numberAnswer, setNumberAnswer] = useState(false);
   const [modalSoal, setModalSoal] = useState(false);
-  const [count, setCount] = useState(3600);
+  const [count, setCount] = useState(random_subtance_question_detail.time_left);
 
   const [hour, setHour] = useState(0);
   const [minute, setMinute] = useState(0);
@@ -38,91 +43,72 @@ const SubtansiUser = ({ token }) => {
     sessionStorage.getItem("targetDate")
   );
 
+  localStorage.setItem("data", JSON.stringify(random_subtance_question_detail));
+
   const handleModalSoal = () => {
     setModalSoal(true);
   };
 
   const handleNext = () => {
     const page = parseInt(router.query.id) + 1;
-    router.push(`${router.pathname.slice(0, 25)}/${page}`);
+    router.push(
+      `${router.pathname.slice(0, 25)}/${page}?theme_id=${
+        router.query.theme_id
+      }&training_id=${router.query.training_id}&category=${
+        router.query.category
+      }`
+    );
   };
-
-  const {
-    // loading: allLoading,
-    // error: allError,
-    random_subtance_question_detail,
-  } = useSelector((state) => state.randomSubtanceQuestionDetail);
 
   const handleCloseModal = () => {
     setModalSoal(false);
   };
   const handleNumber = (val) => {
-    console.log(val.target.innerHTML);
-    // e.preventDefault();
     setNumberPage(val);
-    router.push(`/peserta/subvit/substansi/${parseInt(val.target.innerHTML)}`);
+    router.push(
+      `/peserta/subvit/substansi/${parseInt(val.target.innerHTML)}?theme_id=${
+        router.query.theme_id
+      }&training_id=${router.query.training_id}&category=${
+        router.query.category
+      }`
+    );
   };
 
   const handleBack = () => {
     const page = parseInt(router.query.id) - 1;
     if (parseInt(router.query.id) === 1) {
-      router.push(`${router.pathname.slice(0, 25)}/1`);
+      router.push(
+        `${router.pathname.slice(0, 25)}/1?theme_id=${
+          router.query.theme_id
+        }&training_id=${router.query.training_id}&category=${
+          router.query.category
+        }`
+      );
     } else {
-      router.push(`${router.pathname.slice(0, 25)}/${page}`);
+      router.push(
+        `${router.pathname.slice(0, 25)}/${page}?theme_id=${
+          router.query.theme_id
+        }&training_id=${router.query.training_id}&category=${
+          router.query.category
+        }`
+      );
     }
+    console.log(random_subtance_question_detail);
   };
-  // function startTimer(duration, display) {
-  //   var timer = duration,
-  //     minutes,
-  //     seconds;
-  //   setInterval(function () {
-  //     minutes = parseInt(timer / 60, 10);
-  //     seconds = parseInt(timer % 60, 10);
 
-  //     minutes = minutes < 10 ? "0" + minutes : minutes;
-  //     seconds = seconds < 10 ? "0" + seconds : seconds;
-
-  //     display.textContent = minutes + ":" + seconds;
-
-  //     if (--timer <= 0) {
-  //       router.replace(`${router.pathname.slice(0, 8)}/done`);
-  //     }
-  //   }, 1000);
-  // }
-  // console.log(random_subtance_question_detail);
   useEffect(() => {
-    // console.log(timeLeft, "ini Time Left ");
-    sessionStorage.setItem("setTime", count);
-
-    // window.onload = function () {
-    //   var fiveMinutes = 1 * 60,
-    //     display = document.querySelector("#time");
-    //   startTimer(fiveMinutes, display);
-    // };
-
     if (count >= 0) {
       const secondsLeft = setInterval(() => {
         setCount((c) => c - 1);
-        let timeLeftVar = secondsToTime(sessionStorage.getItem("setItem"));
-        // console.log(timeLeftVar);
+        let timeLeftVar = secondsToTime(count);
         setHour(timeLeftVar.h);
-        sessionStorage.setItem("hours", hour);
         setMinute(timeLeftVar.m);
-        sessionStorage.setItem("minute", minute);
         setSecond(timeLeftVar.s);
-        sessionStorage.setItem("second", second);
-        // console.log(secondsLeft);
       }, 1000);
-
       return () => clearInterval(secondsLeft);
     } else {
       console.log("time out");
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    // return () => {
-    //   sessionStorage.setItem("cTimer", count);
-    // };
   }, [count]);
 
   let number = [];
@@ -171,16 +157,11 @@ const SubtansiUser = ({ token }) => {
               <table>
                 <tr>
                   <td className={styles.academy}>
-                    Thematic Academy (
-                    {random_subtance_question_detail &&
-                      random_subtance_question_detail.academy}
-                    )
+                    Thematic Academy ({data && data.academy})
                   </td>
+
                   <td>&nbsp;</td>
-                  <td className={styles.training}>
-                    {random_subtance_question_detail &&
-                      random_subtance_question_detail.theme}
-                  </td>
+                  <td className={styles.training}>{data && data.theme}</td>
                 </tr>
               </table>
             </Col>
@@ -201,17 +182,9 @@ const SubtansiUser = ({ token }) => {
                 </div>
               </Button>
               <Card className={styles.time} id="time">
-                {sessionStorage.getItem("hours") < 9
-                  ? "0" + parseInt(sessionStorage.getItem("hours"))
-                  : parseInt(sessionStorage.getItem("hours"))}
-                :
-                {sessionStorage.getItem("minute") < 9
-                  ? "0" + parseInt(sessionStorage.getItem("minute"))
-                  : parseInt(sessionStorage.getItem("minute"))}
-                :
-                {sessionStorage.getItem("second") < 9
-                  ? "0" + parseInt(sessionStorage.getItem("second"))
-                  : parseInt(sessionStorage.getItem("second"))}
+                {hour < 9 ? "0" + hour : hour}:
+                {minute < 9 ? "0" + minute : minute}:
+                {second < 9 ? "0" + second : second}
               </Card>
             </Col>
           </Row>
@@ -221,62 +194,29 @@ const SubtansiUser = ({ token }) => {
             <Card className={styles.cardSoal}>
               <p className={styles.totalSoal}>
                 Soal {parseInt(router.query.id)} dari{" "}
-                {random_subtance_question_detail &&
-                  random_subtance_question_detail.total_questions}
+                {data && data.total_questions}
               </p>
               <h1 className={styles.soal}>
-                Ketika melakukan review project, atasan Anda selalu memberikan
-                kritik yang menurunkan semangat tim Anda. Bagaimana Anda
-                menanggapinya?
+                {data.list_questions[parseInt(router.query.id) - 1].question}
               </h1>
               <hr />
-
-              <Card className={styles.boxAnswer}>
-                <table>
-                  <tr>
-                    <td style={{ width: "5px" }}>A</td>
-                    <td style={{ width: "15px" }}>.</td>
-                    <td>
-                      Membiarkannya karena tidak memiliki wewenang apa-apa
-                    </td>
-                  </tr>
-                </table>
-              </Card>
-              <Card className={styles.boxAnswer}>
-                <table>
-                  <tr>
-                    <td style={{ width: "5px" }}>A</td>
-                    <td style={{ width: "15px" }}>.</td>
-                    <td>
-                      Membiarkannya karena tidak memiliki wewenang apa-apa
-                    </td>
-                  </tr>
-                </table>
-              </Card>
-
-              <Card className={styles.boxAnswer}>
-                <table>
-                  <tr>
-                    <td style={{ width: "5px" }}>A</td>
-                    <td style={{ width: "15px" }}>.</td>
-                    <td>
-                      Membiarkannya karena tidak memiliki wewenang apa-apa
-                    </td>
-                  </tr>
-                </table>
-              </Card>
-
-              <Card className={styles.boxAnswer}>
-                <table>
-                  <tr>
-                    <td style={{ width: "5px" }}>A</td>
-                    <td style={{ width: "15px" }}>.</td>
-                    <td>
-                      Membiarkannya karena tidak memiliki wewenang apa-apa
-                    </td>
-                  </tr>
-                </table>
-              </Card>
+              {JSON.parse(
+                data.list_questions[parseInt(router.query.id) - 1].answer
+              ).map((item, index) => {
+                return (
+                  <>
+                    <Card className={styles.boxAnswer} key={index}>
+                      <table>
+                        <tr>
+                          <td style={{ width: "5px" }}>{item.key}</td>
+                          <td style={{ width: "15px" }}>.</td>
+                          <td>{item.option}</td>
+                        </tr>
+                      </table>
+                    </Card>
+                  </>
+                );
+              })}
 
               <Row style={{ marginTop: "20px" }}>
                 <Col>
@@ -311,10 +251,19 @@ const SubtansiUser = ({ token }) => {
                     variant="link"
                     className={styles.btnSkip}
                     onClick={handleNext}
+                    disabled={
+                      parseInt(router.query.id) === data.total_questions
+                    }
                   >
                     Lewati
                   </Button>
-                  <Button className={styles.btnNext} onClick={handleNext}>
+                  <Button
+                    className={styles.btnNext}
+                    onClick={handleNext}
+                    disabled={
+                      parseInt(router.query.id) === data.total_questions
+                    }
+                  >
                     <div className="d-flex flex-row">
                       <div className="p-1">Lanjut</div>
                       <div className="p-1">
