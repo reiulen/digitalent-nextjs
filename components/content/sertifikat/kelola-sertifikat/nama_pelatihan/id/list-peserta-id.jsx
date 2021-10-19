@@ -4,6 +4,7 @@ import React, {
   useRef,
   createRef,
   useCallback,
+  Fragment,
 } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -15,6 +16,7 @@ import { useSelector } from "react-redux";
 import PageWrapper from "../../../../../wrapper/page.wrapper";
 import { clearErrors } from "../../../../../../redux/actions/sertifikat/kelola-sertifikat.action";
 import { toPng, toJpeg } from "html-to-image";
+import html2canvas from "html2canvas";
 // #Icon
 
 export default function ListPesertaID({ token }) {
@@ -31,7 +33,18 @@ export default function ListPesertaID({ token }) {
     participant,
   } = useSelector(state => state.detailParticipant);
 
-  const [type, setType] = useState(certificate.data.certificate_type);
+  console.log(certificate);
+  console.log(participant);
+  const [type, setType] = useState(
+    certificate.data.certificate.certificate_type
+  );
+  const [currentUser, setCurrentUser] = useState([]);
+  useEffect(() => {
+    const data = participant.data.list_certificate.filter(
+      el => el.name == query.name
+    );
+    setCurrentUser(data);
+  }, [participant, query.name]);
 
   const handleResetError = () => {
     if (error) {
@@ -51,21 +64,21 @@ export default function ListPesertaID({ token }) {
   };
 
   const handleDownload = async () => {
+    // const data = await convertDivToPng(divReference.current);
     const data = await convertDivToPng(divReference.current);
     if (data) {
+      console.log(data);
       const link = document.createElement("a");
       link.download = `Sertifikat - ${query.name}.png`;
       link.href = data;
       link.click();
+      // router.reload();
     }
-  };
-
-  const handleDownloadSyllabus = async () => {
-    const data = await convertDivToPng(divReferenceSyllabus.current);
-    if (data) {
+    if (type == "2 lembar") {
+      const image = document.getElementById("image2").getAttribute("src");
       const link = document.createElement("a");
-      link.download = `Syllabus - ${query.name}.png`;
-      link.href = data;
+      link.href = image;
+      link.download = "tes 123";
       link.click();
     }
   };
@@ -130,37 +143,53 @@ export default function ListPesertaID({ token }) {
               {/* START COL */}
               <div
                 className={`position-relative p-0 d-flex`}
+                id="sertifikat1"
                 ref={divReference}
               >
-                <Image
-                  src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-images/${certificate?.data?.certificate_result}`}
-                  alt={`image ${certificate.data.certificate_result}`}
-                  objectFit="fill"
-                  width={842}
-                  height={595}
-                />
-                <div
-                  className={`position-absolute w-100 text-center responsive-margin-publish`}
-                >
-                  <span className="responsive-font-size-peserta font-weight-bolder">
-                    {query.name}
-                  </span>
+                <div className="position-relative">
+                  <div className="position-absolute p-6 font-weight-boldest responsive-font-size-peserta zindex-1">
+                    {currentUser[0]?.registration_number}
+                  </div>
+                  <div className="position-absolute responsive-date-from font-weight-boldest zindex-1 responsive-date-text">
+                    {currentUser[0]?.date_from.split("-").reverse().join("-")} -{" "}
+                    {currentUser[0]?.date_to.split("-").reverse().join("-")}
+                  </div>
+                  <div className="position-absolute responsive-year font-weight-boldest zindex-1 responsive-date-text">
+                    {currentUser[0]?.year}
+                  </div>
+                  <Image
+                    src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-images/${certificate.data.certificate.certificate_result}`}
+                    alt={`image ${certificate.data.certificate.certificate_result}`}
+                    objectFit="fill"
+                    // layout="fill"
+                    width={842}
+                    height={595}
+                    key={certificate.data.certificate.certificate_result}
+                  />
+                  <div
+                    className={`position-absolute w-100 text-center responsive-margin-publish`}
+                  >
+                    <span className="responsive-font-size-peserta font-weight-bolder">
+                      {query.name}
+                    </span>
+                  </div>
                 </div>
               </div>
               {/* END COL */}
             </div>
-            <div className="row mx-0 mt-10 col-12">
-              <div className="position-relative col-12 col-md-2 btn bg-blue-secondary text-white rounded-full font-weight-bolder px-10 py-4">
-                <a
-                  className="text-center"
-                  onClick={e => {
-                    handleDownload(e);
-                  }}
-                >
-                  Unduh
-                </a>
+            {type == "1 lembar" && (
+              <div className="row mx-0 mt-10 col-12">
+                <div className="position-relative text-center col-12 col-md-2 btn bg-blue-secondary text-white rounded-full font-weight-bolder px-10 py-4">
+                  <a
+                    onClick={e => {
+                      handleDownload(e);
+                    }}
+                  >
+                    Unduh
+                  </a>
+                </div>
               </div>
-            </div>
+            )}
           </div>
           {/* END BODY */}
         </div>
@@ -175,24 +204,27 @@ export default function ListPesertaID({ token }) {
                   ref={divReferenceSyllabus}
                 >
                   <Image
-                    src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-syllabus-images/${certificate?.data?.certificate_result_syllabus}`}
-                    alt="fitur"
+                    src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-syllabus-images/${certificate.data.certificate.certificate_result_syllabus}`}
+                    alt={`image ${certificate.data.certificate.certificate_result_syllabus}`}
                     width={842}
                     height={595}
                     objectFit="fill"
+                    key={
+                      certificate.data.certificate.certificate_result_syllabus
+                    }
+                    id="image2"
                   />
                 </div>
                 {/* END COL */}
               </div>
-              <div className="row mt-10 col-12">
-                <div className="position-relative col-12 col-md-2 btn bg-blue-secondary text-white rounded-full font-weight-bolder px-10 py-4">
-                  <a
-                    onClick={e => {
-                      handleDownloadSyllabus(e);
-                    }}
-                  >
-                    Unduh
-                  </a>
+              <div className="row mt-10 col-12 p-0 m-0">
+                <div
+                  onClick={e => {
+                    handleDownload();
+                  }}
+                  className="position-relative col-12 col-md-2 btn bg-blue-secondary text-white rounded-full font-weight-bolder px-10 py-4"
+                >
+                  <a>Unduh</a>
                 </div>
               </div>
             </div>
