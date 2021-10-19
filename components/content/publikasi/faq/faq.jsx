@@ -10,6 +10,7 @@ import DatePicker from 'react-datepicker'
 import { addDays } from 'date-fns'
 import LoadingTable from '../../../LoadingTable';
 import styles from "../../../../styles/previewGaleri.module.css";
+import stylesPag from "../../../../styles/pagination.module.css";
 
 import PageWrapper from '../../../wrapper/page.wrapper'
 import CardPage from '../../../CardPage'
@@ -640,7 +641,7 @@ const Faq = ({ token }) => {
                                                 <th>Pin FAQ</th>
                                                 <th>Status</th>
                                                 <th>Role</th>
-                                                <th>Aksi</th>
+                                                <th style={{ width: '8vw' }}>Aksi</th>
                                             </tr>
                                         </thead>
 
@@ -786,7 +787,7 @@ const Faq = ({ token }) => {
 
                             <div className="row">
                                 {faq && faq.perPage < faq.total &&
-                                    <div className="table-pagination">
+                                    <div className={`${stylesPag.pagination} table-pagination`}>
                                         <Pagination
                                             activePage={page}
                                             itemsCountPerPage={faq.perPage}
@@ -830,7 +831,7 @@ const Faq = ({ token }) => {
                                         </div>
                                     </div> : ''
                                 } */}
-                                <div className="table-total ml-auto">
+                                <div className={`${stylesPag.rightPag} table-total ml-auto`}>
                                     <div className="row">
                                         <div className="col-4 mr-0 mt-3">
                                             <select

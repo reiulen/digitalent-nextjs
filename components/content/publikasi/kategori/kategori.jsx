@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import Swal from "sweetalert2";
 import styles from "../../../../styles/previewGaleri.module.css";
+import stylesPag from "../../../../styles/pagination.module.css";
 
 import Pagination from "react-js-pagination";
 import DatePicker from "react-datepicker";
@@ -627,7 +628,8 @@ const Kategori = ({ token }) => {
               {kategori && paginateKategori ? (
                 <div className="row">
                   {paginateKategori.perPage < kategori.total && (
-                    <div className="table-pagination">
+                    <div className={`${stylesPag.pagination} table-pagination`}>
+                    {/* <div className="table-pagination"> */}
                       <Pagination
                         activePage={page}
                         itemsCountPerPage={paginateKategori.perPage}
@@ -671,7 +673,8 @@ const Kategori = ({ token }) => {
                                                 </div>
                                             </div> : ''
                                         } */}
-                  <div className="table-total ml-auto">
+                  <div className={`${stylesPag.rightPag} table-total ml-auto`}>
+                  {/* <div className="table-total ml-auto"> */}
                     <div className="row">
                       <div className="col-4 mr-0 mt-3">
                         <select

@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import styles from "../../../../styles/previewGaleri.module.css";
+import stylesPag from "../../../../styles/pagination.module.css";
 
 import Pagination from "react-js-pagination";
 import { css } from "@emotion/react";
@@ -1060,7 +1061,7 @@ const Galeri = ({ token }) => {
 
                             <div className="row">
                                 {galeri && galeri.perPage < galeri.total && (
-                                    <div className="table-pagination">
+                                    <div className={`${stylesPag.pagination} table-pagination`}>
                                         <Pagination
                                             activePage={page}
                                             itemsCountPerPage={galeri.perPage}
@@ -1077,7 +1078,7 @@ const Galeri = ({ token }) => {
                                     </div>
                                 )}
                                 {galeri ? (
-                                    <div className="table-total ml-auto">
+                                    <div className={`${stylesPag.rightPag} table-total ml-auto`}>
                                         <div className="row">
                                             <div className="col-4 mr-0 mt-3">
                                                 <select
