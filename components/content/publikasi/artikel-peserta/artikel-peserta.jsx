@@ -571,7 +571,7 @@ const ArtikelPeserta = ({ token }) => {
                                         <tbody>
                                             {
                                                 !artikel_peserta || artikel_peserta && artikel_peserta.artikel.length === 0 ?
-                                                    <td className='align-middle text-center' colSpan={8}>Data Tidak Ditemukan</td> :
+                                                    <td className='align-middle text-center' colSpan={9}>Data Tidak Ditemukan</td> :
                                                     artikel_peserta && artikel_peserta.artikel && artikel_peserta.artikel.map((row, i) => {
                                                         return <tr key={row.id}>
                                                             <td className='align-middle text-center'>

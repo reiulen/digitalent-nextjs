@@ -271,13 +271,10 @@ const Galeri = ({ token }) => {
     const handleSearch = () => {
         if (limit != null && startDate === null && endDate === null) {
             router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`);
+
         } else if (limit !== null && startDate !== null && endDate !== null) {
-            router.push(
-                `${router.pathname
-                }?page=1&keyword=${search}&limit=${limit}&startdate=${moment(
-                    startDate
-                ).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`
-            );
+            router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`
+);
         } else {
             router.push(`${router.pathname}?page=1&keyword=${search}`);
         }
@@ -373,8 +370,10 @@ const Galeri = ({ token }) => {
         setLimit(val);
         if (search === "" && publishValue === null) {
             router.push(`${router.pathname}?page=1&limit=${val}`);
+
         } else if (search !== "" && publishValue === null) {
             router.push(`${router.pathname}?page=1&keyword=${search}&limit=${val}`);
+            
         } else if (search === "" && publishValue === "1") {
             router.push(
                 `${router.pathname}?page=1&publish=${publishValue}&limit=${val}`
@@ -904,7 +903,7 @@ const Galeri = ({ token }) => {
 
                                         <tbody>
                                             {!galeri || (galeri && galeri.gallery.length === 0) ? (
-                                                <td className="align-middle text-center" colSpan={8}>
+                                                <td className="align-middle text-center" colSpan={9}>
                                                     Data Tidak Ditemukan
                                                 </td>
                                             ) : (
@@ -1164,7 +1163,7 @@ const Galeri = ({ token }) => {
                         </div> */}
                         <div className="modal-body">
                             <div className={`${styles.fullBar} row`}>
-                                <div className="col-sm-6 col-md-6 col-lg-6">
+                                <div className="col-sm-12 col-md-6 col-lg-6">
                                     {/* {console.log("Cek Modal Image :", galeri.gallery)} */}
                                     <div className={styles["img-left"]}>
                                         {
@@ -1175,7 +1174,7 @@ const Galeri = ({ token }) => {
                                         }
                                     </div>
                                 </div>
-                                <div className="col-sm-6 col-md-6 col-lg-6" style={{ padding: "30px" }}>
+                                <div className="col-sm-12 col-md-6 col-lg-6" style={{ padding: "30px" }}>
                                     <div className={styles["rightSide"]}>
                                         {galeri &&
                                             galeri.gallery.length !== 0 &&
@@ -1204,7 +1203,7 @@ const Galeri = ({ token }) => {
                                                 ></button> */}
                                                 </div>
                                                 <div className="row mb-4">
-                                                    <div className="col-8">
+                                                    <div className="col-sm-7 col-8">
                                                         <div className={styles["subMenuPreview"]}>
                                                             <div className="mb-1 p-0 d-flex align-items-center">
                                                                 <div className={styles["iconPreview"]}>
@@ -1225,7 +1224,7 @@ const Galeri = ({ token }) => {
                                                         </div>
                                                     </div>
 
-                                                    <div className="col-4" style={{ textAlign: 'right' }}>
+                                                    <div className="col-sm-5 col-4" style={{  }}>
                                                         <span className="label label-inline label-light-success font-weight-bold p-2">
                                                             {(galeri.gallery[index_galleri].nama_kategori).toUpperCase()}
                                                         </span>
@@ -1248,7 +1247,7 @@ const Galeri = ({ token }) => {
                                                             __html: galeri.gallery[index_galleri].isi_galleri,
                                                         }}
                                                     ></p>
-                                                    <div className="row justify-content-between align-items-center" style={{ width: '110%' }}>
+                                                    <div className="row justify-content-between align-items-center" style={{ width: '100%' }}>
                                                         <div className="col-sm-8 col-md-9 col-9">
                                                             {galeri.gallery[index_galleri].tag !== null
                                                                 ? galeri.gallery[index_galleri].tag.map((row, i) => {
