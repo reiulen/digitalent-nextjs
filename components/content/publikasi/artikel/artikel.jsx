@@ -10,6 +10,7 @@ import { addDays } from "date-fns";
 import Swal from "sweetalert2";
 import moment from "moment";
 import styles from "../../../../styles/previewGaleri.module.css";
+import stylesPag from "../../../../styles/pagination.module.css";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
 import CardPage from "../../../CardPage";
@@ -653,7 +654,7 @@ const Artikel = ({ token }) => {
                         <th>Dibuat</th>
                         <th>Status</th>
                         <th>Role</th>
-                        <th>Aksi</th>
+                        <th style={{ width: '10vw' }}>Aksi</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -820,7 +821,7 @@ const Artikel = ({ token }) => {
               </div>
               <div className="row">
                 {artikel && artikel.perPage < artikel.total && (
-                  <div className="table-pagination">
+                  <div className={`${stylesPag.pagination} table-pagination`}>
                     <Pagination
                       activePage={page}
                       itemsCountPerPage={artikel.perPage}
@@ -837,7 +838,7 @@ const Artikel = ({ token }) => {
                   </div>
                 )}
                 {artikel ? (
-                  <div className="table-total ml-auto">
+                  <div className={`${stylesPag.rightPag} table-total ml-auto`}>
                     <div className="row">
                       <div className="col-4 mr-0 mt-3">
                         <select
