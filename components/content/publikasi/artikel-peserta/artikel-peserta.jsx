@@ -10,6 +10,7 @@ import { addDays } from 'date-fns'
 import Swal from 'sweetalert2'
 import moment from "moment";
 import styles from "../../../../styles/previewGaleri.module.css";
+import stylesPag from "../../../../styles/pagination.module.css";
 
 import PageWrapper from '../../../wrapper/page.wrapper'
 import CardPage from '../../../CardPage'
@@ -666,7 +667,7 @@ const ArtikelPeserta = ({ token }) => {
 
                             <div className="row">
                                 {artikel_peserta && artikel_peserta.perPage < artikel_peserta.total &&
-                                    <div className="table-pagination">
+                                    <div className={`${stylesPag.pagination} table-pagination`}>
                                         <Pagination
                                             activePage={page}
                                             itemsCountPerPage={artikel_peserta.perPage}
@@ -683,39 +684,39 @@ const ArtikelPeserta = ({ token }) => {
                                     </div>
                                 }
                                 {artikel_peserta ?
-                                    <div className="table-total ml-auto">
-                                        <div className="table-total ml-auto">
-                                            <div className="row">
-                                                <div className="col-4 mr-0 mt-3">
-                                                    <select
-                                                        className="form-control"
-                                                        id="exampleFormControlSelect2"
-                                                        style={{
-                                                            width: "65px",
-                                                            background: "#F3F6F9",
-                                                            borderColor: "#F3F6F9",
-                                                            color: "#9E9E9E",
-                                                        }}
-                                                        onChange={(e) => handleLimit(e.target.value)}
-                                                        onBlur={(e) => handleLimit(e.target.value)}
-                                                    >
-                                                        <option value='5' selected={limit == "5" ? true : false}>5</option>
-                                                        <option value='10' selected={limit == "10" ? true : false}>10</option>
-                                                        <option value='30' selected={limit == "30" ? true : false}>30</option>
-                                                        <option value='40' selected={limit == "40" ? true : false}>40</option>
-                                                        <option value='50' selected={limit == "50" ? true : false}>50</option>
-                                                    </select>
-                                                </div>
-                                                <div className="col-8 my-auto">
-                                                    <p
-                                                        className="align-middle mt-5 pt-1"
-                                                        style={{ color: "#B5B5C3" }}
-                                                    >
-                                                        Total Data {artikel_peserta.total} List Data
-                                                    </p>
-                                                </div>
+                                    // <div className="table-total ml-auto">
+                                    <div className={`${stylesPag.rightPag} table-total ml-auto`}>
+                                        <div className="row">
+                                            <div className="col-4 mr-0 mt-3">
+                                                <select
+                                                    className="form-control"
+                                                    id="exampleFormControlSelect2"
+                                                    style={{
+                                                        width: "65px",
+                                                        background: "#F3F6F9",
+                                                        borderColor: "#F3F6F9",
+                                                        color: "#9E9E9E",
+                                                    }}
+                                                    onChange={(e) => handleLimit(e.target.value)}
+                                                    onBlur={(e) => handleLimit(e.target.value)}
+                                                >
+                                                    <option value='5' selected={limit == "5" ? true : false}>5</option>
+                                                    <option value='10' selected={limit == "10" ? true : false}>10</option>
+                                                    <option value='30' selected={limit == "30" ? true : false}>30</option>
+                                                    <option value='40' selected={limit == "40" ? true : false}>40</option>
+                                                    <option value='50' selected={limit == "50" ? true : false}>50</option>
+                                                </select>
+                                            </div>
+                                            <div className="col-8 my-auto">
+                                                <p
+                                                    className="align-middle mt-5 pt-1"
+                                                    style={{ color: "#B5B5C3" }}
+                                                >
+                                                    Total Data {artikel_peserta.total} List Data
+                                                </p>
                                             </div>
                                         </div>
+                                        {/* </div> */}
                                     </div> : ''
                                 }
                             </div>

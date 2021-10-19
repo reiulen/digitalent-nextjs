@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import styles from '../../../../styles/preview.module.css'
+import stylesPag from "../../../../styles/pagination.module.css";
 
 import Pagination from 'react-js-pagination';
 import DatePicker from 'react-datepicker'
@@ -827,7 +828,7 @@ const Vidio = ({ token }) => {
 
                             <div className="row">
                                 {video && video.perPage < video.total &&
-                                    <div className="table-pagination">
+                                    <div className={`${stylesPag.pagination} table-pagination`}>
                                         <Pagination
                                             activePage={page}
                                             itemsCountPerPage={video.perPage}
@@ -844,7 +845,7 @@ const Vidio = ({ token }) => {
                                     </div>
                                 }
                                 {video ?
-                                    <div className="table-total ml-auto">
+                                    <div className={`${stylesPag.rightPag} table-total ml-auto`}>
                                         <div className="row">
                                             {/* <div className="col-4 mr-0 p-0 mt-3"> */}
                                             <div className="col-4 mr-0 mt-3">

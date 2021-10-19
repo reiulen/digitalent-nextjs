@@ -1,0 +1,12 @@
+.pagination{
+    margin-left: 15px;
+}
+
+@media only screen and (max-width: 576px) {
+    .rightPag{
+        display: none;
+    }
+    .pagination{
+        margin: auto;
+    }
+}
