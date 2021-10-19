@@ -57,7 +57,7 @@ export const getAllTheme =
     } catch (error) {
       dispatch({
         type: THEME_FAIL,
-        payload: error.message,
+        payload: error.response.data.message,
       });
     }
   };

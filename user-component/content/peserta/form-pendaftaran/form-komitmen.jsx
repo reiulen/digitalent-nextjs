@@ -3,6 +3,7 @@ import { Card, Button, Row, Col, Form } from "react-bootstrap";
 import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
+import style from "./style.module.css";
 
 import { newPendaftaranPelatihan } from "../../../../redux/actions/pelatihan/register-training.actions";
 
@@ -153,23 +154,21 @@ const FormKomitmen = ({
             </div>
           )}
 
-          <Button
-            variant="primary"
-            className="btn-rounded-full mt-3 float-right text-white "
-            size="sm"
-            type="submit"
-          >
-            Daftar
-          </Button>
-          <Button
-            variant="primary"
-            className="btn-rounded-full mt-3 float-right text-white mr-2"
-            size="sm"
-            type="button"
-            onClick={() => funcView(1)}
-          >
-            Kembali
-          </Button>
+          <div className="button-aksi mt-7 float-right">
+            <Button
+              className={`${style.button_profile_batal} rounded-xl mr-3`}
+              type="button"
+              onClick={() => funcView(1)}
+            >
+              Kembali
+            </Button>
+            <Button
+              className={`${style.button_profile_simpan} rounded-xl`}
+              type="submit"
+            >
+              Daftar
+            </Button>
+          </div>
         </Form>
       </Card.Body>
     </>

@@ -51,7 +51,7 @@ export const getDataPribadi = (token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: GET_DATA_PRIBADI_FAIL,
-      payload: error.message,
+      payload: error.response.data.message,
     });
   }
 };
@@ -176,7 +176,7 @@ export const dropdownAkademi = (token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ERROR_DROPDOWN_AKADEMI,
-      payload: error.message,
+      payload: error.response.data.message,
     });
   }
 };
@@ -199,7 +199,7 @@ export const dropdownTema = (token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ERROR_DROPDOWN_TEMA,
-      payload: error.message,
+      payload: error.response.data.message,
     });
   }
 };
@@ -222,7 +222,7 @@ export const dropdownPelatihan = (token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ERROR_DROPDOWN_PELATIHAN,
-      payload: error.message,
+      payload: error.response.data.message,
     });
   }
 };
@@ -245,7 +245,7 @@ export const dropdownLevelPelatihan = (token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ERROR_DROPDOWN_LEVEL_PELATIHAN,
-      payload: error.message,
+      payload: error.response.data.message,
     });
   }
 };
@@ -268,7 +268,7 @@ export const dropdownMitra = (token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ERROR_DROPDOWN_MITRA,
-      payload: error.message,
+      payload: error.response.data.message,
     });
   }
 };
@@ -291,7 +291,7 @@ export const dropdownZonasi = (token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ERROR_DROPDOWN_ZONASI,
-      payload: error.message,
+      payload: error.response.data.message,
     });
   }
 };
@@ -314,7 +314,7 @@ export const dropdownProvinsi = (token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ERROR_DROPDOWN_PROVINSI,
-      payload: error.message,
+      payload: error.response.data.message,
     });
   }
 };
@@ -337,7 +337,7 @@ export const dropdownKabupaten = (token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ERROR_DROPDOWN_KABUPATEN,
-      payload: error.message,
+      payload: error.response.data.message,
     });
   }
 };
@@ -360,7 +360,7 @@ export const dropdownPenyelenggara = (token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ERROR_DROPDOWN_PENYELENGGARA,
-      payload: error.message,
+      payload: error.response.data.message,
     });
   }
 };

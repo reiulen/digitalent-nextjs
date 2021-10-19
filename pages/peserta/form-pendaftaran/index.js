@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
+import { useDispatch, useSelector } from "react-redux";
 
 import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
@@ -8,6 +9,8 @@ import { getDataPribadi } from "../../../redux/actions/pelatihan/function.action
 import {
   getFormBuilder,
   getPelatihan,
+  getFormRegister,
+  storeFormRegister,
 } from "../../../redux/actions/pelatihan/register-training.actions";
 
 const Layout = dynamic(() =>
@@ -28,7 +31,30 @@ const IndexForm = dynamic(
 );
 
 export default function FormPendaftaran(props) {
+  const dispatch = useDispatch();
   const session = props.session.user.user.data.user;
+  const { error: errorFormBuilder, formBuilder: dataForm } = useSelector(
+    (state) => state.getFormBuilder
+  );
+
+  useEffect(() => {
+    let data = [];
+    dataForm &&
+      dataForm.FormBuilder.map((row, i) => {
+        data.push({
+          key: row.key,
+          name: row.name,
+          type: row.element,
+          size: row.size,
+          option: row.option,
+          dataOption: row.dataOption,
+          required: row.required,
+          fileName: "",
+          value: "",
+        });
+      });
+    dispatch(storeFormRegister(data));
+  }, [dataForm]);
   return (
     <>
       <Layout title="Form Pendaftaran Peserta - Pelatihan" session={session}>

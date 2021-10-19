@@ -2,33 +2,21 @@ import React, { useState, useEffect, useRef } from "react";
 import { Col, Row, Card, Button } from "react-bootstrap";
 import SimpleReactValidator from "simple-react-validator";
 import Swal from "sweetalert2";
+import { useRouter } from "next/router";
+import style from "./style.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import { storeFormRegister } from "../../../../redux/actions/pelatihan/register-training.actions";
 
-const FormPendaftaran = ({ propsTitle, propsForm, funcForm, funcView }) => {
+const FormPendaftaran = ({ propsTitle, funcView }) => {
+  const router = useRouter();
+  const dispatch = useDispatch();
+
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
 
   const [title, setTitle] = useState(propsTitle);
-  const [formBuilder] = useState(propsForm);
-  const [dataPendaftaran, setDataPendaftaran] = useState([]);
-
-  useEffect(() => {
-    let data = [];
-    formBuilder.map((row, i) => {
-      data.push({
-        key: row.key,
-        name: row.name,
-        type: row.element,
-        size: row.size,
-        option: row.option,
-        dataOption: row.dataOption,
-        required: row.required,
-        fileName: "",
-        value: "",
-      });
-    });
-    funcForm(data);
-    setDataPendaftaran(data);
-  }, [formBuilder]);
+  const { dataForm } = useSelector((state) => state.formRegister);
+  const [dataPendaftaran, setDataPendaftaran] = useState(dataForm);
 
   const readerElementHandler = (row, i) => {
     switch (row.type) {
@@ -310,13 +298,14 @@ const FormPendaftaran = ({ propsTitle, propsForm, funcForm, funcView }) => {
       }
     }
     setDataPendaftaran(list);
-    funcForm(list);
+    // funcForm(list);
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
       console.log(dataPendaftaran);
+      dispatch(storeFormRegister(dataPendaftaran));
       funcView(2);
     } else {
       simpleValidator.current.showMessages();
@@ -341,14 +330,21 @@ const FormPendaftaran = ({ propsTitle, propsForm, funcForm, funcView }) => {
             ))}
           </div>
 
-          <Button
-            variant="primary"
-            className="btn-rounded-full mt-3 float-right"
-            size="sm"
-            type="submit"
-          >
-            Lanjut
-          </Button>
+          <div className="button-aksi mt-7 float-right">
+            <Button
+              className={`${style.button_profile_batal} rounded-xl mr-3`}
+              type="button"
+              onClick={() => router.back()}
+            >
+              Batal
+            </Button>
+            <Button
+              className={`${style.button_profile_simpan} rounded-xl`}
+              type="submit"
+            >
+              Lanjut
+            </Button>
+          </div>
         </form>
       </Card.Body>
     </>

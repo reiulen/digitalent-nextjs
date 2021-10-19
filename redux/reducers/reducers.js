@@ -289,7 +289,8 @@ import {
   getFormBuilderReducer,
   getPelatihanReducer,
   newPendaftaranPelatihanReducer,
-} from "./pelatihan/admin/register-training.reducers";
+  formRegisterReducer,
+} from "./pelatihan/peserta/register-training.reducers";
 // ================ pendaftaran pelatihan ===============
 import { allSummaryReducer } from "./pelatihan/admin/summary.reducers";
 
@@ -585,6 +586,7 @@ const reducer = combineReducers({
   getFormBuilder: getFormBuilderReducer,
   getPelatihan: getPelatihanReducer,
   newPendaftaranPelatihan: newPendaftaranPelatihanReducer,
+  formRegister: formRegisterReducer,
 
   getDataPribadi: getDataPribadiReducer,
   trainingStep1: trainingStep1Reducer,
