@@ -699,7 +699,7 @@ const Vidio = ({ token }) => {
                                         <tbody>
                                             {
                                                 !video || video && video.video.length === 0 ?
-                                                    <td className='align-middle text-center' colSpan={8}>Data Tidak Ditemukan</td> :
+                                                    <td className='align-middle text-center' colSpan={12}>Data Tidak Ditemukan</td> :
                                                     video && video.video.map((row, i) => {
                                                         // { console.log("Video :", row) }
                                                         return <tr key={row.id}>
@@ -785,7 +785,7 @@ const Vidio = ({ token }) => {
                                                                 </Link>
 
                                                                 <button
-                                                                    className="btn btn-link-action bg-blue-secondary text-white my-5 position-relative btn-delete"
+                                                                    className="btn btn-link-action bg-blue-secondary text-white my-5 btn-delete"
                                                                     onClick={() => handleDelete(row.id)}
                                                                 >
                                                                     <i className="ri-delete-bin-fill p-0 text-white"></i>
