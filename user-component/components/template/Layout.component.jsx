@@ -17,9 +17,15 @@ const Sidebar = dynamic(() =>
 
 const Layout = ({ title = "Peserta - Pelatihan", session, children }) => {
   const router = useRouter();
+  let routerPath;
+  if (router.pathname.includes("form-pendaftaran"))
+    routerPath = "form-pendaftaran";
+  if (router.pathname.includes("substansi")) routerPath = "substansi";
+  if (router.pathname.includes("trivia")) routerPath = "trivia";
+  if (router.pathname.includes("survey")) routerPath = "survey";
+
   return (
     <>
-      {console.log(router)}
       <Head>
         <title>{title}</title>
         <meta charSet="utf-8" />
@@ -31,10 +37,7 @@ const Layout = ({ title = "Peserta - Pelatihan", session, children }) => {
       <div className="container-fluid py-5">
         <Row>
           <Col md={3}>
-            {!router.pathname.includes(
-              "substansi" || "survey" || "trivia" || "form-pendaftaran"
-            ) && <Sidebar />}
-            {/* <Sidebar /> */}
+            {!router.pathname.includes(routerPath) && <Sidebar />}
           </Col>
           {children}
         </Row>
