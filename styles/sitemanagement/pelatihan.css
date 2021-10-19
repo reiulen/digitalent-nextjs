@@ -26,7 +26,7 @@
     margin-right: 32px;
 }
 
-/* .active {
+.isactive {
     padding: 16px;
     background-color: #ECF5FC;
     margin-bottom: 8px;
@@ -35,16 +35,16 @@
     font-weight: bold;
 }
 
-.active a {
+.isactive a {
     text-decoration: none;
 }
 
-.active h3 {
+.isactive h3 {
     padding-left: 16px;
     font-weight: 600;
 }
 
-.active:hover {
+.isactive:hover {
     background-color: #ECF5FC;
     color: #1F1F1F;
 } */

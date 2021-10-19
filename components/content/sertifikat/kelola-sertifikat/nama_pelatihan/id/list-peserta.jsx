@@ -92,7 +92,7 @@ export default function ListPeserta() {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark">
-              Kelola Sertifikat
+              Sertifikat Peserta {participant.training}
             </h3>
           </div>
 
@@ -150,9 +150,7 @@ export default function ListPeserta() {
                         participant.data.list_certificate.length === 0) ? (
                         <tr>
                           <td className="text-center" colSpan={6}>
-                            {search
-                              ? "Data Tidak Ditemukan"
-                              : "Data Masih Kosong"}
+                            Data Tidak Ditemukan
                           </td>
                         </tr>
                       ) : (

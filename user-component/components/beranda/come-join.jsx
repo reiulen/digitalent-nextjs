@@ -1,6 +1,7 @@
 import Link from "next/link";
 import BgComeJoin from "../../../components/assets/icon-dashboard-peserta/bg-come-join.png";
 import Image from 'next/image'
+
 export default function comeJoin() {
   return (
     <div style={{background: "#FAFAFB"}} className="py-20 come-join position-relative max-container">
@@ -31,7 +32,7 @@ export default function comeJoin() {
           </div>
           <div className="col-12 col-sm-8">
             <div className="row">
-              <div className="col-12 col-sm-6 col-md-4">
+              <div className="col-12 col-sm-6 col-md-3">
                 <div className="p-10 mt-5" style={{border: "1px solid #D7E1EA",borderRadius: "12px"}}>
                   <p className="fz-32 fw-700 mb-1" style={{color:"#0063CC"}}>
                   260K+
@@ -41,7 +42,7 @@ export default function comeJoin() {
                 </div>
 
               </div>
-              <div className="col-12 col-sm-6 col-md-4">
+              <div className="col-12 col-sm-6 col-md-3">
                 <div className="p-10 mt-5" style={{border: "1px solid #D7E1EA",borderRadius: "12px"}}>
                   <p className="fz-32 fw-700 mb-1" style={{color:"#0063CC"}}>
                   260K+
@@ -51,7 +52,7 @@ export default function comeJoin() {
                 </div>
 
               </div>
-              <div className="col-12 col-sm-6 col-md-4">
+              <div className="col-12 col-sm-6 col-md-3">
                 <div className="p-10 mt-5" style={{border: "1px solid #D7E1EA",borderRadius: "12px"}}>
                   <p className="fz-32 fw-700 mb-1" style={{color:"#0063CC"}}>
                   260K+
@@ -61,7 +62,7 @@ export default function comeJoin() {
                 </div>
 
               </div>
-              <div className="col-12 col-sm-6 col-md-4">
+              <div className="col-12 col-sm-6 col-md-3">
                 <div className="p-10 mt-5" style={{border: "1px solid #D7E1EA",borderRadius: "12px"}}>
                   <p className="fz-32 fw-700 mb-1" style={{color:"#0063CC"}}>
                   260K+

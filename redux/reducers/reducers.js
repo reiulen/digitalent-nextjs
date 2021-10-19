@@ -152,6 +152,8 @@ import {
   updateSertifikatReducer,
   singleSertifikatReducer,
   publishedSertifikatReducer,
+  allAcademyOptionsReducer,
+  allThemeOptionsReducer,
 } from "./sertifikat/sertifikat.reducers";
 
 import {
@@ -467,9 +469,10 @@ const reducer = combineReducers({
   deleteCertificates: deleteSertifikatReducer,
   updateCertificates: updateSertifikatReducer,
   publishCertificate: publishedSertifikatReducer,
-
   allParticipant: allPesertaReducers,
   detailParticipant: detailPesertaReducer,
+  allAcademy: allAcademyOptionsReducer,
+  allTheme: allThemeOptionsReducer,
   // =============== end sertifikat ==================
 
   // PARTNERSHIP

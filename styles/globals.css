@@ -20,8 +20,8 @@ a {
   box-sizing: border-box;
 }
 
-.aside-menu .menu-nav > .menu-item > .menu-heading .menu-text,
-.aside-menu .menu-nav > .menu-item > .menu-link .menu-text {
+.aside-menu .menu-nav>.menu-item>.menu-heading .menu-text,
+.aside-menu .menu-nav>.menu-item>.menu-link .menu-text {
   font-weight: 500 !important;
 }
 
@@ -273,6 +273,7 @@ a {
   background-color: white;
   transform: translateY(-50%);
 }
+
 .not-found-page {
   position: fixed;
   inset: 0;
