@@ -5,8 +5,12 @@ import Beasiswa from "/public/assets/logo/Logo besiswa fix  3.png";
 import Image from "next/dist/client/image";
 import styles from "./Sidebar.module.css";
 import { useState } from "react";
+import { useRouter } from "next/router";
+import Link from "next/link";
 
 const Sidebar = () => {
+  const router = useRouter();
+
   const [drop, setDrop] = useState(false);
   const [click, setClick] = useState(1);
 
@@ -49,6 +53,8 @@ const Sidebar = () => {
     }
   };
 
+  console.log(router);
+
   return (
     <>
       <div className={styles.titlePlatform}>PLATFORM</div>
@@ -73,14 +79,16 @@ const Sidebar = () => {
       {drop && (
         <>
           <div>
-            <div className={`${styles.menuItem} d-flex flex-row`}>
-              <div className="p-2">
-                <i className={`${styles.iconMenu} ri-pie-chart-line`}></i>
+            <Link href="/peserta" passHref>
+              <div className={`${styles.menuItem} d-flex flex-row`}>
+                <div className="p-2">
+                  <i className={`${styles.iconMenu} ri-pie-chart-line`}></i>
+                </div>
+                <div className="p-2">
+                  <td>Dashboard</td>
+                </div>
               </div>
-              <div className="p-2">
-                <td>Dashboard</td>
-              </div>
-            </div>
+            </Link>
           </div>
           <div>
             <div className={`${styles.menuItem} d-flex flex-row`}>
@@ -181,16 +189,18 @@ const Sidebar = () => {
         </div>
       </div>
       <div className={styles.titleAkun}>AKUN</div>
-      <div className={styles.akunMenu}>
-        <div className="d-flex flex-row">
-          <div className="p-2">
-            <i className="ri-user-line"></i>
-          </div>
-          <div className="p-2">
-            <td>Profile</td>
+      <Link href="/peserta/profile" passHref>
+        <div className={styles.akunMenu}>
+          <div className="d-flex flex-row">
+            <div className="p-2">
+              <i className="ri-user-line"></i>
+            </div>
+            <div className="p-2">
+              <td>Profile</td>
+            </div>
           </div>
         </div>
-      </div>
+      </Link>
       <div className={styles.akunMenu}>
         <div className="d-flex flex-row">
           <div className="p-2">

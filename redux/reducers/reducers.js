@@ -238,6 +238,10 @@ import {
   updateUnitWorkReducer,
   deleteUnitWorkReducer,
 } from "./site-management/unit-work.reducers";
+
+// ============== pelatihan ===============
+import {allPromptReducer} from './site-management/settings/pelatihan.reducers'
+
 // End Site Management
 
 //PELATIHAN
@@ -294,6 +298,7 @@ import {
   trainingStep1Reducer,
   registrationStep2Reducer,
   commitmentStep3Reducer,
+  statusUpdateProfileReducer,
   drowpdownAkademiReducers,
   drowpdownTemaReducers,
   drowpdownPelatihanReducers,
@@ -524,6 +529,8 @@ const reducer = combineReducers({
   detailRoles: detailRolesReducer,
   updateRoles: updateRolesReducer,
   deleteRoles: deleteRolesReducer,
+  // ============ PELATIHAN =======
+  allPrompt: allPromptReducer,
 
   // END SITE MANAGEMENT
 

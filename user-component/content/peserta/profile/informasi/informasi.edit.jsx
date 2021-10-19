@@ -1,10 +1,11 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
 import Select from "react-select";
 import Swal from "sweetalert2";
 import SimpleReactValidator from "simple-react-validator";
+import style from "../style.module.css";
 
-const InformasiEdit = () => {
+const InformasiEdit = ({ funcViewEdit }) => {
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
 
@@ -68,8 +69,7 @@ const InformasiEdit = () => {
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = () => {
     if (simpleValidator.current.allValid()) {
       const data = {
         name,
@@ -398,18 +398,22 @@ const InformasiEdit = () => {
               }
             )}
           </Form.Group>
-        </div>
-        <div className="button-aksi mt-5 float-right">
-          <Button className="btn-outline-primary rounded-pill mr-3">
-            Kembali
-          </Button>
-          <Button
-            className="btn-primary-rounded-full bg-blue-primary"
-            variant="transparent"
-            type="submit"
-          >
-            Simpan
-          </Button>
+
+          <div className="button-aksi mt-5 float-right">
+            <Button
+              className={`${style.button_profile_batal} rounded-xl mr-2`}
+              type="button"
+              onClick={() => funcViewEdit(false)}
+            >
+              Batal
+            </Button>
+            <Button
+              className={`${style.button_profile_simpan} rounded-xl`}
+              type="submit"
+            >
+              Submit
+            </Button>
+          </div>
         </div>
       </Form>
     </>
