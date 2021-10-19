@@ -143,7 +143,7 @@ const FormKomitmen = ({
                         <h6 className="form-weight-bolder">
                           Telah Menyatakan Menyetujui dengan sebenarnya secara
                           sadar dan tanpa paksaan dan telah menerima segala hak
-                          yang telah disetujui
+                          yang telah disetuju
                         </h6>
                       </div>
                     </div>
