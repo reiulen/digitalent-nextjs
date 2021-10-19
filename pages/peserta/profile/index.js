@@ -6,8 +6,16 @@ import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
 
+import { getDataPribadi } from "../../../redux/actions/pelatihan/function.actions";
+import {
+  getProfileAlamat,
+  getProfilePendidikan,
+  getProfileKeterampilan,
+  getProfilePekerjaan,
+} from "../../../redux/actions/pelatihan/profile.actions";
+
 const Profile = dynamic(
-  () => import("../../../user-component/content/peserta/profile//index"),
+  () => import("../../../user-component/content/peserta/profile/index"),
   {
     loading: function loadingNow() {
       return <LoadingSkeleton />;
@@ -52,6 +60,13 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+      await store.dispatch(getDataPribadi(data.user.token));
+      await store.dispatch(getProfileAlamat(data.user.token));
+      await store.dispatch(getProfilePendidikan(data.user.token));
+      // await store.dispatch(
+      //   getProfileKeterampilan(data.user.token)
+      // );
+      await store.dispatch(getProfilePekerjaan(data.user.token));
 
       return {
         props: { data: "auth", session, title: "Profile - Peserta" },
