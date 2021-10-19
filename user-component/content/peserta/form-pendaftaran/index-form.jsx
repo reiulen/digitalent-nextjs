@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Col, Row, Card, Button } from "react-bootstrap";
+import { Col, Row, Card, Button, Container } from "react-bootstrap";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
@@ -8,6 +8,7 @@ import LoadingPage from "../../../../components/LoadingPage";
 import FormPendaftaran from "./form-pendaftaran";
 import FormKomitmen from "./form-komitmen";
 import FormBerhasil from "./form-berhasil";
+import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
 
 const IndexForm = ({ token }) => {
   const dispatch = useDispatch();
@@ -91,13 +92,11 @@ const IndexForm = ({ token }) => {
   return (
     <>
       {/* <LoadingPage loading={true} /> */}
-      <div className="container-fluid p-6">
-        <Col lg={12} className="order-1 px-0">
-          <Card className="card-custom card-stretch gutter-b">
-            {showViewForm()}
-          </Card>
-        </Col>
-      </div>
+      <Container>
+        <Card className="card-custom card-stretch gutter-b">
+          {showViewForm()}
+        </Card>
+      </Container>
     </>
   );
 };
