@@ -41,17 +41,17 @@
 }
 
 .navdropdown :hover{
-    background-color: #215480 !important;
+    background-color: #007CFF !important;
     color: white;
 }
 
 .navdropdown :focus{
-    background-color: #215480 !important;
+    background-color: #007CFF !important;
     color: white;
 }
 
 .navdropdown :active{
-    background-color: #215480 !important;
+    background-color: #007CFF !important;
     color: white;
 }
 
@@ -61,17 +61,17 @@
 }
 
 .navdropdown-child:hover {
-    background-color: #215480 !important;
+    background-color: #007CFF !important;
     color: white;
 }
 
 .navdropdown-child:focus {
-    background-color: #215480 !important;
+    background-color: #007CFF !important;
     color: white;
 }
 
 .navdropdown-child:active {
-    background-color: #215480 !important;
+    background-color: #007CFF !important;
     color: white;
 }
 
