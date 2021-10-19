@@ -17,9 +17,9 @@ import {
   Dropdown,
 } from "react-bootstrap";
 
-// import IconSearch from "../../public/assets/icon/icon-dashboard-peserta/Search"
-import IconLogin from "../../public/assets/icon/icon-dashboard-peserta/Login";
-import IconRegister from "../../public/assets/icon/icon-dashboard-peserta/Register";
+import IconSearch from "../../components/assets/icon/Search";
+import IconLogin from "../../components/assets/icon-dashboard-peserta/Login";
+import IconRegister from "../../components/assets/icon-dashboard-peserta/Register";
 
 const Navigationbar = () => {
   return (
@@ -164,34 +164,37 @@ const Navigationbar = () => {
                 </NavDropdown.Item>
               </NavDropdown>
             </Nav>
-            <Form className="d-flex col-9">
-              <FormControl
-                type="search"
-                placeholder="   Search"
-                className="mr-2"
-                aria-label="Search"
-              />
-              {/* <Button variant="outline-success">Search</Button> */}
-              <i className="ri-search-line left-center-absolute" style={{ left: "17px" }}></i>
+            <Form className="w-100 mx-5">
+              <div className="position-relative w-100">
+                <FormControl
+                  type="search"
+                  placeholder="Search"
+                  className="pl-10 rounded-full"
+                  aria-label="Search"
+                />
+                <IconSearch
+                  className="left-center-absolute"
+                  style={{ left: "10px" }}
+                />
+              </div>
             </Form>
             <Nav>
               <Link href="/login">
                 <a>
-                  <button className="btn btn-outline-info rounded-pill btn-sm mr-5">
-                    <i className="ri-login-box-line mr-2"></i>
+                  <button className="btn btn-sm btn-login-peserta">
+                    <IconLogin className="mr-2" />
                     Masuk
                   </button>
                 </a>
               </Link>
               <Link href="/register">
                 <a>
-                  <button className="btn btn-info rounded-pill btn-sm">
-                     <i className="ri-user-line mr-2"></i>
+                  <button className="btn btn-register-peserta btn-sm">
+                     <IconRegister className="mr-2" />
                     Daftar
                   </button>
                 </a>
               </Link>
-              
             </Nav>
           </Navbar.Collapse>
         </Container>
