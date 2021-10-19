@@ -36,10 +36,10 @@ const IndexForm = ({ token }) => {
   if (errorNewPendaftaran) error = errorNewPendaftaran;
 
   const [view, setView] = useState(1);
-  const [title, setTitle] = useState(dataForm.judul_form);
-  const [formBuilder] = useState(dataForm.FormBuilder);
-  const [dataPeserta] = useState(dataPribadi);
-  const [dataPelatihan] = useState(dataTraining);
+  const [title, setTitle] = useState((dataForm && dataForm.judul_form) || "");
+  const [formBuilder] = useState((dataForm && dataForm.FormBuilder) || []);
+  const [dataPeserta] = useState(dataPribadi || null);
+  const [dataPelatihan] = useState(dataTraining || null);
   const [dataPendaftaran, setDataPendaftaran] = useState([]);
 
   useEffect(() => {

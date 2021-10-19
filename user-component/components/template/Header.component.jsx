@@ -32,9 +32,9 @@ const Header = () => {
     if (e) {
       e.innerHTML = h + ":" + m + ":" + s;
     } else {
-      router.push("/peserta");
-      // window.location.reload();
-      router.reload();
+      // router.push("/peserta");
+      // // window.location.reload();
+      // router.reload();
     }
 
     // setTimeout("time()", 1000);
@@ -55,9 +55,9 @@ const Header = () => {
     if (e) {
       e.innerHTML = h + ":" + m + ":" + s;
     } else {
-      router.push("/peserta");
-      // window.location.reload();
-      router.reload();
+      // router.push("/peserta");
+      // // window.location.reload();
+      // router.reload();
     }
 
     // setTimeout("time()", 1000);

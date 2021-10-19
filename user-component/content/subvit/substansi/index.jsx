@@ -357,48 +357,84 @@ const SubtansiUser = ({ token }) => {
         <ModalBody>
           {router.pathname.includes("substansi") ? (
             <Card style={{ padding: "10px", marginTop: "10px" }}>
-              <table></table>
-              1. Sebelum mengerjakan test, harap perhatikan dan lakukan hal-hal
-              berikut :
-              <ul>
-                <li>
-                  Pastikan koneksi internet stabil (sangat disarankan
-                  menggunakan koneksi internet broadband dengan kecepatan akses
-                  download 384 kbps ke atas). Cek hal ini melalui
-                  https://www.speedtest.net/
-                </li>
-                <li>
-                  Gunakan browser : Mozilla Firefox atau Google Chrome versi
-                  terbaru
-                </li>
-                <li>
-                  Pastikan Javascript ACTIVE/ENABLED. Cek hal ini melalui
-                  https://www.whatismybrowser.com/detect/is-javascript-enabled
-                  atau baca terlebih dahulu Panduan Pengaktifan Javascript pada
-                  https://k-cloud.kominfo.go.id/s/jwFLJLrJfyFgbEo
-                </li>
-                <li>
-                  Pastikan Cookies ACTIVE/ENABLED. Baca Panduan Pengaktifan
-                  Cookie pada https://k-cloud.kominfo.go.id/s/XaJKPwL5PYWaXQo
-                </li>
-                <li>
-                  Pastikan keyboard dan mouse/trackpad Anda dalam keadaan baik.
-                </li>
-                <li>
-                  Siapkan kertas dan pensil/pulpen untuk mencoret-coret jika
-                  diperlukan.
-                </li>
-              </ul>
-              2.Alokasi waktu yang diberikan untuk mengerjakan Test Substansi
-              sesuai dengan masing-masing tema pelatihan. Informasi tersebut
-              dapat di akses pada dashboard Test Substansi.Peserta wajib
-              menjawab seluruh soal Test Substansi dan jumlah soal sesuai dengan
-              masing-masing tema pelatihan. Tidak ada nilai negatif untuk
-              jawaban yang salah.Setelah Test Substansi dimulai, waktu tes tidak
-              dapat diberhentikan dan tes tidak dapat diulang. Setelah waktu
-              habis, halaman soal akan tertutup secara otomatis.Skor untuk soal
-              yang sudah dijawab tetap terhitung walaupun peserta belum menekan
-              tombol submit atau peserta mengalami force majeure.
+              <table>
+                <tr>
+                  <td style={{ position: "absolute" }}>1.</td>
+                  <td>&nbsp;</td>
+                  <td>
+                    Sebelum mengerjakan test, harap perhatikan dan lakukan
+                    hal-hal berikut :
+                    <ul>
+                      <li>
+                        Pastikan koneksi internet stabil (sangat disarankan
+                        menggunakan koneksi internet broadband dengan kecepatan
+                        akses download 384 kbps ke atas). Cek hal ini melalui
+                        https://www.speedtest.net/
+                      </li>
+                      <li>
+                        Gunakan browser : Mozilla Firefox atau Google Chrome
+                        versi terbaru
+                      </li>
+                      <li>
+                        Pastikan Javascript ACTIVE/ENABLED. Cek hal ini melalui
+                        https://www.whatismybrowser.com/detect/is-javascript-enabled
+                        atau baca terlebih dahulu Panduan Pengaktifan Javascript
+                        pada https://k-cloud.kominfo.go.id/s/jwFLJLrJfyFgbEo
+                      </li>
+                      <li>
+                        Pastikan Cookies ACTIVE/ENABLED. Baca Panduan
+                        Pengaktifan Cookie pada
+                        https://k-cloud.kominfo.go.id/s/XaJKPwL5PYWaXQo
+                      </li>
+                      <li>
+                        Pastikan keyboard dan mouse/trackpad Anda dalam keadaan
+                        baik.
+                      </li>
+                      <li>
+                        Siapkan kertas dan pensil/pulpen untuk mencoret-coret
+                        jika diperlukan.
+                      </li>
+                    </ul>
+                  </td>
+                </tr>
+                <tr>
+                  <td style={{ position: "absolute" }}>2.</td>
+                  <td>&nbsp;</td>
+                  <td>
+                    Alokasi waktu yang diberikan untuk mengerjakan Test
+                    Substansi sesuai dengan masing-masing tema pelatihan.
+                    Informasi tersebut dapat di akses pada dashboard Test
+                    Substansi.
+                  </td>
+                </tr>
+                <tr>
+                  <td style={{ position: "absolute" }}>3.</td>
+                  <td>&nbsp;</td>
+                  <td>
+                    Peserta wajib menjawab seluruh soal Test Substansi dan
+                    jumlah soal sesuai dengan masing-masing tema pelatihan.
+                    Tidak ada nilai negatif untuk jawaban yang salah.
+                  </td>
+                </tr>
+                <tr>
+                  <td style={{ position: "absolute" }}>4.</td>
+                  <td>&nbsp;</td>
+                  <td>
+                    Setelah Test Substansi dimulai, waktu tes tidak dapat
+                    diberhentikan dan tes tidak dapat diulang. Setelah waktu
+                    habis, halaman soal akan tertutup secara otomatis.
+                  </td>
+                </tr>
+                <tr>
+                  <td>5.</td>
+                  <td>&nbsp;</td>
+                  <td>
+                    Skor untuk soal yang sudah dijawab tetap terhitung walaupun
+                    peserta belum menekan tombol submit atau peserta mengalami
+                    force majeure.
+                  </td>
+                </tr>
+              </table>
             </Card>
           ) : router.pathname.includes("substansi") ? (
             "Survey"

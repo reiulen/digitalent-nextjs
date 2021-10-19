@@ -116,7 +116,7 @@ const TambahTandaTangan = ({token}) => {
               query: { success: true },
             });
           } catch (error) {
-            notify(error.response.data.message);
+            notify("Mohon maaf akun anda telah dihapus");
           }
         }
       });

@@ -19,6 +19,7 @@ const Layout = ({ title = "Peserta - Pelatihan", session, children }) => {
   const router = useRouter();
   return (
     <>
+      {console.log(router)}
       <Head>
         <title>{title}</title>
         <meta charSet="utf-8" />
@@ -30,9 +31,9 @@ const Layout = ({ title = "Peserta - Pelatihan", session, children }) => {
       <div className="container-fluid py-5">
         <Row>
           <Col md={3}>
-            {!router.pathname.includes("substansi" || "survey" || "trivia") && (
-              <Sidebar />
-            )}
+            {!router.pathname.includes(
+              "substansi" || "survey" || "trivia" || "form-pendaftaran"
+            ) && <Sidebar />}
             {/* <Sidebar /> */}
           </Col>
           {children}
