@@ -315,16 +315,44 @@ export default function TambahMasterSertifikat({ token }) {
           "number_of_signature_syllabus",
           number_of_signature_syllabus
         );
-        signature_certificate_name.forEach((item, i) => {
-          formData.append(`signature_certificate_name[${i}]`, item);
-        }); // nama
 
-        signature_certificate_position.forEach((item, i) => {
-          formData.append(`signature_certificate_position[${i}]`, item);
-        }); //nih buat posisi
-        signature_certificate_set_position.forEach((item, i) => {
-          formData.append(`signature_certificate_set_position[${i}]`, item);
-        });
+        for (let i = 0; i < number_of_signatures; i++) {
+          formData.append(
+            `signature_certificate_name[${i}]`,
+            signature_certificate_name[i]
+          );
+          formData.append(
+            `signature_certificate_position[${i}]`,
+            signature_certificate_position[i]
+          );
+          formData.append(
+            `signature_certificate_set_position[${i}]`,
+            signature_certificate_set_position[i]
+          );
+          formData.append(
+            `signature_certificate_image[${i}]`,
+            signature_certificate_image[i]
+          );
+        }
+
+        for (let i = 0; i < number_of_signature_syllabus; i++) {
+          formData.append(
+            `signature_certificate_name_syllabus[${i}]`,
+            signature_certificate_name_syllabus[i]
+          );
+          formData.append(
+            `signature_certificate_position_syllabus[${i}]`,
+            signature_certificate_position_syllabus[i]
+          );
+          formData.append(
+            `signature_certificate_set_position_syllabus[${i}]`,
+            signature_certificate_set_position_syllabus[i]
+          );
+          formData.append(
+            `signature_certificate_image_syllabus[${i}]`,
+            signature_certificate_set_position_syllabus[i]
+          );
+        }
 
         syllabus.forEach((item, i) => {
           formData.append(`syllabus[${i}]`, item);
@@ -332,33 +360,9 @@ export default function TambahMasterSertifikat({ token }) {
 
         formData.append("background_syllabus", background_syllabus);
 
-        signature_certificate_name_syllabus.forEach((item, i) => {
-          formData.append(`signature_certificate_name_syllabus[${i}]`, item);
-        });
-
-        signature_certificate_position_syllabus.forEach((item, i) => {
-          formData.append(
-            `signature_certificate_position_syllabus[${i}]`,
-            item
-          );
-        });
-        signature_certificate_set_position_syllabus?.forEach((item, i) => {
-          formData.append(
-            `signature_certificate_set_position_syllabus[${i}]`,
-            item
-          );
-        });
-
         // bagian image2
         formData.append("background", background);
 
-        signature_certificate_image.forEach((item, i) => {
-          formData.append(`signature_certificate_image[${i}]`, item);
-        }); // nih buat signature
-
-        signature_certificate_image_syllabus.forEach((item, i) => {
-          formData.append(`signature_certificate_image_syllabus[${i}]`, item);
-        });
         const data = await convertDivToPng(divReference.current); // convert bg 1
 
         formData.append("certificate_result", data);
@@ -409,7 +413,7 @@ export default function TambahMasterSertifikat({ token }) {
   return (
     <PageWrapper>
       {/* error START */}
-      {error || errorDetail ? (
+      {error ? (
         <div
           className="alert alert-custom alert-light-danger fade show mb-5"
           role="alert"
@@ -417,7 +421,7 @@ export default function TambahMasterSertifikat({ token }) {
           <div className="alert-icon">
             <i className="flaticon-warning"></i>
           </div>
-          <div className="alert-text">{error || errorDetail}</div>
+          <div className="alert-text">{error}</div>
           <div className="alert-close">
             <button
               type="button"
@@ -1968,3 +1972,40 @@ export default function TambahMasterSertifikat({ token }) {
     </PageWrapper>
   );
 }
+
+//B4 update
+// signature_certificate_name_syllabus.forEach((item, i) => {
+//   formData.append(`signature_certificate_name_syllabus[${i}]`, item);
+// });
+
+// signature_certificate_position_syllabus.forEach((item, i) => {
+//   formData.append(
+//     `signature_certificate_position_syllabus[${i}]`,
+//     item
+//   );
+// });
+// signature_certificate_set_position_syllabus?.forEach((item, i) => {
+//   formData.append(
+//     `signature_certificate_set_position_syllabus[${i}]`,
+//     item
+//   );
+// });
+// signature_certificate_image_syllabus.forEach((item, i) => {
+//   formData.append(`signature_certificate_image_syllabus[${i}]`, item);
+// });
+
+// signature_certificate_name.forEach((item, i) => {
+//   formData.append(`signature_certificate_name[${i}]`, item);
+// }); // nama
+
+// signature_certificate_position.forEach((item, i) => {
+//   formData.append(`signature_certificate_position[${i}]`, item);
+// }); //nih buat posisi
+
+// signature_certificate_set_position.forEach((item, i) => {
+//   formData.append(`signature_certificate_set_position[${i}]`, item);
+// });
+
+// signature_certificate_image.forEach((item, i) => {
+//   formData.append(`signature_certificate_image[${i}]`, item);
+// }); // nih buat signature

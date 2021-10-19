@@ -344,7 +344,7 @@ export default function NamaPelatihanID({ token }) {
                         certificate.data.list_certificate.length === 0) ? (
                         <tr>
                           <td className="text-center" colSpan={6}>
-                            Data Masih Kosong
+                            Data Tidak Ditemukan
                           </td>
                         </tr>
                       ) : (

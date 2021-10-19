@@ -33,11 +33,13 @@ export default function NamaPelatihan({ token }) {
   const [dataAcademy, setDataAcademy] = useState([]);
   let { page = 1, keyword } = router.query;
 
+  let selectRefAkademi = null;
+  let temaRef = null;
+
   const resetValueSort = e => {
-    router.push(`${router.pathname}?page=${page}`);
-    setTemaPelatihan("");
     setDisable(true);
-    setAcademy("");
+    selectRefAkademi.select.clearValue();
+    router.push(`${router.pathname}?page=${page}`);
   };
   // #DatePicker
 
@@ -95,8 +97,8 @@ export default function NamaPelatihan({ token }) {
   const handleSelectAcademy = e => {
     // console.log(e.target.value);
     // setAcademy(e.target.value);
+
     setAcademy(e.value);
-    setTemaPelatihan("");
     setDisable(false);
     let arr = certificate.list_certificate;
     const filteredTheme = arr.filter(el => el.theme.academy.name == e.value);
@@ -242,9 +244,10 @@ export default function NamaPelatihan({ token }) {
                                   Akademi
                                 </label>
                                 <Select
+                                  ref={ref => (selectRefAkademi = ref)}
                                   className="basic-single"
                                   classNamePrefix="select"
-                                  placeholder="Semua"
+                                  // placeholder="Semua"
                                   isDisabled={false}
                                   isLoading={false}
                                   isClearable={false}
@@ -264,7 +267,7 @@ export default function NamaPelatihan({ token }) {
                                   defaultValue={"Semua"}
                                 > */}
                                 {/* <option selected>Menu</option> */}
-                                {dataAcademy.map((item, i) => {
+                                {/* {dataAcademy.map((item, i) => {
                                   // return (
                                   // <option
                                   //   key={i}
@@ -274,7 +277,7 @@ export default function NamaPelatihan({ token }) {
                                   //   {item.label}
                                   // </option>
                                   // );
-                                })}
+                                })} */}
                                 {/* </select> */}
                               </div>
                               <div className="fv-row mb-10">
@@ -349,9 +352,7 @@ export default function NamaPelatihan({ token }) {
                         certificate.list_certificate.length === 0) ? (
                         <tr>
                           <td className="text-center" colSpan={6}>
-                            {search
-                              ? "Data Tidak Ditemukan"
-                              : "Data Masih Kosong"}
+                            Data Tidak Ditemukan
                           </td>
                         </tr>
                       ) : (
@@ -409,7 +410,7 @@ export default function NamaPelatihan({ token }) {
               {/* START Pagination */}
               <div className="row">
                 {certificate && (
-                  <div className="table-pagination">
+                  <div className="table-pagination my-auto">
                     <Pagination
                       activePage={+page}
                       itemsCountPerPage={certificate.perPage}

@@ -151,9 +151,7 @@ export default function ListPeserta() {
                         participant.data.list_certificate.length === 0) ? (
                         <tr>
                           <td className="text-center" colSpan={6}>
-                            {search
-                              ? "Data Tidak Ditemukan"
-                              : "Data Masih Kosong"}
+                            Data Tidak Ditemukan
                           </td>
                         </tr>
                       ) : (
