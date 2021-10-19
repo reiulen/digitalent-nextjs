@@ -21,7 +21,7 @@ export async function getServerSideProps(context) {
   
     return {
       props: {
-        title:"Detail Kategori", data: "auth",
+        title:"Detail Pelatihan", data: "auth",
       },
     };
   }
