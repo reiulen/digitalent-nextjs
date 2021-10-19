@@ -17,22 +17,24 @@ import HeaderUser from "../header";
 import axios from "axios";
 import Image from "next/dist/client/image";
 import { useSelector } from "react-redux";
-import Breadcrumb from "../breadcrumb";
 import ModalHeader from "react-bootstrap/esm/ModalHeader";
 
 // import Cookies from "js-cookie";
-
 const SubtansiUser = ({ token }) => {
+  const {
+    // loading: allLoading,
+    // error: allError,
+    random_subtance_question_detail,
+  } = useSelector((state) => state.randomSubtanceQuestionDetail);
   const router = useRouter();
-  const [data] = useState(random_subtance_question_detail);
+  const [data] = useState(JSON.parse(localStorage.getItem("data")));
   const [answer, setAnswer] = useState("");
   const [listAnswer, setListAnswer] = useState([]);
   const [numberPage, setNumberPage] = useState("");
   const [numberAnswer, setNumberAnswer] = useState(false);
   const [modalSoal, setModalSoal] = useState(false);
-  const [count, setCount] = useState(
-    parseInt(sessionStorage.getItem("targetDate") || 3600)
-  );
+  const [count, setCount] = useState(random_subtance_question_detail.time_left);
+
   const [hour, setHour] = useState(0);
   const [minute, setMinute] = useState(0);
   const [second, setSecond] = useState(0);
@@ -40,7 +42,7 @@ const SubtansiUser = ({ token }) => {
     sessionStorage.getItem("targetDate")
   );
 
-  const [totalSecond, setTotalSecond] = useState(0);
+  localStorage.setItem("data", JSON.stringify(random_subtance_question_detail));
 
   const handleModalSoal = () => {
     setModalSoal(true);
@@ -48,97 +50,76 @@ const SubtansiUser = ({ token }) => {
 
   const handleNext = () => {
     const page = parseInt(router.query.id) + 1;
-    router.push(`${router.pathname.slice(0, 25)}/${page}`);
+    router.push(
+      `${router.pathname.slice(0, 25)}/${page}?theme_id=${
+        router.query.theme_id
+      }&training_id=${router.query.training_id}&category=${
+        router.query.category
+      }`
+    );
   };
-
-  const {
-    // loading: allLoading,
-    // error: allError,
-    random_subtance_question_detail,
-  } = useSelector((state) => state.randomSubtanceQuestionDetail);
 
   const handleCloseModal = () => {
     setModalSoal(false);
   };
   const handleNumber = (val) => {
-    console.log(val);
-    // e.preventDefault();
     setNumberPage(val);
-    router.push(`/peserta/subvit/substansi/${parseInt(val.target.innerHTML)}`);
+    router.push(
+      `/peserta/subvit/substansi/${parseInt(val.target.innerHTML)}?theme_id=${
+        router.query.theme_id
+      }&training_id=${router.query.training_id}&category=${
+        router.query.category
+      }`
+    );
   };
 
   const handleBack = () => {
     const page = parseInt(router.query.id) - 1;
     if (parseInt(router.query.id) === 1) {
-      router.push(`${router.pathname.slice(0, 25)}/1`);
+      router.push(
+        `${router.pathname.slice(0, 25)}/1?theme_id=${
+          router.query.theme_id
+        }&training_id=${router.query.training_id}&category=${
+          router.query.category
+        }`
+      );
     } else {
-      router.push(`${router.pathname.slice(0, 25)}/${page}`);
+      router.push(
+        `${router.pathname.slice(0, 25)}/${page}?theme_id=${
+          router.query.theme_id
+        }&training_id=${router.query.training_id}&category=${
+          router.query.category
+        }`
+      );
     }
+    console.log(random_subtance_question_detail);
   };
-  // function startTimer(duration, display) {
-  //   var timer = duration,
-  //     minutes,
-  //     seconds;
-  //   setInterval(function () {
-  //     minutes = parseInt(timer / 60, 10);
-  //     seconds = parseInt(timer % 60, 10);
 
-  //     minutes = minutes < 10 ? "0" + minutes : minutes;
-  //     seconds = seconds < 10 ? "0" + seconds : seconds;
-
-  //     display.textContent = minutes + ":" + seconds;
-
-  //     if (--timer <= 0) {
-  //       router.replace(`${router.pathname.slice(0, 8)}/done`);
-  //     }
-  //   }, 1000);
-  // }
   useEffect(() => {
-    // console.log(timeLeft, "ini Time Left ");
-    sessionStorage.setItem("setTime", count);
-    // window.onload = function () {
-    //   var fiveMinutes = 1 * 60,
-    //     display = document.querySelector("#time");
-    //   startTimer(fiveMinutes, display);
-    // };
+    if (count >= 0) {
+      const secondsLeft = setInterval(() => {
+        setCount((c) => c - 1);
+        let timeLeftVar = secondsToTime(count);
+        setHour(timeLeftVar.h);
+        setMinute(timeLeftVar.m);
+        setSecond(timeLeftVar.s);
+      }, 1000);
+      return () => clearInterval(secondsLeft);
+    } else {
+      console.log("time out");
+    }
+  }, [count]);
 
-    useEffect(() => {
-      if (count >= 0) {
-        const secondsLeft = setInterval(() => {
-          setCount((c) => c - 1);
-          let timeLeftVar = secondsToTime(sessionStorage.getItem("setItem"));
-          // console.log(timeLeftVar);
-          setHour(timeLeftVar.h);
-          sessionStorage.setItem("hours", hour);
-          setMinute(timeLeftVar.m);
-          sessionStorage.setItem("minute", minute);
-          setSecond(timeLeftVar.s);
-          sessionStorage.setItem("second", second);
-          // console.log(secondsLeft);
-        }, 1000);
-
-        return () => clearInterval(secondsLeft);
-      } else {
-        console.log("time out");
-      }
-
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      // return () => {
-      //   sessionStorage.setItem("cTimer", count);
-      // };
-    }, [count]);
-
-    const secondsToTime = (secs) => {
-      var hours = Math.floor(secs / (60 * 60));
-      var divisor_for_minutes = secs % (60 * 60);
-      var minutes = Math.floor(divisor_for_minutes / 60);
-      var divisor_for_seconds = divisor_for_minutes % 60;
-      var seconds = Math.ceil(divisor_for_seconds);
-      return {
-        h: hours,
-        m: minutes,
-        s: seconds,
-      };
+  const secondsToTime = (secs) => {
+    var hours = Math.floor(secs / (60 * 60));
+    var divisor_for_minutes = secs % (60 * 60);
+    var minutes = Math.floor(divisor_for_minutes / 60);
+    var divisor_for_seconds = divisor_for_minutes % 60;
+    var seconds = Math.ceil(divisor_for_seconds);
+    return {
+      h: hours,
+      m: minutes,
+      s: seconds,
     };
 
     let list = [];
@@ -159,20 +140,24 @@ const SubtansiUser = ({ token }) => {
       }
       console.log(list);
     };
-
+    let number = [];
+    for (let i = 0; i < random_subtance_question_detail.total_questions; i++) {
+      number.push[i];
+    }
     return (
       <>
-        <Container className={styles.baseAll}>
+        <Container className={styles.baseAll} fluid>
           <Card className={styles.cardTop}>
             <Row>
               <Col style={{ marginTop: "8px" }}>
                 <table>
                   <tr>
-                    <td className={styles.academy}>Thematic Academy (TA)</td>
-                    <td>&nbsp;</td>
-                    <td className={styles.training}>
-                      Intermediate Multimedia Designer
+                    <td className={styles.academy}>
+                      Thematic Academy ({data && data.academy})
                     </td>
+
+                    <td>&nbsp;</td>
+                    <td className={styles.training}>{data && data.theme}</td>
                   </tr>
                 </table>
               </Col>
@@ -193,17 +178,9 @@ const SubtansiUser = ({ token }) => {
                   </div>
                 </Button>
                 <Card className={styles.time} id="time">
-                  {sessionStorage.getItem("hours") < 9
-                    ? "0" + parseInt(sessionStorage.getItem("hours"))
-                    : parseInt(sessionStorage.getItem("hours"))}
-                  :
-                  {sessionStorage.getItem("minute") < 9
-                    ? "0" + parseInt(sessionStorage.getItem("minute"))
-                    : parseInt(sessionStorage.getItem("minute"))}
-                  :
-                  {sessionStorage.getItem("second") < 9
-                    ? "0" + parseInt(sessionStorage.getItem("second"))
-                    : parseInt(sessionStorage.getItem("second"))}
+                  {hour < 9 ? "0" + hour : hour}:
+                  {minute < 9 ? "0" + minute : minute}:
+                  {second < 9 ? "0" + second : second}
                 </Card>
               </Col>
             </Row>
@@ -212,59 +189,30 @@ const SubtansiUser = ({ token }) => {
             <Col sm={9}>
               <Card className={styles.cardSoal}>
                 <p className={styles.totalSoal}>
-                  Soal {parseInt(router.query.id)} dari 50
+                  Soal {parseInt(router.query.id)} dari{" "}
+                  {data && data.total_questions}
                 </p>
                 <h1 className={styles.soal}>
-                  Ketika melakukan review project, atasan Anda selalu memberikan
-                  kritik yang menurunkan semangat tim Anda. Bagaimana Anda
-                  menanggapinya?
+                  {data.list_questions[parseInt(router.query.id) - 1].question}
                 </h1>
                 <hr />
-
-                <Card className={styles.boxAnswer}>
-                  <table>
-                    <tr>
-                      <td>A</td>
-                      <td>.</td>
-                      <td>
-                        Membiarkannya karena tidak memiliki wewenang apa-apa
-                      </td>
-                    </tr>
-                  </table>
-                </Card>
-                <Card className={styles.boxAnswer}>
-                  <table>
-                    <tr>
-                      <td>B</td>
-                      <td>.</td>
-                      <td>
-                        Membiarkannya karena tidak memiliki wewenang apa-apa
-                      </td>
-                    </tr>
-                  </table>
-                </Card>
-                <Card className={styles.boxAnswer}>
-                  <table>
-                    <tr>
-                      <td>C</td>
-                      <td>.</td>
-                      <td>
-                        Membiarkannya karena tidak memiliki wewenang apa-apa
-                      </td>
-                    </tr>
-                  </table>
-                </Card>
-                <Card className={styles.boxAnswer}>
-                  <table>
-                    <tr>
-                      <td>D</td>
-                      <td>.</td>
-                      <td>
-                        Membiarkannya karena tidak memiliki wewenang apa-apa
-                      </td>
-                    </tr>
-                  </table>
-                </Card>
+                {JSON.parse(
+                  data.list_questions[parseInt(router.query.id) - 1].answer
+                ).map((item, index) => {
+                  return (
+                    <>
+                      <Card className={styles.boxAnswer} key={index}>
+                        <table>
+                          <tr>
+                            <td style={{ width: "5px" }}>{item.key}</td>
+                            <td style={{ width: "15px" }}>.</td>
+                            <td>{item.option}</td>
+                          </tr>
+                        </table>
+                      </Card>
+                    </>
+                  );
+                })}
 
                 <Row style={{ marginTop: "20px" }}>
                   <Col>
@@ -284,7 +232,7 @@ const SubtansiUser = ({ token }) => {
                             style={
                               parseInt(router.query.id) === 1
                                 ? {
-                                    color: "#000",
+                                    color: "#d3d3d3",
                                   }
                                 : { color: "#007CFF", cursor: "pointer" }
                             }
@@ -299,10 +247,19 @@ const SubtansiUser = ({ token }) => {
                       variant="link"
                       className={styles.btnSkip}
                       onClick={handleNext}
+                      disabled={
+                        parseInt(router.query.id) === data.total_questions
+                      }
                     >
                       Lewati
                     </Button>
-                    <Button className={styles.btnNext} onClick={handleNext}>
+                    <Button
+                      className={styles.btnNext}
+                      onClick={handleNext}
+                      disabled={
+                        parseInt(router.query.id) === data.total_questions
+                      }
+                    >
                       <div className="d-flex flex-row">
                         <div className="p-1">Lanjut</div>
                         <div className="p-1">
@@ -323,7 +280,11 @@ const SubtansiUser = ({ token }) => {
                       <>
                         <Col key={index} style={{ width: "20%" }}>
                           <Card
-                            className={styles.cardChoose}
+                            className={
+                              item === parseInt(router.query.id)
+                                ? styles.cardChoosed
+                                : styles.cardChoose
+                            }
                             onClick={(event) => handleNumber(event)}
                           >
                             {item}
@@ -338,12 +299,13 @@ const SubtansiUser = ({ token }) => {
           </Row>
         </Container>
 
+        {/* Modal bantuan */}
         <Modal show={modalSoal} onHide={handleCloseModal} centered size="lg">
-          <ModalHeader>
+          <ModalHeader className={styles.headerModal}>
             Panduan{" "}
             {router.pathname.includes("substansi")
               ? "Test Substansi"
-              : router.pathname.includes("substansi")
+              : router.pathname.includes("survey")
               ? "Survey"
               : router.pathname.includes("trivia")
               ? "TRIVIA"
@@ -354,7 +316,7 @@ const SubtansiUser = ({ token }) => {
           </ModalHeader>
           <ModalBody>
             {router.pathname.includes("substansi") ? (
-              <Card style={{ padding: "10px", marginTop: "10px" }}>
+              <Card className={styles.cardPanduan}>
                 <table>
                   <tr>
                     <td style={{ position: "absolute" }}>1.</td>
@@ -367,7 +329,10 @@ const SubtansiUser = ({ token }) => {
                           Pastikan koneksi internet stabil (sangat disarankan
                           menggunakan koneksi internet broadband dengan
                           kecepatan akses download 384 kbps ke atas). Cek hal
-                          ini melalui https://www.speedtest.net/
+                          ini melalui{" "}
+                          <a href="https://www.speedtest.net/">
+                            https://www.speedtest.net/
+                          </a>
                         </li>
                         <li>
                           Gunakan browser : Mozilla Firefox atau Google Chrome
@@ -375,16 +340,22 @@ const SubtansiUser = ({ token }) => {
                         </li>
                         <li>
                           Pastikan Javascript ACTIVE/ENABLED. Cek hal ini
-                          melalui
-                          https://www.whatismybrowser.com/detect/is-javascript-enabled
+                          melalui{" "}
+                          <a href="https://www.whatismybrowser.com/detect/is-javascript-enabled">
+                            https://www.whatismybrowser.com/detect/is-javascript-enabled
+                          </a>{" "}
                           atau baca terlebih dahulu Panduan Pengaktifan
-                          Javascript pada
-                          https://k-cloud.kominfo.go.id/s/jwFLJLrJfyFgbEo
+                          Javascript pada{" "}
+                          <a href="https://k-cloud.kominfo.go.id/s/jwFLJLrJfyFgbEo">
+                            https://k-cloud.kominfo.go.id/s/jwFLJLrJfyFgbEo
+                          </a>
                         </li>
                         <li>
                           Pastikan Cookies ACTIVE/ENABLED. Baca Panduan
-                          Pengaktifan Cookie pada
-                          https://k-cloud.kominfo.go.id/s/XaJKPwL5PYWaXQo
+                          Pengaktifan Cookie pada{" "}
+                          <a href="https://k-cloud.kominfo.go.id/s/XaJKPwL5PYWaXQo">
+                            https://k-cloud.kominfo.go.id/s/XaJKPwL5PYWaXQo
+                          </a>
                         </li>
                         <li>
                           Pastikan keyboard dan mouse/trackpad Anda dalam
@@ -426,7 +397,7 @@ const SubtansiUser = ({ token }) => {
                     </td>
                   </tr>
                   <tr>
-                    <td>5.</td>
+                    <td style={{ verticalAlign: "top" }}>5.</td>
                     <td>&nbsp;</td>
                     <td>
                       Skor untuk soal yang sudah dijawab tetap terhitung
@@ -436,8 +407,47 @@ const SubtansiUser = ({ token }) => {
                   </tr>
                 </table>
               </Card>
-            ) : router.pathname.includes("substansi") ? (
-              "Survey"
+            ) : router.pathname.includes("survey") ? (
+              <Card className={styles.cardPanduan}>
+                <table>
+                  <tr>
+                    <td style={{ verticalAlign: "top" }}>1.</td>
+                    <td>&nbsp;</td>
+                    <td>
+                      {" "}
+                      Lakukan pengisian survey hingga seluruh pertanyaan
+                      terjawab dengan tuntas.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style={{ verticalAlign: "top" }}>2.</td>
+                    <td>&nbsp;</td>
+                    <td>
+                      {" "}
+                      Peserta wajib menjawab seluruh survey yang berjumlah 50
+                      pertanyaan.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style={{ verticalAlign: "top" }}>3.</td>
+                    <td>&nbsp;</td>
+                    <td>
+                      {" "}
+                      Peserta WAJIB mengisi jawaban dengan jujur sebagai bahan
+                      evaluasi bagi manajemen pelaksana pelatihan Digital Talent
+                      Scholarship 2022.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style={{ verticalAlign: "top" }}>4.</td>
+                    <td>&nbsp;</td>
+                    <td>
+                      {" "}
+                      Waktu yang tersedia untuk mengisi survey ini 1 Jam.
+                    </td>
+                  </tr>
+                </table>
+              </Card>
             ) : router.pathname.includes("trivia") ? (
               "TRIVIA"
             ) : (
@@ -447,7 +457,7 @@ const SubtansiUser = ({ token }) => {
         </Modal>
       </>
     );
-  });
+  };
 };
 
 export default SubtansiUser;

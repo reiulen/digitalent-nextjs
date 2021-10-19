@@ -20,7 +20,7 @@ export default function SubvitUserSubtansi(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <Layout title="Test Substansi - Subvit" session={session}>
+        <Layout title="Survey - Subvit" session={session}>
           <SubtansiUser token={session.token} />
         </Layout>
       </div>
@@ -32,7 +32,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
-      // console.log(session.user.user.data.user);
       if (!session) {
         return {
           redirect: {
@@ -47,12 +46,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
           query.training_id,
           query.theme_id,
           query.category,
-          session.user.user.data.user.token
+          session.user.user.data.token
         )
       );
-
       const data = session.user.user.data;
-      // console.log(data);
       if (data.user.roles[0] !== "user") {
         return {
           redirect: {
@@ -65,7 +62,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         props: {
           data: "auth",
           session,
-          title: "Test Substansi - Subvit ",
+          title: "Survey - Subvit ",
         },
       };
     }
