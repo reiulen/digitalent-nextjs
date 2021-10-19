@@ -3,8 +3,9 @@ import { Form, Button, Col, Row } from "react-bootstrap";
 import Select from "react-select";
 import Swal from "sweetalert2";
 import SimpleReactValidator from "simple-react-validator";
+import style from "../style.module.css";
 
-const PekerjaanEdit = () => {
+const PekerjaanEdit = ({ funcViewEdit }) => {
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
 
@@ -187,15 +188,18 @@ const PekerjaanEdit = () => {
           </Row>
         </div>
         <div className="button-aksi mt-5 float-right">
-          <Button className="btn-outline-primary rounded-pill mr-3">
-            Kembali
+          <Button
+            className={`${style.button_profile_batal} rounded-xl mr-2`}
+            type="button"
+            onClick={() => funcViewEdit(false)}
+          >
+            Batal
           </Button>
           <Button
-            className="btn-primary-rounded-full bg-blue-primary"
-            variant="transparent"
+            className={`${style.button_profile_simpan} rounded-xl`}
             type="submit"
           >
-            Simpan
+            Submit
           </Button>
         </div>
       </Form>

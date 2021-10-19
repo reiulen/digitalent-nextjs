@@ -128,7 +128,7 @@ const RegisterUser = () => {
       <AuthWrapper image="bg-user-2.png" title="Register">
         <div
           className="col-lg-7 d-flex flex-wrap align-content-center"
-          style={{ background: "#1A4367" }}
+          style={{ background: "#0063CC" }}
         >
           <div className="container ">
             <div className="title-login text-center mt-6">
