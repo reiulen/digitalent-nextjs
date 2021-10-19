@@ -171,19 +171,40 @@ console.log("allDataReference",allDataReference)
                               </td>
                               <td className="align-middle text-left">
                                 <div className="d-flex align-items-center">
-                                  <button
-                                    className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                                    onClick={() =>
-                                      router.push(
-                                        `/site-management/reference/ubah-reference-dengan-relasi`
-                                      )
-                                    }
+
+                                  
+                                  {items.data_references_relasi_id ?
+                                  <Link
+                                    href={{
+                                      pathname:"/site-management/reference/ubah-reference-dengan-relasi",
+                                      query:{id:items.data_references_relasi_id}
+                                    }}
                                   >
-                                    <IconPencil width="16" height="16" />
-                                    <div className="text-hover-show-hapus">
-                                      Ubah
-                                    </div>
-                                  </button>
+                                    <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
+                                      <IconPencil width="16" height="16" />
+                                      <div className="text-hover-show-hapus">
+                                        Ubah
+                                      </div>
+                                    </a>
+                                  </Link>
+                                  :
+                                  <Link
+                                    href={{
+                                      pathname:"/site-management/reference/ubah-reference-tanpa-relasi",
+                                      query:{id:items.data_references_relasi_id}
+                                    }}
+                                  >
+                                    <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
+                                      <IconPencil width="16" height="16" />
+                                      <div className="text-hover-show-hapus">
+                                        Ubah
+                                      </div>
+                                    </a>
+                                  </Link>
+                                  }
+
+
+
                                   <button
                                     className="btn btn-link-action bg-blue-secondary ml-3 position-relative btn-delete"
                                     onClick={() =>
