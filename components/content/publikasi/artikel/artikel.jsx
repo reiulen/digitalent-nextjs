@@ -658,9 +658,9 @@ const Artikel = ({ token }) => {
                     </thead>
                     <tbody>
                       {!artikel || (artikel && artikel.artikel.length === 0) ? (
-                        <tr>
-                          <td className='align-middle text-center' colSpan={8}>Data Tidak Ditemukan</td>
-                        </tr>
+                        // <tr>
+                          <td className='align-middle text-center' colSpan={9}>Data Tidak Ditemukan</td>
+                        // </tr>
                       ) : (
                         artikel &&
                         // artikel.artikel &&
