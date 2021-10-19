@@ -28,10 +28,7 @@ const EditVideo = ({ token }) => {
         ssr: false
     })
     const simpleValidator = useRef(new SimpleReactValidator({
-        locale: "id",
-        messages: {
-            url: "Format url berupa: https://www.example.com"
-        }
+        locale: "id"
     }));
     const [, forceUpdate] = useState();
     const { video } = useSelector(state => state.detailVideo)
@@ -594,14 +591,14 @@ const EditVideo = ({ token }) => {
                                         {/* <div className="input-group-prepend">
                                             <div className="input-group-text">https://</div>
                                         </div> */}
-                                        <input type="text" className="form-control ml-4" placeholder="https://www.example.com" value={url_video} onChange={(e) => setUrlVideo(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("url_video")} />
+                                        <input type="text" className="form-control ml-1" placeholder="https://www.example.com" value={url_video} onChange={(e) => setUrlVideo(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("url_video")} />
                                     </div>
 
                                     {simpleValidator.current.message(
                                         "url_video",
                                         url_video,
                                         "required|url",
-                                        { className: "text-danger" }
+                                        { className: "text-danger ml-4" }
                                     )}
 
                                 </div>

@@ -450,7 +450,7 @@ const EditGaleri = ({ token }) => {
             }
 
             // dispatch(newGaleri(data, token))
-            // dispatch(onCall(data, token))
+            dispatch(onCall(data, token))
             console.log("Unpublish : ", data)
             // console.log(image)
 
@@ -470,7 +470,7 @@ const EditGaleri = ({ token }) => {
                 image_delete: deleteImg
             }
 
-            // dispatch(onCall(data, token))
+            dispatch(onCall(data, token))
             console.log("Publish : ", data)
             // console.log(image)
         }
@@ -615,12 +615,9 @@ const EditGaleri = ({ token }) => {
 
     return (
         <PageWrapper>
-            {
+            {/* {
                 console.log("Cek Edit Image :", galeri)
-            }
-            {
-                console.log("Cek Success Image :", success)
-            }
+            } */}
 
             {/* {
                 console.log (image)
