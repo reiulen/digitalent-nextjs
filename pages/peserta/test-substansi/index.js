@@ -1,21 +1,12 @@
 import dynamic from "next/dynamic";
 
 // import Layout from "../../../components/templates/layout.component";
-
 import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
 
-import { getDataPribadi } from "../../../redux/actions/pelatihan/function.actions";
-import {
-  getProfileAlamat,
-  getProfilePendidikan,
-  getProfileKeterampilan,
-  getProfilePekerjaan,
-} from "../../../redux/actions/pelatihan/profile.actions";
-
-const Profile = dynamic(
-  () => import("../../../user-component/content/peserta/profile/index"),
+const TestSubstansi = dynamic(
+  () => import("../../../user-component/content/peserta/test-substansi"),
   {
     loading: function loadingNow() {
       return <LoadingSkeleton />;
@@ -28,12 +19,12 @@ const Layout = dynamic(() =>
   import("../../../user-component/components/template/Layout.component")
 );
 
-export default function ProfilePage(props) {
+export default function TestSubstansiPage(props) {
   const session = props.session.user.user.data.user;
   return (
     <>
-      <Layout title="Informasi Pribadi Peserta - Pelatihan" session={session}>
-        <Profile session={session} />
+      <Layout title="Dashboard Peserta - Pelatihan" session={session}>
+        <TestSubstansi session={session} />
       </Layout>
     </>
   );
@@ -60,16 +51,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
-      await store.dispatch(getDataPribadi(data.user.token));
-      await store.dispatch(getProfileAlamat(data.user.token));
-      await store.dispatch(getProfilePendidikan(data.user.token));
-      // await store.dispatch(
-      //   getProfileKeterampilan(data.user.token)
-      // );
-      await store.dispatch(getProfilePekerjaan(data.user.token));
 
       return {
-        props: { data: "auth", session, title: "Profile - Peserta" },
+        props: { data: "auth", session, title: "Dashboard - Peserta" },
       };
     }
 );

@@ -3,7 +3,7 @@ import {
   SUMMARY_SUCCESS,
   SUMMARY_FAIL,
   CLEAR_ERRORS,
-} from "../../types/pelatihan/summary.type";
+} from "../../../types/pelatihan/summary.type";
 
 export const allSummaryReducer = (state = { summary: [] }, action) => {
   switch (action.type) {

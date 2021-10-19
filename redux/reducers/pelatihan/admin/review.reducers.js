@@ -21,7 +21,7 @@ import {
   TOLAK_REVIEW_FAIL,
   TOLAK_REVIEW_RESET,
   CLEAR_ERRORS,
-} from "../../types/pelatihan/review.type";
+} from "../../../types/pelatihan/review.type";
 
 export const allListReviewReducer = (state = { review: [] }, action) => {
   switch (action.type) {

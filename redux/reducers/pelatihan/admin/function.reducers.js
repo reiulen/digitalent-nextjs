@@ -30,7 +30,7 @@ import {
   GET_DATA_PRIBADI_SUCCESS,
   GET_DATA_PRIBADI_FAIL,
   CLEAR_ERRORS,
-} from "../../types/pelatihan/function.type";
+} from "../../../types/pelatihan/function.type";
 
 export const getDataPribadiReducer = (state = { dataPribadi: {} }, action) => {
   switch (action.type) {

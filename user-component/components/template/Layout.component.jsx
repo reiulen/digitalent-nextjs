@@ -3,6 +3,7 @@ import dynamic from "next/dynamic";
 import Head from "next/head";
 import { ToastContainer } from "react-toastify";
 import { Row, Col } from "react-bootstrap";
+import { useRouter } from "next/router";
 
 const Navbar = dynamic(() =>
   import("../../../user-component/components/template/Navbar.component")
@@ -15,6 +16,17 @@ const Sidebar = dynamic(() =>
 );
 
 const Layout = ({ title = "Peserta - Pelatihan", session, children }) => {
+  const router = useRouter();
+  let routerPath;
+  if (router.pathname.includes("form-pendaftaran"))
+    routerPath = "form-pendaftaran";
+  if (router.pathname === "/peserta/subvit/substansi/[id]")
+    routerPath = "/peserta/subvit/substansi/[id]";
+  if (router.pathname === "/peserta/survey/substansi/[id]")
+    routerPath = "/peserta/survey/substansi/[id]";
+  if (router.pathname === "/peserta/trivia/substansi/[id]")
+    routerPath = "/peserta/trivia/substansi/[id]";
+
   return (
     <>
       <Head>
@@ -28,7 +40,7 @@ const Layout = ({ title = "Peserta - Pelatihan", session, children }) => {
       <div className="container-fluid py-5">
         <Row>
           <Col md={3}>
-            <Sidebar />
+            {!router.pathname.includes(routerPath) && <Sidebar />}
           </Col>
           {children}
         </Row>

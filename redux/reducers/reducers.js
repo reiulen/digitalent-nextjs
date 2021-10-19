@@ -254,7 +254,7 @@ import {
   detailAcademyReducer,
   updateAcademyReducer,
   deleteAcademyReducer,
-} from "./pelatihan/academy.reducers";
+} from "./pelatihan/admin/academy.reducers";
 
 // ====================== tema =====================
 import {
@@ -263,7 +263,7 @@ import {
   detailThemeReducer,
   updateThemeReducer,
   deleteThemeReducer,
-} from "./pelatihan/theme.reducers";
+} from "./pelatihan/admin/theme.reducers";
 
 // ====================== pelatihan =====================
 import {
@@ -272,7 +272,7 @@ import {
   allTrainingReducer,
   deleteTrainingReducer,
   updateStatusReducer,
-} from "./pelatihan/training.reducers";
+} from "./pelatihan/admin/training.reducers";
 // =================== review pelatihan ==================
 import {
   allListReviewReducer,
@@ -283,15 +283,28 @@ import {
   getReviewStep3Reducer,
   revisiReviewReducer,
   tolakReviewReducer,
-} from "./pelatihan/review.reducers";
+} from "./pelatihan/admin/review.reducers";
 // =================== rekap pelatihan ==================
 import {
   getFormBuilderReducer,
   getPelatihanReducer,
   newPendaftaranPelatihanReducer,
-} from "./pelatihan/register-training.reducers";
+} from "./pelatihan/admin/register-training.reducers";
 // ================ pendaftaran pelatihan ===============
-import { allSummaryReducer } from "./pelatihan/summary.reducers";
+import { allSummaryReducer } from "./pelatihan/admin/summary.reducers";
+
+// ================ profile peserta ===============
+import {
+  dataAlamatReducer,
+  dataPendidikanReducer,
+  dataKeterampilanReducer,
+  dataPekerjaanReducer,
+  updateDataPribadiReducer,
+  updateAlamatReducer,
+  updatePendidikanReducer,
+  updateKeterampilanReducer,
+  updatePekerjaanReducer,
+} from "./pelatihan/peserta/profile.reducers";
 //END PELATIHAN
 
 // functional reducer
@@ -300,7 +313,6 @@ import {
   trainingStep1Reducer,
   registrationStep2Reducer,
   commitmentStep3Reducer,
-  statusUpdateProfileReducer,
   drowpdownAkademiReducers,
   drowpdownTemaReducers,
   drowpdownPelatihanReducers,
@@ -310,7 +322,7 @@ import {
   drowpdownProvinsiReducers,
   drowpdownKabupatenReducers,
   drowpdownPenyelenggaraReducers,
-} from "./pelatihan/function.reducers";
+} from "./pelatihan/admin/function.reducers";
 import { allProvinsiReducer, allKotaReducer } from "./utils/utils.reducers";
 import { reducerFunctionals } from "./utils/functionals.reducer";
 
@@ -588,6 +600,17 @@ const reducer = combineReducers({
   drowpdownKabupaten: drowpdownKabupatenReducers,
   drowpdownPenyelenggara: drowpdownPenyelenggaraReducers,
   updateStatus: updateStatusReducer,
+
+  // ========== profile peserta ========
+  dataAlamat: dataAlamatReducer,
+  dataPendidikan: dataPendidikanReducer,
+  dataKeterampilan: dataKeterampilanReducer,
+  dataPekerjaan: dataPekerjaanReducer,
+  updateDataPribadi: updateDataPribadiReducer,
+  updateAlamat: updateAlamatReducer,
+  updatePendidikan: updatePendidikanReducer,
+  updateKeterampilan: updateKeterampilanReducer,
+  updatePekerjaan: updatePekerjaanReducer,
   //END PELATIHAN
 
   //BERANDA
