@@ -89,9 +89,11 @@ const SubtansiUser = ({ token }) => {
   //     }
   //   }, 1000);
   // }
+  // console.log(random_subtance_question_detail);
   useEffect(() => {
     // console.log(timeLeft, "ini Time Left ");
     sessionStorage.setItem("setTime", count);
+
     // window.onload = function () {
     //   var fiveMinutes = 1 * 60,
     //     display = document.querySelector("#time");
@@ -124,7 +126,7 @@ const SubtansiUser = ({ token }) => {
   }, [count]);
 
   let number = [];
-  for (let i = 0; i < 50; i++) {
+  for (let i = 0; i < random_subtance_question_detail.total_questions; i++) {
     number.push(i + 1);
   }
 
@@ -168,10 +170,16 @@ const SubtansiUser = ({ token }) => {
             <Col style={{ marginTop: "8px" }}>
               <table>
                 <tr>
-                  <td className={styles.academy}>Thematic Academy (TA)</td>
+                  <td className={styles.academy}>
+                    Thematic Academy (
+                    {random_subtance_question_detail &&
+                      random_subtance_question_detail.academy}
+                    )
+                  </td>
                   <td>&nbsp;</td>
                   <td className={styles.training}>
-                    Intermediate Multimedia Designer
+                    {random_subtance_question_detail &&
+                      random_subtance_question_detail.theme}
                   </td>
                 </tr>
               </table>
@@ -212,7 +220,9 @@ const SubtansiUser = ({ token }) => {
           <Col sm={9}>
             <Card className={styles.cardSoal}>
               <p className={styles.totalSoal}>
-                Soal {parseInt(router.query.id)} dari 50
+                Soal {parseInt(router.query.id)} dari{" "}
+                {random_subtance_question_detail &&
+                  random_subtance_question_detail.total_questions}
               </p>
               <h1 className={styles.soal}>
                 Ketika melakukan review project, atasan Anda selalu memberikan

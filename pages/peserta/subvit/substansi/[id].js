@@ -32,6 +32,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
+      // console.log(session.user.user.data.user);
       if (!session) {
         return {
           redirect: {
@@ -46,10 +47,12 @@ export const getServerSideProps = wrapper.getServerSideProps(
           query.training_id,
           query.theme_id,
           query.category,
-          session.user.user.data.token
+          session.user.user.data.user.token
         )
       );
+
       const data = session.user.user.data;
+      // console.log(data);
       if (data.user.roles[0] !== "user") {
         return {
           redirect: {

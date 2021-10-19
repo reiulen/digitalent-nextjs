@@ -9,7 +9,9 @@ const TestSubstansi = () => {
   const router = useRouter();
 
   const handlePage = () => {
-    router.push("/peserta/subvit/substansi/1");
+    router.push(
+      "/peserta/subvit/substansi/1?theme_id=1&training_id=1&category=Test Substansi"
+    );
   };
 
   const [show, setShow] = useState(false);
