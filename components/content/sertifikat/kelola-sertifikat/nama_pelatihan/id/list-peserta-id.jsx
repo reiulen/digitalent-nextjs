@@ -33,9 +33,18 @@ export default function ListPesertaID({ token }) {
     participant,
   } = useSelector(state => state.detailParticipant);
 
+  console.log(certificate);
+  console.log(participant);
   const [type, setType] = useState(
     certificate.data.certificate.certificate_type
   );
+  const [currentUser, setCurrentUser] = useState([]);
+  useEffect(() => {
+    const data = participant.data.list_certificate.filter(
+      el => el.name == query.name
+    );
+    setCurrentUser(data);
+  }, [participant, query.name]);
 
   const handleResetError = () => {
     if (error) {
@@ -137,21 +146,33 @@ export default function ListPesertaID({ token }) {
                 id="sertifikat1"
                 ref={divReference}
               >
-                <Image
-                  src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-images/${certificate.data.certificate.certificate_result}`}
-                  alt={`image ${certificate.data.certificate.certificate_result}`}
-                  objectFit="fill"
-                  // layout="fill"
-                  width={842}
-                  height={595}
-                  key={certificate.data.certificate.certificate_result}
-                />
-                <div
-                  className={`position-absolute w-100 text-center responsive-margin-publish`}
-                >
-                  <span className="responsive-font-size-peserta font-weight-bolder">
-                    {query.name}
-                  </span>
+                <div className="position-relative">
+                  <div className="position-absolute p-6 font-weight-boldest responsive-font-size-peserta zindex-1">
+                    {currentUser[0]?.registration_number}
+                  </div>
+                  <div className="position-absolute responsive-date-from font-weight-boldest zindex-1 responsive-date-text">
+                    {currentUser[0]?.date_from.split("-").reverse().join("-")} -{" "}
+                    {currentUser[0]?.date_to.split("-").reverse().join("-")}
+                  </div>
+                  <div className="position-absolute responsive-year font-weight-boldest zindex-1 responsive-date-text">
+                    {currentUser[0]?.year}
+                  </div>
+                  <Image
+                    src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-images/${certificate.data.certificate.certificate_result}`}
+                    alt={`image ${certificate.data.certificate.certificate_result}`}
+                    objectFit="fill"
+                    // layout="fill"
+                    width={842}
+                    height={595}
+                    key={certificate.data.certificate.certificate_result}
+                  />
+                  <div
+                    className={`position-absolute w-100 text-center responsive-margin-publish`}
+                  >
+                    <span className="responsive-font-size-peserta font-weight-bolder">
+                      {query.name}
+                    </span>
+                  </div>
                 </div>
               </div>
               {/* END COL */}

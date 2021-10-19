@@ -4,7 +4,6 @@ import Link from "next/link";
 import Image from "next/image";
 import moment from "moment";
 
-import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import IconLogin from "../../../components/assets/icon-dashboard-peserta/Login";
 import { Card, Carousel, Badge } from "react-bootstrap";
@@ -40,11 +39,11 @@ const Navigationbar = dynamic(
 );
 
 const Beranda = () => {
-  const { akademi } = useSelector((state) => state.allAkademi);
+  const { akademi } = useSelector(state => state.allAkademi);
 
-  const { tema } = useSelector((state) => state.temaByAkademi);
+  const { tema } = useSelector(state => state.temaByAkademi);
 
-  const { pelatihan } = useSelector((state) => state.pelatihanByTema);
+  const { pelatihan } = useSelector(state => state.pelatihanByTema);
 
   const [activeTab, setActiveTab] = useState("VSGA");
   const [indexTab, setIndexTab] = useState(0);
@@ -55,34 +54,37 @@ const Beranda = () => {
   const [slideAkademiToShow, setSlideAkademiToShow] = useState(4);
   const [slideTrainingToShow, setSlideTrainingToShow] = useState(3);
 
-    const renderButton = (status, daftar_mulai, daftar_selesai, quota, id) => {
-        if (status === true){
-            return (
-                <div>
-                    <Link href={`/detail/kategori/${id}`}>
-                        <Button className="btn btn-outline-info rounded-pill col-12">
-                            Quick View
-                        </Button>
-                    </Link>
-                </div>
-            )
-        } else {
-            return (
-                <div>
-                    <div className="d-flex align-content-center">
-                        <i className="ri-time-line mr-2"></i>
-                        <span className="mt-1">Registrasi: {moment (daftar_mulai).format("DD MMMM YYYY")} - {moment (daftar_selesai).format("DD MMMM YYYY")}</span>
-                    </div>
-                    <div className="d-flex align-content-center">
-                        <i className="ri-group-line mr-2"></i>
-                        <span className="mt-1">Kuota {quota} Peserta</span>
-                    </div> 
-                </div>
-            )
-        }
+  const renderButton = (status, daftar_mulai, daftar_selesai, quota, id) => {
+    if (status === true) {
+      return (
+        <div>
+          <Link href={`/detail/kategori/${id}`}>
+            <Button className="btn btn-outline-info rounded-pill col-12">
+              Quick View
+            </Button>
+          </Link>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <div className="d-flex align-content-center">
+            <i className="ri-time-line mr-2"></i>
+            <span className="mt-1">
+              Registrasi: {moment(daftar_mulai).format("DD MMMM YYYY")} -{" "}
+              {moment(daftar_selesai).format("DD MMMM YYYY")}
+            </span>
+          </div>
+          <div className="d-flex align-content-center">
+            <i className="ri-group-line mr-2"></i>
+            <span className="mt-1">Kuota {quota} Peserta</span>
+          </div>
+        </div>
+      );
     }
+  };
 
-  const handleDragStart = (e) => e.preventDefault();
+  const handleDragStart = e => e.preventDefault();
 
   const handleAkademiCarousel = () => {
     let arr = [];
@@ -129,7 +131,7 @@ const Beranda = () => {
     // console.log (arrPelatihan)
   };
 
-  const handleMouseEnter = (index) => {
+  const handleMouseEnter = index => {
     let obj = show;
 
     for (let i = 0; i < obj.length; i++) {
@@ -142,7 +144,7 @@ const Beranda = () => {
     // console.log ("mouseOver")
   };
 
-  const handleMouseLeave = (index) => {
+  const handleMouseLeave = index => {
     let obj = show;
 
     for (let i = 0; i < obj.length; i++) {

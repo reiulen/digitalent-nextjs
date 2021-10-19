@@ -53,6 +53,25 @@
     height: 595px !important;
 }
 
+.responsive-nomor-sertifikat {
+    top: 10%;
+    left: 10%;
+}
+
+.responsive-date-from {
+    top: 95px;
+    left: 59%;
+}
+
+.responsive-year {
+    top: 105px;
+    left: 60%;
+}
+
+.responsive-date-text {
+    font-size: 5px;
+}
+
 /* tablet */
 @media(min-width: 768px) {
     .responsive-margin-peserta {
@@ -65,6 +84,19 @@
 
     .responsive-margin-publish {
         top: 135px
+    }
+
+    .responsive-date-from {
+        top: 260px;
+    }
+
+    .responsive-date-text {
+        font-size: 12px;
+    }
+
+    .responsive-year {
+        top: 287px;
+        left: 60%;
     }
 }
 
@@ -107,6 +139,18 @@
         top: 125px;
     }
 
+    .responsive-date-from {
+        top: 245px;
+    }
+
+    .responsive-date-text {
+        font-size: 14px;
+    }
+
+    .responsive-year {
+        top: 270px;
+        left: 60%;
+    }
 }
 
 /* normal */
@@ -122,5 +166,18 @@
     .responsive-margin-publish {
         /* margin-top: 135px !important; */
         top: 155px !important;
+    }
+
+    .responsive-date-from {
+        top: 307px;
+    }
+
+    .responsive-date-text {
+        font-size: 16px;
+    }
+
+    .responsive-year {
+        top: 340px;
+        left: 60%;
     }
 }

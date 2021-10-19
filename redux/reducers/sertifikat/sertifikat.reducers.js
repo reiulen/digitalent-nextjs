@@ -30,12 +30,23 @@ import {
   OPTIONS_THEME_FAIL,
   OPTIONS_THEME_REQUEST,
   OPTIONS_THEME_SUCCESS,
+  SET_KEYWORD_VALUE,
+  RESET_VALUE_FILTER,
+  SET_ACADEMY_VALUE,
+  SET_THEME_VALUE,
 } from "../../types/sertifikat/kelola-sertifikat.type";
 
 const initialStates = {
   certificate: [],
   academyOptions: [],
   themeOptions: [],
+  //
+  page: 1,
+  limit: 5,
+  academy: "",
+  theme: "",
+  keyword: "",
+  certificateActive: [],
 };
 
 export const allSertifikatReducers = (state = initialStates, action) => {
@@ -57,6 +68,68 @@ export const allSertifikatReducers = (state = initialStates, action) => {
         loading: false,
         certificate: action.payload.data,
       };
+    case OPTIONS_ACADEMY_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case OPTIONS_ACADEMY_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        academyOptions: action.payload.data,
+      };
+    case OPTIONS_ACADEMY_FAIL:
+      return {
+        ...state,
+        loading: false,
+        academyOptions: action.payload.data,
+      };
+    case OPTIONS_THEME_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case OPTIONS_THEME_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        themeOptions: action.payload.data,
+      };
+    case OPTIONS_THEME_FAIL:
+      return {
+        ...state,
+        loading: false,
+        themeOptions: action.payload.data,
+      };
+    case SET_KEYWORD_VALUE: {
+      return {
+        ...state,
+        keyword: action.text,
+      };
+    }
+    case SET_ACADEMY_VALUE: {
+      return {
+        ...state,
+        academy: action.text,
+      };
+    }
+    case SET_THEME_VALUE: {
+      return {
+        ...state,
+        theme: action.text,
+      };
+    }
+    case RESET_VALUE_FILTER: {
+      return {
+        ...state,
+        academy: "",
+        theme: "",
+        page: 1,
+        limit: 5,
+        keyword: "",
+      };
+    }
     case CLEAR_ERRORS:
       return {
         ...state,
@@ -67,7 +140,7 @@ export const allSertifikatReducers = (state = initialStates, action) => {
   }
 };
 
-export const allAcademyOptionsReducer = (state = [], action) => {
+export const allAcademyOptionsReducer = (state = {}, action) => {
   switch (action.type) {
     case OPTIONS_ACADEMY_REQUEST:
       return {

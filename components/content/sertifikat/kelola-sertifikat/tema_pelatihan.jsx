@@ -18,39 +18,58 @@ import { useSelector } from "react-redux";
 import moment from "moment";
 import Select from "react-select";
 import { useDispatch } from "react-redux";
+import {
+  getAllSertifikat,
+  searchKeyword,
+  setValueAcademy,
+  setValueTheme,
+} from "../../../../redux/actions/sertifikat/kelola-sertifikat.action";
+import { RESET_VALUE_FILTER } from "../../../../redux/types/sertifikat/kelola-sertifikat.type";
 
 export default function NamaPelatihan({ token }) {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const { loading, error, certificate } = useSelector(
-    state => state.allCertificates
-  );
+  const { loading, error, certificate, academyOptions, themeOptions } =
+    useSelector(state => state.allCertificates);
 
-  const { academyOptions, loading: loadingAcademy } = useSelector(
-    state => state.allAcademy
-  );
-  console.log(academyOptions, "ini  option", loadingAcademy);
-  const { optionsTheme } = useSelector(state => state.allTheme);
+  const allCertificates = useSelector(state => state.allCertificates);
+  // const { academyOptions, loading: loadingAcademy } = useSelector(
+  //   state => state.allAcademy
+  // );
+  // console.log(academyOptions, "ini  option");
+  // console.log(themeOptions, "ini  option");
+  // console.log(certificate, "ini  certificate");
+
+  useEffect(() => {
+    let arr = [];
+    academyOptions.forEach(el => {
+      // console.log(el);
+      arr.push({ value: el.name, label: el.name });
+    });
+    setDataAcademy(arr);
+  }, [academyOptions]);
+
   const [academy, setAcademy] = useState("");
   const [temaPelatihan, setTemaPelatihan] = useState("");
   const [disable, setDisable] = useState(true);
   const [dataTemaPelatihan, setDataTemaPelatihan] = useState([]);
   const [dataAcademy, setDataAcademy] = useState([]);
-  let { page = 1, keyword } = router.query;
+  const [search, setSearch] = useState("");
+  const [limit, setLimit] = useState(null);
+
+  let { page = 1 } = router.query;
 
   let selectRefAkademi = null;
   let temaRef = null;
 
   const resetValueSort = e => {
-    setDisable(true);
+    e.preventDefault();
+    temaRef.select.clearValue();
     selectRefAkademi.select.clearValue();
-    router.push(`${router.pathname}?page=${page}`);
+    setDisable(true);
+    dispatch({ type: RESET_VALUE_FILTER });
   };
-  // #DatePicker
-  // #Pagination, search, filter
-  const [search, setSearch] = useState("");
-  const [limit, setLimit] = useState(null);
 
   const handlePagination = pageNumber => {
     let link = `${router.pathname}?page=${pageNumber}`;
@@ -64,49 +83,19 @@ export default function NamaPelatihan({ token }) {
     router.push(`${router.pathname}?page=1&limit=${val}`);
   };
 
-  const handleSearch = () => {
-    let link = `${router.pathname}?page=1`;
-    if (limit) link = link.concat(`&limit=${limit}`);
-    if (search) link = link.concat(`&keyword=${search}`);
-    router.push(link);
+  const handleSearch = e => {
+    e.preventDefault();
+    dispatch(searchKeyword(search));
   };
 
-  const handleFilter = e => {
-    if (!academy && !temaPelatihan) {
-      Swal.fire(
-        "Oops !",
-        "Harap memilih kategori Akademi atau Tema pelatihan terlebih dahulu.",
-        "error"
-      );
-    } else {
-      let link = `${router.pathname}?page=1`;
-      if (limit) link = link.concat(`&limit=${limit}`);
-      if (academy) link = link.concat(`&academy=${academy}`);
-      if (temaPelatihan) link = link.concat(`&theme=${temaPelatihan}`);
-      router.push(link);
-    }
-  };
-
-  useEffect(() => {
-    let arr = [];
-    arr.push({ value: "", label: "Semua" });
-    certificate.list_certificate.forEach((el, i) => {
-      arr.push({
-        value: el.theme.academy.name,
-        label: el.theme.academy.name,
-      });
-    });
-    setDataAcademy(arr);
-  }, [certificate.list_certificate]);
-
+  console.log(allCertificates);
+  const date = new Date();
+  console.log(date);
   const handleSelectAcademy = e => {
-    // console.log(e.target.value);
-    // setAcademy(e.target.value);
-
-    setAcademy(e.value);
+    setAcademy(e?.value);
     setDisable(false);
     let arr = certificate.list_certificate;
-    const filteredTheme = arr.filter(el => el.theme.academy.name == e.value);
+    const filteredTheme = arr.filter(el => el.theme.academy.name == e?.value);
     const newArr = [{}];
     filteredTheme.forEach((el, i) => {
       newArr[i]["value"]
@@ -118,6 +107,27 @@ export default function NamaPelatihan({ token }) {
           });
     });
     setDataTemaPelatihan(newArr);
+    if (academy) {
+      temaRef.select.clearValue();
+    }
+  };
+
+  const handleFilter = e => {
+    e.preventDefault();
+    if (!academy && !temaPelatihan) {
+      Swal.fire(
+        "Oops !",
+        "Harap memilih kategori Akademi atau Tema pelatihan terlebih dahulu.",
+        "error"
+      );
+    } else {
+      if (academy) {
+        dispatch(setValueAcademy(academy));
+      }
+      if (temaPelatihan) {
+        dispatch(setValueTheme(temaPelatihan));
+      }
+    }
   };
 
   const handleResetError = () => {
@@ -125,6 +135,18 @@ export default function NamaPelatihan({ token }) {
       dispatch(clearErrors);
     }
   };
+
+  useEffect(() => {
+    dispatch(getAllSertifikat(token));
+  }, [
+    dispatch,
+    token,
+    allCertificates.keyword,
+    allCertificates.page,
+    allCertificates.theme,
+    allCertificates.academy,
+    allCertificates.limit,
+  ]);
 
   return (
     <PageWrapper>
@@ -185,8 +207,8 @@ export default function NamaPelatihan({ token }) {
                         borderTopLeftRadius: "0",
                         borderBottomLeftRadius: "0",
                       }}
-                      onClick={() => {
-                        handleSearch();
+                      onClick={e => {
+                        handleSearch(e);
                       }}
                     >
                       Cari
@@ -252,7 +274,7 @@ export default function NamaPelatihan({ token }) {
                                   ref={ref => (selectRefAkademi = ref)}
                                   className="basic-single"
                                   classNamePrefix="select"
-                                  // placeholder="Semua"
+                                  placeholder="Semua"
                                   isDisabled={false}
                                   isLoading={false}
                                   isClearable={false}
@@ -264,45 +286,26 @@ export default function NamaPelatihan({ token }) {
                                   }}
                                   options={dataAcademy}
                                 />
-                                {/* <select
-                                  className="form-control"
-                                  onChange={e => {
-                                    handleSelectAcademy(e);
-                                  }}
-                                  defaultValue={"Semua"}
-                                > */}
-                                {/* <option selected>Menu</option> */}
-                                {/* {dataAcademy.map((item, i) => {
-                                  // return (
-                                  // <option
-                                  //   key={i}
-                                  //   selected={i == 0}
-                                  //   value={item.value}
-                                  // >
-                                  //   {item.label}
-                                  // </option>
-                                  // );
-                                })} */}
-                                {/* </select> */}
                               </div>
                               <div className="fv-row mb-10">
                                 <label className="required fw-bold fs-6 mb-2">
                                   Tema Pelatihan
                                 </label>
                                 <Select
+                                  ref={ref => (temaRef = ref)}
                                   className="basic-single"
                                   classNamePrefix="select"
                                   placeholder={
                                     disable ? "Isi kolom akademi" : "Semua"
                                   }
                                   // defaultValue={options[0].value}
-                                  isDisabled={disable ? true : false}
+                                  isDisabled={!academy ? true : false}
                                   isLoading={false}
                                   isClearable={false}
                                   isRtl={false}
                                   isSearchable={true}
                                   name="color"
-                                  onChange={e => setTemaPelatihan(e.value)}
+                                  onChange={e => setTemaPelatihan(e?.value)}
                                   options={dataTemaPelatihan}
                                 />
                               </div>

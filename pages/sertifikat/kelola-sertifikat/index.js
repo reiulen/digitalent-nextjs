@@ -8,6 +8,7 @@ import Pagination from "react-js-pagination";
 import {
   getAllSertifikat,
   getOptionsAcademy,
+  getOptionsTheme,
 } from "../../../redux/actions/sertifikat/kelola-sertifikat.action";
 import { wrapper } from "../../../redux/store";
 
@@ -51,17 +52,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
-      await store.dispatch(
-        getAllSertifikat(
-          query.page,
-          query.keyword,
-          query.limit,
-          query.academy,
-          query.theme,
-          session.user.user.data.token
-        )
-      );
+      await store.dispatch(getAllSertifikat(session.user.user.data.token));
       await store.dispatch(getOptionsAcademy(session.user.user.data.token));
+      await store.dispatch(getOptionsTheme(session.user.user.data.token));
+
       return {
         props: { session, title: "List Akademi - Sertifikat" },
       };
