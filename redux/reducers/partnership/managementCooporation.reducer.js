@@ -95,6 +95,7 @@ export const allMCooporationReducerMK = (state = initialState, action) => {
         statusLoad: statuslist.error,
         error: null,
       };
+
     case SEARCH_M_COORPORATION:
       return {
         ...state,

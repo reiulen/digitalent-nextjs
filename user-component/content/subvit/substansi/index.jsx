@@ -40,6 +40,8 @@ const SubtansiUser = ({ token }) => {
     sessionStorage.getItem("targetDate")
   );
 
+  const [totalSecond, setTotalSecond] = useState(0);
+
   const handleModalSoal = () => {
     setModalSoal(true);
   };
@@ -53,13 +55,13 @@ const SubtansiUser = ({ token }) => {
     // loading: allLoading,
     // error: allError,
     random_subtance_question_detail,
-  } = useSelector((state) => state.randomSubtanceQuestionDetail);
+  } = useSelector(state => state.randomSubtanceQuestionDetail);
 
   const handleCloseModal = () => {
     setModalSoal(false);
   };
-  const handleNumber = (val) => {
-    console.log(val.target.innerHTML);
+  const handleNumber = val => {
+    console.log(val);
     // e.preventDefault();
     setNumberPage(val);
     router.push(`/peserta/subvit/substansi/${parseInt(val.target.innerHTML)}`);
@@ -100,6 +102,7 @@ const SubtansiUser = ({ token }) => {
     //   startTimer(fiveMinutes, display);
     // };
 
+  useEffect(() => {
     if (count >= 0) {
       const secondsLeft = setInterval(() => {
         setCount((c) => c - 1);
@@ -125,12 +128,7 @@ const SubtansiUser = ({ token }) => {
     // };
   }, [count]);
 
-  let number = [];
-  for (let i = 0; i < 50; i++) {
-    number.push(i + 1);
-  }
-
-  const secondsToTime = (secs) => {
+  const secondsToTime = secs => {
     var hours = Math.floor(secs / (60 * 60));
     var divisor_for_minutes = secs % (60 * 60);
     var minutes = Math.floor(divisor_for_minutes / 60);
@@ -144,7 +142,7 @@ const SubtansiUser = ({ token }) => {
   };
 
   let list = [];
-  const handleAnswer = (e) => {
+  const handleAnswer = e => {
     console.log(e);
 
     setAnswer(e.option);
