@@ -76,7 +76,7 @@ const Preview = () => {
                             <ol className="breadcrumb bg-transparent my-5 ps-5" style={{border:'1px solid gray', borderRadius:'20px'}}>
                                 <li className="breadcrumb-item" style={{color:'blue'}}><a href="#">Beranda</a></li>
                                 <li className="breadcrumb-item" style={{color:'blue'}}><a href="#">Artikel</a></li>
-                                <li className="breadcrumb-item active" aria-current="page">Detail Artikel</li>
+                                <li className="breadcrumb-item" aria-current="page"><a href="#">Detail Artikel</a></li>
                             </ol>
                         </nav>
 
@@ -123,7 +123,7 @@ const Preview = () => {
                             </div>
                         </div>
                         <div className="row">
-                            <div className="col-8">
+                            {/* <div className="col-8"> */}
                                 <div className="pt-0" style={{ height: '100%' }}>
                                     {/* <div className="text-center mt-5">
                                     <h3>
@@ -150,7 +150,7 @@ const Preview = () => {
 
                                     <div className="text-justify my-5 p-3" style={{ border: '1px solid #d7e1ea', borderRadius: '10px' }}>
                                         {/* To render html Tag */}
-                                        <div dangerouslySetInnerHTML={{ __html: isi_artikel }} className={styles['isiBerita']}></div>
+                                        <div dangerouslySetInnerHTML={{ __html: isi_artikel }} style={{overflowWrap:'break-word'}}></div>
                                         <div className="row">
                                             <div className="col-sm-8 col-md-10 col-11">
                                                 <div className="row my-3 ml-0">
@@ -184,7 +184,7 @@ const Preview = () => {
                                     </div>
 
                                 </div>
-                            </div>
+                            {/* </div>
                             <div className="col-4" style={{ padding: '35px' }}>
                                 <div className="p-5" style={{ border: '1px solid gray', borderRadius: '15px' }}>
                                     <div className="d-flex align-items-center font-weight-bolder">
@@ -236,7 +236,7 @@ const Preview = () => {
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
 

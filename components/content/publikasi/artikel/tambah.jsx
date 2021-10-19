@@ -65,6 +65,7 @@ const TambahArtikel = ({ token }) => {
   // const forceUpdate = React.useReducer(() => ({}))[1]
 
   const { loading, error, success } = useSelector((state) => state.newArtikel);
+  const { setting } = useSelector(state => state.allSettingPublikasi)
   const {
     loading: allLoading,
     error: allError,
@@ -203,9 +204,9 @@ const TambahArtikel = ({ token }) => {
     // console.log ("check")
 
     if (type.includes(e.target.files[0].type)) {
-      if (e.target.files[0].size > 5000000) {
+      if (e.target.files[0].size > parseInt(setting[0].max_size) + '000000') {
         e.target.value = null;
-        Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
+        Swal.fire("Oops !", "Data Image Melebihi Ketentuan", "error");
       } else {
         const reader = new FileReader();
         reader.onload = () => {
@@ -386,9 +387,9 @@ const TambahArtikel = ({ token }) => {
 
   return (
     <>
-      {
-        // console.log (kategori)
-      }
+      {/* {
+        console.log (setting)
+      } */}
       <PageWrapper>
         {error ? (
           <div

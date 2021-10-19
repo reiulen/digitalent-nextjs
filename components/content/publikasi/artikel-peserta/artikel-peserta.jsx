@@ -565,7 +565,7 @@ const ArtikelPeserta = ({ token }) => {
                                                 <th>Dibuat</th>
                                                 <th>Status</th>
                                                 <th>Role</th>
-                                                <th>Aksi</th>
+                                                <th style={{ width: '10vw' }}>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>

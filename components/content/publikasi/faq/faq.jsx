@@ -640,7 +640,7 @@ const Faq = ({ token }) => {
                                                 <th>Pin FAQ</th>
                                                 <th>Status</th>
                                                 <th>Role</th>
-                                                <th>Aksi</th>
+                                                <th style={{ width: '8vw' }}>Aksi</th>
                                             </tr>
                                         </thead>
 
