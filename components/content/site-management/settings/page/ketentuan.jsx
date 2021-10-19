@@ -73,28 +73,28 @@ export default function Ketentuan(props) {
                     setStatusLulus(e.target.checked);
                   }}
                 />
-                <span></span>
+                <span className="checkbox-ketentuan"></span>
                 Status Lulus Pelatihan
               </label>
               <label className="checkbox">
-                <input type="checkbox" name="Checkboxes4" checked={statusAdmin} onChange={(e) => {
+                <input type="checkbox" className="checkbox-ketentuan" name="Checkboxes4" checked={statusAdmin} onChange={(e) => {
                     setStatusAdmin(e.target.checked);
                   }}  />
-                <span></span>
+                <span className="checkbox-ketentuan"></span>
                 Status Administrasi Akhir Lengkap
               </label>
               <label className="checkbox">
                 <input type="checkbox" name="Checkboxes4" checked={statusTidakLulus} onChange={(e) => {
                     setStatusTidakLulus(e.target.checked);
                   }} />
-                <span></span>
+                <span className="checkbox-ketentuan"></span>
                 Status Tidak Lulus Pelatihan
               </label>
               <label className="checkbox">
                 <input type="checkbox" name="Checkboxes4" checked={statusPelatihan} onChange={(e) => {
                     setStatusPelatihan(e.target.checked);
                   }} />
-                <span></span>
+                <span className="checkbox-ketentuan"></span>
                 Tidak Diterima Pelatihan
               </label>
             </div>

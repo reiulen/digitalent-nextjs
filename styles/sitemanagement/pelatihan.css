@@ -227,7 +227,7 @@ input[type='radio']:checked:before {
     background: #215480;
 }
 
-.checkbox>input:checked~span {
+.checkbox>input:checked~.checkbox-ketentuan {
     background-color: #215480;
 }
 
