@@ -21,6 +21,7 @@ import "../../../styles/beranda.module.css";
 // import "slick-carousel/slick/slick.css";
 // import "slick-carousel/slick/slick-theme.css";
 
+
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/splide/dist/css/splide.min.css";
 import IconArrow from "../../../components/assets/icon/Arrow2";
