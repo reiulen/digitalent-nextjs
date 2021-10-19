@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import Image from "next/image";
+import moment from "moment";
 
 import { useDispatch, useSelector } from "react-redux";
 
@@ -260,7 +261,7 @@ const Beranda = () => {
                 <div>
                     <div className="d-flex align-content-center">
                         <i className="ri-time-line mr-2"></i>
-                        <span className="mt-1">Registrasi: {new Date (daftar_mulai).toLocaleDateString("en-GB")} - {new Date (daftar_selesai).toLocaleDateString("en-GB")}</span>
+                        <span className="mt-1">Registrasi: {moment (daftar_mulai).format("DD MMMM YYYY")} - {moment (daftar_selesai).format("DD MMMM YYYY")}</span>
                     </div>
                     <div className="d-flex align-content-center">
                         <i className="ri-group-line mr-2"></i>
@@ -389,7 +390,7 @@ const Beranda = () => {
                 }
 
                 {
-                    // console.log (show)
+                    console.log (show)
                 }
 
                 {
@@ -589,14 +590,7 @@ const Beranda = () => {
                                                                 {
                                                                     renderButton(show[i].pelatihan[ind].hover, row.pendaftaran_mulai, row.pendaftaran_selesai, row.kuota_peserta, el.id)
                                                                 }
-                                                                {/* <div className="d-flex align-content-center">
-                                                                    <i className="ri-time-line mr-2"></i>
-                                                                    <span className="mt-1">Registrasi: {new Date (row.pendaftaran_mulai).toLocaleDateString("en-GB")} - {new Date (row.pendaftaran_selesai).toLocaleDateString("en-GB")}</span>
-                                                                </div>
-                                                                <div className="d-flex align-content-center">
-                                                                    <i className="ri-group-line mr-2"></i>
-                                                                    <span className="mt-1">Kuota {row.kuota_peserta} Peserta</span>
-                                                                </div> */}
+                                                              
                                                             </Card.Body>
                                                         </Card>
                                                     :
