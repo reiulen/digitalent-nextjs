@@ -13,12 +13,20 @@ import {
 } from "react-bootstrap";
 import style from "./style.module.css";
 
-const ProfileWrapper = ({ propsEdit, funcViewEdit }) => {
+const ProfileWrapper = ({
+  propsEdit,
+  propsViewProfile,
+  funcViewEdit,
+  funcViewProfile,
+}) => {
   const router = useRouter();
   const [viewEdit, setViewEdit] = useState(propsEdit);
+  const [viewProvile, setViewProfile] = useState(propsViewProfile);
+
+  console.log("wrapper " + viewEdit);
+
   return (
     <>
-      {console.log(router.pathname)}
       <Col md={12} className="mb-5">
         <Card>
           <Card.Body>
@@ -47,15 +55,17 @@ const ProfileWrapper = ({ propsEdit, funcViewEdit }) => {
               </Col>
               <Col md={2}>
                 <div className="button ml-auto">
-                  <Button
-                    className={`${style.button_profile_wrapper} rounded-xl btn-block`}
-                    onClick={() => {
-                      setViewEdit(!viewEdit);
-                      funcViewEdit(!viewEdit);
-                    }}
-                  >
-                    Ubah Data
-                  </Button>
+                  {viewEdit !== true && (
+                    <Button
+                      className={`${style.button_profile_wrapper} rounded-xl btn-block`}
+                      onClick={() => {
+                        setViewEdit(!viewEdit);
+                        funcViewEdit(!viewEdit);
+                      }}
+                    >
+                      Ubah Data
+                    </Button>
+                  )}
                 </div>
               </Col>
             </Row>
@@ -68,56 +78,61 @@ const ProfileWrapper = ({ propsEdit, funcViewEdit }) => {
             >
               <Container>
                 <Nav className={`${style.navbar_profile_wrapper}`}>
-                  <Link href="/peserta/profile" passHref>
-                    <Nav.Link
-                      className={`mr-9 ${
-                        router.pathname === "/peserta/profile" &&
-                        style.navbar_profile_active
-                      }`}
-                    >
-                      Informasi Pribadi
-                    </Nav.Link>
-                  </Link>
-                  <Link href="/peserta/profile/alamat" passHref>
-                    <Nav.Link
-                      className={`mr-9 ${
-                        router.pathname === "/peserta/profile/alamat" &&
-                        style.navbar_profile_active
-                      }`}
-                    >
-                      Alamat
-                    </Nav.Link>
-                  </Link>
-                  <Link href="/peserta/profile/pendidikan" passHref>
-                    <Nav.Link
-                      className={`mr-9 ${
-                        router.pathname === "/peserta/profile/pendidikan" &&
-                        style.navbar_profile_active
-                      }`}
-                    >
-                      Pendidikan
-                    </Nav.Link>
-                  </Link>
-                  <Link href="/peserta/profile/keterampilan" passHref>
-                    <Nav.Link
-                      className={`mr-9 ${
-                        router.pathname === "/peserta/profile/keterampilan" &&
-                        style.navbar_profile_active
-                      }`}
-                    >
-                      Keterampilan
-                    </Nav.Link>
-                  </Link>
-                  <Link href="/peserta/profile/pekerjaan" passHref>
-                    <Nav.Link
-                      className={`mr-9 ${
-                        router.pathname === "/peserta/profile/pekerjaan" &&
-                        style.navbar_profile_active
-                      }`}
-                    >
-                      Pekerjaan
-                    </Nav.Link>
-                  </Link>
+                  <Nav.Link
+                    className={`mr-9 ${
+                      viewProvile === 1 && style.navbar_profile_active
+                    }`}
+                    onClick={() => {
+                      funcViewProfile(1);
+                      setViewProfile(1);
+                    }}
+                  >
+                    Informasi Pribadi
+                  </Nav.Link>
+                  <Nav.Link
+                    className={`mr-9 ${
+                      viewProvile === 2 && style.navbar_profile_active
+                    }`}
+                    onClick={() => {
+                      funcViewProfile(2);
+                      setViewProfile(2);
+                    }}
+                  >
+                    Alamat
+                  </Nav.Link>
+                  <Nav.Link
+                    className={`mr-9 ${
+                      viewProvile === 3 && style.navbar_profile_active
+                    }`}
+                    onClick={() => {
+                      funcViewProfile(3);
+                      setViewProfile(3);
+                    }}
+                  >
+                    Pendidikan
+                  </Nav.Link>
+                  <Nav.Link
+                    className={`mr-9 ${
+                      viewProvile === 4 && style.navbar_profile_active
+                    }`}
+                    onClick={() => {
+                      funcViewProfile(4);
+                      setViewProfile(4);
+                    }}
+                  >
+                    Keterampilan
+                  </Nav.Link>
+                  <Nav.Link
+                    className={`mr-9 ${
+                      viewProvile === 5 && style.navbar_profile_active
+                    }`}
+                    onClick={() => {
+                      funcViewProfile(5);
+                      setViewProfile(5);
+                    }}
+                  >
+                    Pekerjaan
+                  </Nav.Link>
                 </Nav>
               </Container>
             </Navbar>
