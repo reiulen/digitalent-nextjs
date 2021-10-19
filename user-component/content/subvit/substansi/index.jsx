@@ -42,6 +42,11 @@ const SubtansiUser = ({ token }) => {
     setModalSoal(true);
   };
 
+  const handleNext = () => {
+    const page = parseInt(router.query.id) + 1;
+    router.push(`${router.pathname.slice(0, 25)}/${page}`);
+  };
+
   const {
     // loading: allLoading,
     // error: allError,
@@ -52,18 +57,18 @@ const SubtansiUser = ({ token }) => {
     setModalSoal(false);
   };
   const handleNumber = (val) => {
-    console.log(val);
+    console.log(val.target.innerHTML);
     // e.preventDefault();
     setNumberPage(val);
-    router.push(`/peserta/subvit/subtansi/${val + 1}`);
+    router.push(`/peserta/subvit/substansi/${parseInt(val.target.innerHTML)}`);
   };
 
   const handleBack = () => {
     const page = parseInt(router.query.id) - 1;
     if (parseInt(router.query.id) === 1) {
-      router.push(`${router.pathname.slice(0, 24)}/1`);
+      router.push(`${router.pathname.slice(0, 25)}/1`);
     } else {
-      router.push(`${router.pathname.slice(0, 24)}/${page}`);
+      router.push(`${router.pathname.slice(0, 25)}/${page}`);
     }
   };
   // function startTimer(duration, display) {
@@ -157,264 +162,6 @@ const SubtansiUser = ({ token }) => {
 
   return (
     <>
-      {/* <HeaderUser /> */}
-      {/* <Breadcrumb /> */}
-      {/* <Container className={styles.base}>
-        <Card className={styles.mainCard}>
-          <Row>
-            <Col sm={1} xs={6}>
-              <Card className={styles.back} onClick={handleBack}>
-                <i
-                  className="ri-arrow-left-s-line"
-                  style={{ fontSize: "25px" }}
-                ></i>
-              </Card>
-            </Col>
-            <Col sm={6} className={styles.academy}>
-              {random_subtance_question_detail &&
-                random_subtance_question_detail.academy}
-            </Col>
-            <Col sm={5} xs={6}>
-              <Card className={styles.time} id="time">
-                {sessionStorage.getItem("hours") < 9
-                  ? "0" + parseInt(sessionStorage.getItem("hours"))
-                  : parseInt(sessionStorage.getItem("hours"))}
-                :
-                {sessionStorage.getItem("minute") < 9
-                  ? "0" + parseInt(sessionStorage.getItem("minute"))
-                  : parseInt(sessionStorage.getItem("minute"))}
-                :
-                {sessionStorage.getItem("second") < 9
-                  ? "0" + parseInt(sessionStorage.getItem("second"))
-                  : parseInt(sessionStorage.getItem("second"))}
-              </Card>
-            </Col>
-          </Row>
-          <Row style={{ marginTop: "20px" }}>
-            <Col xs={6} className={styles.totalSoalResponsive}>
-              Soal {router.query.id} dari{" "}
-              {random_subtance_question_detail &&
-                random_subtance_question_detail.list_questions &&
-                random_subtance_question_detail.list_questions.length}
-            </Col>
-            <Col
-              xs={6}
-              className={styles.daftarSoalResponsive}
-              onClick={handleModalSoal}
-            >
-              Daftar Soal
-            </Col>
-            <Col sm={6} xs={12}>
-              <p className={styles.nameTest}>
-                Tes Subtansi
-                <span
-                  style={{
-                    color: "#B5B5C3",
-                  }}
-                >
-                  {" "}
-                  |{" "}
-                </span>
-                {random_subtance_question_detail &&
-                  random_subtance_question_detail.theme}
-              </p>
-            </Col>
-            <Col sm={6} className={styles.totalSoal}>
-              Soal {router.query.id} dari{" "}
-              {random_subtance_question_detail &&
-                random_subtance_question_detail.list_questions &&
-                random_subtance_question_detail.list_questions.length}
-            </Col>
-          </Row>
-          <Row
-            style={{
-              marginTop: "10px",
-              padding: "0px 15px",
-            }}
-          >
-            <Col sm={8}>
-              <Row>
-                {random_subtance_question_detail &&
-                random_subtance_question_detail.list_questions &&
-                random_subtance_question_detail.list_questions[
-                  parseInt(router.query.id) - 1
-                ].question_image !== null ? (
-                  <>
-                    <Col sm={2}>
-                      <p>Ini Gambar</p>
-                    </Col>
-                    <Col sm={10}>
-                      <p
-                        style={{
-                          fontFamily: "Poppins",
-                          fontStyle: "normal",
-                          fontWeight: "bold",
-                          fontSize: "16px",
-                          lineHeight: "120%",
-                          marginBottom: "10px",
-                          color: "#212121",
-                        }}
-                      >
-                        {random_subtance_question_detail.list_questions &&
-                          random_subtance_question_detail.list_questions[
-                            parseInt(router.query.id) - 1
-                          ].question}
-                      </p>
-                    </Col>
-                  </>
-                ) : (
-                  <p
-                    style={{
-                      fontFamily: "Poppins",
-                      fontStyle: "normal",
-                      fontWeight: "bold",
-                      fontSize: "16px",
-                      lineHeight: "120%",
-                      marginBottom: "10px",
-                      color: "#212121",
-                    }}
-                  >
-                    {random_subtance_question_detail &&
-                      random_subtance_question_detail.list_questions &&
-                      random_subtance_question_detail.list_questions[
-                        parseInt(router.query.id) - 1
-                      ].question}
-                  </p>
-                )}
-              </Row>
-              <hr />
-              {random_subtance_question_detail &&
-                random_subtance_question_detail.list_questions &&
-                JSON.parse(
-                  random_subtance_question_detail.list_questions[
-                    parseInt(router.query.id) - 1
-                  ].answer
-                ).map((key, index) => {
-                  return (
-                    <>
-                      <Row>
-                        {key.image != null ? (
-                          <>
-                            <Col sm={2}>ini Gambar</Col>
-                            <Col sm={10}>
-                              <Card
-                                key={index}
-                                className={
-                                  localStorage.getItem(`${router.query.id}`) ===
-                                  key.option
-                                    ? styles.cardAnswered
-                                    : styles.cardAnswer
-                                }
-                                onClick={() => handleAnswer(key)}
-                              >
-                                {key.key}. {key.option}
-                              </Card>
-                            </Col>
-                          </>
-                        ) : (
-                          <Col sm={12}>
-                            <Card
-                              key={index}
-                              className={
-                                localStorage.getItem(`${router.query.id}`) ===
-                                key.option
-                                  ? styles.cardAnswered
-                                  : styles.cardAnswer
-                              }
-                              onClick={() => handleAnswer(key)}
-                            >
-                              {key.key}. {key.option}
-                            </Card>
-                          </Col>
-                        )}
-                      </Row>
-                    </>
-                  );
-                })}
-            </Col>
-            <Col sm={1}></Col>
-            <Col sm={3}>
-              <p style={{}} className={styles.daftarSoal}>
-                Daftar Soal
-              </p>
-              <Row className={styles.rowNumber}>
-                {random_subtance_question_detail &&
-                  random_subtance_question_detail.list_questions &&
-                  random_subtance_question_detail.list_questions.map(
-                    (item, index) => {
-                      return (
-                        <Col key={index} style={{ width: "20%" }}>
-                          <Card
-                            className={
-                              index + 1 === parseInt(router.query.id)
-                                ? styles.cardChoosed
-                                : styles.cardChoose
-                            }
-                            onClick={() => handleNumber(index)}
-                          >
-                            <p
-                              className={
-                                index + 1 === parseInt(router.query.id)
-                                  ? styles.textCardNumber
-                                  : styles.textCard
-                              }
-                            >
-                              {index + 1}
-                            </p>
-                          </Card>
-                        </Col>
-                      );
-                    }
-                  )}
-              </Row>
-            </Col>
-          </Row>
-          <Footer
-            answer={answer}
-            number={
-              random_subtance_question_detail &&
-              random_subtance_question_detail.list_questions &&
-              random_subtance_question_detail.list_questions.length
-            }
-          />
-        </Card>
-      </Container>
-
-      <Modal show={modalSoal} onHide={handleCloseModal} centered>
-        <Modal.Body>
-          <h1>Daftar Soal</h1>
-          <Row className={styles.rowNumberResponsive}>
-            {random_subtance_question_detail &&
-              random_subtance_question_detail.list_questions &&
-              random_subtance_question_detail.list_questions.map(
-                (item, index) => {
-                  return (
-                    <Col key={index} style={{ width: "20%" }}>
-                      <Card
-                        className={
-                          index + 1 === parseInt(router.query.id)
-                            ? styles.cardChoosed
-                            : styles.cardChoose
-                        }
-                        onClick={() => handleNumber(index)}
-                      >
-                        <p
-                          className={
-                            index + 1 === parseInt(router.query.id)
-                              ? styles.textCardNumber
-                              : styles.textCard
-                          }
-                        >
-                          {index + 1}
-                        </p>
-                      </Card>
-                    </Col>
-                  );
-                }
-              )}
-          </Row>
-        </Modal.Body>
-      </Modal> */}
       <Container className={styles.baseAll}>
         <Card className={styles.cardTop}>
           <Row>
@@ -460,7 +207,9 @@ const SubtansiUser = ({ token }) => {
         <Row style={{ marginTop: "20px" }}>
           <Col sm={9}>
             <Card className={styles.cardSoal}>
-              <p className={styles.totalSoal}>Soal 1 dari 50</p>
+              <p className={styles.totalSoal}>
+                Soal {parseInt(router.query.id)} dari 50
+              </p>
               <h1 className={styles.soal}>
                 Ketika melakukan review project, atasan Anda selalu memberikan
                 kritik yang menurunkan semangat tim Anda. Bagaimana Anda
@@ -482,7 +231,7 @@ const SubtansiUser = ({ token }) => {
               <Card className={styles.boxAnswer}>
                 <table>
                   <tr>
-                    <td>A</td>
+                    <td>B</td>
                     <td>.</td>
                     <td>
                       Membiarkannya karena tidak memiliki wewenang apa-apa
@@ -493,7 +242,7 @@ const SubtansiUser = ({ token }) => {
               <Card className={styles.boxAnswer}>
                 <table>
                   <tr>
-                    <td>A</td>
+                    <td>C</td>
                     <td>.</td>
                     <td>
                       Membiarkannya karena tidak memiliki wewenang apa-apa
@@ -504,7 +253,7 @@ const SubtansiUser = ({ token }) => {
               <Card className={styles.boxAnswer}>
                 <table>
                   <tr>
-                    <td>A</td>
+                    <td>D</td>
                     <td>.</td>
                     <td>
                       Membiarkannya karena tidak memiliki wewenang apa-apa
@@ -515,9 +264,17 @@ const SubtansiUser = ({ token }) => {
 
               <Row style={{ marginTop: "20px" }}>
                 <Col>
-                  <Button variant="link" className={styles.btnBack}>
+                  <Button
+                    variant="link"
+                    className={styles.btnBack}
+                    onClick={handleBack}
+                    disabled={parseInt(router.query.id) === 1}
+                  >
                     <div className="d-flex flex-row">
-                      <div className="p-2">
+                      <div
+                        className="p-2"
+                        aria-disabled={parseInt(router.query.id) === 1}
+                      >
                         <i
                           className="ri-arrow-left-s-line"
                           style={{ color: "#007CFF" }}
@@ -528,10 +285,14 @@ const SubtansiUser = ({ token }) => {
                   </Button>
                 </Col>
                 <Col style={{ textAlign: "right", margin: "10px " }}>
-                  <Button variant="link" className={styles.btnSkip}>
+                  <Button
+                    variant="link"
+                    className={styles.btnSkip}
+                    onClick={handleNext}
+                  >
                     Lewati
                   </Button>
-                  <Button className={styles.btnNext}>
+                  <Button className={styles.btnNext} onClick={handleNext}>
                     <div className="d-flex flex-row">
                       <div className="p-1">Lanjut</div>
                       <div className="p-1">
@@ -551,7 +312,12 @@ const SubtansiUser = ({ token }) => {
                   return (
                     <>
                       <Col key={index} style={{ width: "20%" }}>
-                        <Card className={styles.cardChoose}>{item}</Card>
+                        <Card
+                          className={styles.cardChoose}
+                          onClick={(event) => handleNumber(event)}
+                        >
+                          {item}
+                        </Card>
                       </Col>
                     </>
                   );
