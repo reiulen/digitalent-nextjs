@@ -347,7 +347,7 @@ const FormPendaftaran = ({ propsTitle, propsForm, funcForm, funcView }) => {
             size="sm"
             type="submit"
           >
-            Simpan
+            Lanjut
           </Button>
         </form>
       </Card.Body>
