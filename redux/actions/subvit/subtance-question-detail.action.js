@@ -85,8 +85,7 @@ export const getRandomSubtanceQuestionDetail =
       if (training_id) link = link.concat(`&training_id=${training_id}`);
       if (category) link = link.concat(`&category=${category}`);
       if (theme_id) link = link.concat(`&theme_id=${theme_id}`);
-      console.log(token);
-
+      console.log(link);
       const config = {
         headers: {
           Authorization: "Bearer " + token,
@@ -94,6 +93,7 @@ export const getRandomSubtanceQuestionDetail =
       };
 
       const { data } = await axios.get(link, config);
+      console.log(data);
 
       dispatch({
         type: SUBTANCE_QUESTION_RANDOM_DETAIL_SUCCESS,

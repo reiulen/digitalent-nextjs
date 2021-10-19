@@ -70,7 +70,7 @@ const Dashboard = ({ session }) => {
             backgroundImage="new-game-4.svg"
             background="primary"
             color="#6C6C6C"
-            link="/peserta"
+            link="/peserta/subvit/substansi/1"
             text="Lakukan Test Substansi"
             desc="Anda Belum Melakukan Test Substansi"
           />

@@ -17,7 +17,6 @@ import HeaderUser from "../header";
 import axios from "axios";
 import Image from "next/dist/client/image";
 import { useSelector } from "react-redux";
-import Breadcrumb from "../breadcrumb";
 import ModalHeader from "react-bootstrap/esm/ModalHeader";
 
 // import Cookies from "js-cookie";
@@ -30,9 +29,8 @@ const SubtansiUser = ({ token }) => {
   const [numberPage, setNumberPage] = useState("");
   const [numberAnswer, setNumberAnswer] = useState(false);
   const [modalSoal, setModalSoal] = useState(false);
-  const [count, setCount] = useState(
-    parseInt(sessionStorage.getItem("targetDate") || 3600)
-  );
+  const [count, setCount] = useState(3600);
+
   const [hour, setHour] = useState(0);
   const [minute, setMinute] = useState(0);
   const [second, setSecond] = useState(0);
@@ -226,8 +224,8 @@ const SubtansiUser = ({ token }) => {
               <Card className={styles.boxAnswer}>
                 <table>
                   <tr>
-                    <td>A</td>
-                    <td>.</td>
+                    <td style={{ width: "5px" }}>A</td>
+                    <td style={{ width: "15px" }}>.</td>
                     <td>
                       Membiarkannya karena tidak memiliki wewenang apa-apa
                     </td>
@@ -237,30 +235,32 @@ const SubtansiUser = ({ token }) => {
               <Card className={styles.boxAnswer}>
                 <table>
                   <tr>
-                    <td>B</td>
-                    <td>.</td>
+                    <td style={{ width: "5px" }}>A</td>
+                    <td style={{ width: "15px" }}>.</td>
                     <td>
                       Membiarkannya karena tidak memiliki wewenang apa-apa
                     </td>
                   </tr>
                 </table>
               </Card>
+
               <Card className={styles.boxAnswer}>
                 <table>
                   <tr>
-                    <td>C</td>
-                    <td>.</td>
+                    <td style={{ width: "5px" }}>A</td>
+                    <td style={{ width: "15px" }}>.</td>
                     <td>
                       Membiarkannya karena tidak memiliki wewenang apa-apa
                     </td>
                   </tr>
                 </table>
               </Card>
+
               <Card className={styles.boxAnswer}>
                 <table>
                   <tr>
-                    <td>D</td>
-                    <td>.</td>
+                    <td style={{ width: "5px" }}>A</td>
+                    <td style={{ width: "15px" }}>.</td>
                     <td>
                       Membiarkannya karena tidak memiliki wewenang apa-apa
                     </td>
@@ -286,7 +286,7 @@ const SubtansiUser = ({ token }) => {
                           style={
                             parseInt(router.query.id) === 1
                               ? {
-                                  color: "#000",
+                                  color: "#d3d3d3",
                                 }
                               : { color: "#007CFF", cursor: "pointer" }
                           }
@@ -325,7 +325,11 @@ const SubtansiUser = ({ token }) => {
                     <>
                       <Col key={index} style={{ width: "20%" }}>
                         <Card
-                          className={styles.cardChoose}
+                          className={
+                            item === parseInt(router.query.id)
+                              ? styles.cardChoosed
+                              : styles.cardChoose
+                          }
                           onClick={(event) => handleNumber(event)}
                         >
                           {item}
@@ -346,7 +350,7 @@ const SubtansiUser = ({ token }) => {
           Panduan{" "}
           {router.pathname.includes("substansi")
             ? "Test Substansi"
-            : router.pathname.includes("substansi")
+            : router.pathname.includes("survey")
             ? "Survey"
             : router.pathname.includes("trivia")
             ? "TRIVIA"
@@ -446,8 +450,44 @@ const SubtansiUser = ({ token }) => {
                 </tr>
               </table>
             </Card>
-          ) : router.pathname.includes("substansi") ? (
-            "Survey"
+          ) : router.pathname.includes("survey") ? (
+            <Card className={styles.cardPanduan}>
+              <table>
+                <tr>
+                  <td style={{ verticalAlign: "top" }}>1.</td>
+                  <td>&nbsp;</td>
+                  <td>
+                    {" "}
+                    Lakukan pengisian survey hingga seluruh pertanyaan terjawab
+                    dengan tuntas.
+                  </td>
+                </tr>
+                <tr>
+                  <td style={{ verticalAlign: "top" }}>2.</td>
+                  <td>&nbsp;</td>
+                  <td>
+                    {" "}
+                    Peserta wajib menjawab seluruh survey yang berjumlah 50
+                    pertanyaan.
+                  </td>
+                </tr>
+                <tr>
+                  <td style={{ verticalAlign: "top" }}>3.</td>
+                  <td>&nbsp;</td>
+                  <td>
+                    {" "}
+                    Peserta WAJIB mengisi jawaban dengan jujur sebagai bahan
+                    evaluasi bagi manajemen pelaksana pelatihan Digital Talent
+                    Scholarship 2022.
+                  </td>
+                </tr>
+                <tr>
+                  <td style={{ verticalAlign: "top" }}>4.</td>
+                  <td>&nbsp;</td>
+                  <td> Waktu yang tersedia untuk mengisi survey ini 1 Jam.</td>
+                </tr>
+              </table>
+            </Card>
           ) : router.pathname.includes("trivia") ? (
             "TRIVIA"
           ) : (

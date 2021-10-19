@@ -7,12 +7,16 @@ import Default from "../../../public/assets/media/logos/default.png";
 
 const Header = () => {
   const router = useRouter();
+
   let routerPath;
   if (router.pathname.includes("form-pendaftaran"))
     routerPath = "form-pendaftaran";
-  if (router.pathname.includes("substansi")) routerPath = "substansi";
-  if (router.pathname.includes("trivia")) routerPath = "trivia";
-  if (router.pathname.includes("survey")) routerPath = "survey";
+  if (router.pathname === "/peserta/subvit/substansi/[id]")
+    routerPath = "/peserta/subvit/substansi/[id]";
+  if (router.pathname === "/peserta/subvit/survey/[id]")
+    routerPath = "/peserta/subvit/survey/[id]";
+  if (router.pathname === "/peserta/subvit/trivia/[id]")
+    routerPath = "/peserta/subvit/trivia/[id]";
 
   var date = new Date();
 
@@ -100,18 +104,10 @@ const Header = () => {
                 <p className={styles.nik}>1239120312839212</p>
               </center>
             </Col>
-            <Col
-              sm={
-                router.pathname.includes("substansi" || "survey" || "trivia")
-                  ? 12
-                  : 9
-              }
-            >
+            <Col sm={router.pathname.includes(routerPath) ? 12 : 9}>
               <Card
                 className={styles.cardBody}
-                hidden={router.pathname.includes(
-                  "substansi" || "survey" || "trivia"
-                )}
+                hidden={router.pathname.includes(routerPath)}
               >
                 <Row>
                   <Col sm={6} xs={4} className={styles.textCardLeft}>
@@ -123,6 +119,8 @@ const Header = () => {
                           ? "Survey"
                           : router.pathname.includes("trivia")
                           ? "Trivia"
+                          : router.pathname.includes("test-subtansi")
+                          ? "Test Substansi"
                           : "Dashboard"}
                       </div>
                     </div>
@@ -150,15 +148,11 @@ const Header = () => {
               </Card>
               <h1
                 className={styles.mainText}
-                hidden={router.pathname.includes(
-                  "substansi" || "survey" || "trivia"
-                )}
+                hidden={router.pathname.includes(routerPath)}
               >
                 Digital Talent Scholarship
               </h1>
-              {router.pathname.includes(
-                "substansi" || "survey" || "trivia"
-              ) && (
+              {router.pathname.includes(routerPath) && (
                 <>
                   <Row>
                     <Col>
@@ -193,14 +187,43 @@ const Header = () => {
               <p className={styles.subText}>
                 <div className="d-flex flex-row" style={{ float: "left" }}>
                   <div className="p-1">
-                    <i
-                      className="ri-article-line"
-                      style={{
-                        color: "#fff",
-                        fontSize: "20px",
-                        marginRight: "15px",
-                      }}
-                    ></i>
+                    {router.pathname.includes("substansi") ? (
+                      <i
+                        className="ri-article-line"
+                        style={{
+                          color: "#fff",
+                          fontSize: "20px",
+                          marginRight: "15px",
+                        }}
+                      ></i>
+                    ) : router.pathname.includes("survey") ? (
+                      <i
+                        className="ri-chat-smile-line"
+                        style={{
+                          color: "#fff",
+                          fontSize: "20px",
+                          marginRight: "15px",
+                        }}
+                      ></i>
+                    ) : router.pathname.includes("trivia") ? (
+                      <i
+                        className="ri-lightbulb-line"
+                        style={{
+                          color: "#fff",
+                          fontSize: "20px",
+                          marginRight: "15px",
+                        }}
+                      ></i>
+                    ) : (
+                      <i
+                        className="ri-article-line"
+                        style={{
+                          color: "#fff",
+                          fontSize: "20px",
+                          marginRight: "15px",
+                        }}
+                      ></i>
+                    )}
                   </div>
                   <div className="p-1">
                     {router.pathname.includes("substansi")
@@ -209,6 +232,8 @@ const Header = () => {
                       ? "Survey"
                       : router.pathname.includes("trivia")
                       ? "Trivia"
+                      : router.pathname.includes("test-subtansi")
+                      ? "Test Substansi"
                       : "Dashboard"}
                   </div>
                 </div>
