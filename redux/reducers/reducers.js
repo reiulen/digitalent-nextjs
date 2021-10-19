@@ -242,6 +242,9 @@ import {
 // ============== pelatihan ===============
 import {allPromptReducer} from './site-management/settings/pelatihan.reducers'
 
+// ============== pelatihan ===============
+import {allDataZonasiReducer} from './site-management/dashboard.reducers'
+
 // End Site Management
 
 //PELATIHAN
@@ -531,6 +534,8 @@ const reducer = combineReducers({
   deleteRoles: deleteRolesReducer,
   // ============ PELATIHAN =======
   allPrompt: allPromptReducer,
+  // ============ Dashboatd =======
+  allDataZonasi: allDataZonasiReducer,
 
   // END SITE MANAGEMENT
 

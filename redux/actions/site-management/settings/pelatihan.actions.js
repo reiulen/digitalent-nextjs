@@ -49,6 +49,33 @@ export const loadDataPrompt = (token) => {
   };
 };
 
+export const postTemplate = (token, subject, body, status) => {
+  return (dispatch) => {
+    axios
+      .post(
+        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-trainings/update-template-email/tes substansi`,
+        {
+          status: status,
+          subject: subject,
+          body: body,
+        },
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then(() => {
+        Swal.fire("Berhasil", "Data berhasil tersimpan", "success").then(() => {
+          router.push("/partnership/user/auth/login");
+        });
+      })
+      .catch((error) => {
+        Swal.fire("Gagal", "Gagal tidak berhasil tersimpan", "error");
+      });
+  };
+};
+
 export const putDataPrompt = (token, notification, email) => {
   return async (dispatch) => {
     try {
@@ -77,7 +104,37 @@ export const putDataPrompt = (token, notification, email) => {
         router.push("/partnership/user/auth/login");
       });
     } catch (error) {
-      Swal.fire("Gagal", "Gagal tidak berhasil tersimpan", "error")
+      Swal.fire("Gagal", "Gagal tidak berhasil tersimpan", "error");
     }
+  };
+};
+
+export const postKetentuan = (token, numberOfTraining, trainingPassStatus, completeFinalAdministrativeStatus, statusNotPassedTraining, noTrainingAccepted) => {
+  console.log("action", numberOfTraining)
+  return (dispatch) => {
+    axios
+      .post(
+        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-trainings/update-training-condition`,
+        {
+          "numberOfTraining": numberOfTraining,
+          "trainingPassStatus": trainingPassStatus,
+          "completeFinalAdministrativeStatus": completeFinalAdministrativeStatus,
+          "statusNotPassedTraining": statusNotPassedTraining,
+          "noTrainingAccepted": noTrainingAccepted,
+        },
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then(() => {
+        Swal.fire("Berhasil", "Data berhasil tersimpan", "success").then(() => {
+          router.push("/partnership/user/auth/login");
+        });
+      })
+      .catch((error) => {
+        Swal.fire("Gagal", "Gagal tidak berhasil tersimpan", "error");
+      });
   };
 };

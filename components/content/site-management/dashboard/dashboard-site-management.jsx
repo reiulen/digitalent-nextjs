@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { getSession } from "next-auth/client";
 import axios from "axios";
+import { useDispatch, useSelector, shallowEqual } from "react-redux";
 
 import IconUser from "../../../assets/icon/User";
 import IconDoc from "../../../assets/icon/Doc";
@@ -12,10 +13,20 @@ import CardDashboardSM from "../../../CardDashboardSM";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import CardDashboardSiteManagement from "../../../CardDashboardSiteManagement";
 
+import {
+  loadDataZonasi,
+  loadDataZonasiNext,
+} from "../../../../redux/actions/site-management/dashboard.actions";
+import { set } from "js-cookie";
+
 const DashboardSiteManagement = ({ token }) => {
   const [participant, setParticipant] = useState("0");
   const [administrator, setAdministrator] = useState("0");
   const [mitra, setMitra] = useState(0);
+  const [pageZonasi, setPageZonasi] = useState(1);
+  const [type, setType] = useState("province");
+
+  let dispatch = useDispatch();
 
   useEffect(() => {
     axios
@@ -25,11 +36,43 @@ const DashboardSiteManagement = ({ token }) => {
         },
       })
       .then((items) => {
-        setParticipant(Intl.NumberFormat().format(items.data.data.participant));
-        setAdministrator(items.data.data.administrator);
-        setMitra(items.data.data.mitra);
+        setParticipant(formatNumber(items.data.data.participant));
+        setAdministrator(formatNumber(items.data.data.administrator));
+        setMitra(formatNumber(items.data.data.mitra));
       });
-  }, [token]);
+
+    dispatch(loadDataZonasi(token, type, pageZonasi));
+  }, [dispatch, token, type, pageZonasi]);
+
+  const { allDataZonasi } = useSelector(
+    (state) => ({
+      allDataZonasi: state.allDataZonasi,
+    }),
+    shallowEqual
+  );
+
+  function capitalize(s) {
+    return s.toLowerCase().replace(/\b./g, function (a) {
+      return a.toUpperCase();
+    });
+  }
+
+  function formatNumber(num) {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  }
+
+  const tableZonasi = allDataZonasi.map((item, index) => {
+    return (
+      <tr key={index}>
+        <td className="data-daerah py-4">
+          <span className="nomor mr-4">{item.nomor}</span>
+          {capitalize(item.provinsi)}
+        </td>
+        <td className="total-peserta">{formatNumber(item.total)} Peserta</td>
+      </tr>
+    );
+  });
+
   return (
     <>
       <PageWrapper>
@@ -161,41 +204,80 @@ const DashboardSiteManagement = ({ token }) => {
               <div className="content-data bg-white">
                 <table className="table table-borderless rounded mx-4">
                   <tr>
-                    <th> </th>
                     <th>
-                      <div className="data-peserta">Data Peserta</div>
+                      <div className="data-peserta">Data Zonasi</div>
                       <div className="berdasarkan">Berdasarkan Daerah</div>
                     </th>
                     <th>
-                      <div className="kota pt-3">
-                        <a href="#">Kota / Kabupaten</a>
+                      <div
+                        className={
+                          type === "city"
+                            ? "btn btn-primary text-white type-styling"
+                            : "text-gray pt-3"
+                        }
+                      >
+                        <a
+                          href="#"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setType("city");
+                            setPageZonasi(1);
+                          }}
+                        >
+                          Kota / Kabupaten
+                        </a>
                       </div>
                     </th>
                     <th>
-                      <div className="btn btn-primary text-white">Provinsi</div>
+                      <div
+                        className={
+                          type === "province"
+                            ? "btn btn-primary text-white type-styling"
+                            : "text-gray pt-3"
+                        }
+                      >
+                        <a
+                          href="#"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setType("province");
+                            setPageZonasi(1);
+                          }}
+                        >
+                          Provinsi
+                        </a>
+                      </div>
                     </th>
                   </tr>
 
-                  <tr>
-                    <td className="text-center">
-                      <span className="nomor">1</span>
-                    </td>
-                    <td className="data-daerah py-4">DKI Jakarta</td>
-                    <td className="total-peserta">12.000 Peserta</td>
-                  </tr>
-                  <tr>
-                    <td className="text-center">
-                      <span className="nomor">1</span>
-                    </td>
-                    <td className="data-daerah">DKI Jakarta</td>
-                    <td className="total-peserta">12.000 Peserta</td>
-                  </tr>
+                  {tableZonasi}
                 </table>
                 <div className="d-flex mx-6">
                   <p className="pt-6">Total: 120.000 Zonasi</p>
                   <div className="ml-auto mx-10 my-4">
-                    <button className="btn btn-primary mx-4">&lt;</button>
-                    <button className="btn btn-primary">&gt;</button>
+                    <button
+                      className={
+                        pageZonasi === 1
+                          ? "btn btn-primary mx-4 disabled"
+                          : "btn btn-primary mx-4"
+                      }
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setPageZonasi(pageZonasi - 1);
+                      }}
+                    >
+                      &lt;
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-primary"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setPageZonasi(pageZonasi + 1);
+                      }}
+                    >
+                      &gt;
+                    </button>
                   </div>
                 </div>
               </div>
