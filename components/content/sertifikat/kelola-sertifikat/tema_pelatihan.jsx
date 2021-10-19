@@ -26,6 +26,12 @@ export default function NamaPelatihan({ token }) {
   const { loading, error, certificate } = useSelector(
     state => state.allCertificates
   );
+
+  const { academyOptions, loading: loadingAcademy } = useSelector(
+    state => state.allAcademy
+  );
+  console.log(academyOptions, "ini  option", loadingAcademy);
+  const { optionsTheme } = useSelector(state => state.allTheme);
   const [academy, setAcademy] = useState("");
   const [temaPelatihan, setTemaPelatihan] = useState("");
   const [disable, setDisable] = useState(true);
@@ -42,7 +48,6 @@ export default function NamaPelatihan({ token }) {
     router.push(`${router.pathname}?page=${page}`);
   };
   // #DatePicker
-
   // #Pagination, search, filter
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(null);

@@ -24,6 +24,12 @@ import {
   UPDATE_SERTIFIKAT_REQUEST,
   UPDATE_SERTIFIKAT_SUCCESS,
   UPDATE_SERTIFIKAT_FAIL,
+  OPTIONS_ACADEMY_FAIL,
+  OPTIONS_ACADEMY_REQUEST,
+  OPTIONS_ACADEMY_SUCCESS,
+  OPTIONS_THEME_FAIL,
+  OPTIONS_THEME_REQUEST,
+  OPTIONS_THEME_SUCCESS,
 } from "../../types/sertifikat/kelola-sertifikat.type";
 
 export const getAllSertifikat =
@@ -152,8 +158,12 @@ export const getPublishedSertifikat = (id, token) => async dispatch => {
     };
 
     const { data } = await axios.get(link, config);
+
     if (data) {
-      dispatch({ type: PUBLISHED_SERTIFIKAT_SUCCESS, payload: data });
+      dispatch({
+        type: PUBLISHED_SERTIFIKAT_SUCCESS,
+        payload: data,
+      });
     }
   } catch (error) {
     dispatch({ type: PUBLISHED_SERTIFIKAT_FAIL, payload: error.message });
@@ -188,5 +198,49 @@ export const updateSertifikat = (id, formData, token) => async dispatch => {
       payload: error.message,
       // payload: error.response.data.message,
     });
+  }
+};
+
+// export const getOptionsAcademy = token => async dispatch => {
+//   try {
+//     dispatch({ type: OPTIONS_ACADEMY_REQUEST });
+
+//     let link = process.env.END_POINT_API_SERTIFIKAT + `api/option/academy`;
+//     const config = {
+//       headers: {
+//         Authorization: `Bearer ${token}`,
+//       },
+//     };
+//     const { data } = await axios.get(link, config);
+//     if (data) {
+//       dispatch({
+//         type: OPTIONS_ACADEMY_SUCCESS,
+//         payload: data,
+//       });
+//     }
+//   } catch (error) {
+//     dispatch({ type: OPTIONS_THEME_FAIL, payload: error.message });
+//   }
+// };
+
+export const getOptionsAcademy = token => async dispatch => {
+  try {
+    dispatch({ type: OPTIONS_ACADEMY_REQUEST });
+    let link = process.env.END_POINT_API_SERTIFIKAT + `api/option/academy`;
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const { data } = await axios.get(link, config);
+
+    console.log(data);
+    if (data) {
+      dispatch({ type: OPTIONS_ACADEMY_SUCCESS, payload: data });
+    }
+  } catch (error) {
+    dispatch({ type: SERTIFIKAT_FAIL, payload: error.message });
   }
 };

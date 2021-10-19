@@ -24,27 +24,90 @@ import {
   PUBLISHED_SERTIFIKAT_REQUEST,
   PUBLISHED_SERTIFIKAT_SUCCESS,
   PUBLISHED_SERTIFIKAT_FAIL,
+  OPTIONS_ACADEMY_FAIL,
+  OPTIONS_ACADEMY_REQUEST,
+  OPTIONS_ACADEMY_SUCCESS,
+  OPTIONS_THEME_FAIL,
+  OPTIONS_THEME_REQUEST,
+  OPTIONS_THEME_SUCCESS,
 } from "../../types/sertifikat/kelola-sertifikat.type";
 
-export const allSertifikatReducers = (state = { certificate: [] }, action) => {
+const initialStates = {
+  certificate: [],
+  academyOptions: [],
+  themeOptions: [],
+};
+
+export const allSertifikatReducers = (state = initialStates, action) => {
   switch (action.type) {
     case SERTIFIKAT_REQUEST:
       return {
+        ...state,
         loading: true,
       };
     case SERTIFIKAT_SUCCESS:
       return {
+        ...state,
         loading: false,
         certificate: action.payload.data,
       };
     case SERTIFIKAT_FAIL:
       return {
+        ...state,
         loading: false,
         certificate: action.payload.data,
       };
     case CLEAR_ERRORS:
       return {
+        ...state,
         error: null,
+      };
+    default:
+      return state;
+  }
+};
+
+export const allAcademyOptionsReducer = (state = [], action) => {
+  switch (action.type) {
+    case OPTIONS_ACADEMY_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case OPTIONS_ACADEMY_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        academyOptions: action.payload.data,
+      };
+    case OPTIONS_ACADEMY_FAIL:
+      return {
+        ...state,
+        loading: false,
+        academyOptions: action.payload.data,
+      };
+    default:
+      return state;
+  }
+};
+
+export const allThemeOptionsReducer = (state = [], action) => {
+  switch (action.type) {
+    case OPTIONS_THEME_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case OPTIONS_THEME_SUCCESS:
+      return {
+        ...state,
+        themeOptions: action.payload.data,
+      };
+    case OPTIONS_THEME_FAIL:
+      return {
+        ...state,
+        loading: false,
+        themeOptions: action.payload.data,
       };
     default:
       return state;
