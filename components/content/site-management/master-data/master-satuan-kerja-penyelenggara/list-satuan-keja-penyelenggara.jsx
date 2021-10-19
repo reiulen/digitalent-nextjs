@@ -141,7 +141,7 @@ const Table = ({ token }) => {
                           className="status-div-red mb-0"
                           style={{ width: "max-content" }}
                         >
-                          {items.status}
+                          {items.status === "1" ? "Aktif" : "Tidak Aktif"}
                         </p>
                       </td>
                       <td className="align-middle text-left">

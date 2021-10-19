@@ -34,6 +34,7 @@ const EditBerita = ({ token }) => {
     const { berita } = useSelector(state => state.detailBerita)
     const { loading, error, success } = useSelector(state => state.updatedBerita)
     const { loading: allLoading, error: allError, kategori } = useSelector((state) => state.allKategori);
+    const { setting } = useSelector(state => state.allSettingPublikasi)
 
     useEffect(() => {
 
@@ -93,9 +94,9 @@ const EditBerita = ({ token }) => {
         // console.log ("check")
 
         if (type.includes(e.target.files[0].type)) {
-            if (e.target.files[0].size > 5000000) {
+            if (e.target.files[0].size > parseInt(setting[0].max_size) + '000000') {
                 e.target.value = null;
-                Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
+                Swal.fire("Oops !", "Data Image Melebihi Ketentuan", "error");
             } else {
                 const reader = new FileReader();
                 reader.onload = () => {
@@ -153,9 +154,7 @@ const EditBerita = ({ token }) => {
                 }
             }
         }
-
         setTag(data)
-
     }
 
     const onSubmit = (e) => {
@@ -338,12 +337,12 @@ const EditBerita = ({ token }) => {
 
     return (
         <>
-            {
+            {/* {
                 console.log(berita)
-            }
-            {
-                // console.log (kategori)
-            }
+            } */}
+            {/* {
+                console.log(setting)
+            } */}
             <PageWrapper>
                 {error ?
                     <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
