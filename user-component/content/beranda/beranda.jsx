@@ -4,7 +4,6 @@ import Link from "next/link";
 import Image from "next/image";
 import moment from "moment";
 
-import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import IconLogin from "../../../components/assets/icon-dashboard-peserta/Login";
 import { Card, Carousel, Badge } from "react-bootstrap";
