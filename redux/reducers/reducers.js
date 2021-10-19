@@ -325,6 +325,13 @@ import {
   detailAkademiReducer,
   allPelatihanReducer,
 } from "../reducers/beranda/detail-akademi.reducers"
+
+// ========== detail pelatihan ========
+import {
+  detailPelatihanReducer,
+  checkRegisteredPelatihanReducer,
+} from "../reducers/beranda/detail-pelatihan.reducers"
+
 //END BERANDA
 
 const reducer = combineReducers({
@@ -596,6 +603,12 @@ const reducer = combineReducers({
   // ========== detail akademi ========
   detailAkademi: detailAkademiReducer,
   allPelatihan: allPelatihanReducer,
+
+  // ========== detail pelatihan ========
+  detailPelatihan: detailPelatihanReducer,
+  checkRegisteredPelatihan: checkRegisteredPelatihanReducer,
+
+
   //END BERANDA
 });
 
