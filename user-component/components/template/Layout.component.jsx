@@ -14,6 +14,7 @@ const Header = dynamic(() =>
 const Sidebar = dynamic(() =>
   import("../../../user-component/components/template/Sidebar.component")
 );
+const Footer = dynamic(() => import("../beranda/footer"));
 
 const Layout = ({ title = "Peserta - Pelatihan", session, children }) => {
   const router = useRouter();
@@ -45,6 +46,7 @@ const Layout = ({ title = "Peserta - Pelatihan", session, children }) => {
           {children}
         </Row>
       </div>
+      <Footer />
     </>
   );
 };

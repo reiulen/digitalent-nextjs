@@ -1,7 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Row, Col } from "react-bootstrap";
+import { useSelector, useDispatch } from "react-redux";
+import { toast } from "react-toastify";
+import { getProfilePendidikan } from "../../../../../redux/actions/pelatihan/profile.actions";
 
-const Pendidikan = () => {
+const Pendidikan = ({ token }) => {
+  const dispatch = useDispatch();
+
+  const { error: errorPendidikan, pendidikan } = useSelector(
+    (state) => state.dataPendidikan
+  );
+
+  useEffect(() => {
+    if (errorPendidikan) {
+      toast.error(errorPendidikan);
+    }
+    dispatch(getProfilePendidikan(token));
+  }, [errorPendidikan, dispatch]);
+
   return (
     <>
       <div className="mt-5 pendidikan">
@@ -9,7 +25,7 @@ const Pendidikan = () => {
         <Row>
           <Col md={12}>
             <p className="text-neutral-body my-1">Jenjang Pendidikan</p>
-            <p>S1</p>
+            <p>{(pendidikan && pendidikan.jenjang) || "-"}</p>
           </Col>
         </Row>
         <Row>
@@ -17,27 +33,27 @@ const Pendidikan = () => {
             <p className="text-neutral-body my-1">
               Asal Sekolah / Perguruan Tinggi
             </p>
-            <p>Universitas Tetangga</p>
+            <p>{(pendidikan && pendidikan.asal_pendidikan) || "-"}</p>
           </Col>
           <Col md={6}>
             <p className="text-neutral-body my-1">Program Studi</p>
-            <p>Teknologi Jadul</p>
+            <p>{(pendidikan && pendidikan.program_studi) || "-"}</p>
           </Col>
         </Row>
         <Row>
           <Col md={6}>
             <p className="text-neutral-body my-1">IPK</p>
-            <p>4.5</p>
+            <p>{(pendidikan && pendidikan.ipk) || "-"}</p>
           </Col>
           <Col md={6}>
             <p className="text-neutral-body my-1">Tahun Masuk</p>
-            <p>2016</p>
+            <p>{(pendidikan && pendidikan.tahun_masuk) || "-"}</p>
           </Col>
         </Row>
         <Row>
           <Col md={12}>
             <p className="text-neutral-body my-1">Unggah Ijazah</p>
-            <p>Scan Ijasah.jpg</p>
+            <p>{(pendidikan && pendidikan.ijasah) || "-"}</p>
           </Col>
         </Row>
       </div>

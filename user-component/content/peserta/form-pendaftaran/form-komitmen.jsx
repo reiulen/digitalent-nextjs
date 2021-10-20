@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import { Card, Button, Row, Col, Form } from "react-bootstrap";
 import Swal from "sweetalert2";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
+import style from "./style.module.css";
 
 import { newPendaftaranPelatihan } from "../../../../redux/actions/pelatihan/register-training.actions";
+import { storeFormRegister } from "../../../../redux/actions/pelatihan/register-training.actions";
 
 const FormKomitmen = ({
   propsDataPribadi,
-  propsForm,
   propsDataPelatihan,
   token,
   funcView,
@@ -16,11 +17,22 @@ const FormKomitmen = ({
   const dispatch = useDispatch();
   const router = useRouter();
 
+  const { dataForm } = useSelector((state) => state.formRegister);
+
   const { id } = router.query;
 
   const [dataPeserta] = useState(propsDataPribadi);
   const [dataPelatihan] = useState(propsDataPelatihan);
-  const [menyatakan, setMenyatakan] = useState(false);
+  const [menyatakan, setMenyatakan] = useState(dataForm.komitmen);
+
+  const handleCommitment = () => {
+    setMenyatakan(!menyatakan);
+    const data = {
+      komitmen: !menyatakan,
+      form_pendaftaran: dataForm.form_pendaftaran,
+    };
+    dispatch(storeFormRegister(data));
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -29,7 +41,7 @@ const FormKomitmen = ({
         const data = {
           pelatian_id: parseInt(id),
           komitmen: menyatakan ? "1" : "0",
-          form_pendaftaran: propsForm,
+          form_pendaftaran: dataForm.form_pendaftaran,
         };
         dispatch(newPendaftaranPelatihan(data, token));
       } else {
@@ -137,7 +149,7 @@ const FormKomitmen = ({
                             className="form-check-input"
                             checked={menyatakan}
                             value={menyatakan}
-                            onClick={() => setMenyatakan(!menyatakan)}
+                            onClick={() => handleCommitment()}
                           />
                         </div>
                         <h6 className="form-weight-bolder">
@@ -153,23 +165,21 @@ const FormKomitmen = ({
             </div>
           )}
 
-          <Button
-            variant="primary"
-            className="btn-rounded-full mt-3 float-right text-white "
-            size="sm"
-            type="submit"
-          >
-            Daftar
-          </Button>
-          <Button
-            variant="primary"
-            className="btn-rounded-full mt-3 float-right text-white mr-2"
-            size="sm"
-            type="button"
-            onClick={() => funcView(1)}
-          >
-            Kembali
-          </Button>
+          <div className="button-aksi mt-7 float-right">
+            <Button
+              className={`${style.button_profile_batal} rounded-xl mr-3`}
+              type="button"
+              onClick={() => funcView(1)}
+            >
+              Kembali
+            </Button>
+            <Button
+              className={`${style.button_profile_simpan} rounded-xl`}
+              type="submit"
+            >
+              Daftar
+            </Button>
+          </div>
         </Form>
       </Card.Body>
     </>

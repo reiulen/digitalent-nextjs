@@ -1,183 +1,169 @@
 .test * {
-    margin-bottom: 0px;
+  margin-bottom: 0px;
 }
 
-/* @font-face {
-    font-family: "futura"; */
-/* src: url('../../../public/assets/font/Futura-Heavy-font.ttf'); */
-/* font-style: ; */
-/* font-weight: 800; */
-/* font-display: swap; */
-/* }  */
-
-
 .futura {
-    font-family: 'futura';
+  font-family: "futura";
 }
 
 .tandatangan {
-    overflow: inherit
+  overflow: inherit;
 }
 
 .h-100px {
-    height: auto !important
+  height: auto !important;
 }
 
 .a4-paper {
-    height: 595px !important;
-    width: 842px !important;
+  height: 595px !important;
+  width: 842px !important;
 }
 
 .a4-font-header {
-    font-size: 4.8vw;
+  font-size: 4.8vw;
 }
 
 .a4-font-normal {
-    font-size: 3.8vw;
+  font-size: 3.8vw;
 }
 
 .responsive-margin-peserta {
-    top: 38px !important;
+  top: 38px !important;
 }
 
 .responsive-margin-publish {
-    top: 42px
+  top: 42px;
 }
 
 .responsive-font-size-peserta {
-    font-size: 8px !important
+  font-size: 8px !important;
 }
 
 .responsive-width {
-    width: 842px !important;
-    height: 595px !important;
+  width: 842px !important;
+  height: 595px !important;
 }
 
 .responsive-nomor-sertifikat {
-    top: 10%;
-    left: 10%;
+  top: 10%;
+  left: 10%;
 }
 
 .responsive-date-from {
-    top: 95px;
-    left: 59%;
+  top: 95px;
+  left: 59%;
 }
 
 .responsive-year {
-    top: 105px;
-    left: 60%;
+  top: 105px;
+  left: 60%;
 }
 
 .responsive-date-text {
-    font-size: 5px;
+  font-size: 5px;
 }
 
-/* tablet */
-@media(min-width: 768px) {
-    .responsive-margin-peserta {
-        top: 120px !important
-    }
+@media (min-width: 768px) {
+  .responsive-margin-peserta {
+    top: 120px !important;
+  }
 
-    .responsive-font-size-peserta {
-        font-size: 16px !important
-    }
+  .responsive-font-size-peserta {
+    font-size: 16px !important;
+  }
 
-    .responsive-margin-publish {
-        top: 135px
-    }
+  .responsive-margin-publish {
+    top: 135px;
+  }
 
-    .responsive-date-from {
-        top: 260px;
-    }
+  .responsive-date-from {
+    top: 260px;
+  }
 
-    .responsive-date-text {
-        font-size: 12px;
-    }
+  .responsive-date-text {
+    font-size: 12px;
+  }
 
-    .responsive-year {
-        top: 287px;
-        left: 60%;
-    }
+  .responsive-year {
+    top: 287px;
+    left: 60%;
+  }
 }
 
 #sertifikat-ck-editor .ck-editor__editable_inline {
-    min-height: 46px;
+  min-height: 46px;
 }
 
 #syllabus-ck-editor .ck-editor__editable_inline {
-    min-height: 46px;
+  min-height: 46px;
 }
-
-/* Laptop */
 
 @media (min-width: 992px) {
-    .h-100px {
-        height: 100px !important
-    }
+  .h-100px {
+    height: 100px !important;
+  }
 
-    .tandatangan {
-        overflow: auto;
-    }
+  .tandatangan {
+    overflow: auto;
+  }
 
-    .a4-font-header {
-        font-size: 1.8vw;
-    }
+  .a4-font-header {
+    font-size: 1.8vw;
+  }
 
-    .a4-font-normal {
-        font-size: 0.75vw;
-    }
+  .a4-font-normal {
+    font-size: 0.75vw;
+  }
 
-    .responsive-margin-peserta {
-        top: 110px !important
-    }
+  .responsive-margin-peserta {
+    top: 110px !important;
+  }
 
-    .responsive-font-size-peserta {
-        font-size: 20px !important
-    }
+  .responsive-font-size-peserta {
+    font-size: 20px !important;
+  }
 
-    .responsive-margin-publish {
-        top: 125px;
-    }
+  .responsive-margin-publish {
+    top: 125px;
+  }
 
-    .responsive-date-from {
-        top: 245px;
-    }
+  .responsive-date-from {
+    top: 245px;
+  }
 
-    .responsive-date-text {
-        font-size: 14px;
-    }
+  .responsive-date-text {
+    font-size: 14px;
+  }
 
-    .responsive-year {
-        top: 270px;
-        left: 60%;
-    }
+  .responsive-year {
+    top: 270px;
+    left: 60%;
+  }
 }
 
-/* normal */
 @media (min-width: 1200px) {
-    .responsive-margin-peserta {
-        top: 135px !important
-    }
+  .responsive-margin-peserta {
+    top: 135px !important;
+  }
 
-    .responsive-font-size-peserta {
-        font-size: 24px !important
-    }
+  .responsive-font-size-peserta {
+    font-size: 24px !important;
+  }
 
-    .responsive-margin-publish {
-        /* margin-top: 135px !important; */
-        top: 155px !important;
-    }
+  .responsive-margin-publish {
+    top: 155px !important;
+  }
 
-    .responsive-date-from {
-        top: 307px;
-    }
+  .responsive-date-from {
+    top: 307px;
+  }
 
-    .responsive-date-text {
-        font-size: 16px;
-    }
+  .responsive-date-text {
+    font-size: 16px;
+  }
 
-    .responsive-year {
-        top: 340px;
-        left: 60%;
-    }
+  .responsive-year {
+    top: 340px;
+    left: 60%;
+  }
 }

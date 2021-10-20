@@ -1,130 +1,116 @@
 .bg-preview-white {
-    background-color: white !important;
+  background-color: white !important;
 }
 
-/* Modals Preview Video Publikasi */
-
-.modal-body{
-    /* border: 1px solid yellow; */
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    height: 450px;
-    margin-top: 20px;
+.modal-body {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  height: 450px;
+  margin-top: 20px;
 }
 
-.playVideo{
-    /* border: 1px solid blue; */
-    position: relative;
-    text-align: right;
-    margin-top: -20px;
-    width: 700px;
-    height: 270px;
-    margin-bottom: 20px;
+.playVideo {
+  position: relative;
+  text-align: right;
+  margin-top: -20px;
+  width: 700px;
+  height: 270px;
+  margin-bottom: 20px;
 }
 
-.isiVideoPrev{
-    margin: 10px;
+.isiVideoPrev {
+  margin: 10px;
 }
 
-
-/* Pratinjau Preview */
-
-.titlePratinjau{
-    font-size: 50px;
-    font-weight: 600;
-    margin-top: -100px;
-    width: 99%;
+.titlePratinjau {
+  font-size: 50px;
+  font-weight: 600;
+  margin-top: -100px;
+  width: 99%;
 }
 
-.iconBorder{
-    /* background-color: #007CFF; */
-    border: 2px solid gray;
+.iconBorder {
+  border: 2px solid gray;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  text-align: center;
+  line-height: 35px;
+  margin-right: 3px;
+}
+
+.isiBerita {
+  overflow-wrap: break-word;
+}
+
+.listTag {
+  display: flex;
+}
+
+.titleSubMenu-2 {
+  display: flex;
+  align-items: center;
+  margin-left: -13px;
+}
+
+@media only screen and (max-width: 1024px) {
+  .modal-body {
+    height: 400px;
+    width: 600px;
+    margin-top: 35px;
+  }
+  .playVideo {
+    width: 100%;
+    height: 60%;
+  }
+  .isiVideoPrev {
+    flex-wrap: wrap;
+
+    width: 10px;
+    font-size: 11px;
+  }
+
+  .iconBorder {
+    background-color: #215480;
     border-radius: 50%;
     width: 35px;
     height: 35px;
     text-align: center;
-    line-height: 35px;
+    line-height: 39px;
     margin-right: 3px;
-}
-
-.isiBerita{
-    /* border: 1px solid black; */
-    overflow-wrap: break-word;
-}
-
-.listTag{
-    display: flex;
-}
-
-.titleSubMenu-2{
-    display: flex;
-    align-items: center;
-    margin-left: -13px
-}
-
-@media only screen and (max-width: 1024px) {
-    .modal-body{
-        height: 400px;
-        width: 600px;
-        margin-top: 35px;
-    }
-    .playVideo{
-        width: 100%;
-        height: 60%;
-    }
-    .isiVideoPrev{
-        flex-wrap: wrap;
-        /* border: 1px solid black; */
-        width: 10px;
-        font-size: 11px;
-    }
-
-    /* Pratinjau */
-    
-    .iconBorder{
-        background-color: #215480;
-        border-radius: 50%;
-        width: 35px;
-        height: 35px;
-        text-align: center;
-        line-height: 39px;
-        margin-right: 3px;
-    }
+  }
 }
 
 @media only screen and (max-width: 768px) {
-    .modal-body{
-        /* border: 1px solid black; */
-        height: 100%;
-        width: 100%;
-    }
-    .playVideo{
-        width: 100%;
-        height: 60%;
-    }
-    .isiBerita{
-        font-size: 8px;
-    }
+  .modal-body {
+    height: 100%;
+    width: 100%;
+  }
+  .playVideo {
+    width: 100%;
+    height: 60%;
+  }
+  .isiBerita {
+    font-size: 8px;
+  }
 }
 
 @media only screen and (max-width: 556px) {
-    .titlePratinjau{
-        font-size: 30px;
-    }
-    .titleSubMenu{
-        font-size: 10px;
-    }
-    .titleSubMenu-2{
-        font-size: 10px;
-    }
-    .isiBerita{
-        /* border: 1px solid black; */
-        font-size: 8px;
-    }
-    .listTag{
-        /* border: 1px solid black; */
-        width: 90%;
-        font-size: 8px;
-    }
+  .titlePratinjau {
+    font-size: 30px;
+  }
+  .titleSubMenu {
+    font-size: 10px;
+  }
+  .titleSubMenu-2 {
+    font-size: 10px;
+  }
+  .isiBerita {
+    font-size: 8px;
+  }
+  .listTag {
+    width: 90%;
+    font-size: 8px;
+  }
 }
