@@ -111,24 +111,29 @@ const Sidebar = () => {
             </div>
           </div>
           <div>
-            <div className={`${styles.menuItem} d-flex flex-row`}>
-              <div className="p-2">
-                <i className={`${styles.iconMenu} ri-article-line`}></i>
+            <Link href="/peserta/test-substansi" passHref>
+              <div className={`${styles.menuItem} d-flex flex-row`}>
+                <div className="p-2">
+                  <i className={`${styles.iconMenu} ri-article-line`}></i>
+                </div>
+                <div className="p-2">
+                  <td>Test Substansi</td>
+                </div>
               </div>
-              <div className="p-2">
-                <td>Test Substansi</td>
-              </div>
-            </div>
+            </Link>
           </div>
+
           <div>
-            <div className={`${styles.menuItem} d-flex flex-row`}>
-              <div className="p-2">
-                <i className={`${styles.iconMenu} ri-chat-smile-line`}></i>
+            <Link href="/peserta/survey" passHref>
+              <div className={`${styles.menuItem} d-flex flex-row`}>
+                <div className="p-2">
+                  <i className={`${styles.iconMenu} ri-chat-smile-line`}></i>
+                </div>
+                <div className="p-2">
+                  <td>Survey</td>
+                </div>
               </div>
-              <div className="p-2">
-                <td>Survey</td>
-              </div>
-            </div>
+            </Link>
           </div>
           <div>
             <div className={`${styles.menuItem} d-flex flex-row`}>

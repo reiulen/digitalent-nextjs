@@ -1,13 +1,12 @@
 import dynamic from "next/dynamic";
 
 // import Layout from "../../../components/templates/layout.component";
-
 import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
 
-const Alamat = dynamic(
-  () => import("../../../user-component/content/peserta/profile/alamat/alamat"),
+const SurveyPage = dynamic(
+  () => import("../../../user-component/content/peserta/survey"),
   {
     loading: function loadingNow() {
       return <LoadingSkeleton />;
@@ -20,12 +19,12 @@ const Layout = dynamic(() =>
   import("../../../user-component/components/template/Layout.component")
 );
 
-export default function AlamatPage(props) {
+export default function TestSubstansiPage(props) {
   const session = props.session.user.user.data.user;
   return (
     <>
-      <Layout title="Informasi Pribadi Peserta - Pelatihan" session={session}>
-        <Alamat session={session} />
+      <Layout title="Survey - Subvit" session={session}>
+        <SurveyPage session={session} />
       </Layout>
     </>
   );
@@ -54,7 +53,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       return {
-        props: { data: "auth", session, title: "Profile - Peserta" },
+        props: { data: "auth", session, title: "Dashboard - Peserta" },
       };
     }
 );
