@@ -1,13 +1,13 @@
 .dropdown-explore {
-  background: #F2F7FC;
+  background: #f2f7fc;
   border-radius: 40px;
   padding: 3px 15px;
   font-weight: 600;
   font-size: 13px;
-  color: #6C6C6C;
+  color: #6c6c6c;
 }
 
-.max-container{
+.max-container {
   max-width: 1440px;
   margin: auto;
 }
@@ -18,20 +18,20 @@
   padding: 8px 15px;
   font-weight: 600;
   font-size: 13px;
-  border: 1px solid #007CFF;
+  border: 1px solid #007cff;
   border-radius: 19px;
-  color: #007CFF;
+  color: #007cff;
   margin-right: 10px;
 }
 
 .btn-register-peserta {
-  background-color: #007CFF;
+  background-color: #007cff;
   display: flex;
   align-items: center;
   padding: 8px 15px;
   font-weight: 600;
   font-size: 13px;
-  border: 1px solid #007CFF;
+  border: 1px solid #007cff;
   border-radius: 19px;
   color: white;
   margin-right: 10px;
@@ -61,7 +61,7 @@
 .carousel-primarys .splide__pagination__page.is-active {
   width: 16px;
   height: 8px;
-  background: #007CFF !important;
+  background: #007cff !important;
   border-radius: 16px;
   margin: 0 7px;
 }
@@ -69,7 +69,7 @@
 .carousel-primarys .splide__pagination__page {
   width: 8px;
   height: 8px;
-  background: #D7E1EA;
+  background: #d7e1ea;
   border-radius: 16px;
 }
 
@@ -81,36 +81,34 @@
   margin: 0 60px;
 }
 
-@media (max-width:768px) {
+@media (max-width: 768px) {
   .carousel-secondarys .splide__slider {
     margin: 0 0px;
   }
-
 }
 
 .card-1 {
   display: flex;
   align-items: center;
   padding: 16px;
-  border: 1px solid #D7E1EA;
+  border: 1px solid #d7e1ea;
   border-radius: 8px;
-  color: #ADB5BD;
+  color: #adb5bd;
   width: 100%;
 }
 
 .card-1.active-card-1 {
-  border: 1px solid #007CFF;
+  border: 1px solid #007cff;
   color: white;
-  background-color: #007CFF;
+  background-color: #007cff;
 }
 
-/* card style */
 .cards-items {
   position: relative;
   border-radius: 12px;
   overflow: hidden;
   filter: drop-shadow(0px 4px 24px rgba(31, 31, 31, 0.1));
-  /* border: 1px solid gray; */
+
   margin-top: 1.5rem;
 }
 
@@ -134,7 +132,7 @@
 }
 
 .cards-items .top label {
-  background: #E6F2FF;
+  background: #e6f2ff;
   border-radius: 40px;
   font-weight: 600;
   font-size: 12px;
@@ -150,16 +148,16 @@
 }
 
 .btn-green-rounded {
-  background: #E6FFF7;
+  background: #e6fff7;
   border-radius: 40px;
-  color: #00996A;
+  color: #00996a;
   padding: 4px 12px;
   font-weight: 600;
   font-size: 12px;
   margin-bottom: 0;
 }
 
-.image-steps-dashboard{
+.image-steps-dashboard {
   position: relative;
   width: 100%;
   height: 645px;
@@ -172,14 +170,12 @@
   font-size: 40px;
 }
 
-
-
-@media (max-width:768px){
+@media (max-width: 768px) {
   .image-steps-dashboard {
     height: 481px;
   }
 
-  .image-steps-dashboard img{
+  .image-steps-dashboard img {
     min-height: 30rem !important;
   }
   .step-registers h1,
@@ -189,59 +185,50 @@
   .rillirs-media h1 {
     font-size: 28px;
   }
-
 }
-@media (max-width:425px){
-  .image-steps-dashboard img{
-    /* height: 100px !important; */
+@media (max-width: 425px) {
+  .image-steps-dashboard img {
     min-height: 20rem !important;
-  
   }
 
   .step-registers .images-shapes,
   .galery-update .images-shapes {
     width: 100% !important;
-
   }
 
   .image-steps-dashboard {
     height: 313px;
   }
-
 }
 
-.splide__arrow{
+.splide__arrow {
   background: #fff !important;
-      /* border: 1px solid #bcbcbc !important; */
-      box-shadow: 0px 0px 16px rgba(31, 31, 31, 0.1);
+
+  box-shadow: 0px 0px 16px rgba(31, 31, 31, 0.1);
 }
 .splide__arrow svg {
-  fill: #203E80;
+  fill: #203e80;
 }
 
-.step-registers .images-shapes{
-      width: 478px;
-      height: 155%;
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-  
+.step-registers .images-shapes {
+  width: 478px;
+  height: 155%;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
 }
 .galery-update .images-shapes {
-      width: 478px;
-      height: 155%;
-      position: absolute;
-      top: 50%;
-      right: 0;
-      transform: translateY(-50%);
-  
+  width: 478px;
+  height: 155%;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
 }
 
-
-/* React Player */
 .player-wrapper {
   position: relative;
-  padding-top: 56.25%; /* 720 / 1280 = 0.5625 */
+  padding-top: 56.25%;
 }
 
 .react-player {

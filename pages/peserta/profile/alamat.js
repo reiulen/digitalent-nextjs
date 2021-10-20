@@ -7,7 +7,7 @@ import { getSession } from "next-auth/client";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
 
 const Alamat = dynamic(
-  () => import("../../../user-component/content/peserta/profile/alamat/index"),
+  () => import("../../../user-component/content/peserta/profile/alamat/alamat"),
   {
     loading: function loadingNow() {
       return <LoadingSkeleton />;

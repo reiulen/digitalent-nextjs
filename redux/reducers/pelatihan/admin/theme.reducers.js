@@ -18,7 +18,7 @@ import {
   UPDATE_THEME_FAIL,
   UPDATE_THEME_RESET,
   CLEAR_ERRORS,
-} from "../../types/pelatihan/theme.type";
+} from "../../../types/pelatihan/theme.type";
 
 export const allThemeReducer = (state = { theme: [] }, action) => {
   switch (action.type) {

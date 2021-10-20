@@ -4,41 +4,91 @@ import Select from "react-select";
 import Swal from "sweetalert2";
 import SimpleReactValidator from "simple-react-validator";
 import style from "../style.module.css";
+import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  updateProfileDataPribadi,
+  clearErrors,
+} from "../../../../../redux/actions/pelatihan/profile.actions";
+import { UPDATE_DATA_PRIBADI_RESET } from "../../../../../redux/types/pelatihan/profile.type";
 
-const InformasiEdit = ({ funcViewEdit }) => {
+const InformasiEdit = ({ funcViewEdit, token }) => {
+  const dispatch = useDispatch();
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
 
-  const [deskripsi, setDeskripsi] = useState(
-    "Saya adalah seorang Marketing dengan track record berhasil meningkatkan penjualan secara konsisten. Berhasil menciptakan strategi marketing baru dengan sistem yang lebih modern dan dapat menganalisis kebutuhan konsumen secara mendetail. Bekerja cekatan dengan menerapkan target tinggi pada diri sendiri, untuk memkasimalkan laba penjualan."
+  const { error: errorDataPribadi, dataPribadi } = useSelector(
+    (state) => state.getDataPribadi
   );
-  const [name, setName] = useState("Lala depok");
-  const [email, setEmail] = useState("lala@gmail.com");
+
+  const {
+    error: errorUpdateData,
+    loading,
+    success,
+  } = useSelector((state) => state.updateDataPribadi);
+
+  const [deskripsi, setDeskripsi] = useState(
+    (dataPribadi && dataPribadi.deskripsi) || ""
+  );
+  const [name, setName] = useState((dataPribadi && dataPribadi.name) || "");
+  const [email, setEmail] = useState((dataPribadi && dataPribadi.email) || "");
   const [kelamin, setKelamin] = useState({ value: "0", label: "Laki - Laki" });
-  const [nik, setNik] = useState("121938918933");
-  const [nomorHandphone, setNomorHandphone] = useState("0979898989");
-  const [agama, setAgama] = useState("Islam");
-  const [tempatLahir, setTempatLahir] = useState("dubai");
-  const [tanggalLahir, setTanggalLahir] = useState(new Date());
+  const [nik, setNik] = useState((dataPribadi && dataPribadi.nik) || "");
+  const [nomorHandphone, setNomorHandphone] = useState(
+    (dataPribadi && dataPribadi.nomor_handphone) || ""
+  );
+  const [agama, setAgama] = useState((dataPribadi && dataPribadi.agama) || "");
+  const [tempatLahir, setTempatLahir] = useState(
+    (dataPribadi && dataPribadi.tampat_lahir) || ""
+  );
+  const [tanggalLahir, setTanggalLahir] = useState(
+    (dataPribadi && dataPribadi.tanggal_lahir) || ""
+  );
 
-  const [nameUrgent, setNameUrgent] = useState("Lala Lala");
-  const [nomorUrgent, setNomorUrgent] = useState("087989898989");
-  const [hubunganUrgent, setHubunganUrgent] = useState("Saudara");
+  const [nameUrgent, setNameUrgent] = useState(
+    (dataPribadi && dataPribadi.Nama_kontak_darurat) || ""
+  );
+  const [nomorUrgent, setNomorUrgent] = useState(
+    (dataPribadi && dataPribadi.nomor_handphone_darurat) || ""
+  );
+  const [hubunganUrgent, setHubunganUrgent] = useState(
+    (dataPribadi && dataPribadi.hubungan) || ""
+  );
 
-  const [ktpName, setKtpName] = useState("Belum ada file");
+  const [ktpName, setKtpName] = useState(
+    (dataPribadi && dataPribadi.File_ktp) || "Belum ada file"
+  );
   const [ktp, setKtp] = useState("");
-  const [ktpPreview, setKtpPreview] = useState("");
+  const [ktpPreview, setKtpPreview] = useState(
+    (dataPribadi && dataPribadi.file_path + dataPribadi.File_ktp) || ""
+  );
 
-  const [cvName, setCvName] = useState("Belum ada file");
+  const [cvName, setCvName] = useState(
+    (dataPribadi && dataPribadi.cv) || "Belum ada file"
+  );
   const [cv, setCv] = useState("");
-  const [cvPreview, setCvPreview] = useState("");
+  const [cvPreview, setCvPreview] = useState(
+    (dataPribadi && dataPribadi.file_path + dataPribadi.cv) || ""
+  );
 
-  const [link, setLink] = useState("");
+  const [link, setLink] = useState((dataPribadi && dataPribadi.link) || "");
 
   const optionsKelamin = [
     { value: "0", label: "Laki - Laki" },
     { value: "1", label: "Perempuan" },
   ];
+
+  useEffect(() => {
+    if (errorUpdateData) {
+      toast.error(errorUpdateData);
+      dispatch(clearErrors());
+    }
+
+    if (success) {
+      dispatch({ type: UPDATE_DATA_PRIBADI_RESET });
+      funcViewEdit(false);
+    }
+  }, [errorUpdateData, success, dispatch]);
 
   const onChangeKtp = (e) => {
     const type = ["image/jpg", "image/png", "image/jpeg", "application/pdf"];
@@ -69,23 +119,55 @@ const InformasiEdit = ({ funcViewEdit }) => {
     }
   };
 
-  const handleSubmit = () => {
+  const onChangeCV = (e) => {
+    const type = ["application/pdf"];
+    if (e.target.files[0]) {
+      if (type.includes(e.target.files[0].type)) {
+        if (e.target.files[0].size > 2000000) {
+          e.target.value = null;
+          Swal.fire("Oops !", "Gambar maksimal 2 MB.", "error");
+        } else {
+          const reader = new FileReader();
+          reader.onload = () => {
+            if (reader.readyState === 2) {
+              setCv(reader.result);
+            }
+          };
+          reader.readAsDataURL(e.target.files[0]);
+          setCvPreview(e.target.files[0]);
+          setCvName(e.target.files[0].name);
+        }
+      } else {
+        e.target.value = null;
+        Swal.fire(
+          "Oops !",
+          "Data yang bisa dimasukkan hanya berupa data PDF.",
+          "error"
+        );
+      }
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
     if (simpleValidator.current.allValid()) {
       const data = {
-        name,
-        email,
-        kelamin,
         nik,
-        nomorHandphone,
+        name,
+        jenis_kelamin: kelamin.label,
         agama,
-        tempatLahir,
-        tanggalLahir,
-        nameUrgent,
-        nomorUrgent,
-        hubunganUrgent,
-        ktp,
+        tempat_lahir: tempatLahir,
+        tanggal_lahir: tanggalLahir,
+        hubungan: hubunganUrgent,
+        nama_kontak_darurat: nameUrgent,
+        nomor_handphone_darurat: nomorUrgent,
+        file_ktp: ktp,
+        file_cv: cv,
+        portofolio: link,
+        nomorHandphone,
+        email,
       };
-      console.log(data);
+      dispatch(updateProfileDataPribadi(data, token));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -102,7 +184,7 @@ const InformasiEdit = ({ funcViewEdit }) => {
       <Form onSubmit={handleSubmit}>
         <div className="informasi-pribadi">
           <h3 className="font-weight-bolder mb-5">Informasi Pribadi</h3>
-          <Form.Group className="mb-3" controlId="formGridAddress1">
+          <Form.Group className="mb-3">
             <Form.Label>Deskripsi Diri</Form.Label>
             <Form.Control
               as="textarea"
@@ -111,14 +193,19 @@ const InformasiEdit = ({ funcViewEdit }) => {
               value={deskripsi}
               onChange={(e) => setDeskripsi(e.target.value)}
               onBlur={() =>
-                simpleValidator.current.showMessageFor("nama lengkap")
+                simpleValidator.current.showMessageFor("deskripsi diri")
               }
             />
-            {simpleValidator.current.message("nama lengkap", name, "required", {
-              className: "text-danger",
-            })}
+            {simpleValidator.current.message(
+              "deskripsi diri",
+              deskripsi,
+              "required",
+              {
+                className: "text-danger",
+              }
+            )}
           </Form.Group>
-          <Form.Group className="mb-3" controlId="formGridAddress1">
+          <Form.Group className="mb-3">
             <Form.Label>Nama Lengkap</Form.Label>
             <Form.Control
               placeholder="Masukan Nama Lengkap"
@@ -133,7 +220,7 @@ const InformasiEdit = ({ funcViewEdit }) => {
             })}
           </Form.Group>
           <Row className="mb-3">
-            <Form.Group as={Col} md={6} controlId="formGridEmail">
+            <Form.Group as={Col} md={6}>
               <Form.Label>Email</Form.Label>
               <Form.Control
                 type="email"
@@ -202,7 +289,7 @@ const InformasiEdit = ({ funcViewEdit }) => {
               )}
             </Form.Group>
           </Row>
-          <Form.Group className="mb-3" controlId="formGridAddress1">
+          <Form.Group className="mb-3">
             <Form.Label>Agama</Form.Label>
             <Form.Control
               type="text"
@@ -216,7 +303,7 @@ const InformasiEdit = ({ funcViewEdit }) => {
             })}
           </Form.Group>
           <Row className="mb-3">
-            <Form.Group as={Col} md={6} controlId="formGridEmail">
+            <Form.Group as={Col} md={6}>
               <Form.Label>Tempat Lahir</Form.Label>
               <Form.Control
                 type="text"
@@ -260,7 +347,7 @@ const InformasiEdit = ({ funcViewEdit }) => {
         </div>
         <div className="kontak-darurat mt-6">
           <h3 className="font-weight-bolder mb-5">Kontak Darurat</h3>
-          <Form.Group className="mb-3" controlId="formGridAddress1">
+          <Form.Group className="mb-3">
             <Form.Label>Nama Lengkap</Form.Label>
             <Form.Control
               placeholder="Masukan Nama Lengkap"
@@ -280,7 +367,7 @@ const InformasiEdit = ({ funcViewEdit }) => {
             )}
           </Form.Group>
           <Row className="mb-3">
-            <Form.Group as={Col} md={6} controlId="formGridEmail">
+            <Form.Group as={Col} md={6}>
               <Form.Label>Nomor Handphone</Form.Label>
               <Form.Control
                 type="number"
@@ -353,7 +440,7 @@ const InformasiEdit = ({ funcViewEdit }) => {
               * JPG/PNG/PDF (Maksimal ukuran file 2 MB)
             </small>
           </div>
-          <div className="form-group mb-1">
+          <div className="form-group mb-5">
             <label className="col-form-label">CV</label>
             <div className="d-flex">
               <div className="custom-file">
@@ -362,7 +449,7 @@ const InformasiEdit = ({ funcViewEdit }) => {
                   className="custom-file-input"
                   name="question_image"
                   accept="application/pdf"
-                  onChange={onChangeKtp}
+                  onChange={onChangeCV}
                   onBlur={() => simpleValidator.current.showMessageFor("cv")}
                 />
                 <label className="custom-file-label" htmlFor="customFile">
@@ -379,7 +466,7 @@ const InformasiEdit = ({ funcViewEdit }) => {
               * PDF (Maksimal ukuran file 2 MB)
             </small>
           </div>
-          <Form.Group className="mb-3" controlId="formGridAddress1">
+          <Form.Group className="mb-3">
             <Form.Label>Link Portofolio</Form.Label>
             <Form.Control
               placeholder="Belum Ada link porfofolio"

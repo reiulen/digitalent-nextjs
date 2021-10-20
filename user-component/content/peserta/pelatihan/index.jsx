@@ -53,7 +53,7 @@ const ListPelatihan = () => {
           step={step}
           title1="Sedang Berjalan"
           title2="Selesai"
-          setStepProps={(val) => setStep(val)}
+          setStepProps={val => setStep(val)}
         />
         <Col lg={12} className="order-1 px-0">
           {handleViewParticipant()}
