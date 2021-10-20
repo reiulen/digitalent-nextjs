@@ -155,16 +155,15 @@ const Table = ({ token }) => {
                           </a>
                           </Link>
 
-
-                          <button
+                          <Link href={`/site-management/master-data/master-satuan-kerja-penyelenggara/detail-satuan-kerja-penyelenggara/${items.id}`}>
+                          <a
                             className="btn btn-link-action bg-blue-secondary ml-3 position-relative btn-delete"
-                            onClick={() =>
-                              router.push(`/site-management/master-data/master-satuan-kerja-penyelenggara/detail-satuan-kerja-penyelenggara`)
-                            }
                           >
                             <IconEye width="16" height="16" />
                             <div className="text-hover-show-hapus">Detail</div>
-                          </button>
+                          </a>
+                          </Link>
+                          
                         </div>
                       </td>
                     </tr>

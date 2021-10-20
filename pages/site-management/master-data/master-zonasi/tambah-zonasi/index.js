@@ -3,7 +3,7 @@ import { getSession } from "next-auth/client";
 // import { getAllArtikel } from "../../../redux/actions/publikasi/artikel.actions";
 import { wrapper } from "../../../../../redux/store";
 import LoadingPage from "../../../../../components/LoadingPage";
-import { dropdownProvinsi } from "../../../../../redux/actions/pelatihan/function.actions";
+import { getAllOptionProvinces } from "../../../../../redux/actions/site-management/option/option-provinces.actions";
 const DetailRole = dynamic(
   () =>
     import(
@@ -41,7 +41,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
-      await store.dispatch(dropdownProvinsi(session.user.user.data.token));
+      await store.dispatch(getAllOptionProvinces(session.user.user.data.token));
       return {
         props: { session, title: "Tambah Zonasi - Site Management" },
       };

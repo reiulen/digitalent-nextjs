@@ -32,7 +32,7 @@ const TambahApi = ({ token }) => {
 
 
 
-  const allProvincesSite = useSelector((state) => state.
+const allProvincesSite = useSelector((state) => state.
 allProvincesSite);
 console.log("allProvincesSite", allProvincesSite);
 let sortirOptionTempProvList = allProvincesSite?.data
@@ -174,23 +174,21 @@ let sortirOptionTempProvList = allProvincesSite?.data
               </div>
               <div className="form-group">
                 <label>Status</label>
-                {detailUnitWork.unitWork.status === "0" ? (
+                {detailUnitWork.unitWork.status == "0" ? (
                   <select
                     className="form-control"
-                    id="exampleSelect1"
                     onChange={(e) => setStatus(e.target.value)}
                   >
-                    <option value="1">Aktif</option>
                     <option value="0">Tidak Aktif</option>
+                    <option value="1">Aktif</option>
                   </select>
                 ) : (
                   <select
                     className="form-control"
-                    id="exampleSelect1"
                     onChange={(e) => setStatus(e.target.value)}
                   >
-                    <option value="0">Tidak Aktif</option>
                     <option value="1">Aktif</option>
+                    <option value="0">Tidak Aktif</option>
                   </select>
                 )}
               </div>

@@ -148,10 +148,7 @@ const Table = ({ token }) => {
                                 <div className="d-flex align-items-center">
                                   <Link
 
-                                    href={{
-                                      pathname:"/site-management/master-data/master-zonasi/ubah-zonasi/",
-                                      query:{id:items.value}
-                                    }}
+                                    href={`/site-management/master-data/master-zonasi/ubah-zonasi/${items.value}`}
 
 
                                   >
@@ -164,10 +161,7 @@ const Table = ({ token }) => {
                                   </Link>
 
                                   <Link
-                                    href={{
-                                      pathname:"/site-management/master-data/master-zonasi/detail-zonasi",
-                                      query:{id:items.value}
-                                    }}
+                                    href={`/site-management/master-data/master-zonasi/detail-zonasi/${items.value}`}
                                   >
                                     <a className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete">
                                       <IconEye width="16" height="16" />

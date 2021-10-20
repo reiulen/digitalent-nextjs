@@ -331,8 +331,9 @@ const EditDokumentKerjasama = ({ token }) => {
                       type="text"
                       value={date}
                       name="text_input"
-                      className="form-control mb-3 mb-lg-0"
+                      className="form-control mb-3 mb-lg-0 border-0"
                       // placeholder="Masukan Alamat E-mail"
+                      style={{backgroundColor:"transparent"}}
                     />
               </div>
 
@@ -506,8 +507,9 @@ const EditDokumentKerjasama = ({ token }) => {
                       type="text"
                       value={isntitusiName}
                       name="text_input"
-                      className="form-control mb-3 mb-lg-0"
+                      className="form-control mb-3 mb-lg-0 border-0"
                       placeholder="Masukan Alamat E-mail"
+                      style={{backgroundColor:"transparent"}}
                     />
                   </div>
                 </div>
@@ -521,8 +523,9 @@ const EditDokumentKerjasama = ({ token }) => {
                       type="text"
                       value={email}
                       name="text_input"
-                      className="form-control mb-3 mb-lg-0"
+                      className="form-control mb-3 mb-lg-0 border-0"
                       placeholder="Masukan Alamat E-mail"
+                      style={{backgroundColor:"transparent"}}
                     />
                   </div>
                 </div>

@@ -12,48 +12,66 @@ import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
 
 const Tambah = ({ token }) => {
-
   const router = useRouter();
   const dispatch = useDispatch();
   let selectRefProvinsi = null;
   let selectRefKabupaten = null;
 
   const detailZonasi = useSelector((state) => state.detailZonasi);
-  const drowpdownProvinsi = useSelector((state) => state.drowpdownProvinsi);
-  let tempOptionsProvinsi = drowpdownProvinsi?.data?.data?.value_reference;
+  console.log("detailZonasi", detailZonasi);
 
-  const [provinsi, setProvinsi] = useState([]);
-  console.log("provinsi",provinsi)
-  const [namaZonation, setNamaZonation] = useState("");
-  const [status, setStatus] = useState("");
+  const drowpdownProvinsi = useSelector((state) => state.allProvincesSite);
+  console.log("drowpdownProvinsi", drowpdownProvinsi);
+  let tempOptionsProvinsi = drowpdownProvinsi?.data;
 
-  const [formInput, setFormInput] = useState([]);
-  const [valueForm, setValueForm] = useState([]);
+  const [nameZonation, setNameZonation] = useState(detailZonasi.data.data.name);
+  const [status, setStatus] = useState(detailZonasi.data.data.status);
+  const [defaultValueKabputen, setDefaultValueKabputen] = useState([]);
+  const [defaultValueProvinces, setDefaultValueProvinces] = useState([]);
+  // state provinsi for set in option provinsi
+  const [provincesOption, setProvincesOption] = useState([]);
+  // state kabupaten for set in option kabupaten
+  const [kabupatenOption, setKabupatenOption] = useState([]);
+  // state id provinsi just for get kabputaen value
+  const [idProvinsi, setIdProvinsi] = useState("");
+  // value for option list dinamic
+  const [formInput, setFormInput] = useState(
+    detailZonasi.data.data.data.map((items) => {
+      return {
+        provinsi: [{ label: items.provinsi, value: items.provinsi }],
+        kabupaten: items.kota_kabupaten,
+      };
+    })
+  );
 
-  const [defaultValueKab, setDefaultValueKab] = useState("")
-  const [defaultValueProv, setDefaultValueProv] = useState("")
-
-  console.log("formInput",formInput)
-  console.log("valueForm",valueForm)
+  console.log("formInput", formInput);
+  // value to send api
+  const [valueSend, setValueSend] = useState(
+    detailZonasi.data.data.data.map((items) => {
+      return { ...items, provinsi_old: items.provinsi };
+    })
+  );
+  console.log("valueSend", valueSend);
 
   const handleAddInput = () => {
     let _temp = [...formInput];
-    let _tempValue = [...valueForm];
+    let _tempValue = [...valueSend];
     _temp.push({
-      provinces: provinsi,
+      provinsi: [],
       kabupaten: [],
     });
     _tempValue.push({
+      provinsi_old: "",
       provinsi: "",
-      kota_kabupaten: [],
+      kabupaten: [],
     });
     setFormInput(_temp);
-    setValueForm(_tempValue);
+    setValueSend(_tempValue);
   };
 
   const handleDelete = (index) => {
     let _temp = [...formInput];
-    let _tempValue = [...valueForm];
+    let _tempValue = [...valueSend];
     let filterHasil = _temp.filter((items, idx) => {
       return idx !== index;
     });
@@ -61,15 +79,18 @@ const Tambah = ({ token }) => {
       return idx !== index;
     });
     setFormInput(filterHasil);
-    setValueForm(filterHasilValue);
+    setValueSend(filterHasilValue);
   };
 
+  // onchange set value to form input loop
   const changeListProvinces = async (e, index) => {
+    console.log("event change provinsices", e.id);
     let _temp = [...formInput];
-    let _tempValue = [...valueForm];
+    let _tempValue = [...valueSend];
+
     try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/reference/choose-provinsi/${e.id}`,
+        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/option/provinsi-choose/${e.id}`,
         {
           headers: {
             authorization: `Bearer ${token}`,
@@ -79,84 +100,89 @@ const Tambah = ({ token }) => {
       let optionProvinsiKab = data.data.map((items) => {
         return { ...items, label: items.value };
       });
-
       _temp[index].kabupaten = optionProvinsiKab;
-      setFormInput(_temp);
-
       _tempValue[index].provinsi = e.label;
+      setFormInput(_temp);
+      setValueSend(_tempValue);
     } catch (error) {
       console.log(error);
     }
   };
 
   const changeListKabupaten = (e, index) => {
-    let _tempValue = [...valueForm];
+    let _tempValue = [...valueSend];
     _tempValue[index].kota_kabupaten = e.map((items) => {
       return { label: items.label };
     });
-    setValueForm(_tempValue);
+    setValueSend(_tempValue);
   };
 
-  const handleSubmit = async (e) => {
+  const submit = (e) => {
     e.preventDefault();
 
-    try {
-      let sendData = {
-        name: namaZonation,
-        status: status,
-        data: valueForm,
-      };
-      let { data } = await axios.post(
-        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/zonasi/store`,
-        sendData,
-        {
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-        }
-      );
+    if (nameZonation === "") {
+      Swal.fire("Gagal simpan", "Nama zonasi tidak boleh kosong", "error");
+    } else if (status === "") {
+      Swal.fire("Gagal simpan", "Form status tidak boleh kosong", "error");
+    }
+    // else if (valueProvinsi === "") {
+    //   Swal.fire("Gagal simpan", "Form provinsi tidak boleh kosong", "error");
+    // }
+    else {
+      Swal.fire({
+        title: "Apakah anda yakin simpan ?",
+        // text: "Data ini tidak bisa dikembalikan !",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        cancelButtonText: "Batal",
+        confirmButtonText: "Ya !",
+        dismissOnDestroy: false,
+      }).then(async (result) => {
+        if (result.value) {
+          const sendData = {
+            id: router.query.id,
+            name: nameZonation,
+            status: status,
+            data: valueSend,
+          };
 
-      Swal.fire("Berhasil", "Data berhasil disimpan", "success").then(() => {
-        router.push("/site-management/master-data/master-zonasi");
+          try {
+            let { data } = await axios.post(
+              `${process.env.END_POINT_API_SITE_MANAGEMENT}api/zonasi/update`,
+              sendData,
+              {
+                headers: {
+                  authorization: `Bearer ${token}`,
+                },
+              }
+            );
+
+            Swal.fire("Berhasil", "Data berhasil disimpan", "success").then(
+              () => {
+                router.push(`/site-management/master-data/master-zonasi`);
+              }
+            );
+          } catch (error) {
+            Swal.fire(
+              "Gagal simpan",
+              `${error.response.data.message}`,
+              "error"
+            );
+          }
+        }
       });
-    } catch (error) {
-      Swal.fire("Gagal simpan", `${error.response.data.message}`, "error");
     }
   };
 
-
-  useEffect(() => {
-    async function getDetailZonasi(id, token) {
-      try {
-        let { data } = await axios.get(
-          `${process.env.END_POINT_API_SITE_MANAGEMENT}api/zonasi/detail/${id}`,
-          {
-            headers: {
-              authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        console.log("data", data);
-        setNamaZonation(data.data.name);
-        setStatus(data.data.status);
-
-        setFormInput(data.data.data);
-        setValueForm(data.data.data);
-      } catch (error) {
-        console.log("error, get", error);
-      }
-    }
-
-    getDetailZonasi(router.query.id, token);
-  }, [router.query.id, token]);
-
+  // add value and label in response api for react select first load page
   useEffect(() => {
     let optionProvinsi = tempOptionsProvinsi?.map((items) => {
-      return { ...items, label: items.value };
+      return { ...items, value: items.label };
     });
-    setProvinsi(optionProvinsi);
+    setProvincesOption(optionProvinsi);
   }, [tempOptionsProvinsi]);
-
 
   return (
     <PageWrapper>
@@ -173,44 +199,37 @@ const Tambah = ({ token }) => {
           <form>
             <div className="card-body">
               <div className="form-group">
-                <label htmlFor="staticEmail" className="col-form-label">
-                  Nama Zonasi
-                </label>
+                <label>Nama Zonasi</label>
                 <input
-                  required
-                  placeholder="Provinsi"
+                  onChange={(e) => setNameZonation(e.target.value)}
+                  placeholder="Masukan nama zonasi"
                   type="text"
-                  name="category_cooperation"
+                  value={nameZonation}
                   className="form-control"
-                  value={namaZonation&&namaZonation}
-                  onChange={(e)=>setNamaZonation(e.target.value)}
                 />
               </div>
 
               {/*  */}
               <div className="form-group">
                 <label>Status</label>
-                {status &&status === 0 ? (
-                <select
-                  className="form-control"
-                  id="exampleSelect1"
-                  onChange={(e) => setStatus(e.target.value)}
-                >
-                    <option value="0">Tidak aktif</option>
-                    <option value="1">Aktif</option>
-                </select>
-                  ):
+                {status == "0" ? (
                   <select
-                  className="form-control"
-                  id="exampleSelect1"
-                  onChange={(e) => setStatus(e.target.value)}
-                >
+                    className="form-control"
+                    onChange={(e) => setStatus(e.target.value)}
+                  >
                     <option value="1">Aktif</option>
                     <option value="0">Tidak aktif</option>
-                </select>
-                  }
+                  </select>
+                ) : (
+                  <select
+                    className="form-control"
+                    onChange={(e) => setStatus(e.target.value)}
+                  >
+                    <option value="0">Tidak aktif</option>
+                    <option value="1">Aktif</option>
+                  </select>
+                )}
               </div>
-
 
               {formInput &&
                 formInput.map((items, index) => {
@@ -225,6 +244,7 @@ const Tambah = ({ token }) => {
                             className="basic-single"
                             classNamePrefix="select"
                             placeholder="Pilih provinsi"
+                            defaultValue={items.provinsi}
                             isDisabled={false}
                             isLoading={false}
                             isClearable={false}
@@ -232,17 +252,15 @@ const Tambah = ({ token }) => {
                             isSearchable={true}
                             name="color"
                             onChange={(e) => changeListProvinces(e, index)}
-                            options={provinsi}
+                            options={provincesOption}
                           />
                         </div>
                       </div>
                       <div className="col-12 col-sm-6">
                         <div className="form-group mt-4">
-                          <div className="position-relative d-flex align-items-center w-100">
+                          <div className="position-relative d-flex align-items-end w-100">
                             <div className="form-group w-100 mr-6 mb-1">
-                              <label htmlFor="exampleSelect1">
-                                Kota / Kabupaten
-                              </label>
+                              <label>Kota / Kabupaten</label>
                               <Select
                                 ref={(ref) => (selectRefKabupaten = ref)}
                                 className="basic-single"
@@ -253,14 +271,15 @@ const Tambah = ({ token }) => {
                                 isLoading={false}
                                 isClearable={false}
                                 isRtl={false}
+                                defaultValue={items.kabupaten}
                                 isSearchable={true}
                                 name="color"
                                 onChange={(e) => changeListKabupaten(e, index)}
                                 options={items.kabupaten}
                               />
-                              <span className="form-text text-muted">
+                              {/* <span className="form-text text-muted">
                                 Please enter your full name
-                              </span>
+                              </span> */}
                             </div>
 
                             {index === 0 ? (
@@ -268,8 +287,11 @@ const Tambah = ({ token }) => {
                             ) : (
                               <button
                                 type="button"
-                                className="btn"
-                                style={{ backgroundColor: "#EE2D41" }}
+                                className="btn position-relative"
+                                style={{
+                                  backgroundColor: "#EE2D41",
+                                  top: "-3px",
+                                }}
                                 onClick={() => handleDelete(index)}
                               >
                                 <IconDelete />
@@ -281,9 +303,6 @@ const Tambah = ({ token }) => {
                     </div>
                   );
                 })}
-
-
-
 
               <div className="d-flex align-items-center justify-content-end">
                 <div className="form-group">
@@ -317,7 +336,7 @@ const Tambah = ({ token }) => {
                   <button
                     type="button"
                     className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
-                    onClick={e => handleSubmit(e)}
+                    onClick={(e) => submit(e)}
                   >
                     Simpan
                   </button>

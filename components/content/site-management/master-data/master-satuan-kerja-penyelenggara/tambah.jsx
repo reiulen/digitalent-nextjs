@@ -115,7 +115,7 @@ const TambahApi = ({ token }) => {
 
   useEffect(() => {
     let optionProvinsi = tempOptionsProvinsi?.map((items) => {
-      return { ...items, label: items.value };
+      return { ...items, value: items.label };
     });
     setProvinsi(optionProvinsi);
   }, [tempOptionsProvinsi]);

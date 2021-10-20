@@ -207,7 +207,7 @@ const TambahApi = ({ token,id }) => {
               </div>
               <div className="form-group">
                 <label>Status</label>
-                {status === 1 ? (
+                {status == 1 ? (
                   <select
                     className="form-control"
                     onChange={(e) => setStatus(e.target.value)}

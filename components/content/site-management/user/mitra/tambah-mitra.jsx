@@ -202,7 +202,7 @@ const TambahApi = ({ token }) => {
                 >
                   <option value="">Pilih status</option>
                   <option value="1">Aktif</option>
-                  <option value="1">Tidak Aktif</option>
+                  <option value="0">Tidak Aktif</option>
                 </select>
               </div>
             </form>
