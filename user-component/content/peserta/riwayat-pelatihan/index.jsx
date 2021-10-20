@@ -29,104 +29,100 @@ export default function RiwayatPelatihan() {
   return (
     <>
       <PesertaWrapper>
-        <Card className="p-6">
-          <Col lg={12}>
-            <Card className="card-custom gutter-b">
-              <Card.Body>
-                <Row>
-                  <Col lg={8}>
-                    <div className="position-relative overflow-hidden">
-                      <i className="ri-search-line left-center-absolute ml-2"></i>
-                      <input
-                        type="text"
-                        className="form-control pl-10"
-                        placeholder="Cari..."
-                        //   onChange={e => setSearch(e.target.value)}
-                      />
-                      <button
-                        className="btn bg-blue-primary text-white right-center-absolute"
-                        style={{
-                          borderTopLeftRadius: "0",
-                          borderBottomLeftRadius: "0",
-                        }}
-                        //   onClick={e => {
-                        //     handleSearch(e);
-                        //   }}
-                      >
-                        Cari
-                      </button>
-                    </div>
-                  </Col>
-                  <Col>
+        <Col lg={12} className="px-0">
+          <Card className="card-custom gutter-b">
+            <Card.Body>
+              <Row>
+                <Col lg={8}>
+                  <div className="position-relative overflow-hidden">
+                    <i className="ri-search-line left-center-absolute ml-2"></i>
+                    <input
+                      type="text"
+                      className="form-control pl-10"
+                      placeholder="Cari..."
+                      //   onChange={e => setSearch(e.target.value)}
+                    />
                     <button
-                      className=" btn border d-flex align-items-center justify-content-between border-2 border-primary w-100"
-                      data-toggle="modal"
+                      className="btn bg-blue-primary text-white right-center-absolute"
                       style={{
-                        color: "#464646",
-                        minWidth: "230px",
+                        borderTopLeftRadius: "0",
+                        borderBottomLeftRadius: "0",
                       }}
-                      onClick={handleShow}
+                      //   onClick={e => {
+                      //     handleSearch(e);
+                      //   }}
                     >
-                      <div className="d-flex align-items-center">
-                        <IconFilter className="mr-3" />
-                        Pilih Filter
-                      </div>
-                      <IconArrow fill="#ADB5BD" width="10" height="6" />
+                      Cari
                     </button>
+                  </div>
+                </Col>
+                <Col>
+                  <button
+                    className=" btn border d-flex align-items-center justify-content-between border-2 border-primary w-100"
+                    data-toggle="modal"
+                    style={{
+                      color: "#464646",
+                      minWidth: "230px",
+                    }}
+                    onClick={handleShow}
+                  >
+                    <div className="d-flex align-items-center">
+                      <IconFilter className="mr-3" />
+                      Pilih Filter
+                    </div>
+                    <IconArrow fill="#ADB5BD" width="10" height="6" />
+                  </button>
 
-                    <Modal show={showModal} onHide={handleClose} centered>
-                      <Modal.Header>
-                        <Modal.Title>Filter</Modal.Title>
-                      </Modal.Header>
-                      <Modal.Body>
-                        <Select
-                          ref={(ref) => (refSelect = ref)}
-                          className="basic-single"
-                          classNamePrefix="select"
-                          placeholder="Semua"
-                          // defaultValue={options[0].value}
-                          isDisabled={false}
-                          isLoading={false}
-                          isClearable={false}
-                          isRtl={false}
-                          isSearchable={true}
-                          name="color"
-                          onChange={(e) => {
-                            setStatus(e?.value);
-                          }}
-                          options={options}
-                        />{" "}
-                      </Modal.Body>
-                      <Modal.Footer>
-                        <Button variant="secondary" onClick={handleClose}>
-                          Close
-                        </Button>
-                        <Button variant="primary" onClick={handleFilter}>
-                          Save Changes
-                        </Button>
-                      </Modal.Footer>
-                    </Modal>
-                  </Col>
-                </Row>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Card>
-        <Card>
-          {/* <Administrasi /> */}
-          <CardPeserta totalButton={2} status={"menunggu jadwal"} />
-          <CardPeserta totalButton={2} status={"tes substansi"} />
-          <CardPeserta totalButton={2} status={"lolos substansi"} />
-          <CardPeserta totalButton={2} status={"tidak lulus"} />
-          <CardPeserta totalButton={2} status={"seleksi administrasi"} />
-          <CardPeserta totalButton={2} status={"lolos administrasi"} />
-          <CardPeserta totalButton={2} status={"ikuti pelatihan"} />
-          <CardPeserta totalButton={2} status={"kerjakan mid test"} />
-          <CardPeserta totalButton={2} status={"kerjakan trivia"} />
-          <CardPeserta totalButton={2} status={"lulus pelatihan"} />
-          <CardPeserta totalButton={2} status={"isi survey"} />
-          <CardPeserta totalButton={2} status={"isi LPJ"} />
-        </Card>
+                  <Modal show={showModal} onHide={handleClose} centered>
+                    <Modal.Header>
+                      <Modal.Title>Filter</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <Select
+                        ref={(ref) => (refSelect = ref)}
+                        className="basic-single"
+                        classNamePrefix="select"
+                        placeholder="Semua"
+                        // defaultValue={options[0].value}
+                        isDisabled={false}
+                        isLoading={false}
+                        isClearable={false}
+                        isRtl={false}
+                        isSearchable={true}
+                        name="color"
+                        onChange={(e) => {
+                          setStatus(e?.value);
+                        }}
+                        options={options}
+                      />{" "}
+                    </Modal.Body>
+                    <Modal.Footer>
+                      <Button variant="secondary" onClick={handleClose}>
+                        Close
+                      </Button>
+                      <Button variant="primary" onClick={handleFilter}>
+                        Save Changes
+                      </Button>
+                    </Modal.Footer>
+                  </Modal>
+                </Col>
+              </Row>
+            </Card.Body>
+          </Card>
+        </Col>
+        {/* <Administrasi /> */}
+        <CardPeserta totalButton={2} status={"menunggu jadwal"} />
+        <CardPeserta totalButton={2} status={"tes substansi"} />
+        <CardPeserta totalButton={2} status={"lolos substansi"} />
+        <CardPeserta totalButton={2} status={"tidak lulus"} />
+        <CardPeserta totalButton={2} status={"seleksi administrasi"} />
+        <CardPeserta totalButton={2} status={"lolos administrasi"} />
+        <CardPeserta totalButton={2} status={"ikuti pelatihan"} />
+        <CardPeserta totalButton={2} status={"kerjakan mid test"} />
+        <CardPeserta totalButton={2} status={"kerjakan trivia"} />
+        <CardPeserta totalButton={2} status={"lulus pelatihan"} />
+        <CardPeserta totalButton={2} status={"isi survey"} />
+        <CardPeserta totalButton={2} status={"isi lpj"} />
       </PesertaWrapper>
     </>
   );

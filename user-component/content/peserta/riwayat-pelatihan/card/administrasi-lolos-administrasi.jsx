@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import style from "../style.module.css";
 
-export default function SubstansiMenungguJadwal() {
+export default function LolosAdministrasi() {
   return (
     <div>
       <Col lg={12} className="order-1 px-0">
@@ -54,10 +54,10 @@ export default function SubstansiMenungguJadwal() {
                 </Col>
                 <Col lg={2} className="p-0 d-flex justify-content-end">
                   <span
-                    className="label label-inline label-light-warning font-weight-bold p-0 px-4"
+                    className="label label-inline label-light-success px-4 font-weight-bold p-0"
                     style={{ borderRadius: "25px" }}
                   >
-                    Menunggu Jadwal
+                    Lolos Administrasi
                   </span>
                 </Col>
               </Row>
@@ -77,13 +77,12 @@ export default function SubstansiMenungguJadwal() {
                   </span>
                 </Col>
               </Row>
-              <Row className="d-flex align-items-end">
-                <Col md={12} className="m-0">
+              <Row>
+                <Col md={12}>
                   <Button
                     variant="primary"
                     className="btn-rounded-full ml-auto btn-block d-flex justify-content-center"
                     size="sm"
-                    style={{ backgroundColor: "#007CFF" }}
                   >
                     <i className="ri-download-2-fill mr-2"></i>
                     Bukti Pendaftaran

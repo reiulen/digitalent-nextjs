@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import style from "../style.module.css";
 
-export default function SubstansiMenungguJadwal() {
+export default function MidTest() {
   return (
     <div>
       <Col lg={12} className="order-1 px-0">
@@ -54,10 +54,10 @@ export default function SubstansiMenungguJadwal() {
                 </Col>
                 <Col lg={2} className="p-0 d-flex justify-content-end">
                   <span
-                    className="label label-inline label-light-warning font-weight-bold p-0 px-4"
+                    className="label label-inline label-light-primary px-4 font-weight-bold p-0"
                     style={{ borderRadius: "25px" }}
                   >
-                    Menunggu Jadwal
+                    Kerjakan Mid Test
                   </span>
                 </Col>
               </Row>
@@ -77,16 +77,29 @@ export default function SubstansiMenungguJadwal() {
                   </span>
                 </Col>
               </Row>
-              <Row className="d-flex align-items-end">
-                <Col md={12} className="m-0">
+              <Row className="">
+                <Col md={6}>
+                  <Button
+                    variant="outline-primary"
+                    className="btn-rounded-full ml-auto btn-block d-flex justify-content-center"
+                    size="sm"
+                    style={{ borderColor: "#007CFF", color: "#007CFF" }}
+                  >
+                    <i
+                      className="ri-download-2-fill mr-2"
+                      style={{ color: "#007CFF" }}
+                    ></i>
+                    Bukti Pendaftaran
+                  </Button>
+                </Col>
+                <Col md={6}>
                   <Button
                     variant="primary"
                     className="btn-rounded-full ml-auto btn-block d-flex justify-content-center"
                     size="sm"
-                    style={{ backgroundColor: "#007CFF" }}
                   >
-                    <i className="ri-download-2-fill mr-2"></i>
-                    Bukti Pendaftaran
+                    Kerjakan Mid Test
+                    <i className="ri-arrow-right-s-line ml-2"></i>
                   </Button>
                 </Col>
               </Row>
