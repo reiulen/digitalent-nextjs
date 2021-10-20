@@ -15,6 +15,10 @@ import {
   ERROR_DROPDOWN_TEMA,
   GET_DROPDOWN_PELATIHAN,
   ERROR_DROPDOWN_PELATIHAN,
+  GET_DROPDOWN_STATUS_PEKERJAAN,
+  ERROR_DROPDOWN_STATUS_PEKERJAAN,
+  GET_DROPDOWN_PENDIDIKAN,
+  ERROR_DROPDOWN_PENDIDIKAN,
   GET_DROPDOWN_LEVEL_PELATIHAN,
   ERROR_DROPDOWN_LEVEL_PELATIHAN,
   GET_DROPDOWN_MITRA,
@@ -25,6 +29,8 @@ import {
   ERROR_DROPDOWN_PROVINSI,
   GET_DROPDOWN_KABUPATEN,
   ERROR_DROPDOWN_KABUPATEN,
+  GET_DROPDOWN_KABUPATEN_DOMISILI,
+  ERROR_DROPDOWN_KABUPATEN_DOMISILI,
   GET_DROPDOWN_PENYELENGGARA,
   ERROR_DROPDOWN_PENYELENGGARA,
   GET_DATA_PRIBADI_SUCCESS,
@@ -187,6 +193,49 @@ export const drowpdownPelatihanReducers = (state = { data: [] }, action) => {
   }
 };
 
+export const drowpdownStatusPekerjaanReducers = (
+  state = { data: [] },
+  action
+) => {
+  switch (action.type) {
+    case GET_DROPDOWN_STATUS_PEKERJAAN:
+      return {
+        data: action.payload,
+      };
+    case ERROR_DROPDOWN_STATUS_PEKERJAAN:
+      return {
+        error: action.payload,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};
+
+export const drowpdownPendidikanReducers = (state = { data: [] }, action) => {
+  switch (action.type) {
+    case GET_DROPDOWN_PENDIDIKAN:
+      return {
+        data: action.payload,
+      };
+    case ERROR_DROPDOWN_PENDIDIKAN:
+      return {
+        error: action.payload,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};
+
 export const drowpdownLevelPelatihanReducers = (
   state = { data: [] },
   action
@@ -277,6 +326,29 @@ export const drowpdownKabupatenReducers = (state = { data: [] }, action) => {
         data: action.payload,
       };
     case ERROR_DROPDOWN_KABUPATEN:
+      return {
+        error: action.payload,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};
+
+export const drowpdownKabupatenDomisiliReducers = (
+  state = { data: [] },
+  action
+) => {
+  switch (action.type) {
+    case GET_DROPDOWN_KABUPATEN_DOMISILI:
+      return {
+        data: action.payload,
+      };
+    case ERROR_DROPDOWN_KABUPATEN_DOMISILI:
       return {
         error: action.payload,
       };

@@ -4,15 +4,28 @@ import Select from "react-select";
 import Swal from "sweetalert2";
 import SimpleReactValidator from "simple-react-validator";
 import style from "../style.module.css";
+import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
+import {
+  updateProfileDataPribadi,
+  clearErrors,
+} from "../../../../../redux/actions/pelatihan/profile.actions";
+import { UPDATE_DATA_PRIBADI_RESET } from "../../../../../redux/types/pelatihan/profile.type";
 
-const InformasiEdit = ({ funcViewEdit }) => {
+const InformasiEdit = ({ funcViewEdit, token }) => {
+  const dispatch = useDispatch();
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
 
   const { error: errorDataPribadi, dataPribadi } = useSelector(
     (state) => state.getDataPribadi
   );
+
+  const {
+    error: errorUpdateData,
+    loading,
+    success,
+  } = useSelector((state) => state.updateDataPribadi);
 
   const [deskripsi, setDeskripsi] = useState(
     (dataPribadi && dataPribadi.deskripsi) || ""
@@ -64,6 +77,18 @@ const InformasiEdit = ({ funcViewEdit }) => {
     { value: "0", label: "Laki - Laki" },
     { value: "1", label: "Perempuan" },
   ];
+
+  useEffect(() => {
+    if (errorUpdateData) {
+      toast.error(errorUpdateData);
+      dispatch(clearErrors());
+    }
+
+    if (success) {
+      dispatch({ type: UPDATE_DATA_PRIBADI_RESET });
+      funcViewEdit(false);
+    }
+  }, [errorUpdateData, success, dispatch]);
 
   const onChangeKtp = (e) => {
     const type = ["image/jpg", "image/png", "image/jpeg", "application/pdf"];
@@ -127,21 +152,22 @@ const InformasiEdit = ({ funcViewEdit }) => {
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
       const data = {
-        name,
-        email,
-        kelamin,
         nik,
-        nomorHandphone,
+        name,
+        jenis_kelamin: kelamin.label,
         agama,
-        tempatLahir,
-        tanggalLahir,
-        nameUrgent,
-        nomorUrgent,
-        hubunganUrgent,
-        ktp,
-        cv,
+        tempat_lahir: tempatLahir,
+        tanggal_lahir: tanggalLahir,
+        hubungan: hubunganUrgent,
+        nama_kontak_darurat: nameUrgent,
+        nomor_handphone_darurat: nomorUrgent,
+        file_ktp: ktp,
+        file_cv: cv,
+        portofolio: link,
+        nomorHandphone,
+        email,
       };
-      console.log(data);
+      dispatch(updateProfileDataPribadi(data, token));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);

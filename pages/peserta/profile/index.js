@@ -10,6 +10,8 @@ import {
   getDataPribadi,
   dropdownProvinsi,
   dropdownKabupaten,
+  dropdownPendidikan,
+  dropdownStatusPekerjaan,
 } from "../../../redux/actions/pelatihan/function.actions";
 import {
   getProfileAlamat,
@@ -67,10 +69,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
       await store.dispatch(getDataPribadi(data.user.token));
       await store.dispatch(getProfileAlamat(data.user.token));
       await store.dispatch(getProfilePendidikan(data.user.token));
-      // await store.dispatch(
-      //   getProfileKeterampilan(data.user.token)
-      // );
+
       await store.dispatch(dropdownProvinsi(data.user.token));
+      await store.dispatch(dropdownStatusPekerjaan(data.user.token));
+      await store.dispatch(dropdownPendidikan(data.user.token));
       await store.dispatch(getProfilePekerjaan(data.user.token));
 
       return {

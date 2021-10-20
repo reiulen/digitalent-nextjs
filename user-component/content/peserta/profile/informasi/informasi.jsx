@@ -1,11 +1,17 @@
 import React, { useEffect } from "react";
 import { Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
+import { getDataPribadi } from "../../../../../redux/actions/pelatihan/function.actions";
 
-const Informasi = ({ funcViewEdit }) => {
+const Informasi = ({ funcViewEdit, token }) => {
+  const dispatch = useDispatch();
   const { error: errorDataPribadi, dataPribadi } = useSelector(
     (state) => state.getDataPribadi
   );
+
+  useEffect(() => {
+    dispatch(getDataPribadi(token));
+  }, [dispatch]);
 
   return (
     <>

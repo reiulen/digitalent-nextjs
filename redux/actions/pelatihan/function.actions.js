@@ -12,6 +12,10 @@ import {
   ERROR_DROPDOWN_TEMA,
   GET_DROPDOWN_PELATIHAN,
   ERROR_DROPDOWN_PELATIHAN,
+  GET_DROPDOWN_STATUS_PEKERJAAN,
+  ERROR_DROPDOWN_STATUS_PEKERJAAN,
+  GET_DROPDOWN_PENDIDIKAN,
+  ERROR_DROPDOWN_PENDIDIKAN,
   GET_DROPDOWN_LEVEL_PELATIHAN,
   ERROR_DROPDOWN_LEVEL_PELATIHAN,
   GET_DROPDOWN_MITRA,
@@ -22,6 +26,8 @@ import {
   ERROR_DROPDOWN_PROVINSI,
   GET_DROPDOWN_KABUPATEN,
   ERROR_DROPDOWN_KABUPATEN,
+  GET_DROPDOWN_KABUPATEN_DOMISILI,
+  ERROR_DROPDOWN_KABUPATEN_DOMISILI,
   GET_DROPDOWN_PENYELENGGARA,
   ERROR_DROPDOWN_PENYELENGGARA,
   GET_DATA_PRIBADI_SUCCESS,
@@ -227,6 +233,52 @@ export const dropdownPelatihan = (token) => async (dispatch) => {
   }
 };
 
+export const dropdownStatusPekerjaan = (token) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    const { data } = await axios.get(
+      process.env.END_POINT_API_SITE_MANAGEMENT + `api/option/job-status`,
+      config
+    );
+    dispatch({
+      type: GET_DROPDOWN_STATUS_PEKERJAAN,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ERROR_DROPDOWN_STATUS_PEKERJAAN,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const dropdownPendidikan = (token) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    const { data } = await axios.get(
+      process.env.END_POINT_API_SITE_MANAGEMENT + `api/option/education`,
+      config
+    );
+    dispatch({
+      type: GET_DROPDOWN_PENDIDIKAN,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ERROR_DROPDOWN_PENDIDIKAN,
+      payload: error.response.data.message,
+    });
+  }
+};
+
 export const dropdownLevelPelatihan = (token) => async (dispatch) => {
   try {
     const config = {
@@ -235,7 +287,7 @@ export const dropdownLevelPelatihan = (token) => async (dispatch) => {
       },
     };
     const { data } = await axios.get(
-      process.env.END_POINT_API_SITE_MANAGEMENT + `api/reference/detail/31`,
+      process.env.END_POINT_API_SITE_MANAGEMENT + `api/option/training-level`,
       config
     );
     dispatch({
@@ -356,12 +408,12 @@ export const dropdownKabupatenDomisili = (token, id) => async (dispatch) => {
       config
     );
     dispatch({
-      type: GET_DROPDOWN_KABUPATEN,
+      type: GET_DROPDOWN_KABUPATEN_DOMISILI,
       payload: data,
     });
   } catch (error) {
     dispatch({
-      type: ERROR_DROPDOWN_KABUPATEN,
+      type: ERROR_DROPDOWN_KABUPATEN_DOMISILI,
       payload: error.response.data.message,
     });
   }

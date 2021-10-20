@@ -121,7 +121,7 @@ const ProfileWrapper = ({
                   >
                     Pendidikan
                   </Nav.Link>
-                  <Nav.Link
+                  {/* <Nav.Link
                     className={`mr-9 ${
                       viewProvile === 4 && style.navbar_profile_active
                     }`}
@@ -131,7 +131,7 @@ const ProfileWrapper = ({
                     }}
                   >
                     Keterampilan
-                  </Nav.Link>
+                  </Nav.Link> */}
                   <Nav.Link
                     className={`mr-9 ${
                       viewProvile === 5 && style.navbar_profile_active
