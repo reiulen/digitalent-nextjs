@@ -11,6 +11,7 @@ const FormKomitmen = ({
   propsForm,
   propsDataPelatihan,
   token,
+  funcView,
 }) => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -55,37 +56,37 @@ const FormKomitmen = ({
             <Row>
               <Col md={6}>
                 <p className="text-neutral-body my-1">Nama Lengkap</p>
-                <p>{dataPeserta.name || "-"}</p>
+                <p>{(dataPeserta && dataPeserta.name) || "-"}</p>
               </Col>
               <Col md={6}>
                 <p className="text-neutral-body my-1">Email</p>
-                <p>{dataPeserta.email || "-"}</p>
+                <p>{(dataPeserta && dataPeserta.email) || "-"}</p>
               </Col>
             </Row>
             <Row>
               <Col md={6}>
                 <p className="text-neutral-body my-1">NIK</p>
-                <p>{dataPeserta.nik || "-"}</p>
+                <p>{(dataPeserta && dataPeserta.nik) || "-"}</p>
               </Col>
               <Col md={6}>
                 <p className="text-neutral-body my-1">Nomor Handphone</p>
-                <p>{dataPeserta.nomor_handphone || "-"}</p>
+                <p>{(dataPeserta && dataPeserta.nomor_handphone) || "-"}</p>
               </Col>
             </Row>
             <Row>
               <Col md={6}>
                 <p className="text-neutral-body my-1">Tempat Lahir</p>
-                <p>{dataPeserta.tempat_lahir || "-"}</p>
+                <p>{(dataPeserta && dataPeserta.tempat_lahir) || "-"}</p>
               </Col>
               <Col md={6}>
                 <p className="text-neutral-body my-1">Tanggal Lahir</p>
-                <p>{dataPeserta.tanggal_lahir || "-"}</p>
+                <p>{(dataPeserta && dataPeserta.tanggal_lahir) || "-"}</p>
               </Col>
             </Row>
             <Row>
               <Col md={12}>
                 <p className="text-neutral-body my-1">Alamat Domisili</p>
-                <p>{dataPeserta.address || "-"}</p>
+                <p>{(dataPeserta && dataPeserta.address) || "-"}</p>
               </Col>
             </Row>
           </div>
@@ -95,32 +96,32 @@ const FormKomitmen = ({
             <Row>
               <Col md={6}>
                 <p className="text-neutral-body my-1">Akademi</p>
-                <p>{dataPelatihan.akademi || "-"}</p>
+                <p>{(dataPelatihan && dataPelatihan.akademi) || "-"}</p>
               </Col>
               <Col md={6}>
                 <p className="text-neutral-body my-1">Tama</p>
-                <p>{dataPelatihan.tema || "-"}</p>
+                <p>{(dataPelatihan && dataPelatihan.tema) || "-"}</p>
               </Col>
             </Row>
             <Row>
               <Col md={6}>
                 <p className="text-neutral-body my-1">Pelatihan</p>
-                <p>{dataPelatihan.name || "-"}</p>
+                <p>{(dataPelatihan && dataPelatihan.name) || "-"}</p>
               </Col>
               <Col md={6}>
                 <p className="text-neutral-body my-1">Mitra</p>
-                <p>{dataPelatihan.mitra || "-"}</p>
+                <p>{(dataPelatihan && dataPelatihan.mitra) || "-"}</p>
               </Col>
             </Row>
           </div>
-          {dataPelatihan.komitmen === "1" && (
+          {dataPelatihan && dataPelatihan.komitmen === "1" && (
             <div className="menyatakan">
               <h3 className="font-weight-bolder pb-5 pt-4">Menyatakan</h3>
               <Row>
                 <Col md={12}>
                   <div
                     dangerouslySetInnerHTML={{
-                      __html: dataPelatihan.deskripsi_komitmen,
+                      __html: dataPelatihan && dataPelatihan.deskripsi_komitmen,
                     }}
                   ></div>
                 </Col>
@@ -142,7 +143,7 @@ const FormKomitmen = ({
                         <h6 className="form-weight-bolder">
                           Telah Menyatakan Menyetujui dengan sebenarnya secara
                           sadar dan tanpa paksaan dan telah menerima segala hak
-                          yang telah disetujui
+                          yang telah disetuju
                         </h6>
                       </div>
                     </div>
@@ -153,12 +154,21 @@ const FormKomitmen = ({
           )}
 
           <Button
-            variant="transparent"
-            className="btn-rounded-full mt-3 float-right bg-blue-primary text-white"
+            variant="primary"
+            className="btn-rounded-full mt-3 float-right text-white "
             size="sm"
             type="submit"
           >
             Daftar
+          </Button>
+          <Button
+            variant="primary"
+            className="btn-rounded-full mt-3 float-right text-white mr-2"
+            size="sm"
+            type="button"
+            onClick={() => funcView(1)}
+          >
+            Kembali
           </Button>
         </Form>
       </Card.Body>

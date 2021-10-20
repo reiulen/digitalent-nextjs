@@ -144,10 +144,9 @@ export const limitCooporation = (value) => {
   };
 };
 
-export const getListApi = (token) => async (dispatch, getState) => {
+export const getListApi = (token) => async (dispatch) => {
   try {
     dispatch({ type: GET_LIST_API_REQUEST });
-
     const { data } = await axios.get(
       `${process.env.END_POINT_API_SITE_MANAGEMENT}api/api-list/all`,
       {
@@ -162,14 +161,12 @@ export const getListApi = (token) => async (dispatch, getState) => {
       payload: data,
     });
   } catch (error) {
-    console.log("error", error);
     dispatch({
       type: GET_LIST_API_FAIL,
-      payload: error.response.data.message,
     });
   }
 };
-export const getListField = (id, token) => async (dispatch, getState) => {
+export const getListField = (id, token) => async (dispatch) => {
   try {
     dispatch({ type: GET_LIST_FIELD_REQUEST });
 
@@ -181,8 +178,6 @@ export const getListField = (id, token) => async (dispatch, getState) => {
         },
       }
     );
-
-    console.log("data", data.data);
 
     let dataSortir = data.data.map((items) => {
       return {
@@ -228,10 +223,8 @@ export const getDetailApi = (id, token) => async (dispatch) => {
       payload: data,
     });
   } catch (error) {
-    console.log("error", error);
     dispatch({
       type: DETAIL_API_FAIL,
-      payload: error.response.data.message,
     });
   }
 };

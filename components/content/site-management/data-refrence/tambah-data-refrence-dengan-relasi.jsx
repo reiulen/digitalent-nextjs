@@ -8,9 +8,13 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import IconAdd from "../../../assets/icon/Add";
 import IconDelete from "../../../assets/icon/Delete";
+import Select from "react-select";
 
 const Tambah = ({ token }) => {
   const router = useRouter();
+
+  let selectRefDataReference = null;
+  let selectRefDataFromReference = null;
 
   const [nameReference, setNameReference] = useState("");
   const [status, setStatus] = useState("");
@@ -98,11 +102,28 @@ const Tambah = ({ token }) => {
     }
   };
 
-  const handleChangeOptionValueTextReference = (event) => {
-    setIdReference(event.target.value);
-    const { options, selectedIndex } = event.target;
-    const text = options[selectedIndex].text;
-    setNameListFromReference(text);
+  // const handleChangeOptionValueTextReference = (event) => {
+  //   setIdReference(event.target.value);
+  //   const { options, selectedIndex } = event.target;
+  //   const text = options[selectedIndex].text;
+  //   setNameListFromReference(text);
+  // };
+
+   const changeListDataReference = (e) => {
+     setIdReference(e.key)
+     setNameListFromReference(e.value)
+    // let data = e.map((items) => {
+    //   return { ...items, region: items.label };
+    // });
+    // const datas = data.map((items) => {
+    //   return {
+    //     region: items.region,
+    //   };
+    // });
+
+    // setValueProvinsi(datas);
+
+    console.log("changeListDataReference", e);
   };
 
   const handleAddInput = (idx, index) => {
@@ -127,6 +148,7 @@ const Tambah = ({ token }) => {
   const handleDelete = (parent, child) => {
     console.log("child", child);
     let _temp = [...formReferenceAndText];
+    console.log("_temp", _temp);
 
     if (child === 0) {
       let resultTemp = _temp.filter((items, idz) => idz !== parent);
@@ -134,12 +156,16 @@ const Tambah = ({ token }) => {
     } else {
       _temp.map((items, ids) => {
         if (ids === parent) {
-          items.text = items.text.filter((itemx, inc) => inc !== child);
+          items.value = items.value.filter((itemx, inc) => inc !== child);
         }
       });
       setFormReferenceAndText(_temp);
     }
   };
+
+
+
+
   const handleAddFormReferenceText = () => {
     let _temp = [...formReferenceAndText];
     _temp.push({
@@ -154,9 +180,17 @@ const Tambah = ({ token }) => {
   };
 
   const handleCHangeNameReference = (e,index) => {
+
+
+
+
     let _temp = [...formReferenceAndText]
-    _temp[index].relasi_id = e.target.value
+    _temp[index].relasi_id = e.key
     setFormReferenceAndText(_temp)
+
+
+
+
   }
 
   const handleChangeTextForm = (e,idx,index) => {
@@ -179,7 +213,11 @@ const Tambah = ({ token }) => {
             },
           }
         );
-        setOptionReference(data);
+        let resultOptionReference = data.data.map((items) =>{
+          return {...items,label:items.value}
+        })
+        console.log("resultOptionReference",resultOptionReference)
+        setOptionReference(resultOptionReference);
       } catch (error) {
         console.log(
           "error get all data reference",
@@ -201,7 +239,11 @@ const Tambah = ({ token }) => {
               },
             }
           );
-          setOptionFromReference(data);
+          let resultOptionReferenceChooce = data.data.map((items) =>{
+          return {...items,label:items.value}
+        })
+          console.log("data sub",data)
+          setOptionFromReference(resultOptionReferenceChooce);
         } catch (error) {
           console.log(
             "error get all data reference",
@@ -254,7 +296,7 @@ const Tambah = ({ token }) => {
               <div className="form-group">
                 <label>Pilih Data Reference</label>
 
-                <select
+                {/* <select
                   onChange={(e) => handleChangeOptionValueTextReference(e)}
                   className="form-control"
                 >
@@ -268,7 +310,24 @@ const Tambah = ({ token }) => {
                           </option>
                         );
                       })}
-                </select>
+                </select> */}
+
+                <Select
+                  ref={(ref) => (selectRefDataReference = ref)}
+                  className="basic-single"
+                  classNamePrefix="select"
+                  placeholder="Pilih provinsi"
+                  // defaultValue={allMK.stateListMitra[0]}
+                  isDisabled={false}
+                  isLoading={false}
+                  isClearable={false}
+                  isRtl={false}
+                  isSearchable={true}
+                  name="color"
+                  onChange={(e) => changeListDataReference(e)}
+                  options={optionReference}
+                />
+
               </div>
 
               {/*  */}
@@ -278,7 +337,26 @@ const Tambah = ({ token }) => {
                     <div className="col-12 col-sm-6">
                       <div className="form-group mt-4">
                         <label>List {nameListFromReference}</label>
-                        <select className="form-control" onChange={(e) => handleCHangeNameReference(e,idx) }>
+
+
+                        <Select
+                  ref={(ref) => (selectRefDataFromReference = ref)}
+                  className="basic-single"
+                  classNamePrefix="select"
+                  placeholder="Pilih provinsi"
+                  // defaultValue={allMK.stateListMitra[0]}
+                  isDisabled={false}
+                  isLoading={false}
+                  isClearable={false}
+                  isRtl={false}
+                  isSearchable={true}
+                  name="color"
+                  onChange={(e) => handleCHangeNameReference(e,idx)}
+                  options={optionFromReference}
+                />
+
+                        
+                        {/* <select className="form-control" onChange={(e) => handleCHangeNameReference(e,idx) }>
                           <option value="">Pilih Data</option>
                           {optionFromReference.length === 0
                             ? ""
@@ -289,7 +367,10 @@ const Tambah = ({ token }) => {
                                   </option>
                                 );
                               })}
-                        </select>
+                        </select> */}
+
+
+
                       </div>
                     </div>
                     <div className="col-12 col-sm-6">
@@ -335,41 +416,6 @@ const Tambah = ({ token }) => {
                           </div>
                         );
                       })}
-                      {/* {valueOptionJustText.map((items, index) => {
-                    return (
-                      <div className="form-group mt-12" key={index}>
-                        <div className="position-relative d-flex align-items-start w-100">
-                          <div className="w-100 mr-6">
-                            <input
-                              value={items.label}
-                              type="text"
-                              className="form-control"
-                              placeholder="Masukan data value"
-                            />
-                          </div>
-
-                          <div className="d-flex align-items-center">
-                            <button
-                              type="button"
-                              className="btn mr-4"
-                              style={{ backgroundColor: "#04AA77" }}
-                              onClick={() => handleAddInput()}
-                            >
-                              <IconAdd />
-                            </button>
-                            <button
-                              type="button"
-                              className="btn"
-                              style={{ backgroundColor: "#EE2D41" }}
-                              onClick={()=>handleDelete(index)}
-                            >
-                              <IconDelete />
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })} */}
 
                       {/* end loop */}
                     </div>

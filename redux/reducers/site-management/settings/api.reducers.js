@@ -249,7 +249,7 @@ export const listApiReducer = (state = { listApi: [] }, action) => {
     case GET_LIST_API_FAIL:
       return {
         loading: false,
-        error: action.payload,
+        error: null,
       };
 
     default:
