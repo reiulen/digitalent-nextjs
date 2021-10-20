@@ -24,33 +24,72 @@ import {
   UPDATE_SERTIFIKAT_REQUEST,
   UPDATE_SERTIFIKAT_SUCCESS,
   UPDATE_SERTIFIKAT_FAIL,
+  OPTIONS_ACADEMY_FAIL,
+  OPTIONS_ACADEMY_REQUEST,
+  OPTIONS_ACADEMY_SUCCESS,
+  OPTIONS_THEME_FAIL,
+  OPTIONS_THEME_REQUEST,
+  OPTIONS_THEME_SUCCESS,
+  SET_KEYWORD_VALUE,
+  SET_ACADEMY_VALUE,
+  SET_THEME_VALUE,
 } from "../../types/sertifikat/kelola-sertifikat.type";
 
-export const getAllSertifikat =
-  (page = 1, keyword = "", limit = 5, academy = null, theme = null, token) =>
-  async dispatch => {
-    try {
-      dispatch({ type: SERTIFIKAT_REQUEST });
-      let link =
-        process.env.END_POINT_API_SERTIFIKAT +
-        `api/manage_certificates?limit=${limit}&page=${page}`;
-      if (keyword) link = link.concat(`&keyword=${keyword}`);
-      if (academy) link = link.concat(`&academy=${academy}`);
-      if (theme) link = link.concat(`&theme=${theme}`);
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
+export const getAllSertifikat = token => async (dispatch, getState) => {
+  try {
+    dispatch({ type: SERTIFIKAT_REQUEST });
+    let link = process.env.END_POINT_API_SERTIFIKAT + `api/manage_certificates`;
+    // console.log(getState().allCertificate);
+    let pageState = getState().allCertificates.page || 1;
+    let limitState = getState().allCertificates.limit || 5;
+    let themeState = getState().allCertificates.theme || "";
+    let academyState = getState().allCertificates.academy || "";
+    let keywordState = getState().allCertificates.keyword || "";
 
-      const { data } = await axios.get(link, config);
-      if (data) {
-        dispatch({ type: SERTIFIKAT_SUCCESS, payload: data });
-      }
-    } catch (error) {
-      dispatch({ type: SERTIFIKAT_FAIL, payload: error.message });
+    const params = {
+      page: pageState,
+      limit: limitState,
+      theme: themeState,
+      academy: academyState,
+      keyword: keywordState,
+    };
+
+    const config = {
+      params,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const { data } = await axios.get(link, config);
+    if (data) {
+      dispatch({ type: SERTIFIKAT_SUCCESS, payload: data });
     }
+  } catch (error) {
+    dispatch({ type: SERTIFIKAT_FAIL, payload: error.message });
+  }
+};
+
+export const searchKeyword = text => {
+  return {
+    type: SET_KEYWORD_VALUE,
+    text,
   };
+};
+
+export const setValueAcademy = text => {
+  return {
+    type: SET_ACADEMY_VALUE,
+    text,
+  };
+};
+
+export const setValueTheme = text => {
+  return {
+    type: SET_THEME_VALUE,
+    text,
+  };
+};
 
 export const getDetailSertifikat =
   (id, page = 1, keyword = "", limit = 5, status = null, token) =>
@@ -152,8 +191,12 @@ export const getPublishedSertifikat = (id, token) => async dispatch => {
     };
 
     const { data } = await axios.get(link, config);
+
     if (data) {
-      dispatch({ type: PUBLISHED_SERTIFIKAT_SUCCESS, payload: data });
+      dispatch({
+        type: PUBLISHED_SERTIFIKAT_SUCCESS,
+        payload: data,
+      });
     }
   } catch (error) {
     dispatch({ type: PUBLISHED_SERTIFIKAT_FAIL, payload: error.message });
@@ -188,5 +231,47 @@ export const updateSertifikat = (id, formData, token) => async dispatch => {
       payload: error.message,
       // payload: error.response.data.message,
     });
+  }
+};
+
+export const getOptionsAcademy = token => async dispatch => {
+  try {
+    dispatch({ type: OPTIONS_ACADEMY_REQUEST });
+    let link = process.env.END_POINT_API_SERTIFIKAT + `api/option/academy`;
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const { data } = await axios.get(link, config);
+    console.log(data);
+    if (data) {
+      dispatch({ type: OPTIONS_ACADEMY_SUCCESS, payload: data });
+    }
+  } catch (error) {
+    dispatch({ type: OPTIONS_ACADEMY_FAIL, payload: error.message });
+  }
+};
+
+export const getOptionsTheme = token => async dispatch => {
+  try {
+    dispatch({ type: OPTIONS_THEME_REQUEST });
+    let link = process.env.END_POINT_API_SERTIFIKAT + `api/option/theme`;
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const { data } = await axios.get(link, config);
+
+    if (data) {
+      dispatch({ type: OPTIONS_THEME_SUCCESS, payload: data });
+    }
+  } catch (error) {
+    dispatch({ type: OPTIONS_THEME_FAIL, payload: error.message });
   }
 };

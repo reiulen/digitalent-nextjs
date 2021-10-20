@@ -152,6 +152,8 @@ import {
   updateSertifikatReducer,
   singleSertifikatReducer,
   publishedSertifikatReducer,
+  allAcademyOptionsReducer,
+  allThemeOptionsReducer,
 } from "./sertifikat/sertifikat.reducers";
 
 import {
@@ -240,7 +242,7 @@ import {
 } from "./site-management/unit-work.reducers";
 
 // ============== pelatihan ===============
-import {allPromptReducer} from './site-management/settings/pelatihan.reducers'
+import { allPromptReducer } from "./site-management/settings/pelatihan.reducers";
 
 // ============== pelatihan ===============
 import {allDataZonasiReducer} from './site-management/dashboard.reducers'
@@ -327,7 +329,7 @@ import {
 import {
   detailAkademiReducer,
   allPelatihanReducer,
-} from "../reducers/beranda/detail-akademi.reducers"
+} from "../reducers/beranda/detail-akademi.reducers";
 //END BERANDA
 
 const reducer = combineReducers({
@@ -461,9 +463,10 @@ const reducer = combineReducers({
   deleteCertificates: deleteSertifikatReducer,
   updateCertificates: updateSertifikatReducer,
   publishCertificate: publishedSertifikatReducer,
-
   allParticipant: allPesertaReducers,
   detailParticipant: detailPesertaReducer,
+  allAcademy: allAcademyOptionsReducer,
+  allTheme: allThemeOptionsReducer,
   // =============== end sertifikat ==================
 
   // PARTNERSHIP

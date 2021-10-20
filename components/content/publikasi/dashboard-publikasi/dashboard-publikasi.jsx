@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import CardDashboard from '../../../CardDashboard'
 import PageWrapper from '../../../wrapper/page.wrapper'
 import LoadingTable from "../../../LoadingTable"
+import styles from "../../../../styles/pagination.module.css"
 
 import { clearErrors } from "../../../../redux/actions/publikasi/dashboard-publikasi.actions";
 
@@ -103,7 +104,8 @@ const DashbardPublikasi = ({token}) => {
                 {console.log (dashboard_publikasi)}
                 {/* {console.log (dataDashboardGallery)} */}
                 <div className="row">
-                    <div className="col-lg-12 col-xxl-12 my-5">
+                    {/* <div className="col-lg-12 col-xxl-12 my-5"> */}
+                    <div className={`${styles.haloAdmin} col-lg-12 col-xxl-12 my-5`}>
                         <div className="card card-custom bg-white">
                             <div className="card-body pt-2" style={{ backgroundPosition: 'left bottom', backgroundImage: "url('/assets/media/Frame-White.svg')", backgroundRepeat: 'no-repeat', borderRadius:'6px' }}>
                                 <div className="d-flex align-items-center mb-10" >
@@ -114,7 +116,7 @@ const DashbardPublikasi = ({token}) => {
                                                     <h4 className="font-weight-bolder text-primary">Halo Admin A</h4>
                                                 </div>
                                                 <div className="col-md-12">
-                                                    <p className='font-weight-bold text-muted'>Sudah Makan Hari ini? <br /> Kalau sudah yuk dicheck verifikasi Test untuk hari ini :)</p>
+                                                    <p className='font-weight-bold text-muted'>Selamat Datang di Dashboard Publikasi, ada informasi apa hari ini ?</p>
                                                 </div>
                                             </div>
 
@@ -135,7 +137,8 @@ const DashbardPublikasi = ({token}) => {
                             </div>
                         </div>
                     </div>
-                    <div className="col-lg-6 col-xxl-6 my-5">
+                    {/* <div className="col-lg-6 col-xxl-6 my-5"> */}
+                    <div className={`${styles.kontenPublish} col-lg-6 col-xxl-6 my-5`}>
                         <div className="card card-custom card-stretch gutter-b">
                             <div className="card-body pt-2" style={{backgroundColor: "#215480", borderRadius:"6px"}}>
                                 <h3 className="card-title font-weight-bolder text-light mt-5">Total Publish dan Belum Dipublish</h3>
@@ -202,7 +205,8 @@ const DashbardPublikasi = ({token}) => {
                         </div>
                     </div>
 
-                    <div className="col-lg-6 col-xxl-6 my-5">
+                    {/* <div className="col-lg-6 col-xxl-6 my-5"> */}
+                    <div className={`${styles.totalUser} col-lg-6 col-xxl-6 my-5`}>
                         <div className="card card-custom card-stretch gutter-b">
                             <div className="card-body pt-2">
                                 <h3 className="card-title font-weight-bolder text-dark mt-5">Total Author, Peserta DTS dan Admin Publikasi </h3>

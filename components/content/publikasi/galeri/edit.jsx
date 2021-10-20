@@ -70,6 +70,7 @@ const EditGaleri = ({ token }) => {
     const { galeri } = useSelector((state) => state.detailGaleri);
     const { error, success, loading } = useSelector((state) => state.updatedGaleri);
     const { loading: allLoading, error: allError, kategori } = useSelector((state) => state.allKategori);
+    const { setting } = useSelector(state => state.allSettingPublikasi)
 
     const [files, setFiles] = useState([]);
     const { getRootProps, getInputProps } = useDropzone({
@@ -243,9 +244,9 @@ const EditGaleri = ({ token }) => {
         const type = ["image/jpg", "image/png", "image/jpeg"];
         let list = [...image];
         if (type.includes(e.target.files[0].type)) {
-            if (e.target.files[0].size > 5000000) {
+            if (e.target.files[0].size > parseInt(setting[0].max_size) + '000000') {
                 e.target.value = null;
-                Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
+                Swal.fire("Oops !", "Data Image Melebihi Ketentuan", "error");
             } else {
                 list[index].imageFile = e.target.files[0];
                 const reader = new FileReader();
@@ -450,7 +451,7 @@ const EditGaleri = ({ token }) => {
             }
 
             // dispatch(newGaleri(data, token))
-            // dispatch(onCall(data, token))
+            dispatch(onCall(data, token))
             console.log("Unpublish : ", data)
             // console.log(image)
 
@@ -470,7 +471,7 @@ const EditGaleri = ({ token }) => {
                 image_delete: deleteImg
             }
 
-            // dispatch(onCall(data, token))
+            dispatch(onCall(data, token))
             console.log("Publish : ", data)
             // console.log(image)
         }
@@ -615,15 +616,12 @@ const EditGaleri = ({ token }) => {
 
     return (
         <PageWrapper>
-            {
+            {/* {
                 console.log("Cek Edit Image :", galeri)
-            }
-            {
-                console.log("Cek Success Image :", success)
-            }
+            } */}
 
             {/* {
-                console.log (image)
+                console.log(setting)
             }       */}
 
             {error ?

@@ -9,6 +9,8 @@ import { TagsInput } from "react-tag-input-component";
 import Swal from "sweetalert2";
 import SimpleReactValidator from "simple-react-validator";
 import DatePicker from 'react-datepicker'
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import { updateVideo, clearErrors } from '../../../../redux/actions/publikasi/video.actions'
 import { NEW_ARTIKEL_RESET, UPDATE_VIDEO_RESET } from '../../../../redux/types/publikasi/video.type'
@@ -28,15 +30,13 @@ const EditVideo = ({ token }) => {
         ssr: false
     })
     const simpleValidator = useRef(new SimpleReactValidator({
-        locale: "id",
-        messages: {
-            url: "Format url berupa: https://www.example.com"
-        }
+        locale: "id"
     }));
     const [, forceUpdate] = useState();
     const { video } = useSelector(state => state.detailVideo)
     const { error, success, loading } = useSelector(state => state.updatedVideo)
     const { loading: allLoading, error: allError, kategori } = useSelector((state) => state.allKategori);
+    const { setting } = useSelector(state => state.allSettingPublikasi)
 
     useEffect(() => {
 
@@ -102,9 +102,9 @@ const EditVideo = ({ token }) => {
         // console.log ("check")
 
         if (type.includes(e.target.files[0].type)) {
-            if (e.target.files[0].size > 5000000) {
+            if (e.target.files[0].size > parseInt(setting[0].max_size) + '000000') {
                 e.target.value = null;
-                Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
+                Swal.fire("Oops !", "Data Image Melebihi Ketentuan", "error");
             } else {
                 const reader = new FileReader();
                 reader.onload = () => {
@@ -456,9 +456,6 @@ const EditVideo = ({ token }) => {
     return (
         <>
             <PageWrapper>
-                {/* {
-                    console.log("Cek Data Awal :", video)
-                } */}
                 {error ?
                     <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
                         <div className="alert-icon"><i className="flaticon-warning"></i></div>
@@ -594,14 +591,14 @@ const EditVideo = ({ token }) => {
                                         {/* <div className="input-group-prepend">
                                             <div className="input-group-text">https://</div>
                                         </div> */}
-                                        <input type="text" className="form-control ml-4" placeholder="https://www.example.com" value={url_video} onChange={(e) => setUrlVideo(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("url_video")} />
+                                        <input type="text" className="form-control ml-1" placeholder="https://www.example.com" value={url_video} onChange={(e) => setUrlVideo(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("url_video")} />
                                     </div>
 
                                     {simpleValidator.current.message(
                                         "url_video",
                                         url_video,
                                         "required|url",
-                                        { className: "text-danger" }
+                                        { className: "text-danger ml-4" }
                                     )}
 
                                 </div>

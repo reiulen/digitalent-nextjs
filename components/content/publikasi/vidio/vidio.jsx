@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import styles from '../../../../styles/preview.module.css'
+import stylesPag from "../../../../styles/pagination.module.css";
 
 import Pagination from 'react-js-pagination';
 import DatePicker from 'react-datepicker'
@@ -394,14 +395,12 @@ const Vidio = ({ token }) => {
                         icon="new/open-book.svg"
                         color='#ffffff'
                         // icon='mail-purple.svg' 
-                        // color='#8A50FC' 
-                        // value={video}
+                        // color='#8A50FC'
                         value={video && video.publish != "" ? video.publish : 0}
                         titleValue='Video'
                         title='Total Publish'
                         publishedVal="1"
-                        routePublish={() => handlePublish(changeStatusCard("1"))}
-                    // routePublish={() => handlePublish("1")}
+                        routePublish={() => handlePublish("1")}
                     />
                     <CardPage
                         background='bg-light-warning'
@@ -693,13 +692,13 @@ const Vidio = ({ token }) => {
                                                 <th>Dibuat</th>
                                                 <th>Status</th>
                                                 <th>Role</th>
-                                                <th>Aksi</th>
+                                                <th style={{ width: '10vw' }}>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {
                                                 !video || video && video.video.length === 0 ?
-                                                    <td className='align-middle text-center' colSpan={8}>Data Tidak Ditemukan</td> :
+                                                    <td className='align-middle text-center' colSpan={12}>Data Tidak Ditemukan</td> :
                                                     video && video.video.map((row, i) => {
                                                         // { console.log("Video :", row) }
                                                         return <tr key={row.id}>
@@ -758,7 +757,8 @@ const Vidio = ({ token }) => {
                                                                 }
 
                                                             </td>
-                                                            <td className='align-middle'>{row.role}</td>
+                                                            {/* <td className='align-middle'>{row.role}</td> */}
+                                                            <td className='align-middle'>Super Admin</td>
                                                             <td className="align-middle d-flex">
 
                                                                 <button
@@ -785,7 +785,7 @@ const Vidio = ({ token }) => {
                                                                 </Link>
 
                                                                 <button
-                                                                    className="btn btn-link-action bg-blue-secondary text-white my-5 position-relative btn-delete"
+                                                                    className="btn btn-link-action bg-blue-secondary text-white my-5 btn-delete"
                                                                     onClick={() => handleDelete(row.id)}
                                                                 >
                                                                     <i className="ri-delete-bin-fill p-0 text-white"></i>
@@ -828,7 +828,7 @@ const Vidio = ({ token }) => {
 
                             <div className="row">
                                 {video && video.perPage < video.total &&
-                                    <div className="table-pagination">
+                                    <div className={`${stylesPag.pagination} table-pagination`}>
                                         <Pagination
                                             activePage={page}
                                             itemsCountPerPage={video.perPage}
@@ -845,7 +845,7 @@ const Vidio = ({ token }) => {
                                     </div>
                                 }
                                 {video ?
-                                    <div className="table-total ml-auto">
+                                    <div className={`${stylesPag.rightPag} table-total ml-auto`}>
                                         <div className="row">
                                             {/* <div className="col-4 mr-0 p-0 mt-3"> */}
                                             <div className="col-4 mr-0 mt-3">
