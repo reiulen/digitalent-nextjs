@@ -1,203 +1,203 @@
 .prompt {
-    padding: 16px;
-    margin-bottom: 8px;
-    border-radius: 5px;
-    font-size: 16px;
+  padding: 16px;
+  margin-bottom: 8px;
+  border-radius: 5px;
+  font-size: 16px;
 }
 
 .prompt a {
-    text-decoration: none;
-    color: #1F1F1F;
+  text-decoration: none;
+  color: #1f1f1f;
 }
 
 .prompt:hover {
-    background-color: #ECF5FC;
-    color: #1F1F1F;
-    font-weight: 600;
+  background-color: #ecf5fc;
+  color: #1f1f1f;
+  font-weight: 600;
 }
 
 .prompt h3 {
-    padding-left: 16px;
-    color: #6C6C6C;
-    font-weight: normal;
+  padding-left: 16px;
+  color: #6c6c6c;
+  font-weight: normal;
 }
 
 .pelatihan-click {
-    margin-right: 32px;
+  margin-right: 32px;
 }
 
 .isactive {
-    padding: 16px;
-    background-color: #ECF5FC;
-    margin-bottom: 8px;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: bold;
+  padding: 16px;
+  background-color: #ecf5fc;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
 }
 
 .isactive a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .isactive h3 {
-    padding-left: 16px;
-    font-weight: 600;
+  padding-left: 16px;
+  font-weight: 600;
 }
 
 .isactive:hover {
-    background-color: #ECF5FC;
-    color: #1F1F1F;
-} */
+  background-color: #ecf5fc;
+  color: #1f1f1f;
+}
 
 .styling-content-pelatihan {
-    margin-left: 32px;
-    margin-top: 32px;
+  margin-left: 32px;
+  margin-top: 32px;
 }
 
 .notification-title h1 {
-    margin-bottom: 24px;
-    font-weight: 600;
-    font-size: 20px;
-    color: #1F1F1F;
+  margin-bottom: 24px;
+  font-weight: 600;
+  font-size: 20px;
+  color: #1f1f1f;
 }
 
 .notification h5 {
-    font-weight: normal;
-    font-size: 16px;
-    color: #1F1F1F;
+  font-weight: normal;
+  font-size: 16px;
+  color: #1f1f1f;
 }
 
 .email {
-    margin-top: 24px;
+  margin-top: 24px;
 }
 
 .email h3 {
-    font-weight: normal;
-    font-size: 16px;
-    color: #1F1F1F;
+  font-weight: normal;
+  font-size: 16px;
+  color: #1f1f1f;
 }
 
 .button-submit-notif {
-    margin-top: 24px;
+  margin-top: 24px;
 }
 
 .btn-notif-styling {
-    padding: 16px 32px 16px 32px;
-    border-radius: 30px;
-    background: #215480;
-    color: #ffffff;
-    border: none;
-    font-size: 14px;
+  padding: 16px 32px 16px 32px;
+  border-radius: 30px;
+  background: #215480;
+  color: #ffffff;
+  border: none;
+  font-size: 14px;
 }
 
-.switch.switch-primary:not(.switch-outline) input:empty~span:before {
-    background-color: #ADB5BD;
+.switch.switch-primary:not(.switch-outline) input:empty ~ span:before {
+  background-color: #adb5bd;
 }
 
-.switch.switch-primary:not(.switch-outline) input:checked~span:before {
-    background-color: #215480;
+.switch.switch-primary:not(.switch-outline) input:checked ~ span:before {
+  background-color: #215480;
 }
 
 .judul {
-    font-size: 16px;
-    color: #1F1F1F;
+  font-size: 16px;
+  color: #1f1f1f;
 }
 
-.styling-radio input[type=radio] {
-    width: 20px;
-    height: 20px;
+.styling-radio input[type="radio"] {
+  width: 20px;
+  height: 20px;
 }
 
 .styling-radio .judul {
-    margin-top: 5px;
-    margin-left: 8px;
+  margin-top: 5px;
+  margin-left: 8px;
 }
 
 .btn-unduh {
-    background-color: #4299E1 !important;
+  background-color: #4299e1 !important;
 }
 
 .btn-upload {
-    background-color: #04AA77 !important;
+  background-color: #04aa77 !important;
 }
 
 .status-peserta {
-    margin-bottom: 27px !important;
+  margin-bottom: 27px !important;
 }
 
 .btn-reset {
-    font-weight: 600;
-    font-size: 14px;
-    color: #215480;
-    margin-right: 48px;
-    background-color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+  color: #215480;
+  margin-right: 48px;
+  background-color: #fff;
 }
 
 .card-styling {
-    width: 10px !important;
+  width: 10px !important;
 }
 
 .data-peserta {
-    font-family: Poppins;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 16px;
-    color: #1F1F1F;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  color: #1f1f1f;
 }
 
 .berdasarkan {
-    font-family: Poppins;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 12px;
-    color: #6C6C6C;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  color: #6c6c6c;
 }
 
 .kota {
-    font-family: Poppins;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 12px;
-    color: #ADB5BD;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  color: #adb5bd;
 }
 
 .nomor {
-    border-radius: 8px;
-    color: #215480;
-    background-color: #F2F7FC;
-    width: 38px;
-    height: 38px;
-    font-weight: 600;
+  border-radius: 8px;
+  color: #215480;
+  background-color: #f2f7fc;
+  width: 38px;
+  height: 38px;
+  font-weight: 600;
 }
 
-.data-daerah{
-    font-family: Poppins;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 14px;
-    color: #1F1F1F;
+.data-daerah {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  color: #1f1f1f;
 }
 
-.total-peserta{
-font-family: Poppins;
-font-style: normal;
-font-weight: 500;
-font-size: 14px;
+.total-peserta {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
 }
 
-.content-data{
-    border-radius: 12px;
+.content-data {
+  border-radius: 12px;
 }
 
-.isAktif{
-    font-family: Poppins;
-font-style: normal;
-font-weight: normal;
-font-size: 16px;
-color: #1F1F1F;
-margin-left: 8px;
+.isAktif {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  color: #1f1f1f;
+  margin-left: 8px;
 }
 
 .sub-menu-pelatihan a {
-    color: #1F1F1F;
+  color: #1f1f1f;
 }
