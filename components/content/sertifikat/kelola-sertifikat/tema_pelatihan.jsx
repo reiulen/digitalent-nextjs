@@ -90,22 +90,8 @@ export default function NamaPelatihan({ token }) {
   };
 
   const handleSelectAcademy = e => {
-    // console.log(e);
     setAcademy(e);
     setDisable(false);
-    // let arr = certificate.list_certificate;
-    // const filteredTheme = arr.filter(el => el.theme.academy.name == e?.value);
-    // const newArr = [{}];
-    // filteredTheme.forEach((el, i) => {
-    //   newArr[i]["value"]
-    //     ? (newArr[i]["value"] = el.theme.name)
-    //     : (newArr[i] = {
-    //         ...newArr[i],
-    //         value: el.theme.name,
-    //         label: el.theme.name,
-    //       });
-    // });
-    // setDataTemaPelatihan(newArr);
     if (academy) {
       temaRef.select.clearValue();
     }
