@@ -52,7 +52,7 @@ export default function SubstansiMenungguJadwal() {
                     </div>
                   </div>
                 </Col>
-                <Col lg={2} className="p-0">
+                <Col lg={2} className="p-0 d-flex justify-content-end">
                   <span
                     className="label label-inline label-light-primary px-4 font-weight-bold p-0"
                     style={{ borderRadius: "25px" }}
@@ -61,7 +61,7 @@ export default function SubstansiMenungguJadwal() {
                   </span>
                 </Col>
               </Row>
-              <Row className="mt-10">
+              <Row className="my-10">
                 <Col md={12} className="d-flex align-items-center">
                   <i className="ri-time-line"></i>
                   <span className={`${style.text_info} pl-2`}>
@@ -77,25 +77,29 @@ export default function SubstansiMenungguJadwal() {
                   </span>
                 </Col>
               </Row>
-              <Row className="my-8">
+              <Row className="">
                 <Col md={6}>
                   <Button
-                    variant="primary"
-                    className="btn-rounded-full ml-auto bg-blue-primary btn-block d-flex justify-content-center mb-5"
+                    variant="outline-primary"
+                    className="btn-rounded-full ml-auto btn-block d-flex justify-content-center"
                     size="sm"
+                    style={{ borderColor: "#007CFF", color: "#007CFF" }}
                   >
-                    <i className="ri-download-cloud-2-fill mr-2"></i>
-                    Download Bukti Pendaftaran
+                    <i
+                      className="ri-download-2-fill mr-2"
+                      style={{ color: "#007CFF" }}
+                    ></i>
+                    Bukti Pendaftaran
                   </Button>
                 </Col>
                 <Col md={6}>
                   <Button
                     variant="primary"
-                    className="btn-rounded-full ml-auto bg-blue-primary btn-block d-flex justify-content-center mb-5"
+                    className="btn-rounded-full ml-auto btn-block d-flex justify-content-center"
                     size="sm"
                   >
-                    <i className="ri-download-cloud-2-fill mr-2"></i>
-                    Download Bukti Pendaftaran
+                    Test Substansi
+                    <i className="ri-arrow-right-s-line ml-2"></i>
                   </Button>
                 </Col>
               </Row>
