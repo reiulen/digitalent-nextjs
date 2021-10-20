@@ -80,7 +80,7 @@ export default function RiwayatPelatihan() {
                       </Modal.Header>
                       <Modal.Body>
                         <Select
-                          ref={ref => (refSelect = ref)}
+                          ref={(ref) => (refSelect = ref)}
                           className="basic-single"
                           classNamePrefix="select"
                           placeholder="Semua"
@@ -91,7 +91,7 @@ export default function RiwayatPelatihan() {
                           isRtl={false}
                           isSearchable={true}
                           name="color"
-                          onChange={e => {
+                          onChange={(e) => {
                             setStatus(e?.value);
                           }}
                           options={options}
@@ -114,7 +114,18 @@ export default function RiwayatPelatihan() {
         </Card>
         <Card>
           {/* <Administrasi /> */}
-          <CardPeserta />
+          <CardPeserta totalButton={2} status={"menunggu jadwal"} />
+          <CardPeserta totalButton={2} status={"tes substansi"} />
+          <CardPeserta totalButton={2} status={"lolos substansi"} />
+          <CardPeserta totalButton={2} status={"tidak lulus"} />
+          <CardPeserta totalButton={2} status={"seleksi administrasi"} />
+          <CardPeserta totalButton={2} status={"lolos administrasi"} />
+          <CardPeserta totalButton={2} status={"ikuti pelatihan"} />
+          <CardPeserta totalButton={2} status={"kerjakan mid test"} />
+          <CardPeserta totalButton={2} status={"kerjakan trivia"} />
+          <CardPeserta totalButton={2} status={"lulus pelatihan"} />
+          <CardPeserta totalButton={2} status={"isi survey"} />
+          <CardPeserta totalButton={2} status={"isi LPJ"} />
         </Card>
       </PesertaWrapper>
     </>

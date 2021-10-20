@@ -1,13 +1,12 @@
-import React from "react";
+import React, { Fragment, useState } from "react";
 import { Card, Col, Row, Badge, Button } from "react-bootstrap";
 import Link from "next/link";
 import Image from "next/image";
+import style from "../style.module.css";
 
-import style from "./style.module.css";
-
-const Administrasi = () => {
+export default function SubstansiMenungguJadwal() {
   return (
-    <>
+    <div>
       <Col lg={12} className="order-1 px-0">
         <Card className="card-custom card-stretch gutter-b p-0">
           <Row className="p-12">
@@ -18,8 +17,6 @@ const Administrasi = () => {
                 objectFit="cover"
                 className={`${style.card_style_image} `}
                 alt="pictures1"
-                //   width={200}
-                //   height={200}
               />
               <Card.ImgOverlay style={{ width: "200px", height: "200px" }}>
                 <Badge bg="secondary text-white text-uppercase">
@@ -56,8 +53,11 @@ const Administrasi = () => {
                   </div>
                 </Col>
                 <Col lg={2} className="p-0">
-                  <span className="label label-inline label-light-warning font-weight-bold p-0">
-                    Menunggu Jadwal
+                  <span
+                    className="label label-inline label-light-primary px-4 font-weight-bold p-0"
+                    style={{ borderRadius: "25px" }}
+                  >
+                    Test Substansi
                   </span>
                 </Col>
               </Row>
@@ -78,7 +78,7 @@ const Administrasi = () => {
                 </Col>
               </Row>
               <Row className="my-8">
-                <Col md={12}>
+                <Col md={6}>
                   <Button
                     variant="primary"
                     className="btn-rounded-full ml-auto bg-blue-primary btn-block d-flex justify-content-center mb-5"
@@ -88,14 +88,21 @@ const Administrasi = () => {
                     Download Bukti Pendaftaran
                   </Button>
                 </Col>
-                <Col md={6}></Col>
+                <Col md={6}>
+                  <Button
+                    variant="primary"
+                    className="btn-rounded-full ml-auto bg-blue-primary btn-block d-flex justify-content-center mb-5"
+                    size="sm"
+                  >
+                    <i className="ri-download-cloud-2-fill mr-2"></i>
+                    Download Bukti Pendaftaran
+                  </Button>
+                </Col>
               </Row>
             </Col>
           </Row>
         </Card>
       </Col>
-    </>
+    </div>
   );
-};
-
-export default Administrasi;
+}
