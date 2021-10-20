@@ -1,0 +1,35 @@
+.card_style_administrasi {
+    border-radius: 50%;
+    background-color: red;
+    /* display: block; */
+    /* overflow: hidden; */
+}
+
+.card_image {
+    height: 200px;
+    width: 200px;
+}
+
+.text-secondary {}
+
+.text-muted {
+    color: #6C6C6C
+}
+
+.card_style_image {
+    border-radius: 12px;
+    overflow: hidden;
+
+}
+
+.text_info {
+    font-size: 14px;
+    color: #6c6c6c;
+    line-height: 21px;
+}
+
+/* 
+border-radius: 50%,
+width: 64px,
+height: 64px,
+backgroundColor: red, */

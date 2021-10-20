@@ -91,14 +91,16 @@ const Sidebar = () => {
             </Link>
           </div>
           <div>
-            <div className={`${styles.menuItem} d-flex flex-row`}>
-              <div className="p-2">
-                <i className={`${styles.iconMenu} ri-history-line`}></i>
+            <Link href="/peserta/riwayat-pelatihan" passHref>
+              <div className={`${styles.menuItem} d-flex flex-row`}>
+                <div className="p-2">
+                  <i className={`${styles.iconMenu} ri-history-line`}></i>
+                </div>
+                <div className="p-2">
+                  <td>Riwayat Pelatihan</td>
+                </div>
               </div>
-              <div className="p-2">
-                <td>Riwayat Pelatihan</td>
-              </div>
-            </div>
+            </Link>
           </div>
           <div>
             <div className={`${styles.menuItem} d-flex flex-row`}>
