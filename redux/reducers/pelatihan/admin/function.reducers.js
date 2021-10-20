@@ -250,7 +250,7 @@ export const drowpdownZonasiReducers = (state = { data: [] }, action) => {
   }
 };
 
-export const drowpdownProvinsiReducers = (state = { data: [] }, action) => {
+export const drowpdownProvinsiReducers = (state = { data: {} }, action) => {
   switch (action.type) {
     case GET_DROPDOWN_PROVINSI:
       return {

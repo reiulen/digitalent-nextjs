@@ -304,7 +304,7 @@ export const dropdownProvinsi = (token) => async (dispatch) => {
       },
     };
     const { data } = await axios.get(
-      process.env.END_POINT_API_SITE_MANAGEMENT + `api/reference/detail/10`,
+      process.env.END_POINT_API_SITE_MANAGEMENT + `api/option/provinsi`,
       config
     );
     dispatch({
@@ -319,7 +319,7 @@ export const dropdownProvinsi = (token) => async (dispatch) => {
   }
 };
 
-export const dropdownKabupaten = (token) => async (dispatch) => {
+export const dropdownKabupaten = (token, id) => async (dispatch) => {
   try {
     const config = {
       headers: {
@@ -327,7 +327,32 @@ export const dropdownKabupaten = (token) => async (dispatch) => {
       },
     };
     const { data } = await axios.get(
-      process.env.END_POINT_API_SITE_MANAGEMENT + `api/reference/detail/34`,
+      process.env.END_POINT_API_SITE_MANAGEMENT +
+        `api/option/provinsi-choose/${id}`,
+      config
+    );
+    dispatch({
+      type: GET_DROPDOWN_KABUPATEN,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ERROR_DROPDOWN_KABUPATEN,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const dropdownKabupatenDomisili = (token, id) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    const { data } = await axios.get(
+      process.env.END_POINT_API_SITE_MANAGEMENT +
+        `api/option/provinsi-choose/${id}`,
       config
     );
     dispatch({
@@ -350,7 +375,7 @@ export const dropdownPenyelenggara = (token) => async (dispatch) => {
       },
     };
     const { data } = await axios.get(
-      process.env.END_POINT_API_SITE_MANAGEMENT + `api/reference/detail/25`,
+      process.env.END_POINT_API_SITE_MANAGEMENT + `api/option/organizer`,
       config
     );
     dispatch({

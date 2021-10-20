@@ -38,10 +38,13 @@ export default function FormPendaftaran(props) {
   );
 
   useEffect(() => {
-    let data = [];
+    let data = {
+      komitmen: false,
+      form_pendaftaran: [],
+    };
     dataForm &&
       dataForm.FormBuilder.map((row, i) => {
-        data.push({
+        data.form_pendaftaran.push({
           key: row.key,
           name: row.name,
           type: row.element,

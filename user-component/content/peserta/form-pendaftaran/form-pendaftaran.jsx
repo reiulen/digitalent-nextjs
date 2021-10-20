@@ -16,7 +16,9 @@ const FormPendaftaran = ({ propsTitle, funcView }) => {
 
   const [title, setTitle] = useState(propsTitle);
   const { dataForm } = useSelector((state) => state.formRegister);
-  const [dataPendaftaran, setDataPendaftaran] = useState(dataForm);
+  const [dataPendaftaran, setDataPendaftaran] = useState(
+    dataForm.form_pendaftaran
+  );
 
   const readerElementHandler = (row, i) => {
     switch (row.type) {
@@ -304,8 +306,11 @@ const FormPendaftaran = ({ propsTitle, funcView }) => {
   const onSubmit = (e) => {
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
-      console.log(dataPendaftaran);
-      dispatch(storeFormRegister(dataPendaftaran));
+      const data = {
+        komitmen: dataForm.komitmen,
+        form_pendaftaran: dataPendaftaran,
+      };
+      dispatch(storeFormRegister(data));
       funcView(2);
     } else {
       simpleValidator.current.showMessages();

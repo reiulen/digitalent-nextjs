@@ -12,6 +12,8 @@ import FormPendaftaran from "./form-pendaftaran";
 import FormKomitmen from "./form-komitmen";
 import FormBerhasil from "./form-berhasil";
 
+import { clearErrors } from "../../../../redux/actions/pelatihan/register-training.actions";
+
 const IndexForm = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -49,6 +51,7 @@ const IndexForm = ({ token }) => {
   useEffect(() => {
     if (error) {
       toast.error(error);
+      dispatch(clearErrors());
     }
   }, [error]);
 
@@ -95,21 +98,19 @@ const IndexForm = ({ token }) => {
         <Card className="mb-4" style={{ marginTop: "-50px" }}>
           <Card.Body>
             <Row>
-              <Col md={2} sm={12} xs={12}>
-                <Image
-                  className="img-fluid rounded-xl w-100"
+              <Col md={2} sm={12}>
+                <img
+                  className="img-fluid rounded-xl w-100 h-80 mb-3"
                   src={`${
                     dataPelatihan
                       ? dataPelatihan.file_path + dataPelatihan.thumbnail
                       : "/assets/media/default-card.png"
                   }`}
-                  objectFit="cover"
-                  layout="fill"
                 />
               </Col>
               <Col md={10}>
                 <div className="d-flex flex-row">
-                  <Image
+                  <img
                     src={`${
                       dataPelatihan
                         ? dataPelatihan.file_path + dataPelatihan.logo
@@ -118,7 +119,6 @@ const IndexForm = ({ token }) => {
                     width={58}
                     height={58}
                     className={`${style.image_mitra}`}
-                    objectFit="cover"
                   />
                   <div className="tema-mitra d-flex flex-column ml-5">
                     <p className={`my-0 ${style.text_title_card}`}>
@@ -135,7 +135,7 @@ const IndexForm = ({ token }) => {
                     </div>
                   </div>
                 </div>
-                <div className="d-flex flex-row flex-wrap mt-4">
+                <div className="d-flex flex-row flex-wrap align-content-end mt-3">
                   <div className="date d-flex align-items-center align-middle mr-7">
                     <i className="ri-time-line"></i>
                     <span className={`${style.text_date_register} pl-2`}>

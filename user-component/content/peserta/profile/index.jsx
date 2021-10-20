@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Card, Figure, Button, ButtonGroup } from "react-bootstrap";
-import Image from "next/image";
+import { Row, Col, Card } from "react-bootstrap";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
 import style from "../../../../styles/peserta/profile.module.css";
 import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
@@ -90,7 +90,10 @@ const Profile = ({ session }) => {
         break;
       case 2:
         return viewEdit ? (
-          <AlamatEdit funcViewEdit={(val) => setViewEdit(val)} />
+          <AlamatEdit
+            funcViewEdit={(val) => setViewEdit(val)}
+            token={session.token}
+          />
         ) : (
           <Alamat />
         );

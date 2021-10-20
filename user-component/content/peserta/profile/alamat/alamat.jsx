@@ -1,7 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Row, Col } from "react-bootstrap";
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 const Alamat = () => {
+  const { error: errorAlamat, alamat } = useSelector(
+    (state) => state.dataAlamat
+  );
+
+  useEffect(() => {
+    if (errorAlamat) {
+      toast.error(errorAlamat);
+    }
+  }, [errorAlamat]);
+
   return (
     <>
       <div className="mt-5 alamat">
@@ -9,30 +21,27 @@ const Alamat = () => {
         <Row>
           <Col md={12}>
             <p className="text-neutral-body my-1">Alamat (Sesuai KTP)</p>
-            <p>
-              Jl. Almuwahiddin Kp. Kaum Kidul Desa Karang Tengah No. 1 Depok
-              Jawabarat
-            </p>
+            <p>{(alamat && alamat.alamat_ktp) || "-"}</p>
           </Col>
         </Row>
         <Row>
           <Col md={6}>
             <p className="text-neutral-body my-1">Provinsi</p>
-            <p>Jawa Barat</p>
+            <p>{(alamat && alamat.provinsi) || "-"}</p>
           </Col>
           <Col md={6}>
             <p className="text-neutral-body my-1">Kota</p>
-            <p>Ciamis</p>
+            <p>{(alamat && alamat.kota) || "-"}</p>
           </Col>
         </Row>
         <Row>
           <Col md={6}>
             <p className="text-neutral-body my-1">Kecamatan</p>
-            <p>Dubai</p>
+            <p>{(alamat && alamat.kecamatan) || "-"}</p>
           </Col>
           <Col md={6}>
             <p className="text-neutral-body my-1">Kode Pos</p>
-            <p>44576</p>
+            <p>{(alamat && alamat.kode_pos) || "-"}</p>
           </Col>
         </Row>
         <hr />
@@ -42,30 +51,27 @@ const Alamat = () => {
             <p className="text-neutral-body my-1">
               Alamat Domisili (Sesuai KTP)
             </p>
-            <p>
-              Jl. Almuwahiddin Kp. Kaum Kidul Desa Karang Tengah No. 1 Depok
-              Jawabarat
-            </p>
+            <p>{(alamat && alamat.alamat_domisili) || "-"}</p>
           </Col>
         </Row>
         <Row>
           <Col md={6}>
             <p className="text-neutral-body my-1">Provinsi</p>
-            <p>Jawa Barat</p>
+            <p>{(alamat && alamat.provinsi_domisili) || "-"}</p>
           </Col>
           <Col md={6}>
             <p className="text-neutral-body my-1">Kota</p>
-            <p>Ciamis</p>
+            <p>{(alamat && alamat.kota_domisili) || "-"}</p>
           </Col>
         </Row>
         <Row>
           <Col md={6}>
             <p className="text-neutral-body my-1">Kecamatan</p>
-            <p>Dubai</p>
+            <p>{(alamat && alamat.kecamatan_domisili) || "-"}</p>
           </Col>
           <Col md={6}>
             <p className="text-neutral-body my-1">Kode Pos</p>
-            <p>44576</p>
+            <p>{(alamat && alamat.kode_pos_domisili) || "-"}</p>
           </Col>
         </Row>
       </div>

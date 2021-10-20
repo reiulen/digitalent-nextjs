@@ -6,7 +6,11 @@ import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
 
-import { getDataPribadi } from "../../../redux/actions/pelatihan/function.actions";
+import {
+  getDataPribadi,
+  dropdownProvinsi,
+  dropdownKabupaten,
+} from "../../../redux/actions/pelatihan/function.actions";
 import {
   getProfileAlamat,
   getProfilePendidikan,
@@ -66,6 +70,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       // await store.dispatch(
       //   getProfileKeterampilan(data.user.token)
       // );
+      await store.dispatch(dropdownProvinsi(data.user.token));
       await store.dispatch(getProfilePekerjaan(data.user.token));
 
       return {
