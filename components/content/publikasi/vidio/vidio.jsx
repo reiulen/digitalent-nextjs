@@ -692,7 +692,7 @@ const Vidio = ({ token }) => {
                                                 <th>Dibuat</th>
                                                 <th>Status</th>
                                                 <th>Role</th>
-                                                <th style={{ width: '10vw' }}>Aksi</th>
+                                                <th style={{ width: '9.7vw' }}>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
