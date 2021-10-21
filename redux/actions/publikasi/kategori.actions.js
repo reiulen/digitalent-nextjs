@@ -94,7 +94,7 @@ export const getAllKategori = (token) => async dispatch => {
     } catch (error) {
         dispatch({
             type: KATEGORI_FAIL,
-            payload: error.message,
+            payload: error.response.data.message,
         });
     }
 };
@@ -138,7 +138,7 @@ export const paginationKategori =
             } catch (error) {
                 dispatch({
                     type: PAGINATION_KATEGORI_FAIL,
-                    payload: error.message,
+                    payload: error.response.data.message,
                 });
             }
         };
@@ -174,7 +174,7 @@ export const getAllKategoriInput = (kategori, token) => async dispatch => {
     } catch (error) {
         dispatch({
             type: KATEGORI_FAIL,
-            payload: error.message,
+            payload: error.response.data.message,
         });
     }
 };

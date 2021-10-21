@@ -72,7 +72,7 @@ export const getAllFaq = (token) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: FAQ_FAIL,
-            payload: error.message
+            payload: error.response.data.message
         })
     }
 }
@@ -105,7 +105,7 @@ export const getAllFaqPagination = (page = 1, keyword = "", limit = 5, publish =
     } catch (error) {
         dispatch({
             type: PAGINATION_FAQ_FAIL,
-            payload: error.message
+            payload: error.response.data.message
         })
     }
 }

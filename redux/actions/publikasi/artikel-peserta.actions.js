@@ -62,7 +62,8 @@ export const getAllArtikelPeserta =
       } catch (error) {
         dispatch({
           type: ARTIKEL_PESERTA_FAIL,
-          payload: error.message,
+          payload: error.response.data.message,
+          // payload: error.message,
         });
       }
     };

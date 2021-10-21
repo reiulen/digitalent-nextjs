@@ -124,7 +124,7 @@ const EditArtikel = ({ token }) => {
   );
   const [gambarName, setGambarName] = useState(artikel.gambar);
   const [kategori_id, setKategoriId] = useState(artikel.kategori_id); //belum
-  const [users_id, setUserId] = useState(3);
+  const [users_id, setUserId] = useState(87);
   // const [users_id, setUserId] = useState(artikel.users_id);
   const [tag, setTag] = useState(artikel.tag);
   // const [publish, setPublish] = useState(artikel.publish === 1 ? true : false);
@@ -209,22 +209,6 @@ const EditArtikel = ({ token }) => {
     }
     // console.log("Data Tag :", data)
     setTag(data)
-  }
-
-  const keyPressTag = (value) => {
-
-    if (value === '' || value === null) {
-      value.replace(/\s/g, '')
-    } else {
-      setTag(value)
-    }
-    // if(event.key === 13){
-    //   console.log('enter press here! ')
-    //   setDisableTag(true)
-    // }else{
-    //   setDisableTag(false)
-    // }
-    // setTag(event)
   }
 
   const onSubmit = e => {

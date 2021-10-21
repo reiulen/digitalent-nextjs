@@ -283,9 +283,9 @@ const ArtikelPeserta = ({ token }) => {
 
     return (
         <PageWrapper>
-            {
+            {/* {
                 console.log(artikel_peserta)
-            }
+            } */}
             {/* {
                 console.log (token)
             } */}
@@ -692,7 +692,7 @@ const ArtikelPeserta = ({ token }) => {
                                                     className="form-control"
                                                     id="exampleFormControlSelect2"
                                                     style={{
-                                                        width: "65px",
+                                                        width: "70px",
                                                         background: "#F3F6F9",
                                                         borderColor: "#F3F6F9",
                                                         color: "#9E9E9E",
