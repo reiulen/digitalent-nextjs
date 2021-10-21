@@ -15,6 +15,7 @@ import { Card, Carousel, Badge } from "react-bootstrap";
 import ImagetronCarousel from "../../components/ImagetronCarousel";
 // import AkademiCarousel from "../../components/AkademiCarousel";
 import BerandaWrapper from "../../../components/wrapper/beranda.wrapper";
+// import DefaultThumbnail from "../../../public/assets/media/default-thumbnail.svg"
 
 import "../../../styles/beranda.module.css";
 // import "react-multi-carousel/lib/styles.css";
@@ -47,15 +48,15 @@ const Beranda = () => {
 
   const { pelatihan } = useSelector((state) => state.pelatihanByTema);
 
-  const [activeImagetron, setActiveImagetron] = useState(1);
-  const [activeTab, setActiveTab] = useState(0);
+  const [ activeImagetron, setActiveImagetron ] = useState(1);
+  const [ activeTab, setActiveTab ] = useState(0);
   // const [indexTab, setIndexTab] = useState(0);
-  const [show, setShow] = useState(false);
-  const [showDetail, setShowDetail] = useState(false);
-  const [akademiItem, setAkademiItem] = useState(null);
-  const [trainingItem, setTrainingItem] = useState(null);
-  const [slideAkademiToShow, setSlideAkademiToShow] = useState(4);
-  const [slideTrainingToShow, setSlideTrainingToShow] = useState(3);
+  const [ show, setShow ] = useState(false);
+  const [ showDetail, setShowDetail ] = useState(false);
+  const [ akademiItem, setAkademiItem ] = useState(null);
+  const [ trainingItem, setTrainingItem ] = useState(null);
+  const [ slideAkademiToShow, setSlideAkademiToShow ] = useState(4);
+  const [ slideTrainingToShow, setSlideTrainingToShow ] = useState(3);
 
     const renderButton = (status, daftar_mulai, daftar_selesai, quota, id) => {
         if (status === true){
@@ -429,9 +430,9 @@ const Beranda = () => {
                       <div className="container-fluid">
                         <div className="row mt-10">
                           <div className="col-12 col-sm-6 col-xl-4">
-                            <Cardss label={<label>PELATIHAN ONLINE</label>}>
+                            <Cardss label={<label>PELATIHAN ONLINE</label>} thumbnail={<Image src={`/assets/media/carousel-01.svg`} layout="fill" objectFit="cover"/>}>
                               <div className="rounded">
-                                
+                                {/* Insert mitra page here */}
                               </div>
                               <div className="d-flex align-items-center justify-content-between pl-24">
                                 <p className="fw-600" style={{ color: "#6C6C6C" }}>
@@ -624,10 +625,14 @@ const Beranda = () => {
 
         {/* Ayo Bergabung, Jadi Jagoan Digital! */}
         <ComeJoin />
-
+        
         {/* Footer */}
         <Footer />
       </div>
+
+      {/* Footer
+      <Footer /> */}
+
     </BerandaWrapper>
   );
 };
