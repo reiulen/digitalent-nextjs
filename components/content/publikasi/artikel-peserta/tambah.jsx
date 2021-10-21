@@ -69,7 +69,7 @@ const TambahArtikel = () => {
   );
   const [gambarName, setGambarName] = useState (null)
   const [kategori_id, setKategoriId] = useState("");
-  const [users_id, setUserId] = useState(8);
+  const [users_id, setUserId] = useState(87);
   const [tag, setTag] = useState([]);
   const [publish, setPublish] = useState(0);
 
@@ -108,7 +108,7 @@ const TambahArtikel = () => {
 
   const handleChangePublish = (e) => {
     setPublish(e.target.checked);
-    console.log (e.target.checked)
+    // console.log (e.target.checked)
   };
 
   const onSubmit = (e) => {
@@ -157,7 +157,7 @@ const TambahArtikel = () => {
           if (result.isConfirmed) {
 
             dispatch(newArtikelPeserta(data));
-            console.log(data);
+            // console.log(data);
           }
       });
 
@@ -253,12 +253,12 @@ const TambahArtikel = () => {
                           data={isi_artikel}
                           onReady={(editor) => {
                             // You can store the "editor" and use when it is needed.
-                            console.log("Editor is ready to use!", editor);
+                            // console.log("Editor is ready to use!", editor);
                           }}
                           onChange={(event, editor) => {
                             const data = editor.getData();
                             setIsiArtikel(data);
-                            console.log({ event, editor, data });
+                            // console.log({ event, editor, data });
                           }}
                           onBlur={() =>
                             simpleValidator.current.showMessageFor(

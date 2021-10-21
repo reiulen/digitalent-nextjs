@@ -60,7 +60,7 @@ export const getAllImagetron = (page = 1, keyword = "", limit = 5, publish = nul
     } catch (error) {
         dispatch({
             type: IMAGETRON_FAIL,
-            payload: error.message
+            payload: error.response.data.message
         })
     }
 }
