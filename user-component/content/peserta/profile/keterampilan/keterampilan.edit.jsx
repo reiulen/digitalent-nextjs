@@ -1,9 +1,10 @@
 import React, { useState, useRef } from "react";
 import Select from "react-select";
-import { Row, Col, Form } from "react-bootstrap";
+import { Row, Col, Form, Button } from "react-bootstrap";
 import SimpleReactValidator from "simple-react-validator";
+import style from "../style.module.css";
 
-const EditKeterampilan = () => {
+const EditKeterampilan = ({ funcViewEdit }) => {
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
 
@@ -42,6 +43,21 @@ const EditKeterampilan = () => {
             }
           )}
         </Form.Group>
+        <div className="button-aksi mt-5 float-right">
+          <Button
+            className={`${style.button_profile_batal} rounded-xl mr-2`}
+            type="button"
+            onClick={() => funcViewEdit(false)}
+          >
+            Batal
+          </Button>
+          <Button
+            className={`${style.button_profile_simpan} rounded-xl`}
+            type="submit"
+          >
+            Submit
+          </Button>
+        </div>
       </div>
     </>
   );

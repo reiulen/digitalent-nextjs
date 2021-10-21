@@ -1,7 +1,9 @@
 import "../styles/globals.css";
 import "../styles/progresBar.css";
 import "../styles/styleCustomUtilities.css";
+import '../styles/sitemanagement/pelatihan.css'
 import "../styles/dashboard.module.css";
+import "../styles/peserta/dashboards.css";
 import "react-datepicker/dist/react-datepicker.css";
 import "../components/Table/tableStyle.css";
 import "remixicon/fonts/remixicon.css";
