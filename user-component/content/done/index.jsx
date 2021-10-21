@@ -3,64 +3,74 @@ import Header from "../subvit/header/index";
 import styles from "./done.module.css";
 import { useRouter } from "next/router";
 
-import doneImage from "../../../public/assets/media/logos/Group 240.png";
+import doneImage from "../../../public/assets/media/logos/Ilustrasi.png";
+import trainingImage from "../../../public/assets/media/logos/gojek.png";
 import Image from "next/dist/client/image";
+import PesertaWrapper from "../../components/wrapper/Peserta.wrapper";
+
+import moment from "moment";
+import "moment/locale/id";
 
 const Done = () => {
   const router = useRouter();
-  // console.log(window.innerHeight());
-  const handleDone = () => {
-    router.push(`${router.pathname.slice(0, 8)}`);
-  };
+
+  // const handleDone = () => {
+  //   router.push(`${router.pathname.slice(0, 8)}`);
+  // };
   return (
     <>
-      <Header />
-      <Container
-        style={{
-          backgroundColor: "#EEF0F8",
-          padding: "34px",
-          // height: `${window.innerHeight}px`,
-        }}
-      >
-        <Card
-          style={{
-            borderRadius: "12px",
-            boxShadow: "0px 0px 12px rgba(31, 31, 31, 0.1)",
-            padding: "32px ",
-          }}
-        >
-          <Row>
-            <Col sm={6}>
-              <center>
+      <PesertaWrapper>
+        <Card className={styles.cardBase}>
+          <h1 className={styles.title}>
+            Terima Kasih Anda telah mengikuti Test Substansi
+          </h1>
+          <center>
+            <Image src={doneImage} alt="" className={styles.imageDone} />
+          </center>
+          <Card className={styles.cardChild}>
+            Peserta yang lulus dan berhasil menjadi Peserta Digital Talent
+            Scholarship 2022 akan diumumkan pada waktu yang telah ditentukan
+            melalui email peserta yang terdaftar.
+          </Card>
+          <br />
+          <br />
+          <Card className={styles.cardTraining}>
+            <div className="d-flex flex-row">
+              <div className="p-2">
+                {" "}
                 <Image
-                  src={doneImage}
+                  src={trainingImage}
                   alt=""
-                  width={400}
-                  height={300}
-                  className={styles.imageDone}
+                  className={styles.imageTraining}
                 />
-              </center>
-            </Col>
-            <Col sm={6} className={styles.colThanks}>
-              <h1 className={styles.thanks}>TERIMA KASIH.</h1>
-              <p className={styles.bodyDone}>
-                Terima Kasih telah Mengikuti Test Substansi.
+              </div>
+              <div className={`${styles.textTraining} p-3`}>
+                Intermediate Multimedia Designer
                 <br />
-                <br />
-                Mohon cek Status Test Substansi Anda secara berkala di Dashboard
-                dan Email.
-              </p>
-              <Button
-                type="primary"
-                className={styles.btnDone}
-                onClick={handleDone}
-              >
-                Selesai
-              </Button>
-            </Col>
-          </Row>
+                <span className={styles.trainingTitle}>Gojek</span>
+                <span className={styles.trainingTheme}>
+                  {" "}
+                  Vocational School Graduate Academy
+                </span>
+              </div>
+            </div>
+
+            <div className="d-flex flex-row">
+              <div className="p-2">
+                <i
+                  className="ri-calendar-2-fill"
+                  style={{ fontSize: "18px", color: "#6C6C6C" }}
+                ></i>
+              </div>
+              <div className="p-3">
+                Selesai Test Substansi :
+                <span className={styles.moment}> {moment().format("LL")}</span>
+              </div>
+            </div>
+            <h1></h1>
+          </Card>
         </Card>
-      </Container>
+      </PesertaWrapper>
     </>
   );
 };

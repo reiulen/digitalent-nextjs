@@ -46,7 +46,7 @@ const Layout = ({ title = "Peserta - Pelatihan", session, children }) => {
           {children}
         </Row>
       </div>
-      <Footer />
+      {!router.pathname.includes(routerPath) && <Footer />}
     </>
   );
 };
