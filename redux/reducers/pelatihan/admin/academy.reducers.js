@@ -18,7 +18,7 @@ import {
   UPDATE_ACADEMY_FAIL,
   UPDATE_ACADEMY_RESET,
   CLEAR_ERRORS,
-} from "../../types/pelatihan/academy.type";
+} from "../../../types/pelatihan/academy.type";
 
 export const allAcademyReducer = (state = { academy: [] }, action) => {
   switch (action.type) {

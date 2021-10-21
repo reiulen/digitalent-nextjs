@@ -2,47 +2,57 @@ thead,
 tbody {
   white-space: nowrap;
 }
+
 .thead {
   background-color: #f3f6f9;
 }
+
 .title-sum-data {
   color: #b5b5c3;
 }
+
 .select-limit-table {
   width: 65px;
   background-color: #f3f6f9;
   border-color: #f3f6f9;
   color: #9e9e9e;
 }
+
 .table-head-custom {
   min-width: max-content;
 }
+
 .table-pagination {
   max-width: 100%;
   margin-top: 1rem;
 }
+
 .pagination-custom .pagintaion {
   margin-bottom: 0.4rem;
 }
 
 .table.table-head-custom thead tr,
-.table.table-head-custom thead th{
-  color: #6C6C6C !important;
+.table.table-head-custom thead th {
+  color: #6c6c6c !important;
 }
+
 .thead {
-  background-color: #F2F7FC;
+  background-color: #f2f7fc;
 }
+
 .table.table-separate th:first-child,
-.table.table-separate td:first-child{
+.table.table-separate td:first-child {
   padding-left: 13px !important;
 }
 
-.table.table-separate th.permision{
+.table.table-separate th.permision {
   padding-right: 11rem !important;
 }
+
 .table.table-separate th.child-permission {
   padding-right: 7rem !important;
 }
+
 .table.table-separate td.child-permission {
   padding-right: 7.3rem !important;
 }

@@ -58,7 +58,7 @@ export default function EditSertifikat({ token }) {
         },
       });
     }
-  }, [isUpdated]);
+  }, [isUpdated, query.tema_pelatihan_id, query.theme_id, router]);
 
   const [confirmModal, setConfirmModal] = useState(false);
   const divReference = useRef(null);
@@ -847,6 +847,7 @@ export default function EditSertifikat({ token }) {
                                     //   style={{
                                     //     height: "400px",
                                     //   }}
+                                    id="sertifikat-ck-editor"
                                   >
                                     <div className="font-size-h5 mb-5">
                                       Penanda Tangan
@@ -1436,7 +1437,7 @@ export default function EditSertifikat({ token }) {
                         </select>
                       </div>
                       <label className=" col-form-label font-weight-bold">
-                        Syllabus
+                        Silabus
                       </label>
                       <div
                         className="card-toolbar"
@@ -1444,7 +1445,7 @@ export default function EditSertifikat({ token }) {
                         data-toggle="modal"
                       >
                         <a className="btn bg-blue-secondary text-white rounded-full font-weight-bolder px-15 py-3">
-                          Atur Syllabus
+                          Atur Silabus
                         </a>
                       </div>
                     </div>
@@ -1506,6 +1507,7 @@ export default function EditSertifikat({ token }) {
                                       //   style={{
                                       //     height: "400px",
                                       //   }}
+                                      id="syllabus-ck-editor"
                                     >
                                       <div className="font-size-h5 mb-5">
                                         Penanda Tangan
@@ -1942,7 +1944,7 @@ export default function EditSertifikat({ token }) {
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title" id="exampleModalLongTitle">
-                    Syllabus
+                    Silabus
                   </h5>
                   <button
                     type="button"
@@ -1963,8 +1965,8 @@ export default function EditSertifikat({ token }) {
                               required
                               placeholder={
                                 index === 0
-                                  ? "Syllabus 1"
-                                  : `Syllabus ${index + 1}`
+                                  ? "Silabus 1"
+                                  : `Silabus ${index + 1}`
                               }
                               name={`cooperation${index}`}
                               type="text"
@@ -2010,7 +2012,7 @@ export default function EditSertifikat({ token }) {
                         onClick={() => handleAddInput()}
                       >
                         <i className="ri-add-fill mr-2 p-0 text-primary"></i>
-                        Tambah Syllabus
+                        Tambah Silabus
                       </div>
                     </div>
                   )}

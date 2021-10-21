@@ -58,7 +58,7 @@ export const getAllSummary =
     } catch (error) {
       dispatch({
         type: SUMMARY_FAIL,
-        payload: error.message,
+        payload: error.response.data.message,
       });
     }
   };

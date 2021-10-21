@@ -1,4 +1,4 @@
-import "react-pro-sidebar/dist/css/styles.css";
+// import "react-pro-sidebar/dist/css/styles.css";
 import Logo from "/public/assets/logo/mainlogo.png";
 import Simonas from "/public/assets/logo/image 10.png";
 import Beasiswa from "/public/assets/logo/Logo besiswa fix  3.png";
@@ -20,7 +20,7 @@ const Sidebar = () => {
   const [dropBeasiswa, setDropBeasiswa] = useState(false);
   const [clickBeasiswa, setClickBeasiswa] = useState(1);
 
-  const handleDown = (e) => {
+  const handleDown = e => {
     if (e.target.innerHTML === "Digital Talent Schoolarship") {
       setClick(click + 1);
 
@@ -60,7 +60,7 @@ const Sidebar = () => {
       <div className={styles.titlePlatform}>PLATFORM</div>
       <div
         className={drop ? styles.active : styles.subMenuTitle}
-        onClick={(event) => handleDown(event)}
+        onClick={event => handleDown(event)}
       >
         <div className="d-flex flex-row">
           <div className="p-2">
@@ -68,7 +68,7 @@ const Sidebar = () => {
               src={Logo}
               alt=""
               className={styles.img}
-              onClick={(event) => handleDown(event)}
+              onClick={event => handleDown(event)}
             />
           </div>
           <div className="p-2">
@@ -91,14 +91,16 @@ const Sidebar = () => {
             </Link>
           </div>
           <div>
-            <div className={`${styles.menuItem} d-flex flex-row`}>
-              <div className="p-2">
-                <i className={`${styles.iconMenu} ri-history-line`}></i>
+            <Link href="/peserta/riwayat-pelatihan" passHref>
+              <div className={`${styles.menuItem} d-flex flex-row`}>
+                <div className="p-2">
+                  <i className={`${styles.iconMenu} ri-history-line`}></i>
+                </div>
+                <div className="p-2">
+                  <td>Riwayat Pelatihan</td>
+                </div>
               </div>
-              <div className="p-2">
-                <td>Riwayat Pelatihan</td>
-              </div>
-            </div>
+            </Link>
           </div>
           <div>
             <div className={`${styles.menuItem} d-flex flex-row`}>
@@ -111,24 +113,29 @@ const Sidebar = () => {
             </div>
           </div>
           <div>
-            <div className={`${styles.menuItem} d-flex flex-row`}>
-              <div className="p-2">
-                <i className={`${styles.iconMenu} ri-article-line`}></i>
+            <Link href="/peserta/test-substansi" passHref>
+              <div className={`${styles.menuItem} d-flex flex-row`}>
+                <div className="p-2">
+                  <i className={`${styles.iconMenu} ri-article-line`}></i>
+                </div>
+                <div className="p-2">
+                  <td>Test Substansi</td>
+                </div>
               </div>
-              <div className="p-2">
-                <td>Test Substansi</td>
-              </div>
-            </div>
+            </Link>
           </div>
+
           <div>
-            <div className={`${styles.menuItem} d-flex flex-row`}>
-              <div className="p-2">
-                <i className={`${styles.iconMenu} ri-chat-smile-line`}></i>
+            <Link href="/peserta/survey" passHref>
+              <div className={`${styles.menuItem} d-flex flex-row`}>
+                <div className="p-2">
+                  <i className={`${styles.iconMenu} ri-chat-smile-line`}></i>
+                </div>
+                <div className="p-2">
+                  <td>Survey</td>
+                </div>
               </div>
-              <div className="p-2">
-                <td>Survey</td>
-              </div>
-            </div>
+            </Link>
           </div>
           <div>
             <div className={`${styles.menuItem} d-flex flex-row`}>
@@ -164,7 +171,7 @@ const Sidebar = () => {
       )}
       <div
         className={dropSimonas ? styles.active : styles.subMenuTitle}
-        onClick={(event) => handleDown(event)}
+        onClick={event => handleDown(event)}
       >
         <div className="d-flex flex-row">
           <div className="p-2">
@@ -177,7 +184,7 @@ const Sidebar = () => {
       </div>
       <div
         className={dropBeasiswa ? styles.active : styles.subMenuTitle}
-        onClick={(event) => handleDown(event)}
+        onClick={event => handleDown(event)}
       >
         <div className="d-flex flex-row">
           <div className="p-2">

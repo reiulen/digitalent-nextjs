@@ -1,42 +1,85 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
 import Select from "react-select";
 import Swal from "sweetalert2";
+import { toast } from "react-toastify";
 import SimpleReactValidator from "simple-react-validator";
+import { useDispatch, useSelector } from "react-redux";
 import style from "../style.module.css";
 
-const PendidikanEdit = ({ funcViewEdit }) => {
+import {
+  updateProfilePendidikan,
+  clearErrors,
+} from "../../../../../redux/actions/pelatihan/profile.actions";
+import { UPDATE_PENDIDIKAN_RESET } from "../../../../../redux/types/pelatihan/profile.type";
+
+const PendidikanEdit = ({ funcViewEdit, token }) => {
+  const dispatch = useDispatch();
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
 
-  const [jengjangPendidikan, setJenjangPendidikan] = useState({
-    value: "0",
-    label: "S1",
-  });
-  const [asalSekolah, setAsalSekolah] = useState({
-    value: "0",
-    label: "SMP",
-  });
-  const [lainya, setLainya] = useState("");
-  const [programStudi, setProgramStudi] = useState("");
-  const [ipk, setIpk] = useState("");
-  const [tahunMasuk, setTahunMasuk] = useState("");
+  const { error: errorPendidikan, data: dataPendidikan } = useSelector(
+    (state) => state.drowpdownPendidikan
+  );
+  const { error: errorPendidikanData, pendidikan } = useSelector(
+    (state) => state.dataPendidikan
+  );
+  const {
+    error: errorUpdateData,
+    loading,
+    success,
+  } = useSelector((state) => state.updatePendidikan);
+
+  const [jengjangPendidikan, setJenjangPendidikan] = useState(
+    (pendidikan && pendidikan.jenjang_pendidikan) || null
+  );
+  const [asalSekolah, setAsalSekolah] = useState(
+    (pendidikan && pendidikan.asal_sekolah) || null
+  );
+  const [lainya, setLainya] = useState(
+    (pendidikan && pendidikan.lainya) || null
+  );
+  const [programStudi, setProgramStudi] = useState(
+    (pendidikan && pendidikan.program_studi) || null
+  );
+  const [ipk, setIpk] = useState((pendidikan && pendidikan.ipk) || null);
+  const [tahunMasuk, setTahunMasuk] = useState(
+    (pendidikan && pendidikan.tahun_masuk) || null
+  );
 
   const [ijazahName, setIjazahName] = useState("Belum ada file");
   const [ijazah, setIjazah] = useState("");
   const [ijazahPreview, setIjazahPreview] = useState("");
 
-  const optionsJenjangPendidikan = [
-    { value: "0", label: "S1" },
-    { value: "1", label: "S2" },
-  ];
+  const optionsJenjangPendidikan = [];
+  if (dataPendidikan) {
+    for (let index = 0; index < dataPendidikan.data.length; index++) {
+      let val = {
+        value: dataPendidikan.data[index].id,
+        label: dataPendidikan.data[index].label,
+      };
+      optionsJenjangPendidikan.push(val);
+    }
+  }
   const optionsAsalSekolah = [
     { value: "0", label: "SMP" },
     { value: "1", label: "SMA" },
   ];
 
+  useEffect(() => {
+    if (errorUpdateData) {
+      toast.error(errorUpdateData);
+      dispatch(clearErrors());
+    }
+
+    if (success) {
+      funcViewEdit(false);
+      dispatch({ type: UPDATE_PENDIDIKAN_RESET });
+    }
+  }, [errorUpdateData, success, dispatch]);
+
   const onChangeIjazah = (e) => {
-    const type = ["image/jpg", "application/pdf"];
+    const type = ["image/jpeg", "image/jpg", "application/pdf"];
     if (e.target.files[0]) {
       if (type.includes(e.target.files[0].type)) {
         if (e.target.files[0].size > 5000000) {
@@ -68,15 +111,16 @@ const PendidikanEdit = ({ funcViewEdit }) => {
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
       const data = {
-        jengjangPendidikan,
-        asalSekolah,
+        jenjang: jengjangPendidikan.label,
+        asal_pendidikan: asalSekolah.label,
         lainya,
-        programStudi,
+        program_studi: programStudi,
         ipk,
-        tahunMasuk,
-        ijazah,
+        tahun_masuk: parseInt(tahunMasuk),
+        ijasah: ijazah,
       };
       console.log(data);
+      dispatch(updateProfilePendidikan(data, token));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -192,7 +236,7 @@ const PendidikanEdit = ({ funcViewEdit }) => {
             <Form.Group as={Col} md={6} controlId="formGridTahun">
               <Form.Label>Tahun Masuk</Form.Label>
               <Form.Control
-                type="date"
+                type="text"
                 placeholder="Silahkan Masukan Tahun Masuk"
                 value={tahunMasuk}
                 onChange={(e) => setTahunMasuk(e.target.value)}
@@ -203,7 +247,7 @@ const PendidikanEdit = ({ funcViewEdit }) => {
               {simpleValidator.current.message(
                 "tahun masuk",
                 tahunMasuk,
-                "required",
+                "required|integer",
                 {
                   className: "text-danger",
                 }
@@ -218,7 +262,7 @@ const PendidikanEdit = ({ funcViewEdit }) => {
                   type="file"
                   className="custom-file-input"
                   name="question_image"
-                  accept="image/jpg ,application/pdf"
+                  accept="image/jpeg , image/jpg ,application/pdf"
                   onChange={onChangeIjazah}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("ijazah")
@@ -240,7 +284,7 @@ const PendidikanEdit = ({ funcViewEdit }) => {
               </div>
             </div>
             <small className="text-muted">
-              *JPG/PDF (Maksimal ukuran file 5 MB)
+              *JPG/JPEG/PDF (Maksimal ukuran file 5 MB)
             </small>
           </div>
         </div>
