@@ -1,13 +1,9 @@
 .akunMenu {
-  /* padding: 0px 10px; */
   font-family: Poppins;
   font-style: normal;
   font-weight: normal;
   font-size: 14px !important;
   line-height: 160%;
-  /* identical to box height, or 26px */
-
-  /* Neutral/Heading */
 
   color: #fff;
 }
@@ -17,10 +13,9 @@
   font-weight: 600;
   font-size: 18px;
   line-height: 155%;
-  /* identical to box height, or 28px */
+
   margin-top: 10px;
   margin-bottom: 10px;
-  /* Neutral/Body */
 
   color: #6c6c6c;
 }
@@ -30,9 +25,7 @@
   font-weight: 600;
   font-size: 18px;
   line-height: 155%;
-  /* identical to box height, or 28px */
 
-  /* Neutral/Body */
   margin-bottom: 10px;
   color: #6c6c6c;
 }
@@ -42,9 +35,6 @@
   font-weight: normal;
   font-size: 16px;
   line-height: 160%;
-  /* identical to box height, or 26px */
-
-  /* Neutral/Heading */
 
   color: #fff;
 }
@@ -54,11 +44,8 @@
   font-weight: normal;
   font-size: 14px;
   line-height: 160%;
-  /* or 22px */
 
   letter-spacing: 0.015em;
-
-  /* Neutral/Body */
 
   color: #6c6c6c;
 }

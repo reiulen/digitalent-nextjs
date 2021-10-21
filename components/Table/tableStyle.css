@@ -33,11 +33,11 @@ tbody {
 
 .table.table-head-custom thead tr,
 .table.table-head-custom thead th {
-  color: #6C6C6C !important;
+  color: #6c6c6c !important;
 }
 
 .thead {
-  background-color: #F2F7FC;
+  background-color: #f2f7fc;
 }
 
 .table.table-separate th:first-child,

@@ -11,10 +11,8 @@
   left: 50%;
   transform: translateX(-50%);
   top: -3rem;
-  color: #6C6C6C;
+  color: #6c6c6c;
   font-size: 13px;
-  /* display: none; */
-
 }
 
 @media (max-width: 1199.98px) {
@@ -42,31 +40,27 @@
   .relative-progress {
     position: static;
   }
-
-
 }
 
 .progress-items .line-progress {
   height: 8px;
-  background-color: #ADB5BD;
+  background-color: #adb5bd;
   width: 100%;
   left: -55%;
   position: absolute;
   top: 1.3rem;
-
 }
 
 .progress-items .circle-progress {
   width: 39px;
   height: 39px;
-  background: #ADB5BD;
+  background: #adb5bd;
   border-radius: 100%;
   position: relative;
   z-index: 1;
 }
 
-@media (max-width:425px) {
-
+@media (max-width: 425px) {
   .progress-items .line-progress {
     height: 3px;
     left: -58%;
@@ -80,18 +74,17 @@
   .progress-items .circle-progress {
     width: 20px;
     height: 20px;
-    background: #ADB5BD;
+    background: #adb5bd;
     border-radius: 100%;
     position: relative;
     z-index: 1;
   }
-
 }
 
 .active-line {
-  background-color: #4CBDE2 !important;
+  background-color: #4cbde2 !important;
 }
 
 .active-circle {
-  background: #4CBDE2 !important;
+  background: #4cbde2 !important;
 }

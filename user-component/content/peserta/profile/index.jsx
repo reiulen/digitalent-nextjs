@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Card, Figure, Button, ButtonGroup } from "react-bootstrap";
-import Image from "next/image";
+import { Row, Col, Card } from "react-bootstrap";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
 import style from "../../../../styles/peserta/profile.module.css";
 import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
@@ -83,23 +83,35 @@ const Profile = ({ session }) => {
     switch (viewProfile) {
       case 1:
         return viewEdit ? (
-          <InformasiEdit funcViewEdit={(val) => setViewEdit(val)} />
+          <InformasiEdit
+            funcViewEdit={(val) => setViewEdit(val)}
+            token={session.token}
+          />
         ) : (
-          <Informasi funcViewEdit={(val) => setViewEdit(val)} />
+          <Informasi
+            funcViewEdit={(val) => setViewEdit(val)}
+            token={session.token}
+          />
         );
         break;
       case 2:
         return viewEdit ? (
-          <AlamatEdit funcViewEdit={(val) => setViewEdit(val)} />
+          <AlamatEdit
+            funcViewEdit={(val) => setViewEdit(val)}
+            token={session.token}
+          />
         ) : (
-          <Alamat />
+          <Alamat token={session.token} />
         );
         break;
       case 3:
         return viewEdit ? (
-          <PendidikanEdit funcViewEdit={(val) => setViewEdit(val)} />
+          <PendidikanEdit
+            funcViewEdit={(val) => setViewEdit(val)}
+            token={session.token}
+          />
         ) : (
-          <Pendidikan />
+          <Pendidikan token={session.token} />
         );
         break;
       case 4:
@@ -111,13 +123,16 @@ const Profile = ({ session }) => {
         break;
       case 5:
         return viewEdit ? (
-          <PekerjaanEdit funcViewEdit={(val) => setViewEdit(val)} />
+          <PekerjaanEdit
+            funcViewEdit={(val) => setViewEdit(val)}
+            token={session.token}
+          />
         ) : (
-          <Pekerjaan />
+          <Pekerjaan token={session.token} />
         );
         break;
       default:
-        return <Informasi />;
+        return <Informasi token={session.token} />;
         break;
     }
   };

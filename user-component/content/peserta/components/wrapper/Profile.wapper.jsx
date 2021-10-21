@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Col,
   Card,
@@ -20,6 +21,11 @@ const ProfileWrapper = ({
   funcViewProfile,
 }) => {
   const router = useRouter();
+
+  const { error: errorDataPribadi, dataPribadi } = useSelector(
+    (state) => state.getDataPribadi
+  );
+
   const [viewEdit, setViewEdit] = useState(propsEdit);
   const [viewProvile, setViewProfile] = useState(propsViewProfile);
 
@@ -34,7 +40,11 @@ const ProfileWrapper = ({
               <Col md={2} className="text-center">
                 <Image
                   className={`${style.image_profile_wrapper}`}
-                  src="/assets/media/logos/default.png"
+                  src={`${
+                    dataPribadi && dataPribadi.foto
+                      ? dataPribadi.file_path + dataPribadi.foto
+                      : "/assets/media/logos/default.png"
+                  }`}
                   width={90}
                   height={90}
                   objectFit="cover"
@@ -43,13 +53,13 @@ const ProfileWrapper = ({
               <Col md={8}>
                 <div className="information">
                   <p className={`${style.name_profile_wrapper} my-0`}>
-                    Dendy Juliano Juanda
+                    {dataPribadi ? dataPribadi.name || "-" : "-"}
                   </p>
                   <p className={`${style.muted_profile_wrapper} my-0`}>
-                    NIK : 3207012307030002
+                    NIK : {dataPribadi ? dataPribadi.nik || "-" : "-"}
                   </p>
                   <p className={`${style.muted_profile_wrapper}`}>
-                    Email : dendy@gmail.com
+                    Email : {dataPribadi ? dataPribadi.email || "-" : "-"}
                   </p>
                 </div>
               </Col>
@@ -111,7 +121,7 @@ const ProfileWrapper = ({
                   >
                     Pendidikan
                   </Nav.Link>
-                  <Nav.Link
+                  {/* <Nav.Link
                     className={`mr-9 ${
                       viewProvile === 4 && style.navbar_profile_active
                     }`}
@@ -121,7 +131,7 @@ const ProfileWrapper = ({
                     }}
                   >
                     Keterampilan
-                  </Nav.Link>
+                  </Nav.Link> */}
                   <Nav.Link
                     className={`mr-9 ${
                       viewProvile === 5 && style.navbar_profile_active

@@ -57,7 +57,7 @@
 
 .mainCard {
   background: #ffffff;
-  /* Card */
+
   padding: 20px 30px;
   box-shadow: 0px 0px 12px rgba(31, 31, 31, 0.1);
   border-radius: 0px 0px 12px 12px;
@@ -199,10 +199,6 @@
   color: #80808f;
 }
 
-/* ===================================================================================== */
-/* REVISI */
-/* ===================================================================================== */
-
 .baseAll {
   position: absolute;
   top: 255px;
@@ -224,11 +220,8 @@
   font-weight: 500;
   font-size: 12px;
   line-height: 160%;
-  /* or 22px */
 
   text-align: center;
-
-  /* Status/Warning/Normal */
 
   color: #ffa800;
 }
@@ -238,9 +231,6 @@
   font-weight: 600;
   font-size: 12px;
   line-height: 160%;
-  /* identical to box height, or 26px */
-
-  /* Neutral/Heading */
 
   color: #1f1f1f;
 }
@@ -250,9 +240,6 @@
   font-weight: normal;
   font-size: 12px;
   line-height: 160%;
-  /* identical to box height, or 26px */
-
-  /* Neutral/Body */
 
   color: #6c6c6c;
 }
@@ -270,12 +257,9 @@
   font-weight: bold;
   font-size: 16px;
   line-height: 155%;
-  /* identical to box height, or 28px */
 
   text-align: center;
   letter-spacing: 0.1em;
-
-  /* Status/Error/Normal */
 
   color: #ee2d41;
 }
@@ -308,7 +292,6 @@
   font-size: 16px;
   line-height: 140%;
   margin-bottom: 20px;
-  /* or 22px */
 }
 .totalSoal {
   font-family: Poppins;
@@ -316,12 +299,9 @@
   font-weight: normal;
   font-size: 14px;
   line-height: 160%;
-  /* or 22px */
 
   text-align: left;
   letter-spacing: 0.015em;
-
-  /* Neutral/Body */
 
   color: #6c6c6c;
 }
@@ -331,17 +311,13 @@
   font-weight: 600;
   font-size: 20px;
   line-height: 140%;
-  /* or 28px */
 
   letter-spacing: 0.015em;
-
-  /* Neutral/Heading */
 
   color: #1f1f1f;
 }
 .boxAnswer {
   background: #ffffff;
-  /* Neutral/Border */
 
   border: 1px solid #d7e1ea;
   box-sizing: border-box;
@@ -354,17 +330,11 @@
   font-weight: normal;
   font-size: 12px;
   line-height: 160%;
-  /* identical to box height, or 26px */
-
-  /* Neutral/Heading */
 
   color: #1f1f1f;
 }
 .boxAnswer:hover {
-  /* Brand/Primary/Tint */
-
   background: #e6f2ff;
-  /* Brand/Primary/Primary */
 
   border: 2px solid #007cff;
   box-sizing: border-box;
@@ -377,10 +347,8 @@
   font-size: 14px;
   line-height: 160%;
 
-  /* or 22px */
   text-align: center;
 
-  /* Brand/Primary/Primary */
   color: #007cff;
   text-decoration: none !important;
 }
@@ -394,10 +362,8 @@
   font-size: 14px;
   line-height: 160%;
 
-  /* or 22px */
   text-align: center;
 
-  /* Status/Error/Normal */
   color: #ee2d41;
   text-decoration: none;
 }
@@ -413,18 +379,15 @@
   font-size: 14px;
   line-height: 160%;
 
-  /* or 22px */
   text-align: center;
   letter-spacing: 0.015em;
 
-  /* Neutral/White */
   color: #ffffff;
   margin-left: 30px;
   padding: 5px 15px;
 }
 .cardPanduan {
   background: #ffffff;
-  /* Neutral/Border */
 
   border: 1px solid #d7e1ea;
   box-sizing: border-box;
@@ -436,11 +399,8 @@
   font-weight: normal;
   font-size: 12px;
   line-height: 200%;
-  /* or 32px */
 
   letter-spacing: 0.015em;
-
-  /* Neutral/Heading */
 
   color: #1f1f1f;
 }
@@ -450,11 +410,8 @@
   font-weight: 600;
   font-size: 20px;
   line-height: 160%;
-  /* or 38px */
 
   letter-spacing: 0.015em;
-
-  /* Neutral/Heading */
 
   color: #1f1f1f;
 }
@@ -473,11 +430,8 @@
   font-weight: 500;
   font-size: 12px;
   line-height: 140%;
-  /* identical to box height, or 20px */
 
   text-align: center;
-
-  /* Brand/Primary/Shade */
 
   color: #0063cc;
 }
