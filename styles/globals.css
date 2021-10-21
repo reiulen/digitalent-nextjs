@@ -273,6 +273,7 @@ a {
   background-color: white;
   transform: translateY(-50%);
 }
+
 .not-found-page {
   position: fixed;
   inset: 0;

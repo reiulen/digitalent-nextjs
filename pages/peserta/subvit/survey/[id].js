@@ -20,7 +20,7 @@ export default function SubvitUserSubtansi(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <Layout title="Test Substansi - Subvit" session={session}>
+        <Layout title="Survey - Subvit" session={session}>
           <SubtansiUser token={session.token} />
         </Layout>
       </div>
@@ -62,7 +62,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         props: {
           data: "auth",
           session,
-          title: "Test Substansi - Subvit ",
+          title: "Survey - Subvit ",
         },
       };
     }

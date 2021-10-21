@@ -73,8 +73,11 @@ export default function NamaPelatihanID({ token }) {
     router.push(link);
   };
 
+  let refSelect = null;
   const resetValueSort = () => {
+    refSelect.select.clearValue();
     setStatus(null);
+
     router.push(
       `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}?id=${router.query.id}`
     );
@@ -274,6 +277,7 @@ export default function NamaPelatihanID({ token }) {
                                   Status
                                 </label>
                                 <Select
+                                  ref={ref => (refSelect = ref)}
                                   className="basic-single"
                                   classNamePrefix="select"
                                   placeholder="Semua"
@@ -285,7 +289,7 @@ export default function NamaPelatihanID({ token }) {
                                   isSearchable={true}
                                   name="color"
                                   onChange={e => {
-                                    setStatus(e.value);
+                                    setStatus(e?.value);
                                   }}
                                   options={options}
                                 />
@@ -344,7 +348,7 @@ export default function NamaPelatihanID({ token }) {
                         certificate.data.list_certificate.length === 0) ? (
                         <tr>
                           <td className="text-center" colSpan={6}>
-                            Data Masih Kosong
+                            Data Tidak Ditemukan
                           </td>
                         </tr>
                       ) : (

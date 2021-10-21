@@ -23,11 +23,8 @@
   font-weight: 600;
   font-size: 12px;
   line-height: 160%;
-  /* or 22px */
 
   letter-spacing: 0.015em;
-
-  /* Neutral/White */
 
   color: #ffffff;
 }
@@ -37,11 +34,8 @@
   font-weight: 600;
   font-size: 12px;
   line-height: 160%;
-  /* or 22px */
 
   letter-spacing: 0.015em;
-
-  /* Neutral/White */
 
   color: #ffffff;
   text-align: right;
@@ -52,12 +46,10 @@
   font-weight: bold;
   font-size: 30px;
   line-height: 120%;
-  /* identical to box height, or 48px */
+
   margin-top: 20px;
   margin-bottom: 20px;
   letter-spacing: 0.025em;
-
-  /* Neutral/White */
 
   color: #ffffff;
 }
@@ -67,12 +59,10 @@
   font-weight: 600;
   font-size: 15px;
   line-height: 140%;
-  /* identical to box height, or 28px */
+
   margin-bottom: 30px;
 
   letter-spacing: 0.015em;
-
-  /* Neutral/White */
 
   color: #ffffff;
 }

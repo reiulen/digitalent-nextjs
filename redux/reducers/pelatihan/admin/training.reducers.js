@@ -90,7 +90,7 @@ import {
   CLONE_TRAINING_RESET,
   CLONE_TRAINING_FAIL,
   CLEAR_ERRORS,
-} from "../../types/pelatihan/training.type";
+} from "../../../types/pelatihan/training.type";
 
 export const allTrainingReducer = (state = { training: [] }, action) => {
   switch (action.type) {

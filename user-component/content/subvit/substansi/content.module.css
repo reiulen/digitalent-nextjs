@@ -50,21 +50,14 @@
 .daftarSoalResponsive {
   display: none;
 }
-.daftarSoal {
-  font-family: Poppins;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 140%;
-  color: #1b283f;
-}
+
 .base {
   padding: 20px 30px;
 }
 
 .mainCard {
   background: #ffffff;
-  /* Card */
+
   padding: 20px 30px;
   box-shadow: 0px 0px 12px rgba(31, 31, 31, 0.1);
   border-radius: 0px 0px 12px 12px;
@@ -79,28 +72,7 @@
   box-sizing: border-box;
   border-radius: 5px;
 }
-.cardChoose {
-  background: #f3f6f9;
-  border-radius: 5px;
-  border: #f3f6f9;
-  padding: 10px;
-  text-align: center;
-  margin-bottom: 12px;
-  width: 40px;
-  height: 40px;
-  cursor: pointer;
-}
-.cardChoosed {
-  background: #d7f9ef !important;
-  border-radius: 5px;
-  border: #f3f6f9 !important;
-  padding: 10px;
-  text-align: center;
-  margin-bottom: 12px;
-  width: 40px;
-  height: 40px;
-  cursor: pointer;
-}
+
 .numberAnswer {
   background: #04aa77;
   border-radius: 5px;
@@ -208,21 +180,7 @@
   padding: 10px 0px;
   color: #1b283f;
 }
-.time {
-  background-color: #ffe2e5;
-  color: #ee2d41;
-  border-color: #ffe2e5;
-  height: 33px;
-  width: 160px;
-  float: right;
-  padding: 4px;
-  text-align: center;
-  font-family: Montserrat;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 18px;
-  line-height: 140%;
-}
+
 .nameTest {
   font-family: poppins;
   font-weight: 600;
@@ -239,4 +197,241 @@
   font-size: 12px;
   line-height: 140%;
   color: #80808f;
+}
+
+.baseAll {
+  position: absolute;
+  top: 255px;
+  left: 0;
+  right: 0;
+}
+
+.cardTop {
+  background: #ffffff;
+  border-radius: 12px 12px 0px 0px;
+  padding: 18px;
+}
+.btnHelp:hover {
+  text-decoration: none;
+}
+.bantuan {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 160%;
+
+  text-align: center;
+
+  color: #ffa800;
+}
+.academy {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 160%;
+
+  color: #1f1f1f;
+}
+.training {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 160%;
+
+  color: #6c6c6c;
+}
+.time {
+  background-color: #ffe2e5;
+  color: #ee2d41;
+  border-color: #ffe2e5;
+  height: 50px;
+  width: 150px;
+  float: right;
+  padding: 12px;
+  text-align: center;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 155%;
+
+  text-align: center;
+  letter-spacing: 0.1em;
+
+  color: #ee2d41;
+}
+.cardSoal {
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 10px;
+}
+.cardNumber {
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 10px;
+}
+.cardChoose {
+  background: #fafafb;
+  border-radius: 5px;
+  border: #f3f6f9;
+  padding: 8px;
+  text-align: center;
+  margin-bottom: 12px;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  font-size: 12px;
+}
+.daftarSoal {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 140%;
+  margin-bottom: 20px;
+}
+.totalSoal {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 160%;
+
+  text-align: left;
+  letter-spacing: 0.015em;
+
+  color: #6c6c6c;
+}
+.soal {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 140%;
+
+  letter-spacing: 0.015em;
+
+  color: #1f1f1f;
+}
+.boxAnswer {
+  background: #ffffff;
+
+  border: 1px solid #d7e1ea;
+  box-sizing: border-box;
+  border-radius: 8px;
+  padding: 14px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 160%;
+
+  color: #1f1f1f;
+}
+.boxAnswer:hover {
+  background: #e6f2ff;
+
+  border: 2px solid #007cff;
+  box-sizing: border-box;
+  border-radius: 8px;
+}
+.btnBack {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 160%;
+
+  text-align: center;
+
+  color: #007cff;
+  text-decoration: none !important;
+}
+.btnBack:hover {
+  text-decoration: none !important;
+}
+.btnSkip {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 160%;
+
+  text-align: center;
+
+  color: #ee2d41;
+  text-decoration: none;
+}
+.btnSkip:hover {
+  text-decoration: none;
+}
+.btnNext {
+  background: #007cff;
+  border-radius: 30px;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 160%;
+
+  text-align: center;
+  letter-spacing: 0.015em;
+
+  color: #ffffff;
+  margin-left: 30px;
+  padding: 5px 15px;
+}
+.cardPanduan {
+  background: #ffffff;
+
+  border: 1px solid #d7e1ea;
+  box-sizing: border-box;
+  border-radius: 12px;
+  padding: 10px 20px;
+  margin-top: 20px;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 200%;
+
+  letter-spacing: 0.015em;
+
+  color: #1f1f1f;
+}
+.headerModal {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 160%;
+
+  letter-spacing: 0.015em;
+
+  color: #1f1f1f;
+}
+.cardChoosed {
+  background: #e6f2ff;
+  border-radius: 5px;
+  border: #e6f2ff;
+  padding: 10px;
+  text-align: center;
+  margin-bottom: 12px;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 140%;
+
+  text-align: center;
+
+  color: #0063cc;
 }

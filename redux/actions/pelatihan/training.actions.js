@@ -138,7 +138,7 @@ export const getAllTraining =
     } catch (error) {
       dispatch({
         type: TRAINING_FAIL,
-        payload: error.message,
+        payload: error.response.data.message,
       });
     }
   };
@@ -165,7 +165,7 @@ export const getCardTraining = (token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: CARD_TRAINING_FAIL,
-      payload: error.message,
+      payload: error.response.data.message,
     });
   }
 };
