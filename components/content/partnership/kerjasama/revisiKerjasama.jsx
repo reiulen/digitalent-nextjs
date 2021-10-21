@@ -28,7 +28,7 @@ const RevisiKerjasama = ({ token }) => {
     catatanREvisi: "",
   });
   const notify = (value) =>
-    toast.info(`🦄 ${value}`, {
+    toast.info(`${value}`, {
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,
@@ -75,7 +75,8 @@ const RevisiKerjasama = ({ token }) => {
       if (result.value) {
         try {
           let { data } = await axios.put(
-            `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/accept-document/${router.query.id}`,null,
+            `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/accept-document/${router.query.id}`,
+            null,
             {
               headers: {
                 authorization: `Bearer ${token}`,
@@ -87,7 +88,11 @@ const RevisiKerjasama = ({ token }) => {
             query: { successTerima: true },
           });
         } catch (error) {
-          console.log("error acceptDokument", error);
+          Swal.fire("Gagal", `${error.response.data.message}`, "error").then(
+            () => {
+              router.push("/partnership/kerjasama");
+            }
+          );
         }
       }
     });
@@ -108,7 +113,8 @@ const RevisiKerjasama = ({ token }) => {
       if (result.value) {
         try {
           let { data } = await axios.put(
-            `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/reject/${router.query.id}`,null,
+            `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/reject/${router.query.id}`,
+            null,
             {
               headers: {
                 authorization: `Bearer ${token}`,
@@ -120,7 +126,11 @@ const RevisiKerjasama = ({ token }) => {
             query: { successReject: true },
           });
         } catch (error) {
-          console.log("error acceptDokument", error);
+          Swal.fire("Gagal", `${error.response.data.message}`, "error").then(
+            () => {
+              router.push("/partnership/kerjasama");
+            }
+          );
         }
       }
     });
@@ -129,7 +139,7 @@ const RevisiKerjasama = ({ token }) => {
     e.preventDefault();
     if (catatanREvisi === "") {
       setError({ ...error, catatanREvisi: "Catatan Revisi harus diisi" });
-      notify("Catatan Revisi harus diisi");
+      // notify("Catatan Revisi harus diisi");
     } else {
       Swal.fire({
         title: "Apakah anda yakin ingin ajukan revisi ?",
@@ -161,7 +171,7 @@ const RevisiKerjasama = ({ token }) => {
               query: { successMakeREvisi: true },
             });
           } catch (error) {
-            console.log("error acceptDokument", error);
+            Swal.fire("Gagal", `${error.response.data.message}`, "error");
           }
         }
       });
@@ -209,13 +219,13 @@ const RevisiKerjasama = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3
-              className="card-title font-weight-bolder text-dark"
+              className="card-title font-weight-bolder text-dark mb-0"
               style={{ fontSize: "24px" }}
             >
               Submit Dokumen Kerjasama Revisi
             </h3>
           </div>
-          <div className="card-body">
+          <div className="card-body pt-0">
             <form>
               <div className="form-group">
                 <label htmlFor="staticEmail" className="col-form-label">
@@ -223,7 +233,7 @@ const RevisiKerjasama = ({ token }) => {
                 </label>
                 <div className="row">
                   <div className="col-12 col-sm-6">
-                    <div className="d-flex align-items-center position-relative datepicker-w mt-2">
+                    <div className="d-flex align-items-center position-relative datepicker-w mt-2 disabled-form">
                       <DatePicker
                         className="form-search-date form-control-sm form-control cursor-pointer"
                         selected={startDate}
@@ -241,9 +251,9 @@ const RevisiKerjasama = ({ token }) => {
                     </div>
                   </div>
                   <div className="col-12 col-sm-6">
-                    <div className="d-flex align-items-center position-relative datepicker-w mt-2">
+                    <div className="d-flex align-items-center position-relative datepicker-w mt-2 disabled-form">
                       <DatePicker
-                        className="form-search-date form-control-sm form-control cursor-pointer"
+                        className="form-search-date form-control-sm form-control cursor-pointer "
                         selected={endDate}
                         readOnly
                         selectsEnd
@@ -266,24 +276,26 @@ const RevisiKerjasama = ({ token }) => {
 
               <div className="fv-row mb-10">
                 <label className="required fw-bold fs-6 mb-2">
-                  Nomer Perjanjian Lembaga
+                  Nomor Perjanjian Lembaga
                 </label>
                 <input
                   type="text"
+                  readOnly
                   name="text_input"
-                  className="form-control mb-3 mb-lg-0"
+                  className="form-control mb-3 mb-lg-0 border-0"
                   placeholder="Masukan Nomor Perjanjian Lembaga"
                   value={no_perjanjianLembaga && no_perjanjianLembaga}
                 />
               </div>
               <div className="fv-row mb-10">
                 <label className="required fw-bold fs-6 mb-2">
-                  Nomer Perjanjian Kemkominfo
+                  Nomor Perjanjian Kemkominfo
                 </label>
                 <input
+                readOnly
                   type="text"
                   name="text_input"
-                  className="form-control mb-3 mb-lg-0"
+                  className="form-control mb-3 mb-lg-0 border-0"
                   placeholder="Masukan Nomor Perjanjian Kemkominfo"
                   value={no_perjanjianKoninfo && no_perjanjianKoninfo}
                 />
@@ -294,7 +306,7 @@ const RevisiKerjasama = ({ token }) => {
                   <label htmlFor="staticEmail" className="col-form-label">
                     Tanggal Penandatanganan
                   </label>
-                  <div className="d-flex align-items-center position-relative datepicker-w mt-2">
+                  <div className="d-flex align-items-center position-relative datepicker-w mt-2 disabled-form">
                     <DatePicker
                       readOnly
                       value={tgl_ttd && tgl_ttd}

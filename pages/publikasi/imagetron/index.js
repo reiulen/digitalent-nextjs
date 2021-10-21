@@ -22,30 +22,17 @@ const Imagetron = dynamic(
   }
 );
 
-<<<<<<< HEAD
-export default function ImagetronPage() {
+export default function ImagetronPage(props) {
+  const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
         {/* <Layout title='Imagetron - Publikasi'> */}
-        <Imagetron />
+        <Imagetron token={session.token} />
         {/* </Layout> */}
       </div>
     </>
   );
-=======
-export default function ImagetronPage(props) {
-    const session = props.session.user.user.data;
-    return (
-        <>
-            <div className="d-flex flex-column flex-root">
-                {/* <Layout title='Imagetron - Publikasi'> */}
-                    <Imagetron token={session.token}/>
-                {/* </Layout> */}
-            </div>
-        </>
-    )
->>>>>>> 279f614e085680387383629b291de8e592fdb1c4
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
@@ -55,7 +42,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (!session) {
         return {
           redirect: {
-            destination: "http://dts-dev.majapahit.id/",
+            destination: "http://dts-dev.majapahit.id/login/admin",
             permanent: false,
           },
         };

@@ -24,7 +24,6 @@ const KelolaSertifikatNamaPelatihanID = dynamic(
 
 export default function KelokaSertifikatPage(props) {
   const session = props.session.user.user.data;
-
   return (
     <>
       <div className="d-flex flex-column flex-root">
@@ -35,13 +34,13 @@ export default function KelokaSertifikatPage(props) {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  (store) =>
+  store =>
     async ({ query, req }) => {
       const session = await getSession({ req });
       if (!session) {
         return {
           redirect: {
-            destination: "http://dts-dev.majapahit.id/",
+            destination: "http://dts-dev.majapahit.id/login/admin",
             permanent: false,
           },
         };
@@ -49,13 +48,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
       await store.dispatch(
         getDetailSertifikat(
-          query.tema_pelatihan_id,
+          query.id,
           query.page,
           query.keyword,
           query.limit,
-          query.publish,
-          query.startdate,
-          query.enddate,
+          query.status,
           session.user.user.data.token
         )
       );

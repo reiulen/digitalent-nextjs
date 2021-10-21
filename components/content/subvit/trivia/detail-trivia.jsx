@@ -157,7 +157,7 @@ const DetailTrivia = ({ token }) => {
 
           <div className="card-body">
             <div className="row">
-              <div className="col-md-5">
+              <div className="col-md-6">
                 <div className="row">
                   <div
                     className="col title-1 font-weight-bold"
@@ -223,7 +223,7 @@ const DetailTrivia = ({ token }) => {
                 className="btn btn-primary-rounded-full px-7 font-weight-bold btn-block"
                 onClick={handleModal}
               >
-                <i className="ri-pencil-fill"></i>
+                <i className="ri-add-fill"></i>
                 Tambah Soal
               </a>
             </div>

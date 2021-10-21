@@ -16,6 +16,7 @@ import { UPDATE_SUBTANCE_QUESTION_BANKS_PUBLISH_RESET } from "../../../../../red
 import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInput from "/components/StepInput";
 import LoadingPage from "../../../../LoadingPage";
+import styles from "../../trivia/edit/step.module.css";
 
 const StepThree = ({ token }) => {
   const dispatch = useDispatch();
@@ -63,7 +64,7 @@ const StepThree = ({ token }) => {
         end_at,
         duration,
         passing_grade,
-        status: 0,
+        status: status,
         questions_to_share: jumlah_soal,
       };
 
@@ -103,7 +104,7 @@ const StepThree = ({ token }) => {
           end_at,
           duration,
           passing_grade,
-          status: 1,
+          status: status,
           questions_to_share: jumlah_soal,
         };
 
@@ -124,6 +125,10 @@ const StepThree = ({ token }) => {
     if (error) {
       dispatch(clearErrors());
     }
+  };
+
+  const handleStatus = (e) => {
+    setStatus(e.target.value);
   };
 
   return (
@@ -201,7 +206,7 @@ const StepThree = ({ token }) => {
                     htmlFor="staticEmail"
                     className=" col-form-label font-weight-bold pb-0"
                   >
-                    Sampai
+                    Pelaksanaan Sampai
                   </p>
                   <DatePicker
                     wrapperClassName="datepicker"
@@ -352,17 +357,17 @@ const StepThree = ({ token }) => {
                     id=""
                     className="form-control"
                     value={status}
-                    onChange={(e) => setStatus(e.target.value)}
-                    onBlur={(e) => {
-                      setStatus(e.target.value);
+                    onChange={(event) => handleStatus(event)}
+                    onBlur={(event) => {
+                      handleStatus(event);
                       simpleValidator.current.showMessageFor("status");
                     }}
                   >
                     <option value="" selected disabled>
                       -- PILIH STATUS --
                     </option>
-                    <option value={true}> Publish </option>
-                    <option value={false}> Draft </option>
+                    <option value={1}> Publish </option>
+                    <option value={0}> Draft </option>
                   </select>
                   {simpleValidator.current.message(
                     "status",
@@ -377,7 +382,7 @@ const StepThree = ({ token }) => {
                 <div className="col-sm-2"></div>
                 <div className="col-sm-10 text-right">
                   <button
-                    className="btn btn-light-ghost-rounded-full mr-2"
+                    className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
                     type="submit"
                   >
                     Simpan & Lanjut

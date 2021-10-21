@@ -48,7 +48,7 @@ import { NEW_ARTIKEL_RESET } from "../../../../redux/types/publikasi/artikel.typ
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingPage from "../../../LoadingPage";
 
-const TambahArtikel = ({token}) => {
+const TambahArtikel = ({ token }) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -65,6 +65,7 @@ const TambahArtikel = ({token}) => {
   // const forceUpdate = React.useReducer(() => ({}))[1]
 
   const { loading, error, success } = useSelector((state) => state.newArtikel);
+  const { setting } = useSelector(state => state.allSettingPublikasi)
   const {
     loading: allLoading,
     error: allError,
@@ -186,9 +187,9 @@ const TambahArtikel = ({token}) => {
   const [iconPlus, setIconPlus] = useState(
     "/assets/icon/Add.svg"
   );
-  const [gambarName, setGambarName] = useState (null)
+  const [gambarName, setGambarName] = useState(null)
   const [kategori_id, setKategoriId] = useState("");
-  const [users_id, setUserId] = useState(3);
+  const [users_id, setUserId] = useState(87);
   const [tag, setTag] = useState([]);
   const [publish, setPublish] = useState(0);
   const [publishDate, setPublishDate] = useState(null);
@@ -202,18 +203,23 @@ const TambahArtikel = ({token}) => {
     // console.log (e.target.files[0])
     // console.log ("check")
 
-    if (type.includes (e.target.files[0].type)){
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-          setGambar(reader.result);
-          setGambarPreview(reader.result);
-        }
-      };
-      reader.readAsDataURL(e.target.files[0])
-      // console.log (reader.readAsDataURL(e.target.files[0]))
-      setGambarName(e.target.files[0].name)
-    } 
+    if (type.includes(e.target.files[0].type)) {
+      if (e.target.files[0].size > parseInt(setting[0].max_size) + '000000') {
+        e.target.value = null;
+        Swal.fire("Oops !", "Data Image Melebihi Ketentuan", "error");
+      } else {
+        const reader = new FileReader();
+        reader.onload = () => {
+          if (reader.readyState === 2) {
+            setGambar(reader.result);
+            setGambarPreview(reader.result);
+          }
+        };
+        reader.readAsDataURL(e.target.files[0])
+        // console.log (reader.readAsDataURL(e.target.files[0]))
+        setGambarName(e.target.files[0].name)
+      }
+    }
     else {
       // setGambar("")
       // setGambarPreview("/assets/media/default.jpg")
@@ -234,11 +240,11 @@ const TambahArtikel = ({token}) => {
     setDisablePublishDate(!disablePublishDate)
     // console.log (e.target.checked)
 
-    if (e.target.checked === false){
-        setPublishDate (null)
-        setPublish (0)
+    if (e.target.checked === false) {
+      setPublishDate(null)
+      setPublish(0)
     } else {
-        setPublish (1)
+      setPublish(1)
     }
   };
 
@@ -252,16 +258,16 @@ const TambahArtikel = ({token}) => {
   }
 
   const handleTag = (data) => {
-    if (data.length === 1 && data[0] === " "){
-        setTag([])
-        alert("tag")
-        setDisableTag (true)
-    } else {
-        setTag(data)
-        setDisableTag (false)
+    for (let i = 0; i < data.length; i++) {
+      for (let j = 0; j < data[i].length; j++) {
+        if (data[i][j] === " ") {
+          setDisableTag(true)
+        } else {
+          setDisableTag(false)
+        }
+      }
     }
-
-    console.log (data)
+    setTag(data)
   }
 
   const onSubmit = (e) => {
@@ -280,10 +286,10 @@ const TambahArtikel = ({token}) => {
 
       if (publish === true) {
         setPublish(1)
-      
+
       } else if (publish === false) {
         setPublish(0)
-        
+
       }
 
       if (publishDate === null) {
@@ -299,7 +305,7 @@ const TambahArtikel = ({token}) => {
           users_id,
           tag,
           publish,
-          tanggal_publish : moment(today).format("YYYY-MM-DD")
+          tanggal_publish: moment(today).format("YYYY-MM-DD")
         };
 
         Swal.fire({
@@ -319,12 +325,12 @@ const TambahArtikel = ({token}) => {
               //     type: NEW_ARTIKEL_RESET,
               //   });
               // }
-  
+
               dispatch(newArtikel(data, token));
-  
+
               // console.log(data);
             }
-        });
+          });
 
       } else {
 
@@ -336,10 +342,10 @@ const TambahArtikel = ({token}) => {
           users_id,
           tag,
           publish,
-          tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
+          tanggal_publish: moment(publishDate).format("YYYY-MM-DD")
         };
 
-        
+
         Swal.fire({
           title: "Apakah anda yakin ?",
           text: "Data ini akan ditambahkan !",
@@ -357,12 +363,12 @@ const TambahArtikel = ({token}) => {
               //     type: NEW_ARTIKEL_RESET,
               //   });
               // }
-  
+
               dispatch(newArtikel(data, token));
-  
-              // console.log(data);
+
+              // console.log("Publish :", data);
             }
-        });
+          });
       }
 
     } else {
@@ -379,9 +385,9 @@ const TambahArtikel = ({token}) => {
 
   return (
     <>
-    {
-      // console.log (kategori)
-    }
+      {/* {
+        console.log (setting)
+      } */}
       <PageWrapper>
         {error ? (
           <div
@@ -440,7 +446,7 @@ const TambahArtikel = ({token}) => {
                     {simpleValidator.current.message(
                       "judul_artikel",
                       judul_artikel,
-                      "required|min:5|max:50",
+                      "required|min:5|max:200",
                       { className: "text-danger" }
                     )}
                   </div>
@@ -449,7 +455,7 @@ const TambahArtikel = ({token}) => {
                 <div className="form-group">
                   <label
                     htmlFor="staticEmail"
-                    className="col-sm-2 col-form-label font-weight-bolder"
+                    className="col-sm-4 col-form-label font-weight-bolder"
                   >
                     Isi Artikel
                   </label>
@@ -473,7 +479,7 @@ const TambahArtikel = ({token}) => {
                               "isi_artikel"
                             )
                           }
-                          config ={{
+                          config={{
                             placeholder: "Tulis Deskripsi",
                             // plugins: [
                             //   Image, ImageToolbar, ImageCaption, ImageStyle, ImageResize, LinkImage
@@ -488,158 +494,158 @@ const TambahArtikel = ({token}) => {
                             //   ]
                             // }
                           }}
-                          // config={{
-                          //   plugins: [
-                          //     Essentials,
-                          //     Paragraph,
-                          //     Bold,
-                          //     Italic,
-                          //     Heading,
-                          //     Indent,
-                          //     IndentBlock,
-                          //     Underline,
-                          //     Strikethrough,
-                          //     BlockQuote,
-                          //     Font,
-                          //     Alignment,
-                          //     List,
-                          //     Link,
-                          //     MediaEmbed,
-                          //     PasteFromOffice,
-                          //     Image,
-                          //     ImageStyle,
-                          //     ImageToolbar,
-                          //     ImageUpload,
-                          //     ImageResize,
-                          //     Base64UploadAdapter,
-                          //     Table,
-                          //     TableToolbar,
-                          //     TextTransformation,
-                          //   ],
-                          //   toolbar: [
-                          //     'heading',
-                          //     '|',
-                          //     'bold',
-                          //     'italic',
-                          //     'underline',
-                          //     'strikethrough',
-                          //     '|',
-                          //     'fontSize',
-                          //     'fontColor',
-                          //     'fontBackgroundColor',
-                          //     '|',
-                          //     'alignment',
-                          //     'outdent',
-                          //     'indent',
-                          //     'bulletedList',
-                          //     'numberedList',
-                          //     'blockQuote',
-                          //     '|',
-                          //     'link',
-                          //     'insertTable',
-                          //     'imageUpload',
-                          //     'mediaEmbed',
-                          //     '|',
-                          //     'undo',
-                          //     'redo',
-                          //   ],
-                          //   heading: {
-                          //     options: [
-                          //       {
-                          //         model: 'paragraph',
-                          //         view: 'p',
-                          //         title: 'Paragraph',
-                          //         class: 'ck-heading_paragraph'
-                          //       },
-                          //       {
-                          //         model: 'heading1',
-                          //         view: 'h1',
-                          //         title: 'Heading 1',
-                          //         class: 'ck-heading_heading1'
-                          //       },
-                          //       {
-                          //         model: 'heading2',
-                          //         view: 'h2',
-                          //         title: 'Heading 2',
-                          //         class: 'ck-heading_heading2'
-                          //       },
-                          //       {
-                          //         model: 'heading3',
-                          //         view: 'h3',
-                          //         title: 'Heading 3',
-                          //         class: 'ck-heading_heading3'
-                          //       }
-                          //     ]
-                          //   },
-                          //   fontSize: {
-                          //     options: [
-                          //       9,
-                          //       10,
-                          //       11,
-                          //       12,
-                          //       13,
-                          //       14,
-                          //       15,
-                          //       16,
-                          //       17,
-                          //       18,
-                          //       19,
-                          //       20,
-                          //       21,
-                          //       23,
-                          //       25,
-                          //       27,
-                          //       29,
-                          //       31,
-                          //       33,
-                          //       35
-                          //     ]
-                          //   },
-                          //   alignment: {
-                          //     options: ['justify', 'left', 'center', 'right']
-                          //   },
-                          //   table: {
-                          //     contentToolbar: [
-                          //       'tableColumn',
-                          //       'tableRow',
-                          //       'mergeTableCells'
-                          //     ]
-                          //   },
-                          //   image: {
-                          //     resizeUnit: 'px',
-                          //     toolbar: [
-                          //       'imageStyle:alignLeft',
-                          //       'imageStyle:full',
-                          //       'imageStyle:alignRight',
-                          //       '|',
-                          //       'imageTextAlternative'
-                          //     ],
-                          //     styles: ['full', 'alignLeft', 'alignRight']
-                          //   },
-                          //   typing: {
-                          //     transformations: {
-                          //       remove: [
-                          //         'enDash',
-                          //         'emDash',
-                          //         'oneHalf',
-                          //         'oneThird',
-                          //         'twoThirds',
-                          //         'oneForth',
-                          //         'threeQuarters'
-                          //       ]
-                          //     }
-                          //   },
-                          //   placeholder: 'Tulis Deskripsi'
-                          // }}
+                        // config={{
+                        //   plugins: [
+                        //     Essentials,
+                        //     Paragraph,
+                        //     Bold,
+                        //     Italic,
+                        //     Heading,
+                        //     Indent,
+                        //     IndentBlock,
+                        //     Underline,
+                        //     Strikethrough,
+                        //     BlockQuote,
+                        //     Font,
+                        //     Alignment,
+                        //     List,
+                        //     Link,
+                        //     MediaEmbed,
+                        //     PasteFromOffice,
+                        //     Image,
+                        //     ImageStyle,
+                        //     ImageToolbar,
+                        //     ImageUpload,
+                        //     ImageResize,
+                        //     Base64UploadAdapter,
+                        //     Table,
+                        //     TableToolbar,
+                        //     TextTransformation,
+                        //   ],
+                        //   toolbar: [
+                        //     'heading',
+                        //     '|',
+                        //     'bold',
+                        //     'italic',
+                        //     'underline',
+                        //     'strikethrough',
+                        //     '|',
+                        //     'fontSize',
+                        //     'fontColor',
+                        //     'fontBackgroundColor',
+                        //     '|',
+                        //     'alignment',
+                        //     'outdent',
+                        //     'indent',
+                        //     'bulletedList',
+                        //     'numberedList',
+                        //     'blockQuote',
+                        //     '|',
+                        //     'link',
+                        //     'insertTable',
+                        //     'imageUpload',
+                        //     'mediaEmbed',
+                        //     '|',
+                        //     'undo',
+                        //     'redo',
+                        //   ],
+                        //   heading: {
+                        //     options: [
+                        //       {
+                        //         model: 'paragraph',
+                        //         view: 'p',
+                        //         title: 'Paragraph',
+                        //         class: 'ck-heading_paragraph'
+                        //       },
+                        //       {
+                        //         model: 'heading1',
+                        //         view: 'h1',
+                        //         title: 'Heading 1',
+                        //         class: 'ck-heading_heading1'
+                        //       },
+                        //       {
+                        //         model: 'heading2',
+                        //         view: 'h2',
+                        //         title: 'Heading 2',
+                        //         class: 'ck-heading_heading2'
+                        //       },
+                        //       {
+                        //         model: 'heading3',
+                        //         view: 'h3',
+                        //         title: 'Heading 3',
+                        //         class: 'ck-heading_heading3'
+                        //       }
+                        //     ]
+                        //   },
+                        //   fontSize: {
+                        //     options: [
+                        //       9,
+                        //       10,
+                        //       11,
+                        //       12,
+                        //       13,
+                        //       14,
+                        //       15,
+                        //       16,
+                        //       17,
+                        //       18,
+                        //       19,
+                        //       20,
+                        //       21,
+                        //       23,
+                        //       25,
+                        //       27,
+                        //       29,
+                        //       31,
+                        //       33,
+                        //       35
+                        //     ]
+                        //   },
+                        //   alignment: {
+                        //     options: ['justify', 'left', 'center', 'right']
+                        //   },
+                        //   table: {
+                        //     contentToolbar: [
+                        //       'tableColumn',
+                        //       'tableRow',
+                        //       'mergeTableCells'
+                        //     ]
+                        //   },
+                        //   image: {
+                        //     resizeUnit: 'px',
+                        //     toolbar: [
+                        //       'imageStyle:alignLeft',
+                        //       'imageStyle:full',
+                        //       'imageStyle:alignRight',
+                        //       '|',
+                        //       'imageTextAlternative'
+                        //     ],
+                        //     styles: ['full', 'alignLeft', 'alignRight']
+                        //   },
+                        //   typing: {
+                        //     transformations: {
+                        //       remove: [
+                        //         'enDash',
+                        //         'emDash',
+                        //         'oneHalf',
+                        //         'oneThird',
+                        //         'twoThirds',
+                        //         'oneForth',
+                        //         'threeQuarters'
+                        //       ]
+                        //     }
+                        //   },
+                        //   placeholder: 'Tulis Deskripsi'
+                        // }}
                         />
-                        
+
                       ) : (
                         <p>Tunggu Sebentar</p>
                       )}
                       {simpleValidator.current.message(
                         "isi_artikel",
                         isi_artikel,
-                        "required|min:100|max:2500",
+                        "required|min:100|max:12000",
                         { className: "text-danger" }
                       )}
                     </div>
@@ -658,7 +664,7 @@ const TambahArtikel = ({token}) => {
                 <div className="form-group">
                   <label
                     htmlFor="staticEmail"
-                    className="col-sm-2 col-form-label font-weight-bolder"
+                    className="col-sm-4 col-form-label font-weight-bolder"
                   >
                     Upload Thumbnail
                   </label>
@@ -691,7 +697,7 @@ const TambahArtikel = ({token}) => {
                         onBlur={() =>
                           simpleValidator.current.showMessageFor("gambar")
                         }
-                        style={{display: "none"}}
+                        style={{ display: "none" }}
                       />
                     </div>
                     {/* <div>
@@ -720,7 +726,7 @@ const TambahArtikel = ({token}) => {
                         style={{display: "none"}}
                       />
                     </div> */}
-                    
+
                   </div>
 
                   <div className="ml-3">
@@ -733,18 +739,18 @@ const TambahArtikel = ({token}) => {
                     {
                       gambarName !== null ?
                         <small className="text-danger">{gambarName}</small>
-                      :
+                        :
                         null
                     }
                   </div>
 
-                  <div className="mt-3 col-sm-3 text-muted">
+                  <div className="mt-3 col-sm-6 col-md-6 col-lg-7 col-xl-3 text-muted">
                     <p>
                       Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar.
                     </p>
-                      
+
                   </div>
-                  
+
                 </div>
 
                 {/* <div className="form-group row">
@@ -828,7 +834,7 @@ const TambahArtikel = ({token}) => {
                         -- Artikel --
                       </option>
                       {!kategori || (kategori && kategori.length === 0) ? (
-                        <option value="">Data kosong</option>
+                        <option value="">Data Tidak Ditemukan</option>
                       ) : (
                         kategori &&
                         kategori.kategori &&
@@ -838,7 +844,7 @@ const TambahArtikel = ({token}) => {
                               <option key={row.id} value={row.id}>
                                 {row.nama_kategori}
                               </option>
-                            :
+                              :
                               null
                           );
                         })
@@ -866,10 +872,19 @@ const TambahArtikel = ({token}) => {
                       onChange={(data) => handleTag(data)}
                       // onChange={setTag}
                       name="fruits"
-                      placeHolder="Isi Tag disini dan enter."
+                      placeHolder="Isi Tag disini"
                       // onBlur={() => simpleValidator.current.showMessageFor('tag')}
+                      seprators={["Enter", "Tab"]}
                     />
                     {/* {simpleValidator.current.message('tag', tag, 'required', { className: 'text-danger' })} */}
+                    {
+                      disableTag === true ?
+                        <p className="text-danger">
+                          Tag tidak bisa terdiri dari "SPACE" character saja
+                        </p>
+                        :
+                        null
+                    }
                   </div>
                 </div>
 
@@ -878,7 +893,7 @@ const TambahArtikel = ({token}) => {
                     htmlFor="staticEmail"
                     className="ml-5 pl-4 font-weight-bolder"
                   >
-                    Publish 
+                    Publish
                   </label>
                   <div className="col-sm-1 ml-4">
                     <div className="">
@@ -892,16 +907,15 @@ const TambahArtikel = ({token}) => {
                           onChange={(e) => handleChangePublish(e)}
                         />
                         <span
-                          className={`sliders round ${
-                            publish ? "text-white" : "pl-2"
-                          }`}
+                          className={`sliders round ${publish ? "text-white" : "pl-2"
+                            }`}
                         >
                         </span>
                       </label>
                     </div>
                   </div>
                 </div>
-                
+
                 {
                   disablePublishDate === false ?
                     <div className="form-group">
@@ -920,8 +934,8 @@ const TambahArtikel = ({token}) => {
                             placeholderText="Silahkan Isi Tanggal Publish"
                             wrapperClassName="col-12 col-lg-12 col-xl-12"
                             // minDate={moment().toDate()}
-                          // minDate={addDays(new Date(), 20)}
-                            disabled = {disablePublishDate === true || disablePublishDate === null}
+                            // minDate={addDays(new Date(), 20)}
+                            disabled={disablePublishDate === true || disablePublishDate === null}
                           />
                         </div>
                         {
@@ -932,11 +946,11 @@ const TambahArtikel = ({token}) => {
                         }
                       </div>
                     </div>
-                  :
+                    :
                     null
 
                 }
-                
+
 
                 <div className="form-group row">
                   <div className="col-sm-2"></div>

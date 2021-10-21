@@ -7,6 +7,7 @@ import LoadingPage from "../../../components/LoadingPage";
 import { getSession } from "next-auth/client";
 import { getAllKategori } from "../../../redux/actions/publikasi/kategori.actions";
 import { wrapper } from "../../../redux/store";
+import { getSettingPublikasi } from "../../../redux/actions/publikasi/setting.actions";
 
 const Tambah = dynamic(
   () => import("../../../components/content/publikasi/imagetron/tambah"),
@@ -20,30 +21,17 @@ const Tambah = dynamic(
   }
 );
 
-<<<<<<< HEAD
-export default function TambahPage() {
+export default function TambahPage(props) {
+  const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
         {/* <Layout title='Tambah Imagetron - Publikasi'> */}
-        <Tambah />
+        <Tambah token={session.token} />
         {/* </Layout> */}
       </div>
     </>
   );
-=======
-export default function TambahPage(props) {
-    const session = props.session.user.user.data;
-    return (
-        <>
-            <div className="d-flex flex-column flex-root">
-                {/* <Layout title='Tambah Imagetron - Publikasi'> */}
-                    <Tambah token={session.token}/>
-                {/* </Layout> */}
-            </div>
-        </>
-    )
->>>>>>> 279f614e085680387383629b291de8e592fdb1c4
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
@@ -55,13 +43,14 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (!session) {
         return {
           redirect: {
-            destination: "http://dts-dev.majapahit.id/",
+            destination: "http://dts-dev.majapahit.id/login/admin",
             permanent: false,
           },
         };
       }
 
       await store.dispatch(getAllKategori(session.user.user.data.token));
+      await store.dispatch(getSettingPublikasi(session.user.user.data.token));
 
       return {
         props: { session, title: "Tambah Imagetron - Publikasi" },

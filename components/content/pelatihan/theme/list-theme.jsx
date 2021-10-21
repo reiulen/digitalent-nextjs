@@ -13,7 +13,11 @@ import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingTable from "../../../LoadingTable";
 
 import { useDispatch, useSelector } from "react-redux";
-import { deleteTheme } from "../../../../redux/actions/pelatihan/theme.actions";
+import {
+  deleteTheme,
+  getAllTheme,
+  clearErrors,
+} from "../../../../redux/actions/pelatihan/theme.actions";
 import { DELETE_THEME_RESET } from "../../../../redux/types/pelatihan/theme.type";
 
 const ListTheme = ({ token }) => {
@@ -30,9 +34,11 @@ const ListTheme = ({ token }) => {
     error: deleteError,
     isDeleted,
   } = useSelector((state) => state.deleteTheme);
+  const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(
+    (state) => state.drowpdownAkademi
+  );
 
-  let { page = 1, success } = router.query;
-  page = Number(page);
+  let { success } = router.query;
 
   let loading = false;
   if (allLoading) {
@@ -48,16 +54,17 @@ const ListTheme = ({ token }) => {
     error = deleteError;
   }
 
+  const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(null);
   const [academy, setAcademy] = useState(null);
   const [status, setStatus] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
-  const options = [
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
+  const optionsAkademi = dataAkademi.data;
+  const optionsStatus = [
+    { value: "1", label: "Publish" },
+    { value: "0", label: "Unpublish" },
   ];
 
   useEffect(() => {
@@ -65,7 +72,8 @@ const ListTheme = ({ token }) => {
       Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
         (result) => {
           if (result.isConfirmed) {
-            window.location.reload();
+            setPage(1);
+            dispatch(getAllTheme(1, null, null, null, null, token));
           }
         }
       );
@@ -73,39 +81,84 @@ const ListTheme = ({ token }) => {
         type: DELETE_THEME_RESET,
       });
     }
-  }, [isDeleted]);
+  }, [isDeleted, dispatch, token]);
 
   const handlePagination = (pageNumber) => {
-    let link = `${router.pathname}?page=${pageNumber}`;
-    if (limit) link = link.concat(`&limit=${limit}`);
-    if (search) link = link.concat(`&keyword=${search}`);
-    router.push(link);
+    // let link = `${router.pathname}?page=${pageNumber}`;
+    // if (limit) link = link.concat(`&limit=${limit}`);
+    // if (search) link = link.concat(`&keyword=${search}`);
+    setPage(pageNumber);
+    dispatch(
+      getAllTheme(
+        pageNumber,
+        null,
+        academy != null ? academy.label : null,
+        status != null ? status.value : null,
+        limit,
+        token
+      )
+    );
+    // router.push(link);
   };
 
   const handleSearch = () => {
     let link = `${router.pathname}?page=1&keyword=${search}`;
     if (limit) link = link.concat(`&limit=${limit}`);
     router.push(link);
+    setPage(1);
+    dispatch(
+      getAllTheme(
+        1,
+        search,
+        academy != null ? academy.label : null,
+        status != null ? status.value : null,
+        limit,
+        token
+      )
+    );
   };
 
   const handleFilter = () => {
-    let link = `${router.pathname}?page=${1}`;
-    if (academy) link = link.concat(`&akademi=${academy.value}`);
-    if (status) link = link.concat(`&status=${status.value}`);
-    router.push(link);
+    // let link = `${router.pathname}?page=${1}`;
+    // if (academy) link = link.concat(`&akademi=${academy.value}`);
+    // if (status) link = link.concat(`&status=${status.value}`);
+    // router.push(link);
+    setPage(1);
+    dispatch(
+      getAllTheme(
+        1,
+        search,
+        academy != null ? academy.label : null,
+        status != null ? status.value : null,
+        limit,
+        token
+      )
+    );
     setShowModal(false);
   };
 
   const handleReset = () => {
     setAcademy(null);
     setStatus(null);
-    router.replace("/pelatihan/tema", undefined, { shallow: true });
+    setPage(1);
+    dispatch(getAllTheme(1, null, null, null, 5, token));
     setShowModal(false);
   };
 
   const handleLimit = (val) => {
+    // router.push(`${router.pathname}?page=1&limit=${val}`);
     setLimit(val);
-    router.push(`${router.pathname}?page=1&limit=${val}`);
+    setPage(1);
+    dispatch(
+      getAllTheme(
+        1,
+        search,
+        academy != null ? academy.label : null,
+        status != null ? status.value : null,
+        val,
+        token
+      )
+    );
   };
 
   const onNewReset = () => {
@@ -195,7 +248,7 @@ const ListTheme = ({ token }) => {
               List Tema
             </h1>
             <div className="card-toolbar">
-              <Link href="/pelatihan/tema/tambah">
+              <Link href="/pelatihan/tema/tambah-tema">
                 <a className="btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2">
                   <i className="ri-add-fill"></i>
                   Tambah Tema
@@ -207,11 +260,8 @@ const ListTheme = ({ token }) => {
           <div className="card-body pt-0">
             <div className="table-filter">
               <div className="row align-items-center">
-                <div className="col-lg-8 col-xl-8">
-                  <div
-                    className="position-relative overflow-hidden mt-3"
-                    style={{ maxWidth: "330px" }}
-                  >
+                <div className="col-lg-4 col-xl-4">
+                  <div className="position-relative overflow-hidden mt-3 mb-2">
                     <i className="ri-search-line left-center-absolute ml-2"></i>
                     <input
                       type="text"
@@ -232,11 +282,12 @@ const ListTheme = ({ token }) => {
                   </div>
                 </div>
 
-                <div className="col-lg-4 col-xl-4 justify-content-end d-flex">
+                <div className="col-lg-5 col-xl-5"></div>
+
+                <div className="col-lg-3 col-xl-3 justify-content-end d-flex">
                   <button
-                    className="btn border d-flex align-items-center justify-content-between mt-1"
+                    className="btn border d-flex align-items-center justify-content-between mt-1 w-100"
                     style={{
-                      minWidth: "280px",
                       color: "#bdbdbd",
                       float: "right",
                     }}
@@ -255,103 +306,109 @@ const ListTheme = ({ token }) => {
             <div className="table-page mt-5">
               <div className="table-responsive">
                 <LoadingTable loading={loading} />
-
-                <table className="table table-separate table-head-custom table-checkable">
-                  <thead style={{ background: "#F3F6F9" }}>
-                    <tr>
-                      <th className="text-center ">No</th>
-                      <th>Akademi</th>
-                      <th>Tema</th>
-                      <th>Peminat</th>
-                      <th>Status</th>
-                      <th>Aksi</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {!theme || (theme && theme.rows.length === 0) ? (
-                      <td className="align-middle text-center" colSpan={8}>
-                        Data Masih Kosong
-                      </td>
-                    ) : (
-                      theme.rows.map((row, i) => (
-                        <tr key={i}>
-                          <td className="text-center">
-                            {limit === null
-                              ? i + 1 * (page * 5) - (5 - 1)
-                              : i + 1 * (page * limit) - (limit - 1)}
-                          </td>
-                          <td className="align-middle">
-                            <p className="font-weight-bolder my-0 h6">
-                              {row.akademi}
-                            </p>
-                            <div
-                              className="py-0"
-                              dangerouslySetInnerHTML={{
-                                __html: row.deskripsi,
-                              }}
-                            ></div>
-                          </td>
-                          <td className="align-middle">{row.name}</td>
-                          <td className="align-middle">500 Peminat</td>
-                          <td className="align-middle">
-                            {row.status === "1" ? (
-                              <span className="label label-inline label-light-success font-weight-bold">
-                                Publish
-                              </span>
-                            ) : (
-                              <span className="label label-inline label-light-danger font-weight-bold">
-                                Unpublish
-                              </span>
-                            )}
-                          </td>
-                          <td className="align-middle">
-                            <div className="d-flex">
-                              <Link href={`/pelatihan/tema/${row.id}`}>
-                                <a
-                                  className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                {loading === false && (
+                  <table className="table table-separate table-head-custom table-checkable">
+                    <thead className="w-100" style={{ background: "#F3F6F9" }}>
+                      <tr>
+                        <th className="text-center ">No</th>
+                        <th>Akademi</th>
+                        <th>Tema</th>
+                        <th>Peminat</th>
+                        <th>Status</th>
+                        <th>Aksi</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {!theme ||
+                      (theme && theme.list === null) ||
+                      theme.list.length === 0 ? (
+                        <td className="align-middle text-center" colSpan={8}>
+                          Data Masih Kosong
+                        </td>
+                      ) : (
+                        theme.list.map((row, i) => (
+                          <tr key={i}>
+                            <td className="text-center">
+                              {limit === null
+                                ? i + 1 * (page * 5) - (5 - 1)
+                                : i + 1 * (page * limit) - (limit - 1)}
+                            </td>
+                            <td className="align-middle">
+                              <p className="font-weight-bolder my-0 h6">
+                                {row.akademi}
+                              </p>
+                              <div
+                                className="py-0"
+                                dangerouslySetInnerHTML={{
+                                  __html: row.deskripsi,
+                                }}
+                              ></div>
+                            </td>
+                            <td className="align-middle">{row.name}</td>
+                            <td className="align-middle">500 Peminat</td>
+                            <td className="align-middle">
+                              {row.status === "1" ? (
+                                <span className="label label-inline label-light-success font-weight-bold">
+                                  Publish
+                                </span>
+                              ) : (
+                                <span className="label label-inline label-light-danger font-weight-bold">
+                                  Unpublish
+                                </span>
+                              )}
+                            </td>
+                            <td className="align-middle">
+                              <div className="d-flex">
+                                <Link
+                                  href={`/pelatihan/tema/edit-tema?id=${row.id}`}
+                                >
+                                  <a
+                                    className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                    data-toggle="tooltip"
+                                    data-placement="bottom"
+                                    title="Edit"
+                                  >
+                                    <i className="ri-pencil-fill p-0 text-white"></i>
+                                  </a>
+                                </Link>
+                                <button
+                                  className="btn btn-link-action bg-blue-secondary text-white"
+                                  onClick={() => handleDelete(row.id)}
                                   data-toggle="tooltip"
                                   data-placement="bottom"
-                                  title="Edit"
+                                  title="Hapus"
                                 >
-                                  <i className="ri-pencil-fill p-0 text-white"></i>
-                                </a>
-                              </Link>
-                              <button
-                                className="btn btn-link-action bg-blue-secondary text-white"
-                                onClick={() => handleDelete(row.id)}
-                                data-toggle="tooltip"
-                                data-placement="bottom"
-                                title="Hapus"
-                              >
-                                <i className="ri-delete-bin-fill p-0 text-white"></i>
-                              </button>
-                            </div>
-                          </td>
-                        </tr>
-                      ))
-                    )}
-                  </tbody>
-                </table>
+                                  <i className="ri-delete-bin-fill p-0 text-white"></i>
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        ))
+                      )}
+                    </tbody>
+                  </table>
+                )}
               </div>
 
               <div className="row">
-                <div className="table-pagination table-pagination pagination-custom col-12 col-md-6">
-                  <Pagination
-                    activePage={theme.page}
-                    itemsCountPerPage={theme.total_pages}
-                    totalItemsCount={theme.total_rows}
-                    pageRangeDisplayed={3}
-                    onChange={handlePagination}
-                    nextPageText={">"}
-                    prevPageText={"<"}
-                    firstPageText={"<<"}
-                    lastPageText={">>"}
-                    itemClass="page-item"
-                    linkClass="page-link"
-                  />
-                </div>
-
-                {academy && academy.total_rows > 5 && (
+                {theme && theme.perPage < theme.total && (
+                  <div className="table-pagination table-pagination pagination-custom col-12 col-md-6">
+                    <Pagination
+                      activePage={page}
+                      itemsCountPerPage={theme.perPage}
+                      totalItemsCount={theme.total}
+                      pageRangeDisplayed={3}
+                      onChange={handlePagination}
+                      nextPageText={">"}
+                      prevPageText={"<"}
+                      firstPageText={"<<"}
+                      lastPageText={">>"}
+                      itemClass="page-item"
+                      linkClass="page-link"
+                    />
+                  </div>
+                )}
+                {theme && theme.total > 5 && (
                   <div className="table-total ml-auto">
                     <div className="row">
                       <div className="col-4 mr-0 p-0 mt-3">
@@ -364,14 +421,15 @@ const ListTheme = ({ token }) => {
                             borderColor: "#F3F6F9",
                             color: "#9E9E9E",
                           }}
+                          value={limit}
                           onChange={(e) => handleLimit(e.target.value)}
                           onBlur={(e) => handleLimit(e.target.value)}
                         >
-                          <option>5</option>
-                          <option>10</option>
-                          <option>30</option>
-                          <option>40</option>
-                          <option>50</option>
+                          <option value="5">5</option>
+                          <option value="10">10</option>
+                          <option value="30">30</option>
+                          <option value="40">40</option>
+                          <option value="50">50</option>
                         </select>
                       </div>
                       <div className="col-8 my-auto pt-3">
@@ -379,7 +437,7 @@ const ListTheme = ({ token }) => {
                           className="align-middle mt-3"
                           style={{ color: "#B5B5C3" }}
                         >
-                          Total Data {theme.total_rows}
+                          Total Data {theme.total}
                         </p>
                       </div>
                     </div>
@@ -411,7 +469,7 @@ const ListTheme = ({ token }) => {
           <div className="form-group mb-5">
             <label className="p-0">Akademi</label>
             <Select
-              options={options}
+              options={optionsAkademi}
               defaultValue={academy}
               onChange={(e) => setAcademy({ value: e.value, label: e.label })}
             />
@@ -419,7 +477,7 @@ const ListTheme = ({ token }) => {
           <div className="form-group mb-0">
             <label className="p-0">Status</label>
             <Select
-              options={options}
+              options={optionsStatus}
               defaultValue={status}
               onChange={(e) => setStatus({ value: e.value, label: e.label })}
             />

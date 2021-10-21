@@ -10,10 +10,39 @@ import IconPencil from "../../../../assets/icon/Pencil";
 import IconDelete from "../../../../assets/icon/Delete";
 import IconAdd from "../../../../assets/icon/Add";
 import IconSearch from "../../../../assets/icon/Search";
+import axios from "axios";
 
 const Table = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
+
+  const [formInput, setFormInput] = useState([]);
+  console.log("formInput",formInput)
+
+  useEffect(() => {
+    async function getDetailZonasi(id, token) {
+      try {
+        let { data } = await axios.get(
+          `${process.env.END_POINT_API_SITE_MANAGEMENT}api/zonasi/detail/${id}`,
+          {
+            headers: {
+              authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        // console.log("data", data);
+        // setNamaZonation(data.data.name);
+        // setStatus(data.data.status);
+
+        setFormInput(data.data.data);
+        // setValueForm(data.data.data);
+      } catch (error) {
+        console.log("error, get", error);
+      }
+    }
+
+    getDetailZonasi(router.query.id, token);
+  }, [router.query.id, token]);
 
   // function delete
   const apiDelete = (id) => {
@@ -60,12 +89,23 @@ const Table = ({ token }) => {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td className="align-middle text-left">1</td>
-                      <td className="align-middle text-left">api</td>
+                    {formInput.length === 0 ? "" :
+                    formInput.map((items,index)=>{
+return(
+                   
+                    <tr key={index}>
+                      <td className="text-left">{index+1}</td>
+                      <td className="text-left">{items.provinsi}</td>
                       <td className="align-middle text-left">
-                        provinsi
+                        {items.kota_kabupaten.map(((items,idx)=>{
+                          return (
+                            <p key={idx}>{items.label}</p>
+                          )
+                        }))}
                       </td> </tr>
+                      )
+                       })
+                      }
                   </tbody>
                 </table>
               </div>{" "}

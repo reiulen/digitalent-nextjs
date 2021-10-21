@@ -198,15 +198,15 @@ const Table = ({ token }) => {
       )}
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
-          <div className="d-flex flex-wrap align-items-center justify-content-between p-8">
+          <div className="d-flex flex-wrap align-items-center justify-content-between px-8 py-4">
             <h1
-              className="card-title font-weight-bolder text-dark"
+              className="card-title font-weight-bolder text-dark mb-0 mt-4"
               style={{ fontSize: "24px" }}
             >
               Master Mitra
             </h1>
             <Link href="/partnership/mitra/tambah">
-              <a className="btn btn-rounded-full bg-blue-primary text-white">
+              <a className="btn btn-rounded-full bg-blue-primary text-white mt-4">
                 <IconAdd
                   className="mr-3"
                   width="16"
@@ -220,7 +220,7 @@ const Table = ({ token }) => {
           {/*  */}
 
           <div className="card-body pt-0">
-            <form onSubmit={handleSubmit}>
+            {/* <form onSubmit={handleSubmit}> */}
               <div className="row w-100">
                 <div className="col-12 col-sm-6">
                   <div className="position-relative overflow-hidden w-100 mt-3">
@@ -236,7 +236,8 @@ const Table = ({ token }) => {
                       onChange={(e) => setKeyWord(e.target.value)}
                     />
                     <button
-                      type="submit"
+                      type="button"
+                      onClick={(e)=>handleSubmit(e)}
                       className="btn bg-blue-primary text-white right-center-absolute"
                       style={{
                         borderTopLeftRadius: "0",
@@ -263,7 +264,7 @@ const Table = ({ token }) => {
                   </div>
                 </div>
               </div>
-            </form>
+            {/* </form> */}
             {
               <Tables
                 tableHead={
@@ -374,13 +375,19 @@ const Table = ({ token }) => {
                           </td>
                           <td className="align-middle text-left">
                             <div className="d-flex align-items-center">
-                              <button
+
+
+                              <Link href={{
+                                pathname:"/partnership/mitra/detail-data-kerjasama-mitra",
+                                query:{id:item.id}
+                              }}>
+                              <a
                                 className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                                onClick={() =>
-                                  router.push(
-                                    `/partnership/mitra/detail/${item.id}`
-                                  )
-                                }
+                                // onClick={() =>
+                                //   router.push(
+                                //     `/partnership/mitra/detail/${item.id}`
+                                //   )
+                                // }
                               >
                                 <IconEye
                                   width="14"
@@ -390,7 +397,11 @@ const Table = ({ token }) => {
                                 <div className="text-hover-show-hapus">
                                   Detail
                                 </div>
-                              </button>
+                              </a>
+                              </Link>
+
+
+
 
                               <button
                                 className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete"

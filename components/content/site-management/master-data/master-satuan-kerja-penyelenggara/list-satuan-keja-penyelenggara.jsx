@@ -10,34 +10,37 @@ import IconPencil from "../../../../assets/icon/Pencil";
 import IconDelete from "../../../../assets/icon/Delete";
 import IconAdd from "../../../../assets/icon/Add";
 import IconSearch from "../../../../assets/icon/Search";
-
+import {
+  getAllUnitWork,
+  setPage,
+  searchCooporation,
+  limitCooporation,
+} from "../../../../../redux/actions/site-management/unit-work.actions";
 const Table = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
 
-  // function delete
-  const apiDelete = (id) => {
-    Swal.fire({
-      title: "Apakah anda yakin ingin menghapus data ?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      cancelButtonText: "Batal",
-      confirmButtonText: "Ya !",
-      dismissOnDestroy: false,
-    }).then(async (result) => {
-      if (result.value) {
-        // dispatch delete
-      }
-    });
+  const allUnitWork = useSelector((state) => state.allUnitWork);
+  console.log("object",allUnitWork)
+
+  const [valueSearch, setValueSearch] = useState("");
+  const handleChangeValueSearch = (value) => {
+    setValueSearch(value);
   };
 
-  const onNewReset = () => {
-    router.replace("/site-management/setting/api", undefined, {
-      shallow: true,
-    });
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    dispatch(searchCooporation(valueSearch));
   };
+
+  useEffect(() => {
+    dispatch(getAllUnitWork(token));
+  }, [dispatch, allUnitWork.cari, allUnitWork.page, allUnitWork.limit, token]);
+
+
+
+
+
   return (
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">
@@ -63,7 +66,7 @@ const Table = ({ token }) => {
               <div className="row align-items-center">
                 <div className="col-lg-12 col-xl-12">
                   <form
-                    // onSubmit={handleSubmit}
+                    onSubmit={handleSubmit}
                     className="d-flex align-items-center w-100"
                   >
                     <div className="row w-100">
@@ -78,9 +81,9 @@ const Table = ({ token }) => {
                             type="text"
                             className="form-control pl-10"
                             placeholder="Ketik disini untuk Pencarian..."
-                            // onChange={(e) =>
-                            //   handleChangeValueSearch(e.target.value)
-                            // }
+                            onChange={(e) =>
+                              handleChangeValueSearch(e.target.value)
+                            }
                           />
                           <button
                             type="submit"
@@ -101,6 +104,9 @@ const Table = ({ token }) => {
             </div>
             <div className="table-page mt-5">
               <div className="table-responsive">
+                {allUnitWork.status === "process" ? (
+                  <LoadingTable />
+                ) : (
                 <table className="table table-separate table-head-custom table-checkable">
                   <thead style={{ background: "#F3F6F9" }}>
                     <tr>
@@ -111,28 +117,48 @@ const Table = ({ token }) => {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td className="align-middle text-left">1</td>
-                      <td className="align-middle text-left">api</td>
+                    {allUnitWork.data.unit_work.length === 0 ? (
+                      <tr>
+                        <td colSpan="4" className="text-center">
+                          <h4>Data tidak ditemukan</h4>
+                        </td>
+                      </tr>
+                    ) : (
+                      allUnitWork.data.unit_work.map((items, index) => {
+                        return (
+                    <tr key={index}>
+                      <td className="align-middle text-left">
+                             {allUnitWork.page === 1
+                                ? index + 1
+                                : (allUnitWork.page - 1) * allUnitWork.limit +
+                                  (index + 1)}
+
+
+                      </td>
+                      <td className="align-middle text-left">{items.name}</td>
                       <td className="align-middle text-left">
                         <p
                           className="status-div-red mb-0"
                           style={{ width: "max-content" }}
                         >
-                          Tidak aktif
+                          {items.status === "1" ? "Aktif" : "Tidak Aktif"}
                         </p>
                       </td>
                       <td className="align-middle text-left">
                         <div className="d-flex align-items-center">
-                          <button
+
+                          
+                          <Link href={`/site-management/master-data/master-satuan-kerja-penyelenggara/ubah-satuan-kerja-penyelenggara/${items.id}`}>
+                          
+                          <a
                             className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                            onClick={() =>
-                              router.push(`/site-management/master-data/master-satuan-kerja-penyelenggara/ubah-satuan-kerja-penyelenggara`)
-                            }
                           >
                             <IconPencil width="16" height="16" />
                             <div className="text-hover-show-hapus">Ubah</div>
-                          </button>
+                          </a>
+                          </Link>
+
+
                           <button
                             className="btn btn-link-action bg-blue-secondary ml-3 position-relative btn-delete"
                             onClick={() =>
@@ -145,30 +171,29 @@ const Table = ({ token }) => {
                         </div>
                       </td>
                     </tr>
+                    );
+                      })
+                    )}
                   </tbody>
                 </table>
+                  )}
               </div>
 
               <div className="row w-100">
                 <div className="table-pagination paginate-cs">
-                  pagination
-                  {/* <Pagination
-                    activePage={allMKCooporation.page}
-                    itemsCountPerPage={
-                      allMKCooporation?.mk_cooporation?.data?.perPage
-                    }
-                    totalItemsCount={
-                      allMKCooporation?.mk_cooporation?.data?.total
-                    }
-                    pageRangeDisplayed={3}
-                    onChange={(page) => dispatch(setPage(page))}
-                    nextPageText={">"}
-                    prevPageText={"<"}
-                    firstPageText={"<<"}
-                    lastPageText={">>"}
-                    itemclassName="page-item"
-                    linkclassName="page-link"
-                  /> */}
+                  <Pagination
+                        activePage={allUnitWork.page}
+                        itemsCountPerPage={allUnitWork.data.perPage}
+                        totalItemsCount={allUnitWork.data.total}
+                        pageRangeDisplayed={3}
+                        onChange={(page) => dispatch(setPage(page))}
+                        nextPageText={">"}
+                        prevPageText={"<"}
+                        firstPageText={"<<"}
+                        lastPageText={">>"}
+                        itemClass="page-item"
+                        linkClass="page-link"
+                      />
                 </div>
 
                 <div className="table-total ml-auto">
@@ -184,6 +209,9 @@ const Table = ({ token }) => {
                           borderColor: "#F3F6F9",
                           color: "#9E9E9E",
                         }}
+                        onChange={(e) =>
+                          dispatch(limitCooporation(e.target.value, token))
+                        }
                       >
                         <option value="5">5</option>
                         <option value="10">10</option>
@@ -197,7 +225,8 @@ const Table = ({ token }) => {
                         className="align-middle mt-3"
                         style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}
                       >
-                        Total Data 9 List Data
+                        Total Data {allUnitWork.data &&
+                          allUnitWork.data.total} List Data
                       </p>
                     </div>
                   </div>

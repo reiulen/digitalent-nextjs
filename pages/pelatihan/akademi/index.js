@@ -1,12 +1,22 @@
-import React, { Suspense } from "react";
+import React from "react";
 
 import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
-import ListAcademy from "../../../components/content/pelatihan/academy/list-academy";
+// import ListAcademy from "../../../components/content/pelatihan/academy/list-academy";
 import { getAllAcademy } from "../../../redux/actions/pelatihan/academy.actions";
 
 import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
+
+const ListAcademy = dynamic(
+  () => import("../../../components/content/pelatihan/academy/list-academy"),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
 
 export default function ListAcademyPage(props) {
   const session = props.session.user.user.data;
@@ -26,7 +36,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (!session) {
         return {
           redirect: {
-            destination: "http://dts-dev.majapahit.id/",
+            destination: "http://dts-dev.majapahit.id/login/admin",
             permanent: false,
           },
         };

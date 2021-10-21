@@ -4,7 +4,7 @@ import { getSession } from "next-auth/client";
 import Layout from "../../../components/templates/layout.component";
 // import Galeri from "../../../components/content/publikasi/galeri/galeri";
 
-import { getAllGaleri } from "../../../redux/actions/publikasi/galeri.actions";
+import { getAllGaleri, getDetailGaleri } from "../../../redux/actions/publikasi/galeri.actions";
 import { wrapper } from "../../../redux/store";
 
 // import LoadingPage from "../../../components/LoadingPage";
@@ -40,7 +40,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (!session) {
         return {
           redirect: {
-            destination: "http://dts-dev.majapahit.id/",
+            destination: "http://dts-dev.majapahit.id/login/admin",
             permanent: false,
           },
         };
@@ -57,6 +57,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
           session.user.user.data.token
         )
       );
+      // await store.dispatch(
+      //   getDetailGaleri(session.user.user.data.token)
+      // );
       // await store.dispatch(getAllKategori(session.user.user.data.token))
       return {
         props: { session, title: "Galeri - Publikasi" },

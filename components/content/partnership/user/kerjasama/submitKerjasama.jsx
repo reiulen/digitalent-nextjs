@@ -14,7 +14,7 @@ import {
   fetchListCooperationSelectById,
 } from "../../../../../redux/actions/partnership/user/cooperation.actions";
 import axios from "axios";
-const DetailDokumenKerjasama = ({token}) => {
+const DetailDokumenKerjasama = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const allCooperationUser = useSelector((state) => state.allCooperationUser);
@@ -52,31 +52,31 @@ const DetailDokumenKerjasama = ({token}) => {
 
     if (date === "") {
       setError({ ...error, date: "Harus isi data tanggal" });
-      notify("Harus isi data tanggal");
+      // notify("Harus isi data tanggal");
     } else if (title === "") {
       setError({ ...error, title: "Judul kerjasama tidak boleh kosong" });
-      notify("Judul kerjasama tidak boleh kosong");
+      // notify("Judul kerjasama tidak boleh kosong");
     } else if (cooperationC_id === "") {
       setError({
         ...error,
         cooperationC_id: "Kategori kerjasama tidak boleh kosong",
       });
-      notify("Kategori kerjasama tidak boleh kosong");
+      // notify("Kategori kerjasama tidak boleh kosong");
     } else if (period === "") {
       setError({
         ...error,
         period: "Periode tidak boleh kosong",
       });
-      notify("Periode tidak boleh kosong");
+      // notify("Periode tidak boleh kosong");
     } else if (periodUnit === "") {
       setError({ ...error, periodUnit: "Period unit tidak boleh kosong" });
-      notify("Period unit tidak boleh kosong");
+      // notify("Period unit tidak boleh kosong");
     } else if (AllCooperation === "") {
       setError({
         ...error,
         AllCooperation: "Kerjasama form tidak boleh kosong",
       });
-      notify("Kerjasama form tidak boleh kosong");
+      // notify("Kerjasama form tidak boleh kosong");
     } else {
       Swal.fire({
         title: "Apakah anda yakin ingin simpan ?",
@@ -90,7 +90,6 @@ const DetailDokumenKerjasama = ({token}) => {
         dismissOnDestroy: false,
       }).then(async (result) => {
         if (result.value) {
-
           let formData = new FormData();
           formData.append("date", date);
           formData.append("title", title);
@@ -112,20 +111,16 @@ const DetailDokumenKerjasama = ({token}) => {
               formData,
               {
                 headers: {
-                  authorization:
-                    `Bearer ${token}`,
+                  authorization: `Bearer ${token}`,
                 },
               }
             );
-            // alert("berhasil");
-            console.log("data",data)
             router.push({
-              pathname: `/partnership/user/kerjasama/review-kerjasama-1`,
-              query: { successSubmitKerjasama: true,id:data.data.id },
+              pathname: `/partnership/user/kerjasama/review-kerjasama`,
+              query: { successSubmitKerjasama: true, id: data.data.id },
             });
           } catch (error) {
-            // alert("gagal");
-            console.log("error",error)
+            notify(error.response.data.message);
           }
 
           // let allDataPart = [
@@ -152,7 +147,9 @@ const DetailDokumenKerjasama = ({token}) => {
 
   const onNewReset = () => {
     setIsProfile(false);
-    router.replace("/partnership/user/kerjasama/submit-kerjasama", undefined, { shallow: true });
+    router.replace("/partnership/user/kerjasama/submit-kerjasama", undefined, {
+      shallow: true,
+    });
   };
 
   const onChangePeriod = (e) => {
@@ -167,7 +164,7 @@ const DetailDokumenKerjasama = ({token}) => {
     }
   };
   const notify = (value) =>
-    toast.info(`🦄 ${value}`, {
+    toast.info(`${value}`, {
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,
@@ -177,15 +174,15 @@ const DetailDokumenKerjasama = ({token}) => {
       progress: undefined,
     });
 
-  const [isProfile, setIsProfile] = useState(false)
+  const [isProfile, setIsProfile] = useState(false);
   useEffect(() => {
-    if(router.query.isProfile){
-      setIsProfile(true)
+    if (router.query.isProfile) {
+      setIsProfile(true);
     }
     dispatch(fetchListCooperationSelect(token));
-    dispatch(fetchListCooperationSelectById(cooperationC_id,token));
+    dispatch(fetchListCooperationSelectById(cooperationC_id, token));
     setDate(moment(new Date()).format("YYYY-MM-DD"));
-  }, [dispatch,cooperationC_id,token,router.query.isProfile]);
+  }, [dispatch, cooperationC_id, token, router.query.isProfile]);
   return (
     <PageWrapper>
       {isProfile ? (
@@ -237,12 +234,14 @@ const DetailDokumenKerjasama = ({token}) => {
           </div>
 
           <div className="card-body">
-            <div className="row mt-8 mb-10">
-              <div className="col-2 p-0">
+            <div className="row mt-8 mb-10 position-relative">
+              <div className="col-2 p-0 relative-progress">
                 <div className="progress-items">
                   {/* <div className="line-progress"></div> */}
                   <div className="circle-progress active-circle">
-                    <span className="title-progress">Submit Kerjasama</span>
+                    <span className="title-progress active">
+                      Submit Kerjasama
+                    </span>
                   </div>
                 </div>
               </div>
@@ -266,8 +265,13 @@ const DetailDokumenKerjasama = ({token}) => {
                 <div className="progress-items">
                   <div className="line-progress"></div>
                   <div className="circle-progress">
-                    <span className="title-progress">
-                      Submit Dokumen Kerjasama
+                    <span
+                      className="title-progress text-center"
+                      style={{ top: "-4rem" }}
+                    >
+                      Submit Dokumen
+                      <br />
+                      Kerjasama
                     </span>
                   </div>
                 </div>
@@ -276,8 +280,13 @@ const DetailDokumenKerjasama = ({token}) => {
                 <div className="progress-items">
                   <div className="line-progress"></div>
                   <div className="circle-progress">
-                    <span className="title-progress">
-                      Review Dokumen Kerjasama
+                    <span
+                      className="title-progress text-center"
+                      style={{ top: "-4rem" }}
+                    >
+                      Review Dokumen
+                      <br />
+                      Kerjasama
                     </span>
                   </div>
                 </div>
@@ -302,7 +311,8 @@ const DetailDokumenKerjasama = ({token}) => {
                     readOnly
                     value={date}
                     type="date"
-                    className="form-control mb-3 mb-lg-0"
+                    className="form-control mb-3 mb-lg-0 border-0"
+                    style={{ backgroundColor: "transparent" }}
                   />
                   {/* icon calender */}
                 </div>
@@ -359,37 +369,33 @@ const DetailDokumenKerjasama = ({token}) => {
                 </div>
               </div>
 
-              <div className="row">
+              <div className="row mb-4">
                 <div className="col-12 col-sm-6">
-                  <div className="form-group mb-10">
-                    <label className="required mb-2">Periode Kerjasama</label>
-                    <input
-                      onFocus={() => setError({ ...error, period: "" })}
-                      value={period}
-                      type="text"
-                      name="text_input"
-                      className="form-control mb-3 mb-lg-0"
-                      placeholder="Masukkan Lama Kerjasama"
-                      onChange={(e) => onChangePeriod(e)}
-                    />
-                    {error.period ? (
-                      <p className="error-text">{error.period}</p>
-                    ) : (
-                      ""
-                    )}
-                  </div>
-                </div>
-                <div className="col-12 col-sm-6">
-                  <div className="form-group mb-10">
-                    <label className="required mb-2"></label>
-                    <select className="form-control mt-2 remove-icon-default" disabled>
-                      <option value="">Tahun</option>
-                    </select>
-                    {/* {error.date ? <p className="error-text">{error.date}</p> : ""} */}
+                  <div className="form-group mb-0">
+                    <label>Periode Kerjasama</label>
+                    <div className="input-group">
+                      <input
+                        onFocus={() => setError({ ...error, period: "" })}
+                        type="text"
+                        value={period}
+                        className="form-control mb-lg-0"
+                        placeholder="Masukkan Lama Kerjasama"
+                        onChange={(e) => onChangePeriod(e)}
+                      />
+                      <div className="input-group-append">
+                        <button
+                          className="btn btn-secondary"
+                          type="button"
+                          disabled
+                        >
+                          Tahun
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-
+              {error.period ? <p className="error-text">{error.period}</p> : ""}
               {/* looping */}
               {allCooperationUser.singleCooporationSelect.length === 0
                 ? ""

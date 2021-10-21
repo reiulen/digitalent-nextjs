@@ -9,49 +9,92 @@ import DatePicker from "react-datepicker";
 import { addDays } from "date-fns";
 import LoadingTable from "../../../../LoadingTable";
 import Pagination from "react-js-pagination";
-
+import Select from "react-select";
 // #Icon
 import IconArrow from "../../../../assets/icon/Arrow";
 import IconClose from "../../../../assets/icon/Close";
 import IconFilter from "../../../../assets/icon/Filter";
 import { useSelector } from "react-redux";
+import { clearErrors } from "../../../../../redux/actions/sertifikat/kelola-sertifikat.action";
 
 export default function NamaPelatihanID({ token }) {
   const router = useRouter();
   const { query } = router;
-  // console.log(query);
-  // #DatePicker
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
-  const resetValueSort = () => {
-    setStartDate(null);
-    setEndDate(null);
-  };
-  // #DatePicker
-
+  const { loading, error, certificate } = useSelector(
+    state => state.detailCertificates
+  );
   // #Pagination
   const [limit, setLimit] = useState(null);
   const [search, setSearch] = useState("");
   // #Pagination
 
-  // #REDUX STATE
-  const { loading, error, certificate } = useSelector(
-    state => state.detailCertificates
-  );
+  if (!certificate) {
+    router.replace(`/sertifikat/kelola-sertifikat`);
+  }
 
-  // console.log(certificate, "ini sertifikat nya");
-  // #REDUX STATE
+  const [status, setStatus] = useState(null);
+
   let { page = 1, keyword, success } = router.query;
 
   const handleLimit = val => {
     setLimit(val);
-    router.push(`${router.pathname}?page=1&limit=${limit}`);
+    router.push(
+      `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}?id=${router.query.id}&page=1&limit=${val}`
+    );
   };
 
   const handleSearch = () => {
-    let link = `${router.pathname}?page=1&keyword=${search}`;
+    let link = `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}?id=${router.query.id}&page=1&keyword=${search}`;
     if (limit) link = link.concat(`&limit=${limit}`);
     router.push(link);
+  };
+
+  const options = [
+    { value: "draft", label: "Draft" },
+    { value: "not-yet-available", label: "Belum Tersedia" },
+    { value: "publish", label: "Publish" },
+  ];
+
+  const handleFilter = e => {
+    if (!status) {
+      Swal.fire("Oops !", "Harap memilih Status terlebih dahulu.", "error");
+    } else {
+      let link = `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}?id=${router.query.id}&page=${page}`;
+      if (limit) link = link.concat(`&limit=${limit}`);
+      if (status) link = link.concat(`&status=${status}`);
+      router.push(link);
+    }
+  };
+
+  const handlePagination = pageNumber => {
+    let link = `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}?page=${pageNumber}`;
+    if (search) link = link.concat(`&keyword=${search}`);
+    if (limit) link = link.concat(`&limit=${limit}`);
+    router.push(link);
+  };
+
+  let refSelect = null;
+  const resetValueSort = () => {
+    refSelect.select.clearValue();
+    setStatus(null);
+
+    router.push(
+      `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}?id=${router.query.id}`
+    );
+  };
+
+  const handleResetError = () => {
+    if (error) {
+      dispatch(clearErrors());
+    }
+  };
+
+  const onNewReset = () => {
+    router.replace(
+      `/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}?id=${query.id}`,
+      null,
+      { shallow: true }
+    );
   };
 
   return (
@@ -83,19 +126,78 @@ export default function NamaPelatihanID({ token }) {
       ) : (
         ""
       )}
+
+      {router.query.update ? (
+        <div
+          className="alert alert-custom alert-light-success fade show mb-5"
+          role="alert"
+          style={{ backgroundColor: "#C9F7F5" }}
+        >
+          <div className="alert-icon">
+            <i className="flaticon2-checkmark" style={{ color: "#1BC5BD" }}></i>
+          </div>
+          <div className="alert-text" style={{ color: "#1BC5BD" }}>
+            {router.query.message}
+          </div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={() => onNewReset()}
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
+      {router.query.created ? (
+        <div
+          className="alert alert-custom alert-light-success fade show mb-5"
+          role="alert"
+          style={{ backgroundColor: "#C9F7F5" }}
+        >
+          <div className="alert-icon">
+            <i className="flaticon2-checkmark" style={{ color: "#1BC5BD" }}></i>
+          </div>
+          <div className="alert-text" style={{ color: "#1BC5BD" }}>
+            {router.query.message}
+          </div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={() => onNewReset()}
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
       {/* error END */}
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark">
-              {certificate.theme}
+              {certificate?.theme}
             </h3>
           </div>
 
           <div className="card-body pt-0">
             <div className="table-filter">
               <div className="row align-items-center">
-                <div className="col-lg-6 col-xl-6 col-sm-9">
+                <div className="col-lg-6 col-xl-6 col-sm-6">
                   <div
                     className="position-relative overflow-hidden mt-3"
                     style={{ maxWidth: "330px" }}
@@ -119,7 +221,7 @@ export default function NamaPelatihanID({ token }) {
                     </button>
                   </div>
                 </div>
-                <div className="col-lg-6 col-xl-6 col-sm-9">
+                <div className="col-lg-6 col-xl-6 col-sm-6">
                   <div className="d-flex flex-wrap align-items-center justify-content-end mt-2">
                     {/* sortir by modal */}
                     <button
@@ -154,7 +256,7 @@ export default function NamaPelatihanID({ token }) {
                           <div className="modal-content">
                             <div className="modal-header">
                               <h5
-                                className="modal-title font-weight-bold"
+                                className="modal-title"
                                 id="exampleModalLongTitle"
                               >
                                 Filter
@@ -164,75 +266,50 @@ export default function NamaPelatihanID({ token }) {
                                 className="close"
                                 data-dismiss="modal"
                                 aria-label="Close"
-                                onClick={() => resetValueSort()}
                               >
                                 <IconClose />
                               </button>
                             </div>
 
-                            <div
-                              className="modal-body text-left"
-                              style={{
-                                height: "200px",
-                              }}
-                            >
-                              <div className="mb-10 col-12">
+                            <div className="modal-body text-left">
+                              <div className="fv-row mb-10">
                                 <label className="required fw-bold fs-6 mb-2">
-                                  Tanggal
+                                  Status
                                 </label>
-
-                                <div>
-                                  <DatePicker
-                                    className="form-search-date form-control-sm form-control"
-                                    selected={startDate}
-                                    onChange={date => setStartDate(date)}
-                                    selectsStart
-                                    startDate={startDate}
-                                    endDate={endDate}
-                                    dateFormat="dd/MM/yyyy"
-                                    placeholderText="Silahkan Isi Tanggal Dari"
-                                    wrapperClassName="col-12 col-lg-12 col-xl-12"
-                                    minDate={moment().toDate()}
-                                  />
-                                </div>
-                              </div>
-
-                              <div className="mb-10 col-12">
-                                <label className="required fw-bold fs-6 mb-2">
-                                  Tanggal
-                                </label>
-
-                                <div>
-                                  <DatePicker
-                                    className="form-search-date form-control-sm form-control"
-                                    selected={endDate}
-                                    onChange={date => setEndDate(date)}
-                                    selectsEnd
-                                    startDate={startDate}
-                                    endDate={endDate}
-                                    dateFormat="dd/MM/yyyy"
-                                    minDate={moment().toDate()}
-                                    maxDate={addDays(startDate, 20)}
-                                    placeholderText="Silahkan Isi Tanggal Sampai"
-                                    wrapperClassName="col-12 col-lg-12 col-xl-12"
-                                  />
-                                </div>
+                                <Select
+                                  ref={ref => (refSelect = ref)}
+                                  className="basic-single"
+                                  classNamePrefix="select"
+                                  placeholder="Semua"
+                                  // defaultValue={options[0].value}
+                                  isDisabled={false}
+                                  isLoading={false}
+                                  isClearable={false}
+                                  isRtl={false}
+                                  isSearchable={true}
+                                  name="color"
+                                  onChange={e => {
+                                    setStatus(e?.value);
+                                  }}
+                                  options={options}
+                                />
                               </div>
                             </div>
                             <div className="modal-footer">
                               <div className="d-flex justify-content-end align-items-center">
                                 <button
-                                  className="btn btn-white-ghost-rounded-full"
+                                  className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5"
                                   type="button"
+                                  data-dismiss="modal"
+                                  aria-label="Close"
                                   onClick={() => resetValueSort()}
                                 >
                                   Reset
                                 </button>
                                 <button
-                                  className="btn btn-primary-rounded-full ml-4"
+                                  className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
                                   type="button"
-                                  data-dismiss="modal"
-                                  onClick={() => handleSearchDate()}
+                                  onClick={handleFilter}
                                 >
                                   Terapkan
                                 </button>
@@ -271,7 +348,7 @@ export default function NamaPelatihanID({ token }) {
                         certificate.data.list_certificate.length === 0) ? (
                         <tr>
                           <td className="text-center" colSpan={6}>
-                            Data Masih Kosong
+                            Data Tidak Ditemukan
                           </td>
                         </tr>
                       ) : (
@@ -282,11 +359,11 @@ export default function NamaPelatihanID({ token }) {
                               <tr key={certificate.id}>
                                 <td className="align-middle text-center">
                                   {limit === null ? (
-                                    <span className="badge badge-secondary text-muted">
+                                    <span className="badge">
                                       {i + 1 * (page * 5) - (5 - 1)}
                                     </span>
                                   ) : (
-                                    <span className="badge badge-secondary text-muted">
+                                    <span className="badge">
                                       {i + 1 * (page * limit) - (limit - 1)}
                                     </span>
                                   )}
@@ -299,7 +376,7 @@ export default function NamaPelatihanID({ token }) {
                                   {certificate.theme.name}
                                 </td>
                                 <td className="align-middle">
-                                  {certificate.nama_sertifikat}
+                                  {certificate.name}
                                 </td>
                                 <td className="align-middle">
                                   {certificate.certificate_type}
@@ -325,7 +402,8 @@ export default function NamaPelatihanID({ token }) {
                                   {certificate.status.name == "draft" ? (
                                     <>
                                       <Link
-                                        href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.id}`}
+                                        // href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.id}`}
+                                        href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.name}?id=${certificate.id}&theme_id=${certificate.theme.id}&status=view`}
                                         passHref
                                       >
                                         <a
@@ -338,7 +416,7 @@ export default function NamaPelatihanID({ token }) {
                                         </a>
                                       </Link>
                                       <Link
-                                        href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.id}/edit`}
+                                        href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.name}?id=${certificate.id}&theme_id=${certificate.theme.id}&status=edit`}
                                         passHref
                                       >
                                         <a
@@ -355,7 +433,7 @@ export default function NamaPelatihanID({ token }) {
                                     <>
                                       <Link
                                         passHref
-                                        href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.id}/published`}
+                                        href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.name}?status=${certificate.status.name}&id=${certificate.id}&theme_id=${certificate.theme.id}`}
                                       >
                                         <a
                                           className="btn btn-link-action bg-blue-secondary text-white mr-2"
@@ -368,7 +446,9 @@ export default function NamaPelatihanID({ token }) {
                                       </Link>
                                       <Link
                                         passHref
-                                        href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.id}/list-peserta`}
+                                        // href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.id}/list-peserta`}
+                                        href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/sertifikat-peserta?id=${certificate.id}`}
+                                        // nama pelatihan id pake certificate.id
                                       >
                                         <a
                                           className="btn btn-link-action bg-blue-secondary text-white mr-2"
@@ -382,7 +462,8 @@ export default function NamaPelatihanID({ token }) {
                                     </>
                                   ) : (
                                     <Link
-                                      href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.id}/add`}
+                                      href={`/sertifikat/kelola-sertifikat/certificate-builder?id=${certificate.id}&theme_id=${certificate.theme.id}&theme_name=${certificate.theme.name}`}
+                                      // ${query.tema_pelatihan_id}
                                       passHref
                                     >
                                       <a
@@ -410,25 +491,24 @@ export default function NamaPelatihanID({ token }) {
               </div>
               {/* START Pagination */}
               <div className="row">
-                {certificate &&
-                  certificate.data.perPage < certificate.data.total && (
-                    <div className="table-pagination">
-                      <Pagination
-                        activePage={page}
-                        itemsCountPerPage={certificate.perPage}
-                        totalItemsCount={certificate.total}
-                        pageRangeDisplayed={3}
-                        onChange={handlePagination}
-                        nextPageText={">"}
-                        prevPageText={"<"}
-                        firstPageText={"<<"}
-                        lastPageText={">>"}
-                        itemClass="page-item"
-                        linkClass="page-link"
-                      />
-                    </div>
-                  )}
-                {certificate ? (
+                {certificate && (
+                  <div className="table-pagination">
+                    <Pagination
+                      activePage={+page}
+                      itemsCountPerPage={certificate.data.perPage}
+                      totalItemsCount={certificate.data.total}
+                      pageRangeDisplayed={3}
+                      onChange={handlePagination}
+                      nextPageText={">"}
+                      prevPageText={"<"}
+                      firstPageText={"<<"}
+                      lastPageText={">>"}
+                      itemClass="page-item"
+                      linkClass="page-link"
+                    />
+                  </div>
+                )}
+                {certificate && certificate.data.total ? (
                   <div className="table-total ml-auto">
                     <div className="row mt-3">
                       <div className="col-4 mr-0 p-0 my-auto">
@@ -444,30 +524,10 @@ export default function NamaPelatihanID({ token }) {
                           onChange={e => handleLimit(e.target.value)}
                           onBlur={e => handleLimit(e.target.value)}
                         >
-                          <option
-                            value="5"
-                            selected={limit == "5" ? true : false}
-                          >
-                            5
-                          </option>
-                          <option
-                            value="10"
-                            selected={limit == "10" ? true : false}
-                          >
-                            10
-                          </option>
-                          <option
-                            value="15"
-                            selected={limit == "15" ? true : false}
-                          >
-                            15
-                          </option>
-                          <option
-                            value="20"
-                            selected={limit == "20" ? true : false}
-                          >
-                            20
-                          </option>
+                          <option value="5">5</option>
+                          <option value="10">10</option>
+                          <option value="15">15</option>
+                          <option value="20">20</option>
                         </select>
                       </div>
                       <div className="col-8 my-auto">
@@ -475,7 +535,7 @@ export default function NamaPelatihanID({ token }) {
                           className="align-middle my-auto"
                           style={{ color: "#B5B5C3" }}
                         >
-                          Total Data {certificate.data.list_certificate.length}
+                          Total Data {certificate.data.total}
                         </p>
                       </div>
                     </div>

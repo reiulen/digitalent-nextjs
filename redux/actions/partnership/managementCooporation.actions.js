@@ -114,7 +114,7 @@ export async function getCooperationNonaktif(params) {
 let debouncedFetchMC = debounce(getMCooporation, 0);
 let debouncedFetchEmail = debounce(getEmail, 0);
 
-export const fetchAllMK = (token) => {
+export const fetchAllMK = token => {
   console.log("token", token);
   return async (dispatch, getState) => {
     dispatch({ type: MANAGEMENT_COOPORATION_REQUEST });
@@ -166,10 +166,9 @@ export const fetchAllMK = (token) => {
           },
         }
       );
-      let dataSortirAll = await await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/index`,
+      let dataSortirAll = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/index?page=1&limit=1000`,
         {
-          paramss,
           headers: {
             authorization: `Bearer ${token}`,
           },
@@ -179,16 +178,16 @@ export const fetchAllMK = (token) => {
       let totalData = dataSortirAll.data.data.list_cooperations.length;
       // get total data status aktif
       let resultDataActive = dataSortirAll.data.data.list_cooperations.filter(
-        (items) => items.status.name === "aktif"
+        items => items.status.name === "aktif"
       );
       // get total data status tidak aktif
       let resultDataNonActive =
         dataSortirAll.data.data.list_cooperations.filter(
-          (items) => items.status.name === "tidak aktif"
+          items => items.status.name === "tidak aktif"
         );
       // get total data status !-- aktif && tidak aktif
       let resultDataAnother = dataSortirAll.data.data.list_cooperations.filter(
-        (items) =>
+        items =>
           items.status.name !== "tidak aktif" &&
           items.status.name !== "aktif" &&
           items.status.name !== "dibatalkan"
@@ -210,7 +209,7 @@ export const fetchAllMK = (token) => {
   };
 };
 
-export const fetchListSelectMitra = (token) => {
+export const fetchListSelectMitra = token => {
   return async (dispatch, getState) => {
     dispatch({ type: LIST_MITRA_REQUEST });
     try {
@@ -223,10 +222,10 @@ export const fetchListSelectMitra = (token) => {
         }
       );
 
-      let dataNewLembaga = data.data.map((items) => {
+      let dataNewLembaga = data.data.map(items => {
         return { ...items, label: items.name, value: items.id };
       });
-      dataNewLembaga.splice(0, 0, { label: "Semua", value: "" });
+      // dataNewLembaga.splice(0, 0, { label: "Semua", value: "" });
 
       dispatch(successFetchListSelectMitra(dataNewLembaga));
     } catch (error) {
@@ -234,7 +233,7 @@ export const fetchListSelectMitra = (token) => {
     }
   };
 };
-export const successFetchListSelectMitra = (data) => {
+export const successFetchListSelectMitra = data => {
   return {
     type: LIST_MITRA_SUCCESS,
     data,
@@ -245,7 +244,7 @@ export const errorFetchListSelectMitra = () => {
     type: LIST_MITRA_FAIL,
   };
 };
-export const fetchListSelectCooperation = (token) => {
+export const fetchListSelectCooperation = token => {
   return async (dispatch, getState) => {
     dispatch({ type: LIST_COOPERATION_REQUEST });
     try {
@@ -257,7 +256,7 @@ export const fetchListSelectCooperation = (token) => {
           },
         }
       );
-      let dataNewKerjasama = data.data.map((items) => {
+      let dataNewKerjasama = data.data.map(items => {
         return {
           ...items,
           label: items.cooperation_categories,
@@ -275,14 +274,14 @@ export const errorFetchListSelectCooperation = () => {
     type: LIST_COOPERATION_FAIL,
   };
 };
-export const successFetchListSelectCooperation = (data) => {
+export const successFetchListSelectCooperation = data => {
   return {
     type: LIST_COOPERATION_SUCCESS,
     data,
   };
 };
 //
-export const fetchListCooperationSelect = (token) => {
+export const fetchListCooperationSelect = token => {
   return async (dispatch, getState) => {
     // dispatch({ type: GET_COOPERTAION_ACTIVE_SELECT });
     try {
@@ -301,7 +300,7 @@ export const fetchListCooperationSelect = (token) => {
     }
   };
 };
-export const successFetchListCooperationSelect = (data) => {
+export const successFetchListCooperationSelect = data => {
   return {
     type: SUCCESS_COOPERTAION_ACTIVE_SELECT,
     data,
@@ -332,13 +331,13 @@ export const fetchListCooperationSelectById = (token, id) => {
     }
   };
 };
-export const successFetchListCooperationSelectByID = (data) => {
+export const successFetchListCooperationSelectByID = data => {
   return {
     type: SUCCESS_COOPERTAION_ACTIVE_SELECT_BY_ID,
     data,
   };
 };
-export const changeCooperationSelectByID = (value) => {
+export const changeCooperationSelectByID = value => {
   return {
     type: CHANGE_COOPERTAION_ACTIVE_SELECT_BY_ID,
     value,
@@ -351,7 +350,7 @@ export const errorFetchListCooperationSelectByID = () => {
 };
 //
 
-export const fetchListSelectStatus = (token) => {
+export const fetchListSelectStatus = token => {
   return async (dispatch, getState) => {
     dispatch({ type: LIST_STATUS_REQUEST });
     try {
@@ -363,7 +362,7 @@ export const fetchListSelectStatus = (token) => {
           },
         }
       );
-      let dataNewStateus = data.data.map((items) => {
+      let dataNewStateus = data.data.map(items => {
         return {
           ...items,
           label: items.name,
@@ -376,7 +375,7 @@ export const fetchListSelectStatus = (token) => {
     }
   };
 };
-export const successFetchListSelectStatus = (data) => {
+export const successFetchListSelectStatus = data => {
   return {
     type: LIST_STATUS_SUCCESS,
     data,
@@ -410,51 +409,51 @@ export const errorfetchAllMK = () => {
   };
 };
 
-export const searchCooporation = (text) => {
+export const searchCooporation = text => {
   return {
     type: SEARCH_M_COORPORATION,
     text,
   };
 };
 
-export const setPage = (page) => {
+export const setPage = page => {
   return {
     type: SET_PAGE_M,
     page,
   };
 };
-export const changeValueMitra = (value) => {
+export const changeValueMitra = value => {
   return {
     type: SET_VALUE_MITRA_M,
     value,
   };
 };
-export const changeValueStatus = (value) => {
+export const changeValueStatus = value => {
   return {
     type: SET_VALUE_STATUS_M,
     value,
   };
 };
-export const changeValueStatusCard = (value) => {
+export const changeValueStatusCard = value => {
   return {
     type: SET_VALUE_CARD_M,
     value,
   };
 };
-export const changeValueKerjaSama = (value) => {
+export const changeValueKerjaSama = value => {
   return {
     type: SET_VALUE_KERJA_SAMA_M,
     value,
   };
 };
-export const limitCooporation = (value) => {
+export const limitCooporation = value => {
   return {
     type: LIMIT_CONFIGURATION_M,
     limitValue: value,
   };
 };
 
-export const fetchDataEmail = (token) => {
+export const fetchDataEmail = token => {
   return async (dispatch, getState) => {
     try {
       let institution_nameState = getState().allMK.institution_name;
@@ -481,7 +480,7 @@ export const fetchDataEmail = (token) => {
   };
 };
 
-export const successGetEmail = (email) => {
+export const successGetEmail = email => {
   return {
     type: SUCCESS_GET_EMAIL,
     email,
@@ -492,7 +491,7 @@ export const failGetEmail = () => {
     type: FAIL_GET_EMAIL,
   };
 };
-export const setNameLembaga = (value) => {
+export const setNameLembaga = value => {
   return {
     type: SET_NAME_LEMBAGA,
     value,
@@ -539,7 +538,7 @@ export const getSingleCooperation = (token, id) => {
     }
   };
 };
-export const successGetSingleCooperation = (data) => {
+export const successGetSingleCooperation = data => {
   return {
     type: SUCCESS_GET_SINGLE_COOPERATION_M,
     data,
@@ -585,7 +584,7 @@ export const cancelChangeNamaLembaga = () => {
     type: CANCEL_CHANGE_EMAIL,
   };
 };
-export const exportFileCSV = (token) => {
+export const exportFileCSV = token => {
   return async (dispatch, getState) => {
     let statusState = getState().allMK.status || "";
     let categories_cooporationState =
@@ -607,19 +606,24 @@ export const exportFileCSV = (token) => {
           },
         }
       );
+      var url =
+        urlExport.config.url +
+        `?partner=${partnerState}&categories_cooporation=${categories_cooporationState}&status=${statusState}`;
 
-      // window.open(
-      //   urlExport.config.url +
-      //     `?partner=${partnerState}&categories_cooporation=${categories_cooporationState}&status=${statusState}`,
-      //   {
-      //     paramssz,
-      //     headers: {
-      //       authorization: `Bearer ${token}`,
-      //     },
-      //   }
-      // );
-
-      // console.log("data", data);
+      fetch(url, {
+        paramssz,
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      })
+        .then(response => response.blob())
+        .then(blob => {
+          var _url = window.URL.createObjectURL(blob);
+          window.open(_url, "_blank").focus();
+        })
+        .catch(err => {
+          console.log(err);
+        });
     } catch (error) {
       console.log("object", error);
     }
@@ -628,7 +632,7 @@ export const exportFileCSV = (token) => {
 
 export const rejectCooperation = (token, id) => {
   console.log("token mm", token);
-  return async (dispatch) => {
+  return async dispatch => {
     try {
       let { data } = await axios.put(
         `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/reject/${id}`,

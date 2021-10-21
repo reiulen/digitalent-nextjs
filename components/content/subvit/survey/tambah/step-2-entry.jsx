@@ -16,6 +16,7 @@ import LoadingPage from "../../../../LoadingPage";
 import ObjectiveComponent from "./step-2/objective-component";
 import MultipleChoiceComponent from "./step-2/multiple-choice-component";
 import TriggeredQuestionComponent from "./step-2/triggered-question-component";
+import styles from "../../trivia/edit/step.module.css";
 
 const StepTwo = ({ token }) => {
   const dispatch = useDispatch();
@@ -30,6 +31,7 @@ const StepTwo = ({ token }) => {
   const [methodAdd, setMethodAdd] = useState("objective");
   const [question, setSoal] = useState("");
   const [question_image, setSoalImage] = useState("");
+  const [imageName, setImageName] = useState("");
   const [answer, setSoalList] = useState([
     { key: "A", option: "", image: "" },
     { key: "B", option: "", image: "" },
@@ -104,6 +106,7 @@ const StepTwo = ({ token }) => {
   }, [dispatch, success, typeSave, id, metode, router]);
 
   const handleSoalImage = (e) => {
+    setImageName(e.target.files[0].name);
     if (e.target.name === "question_image") {
       const reader = new FileReader();
       reader.onload = () => {
@@ -521,7 +524,7 @@ const StepTwo = ({ token }) => {
                       accept="image/png, image/gif, image/jpeg , image/jpg"
                     />
                     <label className="custom-file-label" htmlFor="customFile">
-                      Choose file
+                      {imageName ? imageName : "Choose File"}
                     </label>
                   </div>
                   <span className="text-muted">
@@ -598,7 +601,7 @@ const StepTwo = ({ token }) => {
                 <div className="col-sm-2"></div>
                 <div className="col-sm-10 text-right">
                   <button
-                    className="btn btn-light-ghost-rounded-full mr-2"
+                    className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
                     type="submit"
                   >
                     Simpan & Lanjut

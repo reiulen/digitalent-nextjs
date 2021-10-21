@@ -240,7 +240,7 @@ const ListSurvey = ({ token }) => {
               <Link href="/subvit/survey/tambah">
                 <a className="text-white btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2 mr-2">
                   <i className="ri-add-fill"></i>
-                  Tambah Soal
+                  Tambah Survey
                 </a>
               </Link>
             </div>
@@ -301,12 +301,12 @@ const ListSurvey = ({ token }) => {
                       ) : (
                         survey &&
                         survey.list_survey.map((row, i) => {
+                          const paginate = i + 1 * (page * limit);
+                          const dividers = limit - 1;
                           return (
                             <tr key={row.id}>
                               <td className="align-middle text-center">
-                                <span className="">
-                                  {i + 1 * (page * 5 || limit) - 4}
-                                </span>
+                                <span className="">{paginate - dividers}</span>
                               </td>
                               <td className="align-middle">
                                 <b>
@@ -401,8 +401,8 @@ const ListSurvey = ({ token }) => {
                   <div className="table-pagination">
                     <Pagination
                       activePage={page}
-                      itemsCountPerPage={survey.perPage}
-                      totalItemsCount={survey.total}
+                      itemsCountPerPage={survey && survey.perPage}
+                      totalItemsCount={survey && survey.total}
                       pageRangeDisplayed={3}
                       onChange={handlePagination}
                       nextPageText={">"}
@@ -422,7 +422,7 @@ const ListSurvey = ({ token }) => {
                           className="form-control"
                           id="exampleFormControlSelect2"
                           style={{
-                            width: "65px",
+                            width: "68px",
                             background: "#F3F6F9",
                             borderColor: "#F3F6F9",
                             color: "#9E9E9E",
@@ -441,7 +441,7 @@ const ListSurvey = ({ token }) => {
                           className="align-middle mt-3"
                           style={{ color: "#B5B5C3" }}
                         >
-                          Total Data {survey.total}
+                          Total Data {survey && survey.total}
                         </p>
                       </div>
                     </div>

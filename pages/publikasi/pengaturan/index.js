@@ -14,30 +14,17 @@ const PengaturanPublikasi = dynamic(
   { loading: () => <LoadingPage />, ssr: false }
 );
 
-<<<<<<< HEAD
-export default function PengaturanPublikasiPage() {
+export default function PengaturanPublikasiPage(props) {
+  const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
         {/* <Layout title='Pengaturan - Publikasi'> */}
-        <PengaturanPublikasi />
+        <PengaturanPublikasi token={session.token} />
         {/* </Layout> */}
       </div>
     </>
   );
-=======
-export default function PengaturanPublikasiPage(props) {
-    const session = props.session.user.user.data;
-    return (
-        <>
-            <div className="d-flex flex-column flex-root">
-                {/* <Layout title='Pengaturan - Publikasi'> */}
-                    <PengaturanPublikasi token={session.token}/>
-                {/* </Layout> */}
-            </div>
-        </>
-    )
->>>>>>> 279f614e085680387383629b291de8e592fdb1c4
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
@@ -47,7 +34,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (!session) {
         return {
           redirect: {
-            destination: "http://dts-dev.majapahit.id/",
+            destination: "http://dts-dev.majapahit.id/login/admin",
             permanent: false,
           },
         };

@@ -42,6 +42,7 @@ const EditImagetron = ({ token }) => {
         error: allError,
         kategori,
     } = useSelector((state) => state.allKategori);
+    const { setting } = useSelector(state => state.allSettingPublikasi)
 
     useEffect(() => {
 
@@ -54,7 +55,7 @@ const EditImagetron = ({ token }) => {
             });
         }
         // window.location.reload()
-        
+
         // if (error) {
         //     dispatch(clearErrors())
         // }
@@ -81,23 +82,28 @@ const EditImagetron = ({ token }) => {
     const [gambarName, setGambarName] = useState(imagetron.gambar)
     const [url_link, setUrlRedirect] = useState(imagetron.url_link)
     const [publish, setPublish] = useState(imagetron.publish)
-    const [users_id, setUserId] = useState(3)
+    const [users_id, setUserId] = useState(87)
     const [_method, setMethod] = useState("put");
     const [publishDate, setPublishDate] = useState(imagetron.tanggal_publish ? new Date(imagetron.tanggal_publish) : null);
     const [disablePublishDate, setDisablePublishDate] = useState(imagetron.publish === 0 ? true : false)
 
     const onChangeGambar = (e) => {
         if (e.target.name === 'gambar') {
-            const reader = new FileReader()
-            reader.onload = () => {
-                if (reader.readyState === 2) {
-                    setGambar(reader.result)
-                    setGambarPreview(reader.result)
+            if (e.target.files[0].size > parseInt(setting[0].max_size) + '000000') {
+                e.target.value = null;
+                Swal.fire("Oops !", "Data Image Melebihi Ketentuan", "error");
+            } else {
+                const reader = new FileReader()
+                reader.onload = () => {
+                    if (reader.readyState === 2) {
+                        setGambar(reader.result)
+                        setGambarPreview(reader.result)
+                    }
                 }
+                reader.readAsDataURL(e.target.files[0])
+                setGambarName(e.target.files[0].name)
+                // reader.URL.revokeObjectURL(e.target.files[0])
             }
-            reader.readAsDataURL(e.target.files[0])
-            setGambarName(e.target.files[0].name)
-            // reader.URL.revokeObjectURL(e.target.files[0])
         }
     }
     // console.log("IMAGE PREVIEW : ",gambarPreview)
@@ -235,7 +241,7 @@ const EditImagetron = ({ token }) => {
                         .then((result) => {
                             if (result.isConfirmed) {
 
-                                dispatch(updateImagetron(data,token));
+                                dispatch(updateImagetron(data, token));
                                 // console.log(data)
                             }
                         });
@@ -265,7 +271,7 @@ const EditImagetron = ({ token }) => {
                         .then((result) => {
                             if (result.isConfirmed) {
 
-                                dispatch(updateImagetron(data,token));
+                                dispatch(updateImagetron(data, token));
                                 // console.log(data)
                             }
                         });
@@ -306,12 +312,12 @@ const EditImagetron = ({ token }) => {
 
     return (
         <PageWrapper>
-            {
+            {/* {
                 console.log(imagetron)
             }
             {
-                console.log(kategori)
-            }
+                console.log(setting)
+            } */}
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
                     <div className="alert-icon"><i className="flaticon-warning"></i></div>
@@ -339,7 +345,7 @@ const EditImagetron = ({ token }) => {
             <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
                 <div className="card card-custom card-stretch gutter-b">
                     <div className="card-header">
-                        <h3 className="card-title font-weight-bolder text-dark">Update Imagetron</h3>
+                        <h3 className="col-sm-4 card-title font-weight-bolder text-dark">Ubah Imagetron</h3>
                     </div>
                     <div className="card-body">
                         <form onSubmit={onSubmit}>
@@ -366,7 +372,7 @@ const EditImagetron = ({ token }) => {
                                             -- Kategori --
                                         </option>
                                         {!kategori || (kategori && kategori.length === 0) ? (
-                                            <option value="">Data kosong</option>
+                                            <option value="">Data Tidak Ditemukan</option>
                                         ) : (
                                             kategori &&
                                             kategori.kategori &&
@@ -399,14 +405,14 @@ const EditImagetron = ({ token }) => {
                                     {simpleValidator.current.message(
                                         "judul",
                                         judul,
-                                        "required||min:5|max:50",
+                                        "required||min:5|max:200",
                                         { className: "text-danger" }
                                     )}
                                 </div>
                             </div>
 
                             <div className="form-group">
-                                <label className='col-sm-2 col-form-label font-weight-bolder'>Link URL</label>
+                                <label className='col-sm-4 col-form-label font-weight-bolder'>Link URL</label>
                                 <div className="col-sm-12">
                                     <div className="input-group">
                                         {/* <div className="input-group-prepend">
@@ -427,7 +433,7 @@ const EditImagetron = ({ token }) => {
                             <div className="form-group">
                                 <label
                                     htmlFor="staticEmail"
-                                    className="col-sm-2 col-form-label font-weight-bolder"
+                                    className="col-sm-4 col-form-label font-weight-bolder"
                                 >
                                     Upload Thumbnail
                                 </label>
@@ -486,7 +492,7 @@ const EditImagetron = ({ token }) => {
                                     }
                                 </div>
 
-                                <div className="mt-3 col-sm-3 text-muted">
+                                <div className="mt-3 col-sm-6 col-md-6 col-lg-7 col-xl-3 text-muted">
                                     <p>
                                         Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar
                                     </p>

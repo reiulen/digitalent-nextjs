@@ -2,1936 +2,638 @@ import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import Image from "next/image";
+import moment from "moment";
 
-import { 
-    Nav, 
-    Button,
-    Card,
-    // Carousel,
-} from "react-bootstrap";
-import Slider from "react-slick";
+// import Image from "next/image";
+import { useDispatch, useSelector } from "react-redux";
+import IconLogin from "../../../components/assets/icon-dashboard-peserta/Login";
+import { Card, Carousel, Badge, Button } from "react-bootstrap";
 
-import Carousel from "react-multi-carousel";
+// import Slider from "react-slick";
+// import CarouselMulti from "react-multi-carousel";
 
-import ImagetronCarousel from "../../../components/ImagetronCarousel";
-import Footer from "../../../components/templates/footer.component"
+import ImagetronCarousel from "../../components/ImagetronCarousel";
+// import AkademiCarousel from "../../components/AkademiCarousel";
+import BerandaWrapper from "../../../components/wrapper/beranda.wrapper";
+// import DefaultThumbnail from "../../../public/assets/media/default-thumbnail.svg"
 
-import "../../../styles/beranda.module.css"
-import "react-multi-carousel/lib/styles.css";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import "../../../styles/beranda.module.css";
+// import "react-multi-carousel/lib/styles.css";
+// import "slick-carousel/slick/slick.css";
+// import "slick-carousel/slick/slick-theme.css";
 
-const Navigationbar = dynamic(() => import("../../../components/templates/navbar.component"), {
+import { Splide, SplideSlide } from "@splidejs/react-splide";
+import "@splidejs/splide/dist/css/splide.min.css";
+import IconArrow from "../../../components/assets/icon/Arrow2";
+import Cardss from "../../components/beranda/card";
+import StepRegister from "../../components/beranda/step-register";
+import RilisMedia from "../../components/beranda/rilis-media";
+import GaleryUpdate from "../../components/beranda/galery-update";
+import InfoVideo from "../../components/beranda/info-videos";
+import ComeJoin from "../../components/beranda/come-join";
+import Footer from "../../components/beranda/footer";
+
+const Navigationbar = dynamic(
+  () => import("../../../components/templates/navbar.component"),
+  {
     ssr: false,
-  });
+  }
+);
 
 const Beranda = () => {
-
-    const responsive = {
-        desktop: {
-            breakpoint: { max: 3000, min: 1024 },
-            items: 7,
-            slidesToSlide: 1 // optional, default to 1.
-        },
-        tablet: {
-            breakpoint: { max: 1024, min: 464 },
-            items: 2,
-            slidesToSlide: 1 // optional, default to 1.
-        },
-        mobile: {
-            breakpoint: { max: 464, min: 0 },
-            items: 1,
-            slidesToSlide: 1 // optional, default to 1.
-        }
-    };
-
-    const settings = {
-        dots: false,
-        infinite: false,
-        speed: 500,
-        slidesToShow: 3,
-        slidesToScroll: 1,
-        arrows: false,
-        swipeToSlide: true,
-    }
-
-    const settingsMobile = {
-        dots: true,
-        infinite: false,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1
-    }
-
-    const [activeTab, setActiveTab] = useState ("VSGA")
-    const [indexTab, setIndexTab] = useState (0)
-    
-    const handleActive = (tab, index) => {
-        setActiveTab (tab)
-        setIndexTab (index)
-    }
-
-    // const CustomRightArrow = ({onClick}) => {
-    //     // const {
-    //     //     onMove,
-    //     //     carouselState: { currentSlide, deviceType }
-    //     //   } = rest;
-
-    //     if (indexTab < 7) {
-    //         return (
-    //             <button className="btn btn-white rounded-circle" onClick={() => setIndexTab (indexTab - 1)}>
-    //                 <i className="ri-arrow-right-line text-primary ml-2 font-weight-bolder"></i>
-    //             </button>
-    //         )
-
-    //     } else {
-    //         return null
-    //     }
-    // }
-
-    // const CustomLeftArrow = ({onClick}) => {
-    //     // const {
-    //     //     onMove,
-    //     //     carouselState: { currentSlide, deviceType }
-    //     //   } = rest;
-
-    //     if (indexTab > 0) {
-    //         return (
-    //             <button className="btn btn-white rounded-circle" onClick={() => setIndexTab (indexTab + 1)}>
-    //                 <i className="ri-arrow-right-line text-primary ml-2 font-weight-bolder"></i>
-    //             </button>
-    //         )
-
-    //     } else {
-    //         return null
-    //     }
-    // }
-
-    return (
-        <div className="bg-white">
-            <Navigationbar />
-
-            <ImagetronCarousel />
-
-            <div className="mx-5">
-                <Carousel
-                    // customLeftArrow = {
-                    //         <button className="btn btn-white rounded-circle" >
-                    //             <i className="ri-arrow-right-line text-primary ml-2 font-weight-bolder"></i>
-                    //         </button> 
-                    //     }
-                    // customRightArrow = {
-                    //         <button className="btn btn-white rounded-circle" >
-                    //             <i className="ri-arrow-right-line text-primary ml-2 font-weight-bolder"></i>
-                    //         </button> 
-                    //     }
-                    arrows
-                    showDots={false}
-                    responsive={responsive}
-                    ssr={true} // means to render carousel on server-side.
-                    infinite={false}
-                    // autoPlay={true}
-                    autoPlaySpeed={3000}
-                    keyBoardControl={true}
-                    // customTransition="all .5"
-                    // transitionDuration={500}
-                    containerClass="carousel-container"
-                    removeArrowOnDeviceType={["tablet", "mobile"]}
-                    // deviceType={this.props.deviceType}
-                    dotListClass="custom-dot-list-style"
-                    draggable={true}
-                    swipeable={true}
-                    slidesToSlide={1}
-                >   
-                    
-                    <Link href="#VSGA">
-                        <Card style={{ width: '15rem', height:"15rem", cursor:"pointer" }} onClick={() => handleActive("VSGA", 0)}>
-                            {
-                                indexTab === 0 ?
-                                    <Card.Body>
-
-                                        <Card.Title>
-                                            <h1 className="font-weight-bolder text-center">
-                                                VSGA
-                                            </h1>
-                                        </Card.Title>
-
-                                        <Card.Text>
-                                            <div className="text-center font-weight-bolder">
-                                                Vocational School Graduate Academy
-                                            </div>
-                                        </Card.Text>
-
-                                    </Card.Body>
-                                :
-                                    <Card.Body>
-
-                                        <Card.Title>
-                                            <h1 className="font-weight-bolder text-muted text-center">
-                                                VSGA
-                                            </h1>
-                                        </Card.Title>
-
-                                        <Card.Text>
-                                            <div className="text-center text-muted font-weight-bolder">
-                                                Vocational School Graduate Academy
-                                            </div>
-                                        </Card.Text>
-
-                                    </Card.Body>
-                            }
-                            
-
-                            {
-                                indexTab === 0 ?
-                                    <div className="bg-primary" style={{height:"10px"}}>
-
-                                    </div>
-                                :
-                                    <div className="bg-gray" style={{height:"10px"}}>
-
-                                    </div>
-                            }
-                            
-                        </Card>
-                    </Link>
-                    
-
-                    
-                    <Link href="#FGA">
-                        <Card style={{ width: '15rem', height:"15rem", cursor:"pointer" }}  onClick={() => handleActive("FGA", 1)}>
-                        {
-                                indexTab === 1 ?
-                                    <Card.Body>
-
-                                        <Card.Title>
-                                            <h1 className="font-weight-bolder text-center">
-                                                FGA
-                                            </h1>
-                                        </Card.Title>
-
-                                        <Card.Text>
-                                            <div className="text-center font-weight-bolder">
-                                                Fresh Graduate Academy
-                                            </div>
-                                        </Card.Text>
-
-                                    </Card.Body>
-                                :
-                                    <Card.Body>
-
-                                        <Card.Title>
-                                            <h1 className="font-weight-bolder text-muted text-center">
-                                                FGA
-                                            </h1>
-                                        </Card.Title>
-
-                                        <Card.Text>
-                                            <div className="text-center text-muted font-weight-bolder">
-                                                Fresh Graduate Academy
-                                            </div>
-                                        </Card.Text>
-
-                                    </Card.Body>
-                            }
-
-                            {
-                                indexTab === 1 ?
-                                    <div className="bg-primary" style={{height:"10px"}}>
-
-                                    </div>
-                                :
-                                    <div className="bg-gray" style={{height:"10px"}}>
-
-                                    </div>
-                            }
-                        </Card>
-                    </Link>
-
-                    
-                    <Link href="#PRO">
-                        <Card style={{ width: '15rem', height:"15rem", cursor:"pointer" }} onClick={() => handleActive("PRO", 2)}>
-                            {
-                                indexTab === 2 ?
-                                    <Card.Body>
-
-                                        <Card.Title>
-                                            <h1 className="font-weight-bolder text-center">
-                                                PRO
-                                            </h1>
-                                        </Card.Title>
-
-                                        <Card.Text>
-                                            <div className="text-center font-weight-bolder">
-                                                Professional Academy
-                                            </div>
-                                        </Card.Text>
-
-                                    </Card.Body>
-                                :
-                                    <Card.Body>
-
-                                        <Card.Title>
-                                            <h1 className="font-weight-bolder text-muted text-center">
-                                                PRO
-                                            </h1>
-                                        </Card.Title>
-
-                                        <Card.Text>
-                                            <div className="text-center text-muted font-weight-bolder">
-                                                Professional Academy
-                                            </div>
-                                        </Card.Text>
-
-                                    </Card.Body>
-                            }
-
-                            {
-                                indexTab === 2 ?
-                                    <div className="bg-primary" style={{height:"10px"}}>
-
-                                    </div>
-                                :
-                                    <div className="bg-gray" style={{height:"10px"}}>
-
-                                    </div>
-                            }
-                        </Card>
-                    </Link>
-
-                    
-                    <Link href="#TA">
-                        <Card style={{ width: '15rem', height:"15rem", cursor:"pointer" }}  onClick={() => handleActive("TA",3)}>
-                            {
-                                indexTab === 3 ?
-                                    <Card.Body>
-
-                                        <Card.Title>
-                                            <h1 className="font-weight-bolder text-center">
-                                                TA
-                                            </h1>
-                                        </Card.Title>
-
-                                        <Card.Text>
-                                            <div className="text-center font-weight-bolder">
-                                                Thematic Academy
-                                            </div>
-                                        </Card.Text>
-
-                                    </Card.Body>
-                                :
-                                    <Card.Body>
-
-                                        <Card.Title>
-                                            <h1 className="font-weight-bolder text-muted text-center">
-                                                TA
-                                            </h1>
-                                        </Card.Title>
-
-                                        <Card.Text>
-                                            <div className="text-center text-muted font-weight-bolder">
-                                                Thematic Academy
-                                            </div>
-                                        </Card.Text>
-
-                                    </Card.Body>
-                            }
-
-                            {
-                                indexTab === 3 ?
-                                    <div className="bg-primary" style={{height:"10px"}}>
-
-                                    </div>
-                                :
-                                    <div className="bg-gray" style={{height:"10px"}}>
-
-                                    </div>
-                            }
-                        </Card>
-                    </Link>
-                    
-                    <Link href="#GTA">
-                        <Card style={{ width: '15rem', height:"15rem", cursor:"pointer" }} onClick={() => handleActive("GTA",4)}>
-                            {
-                                indexTab === 4 ?
-                                    <Card.Body>
-
-                                        <Card.Title>
-                                            <h1 className="font-weight-bolder text-center">
-                                                GTA
-                                            </h1>
-                                        </Card.Title>
-
-                                        <Card.Text>
-                                            <div className="text-center font-weight-bolder">
-                                                Government Transformation Academy
-                                            </div>
-                                        </Card.Text>
-
-                                    </Card.Body>
-                                :
-                                    <Card.Body>
-
-                                        <Card.Title>
-                                            <h1 className="font-weight-bolder text-muted text-center">
-                                                GTA
-                                            </h1>
-                                        </Card.Title>
-
-                                        <Card.Text>
-                                            <div className="text-center text-muted font-weight-bolder">
-                                                Government Transformation Academy
-                                            </div>
-                                        </Card.Text>
-
-                                    </Card.Body>
-                            }
-
-                            {
-                                indexTab === 4 ?
-                                    <div className="bg-primary" style={{height:"10px"}}>
-
-                                    </div>
-                                :
-                                    <div className="bg-gray" style={{height:"10px"}}>
-
-                                    </div>
-                            }
-                        </Card>
-                    </Link>
-
-                    <Link href="#DEA">
-                        <Card style={{ width: '15rem', height:"15rem", cursor:"pointer" }} onClick={() => handleActive("DEA", 5)}>
-                            {
-                                indexTab === 5 ?
-                                    <Card.Body>
-
-                                        <Card.Title>
-                                            <h1 className="font-weight-bolder text-center">
-                                                DEA
-                                            </h1>
-                                        </Card.Title>
-
-                                        <Card.Text>
-                                            <div className="text-center font-weight-bolder">
-                                                Digital Entrepeneurship Academy
-                                            </div>
-                                        </Card.Text>
-
-                                    </Card.Body>
-                                :
-                                    <Card.Body>
-
-                                        <Card.Title>
-                                            <h1 className="font-weight-bolder text-muted text-center">
-                                                DEA
-                                            </h1>
-                                        </Card.Title>
-
-                                        <Card.Text>
-                                            <div className="text-center text-muted font-weight-bolder">
-                                                Digital Entrepeneurship Academy
-                                            </div>
-                                        </Card.Text>
-
-                                    </Card.Body>
-                            }
-
-                            {
-                                indexTab === 5 ?
-                                    <div className="bg-primary" style={{height:"10px"}}>
-
-                                    </div>
-                                :
-                                    <div className="bg-gray" style={{height:"10px"}}>
-
-                                    </div>
-                            }
-                        </Card>
-                    </Link>
-
-                    <Link href="#TSA">
-                        <Card style={{ width: '15rem', height:"15rem", cursor:"pointer" }} onClick={() => handleActive("TSA", 6)}>
-                            {   
-                                indexTab === 6 ?
-                                    <Card.Body>
-
-                                        <Card.Title>
-                                            <h1 className="font-weight-bolder text-center">
-                                                TSA
-                                            </h1>
-                                        </Card.Title>
-
-                                        <Card.Text>
-                                            <div className="text-center font-weight-bolder">
-                                                Talent Scouting Academy
-                                            </div>
-                                        </Card.Text>
-
-                                    </Card.Body>
-                                :
-                                    <Card.Body>
-
-                                        <Card.Title>
-                                            <h1 className="font-weight-bolder text-muted text-center">
-                                                TSA
-                                            </h1>
-                                        </Card.Title>
-
-                                        <Card.Text>
-                                            <div className="text-center text-muted font-weight-bolder">
-                                                Talent Scouting Academy
-                                            </div>
-                                        </Card.Text>
-
-                                    </Card.Body>
-                            }
-
-                            {
-                                indexTab === 6 ?
-                                    <div className="bg-primary" style={{height:"10px"}}>
-
-                                    </div>
-                                :
-                                    <div className="bg-gray" style={{height:"10px"}}>
-
-                                    </div>
-                            }
-                        </Card>
-                    </Link>
-
-                    <Link href="#TSA">
-                        <Card style={{ width: '15rem', height:"15rem", cursor:"pointer" }} onClick={() => handleActive("TSA", 6)}>
-                            {   
-                                indexTab === 6 ?
-                                    <Card.Body>
-
-                                        <Card.Title>
-                                            <h1 className="font-weight-bolder text-center">
-                                                TSA
-                                            </h1>
-                                        </Card.Title>
-
-                                        <Card.Text>
-                                            <div className="text-center font-weight-bolder">
-                                                Talent Scouting Academy
-                                            </div>
-                                        </Card.Text>
-
-                                    </Card.Body>
-                                :
-                                    <Card.Body>
-
-                                        <Card.Title>
-                                            <h1 className="font-weight-bolder text-muted text-center">
-                                                TSA
-                                            </h1>
-                                        </Card.Title>
-
-                                        <Card.Text>
-                                            <div className="text-center text-muted font-weight-bolder">
-                                                Talent Scouting Academy
-                                            </div>
-                                        </Card.Text>
-
-                                    </Card.Body>
-                            }
-
-                            {
-                                indexTab === 6 ?
-                                    <div className="bg-primary" style={{height:"10px"}}>
-
-                                    </div>
-                                :
-                                    <div className="bg-gray" style={{height:"10px"}}>
-
-                                    </div>
-                            }
-                        </Card>
-                    </Link>
-
-                    <Link href="#TSA">
-                        <Card style={{ width: '15rem', height:"15rem", cursor:"pointer" }} onClick={() => handleActive("TSA", 6)}>
-                            {   
-                                indexTab === 6 ?
-                                    <Card.Body>
-
-                                        <Card.Title>
-                                            <h1 className="font-weight-bolder text-center">
-                                                TSA
-                                            </h1>
-                                        </Card.Title>
-
-                                        <Card.Text>
-                                            <div className="text-center font-weight-bolder">
-                                                Talent Scouting Academy
-                                            </div>
-                                        </Card.Text>
-
-                                    </Card.Body>
-                                :
-                                    <Card.Body>
-
-                                        <Card.Title>
-                                            <h1 className="font-weight-bolder text-muted text-center">
-                                                TSA
-                                            </h1>
-                                        </Card.Title>
-
-                                        <Card.Text>
-                                            <div className="text-center text-muted font-weight-bolder">
-                                                Talent Scouting Academy
-                                            </div>
-                                        </Card.Text>
-
-                                    </Card.Body>
-                            }
-
-                            {
-                                indexTab === 6 ?
-                                    <div className="bg-primary" style={{height:"10px"}}>
-
-                                    </div>
-                                :
-                                    <div className="bg-gray" style={{height:"10px"}}>
-
-                                    </div>
-                            }
-                        </Card>
-                    </Link>
-                    
-                </Carousel>
-            </div>
-
-
-            {/* Carousel Training  */}
-            <div className="my-5">
-                <div className="d-flex justify-content-between">
-                    <h1 className="text-left font-weight-bolder ml-5">
-                        Multi Media Designer
-                    </h1>
-                    <div>
-                        <Link href="#home">
-                            <a className="text-primary d-flex alignment-content-center font-weight-bolder">
-                                <div className="pt-1" style={{color:"#215480"}}> 
-                                    Lihat Semua
-                                </div>
-                                <i className="ri-arrow-right-s-line " style={{color:"#215480"}}></i>
-                            </a>
-                        </Link>
-                    </div>
-                </div>
-                
-                <Slider {...settings}>
-                    <Link href="#">
-                        <Card style={{ width: '35rem', height:"35rem", cursor:"pointer"}}>
-                            <div className='p-3'>
-                                <Card.Img variant="top" src={`/assets/media/image_28.svg`} />
-                            </div>
-                            
-
-                            <div className="ml-3 p-1" style={{marginTop:"-35px"}}> 
-                                <Image 
-                                    src={`/assets/media/Frame_6523.svg`}
-                                    width={50}
-                                    height={50}
-                                />
-                            </div>
-                            
-                            <Card.Body>
-                                <div className="text-right text-muted mb-2">
-                                    05 Juli 2021 - 31 Juli 2021
-                                </div>
-
-                                <Card.Title>
-                                    Intermediate Multimedia Designer
-                                </Card.Title>
-
-                                <div className="text-muted mb-3">
-                                    Gojek
-                                </div>
-
-                                <div className="row">
-                                    <div className="col-3 text-left d-flex flex-row">
-                                        <button className="btn btn-light rounded">
-                                            <div className="text-success">
-                                                Open
-                                            </div>
-                                        </button>
-                                    </div>
-                                    
-                                    <div className="col-6 text-right d-flex flex-row">
-                                        <button className="btn btn-light rounded ml-5 d-flex flex-row">
-                                            <i className="ri-parent-line mr-2 text-info"></i>
-                                            <span className="text-gray">
-                                                1000
-                                            </span>
-                                        </button>
-
-                                        <button className="btn btn-light rounded ml-1 d-flex flex-row">
-                                            <i className="ri-heart-line mr-2 text-info"></i>
-                                            <span className="text-gray">
-                                                Wishlist
-                                            </span>
-                                        </button>
-
-                                        <button className="btn btn-light rounded ml-1 d-flex flex-row">
-                                            <i className="ri-share-fill mr-2 text-info"></i>
-                                            <span className="text-gray">
-                                                Share
-                                            </span>
-                                        </button>
-                                    </div>
-                                    
-
-                                </div>
-
-                            </Card.Body>
-
-                        </Card>
-                    </Link>
-
-                    <Link href="#">
-                        <Card style={{ width: '35rem', height:"35rem", cursor:"pointer"}}>
-                            <div className='p-3'>
-                                <Card.Img variant="top" src={`/assets/media/image_28.svg`} />
-                            </div>
-                            
-
-                            <div className="ml-3 p-1" style={{marginTop:"-35px"}}> 
-                                <Image 
-                                    src={`/assets/media/Frame_6523.svg`}
-                                    width={50}
-                                    height={50}
-                                />
-                            </div>
-                            
-                            <Card.Body>
-                                <div className="text-right text-muted mb-2">
-                                    05 Juli 2021 - 31 Juli 2021
-                                </div>
-
-                                <Card.Title>
-                                    Intermediate Multimedia Designer
-                                </Card.Title>
-
-                                <div className="text-muted mb-3">
-                                    Gojek
-                                </div>
-
-                                <div className="row">
-                                    <div className="col-3 text-left d-flex flex-row">
-                                        <button className="btn btn-light rounded">
-                                            <div className="text-success">
-                                                Open
-                                            </div>
-                                        </button>
-                                    </div>
-                                    
-                                    <div className="col-6 text-right d-flex flex-row">
-                                        <button className="btn btn-light rounded ml-5 d-flex flex-row">
-                                            <i className="ri-parent-line mr-2 text-info"></i>
-                                            <span className="text-gray">
-                                                1000
-                                            </span>
-                                        </button>
-
-                                        <button className="btn btn-light rounded ml-1 d-flex flex-row">
-                                            <i className="ri-heart-line mr-2 text-info"></i>
-                                            <span className="text-gray">
-                                                Wishlist
-                                            </span>
-                                        </button>
-
-                                        <button className="btn btn-light rounded ml-1 d-flex flex-row">
-                                            <i className="ri-share-fill mr-2 text-info"></i>
-                                            <span className="text-gray">
-                                                Share
-                                            </span>
-                                        </button>
-                                    </div>
-                                    
-
-                                </div>
-
-                            </Card.Body>
-
-                        </Card>
-                    </Link>
-
-                    <Link href="#">
-                        <Card style={{ width: '35rem', height:"35rem", cursor:"pointer"}}>
-                            <div className='p-3'>
-                                <Card.Img variant="top" src={`/assets/media/image_28.svg`} />
-                            </div>
-                            
-
-                            <div className="ml-3 p-1" style={{marginTop:"-35px"}}> 
-                                <Image 
-                                    src={`/assets/media/Frame_6523.svg`}
-                                    width={50}
-                                    height={50}
-                                />
-                            </div>
-                            
-                            <Card.Body>
-                                <div className="text-right text-muted mb-2">
-                                    05 Juli 2021 - 31 Juli 2021
-                                </div>
-
-                                <Card.Title>
-                                    Intermediate Multimedia Designer
-                                </Card.Title>
-
-                                <div className="text-muted mb-3">
-                                    Gojek
-                                </div>
-
-                                <div className="row">
-                                    <div className="col-3 text-left d-flex flex-row">
-                                        <button className="btn btn-light rounded">
-                                            <div className="text-success">
-                                                Open
-                                            </div>
-                                        </button>
-                                    </div>
-                                    
-                                    <div className="col-6 text-right d-flex flex-row">
-                                        <button className="btn btn-light rounded ml-5 d-flex flex-row">
-                                            <i className="ri-parent-line mr-2 text-info"></i>
-                                            <span className="text-gray">
-                                                1000
-                                            </span>
-                                        </button>
-
-                                        <button className="btn btn-light rounded ml-1 d-flex flex-row">
-                                            <i className="ri-heart-line mr-2 text-info"></i>
-                                            <span className="text-gray">
-                                                Wishlist
-                                            </span>
-                                        </button>
-
-                                        <button className="btn btn-light rounded ml-1 d-flex flex-row">
-                                            <i className="ri-share-fill mr-2 text-info"></i>
-                                            <span className="text-gray">
-                                                Share
-                                            </span>
-                                        </button>
-                                    </div>
-                                    
-
-                                </div>
-
-                            </Card.Body>
-
-                        </Card>
-                    </Link>
-
-                    <Link href="#">
-                        <Card style={{ width: '35rem', height:"35rem", cursor:"pointer"}}>
-                            <div className='p-3'>
-                                <Card.Img variant="top" src={`/assets/media/image_28.svg`} />
-                            </div>
-                            
-
-                            <div className="ml-3 p-1" style={{marginTop:"-35px"}}> 
-                                <Image 
-                                    src={`/assets/media/Frame_6523.svg`}
-                                    width={50}
-                                    height={50}
-                                />
-                            </div>
-                            
-                            <Card.Body>
-                                <div className="text-right text-muted mb-2">
-                                    05 Juli 2021 - 31 Juli 2021
-                                </div>
-
-                                <Card.Title>
-                                    Intermediate Multimedia Designer
-                                </Card.Title>
-
-                                <div className="text-muted mb-3">
-                                    Gojek
-                                </div>
-
-                                <div className="row">
-                                    <div className="col-3 text-left d-flex flex-row">
-                                        <button className="btn btn-light rounded">
-                                            <div className="text-success">
-                                                Open
-                                            </div>
-                                        </button>
-                                    </div>
-                                    
-                                    <div className="col-6 text-right d-flex flex-row">
-                                        <button className="btn btn-light rounded ml-5 d-flex flex-row">
-                                            <i className="ri-parent-line mr-2 text-info"></i>
-                                            <span className="text-gray">
-                                                1000
-                                            </span>
-                                        </button>
-
-                                        <button className="btn btn-light rounded ml-1 d-flex flex-row">
-                                            <i className="ri-heart-line mr-2 text-info"></i>
-                                            <span className="text-gray">
-                                                Wishlist
-                                            </span>
-                                        </button>
-
-                                        <button className="btn btn-light rounded ml-1 d-flex flex-row">
-                                            <i className="ri-share-fill mr-2 text-info"></i>
-                                            <span className="text-gray">
-                                                Share
-                                            </span>
-                                        </button>
-                                    </div>
-                                    
-
-                                </div>
-
-                            </Card.Body>
-
-                        </Card>
-                    </Link>
-
-                    <Link href="#">
-                        <Card style={{ width: '35rem', height:"35rem", cursor:"pointer"}}>
-                            <div className='p-3'>
-                                <Card.Img variant="top" src={`/assets/media/image_28.svg`} />
-                            </div>
-                            
-
-                            <div className="ml-3 p-1" style={{marginTop:"-35px"}}> 
-                                <Image 
-                                    src={`/assets/media/Frame_6523.svg`}
-                                    width={50}
-                                    height={50}
-                                />
-                            </div>
-                            
-                            <Card.Body>
-                                <div className="text-right text-muted mb-2">
-                                    05 Juli 2021 - 31 Juli 2021
-                                </div>
-
-                                <Card.Title>
-                                    Intermediate Multimedia Designer
-                                </Card.Title>
-
-                                <div className="text-muted mb-3">
-                                    Gojek
-                                </div>
-
-                                <div className="row">
-                                    <div className="col-3 text-left d-flex flex-row">
-                                        <button className="btn btn-light rounded">
-                                            <div className="text-success">
-                                                Open
-                                            </div>
-                                        </button>
-                                    </div>
-                                    
-                                    <div className="col-6 text-right d-flex flex-row">
-                                        <button className="btn btn-light rounded ml-5 d-flex flex-row">
-                                            <i className="ri-parent-line mr-2 text-info"></i>
-                                            <span className="text-gray">
-                                                1000
-                                            </span>
-                                        </button>
-
-                                        <button className="btn btn-light rounded ml-1 d-flex flex-row">
-                                            <i className="ri-heart-line mr-2 text-info"></i>
-                                            <span className="text-gray">
-                                                Wishlist
-                                            </span>
-                                        </button>
-
-                                        <button className="btn btn-light rounded ml-1 d-flex flex-row">
-                                            <i className="ri-share-fill mr-2 text-info"></i>
-                                            <span className="text-gray">
-                                                Share
-                                            </span>
-                                        </button>
-                                    </div>
-                                    
-
-                                </div>
-
-                            </Card.Body>
-
-                        </Card>
-                    </Link>
-                    
-
-                </Slider>
-                {/* <Carousel
-                    arrows
-                    showDots={false}
-                    responsive={responsive}
-                    ssr={true} // means to render carousel on server-side.
-                    infinite={false}
-                    // autoPlay={true}
-                    autoPlaySpeed={3000}
-                    keyBoardControl={true}
-                    // customTransition="all .5"
-                    // transitionDuration={500}
-                    // containerClass="carousel-container"
-                    removeArrowOnDeviceType={["tablet", "mobile"]}
-                    // deviceType={this.props.deviceType}
-                    dotListClass="custom-dot-list-style"
-                    draggable={true}
-                    swipeable={true}
-                    slidesToSlide={1}
-                    className="my-3 ml-5"
-                    // itemClass="carousel-item-padding-40-px"
-                    // itemClass="p-5"
-                >
-                    <Link href="#">
-                        <Card style={{ width: '35rem', height:"35rem", cursor:"pointer"}}>
-                            <div className='p-3'>
-                                <Card.Img variant="top" src={`/assets/media/image_28.svg`} />
-                            </div>
-                            
-
-                            <div className="ml-3 p-1" style={{marginTop:"-35px"}}> 
-                                <Image 
-                                    src={`/assets/media/Frame_6523.svg`}
-                                    width={50}
-                                    height={50}
-                                />
-                            </div>
-                            
-                            <Card.Body>
-                                <div className="text-right text-muted mb-2">
-                                    05 Juli 2021 - 31 Juli 2021
-                                </div>
-
-                                <Card.Title>
-                                    Intermediate Multimedia Designer
-                                </Card.Title>
-
-                                <div className="text-muted mb-3">
-                                    Gojek
-                                </div>
-
-                                <div className="row">
-                                    <div className="col-3 text-left d-flex flex-row">
-                                        <button className="btn btn-light rounded">
-                                            <div className="text-success">
-                                                Open
-                                            </div>
-                                        </button>
-                                    </div>
-                                    
-                                    <div className="col-6 text-right d-flex flex-row">
-                                        <button className="btn btn-light rounded ml-5 d-flex flex-row">
-                                            <i className="ri-parent-line mr-2 text-info"></i>
-                                            <span className="text-gray">
-                                                1000
-                                            </span>
-                                        </button>
-
-                                        <button className="btn btn-light rounded ml-1 d-flex flex-row">
-                                            <i className="ri-heart-line mr-2 text-info"></i>
-                                            <span className="text-gray">
-                                                Wishlist
-                                            </span>
-                                        </button>
-
-                                        <button className="btn btn-light rounded ml-1 d-flex flex-row">
-                                            <i className="ri-share-fill mr-2 text-info"></i>
-                                            <span className="text-gray">
-                                                Share
-                                            </span>
-                                        </button>
-                                    </div>
-                                    
-
-                                </div>
-
-                            </Card.Body>
-
-                        </Card>
-                    </Link>
-
-                    
-
-                </Carousel> */}
-
-            </div>
-
-            <div className="my-5">
-                <div className="d-flex justify-content-between">
-                    <h1 className="text-left font-weight-bolder ml-5">
-                        Multi Media Designer
-                    </h1>
-                    <div>
-                        <Link href="#home">
-                            <a className="text-primary d-flex alignment-content-center font-weight-bolder">
-                                <div className="pt-1" style={{color:"#215480"}}> 
-                                    Lihat Semua
-                                </div>
-                                <i className="ri-arrow-right-s-line " style={{color:"#215480"}}></i>
-                            </a>
-                        </Link>
-                    </div>
-                </div>
-                
-                <Slider {...settings}>
-                    <Link href="#">
-                        <Card style={{ width: '35rem', height:"35rem", cursor:"pointer"}}>
-                            <div className='p-3'>
-                                <Card.Img variant="top" src={`/assets/media/image_28.svg`} />
-                            </div>
-                            
-
-                            <div className="ml-3 p-1" style={{marginTop:"-35px"}}> 
-                                <Image 
-                                    src={`/assets/media/Frame_6523.svg`}
-                                    width={50}
-                                    height={50}
-                                />
-                            </div>
-                            
-                            <Card.Body>
-                                <div className="text-right text-muted mb-2">
-                                    05 Juli 2021 - 31 Juli 2021
-                                </div>
-
-                                <Card.Title>
-                                    Intermediate Multimedia Designer
-                                </Card.Title>
-
-                                <div className="text-muted mb-3">
-                                    Gojek
-                                </div>
-
-                                <div className="row">
-                                    <div className="col-3 text-left d-flex flex-row">
-                                        <button className="btn btn-light rounded">
-                                            <div className="text-success">
-                                                Open
-                                            </div>
-                                        </button>
-                                    </div>
-                                    
-                                    <div className="col-6 text-right d-flex flex-row">
-                                        <button className="btn btn-light rounded ml-5 d-flex flex-row">
-                                            <i className="ri-parent-line mr-2 text-info"></i>
-                                            <span className="text-gray">
-                                                1000
-                                            </span>
-                                        </button>
-
-                                        <button className="btn btn-light rounded ml-1 d-flex flex-row">
-                                            <i className="ri-heart-line mr-2 text-info"></i>
-                                            <span className="text-gray">
-                                                Wishlist
-                                            </span>
-                                        </button>
-
-                                        <button className="btn btn-light rounded ml-1 d-flex flex-row">
-                                            <i className="ri-share-fill mr-2 text-info"></i>
-                                            <span className="text-gray">
-                                                Share
-                                            </span>
-                                        </button>
-                                    </div>
-                                    
-
-                                </div>
-
-                            </Card.Body>
-
-                        </Card>
-                    </Link>
-
-                    <Link href="#">
-                        <Card style={{ width: '35rem', height:"35rem", cursor:"pointer"}}>
-                            <div className='p-3'>
-                                <Card.Img variant="top" src={`/assets/media/image_28.svg`} />
-                            </div>
-                            
-
-                            <div className="ml-3 p-1" style={{marginTop:"-35px"}}> 
-                                <Image 
-                                    src={`/assets/media/Frame_6523.svg`}
-                                    width={50}
-                                    height={50}
-                                />
-                            </div>
-                            
-                            <Card.Body>
-                                <div className="text-right text-muted mb-2">
-                                    05 Juli 2021 - 31 Juli 2021
-                                </div>
-
-                                <Card.Title>
-                                    Intermediate Multimedia Designer
-                                </Card.Title>
-
-                                <div className="text-muted mb-3">
-                                    Gojek
-                                </div>
-
-                                <div className="row">
-                                    <div className="col-3 text-left d-flex flex-row">
-                                        <button className="btn btn-light rounded">
-                                            <div className="text-success">
-                                                Open
-                                            </div>
-                                        </button>
-                                    </div>
-                                    
-                                    <div className="col-6 text-right d-flex flex-row">
-                                        <button className="btn btn-light rounded ml-5 d-flex flex-row">
-                                            <i className="ri-parent-line mr-2 text-info"></i>
-                                            <span className="text-gray">
-                                                1000
-                                            </span>
-                                        </button>
-
-                                        <button className="btn btn-light rounded ml-1 d-flex flex-row">
-                                            <i className="ri-heart-line mr-2 text-info"></i>
-                                            <span className="text-gray">
-                                                Wishlist
-                                            </span>
-                                        </button>
-
-                                        <button className="btn btn-light rounded ml-1 d-flex flex-row">
-                                            <i className="ri-share-fill mr-2 text-info"></i>
-                                            <span className="text-gray">
-                                                Share
-                                            </span>
-                                        </button>
-                                    </div>
-                                    
-
-                                </div>
-
-                            </Card.Body>
-
-                        </Card>
-                    </Link>
-
-                    <Link href="#">
-                        <Card style={{ width: '35rem', height:"35rem", cursor:"pointer"}}>
-                            <div className='p-3'>
-                                <Card.Img variant="top" src={`/assets/media/image_28.svg`} />
-                            </div>
-                            
-
-                            <div className="ml-3 p-1" style={{marginTop:"-35px"}}> 
-                                <Image 
-                                    src={`/assets/media/Frame_6523.svg`}
-                                    width={50}
-                                    height={50}
-                                />
-                            </div>
-                            
-                            <Card.Body>
-                                <div className="text-right text-muted mb-2">
-                                    05 Juli 2021 - 31 Juli 2021
-                                </div>
-
-                                <Card.Title>
-                                    Intermediate Multimedia Designer
-                                </Card.Title>
-
-                                <div className="text-muted mb-3">
-                                    Gojek
-                                </div>
-
-                                <div className="row">
-                                    <div className="col-3 text-left d-flex flex-row">
-                                        <button className="btn btn-light rounded">
-                                            <div className="text-success">
-                                                Open
-                                            </div>
-                                        </button>
-                                    </div>
-                                    
-                                    <div className="col-6 text-right d-flex flex-row">
-                                        <button className="btn btn-light rounded ml-5 d-flex flex-row">
-                                            <i className="ri-parent-line mr-2 text-info"></i>
-                                            <span className="text-gray">
-                                                1000
-                                            </span>
-                                        </button>
-
-                                        <button className="btn btn-light rounded ml-1 d-flex flex-row">
-                                            <i className="ri-heart-line mr-2 text-info"></i>
-                                            <span className="text-gray">
-                                                Wishlist
-                                            </span>
-                                        </button>
-
-                                        <button className="btn btn-light rounded ml-1 d-flex flex-row">
-                                            <i className="ri-share-fill mr-2 text-info"></i>
-                                            <span className="text-gray">
-                                                Share
-                                            </span>
-                                        </button>
-                                    </div>
-                                    
-
-                                </div>
-
-                            </Card.Body>
-
-                        </Card>
-                    </Link>
-
-                    <Link href="#">
-                        <Card style={{ width: '35rem', height:"35rem", cursor:"pointer"}}>
-                            <div className='p-3'>
-                                <Card.Img variant="top" src={`/assets/media/image_28.svg`} />
-                            </div>
-                            
-
-                            <div className="ml-3 p-1" style={{marginTop:"-35px"}}> 
-                                <Image 
-                                    src={`/assets/media/Frame_6523.svg`}
-                                    width={50}
-                                    height={50}
-                                />
-                            </div>
-                            
-                            <Card.Body>
-                                <div className="text-right text-muted mb-2">
-                                    05 Juli 2021 - 31 Juli 2021
-                                </div>
-
-                                <Card.Title>
-                                    Intermediate Multimedia Designer
-                                </Card.Title>
-
-                                <div className="text-muted mb-3">
-                                    Gojek
-                                </div>
-
-                                <div className="row">
-                                    <div className="col-3 text-left d-flex flex-row">
-                                        <button className="btn btn-light rounded">
-                                            <div className="text-success">
-                                                Open
-                                            </div>
-                                        </button>
-                                    </div>
-                                    
-                                    <div className="col-6 text-right d-flex flex-row">
-                                        <button className="btn btn-light rounded ml-5 d-flex flex-row">
-                                            <i className="ri-parent-line mr-2 text-info"></i>
-                                            <span className="text-gray">
-                                                1000
-                                            </span>
-                                        </button>
-
-                                        <button className="btn btn-light rounded ml-1 d-flex flex-row">
-                                            <i className="ri-heart-line mr-2 text-info"></i>
-                                            <span className="text-gray">
-                                                Wishlist
-                                            </span>
-                                        </button>
-
-                                        <button className="btn btn-light rounded ml-1 d-flex flex-row">
-                                            <i className="ri-share-fill mr-2 text-info"></i>
-                                            <span className="text-gray">
-                                                Share
-                                            </span>
-                                        </button>
-                                    </div>
-                                    
-
-                                </div>
-
-                            </Card.Body>
-
-                        </Card>
-                    </Link>
-
-                    <Link href="#">
-                        <Card style={{ width: '35rem', height:"35rem", cursor:"pointer"}}>
-                            <div className='p-3'>
-                                <Card.Img variant="top" src={`/assets/media/image_28.svg`} />
-                            </div>
-                            
-
-                            <div className="ml-3 p-1" style={{marginTop:"-35px"}}> 
-                                <Image 
-                                    src={`/assets/media/Frame_6523.svg`}
-                                    width={50}
-                                    height={50}
-                                />
-                            </div>
-                            
-                            <Card.Body>
-                                <div className="text-right text-muted mb-2">
-                                    05 Juli 2021 - 31 Juli 2021
-                                </div>
-
-                                <Card.Title>
-                                    Intermediate Multimedia Designer
-                                </Card.Title>
-
-                                <div className="text-muted mb-3">
-                                    Gojek
-                                </div>
-
-                                <div className="row">
-                                    <div className="col-3 text-left d-flex flex-row">
-                                        <button className="btn btn-light rounded">
-                                            <div className="text-success">
-                                                Open
-                                            </div>
-                                        </button>
-                                    </div>
-                                    
-                                    <div className="col-6 text-right d-flex flex-row">
-                                        <button className="btn btn-light rounded ml-5 d-flex flex-row">
-                                            <i className="ri-parent-line mr-2 text-info"></i>
-                                            <span className="text-gray">
-                                                1000
-                                            </span>
-                                        </button>
-
-                                        <button className="btn btn-light rounded ml-1 d-flex flex-row">
-                                            <i className="ri-heart-line mr-2 text-info"></i>
-                                            <span className="text-gray">
-                                                Wishlist
-                                            </span>
-                                        </button>
-
-                                        <button className="btn btn-light rounded ml-1 d-flex flex-row">
-                                            <i className="ri-share-fill mr-2 text-info"></i>
-                                            <span className="text-gray">
-                                                Share
-                                            </span>
-                                        </button>
-                                    </div>
-                                    
-
-                                </div>
-
-                            </Card.Body>
-
-                        </Card>
-                    </Link>
-                    
-
-                </Slider>
-            </div>
-
-            <div className="my-5">
-                <div className="d-flex justify-content-between">
-                    <h1 className="text-left font-weight-bolder ml-5">
-                        Multi Media Designer
-                    </h1>
-                    <div>
-                        <Link href="#home">
-                            <a className="text-primary d-flex alignment-content-center font-weight-bolder">
-                                <div className="pt-1" style={{color:"#215480"}}> 
-                                    Lihat Semua
-                                </div>
-                                <i className="ri-arrow-right-s-line " style={{color:"#215480"}}></i>
-                            </a>
-                        </Link>
-                    </div>
-                </div>
-                
-                <Slider {...settings}>
-                    <Link href="#">
-                        <Card style={{ width: '35rem', height:"35rem", cursor:"pointer"}}>
-                            <div className='p-3'>
-                                <Card.Img variant="top" src={`/assets/media/image_28.svg`} />
-                            </div>
-                            
-
-                            <div className="ml-3 p-1" style={{marginTop:"-35px"}}> 
-                                <Image 
-                                    src={`/assets/media/Frame_6523.svg`}
-                                    width={50}
-                                    height={50}
-                                />
-                            </div>
-                            
-                            <Card.Body>
-                                <div className="text-right text-muted mb-2">
-                                    05 Juli 2021 - 31 Juli 2021
-                                </div>
-
-                                <Card.Title>
-                                    Intermediate Multimedia Designer
-                                </Card.Title>
-
-                                <div className="text-muted mb-3">
-                                    Gojek
-                                </div>
-
-                                <div className="row">
-                                    <div className="col-3 text-left d-flex flex-row">
-                                        <button className="btn btn-light rounded">
-                                            <div className="text-success">
-                                                Open
-                                            </div>
-                                        </button>
-                                    </div>
-                                    
-                                    <div className="col-6 text-right d-flex flex-row">
-                                        <button className="btn btn-light rounded ml-5 d-flex flex-row">
-                                            <i className="ri-parent-line mr-2 text-info"></i>
-                                            <span className="text-gray">
-                                                1000
-                                            </span>
-                                        </button>
-
-                                        <button className="btn btn-light rounded ml-1 d-flex flex-row">
-                                            <i className="ri-heart-line mr-2 text-info"></i>
-                                            <span className="text-gray">
-                                                Wishlist
-                                            </span>
-                                        </button>
-
-                                        <button className="btn btn-light rounded ml-1 d-flex flex-row">
-                                            <i className="ri-share-fill mr-2 text-info"></i>
-                                            <span className="text-gray">
-                                                Share
-                                            </span>
-                                        </button>
-                                    </div>
-                                    
-
-                                </div>
-
-                            </Card.Body>
-
-                        </Card>
-                    </Link>
-
-                    <Link href="#">
-                        <Card style={{ width: '35rem', height:"35rem", cursor:"pointer"}}>
-                            <div className='p-3'>
-                                <Card.Img variant="top" src={`/assets/media/image_28.svg`} />
-                            </div>
-                            
-
-                            <div className="ml-3 p-1" style={{marginTop:"-35px"}}> 
-                                <Image 
-                                    src={`/assets/media/Frame_6523.svg`}
-                                    width={50}
-                                    height={50}
-                                />
-                            </div>
-                            
-                            <Card.Body>
-                                <div className="text-right text-muted mb-2">
-                                    05 Juli 2021 - 31 Juli 2021
-                                </div>
-
-                                <Card.Title>
-                                    Intermediate Multimedia Designer
-                                </Card.Title>
-
-                                <div className="text-muted mb-3">
-                                    Gojek
-                                </div>
-
-                                <div className="row">
-                                    <div className="col-3 text-left d-flex flex-row">
-                                        <button className="btn btn-light rounded">
-                                            <div className="text-success">
-                                                Open
-                                            </div>
-                                        </button>
-                                    </div>
-                                    
-                                    <div className="col-6 text-right d-flex flex-row">
-                                        <button className="btn btn-light rounded ml-5 d-flex flex-row">
-                                            <i className="ri-parent-line mr-2 text-info"></i>
-                                            <span className="text-gray">
-                                                1000
-                                            </span>
-                                        </button>
-
-                                        <button className="btn btn-light rounded ml-1 d-flex flex-row">
-                                            <i className="ri-heart-line mr-2 text-info"></i>
-                                            <span className="text-gray">
-                                                Wishlist
-                                            </span>
-                                        </button>
-
-                                        <button className="btn btn-light rounded ml-1 d-flex flex-row">
-                                            <i className="ri-share-fill mr-2 text-info"></i>
-                                            <span className="text-gray">
-                                                Share
-                                            </span>
-                                        </button>
-                                    </div>
-                                    
-
-                                </div>
-
-                            </Card.Body>
-
-                        </Card>
-                    </Link>
-
-                    <Link href="#">
-                        <Card style={{ width: '35rem', height:"35rem", cursor:"pointer"}}>
-                            <div className='p-3'>
-                                <Card.Img variant="top" src={`/assets/media/image_28.svg`} />
-                            </div>
-                            
-
-                            <div className="ml-3 p-1" style={{marginTop:"-35px"}}> 
-                                <Image 
-                                    src={`/assets/media/Frame_6523.svg`}
-                                    width={50}
-                                    height={50}
-                                />
-                            </div>
-                            
-                            <Card.Body>
-                                <div className="text-right text-muted mb-2">
-                                    05 Juli 2021 - 31 Juli 2021
-                                </div>
-
-                                <Card.Title>
-                                    Intermediate Multimedia Designer
-                                </Card.Title>
-
-                                <div className="text-muted mb-3">
-                                    Gojek
-                                </div>
-
-                                <div className="row">
-                                    <div className="col-3 text-left d-flex flex-row">
-                                        <button className="btn btn-light rounded">
-                                            <div className="text-success">
-                                                Open
-                                            </div>
-                                        </button>
-                                    </div>
-                                    
-                                    <div className="col-6 text-right d-flex flex-row">
-                                        <button className="btn btn-light rounded ml-5 d-flex flex-row">
-                                            <i className="ri-parent-line mr-2 text-info"></i>
-                                            <span className="text-gray">
-                                                1000
-                                            </span>
-                                        </button>
-
-                                        <button className="btn btn-light rounded ml-1 d-flex flex-row">
-                                            <i className="ri-heart-line mr-2 text-info"></i>
-                                            <span className="text-gray">
-                                                Wishlist
-                                            </span>
-                                        </button>
-
-                                        <button className="btn btn-light rounded ml-1 d-flex flex-row">
-                                            <i className="ri-share-fill mr-2 text-info"></i>
-                                            <span className="text-gray">
-                                                Share
-                                            </span>
-                                        </button>
-                                    </div>
-                                    
-
-                                </div>
-
-                            </Card.Body>
-
-                        </Card>
-                    </Link>
-
-                    <Link href="#">
-                        <Card style={{ width: '35rem', height:"35rem", cursor:"pointer"}}>
-                            <div className='p-3'>
-                                <Card.Img variant="top" src={`/assets/media/image_28.svg`} />
-                            </div>
-                            
-
-                            <div className="ml-3 p-1" style={{marginTop:"-35px"}}> 
-                                <Image 
-                                    src={`/assets/media/Frame_6523.svg`}
-                                    width={50}
-                                    height={50}
-                                />
-                            </div>
-                            
-                            <Card.Body>
-                                <div className="text-right text-muted mb-2">
-                                    05 Juli 2021 - 31 Juli 2021
-                                </div>
-
-                                <Card.Title>
-                                    Intermediate Multimedia Designer
-                                </Card.Title>
-
-                                <div className="text-muted mb-3">
-                                    Gojek
-                                </div>
-
-                                <div className="row">
-                                    <div className="col-3 text-left d-flex flex-row">
-                                        <button className="btn btn-light rounded">
-                                            <div className="text-success">
-                                                Open
-                                            </div>
-                                        </button>
-                                    </div>
-                                    
-                                    <div className="col-6 text-right d-flex flex-row">
-                                        <button className="btn btn-light rounded ml-5 d-flex flex-row">
-                                            <i className="ri-parent-line mr-2 text-info"></i>
-                                            <span className="text-gray">
-                                                1000
-                                            </span>
-                                        </button>
-
-                                        <button className="btn btn-light rounded ml-1 d-flex flex-row">
-                                            <i className="ri-heart-line mr-2 text-info"></i>
-                                            <span className="text-gray">
-                                                Wishlist
-                                            </span>
-                                        </button>
-
-                                        <button className="btn btn-light rounded ml-1 d-flex flex-row">
-                                            <i className="ri-share-fill mr-2 text-info"></i>
-                                            <span className="text-gray">
-                                                Share
-                                            </span>
-                                        </button>
-                                    </div>
-                                    
-
-                                </div>
-
-                            </Card.Body>
-
-                        </Card>
-                    </Link>
-
-                    <Link href="#">
-                        <Card style={{ width: '35rem', height:"35rem", cursor:"pointer"}}>
-                            <div className='p-3'>
-                                <Card.Img variant="top" src={`/assets/media/image_28.svg`} />
-                            </div>
-                            
-
-                            <div className="ml-3 p-1" style={{marginTop:"-35px"}}> 
-                                <Image 
-                                    src={`/assets/media/Frame_6523.svg`}
-                                    width={50}
-                                    height={50}
-                                />
-                            </div>
-                            
-                            <Card.Body>
-                                <div className="text-right text-muted mb-2">
-                                    05 Juli 2021 - 31 Juli 2021
-                                </div>
-
-                                <Card.Title>
-                                    Intermediate Multimedia Designer
-                                </Card.Title>
-
-                                <div className="text-muted mb-3">
-                                    Gojek
-                                </div>
-
-                                <div className="row">
-                                    <div className="col-3 text-left d-flex flex-row">
-                                        <button className="btn btn-light rounded">
-                                            <div className="text-success">
-                                                Open
-                                            </div>
-                                        </button>
-                                    </div>
-                                    
-                                    <div className="col-6 text-right d-flex flex-row">
-                                        <button className="btn btn-light rounded ml-5 d-flex flex-row">
-                                            <i className="ri-parent-line mr-2 text-info"></i>
-                                            <span className="text-gray">
-                                                1000
-                                            </span>
-                                        </button>
-
-                                        <button className="btn btn-light rounded ml-1 d-flex flex-row">
-                                            <i className="ri-heart-line mr-2 text-info"></i>
-                                            <span className="text-gray">
-                                                Wishlist
-                                            </span>
-                                        </button>
-
-                                        <button className="btn btn-light rounded ml-1 d-flex flex-row">
-                                            <i className="ri-share-fill mr-2 text-info"></i>
-                                            <span className="text-gray">
-                                                Share
-                                            </span>
-                                        </button>
-                                    </div>
-                                    
-
-                                </div>
-
-                            </Card.Body>
-
-                        </Card>
-                    </Link>
-                    
-
-                </Slider>
-            </div>
-            
-
-            
-
-            {/* H-Banner 01*/}
-            <Image 
-                src={`/assets/media/Tahapan-Pendaftaran-2.svg`}
-                width={1500}
-                height={580}
-                className="my-5"
-            />
-
-            {/* H-Banner 02*/}
-            <div className="my-5">
-                <div className="d-flex justify-content-between">
-                    <h1 className="text-left font-weight-bolder ml-5">
-                        Rilis Media dan Informasi
-                    </h1>
-                    <div>
-                        <Link href="#home">
-                            <a className="text-primary d-flex alignment-content-center font-weight-bolder">
-                                <div className="pt-1" style={{color:"#215480"}}> 
-                                    Lihat Semua
-                                </div>
-                                <i className="ri-arrow-right-s-line " style={{color:"#215480"}}></i>
-                            </a>
-                        </Link>
-                    </div>
-                </div>
-                
-
-                {/* Card */}
-                <div className="d-flex justify-content-around my-5">
-
-                    <Card style={{ width: '30rem' }}>
-                        <Card.Img variant="top" src={`/assets/media/image-29.svg`} />
-
-                        <div className="ml-3" style={{marginTop:"-35px"}}> 
-                            <Image 
-                                src={`/assets/media/VSGA-tag.svg`}
-                                width={50}
-                                height={25}
-                            />
-                        </div>
-                        
-                        <Card.Body>
-                            
-                            <Card.Text>
-                                12 Mei 2021
-                            </Card.Text>
-
-                            <Card.Title>
-                                Pengumuman Kelulusan Peserta Pelatihan Daring Gelombang 1 Program VSGA DTS 2021
-                            </Card.Title>
-
-                        </Card.Body>
-
-                        <Card.Footer className="bg-primary">
-                            <Link href="#home">
-                                <a className="text-white d-flex alignment-content-center justify-content-between">
-                                    <div className="pt-1 font-weight-bolder"> 
-                                        Lihat Detail
-                                    </div>
-                                    <i className="ri-arrow-right-line text-white ml-2 font-weight-bolder"></i>
-                                </a>
-                            </Link>
-                        </Card.Footer>
-                    </Card>
-
-                    <Card style={{ width: '30rem' }}>
-                        <Card.Img variant="top" src={`/assets/media/image-29.svg`} />
-
-                        <div className="ml-3" style={{marginTop:"-35px"}}> 
-                            <Image 
-                                src={`/assets/media/VSGA-tag.svg`}
-                                width={50}
-                                height={25}
-                            />
-                        </div>
-
-                        <Card.Body>
-                            
-                            <Card.Text>
-                                12 Mei 2021
-                            </Card.Text>
-                            <Card.Title>
-                                Pengumuman Kelulusan Peserta Pelatihan Daring Gelombang 1 Program VSGA DTS 2021
-                            </Card.Title>
-                        </Card.Body>
-                        <Card.Footer className="bg-primary">
-                            <Link href="#home">
-                                <a className="text-white d-flex alignment-content-center justify-content-between">
-                                    <div className="pt-1 font-weight-bolder"> 
-                                        Lihat Detail
-                                    </div>
-                                    <i className="ri-arrow-right-line text-white ml-2 font-weight-bolder"></i>
-                                </a>
-                            </Link>
-                        </Card.Footer>
-                    </Card>
-
-                    <Card style={{ width: '30rem' }}>
-                        <Card.Img variant="top" src={`/assets/media/image-29.svg`} />
-
-                        <div className="ml-3" style={{marginTop:"-35px"}}> 
-                            <Image 
-                                src={`/assets/media/VSGA-tag.svg`}
-                                width={50}
-                                height={25}
-                            />
-                        </div>
-
-                        <Card.Body>
-                            
-                            <Card.Text>
-                                12 Mei 2021
-                            </Card.Text>
-                            <Card.Title>
-                                Pengumuman Kelulusan Peserta Pelatihan Daring Gelombang 1 Program VSGA DTS 2021
-                            </Card.Title>
-                        </Card.Body>
-                        <Card.Footer className="bg-primary">
-                            <Link href="#home">
-                                <a className="text-white d-flex alignment-content-center justify-content-between">
-                                    <div className="pt-1 font-weight-bolder"> 
-                                        Lihat Detail
-                                    </div>
-                                    <i className="ri-arrow-right-line text-white ml-2 font-weight-bolder"></i>
-                                </a>
-                            </Link>
-                        </Card.Footer>
-                    </Card>
-
-
-
-                </div>
-            </div>
-
-            <Image 
-                src={`/assets/media/banner-02.svg`}
-                width={1500}
-                height={380}
-            />
-            
-            <Footer />
-
+  const { akademi } = useSelector(state => state.allAkademi);
+
+  const { tema } = useSelector(state => state.temaByAkademi);
+
+  const { pelatihan } = useSelector(state => state.pelatihanByTema);
+
+  const [ activeImagetron, setActiveImagetron ] = useState(1);
+  const [ activeTab, setActiveTab ] = useState(0);
+  // const [indexTab, setIndexTab] = useState(0);
+  const [ show, setShow ] = useState(false);
+  const [ showDetail, setShowDetail ] = useState(false);
+  const [ akademiItem, setAkademiItem ] = useState(null);
+  const [ trainingItem, setTrainingItem ] = useState(null);
+  const [ slideAkademiToShow, setSlideAkademiToShow ] = useState(4);
+  const [ slideTrainingToShow, setSlideTrainingToShow ] = useState(3);
+
+  const renderButton = (status, daftar_mulai, daftar_selesai, quota, id) => {
+    if (status === true) {
+      return (
+        <div>
+          <Link href={`/detail/kategori/${id}`}>
+            <Button className="btn btn-outline-info rounded-pill col-12">
+              Quick View
+            </Button>
+          </Link>
         </div>
-    )
-}
+      );
+    } else {
+      return (
+        <div>
+          <div className="d-flex align-content-center">
+            <i className="ri-time-line mr-2"></i>
+            <span className="mt-1">
+              Registrasi: {moment(daftar_mulai).format("DD MMMM YYYY")} -{" "}
+              {moment(daftar_selesai).format("DD MMMM YYYY")}
+            </span>
+          </div>
+          <div className="d-flex align-content-center">
+            <i className="ri-group-line mr-2"></i>
+            <span className="mt-1">Kuota {quota} Peserta</span>
+          </div>
+        </div>
+      );
+    }
+  };
 
-export default Beranda
+  const handleDragStart = e => e.preventDefault();
+
+  const handleAkademiCarousel = () => {
+    let arr = [];
+
+    if (akademi.length !== 0) {
+      for (let i = 0; i < akademi.length; i += slideAkademiToShow) {
+        arr.push(akademi.slice(i, i + slideAkademiToShow));
+      }
+
+      setAkademiItem(arr);
+    }
+    // console.log (arr)
+  };
+
+  const handleTrainingCarousel = () => {
+    let arr = [];
+
+    if (training.length !== 0) {
+      for (let i = 0; i < training.length; i += slideTrainingToShow) {
+        arr.push(training.slice(i, i + slideTrainingToShow));
+      }
+
+      setTrainingItem(arr);
+    }
+    // console.log (arr)
+  };
+
+  const handleIndexShow = () => {
+    let arrPelatihan = [];
+
+    if (pelatihan?.length !== 0) {
+      for (let i = 0; i < pelatihan?.length; i++) {
+        let obj = {
+          id: pelatihan[i].id,
+          name: pelatihan[i].name,
+          showButton: false,
+          showDetail: false,
+        };
+        arrPelatihan.push(obj);
+      }
+    }
+
+    setShow(arrPelatihan);
+    // console.log (arrPelatihan)
+  };
+
+  const handleMouseEnter = index => {
+    let obj = show;
+
+    for (let i = 0; i < obj.length; i++) {
+      if (i == index) {
+        obj[i].showButton = true;
+      }
+    }
+
+    setShow(obj);
+    // console.log ("mouseOver")
+  };
+
+  const handleMouseLeave = index => {
+    let obj = show;
+
+    for (let i = 0; i < obj.length; i++) {
+      if (i == index) {
+        obj[i].showButton = false;
+      }
+    }
+    setShow(obj);
+    // console.log ("mouseOut")
+  };
+
+  const handleActiveImagetron = index => {
+    setActiveImagetron(index);
+    console.log("imagetron active");
+  };
+
+  const handleActive = index => {
+    setActiveTab(index);
+  };
+
+  const handleQuickView = () => {
+    setShowDetail(true);
+    // console.log ("open")
+  };
+
+  const handleCloseQuickView = () => {
+    setShowDetail(false);
+    // console.log ("close")
+  };
+
+  return (
+    <BerandaWrapper title="Digitalent">
+      {
+        // console.log (akademi)
+      }
+
+      {
+        // console.log (tema)
+      }
+      <div style={{ backgroundColor: "white" }}>
+        <Navigationbar />
+
+        {/* <ImagetronCarousel /> */}
+
+        {/* Carousel 1 */}
+        <div className="container-fluid max-container">
+          <div className="carousel-primarys">
+            <Splide
+              active={() => handleActiveImagetron(1)}
+              options={{
+                type: "loop",
+                gap: "1rem",
+                autoplay: true,
+                padding: "5rem",
+                height: "600px",
+                focus: "center",
+                breakpoints: {
+                  1669: {
+                    height: "500px",
+                  },
+                  1262: {
+                    height: "400px",
+                  },
+                  1062: {
+                    height: "300px",
+                  },
+                  833: {
+                    height: "270px",
+                  },
+                  726: {
+                    height: "230px",
+                  },
+                  629: {
+                    height: "210px",
+                  },
+                  590: {
+                    height: "180px",
+                    padding: "0",
+                    gap: "0",
+                  },
+                  514: {
+                    height: "160px",
+                    padding: "0",
+                    gap: "0",
+                  },
+                  450: {
+                    height: "160px",
+                    padding: "0",
+                    gap: "0",
+                  },
+                  425: {
+                    height: "160px",
+                    padding: "0",
+                    gap: "0",
+                  },
+                  320: {
+                    height: "150px",
+                    padding: "0",
+                    gap: "0",
+                  },
+                },
+              }}
+              hasSliderWrapper
+            >
+              <SplideSlide>
+                <Image
+                  layout="fill"
+                  // width="1000vw"
+                  // height="500vh"
+                  objectFit="fill"
+                  src={`/assets/media/carousel-01.svg`}
+                  alt="First slide"
+                  className="mx-5"
+                />
+              </SplideSlide>
+
+              <SplideSlide>
+                <Image
+                  layout="fill"
+                  objectFit="fill"
+                  // width="1000vw"
+                  // height="500vh"
+                  src={`/assets/media/carousel-01.svg`}
+                  alt="First slide"
+                  className="mx-5"
+                />
+              </SplideSlide>
+
+              <SplideSlide>
+                <Image
+                  layout="fill"
+                  // width="1000vw"
+                  // height="500vh"
+                  objectFit="fill"
+                  src={`/assets/media/carousel-01.svg`}
+                  alt="First slide"
+                  className="mx-5"
+                />
+              </SplideSlide>
+            </Splide>
+          </div>
+        </div>
+
+        {/* Carousel 2 */}
+
+        {akademi ? (
+          <div className="container-fluid max-container">
+            <div className="carousel-secondarys">
+              <Splide
+                options={{
+                  gap: "1rem",
+                  drag: "free",
+                  perPage: 4,
+                  height: "200px",
+                  type: "loop",
+                  breakpoints: {
+                    1262: {
+                      height: "200px",
+                    },
+                    1062: {
+                      height: "200px",
+                      perPage: 3,
+                    },
+                    833: {
+                      height: "150px",
+                      perPage: 2,
+                    },
+                    726: {
+                      height: "150px",
+                      perPage: 2,
+                    },
+                    629: {
+                      height: "130px",
+                      perPage: 1,
+                    },
+                    590: {
+                      height: "180px",
+                      padding: "0",
+                      gap: "0",
+                    },
+                    514: {
+                      height: "160px",
+                      padding: "0",
+                      gap: "0",
+                      perPage: 1,
+                    },
+                    450: {
+                      height: "150px",
+                      padding: "0",
+                      gap: "0",
+                      perPage: 1,
+                    },
+                    425: {
+                      height: "150px",
+                      padding: "0",
+                      gap: "0",
+                      perPage: 1,
+                    },
+                    320: {
+                      height: "100px",
+                      padding: "0",
+                      gap: "0",
+                      perPage: 1,
+                    },
+                  },
+                }}
+                hasSliderWrapper
+                // hasAutoplayControls
+                // hasAutoplayProgress
+              >
+                {akademi.map((el, i) => {
+                  return (
+                    <SplideSlide key={i}>
+                      {activeTab !== i ? (
+                        <div
+                          className="d-flex align-items-center h-100"
+                          onClick={() => handleActive(i)}
+                          style={{ cursor: "pointer" }}
+                        >
+                          <div className="card-1">
+                            <h1 className="mb-0 mr-2 fw-700">{el.slug}</h1>
+                            <div>
+                              <p className="mb-0">{el.name}</p>
+                            </div>
+                          </div>
+                        </div>
+                      ) : (
+                        <div
+                          className="d-flex align-items-center h-100"
+                          onClick={() => handleActive(i)}
+                          style={{ cursor: "pointer" }}
+                        >
+                          <div className="card-1 bg-secondary">
+                            <h1 className="mb-0 mr-2 fw-700 text-white">
+                              {el.slug}
+                            </h1>
+                            <div>
+                              <p className="mb-0 text-white">{el.name}</p>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </SplideSlide>
+                  );
+                })}
+              </Splide>
+            </div>
+          </div>
+        ) : null}
+
+        <div className="container-fluid max-container">
+          {/* Card row */}
+
+          <div className="card-rows">
+            {/*Tema*/}
+            {tema
+              ? tema.map((el, i) => {
+                  return (
+                    <div key={i} className="my-5">
+                      <div className="d-flex align-items-center justify-content-between px-10">
+                        <h1 className="mb-0 fw-600 fz-20">{el.Name}</h1>
+                        <div className="d-flex align-items-center">
+                          <p
+                            className="mb-0 fz-14 fw-600"
+                            style={{ color: "#0063CC" }}
+                          >
+                            Lihat Semua
+                          </p>
+                          <IconArrow
+                            width="8"
+                            height="10"
+                            fill="#0063CC"
+                            className="ml-2"
+                            style={{ transform: "rotate(0)" }}
+                          />
+                        </div>
+                      </div>
+
+                      <div className="container-fluid">
+                        <div className="row mt-10">
+                          <div className="col-12 col-sm-6 col-xl-4">
+                            <Cardss label={<label>PELATIHAN ONLINE</label>} thumbnail={<Image src={`/assets/media/carousel-01.svg`} layout="fill" objectFit="cover"/>}>
+                              <div className="rounded">
+                                {/* Insert mitra page here */}
+                              </div>
+                              <div className="d-flex align-items-center justify-content-between pl-24">
+                                <p
+                                  className="fw-600"
+                                  style={{ color: "#6C6C6C" }}
+                                >
+                                  Gojek
+                                </p>
+                                <button className="btn btn-green-rounded">
+                                  OPEN
+                                </button>
+                              </div>
+                              <h1
+                                className="fz-18 fw-600 mt-4"
+                                style={{ color: "#1F1F1F" }}
+                              >
+                                Intermediate Multimedia Designer
+                              </h1>
+                              <h3
+                                className="mb-0 fz-18 fw-400 mt-4"
+                                style={{ color: "#6C6C6C" }}
+                              >
+                                Vocational School Graduate Academy
+                              </h3>
+                              <hr />
+
+                              <div className="mt-2">
+                                <div className="d-flex align-items-center">
+                                  Registrasi: 05 Juli 2021 - 21 Juli 2021
+                                </div>
+                                <div className="d-flex align-items-center mt-2">
+                                  Kuota: 1000 Peserta
+                                </div>
+                              </div>
+                            </Cardss>
+                          </div>
+                          <div className="col-12 col-sm-6 col-xl-4">
+                            <Cardss />
+                          </div>
+                          <div className="col-12 col-sm-6 col-xl-4">
+                            <Cardss />
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* {
+                        el.pelatihan.map ((element, index) => {
+                          return (
+                            <div className="container-fluid" key={index}>
+                              <div className="row mt-10">
+                                <div className="col-12 col-sm-6 col-xl-4">
+                                  <Cardss label={<label>PELATIHAN ONLINE</label>}>
+                                    <div className="rounded"></div>
+                                    <div className="d-flex align-items-center justify-content-between pl-24">
+                                      <p className="fw-600" style={{ color: "#6C6C6C" }}>
+                                        Gojek
+                                      </p>
+                                      <button className="btn btn-green-rounded">OPEN</button>
+                                    </div>
+                                    <h1
+                                      className="fz-18 fw-600 mt-4"
+                                      style={{ color: "#1F1F1F" }}
+                                    >
+                                      Intermediate Multimedia Designer
+                                    </h1>
+                                    <h3
+                                      className="mb-0 fz-18 fw-400 mt-4"
+                                      style={{ color: "#6C6C6C" }}
+                                    >
+                                      Vocational School Graduate Academy
+                                    </h3>
+                                    <hr />
+
+                                    <div className="mt-2">
+                                      <div className="d-flex align-items-center">
+                                        Registrasi: 05 Juli 2021 - 21 Juli 2021
+                                      </div>
+                                      <div className="d-flex align-items-center mt-2">
+                                        Kuota: 1000 Peserta
+                                      </div>
+                                    </div>
+                                  </Cardss>
+                                </div>
+                              </div>
+                            </div>
+                          )
+                        })
+                      } */}
+                    </div>
+                  );
+                })
+              : null}
+            {/* <div className="d-flex align-items-center justify-content-between px-10">
+              <h1 className="mb-0 fw-600 fz-20">Multimedia Designer</h1>
+              <div className="d-flex align-items-center">
+                <p className="mb-0 fz-14 fw-600" style={{ color: "#0063CC" }}>
+                  Lihat Semua
+                </p>
+                <IconArrow
+                  width="8"
+                  height="10"
+                  fill="#0063CC"
+                  className="ml-2"
+                  style={{ transform: "rotate(0)" }}
+                />
+              </div>
+            </div> */}
+
+            {/* Pelatihan  */}
+            {/* <div className="container-fluid">
+              <div className="row mt-10">
+                <div className="col-12 col-sm-6 col-xl-4">
+                  <Cardss label={<label>PELATIHAN ONLINE</label>}>
+                    <div className="rounded"></div>
+                    <div className="d-flex align-items-center justify-content-between pl-24">
+                      <p className="fw-600" style={{ color: "#6C6C6C" }}>
+                        Gojek
+                      </p>
+                      <button className="btn btn-green-rounded">OPEN</button>
+                    </div>
+                    <h1
+                      className="fz-18 fw-600 mt-4"
+                      style={{ color: "#1F1F1F" }}
+                    >
+                      Intermediate Multimedia Designer
+                    </h1>
+                    <h3
+                      className="mb-0 fz-18 fw-400 mt-4"
+                      style={{ color: "#6C6C6C" }}
+                    >
+                      Vocational School Graduate Academy
+                    </h3>
+                    <hr />
+
+                    <div className="mt-2">
+                      <div className="d-flex align-items-center">
+                        Registrasi: 05 Juli 2021 - 21 Juli 2021
+                      </div>
+                      <div className="d-flex align-items-center mt-2">
+                        Kuota: 1000 Peserta
+                      </div>
+                    </div>
+                  </Cardss>
+                </div>
+                <div className="col-12 col-sm-6 col-xl-4">
+                  <Cardss />
+                </div>
+                <div className="col-12 col-sm-6 col-xl-4">
+                  <Cardss />
+                </div>
+                <div className="col-12 col-sm-6 col-xl-4">
+                  <Cardss />
+                </div>
+                <div className="col-12 col-sm-6 col-xl-4">
+                  <Cardss />
+                </div>
+              </div>
+            </div> */}
+
+            <div className="d-flex justify-content-center mt-10">
+              <Link href="/login">
+                <a>
+                  <button className="btn btn-sm btn-login-peserta px-12 py-3">
+                    Lebih Banyak Tema
+                    <IconArrow
+                      width="8"
+                      height="10"
+                      fill="#0063CC"
+                      className="ml-2"
+                      style={{ transform: "rotate(0)" }}
+                    />
+                  </button>
+                </a>
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        {/* tahapan pendaftaran */}
+        <StepRegister />
+
+        {/* Rilis Media & Informasi Terbaru */}
+        <RilisMedia />
+
+        {/* Galeri Terupdate dan Terkini */}
+        <GaleryUpdate />
+
+        {/* Informasi Dalam Video Terkini */}
+        <InfoVideo />
+
+        {/* Ayo Bergabung, Jadi Jagoan Digital! */}
+        <ComeJoin />
+        
+        {/* Footer */}
+        <Footer />
+      </div>
+
+      {/* Footer
+      <Footer /> */}
+
+    </BerandaWrapper>
+  );
+};
+
+export default Beranda;

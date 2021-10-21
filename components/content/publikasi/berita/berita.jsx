@@ -9,6 +9,8 @@ import DatePicker from 'react-datepicker'
 import { addDays } from 'date-fns'
 import Swal from 'sweetalert2'
 import moment from "moment";
+import styles from "../../../../styles/previewGaleri.module.css";
+import stylesPag from "../../../../styles/pagination.module.css";
 
 import PageWrapper from '../../../wrapper/page.wrapper'
 import CardPage from '../../../CardPage'
@@ -24,20 +26,20 @@ import { deleteBerita, clearErrors } from '../../../../redux/actions/publikasi/b
 
 import { DELETE_BERITA_RESET } from "../../../../redux/types/publikasi/berita.type";
 
-const Berita = ({token}) => {
+const Berita = ({ token }) => {
 
     const dispatch = useDispatch()
     const router = useRouter()
 
-    const { 
+    const {
         loading: allLoading,
-        error, 
-        berita 
+        error,
+        berita
     } = useSelector(state => state.allBerita)
-    const { 
-        loading: deleteLoading, 
-        error: deleteError, 
-        isDeleted 
+    const {
+        loading: deleteLoading,
+        error: deleteError,
+        isDeleted
     } = useSelector(state => state.deleteBerita)
 
     const [search, setSearch] = useState("");
@@ -45,7 +47,7 @@ const Berita = ({token}) => {
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
     const [publishValue, setPublishValue] = useState(null)
-    const [disableEndDate, setDisableEndDate] = useState (true)
+    const [disableEndDate, setDisableEndDate] = useState(true)
 
     let loading = false;
     let { page = 1, keyword, success } = router.query;
@@ -62,19 +64,19 @@ const Berita = ({token}) => {
         // }
 
         if (isDeleted) {
-        Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
-            (result) => {
-            if (result.isConfirmed) {
-                window.location.reload();
-            }
-            }
-        );
-        dispatch({
-            type: DELETE_BERITA_RESET,
+            Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
+                (result) => {
+                    if (result.isConfirmed) {
+                        window.location.reload();
+                    }
+                }
+            );
+            dispatch({
+                type: DELETE_BERITA_RESET,
             });
         }
-      
-    }, [isDeleted, dispatch, ]);
+
+    }, [isDeleted, dispatch,]);
 
     const onNewReset = () => {
         router.replace("/publikasi/berita", undefined, { shallow: true });
@@ -98,45 +100,45 @@ const Berita = ({token}) => {
     }
 
     const handlePagination = (pageNumber) => {
-        if (limit !== null  && search === "" && startDate === null && endDate === null && publishValue === null) {
+        if (limit !== null && search === "" && startDate === null && endDate === null && publishValue === null) {
             router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}`)
-    
+
         } else if (limit !== null && search !== "" && startDate === null && endDate === null && publishValue === null) {
             router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}`)
-    
+
         } else if (limit === null && search !== "" && startDate === null && endDate === null && publishValue === null) {
             router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}`)
-    
-        } else if (limit !== null  && search === "" && startDate !== null && endDate !== null && publishValue === null) {
+
+        } else if (limit !== null && search === "" && startDate !== null && endDate !== null && publishValue === null) {
             router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
-    
-        } else if (limit !== null  && search !== "" && startDate !== null && endDate !== null && publishValue === null) {
+
+        } else if (limit !== null && search !== "" && startDate !== null && endDate !== null && publishValue === null) {
             router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
-        
-        } else if (limit === null  && search !== "" && startDate !== null && endDate !== null && publishValue === null) {
+
+        } else if (limit === null && search !== "" && startDate !== null && endDate !== null && publishValue === null) {
             router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
-        
-        } else if (limit !== null  && search === "" && startDate === null && endDate === null && publishValue !== null) {
+
+        } else if (limit !== null && search === "" && startDate === null && endDate === null && publishValue !== null) {
             router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&publish=${publishValue}`)
-          
-        } else if (limit !== null  && search !== "" && startDate === null && endDate === null && publishValue !== null) {
+
+        } else if (limit !== null && search !== "" && startDate === null && endDate === null && publishValue !== null) {
             router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&publish=${publishValue}`)
-    
+
         } else if (limit === null && search !== "" && startDate === null && endDate === null && publishValue !== null) {
             router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&publish=${publishValue}`)
-    
+
         } else if (limit === null && search === "" && startDate === null && endDate === null && publishValue !== null) {
-          router.push(`${router.pathname}?page=${pageNumber}&publish=${publishValue}`)
-    
-        } else if (limit !== null  && search === "" && startDate !== null && endDate !== null && publishValue !== null) {
-          router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
-    
-        } else if (limit !== null  && search !== "" && startDate !== null && endDate !== null && publishValue !== null) {
-          router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
-        
-        } else if (limit === null  && search !== "" && startDate !== null && endDate !== null && publishValue !== null) {
-          router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
-    
+            router.push(`${router.pathname}?page=${pageNumber}&publish=${publishValue}`)
+
+        } else if (limit !== null && search === "" && startDate !== null && endDate !== null && publishValue !== null) {
+            router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+
+        } else if (limit !== null && search !== "" && startDate !== null && endDate !== null && publishValue !== null) {
+            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+
+        } else if (limit === null && search !== "" && startDate !== null && endDate !== null && publishValue !== null) {
+            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+
         } else {
             router.push(`${router.pathname}?page=${pageNumber}`)
         }
@@ -145,27 +147,27 @@ const Berita = ({token}) => {
     const handleSearch = () => {
         if (limit != null && startDate === null && endDate === null) {
             router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`)
-    
-        } else if (limit !== null && startDate !== null && endDate !== null ) {
+
+        } else if (limit !== null && startDate !== null && endDate !== null) {
             router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
-    
+
         } else {
             router.push(`${router.pathname}?page=1&keyword=${search}`)
         }
-    
+
     };
 
     const handleSearchDate = () => {
         // console.log (startDate)
 
-        if (moment(startDate).format("YYYY-MM-DD") > moment(endDate).format("YYYY-MM-DD")){
+        if (moment(startDate).format("YYYY-MM-DD") > moment(endDate).format("YYYY-MM-DD")) {
             Swal.fire(
                 'Oops !',
                 'Tanggal Dari tidak boleh melebihi Tanggal Sampai.',
                 'error'
             )
-            setStartDate (null)
-            setEndDate (null)
+            setStartDate(null)
+            setEndDate(null)
 
         } else if (startDate === null && endDate !== null) {
             Swal.fire(
@@ -173,8 +175,8 @@ const Berita = ({token}) => {
                 'Tanggal Dari tidak boleh kosong',
                 'error'
             )
-            setStartDate (null)
-            setEndDate (null)
+            setStartDate(null)
+            setEndDate(null)
 
         } else if (startDate !== null && endDate === null) {
             Swal.fire(
@@ -182,8 +184,8 @@ const Berita = ({token}) => {
                 'Tanggal Sampai tidak boleh kosong',
                 'error'
             )
-            setStartDate (null)
-            setEndDate (null)
+            setStartDate(null)
+            setEndDate(null)
 
         } else if (startDate === null && endDate === null) {
             Swal.fire(
@@ -191,23 +193,23 @@ const Berita = ({token}) => {
                 'Harap mengisi tanggal terlebih dahulu.',
                 'error'
             )
-            setStartDate (null)
-            setEndDate (null)
+            setStartDate(null)
+            setEndDate(null)
 
         } else {
             if (limit !== null && search !== null && startDate !== null && endDate !== null) {
                 router.push(
                     `${router.pathname}?page=1&keyword=${search}startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
                 );
-    
+
             } else if (limit !== null && search === null && startDate !== null && endDate !== null) {
                 router.push(
                     `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
                 )
-              
-            
+
+
             } else if (limit !== null && search === null && startDate === null && endDate === null) {
-                router.push (
+                router.push(
                     `${router.pathname}?page=1&limit=${limit}`
                 )
 
@@ -215,11 +217,11 @@ const Berita = ({token}) => {
                 router.push(
                     `${router.pathname}?page=1&limit=${limit}&keyword=${search}`
                 )
-                
+
             } else {
                 router.push(
                     `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`
-                ); 
+                );
             }
         }
     };
@@ -227,70 +229,70 @@ const Berita = ({token}) => {
     const handleLimit = (val) => {
         setLimit(val)
         if (search === "" && publishValue === null) {
-          router.push(`${router.pathname}?page=1&limit=${val}`);
-    
+            router.push(`${router.pathname}?page=1&limit=${val}`);
+
         } else if (search !== "" && publishValue === null) {
-          router.push(`${router.pathname}?page=1&keyword=${search}&limit=${val}`)
-        
+            router.push(`${router.pathname}?page=1&keyword=${search}&limit=${val}`)
+
         } else if (search === "" && publishValue !== null) {
-          router.push(`${router.pathname}?page=1&limit=${val}&publish=${publishValue}`);
-        
+            router.push(`${router.pathname}?page=1&limit=${val}&publish=${publishValue}`);
+
         } else if (search !== "" && publishValue !== null) {
-          router.push(`${router.pathname}?page=1&keyword=${search}&limit=${val}&publish=${publishValue}`)
+            router.push(`${router.pathname}?page=1&keyword=${search}&limit=${val}&publish=${publishValue}`)
         }
-    
+
     };
-    
+
     const handlePublish = (val) => {
         if (val !== null || val !== "") {
-          setPublishValue (val)
-    
-          if ( startDate === null && endDate === null && limit === null && search === null){
-            router.push(`${router.pathname}?publish=${val}`);
-      
-          } else if ( startDate !== null && endDate !== null && limit === null && search === null) {
-              router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
-      
-          } else if ( startDate !== null && endDate !== null && limit !== null && search === null) {
-              router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`)
-          
-          } else if ( startDate !== null && endDate !== null && limit === null && search !== null) {
-              router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&keyword=${search}`)
-      
-          } else if ( startDate === null && endDate === null && limit !== null && search === null) {
-              router.push(`${router.pathname}?publish=${val}&limit=${limit}`);
-      
-          } else if ( startDate === null && endDate === null && limit === null && search !== null) {
-              router.push(`${router.pathname}?publish=${val}&keyword=${search}`);
-          
-          } else if ( startDate === null && endDate === null && limit !== null && search !== null) {
-              router.push(`${router.pathname}?publish=${val}&limit=${limit}&keyword=${search}`);
-          
-          } else if ( startDate !== null && endDate !== null && limit !== null && search !== null) {
-              router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}&keyword=${search}`)
-          }
+            setPublishValue(val)
+
+            if (startDate === null && endDate === null && limit === null && search === null) {
+                router.push(`${router.pathname}?publish=${val}`);
+
+            } else if (startDate !== null && endDate !== null && limit === null && search === null) {
+                router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+
+            } else if (startDate !== null && endDate !== null && limit !== null && search === null) {
+                router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`)
+
+            } else if (startDate !== null && endDate !== null && limit === null && search !== null) {
+                router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&keyword=${search}`)
+
+            } else if (startDate === null && endDate === null && limit !== null && search === null) {
+                router.push(`${router.pathname}?publish=${val}&limit=${limit}`);
+
+            } else if (startDate === null && endDate === null && limit === null && search !== null) {
+                router.push(`${router.pathname}?publish=${val}&keyword=${search}`);
+
+            } else if (startDate === null && endDate === null && limit !== null && search !== null) {
+                router.push(`${router.pathname}?publish=${val}&limit=${limit}&keyword=${search}`);
+
+            } else if (startDate !== null && endDate !== null && limit !== null && search !== null) {
+                router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}&keyword=${search}`)
+            }
         }
-        
+
     }
 
     const resetValueSort = () => {
         setStartDate(null)
         setEndDate(null)
-        setDisableEndDate (true)
+        setDisableEndDate(true)
     }
 
     const handleStartDate = (date) => {
-        setStartDate (date)
-        setDisableEndDate (false)
+        setStartDate(date)
+        setDisableEndDate(false)
     }
-    
+
 
     return (
         <PageWrapper>
             {
                 // console.log (berita)
             }
-            
+
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
                     <div className="alert-icon"><i className="flaticon-warning"></i></div>
@@ -319,7 +321,7 @@ const Berita = ({token}) => {
                             data-dismiss="alert"
                             aria-label="Close"
                             onClick={onNewReset}
-                            >
+                        >
                             <span aria-hidden="true">
                                 <i className="ki ki-close"></i>
                             </span>
@@ -332,55 +334,55 @@ const Berita = ({token}) => {
 
             <div className="col-lg-12 col-md-12">
                 <div className="row">
-                    <CardPage 
-                        background='bg-light-info' 
+                    <CardPage
+                        background='bg-light-info'
                         icon="new/open-book.svg"
                         color='#ffffff'
                         // icon='mail-purple.svg' 
                         // color='#8A50FC' 
                         value={berita && berita.publish != "" ? berita.publish : 0}
-                        titleValue='Berita' 
+                        titleValue='Berita'
                         title='Total Publish'
-                        publishedVal = "1"
-                        routePublish = { () => handlePublish("1")}
-                        />
-                    <CardPage 
-                        background='bg-light-warning' 
+                        publishedVal="1"
+                        routePublish={() => handlePublish("1")}
+                    />
+                    <CardPage
+                        background='bg-light-warning'
                         icon="new/mail-white.svg"
                         color="#ffffff"
                         // icon='garis-yellow.svg' 
                         // color='#634100' 
-                        value='64' 
-                        titleValue='Berita' 
+                        value='64'
+                        titleValue='Berita'
                         title='Total Author'
-                        publishedVal = ""
-                        routePublish = { () => handlePublish("")} 
-                        />
-                    <CardPage 
-                        background='bg-light-success' 
-                        icon='user-white.svg' 
+                        publishedVal=""
+                        routePublish={() => handlePublish("")}
+                    />
+                    <CardPage
+                        background='bg-light-success'
+                        icon='user-white.svg'
                         color='#ffffff'
                         // icon='orang-tambah-green.svg' 
                         // color='#74BBB7' 
                         value='64'
                         // value={berita && berita.total_views !== null ? berita.total_views : 0} 
-                        titleValue='Orang' 
-                        title='Total Yang Baca' 
-                        publishedVal = ""
-                        routePublish = { () => handlePublish("")}
-                        />
-                    <CardPage 
-                        background='bg-light-danger' 
+                        titleValue='Orang'
+                        title='Total Pembaca'
+                        publishedVal=""
+                        routePublish={() => handlePublish("")}
+                    />
+                    <CardPage
+                        background='bg-light-danger'
                         icon="Library.svg"
                         color='#ffffff'
                         // icon='kotak-kotak-red.svg' 
                         // color='#F65464' 
-                        value={berita && berita.unpublish != "" ? berita.unpublish : 0} 
-                        titleValue='Berita' 
-                        title='Total Belum Publish'
-                        publishedVal = "0"
-                        routePublish = { () => handlePublish("0")} 
-                        />
+                        value={berita && berita.unpublish != "" ? berita.unpublish : 0}
+                        titleValue='Berita'
+                        title='Total Belum Dipublish'
+                        publishedVal="0"
+                        routePublish={() => handlePublish("0")}
+                    />
                 </div>
             </div>
 
@@ -388,10 +390,10 @@ const Berita = ({token}) => {
             <div className="col-lg-12 order-1 px-0">
                 <div className="card card-custom card-stretch gutter-b">
                     <div className="card-header border-0">
-                        <h3 className="card-title font-weight-bolder text-dark">Berita</h3>
+                        <h3 className={`${styles.headTitle}`}>Berita</h3>
                         <div className="card-toolbar">
                             <Link href='/publikasi/berita/tambah'>
-                                <a className="btn btn-primary-rounded-full px-6 font-weight-bold btn-block ">
+                                <a className={`${styles.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bold btn-block`}>
                                     <i className="ri-add-line pb-1 text-white mr-2 "></i>
                                     Tambah Berita
                                 </a>
@@ -405,170 +407,170 @@ const Berita = ({token}) => {
                     <div className="card-body pt-0">
                         <div className="table-filter">
                             <div className="row align-items-center">
-                                <div className="col-lg-6 col-xl-6 col-sm-9">
-                                <div
-                                    className="position-relative overflow-hidden mt-3"
-                                    style={{ maxWidth: "330px" }}
-                                >
-                                    <i className="ri-search-line left-center-absolute ml-2"></i>
-                                    <input
-                                    type="text"
-                                    className="form-control pl-10"
-                                    placeholder="Ketik disini untuk Pencarian..."
-                                    onChange={(e) => setSearch(e.target.value)}
-                                    />
-                                    <button
-                                    className="btn bg-blue-primary text-white right-center-absolute"
-                                    style={{
-                                        borderTopLeftRadius: "0",
-                                        borderBottomLeftRadius: "0",
-                                    }}
-                                    onClick={handleSearch}
-                                    >
-                                    Cari
-                                    </button>
-                                </div>
-                                </div>
-                                <div className="col-lg-6 col-xl-6 col-sm-9">
-                                <div className="d-flex flex-wrap align-items-center justify-content-end mt-2">
-                                    {/* sortir by modal */}
-                                    <button
-                                    className="avatar item-rtl btn border d-flex align-items-center justify-content-between mt-2"
-                                    data-toggle="modal"
-                                    data-target="#exampleModalCenter"
-                                    style={{ color: "#464646", minWidth: "230px" }}
-                                    >
-                                    <div className="d-flex align-items-center">
-                                    <IconFilter className="mr-3" />
-                                    Pilih Filter
-                                    </div>
-                                    <IconArrow fill="#E4E6EF" width="11" height="11"/>
-                                    </button>
-
-                                    {/* modal */}
-                                    <form
-                                    // id="kt_docs_formvalidation_text"
-                                    className="form text-left"
-                                    // action="#"
-                                    // autoComplete="off"
-                                    // onSubmit={handleSubmitSearchMany}
-                                    >
+                                <div className="col-sm-6 col-md-6 col-lg-6 col-xl-6">
                                     <div
-                                        className="modal fade"
-                                        id="exampleModalCenter"
-                                        tabIndex="-1"
-                                        role="dialog"
-                                        aria-labelledby="exampleModalCenterTitle"
-                                        aria-hidden="true"
+                                        className="position-relative overflow-hidden mt-3"
+                                        style={{ maxWidth: "330px" }}
                                     >
-                                        <div
-                                        className="modal-dialog modal-dialog-centered"
-                                        role="document"
+                                        <i className="ri-search-line left-center-absolute ml-2"></i>
+                                        <input
+                                            type="text"
+                                            className="form-control pl-10"
+                                            placeholder="Ketik disini untuk Pencarian..."
+                                            onChange={(e) => setSearch(e.target.value)}
+                                        />
+                                        <button
+                                            className="btn bg-blue-primary text-white right-center-absolute"
+                                            style={{
+                                                borderTopLeftRadius: "0",
+                                                borderBottomLeftRadius: "0",
+                                            }}
+                                            onClick={handleSearch}
                                         >
-                                        <div className="modal-content">
-                                            <div className="modal-header">
-                                            <h5
-                                                className="modal-title font-weight-bold"
-                                                id="exampleModalLongTitle"
-                                            >
-                                            Filter
-                                            </h5>
-                                            <button
-                                                type="button"
-                                                className="close"
-                                                data-dismiss="modal"
-                                                aria-label="Close"
-                                                onClick={() => resetValueSort()}
-                                            >
-                                            <IconClose />
-                                            </button>
-                                            </div>
-
-                                            <div
-                                            className="modal-body text-left"
-                                            style={{ height: "200px" }}
-                                            >
-                                            <div className="mb-10 col-12">
-                                                <label className="required fw-bold fs-6 mb-2">
-                                                Tanggal
-                                                </label>
-
-                                                <div>
-                                                <DatePicker
-                                                    className="form-search-date form-control-sm form-control"
-                                                    selected={startDate}
-                                                    onChange={(date) => handleStartDate(date)}
-                                                    selectsStart
-                                                    startDate={startDate}
-                                                    endDate={endDate}
-                                                    dateFormat="dd/MM/yyyy"
-                                                    placeholderText="Silahkan Isi Tanggal Dari"
-                                                    wrapperClassName="col-12 col-lg-12 col-xl-12"
-                                                    // minDate={moment().toDate()}
-                                                // minDate={addDays(new Date(), 20)}
-                                                />
-                                                </div>
-                                            </div>
-
-                                            <div className="mb-10 col-12">
-                                                <label className="required fw-bold fs-6 mb-2">
-                                                Tanggal
-                                                </label>
-                                    
-                                                <div>
-                                                <DatePicker
-                                                    className="form-search-date form-control-sm form-control"
-                                                    selected={endDate}
-                                                    onChange={(date) => setEndDate(date)}
-                                                    selectsEnd
-                                                    startDate={startDate}
-                                                    endDate={endDate}
-                                                    dateFormat="dd/MM/yyyy"
-                                                    minDate={startDate}
-                                                    // minDate={moment().toDate()}
-                                                    maxDate={addDays(startDate, 20)}
-                                                    placeholderText="Silahkan Isi Tanggal Sampai"
-                                                    wrapperClassName="col-12 col-lg-12 col-xl-12"
-                                                    disabled = {disableEndDate === true || disableEndDate === null}
-                                                // minDate={addDays(new Date(), 20)}
-                                                />
-                                                </div>
-                                                {
-                                                    disableEndDate === true || disableEndDate === null ?
-                                                        <small className="text-muted">
-                                                        Mohon isi Tanggal Dari terlebih dahulu
-                                                        </small>
-                                                    :
-                                                        null
-                                                }
-                                            </div>
-                                            </div>
-                                        <div className="modal-footer">
-                                            <div className="d-flex justify-content-end align-items-center">
-                                            <button
-                                                className="btn btn-white-ghost-rounded-full"
-                                                type="button"
-                                                onClick={() => resetValueSort()}
-                                            >
-                                                Reset
-                                            </button>
-                                            <button
-                                                className="btn btn-primary-rounded-full ml-4"
-                                                type="button"
-                                                data-dismiss="modal"
-                                                onClick={() => handleSearchDate()}
-                                            >
-                                                Terapkan
-                                            </button>
-                                            </div>
-                                        </div>
-                                        </div>
+                                            Cari
+                                        </button>
                                     </div>
-                                    </div>
-                                </form>
-                                {/* end modal */}
-
                                 </div>
+                                <div className="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                    <div className="d-flex flex-wrap align-items-center justify-content-end mt-2">
+                                        {/* sortir by modal */}
+                                        <button
+                                            className="col-sm-12 col-md-6 avatar item-rtl btn border d-flex align-items-center justify-content-between mt-2"
+                                            data-toggle="modal"
+                                            data-target="#exampleModalCenter"
+                                            style={{ color: "#464646", minWidth: "230px" }}
+                                        >
+                                            <div className="d-flex align-items-center">
+                                                <IconFilter className="mr-3" />
+                                                Pilih Filter
+                                            </div>
+                                            <IconArrow fill="#E4E6EF" width="11" height="11" />
+                                        </button>
+
+                                        {/* modal */}
+                                        <form
+                                            // id="kt_docs_formvalidation_text"
+                                            className="form text-left"
+                                        // action="#"
+                                        // autoComplete="off"
+                                        // onSubmit={handleSubmitSearchMany}
+                                        >
+                                            <div
+                                                className="modal fade"
+                                                id="exampleModalCenter"
+                                                tabIndex="-1"
+                                                role="dialog"
+                                                aria-labelledby="exampleModalCenterTitle"
+                                                aria-hidden="true"
+                                            >
+                                                <div
+                                                    className="modal-dialog modal-dialog-centered"
+                                                    role="document"
+                                                >
+                                                    <div className="modal-content">
+                                                        <div className="modal-header">
+                                                            <h5
+                                                                className="modal-title font-weight-bold"
+                                                                id="exampleModalLongTitle"
+                                                            >
+                                                                Filter
+                                                            </h5>
+                                                            <button
+                                                                type="button"
+                                                                className="close"
+                                                                data-dismiss="modal"
+                                                                aria-label="Close"
+                                                                onClick={() => resetValueSort()}
+                                                            >
+                                                                <IconClose />
+                                                            </button>
+                                                        </div>
+
+                                                        <div
+                                                            className="modal-body text-left"
+                                                            style={{ height: "200px" }}
+                                                        >
+                                                            <div className="mb-10 col-12">
+                                                                <label className="required fw-bold fs-6 mb-2">
+                                                                    Tanggal
+                                                                </label>
+
+                                                                <div>
+                                                                    <DatePicker
+                                                                        className="form-search-date form-control-sm form-control"
+                                                                        selected={startDate}
+                                                                        onChange={(date) => handleStartDate(date)}
+                                                                        selectsStart
+                                                                        startDate={startDate}
+                                                                        endDate={endDate}
+                                                                        dateFormat="dd/MM/yyyy"
+                                                                        placeholderText="Silahkan Isi Tanggal Dari"
+                                                                        wrapperClassName="col-12 col-lg-12 col-xl-12"
+                                                                    // minDate={moment().toDate()}
+                                                                    // minDate={addDays(new Date(), 20)}
+                                                                    />
+                                                                </div>
+                                                            </div>
+
+                                                            <div className="mb-10 col-12">
+                                                                <label className="required fw-bold fs-6 mb-2">
+                                                                    Tanggal
+                                                                </label>
+
+                                                                <div>
+                                                                    <DatePicker
+                                                                        className="form-search-date form-control-sm form-control"
+                                                                        selected={endDate}
+                                                                        onChange={(date) => setEndDate(date)}
+                                                                        selectsEnd
+                                                                        startDate={startDate}
+                                                                        endDate={endDate}
+                                                                        dateFormat="dd/MM/yyyy"
+                                                                        minDate={startDate}
+                                                                        // minDate={moment().toDate()}
+                                                                        maxDate={addDays(startDate, 20)}
+                                                                        placeholderText="Silahkan Isi Tanggal Sampai"
+                                                                        wrapperClassName="col-12 col-lg-12 col-xl-12"
+                                                                        disabled={disableEndDate === true || disableEndDate === null}
+                                                                    // minDate={addDays(new Date(), 20)}
+                                                                    />
+                                                                </div>
+                                                                {
+                                                                    disableEndDate === true || disableEndDate === null ?
+                                                                        <small className="text-muted">
+                                                                            Mohon isi Tanggal Dari terlebih dahulu
+                                                                        </small>
+                                                                        :
+                                                                        null
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                        <div className="modal-footer">
+                                                            <div className="d-flex justify-content-end align-items-center">
+                                                                <button
+                                                                    className="btn btn-white-ghost-rounded-full"
+                                                                    type="button"
+                                                                    onClick={() => resetValueSort()}
+                                                                >
+                                                                    Reset
+                                                                </button>
+                                                                <button
+                                                                    className="btn btn-primary-rounded-full ml-4"
+                                                                    type="button"
+                                                                    data-dismiss="modal"
+                                                                    onClick={() => handleSearchDate()}
+                                                                >
+                                                                    Terapkan
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        {/* end modal */}
+
+                                    </div>
                                 </div>
                             </div>
                             {/* <div className="row align-items-right">
@@ -631,27 +633,27 @@ const Berita = ({token}) => {
                                                 <th>Dibuat</th>
                                                 <th>Status</th>
                                                 <th>Role</th>
-                                                <th>Aksi</th>
+                                                <th style={{ width: '10vw' }}>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {
                                                 !berita || berita && berita.berita.length === 0 ?
-                                                    <td className='align-middle text-center' colSpan={8}>Data Masih Kosong</td> :
+                                                    <td className='align-middle text-center' colSpan={9}>Data Tidak Ditemukan</td> :
                                                     berita && berita.berita.map((row, i) => {
                                                         return <tr key={row.id}>
                                                             <td className='align-middle text-center'>
                                                                 {
                                                                     limit === null ?
-                                                                    <span className="badge badge-secondary text-muted">
-                                                                        {i + 1 * (page * 5 ) - (5 - 1 )}
-                                                                    </span>
-                                                                    :
-                                                                    <span className="badge badge-secondary text-muted">
-                                                                        {i + 1 * (page * limit) - (limit - 1)}
-                                                                    </span>
+                                                                        <span>
+                                                                            {i + 1 * (page * 5) - (5 - 1)}
+                                                                        </span>
+                                                                        :
+                                                                        <span>
+                                                                            {i + 1 * (page * limit) - (limit - 1)}
+                                                                        </span>
                                                                 }
-                                                                
+
                                                             </td>
                                                             <td className='text-center'>
                                                                 <Image
@@ -662,17 +664,17 @@ const Berita = ({token}) => {
                                                                     height={50}
                                                                 />
                                                             </td>
-                                                            
+
                                                             <td className='align-middle'>{row.kategori}</td>
                                                             <td className='align-middle'>{row.judul_berita}</td>
                                                             <td className='align-middle'>
                                                                 {
                                                                     row.publish === 1 ? (
-                                                                    row.tanggal_publish
+                                                                        row.tanggal_publish
                                                                     ) : (
-                                                                    <span className="label label-inline label-light-danger font-weight-bold">
-                                                                        Belum dipublish
-                                                                    </span>
+                                                                        <span className="label label-inline label-light-danger font-weight-bold">
+                                                                            Belum dipublish
+                                                                        </span>
                                                                     )
                                                                 }
                                                             </td>
@@ -699,25 +701,25 @@ const Berita = ({token}) => {
                                                             <td className="align-middle d-flex">
 
                                                                 <Link
-                                                                href={`/publikasi/berita/preview/${row.id}`}
+                                                                    href={`/publikasi/berita/preview/${row.id}`}
                                                                 >
-                                                                <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete" target="_blank">
-                                                                    <i className="ri-todo-fill p-0 text-white"></i>
-                                                                    <div className="text-hover-show-hapus">
-                                                                        Pratinjau
-                                                                    </div> 
-                                                                </a>
+                                                                    <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete" target="_blank">
+                                                                        <i className="ri-todo-fill p-0 text-white"></i>
+                                                                        <div className="text-hover-show-hapus">
+                                                                            Pratinjau
+                                                                        </div>
+                                                                    </a>
                                                                 </Link>
 
                                                                 <Link
-                                                                href={`/publikasi/berita/${row.id}`}
+                                                                    href={`/publikasi/berita/${row.id}`}
                                                                 >
-                                                                <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete">
-                                                                    <i className="ri-pencil-fill p-0 text-white"></i>
-                                                                    <div className="text-hover-show-hapus">
-                                                                        Ubah
-                                                                    </div> 
-                                                                </a>
+                                                                    <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete">
+                                                                        <i className="ri-pencil-fill p-0 text-white"></i>
+                                                                        <div className="text-hover-show-hapus">
+                                                                            Ubah
+                                                                        </div>
+                                                                    </a>
                                                                 </Link>
 
                                                                 <button
@@ -727,7 +729,7 @@ const Berita = ({token}) => {
                                                                     <i className="ri-delete-bin-fill p-0 text-white"></i>
                                                                     <div className="text-hover-show-hapus">
                                                                         Hapus
-                                                                    </div> 
+                                                                    </div>
                                                                 </button>
                                                             </td>
 
@@ -764,7 +766,7 @@ const Berita = ({token}) => {
 
                             <div className="row">
                                 {berita && berita.perPage < berita.total &&
-                                    <div className="table-pagination">
+                                    <div className={`${stylesPag.pagination} table-pagination`}>
                                         <Pagination
                                             activePage={page}
                                             itemsCountPerPage={berita.perPage}
@@ -780,37 +782,37 @@ const Berita = ({token}) => {
                                         />
                                     </div>
                                 }
-                                {berita  ?
-                                    <div className="table-total ml-auto">
+                                {berita ?
+                                    <div className={`${stylesPag.rightPag} table-total ml-auto`}>
                                         <div className="row">
-                                            <div className="col-4 mr-0 p-0 mt-3">
-                                                <select 
-                                                    className="form-control" 
-                                                    id="exampleFormControlSelect2" 
-                                                    style={{ 
-                                                        width: '65px', 
-                                                        background: '#F3F6F9', 
-                                                        borderColor: '#F3F6F9', 
-                                                        color: '#9E9E9E' 
+                                            <div className="col-4 mr-0 mt-3">
+                                                <select
+                                                    className="form-control"
+                                                    id="exampleFormControlSelect2"
+                                                    style={{
+                                                        width: '70px',
+                                                        background: '#F3F6F9',
+                                                        borderColor: '#F3F6F9',
+                                                        color: '#9E9E9E'
                                                     }}
                                                     onChange={e => handleLimit(e.target.value)}
                                                     onBlur={e => handleLimit(e.target.value)}
-                                                    >
-                                                    <option value='5' selected={limit == "5" ? true: false}>5</option>
-                                                    <option value='10' selected={limit == "10" ? true: false}>10</option>
-                                                    <option value='15' selected={limit == "15" ? true: false}>15</option>
-                                                    <option value='20' selected={limit == "20" ? true: false}>20</option>
-                                                    {/* <option value='50' selected={limit == "50" ? true: false}>50</option> */}
+                                                >
+                                                    <option value='5' selected={limit == "5" ? true : false}>5</option>
+                                                    <option value='10' selected={limit == "10" ? true : false}>10</option>
+                                                    <option value='30' selected={limit == "30" ? true : false}>30</option>
+                                                    <option value='40' selected={limit == "40" ? true : false}>40</option>
+                                                    <option value='50' selected={limit == "50" ? true : false}>50</option>
                                                 </select>
                                             </div>
                                             <div className="col-8 my-auto">
-                                                <p className='align-middle mt-5 pt-1' style={{ color: '#B5B5C3' }}>Total Data {berita.total}</p>
+                                                <p className='align-middle mt-5 pt-1' style={{ color: '#B5B5C3' }}>Total Data {berita.total} List Data</p>
                                             </div>
                                         </div>
                                     </div> : ''
                                 }
-                                
-                                
+
+
                             </div>
                         </div>
                     </div>

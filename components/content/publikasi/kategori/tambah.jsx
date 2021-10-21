@@ -95,12 +95,12 @@ const TambahKategori = ({ token }) => {
                 {loading ? <LoadingPage loading={loading} /> : ""}
                 <div className="card card-custom card-stretch gutter-b">
                     <div className="card-header border-0">
-                        <h3 className="card-title font-weight-bolder text-dark">Tambah Kategori</h3>
+                        <h3 className="col-sm-4 card-title font-weight-bolder text-dark">Tambah Kategori</h3>
                     </div>
                     <div className="card-body">
                         <form onSubmit={onSubmit}>
                             <div className="form-group">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Nama Kategori</label>
+                                <label htmlFor="staticEmail" className="col-sm-4 col-form-label font-weight-bolder">Nama Kategori</label>
                                 <div className="col-sm-12">
                                     <input
                                         type="text"
@@ -114,13 +114,13 @@ const TambahKategori = ({ token }) => {
                                         success ?
                                             null
                                             :
-                                            simpleValidator.current.message("nama kategori", nama, "required|min:1|max:100|string", { className: "text-danger" })
+                                            simpleValidator.current.message("nama kategori", nama, "required|min:1|max:200|string", { className: "text-danger" })
                                     }
                                 </div>
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Jenis Kategori</label>
+                                <label htmlFor="staticEmail" className="col-sm-4 col-form-label font-weight-bolder">Jenis Kategori</label>
                                 <div className="col-sm-12">
                                     <select
                                         value={jenis_kategori}

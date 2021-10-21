@@ -63,9 +63,10 @@ const ListTrivia = ({ token }) => {
     router.push(link);
   };
 
-  const handleLimit = (val) => {
-    setLimit(val);
-    router.push(`${router.pathname}?page=1&limit=${limit}`);
+  const handleLimit = (e) => {
+    console.log(e.target.value);
+    setLimit(e.target.value);
+    router.push(`${router.pathname}?page=1&limit=${e.target.value}`);
   };
 
   const handleDelete = (id) => {
@@ -225,13 +226,13 @@ const ListTrivia = ({ token }) => {
               className="card-title text-dark mt-2"
               style={{ fontSize: "24px" }}
             >
-              List Trivia
+              List TRIVIA
             </h1>
             <div className="card-toolbar">
               <Link href="/subvit/trivia/tambah">
                 <a className="text-white btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2 mr-2">
-                  <i className="ri-pencil-fill"></i>
-                  Tambah Soal
+                  <i className="ri-add-fill"></i>
+                  Tambah TRIVIA
                 </a>
               </Link>
             </div>
@@ -295,16 +296,19 @@ const ListTrivia = ({ token }) => {
                       ) : (
                         trivia &&
                         trivia.list_trivia.map((row, i) => {
-                          console.log(row);
+                          const paginate = i + 1 * (page * limit);
+                          const dividers = limit - 1;
                           return (
                             <tr key={row.id}>
                               <td className="align-middle text-center">
-                                <span className="">
-                                  {i + 1 * (page * 5 || limit) - 4}
-                                </span>
+                                <span className="">{paginate - dividers}</span>
                               </td>
                               <td className="align-middle">
-                                <b>{row.academy.name}</b>
+                                <b>
+                                  {row.academy !== null
+                                    ? row.academy.name
+                                    : "-"}
+                                </b>
                                 <p>
                                   {row.theme != null
                                     ? row.training !== null
@@ -415,13 +419,14 @@ const ListTrivia = ({ token }) => {
                           className="form-control"
                           id="exampleFormControlSelect2"
                           style={{
-                            width: "65px",
+                            width: "68px",
                             background: "#F3F6F9",
                             borderColor: "#F3F6F9",
                             color: "#9E9E9E",
                           }}
-                          onChange={(e) => handleLimit(e.target.value)}
-                          onBlur={(e) => handleLimit(e.target.value)}
+                          onChange={(event) => handleLimit(event)}
+                          onBlur={(event) => handleLimit(event)}
+                          value={limit}
                         >
                           <option>5</option>
                           <option>10</option>

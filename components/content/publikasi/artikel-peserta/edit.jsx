@@ -149,11 +149,11 @@ const EditArtikel = ({token}) => {
   }
 
   const onSubmit = (e) => {
-    console.log ("test-0")
+    // console.log ("test-0")
 
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
-      console.log ("test")
+      // console.log ("test")
 
       if (error) {
         dispatch(clearErrors());
@@ -238,7 +238,7 @@ const EditArtikel = ({token}) => {
           })
             .then((result) => {
               if (result.isConfirmed) {
-                console.log ("check")
+                // console.log ("check")
                 
                 dispatch(updateArtikelPeserta(data, token));
                 
@@ -483,7 +483,7 @@ const EditArtikel = ({token}) => {
                     {simpleValidator.current.message(
                       "judul_artikel",
                       judul_artikel,
-                      "required|max:50",
+                      "required|max:200",
                       { className: "text-danger" }
                     )}
                   </div>
@@ -504,12 +504,12 @@ const EditArtikel = ({token}) => {
                           data={isi_artikel}
                           onReady={(editor) => {
                             // You can store the "editor" and use when it is needed.
-                            console.log("Editor is ready to use!", editor);
+                            // console.log("Editor is ready to use!", editor);
                           }}
                           onChange={(event, editor) => {
                             const data = editor.getData();
                             setIsiArtikel(data);
-                            console.log({ event, editor, data });
+                            // console.log({ event, editor, data });
                           }}
                           onBlur={() =>
                             simpleValidator.current.showMessageFor(
@@ -534,7 +534,7 @@ const EditArtikel = ({token}) => {
                       {simpleValidator.current.message(
                         "isi_artikel",
                         isi_artikel,
-                        "required|min:100|max:2500",
+                        "required|min:100|max:12000",
                         { className: "text-danger" }
                       )}
                     </div>

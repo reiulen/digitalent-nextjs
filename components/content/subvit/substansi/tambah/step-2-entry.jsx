@@ -14,6 +14,7 @@ import { useRouter } from "next/router";
 import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInput from "/components/StepInput";
 import LoadingPage from "../../../../LoadingPage";
+import styles from "../../trivia/edit/step.module.css";
 
 const StepTwo = ({ token }) => {
   const dispatch = useDispatch();
@@ -39,14 +40,40 @@ const StepTwo = ({ token }) => {
   const [question, setSoal] = useState("");
   const [question_image, setSoalImage] = useState("");
   const [answer, setSoalList] = useState([
-    { key: "A", option: "", image: "", is_right: false },
-    { key: "B", option: "", image: "", is_right: false },
-    { key: "C", option: "", image: "", is_right: false },
-    { key: "D", option: "", image: "", is_right: false },
+    {
+      key: "A",
+      option: "",
+      image: "",
+      imageName: "Pilih Gambar",
+      is_right: false,
+    },
+    {
+      key: "B",
+      option: "",
+      image: "",
+      imageName: "Pilih Gambar",
+      is_right: false,
+    },
+    {
+      key: "C",
+      option: "",
+      image: "",
+      imageName: "Pilih Gambar",
+      is_right: false,
+    },
+    {
+      key: "D",
+      option: "",
+      image: "",
+      imageName: "Pilih Gambar",
+      is_right: false,
+    },
   ]);
   const [answer_key, setAnswerKey] = useState("");
   const [question_type_id, setQuestionTypeId] = useState("");
   const [typeSave, setTypeSave] = useState("lanjut");
+  const [imageSoalName, setImageSoalName] = useState("");
+  const [imageAnswerName, setImageAnswerName] = useState("");
 
   useEffect(() => {
     if (success) {
@@ -74,6 +101,7 @@ const StepTwo = ({ token }) => {
     const list = [...answer];
     list[index][name] = value;
     if (name === "image") {
+      list[index]["imageName"] = e.target.files[0].name;
       const reader = new FileReader();
       reader.onload = () => {
         if (reader.readyState === 2) {
@@ -88,6 +116,7 @@ const StepTwo = ({ token }) => {
   };
 
   const handleSoalImage = (e) => {
+    setImageSoalName(e.target.files[0].name);
     if (e.target.name === "question_image") {
       const reader = new FileReader();
       reader.onload = () => {
@@ -321,7 +350,7 @@ const StepTwo = ({ token }) => {
           <StepInput step="2"></StepInput>
           <div className="card-header border-0">
             <h2 className="card-title h2 text-dark">
-              Soal {subtance.bank_soal + 1}
+              Soal {subtance && subtance.bank_soal + 1}
             </h2>
           </div>
           <div className="card-body pt-0">
@@ -362,7 +391,7 @@ const StepTwo = ({ token }) => {
                       accept="image/png, image/gif, image/jpeg , image/jpg"
                     />
                     <label className="custom-file-label" htmlFor="customFile">
-                      Choose file
+                      {imageSoalName ? imageSoalName : "Choose file"}
                     </label>
                   </div>
                   <span className="text-muted">
@@ -411,7 +440,7 @@ const StepTwo = ({ token }) => {
                             className="custom-file-label"
                             htmlFor="customFile"
                           >
-                            Choose file
+                            {x.imageName}
                           </label>
                         </div>
                       </div>
@@ -459,7 +488,7 @@ const StepTwo = ({ token }) => {
               </div>
 
               <div className="form-group row">
-                <div className="col-sm-6 col-md-3">
+                <div className="col-sm-7 col-md-4">
                   {answer.length < 6 ? (
                     <button
                       type="button"
@@ -514,7 +543,7 @@ const StepTwo = ({ token }) => {
                 <div className="col-sm-2"></div>
                 <div className="col-sm-10 text-right">
                   <button
-                    className="btn btn-light-ghost-rounded-full mr-2"
+                    className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
                     type="submit"
                   >
                     Simpan & Lanjut

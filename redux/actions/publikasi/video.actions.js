@@ -27,6 +27,7 @@ import {
     PLAY_VIDEO_FAIL,
 
     CLEAR_ERRORS,
+    SET_FILTER_CARD
 } from '../../types/publikasi/video.type'
 
 import axios from 'axios'
@@ -70,7 +71,7 @@ export const getAllVideo = (page = 1, keyword = "", limit = 5, publish = null, s
     } catch (error) {
         dispatch({
             type: VIDEO_FAIL,
-            payload: error.message
+            payload: error.response.data.message
         })
     }
 }
@@ -133,7 +134,7 @@ export const newVideo = (videoData, token) => async (dispatch) => {
             payload: data
         })
 
-        console.log("Action Add Video :", videoData)
+        // console.log("Action Add Video :", videoData)
 
     } catch (error) {
         dispatch({
@@ -171,7 +172,7 @@ export const updateVideo = (videoData, token) => async (dispatch) => {
         };
 
         const { data } = await axios.post(link, videoData, config)
-        // console.log("Update Data : ", data)
+        console.log("Update Data : ", data)
         dispatch({
             type: UPDATE_VIDEO_SUCCESS,
             payload: data
@@ -223,9 +224,10 @@ export const playVideo = (videoData, token) => async (dispatch) => {
             },
         };
 
-        let link = process.env.END_POINT_API_PUBLIKASI + `api/video/${videoData.id}`
+        let link = process.env.END_POINT_API_PUBLIKASI + `api/video/play/${videoData.id}`
 
         const { data } = await axios.post(link, videoData, config)
+        // console.log("Play Video Actions :", data)
 
         dispatch({
             type: PLAY_VIDEO_SUCCESS,
@@ -246,3 +248,63 @@ export const clearErrors = () => async (dispatch) => {
         type: CLEAR_ERRORS
     })
 }
+
+// Card
+// export const changeStatusCard = (data) => {
+//     return {
+//         type: SET_FILTER_CARD,
+//         payload: data
+//     }
+// }
+
+// export const filterCard = (token) => {
+//     return async (dispatch, getState) => {
+//         dispatch({ type: VIDEO_SUCCESS });
+
+//         let pageState = getState().allFilter.page || 1;
+//         let cardState = getState().allFilter.card || "";
+//         let limitState = getState().allFilter.limit || 5;
+//         let keywordState = getState().allFilter.keyword || "";
+//         let startDateState = getState().allFilter.startdate || null;
+//         let endDateState = getState().allFilter.enddate || null;
+
+//         const params = {
+//             page: pageState,
+//             card: cardState,
+//             limit: limitState,
+//             keyword: keywordState,
+//             startDate: startDateState,
+//             endDate: endDateState
+//         }
+
+//         try {
+//             const { data } = await axios.get(
+//                 process.env.END_POINT_API_PUBLIKASI + `api/video`,
+//                 {
+//                     params,
+//                     headers: {
+//                         authorization: `Bearer ${token}`,
+//                     },
+//                 }
+//             )
+//             const sortData = await axios.get(
+//                 process.env.END_POINT_API_PUBLIKASI + `api/video?page=1`,
+//                 {
+//                     params,
+//                     headers: {
+//                         authorization: `Bearer ${token}`,
+//                     },
+//                 }
+//             )
+
+//             console.log("Cek Data Video :",data)
+//             // let totalData = sortData.data
+
+//         } catch (error) {
+//             dispatch({
+//                 type: VIDEO_FAIL,
+//                 payload: error.message
+//             })
+//         }
+//     }
+// }

@@ -17,10 +17,14 @@ import {
   Dropdown,
 } from "react-bootstrap";
 
+import IconSearch from "../../components/assets/icon/Search";
+import IconLogin from "../../components/assets/icon-dashboard-peserta/Login";
+import IconRegister from "../../components/assets/icon-dashboard-peserta/Register";
+
 const Navigationbar = () => {
   return (
     <>
-      <Navbar bg="white" expand="lg" className="shadow">
+      <Navbar bg="white" expand="lg" className="shadow header-dashboards">
         <Container>
           <Navbar.Brand href="/">
             <Image
@@ -32,9 +36,9 @@ const Navigationbar = () => {
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
+            <Nav className="me-auto dropdown-explore">
               <NavDropdown
-                title="Explore"
+                title="Menu"
                 id="basic-nav-dropdown"
                 className="navdropdown-child"
               >
@@ -44,20 +48,6 @@ const Navigationbar = () => {
                 >
                   Beranda
                 </NavDropdown.Item>
-                {/* <NavDropdown.Item href="#action/3.2">Pelatihan</NavDropdown.Item> */}
-                {/* <DropdownButton
-                                    drop='end'
-                                    title="Pelatihan"
-                                    variant="white"
-                                > 
-                                    <Dropdown.Item eventKey="1">VSGA</Dropdown.Item>
-                                    <Dropdown.Item eventKey="2">FGA</Dropdown.Item>
-                                    <Dropdown.Item eventKey="3">PRO</Dropdown.Item>
-                                    <Dropdown.Item eventKey="4">TA</Dropdown.Item>
-                                    <Dropdown.Item eventKey="5">GTA</Dropdown.Item>
-                                    <Dropdown.Item eventKey="6">DEA</Dropdown.Item>
-                                    <Dropdown.Item eventKey="7">TSA</Dropdown.Item>
-                                </DropdownButton> */}
                 <div className="btn-group dropright">
                   <button
                     type="button"
@@ -99,7 +89,6 @@ const Navigationbar = () => {
                     </a>
                   </div>
                 </div>
-                {/* <NavDropdown.Item href="#action/3.3" className="navdropdown-child">Pusat Informasi</NavDropdown.Item> */}
                 <div className="btn-group dropright">
                   <button
                     type="button"
@@ -109,7 +98,6 @@ const Navigationbar = () => {
                     aria-expanded="false"
                   >
                     Pusat Informasi
-                    {/* <i className="ri-arrow-right-s-line text-dark"> </i> */}
                   </button>
                   <div className="dropdown-menu ml-3">
                     <a className="dropdown-item navdropdown-child" href="#">
@@ -132,7 +120,6 @@ const Navigationbar = () => {
                 >
                   Penyelenggara
                 </NavDropdown.Item>
-                {/* <NavDropdown.Item href="#action/3.4" className="navdropdown-child">Rilis Media</NavDropdown.Item> */}
                 <div className="btn-group dropright">
                   <button
                     type="button"
@@ -177,33 +164,34 @@ const Navigationbar = () => {
                 </NavDropdown.Item>
               </NavDropdown>
             </Nav>
-            <Form className="d-flex col-10">
-              <FormControl
-                type="search"
-                placeholder="Search"
-                className="mr-2"
-                aria-label="Search"
-              />
-              {/* <Button variant="outline-success">Search</Button> */}
+            <Form className="w-100 mx-5">
+              <div className="position-relative w-100">
+                <FormControl
+                  type="search"
+                  placeholder="Search"
+                  className="pl-10 rounded-full"
+                  aria-label="Search"
+                />
+                <IconSearch
+                  className="left-center-absolute"
+                  style={{ left: "10px" }}
+                />
+              </div>
             </Form>
             <Nav>
-              <Link href="/register">
+              <Link href="/login">
                 <a>
-                  {/* <Button className="btn btn-primary rounded-pill ">
-                                    Daftar
-                                </Button> */}
-                  <button className="btn btn-primary-rounded-full rounded-pill btn-sm">
-                    Daftar
+                  <button className="btn btn-sm btn-login-peserta">
+                    <IconLogin className="mr-2" />
+                    Masuk
                   </button>
                 </a>
               </Link>
-              <Link href="/login">
+              <Link href="/register">
                 <a>
-                  {/* <Button className="btn btn-white rounded-pill ">
-                                    Masuk
-                                </Button> */}
-                  <button className="btn btn-outline-primary-rounded-full rounded-pill btn-sm ml-3">
-                    Masuk
+                  <button className="btn btn-register-peserta btn-sm">
+                     <IconRegister className="mr-2" />
+                    Daftar
                   </button>
                 </a>
               </Link>
@@ -211,12 +199,6 @@ const Navigationbar = () => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-
-      {/* <a href="/login">
-                <button className="btn btn-primary-rounded-full rounded-pill btn-sm">
-                    Login
-                </button>
-            </a> */}
     </>
   );
 };

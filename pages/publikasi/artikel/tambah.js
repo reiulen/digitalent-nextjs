@@ -8,6 +8,7 @@ import { getAllKategori } from "../../../redux/actions/publikasi/kategori.action
 import { wrapper } from "../../../redux/store";
 
 import LoadingPage from "../../../components/LoadingPage";
+import { getSettingPublikasi } from "../../../redux/actions/publikasi/setting.actions";
 
 const Tambah = dynamic(
   () => import("../../../components/content/publikasi/artikel/tambah"),
@@ -43,13 +44,14 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (!session) {
         return {
           redirect: {
-            destination: "http://dts-dev.majapahit.id/",
+            destination: "http://dts-dev.majapahit.id/login/admin",
             permanent: false,
           },
         };
       }
 
       await store.dispatch(getAllKategori(session.user.user.data.token));
+      await store.dispatch(getSettingPublikasi(session.user.user.data.token));
 
       return {
         props: { session, title: "Tambah Artikel - Publikasi" },
@@ -65,7 +67,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
 //     if (!session) {
 //         return {
 //             redirect: {
-//             destination: "http://dts-dev.majapahit.id/",
+//             destination:"/login/admin",
 //             permanent: false,
 //             },
 //         };

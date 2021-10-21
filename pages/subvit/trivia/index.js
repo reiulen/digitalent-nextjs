@@ -6,8 +6,14 @@ import { wrapper } from "../../../redux/store";
 
 const ListTrivia = dynamic(
   () => import("../../../components/content/subvit/trivia/list-trivia"),
-  { loading: () => <LoadingSkeleton /> }
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
 );
+
 export default function Trivia(props) {
   const session = props.session.user.user.data;
 
@@ -27,7 +33,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (!session) {
         return {
           redirect: {
-            destination: "http://dts-dev.majapahit.id/",
+            destination: "http://dts-dev.majapahit.id/login/admin",
             permanent: false,
           },
         };

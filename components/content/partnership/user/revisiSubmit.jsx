@@ -88,8 +88,6 @@ const RevisiSubmit = ({token}) => {
 
   const [lengthListCard, setLengthListCard] = useState("")
   const [indexCard, setIndexCard] = useState("")
-  console.log("lengthListCard",lengthListCard)
-  console.log("indexCard",indexCard)
   const getLengthListCard = async (id) => {
     
   };
@@ -98,13 +96,11 @@ const RevisiSubmit = ({token}) => {
   const handleChange = (e, index) => {
     let dataaa = [...allCooperation];
     dataaa[index].form_content = e.target.value;
-    console.log("dataaa", dataaa);
-    // console.log("index",index)
     setAllCooperation(dataaa);
   };
 
   const notify = (value) =>
-    toast.info(`🦄 ${value}`, {
+    toast.info(`${value}`, {
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,
@@ -146,7 +142,6 @@ const RevisiSubmit = ({token}) => {
           },
         }
       );
-      console.log("data list revisi",data.data.length -1)
       setLengthListCard(data.data.length - 1)
     } catch (error) {
       console.log("action getSIngle gagal", error);
@@ -179,7 +174,7 @@ const RevisiSubmit = ({token}) => {
           </div>
 
           <div className="card-body">
-            <div className="row mt-8 mb-10">
+            <div className="row mt-8 mb-10 relative-progress">
               <div className="col-2 p-0">
                 <div className="progress-items">
                   {/* <div className="line-progress"></div> */}
@@ -192,7 +187,7 @@ const RevisiSubmit = ({token}) => {
                 <div className="progress-items">
                   <div className="line-progress active-line"></div>
                   <div className="circle-progress active-circle">
-                    <span className="title-progress">Review Kerjasama</span>
+                    <span className="title-progress active">Review Kerjasama</span>
                   </div>
                 </div>
               </div>
@@ -208,8 +203,8 @@ const RevisiSubmit = ({token}) => {
                 <div className="progress-items">
                   <div className="line-progress"></div>
                   <div className="circle-progress">
-                    <span className="title-progress">
-                      Submit Dokumen Kerjasama
+                    <span className="title-progress text-center" style={{top:"-4rem"}}>
+                      Submit Dokumen<br/>Kerjasama
                     </span>
                   </div>
                 </div>
@@ -218,8 +213,8 @@ const RevisiSubmit = ({token}) => {
                 <div className="progress-items">
                   <div className="line-progress"></div>
                   <div className="circle-progress">
-                    <span className="title-progress">
-                      Review Dokumen Kerjasama
+                    <span className="title-progress text-center" style={{top:"-4rem"}}>
+                      Review Dokumen<br/>Kerjasama
                     </span>
                   </div>
                 </div>
@@ -244,7 +239,7 @@ const RevisiSubmit = ({token}) => {
                     readOnly
                     value={date && date}
                     type="date"
-                    className="form-control mb-3 mb-lg-0"
+                    className="form-control mb-3 mb-lg-0 border-0"
                   />
                   {/* icon calender */}
                 </div>
@@ -260,7 +255,7 @@ const RevisiSubmit = ({token}) => {
                       readOnly
                       value={title && title}
                       type="text"
-                      className="form-control mb-3 mb-lg-0"
+                      className="form-control mb-3 mb-lg-0 border-0"
                     />
                     {/* {error.date ? <p className="error-text">{error.date}</p> : ""} */}
                   </div>
@@ -269,8 +264,9 @@ const RevisiSubmit = ({token}) => {
                   <div className="form-group mb-10">
                     <label className="required mb-2">Kategori Kerjasama</label>
                     <select
-                      className="form-control remove-icon-default"
+                      className="form-control remove-icon-default border-0"
                       disabled
+                      style={{backgroundColor:"transparent"}}
                     >
                       <option value="">
                         {cooperationID && cooperationID.name}
@@ -290,7 +286,7 @@ const RevisiSubmit = ({token}) => {
                       readOnly
                       value={period && period}
                       type="number"
-                      className="form-control mb-3 mb-lg-0"
+                      className="form-control mb-3 mb-lg-0 border-0"
                     />
                     {/* {error.date ? <p className="error-text">{error.date}</p> : ""} */}
                   </div>
@@ -298,7 +294,7 @@ const RevisiSubmit = ({token}) => {
                 <div className="col-12 col-sm-6">
                   <div className="form-group mb-10">
                     <label className="required mb-2"></label>
-                    <select className="form-control mt-2" disabled>
+                    <select className="form-control mt-2 border-0" style={{backgroundColor:"transparent"}} disabled>
                       <option value="">Tahun</option>
                     </select>
                     {/* {error.date ? <p className="error-text">{error.date}</p> : ""} */}
@@ -352,7 +348,8 @@ const RevisiSubmit = ({token}) => {
                                 id=""
                                 cols="30"
                                 rows="5"
-                                className="form-control"
+                                className="form-control border-0"
+                                style={{backgroundColor:"transparent"}}
                                 placeholder="Tuliskan Catatan Revisi"
                               ></textarea>
                             </div>
@@ -377,7 +374,8 @@ const RevisiSubmit = ({token}) => {
                     value={note && note}
                     cols="30"
                     rows="5"
-                    className="form-control"
+                    className="form-control border-0"
+                    style={{backgroundColor:"transparent"}}
                     placeholder="Tuliskan Catatan Tambahan"
                   ></textarea>
                 </div>
@@ -386,7 +384,7 @@ const RevisiSubmit = ({token}) => {
               <div className="form-group row">
                 <div className="col-sm-12 d-flex justify-content-end">
                   <Link href={{
-                    pathname:"/partnership/user/kerjasama/review-kerjasama-2",
+                    pathname:"/partnership/user/kerjasama/review-list-kerjasama",
                     query:{id:router.query.id}
                   }}>
                     <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">

@@ -11,42 +11,29 @@ import IconDelete from "../../../../assets/icon/Delete";
 import IconAdd from "../../../../assets/icon/Add";
 import IconSearch from "../../../../assets/icon/Search";
 import {
-  fetchPage,
+  deletePage,
+  getAllPage,
   setPage,
-  limitCooporation,
   searchCooporation,
-  deletePage
+  limitCooporation,
 } from "../../../../../redux/actions/site-management/settings/page.actions";
+
+import { DELETE_PAGE_RESET } from "../../../../../redux/types/site-management/settings/page.type";
 
 const Table = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
 
   const allPage = useSelector((state) => state.allPage);
-  console.log("allPage list table", allPage);
+  const {
+    loading: deleteLoading,
+    error: deleteError,
+    isDeleted,
+  } = useSelector((state) => state.deletePage);
 
   const [valueSearch, setValueSearch] = useState("");
   const handleChangeValueSearch = (value) => {
     setValueSearch(value);
-  };
-
-  // function delete
-  const pageDelete = (id) => {
-    Swal.fire({
-      title: "Apakah anda yakin ingin menghapus data ?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      cancelButtonText: "Batal",
-      confirmButtonText: "Ya !",
-      dismissOnDestroy: false,
-    }).then(async (result) => {
-      if (result.value) {
-        // dispatch delete
-        dispatch(deletePage(id,token))
-      }
-    });
   };
 
   const handleSubmit = (event) => {
@@ -54,25 +41,42 @@ const Table = ({ token }) => {
     dispatch(searchCooporation(valueSearch));
   };
 
-  const onNewReset = () => {
-    router.replace("/site-management/setting/page", undefined, {
-      shallow: true,
+  const handleDelete = (id, token) => {
+    Swal.fire({
+      title: "Apakah anda yakin menghapus data ?",
+      text: "Data ini tidak bisa dikembalikan !",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Ya !",
+      cancelButtonText: "Batal",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(deletePage(id, token));
+      }
     });
   };
 
   useEffect(() => {
-    if (allAuthentication.status === "error") {
-      notify(allAuthentication.errorRegister);
-    } else if (allAuthentication.status === "success"){
-      // jika sukses
-      Swal.fire("Berhasil Daftar", "Silahkan login", "success").then(() => {
-        router.push("/partnership/user/auth/login")
-      });
-    }else{
-      ""
+    dispatch(getAllPage(token));
+  }, [dispatch, allPage.cari, allPage.page,allPage.limit, token]);
+
+  useEffect(() => {
+    if (isDeleted) {
+      Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
+        (result) => {
+          if (result.isConfirmed) {
+            dispatch(getAllPage(token));
+          }
+        }
+      );
     }
-    dispatch(fetchPage(token));
-  }, [dispatch, allPage.keyword, allPage.limit, allPage.page,allPage.dataSuccesDelete,allPage.errorDeletePage]);
+    dispatch({
+      type: DELETE_PAGE_RESET,
+    });
+  }, [isDeleted, dispatch, token]);
+
   return (
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">
@@ -97,10 +101,7 @@ const Table = ({ token }) => {
             <div className="table-filter">
               <div className="row align-items-center">
                 <div className="col-lg-12 col-xl-12">
-                  <form
-                    onSubmit={handleSubmit}
-                    className="d-flex align-items-center w-100"
-                  >
+                  <form onSubmit={handleSubmit}>
                     <div className="row w-100">
                       <div className="col-12 col-sm-6">
                         <div className="position-relative overflow-hidden w-100">
@@ -150,15 +151,14 @@ const Table = ({ token }) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {allPage.dataPage.data && allPage.dataPage.data.length === 0 ? (
+                      {allPage.data.setting_page.length === 0 ? (
                         <tr>
                           <td colSpan="5" className="text-center">
                             <h4>Data tidak ditemukan</h4>
                           </td>
                         </tr>
                       ) : (
-                        allPage.dataPage.data &&
-                        allPage.dataPage.data.map((items, index) => {
+                        allPage.data.setting_page.map((items, index) => {
                           return (
                             <tr key={index}>
                               <td className="align-middle text-left">
@@ -183,37 +183,31 @@ const Table = ({ token }) => {
                               </td>
                               <td className="align-middle text-left">
                                 <div className="d-flex align-items-center">
-                                  <button
-                                    className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                                    onClick={() =>
-                                      router.push(
-                                        `/site-management/setting/ubah-page`
-                                      )
-                                    }
+                                  <Link
+                                    href={`/site-management/setting/ubah-page/${items.id}`}
                                   >
-                                    <IconPencil width="16" height="16" />
-                                    <div className="text-hover-show-hapus">
-                                      Ubah
-                                    </div>
-                                  </button>
-                                  <button
-                                    className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete"
-                                    onClick={() =>
-                                      router.push(
-                                        `/site-management/setting/preview-page`
-                                      )
-                                    }
+                                    <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
+                                      <IconPencil width="16" height="16" />
+                                      <div className="text-hover-show-hapus">
+                                        Ubah
+                                      </div>
+                                    </a>
+                                  </Link>
+                                  <Link
+                                    href={`/site-management/setting/preview-page/${items.id}`}
                                   >
-                                    <IconEye width="16" height="16" />
-                                    <div className="text-hover-show-hapus">
-                                      Preview
-                                    </div>
-                                  </button>
+                                    <a className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete">
+                                      <IconEye width="16" height="16" />
+                                      <div className="text-hover-show-hapus">
+                                        Preview
+                                      </div>
+                                    </a>
+                                  </Link>
 
                                   <button
                                     className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
                                     onClick={() =>
-                                      pageDelete(items.id)
+                                      handleDelete(items.id, token)
                                     }
                                   >
                                     <IconDelete width="16" height="16" />
@@ -234,19 +228,21 @@ const Table = ({ token }) => {
 
               <div className="row">
                 <div className="table-pagination paginate-cs">
-                  <Pagination
-                    activePage={allPage.page}
-                    itemsCountPerPage={allPage?.dataPage?.data?.perPage}
-                    totalItemsCount={allPage?.dataPage?.data?.total}
-                    pageRangeDisplayed={3}
-                    onChange={(page) => dispatch(setPage(page))}
-                    nextPageText={">"}
-                    prevPageText={"<"}
-                    firstPageText={"<<"}
-                    lastPageText={">>"}
-                    itemClass="page-item"
-                    linkClass="page-link"
-                  />
+                  <div className="table-pagination">
+                    <Pagination
+                      activePage={allPage.page}
+                      itemsCountPerPage={allPage.data.perPage}
+                      totalItemsCount={allPage.data.total}
+                      pageRangeDisplayed={3}
+                      onChange={(page) => dispatch(setPage(page))}
+                      nextPageText={">"}
+                      prevPageText={"<"}
+                      firstPageText={"<<"}
+                      lastPageText={">>"}
+                      itemClass="page-item"
+                      linkClass="page-link"
+                    />
+                  </div>
                 </div>
 
                 <div className="table-total ml-auto">
@@ -263,7 +259,7 @@ const Table = ({ token }) => {
                           color: "#9E9E9E",
                         }}
                         onChange={(e) =>
-                          dispatch(limitCooporation(e.target.value))
+                          dispatch(limitCooporation(e.target.value,token))
                         }
                       >
                         <option value="5">5</option>
@@ -278,7 +274,8 @@ const Table = ({ token }) => {
                         className="align-middle mt-3"
                         style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}
                       >
-                        Total Data 9 List Data
+                        Total Data {allPage.data &&
+                          allPage.data.total} List Data
                       </p>
                     </div>
                   </div>

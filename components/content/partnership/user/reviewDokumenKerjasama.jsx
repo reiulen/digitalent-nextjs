@@ -27,10 +27,9 @@ function ReviewDokumenKerjasama({ token }) {
   const [catatanREvisi, setCatatanREvisi] = useState("");
 
   const [note, setNote] = useState("");
-  console.log("note", note);
 
   // const setDataSingle = async (id) => {
-    
+
   // };
 
   // pdf from api
@@ -93,7 +92,7 @@ function ReviewDokumenKerjasama({ token }) {
   };
 
   const notify = (value) =>
-    toast.info(`🦄 ${value}`, {
+    toast.info(`${value}`, {
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,
@@ -127,11 +126,11 @@ function ReviewDokumenKerjasama({ token }) {
         // formData.append("period", period);
         // formData.append("period_unit", periodUnit);
 
-        if (documentLocal === "") {
-          console.log("object");
-        } else {
-          formData.append("document", documentLocal);
-        }
+        formData.append("document", documentLocal);
+        // if (documentLocal === "") {
+        //   console.log("object");
+        // } else {
+        // }
 
         try {
           let { data } = await axios.post(
@@ -145,7 +144,7 @@ function ReviewDokumenKerjasama({ token }) {
           );
           router.push({
             pathname: "/partnership/user/kerjasama/review-dokumen-kerjasama/",
-            query: { revisiDone: true,id:router.query.id },
+            query: { revisiDone: true, id: router.query.id },
           });
         } catch (error) {
           console.log("object skdmksdmksdmksdmkk");
@@ -166,40 +165,50 @@ function ReviewDokumenKerjasama({ token }) {
 
   // kondisi jika note terisi alihkan page ke revisi
   useEffect(() => {
-
     async function setDataSingle(id) {
       try {
-      let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/cek-progres/${id}`,
-        {
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
+        let { data } = await axios.get(
+          `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/cek-progres/${id}`,
+          {
+            headers: {
+              authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setPeriod_start(data.data.period_date_start);
+        setPeriod_end(data.data.period_date_end);
+        setNo_perjanjianLembaga(data.data.agreement_number_partner);
+        setNo_perjanjianKoninfo(data.data.agreement_number_kemkominfo);
+        setTgl_ttd(data.data.signing_date);
+        setDokument(data.data.document);
+        setCatatanREvisi(data.data.note);
+        setNote(data.data.note);
+        if ((data.data.status_migrates_id.status === "aktif") || (data.data.status_migrates_id.status === "dibatalkan") ) {
+          router.push({
+            pathname: "/partnership/user/kerjasama/hasil",
+            query: {
+              id: router.query.id,
+              statusKerjasama: data.data.status_migrates_id.status,
+            },
+          });
         }
-      );
-      setPeriod_start(data.data.period_date_start);
-      setPeriod_end(data.data.period_date_end);
-      setNo_perjanjianLembaga(data.data.agreement_number_partner);
-      setNo_perjanjianKoninfo(data.data.agreement_number_kemkominfo);
-      setTgl_ttd(data.data.signing_date);
-      setDokument(data.data.document);
-      setCatatanREvisi(data.data.note);
-      setNote(data.data.note);
-      console.log("data single", data);
-      if(data.data.status_migrates_id.status === "aktif"){
-        router.push({
-          pathname:"/partnership/user/kerjasama/hasil",
-          query:{id:router.query.id,statusKerjasama:data.data.status_migrates_id.status},
-        })
+
+        if (data.data.status_migrates_id.status === "pengajuan-document" ) {
+          router.push({
+            pathname: "/partnership/user/kerjasama/review-dokumen-kerjasama",
+            query: {
+              id: router.query.id,
+            },
+          });
+        }
+        console.log("data.data.status_migrates_id.status",data.data.status_migrates_id.status)
+      } catch (error) {
+        console.log("action getSIngle gagal", error);
       }
-    } catch (error) {
-      console.log("action getSIngle gagal", error);
-    }
-      
     }
 
     setDataSingle(router.query.id);
-  }, [router.query.id,router,token]);
+  }, [router.query.id, token]);
 
   return (
     <PageWrapper>
@@ -251,7 +260,7 @@ function ReviewDokumenKerjasama({ token }) {
             </h3>
           </div>
           <div className="card-body pb-28">
-            <div className="row mt-8 mb-10">
+            <div className="row mt-8 mb-10 position-relative">
               <div className="col-2 p-0">
                 <div className="progress-items">
                   {/* <div className="line-progress"></div> */}
@@ -280,22 +289,35 @@ function ReviewDokumenKerjasama({ token }) {
                 <div className="progress-items">
                   <div className="line-progress active-line"></div>
                   <div className="circle-progress active-circle">
-                    <span className="title-progress">
-                      Submit Dokumen Kerjasama
+                    <span
+                      className="title-progress text-center"
+                      style={{ top: "-4rem" }}
+                    >
+                      Submit Dokumen
+                      <br />
+                      Kerjasama
                     </span>
                   </div>
                 </div>
               </div>
-              <div className="col-2">
-                <div className="progress-items">
-                  <div className="line-progress active-line"></div>
-                  <div className="circle-progress active-circle">
-                    <span className="title-progress">
-                      Review Dokumen Kerjasama
-                    </span>
+
+             
+                <div className="col-2">
+                  <div className="progress-items">
+                    <div className="line-progress active-line"></div>
+                    <div className="circle-progress active-circle">
+                      <span
+                        className="title-progress text-center active"
+                        style={{ top: "-4rem" }}
+                      >
+                        Review Dokumen
+                        <br />
+                        Kerjasama
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </div>
+
               <div className="col-2">
                 <div className="progress-items">
                   <div className="line-progress"></div>
@@ -319,33 +341,20 @@ function ReviewDokumenKerjasama({ token }) {
                 <div className="col-12 col-sm-6">
                   <div className="d-flex flex-column align-items-start justify-content-center h-100">
                     <h1 className="fz-40 fw-700" style={{ color: "#6C6C6C" }}>
-                      Dokumen Kerjasama Anda Telah Diterima
+                      Dokumen Kerjasama Terkirim!
                     </h1>
                     <p className="mt-5 fz-16">
-                      Terima Kasih telah Melakukan Pengajuan Kerjasama Dengan
-                      Kami.
-                    </p>
-                    <p className="fz-16">
-                      Mohon tunggu beberapa saat untuk proses review berkas yang
-                      anda submit
+                      Terima kasih telah mengirimkan dokumen kerjasama. Mohon tunggu dalam beberapa waktu karena Kami akan segera memproses dokumen kerjasamamu. 
                     </p>
                   </div>
 
                   <div className="form-group row">
                     <div className="col-sm-12 d-flex justify-content-end">
                       <Link href="/partnership/user/kerjasama" passHref>
-                    <a className="btn btn-sm btn-rounded-full bg-blue-primary text-white">
-                      Selesai
-                    </a>
-                  </Link>
-
-                      {/* <button
-                        className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
-                      >
-                        Selesai
-                      </button> */}
-
-
+                        <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary">
+                          Kembali
+                        </a>
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -353,10 +362,54 @@ function ReviewDokumenKerjasama({ token }) {
             ) : (
               <form>
                 <div className="form-group">
-                  <label htmlFor="staticEmail" className="col-form-label">
+                  <label
+                    htmlFor="staticEmail"
+                    className="col-form-label fz-14"
+                    style={{ color: "#6C6C6C" }}
+                  >
                     Periode Kerjasama
                   </label>
-                  <div className="row">
+                  <p className="fz-16">
+                    {period_start && period_start} - {period_end && period_end}
+                  </p>
+
+                  <label
+                    htmlFor="staticEmail"
+                    className="col-form-label fz-14"
+                    style={{ color: "#6C6C6C" }}
+                  >
+                    Nomor Perjanjian Lembaga
+                  </label>
+                  <p className="fz-16">
+                    {no_perjanjianLembaga && no_perjanjianLembaga}
+                  </p>
+                  <label
+                    htmlFor="staticEmail"
+                    className="col-form-label fz-14"
+                    style={{ color: "#6C6C6C" }}
+                  >
+                    Nomor Perjanjian Kemkominfo
+                  </label>
+                  <p className="fz-16">
+                    {no_perjanjianKoninfo && no_perjanjianKoninfo}
+                  </p>
+                  <label
+                    htmlFor="staticEmail"
+                    className="col-form-label fz-14"
+                    style={{ color: "#6C6C6C" }}
+                  >
+                    Tanggal Tanda Tangan
+                  </label>
+                  <p className="fz-16">{tgl_ttd && tgl_ttd}</p>
+                  <label
+                    htmlFor="staticEmail"
+                    className="col-form-label fz-14"
+                    style={{ color: "#6C6C6C" }}
+                  >
+                    Catatan Revisi
+                  </label>
+                  <p className="fz-16">{catatanREvisi && catatanREvisi}</p>
+                  {/* <div className="row">
                     <div className="col-12 col-sm-6">
                       <div className="d-flex align-items-center position-relative datepicker-w mt-2">
                         <DatePicker
@@ -396,10 +449,10 @@ function ReviewDokumenKerjasama({ token }) {
                         />
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
 
-                <div className="row">
+                {/* <div className="row">
                   <div className="col-12 col-sm-12">
                     <div className="form-group mb-10">
                       <label className="required mb-2">
@@ -415,8 +468,8 @@ function ReviewDokumenKerjasama({ token }) {
                       />
                     </div>
                   </div>
-                </div>
-                <div className="row">
+                </div> */}
+                {/* <div className="row">
                   <div className="col-12 col-sm-12">
                     <div className="form-group mb-10">
                       <label className="required mb-2">
@@ -432,9 +485,9 @@ function ReviewDokumenKerjasama({ token }) {
                       />
                     </div>
                   </div>
-                </div>
+                </div> */}
 
-                <div className="row">
+                {/* <div className="row">
                   <div className="col-12 col-sm-6">
                     <label htmlFor="staticEmail" className="col-form-label">
                       Tanggal Penandatanganan
@@ -456,46 +509,14 @@ function ReviewDokumenKerjasama({ token }) {
                       />
                     </div>
                   </div>
-                </div>
-                <div className="row">
+                </div> */}
+                {/* UPLOAD DOKUMENT SEBELUMNYA */}
+                {/* <div className="row">
                   <div className="col-12">
-                    {/* <div className="form-group">
-                    <label htmlFor="staticEmail" className="col-form-label">
-                      Dokumen Kerjasama
-                    </label>
-                    <div className="position-relative overflow-hidden w-100 ">
-                      <input
-                        disabled
-                        type="text"
-                        className="form-control"
-                        placeholder={`${dokument}`}
-                      />
-                      <button
-                        type="button"
-                        className="btn right-center-absolute"
-                        style={{
-                          borderTopLeftRadius: "0",
-                          borderBottomLeftRadius: "0",
-                          backgroundColor: "#D7E1EA",
-                          color: "#6C6C6C",
-                        }}
-                        onClick={() =>
-                          window.open(
-                            `https://dts-partnership-dev.s3.ap-southeast-1.amazonaws.com/partnership/files/document_cooperations/${dokument}`
-                          )
-                        }
-                      >
-                        Buka File
-                      </button>
-                    </div>
-                  </div> */}
-                    {/* start dokument */}
                     <div className="form-group">
                       <label htmlFor="staticEmail" className="col-form-label">
                         Dokumen Kerjasama
                       </label>
-                      {/* action show and upload */}
-                      {/* start action show and upload */}
                       <div className="row">
                         <div className="col-sm-12">
                           <div className="d-flex flex-wrap align-items-center mb-4">
@@ -579,13 +600,11 @@ function ReviewDokumenKerjasama({ token }) {
                       ) : (
                         ""
                       )}
-                      {/* start action show and upload */}
                     </div>
-                    {/* end dokument */}
                   </div>
-                </div>
+                </div> */}
 
-                <div className="row">
+                {/* <div className="row">
                   <div className="col-12">
                     <div className="form-group">
                       <label htmlFor="staticEmail" className="col-form-label">
@@ -604,6 +623,23 @@ function ReviewDokumenKerjasama({ token }) {
                         ></textarea>
                       </div>
                     </div>
+                  </div>
+                </div> */}
+
+                <div className="form-group">
+                  <label>Unggah Dokumen Kerjasama</label>
+                  <div></div>
+                  <div className="custom-file">
+                    <input
+                    accept=".pdf"
+                      type="file"
+                      className="custom-file-input"
+                      id="customFile"
+                      onChange={handlePdfFileChange}
+                    />
+                    <label className="custom-file-label" htmlFor="customFile">
+                      {NamePDF ? NamePDF : "Belum ada file"}
+                    </label>
                   </div>
                 </div>
 

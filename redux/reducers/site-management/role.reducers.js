@@ -36,7 +36,7 @@ export const allRolesReducer = (state = { role: [] }, action) => {
     case ROLE_FAIL:
       return {
         loading: false,
-        error: action.payload,
+        error: null,
       };
 
     case CLEAR_ERRORS:
@@ -114,7 +114,7 @@ export const detailRolesReducer = (state = { role: {} }, action) => {
   }
 };
 
-export const updateRoleReducer = (state = {}, action) => {
+export const updateRolesReducer = (state = {}, action) => {
   switch (action.type) {
     case UPDATE_ROLE_REQUEST:
       return {

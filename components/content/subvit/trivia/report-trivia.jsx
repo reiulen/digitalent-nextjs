@@ -12,6 +12,7 @@ import CardPage from "../../../CardPage";
 
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
+import styles from "../trivia/edit/step.module.css";
 
 const ReportTrivia = ({ token }) => {
   const dispatch = useDispatch();
@@ -184,7 +185,7 @@ const ReportTrivia = ({ token }) => {
 
                 <div className="col-md-3">
                   <button
-                    className="btn btn-rounded-full bg-blue-secondary text-white mt-2"
+                    className={`${styles.btnResponsive} btn btn-rounded-full bg-blue-secondary text-white mt-2`}
                     type="button"
                     onClick={handleExportReport}
                   >
@@ -207,7 +208,7 @@ const ReportTrivia = ({ token }) => {
                         <th>Peserta Test</th>
                         <th>Pelatihan</th>
                         <th>Total Pengerjaan</th>
-                        <th>Status</th>
+                        <th className="align-middle text-center">Status</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -255,20 +256,22 @@ const ReportTrivia = ({ token }) => {
                                 </div>
                               </td>
 
-                              <td className="align-middle">
-                                {row.status ? (
-                                  <td className="align-middle">
-                                    <span className="label label-inline label-light-success font-weight-bold">
-                                      Diterima
-                                    </span>
-                                  </td>
-                                ) : (
-                                  <td className="align-middle">
-                                    <span className="label label-inline label-light-danger font-weight-bold">
-                                      Ditolak
-                                    </span>
-                                  </td>
-                                )}
+                              <td className="align-middle ">
+                                <center>
+                                  {row.status ? (
+                                    <td className="align-middle ">
+                                      <span className="label label-inline label-light-success font-weight-bold">
+                                        Diterima
+                                      </span>
+                                    </td>
+                                  ) : (
+                                    <td className="align-middle">
+                                      <span className="label label-inline label-light-danger font-weight-bold">
+                                        Ditolak
+                                      </span>
+                                    </td>
+                                  )}
+                                </center>
                               </td>
                             </tr>
                           );

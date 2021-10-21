@@ -40,6 +40,7 @@ export const getAllSurveyQuestionDetail =
         `api/survey-question-bank-details/all/${id}?`;
       if (page) link = link.concat(`&page=${page}`);
       if (limit) link = link.concat(`&limit=${limit}`);
+      if (keyword) link = link.concat(`&keyword=${keyword}`);
 
       const { data } = await axios.get(link, config);
 

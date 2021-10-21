@@ -16,6 +16,7 @@ import moment from "moment";
 import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInputPublish from "/components/StepInputPublish";
 import LoadingPage from "../../../../LoadingPage";
+import styles from "../../trivia/edit/step.module.css";
 
 const StepTwo = ({ token }) => {
   const dispatch = useDispatch();
@@ -203,7 +204,7 @@ const StepTwo = ({ token }) => {
                     endDate={endDate}
                     dateFormat="dd/MM/yyyy"
                     autoComplete="off"
-                    value={startDate}
+                    value={startDate ? startDate : new Date(Date.now())}
                   />
 
                   {simpleValidator.current.message(
@@ -219,7 +220,7 @@ const StepTwo = ({ token }) => {
                     htmlFor="staticEmail"
                     className=" col-form-label font-weight-bold pb-0"
                   >
-                    Sampai
+                    Pelaksanaan Sampai
                   </p>
                   <DatePicker
                     wrapperClassName="datepicker"
@@ -235,7 +236,7 @@ const StepTwo = ({ token }) => {
                     minDate={startDate}
                     dateFormat="dd/MM/yyyy"
                     autoComplete="off"
-                    value={endDate}
+                    value={endDate ? endDate : new Date(Date.now())}
                   />
                   {simpleValidator.current.message(
                     "tanggal sampai",
@@ -358,7 +359,7 @@ const StepTwo = ({ token }) => {
                 <div className="col-sm-2"></div>
                 <div className="col-sm-10 text-right">
                   <button
-                    className="btn btn-light-ghost-rounded-full mr-2"
+                    className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
                     type="submit"
                   >
                     Simpan & Lanjut

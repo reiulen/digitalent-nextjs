@@ -28,10 +28,7 @@ const TambahVidio = ({ token }) => {
         ssr: false
     })
     const simpleValidator = useRef(new SimpleReactValidator({
-        locale: "id",
-        // messages: {
-        //    url: "Format url berupa: https://www.example.com"
-        // }
+        locale: "id"
     }));
     const [, forceUpdate] = useState();
 
@@ -41,6 +38,7 @@ const TambahVidio = ({ token }) => {
         error: allError,
         kategori,
     } = useSelector((state) => state.allKategori);
+    const { setting } = useSelector(state => state.allSettingPublikasi)
 
     useEffect(() => {
         // dispatch(getAllKategori());
@@ -79,7 +77,7 @@ const TambahVidio = ({ token }) => {
     const [isi_video, setIsiVideo] = useState('');
     const [url_video, setUrlVideo] = useState('')
     const [gambar, setGambar] = useState('')
-    const [tag, setTag] = useState('')
+    const [tag, setTag] = useState([])
     const [gambarPreview, setGambarPreview] = useState('/assets/media/default.jpg')
     const [iconPlus, setIconPlus] = useState(
         "/assets/icon/Add.svg"
@@ -88,6 +86,7 @@ const TambahVidio = ({ token }) => {
     const [publish, setPublish] = useState(0)
     const [publishDate, setPublishDate] = useState(null);
     const [disablePublishDate, setDisablePublishDate] = useState(true)
+    const [disableTag, setDisableTag] = useState(false)
 
     const onChangeGambar = (e) => {
         const type = ["image/jpg", "image/png", "image/jpeg"]
@@ -95,16 +94,21 @@ const TambahVidio = ({ token }) => {
         // console.log ("check")
 
         if (type.includes(e.target.files[0].type)) {
-            const reader = new FileReader();
-            reader.onload = () => {
-                if (reader.readyState === 2) {
-                    setGambar(reader.result);
-                    setGambarPreview(reader.result);
-                }
-            };
-            reader.readAsDataURL(e.target.files[0])
-            setGambarName(e.target.files[0].name)
-            // console.log (reader.readAsDataURL(e.target.files[0]))
+            if (e.target.files[0].size > parseInt(setting[0].max_size) + '000000') {
+                e.target.value = null;
+                Swal.fire("Oops !", "Data Image Melebihi Ketentuan", "error");
+            } else {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    if (reader.readyState === 2) {
+                        setGambar(reader.result);
+                        setGambarPreview(reader.result);
+                    }
+                };
+                reader.readAsDataURL(e.target.files[0])
+                setGambarName(e.target.files[0].name)
+                // console.log (reader.readAsDataURL(e.target.files[0]))
+            }
         }
 
         // if (e.target.name === 'gambar') {
@@ -117,6 +121,30 @@ const TambahVidio = ({ token }) => {
         //     }
         //     reader.readAsDataURL(e.target.files[0])
         // }
+    }
+
+    function hasWhiteSpace(s) {
+        return s.indexOf(' ') >= 0;
+    }
+    
+    const handleTag = (data) => {
+        for (let i = 0; i < data.length; i++) {
+            if (hasWhiteSpace(data[i])) {
+                data.splice([i], 1);
+            }
+            // console.log(hasWhiteSpace(data[i]));
+            // if(data[i] === " "){
+            //     console.log(data[i]);
+            //     data.splice(i, 1);
+            // }
+            // for (let j = 0; j < data[i].length; j++) {
+            //     if (data[i][j] === " ") {
+            //         data.splice(index, 1);
+            //         // setDisableTag(true)
+            //     }
+            // }
+        }
+        setTag(data);
     }
 
     const handleChangePublish = (e) => {
@@ -177,7 +205,7 @@ const TambahVidio = ({ token }) => {
                 }
 
                 dispatch(newVideo(data, token))
-                console.log("Unpublish :", data)
+                // console.log("Unpublish :", data)
             } else {
 
                 const data = {
@@ -193,7 +221,7 @@ const TambahVidio = ({ token }) => {
                 }
 
                 dispatch(newVideo(data, token))
-                console.log("Publish :", data)
+                // console.log("Publish :", data)
             }
 
         } else {
@@ -257,17 +285,17 @@ const TambahVidio = ({ token }) => {
                                     {simpleValidator.current.message(
                                         "judul_video",
                                         judul_video,
-                                        "required|min:5|max:50",
+                                        "required|min:5|max:200",
                                         { className: "text-danger" }
                                     )}
                                 </div>
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Deskripsi Video</label>
+                                <label htmlFor="staticEmail" className="col-sm-4 col-form-label font-weight-bolder">Deskripsi Video</label>
                                 <div className="col-sm-12">
                                     <textarea className='form-control' placeholder='Tulis Deskripsi' name="deskripsi" id="" rows="10" onChange={e => setIsiVideo(e.target.value)} value={isi_video} onBlur={() => simpleValidator.current.showMessageFor("isi_video")}></textarea>
-                                    {simpleValidator.current.message("isi_video", isi_video, "required|max:160|min:5", { className: "text-danger" })}
+                                    {simpleValidator.current.message("isi_video", isi_video, "required|min:5|max:5000", { className: "text-danger" })}
                                     {/* <small className='text-danger'>*Minimum 50 Karakter dan Maksimal 160 Karakter</small> */}
                                 </div>
                             </div>
@@ -275,7 +303,7 @@ const TambahVidio = ({ token }) => {
                             <div className="form-group">
                                 <label
                                     htmlFor="staticEmail"
-                                    className="col-sm-2 col-form-label font-weight-bolder"
+                                    className="col-sm-4 col-form-label font-weight-bolder"
                                 >
                                     Upload Thumbnail
                                 </label>
@@ -334,7 +362,7 @@ const TambahVidio = ({ token }) => {
                                     }
                                 </div>
 
-                                <div className="mt-3 col-sm-3 text-muted">
+                                <div className="mt-3 col-sm-6 col-md-6 col-lg-7 col-xl-3 text-muted">
                                     <p>
                                         Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar
                                     </p>
@@ -344,7 +372,7 @@ const TambahVidio = ({ token }) => {
                             </div>
 
                             <div className="form-group">
-                                <label className='col-sm-2 col-form-label font-weight-bolder'>Link URL Video</label>
+                                <label className='col-sm-4 col-form-label font-weight-bolder'>Link URL Video</label>
                                 <div className="col-sm-12">
                                     <div className="input-group">
                                         {/* <div className="input-group-prepend">
@@ -385,7 +413,7 @@ const TambahVidio = ({ token }) => {
                                             -- Video --
                                         </option>
                                         {!kategori || (kategori && kategori.length === 0) ? (
-                                            <option value="">Data kosong</option>
+                                            <option value="">Data Tidak Ditemukan</option>
                                         ) : (
                                             kategori &&
                                             kategori.kategori &&
@@ -413,14 +441,23 @@ const TambahVidio = ({ token }) => {
                             <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Tag</label>
                                 <div className="col-sm-12">
+                                    {/* <div>{tag}</div> */}
                                     <TagsInput
                                         value={tag}
-                                        onChange={setTag}
+                                        onChange={(data) => handleTag(data)}
                                         name="fruits"
-                                        placeHolder="Isi Tag disini dan Enter"
+                                        placeHolder="Isi Tag disini"
+                                        seprators={["Enter", "Tab"]}
                                     // onBlur={() => simpleValidator.current.showMessageFor('tag')}
                                     />
-                                    {/* <input type="text" className="form-control" placeholder="Isi Tag disini" value={tag} onChange={e => setTag(e.target.value)} /> */}
+                                    {
+                                        (disableTag === true) &&
+                                        <p className="text-danger">
+                                            Tag tidak bisa terdiri dari "SPACE" character saja
+                                        </p>
+                                        // :
+                                        // null
+                                    }
                                 </div>
                             </div>
                             <div className="form-group row">

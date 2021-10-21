@@ -54,7 +54,7 @@ const EditFaq = ({token}) => {
     const [judul, setJudulPertanyaan] = useState(faq.judul)
     const [jawaban, setJawaban] = useState(faq.jawaban);
     const [kategori_id, setKategoriId] = useState(faq.kategori_id)
-    const [users_id, setUsersId] = useState(3)
+    const [users_id, setUsersId] = useState(87)
     // const [pinned, setPinnedFaq] = useState(faq.pinned === 1 ? true : false)
     const [pinned, setPinnedFaq] = useState(faq.pinned)
     // const [publish, setPublish] = useState(faq.publish === 1 ? true : false)
@@ -190,7 +190,7 @@ const EditFaq = ({token}) => {
                             <div className="card-body">
                                 <form onSubmit={onSubmit}>
                                     <div className="form-group">
-                                        <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Judul Pertanyaan</label>
+                                        <label htmlFor="staticEmail" className="col-sm-4 col-form-label font-weight-bolder">Judul Pertanyaan</label>
                                         <div className="col-sm-12">
                                             <input
                                                 type="text"
@@ -200,7 +200,7 @@ const EditFaq = ({token}) => {
                                                 onChange={(e) => setJudulPertanyaan(e.target.value)}
                                                 onBlur={() => simpleValidator.current.showMessageFor("judul pertanyaan")}
                                             />
-                                            {simpleValidator.current.message("judul pertanyaan", judul, "required|min:5|max:50", { className: "text-danger" })}
+                                            {simpleValidator.current.message("judul pertanyaan", judul, "required|min:5|max:200", { className: "text-danger" })}
                                         </div>
                                     </div>
 
@@ -231,7 +231,7 @@ const EditFaq = ({token}) => {
                                             >
                                                 <option value="" disabled selected>-- FAQ --</option>
                                                 {!kategori || (kategori && kategori.length === 0) ? (
-                                                    <option value="">Data kosong</option>
+                                                    <option value="">Data Tidak Ditemukan</option>
                                                 ) : (
                                                     kategori &&
                                                     kategori.kategori &&

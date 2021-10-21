@@ -1,10 +1,13 @@
 import "../styles/globals.css";
-import "../styles/progresBar.css";
-import "../styles/styleCustomUtilities.css";
 import "react-datepicker/dist/react-datepicker.css";
-import "../components/Table/tableStyle.css";
 import "remixicon/fonts/remixicon.css";
 import "react-toastify/dist/ReactToastify.css";
+import "../styles/sitemanagement/pelatihan.css";
+import "../styles/peserta/dashboards.css";
+import "../styles/progresBar.css";
+import "../styles/styleCustomUtilities.css";
+import "../styles/dashboard.module.css";
+import "../components/Table/tableStyle.css";
 import "../components/content/sertifikat/style.css";
 import SimpleReactValidator from "simple-react-validator";
 import { wrapper } from "../redux/store";

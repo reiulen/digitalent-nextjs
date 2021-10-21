@@ -63,7 +63,8 @@ const TambahGaleri = ({ token }) => {
 
     const { loading, error, success } = useSelector(state => state.newGaleri)
     const { loading: allLoading, error: allError, kategori } = useSelector((state) => state.allKategori);
-
+    const { setting } = useSelector(state => state.allSettingPublikasi)
+    
     const [files, setFiles] = useState([]);
     const { getRootProps, getInputProps } = useDropzone({
         accept: 'image/*',
@@ -136,6 +137,7 @@ const TambahGaleri = ({ token }) => {
         }
 
         // }, [dispatch, error, success, files, router]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dispatch, error, success, router]);
 
 
@@ -152,13 +154,14 @@ const TambahGaleri = ({ token }) => {
     ]);
     const [kategori_id, setKategoriId] = useState(null)
     // const [kategori_id, setKategoriId] = useState(1)
-    const [users_id, setUserId] = useState(3)
+    const [users_id, setUserId] = useState(87)
     const [tag, setTag] = useState([])
     const [publish, setPublish] = useState(0)
     const [publishDate, setPublishDate] = useState(null);
     const [disablePublishDate, setDisablePublishDate] = useState(true)
     const [gambarName, setGambarName] = useState(null)
     const [totalImage, setTotalImage] = useState(1)
+    const [disableTag, setDisableTag] = useState(false)
 
     const handleChangePublish = (e) => {
         // setPublish(e.target.checked);
@@ -243,29 +246,63 @@ const TambahGaleri = ({ token }) => {
     //     }
     // }
 
+    // const onChangeImage = (e, index) => {
+    //     const type = ["image/jpg", "image/png", "image/jpeg"];
+    //     let list = [...image];
+    //     if (type.includes(e.target.files[0].type)) {
+    //         if (e.target.files[0].size > 5000000) {
+    //             e.target.value = null;
+    //             Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
+    //         } else {
+    //             list[index].imageFile = e.target.files[0];
+    //             list[index].imagePreview = URL.createObjectURL(e.target.files[0]);
+    //             list[index].imageName = e.target.files[0].name;
+    //             console.log(list)
+    //             setImage(list);
+    //         }
+    //         console.log(image);
+    //         // const reader = new FileReader();
+    //         // reader.onload = () => {
+    //         //   if (reader.readyState === 2) {
+    //         //   }
+    //         // };
+    //         // reader.readAsDataURL(e.target.files[0]);
+    //     } else {
+    //         e.target.value = null;
+    //         Swal.fire(
+    //             "Oops !",
+    //             "Data yang bisa dimasukkan hanya berupa data gambar.",
+    //             "error"
+    //         );
+    //     }
+    // };
+
     const onChangeImage = (e, index) => {
         const type = ["image/jpg", "image/png", "image/jpeg"];
         let list = [...image];
         if (type.includes(e.target.files[0].type)) {
-            list[index].imageFile = e.target.files[0];
-            const reader = new FileReader();
+            if (e.target.files[0].size > parseInt(setting[0].max_size) + '000000') {
+                e.target.value = null;
+                Swal.fire("Oops !", "Data Image Melebihi Ketentuan", "error");
+            } else {
+                list[index].imageFile = e.target.files[0];
+                const reader = new FileReader();
 
-            reader.onload = () => {
-                if (reader.readyState === 2) {
-                    list[index].imagePreview = reader.result;
-                }
-                // router.reload(window.location.pathname)
-                setImage([
-                    ...image,
-                ]);
-            };
+                reader.onload = () => {
+                    if (reader.readyState === 2) {
+                        list[index].imagePreview = reader.result;
+                    }
+                    // router.reload(window.location.pathname)
+                    setImage([
+                        ...image,
+                    ]);
+                };
 
-            reader.readAsDataURL(e.target.files[0]);
-            list[index].imageName = e.target.files[0].name;
+                reader.readAsDataURL(e.target.files[0]);
+                list[index].imageName = e.target.files[0].name;
 
-            setImage(list);
-
-
+                setImage(list);
+            }
         } else {
             e.target.value = null;
             Swal.fire(
@@ -290,6 +327,22 @@ const TambahGaleri = ({ token }) => {
         setTotalImage((totalImage) + 1)
     };
 
+    // const onAddImage = () => {
+    //     let newKey = 1;
+    //     if (image.length > 0) {
+    //       newKey = image[image.length - 1].key + 1;
+    //     }
+    //     setImage([
+    //       ...image,
+    //       {
+    //         key: newKey,
+    //         imagePreview: "",
+    //         imageFile: "",
+    //         imageName: "",
+    //       },
+    //     ]);
+    //   };
+
     const onDeleteImage = (index) => {
 
         if (totalImage === 1) {
@@ -306,6 +359,19 @@ const TambahGaleri = ({ token }) => {
         }
 
     };
+
+    const handleTag = (data) => {
+        for (let i = 0; i < data.length; i++) {
+            for (let j = 0; j < data[i].length; j++) {
+                if (data[i][j] === " ") {
+                    setDisableTag(true)
+                } else {
+                    setDisableTag(false)
+                }
+            }
+        }
+        setTag(data)
+    }
 
     const handleData = (temps, onCall) => {
         if (publishDate === null) {
@@ -326,7 +392,7 @@ const TambahGaleri = ({ token }) => {
             // dispatch(newGaleri(data, token))
 
             dispatch(onCall(data, token))
-            console.log("UNPUBLISH : ", data)
+            // console.log("UNPUBLISH : ", data)
             // console.log(image)
 
         } else {
@@ -343,7 +409,7 @@ const TambahGaleri = ({ token }) => {
             }
 
             dispatch(onCall(data, token))
-            console.log("PUBLISH : ", data)
+            // console.log("PUBLISH : ", data)
             // console.log(image)
         }
     }
@@ -448,9 +514,9 @@ const TambahGaleri = ({ token }) => {
 
     return (
         <PageWrapper>
-            {
-                console.log("Cek Kategori Awal",kategori)
-            }
+            {/* {
+                console.log("Cek Kategori Awal", kategori)
+            } */}
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
                     <div className="alert-icon"><i className="flaticon-warning"></i></div>
@@ -478,7 +544,7 @@ const TambahGaleri = ({ token }) => {
                                     {simpleValidator.current.message(
                                         "judul",
                                         judul,
-                                        "required|min:5|max:50",
+                                        "required|min:5|max:200",
                                         { className: "text-danger" }
                                     )}
                                 </div>
@@ -491,7 +557,7 @@ const TambahGaleri = ({ token }) => {
                                     {simpleValidator.current.message(
                                         "judul",
                                         judul,
-                                        "required|min:5|max:50",
+                                        "required|min:5|max:5000",
                                         { className: "text-danger" }
                                     )}
                                     {/* <small className='text-danger'>*Maksimal 160 Karakter</small> */}
@@ -499,7 +565,7 @@ const TambahGaleri = ({ token }) => {
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Upload Gambar</label>
+                                <label htmlFor="staticEmail" className="col-sm-4 col-form-label font-weight-bolder">Upload Gambar</label>
 
                                 {/* {
                                     totalImage === 1 ?
@@ -1634,7 +1700,7 @@ const TambahGaleri = ({ token }) => {
                                         </button>
                                     </div>
 
-                                    <div className="mt-3 col-sm-3 text-muted">
+                                    <div className="mt-3 col-sm-6 col-md-6 col-lg-7 col-xl-3 text-muted">
                                         <p>Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar.</p>
                                     </div>
                                 </div>
@@ -1672,7 +1738,7 @@ const TambahGaleri = ({ token }) => {
                                             -- Galeri --
                                         </option>
                                         {!kategori || (kategori && kategori.length === 0) ? (
-                                            <option value="">Data kosong</option>
+                                            <option value="">Data Tidak Ditemukan</option>
                                         ) : (
                                             kategori &&
                                             kategori.kategori &&
@@ -1702,12 +1768,19 @@ const TambahGaleri = ({ token }) => {
                                 <div className="col-sm-12">
                                     <TagsInput
                                         value={tag}
-                                        onChange={setTag}
+                                        onChange={(data) => handleTag(data)}
                                         name="fruits"
                                         placeHolder="Isi Tag disini dan Enter"
                                     // onBlur={() => simpleValidator.current.showMessageFor('tag')}
                                     />
-                                    {/* <input type="text" className="form-control" placeholder="Isi Tag disini" value={tag} onChange={e => setTag(e.target.value)} /> */}
+                                    {
+                                        disableTag === true ?
+                                            <p className="text-danger">
+                                                Tag tidak bisa terdiri dari "SPACE" character saja
+                                            </p>
+                                            :
+                                            null
+                                    }
                                 </div>
                             </div>
 

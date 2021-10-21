@@ -13,7 +13,6 @@ const Edit = ({ token }) => {
   const router = useRouter();
   let dispatch = useDispatch();
   const allMKCooporation = useSelector((state) => state.allMKCooporation);
-  console.log("allMKCooporation", allMKCooporation);
   const [categoryCooporation, setCategoryCooporation] = useState("");
   const [stateDataSingleOld, setStateDataSingleOld] = useState([]);
   const [stateDataSingle, setStateDataSingle] = useState([]);
@@ -113,7 +112,7 @@ const Edit = ({ token }) => {
   
 
   const notify = (value) =>
-    toast.info(`🦄 ${value}`, {
+    toast.info(`${value}`, {
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,

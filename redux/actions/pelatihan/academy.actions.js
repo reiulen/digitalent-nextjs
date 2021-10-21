@@ -48,7 +48,7 @@ export const getAllAcademy =
     } catch (error) {
       dispatch({
         type: ACADEMY_FAIL,
-        payload: error.message,
+        payload: error.response.data.message,
       });
     }
   };

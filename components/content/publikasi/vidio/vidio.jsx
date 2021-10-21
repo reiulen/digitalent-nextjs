@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
+import styles from '../../../../styles/preview.module.css'
+import stylesPag from "../../../../styles/pagination.module.css";
 
 import Pagination from 'react-js-pagination';
 import DatePicker from 'react-datepicker'
@@ -10,6 +12,7 @@ import { addDays } from 'date-fns'
 import ReactPlayer from 'react-player';
 import Swal from "sweetalert2";
 import moment from "moment";
+import styles2 from "../../../../styles/previewGaleri.module.css";
 
 import PageWrapper from '../../../wrapper/page.wrapper'
 import CardPage from '../../../CardPage'
@@ -20,8 +23,9 @@ import IconClose from "../../../assets/icon/Close";
 import IconFilter from "../../../assets/icon/Filter";
 
 import { useDispatch, useSelector } from 'react-redux'
-import { deleteVideo, playVideo, clearErrors } from '../../../../redux/actions/publikasi/video.actions'
+import { deleteVideo, playVideo, clearErrors, changeStatusCard, filterCard } from '../../../../redux/actions/publikasi/video.actions'
 import { DELETE_VIDEO_RESET } from '../../../../redux/types/publikasi/video.type'
+import { viewGaleri } from '../../../../redux/actions/publikasi/galeri.actions';
 
 const Vidio = ({ token }) => {
 
@@ -44,6 +48,8 @@ const Vidio = ({ token }) => {
     const [judul_video, setJudulVideo] = useState(null)
     const [tanggal_publish, setTanggalPublish] = useState(null)
     const [kategori, setKategori] = useState(null)
+    const [isiVideo, setIsiVideo] = useState(null)
+    const [tag, setTag] = useState([])
 
     let loading = false
     let { page = 1, keyword, success } = router.query
@@ -57,6 +63,19 @@ const Vidio = ({ token }) => {
     }
 
     page = Number(page)
+
+    // useEffect(()=>{
+    //     dispatch(filterCard(token));
+    // },[
+    //     dispatch,
+    //     allFilter.page,
+    //     allFilter.card,
+    //     allFilter.limit,
+    //     allFilter.keyword,
+    //     allFilter.startdate,
+    //     allFilter.enddate,
+    //     token
+    // ])
 
     useEffect(() => {
         // if (limit) {
@@ -284,20 +303,23 @@ const Vidio = ({ token }) => {
 
     }
 
-    const handlePreview = (url, id, judul_video, tanggal_publish, kategori) => {
+    const handlePreview = (url, id, judul_video, tanggal_publish, kategori, isi_video, tag) => {
         // const data = {
         //     id,
         //     _method: "PUT",
         //     isplay: "1"
         // }
 
-        // dispatch(playVideo(data))
+        // dispatch(playVideo(data, token))
+
         setIdVideo(id)
         setVideoPlaying(true)
         setUrlVideo(url)
         setJudulVideo(judul_video)
         setTanggalPublish(tanggal_publish)
         setKategori(kategori)
+        setIsiVideo(isi_video)
+        setTag(tag)
     }
 
     const handleIsPlayed = () => {
@@ -306,8 +328,8 @@ const Vidio = ({ token }) => {
             _method: "PUT",
             isplay: "1"
         }
-
         dispatch(playVideo(data, token))
+        // console.log("Video Play :", data)
     }
 
     const resetValueSort = () => {
@@ -321,21 +343,11 @@ const Vidio = ({ token }) => {
         setDisableEndDate(false)
     }
 
-    // const handleIsPlayed = (id) => {
-    //     const data = {
-    //         id,
-    //         _method: "PUT",
-    //         isplay: "1"
-    //     }
-
-    //     dispatch(playVideo(data))
-    // }
-
     return (
         <PageWrapper>
-            {
+            {/* {
                 console.log(video)
-            }
+            } */}
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
                     <div className="alert-icon"><i className="flaticon-warning"></i></div>
@@ -376,14 +388,14 @@ const Vidio = ({ token }) => {
                 ""
             )}
 
-            <div className="col-lg-12 col-md-3">
+            <div className="col-lg-12 col-md-12">
                 <div className="row">
                     <CardPage
                         background='bg-light-info'
                         icon="new/open-book.svg"
                         color='#ffffff'
                         // icon='mail-purple.svg' 
-                        // color='#8A50FC' 
+                        // color='#8A50FC'
                         value={video && video.publish != "" ? video.publish : 0}
                         titleValue='Video'
                         title='Total Publish'
@@ -433,10 +445,10 @@ const Vidio = ({ token }) => {
             <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
                 <div className="card card-custom card-stretch gutter-b">
                     <div className="card-header border-0">
-                        <h3 className="card-title font-weight-bolder text-dark">Video</h3>
+                        <h3 className={`${styles2.headTitle}`}>Video</h3>
                         <div className="card-toolbar">
                             <Link href='/publikasi/video/tambah'>
-                                <a className="btn btn-primary-rounded-full px-6 font-weight-bold btn-block ">
+                                <a className={`${styles2.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bold btn-block`}>
                                     <i className="ri-add-fill pb-1 text-white mr-2 "></i>
                                     Tambah Video
                                 </a>
@@ -448,7 +460,7 @@ const Vidio = ({ token }) => {
 
                         <div className="table-filter">
                             <div className="row align-items-center">
-                                <div className="col-lg-6 col-xl-6 col-sm-9">
+                                <div className="col-sm-6 col-md-6 col-lg-6 col-xl-6">
                                     <div
                                         className="position-relative overflow-hidden mt-3"
                                         style={{ maxWidth: "330px" }}
@@ -472,11 +484,11 @@ const Vidio = ({ token }) => {
                                         </button>
                                     </div>
                                 </div>
-                                <div className="col-lg-6 col-xl-6 col-sm-9">
+                                <div className="col-sm-6 col-md-6 col-lg-6 col-xl-6">
                                     <div className="d-flex flex-wrap align-items-center justify-content-end mt-2">
                                         {/* sortir by modal */}
                                         <button
-                                            className="avatar item-rtl btn border d-flex align-items-center justify-content-between mt-2"
+                                            className="col-sm-12 col-md-6 avatar item-rtl btn border d-flex align-items-center justify-content-between mt-2"
                                             data-toggle="modal"
                                             data-target="#exampleModalCenter"
                                             style={{ color: "#464646", minWidth: "230px" }}
@@ -680,15 +692,15 @@ const Vidio = ({ token }) => {
                                                 <th>Dibuat</th>
                                                 <th>Status</th>
                                                 <th>Role</th>
-                                                <th>Aksi</th>
+                                                <th style={{ width: '10vw' }}>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {
                                                 !video || video && video.video.length === 0 ?
-                                                    <td className='align-middle text-center' colSpan={8}>Data Tidak Ditemukan</td> :
+                                                    <td className='align-middle text-center' colSpan={12}>Data Tidak Ditemukan</td> :
                                                     video && video.video.map((row, i) => {
-                                                        { console.log("Video :", row.id) }
+                                                        // { console.log("Video :", row) }
                                                         return <tr key={row.id}>
                                                             {/* <td className="align-middle text-center">
                                                                 <span className="badge badge-secondary text-muted">
@@ -698,11 +710,11 @@ const Vidio = ({ token }) => {
                                                             <td className='align-middle text-center'>
                                                                 {
                                                                     limit === null ?
-                                                                        <span className="badge badge-secondary text-muted">
+                                                                        <span>
                                                                             {i + 1 * (page * 5) - (5 - 1)}
                                                                         </span>
                                                                         :
-                                                                        <span className="badge badge-secondary text-muted">
+                                                                        <span>
                                                                             {i + 1 * (page * limit) - (limit - 1)}
                                                                         </span>
                                                                 }
@@ -745,11 +757,12 @@ const Vidio = ({ token }) => {
                                                                 }
 
                                                             </td>
+                                                            {/* <td className='align-middle'>{row.role}</td> */}
                                                             <td className='align-middle'>Super Admin</td>
                                                             <td className="align-middle d-flex">
 
                                                                 <button
-                                                                    onClick={() => handlePreview(row.url_video, row.id, row.judul_video, row.tanggal_publish, row.kategori)}
+                                                                    onClick={() => handlePreview(row.url_video, row.id, row.judul_video, row.tanggal_publish, row.kategori, row.isi_video, row.tag)}
                                                                     className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete"
                                                                     data-target="#videoPlayerModal"
                                                                     data-toggle="modal"
@@ -772,7 +785,7 @@ const Vidio = ({ token }) => {
                                                                 </Link>
 
                                                                 <button
-                                                                    className="btn btn-link-action bg-blue-secondary text-white my-5 position-relative btn-delete"
+                                                                    className="btn btn-link-action bg-blue-secondary text-white my-5 btn-delete"
                                                                     onClick={() => handleDelete(row.id)}
                                                                 >
                                                                     <i className="ri-delete-bin-fill p-0 text-white"></i>
@@ -815,7 +828,7 @@ const Vidio = ({ token }) => {
 
                             <div className="row">
                                 {video && video.perPage < video.total &&
-                                    <div className="table-pagination">
+                                    <div className={`${stylesPag.pagination} table-pagination`}>
                                         <Pagination
                                             activePage={page}
                                             itemsCountPerPage={video.perPage}
@@ -832,21 +845,22 @@ const Vidio = ({ token }) => {
                                     </div>
                                 }
                                 {video ?
-                                    <div className="table-total ml-auto">
+                                    <div className={`${stylesPag.rightPag} table-total ml-auto`}>
                                         <div className="row">
                                             {/* <div className="col-4 mr-0 p-0 mt-3"> */}
                                             <div className="col-4 mr-0 mt-3">
                                                 <select
                                                     className="form-control"
                                                     id="exampleFormControlSelect2"
-                                                    style={{ width: '65px', background: '#F3F6F9', borderColor: '#F3F6F9', color: '#9E9E9E' }}
+                                                    style={{ width: '70px', background: '#F3F6F9', borderColor: '#F3F6F9', color: '#9E9E9E' }}
                                                     onChange={(e) => handleLimit(e.target.value)}
                                                     onBlur={(e) => handleLimit(e.target.value)}
                                                 >
                                                     <option value='5' selected={limit == "5" ? true : false}>5</option>
                                                     <option value='10' selected={limit == "10" ? true : false}>10</option>
-                                                    <option value='15' selected={limit == "15" ? true : false}>15</option>
-                                                    <option value='20' selected={limit == "20" ? true : false}>20</option>
+                                                    <option value='30' selected={limit == "30" ? true : false}>30</option>
+                                                    <option value='40' selected={limit == "40" ? true : false}>40</option>
+                                                    <option value='50' selected={limit == "50" ? true : false}>50</option>
                                                 </select>
                                             </div>
                                             <div className="col-8 my-auto">
@@ -864,48 +878,88 @@ const Vidio = ({ token }) => {
             {/* Modal */}
             <div className="modal fade" id="videoPlayerModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" >
                 <div className="modal-dialog modal-dialog-centered" role="document">
-                    <div className="modal-content" style={{ width: '1000px' }}>
-                        <div className="modal-header">
+                    <div className="modal-content" style={{ width: '700px', height: '470px' }}>
+                        {/* <div className="modal-header">
                             <h5 className="modal-title" id="exampleModalLongTitle">Pratinjau Video</h5>
                             <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
-                        </div>
-                        <div className="modal-body d-flex justify-content-center flex-column" style={{ height: '400px' }}>
-                            <ReactPlayer url={url_video} controls width="700px" playing={video_playing} onPlay={handleIsPlayed} />
-                            <div className="my-2">
-                                <h3>
+                        </div> */}
+                        <div className={styles['modal-body']}>
+                            {/* <div className={styles['title-preview-video']}> */}
+                            {/* <div className="mb-2" style={{ textAlign: 'right' }}> */}
+                            <div className={styles['playVideo']}>
+                                <button type="button" className="col-1 flaticon2-delete mb-2" data-dismiss="modal" aria-label="Close" style={{ border: 'none', background: 'none' }}></button>
+                                {/* </div> */}
+                                <ReactPlayer url={url_video} controls width="100%" height="100%" playing={video_playing} onPlay={handleIsPlayed} />
+                            </div>
+                            {/* </div> */}
+                            <div className="ml-3" style={{ marginTop: '30px' }}>
+                                <h3 className="font-weight-bolder">
                                     {judul_video}
                                 </h3>
                             </div>
-                            <div className="row">
-                                <div style={{ background: "#F3F6F9" }}
-                                    className="mr-5 px-3 py-1 rounded mb-1 ml-4">
-                                    <i className="flaticon2-calendar-4"></i>
+                            <div className="row align-items-center" style={{ marginLeft: '0' }}>
+                                <div className="col-3">
+                                    <span className="text-muted" style={{ fontSize: '11px' }}>
+                                        {tanggal_publish} | 120 Ditonton
+                                    </span>
+                                </div>
+                                <div className="col-6">
+                                    <div className={styles['listTag']}>
+                                        {
+                                            // console.log("Isi tag :", tag)
+                                            tag.map((el, i) => {
+                                                return (
+                                                    <div style={{ background: "#fff", border: '1px solid #d7e1ea' }}
+                                                        className="mr-2 px-3 py-1 rounded"
+                                                        key={i}>
+                                                        <div className="text-center" style={{ fontSize: '10px' }}>
+                                                            #{el.toUpperCase()}
+                                                        </div>
+                                                    </div>
+                                                )
+                                            })
+                                        }
+                                    </div>
+                                </div>
+                                <div className="col-3" style={{ textAlign: 'center' }}>
+                                    <span className="p-2 label label-inline label-light-success font-weight-bold">
+                                        {kategori}
+                                    </span>
+                                </div>
+                                {/* <div
+                                    className="mr-5 px-3 py-1 rounded mb-1 ml-4 d-flex align-items-center">
+                                    <i className="flaticon2-calendar-4 "></i>
                                     {
                                         tanggal_publish ?
-                                            <span className="ml-1">
-                                                Publish : {tanggal_publish}
+                                            <span className="ml-2">
+                                                Publish : {moment({ tanggal_publish }).format('LL')}
                                             </span>
                                             :
-                                            <span className="ml-1">
+                                            <span className="ml-2">
                                                 Belum dipublish
                                             </span>
                                     }
                                 </div>
 
-                                <div style={{ background: "#F3F6F9" }}
-                                    className=" rounded px-3">
+                                <div
+                                    className=" rounded px-3 d-flex align-items-center">
                                     <i className="ri-dashboard-line"></i>
-                                    <span className="ml-1 py-1">
+                                    <span className="ml-2 py-1">
                                         Kategori: {kategori}
                                     </span>
-                                </div>
+                                </div> */}
+                            </div>
+                            <div className="text-break m-4">
+                                <span>
+                                    {isiVideo}
+                                </span>
                             </div>
                         </div>
-                        <div className="modal-footer">
+                        {/* <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={() => setVideoPlaying(false)}>Tutup</button>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>

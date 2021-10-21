@@ -59,7 +59,7 @@ class MyDocument extends Document {
           {/* <link href="/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css" /> */}
 
           {/* <!--end::Layout Themes--> */}
-          <link rel="shortcut icon" href="/assets/media/logos/favicon.ico" />
+          <link rel="shortcut icon" href="/assets/icon/mainlogo.svg" />
 
           <script
             type="text/javascript"

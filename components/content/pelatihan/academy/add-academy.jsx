@@ -24,7 +24,6 @@ const AddAcademy = ({ token }) => {
   const [editorLoaded, setEditorLoaded] = useState(false);
   const { CKEditor, ClassicEditor, Base64UploadAdapter } =
     editorRef.current || {};
-
   const { loading, error, success, academy } = useSelector(
     (state) => state.newAcademy
   );
@@ -68,7 +67,7 @@ const AddAcademy = ({ token }) => {
         query: { success: true },
       });
     }
-  }, [success]);
+  }, [success, dispatch, router]);
 
   const handleResetError = () => {
     if (error) {
@@ -386,6 +385,7 @@ const AddAcademy = ({ token }) => {
                   Status
                 </label>
                 <Select
+                  placeholder="Silahkan Pilih Status"
                   options={optionsStatus}
                   defaultValue={status}
                   onChange={(e) => setStatus(e.value)}

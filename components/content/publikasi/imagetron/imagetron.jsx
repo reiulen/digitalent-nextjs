@@ -11,6 +11,8 @@ import DatePicker from 'react-datepicker'
 import { addDays } from 'date-fns'
 import Swal from "sweetalert2";
 import moment from "moment";
+import styles from "../../../../styles/previewGaleri.module.css";
+import stylesPag from "../../../../styles/pagination.module.css";
 
 import PageWrapper from '../../../wrapper/page.wrapper'
 import CardPage from '../../../CardPage'
@@ -84,10 +86,6 @@ const Imagetron = ({ token }) => {
         //         type: UPDATE_IMAGETRON_REQUEST
         //     })
         // }
-        printData()
-        // setTimeout(() => {
-        //     window.location.reload()
-        // }, 8000);
 
         if (isDeleted) {
             Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
@@ -375,99 +373,10 @@ const Imagetron = ({ token }) => {
     //     />
     // }
 
-    const printData = () => {
-        { console.log("CEK Imagetron :", imagetron) }
-        {
-            return !imagetron || imagetron && imagetron.data.imagetron.length === 0 ?
-                <td className='align-middle text-center' colSpan={8}>Data Tidak Ditemukan</td> :
-                imagetron && imagetron.data.imagetron.map((row, i) => {
-                    return <tr key={row.id}>
-                        <td className='align-middle text-center'>
-                            {
-                                limit === null ?
-                                    <span className="badge badge-secondary text-muted">
-                                        {i + 1 * (page * 5) - (5 - 1)}
-                                    </span>
-                                    :
-                                    <span className="badge badge-secondary text-muted">
-                                        {i + 1 * (page * limit) - (limit - 1)}
-                                    </span>
-                            }
+    // const printData = () => {
+    //     { console.log("CEK Imagetron :", imagetron) }
 
-                        </td>
-                        <td className='text-center'>
-                            <Image
-                                alt={row.judul}
-                                unoptimized={
-                                    process.env.ENVIRONMENT !== "PRODUCTION"
-                                }
-                                loader={process.env.END_POINT_API_IMAGE_PUBLIKASI +
-                                    "publikasi/images/" +
-                                    row.gambar}
-                                src={
-                                    process.env.END_POINT_API_IMAGE_PUBLIKASI +
-                                    "publikasi/images/" +
-                                    row.gambar
-                                }
-                                width={80}
-                                height={50}
-                            />
-                            {/* <Image alt='name_image' src='https://statik.tempo.co/data/2018/11/29/id_800478/800478_720.jpg' width={80} height={50} /> */}
-                        </td>
-                        <td className='align-middle'>{row.nama_kategori}</td>
-                        <td className='align-middle'>{row.judul}</td>
-                        <td className="align-middle">
-                            {row.publish === 1 ? (
-                                row.tanggal_publish
-                            ) : (
-                                <span className="label label-inline label-light-danger font-weight-bold">
-                                    Belum dipublish
-                                </span>
-                            )}
-                        </td>
-                        {/* <td className='align-middle'>{row.dibuat}</td> */}
-                        <td className='align-middle'>Super Admin</td>
-                        <td className="align-middle">
-                            {row.publish === 1 ? (
-                                <span className="label label-inline label-light-success font-weight-bold">
-                                    Publish
-                                </span>
-                            ) : (
-                                <span className="label label-inline label-light-warning font-weight-bold">
-                                    Belum dipublish
-                                </span>
-                            )}
-                        </td>
-                        <td className='align-middle'>Super Admin</td>
-                        <td className="align-middle d-flex justify-content-center">
-
-                            <Link
-                                href={`/publikasi/imagetron/${row.id}`}
-                            >
-                                <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete">
-                                    <i className="ri-pencil-fill p-0 text-white"></i>
-                                    <div className="text-hover-show-hapus">
-                                        Ubah
-                                    </div>
-                                </a>
-                            </Link>
-
-                            <button
-                                className="btn btn-link-action bg-blue-secondary text-white my-5 position-relative btn-delete"
-                                onClick={() => handleDelete(row.id)}
-                            >
-                                <i className="ri-delete-bin-fill p-0 text-white"></i>
-                                <div className="text-hover-show-hapus">
-                                    Hapus
-                                </div>
-                            </button>
-
-                        </td>
-                    </tr>
-
-                })
-        }
-    }
+    // }
 
     // caches.open('v1').then(function(cache) {
     //     cache.delete('/images/image.png').then(function(response) {
@@ -477,9 +386,9 @@ const Imagetron = ({ token }) => {
 
     return (
         <PageWrapper>
-            {
+            {/* {
                 console.log(imagetron)
-            }
+            } */}
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
                     <div className="alert-icon"><i className="flaticon-warning"></i></div>
@@ -589,12 +498,12 @@ const Imagetron = ({ token }) => {
             <div className="col-lg-12 order-1 px-0">
                 <div className="card card-custom card-stretch gutter-b">
                     <div className="card-header border-0">
-                        <h3 className="card-title font-weight-bolder text-dark">
+                        <h3 className={`${styles.headTitle}`}>
                             Imagetron
                         </h3>
                         <div className="card-toolbar">
                             <Link href="/publikasi/imagetron/tambah">
-                                <a className="btn btn-primary-rounded-full px-6 font-weight-bold btn-block ">
+                                <a className={`${styles.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bold btn-block`}>
                                     <i className="ri-add-fill pb-1 text-white mr-2 "></i>
                                     Tambah Imagetron
                                 </a>
@@ -606,7 +515,7 @@ const Imagetron = ({ token }) => {
 
                         <div className="table-filter">
                             <div className="row align-items-center">
-                                <div className="col-lg-6 col-xl-6 col-sm-9">
+                                <div className="col-sm-6 col-md-6 col-lg-6 col-xl-6">
                                     <div
                                         className="position-relative overflow-hidden mt-3"
                                         style={{ maxWidth: "330px" }}
@@ -630,11 +539,11 @@ const Imagetron = ({ token }) => {
                                         </button>
                                     </div>
                                 </div>
-                                <div className="col-lg-6 col-xl-6 col-sm-9">
+                                <div className="col-sm-6 col-md-6 col-lg-6 col-xl-6">
                                     <div className="d-flex flex-wrap align-items-center justify-content-end mt-2">
                                         {/* sortir by modal */}
                                         <button
-                                            className="avatar item-rtl btn border d-flex align-items-center justify-content-between mt-2"
+                                            className="col-sm-12 col-md-6 avatar item-rtl btn border d-flex align-items-center justify-content-between mt-2"
                                             data-toggle="modal"
                                             data-target="#exampleModalCenter"
                                             style={{ color: "#464646", minWidth: "230px" }}
@@ -839,12 +748,102 @@ const Imagetron = ({ token }) => {
                                                 <th>Dibuat</th>
                                                 <th>Status</th>
                                                 <th>Role</th>
-                                                <th>Aksi</th>
+                                                <th style={{ width: '9vw' }}>Aksi</th>
                                             </tr>
                                         </thead>
 
                                         <tbody>
-                                            {printData()}
+                                            {
+                                                !imagetron || imagetron && imagetron.data.imagetron.length === 0 ?
+                                                    <td className='align-middle text-center' colSpan={9}>Data Tidak Ditemukan</td> :
+                                                    imagetron && imagetron.data.imagetron.map((row, i) => {
+                                                        return <tr key={row.id}>
+                                                            <td className='align-middle text-center'>
+                                                                {
+                                                                    limit === null ?
+                                                                        // <span className="badge badge-secondary text-muted">
+                                                                        <span>
+                                                                            {i + 1 * (page * 5) - (5 - 1)}
+                                                                        </span>
+                                                                        :
+                                                                        <span>
+                                                                            {i + 1 * (page * limit) - (limit - 1)}
+                                                                        </span>
+                                                                }
+
+                                                            </td>
+                                                            <td className='text-center'>
+                                                                <Image
+                                                                    alt={row.judul}
+                                                                    unoptimized={
+                                                                        process.env.ENVIRONMENT !== "PRODUCTION"
+                                                                    }
+                                                                    loader={() => (process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                                                        "publikasi/images/" +
+                                                                        row.gambar)}
+                                                                    src={
+                                                                        process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                                                        "publikasi/images/" +
+                                                                        row.gambar
+                                                                    }
+                                                                    width={80}
+                                                                    height={50}
+                                                                />
+                                                                {/* <Image alt='name_image' src='https://statik.tempo.co/data/2018/11/29/id_800478/800478_720.jpg' width={80} height={50} /> */}
+                                                            </td>
+                                                            <td className='align-middle'>{row.nama_kategori}</td>
+                                                            <td className='align-middle'>{row.judul}</td>
+                                                            <td className="align-middle">
+                                                                {row.publish === 1 ? (
+                                                                    row.tanggal_publish
+                                                                ) : (
+                                                                    <span className="label label-inline label-light-danger font-weight-bold">
+                                                                        Belum dipublish
+                                                                    </span>
+                                                                )}
+                                                            </td>
+                                                            {/* <td className='align-middle'>{row.dibuat}</td> */}
+                                                            <td className='align-middle'>{row.dibuat}</td>
+                                                            <td className="align-middle">
+                                                                {row.publish === 1 ? (
+                                                                    <span className="label label-inline label-light-success font-weight-bold">
+                                                                        Publish
+                                                                    </span>
+                                                                ) : (
+                                                                    <span className="label label-inline label-light-warning font-weight-bold">
+                                                                        Belum dipublish
+                                                                    </span>
+                                                                )}
+                                                            </td>
+                                                            <td className='align-middle'>{row.role}</td>
+                                                            <td className="align-middle d-flex justify-content-center">
+
+                                                                <Link
+                                                                    href={`/publikasi/imagetron/${row.id}`}
+                                                                >
+                                                                    <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete">
+                                                                        <i className="ri-pencil-fill p-0 text-white"></i>
+                                                                        <div className="text-hover-show-hapus">
+                                                                            Ubah
+                                                                        </div>
+                                                                    </a>
+                                                                </Link>
+
+                                                                <button
+                                                                    className="btn btn-link-action bg-blue-secondary text-white my-5 position-relative btn-delete"
+                                                                    onClick={() => handleDelete(row.id)}
+                                                                >
+                                                                    <i className="ri-delete-bin-fill p-0 text-white"></i>
+                                                                    <div className="text-hover-show-hapus">
+                                                                        Hapus
+                                                                    </div>
+                                                                </button>
+
+                                                            </td>
+                                                        </tr>
+
+                                                    })
+                                            }
                                         </tbody>
                                     </table> : ''
                                 }
@@ -852,7 +851,7 @@ const Imagetron = ({ token }) => {
 
                             <div className="row">
                                 {imagetron && parseInt(imagetron.data.perPage) < imagetron.data.total &&
-                                    <div className="table-pagination">
+                                    <div className={`${stylesPag.pagination} table-pagination`}>
                                         <Pagination
                                             activePage={page}
                                             itemsCountPerPage={parseInt(imagetron.data.perPage)}
@@ -869,14 +868,14 @@ const Imagetron = ({ token }) => {
                                     </div>
                                 }
                                 {imagetron ?
-                                    <div className="table-total ml-auto">
+                                    <div className={`${stylesPag.rightPag} table-total ml-auto`}>
                                         <div className="row">
                                             <div className="col-4 mr-0 mt-3">
                                                 <select
                                                     className="form-control"
                                                     id="exampleFormControlSelect2"
                                                     style={{
-                                                        width: "65px",
+                                                        width: "70px",
                                                         background: "#F3F6F9",
                                                         borderColor: "#F3F6F9",
                                                         color: "#9E9E9E",
@@ -886,8 +885,9 @@ const Imagetron = ({ token }) => {
                                                 >
                                                     <option value='5' selected={limit == "5" ? true : false}>5</option>
                                                     <option value='10' selected={limit == "10" ? true : false}>10</option>
-                                                    <option value='15' selected={limit == "15" ? true : false}>15</option>
-                                                    <option value='20' selected={limit == "20" ? true : false}>20</option>
+                                                    <option value='30' selected={limit == "30" ? true : false}>30</option>
+                                                    <option value='40' selected={limit == "40" ? true : false}>40</option>
+                                                    <option value='50' selected={limit == "50" ? true : false}>50</option>
                                                 </select>
                                             </div>
                                             <div className="col-8 my-auto">

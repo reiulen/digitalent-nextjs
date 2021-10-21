@@ -17,10 +17,13 @@ import moment from "moment";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Select from "react-select";
+import FormSubmit from './submitKerjasama'
 
-const Tambah = ({token}) => {
+const Tambah = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
+  const {formSubmit} = router.query
+  console.log("formSubmit",formSubmit)
   const allMK = useSelector((state) => state.allMK);
   // state form data 1
   const [institution_name, setInstitution_name] = useState("");
@@ -49,41 +52,39 @@ const Tambah = ({token}) => {
     setAllCooperation(dataaa);
   };
 
-  
-
   const submit = (e) => {
     e.preventDefault();
 
     if (institution_name === "") {
       setError({ ...error, institution_name: "Harus pilih nama lembaga" });
-      notify("Harus pilih nama lembaga");
+      // notify("Harus pilih nama lembaga");
     } else if (date === "") {
       setError({ ...error, date: "Filed tanggal tidak boleh kosong" });
-      notify("Filed tanggal tidak boleh kosong");
+      // notify("Filed tanggal tidak boleh kosong");
     } else if (title === "") {
       setError({ ...error, title: "Filed judul kerjasama tidak boleh kosong" });
-      notify("Filed judul kerjasama tidak boleh kosong");
+      // notify("Filed judul kerjasama tidak boleh kosong");
     } else if (cooperationC_id === "") {
       setError({
         ...error,
         cooperationC_id: "Filed kategori kerjasama tidak boleh kosong",
       });
-      notify("Filed kategori kerjasama tidak boleh kosong");
+      // notify("Filed kategori kerjasama tidak boleh kosong");
     } else if (period === "") {
       setError({ ...error, period: "Filed periode tidak boleh kosong" });
-      notify("Filed periode tidak boleh kosong");
+      // notify("Filed periode tidak boleh kosong");
     } else if (periodUnit === "") {
       setError({
         ...error,
         periodUnit: "Filed period unit tidak boleh kosong",
       });
-      notify("Filed period unit tidak boleh kosong");
+      // notify("Filed period unit tidak boleh kosong");
     } else if (AllCooperation === "") {
       setError({
         ...error,
         AllCooperation: "Filed kerjasama form tidak boleh kosong",
       });
-      notify("Filed kerjasama form tidak boleh kosong");
+      // notify("Filed kerjasama form tidak boleh kosong");
     } else {
       Swal.fire({
         title: "Apakah anda yakin ?",
@@ -111,8 +112,13 @@ const Tambah = ({token}) => {
 
           sessionStorage.setItem("dataBefore", JSON.stringify(allDataPart));
 
+          // router.push({
+          //   pathname: "/partnership/kerjasama/submit",
+          //   query:{formSubmit:true}
+          // });
           router.push({
-            pathname: "/partnership/kerjasama/submit",
+            pathname: "/partnership/kerjasama/tambah",
+            query:{formSubmit:true}
           });
         }
       });
@@ -131,7 +137,7 @@ const Tambah = ({token}) => {
   };
 
   const notify = (value) =>
-    toast.info(`🦄 ${value}`, {
+    toast.info(`${value}`, {
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,
@@ -152,7 +158,7 @@ const Tambah = ({token}) => {
     dispatch(fetchListSelectCooperation(token));
     // get cooperation active select
     dispatch(fetchListCooperationSelect(token));
-    dispatch(fetchListCooperationSelectById(token,cooperationC_id));
+    dispatch(fetchListCooperationSelectById(token, cooperationC_id));
     dispatch(fetchListSelectMitra(token));
     setDate(moment(new Date()).format("YYYY-MM-DD"));
   }, [
@@ -160,10 +166,12 @@ const Tambah = ({token}) => {
     allMK.institution_name,
     allMK.idCooporationSelect,
     cooperationC_id,
-    token
+    token,
   ]);
+
   return (
     <PageWrapper>
+      {!formSubmit ?
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
         <ToastContainer
           position="bottom-right"
@@ -185,21 +193,32 @@ const Tambah = ({token}) => {
               Tambah Kerjasama
             </h3>
           </div>
-          <div className="card-body">
+          <div className="card-body pt-0">
             <form onSubmit={submit}>
               <div className="fv-row mb-10">
                 <label className="required fw-bold fs-6 mb-2">Tanggal</label>
-                <input
+                {/* <input
                   readOnly
                   value={date}
                   type="text"
                   className="form-control mb-3 mb-lg-0"
+                /> */}
+
+                <input
+                  disabled
+                  type="text"
+                  value={date}
+                  name="text_input"
+                  className="form-control mb-3 mb-lg-0 border-0"
+                  // placeholder="Masukan Alamat E-mail"
+                  style={{backgroundColor:"transparent"}}
                 />
+
                 {error.date ? <p className="error-text">{error.date}</p> : ""}
               </div>
               <div className="row">
                 <div className="col-12 col-sm-6">
-                  <div className="fv-row mb-10">
+                  <div className="fv-row mb-6 position-relative" style={{zIndex:"4"}}>
                     <label className="required fw-bold fs-6 mb-2">
                       Lembaga
                     </label>
@@ -228,27 +247,24 @@ const Tambah = ({token}) => {
                   </div>
                 </div>
                 <div className="col-12 col-sm-6">
-
-
-                  <div className="fv-row mb-10">
+                  <div className="fv-row mb-6">
                     <label className="required fw-bold fs-6 mb-2">Email</label>
                     <input
                       disabled
                       type="text"
                       value={allMK.email}
                       name="text_input"
-                      className="form-control mb-3 mb-lg-0"
-                      placeholder="Masukan Alamat E-mail"
+                      className="form-control mb-3 mb-lg-0 border-0"
+                      // placeholder="Masukan Alamat E-mail"
+                      style={{backgroundColor:"transparent"}}
                     />
                   </div>
-
-
                 </div>
               </div>
 
-              <div className="row">
+              {/* <div className="row">
                 <div className="col-12 col-sm-6">
-                  <div className="fv-row mb-10">
+                  <div className="fv-row mb-6">
                     <label className="required fw-bold fs-6 mb-2">
                       Periode Kerjasama
                     </label>
@@ -269,7 +285,7 @@ const Tambah = ({token}) => {
                   </div>
                 </div>
                 <div className="col-12 col-sm-6">
-                  <div className="fv-row mb-10">
+                  <div className="fv-row mb-6">
                     <label className="required fw-bold fs-6 mb-2"></label>
                     <input
                       disabled
@@ -280,9 +296,43 @@ const Tambah = ({token}) => {
                     />
                   </div>
                 </div>
-              </div>
+              </div> */}
 
-              <div className="fv-row mb-10">
+              <div className="row mb-4">
+                <div className="col-12 col-sm-6">
+                  <div className="form-group mb-4">
+                    <label>Periode Kerjasama</label>
+                    <div className="input-group">
+                      <input
+                        onFocus={() => setError({ ...error, period: "" })}
+                        type="text"
+                        value={period}
+                        className="form-control mb-lg-0"
+                        placeholder="Masukkan Lama Kerjasama"
+                        onChange={(e) => onChangePeriod(e)}
+                      />
+                      
+                      <div className="input-group-append">
+                        <button
+                          className="btn btn-secondary"
+                          type="button"
+                          disabled
+                        >
+                          Tahun
+                        </button>
+                      </div>
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {error.period ? (
+                      <p className="error-text mb-4 mt-0">{error.period}</p>
+                    ) : (
+                      ""
+                    )}
+
+              <div className="fv-row mb-6">
                 <label className="required fw-bold fs-6 mb-2">
                   Judul Kerjasama
                 </label>
@@ -386,6 +436,7 @@ const Tambah = ({token}) => {
           </div>
         </div>
       </div>
+       : <FormSubmit token={token} /> }
     </PageWrapper>
   );
 };

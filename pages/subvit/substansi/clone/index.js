@@ -20,14 +20,14 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (!session) {
         return {
           redirect: {
-            destination: "http://dts-dev.majapahit.id/",
+            destination: "http://dts-dev.majapahit.id/login/admin",
             permanent: false,
           },
         };
       }
 
       return {
-        props: { session, title: "Clone Bank Soal Tes Subtansi - Subvit" },
+        props: { session, title: "Clone Bank Soal Test Subtansi - Subvit" },
       };
     }
 );

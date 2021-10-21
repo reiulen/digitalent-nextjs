@@ -16,7 +16,7 @@ export async function getServerSideProps(context) {
   if (session) {
     return {
       redirect: {
-        destination: "http://dts-dev.majapahit.id/",
+        destination: "http://dts-dev.majapahit.id/partnership/user/kerjasama",
         permanent: false,
       },
     };

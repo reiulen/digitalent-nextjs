@@ -41,22 +41,23 @@ const LoginUser = () => {
         redirect: false,
         email,
         password,
-        role: "user",
-        captcha,
+        role: "peserta",
+        capcha: captcha,
       };
-      // const result = await signIn("credentials", data);
+      const result = await signIn("credentials", data);
 
-      router.push("/peserta");
-      // if (result.error) {
-      //   toast.error(result.error);
-      //   setLoading(false);
-      // } else {
-      //   setLoading(false);
-      //   if (data.role === "admin") {
-      //   } else {
-      //     router.push("/partnership/user/kerjasama");
-      //   }
-      // }
+      if (result.error) {
+        toast.error(result.error);
+        setLoading(false);
+      } else {
+        setLoading(false);
+        if (data.role === "admin") {
+        } else if (data.role === "mitra") {
+          router.push("/partnership/user/kerjasama");
+        } else {
+          router.push("/peserta");
+        }
+      }
     } else {
       setLoading(false);
       simpleValidator.current.showMessages();
@@ -69,7 +70,7 @@ const LoginUser = () => {
       <AuthWrapper image="bg-user-2.png" title="Login">
         <div
           className="col-lg-7 d-flex flex-wrap align-content-center"
-          style={{ background: "#1A4367" }}
+          style={{ background: "#0063CC" }}
         >
           <div className="container ">
             <div className="title-login text-center mt-6">
@@ -122,7 +123,12 @@ const LoginUser = () => {
                 </div>
                 <div className="form-group">
                   <label className="form-auth-label">Password</label>
-                  <a className="float-right text-primary">Lupa Password ?</a>
+                  <a
+                    className="float-right font-weight-bold"
+                    style={{ color: "#4CBDE2" }}
+                  >
+                    Lupa Password ?
+                  </a>
                   <div className="position-relative">
                     <input
                       id="input-password"
@@ -159,7 +165,7 @@ const LoginUser = () => {
                   )}
                 </div>
 
-                <div className="capcha">
+                <div className="g-recaptcha">
                   <ReCAPTCHA
                     sitekey={process.env.CAPTCHA_SITE_KEY}
                     onChange={setCaptcha}
@@ -196,7 +202,12 @@ const LoginUser = () => {
                 <p style={{ fontSize: "12px", color: "#ffffff" }}>
                   Belum punya akun?
                   <Link href="/register">
-                    <a className="text-primary ml-2">Buat Akun</a>
+                    <a
+                      className="ml-2 font-weight-bolder"
+                      style={{ color: "#4CBDE2" }}
+                    >
+                      Buat Akun
+                    </a>
                   </Link>
                 </p>
               </div>

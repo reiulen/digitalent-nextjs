@@ -9,6 +9,8 @@ import Pagination from 'react-js-pagination';
 import DatePicker from 'react-datepicker'
 import { addDays } from 'date-fns'
 import LoadingTable from '../../../LoadingTable';
+import styles from "../../../../styles/previewGaleri.module.css";
+import stylesPag from "../../../../styles/pagination.module.css";
 
 import PageWrapper from '../../../wrapper/page.wrapper'
 import CardPage from '../../../CardPage'
@@ -21,7 +23,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { deleteFaq, updatePinFaq, getAllFaqPagination } from '../../../../redux/actions/publikasi/faq.actions'
 import { DELETE_FAQ_RESET, UPDATE_PIN_FAQ_RESET } from '../../../../redux/types/publikasi/faq.type'
 
-const Faq = ({token}) => {
+const Faq = ({ token }) => {
     const importSwitch = () => import("bootstrap-switch-button-react");
     const SwitchButton = dynamic(importSwitch, {
         ssr: false,
@@ -33,7 +35,7 @@ const Faq = ({token}) => {
     const { loading, error, faq } = useSelector(state => state.allFaq)
     const { paginateFaq } = useSelector(state => state.paginationFaq)
     const { error: deleteError, isDeleted } = useSelector(state => state.deleteFaq)
-    const { error: updateError,isUpdated } = useSelector(state => state.updatePinFaq)
+    const { error: updateError, isUpdated } = useSelector(state => state.updatePinFaq)
 
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
@@ -42,7 +44,7 @@ const Faq = ({token}) => {
     const [search, setSearch] = useState('')
 
     const [publishValue, setPublishValue] = useState(null);
-    const [disableEndDate, setDisableEndDate] = useState (true)
+    const [disableEndDate, setDisableEndDate] = useState(true)
 
     let { page = 1, success } = router.query
     page = Number(page)
@@ -126,45 +128,45 @@ const Faq = ({token}) => {
     };
 
     const handlePagination = (pageNumber) => {
-        if (limit !== null  && search === "" && startDate === null && endDate === null && publishValue === null) {
+        if (limit !== null && search === "" && startDate === null && endDate === null && publishValue === null) {
             router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}`)
-    
+
         } else if (limit !== null && search !== "" && startDate === null && endDate === null && publishValue === null) {
             router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}`)
-    
+
         } else if (limit === null && search !== "" && startDate === null && endDate === null && publishValue === null) {
             router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}`)
-    
-        } else if (limit !== null  && search === "" && startDate !== null && endDate !== null && publishValue === null) {
+
+        } else if (limit !== null && search === "" && startDate !== null && endDate !== null && publishValue === null) {
             router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
-    
-        } else if (limit !== null  && search !== "" && startDate !== null && endDate !== null && publishValue === null) {
+
+        } else if (limit !== null && search !== "" && startDate !== null && endDate !== null && publishValue === null) {
             router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
-        
-        } else if (limit === null  && search !== "" && startDate !== null && endDate !== null && publishValue === null) {
+
+        } else if (limit === null && search !== "" && startDate !== null && endDate !== null && publishValue === null) {
             router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
-        
-        } else if (limit !== null  && search === "" && startDate === null && endDate === null && publishValue !== null) {
+
+        } else if (limit !== null && search === "" && startDate === null && endDate === null && publishValue !== null) {
             router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&publish=${publishValue}`)
-          
-        } else if (limit !== null  && search !== "" && startDate === null && endDate === null && publishValue !== null) {
+
+        } else if (limit !== null && search !== "" && startDate === null && endDate === null && publishValue !== null) {
             router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&publish=${publishValue}`)
-    
+
         } else if (limit === null && search !== "" && startDate === null && endDate === null && publishValue !== null) {
             router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&publish=${publishValue}`)
-    
+
         } else if (limit === null && search === "" && startDate === null && endDate === null && publishValue !== null) {
-          router.push(`${router.pathname}?page=${pageNumber}&publish=${publishValue}`)
-    
-        } else if (limit !== null  && search === "" && startDate !== null && endDate !== null && publishValue !== null) {
-          router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
-    
-        } else if (limit !== null  && search !== "" && startDate !== null && endDate !== null && publishValue !== null) {
-          router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
-        
-        } else if (limit === null  && search !== "" && startDate !== null && endDate !== null && publishValue !== null) {
-          router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
-    
+            router.push(`${router.pathname}?page=${pageNumber}&publish=${publishValue}`)
+
+        } else if (limit !== null && search === "" && startDate !== null && endDate !== null && publishValue !== null) {
+            router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+
+        } else if (limit !== null && search !== "" && startDate !== null && endDate !== null && publishValue !== null) {
+            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+
+        } else if (limit === null && search !== "" && startDate !== null && endDate !== null && publishValue !== null) {
+            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+
         } else {
             router.push(`${router.pathname}?page=${pageNumber}`)
         }
@@ -174,27 +176,27 @@ const Faq = ({token}) => {
     const handleSearch = () => {
         if (limit != null && startDate === null && endDate === null) {
             router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`)
-    
-        } else if (limit !== null && startDate !== null && endDate !== null ) {
+
+        } else if (limit !== null && startDate !== null && endDate !== null) {
             router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
-    
+
         } else {
             router.push(`${router.pathname}?page=1&keyword=${search}`)
         }
-    
+
     };
 
     const handleSearchDate = () => {
         // console.log (startDate)
 
-        if (moment(startDate).format("YYYY-MM-DD") > moment(endDate).format("YYYY-MM-DD")){
+        if (moment(startDate).format("YYYY-MM-DD") > moment(endDate).format("YYYY-MM-DD")) {
             Swal.fire(
                 'Oops !',
                 'Tanggal Dari tidak boleh melebihi Tanggal Sampai.',
                 'error'
             )
-            setStartDate (null)
-            setEndDate (null)
+            setStartDate(null)
+            setEndDate(null)
 
         } else if (startDate === null && endDate !== null) {
             Swal.fire(
@@ -202,8 +204,8 @@ const Faq = ({token}) => {
                 'Tanggal Dari tidak boleh kosong',
                 'error'
             )
-            setStartDate (null)
-            setEndDate (null)
+            setStartDate(null)
+            setEndDate(null)
 
         } else if (startDate !== null && endDate === null) {
             Swal.fire(
@@ -211,8 +213,8 @@ const Faq = ({token}) => {
                 'Tanggal Sampai tidak boleh kosong',
                 'error'
             )
-            setStartDate (null)
-            setEndDate (null)
+            setStartDate(null)
+            setEndDate(null)
 
         } else if (startDate === null && endDate === null) {
             Swal.fire(
@@ -220,23 +222,23 @@ const Faq = ({token}) => {
                 'Harap mengisi tanggal terlebih dahulu.',
                 'error'
             )
-            setStartDate (null)
-            setEndDate (null)
+            setStartDate(null)
+            setEndDate(null)
 
         } else {
             if (limit !== null && search !== null && startDate !== null && endDate !== null) {
                 router.push(
                     `${router.pathname}?page=1&keyword=${search}startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
                 );
-    
+
             } else if (limit !== null && search === null && startDate !== null && endDate !== null) {
                 router.push(
                     `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
                 )
-              
-            
+
+
             } else if (limit !== null && search === null && startDate === null && endDate === null) {
-                router.push (
+                router.push(
                     `${router.pathname}?page=1&limit=${limit}`
                 )
 
@@ -244,11 +246,11 @@ const Faq = ({token}) => {
                 router.push(
                     `${router.pathname}?page=1&limit=${limit}&keyword=${search}`
                 )
-                
+
             } else {
                 router.push(
                     `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`
-                ); 
+                );
             }
         }
     };
@@ -256,61 +258,61 @@ const Faq = ({token}) => {
     const handleLimit = (val) => {
         setLimit(val)
         if (search === "" && publishValue === null) {
-          router.push(`${router.pathname}?page=1&limit=${val}`);
-    
+            router.push(`${router.pathname}?page=1&limit=${val}`);
+
         } else if (search !== "" && publishValue === null) {
-          router.push(`${router.pathname}?page=1&keyword=${search}&limit=${val}`)
-        
+            router.push(`${router.pathname}?page=1&keyword=${search}&limit=${val}`)
+
         } else if (search === "" && publishValue !== null) {
-          router.push(`${router.pathname}?page=1&limit=${val}&publish=${publishValue}`);
-        
+            router.push(`${router.pathname}?page=1&limit=${val}&publish=${publishValue}`);
+
         } else if (search !== "" && publishValue !== null) {
-          router.push(`${router.pathname}?page=1&keyword=${search}&limit=${val}&publish=${publishValue}`)
+            router.push(`${router.pathname}?page=1&keyword=${search}&limit=${val}&publish=${publishValue}`)
         }
-    
+
     };
-    
+
     const handlePublish = (val) => {
         if (val !== null || val !== "") {
-          setPublishValue (val)
-    
-          if ( startDate === null && endDate === null && limit === null && search === null){
-            router.push(`${router.pathname}?publish=${val}`);
-      
-          } else if ( startDate !== null && endDate !== null && limit === null && search === null) {
-              router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
-      
-          } else if ( startDate !== null && endDate !== null && limit !== null && search === null) {
-              router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`)
-          
-          } else if ( startDate !== null && endDate !== null && limit === null && search !== null) {
-              router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&keyword=${search}`)
-      
-          } else if ( startDate === null && endDate === null && limit !== null && search === null) {
-              router.push(`${router.pathname}?publish=${val}&limit=${limit}`);
-      
-          } else if ( startDate === null && endDate === null && limit === null && search !== null) {
-              router.push(`${router.pathname}?publish=${val}&keyword=${search}`);
-          
-          } else if ( startDate === null && endDate === null && limit !== null && search !== null) {
-              router.push(`${router.pathname}?publish=${val}&limit=${limit}&keyword=${search}`);
-          
-          } else if ( startDate !== null && endDate !== null && limit !== null && search !== null) {
-              router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}&keyword=${search}`)
-          }
+            setPublishValue(val)
+
+            if (startDate === null && endDate === null && limit === null && search === null) {
+                router.push(`${router.pathname}?publish=${val}`);
+
+            } else if (startDate !== null && endDate !== null && limit === null && search === null) {
+                router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+
+            } else if (startDate !== null && endDate !== null && limit !== null && search === null) {
+                router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`)
+
+            } else if (startDate !== null && endDate !== null && limit === null && search !== null) {
+                router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&keyword=${search}`)
+
+            } else if (startDate === null && endDate === null && limit !== null && search === null) {
+                router.push(`${router.pathname}?publish=${val}&limit=${limit}`);
+
+            } else if (startDate === null && endDate === null && limit === null && search !== null) {
+                router.push(`${router.pathname}?publish=${val}&keyword=${search}`);
+
+            } else if (startDate === null && endDate === null && limit !== null && search !== null) {
+                router.push(`${router.pathname}?publish=${val}&limit=${limit}&keyword=${search}`);
+
+            } else if (startDate !== null && endDate !== null && limit !== null && search !== null) {
+                router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}&keyword=${search}`)
+            }
         }
-        
+
     }
 
     const resetValueSort = () => {
         setStartDate(null)
         setEndDate(null)
-        setDisableEndDate (true)
+        setDisableEndDate(true)
     }
 
     const handleStartDate = (date) => {
-        setStartDate (date)
-        setDisableEndDate (false)
+        setStartDate(date)
+        setDisableEndDate(false)
     }
 
 
@@ -360,39 +362,39 @@ const Faq = ({token}) => {
 
             <div className="col-lg-12 col-md-12">
                 <div className="row">
-                    <CardPage 
-                        background='bg-light-info' 
+                    <CardPage
+                        background='bg-light-info'
                         icon="new/open-book.svg"
                         color='#ffffff'
                         // icon='mail-purple.svg' 
                         // color='#8A50FC' 
-                        value={faq && faq.publish != "" ? faq.publish : 0} 
-                        titleValue='FAQ' 
+                        value={faq && faq.publish != "" ? faq.publish : 0}
+                        titleValue='FAQ'
                         title='Total Publish'
                         publishedVal="1"
-                        routePublish={() => handlePublish("1")} 
+                        routePublish={() => handlePublish("1")}
                     />
-                    <CardPage 
-                        background='bg-light-success' 
+                    <CardPage
+                        background='bg-light-success'
                         icon="new/mail-white.svg"
                         color="#ffffff"
                         // icon='garis-yellow.svg' 
                         // color='#634100' 
-                        value='64' 
-                        titleValue='FAQ' 
+                        value='64'
+                        titleValue='FAQ'
                         title='Total Author'
                         publishedVal=""
-                        routePublish={() => handlePublish("")} 
+                        routePublish={() => handlePublish("")}
                     />
-                    <CardPage 
-                        background='bg-light-danger' 
+                    <CardPage
+                        background='bg-light-danger'
                         icon="Library.svg"
-                        color='#ffffff' 
+                        color='#ffffff'
                         // icon='kotak-kotak-red.svg' 
                         // color='#F65464' 
-                        value={faq && faq.unpublish != "" ? faq.unpublish : 0}  
-                        titleValue='FAQ' 
-                        title='Total Unpublish' 
+                        value={faq && faq.unpublish != "" ? faq.unpublish : 0}
+                        titleValue='FAQ'
+                        title='Total Unpublish'
                         publishedVal="0"
                         routePublish={() => handlePublish("0")}
                     />
@@ -402,10 +404,10 @@ const Faq = ({token}) => {
             <div className="col-lg-12 order-1 px-0">
                 <div className="card card-custom card-stretch gutter-b">
                     <div className="card-header border-0">
-                        <h3 className="card-title font-weight-bolder text-dark">FAQ</h3>
+                        <h3 className={`${styles.headTitle}`}>FAQ</h3>
                         <div className="card-toolbar">
                             <Link href='/publikasi/faq/tambah'>
-                                <a className="btn btn-primary-rounded-full px-6 font-weight-bold btn-block ">
+                                <a className={`${styles.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bold btn-block`}>
                                     <i className="ri-add-line pb-1 text-white mr-2 "></i>
                                     Tambah FAQ
                                 </a>
@@ -417,173 +419,172 @@ const Faq = ({token}) => {
 
                         <div className="table-filter">
                             <div className="row align-items-center">
-                                <div className="col-lg-6 col-xl-6 col-sm-9">
-                                <div
-                                    className="position-relative overflow-hidden mt-3"
-                                    style={{ maxWidth: "330px" }}
-                                >
-                                    <i className="ri-search-line left-center-absolute ml-2"></i>
-                                    <input
-                                    type="text"
-                                    className="form-control pl-10"
-                                    placeholder="Ketik disini untuk Pencarian..."
-                                    onChange={(e) => setSearch(e.target.value)}
-                                    />
-                                    <button
-                                    className="btn bg-blue-primary text-white right-center-absolute"
-                                    style={{
-                                        borderTopLeftRadius: "0",
-                                        borderBottomLeftRadius: "0",
-                                    }}
-                                    onClick={handleSearch}
+                                <div className="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                    <div className="position-relative overflow-hidden mt-3"
+                                        style={{ maxWidth: "330px" }}
                                     >
-                                    Cari
-                                    </button>
-                                </div>
-                                </div>
-                                <div className="col-lg-6 col-xl-6 col-sm-9">
-                                <div className="d-flex flex-wrap align-items-center justify-content-end mt-2">
-                                    {/* sortir by modal */}
-                                    <button
-                                    className="avatar item-rtl btn border d-flex align-items-center justify-content-between mt-2"
-                                    data-toggle="modal"
-                                    data-target="#exampleModalCenter"
-                                    style={{ color: "#464646", minWidth: "230px" }}
-                                    >
-                                    <div className="d-flex align-items-center">
-                                    <IconFilter className="mr-3" />
-                                    Pilih Filter
-                                    </div>
-                                    <IconArrow fill="#E4E6EF" width="11" height="11"/>
-                                    </button>
-
-                                    {/* modal */}
-                                    <form
-                                    // id="kt_docs_formvalidation_text"
-                                    className="form text-left"
-                                    // action="#"
-                                    // autoComplete="off"
-                                    // onSubmit={handleSubmitSearchMany}
-                                    >
-                                    <div
-                                        className="modal fade"
-                                        id="exampleModalCenter"
-                                        tabIndex="-1"
-                                        role="dialog"
-                                        aria-labelledby="exampleModalCenterTitle"
-                                        aria-hidden="true"
-                                    >
-                                        <div
-                                        className="modal-dialog modal-dialog-centered"
-                                        role="document"
+                                        <i className="ri-search-line left-center-absolute ml-2"></i>
+                                        <input
+                                            type="text"
+                                            className="form-control pl-10"
+                                            placeholder="Ketik disini untuk Pencarian..."
+                                            onChange={(e) => setSearch(e.target.value)}
+                                        />
+                                        <button
+                                            className="btn bg-blue-primary text-white right-center-absolute"
+                                            style={{
+                                                borderTopLeftRadius: "0",
+                                                borderBottomLeftRadius: "0",
+                                            }}
+                                            onClick={handleSearch}
                                         >
-                                        <div className="modal-content">
-                                            <div className="modal-header">
-                                            <h5
-                                                className="modal-title font-weight-bold"
-                                                id="exampleModalLongTitle"
-                                            >
-                                            Filter
-                                            </h5>
-                                            <button
-                                                type="button"
-                                                className="close"
-                                                data-dismiss="modal"
-                                                aria-label="Close"
-                                                onClick={() => resetValueSort()}
-                                            >
-                                            <IconClose />
-                                            </button>
+                                            Cari
+                                        </button>
+                                    </div>
+                                </div>
+                                <div className="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                    <div className="d-flex flex-wrap align-items-center justify-content-end mt-2">
+                                        {/* sortir by modal */}
+                                        <button
+                                            className="col-sm-12 col-md-6 avatar item-rtl btn border d-flex align-items-center justify-content-between mt-2"
+                                            data-toggle="modal"
+                                            data-target="#exampleModalCenter"
+                                            style={{ color: "#464646", minWidth: "230px" }}
+                                        >
+                                            <div className="d-flex align-items-center">
+                                                <IconFilter className="mr-3" />
+                                                Pilih Filter
                                             </div>
+                                            <IconArrow fill="#E4E6EF" width="11" height="11" />
+                                        </button>
 
+                                        {/* modal */}
+                                        <form
+                                            // id="kt_docs_formvalidation_text"
+                                            className="form text-left"
+                                        // action="#"
+                                        // autoComplete="off"
+                                        // onSubmit={handleSubmitSearchMany}
+                                        >
                                             <div
-                                            className="modal-body text-left"
-                                            style={{ height: "200px" }}
+                                                className="modal fade"
+                                                id="exampleModalCenter"
+                                                tabIndex="-1"
+                                                role="dialog"
+                                                aria-labelledby="exampleModalCenterTitle"
+                                                aria-hidden="true"
                                             >
-                                            <div className="mb-10 col-12">
-                                                <label className="required fw-bold fs-6 mb-2">
-                                                Tanggal
-                                                </label>
+                                                <div
+                                                    className="modal-dialog modal-dialog-centered"
+                                                    role="document"
+                                                >
+                                                    <div className="modal-content">
+                                                        <div className="modal-header">
+                                                            <h5
+                                                                className="modal-title font-weight-bold"
+                                                                id="exampleModalLongTitle"
+                                                            >
+                                                                Filter
+                                                            </h5>
+                                                            <button
+                                                                type="button"
+                                                                className="close"
+                                                                data-dismiss="modal"
+                                                                aria-label="Close"
+                                                                onClick={() => resetValueSort()}
+                                                            >
+                                                                <IconClose />
+                                                            </button>
+                                                        </div>
 
-                                                <div>
-                                                <DatePicker
-                                                    className="form-search-date form-control-sm form-control"
-                                                    selected={startDate}
-                                                    onChange={(date) => handleStartDate(date)}
-                                                    selectsStart
-                                                    startDate={startDate}
-                                                    endDate={endDate}
-                                                    dateFormat="dd/MM/yyyy"
-                                                    placeholderText="Silahkan Isi Tanggal Dari"
-                                                    wrapperClassName="col-12 col-lg-12 col-xl-12"
-                                                    // minDate={moment().toDate()}
-                                                // minDate={addDays(new Date(), 20)}
-                                                />
+                                                        <div
+                                                            className="modal-body text-left"
+                                                            style={{ height: "200px" }}
+                                                        >
+                                                            <div className="mb-10 col-12">
+                                                                <label className="required fw-bold fs-6 mb-2">
+                                                                    Tanggal
+                                                                </label>
+
+                                                                <div>
+                                                                    <DatePicker
+                                                                        className="form-search-date form-control-sm form-control"
+                                                                        selected={startDate}
+                                                                        onChange={(date) => handleStartDate(date)}
+                                                                        selectsStart
+                                                                        startDate={startDate}
+                                                                        endDate={endDate}
+                                                                        dateFormat="dd/MM/yyyy"
+                                                                        placeholderText="Silahkan Isi Tanggal Dari"
+                                                                        wrapperClassName="col-12 col-lg-12 col-xl-12"
+                                                                    // minDate={moment().toDate()}
+                                                                    // minDate={addDays(new Date(), 20)}
+                                                                    />
+                                                                </div>
+                                                            </div>
+
+                                                            <div className="mb-10 col-12">
+                                                                <label className="required fw-bold fs-6 mb-2">
+                                                                    Tanggal
+                                                                </label>
+
+                                                                <div>
+                                                                    <DatePicker
+                                                                        className="form-search-date form-control-sm form-control"
+                                                                        selected={endDate}
+                                                                        onChange={(date) => setEndDate(date)}
+                                                                        selectsEnd
+                                                                        startDate={startDate}
+                                                                        endDate={endDate}
+                                                                        dateFormat="dd/MM/yyyy"
+                                                                        minDate={startDate}
+                                                                        // minDate={moment().toDate()}
+                                                                        maxDate={addDays(startDate, 20)}
+                                                                        placeholderText="Silahkan Isi Tanggal Sampai"
+                                                                        wrapperClassName="col-12 col-lg-12 col-xl-12"
+                                                                        disabled={disableEndDate === true || disableEndDate === null}
+                                                                    // minDate={addDays(new Date(), 20)}
+                                                                    />
+                                                                </div>
+                                                                {
+                                                                    disableEndDate === true || disableEndDate === null ?
+                                                                        <small className="text-muted">
+                                                                            Mohon isi Tanggal Dari terlebih dahulu
+                                                                        </small>
+                                                                        :
+                                                                        null
+                                                                }
+                                                            </div>
+
+                                                        </div>
+                                                        <div className="modal-footer">
+                                                            <div className="d-flex justify-content-end align-items-center">
+                                                                <button
+                                                                    className="btn btn-white-ghost-rounded-full"
+                                                                    type="button"
+                                                                    onClick={() => resetValueSort()}
+                                                                >
+                                                                    Reset
+                                                                </button>
+                                                                <button
+                                                                    className="btn btn-primary-rounded-full ml-4"
+                                                                    type="button"
+                                                                    data-dismiss="modal"
+                                                                    onClick={() => handleSearchDate()}
+                                                                >
+                                                                    Terapkan
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
+                                        </form>
+                                        {/* end modal */}
 
-                                            <div className="mb-10 col-12">
-                                                <label className="required fw-bold fs-6 mb-2">
-                                                Tanggal
-                                                </label>
-                                    
-                                                <div>
-                                                <DatePicker
-                                                    className="form-search-date form-control-sm form-control"
-                                                    selected={endDate}
-                                                    onChange={(date) => setEndDate(date)}
-                                                    selectsEnd
-                                                    startDate={startDate}
-                                                    endDate={endDate}
-                                                    dateFormat="dd/MM/yyyy"
-                                                    minDate={startDate}
-                                                    // minDate={moment().toDate()}
-                                                    maxDate={addDays(startDate, 20)}
-                                                    placeholderText="Silahkan Isi Tanggal Sampai"
-                                                    wrapperClassName="col-12 col-lg-12 col-xl-12"
-                                                    disabled = {disableEndDate === true || disableEndDate === null}
-                                                // minDate={addDays(new Date(), 20)}
-                                                />
-                                                </div>
-                                                {
-                                                    disableEndDate === true || disableEndDate === null ?
-                                                        <small className="text-muted">
-                                                        Mohon isi Tanggal Dari terlebih dahulu
-                                                        </small>
-                                                    :
-                                                        null
-                                                }
-                                            </div>
-                                            
-                                            </div>
-                                        <div className="modal-footer">
-                                            <div className="d-flex justify-content-end align-items-center">
-                                            <button
-                                                className="btn btn-white-ghost-rounded-full"
-                                                type="button"
-                                                onClick={() => resetValueSort()}
-                                            >
-                                                Reset
-                                            </button>
-                                            <button
-                                                className="btn btn-primary-rounded-full ml-4"
-                                                type="button"
-                                                data-dismiss="modal"
-                                                onClick={() => handleSearchDate()}
-                                            >
-                                                Terapkan
-                                            </button>
-                                            </div>
-                                        </div>
-                                        </div>
                                     </div>
-                                    </div>
-                                </form>
-                                {/* end modal */}
-
                                 </div>
-                                </div>
-                </div>
+                            </div>
                             {/* <div className="row align-items-right">
                                 <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
                                     <DatePicker
@@ -640,9 +641,10 @@ const Faq = ({token}) => {
                                                 <th>Pin FAQ</th>
                                                 <th>Status</th>
                                                 <th>Role</th>
-                                                <th>Aksi</th>
+                                                <th style={{ width: '8vw' }}>Aksi</th>
                                             </tr>
                                         </thead>
+
                                         <tbody>
                                             {
                                                 !faq || faq && faq.faq.length === 0 ?
@@ -657,15 +659,15 @@ const Faq = ({token}) => {
                                                             <td className='align-middle text-center'>
                                                                 {
                                                                     limit === null ?
-                                                                    <span className="badge badge-secondary text-muted">
-                                                                        {i + 1 * (page * 5 ) - (5 - 1 )}
-                                                                    </span>
-                                                                    :
-                                                                    <span className="badge badge-secondary text-muted">
-                                                                        {i + 1 * (page * limit) - (limit - 1)}
-                                                                    </span>
+                                                                        <span>
+                                                                            {i + 1 * (page * 5) - (5 - 1)}
+                                                                        </span>
+                                                                        :
+                                                                        <span>
+                                                                            {i + 1 * (page * limit) - (limit - 1)}
+                                                                        </span>
                                                                 }
-                                                                
+
                                                             </td>
                                                             <td className='align-middle'>{row.judul}</td>
                                                             <td className='align-middle'>{row.kategori}</td>
@@ -684,37 +686,36 @@ const Faq = ({token}) => {
                                                             </td>
                                                             <td className='align-middle'>
                                                                 {
-                                                                    row.publish === 1 ? 
-                                                                    // <SwitchButton
-                                                                    //     checked={row.pinned === 1 ? true : false}
-                                                                    //     onlabel=" "
-                                                                    //     onstyle="primary"
-                                                                    //     offlabel=" "
-                                                                    //     offstyle="secondary"
-                                                                    //     size="sm"
-                                                                    //     width={30}
-                                                                    //     onChange={(checked) => onSetPin(checked, row.id)}
-                                                                    // />
-                                                                    <label className="switches">
-                                                                        <input
-                                                                        // required
-                                                                        className="checkbox"
-                                                                        checked={row.pinned === 1 || row.pinned === true ? true : false}
-                                                                        type="checkbox"
-                                                                        // onChange={(checked) => setPublish(checked)}
-                                                                        onChange={(checked) => onSetPin(checked, row)}
-                                                                        />
-                                                                        <span
-                                                                        className={`sliders round ${
-                                                                            row.pinned === 1  || row.pinned === true  ?"text-white" : "pl-2"
-                                                                        }`}
-                                                                        >
-                                                                        </span>
-                                                                    </label>
-                                                                    :
-                                                                    <div className="text-center ml-1"> - </div>
+                                                                    row.publish === 1 ?
+                                                                        // <SwitchButton
+                                                                        //     checked={row.pinned === 1 ? true : false}
+                                                                        //     onlabel=" "
+                                                                        //     onstyle="primary"
+                                                                        //     offlabel=" "
+                                                                        //     offstyle="secondary"
+                                                                        //     size="sm"
+                                                                        //     width={30}
+                                                                        //     onChange={(checked) => onSetPin(checked, row.id)}
+                                                                        // />
+                                                                        <label className="switches">
+                                                                            <input
+                                                                                // required
+                                                                                className="checkbox"
+                                                                                checked={row.pinned === 1 || row.pinned === true ? true : false}
+                                                                                type="checkbox"
+                                                                                // onChange={(checked) => setPublish(checked)}
+                                                                                onChange={(checked) => onSetPin(checked, row)}
+                                                                            />
+                                                                            <span
+                                                                                className={`sliders round ${row.pinned === 1 || row.pinned === true ? "text-white" : "pl-2"
+                                                                                    }`}
+                                                                            >
+                                                                            </span>
+                                                                        </label>
+                                                                        :
+                                                                        <div className="text-center ml-1"> - </div>
                                                                 }
-                                                                
+
                                                             </td>
                                                             <td className='align-middle'>
                                                                 {row.publish === 1 ? (
@@ -734,14 +735,14 @@ const Faq = ({token}) => {
                                                             <td className="align-middle d-flex justify-content-center">
 
                                                                 <Link
-                                                                href={`/publikasi/faq/${row.id}`}
+                                                                    href={`/publikasi/faq/${row.id}`}
                                                                 >
-                                                                <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete">
-                                                                    <i className="ri-pencil-fill p-0 text-white"></i>
-                                                                    <div className="text-hover-show-hapus">
-                                                                        Ubah
-                                                                    </div>
-                                                                </a>
+                                                                    <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete">
+                                                                        <i className="ri-pencil-fill p-0 text-white"></i>
+                                                                        <div className="text-hover-show-hapus">
+                                                                            Ubah
+                                                                        </div>
+                                                                    </a>
                                                                 </Link>
 
                                                                 <button
@@ -786,7 +787,7 @@ const Faq = ({token}) => {
 
                             <div className="row">
                                 {faq && faq.perPage < faq.total &&
-                                    <div className="table-pagination">
+                                    <div className={`${stylesPag.pagination} table-pagination`}>
                                         <Pagination
                                             activePage={page}
                                             itemsCountPerPage={faq.perPage}
@@ -830,14 +831,14 @@ const Faq = ({token}) => {
                                         </div>
                                     </div> : ''
                                 } */}
-                                <div className="table-total ml-auto">
+                                <div className={`${stylesPag.rightPag} table-total ml-auto`}>
                                     <div className="row">
-                                        <div className="col-4 mr-0 p-0 mt-3">
+                                        <div className="col-4 mr-0 mt-3">
                                             <select
                                                 className="form-control"
                                                 id="exampleFormControlSelect2"
                                                 style={{
-                                                    width: "65px",
+                                                    width: "70px",
                                                     background: "#F3F6F9",
                                                     borderColor: "#F3F6F9",
                                                     color: "#9E9E9E",
@@ -845,14 +846,15 @@ const Faq = ({token}) => {
                                                 onChange={e => handleLimit(e.target.value)}
                                                 onBlur={e => handleLimit(e.target.value)}
                                             >
-                                                <option value='5' selected={limit == "5" ? true: false}>5</option>
-                                                <option value='10' selected={limit == "10" ? true: false}>10</option>
-                                                <option value='15' selected={limit == "15" ? true: false}>15</option>
-                                                <option value='20' selected={limit == "20" ? true: false}>20</option>
+                                                <option value='5' selected={limit == "5" ? true : false}>5</option>
+                                                <option value='10' selected={limit == "10" ? true : false}>10</option>
+                                                <option value='30' selected={limit == "30" ? true : false}>30</option>
+                                                <option value='40' selected={limit == "40" ? true : false}>40</option>
+                                                <option value='50' selected={limit == "50" ? true : false}>50</option>
                                             </select>
                                         </div>
                                         <div className="col-8 my-auto">
-                                            <p className='align-middle mt-5 pt-1' style={{ color: '#B5B5C3' }}>Total Data {faq.total}</p>
+                                            <p className='align-middle mt-5 pt-1' style={{ color: '#B5B5C3' }}>Total Data {faq.total} List Data</p>
                                         </div>
                                     </div>
                                 </div>

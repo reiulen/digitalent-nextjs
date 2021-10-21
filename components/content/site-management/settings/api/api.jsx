@@ -11,33 +11,72 @@ import IconDelete from "../../../../assets/icon/Delete";
 import IconAdd from "../../../../assets/icon/Add";
 import IconSearch from "../../../../assets/icon/Search";
 
+import {
+  deleteApi,
+  getAllApi,
+  setPage,
+  searchCooporation,
+  limitCooporation,
+} from "../../../../../redux/actions/site-management/settings/api.actions";
+import { DELETE_API_RESET } from "../../../../../redux/types/site-management/settings/api.type";
+
 const Table = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
 
-  // function delete
-  const apiDelete = (id) => {
+  const allApi = useSelector((state) => state.allApi);
+  const {
+    loading: deleteLoading,
+    error: deleteError,
+    isDeleted,
+  } = useSelector((state) => state.deleteApi);
+
+  const [valueSearch, setValueSearch] = useState("");
+  const handleChangeValueSearch = (value) => {
+    setValueSearch(value);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    dispatch(searchCooporation(valueSearch));
+  };
+
+  const handleDelete = (id, token) => {
     Swal.fire({
-      title: "Apakah anda yakin ingin menghapus data ?",
+      title: "Apakah anda yakin menghapus data ?",
+      text: "Data ini tidak bisa dikembalikan !",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      cancelButtonText: "Batal",
       confirmButtonText: "Ya !",
-      dismissOnDestroy: false,
-    }).then(async (result) => {
-      if (result.value) {
-        // dispatch delete
+      cancelButtonText: "Batal",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(deleteApi(id, token));
       }
     });
   };
 
-  const onNewReset = () => {
-    router.replace("/site-management/setting/api", undefined, {
-      shallow: true,
+  useEffect(() => {
+    dispatch(getAllApi(token));
+  }, [dispatch, allApi.cari, allApi.page, allApi.limit, token]);
+
+  useEffect(() => {
+    if (isDeleted) {
+      Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
+        (result) => {
+          if (result.isConfirmed) {
+            dispatch(getAllApi(token));
+          }
+        }
+      );
+    }
+    dispatch({
+      type: DELETE_API_RESET,
     });
-  };
+  }, [isDeleted, dispatch, token]);
+
   return (
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">
@@ -62,10 +101,7 @@ const Table = ({ token }) => {
             <div className="table-filter">
               <div className="row align-items-center">
                 <div className="col-lg-12 col-xl-12">
-                  <form
-                    // onSubmit={handleSubmit}
-                    className="d-flex align-items-center w-100"
-                  >
+                  <form onSubmit={handleSubmit}>
                     <div className="row w-100">
                       <div className="col-12 col-sm-6">
                         <div className="position-relative overflow-hidden w-100">
@@ -78,9 +114,9 @@ const Table = ({ token }) => {
                             type="text"
                             className="form-control pl-10"
                             placeholder="Ketik disini untuk Pencarian..."
-                            // onChange={(e) =>
-                            //   handleChangeValueSearch(e.target.value)
-                            // }
+                            onChange={(e) =>
+                              handleChangeValueSearch(e.target.value)
+                            }
                           />
                           <button
                             type="submit"
@@ -101,6 +137,9 @@ const Table = ({ token }) => {
             </div>
             <div className="table-page mt-5">
               <div className="table-responsive">
+                {allApi.status === "process" ? (
+                  <LoadingTable />
+                ) : (
                 <table className="table table-separate table-head-custom table-checkable">
                   <thead style={{ background: "#F3F6F9" }}>
                     <tr>
@@ -115,78 +154,107 @@ const Table = ({ token }) => {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td className="align-middle text-left">1</td>
-                      <td className="align-middle text-left">api</td>
-                      <td className="align-middle text-left">url</td>
-                      <td className="align-middle text-left">key</td>
-                      <td className="align-middle text-left">pengguna</td>
-                      <td className="align-middle text-left">masa berlaku</td>
-                      <td className="align-middle text-left">
-                        <p
-                          className="status-div-red mb-0"
-                          style={{ width: "max-content" }}
-                        >
-                          Tidak aktif
-                        </p>
-                      </td>
-                      <td className="align-middle text-left">
-                        <div className="d-flex align-items-center">
-                          <button
-                            className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                            onClick={() =>
-                              router.push(`/site-management/setting/api/ubah-api`)
-                            }
-                          >
-                            <IconPencil width="16" height="16" />
-                            <div className="text-hover-show-hapus">Ubah</div>
-                          </button>
-                          <button
-                            className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete"
-                            onClick={() =>
-                              router.push(`/site-management/setting/api/detail-api`)
-                            }
-                          >
-                            <IconEye width="16" height="16" />
-                            <div className="text-hover-show-hapus">Detail</div>
-                          </button>
+                    {allApi.data.setting_api.length === 0 ? (
+                      <tr>
+                        <td colSpan="8" className="text-center">
+                          <h4>Data tidak ditemukan</h4>
+                        </td>
+                      </tr>
+                    ) : (
+                      allApi.data.setting_api.map((items, index) => {
+                        return (
+                          <tr key={index}>
+                            <td className="align-middle text-left">
+                              {allApi.page === 1
+                                ? index + 1
+                                : (allApi.page - 1) * allApi.limit +
+                                  (index + 1)}
+                            </td>
+                            <td className="align-middle text-left">
+                              {items.api_name}
+                            </td>
+                            <td className="align-middle text-left">
+                              url belom ada di api
+                            </td>
+                            <td className="align-middle text-left">
+                              {items.api_key}
+                            </td>
+                            <td className="align-middle text-left">
+                              {items.username}
+                            </td>
+                            <td className="align-middle text-left">
+                              {items.from_date} / {items.to_date}
+                            </td>
+                            <td className="align-middle text-left">
+                              <p
+                                className="status-div-red mb-0"
+                                style={{ width: "max-content" }}
+                              >
+                                Tidak aktif
+                              </p>
+                            </td>
+                            <td className="align-middle text-left">
+                              <div className="d-flex align-items-center">
+                                <Link
+                                  href={`/site-management/setting/api/ubah-api/${items.id}`}
+                                >
+                                  <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
+                                    <IconPencil width="16" height="16" />
+                                    <div className="text-hover-show-hapus">
+                                      Ubah
+                                    </div>
+                                  </a>
+                                </Link>
+                                <Link
+                                  href={`/site-management/setting/api/detail-api/${items.id}`}
+                                >
+                                  <a className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete">
+                                    <IconEye width="16" height="16" />
+                                    <div className="text-hover-show-hapus">
+                                      Detail
+                                    </div>
+                                  </a>
+                                </Link>
 
-                          <button
-                            className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                            // onClick={() =>
-                            //   apiDelete(items.id)
-                            // }
-                          >
-                            <IconDelete width="16" height="16" />
-                            <div className="text-hover-show-hapus">Hapus</div>
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
+                                <button
+                                  className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                  onClick={() =>
+                                      handleDelete(items.id, token)
+                                    }
+                                >
+                                  <IconDelete width="16" height="16" />
+                                  <div className="text-hover-show-hapus">
+                                    Hapus
+                                  </div>
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        );
+                      })
+                    )}
                   </tbody>
                 </table>
+                )}
               </div>
 
-              <div className="row">
+              <div className="row mt-6">
                 <div className="table-pagination paginate-cs">
-                  pagination
-                  {/* <Pagination
-                    activePage={allMKCooporation.page}
-                    itemsCountPerPage={
-                      allMKCooporation?.mk_cooporation?.data?.perPage
-                    }
-                    totalItemsCount={
-                      allMKCooporation?.mk_cooporation?.data?.total
-                    }
-                    pageRangeDisplayed={3}
-                    onChange={(page) => dispatch(setPage(page))}
-                    nextPageText={">"}
-                    prevPageText={"<"}
-                    firstPageText={"<<"}
-                    lastPageText={">>"}
-                    itemclassName="page-item"
-                    linkclassName="page-link"
-                  /> */}
+                    <div className="table-pagination">
+                      <Pagination
+                        activePage={allApi.page}
+                        itemsCountPerPage={allApi.data.perPage}
+                        totalItemsCount={allApi.data.total}
+                        pageRangeDisplayed={3}
+                        onChange={(page) => dispatch(setPage(page))}
+                        nextPageText={">"}
+                        prevPageText={"<"}
+                        firstPageText={"<<"}
+                        lastPageText={">>"}
+                        itemClass="page-item"
+                        linkClass="page-link"
+                      />
+                    </div>
                 </div>
 
                 <div className="table-total ml-auto">
@@ -202,6 +270,9 @@ const Table = ({ token }) => {
                           borderColor: "#F3F6F9",
                           color: "#9E9E9E",
                         }}
+                        onChange={(e) =>
+                          dispatch(limitCooporation(e.target.value, token))
+                        }
                       >
                         <option value="5">5</option>
                         <option value="10">10</option>
@@ -215,7 +286,8 @@ const Table = ({ token }) => {
                         className="align-middle mt-3"
                         style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}
                       >
-                        Total Data 9 List Data
+                        Total Data {allApi.data &&
+                          allApi.data.total} List Data
                       </p>
                     </div>
                   </div>

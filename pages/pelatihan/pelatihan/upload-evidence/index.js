@@ -2,10 +2,21 @@ import React, { Suspense } from "react";
 
 import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../../components/LoadingSkeleton";
-import UploadEvidence from "../../../../components/content/pelatihan/training/upload-evidence";
+// import UploadEvidence from "../../../../components/content/pelatihan/training/upload-evidence";
 
 import { wrapper } from "../../../../redux/store";
 import { getSession } from "next-auth/client";
+
+const UploadEvidence = dynamic(
+  () =>
+    import("../../../../components/content/pelatihan/training/upload-evidence"),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
 
 export default function UploadEvidencePage() {
   return (
@@ -24,7 +35,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (!session) {
         return {
           redirect: {
-            destination: "http://dts-dev.majapahit.id/",
+            destination: "http://dts-dev.majapahit.id/login/admin",
             permanent: false,
           },
         };

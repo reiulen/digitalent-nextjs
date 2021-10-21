@@ -229,7 +229,7 @@ const ListSubstansi = ({ token }) => {
               className="card-title text-dark mt-2"
               style={{ fontSize: "24px" }}
             >
-              List Tes Substansi
+              List Test Substansi
             </h1>
             <div className="card-toolbar">
               <Link href="/subvit/substansi/tipe-soal">
@@ -247,7 +247,7 @@ const ListSubstansi = ({ token }) => {
               <Link href="/subvit/substansi/tambah-step-1">
                 <a className="btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2">
                   <i className="ri-add-fill"></i>
-                  Tambah Soal
+                  Tambah Test Subtansi
                 </a>
               </Link>
             </div>
@@ -327,15 +327,19 @@ const ListSubstansi = ({ token }) => {
                         subtance &&
                         subtance.list_substance &&
                         subtance.list_substance.map((subtance, i) => {
+                          const paginate = i + 1 * (page * limit);
+                          const dividers = limit - 1;
                           return (
                             <tr key={subtance.id}>
                               <td className="align-middle text-center">
-                                <span className="">
-                                  {i + 1 * (page * 5 || limit) - 4}
-                                </span>
+                                <span className="">{paginate - dividers}</span>
                               </td>
                               <td className="align-middle">
-                                <b>{subtance.academy.name}</b>
+                                <b>
+                                  {subtance.academy !== null
+                                    ? subtance.academy.name
+                                    : "-"}
+                                </b>
                                 <p>
                                   {subtance.training !== null
                                     ? subtance.training.name
@@ -449,7 +453,7 @@ const ListSubstansi = ({ token }) => {
                           className="form-control"
                           id="exampleFormControlSelect2"
                           style={{
-                            width: "65px",
+                            width: "68px",
                             background: "#F3F6F9",
                             borderColor: "#F3F6F9",
                             color: "#9E9E9E",

@@ -2,10 +2,20 @@ import React, { Suspense } from "react";
 
 import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../../components/LoadingSkeleton";
-import DetailReport from "../../../../components/content/pelatihan/report/detail-report";
+// import DetailReport from "../../../../components/content/pelatihan/report/detail-report";
 
 import { wrapper } from "../../../../redux/store";
 import { getSession } from "next-auth/client";
+
+const DetailReport = dynamic(
+  () => import("../../../../components/content/pelatihan/report/detail-report"),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
 
 export default function DetailReportPage() {
   return (
@@ -24,7 +34,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (!session) {
         return {
           redirect: {
-            destination: "http://dts-dev.majapahit.id/",
+            destination: "http://dts-dev.majapahit.id/login/admin",
             permanent: false,
           },
         };
