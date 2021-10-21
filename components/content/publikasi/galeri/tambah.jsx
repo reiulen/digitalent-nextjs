@@ -154,7 +154,7 @@ const TambahGaleri = ({ token }) => {
     ]);
     const [kategori_id, setKategoriId] = useState(null)
     // const [kategori_id, setKategoriId] = useState(1)
-    const [users_id, setUserId] = useState(3)
+    const [users_id, setUserId] = useState(87)
     const [tag, setTag] = useState([])
     const [publish, setPublish] = useState(0)
     const [publishDate, setPublishDate] = useState(null);
@@ -392,7 +392,7 @@ const TambahGaleri = ({ token }) => {
             // dispatch(newGaleri(data, token))
 
             dispatch(onCall(data, token))
-            console.log("UNPUBLISH : ", data)
+            // console.log("UNPUBLISH : ", data)
             // console.log(image)
 
         } else {
@@ -409,7 +409,7 @@ const TambahGaleri = ({ token }) => {
             }
 
             dispatch(onCall(data, token))
-            console.log("PUBLISH : ", data)
+            // console.log("PUBLISH : ", data)
             // console.log(image)
         }
     }

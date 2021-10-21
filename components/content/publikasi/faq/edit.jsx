@@ -54,7 +54,7 @@ const EditFaq = ({token}) => {
     const [judul, setJudulPertanyaan] = useState(faq.judul)
     const [jawaban, setJawaban] = useState(faq.jawaban);
     const [kategori_id, setKategoriId] = useState(faq.kategori_id)
-    const [users_id, setUsersId] = useState(3)
+    const [users_id, setUsersId] = useState(87)
     // const [pinned, setPinnedFaq] = useState(faq.pinned === 1 ? true : false)
     const [pinned, setPinnedFaq] = useState(faq.pinned)
     // const [publish, setPublish] = useState(faq.publish === 1 ? true : false)

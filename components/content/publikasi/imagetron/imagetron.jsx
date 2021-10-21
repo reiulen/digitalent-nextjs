@@ -386,9 +386,9 @@ const Imagetron = ({ token }) => {
 
     return (
         <PageWrapper>
-            {
+            {/* {
                 console.log(imagetron)
-            }
+            } */}
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
                     <div className="alert-icon"><i className="flaticon-warning"></i></div>
@@ -875,7 +875,7 @@ const Imagetron = ({ token }) => {
                                                     className="form-control"
                                                     id="exampleFormControlSelect2"
                                                     style={{
-                                                        width: "65px",
+                                                        width: "70px",
                                                         background: "#F3F6F9",
                                                         borderColor: "#F3F6F9",
                                                         color: "#9E9E9E",

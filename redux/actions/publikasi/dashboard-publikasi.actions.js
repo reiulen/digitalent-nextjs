@@ -31,7 +31,7 @@ export const getAllDashboardPublikasi = (token) =>
     } catch (error) {
       dispatch({
         type: DASHBOARD_PUBLIKASI_FAIL,
-        payload: error.message,
+        payload: error.response.data.message,
       });
     }
   };
