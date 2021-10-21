@@ -223,6 +223,7 @@ const StepThree = ({ token }) => {
                     dateFormat="dd/MM/yyyy"
                     autoComplete="off"
                     placeholderText="Silahkan Pilih Tanggal Sampai"
+                    disabled={!startDate}
                   />
                   {simpleValidator.current.message(
                     "tanggal sampai",

@@ -22,7 +22,7 @@ export const allPesertaReducers = (state = { participant: [] }, action) => {
     case LIST_PESERTA_FAIL:
       return {
         loading: false,
-        participant: action.payload.data,
+        error: action.payload,
       };
     case CLEAR_ERRORS:
       return {

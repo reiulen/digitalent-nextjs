@@ -3,6 +3,11 @@ import React, { useState } from "react";
 const PertanyaanTerbukaComponent = ({ propsStatus, sendPropsStatus }) => {
   const [status, setStatus] = useState(propsStatus);
 
+  const handleStatus = (e) => {
+    setStatus(e.target.value);
+    sendPropsStatus(e.target.value);
+  };
+
   return (
     <>
       <div className="form-group row">
@@ -11,13 +16,11 @@ const PertanyaanTerbukaComponent = ({ propsStatus, sendPropsStatus }) => {
           <select
             name="training_id"
             className="form-control"
-            onChange={(e) => {
-              setStatus(e.target.value);
-              sendPropsStatus(e.target.value);
+            onChange={(event) => {
+              handleStatus(event);
             }}
-            onBlur={(e) => {
-              setStatus(e.target.value);
-              sendPropsStatus(e.target.value);
+            onBlur={(event) => {
+              handleStatus(event);
             }}
             value={status}
           >
