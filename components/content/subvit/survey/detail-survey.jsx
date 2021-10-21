@@ -301,7 +301,7 @@ const DetailSurvey = ({ token }) => {
                                 {question.question}
                               </td>
                               <td className="align-middle">
-                                {question.status ? (
+                                {question.status === 1 ? (
                                   <span className="label label-inline label-light-success font-weight-bold">
                                     Publish
                                   </span>

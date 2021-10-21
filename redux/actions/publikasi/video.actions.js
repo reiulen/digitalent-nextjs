@@ -71,7 +71,7 @@ export const getAllVideo = (page = 1, keyword = "", limit = 5, publish = null, s
     } catch (error) {
         dispatch({
             type: VIDEO_FAIL,
-            payload: error.message
+            payload: error.response.data.message
         })
     }
 }
@@ -250,12 +250,12 @@ export const clearErrors = () => async (dispatch) => {
 }
 
 // Card
-export const changeStatusCard = (data) => {
-    return {
-        type: SET_FILTER_CARD,
-        payload: data
-    }
-}
+// export const changeStatusCard = (data) => {
+//     return {
+//         type: SET_FILTER_CARD,
+//         payload: data
+//     }
+// }
 
 // export const filterCard = (token) => {
 //     return async (dispatch, getState) => {

@@ -77,7 +77,7 @@ const TambahBerita = ({ token }) => {
 
 
     const [kategori_id, setKategoriId] = useState('')
-    const [users_id, setUserId] = useState(3)
+    const [users_id, setUserId] = useState(87)
     const [judul_berita, setJudulBerita] = useState('')
     const [isi_berita, setIsiBerita] = useState('');
     const [gambar, setGambar] = useState('')

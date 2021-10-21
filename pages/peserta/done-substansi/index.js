@@ -16,11 +16,11 @@ const Layout = dynamic(() =>
 );
 
 export default function SubvitDone(props) {
-  const session = props.session.user.user.data;
+  const session = props.session.user.user.data.user;
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <Layout title="Test Substansi" session={session}>
+        <Layout title="Selesai Test Substansi - Subvit" session={session}>
           <Done />
         </Layout>
       </div>

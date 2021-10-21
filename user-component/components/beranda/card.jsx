@@ -2,13 +2,15 @@ import React from "react";
 import IconTime from "../../../components/assets/icon-dashboard-peserta/Time";
 import IconPeserta from "../../../components/assets/icon-dashboard-peserta/Time";
 
-export default function card({children,label}) {
+export default function card({children,label,thumbnail}) {
   return (
     <div className="cards-items">
       <div className="top">
         {label}
       </div>
-      <div className="rounded"></div>
+      <div className="rounded">
+        {thumbnail}
+      </div>
 
       <div className="bottom">
         {children}

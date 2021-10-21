@@ -189,7 +189,7 @@ const TambahArtikel = ({ token }) => {
   );
   const [gambarName, setGambarName] = useState(null)
   const [kategori_id, setKategoriId] = useState("");
-  const [users_id, setUserId] = useState(3);
+  const [users_id, setUserId] = useState(87);
   const [tag, setTag] = useState([]);
   const [publish, setPublish] = useState(0);
   const [publishDate, setPublishDate] = useState(null);
@@ -267,9 +267,7 @@ const TambahArtikel = ({ token }) => {
         }
       }
     }
-
     setTag(data)
-
   }
 
   const onSubmit = (e) => {
@@ -874,7 +872,7 @@ const TambahArtikel = ({ token }) => {
                       onChange={(data) => handleTag(data)}
                       // onChange={setTag}
                       name="fruits"
-                      placeHolder="Isi Tag disini dan tekan `Enter` atau `Tab`."
+                      placeHolder="Isi Tag disini"
                       // onBlur={() => simpleValidator.current.showMessageFor('tag')}
                       seprators={["Enter", "Tab"]}
                     />

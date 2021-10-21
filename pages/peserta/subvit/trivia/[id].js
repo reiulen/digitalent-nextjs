@@ -16,7 +16,7 @@ const SubtansiUser = dynamic(
 );
 
 export default function SubvitUserSubtansi(props) {
-  const session = props.session.user.user.data;
+  const session = props.session.user.user.data.user;
   return (
     <>
       <div className="d-flex flex-column flex-root">

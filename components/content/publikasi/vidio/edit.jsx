@@ -82,17 +82,43 @@ const EditVideo = ({ token }) => {
     const [disablePublishDate, setDisablePublishDate] = useState(video.publish === 0 ? true : false)
     const [disableTag, setDisableTag] = useState(false)
 
+    // const handleTag = (data) => {
+    //     for (let i = 0; i < data.length; i++) {
+    //         for (let j = 0; j < data[i].length; j++) {
+    //             if (data[i][j] === " ") {
+    //                 setDisableTag(true)
+    //             } else {
+    //                 setDisableTag(false)
+    //             }
+    //         }
+    //     }
+    //     setTag(data)
+    // }
+
+    function hasWhiteSpace(s) {
+        return s.indexOf(' ') >= 0;
+    }
+
     const handleTag = (data) => {
+        console.log(data);
         for (let i = 0; i < data.length; i++) {
-            for (let j = 0; j < data[i].length; j++) {
-                if (data[i][j] === " ") {
-                    setDisableTag(true)
-                } else {
-                    setDisableTag(false)
-                }
+            if (hasWhiteSpace(data[i])) {
+                data.splice([i], 1);
             }
+            // console.log(hasWhiteSpace(data[i]));
+            // if(data[i] === " "){
+            //     console.log(data[i]);
+            //     data.splice(i, 1);
+            // }
+            // for (let j = 0; j < data[i].length; j++) {
+            //     if (data[i][j] === " ") {
+            //         data.splice(index, 1);
+            //         // setDisableTag(true)
+            //     }
+            // }
         }
-        setTag(data)
+        setTag(data);
+        // setTag(data)
     }
 
     const onChangeGambar = (e) => {
@@ -218,7 +244,7 @@ const EditVideo = ({ token }) => {
                                 // }
 
                                 dispatch(updateVideo(data, token));
-                                console.log(data)
+                                // console.log(data)
                             }
                         });
                 } else {
@@ -259,7 +285,7 @@ const EditVideo = ({ token }) => {
                                 // }
 
                                 dispatch(updateVideo(data, token));
-                                console.log(data)
+                                // console.log(data)
                             }
                         });
                 }
@@ -305,7 +331,7 @@ const EditVideo = ({ token }) => {
                                 // }
 
                                 dispatch(updateVideo(data, token));
-                                console.log(data)
+                                // console.log(data)
                             }
                         });
 
@@ -346,7 +372,7 @@ const EditVideo = ({ token }) => {
                                 // }
 
                                 dispatch(updateVideo(data, token));
-                                console.log(data)
+                                // console.log(data)
                             }
                         });
                 }
@@ -456,6 +482,7 @@ const EditVideo = ({ token }) => {
     return (
         <>
             <PageWrapper>
+                {console.log(video)}
                 {error ?
                     <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
                         <div className="alert-icon"><i className="flaticon-warning"></i></div>
