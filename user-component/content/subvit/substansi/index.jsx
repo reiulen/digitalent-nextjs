@@ -208,7 +208,8 @@ const SubtansiUser = ({ token }) => {
                 {data && data.total_questions}
               </p>
               <h1 className={styles.soal}>
-                {data.list_questions[parseInt(router.query.id) - 1]
+                {data.list_questions.question_image &&
+                data.list_questions[parseInt(router.query.id) - 1]
                   .question_image !== null ? (
                   <div className="d-flex flex-row">
                     <div className="p-2">
@@ -222,71 +223,74 @@ const SubtansiUser = ({ token }) => {
                     </div>
                   </div>
                 ) : (
+                  data.list_questions.question &&
                   data.list_questions[parseInt(router.query.id) - 1].question
                 )}
               </h1>
               <hr />
-              {JSON.parse(
-                data.list_questions[parseInt(router.query.id) - 1].answer
-              ).map((item, index) => {
-                return (
-                  <>
-                    {item.image !== null ? (
-                      <div className="d-flex flex-row">
-                        <div className="p-2">
-                          <Image
-                            src={defaultImage}
-                            alt=""
-                            width={70}
-                            height={70}
-                          />
-                        </div>
-                        <div
-                          className="p-4"
-                          style={{ width: "100%", height: "100%" }}
-                        >
-                          <Card
-                            className={
-                              localStorage.getItem(router.query.id) ===
-                              item.option
-                                ? styles.answer
-                                : styles.boxAnswer
-                            }
-                            key={index}
-                            onClick={() => handleAnswer(item)}
+              {data.list_questions.answer &&
+                JSON.parse(
+                  data.list_questions[parseInt(router.query.id) - 1].answer
+                ).map((item, index) => {
+                  return (
+                    <>
+                      {item.image !== null ? (
+                        <div className="d-flex flex-row">
+                          <div className="p-2">
+                            <Image
+                              src={defaultImage}
+                              alt=""
+                              width={70}
+                              height={70}
+                            />
+                          </div>
+                          <div
+                            className="p-4"
+                            style={{ width: "100%", height: "100%" }}
                           >
-                            <table>
-                              <tr>
-                                <td style={{ width: "5px" }}>{item.key}</td>
-                                <td style={{ width: "15px" }}>.</td>
-                                <td>{item.option}</td>
-                              </tr>
-                            </table>
-                          </Card>
+                            <Card
+                              className={
+                                localStorage.getItem(router.query.id) ===
+                                item.option
+                                  ? styles.answer
+                                  : styles.boxAnswer
+                              }
+                              key={index}
+                              onClick={() => handleAnswer(item)}
+                            >
+                              <table>
+                                <tr>
+                                  <td style={{ width: "5px" }}>{item.key}</td>
+                                  <td style={{ width: "15px" }}>.</td>
+                                  <td>{item.option}</td>
+                                </tr>
+                              </table>
+                            </Card>
+                          </div>
                         </div>
-                      </div>
-                    ) : (
-                      <Card
-                        className={
-                          localStorage.getItem(router.query.id) === item.option
-                            ? styles.answer
-                            : styles.boxAnswer
-                        }
-                        key={index}
-                        onClick={() => handleAnswer(item)}
-                      >
-                        <table>
-                          <tr>
-                            <td style={{ width: "5px" }}>{item.key}</td>
-                            <td style={{ width: "15px" }}>.</td>
-                            <td>{item.option}</td>
-                          </tr>
-                        </table>
-                      </Card>
-                    )}
-                  </>
-                );
-              })}
+                      ) : (
+                        <Card
+                          className={
+                            localStorage.getItem(router.query.id) ===
+                            item.option
+                              ? styles.answer
+                              : styles.boxAnswer
+                          }
+                          key={index}
+                          onClick={() => handleAnswer(item)}
+                        >
+                          <table>
+                            <tr>
+                              <td style={{ width: "5px" }}>{item.key}</td>
+                              <td style={{ width: "15px" }}>.</td>
+                              <td>{item.option}</td>
+                            </tr>
+                          </table>
+                        </Card>
+                      )}
+                    </>
+                  );
+                })}
 
               <Row style={{ marginTop: "20px" }}>
                 <Col>
