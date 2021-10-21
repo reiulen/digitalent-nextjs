@@ -87,7 +87,7 @@ export default function SeleksiAdministrasi() {
                   klien. Di akhir pelatihan peserta akan mengikuti uji
                   kompetensi dan sertifikasi Intermediate Multimedia Designer,
                   bagi yang dinyatakan kompeten akan mendapatkan Sertifikat
-                  Kompetensi Intermediate Multimedia Designer dari BNSP. <hr />
+                  Kompetensi Intermediate Multimedia Designer dari BNSP.
                   Pelatihan akan dilaksanakan secara daring (online) kurang
                   lebih 6 (enam) minggu dengan pengantar live session dalam
                   Bahasa Indonesia. Peserta akan mendapatkan fasilitas secara
