@@ -63,7 +63,7 @@ export const getAllGaleri = (page = 1, keyword = '', limit = 5, publish = null, 
     } catch (error) {
         dispatch({
             type: GALERI_FAIL,
-            payload: error.message
+            payload: error.response.data.message
         })
     }
 }

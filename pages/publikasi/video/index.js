@@ -24,6 +24,7 @@ const Vidio = dynamic(
 
 export default function VidioPage(props) {
   const session = props.session.user.user.data;
+  // console.log("props session :", session)
   return (
     <>
       <div className="d-flex flex-column flex-root">
