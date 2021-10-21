@@ -134,6 +134,10 @@ const Header = () => {
                           ? "Trivia"
                           : router.pathname.includes("test-subtansi")
                           ? "Test Substansi"
+                          : router.pathname.includes("riwayat-pelatihan")
+                          ? "Riwayat Pelatihan"
+                          : router.pathname.includes("administrasi")
+                          ? "Administrasi"
                           : "Dashboard"}
                       </div>
                     </div>
