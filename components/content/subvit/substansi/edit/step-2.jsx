@@ -170,6 +170,7 @@ const StepTwo = ({ token }) => {
                     dateFormat="dd/MM/yyyy"
                     autoComplete="off"
                     value={startDate}
+                    placeholderText="Silahkan Pilih Tanggal Dari"
                   />
 
                   {simpleValidator.current.message(
@@ -202,6 +203,7 @@ const StepTwo = ({ token }) => {
                     dateFormat="dd/MM/yyyy"
                     autoComplete="off"
                     value={endDate}
+                    disabled={!startDate}
                   />
 
                   {simpleValidator.current.message(
