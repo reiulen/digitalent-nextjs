@@ -12,6 +12,7 @@ import DatePicker from "react-datepicker";
 import SimpleReactValidator from "simple-react-validator";
 import Swal from "sweetalert2";
 import moment from "moment";
+import "moment/locale/id";
 
 import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInputPublish from "/components/StepInputPublish";
@@ -201,6 +202,7 @@ const StepTwo = ({ token }) => {
                     dateFormat="dd/MM/yyyy"
                     autoComplete="off"
                     value={startDate ? startDate : new Date(Date.now())}
+                    placeholderText={moment().format("LL")}
                   />
 
                   {simpleValidator.current.message(
