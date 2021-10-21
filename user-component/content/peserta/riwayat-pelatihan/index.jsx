@@ -119,13 +119,13 @@ export default function RiwayatPelatihan() {
         <CardPeserta totalButton={2} status={"tes substansi"} />
         <CardPeserta totalButton={2} status={"lolos substansi"} />
         <CardPeserta totalButton={2} status={"tidak lulus"} />
+        <CardPeserta totalButton={2} status={"isi survey"} />
         <CardPeserta totalButton={2} status={"seleksi administrasi"} />
         <CardPeserta totalButton={2} status={"lolos administrasi"} />
         <CardPeserta totalButton={2} status={"ikuti pelatihan"} />
         <CardPeserta totalButton={2} status={"kerjakan mid test"} />
         <CardPeserta totalButton={2} status={"kerjakan trivia"} />
         <CardPeserta totalButton={2} status={"lulus pelatihan"} />
-        <CardPeserta totalButton={2} status={"isi survey"} />
         <CardPeserta totalButton={2} status={"isi lpj"} />
       </PesertaWrapper>
       <Modal show={showModal} onHide={handleClose} centered>

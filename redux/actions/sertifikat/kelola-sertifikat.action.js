@@ -35,7 +35,7 @@ import {
   SET_THEME_VALUE,
 } from "../../types/sertifikat/kelola-sertifikat.type";
 
-export const getAllSertifikat = token => async (dispatch, getState) => {
+export const getAllSertifikat = (token) => async (dispatch, getState) => {
   try {
     dispatch({ type: SERTIFIKAT_REQUEST });
     let link = process.env.END_POINT_API_SERTIFIKAT + `api/manage_certificates`;
@@ -66,25 +66,25 @@ export const getAllSertifikat = token => async (dispatch, getState) => {
       dispatch({ type: SERTIFIKAT_SUCCESS, payload: data });
     }
   } catch (error) {
-    dispatch({ type: SERTIFIKAT_FAIL, payload: error });
+    dispatch({ type: SERTIFIKAT_FAIL, payload: error.response.data.message });
   }
 };
 
-export const searchKeyword = text => {
+export const searchKeyword = (text) => {
   return {
     type: SET_KEYWORD_VALUE,
     text,
   };
 };
 
-export const setValueAcademy = text => {
+export const setValueAcademy = (text) => {
   return {
     type: SET_ACADEMY_VALUE,
     text,
   };
 };
 
-export const setValueTheme = text => {
+export const setValueTheme = (text) => {
   return {
     type: SET_THEME_VALUE,
     text,
@@ -93,7 +93,7 @@ export const setValueTheme = text => {
 
 export const getDetailSertifikat =
   (id, page = 1, keyword = "", limit = 5, status = null, token) =>
-  async dispatch => {
+  async (dispatch) => {
     try {
       dispatch({ type: DETAIL_SERTIFIKAT_REQUEST });
       let link =
@@ -114,11 +114,14 @@ export const getDetailSertifikat =
         dispatch({ type: DETAIL_SERTIFIKAT_SUCCESS, payload: data });
       }
     } catch (error) {
-      dispatch({ type: DETAIL_SERTIFIKAT_FAIL, payload: error.message });
+      dispatch({
+        type: DETAIL_SERTIFIKAT_FAIL,
+        payload: error.response.data.message,
+      });
     }
   };
 
-export const newSertifikat = (id, formData, token) => async dispatch => {
+export const newSertifikat = (id, formData, token) => async (dispatch) => {
   try {
     dispatch({ type: NEW_SERTIFIKAT_REQUEST });
     let link =
@@ -139,18 +142,18 @@ export const newSertifikat = (id, formData, token) => async dispatch => {
   } catch (error) {
     dispatch({
       type: NEW_SERTIFIKAT_FAIL,
-      payload: error.message,
+      payload: error.response.data.message,
     });
   }
 };
 
-export const clearErrors = () => async dispatch => {
+export const clearErrors = () => async (dispatch) => {
   dispatch({
     type: CLEAR_ERRORS,
   });
 };
 
-export const getSingleSertifikat = (id, token) => async dispatch => {
+export const getSingleSertifikat = (id, token) => async (dispatch) => {
   try {
     dispatch({ type: SINGLE_SERTIFIKAT_REQUEST });
     let link =
@@ -168,7 +171,6 @@ export const getSingleSertifikat = (id, token) => async dispatch => {
       dispatch({ type: SINGLE_SERTIFIKAT_SUCCESS, payload: data });
     }
   } catch (error) {
-    // console.log("error masuk sini", error.response.data.message);
     dispatch({
       type: SINGLE_SERTIFIKAT_FAIL,
       // payload: error.message
@@ -177,7 +179,7 @@ export const getSingleSertifikat = (id, token) => async dispatch => {
   }
 };
 
-export const getPublishedSertifikat = (id, token) => async dispatch => {
+export const getPublishedSertifikat = (id, token) => async (dispatch) => {
   try {
     dispatch({ type: PUBLISHED_SERTIFIKAT_REQUEST });
 
@@ -199,11 +201,14 @@ export const getPublishedSertifikat = (id, token) => async dispatch => {
       });
     }
   } catch (error) {
-    dispatch({ type: PUBLISHED_SERTIFIKAT_FAIL, payload: error.message });
+    dispatch({
+      type: PUBLISHED_SERTIFIKAT_FAIL,
+      payload: error.response.data.message,
+    });
   }
 };
 
-export const updateSertifikat = (id, formData, token) => async dispatch => {
+export const updateSertifikat = (id, formData, token) => async (dispatch) => {
   try {
     dispatch({ type: UPDATE_SERTIFIKAT_REQUEST });
     // for (var pair of formData.entries()) {
@@ -228,13 +233,12 @@ export const updateSertifikat = (id, formData, token) => async dispatch => {
   } catch (error) {
     dispatch({
       type: UPDATE_SERTIFIKAT_FAIL,
-      payload: error.message,
-      // payload: error.response.data.message,
+      payload: error.response.data.message,
     });
   }
 };
 
-export const getOptionsAcademy = token => async dispatch => {
+export const getOptionsAcademy = (token) => async (dispatch) => {
   try {
     dispatch({ type: OPTIONS_ACADEMY_REQUEST });
     let link = process.env.END_POINT_API_SERTIFIKAT + `api/option/academy`;
@@ -251,11 +255,14 @@ export const getOptionsAcademy = token => async dispatch => {
       dispatch({ type: OPTIONS_ACADEMY_SUCCESS, payload: data });
     }
   } catch (error) {
-    dispatch({ type: OPTIONS_ACADEMY_FAIL, payload: error.message });
+    dispatch({
+      type: OPTIONS_ACADEMY_FAIL,
+      payload: error.response.data.message,
+    });
   }
 };
 
-export const getOptionsTheme = token => async dispatch => {
+export const getOptionsTheme = (token) => async (dispatch) => {
   try {
     dispatch({ type: OPTIONS_THEME_REQUEST });
     let link = process.env.END_POINT_API_SERTIFIKAT + `api/option/theme`;
@@ -272,6 +279,9 @@ export const getOptionsTheme = token => async dispatch => {
       dispatch({ type: OPTIONS_THEME_SUCCESS, payload: data });
     }
   } catch (error) {
-    dispatch({ type: OPTIONS_THEME_FAIL, payload: error.message });
+    dispatch({
+      type: OPTIONS_THEME_FAIL,
+      payload: error.response.data.message,
+    });
   }
 };

@@ -157,7 +157,7 @@ export const allAcademyOptionsReducer = (state = {}, action) => {
       return {
         ...state,
         loading: false,
-        academyOptions: action.payload.data,
+        error: action.payload,
       };
     default:
       return state;
@@ -180,7 +180,7 @@ export const allThemeOptionsReducer = (state = [], action) => {
       return {
         ...state,
         loading: false,
-        themeOptions: action.payload.data,
+        error: action.payload,
       };
     default:
       return state;
@@ -303,6 +303,7 @@ export const publishedSertifikatReducer = (
 
     case PUBLISHED_SERTIFIKAT_FAIL:
       return {
+        ...state,
         error: action.payload,
       };
     case CLEAR_ERRORS:
