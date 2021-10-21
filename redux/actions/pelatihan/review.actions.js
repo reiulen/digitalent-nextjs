@@ -74,7 +74,7 @@ export const getAllListReview =
     } catch (error) {
       dispatch({
         type: LIST_REVIEW_FAIL,
-        payload: error.message,
+        payload: error.response.data.message,
       });
     }
   };
@@ -102,7 +102,7 @@ export const getCardReview = (token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: CARD_REVIEW_FAIL,
-      payload: error.message,
+      payload: error.response.data.message,
     });
   }
 };
@@ -129,7 +129,7 @@ export const getListRevisi = (token, id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: GET_LIST_REVISI_FAIL,
-      payload: error.message,
+      payload: error.response.data.message,
     });
   }
 };
@@ -155,7 +155,7 @@ export const getReviewStep1Revisi = (token, id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: GET_REVIEW_STEP1_FAIL,
-      payload: error.message,
+      payload: error.response.data.message,
     });
   }
 };
@@ -181,7 +181,7 @@ export const getReviewStep2Revisi = (token, id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: GET_REVIEW_STEP2_FAIL,
-      payload: error.message,
+      payload: error.response.data.message,
     });
   }
 };
@@ -207,7 +207,7 @@ export const getReviewStep3Revisi = (token, id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: GET_REVIEW_STEP3_FAIL,
-      payload: error.message,
+      payload: error.response.data.message,
     });
   }
 };
@@ -236,7 +236,7 @@ export const revisiReviewPelatihan =
     } catch (error) {
       dispatch({
         type: REVISI_REVIEW_FAIL,
-        payload: error.message,
+        payload: error.response.data.message,
       });
     }
   };
@@ -264,7 +264,7 @@ export const tolakReviewPelatihan = (dataTolak, token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: TOLAK_REVIEW_FAIL,
-      payload: error.message,
+      payload: error.response.data.message,
     });
   }
 };

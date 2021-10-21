@@ -12,7 +12,7 @@ import {
 const NamaPelatihanID = dynamic(
   () =>
     import(
-      "../../../../../components/content/sertifikat/kelola-sertifikat/nama_pelatihan/id/single_sertifikat"
+      "../../../../../components/content/sertifikat/kelola-sertifikat/nama_pelatihan/id/single_sertifikat_draft"
     ),
   {
     loading: function loadingNow() {
@@ -94,18 +94,31 @@ export const getServerSideProps = wrapper.getServerSideProps(
         await store.dispatch(
           getPublishedSertifikat(query.id, session.user.user.data.token)
         );
+        return {
+          props: {
+            session,
+            title: "Published - Sertifikat",
+            status: query.status,
+          },
+        };
       } else if (query.status == "edit") {
         await store.dispatch(
           getSingleSertifikat(query.id, session.user.user.data.token)
         );
+        return {
+          props: { session, title: "Edit - Sertifikat", status: query.status },
+        };
       } else {
         await store.dispatch(
           getSingleSertifikat(query.id, session.user.user.data.token)
         );
+        return {
+          props: {
+            session,
+            title: "Detail - Sertifikat",
+            status: query.status,
+          },
+        };
       }
-
-      return {
-        props: { session, title: "Detail - Sertifikat", status: query.status },
-      };
     }
 );

@@ -8,7 +8,34 @@ import {
   PENDAFTARAN_PELATIHAN_RESET,
   PENDAFTARAN_PELATIHAN_FAIL,
   CLEAR_ERRORS,
-} from "../../types/pelatihan/register-training.type";
+} from "../../../types/pelatihan/register-training.type";
+import {
+  GET_FORM_REGISTER,
+  STORE_FORM_REGISTER,
+  RESET_FORM_REGISTER,
+} from "../../../types/pelatihan/function.type";
+
+export const formRegisterReducer = (state = { dataForm: null }, action) => {
+  switch (action.type) {
+    case GET_FORM_REGISTER:
+      return {
+        ...state,
+        dataForm: action.payload,
+      };
+    case STORE_FORM_REGISTER:
+      return {
+        ...state,
+        dataForm: action.payload,
+      };
+    case RESET_FORM_REGISTER:
+      return {
+        ...state,
+        dataForm: [],
+      };
+    default:
+      return state;
+  }
+};
 
 export const getFormBuilderReducer = (state = { formBuilder: [] }, action) => {
   switch (action.type) {

@@ -1,19 +1,14 @@
-.pagination{
-    margin-left: 15px;
+.pagination {
+  margin-left: 15px;
+  display: inline-block;
 }
 
 @media only screen and (max-width: 576px) {
-    .rightPag{
-        display: none;
-    }
-    .pagination{
-        margin: auto;
-    }
+  .rightPag {
+    display: none;
+  }
 
-    /* Dashboard Publikasi */
-
-    .haloAdmin{
-        /* margin-left: 5px; */
-        /* margin: auto; */
-    }
+  .pagination {
+    margin: auto;
+  }
 }
