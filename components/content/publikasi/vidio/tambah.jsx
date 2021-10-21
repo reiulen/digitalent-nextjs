@@ -147,19 +147,6 @@ const TambahVidio = ({ token }) => {
         setTag(data);
     }
 
-    // const handleTag = (data) => {
-    //     for (let i = 0; i < data.length; i++) {
-    //         for (let j = 0; j < data[i].length; j++) {
-    //             if (data[i][j] === " ") {
-    //                 setDisableTag(true)
-    //             } else {
-    //                 setDisableTag(false)
-    //             }
-    //         }
-    //     }
-    //     setTag(data)
-    // }
-
     const handleChangePublish = (e) => {
         // setPublish(e.target.checked);
         setDisablePublishDate(!disablePublishDate)
