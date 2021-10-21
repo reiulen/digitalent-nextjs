@@ -66,7 +66,7 @@ export const allSertifikatReducers = (state = initialStates, action) => {
       return {
         ...state,
         loading: false,
-        certificate: action.payload.data,
+        error: action.payload,
       };
     case OPTIONS_ACADEMY_REQUEST:
       return {
@@ -83,7 +83,7 @@ export const allSertifikatReducers = (state = initialStates, action) => {
       return {
         ...state,
         loading: false,
-        academyOptions: action.payload.data,
+        error: action.payload,
       };
     case OPTIONS_THEME_REQUEST:
       return {
@@ -100,7 +100,7 @@ export const allSertifikatReducers = (state = initialStates, action) => {
       return {
         ...state,
         loading: false,
-        themeOptions: action.payload.data,
+        error: action.payload,
       };
     case SET_KEYWORD_VALUE: {
       return {

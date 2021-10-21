@@ -66,7 +66,7 @@ export const getAllSertifikat = token => async (dispatch, getState) => {
       dispatch({ type: SERTIFIKAT_SUCCESS, payload: data });
     }
   } catch (error) {
-    dispatch({ type: SERTIFIKAT_FAIL, payload: error.message });
+    dispatch({ type: SERTIFIKAT_FAIL, payload: error });
   }
 };
 
