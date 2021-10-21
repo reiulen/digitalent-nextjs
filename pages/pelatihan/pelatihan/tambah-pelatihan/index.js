@@ -69,7 +69,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
       await store.dispatch(dropdownMitra(session.user.user.data.token));
       await store.dispatch(dropdownZonasi(session.user.user.data.token));
       await store.dispatch(dropdownProvinsi(session.user.user.data.token));
-      await store.dispatch(dropdownKabupaten(session.user.user.data.token));
       await store.dispatch(dropdownPenyelenggara(session.user.user.data.token));
 
       return {
