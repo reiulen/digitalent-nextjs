@@ -47,12 +47,8 @@ const StepTwo = ({ token }) => {
     }
   }, [dispatch, error, success, router]);
 
-  const [startDate, setStartDate] = useState(
-    new Date(survey.start_at ? survey.start_at : Date.now())
-  );
-  const [endDate, setEndDate] = useState(
-    new Date(survey.end_at ? survey.end_at : Date.now())
-  );
+  const [startDate, setStartDate] = useState();
+  const [endDate, setEndDate] = useState();
   const [duration, setDuration] = useState(survey.duration);
   const [jumlah_soal, setJumlahSoal] = useState(survey.questions_to_share);
   const [status, setStatus] = useState(survey.status);
@@ -236,7 +232,8 @@ const StepTwo = ({ token }) => {
                     minDate={startDate}
                     dateFormat="dd/MM/yyyy"
                     autoComplete="off"
-                    value={endDate ? endDate : new Date(Date.now())}
+                    value={endDate}
+                    disabled={!startDate}
                   />
                   {simpleValidator.current.message(
                     "tanggal sampai",
