@@ -16,7 +16,7 @@ export default function TidakLulus() {
                   layout="fill"
                   src="/assets/media/bg-admin-1.png"
                   objectFit="cover"
-                  className={`${style.card_style_image} zindex-0`}
+                  className={`rounded-xl zindex-0`}
                   alt="pictures1"
                 />
                 <Card.ImgOverlay style={{ width: "200px", height: "200px" }}>
