@@ -27,12 +27,12 @@ export default function SeleksiAdministrasi() {
           >
             <Button className="p-0" variant="white">
               <Row className="p-12 m-0">
-                <Col md={3} className="p-0">
-                  <Image
+                <Col md={3} sm={12} className="p-0">
+                  <img
                     layout="fill"
                     src="/assets/media/bg-admin-1.png"
                     objectFit="cover"
-                    className={`rounded-xl `}
+                    className={`rounded-xl img-fluid w-100 h-80`}
                     alt="pictures1"
                   />
                   <Card.ImgOverlay style={{ width: "200px", height: "200px" }}>
