@@ -591,7 +591,7 @@ const Galeri = ({ token }) => {
 
     return (
         <PageWrapper>
-            {console.log("Data Awal : ", galeri)}
+            {/* {console.log("Data Awal : ", galeri)} */}
             {error ? (
                 <div
                     className="alert alert-custom alert-light-danger fade show mb-5"
@@ -1085,7 +1085,7 @@ const Galeri = ({ token }) => {
                                                     className="form-control"
                                                     id="exampleFormControlSelect2"
                                                     style={{
-                                                        width: "65px",
+                                                        width: "70px",
                                                         background: "#F3F6F9",
                                                         borderColor: "#F3F6F9",
                                                         color: "#9E9E9E",

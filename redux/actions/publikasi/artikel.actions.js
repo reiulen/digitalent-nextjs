@@ -33,39 +33,39 @@ export const getAllArtikel =
     enddate = null,
     token
   ) =>
-  async dispatch => {
-    try {
-      dispatch({ type: ARTIKEL_REQUEST });
+    async dispatch => {
+      try {
+        dispatch({ type: ARTIKEL_REQUEST });
 
-      // console.log (`Artikel: ${token}`)
+        // console.log (`Artikel: ${token}`)
 
-      let link =
-        process.env.END_POINT_API_PUBLIKASI + `api/artikel?page=${page}`;
-      if (keyword) link = link.concat(`&keyword=${keyword}`);
-      if (limit) link = link.concat(`&limit=${limit}`);
-      if (publish) link = link.concat(`&publish=${publish}`);
-      if (startdate) link = link.concat(`&startdate=${startdate}`);
-      if (enddate) link = link.concat(`&enddate=${enddate}`);
+        let link =
+          process.env.END_POINT_API_PUBLIKASI + `api/artikel?page=${page}`;
+        if (keyword) link = link.concat(`&keyword=${keyword}`);
+        if (limit) link = link.concat(`&limit=${limit}`);
+        if (publish) link = link.concat(`&publish=${publish}`);
+        if (startdate) link = link.concat(`&startdate=${startdate}`);
+        if (enddate) link = link.concat(`&enddate=${enddate}`);
 
-      const config = {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      };
+        const config = {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        };
 
-      const { data } = await axios.get(link, config);
+        const { data } = await axios.get(link, config);
 
-      dispatch({
-        type: ARTIKEL_SUCCESS,
-        payload: data,
-      });
-    } catch (error) {
-      dispatch({
-        type: ARTIKEL_FAIL,
-        payload: error.message,
-      });
-    }
-  };
+        dispatch({
+          type: ARTIKEL_SUCCESS,
+          payload: data,
+        });
+      } catch (error) {
+        dispatch({
+          type: ARTIKEL_FAIL,
+          payload: error.response.data.message,
+        });
+      }
+    };
 
 export const getDetailArtikel = (id, token) => async dispatch => {
   try {

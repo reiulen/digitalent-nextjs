@@ -7,8 +7,9 @@
   color: #6c6c6c;
 }
 
-.max-container {
-  max-width: 1440px;
+.max-container{
+  /* max-width: 1440px; */
+  max-width: 1700px;
   margin: auto;
 }
 
@@ -42,7 +43,7 @@
   top: 0;
   left: 0;
   right: 0;
-  z-index: 1;
+  z-index: 1000;
 }
 
 .carousel-primarys {
@@ -71,6 +72,16 @@
   height: 8px;
   background: #d7e1ea;
   border-radius: 16px;
+}
+
+.carousel-primarys .splide__pagination li {
+  position: static !important;
+  display: inline-block;
+  line-height: 1;
+  list-style-type: none;
+  margin: 0;
+  pointer-events: none;
+  z-index: -1 !important;
 }
 
 .carousel-secondarys .splide__pagination {
@@ -127,6 +138,8 @@
 .cards-items .top {
   min-height: 180px;
   height: 180px;
+   /* background-image: url("../../public/assets/media/dummy-banner.png"); */
+  /* background-image: url("../../public/assets/media/default-thumbnail.svg"); */
   background-color: blue;
   padding: 20px;
 }
