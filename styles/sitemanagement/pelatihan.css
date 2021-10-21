@@ -119,6 +119,7 @@
 
 .btn-upload {
   background-color: #04aa77 !important;
+  cursor: pointer;
 }
 
 .status-peserta {

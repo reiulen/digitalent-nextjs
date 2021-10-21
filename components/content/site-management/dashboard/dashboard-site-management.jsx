@@ -25,6 +25,7 @@ const DashboardSiteManagement = ({ token }) => {
   const [mitra, setMitra] = useState(0);
   const [pageZonasi, setPageZonasi] = useState(1);
   const [type, setType] = useState("province");
+  const [totalPage, setTotalPage] = useState(0);
 
   let dispatch = useDispatch();
 
@@ -240,7 +241,7 @@ const DashboardSiteManagement = ({ token }) => {
                           href="#"
                           onClick={(e) => {
                             e.preventDefault();
-                            setType("province");
+                            setType("province");120.000
                             setPageZonasi(1);
                           }}
                         >
@@ -253,7 +254,7 @@ const DashboardSiteManagement = ({ token }) => {
                   {tableZonasi}
                 </table>
                 <div className="d-flex mx-6">
-                  <p className="pt-6">Total: 120.000 Zonasi</p>
+                  <p className="pt-6">Total: {allDataZonasi[0].totalZonasi} Zonasi</p>
                   <div className="ml-auto mx-10 my-4">
                     <button
                       className={
@@ -263,17 +264,30 @@ const DashboardSiteManagement = ({ token }) => {
                       }
                       onClick={(e) => {
                         e.preventDefault();
-                        setPageZonasi(pageZonasi - 1);
+                        if(pageZonasi === 1){
+                          setPageZonasi(pageZonasi);
+                        }else{
+                          setPageZonasi(pageZonasi - 1);
+                        }
+                        
                       }}
                     >
                       &lt;
                     </button>
                     <button
                       type="button"
-                      className="btn btn-primary"
+                      className={
+                        pageZonasi >= Math.ceil(allDataZonasi[0].totalPage / 5)
+                          ? "btn btn-primary disabled"
+                          : "btn btn-primary"
+                      }
                       onClick={(e) => {
                         e.preventDefault();
-                        setPageZonasi(pageZonasi + 1);
+                        if(pageZonasi >= Math.ceil(allDataZonasi[0].totalPage / 5)){
+                          setPageZonasi(pageZonasi);
+                        }else{
+                          setPageZonasi(pageZonasi + 1);
+                        }
                       }}
                     >
                       &gt;

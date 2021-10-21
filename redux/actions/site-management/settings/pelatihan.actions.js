@@ -12,21 +12,6 @@ const drawDataPrompt = (data) => ({
   email: data.email.status,
 });
 
-// export const loadDataPrompt = (token) => {
-//     return (dispatch) => {
-//       return axios
-//         .get(`${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-trainings/list-propt`,{
-//             headers: {
-//                 authorization: `Bearer ${token}`,
-//               },
-//         }
-//         )
-//         .then((data) => {
-//             dispatch(drawDataPrompt(data.data.data.training_rules))
-//         });
-//     };
-//   };
-
 export const loadDataPrompt = (token) => {
   return async (dispatch) => {
     try {
@@ -109,18 +94,70 @@ export const putDataPrompt = (token, notification, email) => {
   };
 };
 
-export const postKetentuan = (token, numberOfTraining, trainingPassStatus, completeFinalAdministrativeStatus, statusNotPassedTraining, noTrainingAccepted) => {
-  console.log("action", numberOfTraining)
+export const postKetentuan = (
+  token,
+  numberOfTraining,
+  trainingPassStatus,
+  completeFinalAdministrativeStatus,
+  statusNotPassedTraining,
+  noTrainingAccepted
+) => {
+  console.log("action", numberOfTraining);
   return (dispatch) => {
     axios
       .post(
         `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-trainings/update-training-condition`,
         {
-          "numberOfTraining": numberOfTraining,
-          "trainingPassStatus": trainingPassStatus,
-          "completeFinalAdministrativeStatus": completeFinalAdministrativeStatus,
-          "statusNotPassedTraining": statusNotPassedTraining,
-          "noTrainingAccepted": noTrainingAccepted,
+          numberOfTraining: numberOfTraining,
+          trainingPassStatus: trainingPassStatus,
+          completeFinalAdministrativeStatus: completeFinalAdministrativeStatus,
+          statusNotPassedTraining: statusNotPassedTraining,
+          noTrainingAccepted: noTrainingAccepted,
+        },
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then(() => {
+        Swal.fire("Berhasil", "Data berhasil tersimpan", "success").then(() => {
+          router.push("/partnership/user/auth/login");
+        });
+      })
+      .catch((error) => {
+        Swal.fire("Gagal", "Gagal tidak berhasil tersimpan", "error");
+      });
+  };
+};
+
+export const postViaFilter = (token) => {
+  const via = {
+    status_types: "via filter",
+  };
+  const data = {
+    title: "jobs",
+    year: "2021",
+    academy: "01",
+    theme: "02",
+    organizer: "03",
+    training: "04",
+    profileStatus: "05",
+    selectionStatus: "06",
+    participantSelectionStatusUpdate: "1",
+    status: "lulus",
+    broadcastEmailSendNotification: "1",
+    emailSubject: "DTS",
+    emailContent: "Sebuah lembaga amal jariyah",
+  };
+
+  return (dispatch) => {
+    axios
+      .post(
+        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-trainings/subm`,
+        {
+          status_types: "via filter",
+          training_rules: data,
         },
         {
           headers: {

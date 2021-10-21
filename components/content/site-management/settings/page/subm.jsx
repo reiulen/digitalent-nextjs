@@ -9,7 +9,10 @@ import PageWrapper from "../../../../wrapper/page.wrapper";
 import Upload from "../../../../../public/assets/icon/sitemanagement/Upload.svg";
 import Unduh from "../../../../../public/assets/icon/sitemanagement/Unduh.svg";
 
-export default function SUBM() {
+import {postViaFilter} from '../../../../../redux/actions/site-management/settings/pelatihan.actions'
+
+
+export default function SUBM(props) {
   const initialState = {
     page: "Prompt",
     isEmail: false,
@@ -21,15 +24,27 @@ export default function SUBM() {
   const [{ page, isEmail, isStatus, notification, isPromptEmail }, setState] =
     useState(initialState);
 
+    let dispatch = useDispatch()
+
   const [via, setVia] = useState("template");
+  const [title, setTitle] =useState("");
+  const [year, setYear] = useState("");
+  const [academy, setAcademy] = useState("")
+  const [theme, setTheme] = useState("")
+  const [organizer, setOrganizer] = useState("")
+  const [training, setTraining] = useState("")
+  const [profileStatus, setProfileStatus] = useState("")
+  const [selectionStatus, setSelectionStatus] = useState("")
+  const [participantSelectionStatusUpdate, setParticipantSelectionStatusUpdate] = useState(0)
+  const [status, setStatus] = useState("")
+  const [broadcastEmailSendNotification, setBroadcastEmailSendNotification] = useState(0)
+  const [emailSubject, setEmailSubject] = useState("");
+  const [emailContent, setEmailContent] = useState("")
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(via);
-  };
-
-  const onChangeVia = (e) => {
-    setVia(e.target.value);
+    dispatch(postViaFilter(props.token))
+    console.log(title, year, academy, theme, organizer, training, profileStatus, selectionStatus, participantSelectionStatusUpdate || participantSelectionStatusUpdate === 1 ? "1" : "0" , status, broadcastEmailSendNotification || broadcastEmailSendNotification === 1 ? "1" : "0" , emailSubject, emailContent);
   };
 
   return (
@@ -46,6 +61,9 @@ export default function SUBM() {
             className="form-control"
             id="formGroupExampleInput"
             placeholder="Example input"
+            onChange={e => {
+              setTitle(e.target.value)
+            }}
           />
         </div>
         <h3 className="judul my-2">Data List Peserta</h3>
@@ -86,7 +104,7 @@ export default function SUBM() {
                   <h3 className="judul">Unduh Template Data Peserta</h3>
                 </div>
                 <div className="d-flex justify-content-start">
-                  <button className="btn btn-rounded-full bg-blue-primary text-white btn-unduh">
+                  <button className="btn btn-rounded-full text-white btn-unduh">
                     <div className="mr-4">
                       <Image src={Unduh} width={24} height={24} alt="Unduh" />
                     </div>
@@ -96,15 +114,16 @@ export default function SUBM() {
               </div>
               <div className="col">
                 <div className="title-unduh">
-                  <h3>Upload Data Peserta</h3>
+                  <h3 className="judul">Upload Data Peserta</h3>
                 </div>
                 <div className="d-flex justify-content-start">
-                  <button className="btn btn-rounded-full bg-blue-primary text-white btn-upload">
+                  <div className="btn-rounded-full text-white btn-upload">
                     <div className="mr-4">
                       <Image src={Upload} width={24} height={24} alt="Upload" />
+                      <input type="file" style={{ display: "none" }} />
                     </div>
                     Upload
-                  </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -216,58 +235,82 @@ export default function SUBM() {
             <div className="row border-bottom">
               <div className="form-group col-xl-6">
                 <h3 className="judul">Tahun</h3>
-                <select className="form-control">
-                  <option disabled>
-                    Tahun
+                <select className="form-control" onChange={e => {
+                  setYear(e.target.value)
+                }}>
+                  <option disabled selected>
+                    --------------- PILIH TAHUN ------------------
                   </option>
+                  <option value="2021">2021</option>
+                  <option value="2022">2022</option>
+                  <option value="2021">2021</option>
+                  <option value="2021">2021</option>
                 </select>
               </div>
               <div className="form-group col-xl-6">
                 <h3 className="judul">Akademi</h3>
-                <select className="form-control">
-                  <option disabled value="">
-                    Tahun
+                <select className="form-control" onChange={e => {
+                  setAcademy(e.target.value)
+                }}>
+                  <option disabled selected>
+                      --------------- PILIH AKADEMI ------------------
                   </option>
+                  <option value="01">01</option>
                 </select>
               </div>
               <div className="form-group col-xl-6">
                 <h3 className="judul">Tema</h3>
-                <select className="form-control">
-                  <option disabled value="">
-                    Tahun
+                <select className="form-control" onChange={e => {
+                  setTheme(e.target.value)
+                }}>
+                  <option disabled selected>
+                  --------------- PILIH TEMA ------------------
                   </option>
+                  <option value="02">02</option>
                 </select>
               </div>
               <div className="form-group col-xl-6">
                 <h3 className="judul">Penyelenggara</h3>
-                <select className="form-control">
-                  <option disabled value="">
-                    Tahun
+                <select className="form-control" onChange={e => {
+                  setOrganizer(e.target.value)
+                }}>
+                  <option disabled selected>
+                  --------------- PILIH PENYELENGGARA ------------------
                   </option>
+                  <option value="03">03</option>
                 </select>
               </div>
               <div className="form-group col-xl-6">
                 <h3 className="judul">Pelatihan</h3>
-                <select className="form-control">
-                  <option disabled value="">
-                    Tahun
+                <select className="form-control" onChange={e => {
+                  setTraining(e.target.value)
+                }}>
+                  <option disabled selected>
+                  --------------- PILIH PELATIHAN ------------------
                   </option>
+                  <option value="04">04</option>
                 </select>
               </div>
               <div className="form-group col-xl-6">
                 <h3 className="judul">Status Profil</h3>
-                <select className="form-control">
-                  <option disabled value="">
-                    Tahun
+                <select className="form-control" onChange={e => {
+                  setProfileStatus(e.target.value)
+                }}>
+                  <option disabled selected>
+                  --------------- PILIH STATUS PROFIL ------------------
                   </option>
+                  <option value="05">05</option>
                 </select>
               </div>
               <div className="form-group col-xl-6">
                 <h3 className="judul">Status Seleksi</h3>
-                <select className="form-control">
-                  <option disabled value="">
-                    Tahun
+                <select className="form-control" onChange={e => {
+                  setSelectionStatus(e.target.value)
+                }}>
+                  <option disabled selected>
+                  --------------- PILIH STATUS SELEKSI ------------------
                   </option>
+                  <option value="06">06</option>
                 </select>
               </div>
             </div>
@@ -279,25 +322,25 @@ export default function SUBM() {
                     type="checkbox"
                     name="select"
                     id="email-check"
-                    onClick={() => {
-                      if (isStatus) {
-                        setState({ page, isEmail, isStatus: false });
-                      } else {
-                        setState({ page, isEmail, isStatus: true });
-                      }
+                    checked={participantSelectionStatusUpdate}
+                    onChange={e => {
+                      setParticipantSelectionStatusUpdate(e.target.checked)
                     }}
                   />
                   <span></span>
                 </label>
                 <h3 className="mt-2 judul">
-                  {isStatus ? "Aktif" : "Tidak Aktif"}
+                  {participantSelectionStatusUpdate ? "Aktif" : "Tidak Aktif"}
                 </h3>
               </span>
             </div>
             <div className="status-peserta">
               <div className="form-group">
                 <h3 className="mb-4 judul">Status</h3>
-                <select className="form-control">
+                <select className="form-control" onChange={e => {
+                  setStatus(e.target.value)
+                }}>
+                  <option disabled selected> --------------- PILIH PELATIHAN ------------------</option>
                   <option value="Menunggu">Menunggu</option>
                   <option value="Tidak Lulus Administrasi">
                     Tidak Lulus Administrasi
@@ -329,18 +372,17 @@ export default function SUBM() {
                     type="checkbox"
                     name="select"
                     id="email-check"
-                    onClick={() => {
-                      if (isEmail) {
-                        setState({ page, isEmail: false, isStatus });
-                      } else {
-                        setState({ page, isEmail: true, isStatus });
+                    checked={broadcastEmailSendNotification}
+                    onChange={
+                      e => {
+                        setBroadcastEmailSendNotification(e.target.checked)
                       }
-                    }}
+                    }
                   />
                   <span></span>
                 </label>
                 <h3 className="mt-2 judul">
-                  {isEmail ? "Aktif" : "Tidak Aktif"}
+                  {broadcastEmailSendNotification ? "Aktif" : "Tidak Aktif"}
                 </h3>
               </span>
             </div>
@@ -352,6 +394,9 @@ export default function SUBM() {
                 className="form-control"
                 id="subjekEmail"
                 placeholder="Subjek Email"
+                onChange={e => {
+                  setEmailSubject(e.target.value)
+                }}
               />
             </div>
             <div className="form-group">
@@ -364,7 +409,8 @@ export default function SUBM() {
                   console.log("Editor is ready to use!", editor);
                 }}
                 onChange={(event, editor) => {
-                  const data = editor.getData();
+                  let data = editor.getData();
+                  setEmailContent(data)
                 }}
               />
             </div>

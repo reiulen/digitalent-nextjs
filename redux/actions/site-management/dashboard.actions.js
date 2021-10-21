@@ -26,10 +26,9 @@ export const loadDataZonasi = (token, type, page) => {
             },
           }
         );
-        console.log(data.data)
         dispatch({
           type: LOAD_DATA_DASHBOARD_SITE_MANAGEMENT,
-          payload: data.data.list_zonasi,
+          payload: data.data,
           page
         });
       } catch (error) {
