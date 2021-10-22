@@ -73,7 +73,7 @@ const DashboardSiteManagement = ({ token }) => {
       </tr>
     );
   });
-
+  
   return (
     <>
       <PageWrapper>
@@ -134,7 +134,7 @@ const DashboardSiteManagement = ({ token }) => {
                 </p>
               </div>
             </div>
-            <div className="col-lg-3">
+            <div className="col-lg-3 mt-2">
               <CardDashboardSiteManagement
                 background="bg-white"
                 icon="/assets/icon/Account.svg"
@@ -143,7 +143,7 @@ const DashboardSiteManagement = ({ token }) => {
                 link="/site-management/setting/pelatihan"
               ></CardDashboardSiteManagement>
             </div>
-            <div className="col-lg-3">
+            <div className="col-lg-3 mt-2">
               <CardDashboardSiteManagement
                 background="bg-white"
                 icon="/assets/icon/Map.svg"
