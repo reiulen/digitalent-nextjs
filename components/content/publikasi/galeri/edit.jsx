@@ -142,7 +142,7 @@ const EditGaleri = ({ token }) => {
                 query: { success: true }
             })
         }
-    }, [dispatch, error, success, files, router]);
+    }, [dispatch, error, success, files, router, galeri.gambar]);
 
     const [id, setId] = useState(galeri.id_gallery);
     // const [id, setId] = useState(galeri.id);
