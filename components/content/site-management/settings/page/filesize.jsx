@@ -22,7 +22,10 @@ export default function FileSize(props) {
       headers: {
         authorization: `Bearer ${props.token}`,
       },
-    }).then()
+    }).then(response => {
+      setImage(response.data.data.training_rules.image[0].size)
+      setDocument(response.data.data.training_rules.document[0].size)
+    })
   }, [props.token])
 
   return (
@@ -38,6 +41,7 @@ export default function FileSize(props) {
               type="number"
               className="form-control"
               placeholder="Size Image"
+              value={image}
               onChange={e => {
                 setImage(e.target.value)
               }}
@@ -53,6 +57,7 @@ export default function FileSize(props) {
           <div className="input-group mb-3">
             <input
               type="number"
+              value={document}
               className="form-control"
               placeholder="Size Document"
               onChange={e => {

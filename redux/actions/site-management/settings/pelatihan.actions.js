@@ -102,7 +102,6 @@ export const postKetentuan = (
   statusNotPassedTraining,
   noTrainingAccepted
 ) => {
-  console.log("action", numberOfTraining);
   return (dispatch) => {
     axios
       .post(
@@ -177,7 +176,6 @@ export const postFileSize = (
   token,
   image, document
 ) => {
-  console.log("action", numberOfTraining);
   return (dispatch) => {
     axios
       .post(

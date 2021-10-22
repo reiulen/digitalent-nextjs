@@ -4,14 +4,13 @@ import Image from "next/image";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
-import axios from 'axios'
+import axios from "axios";
 
 import PageWrapper from "../../../../wrapper/page.wrapper";
 import Upload from "../../../../../public/assets/icon/sitemanagement/Upload.svg";
 import Unduh from "../../../../../public/assets/icon/sitemanagement/Unduh.svg";
 
-import {postViaFilter} from '../../../../../redux/actions/site-management/settings/pelatihan.actions'
-
+import { postViaFilter } from "../../../../../redux/actions/site-management/settings/pelatihan.actions";
 
 export default function SUBM(props) {
   const initialState = {
@@ -25,24 +24,28 @@ export default function SUBM(props) {
   const [{ page, isEmail, isStatus, notification, isPromptEmail }, setState] =
     useState(initialState);
 
-    let dispatch = useDispatch()
+  let dispatch = useDispatch();
 
   const [via, setVia] = useState("template");
-  const [title, setTitle] =useState("");
+  const [title, setTitle] = useState("");
   const [year, setYear] = useState("");
-  const [academy, setAcademy] = useState("")
-  const [theme, setTheme] = useState("")
-  const [organizer, setOrganizer] = useState("")
-  const [training, setTraining] = useState("")
-  const [profileStatus, setProfileStatus] = useState("")
-  const [selectionStatus, setSelectionStatus] = useState("")
-  const [participantSelectionStatusUpdate, setParticipantSelectionStatusUpdate] = useState(0)
-  const [status, setStatus] = useState("")
-  const [broadcastEmailSendNotification, setBroadcastEmailSendNotification] = useState(0)
+  const [academy, setAcademy] = useState("");
+  const [theme, setTheme] = useState("");
+  const [organizer, setOrganizer] = useState("");
+  const [training, setTraining] = useState("");
+  const [profileStatus, setProfileStatus] = useState("");
+  const [selectionStatus, setSelectionStatus] = useState("");
+  const [
+    participantSelectionStatusUpdate,
+    setParticipantSelectionStatusUpdate,
+  ] = useState(0);
+  const [status, setStatus] = useState("");
+  const [broadcastEmailSendNotification, setBroadcastEmailSendNotification] =
+    useState(0);
   const [emailSubject, setEmailSubject] = useState("");
-  const [emailContent, setEmailContent] = useState("")
+  const [emailContent, setEmailContent] = useState("");
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const data = {
@@ -54,38 +57,38 @@ export default function SUBM(props) {
       training,
       profileStatus,
       selectionStatus,
-      participantSelectionStatusUpdate: participantSelectionStatusUpdate || participantSelectionStatusUpdate === 1 ? "1" : "0",
+      participantSelectionStatusUpdate:
+        participantSelectionStatusUpdate ||
+        participantSelectionStatusUpdate === 1
+          ? "1"
+          : "0",
       status: "1",
-      broadcastEmailSendNotification: broadcastEmailSendNotification || broadcastEmailSendNotification === 1 ? "1" : "0",
+      broadcastEmailSendNotification:
+        broadcastEmailSendNotification || broadcastEmailSendNotification === 1
+          ? "1"
+          : "0",
       emailSubject,
       emailContent,
     };
 
-    const formData = new FormData()
-    formData.append("status_types", "via filter")
-    formData.append("training_rules", JSON.stringify(data))
+    const formData = new FormData();
+    formData.append("status_types", "via filter");
+    formData.append("training_rules", JSON.stringify(data));
 
     try {
-      let {data} = await axios.post(
+      let { data } = await axios.post(
         `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-trainings/subm`,
-        formData, 
+        formData,
         {
-          headers: {  
-            authorization: `Bearer ${props.token}`
+          headers: {
+            authorization: `Bearer ${props.token}`,
           },
         }
-      )
-      console.log("response sukses",data)
+      );
+      console.log("response sukses", data);
     } catch (error) {
-      console.log("error",error.response)
-      
+      console.log("error", error.response);
     }
-
-
-
-
-
-
 
     // dispatch(postViaFilter(props.token, title, year, academy, theme, organizer, training, profileStatus, selectionStatus, participantSelectionStatusUpdate || participantSelectionStatusUpdate === 1 ? "1" : "0" , status, broadcastEmailSendNotification || broadcastEmailSendNotification === 1 ? "1" : "0" , emailSubject, emailContent, `via ${via}`))
     // console.log(title, year, academy, theme, organizer, training, profileStatus, selectionStatus, participantSelectionStatusUpdate || participantSelectionStatusUpdate === 1 ? "1" : "0" , status, broadcastEmailSendNotification || broadcastEmailSendNotification === 1 ? "1" : "0" , emailSubject, emailContent);
@@ -93,7 +96,7 @@ export default function SUBM(props) {
 
   return (
     <div className="col-xl-8 styling-content-pelatihan">
-      <form >
+      <form>
         <div className="notification-title">
           <h1>Status Update & Broadcast Email</h1>
         </div>
@@ -105,8 +108,8 @@ export default function SUBM(props) {
             className="form-control"
             id="formGroupExampleInput"
             placeholder="Example input"
-            onChange={e => {
-              setTitle(e.target.value)
+            onChange={(e) => {
+              setTitle(e.target.value);
             }}
           />
         </div>
@@ -160,13 +163,10 @@ export default function SUBM(props) {
                 <div className="title-unduh">
                   <h3 className="judul">Upload Data Peserta</h3>
                 </div>
-                <div className="d-flex justify-content-start">
-                  <div className="btn-rounded-full text-white btn-upload">
-                    <div className="mr-4">
-                      <Image src={Upload} width={24} height={24} alt="Upload" />
-                      <input type="file" style={{ display: "none" }} />
-                    </div>
-                    Upload
+                <div className="justify-content-start">
+                  <div className="mr-4 styling-upload d-flex">
+                    <Image src={Upload} width={24} height={24} alt="Upload" />
+                    <input type="file" title=" " />
                   </div>
                 </div>
               </div>
@@ -279,9 +279,12 @@ export default function SUBM(props) {
             <div className="row border-bottom">
               <div className="form-group col-xl-6">
                 <h3 className="judul">Tahun</h3>
-                <select className="form-control" onChange={e => {
-                  setYear(e.target.value)
-                }}>
+                <select
+                  className="form-control"
+                  onChange={(e) => {
+                    setYear(e.target.value);
+                  }}
+                >
                   <option disabled selected>
                     --------------- PILIH TAHUN ------------------
                   </option>
@@ -293,66 +296,84 @@ export default function SUBM(props) {
               </div>
               <div className="form-group col-xl-6">
                 <h3 className="judul">Akademi</h3>
-                <select className="form-control" onChange={e => {
-                  setAcademy(e.target.value)
-                }}>
+                <select
+                  className="form-control"
+                  onChange={(e) => {
+                    setAcademy(e.target.value);
+                  }}
+                >
                   <option disabled selected>
-                      --------------- PILIH AKADEMI ------------------
+                    --------------- PILIH AKADEMI ------------------
                   </option>
                   <option value="01">01</option>
                 </select>
               </div>
               <div className="form-group col-xl-6">
                 <h3 className="judul">Tema</h3>
-                <select className="form-control" onChange={e => {
-                  setTheme(e.target.value)
-                }}>
+                <select
+                  className="form-control"
+                  onChange={(e) => {
+                    setTheme(e.target.value);
+                  }}
+                >
                   <option disabled selected>
-                  --------------- PILIH TEMA ------------------
+                    --------------- PILIH TEMA ------------------
                   </option>
                   <option value="02">02</option>
                 </select>
               </div>
               <div className="form-group col-xl-6">
                 <h3 className="judul">Penyelenggara</h3>
-                <select className="form-control" onChange={e => {
-                  setOrganizer(e.target.value)
-                }}>
+                <select
+                  className="form-control"
+                  onChange={(e) => {
+                    setOrganizer(e.target.value);
+                  }}
+                >
                   <option disabled selected>
-                  --------------- PILIH PENYELENGGARA ------------------
+                    --------------- PILIH PENYELENGGARA ------------------
                   </option>
                   <option value="03">03</option>
                 </select>
               </div>
               <div className="form-group col-xl-6">
                 <h3 className="judul">Pelatihan</h3>
-                <select className="form-control" onChange={e => {
-                  setTraining(e.target.value)
-                }}>
+                <select
+                  className="form-control"
+                  onChange={(e) => {
+                    setTraining(e.target.value);
+                  }}
+                >
                   <option disabled selected>
-                  --------------- PILIH PELATIHAN ------------------
+                    --------------- PILIH PELATIHAN ------------------
                   </option>
                   <option value="04">04</option>
                 </select>
               </div>
               <div className="form-group col-xl-6">
                 <h3 className="judul">Status Profil</h3>
-                <select className="form-control" onChange={e => {
-                  setProfileStatus(e.target.value)
-                }}>
+                <select
+                  className="form-control"
+                  onChange={(e) => {
+                    setProfileStatus(e.target.value);
+                  }}
+                >
                   <option disabled selected>
-                  --------------- PILIH STATUS PROFIL ------------------
+                    --------------- PILIH STATUS PROFIL ------------------
                   </option>
                   <option value="05">05</option>
                 </select>
               </div>
               <div className="form-group col-xl-6">
                 <h3 className="judul">Status Seleksi</h3>
-                <select className="form-control" onChange={e => {
-                  setSelectionStatus(e.target.value)
-                }}>
+                <select
+                  className="form-control"
+                  onChange={(e) => {
+                    setSelectionStatus(e.target.value);
+                  }}
+                >
                   <option disabled selected>
-                  --------------- PILIH STATUS SELEKSI ------------------
+                    --------------- PILIH STATUS SELEKSI ------------------
                   </option>
                   <option value="06">06</option>
                 </select>
@@ -367,8 +388,8 @@ export default function SUBM(props) {
                     name="select"
                     id="email-check"
                     checked={participantSelectionStatusUpdate}
-                    onChange={e => {
-                      setParticipantSelectionStatusUpdate(e.target.checked)
+                    onChange={(e) => {
+                      setParticipantSelectionStatusUpdate(e.target.checked);
                     }}
                   />
                   <span></span>
@@ -381,10 +402,16 @@ export default function SUBM(props) {
             <div className="status-peserta">
               <div className="form-group">
                 <h3 className="mb-4 judul">Status</h3>
-                <select className="form-control" onChange={e => {
-                  setStatus(e.target.value)
-                }}>
-                  <option disabled selected> --------------- PILIH PELATIHAN ------------------</option>
+                <select
+                  className="form-control"
+                  onChange={(e) => {
+                    setStatus(e.target.value);
+                  }}
+                >
+                  <option disabled selected>
+                    {" "}
+                    --------------- PILIH PELATIHAN ------------------
+                  </option>
                   <option value="Menunggu">Menunggu</option>
                   <option value="Tidak Lulus Administrasi">
                     Tidak Lulus Administrasi
@@ -417,11 +444,9 @@ export default function SUBM(props) {
                     name="select"
                     id="email-check"
                     checked={broadcastEmailSendNotification}
-                    onChange={
-                      e => {
-                        setBroadcastEmailSendNotification(e.target.checked)
-                      }
-                    }
+                    onChange={(e) => {
+                      setBroadcastEmailSendNotification(e.target.checked);
+                    }}
                   />
                   <span></span>
                 </label>
@@ -438,8 +463,8 @@ export default function SUBM(props) {
                 className="form-control"
                 id="subjekEmail"
                 placeholder="Subjek Email"
-                onChange={e => {
-                  setEmailSubject(e.target.value)
+                onChange={(e) => {
+                  setEmailSubject(e.target.value);
                 }}
               />
             </div>
@@ -454,7 +479,7 @@ export default function SUBM(props) {
                 }}
                 onChange={(event, editor) => {
                   let data = editor.getData();
-                  setEmailContent(data)
+                  setEmailContent(data);
                 }}
               />
             </div>
@@ -473,7 +498,7 @@ export default function SUBM(props) {
           </button>
           <button
             type="button"
-            onClick={(e)=>handleSubmit(e)}
+            onClick={(e) => handleSubmit(e)}
             className="btn btn-rounded-full bg-blue-primary text-white"
           >
             Simpan
