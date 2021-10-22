@@ -471,8 +471,8 @@ const Beranda = () => {
                                         
                                           thumbnail={
                                             <Image 
-                                              // src={process.env.END_POINT_API_PELATIHAN + element.gambar}
-                                              src={`https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/${element.gambar}`}
+                                              src={process.env.END_POINT_API_IMAGE_BEASISWA + element.gambar}
+                                              // src={`https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/${element.gambar}`}
                                               layout="fill" 
                                               objectFit="cover"
                                             />
@@ -559,8 +559,8 @@ const Beranda = () => {
                                     <div className="col-12 col-md-4">
                                       <Image 
                                         // src={`/assets/media/logo-vsga-1.svg`}
-                                        // src={process.env.END_POINT_API_PELATIHAN + cardImage}
-                                        src={`https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/${cardImage}`}
+                                        src={process.env.END_POINT_API_IMAGE_BEASISWA + cardImage}
+                                        // src={`https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/${cardImage}`}
                                         layout="fill" 
                                         objectFit="cover"
                                         className="rounded"
@@ -576,8 +576,8 @@ const Beranda = () => {
                                         <div className="col-12 col-md-2">
                                           <Image 
                                             // src={`/assets/media/logo-vsga-1.svg`}
-                                            // src={process.env.END_POINT_API_PELATIHAN + cardImageMitra}
-                                            src={`https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/${cardImageMitra}`}
+                                            src={process.env.END_POINT_API_IMAGE_PARTNERSHIP + cardImageMitra}
+                                            // src={`https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/${cardImageMitra}`}
                                             width="80vw"
                                             height="80vh" 
                                             objectFit="cover"

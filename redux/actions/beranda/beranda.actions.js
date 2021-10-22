@@ -95,7 +95,7 @@ export const getAllPublikasi = () => async dispatch => {
     try {
         dispatch({ type: BERANDA_PUBLIKASI_REQUEST });
 
-        let link = `http://dts-publikasi-dev.majapahit.id/api/home`
+        let link = process.env.END_POINT_API_PUBLIKASI_1 +`api/home`
 
         const { data } = await axios.get(link);
 
