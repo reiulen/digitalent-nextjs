@@ -12,27 +12,26 @@ import { GET_TRAINING_STEP1 } from "../../../../../redux/types/pelatihan/functio
 import {
   storeTrainingStep1,
   getTrainingStep1,
+  dropdownKabupaten,
 } from "../../../../../redux/actions/pelatihan/function.actions";
 import LoadingPage from "../../../../LoadingPage";
 
-const AddTrainingStep1 = ({ propsStep }) => {
+const AddTrainingStep1 = ({ propsStep, token }) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
 
   const { trainingData } = useSelector((state) => state.trainingStep1);
-  const { error: dropdownErrorLevelPelatihan, data: dataLevelPelatihan } = useSelector(
-    (state) => state.drowpdownLevelPelatihan
-  );
+  const { error: dropdownErrorLevelPelatihan, data: dataLevelPelatihan } =
+    useSelector((state) => state.drowpdownLevelPelatihan);
   const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(
     (state) => state.drowpdownAkademi
   );
   const { error: dropdownErrorTema, data: dataTema } = useSelector(
     (state) => state.drowpdownTema
   );
-  const { error: dropdownErrorPenyelenggara, data: dataPenyelenggara } = useSelector(
-    (state) => state.drowpdownPenyelenggara
-  );
+  const { error: dropdownErrorPenyelenggara, data: dataPenyelenggara } =
+    useSelector((state) => state.drowpdownPenyelenggara);
   const { error: dropdownErrorMitra, data: dataMitra } = useSelector(
     (state) => state.drowpdownMitra
   );
@@ -122,13 +121,6 @@ const AddTrainingStep1 = ({ propsStep }) => {
   const [tuna_daksa, setTunaDaksa] = useState(trainingData.tuna_daksa);
   // const [disabilitas, setDisabilitas] = useState(trainingData.disabilitas);
 
-  const options = 
-  [
-    { value: "1", label: "Chocolate" },
-    { value: "2", label: "Strawberry" },
-    { value: "3", label: "Vanilla" },
-  ];
-
   const optionsAkademi = dataAkademi.data;
   const optionsTema = dataTema.data;
 
@@ -138,40 +130,61 @@ const AddTrainingStep1 = ({ propsStep }) => {
     optionBatch.push(val);
   }
 
-  const optionsLevelPelatihan = []
-  for (let index = 0; index < dataLevelPelatihan.data.length; index++){
-    let val = { value: dataLevelPelatihan.data[index].id, label: dataLevelPelatihan.data[index].value}
-    optionsLevelPelatihan.push (val)
+  const optionsLevelPelatihan = [];
+  for (let index = 0; index < dataLevelPelatihan.data.length; index++) {
+    let val = {
+      value: dataLevelPelatihan.data[index].id,
+      label: dataLevelPelatihan.data[index].value,
+    };
+    optionsLevelPelatihan.push(val);
   }
 
-  const optionsPenyelenggara = []
-  for (let index = 0; index < dataPenyelenggara.data.length; index++){
-    let val = { value: dataPenyelenggara.data[index].id, label: dataPenyelenggara.data[index].value}
-    optionsPenyelenggara.push (val)
+  const optionsPenyelenggara = [];
+  for (let index = 0; index < dataPenyelenggara.data.length; index++) {
+    let val = {
+      value: dataPenyelenggara.data[index].id,
+      label: dataPenyelenggara.data[index].value,
+    };
+    optionsPenyelenggara.push(val);
   }
 
-  const optionsMitra = []
-  for (let index = 0; index < dataMitra.data.length; index++){
-    let val = { value: dataMitra.data[index].id, label: dataMitra.data[index].name}
-    optionsMitra.push (val)
+  const optionsMitra = [];
+  for (let index = 0; index < dataMitra.data.length; index++) {
+    let val = {
+      value: dataMitra.data[index].id,
+      label: dataMitra.data[index].name,
+    };
+    optionsMitra.push(val);
   }
 
-  const optionsZonasi = []
-  for (let index = 0; index < dataZonasi.data.zonasi.length; index++){
-    let val = { value: dataZonasi.data.zonasi[index].value, label: dataZonasi.data.zonasi[index].label}
-    optionsZonasi.push (val)
+  const optionsZonasi = [];
+  for (let index = 0; index < dataZonasi.data.zonasi.length; index++) {
+    let val = {
+      value: dataZonasi.data.zonasi[index].value,
+      label: dataZonasi.data.zonasi[index].label,
+    };
+    optionsZonasi.push(val);
   }
 
-  const optionsProvinsi = []
-  for (let index = 0; index < dataProvinsi.data.length; index++){
-    let val = { value: dataProvinsi.data[index].id, label: dataProvinsi.data[index].value}
-    optionsProvinsi.push (val)
+  const optionsProvinsi = [];
+  for (let index = 0; index < dataProvinsi.data.length; index++) {
+    let val = {
+      value: dataProvinsi.data[index].id,
+      label: dataProvinsi.data[index].label,
+    };
+    optionsProvinsi.push(val);
   }
 
-  const optionsKabupaten = []
-  for (let index = 0; index < dataKabupaten.data.length; index++){
-    let val = { value: dataKabupaten.data[index].id, label: dataKabupaten.data[index].value}
-    optionsKabupaten.push (val)
+  let selectRefKabupaten = null;
+  const optionsKabupaten = [];
+  if (dataKabupaten.length !== 0) {
+    for (let index = 0; index < dataKabupaten.data.length; index++) {
+      let val = {
+        value: dataKabupaten.data[index].id,
+        label: dataKabupaten.data[index].value,
+      };
+      optionsKabupaten.push(val);
+    }
   }
 
   useEffect(() => {
@@ -484,7 +497,7 @@ const AddTrainingStep1 = ({ propsStep }) => {
                 placeholder="Silahkan Pilih Level Pelatihan"
                 options={optionsLevelPelatihan}
                 defaultValue={level}
-                onChange={(e) => setLevel({ value: e.value, label: e.label })}
+                onChange={(e) => setLevel({ value: e?.value, label: e?.label })}
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("level pelatihan")
                 }
@@ -505,7 +518,9 @@ const AddTrainingStep1 = ({ propsStep }) => {
                 placeholder="Silahkan Pilih Akademi"
                 options={optionsAkademi}
                 defaultValue={academy}
-                onChange={(e) => setAcademy({ value: e.value, label: e.label })}
+                onChange={(e) =>
+                  setAcademy({ value: e?.value, label: e?.label })
+                }
                 onBlur={() => simpleValidator.current.showMessageFor("akademi")}
               />
             </div>
@@ -526,7 +541,7 @@ const AddTrainingStep1 = ({ propsStep }) => {
                 placeholder="Silahkan Pilih Tema"
                 options={optionsTema}
                 defaultValue={theme}
-                onChange={(e) => setTheme({ value: e.value, label: e.label })}
+                onChange={(e) => setTheme({ value: e?.value, label: e?.label })}
                 onBlur={() => simpleValidator.current.showMessageFor("tema")}
               />
             </div>
@@ -681,7 +696,9 @@ const AddTrainingStep1 = ({ propsStep }) => {
               placeholder="Silahkan Pilih Penyelenggara"
               options={optionsPenyelenggara}
               defaultValue={organizer}
-              onChange={(e) => setOrganizer({ value: e.value, label: e.label })}
+              onChange={(e) =>
+                setOrganizer({ value: e?.value, label: e?.label })
+              }
               onBlur={() =>
                 simpleValidator.current.showMessageFor("penyelenggara")
               }
@@ -704,7 +721,7 @@ const AddTrainingStep1 = ({ propsStep }) => {
               placeholder="Silahkan Pilih Mitra"
               options={optionsMitra}
               defaultValue={mitra}
-              onChange={(e) => setMitra({ value: e.value, label: e.label })}
+              onChange={(e) => setMitra({ value: e?.value, label: e?.label })}
               onBlur={() => simpleValidator.current.showMessageFor("mitra")}
             />
             {simpleValidator.current.message("mitra", mitra.value, "required", {
@@ -1128,7 +1145,9 @@ const AddTrainingStep1 = ({ propsStep }) => {
                 placeholder="Silahkan Pilih Level Zonasi"
                 options={optionsZonasi}
                 defaultValue={zonasi}
-                onChange={(e) => setZonasi({ value: e.value, label: e.label })}
+                onChange={(e) =>
+                  setZonasi({ value: e?.value, label: e?.label })
+                }
                 onBlur={() => simpleValidator.current.showMessageFor("zonasi")}
               />
               {simpleValidator.current.message(
@@ -1146,7 +1165,7 @@ const AddTrainingStep1 = ({ propsStep }) => {
                 placeholder="Silahkan Pilih Batch"
                 options={optionBatch}
                 defaultValue={batch}
-                onChange={(e) => setBatch({ value: e.value, label: e.label })}
+                onChange={(e) => setBatch({ value: e?.value, label: e?.label })}
                 onBlur={() => simpleValidator.current.showMessageFor("batch")}
               />
               {simpleValidator.current.message(
@@ -1244,9 +1263,11 @@ const AddTrainingStep1 = ({ propsStep }) => {
                 placeholder="Silahkan Pilih Provinsi"
                 options={optionsProvinsi}
                 defaultValue={province}
-                onChange={(e) =>
-                  setProvince({ value: e.value, label: e.label })
-                }
+                onChange={(e) => {
+                  selectRefKabupaten.select.clearValue();
+                  setProvince({ label: e?.label, value: e?.value });
+                  dispatch(dropdownKabupaten(token, e.value));
+                }}
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("provinsi")
                 }
@@ -1265,10 +1286,11 @@ const AddTrainingStep1 = ({ propsStep }) => {
                 Kota / Kabupaten
               </label>
               <Select
+                ref={(ref) => (selectRefKabupaten = ref)}
                 placeholder="Silahkan Pilih Kota / Kabupaten"
                 options={optionsKabupaten}
                 defaultValue={city}
-                onChange={(e) => setCity({ value: e.value, label: e.label })}
+                onChange={(e) => setCity({ value: e?.value, label: e?.label })}
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("kota/kabupaten")
                 }

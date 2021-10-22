@@ -18,6 +18,10 @@ import {
 } from "react-bootstrap";
 
 const NavbarComponent = ({ session }) => {
+  const { error: errorDataPribadi, dataPribadi } = useSelector(
+    (state) => state.getDataPribadi
+  );
+
   const handlerLogout = () => {
     signOut();
   };
@@ -180,7 +184,9 @@ const NavbarComponent = ({ session }) => {
                 <i className="ri-notification-2-fill"></i>
               </Nav.Link>
               <NavDropdown
-                title={`${session.name}`}
+                title={`${
+                  dataPribadi ? dataPribadi.name.split(" ")[0] || "-" : "-"
+                }`}
                 id="basic-nav-dropdown"
                 className="font-weight-bolder mb-0 pb-0"
               >
