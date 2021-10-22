@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
+import { getDataPribadi } from "../../../redux/actions/pelatihan/function.actions";
 
 const TestSubstansi = dynamic(
   () => import("../../../user-component/content/peserta/test-substansi"),
@@ -34,6 +35,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
+      // console.log(session.user.user.data.user.token);
       if (!session) {
         return {
           redirect: {
@@ -51,6 +53,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+
+      await store.dispatch(getDataPribadi(session.user.user.data.user.token));
 
       return {
         props: { data: "auth", session, title: "Dashboard - Peserta" },

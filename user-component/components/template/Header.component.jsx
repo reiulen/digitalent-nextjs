@@ -143,7 +143,10 @@ const Header = () => {
                     </div>
                   </Col>
                   <Col sm={6} xs={7} className={styles.textCardRight}>
-                    <div className="d-flex flex-row" style={{ float: "right" }}>
+                    <div
+                      className="d-flex flex-row "
+                      style={{ float: "right" }}
+                    >
                       <div className="p-1">
                         <i
                           className={`${styles.icon} ri-time-fill`}
@@ -177,7 +180,7 @@ const Header = () => {
                     <Col className={styles.textCardRight}>
                       <Card className={styles.cardBodyTest}>
                         <div
-                          className="d-flex flex-row text-center"
+                          className="d-flex flex-row "
                           style={{ float: "right" }}
                         >
                           <div className="p-1">
