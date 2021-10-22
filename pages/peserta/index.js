@@ -4,14 +4,14 @@ import dynamic from "next/dynamic";
 
 import { wrapper } from "../../redux/store";
 import { getSession } from "next-auth/client";
-import LoadingSkeleton from "../../components/LoadingSkeleton";
 import { getDataPribadi } from "../../redux/actions/pelatihan/function.actions";
+import LoadingContent from "../../user-component/content/peserta/components/loader/LoadingContent";
 
 const Dashboard = dynamic(
   () => import("../../user-component/content/peserta/dashboard"),
   {
     loading: function loadingNow() {
-      return <LoadingSkeleton />;
+      return <LoadingContent />;
     },
     ssr: false,
   }
@@ -39,7 +39,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (!session) {
         return {
           redirect: {
-            destination: "/login",
+            destination: "http://dts-dev.majapahit.id/login",
             permanent: false,
           },
         };
@@ -48,7 +48,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (data.user.roles[0] !== "user") {
         return {
           redirect: {
-            destination: "/login",
+            destination: "http://dts-dev.majapahit.id/login",
             permanent: false,
           },
         };

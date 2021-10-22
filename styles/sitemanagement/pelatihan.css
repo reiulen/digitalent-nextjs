@@ -202,7 +202,7 @@
     color: #1F1F1F;
 }
 
-input[type='radio'] {
+.styling-radio input[type='radio'] {
     -webkit-appearance: none;
     width: 20px;
     height: 20px;
@@ -211,11 +211,11 @@ input[type='radio'] {
     outline: none;
 }
 
-input[type='radio']:hover {
+.styling-radio input[type='radio']:hover {
     box-shadow: 0 0 5px 0px #215480 inset;
 }
 
-input[type='radio']:before {
+.styling-radio input[type='radio']:before {
     content: '';
     display: block;
     width: 60%;
@@ -224,7 +224,7 @@ input[type='radio']:before {
     border-radius: 50%;
 }
 
-input[type='radio']:checked:before {
+.styling-radio input[type='radio']:checked:before {
     background: #215480;
 }
 

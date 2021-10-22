@@ -106,6 +106,32 @@ const TambahArtikel = () => {
     }
   };
 
+  function hasWhiteSpace(s) {
+    return s.indexOf(' ') >= 0;
+  }
+
+  const handleTag = (data) => {
+    console.log(data);
+    for (let i = 0; i < data.length; i++) {
+      if (hasWhiteSpace(data[i])) {
+        data.splice([i], 1);
+      }
+      // console.log(hasWhiteSpace(data[i]));
+      // if(data[i] === " "){
+      //     console.log(data[i]);
+      //     data.splice(i, 1);
+      // }
+      // for (let j = 0; j < data[i].length; j++) {
+      //     if (data[i][j] === " ") {
+      //         data.splice(index, 1);
+      //         // setDisableTag(true)
+      //     }
+      // }
+    }
+    setTag(data);
+    // setTag(data)
+  }
+
   const handleChangePublish = (e) => {
     setPublish(e.target.checked);
     // console.log (e.target.checked)

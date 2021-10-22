@@ -38,59 +38,61 @@ const Preview = () => {
 
                 <div className="col-lg-12 order-1 px-0 position-relative">
                     <div className="" style={{ height: '100%' }}>
+                        <div className="container">
+                            <nav aria-label="breadcrumb">
+                                <ol className="breadcrumb bg-transparent my-5 ps-5" style={{ border: '1px solid gray', borderRadius: '20px' }}>
+                                    <li className="breadcrumb-item" style={{ color: 'blue' }}><a href="#">Beranda</a></li>
+                                    <li className="breadcrumb-item" style={{ color: 'blue' }}><a href="#">Berita</a></li>
+                                    <li className="breadcrumb-item" aria-current="page"><a href="#">Detail Berita</a></li>
+                                </ol>
+                            </nav>
 
-                        <nav aria-label="breadcrumb">
-                            <ol className="breadcrumb bg-transparent my-5 ps-5" style={{ border: '1px solid gray', borderRadius: '20px' }}>
-                                <li className="breadcrumb-item" style={{ color: 'blue' }}><a href="#">Beranda</a></li>
-                                <li className="breadcrumb-item" style={{ color: 'blue' }}><a href="#">Berita</a></li>
-                                <li className="breadcrumb-item" aria-current="page"><a href="#">Detail Berita</a></li>
-                            </ol>
-                        </nav>
+                            <div className="ml-0">
+                                <h1 className={`${styles.titlePratinjau} font-weight-bold my-5`}>
+                                    {judul_berita}
+                                </h1>
 
-                        <div className="ml-0">
-                            <h1 className={`${styles.titlePratinjau} font-weight-bold my-5`}>
-                                {judul_berita}
-                            </h1>
-
-                            <div className="row mb-4">
-                                <div className="rounded mt-1" style={{ marginLeft: '25px' }}>
-                                    <div className={styles['titleSubMenu-2']}>
-                                        {/* <i className="ri-dashboard-line"></i> */}
-                                        <span className="label label-inline label-light-success font-weight-bold">
-                                            {(jenis_kategori).toUpperCase()}
-                                        </span>
+                                <div className="row mb-4">
+                                    <div className="rounded mt-1" style={{ marginLeft: '25px' }}>
+                                        <div className={styles['titleSubMenu-2']}>
+                                            {/* <i className="ri-dashboard-line"></i> */}
+                                            <span className="label label-inline label-light-success font-weight-bold">
+                                                {(jenis_kategori).toUpperCase()}
+                                            </span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="rounded mt-1" style={{ marginLeft: '25px' }}>
-                                    <div className={styles['titleSubMenu-2']}>
-                                        <i className="flaticon-eye"></i>
-                                        <span className="ml-2 mr-5 text-muted">
-                                            Dibaca 120
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="row">
-                                <div className="col-sm-8 col-md-10 col-11 mt-4 d-flex align-items-center">
-                                    <div className={styles['titleSubMenu']}>
-                                        <h5 className="font-weight-bold">Admin Pokja</h5>
-                                        <span className="text-muted">{moment({ created_at }).format('LL')}</span>
+                                    <div className="rounded mt-1" style={{ marginLeft: '25px' }}>
+                                        <div className={styles['titleSubMenu-2']}>
+                                            <i className="flaticon-eye"></i>
+                                            <span className="ml-2 mr-5 text-muted">
+                                                Dibaca 120
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div className="col-sm-4 col-md-2 col-1 d-flex align-items-center justify-content-end">
-                                    <div className={styles['iconBorder']}>
-                                        <i className="socicon-sharethis" style={{ color: '#000' }}></i>
+                                <div className="row">
+                                    <div className="col-sm-8 col-md-10 col-11 mt-4 d-flex align-items-center">
+                                        <div className={styles['titleSubMenu']}>
+                                            <h5 className="font-weight-bold">Admin Pokja</h5>
+                                            <span className="text-muted">{moment({ created_at }).format('LL')}</span>
+                                        </div>
                                     </div>
-                                    <div className={styles['iconBorder']}>
-                                        <i className="flaticon-black" style={{ color: '#000' }}></i>
+
+                                    <div className="col-sm-4 col-md-2 col-1 d-flex align-items-center justify-content-end">
+                                        <div className={styles['iconBorder']}>
+                                            <i className={`${styles.icon} socicon-sharethis`}></i>
+                                        </div>
+                                        <div className={styles['iconBorder']}>
+                                            <i className={`${styles.icon} flaticon-black`}></i>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div className="row">
-                            {/* <div className="col-8"> */}
+                        <div className="container">
+                            <div className="row">
+                                {/* <div className="col-8"> */}
                                 <div className="pt-0" style={{ height: '100%' }}>
                                     {/* <div className="text-center mt-5">
                                     <h3>
@@ -117,23 +119,24 @@ const Preview = () => {
 
                                     <div className="text-justify my-5 p-3" style={{ border: '1px solid #d7e1ea', borderRadius: '10px' }}>
                                         {/* To render html Tag */}
-                                        <div dangerouslySetInnerHTML={{ __html: isi_berita }} style={{overflowWrap:'break-word'}}></div>
+                                        <div dangerouslySetInnerHTML={{ __html: isi_berita }} style={{ overflowWrap: 'break-word' }}></div>
                                         <div className="row">
                                             <div className="col-sm-8 col-md-10 col-11">
                                                 <div className="row my-3 ml-0">
                                                     <div className={styles['listTag']}>
                                                         {
-                                                            tags.map((el, i) => {
-                                                                return (
-                                                                    <div style={{ background: "#fff", border: '1px solid #d7e1ea' }}
-                                                                        className="mr-5 px-3 py-1 rounded"
-                                                                        key={i}>
-                                                                        <div className="text-center">
-                                                                            #{(el).toUpperCase()}
+                                                            (tags === null) ? null :
+                                                                tags.map((el, i) => {
+                                                                    return (
+                                                                        <div style={{ background: "#fff", border: '1px solid #d7e1ea' }}
+                                                                            className="mr-5 px-3 py-1 rounded"
+                                                                            key={i}>
+                                                                            <div className="text-center">
+                                                                                #{(el).toUpperCase()}
+                                                                            </div>
                                                                         </div>
-                                                                    </div>
-                                                                )
-                                                            })
+                                                                    )
+                                                                })
                                                         }
                                                     </div>
                                                 </div>
@@ -141,17 +144,17 @@ const Preview = () => {
 
                                             <div className="col-sm-4 col-md-2 col-1 d-flex align-items-center justify-content-end">
                                                 <div className={styles['iconBorder']}>
-                                                    <i className="socicon-sharethis" style={{ color: '#000' }}></i>
+                                                    <i className={`${styles.icon} socicon-sharethis`}></i>
                                                 </div>
                                                 <div className={styles['iconBorder']}>
-                                                    <i className="flaticon-black" style={{ color: '#000' }}></i>
+                                                    <i className={`${styles.icon} flaticon-black`}></i>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
                                 </div>
-                            {/* </div>
+                                {/* </div>
                             <div className="col-4" style={{ padding: '35px' }}>
                                 <div className="p-5" style={{ border: '1px solid gray', borderRadius: '15px' }}>
                                     <div className="d-flex align-items-center font-weight-bolder">
@@ -204,6 +207,7 @@ const Preview = () => {
                                     </div>
                                 </div>
                             </div> */}
+                            </div>
                         </div>
                     </div>
 

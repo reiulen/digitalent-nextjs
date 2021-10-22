@@ -748,7 +748,7 @@ const Imagetron = ({ token }) => {
                                                 <th>Dibuat</th>
                                                 <th>Status</th>
                                                 <th>Role</th>
-                                                <th style={{ width: '9vw' }}>Aksi</th>
+                                                <th style={{ width: '9vw', textAlign:'center' }}>Aksi</th>
                                             </tr>
                                         </thead>
 
@@ -815,7 +815,8 @@ const Imagetron = ({ token }) => {
                                                                     </span>
                                                                 )}
                                                             </td>
-                                                            <td className='align-middle'>{row.role}</td>
+                                                            <td className='align-middle'>Super Admin</td>
+                                                            {/* <td className='align-middle'>{row.role}</td> */}
                                                             <td className="align-middle d-flex justify-content-center">
 
                                                                 <Link
