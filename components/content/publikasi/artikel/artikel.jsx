@@ -280,6 +280,7 @@ const Artikel = ({ token }) => {
     setStartDate(null)
     setEndDate(null)
     setDisableEndDate(true)
+    router.replace('/publikasi/artikel', undefined, { shallow: true })
   }
 
   const handleStartDate = (date) => {

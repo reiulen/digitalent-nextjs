@@ -233,17 +233,6 @@ const Vidio = ({ token }) => {
         }
     };
 
-    // const handleLimit = (val) => {
-    //     setLimit(val)
-    //     if (search === "") {
-    //         router.push(`${router.pathname}?page=1&limit=${val}`);
-
-    //     } else {
-    //         router.push(`${router.pathname}?page=1&keyword=${search}&limit=${val}`)
-    //     }
-
-    // };
-
     const handleLimit = (val) => {
         setLimit(val)
         if (search === "" && publishValue === null) {
@@ -304,14 +293,6 @@ const Vidio = ({ token }) => {
     }
 
     const handlePreview = (url, id, judul_video, tanggal_publish, kategori, isi_video, tag) => {
-        // const data = {
-        //     id,
-        //     _method: "PUT",
-        //     isplay: "1"
-        // }
-
-        // dispatch(playVideo(data, token))
-
         setIdVideo(id)
         setVideoPlaying(true)
         setUrlVideo(url)
@@ -335,6 +316,7 @@ const Vidio = ({ token }) => {
         setStartDate(null)
         setEndDate(null)
         setDisableEndDate(true)
+        router.replace('/publikasi/video', undefined, { shallow: true })
     }
 
     const handleStartDate = (date) => {

@@ -280,38 +280,6 @@ const Imagetron = ({ token }) => {
 
     };
 
-    // const handlePublish = (val) => {
-    //     if (val !== null || val !== "") {
-    //         setPublishValue(val)
-
-    //         if (startDate === null && endDate === null && limit === null && search === null) {
-    //             router.push(`${router.pathname}?publish=${val}`);
-
-    //         } else if (startDate !== null && endDate !== null && limit === null && search === null) {
-    //             router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
-
-    //         } else if (startDate !== null && endDate !== null && limit !== null && search === null) {
-    //             router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`)
-
-    //         } else if (startDate !== null && endDate !== null && limit === null && search !== null) {
-    //             router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&keyword=${search}`)
-
-    //         } else if (startDate === null && endDate === null && limit !== null && search === null) {
-    //             router.push(`${router.pathname}?publish=${val}&limit=${limit}`);
-
-    //         } else if (startDate === null && endDate === null && limit === null && search !== null) {
-    //             router.push(`${router.pathname}?publish=${val}&keyword=${search}`);
-
-    //         } else if (startDate === null && endDate === null && limit !== null && search !== null) {
-    //             router.push(`${router.pathname}?publish=${val}&limit=${limit}&keyword=${search}`);
-
-    //         } else if (startDate !== null && endDate !== null && limit !== null && search !== null) {
-    //             router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}&keyword=${search}`)
-    //         }
-    //     }
-
-    // }
-
     const handlePublish = (val) => {
         if (val !== null || val !== "") {
             setPublishValue(val)
@@ -349,40 +317,13 @@ const Imagetron = ({ token }) => {
         setStartDate(null)
         setEndDate(null)
         setDisableEndDate(true)
+        router.replace("/publikasi/imagetron", undefined, { shallow: true });
     }
 
     const handleStartDate = (date) => {
         setStartDate(date)
         setDisableEndDate(false)
     }
-
-    // const printImage = () => {
-    //     <Image
-    //         loader={() => (process.env.END_POINT_API_IMAGE_PUBLIKASI +
-    //             "publikasi/images/" +
-    //             imagetron.imagetron.data.imagetron)}
-    //         src={
-    //             process.env.END_POINT_API_IMAGE_PUBLIKASI +
-    //             "publikasi/images/" +
-    //             imagetron.imagetron.data.imagetron
-    //         }
-
-    //         alt='image'
-    //         layout='fill'
-    //         objectFit='fill'
-    //     />
-    // }
-
-    // const printData = () => {
-    //     { console.log("CEK Imagetron :", imagetron) }
-
-    // }
-
-    // caches.open('v1').then(function(cache) {
-    //     cache.delete('/images/image.png').then(function(response) {
-    //         someUIUpdateFunction();
-    //     });
-    // })
 
     return (
         <PageWrapper>

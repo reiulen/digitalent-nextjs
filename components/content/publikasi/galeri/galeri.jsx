@@ -579,6 +579,7 @@ const Galeri = ({ token }) => {
         setStartDate(null);
         setEndDate(null);
         setDisableEndDate(true);
+        router.replace("/publikasi/galeri", undefined, { shallow: true });
     };
 
     const handleStartDate = date => {

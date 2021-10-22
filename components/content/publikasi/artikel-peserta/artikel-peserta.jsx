@@ -273,6 +273,7 @@ const ArtikelPeserta = ({ token }) => {
         setStartDate(null)
         setEndDate(null)
         setDisableEndDate(true)
+        router.replace("/publikasi/artikel-peserta", undefined, { shallow: true });
     }
 
     const handleStartDate = (date) => {

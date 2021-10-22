@@ -265,6 +265,7 @@ const Kategori = ({ token }) => {
   const resetValueSort = () => {
     setSearchKategori(null);
     $("#selectKategori").prop("selectedIndex", 0);
+    router.replace("/publikasi/kategori", undefined, { shallow: true });
   };
 
   return (
