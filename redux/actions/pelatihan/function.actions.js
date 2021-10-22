@@ -37,7 +37,7 @@ import {
 
 import axios from "axios";
 
-export const getDataPribadi = (token) => async (dispatch) => {
+export const getDataPribadi = token => async dispatch => {
   try {
     let link =
       process.env.END_POINT_API_PELATIHAN + `/api/v1/auth/get-data-pribadi`;
@@ -62,7 +62,7 @@ export const getDataPribadi = (token) => async (dispatch) => {
   }
 };
 
-export const getTrainingStep1 = () => async (dispatch) => {
+export const getTrainingStep1 = () => async dispatch => {
   const data = {
     program_dts: "",
     ketentuan_peserta: false,
@@ -110,14 +110,14 @@ export const getTrainingStep1 = () => async (dispatch) => {
   });
 };
 
-export const storeTrainingStep1 = (data) => async (dispatch) => {
+export const storeTrainingStep1 = data => async dispatch => {
   dispatch({
     type: STORE_TRAINING_STEP1,
     payload: data,
   });
 };
 
-export const getRegistrationStep2 = () => async (dispatch) => {
+export const getRegistrationStep2 = () => async dispatch => {
   const data = {
     judul_form: "",
     formBuilder: [
@@ -139,14 +139,14 @@ export const getRegistrationStep2 = () => async (dispatch) => {
   });
 };
 
-export const storeRegistrationStep2 = (data) => async (dispatch) => {
+export const storeRegistrationStep2 = data => async dispatch => {
   dispatch({
     type: STORE_REGISTRATION_STEP2,
     payload: data,
   });
 };
 
-export const getCommitmentStep3 = () => async (dispatch) => {
+export const getCommitmentStep3 = () => async dispatch => {
   const data = {
     komitmen: "",
     deskripsi_komitmen: "",
@@ -157,14 +157,14 @@ export const getCommitmentStep3 = () => async (dispatch) => {
   });
 };
 
-export const storeCommitmentStep3 = (data) => async (dispatch) => {
+export const storeCommitmentStep3 = data => async dispatch => {
   dispatch({
     type: STORE_COMMITMENT_STEP3,
     payload: data,
   });
 };
 
-export const dropdownAkademi = (token) => async (dispatch) => {
+export const dropdownAkademi = token => async dispatch => {
   try {
     const config = {
       headers: {
@@ -187,7 +187,7 @@ export const dropdownAkademi = (token) => async (dispatch) => {
   }
 };
 
-export const dropdownTema = (token) => async (dispatch) => {
+export const dropdownTema = token => async dispatch => {
   try {
     const config = {
       headers: {
@@ -210,7 +210,7 @@ export const dropdownTema = (token) => async (dispatch) => {
   }
 };
 
-export const dropdownPelatihan = (token) => async (dispatch) => {
+export const dropdownPelatihan = token => async dispatch => {
   try {
     const config = {
       headers: {
@@ -233,7 +233,7 @@ export const dropdownPelatihan = (token) => async (dispatch) => {
   }
 };
 
-export const dropdownStatusPekerjaan = (token) => async (dispatch) => {
+export const dropdownStatusPekerjaan = token => async dispatch => {
   try {
     const config = {
       headers: {
@@ -256,7 +256,7 @@ export const dropdownStatusPekerjaan = (token) => async (dispatch) => {
   }
 };
 
-export const dropdownPendidikan = (token) => async (dispatch) => {
+export const dropdownPendidikan = token => async dispatch => {
   try {
     const config = {
       headers: {
@@ -279,7 +279,7 @@ export const dropdownPendidikan = (token) => async (dispatch) => {
   }
 };
 
-export const dropdownLevelPelatihan = (token) => async (dispatch) => {
+export const dropdownLevelPelatihan = token => async dispatch => {
   try {
     const config = {
       headers: {
@@ -302,7 +302,7 @@ export const dropdownLevelPelatihan = (token) => async (dispatch) => {
   }
 };
 
-export const dropdownMitra = (token) => async (dispatch) => {
+export const dropdownMitra = token => async dispatch => {
   try {
     const config = {
       headers: {
@@ -325,7 +325,7 @@ export const dropdownMitra = (token) => async (dispatch) => {
   }
 };
 
-export const dropdownZonasi = (token) => async (dispatch) => {
+export const dropdownZonasi = token => async dispatch => {
   try {
     const config = {
       headers: {
@@ -348,7 +348,7 @@ export const dropdownZonasi = (token) => async (dispatch) => {
   }
 };
 
-export const dropdownProvinsi = (token) => async (dispatch) => {
+export const dropdownProvinsi = token => async dispatch => {
   try {
     const config = {
       headers: {
@@ -371,7 +371,7 @@ export const dropdownProvinsi = (token) => async (dispatch) => {
   }
 };
 
-export const dropdownKabupaten = (token, id) => async (dispatch) => {
+export const dropdownKabupaten = (token, id) => async dispatch => {
   try {
     const config = {
       headers: {
@@ -395,7 +395,7 @@ export const dropdownKabupaten = (token, id) => async (dispatch) => {
   }
 };
 
-export const dropdownKabupatenDomisili = (token, id) => async (dispatch) => {
+export const dropdownKabupatenDomisili = (token, id) => async dispatch => {
   try {
     const config = {
       headers: {
@@ -419,7 +419,7 @@ export const dropdownKabupatenDomisili = (token, id) => async (dispatch) => {
   }
 };
 
-export const dropdownPenyelenggara = (token) => async (dispatch) => {
+export const dropdownPenyelenggara = token => async dispatch => {
   try {
     const config = {
       headers: {
@@ -442,7 +442,7 @@ export const dropdownPenyelenggara = (token) => async (dispatch) => {
   }
 };
 
-export const clearErrors = () => async (dispatch) => {
+export const clearErrors = () => async dispatch => {
   dispatch({
     type: CLEAR_ERRORS,
   });

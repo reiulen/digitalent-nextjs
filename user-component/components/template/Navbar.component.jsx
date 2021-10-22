@@ -19,10 +19,9 @@ import {
 
 const NavbarComponent = ({ session }) => {
   const { error: errorDataPribadi, dataPribadi } = useSelector(
-    (state) => state.getDataPribadi
+    state => state.getDataPribadi
   );
 
-  console.log(dataPribadi);
   const handlerLogout = () => {
     signOut({
       callbackUrl: `${window.location.origin}/login`,
