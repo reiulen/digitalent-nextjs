@@ -95,15 +95,10 @@ const Faq = ({ token }) => {
             jawaban: data.jawaban,
             publish: data.publish,
             users_id: users_id,
-            // users_id: users_id,
             tanggal_publish: data.tanggal_publish,
-            // users_id: data.users_id,
         }
 
         dispatch(updatePinFaq(dataToSend, data.id, token))
-        // console.log (e.target.checked)
-        // console.log (dataToSend)
-        // console.log(data.id)
     };
 
     const onNewReset = () => {
@@ -187,7 +182,6 @@ const Faq = ({ token }) => {
     };
 
     const handleSearchDate = () => {
-        // console.log (startDate)
 
         if (moment(startDate).format("YYYY-MM-DD") > moment(endDate).format("YYYY-MM-DD")) {
             Swal.fire(

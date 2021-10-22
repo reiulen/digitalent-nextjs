@@ -18,6 +18,13 @@ const TambahRole = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
 
+  const [status, setStatus] = useState("")
+  const [editTable, setEditTable] = useState("")
+  const [nameRole, setNameRole] = useState("")
+
+
+
+
   const btnIconPlus = {
     display: "flex",
     justifyContent: "center",
@@ -37,11 +44,7 @@ const TambahRole = ({ token }) => {
     backgroundColor: "#4299E1",
   };
 
-  const onNewReset = () => {
-    router.replace("/site-management/api", undefined, {
-      shallow: true,
-    });
-  };
+  
   return (
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">
@@ -59,32 +62,30 @@ const TambahRole = ({ token }) => {
               <div className="form-group">
                 <label>Nama Role</label>
                 <input
+                onChange={(e)=>setNameRole(e.target.value)}
                   type="text"
                   className="form-control"
-                  placeholder="Placeholder"
+                  placeholder="Masukan nama role"
                 />
-                <span className="form-text text-muted">
-                  Please enter your full name
-                </span>
+                
               </div>
               <div className="form-group">
-                <label htmlFor="exampleSelect1">Status</label>
-                <select className="form-control" id="exampleSelect1">
-                  <option>Placeholder</option>
+                <label>Status</label>
+                <select onChange={(e)=>setStatus(e.target.value)} className="form-control">
+                  <option value="">Pilih status</option>
+                  <option value="1">Aktif</option>
+                  <option value="0">Tidak Aktif</option>
                 </select>
-                <span className="form-text text-muted">
-                  Please enter your full name
-                </span>
+                
               </div>
               <div className="form-group">
-                <label htmlFor="exampleSelect1">Editable</label>
-                <select className="form-control" id="exampleSelect1">
-                  <option>Placeholder</option>
+                <label>Editable</label>
+                <select onChange={(e)=>setEditTable(e.target.value)} className="form-control">
+                  <option value="">Pilih Editable</option>
+                  <option value="1">Yes</option>
+                  <option value="0">No</option>
                 </select>
-                <span className="form-text text-muted">
-                  Please enter your full name
-                </span>
-              </div>{" "}
+              </div>
             </form>
 
             <div>

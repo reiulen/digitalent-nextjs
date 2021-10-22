@@ -329,7 +329,6 @@ const Vidio = ({ token }) => {
             isplay: "1"
         }
         dispatch(playVideo(data, token))
-        // console.log("Video Play :", data)
     }
 
     const resetValueSort = () => {
@@ -700,7 +699,7 @@ const Vidio = ({ token }) => {
                                                 !video || video && video.video.length === 0 ?
                                                     <td className='align-middle text-center' colSpan={12}>Data Tidak Ditemukan</td> :
                                                     video && video.video.map((row, i) => {
-                                                        // { console.log("Video :", row) }
+                                                        
                                                         return <tr key={row.id}>
                                                             {/* <td className="align-middle text-center">
                                                                 <span className="badge badge-secondary text-muted">
@@ -906,7 +905,6 @@ const Vidio = ({ token }) => {
                                 <div className="col-6">
                                     <div className={styles['listTag']}>
                                         {
-                                            // console.log("Isi tag :", tag)
                                             tag.map((el, i) => {
                                                 return (
                                                     <div style={{ background: "#fff", border: '1px solid #d7e1ea' }}

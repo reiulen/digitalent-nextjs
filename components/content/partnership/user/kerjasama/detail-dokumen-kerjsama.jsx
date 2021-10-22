@@ -35,7 +35,7 @@ const DetailDokumenKerjasama = ({ token }) => {
         );
         setPdfFIle(data.data.document_file);
       } catch (error) {
-        console.log("action getSingleValue gagal", error);
+        notify(error.response.data.message);
       }
     }
 
@@ -450,6 +450,13 @@ const DetailDokumenKerjasama = ({ token }) => {
                 </div>
               </div> */}
 
+                <label
+                htmlFor="staticEmail"
+                className="col-form-label fz-14"
+                style={{ color: "#6C6C6C" }}
+              >
+                Dokumen Kerjasama
+              </label>
 
               <div className="border-bottom pb-6">
               <button type="button" className="btn bg-blue-secondary text-white rounded-full d-flex align-items-center" onClick={() =>

@@ -32,7 +32,7 @@ export const loadDataZonasi = (token, type, page) => {
           page
         });
       } catch (error) {
-        console.log(error);
+        notify(error.response.data.message);
       }
     };
   };
@@ -59,7 +59,7 @@ export const loadDataZonasi = (token, type, page) => {
           payload: data.data.list_zonasi,
         });
       } catch (error) {
-        console.log(error);
+        notify(error.response.data.message);
       }
     };
   };

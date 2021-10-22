@@ -61,32 +61,24 @@ const TambahFaq = ({ token, id }) => {
     // const forceUpdate = React.useReducer(() => ({}))[1]
 
     const handleChangePublish = (e) => {
-        // setPublish(e.target.checked);
         setDisablePublishDate(!disablePublishDate)
-        // console.log (e.target.checked)
-
-        if (e.target.checked === false) {
-            setPublishDate(null)
-            setPublish(0)
+    
+        if (e.target.checked === false){
+            setPublishDate (null)
+            setPublish (0)
         } else {
             setPublish(1)
         }
     };
 
     const handlePublishDate = (date) => {
-        // let result = moment(date).format("YYYY-MM-DD")
         if (disablePublishDate === false) {
-            // setPublishDate(result)
             setPublishDate(date)
-            // console.log (result)
         }
     }
 
     const handleChangePinned = (e) => {
-        // setPinnedFaq(e.target.checked);
-        // console.log (e.target.checked)
-
-        if (e.target.checked === false) {
+        if (e.target.checked === false){
             setPinnedFaq(0)
 
         } else if (e.target.checked === true) {

@@ -174,10 +174,8 @@ const EditMitra = ({ token }) => {
       }).then(async (result) => {
         if (result.value) {
           let formData = new FormData();
-          // formData.append("email", email);
-          if (agency_logo === "") {
-            console.log("tidak update gambar");
-          } else {
+          
+          if (agency_logo !== "") {
             formData.append("agency_logo", agency_logo);
           }
           formData.append("_method", "PUT");
@@ -272,7 +270,7 @@ const EditMitra = ({ token }) => {
       setPic_contact_number(data.data.pic_contact_number);
       setPic_email(data.data.pic_email);
     } catch (error) {
-      console.log("action getSIngle gagal", error);
+      notify(error.response.data.message);
     }
 
     } 
@@ -294,7 +292,7 @@ const EditMitra = ({ token }) => {
           dataNewCitites.splice(0, 0, { label: "Pilih Kab/Kota", value: "" });
           setCitiesAll(dataNewCitites);
         } catch (error) {
-          console.log("gagal get cities", error);
+          notify(error.response.data.message);
         }
       }
       fetchAPI();
@@ -336,7 +334,7 @@ const EditMitra = ({ token }) => {
                 readOnly
                   onFocus={() => setError({ ...error, institution_name: "" })}
                   type="text"
-                  className="form-control"
+                  className="form-control border-0"
                   placeholder="Masukkan Nama Lembaga"
                   value={institution_name}
                   onChange={(e) => setInstitution_name(e.target.value)}
@@ -378,7 +376,7 @@ const EditMitra = ({ token }) => {
                     readOnly
                       onFocus={() => setError({ ...error, email: "" })}
                       type="email"
-                      className="form-control"
+                      className="form-control border-0"
                       placeholder="Masukkan Email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}

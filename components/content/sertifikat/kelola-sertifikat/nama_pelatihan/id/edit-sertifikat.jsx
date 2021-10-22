@@ -347,6 +347,7 @@ export default function EditSertifikat({ token }) {
       cacheBust: true,
       canvasWidth: 842,
       canvasHeight: 595,
+      backgroundColor: "white",
     });
     return data;
   };
@@ -458,7 +459,7 @@ export default function EditSertifikat({ token }) {
         Swal.fire("Oops !", "Isi data dengan benar.", "error");
       }
     } catch (e) {
-      console.log(e, "Masuk sini errornya catch");
+      notify(error.response.data.message);
     }
   };
 

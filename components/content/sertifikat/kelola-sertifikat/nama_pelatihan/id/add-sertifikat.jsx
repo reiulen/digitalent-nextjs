@@ -280,6 +280,7 @@ export default function TambahMasterSertifikat({ token }) {
       cacheBust: true,
       canvasWidth: 842,
       canvasHeight: 595,
+      backgroundColor: "white",
     });
     return data;
   };
@@ -383,8 +384,8 @@ export default function TambahMasterSertifikat({ token }) {
         forceUpdate(1);
         Swal.fire("Oops !", "Isi data dengan benar.", "error");
       }
-    } catch (e) {
-      console.log(e, "Masuk sini errornya");
+    } catch (error) {
+      notify(error.response.data.message);
     }
   };
 
@@ -501,16 +502,19 @@ export default function TambahMasterSertifikat({ token }) {
                       className={`col-12 text-center font-weight-normal p-0 justify-content-center `}
                     >
                       <label
-                        className="font-weight-boldest w-100"
-                        style={{ fontSize: "200%" }}
+                        className="font-weight-boldest w-100 responsive-font-size-sertifikat"
+                        // style={{ fontSize: "200%" }}
                       >
                         SERTIFIKAT
                       </label>
                       <div className="w-100">Diberikan kepada</div>
                       <div className="my-2">
                         <span
-                          className="mx-2 px-2 px-10 w-100 font-weight-bold"
-                          style={{ fontSize: "150%", height: "29px" }}
+                          className="mx-2 px-2 px-10 w-100 font-weight-bold responsive-font-size-nama-peserta"
+                          style={{
+                            // fontSize: "150%",
+                            height: "29px",
+                          }}
                         >
                           {namaPeserta ? namaPeserta : ""}
                         </span>
@@ -540,13 +544,21 @@ export default function TambahMasterSertifikat({ token }) {
                           </span>{" "}
                           Selama
                         </span>
-                        <span className="mx-2 px-2 border-2 w-100">
+                        <span
+                          className="mx-2 px-2 border-2 w-100"
+                          style={{ width: "19px" }}
+                        >
                           {tanggal}
                         </span>
                       </div>
                       <div className="mt-2 w-100">
                         <span>Digital Talent Scholarship</span>
-                        <span className="mx-2 px-2 border-2">{tahun}</span>
+                        <span
+                          className="mx-2 px-2 border-2"
+                          style={{ width: "19px" }}
+                        >
+                          {tahun}
+                        </span>
                       </div>
                       <div className="my-4 w-100 text-center">
                         <span className="mx-2 px-2 border-2">

@@ -37,7 +37,6 @@ const Kategori = ({ token }) => {
     state => state.deleteKategori
   );
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
-  // console.log("PAGINATION KATEGORI : ", paginateKategori)
 
   let { page = 1, success } = router.query;
   page = Number(page);
@@ -618,13 +617,7 @@ const Kategori = ({ token }) => {
                   ""
                 )}
               </div>
-
-              {/* {
-                                console.log("KATEGORI : ", kategori)
-                            }
-                            {
-                                console.log("PAGINATE KATEGORI : ", paginateKategori)
-                            } */}
+              
               {kategori && paginateKategori ? (
                 <div className="row">
                   {paginateKategori.perPage < kategori.total && (

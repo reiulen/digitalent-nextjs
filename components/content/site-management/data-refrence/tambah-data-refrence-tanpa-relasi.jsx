@@ -58,7 +58,7 @@ const Tambah = ({ token }) => {
       formData.append("status", status);
   
       values.forEach((item, i) => {
-        formData.append(`value[${i}]`, item);
+        formData.append(`value[${i}]`, item.value);
       });
       try {
         let { data } = await axios.post(
@@ -132,6 +132,10 @@ const Tambah = ({ token }) => {
                         onChange={(e) => handleChange(e, index)}
                         className="form-control mr-6"
                       />
+
+
+                      {index == 0 ? ""
+                      :
                       <button
                         type="button"
                         className="btn"
@@ -153,6 +157,9 @@ const Tambah = ({ token }) => {
                           />
                         </svg>
                       </button>
+                      }
+
+
                     </div>
                   </div>
                 );

@@ -153,7 +153,6 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
   };
 
   const handleAddClick = (type, index, parent) => {
-    console.log(type, index, parent);
     const list = [...answer];
 
     if (index == null && parent == null) {

@@ -134,7 +134,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
   for (let index = 0; index < dataLevelPelatihan.data.length; index++) {
     let val = {
       value: dataLevelPelatihan.data[index].id,
-      label: dataLevelPelatihan.data[index].value,
+      label: dataLevelPelatihan.data[index].label,
     };
     optionsLevelPelatihan.push(val);
   }
@@ -143,7 +143,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
   for (let index = 0; index < dataPenyelenggara.data.length; index++) {
     let val = {
       value: dataPenyelenggara.data[index].id,
-      label: dataPenyelenggara.data[index].value,
+      label: dataPenyelenggara.data[index].label,
     };
     optionsPenyelenggara.push(val);
   }
@@ -365,7 +365,6 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
         tuna_daksa,
       };
       dispatch(storeTrainingStep1(data));
-      // console.log(data);
       propsStep(2);
     } else {
       simpleValidator.current.showMessages();
@@ -872,7 +871,6 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                   onChange={(event, editor) => {
                     const data = editor.getData();
                     setDescription(data);
-                    // console.log({ event, editor, data });
                   }}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("deskripsi")

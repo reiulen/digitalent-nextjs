@@ -75,7 +75,6 @@ export const getDetailImagetron = (id, token) => async (dispatch) => {
         };
 
         const { data } = await axios.get(link, config);
-
         dispatch({
             type: DETAIL_IMAGETRON_SUCCESS,
             payload: data.data,
@@ -102,7 +101,6 @@ export const newImagetron = (imagetronData, token) => async (dispatch) => {
                 Authorization: "Bearer " + token,
             },
         };
-
         const { data } = await axios.post(process.env.END_POINT_API_PUBLIKASI + 'api/imagetron', imagetronData, config)
 
         dispatch({
@@ -161,7 +159,6 @@ export const deleteImagetron = (id, token) => async (dispatch) => {
             type: DELETE_IMAGETRON_SUCCESS,
             payload: data.status
         })
-
     } catch (error) {
         dispatch({
             type: DELETE_IMAGETRON_FAIL,

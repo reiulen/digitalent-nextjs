@@ -160,9 +160,7 @@ const TambahGaleri = ({ token, id }) => {
     const [disableTag, setDisableTag] = useState(false)
 
     const handleChangePublish = (e) => {
-        // setPublish(e.target.checked);
         setDisablePublishDate(!disablePublishDate)
-        // console.log (e.target.checked)
 
         if (e.target.checked === false) {
             setPublishDate(null)
@@ -173,11 +171,9 @@ const TambahGaleri = ({ token, id }) => {
     };
 
     const handlePublishDate = (date) => {
-        // let result = moment(date).format("YYYY-MM-DD")
         if (disablePublishDate === false) {
-            // setPublishDate(result)
             setPublishDate(date)
-            // console.log (result)
+
         }
     }
 
@@ -197,7 +193,6 @@ const TambahGaleri = ({ token, id }) => {
                 }
             };
             reader.readAsDataURL(e.target.files[0])
-            // console.log (reader.readAsDataURL(e.target.files[0]))
             setGambarName(e.target.files[0].name)
             setGambar(arr)
             setGambarPreview(arrPreview)
@@ -345,14 +340,12 @@ const TambahGaleri = ({ token, id }) => {
     }
 
     const handleTag = (data) => {
-        // console.log(data);
         for (let i = 0; i < data.length; i++) {
             if (hasWhiteSpace(data[i])) {
                 data.splice([i], 1);
             }
         }
         setTag(data);
-        // setTag(data)
     }
 
     const handleData = (temps, onCall) => {
@@ -370,13 +363,7 @@ const TambahGaleri = ({ token, id }) => {
                 publish,
                 tanggal_publish: moment(today).format("YYYY-MM-DD")
             }
-
-            // dispatch(newGaleri(data, token))
-
             dispatch(onCall(data, token))
-            // console.log("UNPUBLISH : ", data)
-            // console.log(image)
-
         } else {
             const data = {
                 judul,
@@ -389,10 +376,7 @@ const TambahGaleri = ({ token, id }) => {
                 publish,
                 tanggal_publish: moment(publishDate).format("YYYY-MM-DD")
             }
-
             dispatch(onCall(data, token))
-            // console.log("PUBLISH : ", data)
-            // console.log(image)
         }
     }
 

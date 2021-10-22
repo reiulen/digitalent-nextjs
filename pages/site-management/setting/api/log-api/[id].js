@@ -1,13 +1,13 @@
 import dynamic from "next/dynamic";
 import { getSession } from "next-auth/client";
 // import { getAllArtikel } from "../../../redux/actions/publikasi/artikel.actions";
-import { wrapper } from "../../../../redux/store";
-import LoadingPage from "../../../../components/LoadingPage";
-
-const UbahRole = dynamic(
+import { wrapper } from "../../../../../redux/store";
+import LoadingPage from "../../../../../components/LoadingPage";
+import {} from "../../../../../redux/actions/site-management/settings/api.actions";
+const TambahApi = dynamic(
   () =>
     import(
-      "../../../../components/content/site-management/data-refrence/ubah-data-refrence-tanpa-relasi"
+      "../../../../../components/content/site-management/settings/api/log-api"
     ),
   {
     loading: function loadingNow() {
@@ -17,12 +17,12 @@ const UbahRole = dynamic(
   }
 );
 
-export default function UbahRoles(props) {
+export default function LogApiPage(props) {
   const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <UbahRole token={session.token} />
+        <TambahApi token={session.token} />
       </div>
     </>
   );
@@ -35,7 +35,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (!session) {
         return {
           redirect: {
-            destination: "/",
+            destination: "http://dts-dev.majapahit.id/login/admin",
             permanent: false,
           },
         };
@@ -53,10 +53,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       //   )
       // );
       return {
-        props: {
-          session,
-          title: "Ubah Reference tanpa relasi - Site Management",
-        },
+        props: { session, title: "Log API - Site Management" },
       };
     }
 );

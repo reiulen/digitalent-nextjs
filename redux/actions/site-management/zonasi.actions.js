@@ -55,7 +55,6 @@ export const getAllZonasi = (token) => async (dispatch, getState) => {
       payload: data,
     });
   } catch (error) {
-    console.log(error.response);
     dispatch({
       type: ZONASI_FAIL,
     });
@@ -160,12 +159,15 @@ export const getDetailZonasi = (id, token) => {
           },
         }
       );
+      console.log("data asdasd", data);
       dispatch({
         type: DETAIL_ZONASI_SUCCESS,
         payload: data,
       });
     } catch (error) {
-      dispatch(failGetSingleCooporation(error.response.data.message));
+      dispatch({
+        type: DETAIL_ZONASI_FAIL,
+      });
     }
   };
 };

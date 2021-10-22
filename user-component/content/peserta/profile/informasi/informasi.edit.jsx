@@ -84,7 +84,6 @@ const InformasiEdit = ({ funcViewEdit, token }) => {
     }
 
     if (success) {
-      console.log(success);
       toast.success("Berhasil Update Data");
       dispatch({ type: UPDATE_DATA_PRIBADI_RESET });
       funcViewEdit(false);

@@ -10,33 +10,40 @@ import IconPencil from "../../../../assets/icon/Pencil";
 import IconDelete from "../../../../assets/icon/Delete";
 import IconAdd from "../../../../assets/icon/Add";
 import IconSearch from "../../../../assets/icon/Search";
+import DatePicker from "react-datepicker";
+import axios from "axios";
+import IconCalender from "../../../../assets/icon/Calender";
 
 const UbahApi = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
 
-  const {
-    loading: allLoading,
-    error,
-    apies,
-    success,
-  } = useSelector((state) => state.detailApi);
-  const [nameApi, setNameApi] = useState(apies.api_name)
-  const [nameUser, setNameUser] = useState(apies.username)
-  const [status, setStatus] = useState(apies.status)
-  const [choiceApi, setChoiceApi] = useState(apies.id_api)
-  const [field, setField] = useState(apies.field)
-  const [from, setFrom] = useState(apies.from)
-  const [to, setTo] = useState(apies.to)
+  const detailApi = useSelector((state) => state.detailApi);
+ 
+  const listApi = useSelector(state => state.listApi)
+ 
 
+  const [optionListApi, setOptionListApi] = useState(listApi.listApi.map((items)=>{
+    return {label:items.api_url,value:items.api_url,id:items.id}
+  }))
+  const [nameApi, setNameApi] = useState(detailApi.apies.api_name);
+  const [nameUser, setNameUser] = useState(detailApi.apies.username);
+  const [status, setStatus] = useState(detailApi.apies.status);
+  const [apiChoice, setApiChoice] = useState(detailApi.apies.id_api);
+  const [nameApiChoice, setNameApiChoice] = useState(detailApi.apies.api_url)
 
-  console.log("apies",apies)
+  const [from, setFrom] = useState(detailApi.apies.from_date);
+  const [to, setTo] = useState(detailApi.apies.to_date);
 
-  const onNewReset = () => {
-    router.replace("/site-management/api", undefined, {
-      shallow: true,
-    });
+  const onChangePeriodeDateStart = (date) => {
+    setFrom(moment(date).format("YYYY-MM-DD"));
+    // checkPeriod(moment(date).format("YYYY-MM-DD"));
   };
+  const onChangePeriodeDateEnd = (date) => {
+    setTo(moment(date).format("YYYY-MM-DD"));
+    // checkPeriod(moment(date).format("YYYY-MM-DD"));
+  };
+
   return (
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">
@@ -54,116 +61,108 @@ const UbahApi = ({ token }) => {
               <div className="form-group">
                 <label>Nama API</label>
                 <input
-                value={nameApi}
-                onChange={(e)=>setNameApi(e.target.value)}
+                  value={nameApi}
+                  onChange={(e) => setNameApi(e.target.value)}
                   type="text"
                   className="form-control"
-                  placeholder="Placeholder"
+                  placeholder="Masukan nama api"
                 />
-                {/* <span className="form-text text-muted">
-                    Please enter your full name
-                  </span> */}
               </div>
               <div className="form-group">
                 <label>Nama Pengguna</label>
                 <input
-                value={nameUser}
-                onChange={(e)=>setNameUser(e.target.value)}
+                  value={nameUser}
+                  onChange={(e) => setNameUser(e.target.value)}
                   type="text"
                   className="form-control"
-                  placeholder="Placeholder"
+                  placeholder="Masukan nama user"
                 />
-                {/* <span className="form-text text-muted">
-                    Please enter your full name
-                  </span> */}
               </div>
 
-
-              {apies.status === "Aktif" ? 
+              {status === "Aktif" ? (
+                <div className="form-group">
+                  <label>Status</label>
+                  <select onChange={(e)=>setStatus(e.target.value)} className="form-control">
+                    <option value="Aktif">Aktif</option>
+                    <option value="Nonaktif">Nonaktif</option>
+                  </select>
+                </div>
+              ) : (
+                <div className="form-group">
+                  <label>Status</label>
+                  <select onChange={(e)=>setStatus(e.target.value)} className="form-control">
+                    <option value="Nonaktif">Nonaktif</option>
+                    <option value="Aktif">Aktif</option>
+                  </select>
+                </div>
+              )}
 
               <div className="form-group">
-                <label htmlhtmlhtmlhtmlFor="exampleSelect1">Status</label>
-                <select className="form-control" id="exampleSelect1">
-                  <option value="Aktif">Aktif</option>
-                  <option value="Nonaktif">Nonaktif</option>
+                <label>Pilih API</label>
+                <select className="form-control">
+                  <option>{nameApiChoice}</option>
                 </select>
-                {/* <span className="form-text text-muted">
-                    Please enter your full name
-                  </span> */}
               </div>
-              :   
-              <div className="form-group">
-                <label htmlhtmlhtmlhtmlFor="exampleSelect1">Status</label>
-                <select className="form-control" id="exampleSelect1">
-                  <option value="Nonaktif">Nonaktif</option>
-                  <option value="Aktif">Aktif</option>
-                </select>
-                {/* <span className="form-text text-muted">
-                    Please enter your full name
-                  </span> */}
-              </div>
-            }
-
 
 
               <div className="form-group">
-                <label htmlhtmlhtmlhtmlFor="exampleSelect1">Pilih API</label>
-                <select className="form-control" id="exampleSelect1">
+                <label>Field</label>
+                <select className="form-control">
                   <option>Placeholder</option>
                 </select>
-                {/* <span className="form-text text-muted">
-                    Please enter your full name
-                  </span> */}
-              </div>
-              <div className="form-group">
-                <label htmlhtmlhtmlhtmlFor="exampleSelect1">Field</label>
-                <select className="form-control" id="exampleSelect1">
-                  <option>Placeholder</option>
-                </select>
-                {/* <span className="form-text text-muted">
-                    Please enter your full name
-                  </span> */}
               </div>
               <div className="form-group row">
-                <div className="col-lg-6">
+                <div className="col-12 col-sm-6">
                   <label>From</label>
-                  <input
-                    type="date"
-                    className="form-control"
-                    placeholder="Enter full name"
-                  />
-                  {/* <span className="form-text text-muted">
-                    Please enter your full name
-                  </span> */}
+                  <div className="d-flex align-items-center position-relative datepicker-w mt-2">
+                    <DatePicker
+                      className="form-search-date form-control cursor-pointer"
+                      onChange={(date) => onChangePeriodeDateStart(date)}
+                      value={from}
+                      dateFormat="YYYY-MM-DD"
+                      placeholderText="From"
+                      minDate={moment().toDate()}
+                    />
+                    <IconCalender
+                      className="right-center-absolute"
+                      style={{ right: "10px" }}
+                    />
+                  </div>
                 </div>
                 <div className="col-lg-6">
                   <label>To</label>
-                  <input
-                    type="date"
-                    className="form-control"
-                    placeholder="Enter contact number"
-                  />
-                  <span className="form-text text-muted">
-                    Please enter your contact number
-                  </span>
+                  <div className="d-flex align-items-center position-relative datepicker-w mt-2">
+                    <DatePicker
+                      className="form-search-date form-control cursor-pointer"
+                      onChange={(date) => onChangePeriodeDateEnd(date)}
+                      value={to}
+                      dateFormat="YYYY-MM-DD"
+                      placeholderText="To"
+                      minDate={moment().toDate()}
+                    />
+                    <IconCalender
+                      className="right-center-absolute"
+                      style={{ right: "10px" }}
+                    />
+                  </div>
                 </div>
               </div>
             </form>
             <div className="form-group row">
-                <div className="col-sm-12 d-flex justify-content-end">
-                  <Link href="/site-management/setting/api">
-                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
-                      Kembali
-                    </a>
-                  </Link>
-                  <button
-                    type="button"
-                    className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
-                  >
-                    Simpan
-                  </button>
-                </div>
+              <div className="col-sm-12 d-flex justify-content-end">
+                <Link href="/site-management/setting/api">
+                  <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
+                    Kembali
+                  </a>
+                </Link>
+                <button
+                  type="button"
+                  className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
+                >
+                  Simpan
+                </button>
               </div>
+            </div>
           </div>
         </div>
       </div>

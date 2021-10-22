@@ -229,9 +229,6 @@ const StepTwo = ({ token }) => {
             answer_key: null,
             type: methodAdd,
           };
-
-          // console.log(data)
-
           dispatch(newSurveyQuestionDetail(data, token));
         }
       default:

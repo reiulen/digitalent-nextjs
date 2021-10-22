@@ -49,14 +49,6 @@ export const getAllFaq = (token) => async (dispatch) => {
 
         let link = process.env.END_POINT_API_PUBLIKASI + `api/faq`;
 
-        // const config = {
-        //     headers: {
-        //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
-        //         'Access-Control-Allow-Origin': '*',
-        //         'apikey': process.env.END_POINT_KEY_AUTH
-        //     }
-        // }
-
         const { data } = await axios.get(link, config)
 
         dispatch({
@@ -111,14 +103,6 @@ export const newFaq = (faqData, token) => async (dispatch) => {
         dispatch({
             type: NEW_FAQ_REQUEST
         })
-
-        // const config = {
-        //     headers: {
-        //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
-        //         'Access-Control-Allow-Origin': '*',
-        //         'apikey': process.env.END_POINT_KEY_AUTH
-        //     }
-        // }
 
         const config = {
             headers: {
@@ -239,9 +223,6 @@ export const updatePinFaq = (faq, id, token) => async (dispatch) => {
             type: UPDATE_PIN_FAQ_SUCCESS,
             payload: data,
         });
-
-
-        // console.log (data)
     } catch (error) {
         dispatch({
             type: UPDATE_PIN_FAQ_FAIL,

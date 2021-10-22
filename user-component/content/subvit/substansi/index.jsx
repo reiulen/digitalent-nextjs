@@ -1,4 +1,3 @@
-import Navigationbar from "../../../../components/templates/navbar.component";
 import {
   Card,
   Col,
@@ -10,25 +9,23 @@ import {
   ModalBody,
 } from "react-bootstrap";
 import styles from "./content.module.css";
-import Footer from "../footer/index";
+
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import HeaderUser from "../header";
-import axios from "axios";
+
 import Image from "next/dist/client/image";
 import { useSelector } from "react-redux";
 import ModalHeader from "react-bootstrap/esm/ModalHeader";
+import { postResult } from "../../../../redux/actions/subvit/subtance-question-detail.action";
 
 import defaultImage from "../../../../public/assets/media/logos/Gambar.png";
-
-// import Cookies from "js-cookie";
+import { useDispatch } from "react-redux";
 
 const SubtansiUser = ({ token }) => {
-  const {
-    // loading: allLoading,
-    // error: allError,
-    random_subtance_question_detail,
-  } = useSelector((state) => state.randomSubtanceQuestionDetail);
+  const { random_subtance_question_detail } = useSelector(
+    (state) => state.randomSubtanceQuestionDetail
+  );
+  const dispatch = useDispatch();
   const router = useRouter();
   const [data] = useState(JSON.parse(localStorage.getItem("data")));
   const [answer, setAnswer] = useState("");
@@ -111,8 +108,9 @@ const SubtansiUser = ({ token }) => {
       }, 1000);
       return () => clearInterval(secondsLeft);
     } else {
-      console.log("time out");
+      router.push(`/peserta/done-substansi`);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [count]);
 
   const secondsToTime = (secs) => {
@@ -131,9 +129,9 @@ const SubtansiUser = ({ token }) => {
   let list = [];
 
   const handleAnswer = (e) => {
-    setAnswer(e.option);
+    setAnswer(e.key);
 
-    localStorage.setItem(`${router.query.id}`, e.option);
+    localStorage.setItem(`${router.query.id}`, e.key);
 
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i);
@@ -153,6 +151,19 @@ const SubtansiUser = ({ token }) => {
   };
 
   const handlePage = () => {
+    const setData = {
+      list: JSON.stringify(
+        data.list_questions.map((item, index) => {
+          return {
+            ...item,
+            participant_answer: localStorage.getItem(index + 1),
+          };
+        })
+      ),
+      training_id: router.query.training_id,
+      type: router.query.category === "Test Substansi" && "substansi",
+    };
+    dispatch(postResult(setData, token));
     router.push(`/peserta/done-substansi`);
   };
 
@@ -208,12 +219,22 @@ const SubtansiUser = ({ token }) => {
                 {data && data.total_questions}
               </p>
               <h1 className={styles.soal}>
-                {data.list_questions.question_image &&
+                {data.list_questions &&
                 data.list_questions[parseInt(router.query.id) - 1]
                   .question_image !== null ? (
                   <div className="d-flex flex-row">
                     <div className="p-2">
-                      <Image src={defaultImage} alt="" />
+                      <Image
+                        src={
+                          process.env.END_POINT_API_IMAGE_SUBVIT +
+                          "subtance/images/" +
+                          data.list_questions[parseInt(router.query.id) - 1]
+                            .question_image
+                        }
+                        alt=""
+                        width={150}
+                        height={150}
+                      />
                     </div>
                     <div className="p-5">
                       {
@@ -223,12 +244,12 @@ const SubtansiUser = ({ token }) => {
                     </div>
                   </div>
                 ) : (
-                  data.list_questions.question &&
+                  data.list_questions &&
                   data.list_questions[parseInt(router.query.id) - 1].question
                 )}
               </h1>
               <hr />
-              {data.list_questions.answer &&
+              {data.list_questions &&
                 JSON.parse(
                   data.list_questions[parseInt(router.query.id) - 1].answer
                 ).map((item, index) => {
@@ -238,7 +259,11 @@ const SubtansiUser = ({ token }) => {
                         <div className="d-flex flex-row">
                           <div className="p-2">
                             <Image
-                              src={defaultImage}
+                              src={
+                                process.env.END_POINT_API_IMAGE_SUBVIT +
+                                "subtance/images/" +
+                                item.image
+                              }
                               alt=""
                               width={70}
                               height={70}
@@ -251,7 +276,7 @@ const SubtansiUser = ({ token }) => {
                             <Card
                               className={
                                 localStorage.getItem(router.query.id) ===
-                                item.option
+                                item.key
                                   ? styles.answer
                                   : styles.boxAnswer
                               }
@@ -271,8 +296,7 @@ const SubtansiUser = ({ token }) => {
                       ) : (
                         <Card
                           className={
-                            localStorage.getItem(router.query.id) ===
-                            item.option
+                            localStorage.getItem(router.query.id) === item.key
                               ? styles.answer
                               : styles.boxAnswer
                           }
@@ -335,13 +359,7 @@ const SubtansiUser = ({ token }) => {
                     <Button
                       className={styles.btnNext}
                       onClick={handleDone}
-                      disabled={
-                        listAnswer.length -
-                          (listAnswer.includes("ally-support-cache")
-                            ? 2
-                            : 1) !==
-                        data.total_questions
-                      }
+                      disabled={listAnswer.includes(data.total_questions)}
                     >
                       Selesai
                     </Button>

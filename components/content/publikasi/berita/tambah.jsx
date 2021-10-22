@@ -94,9 +94,6 @@ const TambahBerita = ({ token, id }) => {
 
     const onChangeGambar = (e) => {
         const type = ["image/jpg", "image/png", "image/jpeg"]
-        // console.log (e.target.files[0].type)
-        // console.log (e.target.files[0])
-        // console.log ("check")
 
         if (type.includes(e.target.files[0].type)) {
             if (e.target.files[0].size > parseInt(setting[0].max_size) + '000000') {
@@ -111,16 +108,10 @@ const TambahBerita = ({ token, id }) => {
                     }
                 };
                 reader.readAsDataURL(e.target.files[0])
-                // console.log (reader.readAsDataURL(e.target.files[0]))
                 setGambarName(e.target.files[0].name)
             }
         }
         else {
-            // setGambar("")
-            // setGambarPreview("/assets/media/default.jpg")
-            // setGambarName(null)
-            // simpleValidator.current.showMessages();
-            // forceUpdate(1);
             e.target.value = null
             Swal.fire(
                 'Oops !',
@@ -131,9 +122,7 @@ const TambahBerita = ({ token, id }) => {
     };
 
     const handleChangePublish = (e) => {
-        // setPublish(e.target.checked);
         setDisablePublishDate(!disablePublishDate)
-        // console.log (e.target.checked)
 
         if (e.target.checked === false) {
             setPublishDate(null)
@@ -144,11 +133,8 @@ const TambahBerita = ({ token, id }) => {
     };
 
     const handlePublishDate = (date) => {
-        // let result = moment(date).format("YYYY-MM-DD")
         if (disablePublishDate === false) {
-            // setPublishDate(result)
             setPublishDate(date)
-            // console.log (result)
         }
     }
 
@@ -157,14 +143,12 @@ const TambahBerita = ({ token, id }) => {
     }
 
     const handleTag = (data) => {
-        // console.log(data);
         for (let i = 0; i < data.length; i++) {
             if (hasWhiteSpace(data[i])) {
                 data.splice([i], 1);
             }
         }
         setTag(data);
-        // setTag(data)
     }
 
     const onSubmit = (e) => {
@@ -214,14 +198,7 @@ const TambahBerita = ({ token, id }) => {
                 })
                     .then((result) => {
                         if (result.isConfirmed) {
-                            // if (success) {
-                            //   dispatch({
-                            //     type: NEW_ARTIKEL_RESET,
-                            //   });
-                            // }
-
                             dispatch(newBerita(data, token))
-                            // console.log("UNPUBLISH :", data)
                         }
                     });
             } else {
@@ -248,14 +225,7 @@ const TambahBerita = ({ token, id }) => {
                 })
                     .then((result) => {
                         if (result.isConfirmed) {
-                            // if (success) {
-                            //   dispatch({
-                            //     type: NEW_ARTIKEL_RESET,
-                            //   });
-                            // }
-
                             dispatch(newBerita(data, token))
-                            // console.log("PUBLISH :", data)
                         }
                     });
             }
@@ -381,7 +351,6 @@ const TambahBerita = ({ token, id }) => {
                                             onChange={(event, editor) => {
                                                 const data = editor.getData()
                                                 setIsiBerita(data);
-                                                // console.log({ event, editor, data })
                                             }}
                                             onBlur={() =>
                                                 simpleValidator.current.showMessageFor(

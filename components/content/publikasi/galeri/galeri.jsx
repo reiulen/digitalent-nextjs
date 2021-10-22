@@ -488,14 +488,11 @@ const Galeri = ({ token }) => {
         const data = {
             id,
         };
-
         dispatch(viewGaleri(data, token));
         setIndexGalleri(i);
-        // console.log("INDEEEXX : ", data)
     };
 
     const printImage = () => {
-        // console.log("isViewed :", isViewed.gambar)
         return galeri && galeri.gallery.length !== 0 && index_galleri !== null ? (
             <>
                 <div

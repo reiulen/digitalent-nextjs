@@ -174,7 +174,6 @@ const TambahPage = ({ token }) => {
                           onChange={(event, editor) => {
                             const data = editor.getData();
                             setIsiArtikel(data);
-                            // console.log({ event, editor, data });
                           }}
                           // onBlur={() =>
                           //   simpleValidator.current.showMessageFor(
@@ -405,8 +404,8 @@ const TambahPage = ({ token }) => {
                       defaultValue={pageStatus}
                     >
                       <option value="">Pilih Status</option>
-                      <option value="Listed">Listed</option>
-                      <option value="Unlisted">Unlisted</option>
+                      <option value="1">Listed</option>
+                      <option value="0">Unlisted</option>
                     </select>
                     {/* <span className="form-text text-muted">
                       Please enter your full name
