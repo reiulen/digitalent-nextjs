@@ -9,6 +9,7 @@ import SimpleReactValidator from "simple-react-validator";
 import Swal from "sweetalert2";
 import { TagsInput } from "react-tag-input-component";
 import DatePicker from 'react-datepicker'
+import Select from 'react-select'
 
 // import Editor from 'ckeditor5-custom-build/build/ckeditor';
 // import { CKEditor } from '@ckeditor/ckeditor5-react'
@@ -257,17 +258,19 @@ const TambahArtikel = ({ token }) => {
     }
   }
 
+  function hasWhiteSpace(s) {
+    return s.indexOf(' ') >= 0;
+  }
+
   const handleTag = (data) => {
+    // console.log(data);
     for (let i = 0; i < data.length; i++) {
-      for (let j = 0; j < data[i].length; j++) {
-        if (data[i][j] === " ") {
-          setDisableTag(true)
-        } else {
-          setDisableTag(false)
-        }
+      if (hasWhiteSpace(data[i])) {
+        data.splice([i], 1);
       }
     }
-    setTag(data)
+    setTag(data);
+    // setTag(data)
   }
 
   const onSubmit = (e) => {

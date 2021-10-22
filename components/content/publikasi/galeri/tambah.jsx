@@ -64,7 +64,7 @@ const TambahGaleri = ({ token }) => {
     const { loading, error, success } = useSelector(state => state.newGaleri)
     const { loading: allLoading, error: allError, kategori } = useSelector((state) => state.allKategori);
     const { setting } = useSelector(state => state.allSettingPublikasi)
-    
+
     const [files, setFiles] = useState([]);
     const { getRootProps, getInputProps } = useDropzone({
         accept: 'image/*',
@@ -327,22 +327,6 @@ const TambahGaleri = ({ token }) => {
         setTotalImage((totalImage) + 1)
     };
 
-    // const onAddImage = () => {
-    //     let newKey = 1;
-    //     if (image.length > 0) {
-    //       newKey = image[image.length - 1].key + 1;
-    //     }
-    //     setImage([
-    //       ...image,
-    //       {
-    //         key: newKey,
-    //         imagePreview: "",
-    //         imageFile: "",
-    //         imageName: "",
-    //       },
-    //     ]);
-    //   };
-
     const onDeleteImage = (index) => {
 
         if (totalImage === 1) {
@@ -360,17 +344,19 @@ const TambahGaleri = ({ token }) => {
 
     };
 
+    function hasWhiteSpace(s) {
+        return s.indexOf(' ') >= 0;
+    }
+
     const handleTag = (data) => {
+        // console.log(data);
         for (let i = 0; i < data.length; i++) {
-            for (let j = 0; j < data[i].length; j++) {
-                if (data[i][j] === " ") {
-                    setDisableTag(true)
-                } else {
-                    setDisableTag(false)
-                }
+            if (hasWhiteSpace(data[i])) {
+                data.splice([i], 1);
             }
         }
-        setTag(data)
+        setTag(data);
+        // setTag(data)
     }
 
     const handleData = (temps, onCall) => {
