@@ -35,11 +35,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
-      // console.log(session.user.user.data); untuk cek role user
+      
       if (!session) {
         return {
           redirect: {
-            destination: "/login",
+            destination: "http://dts-dev.majapahit.id/login",
             permanent: false,
           },
         };
@@ -48,7 +48,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (data.user.roles[0] !== "user") {
         return {
           redirect: {
-            destination: "/login",
+            destination: "http://dts-dev.majapahit.id/login",
             permanent: false,
           },
         };

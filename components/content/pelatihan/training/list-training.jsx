@@ -109,7 +109,7 @@ const ListTraining = ({ token }) => {
     for (let index = 0; index < dataPenyelenggara.data.length; index++) {
       let val = {
         value: dataPenyelenggara.data[index].id,
-        label: dataPenyelenggara.data[index].value,
+        label: dataPenyelenggara.data[index].label,
       };
       optionsPenyelenggara.push(val);
     }
@@ -184,8 +184,6 @@ const ListTraining = ({ token }) => {
       revisi.map((row, i) => {
         setNote(row.revisi);
       });
-      // console.log(Object.keys(revisi).length);
-      // console.log(revisi);
     }
   }, [isDeleted, statusSuccess, dispatch, token, revisi]);
 
@@ -618,10 +616,10 @@ const ListTraining = ({ token }) => {
                         <th>Status Publish</th>
                         <th>Status Substansi</th>
                         <th>Status Pelatihan</th>
-                        <th>Aksi</th>
+                        <th className="row-aksi-pelatihan">Aksi</th>
                       </tr>
                     </thead>
-                    <tbody>
+                    <tbody className="w-100">
                       {!training ||
                       (training && training.list === null) ||
                       training.list.length === 0 ? (
@@ -729,7 +727,7 @@ const ListTraining = ({ token }) => {
                               </div>
                             </td>
                             <td className="align-middle">
-                              <div className="d-flex">
+                              <div className="d-flex flex-row">
                                 <Link
                                   href={`/pelatihan/pelatihan/edit-pelatihan/${row.id}`}
                                 >

@@ -43,7 +43,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
-      console.log(store);
 
       await store.dispatch(
         getAllSubtanceQuestionBanks(

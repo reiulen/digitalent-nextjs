@@ -49,10 +49,9 @@ function RevisiList({ token }) {
             },
           }
         );
-
         setListCardREvisi(data.data);
       } catch (error) {
-        console.log("action getCardREviewList", error);
+        notify(error.response.data.message);
       }
     }
     getCardREviewList(router.query.id);

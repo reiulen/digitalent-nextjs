@@ -13,7 +13,6 @@ const DashboardMasterData = ({ session }) => {
   //     console.log(session.user.user);
   //   });
   // }, [getSession]);
-  console.log(session);
   return (
     <>
       <PageWrapper>

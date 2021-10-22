@@ -183,7 +183,6 @@ const EditSoalTrivia = ({ token }) => {
   };
 
   const handleStatus = (status) => {
-    console.log(status);
     setStatus(status);
   };
 

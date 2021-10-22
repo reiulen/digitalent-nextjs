@@ -28,10 +28,6 @@ const UbahApi = ({ token }) => {
   const [field, setField] = useState(apies.field)
   const [from, setFrom] = useState(apies.from)
   const [to, setTo] = useState(apies.to)
-
-
-  console.log("apies",apies)
-
   const onNewReset = () => {
     router.replace("/site-management/api", undefined, {
       shallow: true,

@@ -43,13 +43,10 @@ const TambahAdmin = () => {
         if (error) {
             dispatch(clearErrors())
         }
-
         const data = {
             nama_role,
         }
-
         dispatch(newArtikel(data))
-        console.log(data)
     }
 
     return (

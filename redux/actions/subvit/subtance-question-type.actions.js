@@ -23,7 +23,7 @@ import {
 import axios from "axios";
 
 export const getAllSubtanceQuestionBanksType =
-  (page = 1, keyword = "", limit = 5, token) =>
+  (page = 0, keyword = "", limit = 0, token) =>
   async (dispatch) => {
     try {
       dispatch({ type: SUBTANCE_QUESTION_TYPE_REQUEST });

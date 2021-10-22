@@ -80,8 +80,6 @@ const EditDokumentKerjasamaById = ({ token }) => {
         setPdfFile(null);
         setPdfFileError("Please selet valid pdf file !!");
       }
-    } else {
-      console.log("select your file");
     }
   };
 
@@ -127,9 +125,7 @@ const EditDokumentKerjasamaById = ({ token }) => {
         formData.append("period", period);
         formData.append("period_unit", periodUnit);
 
-        if (documentLocal === "") {
-          console.log("object");
-        } else {
+        if (documentLocal !== "") {
           formData.append("document", documentLocal);
         }
 
@@ -271,7 +267,7 @@ const EditDokumentKerjasamaById = ({ token }) => {
       setDocument(data.data.document_file);
       setEmail(data.data.email);
     } catch (error) {
-      console.log("action getSIngle gagal", error);
+      notify(error.response.data.message);
     }
 
     } 

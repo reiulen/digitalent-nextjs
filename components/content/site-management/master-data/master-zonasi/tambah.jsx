@@ -31,8 +31,6 @@ const Tambah = ({ token }) => {
     },
   ]);
 
-  console.log("formInput", formInput);
-  console.log("valueForm", valueForm);
   const handleAddInput = () => {
     let _temp = [...formInput];
     let _tempValue = [...valueForm];
@@ -87,7 +85,7 @@ const Tambah = ({ token }) => {
 
       _tempValue[index].provinsi = e.label;
     } catch (error) {
-      console.log(error);
+      notify(error.response.data.message);
     }
   };
 

@@ -488,14 +488,11 @@ const Galeri = ({ token }) => {
         const data = {
             id,
         };
-
         dispatch(viewGaleri(data, token));
         setIndexGalleri(i);
-        // console.log("INDEEEXX : ", data)
     };
 
     const printImage = () => {
-        // console.log("isViewed :", isViewed.gambar)
         return galeri && galeri.gallery.length !== 0 && index_galleri !== null ? (
             <>
                 <div
@@ -898,7 +895,7 @@ const Galeri = ({ token }) => {
                                                 <th>Dibuat</th>
                                                 <th>Status</th>
                                                 <th>Role</th>
-                                                <th>Aksi</th>
+                                                <th style={{ width: '9.7vw' }}>Aksi</th>
                                             </tr>
                                         </thead>
 

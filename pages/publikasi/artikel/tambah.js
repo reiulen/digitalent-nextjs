@@ -23,15 +23,14 @@ const Tambah = dynamic(
 );
 
 export default function TambahPage(props) {
-  const session = props.session.user.user.data;
-  // console.log (session)
+  const session = props.session.user.user.data;  
   return (
     <>
       <div className="d-flex flex-column flex-root">
         {/* <Layout title='Tambah Artikel - Publikasi'>
                     <Tambah />
                 </Layout> */}
-        <Tambah token={session.token} />
+        <Tambah token={session.token} id={session.user.id}/>
       </div>
     </>
   );

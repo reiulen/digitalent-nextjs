@@ -4,6 +4,7 @@ import Image from "next/image";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
+import axios from 'axios'
 
 import PageWrapper from "../../../../wrapper/page.wrapper";
 import Upload from "../../../../../public/assets/icon/sitemanagement/Upload.svg";
@@ -41,15 +42,56 @@ export default function SUBM(props) {
   const [emailSubject, setEmailSubject] = useState("");
   const [emailContent, setEmailContent] = useState("")
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    dispatch(postViaFilter(props.token))
-    console.log(title, year, academy, theme, organizer, training, profileStatus, selectionStatus, participantSelectionStatusUpdate || participantSelectionStatusUpdate === 1 ? "1" : "0" , status, broadcastEmailSendNotification || broadcastEmailSendNotification === 1 ? "1" : "0" , emailSubject, emailContent);
+
+    const data = {
+      title,
+      year,
+      academy,
+      theme,
+      organizer,
+      training,
+      profileStatus,
+      selectionStatus,
+      participantSelectionStatusUpdate: participantSelectionStatusUpdate || participantSelectionStatusUpdate === 1 ? "1" : "0",
+      status: "1",
+      broadcastEmailSendNotification: broadcastEmailSendNotification || broadcastEmailSendNotification === 1 ? "1" : "0",
+      emailSubject,
+      emailContent,
+    };
+
+    const formData = new FormData()
+    formData.append("status_types", "via filter")
+    formData.append("training_rules", JSON.stringify(data))
+
+    try {
+      let {data} = await axios.post(
+        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-trainings/subm`,
+        formData, 
+        {
+          headers: {  
+            authorization: `Bearer ${props.token}`
+          },
+        }
+      )
+    } catch (error) {
+      notify(error.response.data.message);
+    }
+
+
+
+
+
+
+
+    // dispatch(postViaFilter(props.token, title, year, academy, theme, organizer, training, profileStatus, selectionStatus, participantSelectionStatusUpdate || participantSelectionStatusUpdate === 1 ? "1" : "0" , status, broadcastEmailSendNotification || broadcastEmailSendNotification === 1 ? "1" : "0" , emailSubject, emailContent, `via ${via}`))
+    // console.log(title, year, academy, theme, organizer, training, profileStatus, selectionStatus, participantSelectionStatusUpdate || participantSelectionStatusUpdate === 1 ? "1" : "0" , status, broadcastEmailSendNotification || broadcastEmailSendNotification === 1 ? "1" : "0" , emailSubject, emailContent);
   };
 
   return (
     <div className="col-xl-8 styling-content-pelatihan">
-      <form onSubmit={handleSubmit}>
+      <form >
         <div className="notification-title">
           <h1>Status Update & Broadcast Email</h1>
         </div>
@@ -83,7 +125,7 @@ export default function SUBM(props) {
           </div>
           <div className="d-flex custom-control custom-radio styling-radio ml-4">
             <input
-              className="form-check-input"
+              className="form-check-input styling-radio"
               type="radio"
               name="via"
               id="filter"
@@ -428,7 +470,8 @@ export default function SUBM(props) {
             Reset
           </button>
           <button
-            type="submit"
+            type="button"
+            onClick={(e)=>handleSubmit(e)}
             className="btn btn-rounded-full bg-blue-primary text-white"
           >
             Simpan

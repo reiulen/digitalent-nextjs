@@ -124,8 +124,8 @@ const EditArtikel = ({ token }) => {
   );
   const [gambarName, setGambarName] = useState(artikel.gambar);
   const [kategori_id, setKategoriId] = useState(artikel.kategori_id); //belum
-  const [users_id, setUserId] = useState(87);
-  // const [users_id, setUserId] = useState(artikel.users_id);
+  // const [users_id, setUserId] = useState(87);
+  const [users_id, setUserId] = useState(artikel.users_id);
   const [tag, setTag] = useState(artikel.tag);
   // const [publish, setPublish] = useState(artikel.publish === 1 ? true : false);
   const [publish, setPublish] = useState(artikel.publish);
@@ -140,9 +140,6 @@ const EditArtikel = ({ token }) => {
 
   const onChangeGambar = e => {
     const type = ["image/jpg", "image/png", "image/jpeg"];
-    // console.log (e.target.files[0].type)
-    // console.log (e.target.files[0])
-    // console.log ("check")
 
     if (type.includes(e.target.files[0].type)) {
       if (e.target.files[0].size > parseInt(setting[0].max_size) + '000000') {
@@ -157,7 +154,6 @@ const EditArtikel = ({ token }) => {
           }
         };
         reader.readAsDataURL(e.target.files[0]);
-        // console.log (reader.readAsDataURL(e.target.files[0]))
         setGambarName(e.target.files[0].name);
       }
     } else {
@@ -176,9 +172,7 @@ const EditArtikel = ({ token }) => {
   };
 
   const handleChangePublish = e => {
-    // setPublish(e.target.checked);
     setDisablePublishDate(!disablePublishDate);
-    // console.log (e.target.checked)
 
     if (e.target.checked === false) {
       setPublishDate(null);
@@ -189,26 +183,22 @@ const EditArtikel = ({ token }) => {
   };
 
   const handlePublishDate = date => {
-    // let result = moment(date).format("YYYY-MM-DD")
     if (disablePublishDate === false) {
-      // setPublishDate(result)
       setPublishDate(date);
-      // console.log (result)
     }
   };
 
+  function hasWhiteSpace(s) {
+    return s.indexOf(' ') >= 0;
+  }
+
   const handleTag = (data) => {
     for (let i = 0; i < data.length; i++) {
-      for (let j = 0; j < data[i].length; j++) {
-        if (data[i][j] === " ") {
-          setDisableTag(true)
-        } else {
-          setDisableTag(false)
-        }
+      if (hasWhiteSpace(data[i])) {
+        data.splice([i], 1);
       }
     }
-    // console.log("Data Tag :", data)
-    setTag(data)
+    setTag(data);
   }
 
   const onSubmit = e => {
@@ -317,8 +307,6 @@ const EditArtikel = ({ token }) => {
         if (publishDate === null) {
           let today = new Date();
 
-          // console.log (today)
-
           const data = {
             judul_artikel,
             isi_artikel,
@@ -343,15 +331,7 @@ const EditArtikel = ({ token }) => {
             cancelButtonText: "Batal",
           }).then(result => {
             if (result.isConfirmed) {
-              // if (success) {
-              //   dispatch({
-              //     // type: NEW_ARTIKEL_RESET
-              //     type: UPDATE_ARTIKEL_RESET,
-              //   });
-              // }
-
               dispatch(updateArtikel(data, token));
-              // console.log(data)
             }
           });
         } else {
@@ -379,15 +359,7 @@ const EditArtikel = ({ token }) => {
             cancelButtonText: "Batal",
           }).then(result => {
             if (result.isConfirmed) {
-              // if (success) {
-              //   dispatch({
-              //     // type: NEW_ARTIKEL_RESET
-              //     type: UPDATE_ARTIKEL_RESET,
-              //   });
-              // }
-
               dispatch(updateArtikel(data, token));
-              // console.log(data)
             }
           });
         }
@@ -456,15 +428,7 @@ const EditArtikel = ({ token }) => {
             cancelButtonText: "Batal",
           }).then(result => {
             if (result.isConfirmed) {
-              // if (success) {
-              //   dispatch({
-              //     // type: NEW_ARTIKEL_RESET
-              //     type: UPDATE_ARTIKEL_RESET,
-              //   });
-              // }
-
               dispatch(updateArtikel(data, token));
-              // console.log(data)
             }
           });
         } else {
@@ -492,15 +456,7 @@ const EditArtikel = ({ token }) => {
             cancelButtonText: "Batal",
           }).then(result => {
             if (result.isConfirmed) {
-              // if (success) {
-              //   dispatch({
-              //     // type: NEW_ARTIKEL_RESET
-              //     type: UPDATE_ARTIKEL_RESET,
-              //   });
-              // }
-
               dispatch(updateArtikel(data, token));
-              // console.log(data)
             }
           });
         }
@@ -565,9 +521,6 @@ const EditArtikel = ({ token }) => {
     <>
       <PageWrapper>
         {/* {console.log(artikel)} */}
-        {/* {
-          console.log (setting)
-        } */}
 
         {error ? (
           <div
@@ -679,7 +632,6 @@ const EditArtikel = ({ token }) => {
                           onChange={(event, editor) => {
                             const data = editor.getData();
                             setIsiArtikel(data);
-                            // console.log({ event, editor, data });
                           }}
                           onBlur={() =>
                             simpleValidator.current.showMessageFor(

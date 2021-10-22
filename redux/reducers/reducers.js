@@ -92,6 +92,8 @@ import {
 import {
   allSubtanceQuestionDetailReducer,
   randomSubtanceQuestionDetailReducer,
+  getDashboardReducer,
+  postResultReducer,
   newSubtanceQuestionDetailReducer,
   deleteSubtanceQuestionDetailReducer,
   detailSubtanceQuestionDetailReducer,
@@ -245,7 +247,7 @@ import {
 import { allPromptReducer } from "./site-management/settings/pelatihan.reducers";
 
 // ============== pelatihan ===============
-import {allDataZonasiReducer} from './site-management/dashboard.reducers'
+import { allDataZonasiReducer } from "./site-management/dashboard.reducers";
 
 // End Site Management
 
@@ -339,6 +341,7 @@ import {
   allAkademiReducer,
   temaByAkademiReducer,
   pelatihanByTemaReducer,
+  allPublikasiBerandaReducer,
 } from "../reducers/beranda/beranda.reducers";
 
 // ========== detail akademi ========
@@ -427,6 +430,8 @@ const reducer = combineReducers({
 
   allSubtanceQuestionDetail: allSubtanceQuestionDetailReducer,
   randomSubtanceQuestionDetail: randomSubtanceQuestionDetailReducer,
+  dashboardSubvit: getDashboardReducer,
+  postResultSubvit: postResultReducer,
   newSubtanceQuestionDetail: newSubtanceQuestionDetailReducer,
   detailSubtanceQuestionDetail: detailSubtanceQuestionDetailReducer,
   updateSubtanceQuestionDetail: updateSubtanceQuestionDetailReducer,
@@ -631,6 +636,7 @@ const reducer = combineReducers({
   allAkademi: allAkademiReducer,
   temaByAkademi: temaByAkademiReducer,
   pelatihanByTema: pelatihanByTemaReducer,
+  allPublikasiBeranda: allPublikasiBerandaReducer,
 
   // ========== detail akademi ========
   detailAkademi: detailAkademiReducer,

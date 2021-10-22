@@ -95,9 +95,6 @@ const EditArtikel = ({token}) => {
 
   const onChangeGambar = (e) => {
     const type = ["image/jpg", "image/png", "image/jpeg"]
-    // console.log (e.target.files[0].type)
-    // console.log (e.target.files[0])
-    // console.log ("check")
 
     if (type.includes (e.target.files[0].type)){
       const reader = new FileReader();
@@ -108,7 +105,6 @@ const EditArtikel = ({token}) => {
         }
       };
       reader.readAsDataURL(e.target.files[0])
-      // console.log (reader.readAsDataURL(e.target.files[0]))
       setGambarName(e.target.files[0].name)
     } 
     else {
@@ -127,10 +123,7 @@ const EditArtikel = ({token}) => {
   };
 
   const handleChangePublish = (e) => {
-    // setPublish(e.target.checked);
-    setDisablePublishDate(!disablePublishDate)
-    // console.log (e.target.checked)
-
+    setDisablePublishDate(!disablePublishDate)    
     if (e.target.checked === false){
         setPublishDate (null)
         setPublish (0)
@@ -144,16 +137,36 @@ const EditArtikel = ({token}) => {
     if (disablePublishDate === false) {
       // setPublishDate(result)
       setPublishDate(date)
-      // console.log (result)
     }
   }
 
+  function hasWhiteSpace(s) {
+    return s.indexOf(' ') >= 0;
+  }
+
+  const handleTag = (data) => {
+    
+    for (let i = 0; i < data.length; i++) {
+      if (hasWhiteSpace(data[i])) {
+        data.splice([i], 1);
+      }
+      // if(data[i] === " "){
+      //     data.splice(i, 1);
+      // }
+      // for (let j = 0; j < data[i].length; j++) {
+      //     if (data[i][j] === " ") {
+      //         data.splice(index, 1);
+      //         // setDisableTag(true)
+      //     }
+      // }
+    }
+    setTag(data);
+  }
+
   const onSubmit = (e) => {
-    // console.log ("test-0")
 
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
-      // console.log ("test")
 
       if (error) {
         dispatch(clearErrors());
@@ -174,7 +187,6 @@ const EditArtikel = ({token}) => {
       }
 
       if (gambarDB !== gambar) {
-        // console.log ("check-1")
 
         if (publishDate === null) {
           let today = new Date
@@ -204,11 +216,7 @@ const EditArtikel = ({token}) => {
           })
             .then((result) => {
               if (result.isConfirmed) {
-                // console.log ("check")
-                
                 dispatch(updateArtikelPeserta(data, token));
-                
-                // console.log(data)
               }
           });
 
@@ -238,18 +246,12 @@ const EditArtikel = ({token}) => {
           })
             .then((result) => {
               if (result.isConfirmed) {
-                // console.log ("check")
-                
                 dispatch(updateArtikelPeserta(data, token));
-                
-                // console.log(data)
               }
           });
         }
 
       } else {
-        // console.log ("check-2")
-
         if (publishDate === null) {
           let today = new Date
 
@@ -278,17 +280,7 @@ const EditArtikel = ({token}) => {
           })
             .then((result) => {
               if (result.isConfirmed) {
-                // if (success) {
-                //   dispatch({
-                //     // type: NEW_ARTIKEL_RESET
-                //     type: UPDATE_ARTIKEL_RESET,
-                //   });
-                // }
-                // console.log ("check1")
-  
                 dispatch(updateArtikelPeserta(data, token));
-                
-                // console.log(data)
               }
           });
         } else {
@@ -317,17 +309,7 @@ const EditArtikel = ({token}) => {
           })
             .then((result) => {
               if (result.isConfirmed) {
-                // if (success) {
-                //   dispatch({
-                //     // type: NEW_ARTIKEL_RESET
-                //     type: UPDATE_ARTIKEL_RESET,
-                //   });
-                // }
-                // console.log ("check1")
-  
                 dispatch(updateArtikelPeserta(data, token));
-                
-                // console.log(data)
               }
           });
 
@@ -509,7 +491,6 @@ const EditArtikel = ({token}) => {
                           onChange={(event, editor) => {
                             const data = editor.getData();
                             setIsiArtikel(data);
-                            // console.log({ event, editor, data });
                           }}
                           onBlur={() =>
                             simpleValidator.current.showMessageFor(

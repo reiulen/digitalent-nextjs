@@ -82,7 +82,8 @@ const EditImagetron = ({ token }) => {
     const [gambarName, setGambarName] = useState(imagetron.gambar)
     const [url_link, setUrlRedirect] = useState(imagetron.url_link)
     const [publish, setPublish] = useState(imagetron.publish)
-    const [users_id, setUserId] = useState(87)
+    const [users_id, setUserId] = useState(imagetron.users_id)
+    // const [users_id, setUserId] = useState(87)
     const [_method, setMethod] = useState("put");
     const [publishDate, setPublishDate] = useState(imagetron.tanggal_publish ? new Date(imagetron.tanggal_publish) : null);
     const [disablePublishDate, setDisablePublishDate] = useState(imagetron.publish === 0 ? true : false)
@@ -106,12 +107,9 @@ const EditImagetron = ({ token }) => {
             }
         }
     }
-    // console.log("IMAGE PREVIEW : ",gambarPreview)
 
     const handleChangePublish = (e) => {
-        // setPublish(e.target.checked);
         setDisablePublishDate(!disablePublishDate)
-        // console.log (e.target.checked)
 
         if (e.target.checked === false) {
             setPublishDate(null)
@@ -122,11 +120,8 @@ const EditImagetron = ({ token }) => {
     };
 
     const handlePublishDate = (date) => {
-        // let result = moment(date).format("YYYY-MM-DD")
         if (disablePublishDate === false) {
-            // setPublishDate(result)
             setPublishDate(date)
-            // console.log (result)
         }
     }
 
@@ -173,9 +168,7 @@ const EditImagetron = ({ token }) => {
                     })
                         .then((result) => {
                             if (result.isConfirmed) {
-
                                 dispatch(updateImagetron(data, token));
-                                // console.log(data)
                             }
                         });
                 } else {
@@ -203,9 +196,7 @@ const EditImagetron = ({ token }) => {
                     })
                         .then((result) => {
                             if (result.isConfirmed) {
-
                                 dispatch(updateImagetron(data, token));
-                                // console.log(data)
                             }
                         });
                 }
@@ -240,9 +231,7 @@ const EditImagetron = ({ token }) => {
                     })
                         .then((result) => {
                             if (result.isConfirmed) {
-
                                 dispatch(updateImagetron(data, token));
-                                // console.log(data)
                             }
                         });
                 } else {
@@ -270,9 +259,7 @@ const EditImagetron = ({ token }) => {
                     })
                         .then((result) => {
                             if (result.isConfirmed) {
-
                                 dispatch(updateImagetron(data, token));
-                                // console.log(data)
                             }
                         });
                 }

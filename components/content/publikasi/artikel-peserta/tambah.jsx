@@ -75,9 +75,6 @@ const TambahArtikel = () => {
 
   const onChangeGambar = (e) => {
     const type = ["image/jpg", "image/png", "image/jpeg"]
-    // console.log (e.target.files[0].type)
-    // console.log (e.target.files[0])
-    // console.log ("check")
 
     if (type.includes (e.target.files[0].type)){
       const reader = new FileReader();
@@ -88,7 +85,6 @@ const TambahArtikel = () => {
         }
       };
       reader.readAsDataURL(e.target.files[0])
-      // console.log (reader.readAsDataURL(e.target.files[0]))
       setGambarName(e.target.files[0].name)
     } 
     else {
@@ -106,9 +102,30 @@ const TambahArtikel = () => {
     }
   };
 
+  function hasWhiteSpace(s) {
+    return s.indexOf(' ') >= 0;
+  }
+
+  const handleTag = (data) => {
+    for (let i = 0; i < data.length; i++) {
+      if (hasWhiteSpace(data[i])) {
+        data.splice([i], 1);
+      }
+      // if(data[i] === " "){
+      //     data.splice(i, 1);
+      // }
+      // for (let j = 0; j < data[i].length; j++) {
+      //     if (data[i][j] === " ") {
+      //         data.splice(index, 1);
+      //         // setDisableTag(true)
+      //     }
+      // }
+    }
+    setTag(data);
+  }
+
   const handleChangePublish = (e) => {
     setPublish(e.target.checked);
-    // console.log (e.target.checked)
   };
 
   const onSubmit = (e) => {
@@ -155,9 +172,7 @@ const TambahArtikel = () => {
       })
         .then((result) => {
           if (result.isConfirmed) {
-
             dispatch(newArtikelPeserta(data));
-            // console.log(data);
           }
       });
 
@@ -258,7 +273,6 @@ const TambahArtikel = () => {
                           onChange={(event, editor) => {
                             const data = editor.getData();
                             setIsiArtikel(data);
-                            // console.log({ event, editor, data });
                           }}
                           onBlur={() =>
                             simpleValidator.current.showMessageFor(

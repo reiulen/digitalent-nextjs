@@ -102,7 +102,6 @@ const EditTheme = ({ token }) => {
         akademi_id: academy.value,
         id: idInt,
       };
-      // console.log(data);
       dispatch(updateTheme(data, token));
     } else {
       simpleValidator.current.showMessages();
@@ -213,7 +212,6 @@ const EditTheme = ({ token }) => {
                       onChange={(event, editor) => {
                         const data = editor.getData();
                         setDescription(data);
-                        // console.log({ event, editor, data });
                       }}
                       onBlur={() =>
                         simpleValidator.current.showMessageFor("deskripsi")

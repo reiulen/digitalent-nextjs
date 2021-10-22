@@ -83,8 +83,8 @@ const AlamatEdit = ({ funcViewEdit, token }) => {
     }
   }
 
-  let selectRefKabupaten = null;
   let selectRefKabupatenDomisili = null;
+  let selectRefKabupaten = null;
   const optionsKabupaten = [];
   if (dataKabupaten.length !== 0) {
     for (let index = 0; index < dataKabupaten.data.length; index++) {
@@ -113,6 +113,7 @@ const AlamatEdit = ({ funcViewEdit, token }) => {
     }
 
     if (success) {
+      toast.success("Berhasil Update Data");
       funcViewEdit(false);
       dispatch({ type: UPDATE_ALAMAT_RESET });
     }
@@ -399,7 +400,6 @@ const AlamatEdit = ({ funcViewEdit, token }) => {
         kode_pos: kodePosDomisili,
       };
       dispatch(updateProfileAlamat(data, token));
-      console.log(data);
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);

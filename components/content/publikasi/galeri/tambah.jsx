@@ -64,7 +64,7 @@ const TambahGaleri = ({ token }) => {
     const { loading, error, success } = useSelector(state => state.newGaleri)
     const { loading: allLoading, error: allError, kategori } = useSelector((state) => state.allKategori);
     const { setting } = useSelector(state => state.allSettingPublikasi)
-    
+
     const [files, setFiles] = useState([]);
     const { getRootProps, getInputProps } = useDropzone({
         accept: 'image/*',
@@ -164,9 +164,7 @@ const TambahGaleri = ({ token }) => {
     const [disableTag, setDisableTag] = useState(false)
 
     const handleChangePublish = (e) => {
-        // setPublish(e.target.checked);
         setDisablePublishDate(!disablePublishDate)
-        // console.log (e.target.checked)
 
         if (e.target.checked === false) {
             setPublishDate(null)
@@ -177,11 +175,9 @@ const TambahGaleri = ({ token }) => {
     };
 
     const handlePublishDate = (date) => {
-        // let result = moment(date).format("YYYY-MM-DD")
         if (disablePublishDate === false) {
-            // setPublishDate(result)
             setPublishDate(date)
-            // console.log (result)
+
         }
     }
 
@@ -201,7 +197,6 @@ const TambahGaleri = ({ token }) => {
                 }
             };
             reader.readAsDataURL(e.target.files[0])
-            // console.log (reader.readAsDataURL(e.target.files[0]))
             setGambarName(e.target.files[0].name)
             setGambar(arr)
             setGambarPreview(arrPreview)
@@ -327,22 +322,6 @@ const TambahGaleri = ({ token }) => {
         setTotalImage((totalImage) + 1)
     };
 
-    // const onAddImage = () => {
-    //     let newKey = 1;
-    //     if (image.length > 0) {
-    //       newKey = image[image.length - 1].key + 1;
-    //     }
-    //     setImage([
-    //       ...image,
-    //       {
-    //         key: newKey,
-    //         imagePreview: "",
-    //         imageFile: "",
-    //         imageName: "",
-    //       },
-    //     ]);
-    //   };
-
     const onDeleteImage = (index) => {
 
         if (totalImage === 1) {
@@ -360,17 +339,17 @@ const TambahGaleri = ({ token }) => {
 
     };
 
+    function hasWhiteSpace(s) {
+        return s.indexOf(' ') >= 0;
+    }
+
     const handleTag = (data) => {
         for (let i = 0; i < data.length; i++) {
-            for (let j = 0; j < data[i].length; j++) {
-                if (data[i][j] === " ") {
-                    setDisableTag(true)
-                } else {
-                    setDisableTag(false)
-                }
+            if (hasWhiteSpace(data[i])) {
+                data.splice([i], 1);
             }
         }
-        setTag(data)
+        setTag(data);
     }
 
     const handleData = (temps, onCall) => {
@@ -388,13 +367,7 @@ const TambahGaleri = ({ token }) => {
                 publish,
                 tanggal_publish: moment(today).format("YYYY-MM-DD")
             }
-
-            // dispatch(newGaleri(data, token))
-
             dispatch(onCall(data, token))
-            // console.log("UNPUBLISH : ", data)
-            // console.log(image)
-
         } else {
             const data = {
                 judul,
@@ -407,10 +380,7 @@ const TambahGaleri = ({ token }) => {
                 publish,
                 tanggal_publish: moment(publishDate).format("YYYY-MM-DD")
             }
-
             dispatch(onCall(data, token))
-            // console.log("PUBLISH : ", data)
-            // console.log(image)
         }
     }
 

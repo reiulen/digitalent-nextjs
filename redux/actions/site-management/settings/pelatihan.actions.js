@@ -29,7 +29,7 @@ export const loadDataPrompt = (token) => {
         payload: data,
       });
     } catch (error) {
-      console.log(error);
+      notify(error.response.data.message);
     }
   };
 };
@@ -102,7 +102,6 @@ export const postKetentuan = (
   statusNotPassedTraining,
   noTrainingAccepted
 ) => {
-  console.log("action", numberOfTraining);
   return (dispatch) => {
     axios
       .post(
@@ -131,34 +130,68 @@ export const postKetentuan = (
   };
 };
 
-export const postViaFilter = (token) => {
-  const via = {
-    status_types: "via filter",
+export const postViaFilter = (token, title, year, academy, theme, organizer, training, profileStatus, selectionStatus, participantSelectionStatusUpdate, status ,broadcastEmailSendNotification, emailSubject, emailContent, via) => {
+  let data = {
+    title,
+    year,
+    academy,
+    theme,
+    organizer,
+    training,
+    profileStatus,
+    selectionStatus,
+    participantSelectionStatusUpdate,
+    status,
+    broadcastEmailSendNotification,
+    emailSubject,
+    emailContent,
   };
-  const data = {
-    title: "jobs",
-    year: "2021",
-    academy: "01",
-    theme: "02",
-    organizer: "03",
-    training: "04",
-    profileStatus: "05",
-    selectionStatus: "06",
-    participantSelectionStatusUpdate: "1",
-    status: "lulus",
-    broadcastEmailSendNotification: "1",
-    emailSubject: "DTS",
-    emailContent: "Sebuah lembaga amal jariyah",
-  };
+
+  let subm = new FormData()
+  subm.append("status_types", via)
+  subm.append("training_rules", JSON.stringify(data))
 
   return (dispatch) => {
     axios
       .post(
         `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-trainings/subm`,
+        subm, 
         {
-          status_types: "via filter",
-          training_rules: data,
-        },
+          headers: {  
+            authorization: `Bearer ${token}`
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response)
+        console.log("BEHASIL")
+      })
+      .catch((error) => {
+        notify(error.response.data.message);
+      });
+  };
+};
+
+export const postFileSize = (
+  token,
+  image, document
+) => {
+  return (dispatch) => {
+    axios
+      .post(
+        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-trainings/update-file-size`,
+        {
+          "image": [
+              {
+                  "size": image
+              }
+          ],
+          "document" : [
+              {
+                  "size": document
+              }
+          ]
+      },
         {
           headers: {
             authorization: `Bearer ${token}`,
