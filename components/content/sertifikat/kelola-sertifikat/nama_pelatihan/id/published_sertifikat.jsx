@@ -53,6 +53,7 @@ export default function KelolasertifikatID({ token }) {
       cacheBust: true,
       canvasWidth: 842,
       canvasHeight: 595,
+      backgroundColor: "white",
     });
     return data;
   }
@@ -127,7 +128,13 @@ export default function KelolasertifikatID({ token }) {
                   width={842}
                   height={595}
                 />
-                <div className="position-absolute w-100 text-center responsive-margin-publish">
+                <div
+                  className={`position-absolute w-100 text-center ${
+                    certificate.data.certificate.background
+                      ? "responsive-margin-publish"
+                      : "responsive-margin-without-background"
+                  }`}
+                >
                   <span className="font-weight-bolder responsive-font-size-peserta">
                     Nama Peserta
                   </span>

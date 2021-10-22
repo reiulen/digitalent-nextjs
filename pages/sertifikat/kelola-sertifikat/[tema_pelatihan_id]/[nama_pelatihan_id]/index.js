@@ -90,6 +90,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+      console.log(session.user.user.data.token);
       if (query.status == "publish") {
         await store.dispatch(
           getPublishedSertifikat(query.id, session.user.user.data.token)
