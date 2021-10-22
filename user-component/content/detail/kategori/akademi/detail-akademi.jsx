@@ -9,6 +9,7 @@ import {
     Badge,
     Button
 } from "react-bootstrap";
+import Cardss from "../../../../components/beranda/card";
 
 import Pagination from "react-js-pagination";
 
@@ -223,18 +224,47 @@ const DetailAkademi = () => {
             <FilterBar />
 
             <div className="row my-5">
-                <div className="col-3">
+                <div className="col-12 col-md-3">
                     <TrainingReminder />
                     <FilterSide />
                 </div>
 
-                <div className="col-9 mt-2 d-flex flex-row flex-wrap justify-content-between">
+                <div className="col-12 col-md-9 mt-2 d-flex flex-row flex-wrap justify-content-between">
                     {
                         pelatihan && pelatihan.list !== 0 && show.length !== 0  ?
                             
                             pelatihan.list.map ((el, i) => {
                                 return (
                                     showDetail[i] === false ?
+                                        // <Cardss
+                                        //     key={i}
+                                        //     label={<label>Pelatihan {el.metode_pelatihan}</label>}
+                                        //     button={
+                                        //         show[i] === true ?
+                                        //           <div className="row">
+                                        //             <Button className="btn btn-white py-1 pl-2 pr-1 rounded-circle mr-2">
+                                        //                 <i className="ri-share-line" />
+                                        //             </Button>
+                                        //             <Button className="btn btn-white py-1 pl-2 pr-1 mr-2 rounded-circle">
+                                        //                 <i className="ri-heart-line" />
+                                        //             </Button>
+                                        //           </div>
+                                        //         :
+                                        //           null
+                                        //       }
+                                        //     thumbnail={
+                                        //     <Image 
+                                        //         src={process.env.END_POINT_API_IMAGE_BEASISWA + el.gambar}
+                                        //         // src={`https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/${element.gambar}`}
+                                        //         layout="fill" 
+                                        //         objectFit="cover"
+                                        //     />
+                                        //     }
+                                        //     onMouseEnter={() => handleMouseEnter(i)}
+                                        //     onMouseLeave={() => handleMouseLeave(i)}
+                                        // >
+
+                                        // </Cardss>
                                         <Card   
                                             style={{ width: '30rem', height:"47rem", cursor:"pointer"}} 
                                             className="m-3 shadow"
@@ -249,7 +279,8 @@ const DetailAkademi = () => {
                                             <div className='rounded'>
                                                 <Card.Img
                                                     variant="top"
-                                                    src={`https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/${el.gambar}`} 
+                                                    src={process.env.END_POINT_API_IMAGE_BEASISWA + el.gambar}
+                                                    // src={`https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/${el.gambar}`} 
                                                 />
                                             </div>
 
@@ -307,7 +338,8 @@ const DetailAkademi = () => {
                                             
                                             <div className="col-4">
                                                 <Image 
-                                                    src={`https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/${el.gambar}`}
+                                                    // src={`https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/${el.gambar}`}
+                                                    src={process.env.END_POINT_API_IMAGE_BEASISWA + el.gambar}
                                                     layout="fill"
                                                     objectFit="cover"
                                                 />
@@ -344,8 +376,8 @@ const DetailAkademi = () => {
                                                         </div>
                                                     </div>
                                                     <div className="row mt-3 ml-3">
-                                                        <div>
-                                                            {el.deskripsi}
+                                                        <div dangerouslySetInnerHTML={{ __html: el.deskripsi }}>
+                                                            {/* {el.deskripsi} */}
                                                         </div>
                                                     </div>
                                                     <div className="row d-flex justify-content-between mt-3">
@@ -364,7 +396,7 @@ const DetailAkademi = () => {
                                                         <div className="d-flex align-content-center">
                                                             <i className="ri-map-pin-line text-dark"></i>
                                                             <span className="mt-1">
-                                                                Lokasi: 
+                                                                Lokasi: {el.alamat}
                                                             </span>
                                                         </div>
                                                     </div>
