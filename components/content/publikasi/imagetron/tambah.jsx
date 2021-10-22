@@ -72,7 +72,7 @@ const TambahImagetron = ({ token }) => {
   const [gambarName, setGambarName] = useState(null)
   const [url_link, setUrlRedirect] = useState('')
   const [publish, setPublish] = useState(0)
-  const [users_id, setUserId] = useState(3)
+  const [users_id, setUserId] = useState(87)
   const [publishDate, setPublishDate] = useState(null);
   const [disablePublishDate, setDisablePublishDate] = useState(true)
 
@@ -177,7 +177,7 @@ const TambahImagetron = ({ token }) => {
           .then((result) => {
             if (result.isConfirmed) {
               dispatch(newImagetron(data, token))
-              console.log("Unpublish :", data)
+              // console.log("Unpublish :", data)
             }
           });
 
@@ -205,7 +205,7 @@ const TambahImagetron = ({ token }) => {
           .then((result) => {
             if (result.isConfirmed) {
               dispatch(newImagetron(data, token))
-              console.log("Publish :", data)
+              // console.log("Publish :", data)
             }
           });
       }

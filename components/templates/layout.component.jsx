@@ -69,10 +69,7 @@ const Layout = ({ children, title = "Dashboard" }) => {
       <HeaderMobile />
       <div className="d-flex flex-row flex-column-fluid page">
         <Sidebar session={session} />
-        <div
-          className="d-flex flex-column flex-row-fluid wrapper"
-          id="kt_wrapper"
-        >
+        <div className="d-flex flex-column flex-row-fluid wrapper" id="kt_wrapper">
           <Header />
           <ContentWrapper>
             <SubHeader />
