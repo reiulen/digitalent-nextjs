@@ -117,12 +117,6 @@
   background-color: #4299e1 !important;
 }
 
-/* 
-.btn-upload {
-  background-color: #04aa77 !important;
-  cursor: pointer;
-} */
-
 .status-peserta {
   margin-bottom: 27px !important;
 }
@@ -276,6 +270,11 @@
 
 .styling-upload input[type="file"]::-webkit-file-upload-button {
   visibility: hidden;
+  color: #fff;
+}
+
+.styling-upload input[type="file"]{
+  color: #ffffff;
 }
 
 .styling-upload input[type="file"]::before {
@@ -300,4 +299,22 @@
 
 .styling-upload input[type="file"]:active::before {
   background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
+}
+
+.provinsi-styling{
+  margin-right: 30px;
+}
+
+.styling-unduh span{
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  padding: 12px 32px 12px 56px;
+  font-size: 14px;
+  background-color: #4299E1  ;
+  border-radius: 30px;
+  color: #fff;
+  cursor: pointer;
+  outline: none;
+  white-space: nowrap;
 }

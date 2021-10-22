@@ -4,15 +4,16 @@ import Image from "next/image";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
+import axios from "axios";
 
-import { postTemplate } from '../../../../../redux/actions/site-management/settings/pelatihan.actions'
+import { postTemplate } from "../../../../../redux/actions/site-management/settings/pelatihan.actions";
 
 export default function Template(props) {
   const [status, setStatus] = useState("");
   const [subject, setSubject] = useState("");
   const [body, setBody] = useState("");
 
-  let dispatch = useDispatch()
+  let dispatch = useDispatch();
 
   const onChangeStatus = (e) => {
     setStatus(e.target.value);
@@ -22,11 +23,27 @@ export default function Template(props) {
     setSubject(e.target.value);
   };
 
-
   const handleSubmit = (e) => {
-    e.preventDefault()
-    dispatch(postTemplate(props.token, subject, body, status))
+    e.preventDefault();
+    dispatch(postTemplate(props.token, subject, body, status));
   };
+
+  useEffect(() => {
+    axios
+      .get(
+        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-trainings/list-template-email/tes substansi`,
+        {
+          headers: {
+            authorization: `Bearer ${props.token}`,
+          },
+        }
+      )
+      .then((items) => {
+        console.log(items.data.data.training_rules);
+        setSubject(items.data.data.training_rules.subject)
+        setBody(items.data.data.training_rules.body)
+      });
+  }, [props.token]);
 
   return (
     <div className="col-xl-8 styling-content-pelatihan">
@@ -37,10 +54,10 @@ export default function Template(props) {
         <div className="form-group">
           <label>Status</label>
           <select className="form-control" onChange={onChangeStatus}>
-            <option disabled selected>Pilih Status</option>
-            <option value="Menunggu">
-              Menunggu
+            <option disabled selected>
+              Pilih Status
             </option>
+            <option value="Menunggu">Menunggu</option>
             <option value="Tidak Lulus Administrasi">
               Tidak Lulus Administrasi
             </option>
@@ -63,20 +80,21 @@ export default function Template(props) {
             className="form-control"
             id="formGroupExampleInput"
             placeholder="Example input"
+            value={subject}
             onChange={onChangeSubject}
           />
         </div>
         <div className="form-group">
           <CKEditor
             editor={ClassicEditor}
-            data=""
+            data={body}
             onReady={(editor) => {
               // You can store the "editor" and use when it is needed.
               // console.log("Editor is ready to use!", editor);
             }}
             onChange={(event, editor) => {
               let data = editor.getData();
-              setBody(data)
+              setBody(data);
             }}
           />
         </div>

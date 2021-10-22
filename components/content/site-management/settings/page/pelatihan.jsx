@@ -17,12 +17,6 @@ import Ketentuan from "./ketentuan";
 import { loadDataPrompt } from "../../../../../redux/actions/site-management/settings/pelatihan.actions";
 
 export default function Pelatihan({ token }) {
-  const { allPrompt } = useSelector(
-    (state) => ({
-      allPrompt: state.allPrompt,
-    }),
-    shallowEqual
-  );
 
   let dispatch = useDispatch();
 
@@ -38,7 +32,7 @@ export default function Pelatihan({ token }) {
     isPromptEmail: "",
   };
 
-  const [{ page, isEmail, isStatus, notification, isPromptEmail }, setState] =
+  const [{ page }, setState] =
     useState(initialState);
 
   return (

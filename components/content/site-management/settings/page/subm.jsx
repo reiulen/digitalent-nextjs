@@ -1,28 +1,15 @@
 import React, { useState, useEffect } from "react";
-import Link from "next/link";
-import Image from "next/image";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import { useDispatch, useSelector, shallowEqual } from "react-redux";
+import { useDispatch } from "react-redux";
 import axios from "axios";
 
-import PageWrapper from "../../../../wrapper/page.wrapper";
-import Upload from "../../../../../public/assets/icon/sitemanagement/Upload.svg";
-import Unduh from "../../../../../public/assets/icon/sitemanagement/Unduh.svg";
-
-import { postViaFilter } from "../../../../../redux/actions/site-management/settings/pelatihan.actions";
+import {
+  postViaFilter,
+  postViaTemplate,
+} from "../../../../../redux/actions/site-management/settings/pelatihan.actions";
 
 export default function SUBM(props) {
-  const initialState = {
-    page: "Prompt",
-    isEmail: false,
-    isStatus: false,
-    notification: false,
-    isPromptEmail: "",
-  };
-
-  const [{ page, isEmail, isStatus, notification, isPromptEmail }, setState] =
-    useState(initialState);
 
   let dispatch = useDispatch();
 
@@ -44,55 +31,56 @@ export default function SUBM(props) {
     useState(0);
   const [emailSubject, setEmailSubject] = useState("");
   const [emailContent, setEmailContent] = useState("");
+  const [file, setFile] = useState("");
+  const [link, setLink] = useState("")
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const data = {
-      title,
-      year,
-      academy,
-      theme,
-      organizer,
-      training,
-      profileStatus,
-      selectionStatus,
-      participantSelectionStatusUpdate:
-        participantSelectionStatusUpdate ||
-        participantSelectionStatusUpdate === 1
-          ? "1"
-          : "0",
-      status: "1",
-      broadcastEmailSendNotification:
-        broadcastEmailSendNotification || broadcastEmailSendNotification === 1
-          ? "1"
-          : "0",
-      emailSubject,
-      emailContent,
-    };
+    if (via === "filter") {
+      dispatch(
+        postViaFilter(
+          props.token,
+          title,
+          year,
+          academy,
+          theme,
+          organizer,
+          training,
+          profileStatus,
+          selectionStatus,
+          participantSelectionStatusUpdate ||
+            participantSelectionStatusUpdate === 1
+            ? "1"
+            : "0",
+          status,
+          broadcastEmailSendNotification || broadcastEmailSendNotification === 1
+            ? "1"
+            : "0",
+          emailSubject,
+          emailContent,
+          `via ${via}`
+        )
+      );
+    } else {
+      dispatch(postViaTemplate(props.token, file, `via ${via}`));
+    }
+  };
 
-    const formData = new FormData();
-    formData.append("status_types", "via filter");
-    formData.append("training_rules", JSON.stringify(data));
-
-    try {
-      let { data } = await axios.post(
-        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-trainings/subm`,
-        formData,
+  useEffect(() => {
+    axios
+      .get(
+        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-trainings/download-template-subm`,
         {
           headers: {
             authorization: `Bearer ${props.token}`,
           },
         }
-      );
-      console.log("response sukses", data);
-    } catch (error) {
-      console.log("error", error.response);
-    }
-
-    // dispatch(postViaFilter(props.token, title, year, academy, theme, organizer, training, profileStatus, selectionStatus, participantSelectionStatusUpdate || participantSelectionStatusUpdate === 1 ? "1" : "0" , status, broadcastEmailSendNotification || broadcastEmailSendNotification === 1 ? "1" : "0" , emailSubject, emailContent, `via ${via}`))
-    // console.log(title, year, academy, theme, organizer, training, profileStatus, selectionStatus, participantSelectionStatusUpdate || participantSelectionStatusUpdate === 1 ? "1" : "0" , status, broadcastEmailSendNotification || broadcastEmailSendNotification === 1 ? "1" : "0" , emailSubject, emailContent);
-  };
+      )
+      .then((data) => {
+        setLink(data.data.data)
+      });
+  }, [props.token]);
 
   return (
     <div className="col-xl-8 styling-content-pelatihan">
@@ -147,16 +135,29 @@ export default function SUBM(props) {
           <div className="mt-4">
             <div className="row">
               <div className="col">
-                <div className="title-unduh">
+                <div className="title-unduh mb-5">
                   <h3 className="judul">Unduh Template Data Peserta</h3>
                 </div>
-                <div className="d-flex justify-content-start">
-                  <button className="btn btn-rounded-full text-white btn-unduh">
-                    <div className="mr-4">
-                      <Image src={Unduh} width={24} height={24} alt="Unduh" />
+                <div className="justify-content-start">
+                  <div className="mr-4 styling-unduh d-flex" onClick={e => {
+                    e.preventDefault()
+                    window.location = link
+                  }}>
+                    <div className="position-relative">
+                      <i
+                        className="fas fa-download"
+                        style={{
+                          position: "absolute",
+                          top: "50%",
+                          transform: "translateY(-50%)",
+                          left: "20px",
+                          color: "#fff",
+                          fontWeight: "bold",
+                        }}
+                      ></i>
+                      <span>Unduh</span>
                     </div>
-                    Unduh
-                  </button>
+                  </div>
                 </div>
               </div>
               <div className="col">
@@ -165,8 +166,25 @@ export default function SUBM(props) {
                 </div>
                 <div className="justify-content-start">
                   <div className="mr-4 styling-upload d-flex">
-                    <Image src={Upload} width={24} height={24} alt="Upload" />
-                    <input type="file" title=" " />
+                    <div className="position-relative">
+                      <i
+                        className="fas fa-upload"
+                        style={{
+                          position: "absolute",
+                          top: "50%",
+                          transform: "translateY(-50%)",
+                          left: "20px",
+                          color: "#fff",
+                          fontWeight: "bold",
+                        }}
+                      ></i>
+                      <input
+                        type="file"
+                        onChange={(e) => {
+                          setFile(e.target.files[0]);
+                        }}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -174,103 +192,6 @@ export default function SUBM(props) {
             <p className="border-bottom mt-4 pb-3">
               *Isi Template Data Peserta Dengan Nomor Registrasi
             </p>
-            <div className="update-status">
-              <h3 className="judul mb-4">Update Status Seleksi Peserta</h3>
-              <span className="d-flex switch switch-primary status-peserta">
-                <label>
-                  <input
-                    type="checkbox"
-                    name="select"
-                    id="email-check"
-                    onClick={() => {
-                      if (isStatus) {
-                        setState({ page, isEmail, isStatus: false });
-                      } else {
-                        setState({ page, isEmail, isStatus: true });
-                      }
-                    }}
-                  />
-                  <span></span>
-                </label>
-                <h3 className="mt-2 judul">
-                  {isStatus ? "Aktif" : "Tidak Aktif"}
-                </h3>
-              </span>
-            </div>
-            <div className="status-peserta">
-              <div className="form-group">
-                <h3 className="mb-4 judul">Status</h3>
-                <select className="form-control">
-                  <option value="Menunggu">Menunggu</option>
-                  <option value="Tidak Lulus Administrasi">
-                    Tidak Lulus Administrasi
-                  </option>
-                  <option value="Tidak Substansi">Tidak Substansi</option>
-                  <option value="Tidak Lulus Tes Substansi">
-                    Tidak Lulus Tes Substansi
-                  </option>
-                  <option value="Lulus Tes Substansi">
-                    Lulus Tes Substansi
-                  </option>
-                  <option value="Ditolak">Ditolak</option>
-                  <option value="Diterima">Diterima</option>
-                  <option value="Pelatihan">Pelatihan</option>
-                  <option value="Lulus Pelatihan">Lulus Pelatihan</option>
-                  <option value="Tidak Lulus Pelatihan">
-                    Tidak Lulus Pelatihan
-                  </option>
-                </select>
-              </div>
-            </div>
-            <div className="update-status">
-              <h3 className="mb-4 judul">
-                Broadcast Email & Send Notification
-              </h3>
-              <span className="d-flex switch switch-primary status-peserta">
-                <label>
-                  <input
-                    type="checkbox"
-                    name="select"
-                    id="email-check"
-                    onClick={() => {
-                      if (isEmail) {
-                        setState({ page, isEmail: false, isStatus });
-                      } else {
-                        setState({ page, isEmail: true, isStatus });
-                      }
-                    }}
-                  />
-                  <span></span>
-                </label>
-                <h3 className="mt-2 judul">
-                  {isEmail ? "Aktif" : "Tidak Aktif"}
-                </h3>
-              </span>
-            </div>
-            <div className="form-group">
-              <h3 className="judul">Subjek Email</h3>
-              <input
-                type="text"
-                name="subjekEmail"
-                className="form-control"
-                id="subjekEmail"
-                placeholder="Subjek Email"
-              />
-            </div>
-            <div className="form-group">
-              <h3 className="judul">Konten Email</h3>
-              <CKEditor
-                editor={ClassicEditor}
-                data=""
-                onReady={(editor) => {
-                  // You can store the "editor" and use when it is needed.
-                  console.log("Editor is ready to use!", editor);
-                }}
-                onChange={(event, editor) => {
-                  const data = editor.getData();
-                }}
-              />
-            </div>
           </div>
         )}
 
@@ -379,110 +300,6 @@ export default function SUBM(props) {
                 </select>
               </div>
             </div>
-            <div className="update-status mt-4">
-              <h3 className="judul mb-4">Update Status Seleksi Peserta</h3>
-              <span className="d-flex switch switch-primary status-peserta">
-                <label>
-                  <input
-                    type="checkbox"
-                    name="select"
-                    id="email-check"
-                    checked={participantSelectionStatusUpdate}
-                    onChange={(e) => {
-                      setParticipantSelectionStatusUpdate(e.target.checked);
-                    }}
-                  />
-                  <span></span>
-                </label>
-                <h3 className="mt-2 judul">
-                  {participantSelectionStatusUpdate ? "Aktif" : "Tidak Aktif"}
-                </h3>
-              </span>
-            </div>
-            <div className="status-peserta">
-              <div className="form-group">
-                <h3 className="mb-4 judul">Status</h3>
-                <select
-                  className="form-control"
-                  onChange={(e) => {
-                    setStatus(e.target.value);
-                  }}
-                >
-                  <option disabled selected>
-                    {" "}
-                    --------------- PILIH PELATIHAN ------------------
-                  </option>
-                  <option value="Menunggu">Menunggu</option>
-                  <option value="Tidak Lulus Administrasi">
-                    Tidak Lulus Administrasi
-                  </option>
-                  <option value="Tidak Substansi">Tidak Substansi</option>
-                  <option value="Tidak Lulus Tes Substansi">
-                    Tidak Lulus Tes Substansi
-                  </option>
-                  <option value="Lulus Tes Substansi">
-                    Lulus Tes Substansi
-                  </option>
-                  <option value="Ditolak">Ditolak</option>
-                  <option value="Diterima">Diterima</option>
-                  <option value="Pelatihan">Pelatihan</option>
-                  <option value="Lulus Pelatihan">Lulus Pelatihan</option>
-                  <option value="Tidak Lulus Pelatihan">
-                    Tidak Lulus Pelatihan
-                  </option>
-                </select>
-              </div>
-            </div>
-            <div className="update-status">
-              <h3 className="mb-4 judul">
-                Broadcast Email & Send Notification
-              </h3>
-              <span className="d-flex switch switch-primary status-peserta">
-                <label>
-                  <input
-                    type="checkbox"
-                    name="select"
-                    id="email-check"
-                    checked={broadcastEmailSendNotification}
-                    onChange={(e) => {
-                      setBroadcastEmailSendNotification(e.target.checked);
-                    }}
-                  />
-                  <span></span>
-                </label>
-                <h3 className="mt-2 judul">
-                  {broadcastEmailSendNotification ? "Aktif" : "Tidak Aktif"}
-                </h3>
-              </span>
-            </div>
-            <div className="form-group">
-              <h3 className="judul">Subjek Email</h3>
-              <input
-                type="text"
-                name="subjekEmail"
-                className="form-control"
-                id="subjekEmail"
-                placeholder="Subjek Email"
-                onChange={(e) => {
-                  setEmailSubject(e.target.value);
-                }}
-              />
-            </div>
-            <div className="form-group">
-              <h3 className="judul">Konten Email</h3>
-              <CKEditor
-                editor={ClassicEditor}
-                data=""
-                onReady={(editor) => {
-                  // You can store the "editor" and use when it is needed.
-                  console.log("Editor is ready to use!", editor);
-                }}
-                onChange={(event, editor) => {
-                  let data = editor.getData();
-                  setEmailContent(data);
-                }}
-              />
-            </div>
           </div>
         )}
 
@@ -491,7 +308,100 @@ export default function SUBM(props) {
             <h1>Via Template / Filter</h1>
           </div>
         )}
-
+        <div className="update-status mt-4">
+          <h3 className="judul mb-4">Update Status Seleksi Peserta</h3>
+          <span className="d-flex switch switch-primary status-peserta">
+            <label>
+              <input
+                type="checkbox"
+                name="select"
+                checked={participantSelectionStatusUpdate}
+                onChange={(e) => {
+                  setParticipantSelectionStatusUpdate(e.target.checked);
+                }}
+              />
+              <span></span>
+            </label>
+            <h3 className="mt-2 judul">
+              {participantSelectionStatusUpdate ? "Aktif" : "Tidak Aktif"}
+            </h3>
+          </span>
+        </div>
+        <div className="status-peserta">
+          <div className="form-group">
+            <h3 className="mb-4 judul">Status</h3>
+            <select
+              className="form-control"
+              onChange={(e) => {
+                setStatus(e.target.value);
+              }}
+            >
+              <option disabled selected>
+                {" "}
+                --------------- PILIH PELATIHAN ------------------
+              </option>
+              <option value="Menunggu">Menunggu</option>
+              <option value="Tidak Lulus Administrasi">
+                Tidak Lulus Administrasi
+              </option>
+              <option value="Tidak Substansi">Tidak Substansi</option>
+              <option value="Tidak Lulus Tes Substansi">
+                Tidak Lulus Tes Substansi
+              </option>
+              <option value="Lulus Tes Substansi">Lulus Tes Substansi</option>
+              <option value="Ditolak">Ditolak</option>
+              <option value="Diterima">Diterima</option>
+              <option value="Pelatihan">Pelatihan</option>
+              <option value="Lulus Pelatihan">Lulus Pelatihan</option>
+              <option value="Tidak Lulus Pelatihan">
+                Tidak Lulus Pelatihan
+              </option>
+            </select>
+          </div>
+        </div>
+        <div className="update-status">
+          <h3 className="mb-4 judul">Broadcast Email & Send Notification</h3>
+          <span className="d-flex switch switch-primary status-peserta">
+            <label>
+              <input
+                type="checkbox"
+                name="select"
+                checked={broadcastEmailSendNotification}
+                onChange={(e) => {
+                  setBroadcastEmailSendNotification(e.target.checked);
+                }}
+              />
+              <span></span>
+            </label>
+            <h3 className="mt-2 judul">
+              {broadcastEmailSendNotification ? "Aktif" : "Tidak Aktif"}
+            </h3>
+          </span>
+        </div>
+        <div className="form-group">
+          <h3 className="judul">Subjek Email</h3>
+          <input
+            type="text"
+            name="subjekEmail"
+            className="form-control"
+            id="subjekEmail"
+            placeholder="Subjek Email"
+            onChange={(e) => {
+              setEmailSubject(e.target.value);
+            }}
+          />
+        </div>
+        <div className="form-group">
+          <h3 className="judul">Konten Email</h3>
+          <CKEditor
+            editor={ClassicEditor}
+            data=""
+            onChange={(event, editor) => {
+              let data = editor.getData();
+              setEmailContent(data);
+            }}
+          />
+        </div>
         <div className="d-flex justify-content-end mb-4">
           <button type="reset" className="btn btn-reset">
             Reset

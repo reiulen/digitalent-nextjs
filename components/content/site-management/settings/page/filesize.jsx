@@ -29,7 +29,7 @@ export default function FileSize(props) {
   }, [props.token])
 
   return (
-    <div className="col styling-content-pelatihan">
+    <div className="col-xl-8 styling-content-pelatihan">
       <form onSubmit={handleSubmit}>
         <div className="notification-title">
           <h1>File Size</h1>

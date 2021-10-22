@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector, shallowEqual } from "react-redux";
+import { useDispatch } from "react-redux";
 import axios from 'axios'
 
-import {loadDataPrompt, putDataPrompt} from '../../../../../redux/actions/site-management/settings/pelatihan.actions'
+import { putDataPrompt} from '../../../../../redux/actions/site-management/settings/pelatihan.actions'
 
 export default function Prompt(props) {
 

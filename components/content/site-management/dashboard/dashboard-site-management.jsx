@@ -31,7 +31,7 @@ const DashboardSiteManagement = ({ token }) => {
 
   useEffect(() => {
     axios
-      .get(`${process.env.END_POINT_API_SITE_MANAGEMENT}/api/dashboard/card`, {
+      .get(`${process.env.END_POINT_API_SITE_MANAGEMENT}api/dashboard/card`, {
         headers: {
           authorization: `Bearer ${token}`,
         },
@@ -73,7 +73,7 @@ const DashboardSiteManagement = ({ token }) => {
       </tr>
     );
   });
-  
+
   return (
     <>
       <PageWrapper>
@@ -134,11 +134,12 @@ const DashboardSiteManagement = ({ token }) => {
                 </p>
               </div>
             </div>
-            <div className="col-lg-3 mt-2">
+            <div className="col-lg-3 mt-2 hover-subm">
               <CardDashboardSiteManagement
                 background="bg-white"
                 icon="/assets/icon/Account.svg"
-                color="text-Black"
+                hover="/assets/icon/HoverSUBM.svg"
+                color="text-black"
                 title="SUBM"
                 link="/site-management/setting/pelatihan"
               ></CardDashboardSiteManagement>
@@ -146,10 +147,11 @@ const DashboardSiteManagement = ({ token }) => {
             <div className="col-lg-3 mt-2">
               <CardDashboardSiteManagement
                 background="bg-white"
+                hover="/assets/icon/HoverSUBM.svg"
                 icon="/assets/icon/Map.svg"
-                color="text-Black"
+                color="text-black"
                 title="Zonasi"
-                link="/site-management/dashboard"
+                link="/site-management/master-data/master-zonasi"
               ></CardDashboardSiteManagement>
             </div>
           </div>
@@ -160,50 +162,149 @@ const DashboardSiteManagement = ({ token }) => {
               <div className="content-data bg-white">
                 <table className="table table-borderless rounded mx-4">
                   <tr>
-                    <th> </th>
                     <th>
                       <div className="data-peserta">Data Peserta</div>
                       <div className="berdasarkan">Berdasarkan Daerah</div>
                     </th>
                     <th>
-                      <div className="kota pt-3">
-                        <a href="#">Kota / Kabupaten</a>
+                      <div
+                        className={
+                          type === "city"
+                            ? "btn btn-primary text-white type-styling"
+                            : "text-gray pt-3"
+                        }
+                      >
+                        <a
+                          href="#"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setType("city");
+                            setPageZonasi(1);
+                          }}
+                        >
+                          Kota / Kabupaten
+                        </a>
                       </div>
                     </th>
                     <th>
-                      <a href="#" className="btn btn-primary text-white">
-                        Kota / Kabupaten
-                      </a>
+                      <div
+                        className={
+                          type === "province"
+                            ? "btn btn-primary text-white type-styling"
+                            : "text-gray pt-3 provinsi-styling"
+                        }
+                      >
+                        <a
+                          href="#"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setType("province");
+                            setPageZonasi(1);
+                          }}
+                        >
+                          Provinsi
+                        </a>
+                      </div>
                     </th>
                   </tr>
 
                   <tr>
-                    <td className="text-center">
-                      <span className="nomor">1</span>
+                    <td className="data-daerah py-4">
+                      <span className="nomor mr-4">1</span>
+                      {capitalize("DKI JAKARTA")}
                     </td>
-                    <td className="data-daerah py-4">DKI Jakarta</td>
-                    <td className="total-peserta">12.000 Peserta</td>
+                    <td className="total-peserta">
+                      {formatNumber(12)} Peserta
+                    </td>
                   </tr>
                   <tr>
-                    <td className="text-center">
-                      <span className="nomor">1</span>
+                    <td className="data-daerah py-4">
+                      <span className="nomor mr-4">1</span>
+                      {capitalize("DKI JAKARTA")}
                     </td>
-                    <td className="data-daerah">DKI Jakarta</td>
-                    <td className="total-peserta">12.000 Peserta</td>
+                    <td className="total-peserta">
+                      {formatNumber(12)} Peserta
+                    </td>
                   </tr>
+                  <tr>
+                    <td className="data-daerah py-4">
+                      <span className="nomor mr-4">1</span>
+                      {capitalize("DKI JAKARTA")}
+                    </td>
+                    <td className="total-peserta">
+                      {formatNumber(12)} Peserta
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="data-daerah py-4">
+                      <span className="nomor mr-4">1</span>
+                      {capitalize("DKI JAKARTA")}
+                    </td>
+                    <td className="total-peserta">
+                      {formatNumber(12)} Peserta
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="data-daerah py-4">
+                      <span className="nomor mr-4">1</span>
+                      {capitalize("DKI JAKARTA")}
+                    </td>
+                    <td className="total-peserta">
+                      {formatNumber(12)} Peserta
+                    </td>
+                  </tr>
+
                 </table>
                 <div className="d-flex mx-6">
-                  <p className="pt-6">Total: 120.000 Zonasi</p>
+                  <p className="pt-6">
+                    Total: {allDataZonasi[0].totalZonasi} Zonasi
+                  </p>
                   <div className="ml-auto mx-10 my-4">
-                    <button className="btn btn-primary mx-4">&lt;</button>
-                    <button className="btn btn-primary">&gt;</button>
+                    <button
+                      className={
+                        pageZonasi === 1
+                          ? "btn btn-primary mx-4 disabled"
+                          : "btn btn-primary mx-4"
+                      }
+                      onClick={(e) => {
+                        e.preventDefault();
+                        if (pageZonasi === 1) {
+                          setPageZonasi(pageZonasi);
+                        } else {
+                          setPageZonasi(pageZonasi - 1);
+                        }
+                      }}
+                    >
+                      &lt;
+                    </button>
+                    <button
+                      type="button"
+                      className={
+                        pageZonasi >= Math.ceil(allDataZonasi[0].totalPage / 5)
+                          ? "btn btn-primary disabled"
+                          : "btn btn-primary"
+                      }
+                      onClick={(e) => {
+                        e.preventDefault();
+                        if (
+                          pageZonasi >=
+                          Math.ceil(allDataZonasi[0].totalPage / 5)
+                        ) {
+                          setPageZonasi(pageZonasi);
+                        } else {
+                          setPageZonasi(pageZonasi + 1);
+                        }
+                      }}
+                    >
+                      &gt;
+                    </button>
                   </div>
                 </div>
               </div>
             </div>
             <div className="col-lg-6 mt-2">
               <div className="content-data bg-white">
-                <table className="table table-borderless rounded mx-4">
+                <table className="table table-borderless rounded">
                   <tr>
                     <th>
                       <div className="data-peserta">Data Zonasi</div>
@@ -234,14 +335,14 @@ const DashboardSiteManagement = ({ token }) => {
                         className={
                           type === "province"
                             ? "btn btn-primary text-white type-styling"
-                            : "text-gray pt-3"
+                            : "text-gray pt-3 provinsi-styling"
                         }
                       >
                         <a
                           href="#"
                           onClick={(e) => {
                             e.preventDefault();
-                            setType("province");120.000
+                            setType("province");
                             setPageZonasi(1);
                           }}
                         >
@@ -254,7 +355,9 @@ const DashboardSiteManagement = ({ token }) => {
                   {tableZonasi}
                 </table>
                 <div className="d-flex mx-6">
-                  <p className="pt-6">Total: {allDataZonasi[0].totalZonasi} Zonasi</p>
+                  <p className="pt-6">
+                    Total: {allDataZonasi[0].totalZonasi} Zonasi
+                  </p>
                   <div className="ml-auto mx-10 my-4">
                     <button
                       className={
@@ -264,12 +367,11 @@ const DashboardSiteManagement = ({ token }) => {
                       }
                       onClick={(e) => {
                         e.preventDefault();
-                        if(pageZonasi === 1){
+                        if (pageZonasi === 1) {
                           setPageZonasi(pageZonasi);
-                        }else{
+                        } else {
                           setPageZonasi(pageZonasi - 1);
                         }
-                        
                       }}
                     >
                       &lt;
@@ -283,9 +385,12 @@ const DashboardSiteManagement = ({ token }) => {
                       }
                       onClick={(e) => {
                         e.preventDefault();
-                        if(pageZonasi >= Math.ceil(allDataZonasi[0].totalPage / 5)){
+                        if (
+                          pageZonasi >=
+                          Math.ceil(allDataZonasi[0].totalPage / 5)
+                        ) {
                           setPageZonasi(pageZonasi);
-                        }else{
+                        } else {
                           setPageZonasi(pageZonasi + 1);
                         }
                       }}

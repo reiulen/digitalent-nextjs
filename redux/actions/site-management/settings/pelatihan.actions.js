@@ -130,7 +130,23 @@ export const postKetentuan = (
   };
 };
 
-export const postViaFilter = (token, title, year, academy, theme, organizer, training, profileStatus, selectionStatus, participantSelectionStatusUpdate, status ,broadcastEmailSendNotification, emailSubject, emailContent, via) => {
+export const postViaFilter = (
+  token,
+  title,
+  year,
+  academy,
+  theme,
+  organizer,
+  training,
+  profileStatus,
+  selectionStatus,
+  participantSelectionStatusUpdate,
+  status,
+  broadcastEmailSendNotification,
+  emailSubject,
+  emailContent,
+  via
+) => {
   let data = {
     title,
     year,
@@ -147,51 +163,97 @@ export const postViaFilter = (token, title, year, academy, theme, organizer, tra
     emailContent,
   };
 
-  let subm = new FormData()
-  subm.append("status_types", via)
-  subm.append("training_rules", JSON.stringify(data))
+  let subm = new FormData();
+  subm.append("status_types", via);
+  subm.append("training_rules", JSON.stringify(data));
 
   return (dispatch) => {
     axios
       .post(
         `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-trainings/subm`,
-        subm, 
+        subm,
         {
-          headers: {  
-            authorization: `Bearer ${token}`
+          headers: {
+            authorization: `Bearer ${token}`,
           },
         }
       )
       .then((response) => {
-        console.log(response)
-        console.log("BEHASIL")
+        Swal.fire("Berhasil", "Data berhasil tersimpan", "success").then(() => {
+          router.push("/partnership/user/auth/login");
+        });
       })
       .catch((error) => {
-      console.log("GAGAL")
+        Swal.fire("Gagal", "Gagal tidak berhasil tersimpan", "error");
       });
   };
 };
 
-export const postFileSize = (
-  token,
-  image, document
-) => {
+export const postViaTemplate = (token, file, via) => {
+  const data = {
+    title: "jobs",
+    year: "2021",
+    academy: "01",
+    theme: "02",
+    organizer: "03",
+    training: "04",
+    profileStatus: "05",
+    selectionStatus: "06",
+    participantSelectionStatusUpdate: "1",
+    status: "lulus",
+    broadcastEmailSendNotification: "0",
+    emailSubject: "DTS",
+    emailContent: "Sebuah lembaga amal jariyah",
+  };
+
+  console.log(file)
+
+  let subm = new FormData();
+
+  subm.append("status_types", via);
+  subm.append("participant", file);
+  subm.append("training_rules", JSON.stringify(data));
+
+  return (dispatch) => {
+    axios
+      .post(
+        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-trainings/subm`,
+        subm,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+            "content-type": "multipart/form-data",
+          },
+        }
+      )
+      .then((response) => {
+        Swal.fire("Berhasil", "Data berhasil tersimpan", "success").then(() => {
+          router.push("/partnership/user/auth/login");
+        });
+      })
+      .catch((error) => {
+        Swal.fire("Gagal", "Gagal tidak berhasil tersimpan", "error");
+      });
+  };
+};
+
+export const postFileSize = (token, image, document) => {
   return (dispatch) => {
     axios
       .post(
         `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-trainings/update-file-size`,
         {
-          "image": [
-              {
-                  "size": image
-              }
+          image: [
+            {
+              size: image,
+            },
           ],
-          "document" : [
-              {
-                  "size": document
-              }
-          ]
-      },
+          document: [
+            {
+              size: document,
+            },
+          ],
+        },
         {
           headers: {
             authorization: `Bearer ${token}`,

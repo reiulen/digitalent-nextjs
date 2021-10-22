@@ -22,7 +22,6 @@ export default function Ketentuan(props) {
         },
       }
     ).then(items => {
-      console.log(items.data.data.training_rules)
       setStatusLulus(parseInt(items.data.data.training_rules.trainingPassStatus))
       setStatusAdmin(parseInt(items.data.data.training_rules.completeFinalAdministrativeStatus))
       setStatusTidakLulus(parseInt(items.data.data.training_rules.statusNotPassedTraining))
@@ -33,12 +32,11 @@ export default function Ketentuan(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(totalPelatihan)
     dispatch(postKetentuan(props.token, totalPelatihan,statusLulus || statusLulus === 1 ? "1" : "0", statusAdmin || statusAdmin === 1 ? "1" : "0", statusTidakLulus || statusTidakLulus === 1 ? "1" : "0", statusPelatihan || statusPelatihan === 1 ? "1" : "0" ))
   };
 
   return (
-    <div className="col styling-content-pelatihan">
+    <div className="col-xl-8 styling-content-pelatihan">
       <form onSubmit={handleSubmit}>
         <div className="notification-title">
           <h1>Ketentuan Pelatihan</h1>
