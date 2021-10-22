@@ -121,12 +121,6 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
   const [tuna_daksa, setTunaDaksa] = useState(trainingData.tuna_daksa);
   // const [disabilitas, setDisabilitas] = useState(trainingData.disabilitas);
 
-  const options = [
-    { value: "1", label: "Chocolate" },
-    { value: "2", label: "Strawberry" },
-    { value: "3", label: "Vanilla" },
-  ];
-
   const optionsAkademi = dataAkademi.data;
   const optionsTema = dataTema.data;
 
