@@ -18,10 +18,8 @@ const Tambah = ({ token }) => {
   let selectRefKabupaten = null;
 
   const detailZonasi = useSelector((state) => state.detailZonasi);
-  console.log("detailZonasi", detailZonasi);
 
   const drowpdownProvinsi = useSelector((state) => state.allProvincesSite);
-  console.log("drowpdownProvinsi", drowpdownProvinsi);
   let tempOptionsProvinsi = drowpdownProvinsi?.data;
 
   const [nameZonation, setNameZonation] = useState(detailZonasi.data.data.name);
@@ -105,7 +103,7 @@ const Tambah = ({ token }) => {
       setFormInput(_temp);
       setValueSend(_tempValue);
     } catch (error) {
-      console.log(error);
+      notify(error.response.data.message);
     }
   };
 

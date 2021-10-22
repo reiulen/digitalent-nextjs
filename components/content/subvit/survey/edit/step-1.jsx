@@ -92,10 +92,7 @@ const StepOne = ({ token }) => {
       training_id,
       _method: "put",
     };
-
     dispatch(updateSurveyQuestionBanks(id, data, token));
-
-    console.log(data);
   };
 
   const handleResetError = () => {

@@ -33,10 +33,7 @@ const Tambah = ({ token }) => {
     },
   ]);
 
-  // console.log("formReferenceAndText", formReferenceAndText);
   const [nameListFromReference, setNameListFromReference] = useState("");
-  // console.log("nameListFromReference", nameListFromReference);
-
   const submit = async (e) => {
     e.preventDefault();
     if (nameReference === "") {
@@ -86,7 +83,7 @@ const Tambah = ({ token }) => {
   };
 
   const handleAddInput = (idx, index) => {
-    console.log("index", index);
+ 
     let _temp = [...formReferenceAndText];
     _temp.map((items, ids) => {
       if (ids === idx) {
@@ -100,7 +97,6 @@ const Tambah = ({ token }) => {
   };
 
   const handleDelete = (parent, child) => {
-    console.log("child", child);
     let _temp = [...formReferenceAndText];
     console.log("_temp", _temp);
 
@@ -161,10 +157,7 @@ const Tambah = ({ token }) => {
         console.log("resultOptionReference", resultOptionReference);
         setOptionReference(resultOptionReference);
       } catch (error) {
-        console.log(
-          "error get all data reference",
-          error.response.data.message
-        );
+        notify(error.response.data.message);
       }
     }
 
@@ -187,10 +180,7 @@ const Tambah = ({ token }) => {
           console.log("data sub", data);
           setOptionFromReference(resultOptionReferenceChooce);
         } catch (error) {
-          console.log(
-            "error get all data reference",
-            error.response.data.message
-          );
+          notify(error.response.data.message);
         }
       }
 

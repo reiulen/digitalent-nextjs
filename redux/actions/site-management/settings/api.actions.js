@@ -196,7 +196,6 @@ export const getListField = (id, token) => async (dispatch) => {
       sortirData: dataSortir,
     });
   } catch (error) {
-    console.log("error", error);
     dispatch({
       type: GET_LIST_FIELD_FAIL,
       payload: error.response.data.message,
@@ -227,7 +226,6 @@ export const getDetailApi = (id, token) => async (dispatch) => {
       payload: data,
     });
   } catch (error) {
-    console.log("error", error.response.data.message);
     dispatch({
       type: DETAIL_API_FAIL,
     });

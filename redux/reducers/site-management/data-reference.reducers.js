@@ -185,7 +185,7 @@ export const detailDataReferenceReducer = (
     case DETAIL_DATA_REFERENCE_FAIL:
       return {
         loading: false,
-        error: action.payload,
+        error: null,
       };
 
     case DETAIL_DATA_REFERENCE_RESET:

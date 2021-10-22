@@ -22,9 +22,7 @@ import {
 const Table = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
-
   const allDataReference = useSelector((state) => state.allDataReference);
-console.log("allDataReference",allDataReference)
   const [valueSearch, setValueSearch] = useState("");
   const handleChangeValueSearch = (value) => {
     setValueSearch(value);
@@ -207,8 +205,22 @@ console.log("allDataReference",allDataReference)
                                   </Link>
                                   }
 
+                                  
+
+                                  <Link
+                                    href={`/site-management/reference/detail-reference/${items.id}`}
+                                  >
+                                    <a className="btn btn-link-action bg-blue-secondary ml-3 position-relative btn-delete">
+                                      <IconEye width="16" height="16" />
+                                    <div className="text-hover-show-hapus">
+                                      Detail
+                                    </div>
+                                    </a>
+                                  </Link>
 
 
+
+{/* 
                                   <button
                                     className="btn btn-link-action bg-blue-secondary ml-3 position-relative btn-delete"
                                     onClick={() =>
@@ -221,7 +233,12 @@ console.log("allDataReference",allDataReference)
                                     <div className="text-hover-show-hapus">
                                       Detail
                                     </div>
-                                  </button>
+                                  </button> */}
+
+
+
+
+
                                 </div>
                               </td>
                             </tr>

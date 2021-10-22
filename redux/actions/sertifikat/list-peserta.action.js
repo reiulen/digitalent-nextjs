@@ -32,7 +32,6 @@ export const getAllParticipant =
       };
 
       const { data } = await axios.get(link, config);
-      // console.log(data);
       if (data) {
         dispatch({ type: LIST_PESERTA_SUCCESS, payload: data });
       }

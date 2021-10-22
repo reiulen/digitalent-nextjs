@@ -26,7 +26,6 @@ export async function fetchSignatureApi(params, token) {
 }
 
 export const fetchSignature = (token) => async (dispatch, getState) => {
-  console.log("object msansman");
   dispatch({ type: TANDA_TANGAN_REQUEST });
   let keywordState = getState().allTandaTangan.keyword || "";
   let limitState = getState().allTandaTangan.limit || "";
@@ -41,7 +40,7 @@ export const fetchSignature = (token) => async (dispatch, getState) => {
     let { data } = await fetchSignatureApi(params, token);
     dispatch(successFetchSignature(data));
   } catch (error) {
-    console.log("error data signature action", error);
+    notify(error.response.data.message);
   }
 };
 
@@ -87,7 +86,7 @@ export const deleteTandaTangan = (id, token) => {
       );
       dispatch({ type: SUCESS_DELETE_TD });
     } catch (error) {
-      console.log("gagal delete ttd", error);
+      notify(error.response.data.message);
     }
   };
 };
@@ -113,7 +112,7 @@ export const changeStatusList = (formData, id, token) => {
       );
       dispatch(successChangeStatusList());
     } catch (error) {
-      console.log("error change status list,", error.response.data.message);
+      notify(error.response.data.message);
     }
   };
 };

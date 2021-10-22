@@ -100,8 +100,6 @@ const StepTwo = ({ token }) => {
         status: status,
         questions_to_share: jumlah_soal,
       };
-      console.log(data);
-
       dispatch(updateTriviaQuestionBanksPublish(data, id, token));
     } else {
       simpleValidator.current.showMessages();
@@ -121,7 +119,6 @@ const StepTwo = ({ token }) => {
   };
 
   const handleChange = (e) => {
-    console.log(e.target.value);
     setStatus(e.target.value);
   };
 

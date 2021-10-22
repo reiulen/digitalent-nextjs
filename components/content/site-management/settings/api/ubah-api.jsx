@@ -19,15 +19,13 @@ const UbahApi = ({ token }) => {
   const router = useRouter();
 
   const detailApi = useSelector((state) => state.detailApi);
-  console.log("detailApi", detailApi);
+ 
   const listApi = useSelector(state => state.listApi)
-  console.log("listApiReducer",listApi)
+ 
 
   const [optionListApi, setOptionListApi] = useState(listApi.listApi.map((items)=>{
     return {label:items.api_url,value:items.api_url,id:items.id}
   }))
-  console.log("optionListApi",optionListApi)
-
   const [nameApi, setNameApi] = useState(detailApi.apies.api_name);
   const [nameUser, setNameUser] = useState(detailApi.apies.username);
   const [status, setStatus] = useState(detailApi.apies.status);

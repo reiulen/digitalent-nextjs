@@ -21,12 +21,11 @@ const TambahApi = ({ token }) => {
  
 
   const detailUnitWork = useSelector((state) => state.detailUnitWork);
-  console.log("detailUnitWork", detailUnitWork);
+ 
   let sortirOptionTempProv = detailUnitWork?.unitWork?.provinsi
   let optionTempProv = sortirOptionTempProv.map((items)=>{
     return {...items,label:items.provinsi}
   })
-  console.log("optionTempProv",optionTempProv)
 
   
 
@@ -34,14 +33,11 @@ const TambahApi = ({ token }) => {
 
 const allProvincesSite = useSelector((state) => state.
 allProvincesSite);
-console.log("allProvincesSite", allProvincesSite);
 let sortirOptionTempProvList = allProvincesSite?.data
   let optionTempProvList = sortirOptionTempProvList.map((items)=>{
     return {...items,value:items.label}
   })
-  console.log("optionTempProvList",optionTempProvList)
  const [valueProvinsi, setValueProvinsi] = useState([]);
-  console.log("valueProvinsi",valueProvinsi)
   const [nameUnitWork, setNameUnitWork] = useState(detailUnitWork.unitWork.name);
   const [status, setStatus] = useState(detailUnitWork.unitWork.status);
 
@@ -67,10 +63,7 @@ let sortirOptionTempProvList = allProvincesSite?.data
         region: items.region,
       };
     });
-
     setValueProvinsi(datas);
-
-    console.log("change provinsi value", datas);
   };
 
   const submit = (e) => {
@@ -123,7 +116,6 @@ let sortirOptionTempProvList = allProvincesSite?.data
               );
             });
           } catch (error) {
-            console.log(error);
             Swal.fire("Gagal ubah", `${error.response.data.message}`, "error");
           }
         }

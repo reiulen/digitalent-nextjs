@@ -458,7 +458,7 @@ export default function EditSertifikat({ token }) {
         Swal.fire("Oops !", "Isi data dengan benar.", "error");
       }
     } catch (e) {
-      console.log(e, "Masuk sini errornya catch");
+      notify(error.response.data.message);
     }
   };
 

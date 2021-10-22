@@ -75,10 +75,8 @@ export default function SUBM(props) {
           },
         }
       )
-      console.log("response sukses",data)
     } catch (error) {
-      console.log("error",error.response)
-      
+      notify(error.response.data.message);
     }
 
 

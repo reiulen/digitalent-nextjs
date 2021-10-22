@@ -1,19 +1,17 @@
 import dynamic from "next/dynamic";
-
-// import Layout from "../../../components/templates/layout.component";
-// import Tambah from "../../../components/content/publikasi/imagetron/tambah";
-
-import LoadingPage from "../../../components/LoadingPage";
 import { getSession } from "next-auth/client";
-import { getAllKategori } from "../../../redux/actions/publikasi/kategori.actions";
-import { wrapper } from "../../../redux/store";
-import { getSettingPublikasi } from "../../../redux/actions/publikasi/setting.actions";
+
+import { getAllKategori } from "/redux/actions/publikasi/kategori.actions";
+import { wrapper } from "/redux/store";
+
+import LoadingPage from "/components/LoadingPage";
 
 const Tambah = dynamic(
-  () => import("../../../components/content/publikasi/imagetron/tambah"),
+  () =>
+    import(
+      "/components/content/site-management/master-data/master-satuan-kerja-penyelenggara/tambah"
+    ),
   {
-    // suspense: true,
-    // loading: () => <LoadingSkeleton />,
     loading: function loadingNow() {
       return <LoadingPage />;
     },
@@ -26,9 +24,10 @@ export default function TambahPage(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        {/* <Layout title='Tambah Imagetron - Publikasi'> */}
+        {/* <Layout title='Tambah Artikel - Publikasi'>
+                    <Tambah />
+                </Layout> */}
         <Tambah token={session.token} />
-        {/* </Layout> */}
       </div>
     </>
   );
@@ -48,10 +47,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       await store.dispatch(getAllKategori(session.user.user.data.token));
-      await store.dispatch(getSettingPublikasi(session.user.user.data.token));
 
       return {
-        props: { session, title: "Tambah Imagetron - Publikasi" },
+        props: { session, title: "Tambah Artikel - Publikasi" },
       };
     }
 );

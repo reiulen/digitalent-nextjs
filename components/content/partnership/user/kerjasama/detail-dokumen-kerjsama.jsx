@@ -35,7 +35,7 @@ const DetailDokumenKerjasama = ({ token }) => {
         );
         setPdfFIle(data.data.document_file);
       } catch (error) {
-        console.log("action getSingleValue gagal", error);
+        notify(error.response.data.message);
       }
     }
 

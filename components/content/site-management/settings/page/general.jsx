@@ -19,7 +19,6 @@ import "react-toastify/dist/ReactToastify.css";
 const GeneralPage = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
-
   const [imageLogo, setImageLogo] = useState("");
   const [description, setDescription] = useState("");
   const [address, setAddress] = useState("");
@@ -27,7 +26,6 @@ const GeneralPage = ({ token }) => {
   const [imageLogoApiFooter, setImageLogoApiFooter] = useState("");
   const [imageLogoApiOld, setImageLogoApiOld] = useState("");
   const [isUpdate, setIsUpdate] = useState(false);
-
   const [color, setColor] = useState([
     {
       name: "Primary",
@@ -61,10 +59,6 @@ const GeneralPage = ({ token }) => {
       link_social_media: "",
     },
   ]);
-
-
-  console.log("formSocialMedia",formSocialMedia)
-
   const [formExternalLink, setFormExternalLink] = useState([
     {
       nama: "",
@@ -115,30 +109,8 @@ const GeneralPage = ({ token }) => {
             color: color,
           };
 
-          console.log("sendData",sendData)
 
-          // try {
-          //   let { data } = await axios.post(
-          //     `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting/general/store`,
-          //     sendData,
-          //     {
-          //       headers: {
-          //         authorization: `Bearer ${token}`,
-          //       },
-          //     }
-          //   );
-
-          //   console.log("data berhasil", data);
-
-          //   Swal.fire("Berhasil", "Data berhasil disimpan", "succes");
-          // } catch (error) {
-          //   console.log(error);
-          //   Swal.fire(
-          //     "Gagal simpan",
-          //     `${error.response.data.message}`,
-          //     "error"
-          //   );
-          // }
+         
         }
       });
     }
@@ -320,25 +292,10 @@ const GeneralPage = ({ token }) => {
             },
           }
         );
-        console.log("data geeneral", data);
-        if (data) {
-          // setIsUpdate(true);
-          // setAddress(data.data.alamat);
 
-
-          
-          // setFormSocialMedia(data.data.social_media);
-
-          // setFormExternalLink(data.data.external_link)
-          // setColor(data.data.color)
-          // setImageLogoApi(data.data.logo);
-          // setImageLogoApiOld(data.data.logo);
-        }
+        if (data) {  }
       } catch (error) {
-        console.log(
-          "gagal mendapatkan data general",
-          error.response.data.message
-        );
+        notify(error.response.data.message);
       }
     }
 

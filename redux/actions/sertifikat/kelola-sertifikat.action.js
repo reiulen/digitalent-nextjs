@@ -39,7 +39,6 @@ export const getAllSertifikat = (token) => async (dispatch, getState) => {
   try {
     dispatch({ type: SERTIFIKAT_REQUEST });
     let link = process.env.END_POINT_API_SERTIFIKAT + `api/manage_certificates`;
-    // console.log(getState().allCertificate);
     let pageState = getState().allCertificates.page || 1;
     let limitState = getState().allCertificates.limit || 5;
     let themeState = getState().allCertificates.theme || "";
@@ -211,9 +210,6 @@ export const getPublishedSertifikat = (id, token) => async (dispatch) => {
 export const updateSertifikat = (id, formData, token) => async (dispatch) => {
   try {
     dispatch({ type: UPDATE_SERTIFIKAT_REQUEST });
-    // for (var pair of formData.entries()) {
-    //   console.log(pair[0] + ", " + pair[1]);
-    // }
 
     let link =
       process.env.END_POINT_API_SERTIFIKAT +

@@ -38,8 +38,6 @@ const TambahApi = ({ token }) => {
     });
 
     setValueProvinsi(datas);
-
-    console.log("change provinsi value", datas);
   };
 
   const submit = (e) => {

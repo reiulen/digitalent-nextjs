@@ -6,7 +6,7 @@ import style from "../style.module.css";
 import { useRouter } from "next/router";
 
 export default function SeleksiAdministrasi() {
-  // console.log(props, "ini props");
+  
   const router = useRouter();
   return (
     <div>

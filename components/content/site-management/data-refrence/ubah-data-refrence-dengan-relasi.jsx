@@ -17,7 +17,7 @@ const Tambah = ({ token }) => {
   let selectRefDataFromReference = null;
 
   const detailDataReference = useSelector((state) => state.detailDataReference);
-  console.log("detailDataReference",detailDataReference)
+  console.log("detailDataReference", detailDataReference);
   const allOptionReferenceSite = useSelector(
     (state) => state.allOptionReferenceSite
   );
@@ -36,38 +36,54 @@ const Tambah = ({ token }) => {
   );
   // state provinsi for set in option provinsi
   const [referenceOption, setReferenceOption] = useState([]);
-  const [idReference, setIdReference] = useState(detailDataReference.dataReference.data_references_relasi_id);
+  const [idReference, setIdReference] = useState(
+    detailDataReference.dataReference.data_references_relasi_id
+  );
   const [nameListFromReference, setNameListFromReference] = useState("");
   const [optionFromReference, setOptionFromReference] = useState([]);
   const changeListDataReference = (e) => {
-    console.log("data reference parents",e.key)
+    console.log("data reference parents", e.key);
     setIdReference(e.key);
     setNameListFromReference(e.value);
   };
-
 
   const manipulate1 = detailDataReference.dataReference.valueReference.map(
     (items) => {
       return { ...items, value: { label: items.value, value: items.value } };
     }
   );
-  console.log("manipulate1",manipulate1)
-  const transformed = manipulate1.map(({ data_references_id,relasi,value,relasi_id, }) => ({ value: relasi,data_references_relasi_id:data_references_id,relasi_id:relasi_id,label:value,}));
-  console.log("transformed",transformed)
-  
-  
+  console.log("manipulate1", manipulate1);
+  const transformed = manipulate1.map(
+    ({ data_references_id, relasi, value, relasi_id, id }) => ({
+      value: relasi,
+      data_references_relasi_id: data_references_id,
+      relasi_id: id,
+      label: value,
+    })
+  );
+  console.log("transformed", transformed);
 
-  const [formReferenceAndText, setFormReferenceAndText] = useState(transformed.map((items)=>{
-    return {...items,value:items.value.map((itemx)=>{
-      return {...itemx,label:itemx.value,label_old:itemx.value}
-    })}
-  }));
-  console.log("formReferenceAndText",formReferenceAndText)
-  const [formReferenceAndTextValue, setFormReferenceAndTextValue] = useState(transformed.map((items)=>{
-    return {...items,value:items.value.map((itemx)=>{
-      return {...itemx,label:itemx.value,label_old:itemx.value}
-    })}
-  }));
+  const [formReferenceAndText, setFormReferenceAndText] = useState(
+    transformed.map((items) => {
+      return {
+        ...items,
+        value: items.value.map((itemx) => {
+          return { ...itemx, label: itemx.value, label_old: itemx.value };
+        }),
+      };
+    })
+  );
+  console.log("formReferenceAndText", formReferenceAndText);
+  const [formReferenceAndTextValue, setFormReferenceAndTextValue] = useState(
+    transformed.map((items) => {
+      return {
+        ...items,
+        value: items.value.map((itemx) => {
+          return { ...itemx, label: itemx.value, label_old: itemx.value };
+        }),
+      };
+    })
+  );
 
   const handleAddFormReferenceText = () => {
     let _temp = [...formReferenceAndText];
@@ -77,8 +93,8 @@ const Tambah = ({ token }) => {
       value: [
         {
           label_old: "",
-          label:"",
-          value:""
+          label: "",
+          value: "",
         },
       ],
     });
@@ -87,8 +103,8 @@ const Tambah = ({ token }) => {
       value: [
         {
           label_old: "",
-          label:"",
-          value:""
+          label: "",
+          value: "",
         },
       ],
     });
@@ -120,9 +136,8 @@ const Tambah = ({ token }) => {
     setFormReferenceAndTextValue(_tempValue);
   };
 
-   const handleCHangeNameReference = (e, index) => {
-    console.log("ketika pilih data reference sub",e.key)
-
+  const handleCHangeNameReference = (e, index) => {
+    console.log("ketika pilih data reference sub", e.key);
 
     let _temp = [...formReferenceAndText];
     let _tempValue = [...formReferenceAndTextValue];
@@ -136,13 +151,11 @@ const Tambah = ({ token }) => {
     let _temp = [...formReferenceAndText];
     let _tempValue = [...formReferenceAndTextValue];
 
-    _temp[idx].value[index].value = e.target.value
-    _temp[idx].value[index].label = e.target.value
+    _temp[idx].value[index].value = e.target.value;
+    _temp[idx].value[index].label = e.target.value;
 
-
-
-    _tempValue[idx].value[index].value = e.target.value
-    _tempValue[idx].value[index].label = e.target.value
+    _tempValue[idx].value[index].value = e.target.value;
+    _tempValue[idx].value[index].label = e.target.value;
 
     setFormReferenceAndText(_temp);
     setFormReferenceAndTextValue(_tempValue);
@@ -174,22 +187,7 @@ const Tambah = ({ token }) => {
     }
   };
 
-
-
-   const submit = async (e) => {
-
-    
-
-    
-
-
-
-
-
-
-
-
-
+  const submit = async (e) => {
     e.preventDefault();
     if (nameReference === "") {
       Swal.fire("Gagal", `Nama data reference tidak boleh kosong`, "error");
@@ -197,7 +195,7 @@ const Tambah = ({ token }) => {
       Swal.fire("Gagal", `Status tidak boleh kosong`, "error");
     } else if (idReference === "") {
       Swal.fire("Gagal", `Harus pilih data reference`, "error");
-    }  else {
+    } else {
       // let sendData = {
       //   name: nameReference,
       //   status: status,
@@ -205,31 +203,21 @@ const Tambah = ({ token }) => {
       //   data: formReferenceAndText,
       // };
 
+      formReferenceAndTextValue.map((items, index) => {
+        items.value.map((itemz, idx) => {
+          if (!itemz.label_old) {
+            formReferenceAndTextValue[index].value[idx].label_old = itemz.value;
+          }
+        });
+      });
 
-      formReferenceAndTextValue.map((items,index)=>{
-      items.value.map((itemz,idx)=>{
-        if(!itemz.label_old){
-          formReferenceAndTextValue[index].value[idx].label_old = itemz.value
-        }
-      })
-    })
-
-
-
-
-    console.log("formReferenceAndTextValue",formReferenceAndTextValue)
-
-    const sendData = {
-    id : router.query.id,
-    name : nameReference,
-    status :status,
-    data_references_relasi_id : idReference,
-    data : formReferenceAndTextValue
-   }
-
-      
-
-
+      const sendData = {
+        id: router.query.id,
+        name: nameReference,
+        status: status,
+        data_references_relasi_id: idReference,
+        data: formReferenceAndTextValue,
+      };
 
       // let formData = new FormData();
 
@@ -246,7 +234,6 @@ const Tambah = ({ token }) => {
       //   formData.append(`value[${i}]`, element.value);
       // });
 
-
       try {
         let { data } = await axios.post(
           `${process.env.END_POINT_API_SITE_MANAGEMENT}api/reference/update-relasi`,
@@ -258,17 +245,14 @@ const Tambah = ({ token }) => {
           }
         );
 
-        Swal.fire("Berhasil", "Data berhasil disimpan", "success")
+        Swal.fire("Berhasil", "Data berhasil disimpan", "success").then(() => {
+          router.push("/site-management/reference");
+        });
       } catch (error) {
         Swal.fire("Gagal simpan", `${error.response.data.message}`, "error");
       }
     }
   };
-
-
-
-
-
 
   useEffect(() => {
     let optionReference = tempOptionsReference?.map((items) => {
@@ -374,8 +358,8 @@ const Tambah = ({ token }) => {
                   options={referenceOption}
                 />
               </div>
-               
-               {formReferenceAndText.map((itemsRef, idx) => {
+
+              {formReferenceAndText.map((itemsRef, idx) => {
                 return (
                   <div className="row" key={idx}>
                     <div className="col-12 col-sm-6">
@@ -400,15 +384,13 @@ const Tambah = ({ token }) => {
                       </div>
                     </div>
                     <div className="col-12 col-sm-6">
-              
-
                       {itemsRef.value.map((items, index) => {
                         return (
                           <div className="form-group mt-12" key={index}>
                             <div className="position-relative d-flex align-items-start w-100">
                               <div className="w-100 mr-6">
                                 <input
-                                value={items.value}
+                                  value={items.value}
                                   type="text"
                                   className="form-control"
                                   placeholder="Masukan data value"
@@ -444,11 +426,10 @@ const Tambah = ({ token }) => {
                           </div>
                         );
                       })}
-
                     </div>
                   </div>
                 );
-              })} 
+              })}
 
               <div className="d-flex align-items-center justify-content-end">
                 <div className="form-group">
@@ -482,7 +463,7 @@ const Tambah = ({ token }) => {
                   <button
                     type="button"
                     className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
-                    onClick={e => submit(e)}
+                    onClick={(e) => submit(e)}
                   >
                     Simpan
                   </button>

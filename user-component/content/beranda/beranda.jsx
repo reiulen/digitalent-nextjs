@@ -144,9 +144,6 @@ const Beranda = () => {
     setCardAlamat(alamat)
     setCardPendaftaranMulai(pendaftaran_mulai)
     setCardPendaftaranSelesai(pendaftaran_selesai)
-
-
-    // console.log ("open")
   };
 
   const handleCloseQuickView = (indexTema) => {
@@ -158,8 +155,6 @@ const Beranda = () => {
       }
     }
     setShow(obj)
-    // setShowDetail(false);
-    // console.log ("close")
   };
 
   return (

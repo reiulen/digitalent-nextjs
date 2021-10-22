@@ -77,10 +77,7 @@ const StepOne = ({ token }) => {
       category,
       _method: "put",
     };
-
     dispatch(updatewSubtanceQuestionBanks(id, data, token));
-
-    console.log(data);
   };
 
   return (

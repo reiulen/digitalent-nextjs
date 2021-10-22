@@ -210,7 +210,7 @@ const TambahMitra = ({ token }) => {
         // dataNewProvinces.splice(0, 0, { label: "Pilih Provinsi", value: "" });
         setAllProvinces(dataNewProvinces);
       } catch (error) {
-        console.log("gagal get province", error);
+        notify(error.response.data.message);
       }
     }
     getDataProvinces(token);
@@ -218,9 +218,7 @@ const TambahMitra = ({ token }) => {
 
   useEffect(() => {
     // get data cities
-    if (indonesia_provinces_id === "") {
-      console.log("kosong");
-    } else {
+    if (indonesia_provinces_id !== "") {
       async function fetchAPI() {
         try {
           let { data } = await axios.get(
@@ -237,10 +235,9 @@ const TambahMitra = ({ token }) => {
           // dataNewCitites.splice(0, 0, { label: "Pilih Kab/Kota", value: "" });
           setCitiesAll(dataNewCitites);
         } catch (error) {
-          console.log("gagal get cities", error);
+          notify(error.response.data.message);
         }
       }
-
       fetchAPI();
     }
   }, [indonesia_provinces_id, token]);
