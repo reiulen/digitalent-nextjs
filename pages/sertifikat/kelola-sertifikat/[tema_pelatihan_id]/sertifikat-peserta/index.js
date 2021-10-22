@@ -41,6 +41,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+      query.id ? query.id : (query.id = req.cookies.nama_pelatihan_id);
 
       await store.dispatch(
         getDetailParticipant(

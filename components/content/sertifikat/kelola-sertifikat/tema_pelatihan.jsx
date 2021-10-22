@@ -83,9 +83,7 @@ export default function NamaPelatihan({ token }) {
   const handleSelectAcademy = e => {
     setAcademy(e);
     setDisable(false);
-    if (academy) {
-      temaRef.select.clearValue();
-    }
+    temaRef.select.clearValue();
   };
 
   const handleFilter = e => {
