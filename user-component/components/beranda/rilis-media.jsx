@@ -1,6 +1,7 @@
 import Cardss from "./card";
 import Link from "next/link";
 import IconArrow from "../../../components/assets/icon/Arrow2";
+import { Badge } from "react-bootstrap";
 export default function rilisMedia({berita}) {
   return (
     <div className="py-0 py-xl-20 rillirs-media max-container">
@@ -25,11 +26,11 @@ export default function rilisMedia({berita}) {
                 <div>
 
                 </div>
-                <button className="btn btn-light rounded-pill">
+                <Badge bg="light">
                   <div className="text-info font-weight-bolder">
                     Kategori
-                  </div>  
-                </button>
+                  </div>
+                </Badge>
               </div>
               <h1
                 className="fz-18 fw-600 mt-4"
@@ -62,11 +63,11 @@ export default function rilisMedia({berita}) {
                 <div>
 
                 </div>
-                <button className="btn btn-light rounded-pill">
+                <Badge bg="light">
                   <div className="text-info font-weight-bolder">
                     Kategori
-                  </div>  
-                </button>
+                  </div>
+                </Badge>
               </div>
               <h1
                 className="fz-18 fw-600 mt-4"
@@ -78,7 +79,8 @@ export default function rilisMedia({berita}) {
               <div className="d-flex align-items-center justify-content-end" style={{
                 position: "absolute",
                 bottom: "28px",
-                right: "24px"
+                right: "24px", 
+                cursor:"pointer"
               }}>
             
                 <div className="font-weight-bolder" style={{ color: "#6C6C6C" }}>
@@ -99,11 +101,11 @@ export default function rilisMedia({berita}) {
                 <div>
 
                 </div>
-                <button className="btn btn-light rounded-pill">
+                <Badge bg="light">
                   <div className="text-info font-weight-bolder">
                     Kategori
-                  </div>  
-                </button>
+                  </div>
+                </Badge>
               </div>
               <h1
                 className="fz-18 fw-600 mt-4"

@@ -12,24 +12,6 @@ export default function DetailAkademiPelatihan () {
     )
 }
 
-// export async function getServerSideProps(context) {
-//     // const session = await getSession({ req: context.req });
-//     // if (session) {
-//     //   return {
-//     //     redirect: {
-//     //       destination: "/dashboard",
-//     //       permanent: false,
-//     //     },
-//     //   };
-//     // }
-  
-//     return {
-//       props: {
-//         title:"Detail Akademi", data: "auth",
-//       },
-//     };
-// }
-
 export const getServerSideProps = wrapper.getServerSideProps((store) => async({ params, req }) => {
   await store.dispatch(
     getDetailAkademi(params.id)
