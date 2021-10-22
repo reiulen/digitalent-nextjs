@@ -83,7 +83,6 @@ export const getRandomSubtanceQuestionDetail =
   (training_id = 1, theme_id = 1, category = "", token) =>
   async (dispatch) => {
     try {
-      // console.log(token);
       dispatch({ type: SUBTANCE_QUESTION_RANDOM_DETAIL_REQUEST });
 
       let link =
@@ -92,7 +91,6 @@ export const getRandomSubtanceQuestionDetail =
       if (training_id) link = link.concat(`&training_id=${training_id}`);
       if (category) link = link.concat(`&category=${category}`);
       if (theme_id) link = link.concat(`&theme_id=${theme_id}`);
-      // console.log(link);
       const config = {
         headers: {
           Authorization: "Bearer " + token,
@@ -100,14 +98,12 @@ export const getRandomSubtanceQuestionDetail =
       };
 
       const { data } = await axios.get(link, config);
-      console.log(data.data.list_questions);
 
       dispatch({
         type: SUBTANCE_QUESTION_RANDOM_DETAIL_SUCCESS,
         payload: data,
       });
     } catch (error) {
-      // console.log(error.response.data);
       dispatch({
         type: SUBTANCE_QUESTION_RANDOM_DETAIL_FAIL,
         payload: error.message,
@@ -119,7 +115,6 @@ export const getDashboardSubvit =
   (page_substansi = 1, page_trivia = 1, page_survey = 1, token) =>
   async (dispatch) => {
     try {
-      // console.log(token);
       dispatch({ type: DASHBOARD_SUBVIT_REQUEST });
 
       let link = process.env.END_POINT_API_SUBVIT + `api/dashboard?`;
@@ -128,7 +123,6 @@ export const getDashboardSubvit =
       if (page_trivia) link = link.concat(`&page_trivia=${page_trivia}`);
       if (page_substansi)
         link = link.concat(`&page_substansi=${page_substansi}`);
-      // console.log(link);
       const config = {
         headers: {
           Authorization: "Bearer " + token,
@@ -136,14 +130,12 @@ export const getDashboardSubvit =
       };
 
       const { data } = await axios.get(link, config);
-      // console.log(data);
 
       dispatch({
         type: DASHBOARD_SUBVIT_SUCCESS,
         payload: data,
       });
     } catch (error) {
-      // console.log(error.response.data);
       dispatch({
         type: DASHBOARD_SUBVIT_FAIL,
         payload: error.message,
