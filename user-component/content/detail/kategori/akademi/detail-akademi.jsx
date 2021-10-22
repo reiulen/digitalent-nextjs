@@ -246,12 +246,6 @@ const DetailAkademi = () => {
                                                 renderShare(show[i], el.metode_pelatihan)
                                             }
 
-                                            {/* <div className='rounded' >
-                                                <div style={{backgroundImage:`https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/${el.gambar}`}}>
-                                                    <div style={show[i] === true ? {background: "rgba(0, 0, 0, 0.5)"} : null}></div>
-                                                </div>
-                                            </div> */}
-
                                             <div className='rounded'>
                                                 <Card.Img
                                                     variant="top"
@@ -312,10 +306,6 @@ const DetailAkademi = () => {
                                         >
                                             
                                             <div className="col-4">
-                                                {/* <Card.Img 
-                                                    variant="top" 
-                                                    src={`https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/${el.gambar}`}
-                                                /> */}
                                                 <Image 
                                                     src={`https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/${el.gambar}`}
                                                     layout="fill"
@@ -399,7 +389,7 @@ const DetailAkademi = () => {
                         :   
                             <div className="row d-flex justify-content-center">
                                 <h3 className="text-center col-12">
-                                    Data Tidak Ditemukan
+                                    Pelatihan Tidak Ditemukan
                                 </h3>
                             </div>
                             
