@@ -134,7 +134,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
   for (let index = 0; index < dataLevelPelatihan.data.length; index++) {
     let val = {
       value: dataLevelPelatihan.data[index].id,
-      label: dataLevelPelatihan.data[index].value,
+      label: dataLevelPelatihan.data[index].label,
     };
     optionsLevelPelatihan.push(val);
   }
@@ -143,7 +143,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
   for (let index = 0; index < dataPenyelenggara.data.length; index++) {
     let val = {
       value: dataPenyelenggara.data[index].id,
-      label: dataPenyelenggara.data[index].value,
+      label: dataPenyelenggara.data[index].label,
     };
     optionsPenyelenggara.push(val);
   }

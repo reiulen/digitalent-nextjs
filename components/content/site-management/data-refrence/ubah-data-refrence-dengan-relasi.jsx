@@ -36,10 +36,11 @@ const Tambah = ({ token }) => {
   );
   // state provinsi for set in option provinsi
   const [referenceOption, setReferenceOption] = useState([]);
-  const [idReference, setIdReference] = useState(detailDataReference.dataReference.id);
+  const [idReference, setIdReference] = useState(detailDataReference.dataReference.data_references_relasi_id);
   const [nameListFromReference, setNameListFromReference] = useState("");
   const [optionFromReference, setOptionFromReference] = useState([]);
   const changeListDataReference = (e) => {
+    console.log("data reference parents",e.key)
     setIdReference(e.key);
     setNameListFromReference(e.value);
   };
@@ -50,7 +51,9 @@ const Tambah = ({ token }) => {
       return { ...items, value: { label: items.value, value: items.value } };
     }
   );
-  const transformed = manipulate1.map(({ data_references_id,relasi,value,relasi_id, }) => ({ value: relasi,data_references_id:data_references_id,relasi_id:relasi_id,label:value}));
+  console.log("manipulate1",manipulate1)
+  const transformed = manipulate1.map(({ data_references_id,relasi,value,relasi_id, }) => ({ value: relasi,data_references_relasi_id:data_references_id,relasi_id:relasi_id,label:value,}));
+  console.log("transformed",transformed)
   
   
 
@@ -59,6 +62,7 @@ const Tambah = ({ token }) => {
       return {...itemx,label:itemx.value,label_old:itemx.value}
     })}
   }));
+  console.log("formReferenceAndText",formReferenceAndText)
   const [formReferenceAndTextValue, setFormReferenceAndTextValue] = useState(transformed.map((items)=>{
     return {...items,value:items.value.map((itemx)=>{
       return {...itemx,label:itemx.value,label_old:itemx.value}
@@ -117,6 +121,9 @@ const Tambah = ({ token }) => {
   };
 
    const handleCHangeNameReference = (e, index) => {
+    console.log("ketika pilih data reference sub",e.key)
+
+
     let _temp = [...formReferenceAndText];
     let _tempValue = [...formReferenceAndTextValue];
     _temp[index].relasi_id = e.key;
@@ -130,7 +137,12 @@ const Tambah = ({ token }) => {
     let _tempValue = [...formReferenceAndTextValue];
 
     _temp[idx].value[index].value = e.target.value
+    _temp[idx].value[index].label = e.target.value
+
+
+
     _tempValue[idx].value[index].value = e.target.value
+    _tempValue[idx].value[index].label = e.target.value
 
     setFormReferenceAndText(_temp);
     setFormReferenceAndTextValue(_tempValue);
@@ -166,13 +178,16 @@ const Tambah = ({ token }) => {
 
    const submit = async (e) => {
 
-    // console.log("submit nameReference",nameReference)
-    // console.log("submit idReference",idReference)
-    // console.log("submit status",status)
+    
 
-     
-    console.log("submit formReferenceAndText",formReferenceAndText)
-    console.log("submit formReferenceAndTextValue",formReferenceAndTextValue)
+    
+
+
+
+
+
+
+
 
 
     e.preventDefault();
@@ -182,13 +197,7 @@ const Tambah = ({ token }) => {
       Swal.fire("Gagal", `Status tidak boleh kosong`, "error");
     } else if (idReference === "") {
       Swal.fire("Gagal", `Harus pilih data reference`, "error");
-    } else if (formValue.length === 1) {
-      Swal.fire(
-        "Gagal",
-        `Form data provinsi dan kabupaten tidak boleh kosong`,
-        "error"
-      );
-    } else {
+    }  else {
       // let sendData = {
       //   name: nameReference,
       //   status: status,
@@ -196,23 +205,63 @@ const Tambah = ({ token }) => {
       //   data: formReferenceAndText,
       // };
 
-      // try {
-      //   let { data } = await axios.post(
-      //     `${process.env.END_POINT_API_SITE_MANAGEMENT}api/reference/store-relasi`,
-      //     sendData,
-      //     {
-      //       headers: {
-      //         authorization: `Bearer ${token}`,
-      //       },
-      //     }
-      //   );
 
-      //   Swal.fire("Berhasil", "Data berhasil disimpan", "success").then(() => {
-      //     router.push("/site-management/reference");
-      //   });
-      // } catch (error) {
-      //   Swal.fire("Gagal simpan", `${error.response.data.message}`, "error");
-      // }
+      formReferenceAndTextValue.map((items,index)=>{
+      items.value.map((itemz,idx)=>{
+        if(!itemz.label_old){
+          formReferenceAndTextValue[index].value[idx].label_old = itemz.value
+        }
+      })
+    })
+
+
+
+
+    console.log("formReferenceAndTextValue",formReferenceAndTextValue)
+
+    const sendData = {
+    id : router.query.id,
+    name : nameReference,
+    status :status,
+    data_references_relasi_id : idReference,
+    data : formReferenceAndTextValue
+   }
+
+      
+
+
+
+      // let formData = new FormData();
+
+      // formData.append("id", router.query.id);
+      // formData.append("name", nameReference);
+      // formData.append("status", status);
+      // formData.append("data_references_relasi_id", idReference);
+
+      // formInput.forEach((element,i) => {
+      //   formData.append(`value_old[${i}]`, element.value_old);
+      // });
+
+      // formInput.forEach((element,i) => {
+      //   formData.append(`value[${i}]`, element.value);
+      // });
+
+
+      try {
+        let { data } = await axios.post(
+          `${process.env.END_POINT_API_SITE_MANAGEMENT}api/reference/update-relasi`,
+          sendData,
+          {
+            headers: {
+              authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        Swal.fire("Berhasil", "Data berhasil disimpan", "success")
+      } catch (error) {
+        Swal.fire("Gagal simpan", `${error.response.data.message}`, "error");
+      }
     }
   };
 

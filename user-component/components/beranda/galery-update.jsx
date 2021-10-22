@@ -5,7 +5,7 @@ import IconArrow from "../../../components/assets/icon/Arrow2";
 import ImageShapes2 from "../../../components/assets/icon-dashboard-peserta/bg-stepes2.png";
 import ImageGalery1 from "../../../components/assets/icon-dashboard-peserta/galery1.png";
 import ImageGalery2 from "../../../components/assets/icon-dashboard-peserta/galery2.png";
-export default function galeryUpdate() {
+export default function galeryUpdate({gambar}) {
   return (
     <div className="position-relative galery-update max-container">
       <div className="images-shapes">

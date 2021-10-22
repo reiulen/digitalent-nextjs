@@ -80,6 +80,7 @@ const Tambah = ({ token }) => {
   };
 
   const changeListDataReference = (e) => {
+    console.log("e.key",e.key)
     setIdReference(e.key);
     setNameListFromReference(e.value);
   };

@@ -359,6 +359,7 @@ import {
   allAkademiReducer,
   temaByAkademiReducer,
   pelatihanByTemaReducer,
+  allPublikasiBerandaReducer,
 } from "../reducers/beranda/beranda.reducers";
 
 // ========== detail akademi ========
@@ -667,6 +668,7 @@ const reducer = combineReducers({
   allAkademi: allAkademiReducer,
   temaByAkademi: temaByAkademiReducer,
   pelatihanByTema: pelatihanByTemaReducer,
+  allPublikasiBeranda: allPublikasiBerandaReducer,
 
   // ========== detail akademi ========
   detailAkademi: detailAkademiReducer,
