@@ -15,6 +15,7 @@ import {
   Modal,
 } from "react-bootstrap";
 import style from "./style.module.css";
+import axios from "axios";
 
 const ProfileWrapper = ({
   propsEdit,
@@ -32,13 +33,21 @@ const ProfileWrapper = ({
   const [viewEdit, setViewEdit] = useState(propsEdit);
   const [viewProvile, setViewProfile] = useState(propsViewProfile);
 
-  const generateImage = (canvas, crop) => {
+  const generateImage = async (canvas, crop) => {
     if (!crop || !canvas) {
       return;
     }
 
     const base64Image = canvas.toDataURL("image/jpeg");
-    console.log(base64Image);
+
+    // const data = {
+    //   foto: base64Image,
+    // };
+    // await axios.post(
+    //   process.env.END_POINT_API_PELATIHAN + "api/v1/auth/update-foto"
+    // );
+
+    // console.log(base64Image);
 
     // UNTUK DOWNLOAD GAMBAR
     // canvas.toBlob(
