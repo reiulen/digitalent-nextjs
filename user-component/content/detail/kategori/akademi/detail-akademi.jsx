@@ -30,11 +30,11 @@ const DetailAkademi = () => {
     } = useSelector((state) => state.allPelatihan);
 
 
-    // const [ akademiId, setAkademiId ] = useState (akademi.id)
-    // const [ akademiLogo, setAkademiLogo ] = useState (akademi.logo)
-    // const [ akademiName, setAkademiName ] = useState (akademi.name)
-    // const [ akademiSlug, setAkademiSlug ] = useState (akademi.slug)
-    // const [ akademiDeskripsi, setAkademiDeskripsi ] = useState (akademi.deskripsi)
+    const [ akademiId, setAkademiId ] = useState (akademi.id)
+    const [ akademiLogo, setAkademiLogo ] = useState (akademi.logo)
+    const [ akademiName, setAkademiName ] = useState (akademi.name)
+    const [ akademiSlug, setAkademiSlug ] = useState (akademi.slug)
+    const [ akademiDeskripsi, setAkademiDeskripsi ] = useState (akademi.deskripsi)
 
     const [ show, setShow ] = useState([])
     const [ showDetail, setShowDetail ] = useState([])
