@@ -61,18 +61,22 @@ const ViewReviewTraining = ({ token }) => {
   }
 
   const [dataPelatihan, setDataPelatihan] = useState({
-    peserta: review.program_dts,
-    ketentuanPeserta: review.Ketentuan_peserta,
+    peserta: review.program_dts === "1" ? "Ya" : "Tidak",
+    ketentuanPeserta:
+      review.ketentuan_peserta === "1"
+        ? "Peserta dapat mengikuti pelatihan ini ditahun yang sama pada Akademi ini"
+        : "",
     namaPelatihan: review.name,
-    levelPelatihan: review.Level_pelatihan,
+    levelPelatihan: review.level_pelatihan,
     akademi: review.akademi,
     tema: review.tema,
     logoReference: review.file_path
       ? review.file_path + review.logo
       : "/assets/media/default.jpg",
-    thumbnail: review.file_path
-      ? review.file_path + review.thumbnail
-      : "/assets/media/default.jpg",
+    thumbnail:
+      review.file_path && review.thumbnail
+        ? review.file_path + review.thumbnail
+        : "/assets/media/default.jpg",
     silabus: review.silabus,
     metodePelatihan: review.metode_pelatihan,
     penyelenggara: review.penyelenggara,
@@ -86,13 +90,13 @@ const ViewReviewTraining = ({ token }) => {
   const [kuotaPelatihan, setKuotaPelatihan] = useState({
     kuotaTargetPendaftar: review.kuota_pendaftar,
     kuotaTargetPeserta: review.kuota_peserta,
-    komitmenPeserta: "Iya",
-    lpjPeserta: review.lpj_peserta,
-    infoSertifikasi: review.sertifikasi,
+    komitmenPeserta: review.komitmen === "1" ? "Iya" : "Tidak",
+    lpjPeserta: review.lpj_peserta === "1" ? "Iya" : "Tidak",
+    infoSertifikasi: review.sertifikasi === "1" ? "Iya" : "Tidak",
     metodePelatihan: review.metode_pelatihan,
     statusKuota: review.status_kuota,
     alurPendaftaran: review.alur_pendaftaran,
-    zonasi: "1",
+    zonasi: review.zonasi,
     batch: "2",
   });
   const [alamatPelatihan, setAlamatPelatihan] = useState({
@@ -201,7 +205,7 @@ const ViewReviewTraining = ({ token }) => {
             <h3 className="font-weight-bolder pb-5 pt-4">Data Pelatihan</h3>
             <div className="row">
               <div className="col-md-6">
-                <p className="text-neutral-body">Peserta DTS</p>
+                <p className="text-neutral-body">Program DTS</p>
                 <p>{dataPelatihan.peserta}</p>
               </div>
               <div className="col-md-6">
