@@ -15,11 +15,8 @@ const DetailRefrence = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
 
-  const onNewReset = () => {
-    router.replace("/site-management/api", undefined, {
-      shallow: true,
-    });
-  };
+  const detailDataReference = useSelector((state) => state.detailDataReference);
+  console.log("detailDataReference", detailDataReference);
   return (
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">
@@ -36,14 +33,14 @@ const DetailRefrence = ({ token }) => {
             <div>
               <div className="form-group d-flex flex-column mt-4">
                 <p htmlFor="exampleSelect1" style={{ color: "#6C6C6C" }}>
-                  Nama Data Reference{" "}
+                  Nama Data Reference
                 </p>
                 <p
                   htmlFor="exampleSelect1"
                   className="fw-400 fz-16"
                   style={{ color: "#1F1F1F" }}
                 >
-                  Provinsi
+                  {detailDataReference.dataReference.data_reference.name}
                 </p>
               </div>
               <div className="form-group d-flex flex-column mt-4">
@@ -55,7 +52,7 @@ const DetailRefrence = ({ token }) => {
                   className="fw-400 fz-16"
                   style={{ color: "#1F1F1F" }}
                 >
-                  Aktif
+                  {detailDataReference.dataReference.status == 1 ? "Aktif" : "Tidak Aktif"}
                 </p>
               </div>
               <div className="form-group d-flex flex-column mt-4">
@@ -63,16 +60,20 @@ const DetailRefrence = ({ token }) => {
                   Value
                 </p>
                 <ul>
-                  <li>
+                  {detailDataReference.dataReference.valueReference.map((items,index)=>{
+                    return(
+
+                  <li key={index}>
                     <p
-                      htmlFor="exampleSelect1"
                       className="fw-400 fz-16 mb-0"
                       style={{ color: "#1F1F1F" }}
                     >
-                      Aceh
+                      {items.value}
                     </p>
                   </li>
-                  <li>
+                    )
+                  })}
+                  {/* <li>
                     <p
                       htmlFor="exampleSelect1"
                       className="fw-400 fz-16 mb-0"
@@ -80,7 +81,7 @@ const DetailRefrence = ({ token }) => {
                     >
                       Jawa Barat
                     </p>
-                  </li>
+                  </li> */}
                 </ul>
               </div>{" "}
             </div>

@@ -18,15 +18,15 @@ const TambahApi = ({ token }) => {
   const router = useRouter();
   let selectRefProvinsi = null;
 
-  const drowpdownProvinsi = useSelector((state) => state.drowpdownProvinsi);
-  let tempOptionsProvinsi = drowpdownProvinsi.data.data;
+  const drowpdownProvinsi = useSelector((state) => state.allProvincesSite);
+  console.log("drowpdownProvinsi", drowpdownProvinsi);
+  let tempOptionsProvinsi = drowpdownProvinsi?.data;
   const [provinsi, setProvinsi] = useState([]);
   const [nameUnitWork, setNameUnitWork] = useState("");
   const [status, setStatus] = useState("");
   const [valueProvinsi, setValueProvinsi] = useState("");
   const [kabupaten, setKabupaten] = useState([]);
 
-  // filter data just region show
   const changeListProvinsi = (e) => {
     let data = e.map((items) => {
       return { ...items, region: items.label };
@@ -36,11 +36,21 @@ const TambahApi = ({ token }) => {
         region: items.region,
       };
     });
-    setValueProvinsi(datas)
+
+    setValueProvinsi(datas);
   };
 
   const submit = (e) => {
     e.preventDefault();
+
+    const sendData = {
+            name: nameUnitWork,
+            status: status,
+            data: valueProvinsi,
+          };
+
+
+          console.log("sendData",sendData)
 
     if (nameUnitWork === "") {
       Swal.fire(
@@ -50,7 +60,7 @@ const TambahApi = ({ token }) => {
       );
     } else if (status === "") {
       Swal.fire("Gagal simpan", "Form status tidak boleh kosong", "error");
-    } else if (valueProvinsi === ""){
+    } else if (valueProvinsi === "") {
       Swal.fire("Gagal simpan", "Form provinsi tidak boleh kosong", "error");
     } else {
       Swal.fire({
@@ -68,7 +78,7 @@ const TambahApi = ({ token }) => {
           const sendData = {
             name: nameUnitWork,
             status: status,
-            data:valueProvinsi
+            data: valueProvinsi,
           };
 
           try {
@@ -82,7 +92,7 @@ const TambahApi = ({ token }) => {
               }
             );
 
-            Swal.fire("Berhasil", "Data berhasil disimpan", "succes").then(
+            Swal.fire("Berhasil", "Data berhasil disimpan", "success").then(
               () => {
                 router.push(
                   `/site-management/master-data/master-satuan-kerja-penyelenggara/`
@@ -102,33 +112,32 @@ const TambahApi = ({ token }) => {
   };
 
   useEffect(() => {
-    let optionProvinsi = tempOptionsProvinsi.map((items) => {
-      return { ...items, label: items.value };
+    let optionProvinsi = tempOptionsProvinsi?.map((items) => {
+      return { ...items, value: items.label };
     });
     setProvinsi(optionProvinsi);
   }, [tempOptionsProvinsi]);
   return (
     <PageWrapper>
-        <form onSubmit={submit}>
-      <div className="col-lg-12 order-1 px-0">
-        <div className="card card-custom card-stretch gutter-b">
-          <div className="card-header border-0">
-            <h3
-              className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 mb-5 mt-5"
-              style={{ fontSize: "24px" }}
-            >
-              Tambah Satuan Kerja Penyelenggara
-            </h3>
-          </div>
-          <div className="card-body pt-0">
-          
+      <form onSubmit={submit}>
+        <div className="col-lg-12 order-1 px-0">
+          <div className="card card-custom card-stretch gutter-b">
+            <div className="card-header border-0">
+              <h3
+                className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 mb-5 mt-5"
+                style={{ fontSize: "24px" }}
+              >
+                Tambah Satuan Kerja Penyelenggara
+              </h3>
+            </div>
+            <div className="card-body pt-0">
               <div className="form-group">
                 <label>Nama Satuan Kerja</label>
                 <input
                   onChange={(e) => setNameUnitWork(e.target.value)}
                   type="text"
                   className="form-control"
-                  placeholder="Placeholder"
+                  placeholder="Masukan nama satuan kerja"
                 />
                 {/* <span className="form-text text-muted">
                   Please enter your full name
@@ -136,10 +145,14 @@ const TambahApi = ({ token }) => {
               </div>
               <div className="form-group">
                 <label>Status</label>
-                <select className="form-control" id="exampleSelect1" onChange={(e)=>setStatus(e.target.value)}>
+                <select
+                  className="form-control"
+                  id="exampleSelect1"
+                  onChange={(e) => setStatus(e.target.value)}
+                >
                   <option value="">Pilih Status</option>
-                  <option value="Aktif">Aktif</option>
-                  <option value="Tidak Aktif">Tidak Aktif</option>
+                  <option value="1">Aktif</option>
+                  <option value="0">Tidak Aktif</option>
                 </select>
               </div>
               <div className="form-group">
@@ -164,27 +177,27 @@ const TambahApi = ({ token }) => {
                   Please enter your full name
                 </span> */}
               </div>
-            <div className="form-group row">
-              <div className="col-sm-12 d-flex justify-content-end">
-                <Link
-                  href="/site-management/master-data/master-satuan-kerja-penyelenggara"
-                  passHref
-                >
-                  <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
-                    Kembali
-                  </a>
-                </Link>
-                <button
-                  type="submit"
-                  className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
-                >
-                  Simpan
-                </button>
+              <div className="form-group row">
+                <div className="col-sm-12 d-flex justify-content-end">
+                  <Link
+                    href="/site-management/master-data/master-satuan-kerja-penyelenggara"
+                    passHref
+                  >
+                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
+                      Kembali
+                    </a>
+                  </Link>
+                  <button
+                    type="submit"
+                    className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
+                  >
+                    Simpan
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
       </form>
     </PageWrapper>
   );

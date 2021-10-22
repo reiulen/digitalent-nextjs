@@ -4,7 +4,7 @@ import LoadingPage from "../../../../../components/LoadingPage";
 import { wrapper } from "../../../../../redux/store";
 import { getSession } from "next-auth/client";
 import { getDetailUnitWork } from "../../../../../redux/actions/site-management/unit-work.actions";
-import { dropdownProvinsi } from "../../../../../redux/actions/pelatihan/function.actions";
+import { getAllOptionProvinces } from "../../../../../redux/actions/site-management/option/option-provinces.actions";
 
 const ListRole = dynamic(
   () =>
@@ -43,11 +43,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
-      await store.dispatch(dropdownProvinsi(session.user.user.data.token));
-
       await store.dispatch(
         getDetailUnitWork(params.id, session.user.user.data.token)
       );
+      await store.dispatch(getAllOptionProvinces(session.user.user.data.token));
 
       return {
         props: {

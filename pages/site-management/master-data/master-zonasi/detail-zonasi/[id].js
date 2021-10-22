@@ -1,15 +1,13 @@
 import dynamic from "next/dynamic";
 import { getSession } from "next-auth/client";
-// import { getAllArtikel } from "../../../redux/actions/publikasi/artikel.actions";
+import { getDetailZonasi } from "../../../../../redux/actions/site-management/zonasi.actions";
 import { wrapper } from "../../../../../redux/store";
 import LoadingPage from "../../../../../components/LoadingPage";
-
-import { dropdownProvinsi } from "../../../../../redux/actions/pelatihan/function.actions";
 
 const DetailRole = dynamic(
   () =>
     import(
-      "../../../../../components/content/site-management/master-data/master-zonasi/ubah"
+      "../../../../../components/content/site-management/master-data/master-zonasi/detail"
     ),
   {
     loading: function loadingNow() {
@@ -32,7 +30,7 @@ export default function DetailRoles(props) {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
-    async ({ req }) => {
+    async ({ params, req }) => {
       const session = await getSession({ req });
       if (!session) {
         return {
@@ -43,10 +41,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
-      await store.dispatch(dropdownProvinsi(session.user.user.data.token));
-
+      await store.dispatch(
+        getDetailZonasi(params.id, session.user.user.data.token)
+      );
       return {
-        props: { session, title: "Ubah Zonasi - Site Management" },
+        props: { session, title: "Detail Zonasi - Site Management" },
       };
     }
 );
