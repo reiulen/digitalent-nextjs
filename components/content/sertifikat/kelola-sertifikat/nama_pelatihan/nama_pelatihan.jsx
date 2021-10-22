@@ -1,5 +1,5 @@
 // #Next & React
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
@@ -16,6 +16,7 @@ import IconClose from "../../../../assets/icon/Close";
 import IconFilter from "../../../../assets/icon/Filter";
 import { useSelector } from "react-redux";
 import { clearErrors } from "../../../../../redux/actions/sertifikat/kelola-sertifikat.action";
+import Cookies from "js-cookie";
 
 export default function NamaPelatihanID({ token }) {
   const router = useRouter();
@@ -28,23 +29,32 @@ export default function NamaPelatihanID({ token }) {
   const [search, setSearch] = useState("");
   // #Pagination
 
-  if (!certificate) {
-    router.replace(`/sertifikat/kelola-sertifikat`);
-  }
-
   const [status, setStatus] = useState(null);
+
+  // useEffect(() => {
+  //   const id = sessionStorage.getItem("tema_pelatihan_id");
+  //   if (!certificate) {
+  //     router.replace(router.asPath + `?id=${id}`);
+  //   }
+  // }, [certificate, router]);
 
   let { page = 1, keyword, success } = router.query;
 
   const handleLimit = val => {
     setLimit(val);
     router.push(
-      `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}?id=${router.query.id}&page=1&limit=${val}`
+      `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}?id=${
+        router.query.id ? router.query.id : Cookies.get("nama_pelatihan_id")
+      }&page=1&limit=${val}`
     );
   };
 
   const handleSearch = () => {
-    let link = `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}?id=${router.query.id}&page=1&keyword=${search}`;
+    let link = `/sertifikat/kelola-sertifikat/${
+      router.query.tema_pelatihan_id
+    }?id=${
+      router.query.id ? router.query.id : Cookies.get("nama_pelatihan_id")
+    }&page=1&keyword=${search}`;
     if (limit) link = link.concat(`&limit=${limit}`);
     router.push(link);
   };
@@ -59,7 +69,11 @@ export default function NamaPelatihanID({ token }) {
     if (!status) {
       Swal.fire("Oops !", "Harap memilih Status terlebih dahulu.", "error");
     } else {
-      let link = `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}?id=${router.query.id}&page=${page}`;
+      let link = `/sertifikat/kelola-sertifikat/${
+        router.query.tema_pelatihan_id
+      }?id=${
+        router.query.id ? router.query.id : Cookies.get("nama_pelatihan_id")
+      }&page=${page}`;
       if (limit) link = link.concat(`&limit=${limit}`);
       if (status) link = link.concat(`&status=${status}`);
       router.push(link);
@@ -79,7 +93,9 @@ export default function NamaPelatihanID({ token }) {
     setStatus(null);
 
     router.push(
-      `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}?id=${router.query.id}`
+      `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}?id=${
+        router.query.id ? router.query.id : Cookies.get("nama_pelatihan_id")
+      }`
     );
   };
 

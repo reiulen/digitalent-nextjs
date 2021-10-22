@@ -92,6 +92,8 @@ import {
 import {
   allSubtanceQuestionDetailReducer,
   randomSubtanceQuestionDetailReducer,
+  getDashboardReducer,
+  postResultReducer,
   newSubtanceQuestionDetailReducer,
   deleteSubtanceQuestionDetailReducer,
   detailSubtanceQuestionDetailReducer,
@@ -245,7 +247,7 @@ import {
 import { allPromptReducer } from "./site-management/settings/pelatihan.reducers";
 
 // ============== pelatihan ===============
-import {allDataZonasiReducer} from './site-management/dashboard.reducers'
+import { allDataZonasiReducer } from "./site-management/dashboard.reducers";
 
 // End Site Management
 
@@ -434,6 +436,8 @@ const reducer = combineReducers({
 
   allSubtanceQuestionDetail: allSubtanceQuestionDetailReducer,
   randomSubtanceQuestionDetail: randomSubtanceQuestionDetailReducer,
+  dashboardSubvit: getDashboardReducer,
+  postResultSubvit: postResultReducer,
   newSubtanceQuestionDetail: newSubtanceQuestionDetailReducer,
   detailSubtanceQuestionDetail: detailSubtanceQuestionDetailReducer,
   updateSubtanceQuestionDetail: updateSubtanceQuestionDetailReducer,

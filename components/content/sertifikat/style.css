@@ -54,13 +54,35 @@
   left: 59%;
 }
 
+.responsive-date-from-without-background {
+  top: 93px;
+  left: 59%;
+}
+
 .responsive-year {
   top: 105px;
   left: 60%;
 }
 
+.responsive-year-without-background {
+  top: 102px;
+  left: 60%;
+}
+
 .responsive-date-text {
   font-size: 5px;
+}
+
+.responsive-font-size-nama-peserta {
+  font-size: 12px;
+}
+
+.responsive-font-size-sertifikat {
+  font-size: 16px;
+}
+
+.responsive-margin-without-background {
+  top: 38px;
 }
 
 @media (min-width: 768px) {
@@ -80,6 +102,11 @@
     top: 260px;
   }
 
+  .responsive-date-from-without-background {
+    top: 252px;
+    left: 59%;
+  }
+
   .responsive-date-text {
     font-size: 12px;
   }
@@ -88,7 +115,27 @@
     top: 287px;
     left: 60%;
   }
+
+  .responsive-year-without-background {
+    top: 278px;
+    left: 60%;
+  }
+
+  .responsive-font-size-nama-peserta {
+    font-size: 16px;
+  }
+
+
+
+  .responsive-font-size-sertifikat {
+    font-size: 24px;
+  }
+
+  .responsive-margin-without-background {
+    top: 120px;
+  }
 }
+
 
 #sertifikat-ck-editor .ck-editor__editable_inline {
   min-height: 46px;
@@ -131,6 +178,11 @@
     top: 245px;
   }
 
+  .responsive-date-from-without-background {
+    top: 237px;
+    left: 59%;
+  }
+
   .responsive-date-text {
     font-size: 14px;
   }
@@ -139,7 +191,26 @@
     top: 270px;
     left: 60%;
   }
+
+  .responsive-year-without-background {
+    top: 262px;
+    left: 60%;
+  }
+
+  .responsive-font-size-nama-peserta {
+    font-size: 16px;
+  }
+
+  .responsive-font-size-sertifikat {
+    font-size: 24px;
+  }
+
+  .responsive-margin-without-background {
+    top: 107px;
+  }
+
 }
+
 
 @media (min-width: 1200px) {
   .responsive-margin-peserta {
@@ -158,6 +229,15 @@
     top: 307px;
   }
 
+  .responsive-date-from-without-background {
+    top: 298px;
+    left: 59%;
+  }
+
+  .responsive-font-size-nama-peserta {
+    font-size: 20px;
+  }
+
   .responsive-date-text {
     font-size: 16px;
   }
@@ -165,5 +245,18 @@
   .responsive-year {
     top: 340px;
     left: 60%;
+  }
+
+  .responsive-year-without-background {
+    top: 328px;
+    left: 60%;
+  }
+
+  .responsive-font-size-sertifikat {
+    font-size: 32px;
+  }
+
+  .responsive-margin-without-background {
+    top: 138px;
   }
 }
