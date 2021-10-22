@@ -404,8 +404,8 @@ const TambahPage = ({ token }) => {
                       defaultValue={pageStatus}
                     >
                       <option value="">Pilih Status</option>
-                      <option value="Listed">Listed</option>
-                      <option value="Unlisted">Unlisted</option>
+                      <option value="1">Listed</option>
+                      <option value="0">Unlisted</option>
                     </select>
                     {/* <span className="form-text text-muted">
                       Please enter your full name

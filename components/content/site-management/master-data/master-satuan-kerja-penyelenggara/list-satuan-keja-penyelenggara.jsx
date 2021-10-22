@@ -36,9 +36,6 @@ const Table = ({ token }) => {
   }, [dispatch, allUnitWork.cari, allUnitWork.page, allUnitWork.limit, token]);
 
 
-
-
-
   return (
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">
@@ -135,12 +132,23 @@ const Table = ({ token }) => {
                       </td>
                       <td className="align-middle text-left">{items.name}</td>
                       <td className="align-middle text-left">
+                        {items.status == 1 ?
                         <p
-                          className="status-div-red mb-0"
-                          style={{ width: "max-content" }}
+                        className="status-div-green mb-0"
+                        style={{ width: "max-content" }}
                         >
-                          {items.status === "1" ? "Aktif" : "Tidak Aktif"}
+                          Aktif
                         </p>
+                        :
+
+                        <p
+                        className="status-div-red mb-0"
+                        style={{ width: "max-content" }}
+                        >
+                          Tidak Aktif
+                        </p>
+                        }
+
                       </td>
                       <td className="align-middle text-left">
                         <div className="d-flex align-items-center">
@@ -156,16 +164,15 @@ const Table = ({ token }) => {
                           </a>
                           </Link>
 
-
-                          <button
+                          <Link href={`/site-management/master-data/master-satuan-kerja-penyelenggara/detail-satuan-kerja-penyelenggara/${items.id}`}>
+                          <a
                             className="btn btn-link-action bg-blue-secondary ml-3 position-relative btn-delete"
-                            onClick={() =>
-                              router.push(`/site-management/master-data/master-satuan-kerja-penyelenggara/detail-satuan-kerja-penyelenggara`)
-                            }
                           >
                             <IconEye width="16" height="16" />
                             <div className="text-hover-show-hapus">Detail</div>
-                          </button>
+                          </a>
+                          </Link>
+                          
                         </div>
                       </td>
                     </tr>

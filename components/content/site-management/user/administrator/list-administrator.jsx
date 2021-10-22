@@ -10,36 +10,79 @@ import IconPencil from "../../../../assets/icon/Pencil";
 import IconDelete from "../../../../assets/icon/Delete";
 import IconAdd from "../../../../assets/icon/Add";
 import IconSearch from "../../../../assets/icon/Search";
-import AlertBar from '../../../partnership/components/BarAlert'
+import AlertBar from "../../../partnership/components/BarAlert";
 import IconArrow from "../../../../assets/icon/Arrow";
+import {
+  deleteAdminSite,
+  getAllAdminSite,
+  setPage,
+  searchCooporation,
+  limitCooporation,
+} from "../../../../../redux/actions/site-management/user/admin-site.action";
+
+import { DETAIL_ADMIN_SITE_RESET } from "../../../../../redux/types/site-management/user/admin-site.type";
 
 const Table = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
 
-  // function delete
-  const roleDelete = (id) => {
+  const allAdminSite = useSelector((state) => state.allAdminSite);
+  console.log("allAdminSite", allAdminSite);
+
+  const { isDeleted } = useSelector((state) => state.deleteAdminSite);
+
+  const [valueSearch, setValueSearch] = useState("");
+  const handleChangeValueSearch = (value) => {
+    setValueSearch(value);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    dispatch(searchCooporation(valueSearch));
+  };
+
+  const handleDelete = (id, token) => {
     Swal.fire({
-      title: "Apakah anda yakin ingin menghapus data ?",
+      title: "Apakah anda yakin menghapus data ?",
+      text: "Data ini tidak bisa dikembalikan !",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      cancelButtonText: "Batal",
       confirmButtonText: "Ya !",
-      dismissOnDestroy: false,
-    }).then(async (result) => {
-      if (result.value) {
-        // dispatch delete
+      cancelButtonText: "Batal",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(deleteAdminSite(id, token));
       }
     });
   };
 
-  const onNewReset = () => {
-    router.replace("/site-management/user/administrator", undefined, {
-      shallow: true,
+  useEffect(() => {
+    dispatch(getAllAdminSite(token));
+  }, [
+    dispatch,
+    allAdminSite.cari,
+    allAdminSite.page,
+    allAdminSite.limit,
+    token,
+  ]);
+
+  useEffect(() => {
+    if (isDeleted) {
+      Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
+        (result) => {
+          if (result.isConfirmed) {
+            dispatch(getAllAdminSite(token));
+          }
+        }
+      );
+    }
+    dispatch({
+      type: DETAIL_ADMIN_SITE_RESET,
     });
-  };
+  }, [isDeleted, dispatch, token]);
+
   return (
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">
@@ -52,7 +95,10 @@ const Table = ({ token }) => {
               List Administrator
             </h3>
             <div className="card-toolbar">
-              <Link href="/site-management/user/administrator/tambah-data-administrator" passHref>
+              <Link
+                href="/site-management/user/administrator/tambah-data-administrator"
+                passHref
+              >
                 <a className="btn btn-rounded-full bg-blue-primary text-white">
                   <IconAdd className="mr-3" width="14" height="14" />
                   Tambah Administrator
@@ -65,7 +111,7 @@ const Table = ({ token }) => {
               <div className="row align-items-center">
                 <div className="col-lg-12 col-xl-12">
                   <form
-                    // onSubmit={handleSubmit}
+                    onSubmit={handleSubmit}
                     className="d-flex align-items-center w-100"
                   >
                     <div className="row w-100">
@@ -80,9 +126,9 @@ const Table = ({ token }) => {
                             type="text"
                             className="form-control pl-10"
                             placeholder="Ketik disini untuk Pencarian..."
-                            // onChange={(e) =>
-                            //   handleChangeValueSearch(e.target.value)
-                            // }
+                            onChange={(e) =>
+                              handleChangeValueSearch(e.target.value)
+                            }
                           />
                           <button
                             type="submit"
@@ -103,111 +149,140 @@ const Table = ({ token }) => {
             </div>
             <div className="table-page mt-5">
               <div className="table-responsive">
-                <table className="table table-separate table-head-custom table-checkable">
-                  <thead style={{ background: "#F3F6F9" }}>
-                    <tr>
-                      <th className="text-left">No</th>
-                      <th className="text-left align-middle">Nama Lengkap</th>
-                      <th className="text-left align-middle">Email</th>
-                      <th className="text-left align-middle">Role</th>
-                      <th className="text-left align-middle">Status</th>
-                      <th className="text-left align-middle">Aksi</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="align-middle text-left">1</td>
-                      <td className="align-middle text-left">name</td>
-                      <td className="align-middle text-left">editable</td>
-                      <td className="align-middle text-left">
-                            role
-                      </td>
-                      <td className="align-middle text-left">
-                          <div className="position-relative w-max-content">
-                            <select
-                              name=""
-                              id=""
-                              className="form-control remove-icon-default dropdown-arrows-green"
-                              // key={index}
-                              // onChange={(e) =>
-                              //   changeListStatus(
-                              //     e,
-                              //     items.id,
-                              //     items.status.name
-                              //   )
-                              // }
-                            >
-                              <option value="1">
-                                {/* {items.status.name} */}
-                                Aktif
-                              </option>
-                              <option value="2">Tidak Aktif</option>
-                            </select>
-                            <IconArrow
-                              className="right-center-absolute"
-                              style={{ right: "10px" }}
-                              width="7"
-                              height="7"
-                            />
-                          </div>
-                        </td>
-                      <td className="align-middle text-left">
-                        <div className="d-flex align-items-center">
-                          <button
-                            className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                            onClick={() =>
-                              router.push(`/site-management/user/administrator/edit-data-administrator`)
-                            }
-                          >
-                            <IconPencil width="16" height="16" />
-                            <div className="text-hover-show-hapus">Ubah</div>
-                          </button>
-                          <button
-                            className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete"
-                            onClick={() =>
-                              router.push(`/site-management/user/administrator/detail-administrator`)
-                            }
-                          >
-                            <IconEye width="16" height="16" />
-                            <div className="text-hover-show-hapus">Detail</div>
-                          </button>
+                {allAdminSite.status === "process" ? (
+                  <LoadingTable />
+                ) : (
+                  <table className="table table-separate table-head-custom table-checkable">
+                    <thead style={{ background: "#F3F6F9" }}>
+                      <tr>
+                        <th className="text-left">No</th>
+                        <th className="text-left align-middle">Nama Lengkap</th>
+                        <th className="text-left align-middle">Email</th>
+                        <th className="text-left align-middle">Role</th>
+                        <th className="text-left align-middle">Status</th>
+                        <th className="text-left align-middle">Aksi</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {allAdminSite.data.list_role.length === 0 ? (
+                        <tr>
+                          <td colSpan="6" className="text-center">
+                            <h4>Data tidak ditemukan</h4>
+                          </td>
+                        </tr>
+                      ) : (
+                        allAdminSite.data.list_role.map((items, index) => {
+                          return (
+                            <tr key={index}>
+                              <td className="align-middle text-left">
+                                {allAdminSite.page === 1
+                                  ? index + 1
+                                  : (allAdminSite.page - 1) *
+                                      allAdminSite.limit +
+                                    (index + 1)}
+                              </td>
+                              <td className="align-middle text-left">
+                                {items.name}
+                              </td>
+                              <td className="align-middle text-left">
+                                Data masih null
+                              </td>
+                              <td className="align-middle text-left">role</td>
+                              <td className="align-middle text-left">
+                                <div className="position-relative w-max-content">
+                                  <select
+                                    name=""
+                                    id=""
+                                    className="form-control remove-icon-default dropdown-arrows-green"
+                                    // key={index}
+                                    // onChange={(e) =>
+                                    //   changeListStatus(
+                                    //     e,
+                                    //     items.id,
+                                    //     items.status.name
+                                    //   )
+                                    // }
+                                  >
+                                    <option value="1">
+                                      {/* {items.status.name} */}
+                                      Aktif
+                                    </option>
+                                    <option value="2">Tidak Aktif</option>
+                                  </select>
+                                  <IconArrow
+                                    className="right-center-absolute"
+                                    style={{ right: "10px" }}
+                                    width="7"
+                                    height="7"
+                                  />
+                                </div>
+                              </td>
+                              <td className="align-middle text-left">
+                                <div className="d-flex align-items-center">
+                                  <button
+                                    className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                    onClick={() =>
+                                      router.push(
+                                        `/site-management/user/administrator/edit-data-administrator`
+                                      )
+                                    }
+                                  >
+                                    <IconPencil width="16" height="16" />
+                                    <div className="text-hover-show-hapus">
+                                      Ubah
+                                    </div>
+                                  </button>
+                                  <button
+                                    className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete"
+                                    onClick={() =>
+                                      router.push(
+                                        `/site-management/user/administrator/detail-administrator`
+                                      )
+                                    }
+                                  >
+                                    <IconEye width="16" height="16" />
+                                    <div className="text-hover-show-hapus">
+                                      Detail
+                                    </div>
+                                  </button>
 
-                          <button
-                            className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                            // onClick={() =>
-                            //   roleDelete(items.id)
-                            // }
-                          >
-                            <IconDelete width="16" height="16" />
-                            <div className="text-hover-show-hapus">Hapus</div>
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                                  <button
+                                    className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                    // onClick={() =>
+                                    //   roleDelete(items.id)
+                                    // }
+                                  >
+                                    <IconDelete width="16" height="16" />
+                                    <div className="text-hover-show-hapus">
+                                      Hapus
+                                    </div>
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          );
+                        })
+                      )}
+                    </tbody>
+                  </table>
+                )}
               </div>
 
               <div className="row">
                 <div className="table-pagination paginate-cs">
-                  pagination
-                  {/* <Pagination
-                    activePage={allMKCooporation.page}
-                    itemsCountPerPage={
-                      allMKCooporation?.mk_cooporation?.data?.perPage
-                    }
-                    totalItemsCount={
-                      allMKCooporation?.mk_cooporation?.data?.total
-                    }
+                  <Pagination
+                    activePage={allAdminSite.page}
+                    itemsCountPerPage={allAdminSite.data.perPage}
+                    totalItemsCount={allAdminSite.data.total}
                     pageRangeDisplayed={3}
                     onChange={(page) => dispatch(setPage(page))}
                     nextPageText={">"}
                     prevPageText={"<"}
                     firstPageText={"<<"}
                     lastPageText={">>"}
-                    itemclassName="page-item"
-                    linkclassName="page-link"
-                  /> */}
+                    itemClass="page-item"
+                    linkClass="page-link"
+                  />
                 </div>
 
                 <div className="table-total ml-auto">
@@ -223,6 +298,9 @@ const Table = ({ token }) => {
                           borderColor: "#F3F6F9",
                           color: "#9E9E9E",
                         }}
+                        onChange={(e) =>
+                          dispatch(limitCooporation(e.target.value, token))
+                        }
                       >
                         <option value="5">5</option>
                         <option value="10">10</option>
@@ -236,7 +314,8 @@ const Table = ({ token }) => {
                         className="align-middle mt-3"
                         style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}
                       >
-                        Total Data 9 List Data
+                        Total Data{" "}
+                        {allAdminSite.data && allAdminSite.data.total} List Data
                       </p>
                     </div>
                   </div>

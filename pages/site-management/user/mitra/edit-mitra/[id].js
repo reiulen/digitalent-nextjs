@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../../../components/LoadingSkeleton";
 import { wrapper } from "../../../../../redux/store";
 import { getSession } from "next-auth/client";
-
+import { getDetailMitraSite } from "../../../../../redux/actions/site-management/user/mitra-site.actions";
 const ListUser = dynamic(
   () =>
     import(
@@ -30,7 +30,7 @@ export default function UserList(props) {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
-    async ({ query, req }) => {
+    async ({ params, req }) => {
       const session = await getSession({ req });
       if (!session) {
         return {
@@ -41,14 +41,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
-      // await store.dispatch(
-      //   getAllRoles(
-      //     query.page,
-      //     query.keyword,
-      //     query.limit,
-      //     session.user.user.data.token
-      //   )
-      // );
+      await store.dispatch(
+        getDetailMitraSite(params.id, session.user.user.data.token)
+      );
 
       return {
         props: {
