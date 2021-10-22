@@ -35,6 +35,7 @@ import {
   SET_ACADEMY_VALUE,
   SET_THEME_VALUE,
   SET_PAGE_VALUE,
+  SET_LIMIT_VALUE,
 } from "../../types/sertifikat/kelola-sertifikat.type";
 
 const initialStates = {
@@ -125,6 +126,12 @@ export const allSertifikatReducers = (state = initialStates, action) => {
       return {
         ...state,
         page: action.text,
+      };
+    }
+    case SET_LIMIT_VALUE: {
+      return {
+        ...state,
+        limit: action.text,
       };
     }
     case RESET_VALUE_FILTER: {

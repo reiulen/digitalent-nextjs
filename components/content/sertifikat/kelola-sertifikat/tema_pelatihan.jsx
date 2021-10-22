@@ -22,6 +22,7 @@ import {
   getAllSertifikat,
   searchKeyword,
   setValueAcademy,
+  setValueLimit,
   setValuePage,
   setValueTheme,
 } from "../../../../redux/actions/sertifikat/kelola-sertifikat.action";
@@ -80,11 +81,6 @@ export default function NamaPelatihan({ token }) {
     // if (limit) link = link.concat(`&limit=${limit}`);
     // router.push(link);
   };
-  console.log(allCertificates);
-  const handleLimit = val => {
-    setLimit(val);
-    router.push(`${router.pathname}?page=1&limit=${val}`);
-  };
 
   const handleSearch = e => {
     e.preventDefault();
@@ -134,6 +130,8 @@ export default function NamaPelatihan({ token }) {
     allCertificates.academy,
     allCertificates.limit,
   ]);
+
+  console.log(allCertificates);
 
   return (
     <PageWrapper>
@@ -421,42 +419,37 @@ export default function NamaPelatihan({ token }) {
                     />
                   </div>
                 )}
-                {certificate && certificate.total ? (
-                  <div className="table-total ml-auto">
-                    <div className="row mt-4">
-                      <div className="col-4 mr-0 p-0 my-auto">
-                        <select
-                          className="form-control"
-                          id="exampleFormControlSelect2"
-                          style={{
-                            width: "65px",
-                            background: "#F3F6F9",
-                            borderColor: "#F3F6F9",
-                            color: "#9E9E9E",
-                          }}
-                          onChange={e => handleLimit(e.target.value)}
-                          onBlur={e => handleLimit(e.target.value)}
-                        >
-                          <option>5</option>
-                          <option>10</option>
-                          <option>30</option>
-                          <option>40</option>
-                          <option>50</option>
-                        </select>
-                      </div>
-                      <div className="col-8 my-auto">
-                        <p
-                          className="align-middle my-auto"
-                          style={{ color: "#B5B5C3" }}
-                        >
-                          Total Data {certificate.total}
-                        </p>
-                      </div>
+                <div className="table-total ml-auto">
+                  <div className="row mt-4">
+                    <div className="col-4 mr-0 p-0 my-auto">
+                      <select
+                        className="form-control"
+                        id="exampleFormControlSelect2"
+                        style={{
+                          width: "65px",
+                          background: "#F3F6F9",
+                          borderColor: "#F3F6F9",
+                          color: "#9E9E9E",
+                        }}
+                        onChange={e => dispatch(setValueLimit(e.target.value))}
+                      >
+                        <option>5</option>
+                        <option>10</option>
+                        <option>30</option>
+                        <option>40</option>
+                        <option>50</option>
+                      </select>
+                    </div>
+                    <div className="col-8 my-auto">
+                      <p
+                        className="align-middle my-auto"
+                        style={{ color: "#B5B5C3" }}
+                      >
+                        Total Data {certificate.total}
+                      </p>
                     </div>
                   </div>
-                ) : (
-                  ""
-                )}
+                </div>
               </div>
               {/* End Pagination */}
             </div>

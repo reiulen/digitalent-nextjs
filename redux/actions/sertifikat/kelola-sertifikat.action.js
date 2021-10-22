@@ -34,6 +34,7 @@ import {
   SET_ACADEMY_VALUE,
   SET_THEME_VALUE,
   SET_PAGE_VALUE,
+  SET_LIMIT_VALUE,
 } from "../../types/sertifikat/kelola-sertifikat.type";
 
 export const getAllSertifikat = token => async (dispatch, getState) => {
@@ -95,6 +96,13 @@ export const setValueTheme = text => {
 export const setValuePage = text => {
   return {
     type: SET_PAGE_VALUE,
+    text,
+  };
+};
+
+export const setValueLimit = text => {
+  return {
+    type: SET_LIMIT_VALUE,
     text,
   };
 };
