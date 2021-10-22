@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
 // import ListSummary from "../../../components/content/pelatihan/summary/list-summary";
 import { getAllSummary } from "../../../redux/actions/pelatihan/summary.actions";
+import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
 import {
   dropdownAkademi,
   dropdownTema,
@@ -38,10 +39,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
-      if (!session) {
+      const middleware = middlewareAuthAdminSession(session);
+      if (!middleware.status) {
         return {
           redirect: {
-            destination: "http://dts-dev.majapahit.id/login/admin",
+            destination: middleware.redirect,
             permanent: false,
           },
         };

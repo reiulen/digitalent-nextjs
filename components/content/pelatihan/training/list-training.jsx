@@ -616,10 +616,10 @@ const ListTraining = ({ token }) => {
                         <th>Status Publish</th>
                         <th>Status Substansi</th>
                         <th>Status Pelatihan</th>
-                        <th>Aksi</th>
+                        <th className="row-aksi-pelatihan">Aksi</th>
                       </tr>
                     </thead>
-                    <tbody>
+                    <tbody className="w-100">
                       {!training ||
                       (training && training.list === null) ||
                       training.list.length === 0 ? (
@@ -727,7 +727,7 @@ const ListTraining = ({ token }) => {
                               </div>
                             </td>
                             <td className="align-middle">
-                              <div className="d-flex">
+                              <div className="d-flex flex-row">
                                 <Link
                                   href={`/pelatihan/pelatihan/edit-pelatihan/${row.id}`}
                                 >
