@@ -33,9 +33,11 @@ import {
   SET_KEYWORD_VALUE,
   SET_ACADEMY_VALUE,
   SET_THEME_VALUE,
+  SET_PAGE_VALUE,
+  SET_LIMIT_VALUE,
 } from "../../types/sertifikat/kelola-sertifikat.type";
 
-export const getAllSertifikat = (token) => async (dispatch, getState) => {
+export const getAllSertifikat = token => async (dispatch, getState) => {
   try {
     dispatch({ type: SERTIFIKAT_REQUEST });
     let link = process.env.END_POINT_API_SERTIFIKAT + `api/manage_certificates`;
@@ -69,30 +71,44 @@ export const getAllSertifikat = (token) => async (dispatch, getState) => {
   }
 };
 
-export const searchKeyword = (text) => {
+export const searchKeyword = text => {
   return {
     type: SET_KEYWORD_VALUE,
     text,
   };
 };
 
-export const setValueAcademy = (text) => {
+export const setValueAcademy = text => {
   return {
     type: SET_ACADEMY_VALUE,
     text,
   };
 };
 
-export const setValueTheme = (text) => {
+export const setValueTheme = text => {
   return {
     type: SET_THEME_VALUE,
     text,
   };
 };
 
+export const setValuePage = text => {
+  return {
+    type: SET_PAGE_VALUE,
+    text,
+  };
+};
+
+export const setValueLimit = text => {
+  return {
+    type: SET_LIMIT_VALUE,
+    text,
+  };
+};
+
 export const getDetailSertifikat =
   (id, page = 1, keyword = "", limit = 5, status = null, token) =>
-  async (dispatch) => {
+  async dispatch => {
     try {
       dispatch({ type: DETAIL_SERTIFIKAT_REQUEST });
       let link =
@@ -120,7 +136,7 @@ export const getDetailSertifikat =
     }
   };
 
-export const newSertifikat = (id, formData, token) => async (dispatch) => {
+export const newSertifikat = (id, formData, token) => async dispatch => {
   try {
     dispatch({ type: NEW_SERTIFIKAT_REQUEST });
     let link =
@@ -146,13 +162,13 @@ export const newSertifikat = (id, formData, token) => async (dispatch) => {
   }
 };
 
-export const clearErrors = () => async (dispatch) => {
+export const clearErrors = () => async dispatch => {
   dispatch({
     type: CLEAR_ERRORS,
   });
 };
 
-export const getSingleSertifikat = (id, token) => async (dispatch) => {
+export const getSingleSertifikat = (id, token) => async dispatch => {
   try {
     dispatch({ type: SINGLE_SERTIFIKAT_REQUEST });
     let link =
@@ -178,7 +194,7 @@ export const getSingleSertifikat = (id, token) => async (dispatch) => {
   }
 };
 
-export const getPublishedSertifikat = (id, token) => async (dispatch) => {
+export const getPublishedSertifikat = (id, token) => async dispatch => {
   try {
     dispatch({ type: PUBLISHED_SERTIFIKAT_REQUEST });
 
@@ -207,7 +223,7 @@ export const getPublishedSertifikat = (id, token) => async (dispatch) => {
   }
 };
 
-export const updateSertifikat = (id, formData, token) => async (dispatch) => {
+export const updateSertifikat = (id, formData, token) => async dispatch => {
   try {
     dispatch({ type: UPDATE_SERTIFIKAT_REQUEST });
 
@@ -234,7 +250,7 @@ export const updateSertifikat = (id, formData, token) => async (dispatch) => {
   }
 };
 
-export const getOptionsAcademy = (token) => async (dispatch) => {
+export const getOptionsAcademy = token => async dispatch => {
   try {
     dispatch({ type: OPTIONS_ACADEMY_REQUEST });
     let link = process.env.END_POINT_API_SERTIFIKAT + `api/option/academy`;
@@ -258,7 +274,7 @@ export const getOptionsAcademy = (token) => async (dispatch) => {
   }
 };
 
-export const getOptionsTheme = (token) => async (dispatch) => {
+export const getOptionsTheme = token => async dispatch => {
   try {
     dispatch({ type: OPTIONS_THEME_REQUEST });
     let link = process.env.END_POINT_API_SERTIFIKAT + `api/option/theme`;
