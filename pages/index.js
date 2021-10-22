@@ -6,7 +6,7 @@ import Beranda from "../user-component/content/beranda/beranda"
 import { wrapper } from "../redux/store";
 import { getAllAkademi } from "../redux/actions/beranda/beranda.actions";
 import { getTemaByAkademi } from "../redux/actions/beranda/beranda.actions";
-import { getPelatihanByTema } from "../redux/actions/beranda/beranda.actions";
+// import { getPelatihanByTema } from "../redux/actions/beranda/beranda.actions";
 
 export default function HomePage() {
   return (
@@ -19,17 +19,6 @@ export default function HomePage() {
   );
 }
 
-// export default function LoginAdminPage() {
-//   return (
-//     <>
-//       <div className="d-flex flex-column flex-root">
-//         {/* <LoginAdmin /> */}
-//         <Beranda />
-//       </div>
-//     </>
-//   );
-// }
-
 export const getStaticProps = wrapper.getStaticProps((store) => async({ query, req }) => {
   await store.dispatch(
     getAllAkademi()
@@ -39,9 +28,9 @@ export const getStaticProps = wrapper.getStaticProps((store) => async({ query, r
     getTemaByAkademi()
   )
 
-  await store.dispatch (
-    getPelatihanByTema()
-  )
+  // await store.dispatch (
+  //   getPelatihanByTema()
+  // )
 
   return {
     props: {
