@@ -28,6 +28,9 @@ import {
   SET_PAGE,
   SEARCH_COORPORATION,
   CLEAR_ERRORS,
+  DETAIL_LOG_API_REQUEST,
+  DETAIL_LOG_API_SUCCESS,
+  DETAIL_LOG_API_FAIL,
 } from "../../../types/site-management/settings/api.type";
 
 import axios from "axios";
@@ -217,14 +220,45 @@ export const getDetailApi = (id, token) => async (dispatch) => {
       `api/setting-api/detail/${id}`;
 
     const { data } = await axios.get(link, config);
+    console.log("data sdafdsaf", data);
 
     dispatch({
       type: DETAIL_API_SUCCESS,
       payload: data,
     });
   } catch (error) {
+    console.log("error", error.response.data.message);
     dispatch({
       type: DETAIL_API_FAIL,
+    });
+  }
+};
+
+export const getDetailLog = (id, token) => async (dispatch) => {
+  try {
+    dispatch({
+      type: DETAIL_LOG_API_REQUEST,
+    });
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    let link =
+      process.env.END_POINT_API_SITE_MANAGEMENT +
+      `api/setting-api/detail/log/${id}`;
+
+    const { data } = await axios.get(link, config);
+    console.log("data sdafdsaf", data);
+
+    dispatch({
+      type: DETAIL_LOG_API_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: DETAIL_LOG_API_FAIL,
     });
   }
 };

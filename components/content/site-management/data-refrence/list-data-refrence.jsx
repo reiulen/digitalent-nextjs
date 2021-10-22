@@ -162,12 +162,22 @@ console.log("allDataReference",allDataReference)
                                 {items.name}
                               </td>
                               <td className="align-middle text-left">
-                                <p
-                                  className="status-div-red mb-0"
-                                  style={{ width: "max-content" }}
-                                >
-                                 {items.status === 1 ? "Aktif" : "Nonaktif"}
-                                </p>
+                                 {items.status == 1 ?
+                        <p
+                        className="status-div-green mb-0"
+                        style={{ width: "max-content" }}
+                        >
+                          Aktif
+                        </p>
+                        :
+
+                        <p
+                        className="status-div-red mb-0"
+                        style={{ width: "max-content" }}
+                        >
+                          Tidak Aktif
+                        </p>
+                        }
                               </td>
                               <td className="align-middle text-left">
                                 <div className="d-flex align-items-center">
@@ -175,10 +185,7 @@ console.log("allDataReference",allDataReference)
                                   
                                   {items.data_references_relasi_id ?
                                   <Link
-                                    href={{
-                                      pathname:"/site-management/reference/ubah-reference-dengan-relasi",
-                                      query:{id:items.data_references_relasi_id}
-                                    }}
+                                    href={`/site-management/reference/ubah-reference-dengan-relasi/${items.id}`}
                                   >
                                     <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
                                       <IconPencil width="16" height="16" />
@@ -189,10 +196,7 @@ console.log("allDataReference",allDataReference)
                                   </Link>
                                   :
                                   <Link
-                                    href={{
-                                      pathname:"/site-management/reference/ubah-reference-tanpa-relasi",
-                                      query:{id:items.data_references_relasi_id}
-                                    }}
+                                    href={`/site-management/reference/ubah-reference-tanpa-relasi/${items.id}`}
                                   >
                                     <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
                                       <IconPencil width="16" height="16" />

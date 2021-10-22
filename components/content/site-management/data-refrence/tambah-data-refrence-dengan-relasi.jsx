@@ -20,7 +20,6 @@ const Tambah = ({ token }) => {
   const [status, setStatus] = useState("");
   const [idReference, setIdReference] = useState("");
   const [optionReference, setOptionReference] = useState([]);
-  console.log("optionReference", optionReference);
   const [optionFromReference, setOptionFromReference] = useState([]);
   const [formValue, setFormValue] = useState([]);
   const [formReferenceAndText, setFormReferenceAndText] = useState([
@@ -34,14 +33,9 @@ const Tambah = ({ token }) => {
     },
   ]);
 
-  console.log("formReferenceAndText",formReferenceAndText)
-  const [valueOptionJustText, setValueOptionJustText] = useState([
-    {
-      label: "",
-    },
-  ]);
+  // console.log("formReferenceAndText", formReferenceAndText);
   const [nameListFromReference, setNameListFromReference] = useState("");
-  console.log("nameListFromReference", nameListFromReference);
+  // console.log("nameListFromReference", nameListFromReference);
 
   const submit = async (e) => {
     e.preventDefault();
@@ -58,29 +52,12 @@ const Tambah = ({ token }) => {
         "error"
       );
     } else {
-
-
       let sendData = {
         name: nameReference,
         status: status,
         data_references_relasi_id: idReference,
-        data:formReferenceAndText
-        // data: [
-        //   {
-        //     relasi_id: "coba",
-        //     value: ["cakung", "buaran"],
-        //   },
-        //   {
-        //     relasi_id: 4,
-        //     value: ["tegalega", "ciamis"],
-        //   },
-        // ],
+        data: formReferenceAndText,
       };
-
-      console.log("sendData",sendData)
-
-
-
 
       try {
         let { data } = await axios.post(
@@ -102,37 +79,13 @@ const Tambah = ({ token }) => {
     }
   };
 
-  // const handleChangeOptionValueTextReference = (event) => {
-  //   setIdReference(event.target.value);
-  //   const { options, selectedIndex } = event.target;
-  //   const text = options[selectedIndex].text;
-  //   setNameListFromReference(text);
-  // };
-
-   const changeListDataReference = (e) => {
-     setIdReference(e.key)
-     setNameListFromReference(e.value)
-    // let data = e.map((items) => {
-    //   return { ...items, region: items.label };
-    // });
-    // const datas = data.map((items) => {
-    //   return {
-    //     region: items.region,
-    //   };
-    // });
-
-    // setValueProvinsi(datas);
-
-    console.log("changeListDataReference", e);
+  const changeListDataReference = (e) => {
+    setIdReference(e.key);
+    setNameListFromReference(e.value);
   };
 
   const handleAddInput = (idx, index) => {
     console.log("index", index);
-    // let _temp = [...valueOptionJustText];
-    // _temp.push({
-    //   label:""
-    // });
-    // setValueOptionJustText(_temp);
     let _temp = [...formReferenceAndText];
     _temp.map((items, ids) => {
       if (ids === idx) {
@@ -163,9 +116,6 @@ const Tambah = ({ token }) => {
     }
   };
 
-
-
-
   const handleAddFormReferenceText = () => {
     let _temp = [...formReferenceAndText];
     _temp.push({
@@ -179,28 +129,19 @@ const Tambah = ({ token }) => {
     setFormReferenceAndText(_temp);
   };
 
-  const handleCHangeNameReference = (e,index) => {
+  const handleCHangeNameReference = (e, index) => {
+    let _temp = [...formReferenceAndText];
+    _temp[index].relasi_id = e.key;
+    setFormReferenceAndText(_temp);
+  };
 
-
-
-
-    let _temp = [...formReferenceAndText]
-    _temp[index].relasi_id = e.key
-    setFormReferenceAndText(_temp)
-
-
-
-
-  }
-
-  const handleChangeTextForm = (e,idx,index) => {
+  const handleChangeTextForm = (e, idx, index) => {
     let _temp = [...formReferenceAndText];
 
-    _temp[idx].value[index].label = e.target.value
+    _temp[idx].value[index].label = e.target.value;
 
-    setFormReferenceAndText(_temp)
-  }
-
+    setFormReferenceAndText(_temp);
+  };
 
   useEffect(() => {
     async function getAllDataReference(token) {
@@ -213,10 +154,10 @@ const Tambah = ({ token }) => {
             },
           }
         );
-        let resultOptionReference = data.data.map((items) =>{
-          return {...items,label:items.value}
-        })
-        console.log("resultOptionReference",resultOptionReference)
+        let resultOptionReference = data.data.map((items) => {
+          return { ...items, label: items.value };
+        });
+        console.log("resultOptionReference", resultOptionReference);
         setOptionReference(resultOptionReference);
       } catch (error) {
         console.log(
@@ -239,10 +180,10 @@ const Tambah = ({ token }) => {
               },
             }
           );
-          let resultOptionReferenceChooce = data.data.map((items) =>{
-          return {...items,label:items.value}
-        })
-          console.log("data sub",data)
+          let resultOptionReferenceChooce = data.data.map((items) => {
+            return { ...items, label: items.value };
+          });
+          console.log("data sub", data);
           setOptionFromReference(resultOptionReferenceChooce);
         } catch (error) {
           console.log(
@@ -296,22 +237,6 @@ const Tambah = ({ token }) => {
               <div className="form-group">
                 <label>Pilih Data Reference</label>
 
-                {/* <select
-                  onChange={(e) => handleChangeOptionValueTextReference(e)}
-                  className="form-control"
-                >
-                  <option value="">Pilih data reference</option>
-                  {optionReference.length === 0
-                    ? ""
-                    : optionReference.data.map((items, index) => {
-                        return (
-                          <option key={index} value={items.key}>
-                            {items.value}
-                          </option>
-                        );
-                      })}
-                </select> */}
-
                 <Select
                   ref={(ref) => (selectRefDataReference = ref)}
                   className="basic-single"
@@ -327,7 +252,6 @@ const Tambah = ({ token }) => {
                   onChange={(e) => changeListDataReference(e)}
                   options={optionReference}
                 />
-
               </div>
 
               {/*  */}
@@ -338,39 +262,21 @@ const Tambah = ({ token }) => {
                       <div className="form-group mt-4">
                         <label>List {nameListFromReference}</label>
 
-
                         <Select
-                  ref={(ref) => (selectRefDataFromReference = ref)}
-                  className="basic-single"
-                  classNamePrefix="select"
-                  placeholder="Pilih provinsi"
-                  // defaultValue={allMK.stateListMitra[0]}
-                  isDisabled={false}
-                  isLoading={false}
-                  isClearable={false}
-                  isRtl={false}
-                  isSearchable={true}
-                  name="color"
-                  onChange={(e) => handleCHangeNameReference(e,idx)}
-                  options={optionFromReference}
-                />
-
-                        
-                        {/* <select className="form-control" onChange={(e) => handleCHangeNameReference(e,idx) }>
-                          <option value="">Pilih Data</option>
-                          {optionFromReference.length === 0
-                            ? ""
-                            : optionFromReference.data.map((items, index) => {
-                                return (
-                                  <option key={index} value={items.key}>
-                                    {items.value}
-                                  </option>
-                                );
-                              })}
-                        </select> */}
-
-
-
+                          ref={(ref) => (selectRefDataFromReference = ref)}
+                          className="basic-single"
+                          classNamePrefix="select"
+                          placeholder="Pilih provinsi"
+                          // defaultValue={allMK.stateListMitra[0]}
+                          isDisabled={false}
+                          isLoading={false}
+                          isClearable={false}
+                          isRtl={false}
+                          isSearchable={true}
+                          name="color"
+                          onChange={(e) => handleCHangeNameReference(e, idx)}
+                          options={optionFromReference}
+                        />
                       </div>
                     </div>
                     <div className="col-12 col-sm-6">
@@ -382,11 +288,12 @@ const Tambah = ({ token }) => {
                             <div className="position-relative d-flex align-items-start w-100">
                               <div className="w-100 mr-6">
                                 <input
-                                  // value={items.label}
                                   type="text"
                                   className="form-control"
                                   placeholder="Masukan data value"
-                                  onChange={(e)=>handleChangeTextForm(e,idx,index)}
+                                  onChange={(e) =>
+                                    handleChangeTextForm(e, idx, index)
+                                  }
                                 />
                               </div>
 
@@ -455,7 +362,7 @@ const Tambah = ({ token }) => {
                   <button
                     type="button"
                     className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
-                    onClick={(e)=>submit(e)}
+                    onClick={(e) => submit(e)}
                   >
                     Simpan
                   </button>

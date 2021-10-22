@@ -102,13 +102,6 @@ const GeneralPage = ({ token }) => {
         dismissOnDestroy: false,
       }).then(async (result) => {
         if (result.value) {
-          // let formData = new FormData();
-          // formData.append("name", lembaga);
-          // formData.append("email", email);
-          // formData.append("password", password);
-          // formData.append("password_confirmation", confirmPassword);
-
-          // dispatch(mitraRegister(formData));
 
           const sendData = {
             alamat: address,
@@ -116,34 +109,36 @@ const GeneralPage = ({ token }) => {
             logo: {
               header_logo: imageLogo,
               footer_logo: imageLogoApiFooter,
-              description: description,
             },
+            logo_description: description,
             social_media: formSocialMedia,
             color: color,
           };
 
-          try {
-            let { data } = await axios.post(
-              `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting/general/store`,
-              sendData,
-              {
-                headers: {
-                  authorization: `Bearer ${token}`,
-                },
-              }
-            );
+          console.log("sendData",sendData)
 
-            console.log("data berhasil", data);
+          // try {
+          //   let { data } = await axios.post(
+          //     `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting/general/store`,
+          //     sendData,
+          //     {
+          //       headers: {
+          //         authorization: `Bearer ${token}`,
+          //       },
+          //     }
+          //   );
 
-            Swal.fire("Berhasil", "Data berhasil disimpan", "succes");
-          } catch (error) {
-            console.log(error);
-            Swal.fire(
-              "Gagal simpan",
-              `${error.response.data.message}`,
-              "error"
-            );
-          }
+          //   console.log("data berhasil", data);
+
+          //   Swal.fire("Berhasil", "Data berhasil disimpan", "succes");
+          // } catch (error) {
+          //   console.log(error);
+          //   Swal.fire(
+          //     "Gagal simpan",
+          //     `${error.response.data.message}`,
+          //     "error"
+          //   );
+          // }
         }
       });
     }
@@ -327,17 +322,17 @@ const GeneralPage = ({ token }) => {
         );
         console.log("data geeneral", data);
         if (data) {
-          setIsUpdate(true);
-          setAddress(data.data.alamat);
+          // setIsUpdate(true);
+          // setAddress(data.data.alamat);
 
 
           
-          setFormSocialMedia(data.data.social_media);
+          // setFormSocialMedia(data.data.social_media);
 
-          setFormExternalLink(data.data.external_link)
-          setColor(data.data.color)
-          setImageLogoApi(data.data.logo);
-          setImageLogoApiOld(data.data.logo);
+          // setFormExternalLink(data.data.external_link)
+          // setColor(data.data.color)
+          // setImageLogoApi(data.data.logo);
+          // setImageLogoApiOld(data.data.logo);
         }
       } catch (error) {
         console.log(

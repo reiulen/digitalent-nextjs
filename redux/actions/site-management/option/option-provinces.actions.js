@@ -17,8 +17,6 @@ export const getAllOptionProvinces = (token) => async (dispatch, getState) => {
       }
     );
 
-    console.log("data", data);
-
     dispatch({
       type: PROVINCES_SUCCESS,
       payload: data,

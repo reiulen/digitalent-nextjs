@@ -174,7 +174,7 @@ const Table = ({ token }) => {
                               {items.api_name}
                             </td>
                             <td className="align-middle text-left">
-                              url belom ada di api
+                              {items.api_url}
                             </td>
                             <td className="align-middle text-left">
                               {items.api_key}
@@ -186,12 +186,22 @@ const Table = ({ token }) => {
                               {items.from_date} / {items.to_date}
                             </td>
                             <td className="align-middle text-left">
-                              <p
-                                className="status-div-red mb-0"
-                                style={{ width: "max-content" }}
-                              >
-                                {items.status}
-                              </p>
+                              {items.status == 1 ?
+                        <p
+                        className="status-div-green mb-0"
+                        style={{ width: "max-content" }}
+                        >
+                          Aktif
+                        </p>
+                        :
+
+                        <p
+                        className="status-div-red mb-0"
+                        style={{ width: "max-content" }}
+                        >
+                          Tidak Aktif
+                        </p>
+                        }
                             </td>
                             <td className="align-middle text-left">
                               <div className="d-flex align-items-center">

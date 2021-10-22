@@ -202,8 +202,8 @@ const TambahApi = ({ token }) => {
                   className="form-control"
                 >
                   <option value="">Pilih status</option>
-                  <option value="Aktif">Aktif</option>
-                  <option value="Nonaktif">Nonaktif</option>
+                  <option value="1">Aktif</option>
+                  <option value="0">Nonaktif</option>
                 </select>
               </div>
 

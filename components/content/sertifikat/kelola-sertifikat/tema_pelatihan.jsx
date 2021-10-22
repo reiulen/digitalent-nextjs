@@ -34,21 +34,6 @@ export default function NamaPelatihan({ token }) {
     useSelector(state => state.allCertificates);
 
   const allCertificates = useSelector(state => state.allCertificates);
-  // const { academyOptions, loading: loadingAcademy } = useSelector(
-  //   state => state.allAcademy
-  // );
-  // console.log(academyOptions, "ini  option");
-  // console.log(themeOptions, "ini  option");
-  // console.log(certificate, "ini  certificate");
-
-  useEffect(() => {
-    let arr = [];
-    academyOptions.forEach(el => {
-      // console.log(el);
-      arr.push({ value: el.name, label: el.name });
-    });
-    setDataAcademy(arr);
-  }, [academyOptions]);
 
   const [academy, setAcademy] = useState("");
   const [temaPelatihan, setTemaPelatihan] = useState("");
@@ -71,6 +56,22 @@ export default function NamaPelatihan({ token }) {
     dispatch({ type: RESET_VALUE_FILTER });
   };
 
+  useEffect(() => {
+    let arr = [];
+    academyOptions.forEach(el => {
+      arr.push({ id: el.id, value: el.name, label: el.name });
+    });
+    setDataAcademy(arr);
+  }, [academyOptions]);
+
+  useEffect(() => {
+    const filteredTheme = themeOptions.filter(items => items.id == academy?.id);
+    const data = filteredTheme.map(el => {
+      return { ...el, value: el.name, label: el.name };
+    });
+    setDataTemaPelatihan(data);
+  }, [academy, themeOptions]);
+
   const handlePagination = pageNumber => {
     let link = `${router.pathname}?page=${pageNumber}`;
     if (search) link = link.concat(`&keyword=${search}`);
@@ -88,25 +89,9 @@ export default function NamaPelatihan({ token }) {
     dispatch(searchKeyword(search));
   };
 
-  console.log(allCertificates);
-  const date = new Date();
-  console.log(date);
   const handleSelectAcademy = e => {
-    setAcademy(e?.value);
+    setAcademy(e);
     setDisable(false);
-    let arr = certificate.list_certificate;
-    const filteredTheme = arr.filter(el => el.theme.academy.name == e?.value);
-    const newArr = [{}];
-    filteredTheme.forEach((el, i) => {
-      newArr[i]["value"]
-        ? (newArr[i]["value"] = el.theme.name)
-        : (newArr[i] = {
-            ...newArr[i],
-            value: el.theme.name,
-            label: el.theme.name,
-          });
-    });
-    setDataTemaPelatihan(newArr);
     if (academy) {
       temaRef.select.clearValue();
     }
@@ -122,10 +107,10 @@ export default function NamaPelatihan({ token }) {
       );
     } else {
       if (academy) {
-        dispatch(setValueAcademy(academy));
+        dispatch(setValueAcademy(academy.value));
       }
       if (temaPelatihan) {
-        dispatch(setValueTheme(temaPelatihan));
+        dispatch(setValueTheme(temaPelatihan.value));
       }
     }
   };

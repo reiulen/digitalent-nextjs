@@ -229,7 +229,7 @@ const Tambah = ({ token }) => {
                   <div className="row" key={index}>
                     <div className="col-12 col-sm-6">
                       <div className="form-group mt-4">
-                        <label htmlFor="exampleSelect1">Provinsi</label>
+                        <label>Provinsi</label>
 
                         <Select
                           ref={(ref) => (selectRefProvinsi = ref)}

@@ -28,6 +28,9 @@ import {
   SET_PAGE,
   SEARCH_COORPORATION,
   CLEAR_ERRORS,
+  DETAIL_LOG_API_REQUEST,
+  DETAIL_LOG_API_SUCCESS,
+  DETAIL_LOG_API_FAIL,
 } from "../../../types/site-management/settings/api.type";
 
 const statuslist = {
@@ -174,13 +177,13 @@ export const detailApiReducer = (state = { apies: {} }, action) => {
       return {
         loading: false,
         success: action.payload.message,
-        apies: action.payload.data,
+        apies: action.payload,
       };
 
     case DETAIL_API_FAIL:
       return {
         loading: false,
-        error: action.payload,
+        error: null,
       };
 
     case DETAIL_API_RESET:
@@ -275,6 +278,30 @@ export const listFieldReducer = (state = { listField: [] }, action) => {
       return {
         loading: false,
         error: action.payload,
+      };
+
+    default:
+      return state;
+  }
+};
+export const listLogReducer = (state = { listLog: [] }, action) => {
+  switch (action.type) {
+    case DETAIL_LOG_API_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case DETAIL_LOG_API_SUCCESS:
+      return {
+        loading: false,
+        listLog: action.payload,
+        data: action.payload,
+      };
+
+    case DETAIL_LOG_API_FAIL:
+      return {
+        loading: false,
+        error: null,
       };
 
     default:

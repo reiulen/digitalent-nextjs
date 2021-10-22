@@ -20,11 +20,19 @@ const UbahApi = ({ token }) => {
 
   const detailApi = useSelector((state) => state.detailApi);
   console.log("detailApi", detailApi);
+  const listApi = useSelector(state => state.listApi)
+  console.log("listApiReducer",listApi)
+
+  const [optionListApi, setOptionListApi] = useState(listApi.listApi.map((items)=>{
+    return {label:items.api_url,value:items.api_url,id:items.id}
+  }))
+  console.log("optionListApi",optionListApi)
 
   const [nameApi, setNameApi] = useState(detailApi.apies.api_name);
   const [nameUser, setNameUser] = useState(detailApi.apies.username);
   const [status, setStatus] = useState(detailApi.apies.status);
   const [apiChoice, setApiChoice] = useState(detailApi.apies.id_api);
+  const [nameApiChoice, setNameApiChoice] = useState(detailApi.apies.api_url)
 
   const [from, setFrom] = useState(detailApi.apies.from_date);
   const [to, setTo] = useState(detailApi.apies.to_date);
@@ -94,7 +102,7 @@ const UbahApi = ({ token }) => {
               <div className="form-group">
                 <label>Pilih API</label>
                 <select className="form-control">
-                  <option>Placeholder</option>
+                  <option>{nameApiChoice}</option>
                 </select>
               </div>
 

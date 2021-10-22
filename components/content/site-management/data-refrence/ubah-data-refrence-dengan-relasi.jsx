@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import Swal from "sweetalert2";
@@ -8,9 +8,91 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import IconAdd from "../../../assets/icon/Add";
 import IconDelete from "../../../assets/icon/Delete";
+import { useDispatch, useSelector } from "react-redux";
+import Select from "react-select";
 
 const Tambah = ({ token }) => {
   const router = useRouter();
+  let selectRefDataReference = null;
+  let selectRefDataFromReference = null;
+
+  const detailDataReference = useSelector((state) => state.detailDataReference);
+  const allOptionReferenceSite = useSelector((state) => state.allOptionReferenceSite);
+  let tempOptionsReference = allOptionReferenceSite?.data;
+
+  console.log("detailDataReferenceReducer", detailDataReference);
+  // console.log("allOptionReferenceSite", allOptionReferenceSite);
+  const [defaultDataReference, setDefaultDataReference] = useState([
+    detailDataReference.dataReference.data_reference,
+  ]);
+
+
+  const [nameReference, setNameReference] = useState(
+    detailDataReference.dataReference.name
+  );
+  const [status, setStatus] = useState(
+    detailDataReference.dataReference.status
+  );
+  // state provinsi for set in option provinsi
+  const [referenceOption, setReferenceOption] = useState([]);
+  const [idReference, setIdReference] = useState("");
+  const [nameListFromReference, setNameListFromReference] = useState("");
+  const [optionFromReference, setOptionFromReference] = useState([]);
+  const changeListDataReference = (e) => {
+     setIdReference(e.key)
+     setNameListFromReference(e.value)
+  };
+
+  // sisa buat loop from detail nya
+
+  // const [formInput, setFormInput] = useState(
+  //   detailDataReference.dataReference.valueReference.map((items) => {
+  //     return {
+  //       provinsi: [{ label: items.provinsi, value: items.provinsi }],
+  //       kabupaten: items.kota_kabupaten,
+  //     };
+  //   })
+  // );
+
+  // console.log("formInput", formInput);
+
+  useEffect(() => {
+    let optionReference = tempOptionsReference?.map((items) => {
+      return { ...items, label: items.value };
+    });
+    setReferenceOption(optionReference);
+  }, [tempOptionsReference]);
+
+  useEffect(() => {
+    if (idReference) {
+      async function getAllDataFromIdReference(token, id) {
+        try {
+          let { data } = await axios.get(
+            `${process.env.END_POINT_API_SITE_MANAGEMENT}api/option/reference-choose/${id}`,
+            {
+              headers: {
+                authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          let resultOptionReferenceChooce = data.data.map((items) =>{
+          return {...items,label:items.value}
+        })
+          // console.log("data sub",data)
+          setOptionFromReference(resultOptionReferenceChooce);
+        } catch (error) {
+          console.log(
+            "error get all data reference",
+            error.response.data.message
+          );
+        }
+      }
+
+      getAllDataFromIdReference(token, idReference);
+    }
+    
+
+  }, [token, idReference])
 
   return (
     <PageWrapper>
@@ -31,44 +113,79 @@ const Tambah = ({ token }) => {
                   Nama Data Reference
                 </label>
                 <input
-                  required
-                  placeholder="Provinsi"
+                  placeholder="Masukan nama data reference"
                   type="text"
-                  name="category_cooperation"
+                  value={nameReference}
                   className="form-control"
-                  // onChange={e => setCategoryCooporation(e.target.value)}
+                  onChange={(e) => setNameReference(e.target.value)}
                 />
               </div>
+
               <div className="form-group">
-                <label htmlFor="exampleSelect1">Status</label>
-                <select className="form-control" id="exampleSelect1">
-                  <option>Placeholder</option>
-                </select>
-                <span className="form-text text-muted">
-                  Please enter your full name
-                </span>
+                <label>Status</label>
+                {status == 1 ? (
+                  <select
+                    className="form-control"
+                    onChange={(e) => setStatus(e.target.value)}
+                  >
+                    <option value="1">Aktif</option>
+                    <option value="0">Tidak aktif</option>
+                  </select>
+                ) : (
+                  <select
+                    className="form-control"
+                    onChange={(e) => setStatus(e.target.value)}
+                  >
+                    <option value="0">Tidak aktif</option>
+                    <option value="1">Aktif</option>
+                  </select>
+                )}
               </div>
+
               <div className="form-group">
-                <label htmlFor="exampleSelect1">Pilih Data Reference</label>
-                <select className="form-control" id="exampleSelect1">
-                  <option>Provinsi</option>
-                </select>
-                <span className="form-text text-muted">
-                  Please enter your full name
-                </span>
+                <label>Pilih Data Reference</label>
+                <Select
+                  ref={(ref) => (selectRefDataReference = ref)}
+                  className="basic-single"
+                  classNamePrefix="select"
+                  placeholder="Pilih provinsi"
+                  defaultValue={defaultDataReference.map((items) => {
+                    return { ...items, label: items.name, value: items.name };
+                  })}
+                  isDisabled={false}
+                  isLoading={false}
+                  isClearable={false}
+                  isRtl={false}
+                  isSearchable={true}
+                  name="color"
+                  onChange={(e) => changeListDataReference(e)}
+                  options={referenceOption}
+                />
               </div>
 
               {/*  */}
               <div className="row">
                 <div className="col-12 col-sm-6">
                   <div className="form-group mt-4">
-                    <label htmlFor="exampleSelect1">List Provinsi</label>
-                    <select className="form-control" id="exampleSelect1">
-                      <option>Jawa Barat</option>
-                    </select>
-                    <span className="form-text text-muted">
-                      Please enter your full name
-                    </span>
+                    <label>List {nameListFromReference}</label>
+                <Select
+                  ref={(ref) => (selectRefDataFromReference = ref)}
+                  className="basic-single"
+                  classNamePrefix="select"
+                  placeholder="Pilih provinsi"
+                  defaultValue={detailDataReference.dataReference.valueReference.map((items) => {
+                    return { label: items.value, value: items.value };
+                  })}
+                  isDisabled={false}
+                  isLoading={false}
+                  isClearable={false}
+                  isRtl={false}
+                  isSearchable={true}
+                  name="color"
+                  onChange={(e) => changeListDataReference(e)}
+                  options={optionFromReference}
+                />
+                   
                   </div>
                 </div>
                 <div className="col-12 col-sm-6">
@@ -82,9 +199,6 @@ const Tambah = ({ token }) => {
                           type="text"
                           className="form-control"
                         />
-                        <span className="form-text text-muted">
-                          Please enter your full name
-                        </span>
                       </div>
 
                       <div className="d-flex align-items-center">
@@ -109,15 +223,11 @@ const Tambah = ({ token }) => {
                     <div className="position-relative d-flex align-items-start w-100">
                       <div className="w-100 mr-6">
                         <input
-                          required
                           placeholder="Aceh"
                           name="cooperation"
                           type="text"
                           className="form-control"
                         />
-                        <span className="form-text text-muted">
-                          Please enter your full name
-                        </span>
                       </div>
 
                       <div className="d-flex align-items-center">

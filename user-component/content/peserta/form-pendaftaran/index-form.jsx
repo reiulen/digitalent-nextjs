@@ -17,19 +17,19 @@ const IndexForm = ({ token }) => {
   const router = useRouter();
 
   const { error: errorFormBuilder, formBuilder: dataForm } = useSelector(
-    (state) => state.getFormBuilder
+    state => state.getFormBuilder
   );
   const { error: errorPelatihan, pelatihan: dataTraining } = useSelector(
-    (state) => state.getPelatihan
+    state => state.getPelatihan
   );
   const { error: errorDataPribadi, dataPribadi } = useSelector(
-    (state) => state.getDataPribadi
+    state => state.getDataPribadi
   );
   const {
     error: errorNewPendaftaran,
     pendaftaran,
     loading,
-  } = useSelector((state) => state.newPendaftaranPelatihan);
+  } = useSelector(state => state.newPendaftaranPelatihan);
 
   let error;
   if (errorFormBuilder) error = errorFormBuilder;
@@ -59,8 +59,8 @@ const IndexForm = ({ token }) => {
           <FormPendaftaran
             propsTitle={title}
             propsForm={formBuilder}
-            funcForm={(val) => setDataPendaftaran(val)}
-            funcView={(val) => setView(val)}
+            funcForm={val => setDataPendaftaran(val)}
+            funcView={val => setView(val)}
           />
         );
         break;
@@ -73,7 +73,7 @@ const IndexForm = ({ token }) => {
             propsDataPelatihan={dataPelatihan}
             token={token}
             // funcForm={(val) => setDataPendaftaran(val)}
-            funcView={(val) => setView(val)}
+            funcView={val => setView(val)}
           />
         );
         break;
@@ -85,8 +85,8 @@ const IndexForm = ({ token }) => {
           <FormPendaftaran
             propsTitle={title}
             propsForm={formBuilder}
-            funcForm={(val) => setDataPendaftaran(val)}
-            funcView={(val) => setView(val)}
+            funcForm={val => setDataPendaftaran(val)}
+            funcView={val => setView(val)}
           />
         );
         break;

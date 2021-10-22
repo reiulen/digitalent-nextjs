@@ -7,4 +7,4 @@ deploy_staging:
   script:
     - ssh -i /home/gitlab-runner/devops.pem ubuntu@13.213.248.9 -T "/home/ubuntu/docker/dts-fe/dts-fe.sh dev"
   only:
-    - development
+    - development 
