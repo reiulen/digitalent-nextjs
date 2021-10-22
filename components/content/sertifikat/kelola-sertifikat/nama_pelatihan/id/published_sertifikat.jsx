@@ -43,14 +43,8 @@ export default function KelolasertifikatID({ token }) {
         link.download = "tes 123";
         link.click();
       }
-<<<<<<< HEAD
-    } catch (e) {
-      return;
-      console.log(e, "ini error sertifikat");
-=======
     } catch (error) {
       notify(error.response.data.message);
->>>>>>> 01713eb02abb022bf88375dbe676e6aa495a0146
     }
   };
 
