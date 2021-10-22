@@ -124,8 +124,8 @@ const EditArtikel = ({ token }) => {
   );
   const [gambarName, setGambarName] = useState(artikel.gambar);
   const [kategori_id, setKategoriId] = useState(artikel.kategori_id); //belum
-  const [users_id, setUserId] = useState(87);
-  // const [users_id, setUserId] = useState(artikel.users_id);
+  // const [users_id, setUserId] = useState(87);
+  const [users_id, setUserId] = useState(artikel.users_id);
   const [tag, setTag] = useState(artikel.tag);
   // const [publish, setPublish] = useState(artikel.publish === 1 ? true : false);
   const [publish, setPublish] = useState(artikel.publish);
@@ -197,18 +197,19 @@ const EditArtikel = ({ token }) => {
     }
   };
 
+  function hasWhiteSpace(s) {
+    return s.indexOf(' ') >= 0;
+  }
+
   const handleTag = (data) => {
+    // console.log(data);
     for (let i = 0; i < data.length; i++) {
-      for (let j = 0; j < data[i].length; j++) {
-        if (data[i][j] === " ") {
-          setDisableTag(true)
-        } else {
-          setDisableTag(false)
-        }
+      if (hasWhiteSpace(data[i])) {
+        data.splice([i], 1);
       }
     }
-    // console.log("Data Tag :", data)
-    setTag(data)
+    setTag(data);
+    // setTag(data)
   }
 
   const onSubmit = e => {
@@ -565,9 +566,6 @@ const EditArtikel = ({ token }) => {
     <>
       <PageWrapper>
         {/* {console.log(artikel)} */}
-        {/* {
-          console.log (setting)
-        } */}
 
         {error ? (
           <div

@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Row, Col } from "react-bootstrap";
+import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import { getDataPribadi } from "../../../../../redux/actions/pelatihan/function.actions";
 
@@ -17,12 +18,6 @@ const Informasi = ({ funcViewEdit, token }) => {
     <>
       <div className="informasi-pribadi">
         <h3 className="font-weight-bolder mb-5">Data Pribadi</h3>
-        <Row>
-          <Col md={12}>
-            <p className="text-neutral-body my-1">Deskripsi Diri</p>
-            <p>{(dataPribadi && dataPribadi.deskripsi) || "-"}</p>
-          </Col>
-        </Row>
         <Row>
           <Col md={6}>
             <p className="text-neutral-body my-1">Nama Lengkap</p>
@@ -56,11 +51,15 @@ const Informasi = ({ funcViewEdit, token }) => {
         <Row>
           <Col md={6}>
             <p className="text-neutral-body my-1">Tempat Lahir</p>
-            <p>{(dataPribadi && dataPribadi.tampat_lahir) || "-"}</p>
+            <p>{(dataPribadi && dataPribadi.tempat_lahir) || "-"}</p>
           </Col>
           <Col md={6}>
             <p className="text-neutral-body my-1">Tanggal lahir</p>
-            <p>{(dataPribadi && dataPribadi.tanggal_lahir) || "-"}</p>
+            <p>
+              {(dataPribadi &&
+                moment(dataPribadi.tanggal_lahir).format("DD MMM YYYY")) ||
+                "-"}
+            </p>
           </Col>
         </Row>
         <hr />
@@ -91,18 +90,6 @@ const Informasi = ({ funcViewEdit, token }) => {
           <Col md={12}>
             <p className="text-neutral-body my-1">KTP</p>
             <p>{(dataPribadi && dataPribadi.File_ktp) || "-"}</p>
-          </Col>
-        </Row>
-        <Row>
-          <Col md={12}>
-            <p className="text-neutral-body my-1">CV</p>
-            <p>CV-me.pdf</p>
-          </Col>
-        </Row>
-        <Row>
-          <Col md={12}>
-            <p className="text-neutral-body my-1">Link Portofolio</p>
-            <p>google.com</p>
           </Col>
         </Row>
       </div>
