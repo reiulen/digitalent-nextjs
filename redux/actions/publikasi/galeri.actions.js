@@ -51,6 +51,7 @@ export const getAllGaleri = (page = 1, keyword = '', limit = 5, publish = null, 
             },
         };
         const { data } = await axios.get(link, config)
+        
         dispatch({
             type: GALERI_SUCCESS,
             payload: data

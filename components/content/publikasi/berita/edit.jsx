@@ -327,9 +327,6 @@ const EditBerita = ({ token, idUser }) => {
             {/* {
                 console.log(berita)
             } */}
-            {/* {
-                console.log(setting)
-            } */}
             <PageWrapper>
                 {error ?
                     <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
@@ -544,7 +541,7 @@ const EditBerita = ({ token, idUser }) => {
                                             onChange={(data) => handleTag(data)}
                                             // onChange={setTag}
                                             name="tag"
-                                            placeHolder="Isi Tag disini dan tekan `Enter` atau `Tab`."
+                                            placeHolder="Isi Tag disini"
                                             seprators={["Enter", "Tab"]}
                                         />
                                         {

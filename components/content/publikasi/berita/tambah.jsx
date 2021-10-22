@@ -501,7 +501,7 @@ const TambahBerita = ({ token, id }) => {
                                         // onChange={setTag}
                                         onChange={(data) => handleTag(data)}
                                         name="tag"
-                                        placeHolder="Isi Tag disini dan tekan `Enter` atau `Tab`."
+                                        placeHolder="Isi Tag disini"
                                         seprators={["Enter", "Tab"]}
                                     />
                                     {

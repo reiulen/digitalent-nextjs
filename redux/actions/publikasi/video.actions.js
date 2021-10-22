@@ -113,10 +113,6 @@ export const newVideo = (videoData, token) => async (dispatch) => {
             type: NEW_VIDEO_SUCCESS,
             payload: data
         })
-<<<<<<< HEAD
-
-=======
->>>>>>> 66b5352af30e4aa3554be2c1ab2f16943173b764
     } catch (error) {
         dispatch({
             type: NEW_VIDEO_FAIL,
@@ -131,11 +127,6 @@ export const updateVideo = (videoData, token) => async (dispatch) => {
 
         let link = process.env.END_POINT_API_PUBLIKASI + `api/video/${videoData.id}`
 
-<<<<<<< HEAD
-        // const { data } = await axios.post (link, dataToSend)
-
-=======
->>>>>>> 66b5352af30e4aa3554be2c1ab2f16943173b764
         const config = {
             headers: {
                 Authorization: 'Bearer ' + token,
@@ -147,10 +138,6 @@ export const updateVideo = (videoData, token) => async (dispatch) => {
             type: UPDATE_VIDEO_SUCCESS,
             payload: data
         })
-<<<<<<< HEAD
-
-=======
->>>>>>> 66b5352af30e4aa3554be2c1ab2f16943173b764
     } catch (error) {
         dispatch({
             type: UPDATE_VIDEO_FAIL,

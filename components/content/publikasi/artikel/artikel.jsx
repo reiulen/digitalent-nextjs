@@ -362,8 +362,8 @@ const Artikel = ({ token }) => {
             color='#ffffff'
             // icon="garis-yellow.svg"
             // color="#634100"
-            value="64"
-            titleValue="Artikel"
+            value="0"
+            titleValue="Orang"
             title="Total Author"
             publishedVal=""
             routePublish={() => handlePublish("")}
@@ -374,8 +374,8 @@ const Artikel = ({ token }) => {
             color='#ffffff'
             // icon="orang-tambah-green.svg"
             // color="#74BBB7"
-            value="64"
-            titleValue="K"
+            value="0"
+            titleValue="Orang"
             title="Total Pembaca"
             publishedVal=""
             routePublish={() => handlePublish("")}
@@ -727,7 +727,7 @@ const Artikel = ({ token }) => {
                                 )}
                               </td>
                               <td className="align-middle">
-                                {artikel.role}
+                                {artikel.role[0].name}
                                 {/* Super Admin */}
                               </td>
                               <td className="align-middle d-flex">

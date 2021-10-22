@@ -407,8 +407,8 @@ const Vidio = ({ token }) => {
                         color='#ffffff'
                         // icon='garis-yellow.svg' 
                         // color='#634100' 
-                        value='64'
-                        titleValue='Video'
+                        value='0'
+                        titleValue='Orang'
                         title='Total Author'
                         publishedVal=""
                         routePublish={() => handlePublish("")}
@@ -755,7 +755,7 @@ const Vidio = ({ token }) => {
                                                                 }
 
                                                             </td>
-                                                            <td className='align-middle'>{row.role}</td>
+                                                            <td className='align-middle'>{row.role[0].name}</td>
                                                             <td className="align-middle d-flex">
 
                                                                 <button

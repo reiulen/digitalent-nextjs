@@ -474,8 +474,8 @@ const Imagetron = ({ token }) => {
                         color='#ffffff'
                         // icon='orang-tambah-green.svg' 
                         // color='#74BBB7' 
-                        value='64'
-                        titleValue='K'
+                        value='0'
+                        titleValue='Orang'
                         title='Total Author'
                         publishedVal=""
                         routePublish={() => handlePublish("")}
@@ -681,58 +681,10 @@ const Imagetron = ({ token }) => {
                                     </div>
                                 </div>
                             </div>
-                            {/* <div className="row align-items-right">
-                                <div className="col-lg-2 col-xl-2">
-                                    <small className="form-text text-muted">
-                                        Dari Tanggal
-                                    </small>
-                                    <DatePicker
-                                        className="form-search-date form-control-sm form-control"
-                                        selected={startDate}
-                                        onChange={(date) => setStartDate(date)}
-                                        selectsStart
-                                        startDate={startDate}
-                                        endDate={endDate}
-                                        dateFormat="dd/MM/yyyy"
-                                    // minDate={addDays(new Date(), 20)}
-                                    />
-                                    
-                                </div>
-                                <div className="col-lg-2 col-xl-2">
-                                    <small className="form-text text-muted">
-                                        Sampai Tanggal
-                                    </small>
-                                    <DatePicker
-                                        className="form-search-date form-control-sm form-control"
-                                        selected={endDate}
-                                        onChange={(date) => setEndDate(date)}
-                                        selectsEnd
-                                        startDate={startDate}
-                                        endDate={endDate}
-                                        minDate={startDate}
-                                        maxDate={addDays(startDate, 20)}
-                                        dateFormat="dd/MM/yyyy"
-                                    />
-                                    
-                                </div>
-                                <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
-                                    <button
-                                        type="button"
-                                        className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block"
-                                        onClick={handleSearchDate}
-                                    >
-                                        Cari
-                                    </button>
-                                </div>
-                            </div> */}
                         </div>
 
                         <div className="table-page mt-5">
                             <div className="table-responsive">
-
-                                {/* <div className="loading text-center justify-content-center">
-                                    <BeatLoader color='#3699FF' loading={loading} css={override} size={10} />
-                                </div> */}
 
                                 <LoadingTable loading={loading} />
 
@@ -816,7 +768,7 @@ const Imagetron = ({ token }) => {
                                                                 )}
                                                             </td>
                                                             {/* <td className='align-middle'>Super Admin</td> */}
-                                                            <td className='align-middle'>{row.role}</td>
+                                                            <td className='align-middle'>{row.role[0].name}</td>
                                                             <td className="align-middle d-flex justify-content-center">
 
                                                                 <Link

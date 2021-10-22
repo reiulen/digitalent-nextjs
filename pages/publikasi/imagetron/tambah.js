@@ -23,7 +23,6 @@ const Tambah = dynamic(
 
 export default function TambahPage(props) {
   const session = props.session.user.user.data;
-  // console.log("Data User :", session.user.id)
   return (
     <>
       <div className="d-flex flex-column flex-root">

@@ -187,59 +187,6 @@ const EditGaleri = ({ token }) => {
         setTotalImage(data.length)
     }
 
-    // const getBase64Image = (imgUrl) => {
-    //     var canvas = document.createElement("canvas");
-    //     canvas.width = imgUrl.width;
-    //     canvas.height = imgUrl.height;
-    //     var ctx = canvas.getContext("2d");
-    //     ctx.drawImage(imgUrl, 0, 0);
-    //     var dataURL = canvas.toDataURL("image/png");
-    //     return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
-
-    //     // reader.readAsDataURL(imgUrl);
-
-    //     // let blob = await fetch(imgUrl).then(r => r.blob());
-    //     //     console.log (blob)
-    //     // return new Promise(
-    //     //   function(resolve, reject) {
-
-    //     //     var img = new Image();
-    //     //     img.src = imgUrl;
-    //     //     img.setAttribute('crossOrigin', 'anonymous');
-
-    //     //     img.onload = function() {
-    //     //       var canvas = document.createElement("canvas");
-    //     //       canvas.width = img.width;
-    //     //       canvas.height = img.height;
-    //     //       var ctx = canvas.getContext("2d");
-    //     //       ctx.drawImage(img, 0, 0);
-    //     //       var dataURL = canvas.toDataURL("image/png");
-    //     //       resolve(dataURL.replace(/^data:image\/(png|jpg);base64,/, ""));
-    //     //     }
-    //     //     img.onerror = function() {
-    //     //       reject("The image could not be loaded.");
-    //     //     }
-
-    //     // });
-
-    // }
-
-    // const getBase64FromUrl = async (url) => {
-    //     const data = await fetch(url , {mode: "no-cors"});
-    //     const blob = await data.blob();
-    //     return new Promise((resolve) => {
-    //       const reader = new FileReader();
-    //       reader.readAsDataURL(blob); 
-    //     // reader.readAsDataURL(url); 
-    //       reader.onloadend = () => {
-    //         const base64data = reader.result;   
-    //         resolve(base64data);
-    //         console.log (reader)
-    //         console.log (base64data)
-    //       }
-    //     });
-    //   }
-
     const onChangeImage = (e, index) => {
         const type = ["image/jpg", "image/png", "image/jpeg"];
         let list = [...image];
@@ -399,6 +346,7 @@ const EditGaleri = ({ token }) => {
                 image_delete: deleteImg
             }
             dispatch(onCall(data, token))
+            // console.log("UNPUBLISH :", data)
         } else {
             const data = {
                 judul,
@@ -416,6 +364,7 @@ const EditGaleri = ({ token }) => {
             }
 
             dispatch(onCall(data, token))
+            // console.log("PUBLISH :", data)
         }
     }
 
@@ -445,7 +394,7 @@ const EditGaleri = ({ token }) => {
         for (let i = 0; i < image.length; i++) {
             flag += 1
 
-            if (image[i].imagePreview !== "") {
+            if (image[i].imageBase64 !== undefined) {
                 // temps.push(image[i])
                 temps.push(image[i].imageBase64)
             }
@@ -456,67 +405,6 @@ const EditGaleri = ({ token }) => {
         }
     }
 
-    // const onSubmit = (e) => {
-    //     e.preventDefault();
-    //     if (error) {
-    //         dispatch(clearErrors());
-    //     }
-
-    //     if (success) {
-    //         dispatch({
-    //             // type: NEW_ARTIKEL_RESET
-    //             type: UPDATE_GALERI_RESET,
-    //         });
-    //     }
-
-    //     if (publish === true) {
-    //         setPublish(1)
-
-    //     } else if (publish === false) {
-    //         setPublish(0)
-
-    //     }
-
-    //     if (publishDate === null) {
-    //         let today = new Date
-
-    //         const data = {
-    //             judul,
-    //             isi_galleri,
-    //             gambar,
-    //             kategori_id,
-    //             users_id,
-    //             tag,
-    //             publish,
-    //             id,
-    //             _method,
-    //             tanggal_publish: moment(today).format("YYYY-MM-DD")
-    //         };
-
-    //         dispatch(updateGaleri(data));
-    //         console.log(data)
-
-    //     } else {
-    //         const data = {
-    //             judul,
-    //             isi_galleri,
-    //             gambar,
-    //             kategori_id,
-    //             users_id,
-    //             tag,
-    //             publish,
-    //             id,
-    //             _method,
-    //             tanggal_publish: moment(publishDate).format("YYYY-MM-DD")
-    //         };
-
-    //         dispatch(updateGaleri(data));
-    //         console.log(data)
-    //     }
-
-
-    // };
-
     const onNewReset = () => {
         dispatch({
             // type: NEW_ARTIKEL_RESET
@@ -524,45 +412,9 @@ const EditGaleri = ({ token }) => {
         });
     };
 
-    // const onSetPublish = (e) => {
-    //   Swal.fire({
-    //     title: "Ubah status publikasi?",
-    //     text: "Status publikasi akan berubah",
-    //     icon: "warning",
-    //     showCancelButton: true,
-    //     confirmButtonColor: "#3085d6",
-    //     cancelButtonColor: "#d33",
-    //     confirmButtonText: "Ya !",
-    //     cancelButtonText: "Batal",
-    //   }).then((result) => {
-    //     if (result.isConfirmed) {
-    //       Swal.fire("Berhasil", "Status publikasi telah diubah", "success");
-
-    //       console.log(e);
-    //       setPublish(e);
-    //     } else {
-    //       Swal.fire("Batal", "Status publikasi telah batal diubah", "info");
-
-    //       console.log(!e);
-    //       setPublish(!e);
-    //     }
-    //   });
-
-    //   // Swal.fire (
-    //   //     'Berhasil',
-    //   //     'Status publikasi telah diubah',
-    //   //     'success'
-    //   // )
-
-    //   // setPublish(e)
-    // };
-
+    
     return (
         <PageWrapper>
-            {/* {
-                console.log("Cek Edit Image :", galeri)
-            } */}
-
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
                     <div className="alert-icon"><i className="flaticon-warning"></i></div>

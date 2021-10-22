@@ -855,7 +855,7 @@ const EditArtikel = ({ token, idUser }) => {
                       onChange={(data) => handleTag(data)}
                       // onKeyPress={(data) => keyPressTag(data)}
                       name="fruits"
-                      placeHolder="Isi Tag disini dan tekan `Enter` atau `Tab`."
+                      placeHolder="Isi Tag disini"
                       seprators={["Enter", "Tab"]}
                     // onBlur={() => simpleValidator.current.showMessageFor('tag')}
                     />

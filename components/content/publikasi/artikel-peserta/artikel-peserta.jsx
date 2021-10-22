@@ -568,6 +568,7 @@ const ArtikelPeserta = ({ token }) => {
                                                 !artikel_peserta || artikel_peserta && artikel_peserta.artikel.length === 0 ?
                                                     <td className='align-middle text-center' colSpan={9}>Data Tidak Ditemukan</td> :
                                                     artikel_peserta && artikel_peserta.artikel && artikel_peserta.artikel.map((row, i) => {
+                                                        // console.log("DATA ROW :", row)
                                                         return <tr key={row.id}>
                                                             <td className='align-middle text-center'>
                                                                 {
@@ -615,7 +616,7 @@ const ArtikelPeserta = ({ token }) => {
                                                                 }
 
                                                             </td>
-                                                            <td className='align-middle'>Peserta</td>
+                                                            <td className='align-middle'>{row.role[0].name}</td>
                                                             <td className='align-middle d-flex'>
                                                                 <Link
                                                                     href={`/publikasi/artikel-peserta/preview/${row.id}`}
