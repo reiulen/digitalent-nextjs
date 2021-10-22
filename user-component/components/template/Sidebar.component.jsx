@@ -53,8 +53,6 @@ const Sidebar = () => {
     }
   };
 
-  console.log(router);
-
   return (
     <>
       <div className={styles.titlePlatform}>PLATFORM</div>

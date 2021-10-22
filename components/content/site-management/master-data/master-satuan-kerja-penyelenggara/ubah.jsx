@@ -20,8 +20,6 @@ const TambahApi = ({ token }) => {
 
   const drowpdownProvinsi = useSelector((state) => state.drowpdownProvinsi);
   const detailUnitWork = useSelector((state) => state.detailUnitWork);
-  console.log("drowpdownProvinsi", drowpdownProvinsi);
-  console.log("detailUnitWork", detailUnitWork);
   let tempOptionsProvinsi = drowpdownProvinsi.data.data;
   let defaultOptionFromApi = detailUnitWork.unitWork.provinsi;
   const [provinsi, setProvinsi] = useState([]);
@@ -29,7 +27,6 @@ const TambahApi = ({ token }) => {
   const [status, setStatus] = useState("");
   const [valueProvinsi, setValueProvinsi] = useState("");
   const [defaultValueProvisniApi, setDefaultValueProvisniApi] = useState([])
-  console.log("defaultValueProvisniApi",defaultValueProvisniApi)
   const [kabupaten, setKabupaten] = useState([]);
 
   // filter data just region show
@@ -42,10 +39,7 @@ const TambahApi = ({ token }) => {
         region: items.region,
       };
     });
-
     setValueProvinsi(datas);
-
-    console.log("change provinsi value", datas);
   };
 
   const submit = (e) => {
@@ -97,7 +91,6 @@ const TambahApi = ({ token }) => {
               );
             });
           } catch (error) {
-            console.log(error);
             Swal.fire("Gagal ubah", `${error.response.data.message}`, "error");
           }
         }

@@ -175,7 +175,6 @@ const EditAcademy = ({ token }) => {
         status: status.value,
         id: idInt,
       };
-      console.log(data);
       dispatch(updateAcademy(data, token));
     } else {
       simpleValidator.current.showMessages();
@@ -307,7 +306,6 @@ const EditAcademy = ({ token }) => {
                       onChange={(event, editor) => {
                         const data = editor.getData();
                         setDescription(data);
-                        // console.log({ event, editor, data });
                       }}
                       onBlur={() =>
                         simpleValidator.current.showMessageFor("deskripsi")

@@ -23,7 +23,6 @@ const Tambah = ({ token }) => {
   let tempOptionsProvinsi = drowpdownProvinsi?.data?.data?.value_reference;
 
   const [provinsi, setProvinsi] = useState([]);
-  console.log("provinsi",provinsi)
   const [namaZonation, setNamaZonation] = useState("");
   const [status, setStatus] = useState("");
 
@@ -32,9 +31,6 @@ const Tambah = ({ token }) => {
 
   const [defaultValueKab, setDefaultValueKab] = useState("")
   const [defaultValueProv, setDefaultValueProv] = useState("")
-
-  console.log("formInput",formInput)
-  console.log("valueForm",valueForm)
 
   const handleAddInput = () => {
     let _temp = [...formInput];
@@ -85,7 +81,7 @@ const Tambah = ({ token }) => {
 
       _tempValue[index].provinsi = e.label;
     } catch (error) {
-      console.log(error);
+      notify(error.response.data.message);
     }
   };
 
@@ -136,14 +132,12 @@ const Tambah = ({ token }) => {
             },
           }
         );
-        console.log("data", data);
         setNamaZonation(data.data.name);
         setStatus(data.data.status);
-
         setFormInput(data.data.data);
         setValueForm(data.data.data);
       } catch (error) {
-        console.log("error, get", error);
+        notify(error.response.data.message);
       }
     }
 

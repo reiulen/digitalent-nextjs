@@ -91,6 +91,7 @@ export const getRandomSubtanceQuestionDetail =
       if (training_id) link = link.concat(`&training_id=${training_id}`);
       if (category) link = link.concat(`&category=${category}`);
       if (theme_id) link = link.concat(`&theme_id=${theme_id}`);
+
       const config = {
         headers: {
           Authorization: "Bearer " + token,

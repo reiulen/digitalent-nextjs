@@ -20,7 +20,7 @@ import html2canvas from "html2canvas";
 // #Icon
 
 export default function ListPesertaID({ token }) {
-  // console.log(token);
+  
   const router = useRouter();
   const { query } = router;
 
@@ -33,8 +33,6 @@ export default function ListPesertaID({ token }) {
     participant,
   } = useSelector(state => state.detailParticipant);
 
-  console.log(certificate);
-  console.log(participant);
   const [type, setType] = useState(
     certificate.data.certificate.certificate_type
   );
@@ -64,15 +62,13 @@ export default function ListPesertaID({ token }) {
   };
 
   const handleDownload = async () => {
-    // const data = await convertDivToPng(divReference.current);
+
     const data = await convertDivToPng(divReference.current);
     if (data) {
-      console.log(data);
       const link = document.createElement("a");
       link.download = `Sertifikat - ${query.name}.png`;
       link.href = data;
       link.click();
-      // router.reload();
     }
     if (type == "2 lembar") {
       const image = document.getElementById("image2").getAttribute("src");

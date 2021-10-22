@@ -29,9 +29,13 @@ const DashbardSubvit = () => {
 
   const data = [];
 
+<<<<<<< HEAD
   const [dataDummy] = useState(dashboard_subvit);
 
   Object.entries(dataDummy.chart).map((item) => {
+=======
+  Object.entries(dataDummy.data.chart).map((item, index) => {
+>>>>>>> 01713eb02abb022bf88375dbe676e6aa495a0146
     return data.push({ name: item[0], value: item[1] });
   });
 

@@ -63,7 +63,6 @@ const DetailSurvey = ({ token }) => {
   };
 
   const handleDelete = (id) => {
-    console.log(id);
     Swal.fire({
       title: "Apakah anda yakin ?",
       text: "Data ini tidak bisa dikembalikan !",
@@ -111,7 +110,6 @@ const DetailSurvey = ({ token }) => {
   // };
 
   const handleSearch = () => {
-    console.log(search);
     router.push(`${router.pathname}?id=${id}&page=1&keyword=${search}`);
   };
 

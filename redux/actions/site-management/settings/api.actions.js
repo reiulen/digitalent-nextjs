@@ -162,7 +162,6 @@ export const getListApi = (token) => async (dispatch, getState) => {
       payload: data,
     });
   } catch (error) {
-    console.log("error", error);
     dispatch({
       type: GET_LIST_API_FAIL,
       payload: error.response.data.message,
@@ -182,8 +181,6 @@ export const getListField = (id, token) => async (dispatch, getState) => {
       }
     );
 
-    console.log("data", data.data);
-
     let dataSortir = data.data.map((items) => {
       return {
         ...items,
@@ -198,7 +195,6 @@ export const getListField = (id, token) => async (dispatch, getState) => {
       sortirData: dataSortir,
     });
   } catch (error) {
-    console.log("error", error);
     dispatch({
       type: GET_LIST_FIELD_FAIL,
       payload: error.response.data.message,
@@ -228,7 +224,6 @@ export const getDetailApi = (id, token) => async (dispatch) => {
       payload: data,
     });
   } catch (error) {
-    console.log("error", error);
     dispatch({
       type: DETAIL_API_FAIL,
       payload: error.response.data.message,

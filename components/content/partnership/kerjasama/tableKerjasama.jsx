@@ -54,7 +54,6 @@ const Table = ({ token }) => {
 
   let dispatch = useDispatch();
   const allMK = useSelector(state => state.allMK);
-  console.log("allMK", allMK);
   const [valueSearch, setValueSearch] = useState("");
   const [valueMitra, setValueMitra] = useState("");
   const [valueStatus, setValueStatus] = useState("");
@@ -193,7 +192,7 @@ const Table = ({ token }) => {
         );
         setSumWillExpire(data.data.total);
       } catch (error) {
-        console.log("object", error);
+        notify(error.response.data.message);
       }
     }
     getWillExpire(token);
