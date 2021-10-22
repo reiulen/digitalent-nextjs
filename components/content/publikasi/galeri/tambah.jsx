@@ -327,22 +327,6 @@ const TambahGaleri = ({ token }) => {
         setTotalImage((totalImage) + 1)
     };
 
-    // const onAddImage = () => {
-    //     let newKey = 1;
-    //     if (image.length > 0) {
-    //       newKey = image[image.length - 1].key + 1;
-    //     }
-    //     setImage([
-    //       ...image,
-    //       {
-    //         key: newKey,
-    //         imagePreview: "",
-    //         imageFile: "",
-    //         imageName: "",
-    //       },
-    //     ]);
-    //   };
-
     const onDeleteImage = (index) => {
 
         if (totalImage === 1) {

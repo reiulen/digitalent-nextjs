@@ -268,34 +268,10 @@ const TambahArtikel = ({ token }) => {
       if (hasWhiteSpace(data[i])) {
         data.splice([i], 1);
       }
-      // console.log(hasWhiteSpace(data[i]));
-      // if(data[i] === " "){
-      //     console.log(data[i]);
-      //     data.splice(i, 1);
-      // }
-      // for (let j = 0; j < data[i].length; j++) {
-      //     if (data[i][j] === " ") {
-      //         data.splice(index, 1);
-      //         // setDisableTag(true)
-      //     }
-      // }
     }
     setTag(data);
     // setTag(data)
   }
-
-  // const handleTag = (data) => {
-  //   for (let i = 0; i < data.length; i++) {
-  //     for (let j = 0; j < data[i].length; j++) {
-  //       if (data[i][j] === " ") {
-  //         setDisableTag(true)
-  //       } else {
-  //         setDisableTag(false)
-  //       }
-  //     }
-  //   }
-  //   setTag(data)
-  // }
 
   const onSubmit = (e) => {
 

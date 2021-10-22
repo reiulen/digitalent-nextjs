@@ -83,19 +83,6 @@ const EditVideo = ({ token }) => {
     const [disablePublishDate, setDisablePublishDate] = useState(video.publish === 0 ? true : false)
     const [disableTag, setDisableTag] = useState(false)
 
-    // const handleTag = (data) => {
-    //     for (let i = 0; i < data.length; i++) {
-    //         for (let j = 0; j < data[i].length; j++) {
-    //             if (data[i][j] === " ") {
-    //                 setDisableTag(true)
-    //             } else {
-    //                 setDisableTag(false)
-    //             }
-    //         }
-    //     }
-    //     setTag(data)
-    // }
-
     function hasWhiteSpace(s) {
         return s.indexOf(' ') >= 0;
     }
