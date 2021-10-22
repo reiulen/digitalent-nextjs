@@ -45,9 +45,6 @@ const RevisiSubmit = ({token}) => {
           return items.form_content;
         });
 
-        // dataee.forEach((item, i) => {
-        //   formData.append(`cooperation_form_content[${i}]`, item);
-        // });
 
         dataee.forEach((item, i) => {
           formData.append(`cooperation_form_content[${i}]`, item);
@@ -77,9 +74,6 @@ const RevisiSubmit = ({token}) => {
     });
   };
 
-  // const setDataSingle = async (id,version) => {
-    
-  // };
 
   const [lengthListCard, setLengthListCard] = useState("")
   const [indexCard, setIndexCard] = useState("")
@@ -165,10 +159,10 @@ const RevisiSubmit = ({token}) => {
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3 className="card-title fz-20 fw-500 text-dark">Revisi</h3>
+            <h3 className="card-title titles-1 fw-500 text-dark">Revisi</h3>
           </div>
 
-          <div className="card-body">
+          <div className="card-body pt-0">
             <div className="row mt-8 mb-10 relative-progress">
               <div className="col-2 p-0">
                 <div className="progress-items">

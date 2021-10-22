@@ -266,7 +266,8 @@ const Tambah = ({ token }) => {
         // dataNewProvinces.splice(0, 0, { label: "Pilih Provinsi", value: "" });
         setAllProvinces(dataNewProvinces);
       } catch (error) {
-        notify(error.response.data.message);
+        // notify(error.response.data.message);
+        return;
       }
     }
 
@@ -320,7 +321,7 @@ const Tambah = ({ token }) => {
           }
         }
       } catch (error) {
-        notify(error.response.data.message);
+        return;
       }
     }
 
@@ -341,7 +342,8 @@ const Tambah = ({ token }) => {
           });
           setCitiesAll(dataNewCitites);
         } catch (error) {
-          notify(error.response.data.message);
+          // notify(error.response.data.message);
+          return;
         }
       }
       fetchAPI();
