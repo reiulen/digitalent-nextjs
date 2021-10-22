@@ -4,6 +4,7 @@
 
 .image_mitra {
   border-radius: 50%;
+  object-fit: cover;
 }
 
 .text_date_register {

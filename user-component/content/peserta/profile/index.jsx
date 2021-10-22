@@ -148,6 +148,7 @@ const Profile = ({ session }) => {
               propsViewProfile={viewProfile}
               funcViewEdit={(val) => setViewEdit(val)}
               funcViewProfile={(val) => setViewProfile(val)}
+              token={session.token}
             />
           ) : (
             <ProfileWrapper
@@ -156,6 +157,7 @@ const Profile = ({ session }) => {
               propsViewProfile={viewProfile}
               funcViewEdit={(val) => setViewEdit(val)}
               funcViewProfile={(val) => setViewProfile(val)}
+              token={session.token}
             />
           )}
           <Col md={12}>

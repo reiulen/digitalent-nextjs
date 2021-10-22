@@ -13,6 +13,7 @@ import FormKomitmen from "./form-komitmen";
 import FormBerhasil from "./form-berhasil";
 
 import { clearErrors } from "../../../../redux/actions/pelatihan/register-training.actions";
+import { PENDAFTARAN_PELATIHAN_RESET } from "../../../../redux/types/pelatihan/register-training.type";
 
 const IndexForm = ({ token }) => {
   const dispatch = useDispatch();
@@ -31,6 +32,7 @@ const IndexForm = ({ token }) => {
     error: errorNewPendaftaran,
     pendaftaran,
     loading,
+    success,
   } = useSelector((state) => state.newPendaftaranPelatihan);
 
   let error;
@@ -53,7 +55,12 @@ const IndexForm = ({ token }) => {
       toast.error(error);
       dispatch(clearErrors());
     }
-  }, [error]);
+    if (success) {
+      toast.success("Berhasil Mendaftar Pelatihan");
+      setView(3);
+      dispatch({ type: PENDAFTARAN_PELATIHAN_RESET });
+    }
+  }, [error, success]);
 
   const showViewForm = () => {
     switch (view) {
