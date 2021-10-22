@@ -1,28 +1,68 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
+import { useDispatch } from "react-redux";
+import axios from 'axios'
 
-export default function FileSize() {
+import { postFileSize } from '../../../../../redux/actions/site-management/settings/pelatihan.actions'
+
+export default function FileSize(props) {
+
+  const [image, setImage] = useState("")
+  const [document, setDocument] = useState("")
+
+  let dispatch = useDispatch()
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    
+    dispatch(postFileSize(props.token, image, document))
+  }
+
+  useEffect(() => {
+    axios.get(`${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-trainings/list-file-size`, {
+      headers: {
+        authorization: `Bearer ${props.token}`,
+      },
+    }).then()
+  }, [props.token])
+
   return (
     <div className="col styling-content-pelatihan">
-      <form action="">
+      <form onSubmit={handleSubmit}>
         <div className="notification-title">
           <h1>File Size</h1>
         </div>
         <div className="form-group">
           <h3 className="judul">Image</h3>
-          <div className="custom-file">
-            <input type="file" className="custom-file-input" id="customFile" />
-            <label className="custom-file-label" htmlFor="customFile">
-              Choose file
-            </label>
+          <div className="input-group mb-3">
+            <input
+              type="number"
+              className="form-control"
+              placeholder="Size Image"
+              onChange={e => {
+                setImage(e.target.value)
+              }}
+              required
+            />
+            <span className="input-group-text" id="basic-addon2">
+              MB
+            </span>
           </div>
         </div>
-        <div className="form-group">
-          <h3 className="judul">Document</h3>
-          <div className="custom-file">
-            <input type="file" className="custom-file-input" id="customFile" />
-            <label className="custom-file-label" htmlFor="customFile">
-              Choose file
-            </label>
+        <div classNameName="form-group">
+          <h3 classNameName="judul">Document</h3>
+          <div className="input-group mb-3">
+            <input
+              type="number"
+              className="form-control"
+              placeholder="Size Document"
+              onChange={e => {
+                setDocument(e.target.value)
+              }}
+              required
+            />
+            <span className="input-group-text" id="basic-addon2">
+              MB
+            </span>
           </div>
         </div>
         <div className="d-flex justify-content-end mb-4">
