@@ -27,6 +27,7 @@ import {
   setValueTheme,
 } from "../../../../redux/actions/sertifikat/kelola-sertifikat.action";
 import { RESET_VALUE_FILTER } from "../../../../redux/types/sertifikat/kelola-sertifikat.type";
+import Cookies from "js-cookie";
 
 export default function NamaPelatihan({ token }) {
   const router = useRouter();
@@ -378,7 +379,7 @@ export default function NamaPelatihan({ token }) {
                                     data-placement="bottom"
                                     title="Detail"
                                     onClick={() => {
-                                      sessionStorage.setItem(
+                                      Cookies.set(
                                         "tema_pelatihan_id",
                                         certificate.id
                                       );

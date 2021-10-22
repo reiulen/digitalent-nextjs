@@ -41,7 +41,6 @@ export const getAllSertifikat = token => async (dispatch, getState) => {
   try {
     dispatch({ type: SERTIFIKAT_REQUEST });
     let link = process.env.END_POINT_API_SERTIFIKAT + `api/manage_certificates`;
-    // console.log(getState().allCertificate);
     let pageState = getState().allCertificates.page || 1;
     let limitState = getState().allCertificates.limit || 5;
     let themeState = getState().allCertificates.theme || "";

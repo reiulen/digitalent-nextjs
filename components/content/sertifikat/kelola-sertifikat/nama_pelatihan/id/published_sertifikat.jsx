@@ -44,6 +44,7 @@ export default function KelolasertifikatID({ token }) {
         link.click();
       }
     } catch (e) {
+      return;
       console.log(e, "ini error sertifikat");
     }
   };

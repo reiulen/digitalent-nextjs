@@ -44,7 +44,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
       await store.dispatch(
         getDetailParticipant(
-          query.id,
+          query.id ? query.id : req.cookies.nama_pelatihan_id,
           query.page,
           query.keyword,
           query.limit,

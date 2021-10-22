@@ -1,5 +1,5 @@
 // #Next & React
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
@@ -16,15 +16,22 @@ import IconClose from "../../../../../assets/icon/Close";
 import IconFilter from "../../../../../assets/icon/Filter";
 import { useSelector } from "react-redux";
 import { clearErrors } from "../../../../../../redux/actions/sertifikat/kelola-sertifikat.action";
+import Cookies from "js-cookie";
 
 export default function ListPeserta() {
   const router = useRouter();
   const { query } = router;
-
   // #DatePicker
   const { loading, error, participant } = useSelector(
     state => state.detailParticipant
   );
+  // console.log(error);
+  // useEffect(() => {
+  //   const id = sessionStorage.getItem("nama_pelatihan_id");
+  //   if (!participant) {
+  //     router.replace(router.asPath + `?id=${id}`);
+  //   }
+  // }, [participant, router]);
 
   // #Pagination
   const [search, setSearch] = useState("");
@@ -92,7 +99,7 @@ export default function ListPeserta() {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark">
-              Sertifikat Peserta {participant.training}
+              Sertifikat Peserta {participant?.training}
             </h3>
           </div>
 
@@ -206,6 +213,12 @@ export default function ListPeserta() {
                                           data-toggle="tooltip"
                                           data-placement="bottom"
                                           title="Detail"
+                                          onClick={() => {
+                                            Cookies.set(
+                                              "nama_pelatihan_id",
+                                              query.id
+                                            );
+                                          }}
                                         >
                                           <i className="ri-eye-fill p-0 text-white"></i>
                                         </a>
