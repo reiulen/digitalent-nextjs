@@ -27,7 +27,7 @@ const KelolaSertifikat = dynamic(
 
 export default function KelokaSertifikatPage(props) {
   const session = props.session.user.user.data;
-
+  console.log(props);
   return (
     <>
       <div className="d-flex flex-column flex-root">

@@ -22,6 +22,7 @@ import {
   getAllSertifikat,
   searchKeyword,
   setValueAcademy,
+  setValuePage,
   setValueTheme,
 } from "../../../../redux/actions/sertifikat/kelola-sertifikat.action";
 import { RESET_VALUE_FILTER } from "../../../../redux/types/sertifikat/kelola-sertifikat.type";
@@ -73,12 +74,13 @@ export default function NamaPelatihan({ token }) {
   }, [academy, themeOptions]);
 
   const handlePagination = pageNumber => {
-    let link = `${router.pathname}?page=${pageNumber}`;
-    if (search) link = link.concat(`&keyword=${search}`);
-    if (limit) link = link.concat(`&limit=${limit}`);
-    router.push(link);
+    dispatch(setPage(pageNumber));
+    // let link = `${router.pathname}?page=${pageNumber}`;
+    // if (search) link = link.concat(`&keyword=${search}`);
+    // if (limit) link = link.concat(`&limit=${limit}`);
+    // router.push(link);
   };
-
+  console.log(allCertificates);
   const handleLimit = val => {
     setLimit(val);
     router.push(`${router.pathname}?page=1&limit=${val}`);
@@ -405,11 +407,11 @@ export default function NamaPelatihan({ token }) {
                 {certificate && (
                   <div className="table-pagination my-auto">
                     <Pagination
-                      activePage={+page}
+                      activePage={allCertificates.page}
                       itemsCountPerPage={certificate.perPage}
                       totalItemsCount={certificate.total}
                       pageRangeDisplayed={3}
-                      onChange={handlePagination}
+                      onChange={page => dispatch(setValuePage(page))}
                       nextPageText={">"}
                       prevPageText={"<"}
                       firstPageText={"<<"}

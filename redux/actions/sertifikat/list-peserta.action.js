@@ -9,15 +9,8 @@ import {
 } from "../../types/sertifikat/list-peserta.type";
 
 export const getAllParticipant =
-  (
-    id,
-    page = 1,
-    keyword = "",
-    limit = 5,
-
-    token
-  ) =>
-  async (dispatch) => {
+  (id, page = 1, keyword = "", limit = 5, token) =>
+  async dispatch => {
     try {
       dispatch({ type: LIST_PESERTA_REQUEST });
       let link =
@@ -46,7 +39,7 @@ export const getAllParticipant =
 
 export const getDetailParticipant =
   (id, page = 1, keyword = "", limit = 5, token) =>
-  async (dispatch) => {
+  async dispatch => {
     try {
       dispatch({ type: DETAIL_LIST_PESERTA_REQUEST });
       let link =
