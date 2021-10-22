@@ -117,7 +117,6 @@ export const errorDeleteCooporation = (data) => {
 };
 
 export const updateMasterCategory = (token, formData, id) => {
-  console.log(token);
   return async (dispatch) => {
     try {
       let { data } = await masterCategoryUpdate(token, formData, id);

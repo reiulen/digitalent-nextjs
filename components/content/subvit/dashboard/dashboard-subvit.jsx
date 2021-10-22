@@ -175,7 +175,6 @@ const DashbardSubvit = () => {
   const data = [];
 
   Object.entries(dataDummy.data.chart).map((item, index) => {
-    // return console.log(item[0]);
     return data.push({ name: item[0], value: item[1] });
   });
 

@@ -36,10 +36,7 @@ const TambahApi = ({ token }) => {
         region: items.region,
       };
     });
-
     setValueProvinsi(datas)
-
-    console.log("change provinsi value", datas);
   };
 
   const submit = (e) => {
@@ -93,7 +90,6 @@ const TambahApi = ({ token }) => {
               }
             );
           } catch (error) {
-            console.log(error);
             Swal.fire(
               "Gagal simpan",
               `${error.response.data.message}`,

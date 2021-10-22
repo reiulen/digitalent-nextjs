@@ -190,7 +190,6 @@ const AddCommitmentStep3 = ({ propsStep, token }) => {
                       onChange={(event, editor) => {
                         const data = editor.getData();
                         setDescription(data);
-                        // console.log({ event, editor, data });
                       }}
                       config={{
                         placeholder: "Silahkan Masukan Deskripsi Detail",

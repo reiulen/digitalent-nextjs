@@ -144,7 +144,7 @@ export const reqCooperationUser = (token) => async (dispatch, getState) => {
       totalDatas: totalData,
     });
   } catch (error) {
-    console.log("error");
+    notify(error.response.data.message);
   }
 };
 
@@ -319,7 +319,7 @@ export const getSingleCooperation = (id, token) => {
       );
       dispatch(successGetSingleCooperation(data));
     } catch (error) {
-      console.log("action getSIngle gagal", error);
+      notify(error.response.data.message);
     }
   };
 };
@@ -343,7 +343,7 @@ export const deleteCooperation = (id, token) => {
       );
       dispatch(successDeleteCooperation());
     } catch (error) {
-      console.log("action delete gagal", error);
+      notify(error.response.data.message);
     }
   };
 };
@@ -367,9 +367,8 @@ export const rejectCooperation = (id, token) => {
         }
       );
       dispatch({ type: REJECT_COOPERATION });
-      console.log("berhasil");
     } catch (error) {
-      console.log("error rejectCooperation", error);
+      notify(error.response.data.message);
     }
   };
 };
@@ -404,10 +403,8 @@ export const exportFileCSV = (token) => {
         urlExport.config.url +
           `?&categories_cooporation=${categories_cooporationState}&status=${statusState}`
       );
-
-      // console.log("data", data);
     } catch (error) {
-      console.log("object", error);
+      notify(error.response.data.message);
     }
   };
 };

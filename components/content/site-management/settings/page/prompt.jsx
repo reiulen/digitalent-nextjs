@@ -27,7 +27,6 @@ export default function Prompt(props) {
 
       const handleSubmit = (e) => {
         e.preventDefault()
-        console.log(notification, email)
         dispatch(putDataPrompt(props.token, notification || notification === 1 ? 1 : 0, email || email === 1 ? 1 : 0))
       };
 

@@ -35,7 +35,6 @@ const TambahApi = ({ token }) => {
   const listApi = useSelector((state) => state.listApi);
   const listField = useSelector((state) => state.listField);
   const {error:errorDelete,success} = useSelector((state) => state.newApi);
-  // console.log("newApi", newApi);
 
   const [error, setError] = useState({
     nameApi: "",
