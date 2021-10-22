@@ -9,7 +9,7 @@ export default function footer() {
   return (
     <div style={{ backgroundColor: "#203E80" }} className="max-container">
       <div className="container-fluid">
-        <div className="row w-100 px-0 m-0">
+        <div className="row w-100 px-0 mt-5 mx-0 mb-0 py-5">
           <div className="col-12 col-sm-3">
             <div>
               <Image

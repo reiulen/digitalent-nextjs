@@ -82,7 +82,8 @@ const EditImagetron = ({ token }) => {
     const [gambarName, setGambarName] = useState(imagetron.gambar)
     const [url_link, setUrlRedirect] = useState(imagetron.url_link)
     const [publish, setPublish] = useState(imagetron.publish)
-    const [users_id, setUserId] = useState(87)
+    const [users_id, setUserId] = useState(imagetron.users_id)
+    // const [users_id, setUserId] = useState(87)
     const [_method, setMethod] = useState("put");
     const [publishDate, setPublishDate] = useState(imagetron.tanggal_publish ? new Date(imagetron.tanggal_publish) : null);
     const [disablePublishDate, setDisablePublishDate] = useState(imagetron.publish === 0 ? true : false)
