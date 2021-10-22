@@ -37,7 +37,7 @@ export default function NamaPelatihan({ token }) {
     useSelector(state => state.allCertificates);
 
   const allCertificates = useSelector(state => state.allCertificates);
-
+  console.log(allCertificates);
   const [academy, setAcademy] = useState("");
   const [temaPelatihan, setTemaPelatihan] = useState("");
   const [disable, setDisable] = useState(true);

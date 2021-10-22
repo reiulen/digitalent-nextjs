@@ -108,18 +108,21 @@ export const allSertifikatReducers = (state = initialStates, action) => {
       return {
         ...state,
         keyword: action.text,
+        page: 1,
       };
     }
     case SET_ACADEMY_VALUE: {
       return {
         ...state,
         academy: action.text,
+        page: 1,
       };
     }
     case SET_THEME_VALUE: {
       return {
         ...state,
         theme: action.text,
+        page: 1,
       };
     }
     case SET_PAGE_VALUE: {
