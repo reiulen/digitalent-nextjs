@@ -5,10 +5,17 @@ import {
   SUBTANCE_QUESTION_RANDOM_DETAIL_REQUEST,
   SUBTANCE_QUESTION_RANDOM_DETAIL_SUCCESS,
   SUBTANCE_QUESTION_RANDOM_DETAIL_FAIL,
+  DASHBOARD_SUBVIT_REQUEST,
+  DASHBOARD_SUBVIT_SUCCESS,
+  DASHBOARD_SUBVIT_FAIL,
   NEW_SUBTANCE_QUESTION_DETAIL_REQUEST,
   NEW_SUBTANCE_QUESTION_DETAIL_SUCCESS,
   NEW_SUBTANCE_QUESTION_DETAIL_RESET,
   NEW_SUBTANCE_QUESTION_DETAIL_FAIL,
+  POST_RESULT_REQUEST,
+  POST_RESULT_SUCCESS,
+  POST_RESULT_RESET,
+  POST_RESULT_FAIL,
   DELETE_SUBTANCE_QUESTION_DETAIL_REQUEST,
   DELETE_SUBTANCE_QUESTION_DETAIL_SUCCESS,
   DELETE_SUBTANCE_QUESTION_DETAIL_RESET,
@@ -97,6 +104,39 @@ export const randomSubtanceQuestionDetailReducer = (
   }
 };
 
+export const getDashboardReducer = (
+  state = { dashboard_subvit: [] },
+  action
+) => {
+  switch (action.type) {
+    case DASHBOARD_SUBVIT_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case DASHBOARD_SUBVIT_SUCCESS:
+      return {
+        loading: false,
+        dashboard_subvit: action.payload.data,
+      };
+
+    case DASHBOARD_SUBVIT_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
 export const newSubtanceQuestionDetailReducer = (
   state = { subtance_question_detail: {} },
   action
@@ -121,6 +161,42 @@ export const newSubtanceQuestionDetailReducer = (
       };
 
     case NEW_SUBTANCE_QUESTION_DETAIL_RESET:
+      return {
+        success: false,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const postResultReducer = (state = { post_result: {} }, action) => {
+  switch (action.type) {
+    case POST_RESULT_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case POST_RESULT_SUCCESS:
+      return {
+        loading: false,
+        success: action.payload.message,
+        post_result: action.payload.data,
+      };
+
+    case POST_RESULT_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    case POST_RESULT_RESET:
       return {
         success: false,
       };
