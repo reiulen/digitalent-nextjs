@@ -72,7 +72,7 @@ const TambahVidio = ({ token }) => {
 
 
     const [kategori_id, setKategoriId] = useState('')
-    const [users_id, setUserId] = useState(3)
+    const [users_id, setUserId] = useState(87)
     const [judul_video, setJudulVideo] = useState('')
     const [isi_video, setIsiVideo] = useState('');
     const [url_video, setUrlVideo] = useState('')
@@ -132,17 +132,6 @@ const TambahVidio = ({ token }) => {
             if (hasWhiteSpace(data[i])) {
                 data.splice([i], 1);
             }
-            // console.log(hasWhiteSpace(data[i]));
-            // if(data[i] === " "){
-            //     console.log(data[i]);
-            //     data.splice(i, 1);
-            // }
-            // for (let j = 0; j < data[i].length; j++) {
-            //     if (data[i][j] === " ") {
-            //         data.splice(index, 1);
-            //         // setDisableTag(true)
-            //     }
-            // }
         }
         setTag(data);
     }

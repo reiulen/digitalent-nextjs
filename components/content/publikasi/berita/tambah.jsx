@@ -152,17 +152,19 @@ const TambahBerita = ({ token }) => {
         }
     }
 
+    function hasWhiteSpace(s) {
+        return s.indexOf(' ') >= 0;
+    }
+
     const handleTag = (data) => {
+        // console.log(data);
         for (let i = 0; i < data.length; i++) {
-            for (let j = 0; j < data[i].length; j++) {
-                if (data[i][j] === " ") {
-                    setDisableTag(true)
-                } else {
-                    setDisableTag(false)
-                }
+            if (hasWhiteSpace(data[i])) {
+                data.splice([i], 1);
             }
         }
-        setTag(data)
+        setTag(data);
+        // setTag(data)
     }
 
     const onSubmit = (e) => {
