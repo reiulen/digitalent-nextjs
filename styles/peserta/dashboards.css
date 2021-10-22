@@ -75,7 +75,7 @@
 }
 
 .carousel-primarys .splide__pagination li {
-  position: static !important;
+  position: relative;
   display: inline-block;
   line-height: 1;
   list-style-type: none;
@@ -150,6 +150,13 @@
   font-weight: 600;
   font-size: 12px;
   padding: 4px 12px;
+  position: relative;
+  z-index: 1;
+}
+
+.cards-items .top button {
+  position: relative;
+  z-index: 1;
 }
 
 .cards-items .bottom {

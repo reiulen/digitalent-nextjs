@@ -47,145 +47,135 @@ const Beranda = () => {
 
   const { pelatihan } = useSelector(state => state.pelatihanByTema);
 
-  const [ activeImagetron, setActiveImagetron ] = useState(1);
   const [ activeTab, setActiveTab ] = useState(0);
-  // const [indexTab, setIndexTab] = useState(0);
-  const [ show, setShow ] = useState(false);
-  const [ showDetail, setShowDetail ] = useState(false);
-  const [ akademiItem, setAkademiItem ] = useState(null);
-  const [ trainingItem, setTrainingItem ] = useState(null);
-  const [ slideAkademiToShow, setSlideAkademiToShow ] = useState(4);
-  const [ slideTrainingToShow, setSlideTrainingToShow ] = useState(3);
+  const [ show, setShow ] = useState(null);
+  const [ cardImage, setCardImage ] = useState(null)
+  const [ cardStatus, setCardStatus ] = useState(null)
+  const [ cardImageMitra, setCardImageMitra ] = useState(null)
+  const [ cardAkademi, setCardAkademi ] = useState(null)
+  const [ cardDeskripsi, setCardDeskripsi ] = useState(null)
+  const [ cardName, setCardName ] = useState(null)
+  const [ cardKuota, setCardKuota ] = useState(null)
+  const [ cardMitra, setCardMitra ] = useState(null)
+  const [ cardAlamat, setCardAlamat ] = useState(null)
+  const [ cardPendaftaranMulai, setCardPendaftaranMulai ] = useState(null)
+  const [ cardPendaftaranSelesai, setCardPendaftaranSelesai ] = useState(null)
+  
+  
 
-  const renderButton = (status, daftar_mulai, daftar_selesai, quota, id) => {
-    if (status === true) {
-      return (
-        <div>
-          <Link href={`/detail/kategori/${id}`}>
-            <Button className="btn btn-outline-info rounded-pill col-12">
-              Quick View
-            </Button>
-          </Link>
-        </div>
-      );
-    } else {
-      return (
-        <div>
-          <div className="d-flex align-content-center">
-            <i className="ri-time-line mr-2"></i>
-            <span className="mt-1">
-              Registrasi: {moment(daftar_mulai).format("DD MMMM YYYY")} -{" "}
-              {moment(daftar_selesai).format("DD MMMM YYYY")}
-            </span>
-          </div>
-          <div className="d-flex align-content-center">
-            <i className="ri-group-line mr-2"></i>
-            <span className="mt-1">Kuota {quota} Peserta</span>
-          </div>
-        </div>
-      );
-    }
-  };
+  useEffect(() => {
+    handleHoverCard()
+  }, [])
 
-  const handleDragStart = e => e.preventDefault();
+  const handleHoverCard = () => {
+    let arr = []
 
-  const handleAkademiCarousel = () => {
-    let arr = [];
-
-    if (akademi.length !== 0) {
-      for (let i = 0; i < akademi.length; i += slideAkademiToShow) {
-        arr.push(akademi.slice(i, i + slideAkademiToShow));
-      }
-
-      setAkademiItem(arr);
-    }
-    // console.log (arr)
-  };
-
-  const handleTrainingCarousel = () => {
-    let arr = [];
-
-    if (training.length !== 0) {
-      for (let i = 0; i < training.length; i += slideTrainingToShow) {
-        arr.push(training.slice(i, i + slideTrainingToShow));
-      }
-
-      setTrainingItem(arr);
-    }
-    // console.log (arr)
-  };
-
-  const handleIndexShow = () => {
-    let arrPelatihan = [];
-
-    if (pelatihan?.length !== 0) {
-      for (let i = 0; i < pelatihan?.length; i++) {
+    if (tema.length !== 0 ){
+      for (let i = 0; i < tema.length; i++){
         let obj = {
-          id: pelatihan[i].id,
-          name: pelatihan[i].name,
-          showButton: false,
+          id: tema[i].id,
+          name: tema[i].Name,
           showDetail: false,
-        };
-        arrPelatihan.push(obj);
+          pelatihan: []
+        }
+        if (tema[i].pelatihan !== 0 && tema[i].pelatihan !== null){
+          for (let j = 0; j < tema[i].pelatihan.length; j++){
+            let objPelatihan = {
+              id: tema[i].pelatihan[j].id,
+              name: tema[i].pelatihan[j].name,
+              hover: false,
+              // showDetail: false
+            }
+
+            obj.pelatihan.push (objPelatihan)
+          }
+          arr.push (obj)
+        }
+        
       }
+      setShow(arr)
     }
+  }
 
-    setShow(arrPelatihan);
-    // console.log (arrPelatihan)
-  };
-
-  const handleMouseEnter = index => {
-    let obj = show;
-
-    for (let i = 0; i < obj.length; i++) {
-      if (i == index) {
-        obj[i].showButton = true;
-      }
+  const handleMouseEnter = (indexTema, indexPelatihan) =>{
+    let obj = [...show]
+    for (let i = 0; i < obj.length; i++){
+        for (let j = 0; j < obj[i].pelatihan.length; j++){
+            if ( i === indexTema && j === indexPelatihan){
+                obj[i].pelatihan[j].hover = true
+            }
+        }
     }
+    setShow(obj)
+  }
 
-    setShow(obj);
-    // console.log ("mouseOver")
-  };
-
-  const handleMouseLeave = index => {
-    let obj = show;
-
-    for (let i = 0; i < obj.length; i++) {
-      if (i == index) {
-        obj[i].showButton = false;
-      }
+  const handleMouseLeave = (indexTema, indexPelatihan) =>{
+    let obj = [...show]
+    
+    for (let i = 0; i < obj.length; i++){
+        for (let j = 0; j < obj[i].pelatihan.length; j++){
+            if ( i === indexTema && j === indexPelatihan){
+                obj[i].pelatihan[j].hover = false
+            }
+        }
     }
-    setShow(obj);
-    // console.log ("mouseOut")
-  };
+    setShow(obj)
+}
 
-  const handleActiveImagetron = index => {
-    setActiveImagetron(index);
-    console.log("imagetron active");
-  };
-
-  const handleActive = index => {
+  const handleActive = (index) => {
     setActiveTab(index);
   };
 
-  const handleQuickView = () => {
-    setShowDetail(true);
+  const handleQuickView = (indexTema, image, status, image_mitra, akademi, deskripsi, name, kuota_pendaftar, mitra, alamat, pendaftaran_mulai, pendaftaran_selesai) => {
+    let obj = [...show]
+
+    for (let i = 0; i < obj.length; i++){
+      if ( i === indexTema){
+        obj[i].showDetail = true
+      }
+    }
+    setShow(obj)
+    setCardImage(image)
+    setCardStatus(status)
+    setCardImageMitra(image_mitra)
+    setCardAkademi(akademi)
+    setCardDeskripsi(deskripsi)
+    setCardName(name)
+    setCardKuota(kuota_pendaftar)
+    setCardMitra(mitra)
+    setCardAlamat(alamat)
+    setCardPendaftaranMulai(pendaftaran_mulai)
+    setCardPendaftaranSelesai(pendaftaran_selesai)
+
+
     // console.log ("open")
   };
 
-  const handleCloseQuickView = () => {
-    setShowDetail(false);
+  const handleCloseQuickView = (indexTema) => {
+    let obj = [...show]
+
+    for (let i = 0; i < obj.length; i++){
+      if ( i === indexTema){
+        obj[i].showDetail = false
+      }
+    }
+    setShow(obj)
+    // setShowDetail(false);
     // console.log ("close")
   };
 
   return (
     <BerandaWrapper title="Digitalent">
       {
-        // console.log (akademi)
+        console.log (akademi)
       }
 
       {
-        // console.log (tema)
+        console.log (tema)
+      }
+
+      {
+        console.log (show)
       }
       <div style={{ backgroundColor: "white" }}>
         <Navigationbar />
@@ -258,6 +248,7 @@ const Beranda = () => {
                   // width="1000vw"
                   // height="500vh"
                   objectFit="fill"
+                  // src={`/assets/media/banner-3.svg`}
                   src={`/assets/media/carousel-01.svg`}
                   alt="First slide"
                   className="mx-5"
@@ -270,6 +261,7 @@ const Beranda = () => {
                   objectFit="fill"
                   // width="1000vw"
                   // height="500vh"
+                  // src={`/assets/media/image27.png`}
                   src={`/assets/media/carousel-01.svg`}
                   alt="First slide"
                   className="mx-5"
@@ -282,6 +274,7 @@ const Beranda = () => {
                   // width="1000vw"
                   // height="500vh"
                   objectFit="fill"
+                  // src={`/assets/media/banner-3.svg`}
                   src={`/assets/media/carousel-01.svg`}
                   alt="First slide"
                   className="mx-5"
@@ -292,7 +285,6 @@ const Beranda = () => {
         </div>
 
         {/* Carousel 2 */}
-
         {akademi ? (
           <div className="container-fluid max-container">
             <div className="carousel-secondarys">
@@ -399,197 +391,272 @@ const Beranda = () => {
         ) : null}
 
         <div className="container-fluid max-container">
-          {/* Card row */}
-
           <div className="card-rows">
             {/*Tema*/}
-            {tema
-              ? tema.map((el, i) => {
+            {tema? 
+              tema.map((el, i) => {
                   return (
                     <div key={i} className="my-5">
                       <div className="d-flex align-items-center justify-content-between px-10">
                         <h1 className="mb-0 fw-600 fz-20">{el.Name}</h1>
-                        <div className="d-flex align-items-center">
-                          <p
-                            className="mb-0 fz-14 fw-600"
-                            style={{ color: "#0063CC" }}
-                          >
-                            Lihat Semua
-                          </p>
-                          <IconArrow
-                            width="8"
-                            height="10"
-                            fill="#0063CC"
-                            className="ml-2"
-                            style={{ transform: "rotate(0)" }}
-                          />
+                        <div>
+                          {
+                            el.pelatihan !== null ?
+                              <a 
+                                href={`/detail/akademi/${el.id}`}
+                                className="d-flex align-items-center"
+                              >
+                                <>
+                                  <p
+                                    className="mb-0 fz-14 fw-600"
+                                    style={{ color: "#0063CC" , cursor:"pointer"}}
+                                  >
+                                    Lihat Semua
+                                  </p>
+                                  <IconArrow
+                                    width="8"
+                                    height="10"
+                                    fill="#0063CC"
+                                    className="ml-2"
+                                    style={{ transform: "rotate(0)" }}
+                                  /> 
+                                </>
+                              </a>
+                            :
+                              null
+                          }
+                          
                         </div>
                       </div>
 
                       <div className="container-fluid">
                         <div className="row mt-10">
-                          <div className="col-12 col-sm-6 col-xl-4">
-                            <Cardss label={<label>PELATIHAN ONLINE</label>} thumbnail={<Image src={`/assets/media/carousel-01.svg`} layout="fill" objectFit="cover"/>}>
-                              <div className="rounded">
-                                {/* Insert mitra page here */}
-                              </div>
-                              <div className="d-flex align-items-center justify-content-between pl-24">
-                                <p
-                                  className="fw-600"
-                                  style={{ color: "#6C6C6C" }}
-                                >
-                                  Gojek
-                                </p>
-                                <button className="btn btn-green-rounded">
-                                  OPEN
-                                </button>
-                              </div>
-                              <h1
-                                className="fz-18 fw-600 mt-4"
-                                style={{ color: "#1F1F1F" }}
-                              >
-                                Intermediate Multimedia Designer
-                              </h1>
-                              <h3
-                                className="mb-0 fz-18 fw-400 mt-4"
-                                style={{ color: "#6C6C6C" }}
-                              >
-                                Vocational School Graduate Academy
-                              </h3>
-                              <hr />
+                          {
+                            show !== null && show[i] !== undefined && show[i] !== null?
+                              show[i].showDetail !== true ?
+                                el.pelatihan ? 
+                                  el.pelatihan.map ((element, index) => {
+                                    return (
+                                      
+                                      <div 
+                                        className="col-12 col-sm-6 col-xl-4" 
+                                        key={index} 
+                                        onMouseEnter={() => handleMouseEnter(i, index)}
+                                        onMouseLeave={() => handleMouseLeave(i, index)}
+                                      >
+                                        <Cardss 
+                                          label={<label>Pelatihan {element.metode_pelatihan}</label>}
 
-                              <div className="mt-2">
-                                <div className="d-flex align-items-center">
-                                  Registrasi: 05 Juli 2021 - 21 Juli 2021
+                                          button={
+                                            show[i].pelatihan[index].hover === true ?
+                                              <div className="row">
+                                                <Button className="btn btn-white py-1 pl-2 pr-1 rounded-circle mr-2">
+                                                    <i className="ri-share-line" />
+                                                </Button>
+                                                <Button className="btn btn-white py-1 pl-2 pr-1 mr-2 rounded-circle">
+                                                    <i className="ri-heart-line" />
+                                                </Button>
+                                              </div>
+                                            :
+                                              null
+                                          }
+                                        
+                                          thumbnail={
+                                            <Image 
+                                              // src={process.env.END_POINT_API_PELATIHAN + element.gambar}
+                                              src={`https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/${element.gambar}`}
+                                              layout="fill" 
+                                              objectFit="cover"
+                                            />
+                                          }
+
+                                          
+                                        > 
+                                          <div className="rounded mt-0 pt-0">
+                                            <Image 
+                                              src={process.env.END_POINT_API_IMAGE_PARTNERSHIP + element.gambar_mitra}
+                                              // src={`https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/${element.gambar_mitra}`}
+                                              layout="fill" 
+                                              objectFit="cover"
+                                            />
+                                          </div>
+
+                                          <div className="d-flex align-items-center justify-content-between pl-24">
+                                            <p
+                                              className="fw-600"
+                                              style={{ color: "#6C6C6C" }}
+                                            >
+                                              {element.mitra}
+                                            </p>
+                                            {
+                                              element.status !== "Closed" ?
+                                                <button className="btn btn-green-rounded mb-5">
+                                                  {element.status}
+                                                </button>
+                                              :
+                                                <button className="btn btn-green-rounded text-danger mb-5">
+                                                  {element.status}
+                                                </button>
+                                            }
+                                            
+                                          </div>
+                                          <h1
+                                            className="fz-18 fw-600 mt-4"
+                                            style={{ color: "#1F1F1F" }}
+                                          >
+                                            {element.name}
+                                          </h1>
+                                          <h3
+                                            className="mb-0 fz-18 fw-400 mt-4"
+                                            style={{ color: "#6C6C6C" }}
+                                          >
+                                            {element.akademi}
+                                          </h3>
+                                          <hr />
+                                          
+                                          {
+                                            show[i].pelatihan[index].hover !== true ?
+                                              <div className="mt-2">
+                                                <div className="d-flex align-items-center">
+                                                  Registrasi: {moment(element.pendafataran_mulai).format("DD MMMM YYYY")} - {moment(element.pendafataran_selesai).format("DD MMMM YYYY")}
+                                                </div>
+                                                <div className="d-flex align-items-center mt-2">
+                                                  Kuota: {element.kuota_peserta} Peserta
+                                                </div>
+                                              </div>
+                                            :
+                                              <div className="mt-2">
+                                                <Button className="btn btn-outline-info rounded-pill col-12" onClick={() => handleQuickView(i, element.gambar, element.status, element.gambar_mitra, element.akademi, element.deskripsi, element.name, element.kuota_peserta, element.mitra, element.alamat, element.pendaftaran_mulai, element.pendaftaran_selesai)}>
+                                                    Quick View
+                                                </Button>
+                                              </div>
+                                          }
+                                          
+                                        </Cardss>
+                                      </div>
+                                    )
+                                  })
+                                :
+                                  <div className="container-fluid">
+                                    <div className="row">
+                                      <h1 className="text-center text-muted col-12">
+                                        Pelatihan Belum Tersedia
+                                      </h1>
+                                    </div>
+                                  </div>
+                              :
+                                // Card Detail
+                                <div className="container-fluid">
+                                  <div className="row bg-white shadow rounded" style={{minHeight:"50vh", maxHeight:"fit-content"}}>
+                                    <div className="col-12 col-md-4">
+                                      <Image 
+                                        // src={`/assets/media/logo-vsga-1.svg`}
+                                        // src={process.env.END_POINT_API_PELATIHAN + cardImage}
+                                        src={`https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/${cardImage}`}
+                                        layout="fill" 
+                                        objectFit="cover"
+                                        className="rounded"
+                                      />
+                                      <div className="position-absolute mt-5">
+                                        <Badge pill bg="light">
+                                          Pelatihan {cardStatus}
+                                        </Badge>
+                                      </div>
+                                    </div>
+                                    <div className="col-12 col-md-8">
+                                      <div className="row ml-5">
+                                        <div className="col-12 col-md-2">
+                                          <Image 
+                                            // src={`/assets/media/logo-vsga-1.svg`}
+                                            // src={process.env.END_POINT_API_PELATIHAN + cardImageMitra}
+                                            src={`https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/${cardImageMitra}`}
+                                            width="80vw"
+                                            height="80vh" 
+                                            objectFit="cover"
+                                            className="rounded-circle"
+                                          />
+                                        </div>
+                                        
+                                        <div className="col-6 col-md-6">
+                                          <div className="text-muted">
+                                            {cardAkademi}
+                                          </div>
+                                          <h1 className="font-weight-bolder text-bold">
+                                            {cardName}
+                                          </h1>
+                                          <div className="text-primary">
+                                            {cardMitra}
+                                          </div>
+                                        </div>
+
+                                        <div className="col-6 col-md-4">
+                                          <div className="row d-flex justify-content-end mt-5">
+                                            <Button className="btn btn-white rounded-circle px-2 py-1 mr-2 border border-dark text-center">
+                                                <i className="ri-share-line" />
+                                            </Button>
+                                            <Button className="btn btn-white mr-2 rounded-circle px-2 py-1 border border-dark text-center">
+                                                <i className="ri-heart-line" />
+                                            </Button>
+                                            <label style={{cursor:"pointer"}} className="mr-5" onClick={() => handleCloseQuickView(i)}>
+                                              <i className="ri-close-line text-dark"></i>
+                                            </label>
+                                          </div>
+                                        </div>
+                                      </div>
+
+                                      <div className="row ml-5">
+                                        <div className="mt-3 ml-3 col-12">
+                                          {cardDeskripsi}
+                                        </div>
+                                      </div>
+
+                                      <div className="row ml-5 mb-5">
+                                        <div className="mt-3 col-12 col-md-4">
+                                          <i className="ri-time-line text-dark"></i>
+                                          <span>Registrasi: {moment(cardPendaftaranMulai).format("DD MMMM YYYY")} - {moment(cardPendaftaranSelesai).format("DD MMMM YYYY")} </span>
+                                        </div>
+
+                                        <div className="mt-3 col-12 col-md-4">
+                                          <i className="ri-group-line text-dark"></i>
+                                          <span>Kuota: {cardKuota} Peserta</span>
+                                        </div>
+
+                                        <div className="mt-3 col-12 col-md-4">
+                                          <i className="ri-map-pin-line text-dark"></i>
+                                          <span>Lokasi: {cardAlamat}</span>
+                                        </div>
+                                      </div>
+
+                                      <div className="row ml-5 border-top my-5">
+                                        <div className="col-12 col-md-6 mt-5">
+                                          <Button className="btn btn-outline-info rounded-pill btn-block">
+                                            Lihat Selengkapnya
+                                          </Button>
+                                        </div>
+                                        <div className="col-12 col-md-6 mt-5">
+                                          <Button className="btn btn-info rounded-pill btn-block">
+                                            Daftar Pelatihan
+                                          </Button>
+                                        </div>
+                                      </div>
+
+                                      
+
+
+                                    </div>
+                                  </div>
                                 </div>
-                                <div className="d-flex align-items-center mt-2">
-                                  Kuota: 1000 Peserta
-                                </div>
-                              </div>
-                            </Cardss>
-                          </div>
-                          <div className="col-12 col-sm-6 col-xl-4">
-                            <Cardss />
-                          </div>
-                          <div className="col-12 col-sm-6 col-xl-4">
-                            <Cardss />
-                          </div>
+                            :
+                              null
+                          }
+                      
                         </div>
                       </div>
 
-                      {/* {
-                        el.pelatihan.map ((element, index) => {
-                          return (
-                            <div className="container-fluid" key={index}>
-                              <div className="row mt-10">
-                                <div className="col-12 col-sm-6 col-xl-4">
-                                  <Cardss label={<label>PELATIHAN ONLINE</label>}>
-                                    <div className="rounded"></div>
-                                    <div className="d-flex align-items-center justify-content-between pl-24">
-                                      <p className="fw-600" style={{ color: "#6C6C6C" }}>
-                                        Gojek
-                                      </p>
-                                      <button className="btn btn-green-rounded">OPEN</button>
-                                    </div>
-                                    <h1
-                                      className="fz-18 fw-600 mt-4"
-                                      style={{ color: "#1F1F1F" }}
-                                    >
-                                      Intermediate Multimedia Designer
-                                    </h1>
-                                    <h3
-                                      className="mb-0 fz-18 fw-400 mt-4"
-                                      style={{ color: "#6C6C6C" }}
-                                    >
-                                      Vocational School Graduate Academy
-                                    </h3>
-                                    <hr />
-
-                                    <div className="mt-2">
-                                      <div className="d-flex align-items-center">
-                                        Registrasi: 05 Juli 2021 - 21 Juli 2021
-                                      </div>
-                                      <div className="d-flex align-items-center mt-2">
-                                        Kuota: 1000 Peserta
-                                      </div>
-                                    </div>
-                                  </Cardss>
-                                </div>
-                              </div>
-                            </div>
-                          )
-                        })
-                      } */}
                     </div>
                   );
                 })
               : null}
-            {/* <div className="d-flex align-items-center justify-content-between px-10">
-              <h1 className="mb-0 fw-600 fz-20">Multimedia Designer</h1>
-              <div className="d-flex align-items-center">
-                <p className="mb-0 fz-14 fw-600" style={{ color: "#0063CC" }}>
-                  Lihat Semua
-                </p>
-                <IconArrow
-                  width="8"
-                  height="10"
-                  fill="#0063CC"
-                  className="ml-2"
-                  style={{ transform: "rotate(0)" }}
-                />
-              </div>
-            </div> */}
-
-            {/* Pelatihan  */}
-            {/* <div className="container-fluid">
-              <div className="row mt-10">
-                <div className="col-12 col-sm-6 col-xl-4">
-                  <Cardss label={<label>PELATIHAN ONLINE</label>}>
-                    <div className="rounded"></div>
-                    <div className="d-flex align-items-center justify-content-between pl-24">
-                      <p className="fw-600" style={{ color: "#6C6C6C" }}>
-                        Gojek
-                      </p>
-                      <button className="btn btn-green-rounded">OPEN</button>
-                    </div>
-                    <h1
-                      className="fz-18 fw-600 mt-4"
-                      style={{ color: "#1F1F1F" }}
-                    >
-                      Intermediate Multimedia Designer
-                    </h1>
-                    <h3
-                      className="mb-0 fz-18 fw-400 mt-4"
-                      style={{ color: "#6C6C6C" }}
-                    >
-                      Vocational School Graduate Academy
-                    </h3>
-                    <hr />
-
-                    <div className="mt-2">
-                      <div className="d-flex align-items-center">
-                        Registrasi: 05 Juli 2021 - 21 Juli 2021
-                      </div>
-                      <div className="d-flex align-items-center mt-2">
-                        Kuota: 1000 Peserta
-                      </div>
-                    </div>
-                  </Cardss>
-                </div>
-                <div className="col-12 col-sm-6 col-xl-4">
-                  <Cardss />
-                </div>
-                <div className="col-12 col-sm-6 col-xl-4">
-                  <Cardss />
-                </div>
-                <div className="col-12 col-sm-6 col-xl-4">
-                  <Cardss />
-                </div>
-                <div className="col-12 col-sm-6 col-xl-4">
-                  <Cardss />
-                </div>
-              </div>
-            </div> */}
 
             <div className="d-flex justify-content-center mt-10">
               <Link href="/login">
