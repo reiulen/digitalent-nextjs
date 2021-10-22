@@ -114,7 +114,6 @@ export const newArtikel = (artikelData, token) => async dispatch => {
       payload: data,
     });
 
-    // console.log(artikelData)
   } catch (error) {
     dispatch({
       type: NEW_ARTIKEL_FAIL,
@@ -144,7 +143,6 @@ export const updateArtikel = (artikelData, token) => async dispatch => {
       payload: data,
     });
 
-    // console.log (`from artikel action ${data}`)
   } catch (error) {
     dispatch({
       type: UPDATE_ARTIKEL_FAIL,
@@ -162,8 +160,6 @@ export const deleteArtikel = (id, token) => async dispatch => {
         Authorization: "Bearer " + token,
       },
     };
-
-    console.log(`token-delete: ${token}`);
 
     const { data } = await axios.delete(
       process.env.END_POINT_API_PUBLIKASI + `api/artikel/${id}`,

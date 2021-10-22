@@ -947,7 +947,7 @@ const Galeri = ({ token }) => {
                                                             <td className="align-middle">
                                                                 {row.nama_kategori}
                                                             </td>
-                                                            <td className="align-middle">{row.judul}</td>
+                                                            <td className="align-middle" className="align-middle" style={{overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',maxWidth:'180px'}}>{row.judul}</td>
                                                             <td className="align-middle">
                                                                 {row.publish === 1 ? (
                                                                     row.tanggal_publish
@@ -958,8 +958,8 @@ const Galeri = ({ token }) => {
                                                                 )}
                                                             </td>
                                                             <td className="align-middle">
-                                                                {/* {row.role} */}
-                                                                Super Admin
+                                                                {row.name}
+                                                                {/* Super Admin */}
                                                             </td>
                                                             <td className="align-middle">
                                                                 {row.publish === 1 ? (

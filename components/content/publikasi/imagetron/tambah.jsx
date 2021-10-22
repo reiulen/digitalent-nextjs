@@ -19,7 +19,7 @@ import { NEW_IMAGETRON_RESET } from "../../../../redux/types/publikasi/imagetron
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingPage from "../../../LoadingPage";
 
-const TambahImagetron = ({ token }) => {
+const TambahImagetron = ({ token, id }) => {
   const editorRef = useRef()
   const dispatch = useDispatch()
   const router = useRouter();
@@ -72,7 +72,7 @@ const TambahImagetron = ({ token }) => {
   const [gambarName, setGambarName] = useState(null)
   const [url_link, setUrlRedirect] = useState('')
   const [publish, setPublish] = useState(0)
-  const [users_id, setUserId] = useState(87)
+  const [users_id, setUserId] = useState(id)
   const [publishDate, setPublishDate] = useState(null);
   const [disablePublishDate, setDisablePublishDate] = useState(true)
 

@@ -283,12 +283,6 @@ const ArtikelPeserta = ({ token }) => {
 
     return (
         <PageWrapper>
-            {/* {
-                console.log(artikel_peserta)
-            } */}
-            {/* {
-                console.log (token)
-            } */}
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
                     <div className="alert-icon"><i className="flaticon-warning"></i></div>
@@ -598,7 +592,7 @@ const ArtikelPeserta = ({ token }) => {
                                                                 />
                                                             </td>
                                                             <td className='align-middle'>{row.nama_kategori}</td>
-                                                            <td className='align-middle'>{row.judul_artikel}</td>
+                                                            <td className='align-middle' className="align-middle" style={{overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',maxWidth:'180px'}}>{row.judul_artikel}</td>
                                                             <td className="align-middle">
                                                                 {row.publish === 1 ? (
                                                                     row.tanggal_publish
@@ -608,7 +602,7 @@ const ArtikelPeserta = ({ token }) => {
                                                                     </span>
                                                                 )}
                                                             </td>
-                                                            <td className='align-middle'>{row.dibuat}</td>
+                                                            <td className='align-middle'>{row.name}</td>
                                                             <td className='align-middle'>
                                                                 {row.publish === 1 ?
                                                                     <span className="label label-inline label-light-success font-weight-bold">

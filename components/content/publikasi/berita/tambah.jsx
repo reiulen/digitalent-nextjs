@@ -18,7 +18,7 @@ import { NEW_BERITA_RESET } from '../../../../redux/types/publikasi/berita.type'
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingPage from '../../../LoadingPage';
 
-const TambahBerita = ({ token }) => {
+const TambahBerita = ({ token, id }) => {
     const editorRef = useRef()
     const dispatch = useDispatch()
     const router = useRouter();
@@ -77,7 +77,7 @@ const TambahBerita = ({ token }) => {
 
 
     const [kategori_id, setKategoriId] = useState('')
-    const [users_id, setUserId] = useState(87)
+    const [users_id, setUserId] = useState(id)
     const [judul_berita, setJudulBerita] = useState('')
     const [isi_berita, setIsiBerita] = useState('');
     const [gambar, setGambar] = useState('')

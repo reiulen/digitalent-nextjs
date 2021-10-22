@@ -48,11 +48,6 @@ export const getAllFaq = (token) => async (dispatch) => {
         };
 
         let link = process.env.END_POINT_API_PUBLIKASI + `api/faq`;
-        // if (keyword) link = link.concat(`&keyword=${keyword}`);
-        // if (limit) link = link.concat(`&limit=${limit}`);
-        // if (publish) link = link.concat(`&publish=${publish}`);
-        // if (startdate) link = link.concat(`&startdate=${startdate}`)
-        // if (enddate) link = link.concat(`&enddate=${enddate}`)
 
         // const config = {
         //     headers: {

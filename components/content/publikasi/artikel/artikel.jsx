@@ -34,13 +34,11 @@ const Artikel = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  // console.log(artikel, 'INI ARTIKEL')
   const {
     loading: allLoading,
     error,
     artikel,
   } = useSelector((state) => state.allArtikel);
-  // console.log(artikel,"Ini ARTIKEL")
   const {
     loading: deleteLoading,
     error: deleteError,
@@ -102,8 +100,6 @@ const Artikel = ({ token }) => {
         dispatch(deleteArtikel(id, token));
       }
     });
-
-    // console.log (token)
   };
 
   const handlePagination = (pageNumber) => {
@@ -291,19 +287,8 @@ const Artikel = ({ token }) => {
     setDisableEndDate(false)
   }
 
-  // const handleEndDate = (date) => {
-  //   if (startDate === null) {
-  //     setDisableEndDate (true)
-
-  //   } else {
-  //     setEndDate (date)
-  //   }
-  // }
-
   return (
     <PageWrapper>
-      {/* {console.log(artikel)} */}
-      {/* {console.log(token)} */}
       {error ? (
         <div
           className="alert alert-custom alert-light-danger fade show mb-5"
@@ -660,12 +645,13 @@ const Artikel = ({ token }) => {
                     <tbody>
                       {!artikel || (artikel && artikel.artikel.length === 0) ? (
                         // <tr>
-                          <td className='align-middle text-center' colSpan={9}>Data Tidak Ditemukan</td>
+                        <td className='align-middle text-center' colSpan={9}>Data Tidak Ditemukan</td>
                         // </tr>
                       ) : (
                         artikel &&
                         // artikel.artikel &&
                         artikel.artikel.map((artikel, i) => {
+                          // console.log("Data Row",artikel)
                           return (
                             <tr key={artikel.id}>
                               {/* <td className="align-middle text-center">
@@ -713,7 +699,7 @@ const Artikel = ({ token }) => {
                                 {/* {artikel.jenis_kategori} */}
                                 {artikel.nama_kategori}
                               </td>
-                              <td className="align-middle">
+                              <td className="align-middle" style={{overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',maxWidth:'180px'}}>
                                 {artikel.judul_artikel}
                               </td>
                               <td className="align-middle">
@@ -726,8 +712,8 @@ const Artikel = ({ token }) => {
                                 )}
                               </td>
                               <td className="align-middle">
-                                {/* {artikel.dibuat} */}
-                                Super Admin
+                                {artikel.name}
+                                {/* Super Admin */}
                               </td>
                               <td className="align-middle">
                                 {artikel.publish === 1 ? (
@@ -741,8 +727,8 @@ const Artikel = ({ token }) => {
                                 )}
                               </td>
                               <td className="align-middle">
-                                {/* {artikel.role} */}
-                                Super Admin
+                                {artikel.role}
+                                {/* Super Admin */}
                               </td>
                               <td className="align-middle d-flex">
 

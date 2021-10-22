@@ -669,7 +669,7 @@ const Faq = ({ token }) => {
                                                                 }
 
                                                             </td>
-                                                            <td className='align-middle'>{row.judul}</td>
+                                                            <td className='align-middle' className="align-middle" style={{overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',maxWidth:'180px'}}>{row.judul}</td>
                                                             <td className='align-middle'>{row.kategori}</td>
                                                             <td className='align-middle'>
                                                                 {row.publish === 1 ? (

@@ -792,7 +792,7 @@ const Imagetron = ({ token }) => {
                                                                 {/* <Image alt='name_image' src='https://statik.tempo.co/data/2018/11/29/id_800478/800478_720.jpg' width={80} height={50} /> */}
                                                             </td>
                                                             <td className='align-middle'>{row.nama_kategori}</td>
-                                                            <td className='align-middle'>{row.judul}</td>
+                                                            <td className='align-middle' className="align-middle" style={{overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',maxWidth:'180px'}}>{row.judul}</td>
                                                             <td className="align-middle">
                                                                 {row.publish === 1 ? (
                                                                     row.tanggal_publish
@@ -803,7 +803,7 @@ const Imagetron = ({ token }) => {
                                                                 )}
                                                             </td>
                                                             {/* <td className='align-middle'>{row.dibuat}</td> */}
-                                                            <td className='align-middle'>{row.dibuat}</td>
+                                                            <td className='align-middle'>{row.name}</td>
                                                             <td className="align-middle">
                                                                 {row.publish === 1 ? (
                                                                     <span className="label label-inline label-light-success font-weight-bold">
@@ -815,8 +815,8 @@ const Imagetron = ({ token }) => {
                                                                     </span>
                                                                 )}
                                                             </td>
-                                                            <td className='align-middle'>Super Admin</td>
-                                                            {/* <td className='align-middle'>{row.role}</td> */}
+                                                            {/* <td className='align-middle'>Super Admin</td> */}
+                                                            <td className='align-middle'>{row.role}</td>
                                                             <td className="align-middle d-flex justify-content-center">
 
                                                                 <Link

@@ -27,7 +27,7 @@ export default function TambahPage(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <Tambah token={session.token} />
+        <Tambah token={session.token} id={session.user.id} />
       </div>
     </>
   );

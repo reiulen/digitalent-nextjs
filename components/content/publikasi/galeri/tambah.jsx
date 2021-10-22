@@ -49,7 +49,7 @@ const img = {
     height: '100%'
 };
 
-const TambahGaleri = ({ token }) => {
+const TambahGaleri = ({ token, id }) => {
     const dispatch = useDispatch()
     const router = useRouter();
 
@@ -144,17 +144,13 @@ const TambahGaleri = ({ token }) => {
     const [judul, setJudulGaleri] = useState('')
     const [isi_galleri, setIsiGaleri] = useState('');
     const [gambar, setGambar] = useState([])
-    // const [gambarPreview, setGambarPreview] = useState(null)
-    // const [gambarPreview, setGambarPreview] = useState(
-    //     "/assets/media/default.jpg"
-    //   );
     const [gambarPreview, setGambarPreview] = useState([]);
     const [image, setImage] = useState([
         { key: 1, imagePreview: "", imageFile: "", imageName: "" },
     ]);
     const [kategori_id, setKategoriId] = useState(null)
     // const [kategori_id, setKategoriId] = useState(1)
-    const [users_id, setUserId] = useState(87)
+    const [users_id, setUserId] = useState(id)
     const [tag, setTag] = useState([])
     const [publish, setPublish] = useState(0)
     const [publishDate, setPublishDate] = useState(null);
@@ -426,74 +422,15 @@ const TambahGaleri = ({ token }) => {
         for (let i = 0; i < image.length; i++) {
             flag += 1
 
-            temps.push(image[i].imagePreview)
+            if (image[i].imagePreview !== "") {
+                temps.push(image[i].imagePreview)
+            }
+
 
             if (flag === image.length) {
                 handleData(temps, newGaleri)
             }
         }
-
-        // for (let i = 0; i < files.length; i++) {
-        //     const reader = new FileReader()
-
-        //     // flag += 1
-
-        //     reader.onload = () => {
-        //         temps.push(reader.result)
-
-        //         // console.log ("check")
-
-        //         flag += 1
-
-        //         if (flag === files.length){
-        //             handleData (temps, newGaleri)
-        //         }
-        //     }
-
-        //     reader.readAsDataURL(files[i])
-        //     // console.log (`Temps: ${temps}`)
-        // }
-
-        // setGambar(temps)
-
-
-
-        // if (publishDate === null) {
-        //     let today = new Date
-
-        //     const data = {
-        //         judul,
-        //         isi_galleri,
-        //         gambar,
-        //         // gambar: temps,
-        //         kategori_id: Number(kategori_id),
-        //         users_id,
-        //         tag,
-        //         publish,
-        //         tanggal_publish: moment(today).format("YYYY-MM-DD")
-        //     }
-
-        //     dispatch(newGaleri(data, token))
-
-        //     // console.log(data)
-        // } else {
-        //     const data = {
-        //         judul,
-        //         isi_galleri,
-        //         gambar,
-        //         // gambar: temps,
-        //         kategori_id: Number(kategori_id),
-        //         users_id,
-        //         tag,
-        //         publish,
-        //         tanggal_publish: moment(publishDate).format("YYYY-MM-DD")
-        //     }
-
-        //     dispatch(newGaleri(data, token))
-        //     // console.log(data)
-        // }
-
-
     }
 
 
@@ -1679,7 +1616,7 @@ const TambahGaleri = ({ token }) => {
                                             style={{ borderRadius: '10px', textAlign: 'center', width: '45px' }}
                                             onClick={onAddImage}
                                             type="button"
-                                            disabled={totalImage === 6 ? true : false}
+                                            disabled={totalImage === 5 ? true : false}
                                         >
                                             <i className="ri-add-line text-white"></i>
                                             {/* <i className="ri-add-line text-white"></i> Tambah Gambar */}

@@ -16,7 +16,7 @@ import { NEW_BERITA_RESET, UPDATE_BERITA_RESET } from '../../../../redux/types/p
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingPage from '../../../LoadingPage';
 
-const EditBerita = ({ token }) => {
+const EditBerita = ({ token, idUser }) => {
     const editorRef = useRef()
     const dispatch = useDispatch()
     const router = useRouter();
@@ -146,18 +146,18 @@ const EditBerita = ({ token }) => {
 
     function hasWhiteSpace(s) {
         return s.indexOf(' ') >= 0;
-      }
-    
-      const handleTag = (data) => {
+    }
+
+    const handleTag = (data) => {
         // console.log(data);
         for (let i = 0; i < data.length; i++) {
-          if (hasWhiteSpace(data[i])) {
-            data.splice([i], 1);
-          }
+            if (hasWhiteSpace(data[i])) {
+                data.splice([i], 1);
+            }
         }
         setTag(data);
         // setTag(data)
-      }
+    }
 
     const onSubmit = (e) => {
         e.preventDefault()

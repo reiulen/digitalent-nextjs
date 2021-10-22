@@ -85,7 +85,6 @@ export const getAllKategori = (token) => async dispatch => {
         };
 
         const { data } = await axios.get(link, config);
-        // console.log("getAllKAtegori actions :", config)
 
         dispatch({
             type: KATEGORI_SUCCESS,
@@ -119,15 +118,6 @@ export const paginationKategori =
                         Authorization: "Bearer " + token,
                     },
                 };
-                // console.log("Paginate actions :", config)
-
-                // const config = {
-                //     headers: {
-                //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
-                //         'Access-Control-Allow-Origin': '*',
-                //         'apikey': process.env.END_POINT_KEY_AUTH
-                //     }
-                // }
 
                 const { data } = await axios.get(link, config);
 
@@ -157,14 +147,6 @@ export const getAllKategoriInput = (kategori, token) => async dispatch => {
             },
         };
 
-        // const config = {
-        //     headers: {
-        //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
-        //         'Access-Control-Allow-Origin': '*',
-        //         'apikey': process.env.END_POINT_KEY_AUTH
-        //     }
-        // }
-
         const { data } = await axios.get(link, config);
 
         dispatch({
@@ -185,20 +167,11 @@ export const newKategori = (kategoriData, token) => async dispatch => {
             type: NEW_KATEGORI_REQUEST,
         });
 
-        // const config = {
-        //     headers: {
-        //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
-        //         'Access-Control-Allow-Origin': '*',
-        //         'apikey': process.env.END_POINT_KEY_AUTH
-        //     }
-        // }
-
         const config = {
             headers: {
                 Authorization: "Bearer " + token,
             },
         };
-        // console.log("getAllKAtegori actions :", config)
 
         const { data } = await axios.post(
             process.env.END_POINT_API_PUBLIKASI + "api/kategori",
@@ -226,7 +199,6 @@ export const deleteKategori = (id, token) => async dispatch => {
                 Authorization: "Bearer " + token,
             },
         };
-        console.log("DAta Delete actions :", config)
 
         const { data } = await axios.delete(
             process.env.END_POINT_API_PUBLIKASI + "api/kategori/" + id, config
@@ -279,7 +251,6 @@ export const updateKategori = (kategori, id, token) => async dispatch => {
                 Authorization: "Bearer " + token,
             },
         };
-        console.log("Update Kategori Action : ", config)
 
         let link = process.env.END_POINT_API_PUBLIKASI + `api/kategori/${id}`;
         const { data } = await axios.put(link, kategori, config);

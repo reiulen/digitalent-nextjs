@@ -23,7 +23,7 @@ import {
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingPage from "../../../LoadingPage";
 
-const EditArtikel = ({ token }) => {
+const EditArtikel = ({ token, idUser }) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -565,7 +565,6 @@ const EditArtikel = ({ token }) => {
   return (
     <>
       <PageWrapper>
-        {/* {console.log(artikel)} */}
 
         {error ? (
           <div

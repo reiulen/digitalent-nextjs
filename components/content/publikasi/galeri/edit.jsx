@@ -153,7 +153,7 @@ const EditGaleri = ({ token }) => {
     //     "/assets/media/default.jpg"
     //   ); //belum
     const [kategori_id, setKategoriId] = useState(galeri.kategori_id); //belum
-    const [users_id, setUserId] = useState(87);
+    const [users_id, setUserId] = useState(galeri.users_id);
     const [tag, setTag] = useState(galeri.tag);
     // const [publish, setPublish] = useState(galeri.publish === 1 ? true : false);
     const [publish, setPublish] = useState(galeri.publish);
@@ -462,8 +462,10 @@ const EditGaleri = ({ token }) => {
         for (let i = 0; i < image.length; i++) {
             flag += 1
 
-            // temps.push(image[i])
-            temps.push(image[i].imageBase64)
+            if (image[i].imagePreview !== "") {
+                // temps.push(image[i])
+                temps.push(image[i].imageBase64)
+            }
 
             if (flag === image.length) {
                 handleData(temps, updateGaleri)

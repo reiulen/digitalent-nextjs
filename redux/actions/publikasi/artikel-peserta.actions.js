@@ -47,9 +47,6 @@ export const getAllArtikelPeserta =
           },
         };
 
-        console.log (token)
-        // console.log (config)
-
         const { data } = await axios.get(link, config);
 
         dispatch({
@@ -149,8 +146,6 @@ export const updateArtikelPeserta = (artikelPesertaData, token) => async (dispat
       type: UPDATE_ARTIKEL_PESERTA_SUCCESS,
       payload: data,
     });
-
-    // console.log (data)
 
   } catch (error) {
     dispatch({

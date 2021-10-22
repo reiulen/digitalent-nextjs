@@ -731,7 +731,7 @@ const Vidio = ({ token }) => {
                                                                 />
                                                             </td>
                                                             <td className='align-middle'>{row.kategori}</td>
-                                                            <td className='align-middle'>{row.judul_video}</td>
+                                                            <td className='align-middle' className="align-middle" style={{overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',maxWidth:'180px'}}>{row.judul_video}</td>
                                                             <td className='align-middle'>
                                                                 {
                                                                     row.publish === 1 ? (
@@ -743,8 +743,7 @@ const Vidio = ({ token }) => {
                                                                     )
                                                                 }
                                                             </td>
-                                                            {/* <td className='align-middle'>{row.dibuat}</td> */}
-                                                            <td className='align-middle'>Super Admin</td>
+                                                            <td className='align-middle'>{row.name}</td>
                                                             <td className='align-middle'>
                                                                 {row.publish === 1 ?
                                                                     <span className="label label-inline label-light-success font-weight-bold">
@@ -757,8 +756,7 @@ const Vidio = ({ token }) => {
                                                                 }
 
                                                             </td>
-                                                            {/* <td className='align-middle'>{row.role}</td> */}
-                                                            <td className='align-middle'>Super Admin</td>
+                                                            <td className='align-middle'>{row.role}</td>
                                                             <td className="align-middle d-flex">
 
                                                                 <button

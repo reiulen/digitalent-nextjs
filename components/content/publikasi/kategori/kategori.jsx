@@ -569,7 +569,7 @@ const Kategori = ({ token }) => {
                                   </span>
                                 )}
                               </td>
-                              <td className="align-middle">
+                              <td className="align-middle" className="align-middle" style={{overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',maxWidth:'180px'}}>
                                 {row.nama_kategori}
                               </td>
                               <td className="align-middle">
