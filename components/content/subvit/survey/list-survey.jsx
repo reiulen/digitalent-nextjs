@@ -301,7 +301,6 @@ const ListSurvey = ({ token }) => {
                       ) : (
                         survey &&
                         survey.list_survey.map((row, i) => {
-                          console.log(row);
                           const paginate = i + 1 * (page * limit);
                           const dividers = limit - 1;
                           return (
