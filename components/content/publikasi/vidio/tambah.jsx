@@ -72,7 +72,7 @@ const TambahVidio = ({ token }) => {
 
 
     const [kategori_id, setKategoriId] = useState('')
-    const [users_id, setUserId] = useState(3)
+    const [users_id, setUserId] = useState(87)
     const [judul_video, setJudulVideo] = useState('')
     const [isi_video, setIsiVideo] = useState('');
     const [url_video, setUrlVideo] = useState('')
@@ -123,17 +123,17 @@ const TambahVidio = ({ token }) => {
         // }
     }
 
+    function hasWhiteSpace(s) {
+        return s.indexOf(' ') >= 0;
+    }
+    
     const handleTag = (data) => {
         for (let i = 0; i < data.length; i++) {
-            for (let j = 0; j < data[i].length; j++) {
-                if (data[i][j] === " ") {
-                    setDisableTag(true)
-                } else {
-                    setDisableTag(false)
-                }
+            if (hasWhiteSpace(data[i])) {
+                data.splice([i], 1);
             }
         }
-        setTag(data)
+        setTag(data);
     }
 
     const handleChangePublish = (e) => {
@@ -430,20 +430,22 @@ const TambahVidio = ({ token }) => {
                             <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Tag</label>
                                 <div className="col-sm-12">
+                                    {/* <div>{tag}</div> */}
                                     <TagsInput
                                         value={tag}
                                         onChange={(data) => handleTag(data)}
                                         name="fruits"
                                         placeHolder="Isi Tag disini"
+                                        seprators={["Enter", "Tab"]}
                                     // onBlur={() => simpleValidator.current.showMessageFor('tag')}
                                     />
                                     {
-                                        disableTag === true ?
-                                            <p className="text-danger">
-                                                Tag tidak bisa terdiri dari "SPACE" character saja
-                                            </p>
-                                            :
-                                            null
+                                        (disableTag === true) &&
+                                        <p className="text-danger">
+                                            Tag tidak bisa terdiri dari "SPACE" character saja
+                                        </p>
+                                        // :
+                                        // null
                                     }
                                 </div>
                             </div>

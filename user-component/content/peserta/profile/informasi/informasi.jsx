@@ -1,70 +1,65 @@
 import React, { useEffect } from "react";
 import { Row, Col } from "react-bootstrap";
+import moment from "moment";
+import { useDispatch, useSelector } from "react-redux";
+import { getDataPribadi } from "../../../../../redux/actions/pelatihan/function.actions";
 
-const Informasi = ({ funcViewEdit }) => {
+const Informasi = ({ funcViewEdit, token }) => {
+  const dispatch = useDispatch();
+  const { error: errorDataPribadi, dataPribadi } = useSelector(
+    (state) => state.getDataPribadi
+  );
+
   useEffect(() => {
-    // console.log(propsViewEdit);
-
-    return function cleanup() {
-      funcViewEdit(true);
-    };
-  }, []);
+    dispatch(getDataPribadi(token));
+  }, [dispatch]);
 
   return (
     <>
       <div className="informasi-pribadi">
         <h3 className="font-weight-bolder mb-5">Data Pribadi</h3>
         <Row>
-          <Col md={12}>
-            <p className="text-neutral-body my-1">Deskripsi Diri</p>
-            <p>
-              Saya adalah seorang Marketing dengan track record berhasil
-              meningkatkan penjualan secara konsisten. Berhasil menciptakan
-              strategi marketing baru dengan sistem yang lebih modern dan dapat
-              menganalisis kebutuhan konsumen secara mendetail. Bekerja cekatan
-              dengan menerapkan target tinggi pada diri sendiri, untuk
-              memkasimalkan laba penjualan.
-            </p>
-          </Col>
-        </Row>
-        <Row>
           <Col md={6}>
             <p className="text-neutral-body my-1">Nama Lengkap</p>
-            <p>Dendy Juliano</p>
+            <p>{(dataPribadi && dataPribadi.name) || "-"}</p>
           </Col>
           <Col md={6}>
             <p className="text-neutral-body my-1">Email</p>
-            <p>dendy@gmail.com</p>
+            <p>{(dataPribadi && dataPribadi.email) || "-"}</p>
           </Col>
         </Row>
         <Row>
           <Col md={6}>
             <p className="text-neutral-body my-1">Nomor Identitas (KTP)</p>
-            <p>320983982389283</p>
+            <p>{(dataPribadi && dataPribadi.nik) || "-"}</p>
           </Col>
           <Col md={6}>
             <p className="text-neutral-body my-1">Jenis Kelamin</p>
-            <p>Perempuan</p>
+            <p>{(dataPribadi && dataPribadi.jenis_kelamin) || "-"}</p>
           </Col>
         </Row>
         <Row>
           <Col md={6}>
             <p className="text-neutral-body my-1">No Handphone</p>
-            <p>083982389283</p>
+            <p>{(dataPribadi && dataPribadi.nomor_handphone) || "-"}</p>
           </Col>
           <Col md={6}>
             <p className="text-neutral-body my-1">Agama</p>
-            <p>Islam</p>
+            <p>{(dataPribadi && dataPribadi.agama) || "-"}</p>
           </Col>
         </Row>
         <Row>
           <Col md={6}>
             <p className="text-neutral-body my-1">Tempat Lahir</p>
-            <p>Depok</p>
+            <p>{(dataPribadi && dataPribadi.tempat_lahir) || "-"}</p>
           </Col>
           <Col md={6}>
             <p className="text-neutral-body my-1">Tanggal lahir</p>
-            <p>21 Januari 2021</p>
+            <p>
+              {(dataPribadi &&
+                moment(dataPribadi.tanggal_lahir).format("DD MMM YYYY")) ||
+                "-"}
+            </p>
           </Col>
         </Row>
         <hr />
@@ -74,17 +69,17 @@ const Informasi = ({ funcViewEdit }) => {
         <Row>
           <Col md={6}>
             <p className="text-neutral-body my-1">Nama Kontak Darurat</p>
-            <p>Dendy Juliano</p>
+            <p>{(dataPribadi && dataPribadi.Nama_kontak_darurat) || "-"}</p>
           </Col>
           <Col md={6}>
             <p className="text-neutral-body my-1">Nomor Kontak Darurat</p>
-            <p>0812832932323</p>
+            <p>{(dataPribadi && dataPribadi.nomor_handphone_darurat) || "-"}</p>
           </Col>
         </Row>
         <Row>
           <Col md={6}>
             <p className="text-neutral-body my-1">Hubungan</p>
-            <p>Pajar</p>
+            <p>{(dataPribadi && dataPribadi.hubungan) || "-"}</p>
           </Col>
         </Row>
         <hr />
@@ -94,19 +89,7 @@ const Informasi = ({ funcViewEdit }) => {
         <Row>
           <Col md={12}>
             <p className="text-neutral-body my-1">KTP</p>
-            <p>ScanKtp.pdf</p>
-          </Col>
-        </Row>
-        <Row>
-          <Col md={12}>
-            <p className="text-neutral-body my-1">CV</p>
-            <p>CV-me.pdf</p>
-          </Col>
-        </Row>
-        <Row>
-          <Col md={12}>
-            <p className="text-neutral-body my-1">Link Portofolio</p>
-            <p>google.com</p>
+            <p>{(dataPribadi && dataPribadi.File_ktp) || "-"}</p>
           </Col>
         </Row>
       </div>

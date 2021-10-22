@@ -264,6 +264,9 @@ import {
 // ============== pelatihan ===============
 import { allPromptReducer } from "./site-management/settings/pelatihan.reducers";
 
+// ============== pelatihan ===============
+import {allDataZonasiReducer} from './site-management/dashboard.reducers'
+
 // End Site Management
 
 //PELATIHAN
@@ -309,7 +312,8 @@ import {
   getFormBuilderReducer,
   getPelatihanReducer,
   newPendaftaranPelatihanReducer,
-} from "./pelatihan/admin/register-training.reducers";
+  formRegisterReducer,
+} from "./pelatihan/peserta/register-training.reducers";
 // ================ pendaftaran pelatihan ===============
 import { allSummaryReducer } from "./pelatihan/admin/summary.reducers";
 
@@ -336,11 +340,14 @@ import {
   drowpdownAkademiReducers,
   drowpdownTemaReducers,
   drowpdownPelatihanReducers,
+  drowpdownPendidikanReducers,
+  drowpdownStatusPekerjaanReducers,
   drowpdownLevelPelatihanReducers,
   drowpdownMitraReducers,
   drowpdownZonasiReducers,
   drowpdownProvinsiReducers,
   drowpdownKabupatenReducers,
+  drowpdownKabupatenDomisiliReducers,
   drowpdownPenyelenggaraReducers,
 } from "./pelatihan/admin/function.reducers";
 import { allProvinsiReducer, allKotaReducer } from "./utils/utils.reducers";
@@ -582,6 +589,8 @@ const reducer = combineReducers({
   deleteRoles: deleteRolesReducer,
   // ============ PELATIHAN =======
   allPrompt: allPromptReducer,
+  // ============ Dashboatd =======
+  allDataZonasi: allDataZonasiReducer,
 
   // END SITE MANAGEMENT
 
@@ -621,6 +630,7 @@ const reducer = combineReducers({
   getFormBuilder: getFormBuilderReducer,
   getPelatihan: getPelatihanReducer,
   newPendaftaranPelatihan: newPendaftaranPelatihanReducer,
+  formRegister: formRegisterReducer,
 
   getDataPribadi: getDataPribadiReducer,
   trainingStep1: trainingStep1Reducer,
@@ -629,11 +639,14 @@ const reducer = combineReducers({
   drowpdownAkademi: drowpdownAkademiReducers,
   drowpdownTema: drowpdownTemaReducers,
   drowpdownPelatihan: drowpdownPelatihanReducers,
+  drowpdownPendidikan: drowpdownPendidikanReducers,
+  drowpdownStatusPekerjaan: drowpdownStatusPekerjaanReducers,
   drowpdownLevelPelatihan: drowpdownLevelPelatihanReducers,
   drowpdownMitra: drowpdownMitraReducers,
   drowpdownZonasi: drowpdownZonasiReducers,
   drowpdownProvinsi: drowpdownProvinsiReducers,
   drowpdownKabupaten: drowpdownKabupatenReducers,
+  drowpdownKabupatenDomisili: drowpdownKabupatenDomisiliReducers,
   drowpdownPenyelenggara: drowpdownPenyelenggaraReducers,
   updateStatus: updateStatusReducer,
 

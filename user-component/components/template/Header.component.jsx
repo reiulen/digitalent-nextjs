@@ -4,9 +4,14 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import Image from "next/dist/client/image";
 import Default from "../../../public/assets/media/logos/default.png";
+import { useDispatch, useSelector } from "react-redux";
 
 const Header = () => {
   const router = useRouter();
+
+  const { error: errorDataPribadi, dataPribadi } = useSelector(
+    (state) => state.getDataPribadi
+  );
 
   let routerPath;
   if (router.pathname.includes("form-pendaftaran"))
@@ -94,14 +99,22 @@ const Header = () => {
             <Col sm={3} hidden={router.pathname.includes(routerPath)}>
               <center>
                 <Image
-                  src={Default}
+                  src={`${
+                    dataPribadi && dataPribadi.foto
+                      ? dataPribadi.file_path + dataPribadi.foto
+                      : "/assets/media/logos/default.png"
+                  }`}
                   alt=""
                   className={styles.imageProfile}
                   width="120px"
                   height="120px"
                 />
-                <h1 className={styles.name}>SYAKILA SALSABILA</h1>
-                <p className={styles.nik}>1239120312839212</p>
+                <h1 className={styles.name}>
+                  {dataPribadi ? dataPribadi.name || "-" : "-"}
+                </h1>
+                <p className={styles.nik}>
+                  {dataPribadi ? dataPribadi.nik || "-" : "-"}
+                </p>
               </center>
             </Col>
             <Col sm={router.pathname.includes(routerPath) ? 12 : 9}>
@@ -121,15 +134,16 @@ const Header = () => {
                           ? "Trivia"
                           : router.pathname.includes("test-subtansi")
                           ? "Test Substansi"
+                          : router.pathname.includes("riwayat-pelatihan")
+                          ? "Riwayat Pelatihan"
+                          : router.pathname.includes("administrasi")
+                          ? "Administrasi"
                           : "Dashboard"}
                       </div>
                     </div>
                   </Col>
                   <Col sm={6} xs={7} className={styles.textCardRight}>
-                    <div
-                      className="d-flex flex-row "
-                      style={{ float: "right" }}
-                    >
+                    <div className="d-flex flex-row" style={{ float: "right" }}>
                       <div className="p-1">
                         <i
                           className={`${styles.icon} ri-time-fill`}
@@ -163,7 +177,7 @@ const Header = () => {
                     <Col className={styles.textCardRight}>
                       <Card className={styles.cardBodyTest}>
                         <div
-                          className="d-flex flex-row "
+                          className="d-flex flex-row text-center"
                           style={{ float: "right" }}
                         >
                           <div className="p-1">

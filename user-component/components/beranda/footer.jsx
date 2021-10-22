@@ -9,7 +9,7 @@ export default function footer() {
   return (
     <div style={{ backgroundColor: "#203E80" }} className="max-container">
       <div className="container-fluid">
-        <div className="row w-100 px-0 py-10 m-0">
+        <div className="row w-100 px-0 mt-5 mx-0 mb-0 py-5">
           <div className="col-12 col-sm-3">
             <div>
               <Image
@@ -94,7 +94,7 @@ export default function footer() {
           </div>
         </div>
         <hr style={{backgroundColor:"white"}} />
-        <p className="text-white fw-500 text-center py-10">Copyright © 2021 | Kementerian Komunikasi dan Informatika</p>
+        <p className="text-white fw-500 text-center py-10 mb-0">Copyright © 2021 | Kementerian Komunikasi dan Informatika</p>
       </div>
     </div>
   );

@@ -16,7 +16,7 @@ const SubtansiUser = dynamic(
 );
 
 export default function SubvitUserSubtansi(props) {
-  const session = props.session.user.user.data;
+  const session = props.session.user.user.data.user;
   return (
     <>
       <div className="d-flex flex-column flex-root">
@@ -35,7 +35,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (!session) {
         return {
           redirect: {
-            destination: "/login",
+            destination: "http://dts-dev.majapahit.id/login",
             permanent: false,
           },
         };
@@ -53,7 +53,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (data.user.roles[0] !== "user") {
         return {
           redirect: {
-            destination: "/login",
+            destination: "http://dts-dev.majapahit.id/login",
             permanent: false,
           },
         };

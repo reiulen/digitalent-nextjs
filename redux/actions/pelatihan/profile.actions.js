@@ -61,7 +61,7 @@ export const updateProfileDataPribadi =
     } catch (error) {
       dispatch({
         type: UPDATE_DATA_PRIBADI_FAIL,
-        payload: error.message,
+        payload: error.response.data.message,
       });
     }
   };
@@ -86,9 +86,10 @@ export const getProfileAlamat = (token) => async (dispatch) => {
       payload: data,
     });
   } catch (error) {
+    console.log(error);
     dispatch({
       type: GET_ALAMAT_FAIL,
-      payload: error.message,
+      payload: error.response.data.message,
     });
   }
 };
@@ -115,7 +116,7 @@ export const updateProfileAlamat = (dataAlamat, token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: UPDATE_ALAMAT_FAIL,
-      payload: error.message,
+      payload: error.response.data.message,
     });
   }
 };
@@ -142,7 +143,7 @@ export const getProfilePendidikan = (token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: GET_PENDIDIKAN_FAIL,
-      payload: error.message,
+      payload: error.response.data.message,
     });
   }
 };
@@ -171,7 +172,7 @@ export const updateProfilePendidikan =
     } catch (error) {
       dispatch({
         type: UPDATE_PENDIDIKAN_FAIL,
-        payload: error.message,
+        payload: error.response.data.message,
       });
     }
   };
@@ -199,7 +200,7 @@ export const getProfileKeterampilan = (token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: GET_KETERAMPILAN_FAIL,
-      payload: error.message,
+      payload: error.response.data.message,
     });
   }
 };
@@ -228,7 +229,7 @@ export const updateProfileKeterampilan =
     } catch (error) {
       dispatch({
         type: UPDATE_KETERAMPILAN_FAIL,
-        payload: error.message,
+        payload: error.response.data.message,
       });
     }
   };
@@ -255,7 +256,7 @@ export const getProfilePekerjaan = (token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: GET_PEKERJAAN_FAIL,
-      payload: error.message,
+      payload: error.response.data.message,
     });
   }
 };
@@ -284,8 +285,14 @@ export const updateProfilePekerjaan =
     } catch (error) {
       dispatch({
         type: UPDATE_PEKERJAAN_FAIL,
-        payload: error.message,
+        payload: error.response.data.message,
       });
     }
   };
 //END PEKERJAAN
+
+export const clearErrors = () => async (dispatch) => {
+  dispatch({
+    type: CLEAR_ERRORS,
+  });
+};

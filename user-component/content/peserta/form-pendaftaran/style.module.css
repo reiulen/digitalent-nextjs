@@ -28,6 +28,29 @@
   font-size: 14px;
 }
 
+.button_profile_simpan {
+  background-color: #007cff !important;
+  color: #ffffff !important;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.button_profile_batal {
+  background-color: #ffffff !important;
+  color: #007cff !important;
+  font-weight: 600;
+  font-size: 14px;
+  border: none;
+}
+
+.button_profile_batal:hover {
+  background-color: #ffffff !important;
+  border: 1px solid #007cff !important;
+  color: #007cff !important;
+  font-weight: 600;
+  font-size: 14px;
+}
+
 @media only screen and (max-width: 500px) {
   .text_title_card {
     font-weight: 600;
@@ -36,18 +59,17 @@
 
   .text_mitra_card {
     font-weight: 600;
-    font-size: 10px;
+    font-size: 12px;
     color: #6c6c6c;
   }
 
   .text_tema_card {
     color: #6c6c6c;
-    font-size: 8px;
+    font-size: 10px;
   }
 
   .text_date_register {
-    font-size: 10px;
+    font-size: 12px;
     color: #6c6c6c;
-    /* line-height: px; */
   }
 }

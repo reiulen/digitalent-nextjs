@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import dynamic from "next/dynamic";
-import LoadingSkeleton from "../../../components/LoadingSkeleton";
+import LoadingContentFull from "../../../user-component/content/peserta/components/loader/LoadingContentFull";
+import { useDispatch, useSelector } from "react-redux";
 
 import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
@@ -8,6 +9,8 @@ import { getDataPribadi } from "../../../redux/actions/pelatihan/function.action
 import {
   getFormBuilder,
   getPelatihan,
+  getFormRegister,
+  storeFormRegister,
 } from "../../../redux/actions/pelatihan/register-training.actions";
 
 const Layout = dynamic(() =>
@@ -21,14 +24,40 @@ const IndexForm = dynamic(
     ),
   {
     loading: function loadingNow() {
-      return <LoadingSkeleton />;
+      return <LoadingContentFull />;
     },
     ssr: false,
   }
 );
 
 export default function FormPendaftaran(props) {
+  const dispatch = useDispatch();
   const session = props.session.user.user.data.user;
+  const { error: errorFormBuilder, formBuilder: dataForm } = useSelector(
+    (state) => state.getFormBuilder
+  );
+
+  useEffect(() => {
+    let data = {
+      komitmen: false,
+      form_pendaftaran: [],
+    };
+    dataForm &&
+      dataForm.FormBuilder.map((row, i) => {
+        data.form_pendaftaran.push({
+          key: row.key,
+          name: row.name,
+          type: row.element,
+          size: row.size,
+          option: row.option,
+          dataOption: row.dataOption,
+          required: row.required,
+          fileName: "",
+          value: "",
+        });
+      });
+    dispatch(storeFormRegister(data));
+  }, [dataForm, dispatch]);
   return (
     <>
       <Layout title="Form Pendaftaran Peserta - Pelatihan" session={session}>
@@ -45,7 +74,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (!session) {
         return {
           redirect: {
-            destination: "/login",
+            destination: "http://dts-dev.majapahit.id/login",
             permanent: false,
           },
         };
@@ -54,7 +83,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (data.user.roles[0] !== "user") {
         return {
           redirect: {
-            destination: "/login",
+            destination: "http://dts-dev.majapahit.id/login",
             permanent: false,
           },
         };

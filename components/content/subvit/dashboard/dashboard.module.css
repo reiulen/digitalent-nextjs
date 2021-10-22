@@ -1,3 +1,9 @@
+@media (max-width: 490px) {
+  .cardSubstansi {
+    display: none;
+  }
+}
+
 .textCardTwo {
   font-family: Poppins;
   font-style: normal;

@@ -1,8 +1,11 @@
 import "../styles/globals.css";
+import "react-datepicker/dist/react-datepicker.css";
 import "remixicon/fonts/remixicon.css";
 import "react-toastify/dist/ReactToastify.css";
-import "react-datepicker/dist/react-datepicker.css";
+import "react-image-crop/dist/ReactCrop.css";
 
+import "../styles/sitemanagement/pelatihan.css";
+import "../styles/peserta/dashboards.css";
 import "../styles/progresBar.css";
 import "../styles/styleCustomUtilities.css";
 import "../styles/dashboard.module.css";

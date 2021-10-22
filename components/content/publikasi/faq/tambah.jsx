@@ -52,7 +52,7 @@ const TambahFaq = ({token}) => {
     const [judul, setJudulPertanyaan] = useState('')
     const [jawaban, setJawaban] = useState('');
     const [kategori_id, setKategoriId] = useState('')
-    const [users_id, setUsersId] = useState(3)
+    const [users_id, setUsersId] = useState(87)
     const [pinned, setPinnedFaq] = useState(0)
     const [publish, setPublish] = useState(0)
     const [publishDate, setPublishDate] = useState(null);

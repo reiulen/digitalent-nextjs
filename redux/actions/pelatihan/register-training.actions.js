@@ -9,7 +9,26 @@ import {
   PENDAFTARAN_PELATIHAN_FAIL,
   CLEAR_ERRORS,
 } from "../../types/pelatihan/register-training.type";
+import {
+  GET_FORM_REGISTER,
+  STORE_FORM_REGISTER,
+} from "../../types/pelatihan/function.type";
+
 import axios from "axios";
+
+export const getFormRegister = () => async (dispatch) => {
+  dispatch({
+    type: GET_FORM_REGISTER,
+    payload: [],
+  });
+};
+
+export const storeFormRegister = (data) => async (dispatch) => {
+  dispatch({
+    type: STORE_FORM_REGISTER,
+    payload: data,
+  });
+};
 
 export const getFormBuilder = (token, id) => async (dispatch) => {
   try {
@@ -32,7 +51,7 @@ export const getFormBuilder = (token, id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: GET_FORM_BUILDER_FAIL,
-      payload: error.message,
+      payload: error.response.data.message,
     });
   }
 };
@@ -58,7 +77,7 @@ export const getPelatihan = (token, id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: GET_PELATIHAN_FAIL,
-      payload: error.message,
+      payload: error.response.data.message,
     });
   }
 };
@@ -93,3 +112,9 @@ export const newPendaftaranPelatihan =
       });
     }
   };
+
+export const clearErrors = () => async (dispatch) => {
+  dispatch({
+    type: CLEAR_ERRORS,
+  });
+};

@@ -17,15 +17,16 @@ const Tambah = ({ token }) => {
   let selectRefDataFromReference = null;
 
   const detailDataReference = useSelector((state) => state.detailDataReference);
-  const allOptionReferenceSite = useSelector((state) => state.allOptionReferenceSite);
+  console.log("detailDataReference",detailDataReference)
+  const allOptionReferenceSite = useSelector(
+    (state) => state.allOptionReferenceSite
+  );
   let tempOptionsReference = allOptionReferenceSite?.data;
 
-  console.log("detailDataReferenceReducer", detailDataReference);
   // console.log("allOptionReferenceSite", allOptionReferenceSite);
   const [defaultDataReference, setDefaultDataReference] = useState([
     detailDataReference.dataReference.data_reference,
   ]);
-
 
   const [nameReference, setNameReference] = useState(
     detailDataReference.dataReference.name
@@ -35,26 +36,190 @@ const Tambah = ({ token }) => {
   );
   // state provinsi for set in option provinsi
   const [referenceOption, setReferenceOption] = useState([]);
-  const [idReference, setIdReference] = useState("");
+  const [idReference, setIdReference] = useState(detailDataReference.dataReference.id);
   const [nameListFromReference, setNameListFromReference] = useState("");
   const [optionFromReference, setOptionFromReference] = useState([]);
   const changeListDataReference = (e) => {
-     setIdReference(e.key)
-     setNameListFromReference(e.value)
+    setIdReference(e.key);
+    setNameListFromReference(e.value);
   };
 
-  // sisa buat loop from detail nya
 
-  // const [formInput, setFormInput] = useState(
-  //   detailDataReference.dataReference.valueReference.map((items) => {
-  //     return {
-  //       provinsi: [{ label: items.provinsi, value: items.provinsi }],
-  //       kabupaten: items.kota_kabupaten,
-  //     };
-  //   })
-  // );
+  const manipulate1 = detailDataReference.dataReference.valueReference.map(
+    (items) => {
+      return { ...items, value: { label: items.value, value: items.value } };
+    }
+  );
+  const transformed = manipulate1.map(({ data_references_id,relasi,value,relasi_id, }) => ({ value: relasi,data_references_id:data_references_id,relasi_id:relasi_id,label:value}));
+  
+  
 
-  // console.log("formInput", formInput);
+  const [formReferenceAndText, setFormReferenceAndText] = useState(transformed.map((items)=>{
+    return {...items,value:items.value.map((itemx)=>{
+      return {...itemx,label:itemx.value,label_old:itemx.value}
+    })}
+  }));
+  const [formReferenceAndTextValue, setFormReferenceAndTextValue] = useState(transformed.map((items)=>{
+    return {...items,value:items.value.map((itemx)=>{
+      return {...itemx,label:itemx.value,label_old:itemx.value}
+    })}
+  }));
+
+  const handleAddFormReferenceText = () => {
+    let _temp = [...formReferenceAndText];
+    let _tempValue = [...formReferenceAndTextValue];
+    _temp.push({
+      relasi_id: "",
+      value: [
+        {
+          label_old: "",
+          label:"",
+          value:""
+        },
+      ],
+    });
+    _tempValue.push({
+      relasi_id: "",
+      value: [
+        {
+          label_old: "",
+          label:"",
+          value:""
+        },
+      ],
+    });
+    setFormReferenceAndText(_temp);
+    setFormReferenceAndTextValue(_tempValue);
+  };
+
+  const handleAddInput = (idx, index) => {
+    let _temp = [...formReferenceAndText];
+    let _tempValue = [...formReferenceAndTextValue];
+    _temp.map((items, ids) => {
+      if (ids === idx) {
+        items.value.push({
+          label: "",
+          label_old: "",
+        });
+      }
+    });
+    _tempValue.map((items, ids) => {
+      if (ids === idx) {
+        items.value.push({
+          label: "",
+          label_old: "",
+        });
+      }
+    });
+
+    setFormReferenceAndText(_temp);
+    setFormReferenceAndTextValue(_tempValue);
+  };
+
+   const handleCHangeNameReference = (e, index) => {
+    let _temp = [...formReferenceAndText];
+    let _tempValue = [...formReferenceAndTextValue];
+    _temp[index].relasi_id = e.key;
+    _tempValue[index].relasi_id = e.key;
+    setFormReferenceAndText(_temp);
+    setFormReferenceAndTextValue(_tempValue);
+  };
+
+  const handleChangeTextForm = (e, idx, index) => {
+    let _temp = [...formReferenceAndText];
+    let _tempValue = [...formReferenceAndTextValue];
+
+    _temp[idx].value[index].value = e.target.value
+    _tempValue[idx].value[index].value = e.target.value
+
+    setFormReferenceAndText(_temp);
+    setFormReferenceAndTextValue(_tempValue);
+  };
+
+  const handleDelete = (parent, child) => {
+    let _temp = [...formReferenceAndText];
+    let _tempValue = [...formReferenceAndTextValue];
+
+    if (child === 0) {
+      let resultTemp = _temp.filter((items, idz) => idz !== parent);
+      setFormReferenceAndText(resultTemp);
+      let resultTempValue = _tempValue.filter((items, idz) => idz !== parent);
+      setFormReferenceAndText(resultTemp);
+      setFormReferenceAndTextValue(resultTempValue);
+    } else {
+      _temp.map((items, ids) => {
+        if (ids === parent) {
+          items.value = items.value.filter((itemx, inc) => inc !== child);
+        }
+      });
+      _tempValue.map((items, ids) => {
+        if (ids === parent) {
+          items.value = items.value.filter((itemx, inc) => inc !== child);
+        }
+      });
+      setFormReferenceAndText(_temp);
+      setFormReferenceAndTextValue(_tempValue);
+    }
+  };
+
+
+
+   const submit = async (e) => {
+
+    // console.log("submit nameReference",nameReference)
+    // console.log("submit idReference",idReference)
+    // console.log("submit status",status)
+
+     
+    console.log("submit formReferenceAndText",formReferenceAndText)
+    console.log("submit formReferenceAndTextValue",formReferenceAndTextValue)
+
+
+    e.preventDefault();
+    if (nameReference === "") {
+      Swal.fire("Gagal", `Nama data reference tidak boleh kosong`, "error");
+    } else if (status === "") {
+      Swal.fire("Gagal", `Status tidak boleh kosong`, "error");
+    } else if (idReference === "") {
+      Swal.fire("Gagal", `Harus pilih data reference`, "error");
+    } else if (formValue.length === 1) {
+      Swal.fire(
+        "Gagal",
+        `Form data provinsi dan kabupaten tidak boleh kosong`,
+        "error"
+      );
+    } else {
+      // let sendData = {
+      //   name: nameReference,
+      //   status: status,
+      //   data_references_relasi_id: idReference,
+      //   data: formReferenceAndText,
+      // };
+
+      // try {
+      //   let { data } = await axios.post(
+      //     `${process.env.END_POINT_API_SITE_MANAGEMENT}api/reference/store-relasi`,
+      //     sendData,
+      //     {
+      //       headers: {
+      //         authorization: `Bearer ${token}`,
+      //       },
+      //     }
+      //   );
+
+      //   Swal.fire("Berhasil", "Data berhasil disimpan", "success").then(() => {
+      //     router.push("/site-management/reference");
+      //   });
+      // } catch (error) {
+      //   Swal.fire("Gagal simpan", `${error.response.data.message}`, "error");
+      // }
+    }
+  };
+
+
+
+
+
 
   useEffect(() => {
     let optionReference = tempOptionsReference?.map((items) => {
@@ -75,9 +240,9 @@ const Tambah = ({ token }) => {
               },
             }
           );
-          let resultOptionReferenceChooce = data.data.map((items) =>{
-          return {...items,label:items.value}
-        })
+          let resultOptionReferenceChooce = data.data.map((items) => {
+            return { ...items, label: items.value };
+          });
           // console.log("data sub",data)
           setOptionFromReference(resultOptionReferenceChooce);
         } catch (error) {
@@ -90,9 +255,7 @@ const Tambah = ({ token }) => {
 
       getAllDataFromIdReference(token, idReference);
     }
-    
-
-  }, [token, idReference])
+  }, [token, idReference]);
 
   return (
     <PageWrapper>
@@ -162,94 +325,81 @@ const Tambah = ({ token }) => {
                   options={referenceOption}
                 />
               </div>
+               
+               {formReferenceAndText.map((itemsRef, idx) => {
+                return (
+                  <div className="row" key={idx}>
+                    <div className="col-12 col-sm-6">
+                      <div className="form-group mt-4">
+                        <label>List {nameListFromReference}</label>
 
-              {/*  */}
-              <div className="row">
-                <div className="col-12 col-sm-6">
-                  <div className="form-group mt-4">
-                    <label>List {nameListFromReference}</label>
-                <Select
-                  ref={(ref) => (selectRefDataFromReference = ref)}
-                  className="basic-single"
-                  classNamePrefix="select"
-                  placeholder="Pilih provinsi"
-                  defaultValue={detailDataReference.dataReference.valueReference.map((items) => {
-                    return { label: items.value, value: items.value };
-                  })}
-                  isDisabled={false}
-                  isLoading={false}
-                  isClearable={false}
-                  isRtl={false}
-                  isSearchable={true}
-                  name="color"
-                  onChange={(e) => changeListDataReference(e)}
-                  options={optionFromReference}
-                />
-                   
-                  </div>
-                </div>
-                <div className="col-12 col-sm-6">
-                  <div className="form-group mt-12">
-                    <div className="position-relative d-flex align-items-start w-100">
-                      <div className="w-100 mr-6">
-                        <input
-                          required
-                          placeholder="Aceh"
-                          name="cooperation"
-                          type="text"
-                          className="form-control"
+                        <Select
+                          ref={(ref) => (selectRefDataFromReference = ref)}
+                          className="basic-single"
+                          classNamePrefix="select"
+                          placeholder="Pilih provinsi"
+                          defaultValue={itemsRef.label}
+                          isDisabled={false}
+                          isLoading={false}
+                          isClearable={false}
+                          isRtl={false}
+                          isSearchable={true}
+                          name="color"
+                          onChange={(e) => handleCHangeNameReference(e, idx)}
+                          options={optionFromReference}
                         />
                       </div>
+                    </div>
+                    <div className="col-12 col-sm-6">
+              
 
-                      <div className="d-flex align-items-center">
-                        <button
-                          type="button"
-                          className="btn mr-4"
-                          style={{ backgroundColor: "#04AA77" }}
-                        >
-                          <IconAdd />
-                        </button>
-                        <button
-                          type="button"
-                          className="btn"
-                          style={{ backgroundColor: "#EE2D41" }}
-                        >
-                          <IconDelete />
-                        </button>
-                      </div>
+                      {itemsRef.value.map((items, index) => {
+                        return (
+                          <div className="form-group mt-12" key={index}>
+                            <div className="position-relative d-flex align-items-start w-100">
+                              <div className="w-100 mr-6">
+                                <input
+                                value={items.value}
+                                  type="text"
+                                  className="form-control"
+                                  placeholder="Masukan data value"
+                                  onChange={(e) =>
+                                    handleChangeTextForm(e, idx, index)
+                                  }
+                                />
+                              </div>
+
+                              <div className="d-flex align-items-center">
+                                <button
+                                  type="button"
+                                  className="btn mr-4"
+                                  style={{ backgroundColor: "#04AA77" }}
+                                  onClick={() => handleAddInput(idx, index)}
+                                >
+                                  <IconAdd />
+                                </button>
+                                {index === 0 && idx === 0 ? (
+                                  ""
+                                ) : (
+                                  <button
+                                    type="button"
+                                    className="btn"
+                                    style={{ backgroundColor: "#EE2D41" }}
+                                    onClick={() => handleDelete(idx, index)}
+                                  >
+                                    <IconDelete />
+                                  </button>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })}
+
                     </div>
                   </div>
-                  <div className="form-group">
-                    <div className="position-relative d-flex align-items-start w-100">
-                      <div className="w-100 mr-6">
-                        <input
-                          placeholder="Aceh"
-                          name="cooperation"
-                          type="text"
-                          className="form-control"
-                        />
-                      </div>
-
-                      <div className="d-flex align-items-center">
-                        <button
-                          type="button"
-                          className="btn mr-4"
-                          style={{ backgroundColor: "#04AA77" }}
-                        >
-                          <IconAdd />
-                        </button>
-                        <button
-                          type="button"
-                          className="btn"
-                          style={{ backgroundColor: "#EE2D41" }}
-                        >
-                          <IconDelete />
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                );
+              })} 
 
               <div className="d-flex align-items-center justify-content-end">
                 <div className="form-group">
@@ -265,7 +415,7 @@ const Tambah = ({ token }) => {
                       color: "#FFFFFF",
                       width: "max-content",
                     }}
-                    // onClick={() => handleAddInput()}
+                    onClick={() => handleAddFormReferenceText()}
                   >
                     <IconAdd className="mr-3" width="14" height="14" />
                     Tambah Value
@@ -283,7 +433,7 @@ const Tambah = ({ token }) => {
                   <button
                     type="button"
                     className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
-                    // onClick={e => handleSubmit(e)}
+                    onClick={e => submit(e)}
                   >
                     Simpan
                   </button>

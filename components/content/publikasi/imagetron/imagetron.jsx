@@ -386,9 +386,9 @@ const Imagetron = ({ token }) => {
 
     return (
         <PageWrapper>
-            {
+            {/* {
                 console.log(imagetron)
-            }
+            } */}
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
                     <div className="alert-icon"><i className="flaticon-warning"></i></div>
@@ -748,7 +748,7 @@ const Imagetron = ({ token }) => {
                                                 <th>Dibuat</th>
                                                 <th>Status</th>
                                                 <th>Role</th>
-                                                <th style={{ width: '9vw' }}>Aksi</th>
+                                                <th style={{ width: '9vw', textAlign:'center' }}>Aksi</th>
                                             </tr>
                                         </thead>
 
@@ -815,7 +815,8 @@ const Imagetron = ({ token }) => {
                                                                     </span>
                                                                 )}
                                                             </td>
-                                                            <td className='align-middle'>{row.role}</td>
+                                                            <td className='align-middle'>Super Admin</td>
+                                                            {/* <td className='align-middle'>{row.role}</td> */}
                                                             <td className="align-middle d-flex justify-content-center">
 
                                                                 <Link
@@ -875,7 +876,7 @@ const Imagetron = ({ token }) => {
                                                     className="form-control"
                                                     id="exampleFormControlSelect2"
                                                     style={{
-                                                        width: "65px",
+                                                        width: "70px",
                                                         background: "#F3F6F9",
                                                         borderColor: "#F3F6F9",
                                                         color: "#9E9E9E",
