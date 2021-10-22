@@ -6,6 +6,7 @@ import Beranda from "../user-component/content/beranda/beranda"
 import { wrapper } from "../redux/store";
 import { getAllAkademi } from "../redux/actions/beranda/beranda.actions";
 import { getTemaByAkademi } from "../redux/actions/beranda/beranda.actions";
+import { getAllPublikasi } from "../redux/actions/beranda/beranda.actions"
 // import { getPelatihanByTema } from "../redux/actions/beranda/beranda.actions";
 
 export default function HomePage() {
@@ -26,6 +27,10 @@ export const getStaticProps = wrapper.getStaticProps((store) => async({ query, r
 
   await store.dispatch (
     getTemaByAkademi()
+  )
+
+  await store.dispatch (
+    getAllPublikasi()
   )
 
   // await store.dispatch (

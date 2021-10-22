@@ -11,6 +11,10 @@ import {
     BERANDA_PELATIHAN_SUCCESS,
     BERANDA_PELATIHAN_FAIL,
 
+    BERANDA_PUBLIKASI_REQUEST,
+    BERANDA_PUBLIKASI_SUCCESS,
+    BERANDA_PUBLIKASI_FAIL,
+
     CLEAR_ERRORS
 } from "../../types/beranda/beranda.type"
 
@@ -86,6 +90,27 @@ export const getPelatihanByTema =(
     }
 }
 
+// GET PUBLIKASI
+export const getAllPublikasi = () => async dispatch => {
+    try {
+        dispatch({ type: BERANDA_PUBLIKASI_REQUEST });
+
+        let link = `http://dts-publikasi-dev.majapahit.id/api/home`
+
+        const { data } = await axios.get(link);
+
+        dispatch({
+            type: BERANDA_PUBLIKASI_SUCCESS,
+            payload: data,
+        });
+        
+    } catch (error) {
+        dispatch({
+            type: BERANDA_PUBLIKASI_FAIL,
+            payload: error.message,
+        });
+    }
+}
 
 // Clear Error
 export const clearErrors = () => async dispatch => {

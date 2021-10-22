@@ -4,23 +4,13 @@ import Link from "next/link";
 import Image from "next/image";
 import moment from "moment";
 
-// import Image from "next/image";
+// import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
-import IconLogin from "../../../components/assets/icon-dashboard-peserta/Login";
 import { Card, Carousel, Badge, Button } from "react-bootstrap";
+import { getTemaByAkademi } from "../../../redux/actions/beranda/beranda.actions"
 
-// import Slider from "react-slick";
-// import CarouselMulti from "react-multi-carousel";
-
-import ImagetronCarousel from "../../components/ImagetronCarousel";
-// import AkademiCarousel from "../../components/AkademiCarousel";
 import BerandaWrapper from "../../../components/wrapper/beranda.wrapper";
-// import DefaultThumbnail from "../../../public/assets/media/default-thumbnail.svg"
-
 import "../../../styles/beranda.module.css";
-// import "react-multi-carousel/lib/styles.css";
-// import "slick-carousel/slick/slick.css";
-// import "slick-carousel/slick/slick-theme.css";
 
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/splide/dist/css/splide.min.css";
@@ -41,11 +31,13 @@ const Navigationbar = dynamic(
 );
 
 const Beranda = () => {
+  const dispatch = useDispatch();
+  // const router = useRouter();
+
   const { akademi } = useSelector(state => state.allAkademi);
-
   const { tema } = useSelector(state => state.temaByAkademi);
-
-  const { pelatihan } = useSelector(state => state.pelatihanByTema);
+  const { publikasi } = useSelector(state => state.allPublikasiBeranda);
+  // const { pelatihan } = useSelector(state => state.pelatihanByTema);
 
   const [ activeTab, setActiveTab ] = useState(0);
   const [ show, setShow ] = useState(null);
@@ -61,11 +53,16 @@ const Beranda = () => {
   const [ cardPendaftaranMulai, setCardPendaftaranMulai ] = useState(null)
   const [ cardPendaftaranSelesai, setCardPendaftaranSelesai ] = useState(null)
   
-  
-
   useEffect(() => {
     handleHoverCard()
   }, [])
+
+  // useEffect(() => {
+  //   if (tema){
+  //     window.location.reload();
+  //   }
+    
+  // }, [tema])
 
   const handleHoverCard = () => {
     let arr = []
@@ -124,6 +121,7 @@ const Beranda = () => {
 
   const handleActive = (index) => {
     setActiveTab(index);
+    dispatch (getTemaByAkademi(index))
   };
 
   const handleQuickView = (indexTema, image, status, image_mitra, akademi, deskripsi, name, kuota_pendaftar, mitra, alamat, pendaftaran_mulai, pendaftaran_selesai) => {
@@ -166,123 +164,133 @@ const Beranda = () => {
 
   return (
     <BerandaWrapper title="Digitalent">
-      {
-        console.log (akademi)
-      }
 
-      {
-        console.log (tema)
-      }
-
-      {
-        console.log (show)
-      }
       <div style={{ backgroundColor: "white" }}>
         <Navigationbar />
 
-        {/* <ImagetronCarousel /> */}
-
         {/* Carousel 1 */}
-        <div className="container-fluid max-container">
-          <div className="carousel-primarys">
-            <Splide
-              active={() => handleActiveImagetron(1)}
-              options={{
-                type: "loop",
-                gap: "1rem",
-                autoplay: true,
-                padding: "5rem",
-                height: "600px",
-                focus: "center",
-                breakpoints: {
-                  1669: {
-                    height: "500px",
-                  },
-                  1262: {
-                    height: "400px",
-                  },
-                  1062: {
-                    height: "300px",
-                  },
-                  833: {
-                    height: "270px",
-                  },
-                  726: {
-                    height: "230px",
-                  },
-                  629: {
-                    height: "210px",
-                  },
-                  590: {
-                    height: "180px",
-                    padding: "0",
-                    gap: "0",
-                  },
-                  514: {
-                    height: "160px",
-                    padding: "0",
-                    gap: "0",
-                  },
-                  450: {
-                    height: "160px",
-                    padding: "0",
-                    gap: "0",
-                  },
-                  425: {
-                    height: "160px",
-                    padding: "0",
-                    gap: "0",
-                  },
-                  320: {
-                    height: "150px",
-                    padding: "0",
-                    gap: "0",
-                  },
-                },
-              }}
-              hasSliderWrapper
-            >
-              <SplideSlide>
-                <Image
-                  layout="fill"
-                  // width="1000vw"
-                  // height="500vh"
-                  objectFit="fill"
-                  // src={`/assets/media/banner-3.svg`}
-                  src={`/assets/media/carousel-01.svg`}
-                  alt="First slide"
-                  className="mx-5"
-                />
-              </SplideSlide>
+        {
+          publikasi.imagetron.length !== 0 ?
+            <div className="container-fluid max-container">
+              <div className="carousel-primarys">
+                <Splide
+                  active={() => handleActiveImagetron(1)}
+                  options={{
+                    type: "loop",
+                    gap: "1rem",
+                    autoplay: true,
+                    padding: "5rem",
+                    height: "600px",
+                    focus: "center",
+                    breakpoints: {
+                      1669: {
+                        height: "500px",
+                      },
+                      1262: {
+                        height: "400px",
+                      },
+                      1062: {
+                        height: "300px",
+                      },
+                      833: {
+                        height: "270px",
+                      },
+                      726: {
+                        height: "230px",
+                      },
+                      629: {
+                        height: "210px",
+                      },
+                      590: {
+                        height: "180px",
+                        padding: "0",
+                        gap: "0",
+                      },
+                      514: {
+                        height: "160px",
+                        padding: "0",
+                        gap: "0",
+                      },
+                      450: {
+                        height: "160px",
+                        padding: "0",
+                        gap: "0",
+                      },
+                      425: {
+                        height: "160px",
+                        padding: "0",
+                        gap: "0",
+                      },
+                      320: {
+                        height: "150px",
+                        padding: "0",
+                        gap: "0",
+                      },
+                    },
+                  }}
+                  hasSliderWrapper
+                >
+                  {
+                    publikasi.imagetron.map ((el, i) => {
+                      return (
+                        <SplideSlide key={i}>
+                          <Image
+                            layout="fill"
+                            objectFit="fill"
+                            // src={process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + el.gambar}
+                            src={`/assets/media/carousel-01.svg`}
+                            alt="Imagetron Slide"
+                            className="mx-5"
+                          />
+                        </SplideSlide>
+                      )
+                    })
+                  }
+                  {/* <SplideSlide>
+                    <Image
+                      layout="fill"
+                      // width="1000vw"
+                      // height="500vh"
+                      objectFit="fill"
+                      // src={`/assets/media/banner-3.svg`}
+                      src={`/assets/media/carousel-01.svg`}
+                      alt="First slide"
+                      className="mx-5"
+                    />
+                  </SplideSlide>
 
-              <SplideSlide>
-                <Image
-                  layout="fill"
-                  objectFit="fill"
-                  // width="1000vw"
-                  // height="500vh"
-                  // src={`/assets/media/image27.png`}
-                  src={`/assets/media/carousel-01.svg`}
-                  alt="First slide"
-                  className="mx-5"
-                />
-              </SplideSlide>
+                  <SplideSlide>
+                    <Image
+                      layout="fill"
+                      objectFit="fill"
+                      // width="1000vw"
+                      // height="500vh"
+                      // src={`/assets/media/image27.png`}
+                      src={`/assets/media/carousel-01.svg`}
+                      alt="First slide"
+                      className="mx-5"
+                    />
+                  </SplideSlide>
 
-              <SplideSlide>
-                <Image
-                  layout="fill"
-                  // width="1000vw"
-                  // height="500vh"
-                  objectFit="fill"
-                  // src={`/assets/media/banner-3.svg`}
-                  src={`/assets/media/carousel-01.svg`}
-                  alt="First slide"
-                  className="mx-5"
-                />
-              </SplideSlide>
-            </Splide>
-          </div>
-        </div>
+                  <SplideSlide>
+                    <Image
+                      layout="fill"
+                      // width="1000vw"
+                      // height="500vh"
+                      objectFit="fill"
+                      // src={`/assets/media/banner-3.svg`}
+                      src={`/assets/media/carousel-01.svg`}
+                      alt="First slide"
+                      className="mx-5"
+                    />
+                  </SplideSlide> */}
+                </Splide>
+              </div>
+            </div>
+          :
+            null
+        }
+        
 
         {/* Carousel 2 */}
         {akademi ? (
@@ -539,7 +547,7 @@ const Beranda = () => {
                                 :
                                   <div className="container-fluid">
                                     <div className="row">
-                                      <h1 className="text-center text-muted col-12">
+                                      <h1 className="text-center text-muted col-12 font-weight-bolder">
                                         Pelatihan Belum Tersedia
                                       </h1>
                                     </div>
@@ -647,7 +655,13 @@ const Beranda = () => {
                                   </div>
                                 </div>
                             :
-                              null
+                              <div className="container-fluid">
+                                <div className="row">
+                                  <h1 className="text-center text-muted col-12 font-weight-bolder">
+                                    Pelatihan Belum Tersedia
+                                  </h1>
+                                </div>
+                              </div>
                           }
                       
                         </div>
@@ -656,23 +670,31 @@ const Beranda = () => {
                     </div>
                   );
                 })
-              : null}
+              : 
+                <div className="container-fluid">
+                  <div className="row">
+                    <h1 className="text-center text-muted col-12 font-weight-bolder">
+                      Tema Pelatihan Belum Tersedia
+                    </h1>
+                  </div>
+                </div>
+              }
 
             <div className="d-flex justify-content-center mt-10">
-              <Link href="/login">
-                <a>
-                  <button className="btn btn-sm btn-login-peserta px-12 py-3">
-                    Lebih Banyak Tema
-                    <IconArrow
-                      width="8"
-                      height="10"
-                      fill="#0063CC"
-                      className="ml-2"
-                      style={{ transform: "rotate(0)" }}
-                    />
-                  </button>
-                </a>
-              </Link>
+              
+              <a href={`/detail/akademi/1`}>
+                <button className="btn btn-sm btn-login-peserta px-12 py-3">
+                  Lebih Banyak Tema
+                  <IconArrow
+                    width="8"
+                    height="10"
+                    fill="#0063CC"
+                    className="ml-2"
+                    style={{ transform: "rotate(0)" }}
+                  />
+                </button>
+              </a>
+            
             </div>
           </div>
         </div>
@@ -681,13 +703,13 @@ const Beranda = () => {
         <StepRegister />
 
         {/* Rilis Media & Informasi Terbaru */}
-        <RilisMedia />
+        <RilisMedia berita={publikasi.berita.length !== 0 ? publikasi.berita.length : null}/>
 
         {/* Galeri Terupdate dan Terkini */}
-        <GaleryUpdate />
+        <GaleryUpdate gambar={publikasi.gallery.length !== 0 ? publikasi.gallery.length : null}/>
 
         {/* Informasi Dalam Video Terkini */}
-        <InfoVideo />
+        <InfoVideo video={publikasi.video.length !== 0 ? publikasi.video.length: null}/>
 
         {/* Ayo Bergabung, Jadi Jagoan Digital! */}
         <ComeJoin />
