@@ -30,7 +30,7 @@ export default function TambahPage(props) {
         {/* <Layout title='Tambah Artikel - Publikasi'>
                     <Tambah />
                 </Layout> */}
-        <Tambah token={session.token} />
+        <Tambah token={session.token} id={session.user.id}/>
       </div>
     </>
   );
