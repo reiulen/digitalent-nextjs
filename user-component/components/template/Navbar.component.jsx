@@ -24,7 +24,9 @@ const NavbarComponent = ({ session }) => {
 
   console.log(dataPribadi);
   const handlerLogout = () => {
-    signOut();
+    signOut({
+      callbackUrl: `${window.location.origin}/login`,
+    });
   };
 
   return (
