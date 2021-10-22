@@ -279,13 +279,14 @@ const DashbardSubvit = () => {
                     </Pie>
                   </PieChart>
                 </ResponsiveContainer>
-                <div className="row" style={{ padding: "0px 20px" }}>
-                  <div className="col-sm-4 ">
-                    <div className="row">
-                      <div
-                        className="col-sm-4 col-xs-4"
-                        style={{ padding: "0px" }}
-                      >
+
+                <div
+                  className="d-flex flex-row "
+                  style={{ padding: "0px 20px" }}
+                >
+                  <div className="p-5">
+                    <div className="d-flex flex-row">
+                      <div className="p-2" style={{ padding: "0px" }}>
                         <Image
                           src={imageSubstansi}
                           alt=""
@@ -293,19 +294,16 @@ const DashbardSubvit = () => {
                           height={50}
                         />
                       </div>
-                      <div className={`${styles.substansi} col-sm-8 col-xs-8`}>
+                      <div className={`${styles.substansi} p-2`}>
                         {dataDummy && dataDummy.chart.total_substansi}
                         <br />
                         <span className={styles.subTextTotal}>Substansi</span>
                       </div>
                     </div>
                   </div>
-                  <div className="col-sm-4 col-xs-4">
-                    <div className="row">
-                      <div
-                        className="col-sm-4 col-xs-4"
-                        style={{ padding: "0px" }}
-                      >
+                  <div className="p-5">
+                    <div className="d-flex flex-row">
+                      <div className="p-2" style={{ padding: "0px" }}>
                         {" "}
                         <Image
                           src={imageSurvey}
@@ -314,19 +312,16 @@ const DashbardSubvit = () => {
                           height={50}
                         />
                       </div>
-                      <div className={`${styles.survey} col-sm-8 col-xs-8`}>
+                      <div className={`${styles.survey} p-2`}>
                         {dataDummy && dataDummy.chart.total_survey}
                         <br />
                         <span className={styles.subTextTotal}>Survey</span>
                       </div>
                     </div>
                   </div>
-                  <div className="col-sm-4 col-xs-4">
-                    <div className="row">
-                      <div
-                        className="col-sm-4 col-xs-4"
-                        style={{ padding: "0px" }}
-                      >
+                  <div className="p-5">
+                    <div className="d-flex flex-row">
+                      <div className="p-2" style={{ padding: "0px" }}>
                         <Image
                           src={imageTrivia}
                           alt=""
@@ -334,7 +329,7 @@ const DashbardSubvit = () => {
                           height={50}
                         />
                       </div>
-                      <div className={`${styles.trivia} col-sm-8 col-xs-8`}>
+                      <div className={`${styles.trivia} p-2`}>
                         {dataDummy && dataDummy.chart.total_trivia}
                         <br />
                         <span className={styles.subTextTotal}>Trivia</span>
@@ -350,6 +345,7 @@ const DashbardSubvit = () => {
               <div className={`${styles.cardPesertaBody} card-body`}>
                 <h1 className={`${styles.headPeserta}`}>Test Substansi</h1>
                 <p className={`${styles.subHeadPeserta}`}>yang sudah publish</p>
+
                 {dataDummy.substansi.list.map((item, index) => {
                   return (
                     <>

@@ -301,6 +301,7 @@ const ListSurvey = ({ token }) => {
                       ) : (
                         survey &&
                         survey.list_survey.map((row, i) => {
+                          console.log(row);
                           const paginate = i + 1 * (page * limit);
                           const dividers = limit - 1;
                           return (
@@ -317,7 +318,7 @@ const ListSurvey = ({ token }) => {
                                 <p>
                                   {row.training !== null
                                     ? row.training.name
-                                    : row.theme.name}
+                                    : "-"}
                                 </p>
                               </td>
                               <td className="align-middle">
