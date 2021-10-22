@@ -1,4 +1,5 @@
 import React from "react";
+import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
 
 import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
@@ -33,10 +34,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
-      if (!session) {
+      const middleware = middlewareAuthAdminSession(session);
+      if (!middleware.status) {
         return {
           redirect: {
-            destination: "http://dts-dev.majapahit.id/login/admin",
+            destination: middleware.redirect,
             permanent: false,
           },
         };

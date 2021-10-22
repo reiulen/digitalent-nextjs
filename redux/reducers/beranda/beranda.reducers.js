@@ -11,6 +11,10 @@ import {
     BERANDA_PELATIHAN_SUCCESS,
     BERANDA_PELATIHAN_FAIL,
 
+    BERANDA_PUBLIKASI_REQUEST,
+    BERANDA_PUBLIKASI_SUCCESS,
+    BERANDA_PUBLIKASI_FAIL,
+
     CLEAR_ERRORS
 } from "../../types/beranda/beranda.type"
 
@@ -86,6 +90,35 @@ export const pelatihanByTemaReducer = (state = { pelatihan: [] }, action) => {
             }
 
         case BERANDA_PELATIHAN_FAIL:
+            return {
+                loading: false,
+                error: action.payload
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                error: null
+            }
+
+        default:
+            return state
+    }
+}
+
+export const allPublikasiBerandaReducer = (state = { publikasi: {} }, action) => {
+    switch (action.type) {
+        case BERANDA_PUBLIKASI_REQUEST:
+            return {
+                loading: true
+            }
+
+        case BERANDA_PUBLIKASI_SUCCESS:
+            return {
+                loading: false,
+                publikasi: action.payload.data
+            }
+
+        case BERANDA_PUBLIKASI_FAIL:
             return {
                 loading: false,
                 error: action.payload
