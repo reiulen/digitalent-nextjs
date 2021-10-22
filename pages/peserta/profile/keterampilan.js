@@ -41,7 +41,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (!session) {
         return {
           redirect: {
-            destination: "/login",
+            destination: "http://dts-dev.majapahit.id/login",
             permanent: false,
           },
         };
@@ -50,7 +50,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (data.user.roles[0] !== "user") {
         return {
           redirect: {
-            destination: "/login",
+            destination: "http://dts-dev.majapahit.id/login",
             permanent: false,
           },
         };

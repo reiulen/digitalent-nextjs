@@ -4,17 +4,44 @@ import Head from "next/head";
 import { ToastContainer } from "react-toastify";
 import { Row, Col } from "react-bootstrap";
 import { useRouter } from "next/router";
+import LoadingSidebar from "../../content/peserta/components/loader/LoadingSidebar";
+import LoadingHeader from "../../content/peserta/components/loader/LoadingHeader";
+import LoadingNavbar from "../../content/peserta/components/loader/LoadingNavbar";
+import LoadingFooter from "../../content/peserta/components/loader/LoadingFooter";
 
-const Navbar = dynamic(() =>
-  import("../../../user-component/components/template/Navbar.component")
+const Navbar = dynamic(
+  () => import("../../../user-component/components/template/Navbar.component"),
+  {
+    loading: function loadingNow() {
+      return <LoadingNavbar />;
+    },
+    ssr: false,
+  }
 );
-const Header = dynamic(() =>
-  import("../../../user-component/components/template/Header.component")
+const Header = dynamic(
+  () => import("../../../user-component/components/template/Header.component"),
+  {
+    loading: function loadingNow() {
+      return <LoadingHeader />;
+    },
+    ssr: false,
+  }
 );
-const Sidebar = dynamic(() =>
-  import("../../../user-component/components/template/Sidebar.component")
+const Sidebar = dynamic(
+  () => import("../../../user-component/components/template/Sidebar.component"),
+  {
+    loading: function loadingNow() {
+      return <LoadingSidebar />;
+    },
+    ssr: false,
+  }
 );
-const Footer = dynamic(() => import("../beranda/footer"));
+const Footer = dynamic(() => import("../beranda/footer"), {
+  loading: function loadingNow() {
+    return <LoadingFooter />;
+  },
+  ssr: false,
+});
 
 const Layout = ({ title = "Peserta - Pelatihan", session, children }) => {
   const router = useRouter();
@@ -46,7 +73,7 @@ const Layout = ({ title = "Peserta - Pelatihan", session, children }) => {
           {children}
         </Row>
       </div>
-      <Footer />
+      {!router.pathname.includes(routerPath) && <Footer />}
     </>
   );
 };

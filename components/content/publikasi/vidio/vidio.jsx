@@ -345,9 +345,9 @@ const Vidio = ({ token }) => {
 
     return (
         <PageWrapper>
-            {
+            {/* {
                 console.log(video)
-            }
+            } */}
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
                     <div className="alert-icon"><i className="flaticon-warning"></i></div>
@@ -692,7 +692,7 @@ const Vidio = ({ token }) => {
                                                 <th>Dibuat</th>
                                                 <th>Status</th>
                                                 <th>Role</th>
-                                                <th style={{ width: '10vw' }}>Aksi</th>
+                                                <th style={{ width: '9.7vw' }}>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -852,7 +852,7 @@ const Vidio = ({ token }) => {
                                                 <select
                                                     className="form-control"
                                                     id="exampleFormControlSelect2"
-                                                    style={{ width: '65px', background: '#F3F6F9', borderColor: '#F3F6F9', color: '#9E9E9E' }}
+                                                    style={{ width: '70px', background: '#F3F6F9', borderColor: '#F3F6F9', color: '#9E9E9E' }}
                                                     onChange={(e) => handleLimit(e.target.value)}
                                                     onBlur={(e) => handleLimit(e.target.value)}
                                                 >

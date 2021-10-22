@@ -148,12 +148,38 @@ const EditArtikel = ({token}) => {
     }
   }
 
+  function hasWhiteSpace(s) {
+    return s.indexOf(' ') >= 0;
+  }
+
+  const handleTag = (data) => {
+    // console.log(data);
+    for (let i = 0; i < data.length; i++) {
+      if (hasWhiteSpace(data[i])) {
+        data.splice([i], 1);
+      }
+      // console.log(hasWhiteSpace(data[i]));
+      // if(data[i] === " "){
+      //     console.log(data[i]);
+      //     data.splice(i, 1);
+      // }
+      // for (let j = 0; j < data[i].length; j++) {
+      //     if (data[i][j] === " ") {
+      //         data.splice(index, 1);
+      //         // setDisableTag(true)
+      //     }
+      // }
+    }
+    setTag(data);
+    // setTag(data)
+  }
+
   const onSubmit = (e) => {
-    console.log ("test-0")
+    // console.log ("test-0")
 
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
-      console.log ("test")
+      // console.log ("test")
 
       if (error) {
         dispatch(clearErrors());
@@ -238,7 +264,7 @@ const EditArtikel = ({token}) => {
           })
             .then((result) => {
               if (result.isConfirmed) {
-                console.log ("check")
+                // console.log ("check")
                 
                 dispatch(updateArtikelPeserta(data, token));
                 
@@ -504,12 +530,12 @@ const EditArtikel = ({token}) => {
                           data={isi_artikel}
                           onReady={(editor) => {
                             // You can store the "editor" and use when it is needed.
-                            console.log("Editor is ready to use!", editor);
+                            // console.log("Editor is ready to use!", editor);
                           }}
                           onChange={(event, editor) => {
                             const data = editor.getData();
                             setIsiArtikel(data);
-                            console.log({ event, editor, data });
+                            // console.log({ event, editor, data });
                           }}
                           onBlur={() =>
                             simpleValidator.current.showMessageFor(

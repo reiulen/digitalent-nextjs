@@ -6,6 +6,7 @@ import SimpleReactValidator from "simple-react-validator";
 import style from "../style.module.css";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
+import moment from "moment";
 import {
   updateProfileDataPribadi,
   clearErrors,
@@ -27,9 +28,6 @@ const InformasiEdit = ({ funcViewEdit, token }) => {
     success,
   } = useSelector((state) => state.updateDataPribadi);
 
-  const [deskripsi, setDeskripsi] = useState(
-    (dataPribadi && dataPribadi.deskripsi) || ""
-  );
   const [name, setName] = useState((dataPribadi && dataPribadi.name) || "");
   const [email, setEmail] = useState((dataPribadi && dataPribadi.email) || "");
   const [kelamin, setKelamin] = useState({ value: "0", label: "Laki - Laki" });
@@ -39,10 +37,11 @@ const InformasiEdit = ({ funcViewEdit, token }) => {
   );
   const [agama, setAgama] = useState((dataPribadi && dataPribadi.agama) || "");
   const [tempatLahir, setTempatLahir] = useState(
-    (dataPribadi && dataPribadi.tampat_lahir) || ""
+    (dataPribadi && dataPribadi.tempat_lahir) || ""
   );
   const [tanggalLahir, setTanggalLahir] = useState(
-    (dataPribadi && dataPribadi.tanggal_lahir) || ""
+    (dataPribadi && moment(dataPribadi.tanggal_lahir).format("YYYY-MM-DD")) ||
+      ""
   );
 
   const [nameUrgent, setNameUrgent] = useState(
@@ -63,15 +62,15 @@ const InformasiEdit = ({ funcViewEdit, token }) => {
     (dataPribadi && dataPribadi.file_path + dataPribadi.File_ktp) || ""
   );
 
-  const [cvName, setCvName] = useState(
-    (dataPribadi && dataPribadi.cv) || "Belum ada file"
-  );
-  const [cv, setCv] = useState("");
-  const [cvPreview, setCvPreview] = useState(
-    (dataPribadi && dataPribadi.file_path + dataPribadi.cv) || ""
-  );
+  // const [cvName, setCvName] = useState(
+  //   (dataPribadi && dataPribadi.cv) || "Belum ada file"
+  // );
+  // const [cv, setCv] = useState("");
+  // const [cvPreview, setCvPreview] = useState(
+  //   (dataPribadi && dataPribadi.file_path + dataPribadi.cv) || ""
+  // );
 
-  const [link, setLink] = useState((dataPribadi && dataPribadi.link) || "");
+  // const [link, setLink] = useState((dataPribadi && dataPribadi.link) || "");
 
   const optionsKelamin = [
     { value: "0", label: "Laki - Laki" },
@@ -85,6 +84,8 @@ const InformasiEdit = ({ funcViewEdit, token }) => {
     }
 
     if (success) {
+      console.log(success);
+      toast.success("Berhasil Update Data");
       dispatch({ type: UPDATE_DATA_PRIBADI_RESET });
       funcViewEdit(false);
     }
@@ -119,34 +120,34 @@ const InformasiEdit = ({ funcViewEdit, token }) => {
     }
   };
 
-  const onChangeCV = (e) => {
-    const type = ["application/pdf"];
-    if (e.target.files[0]) {
-      if (type.includes(e.target.files[0].type)) {
-        if (e.target.files[0].size > 2000000) {
-          e.target.value = null;
-          Swal.fire("Oops !", "Gambar maksimal 2 MB.", "error");
-        } else {
-          const reader = new FileReader();
-          reader.onload = () => {
-            if (reader.readyState === 2) {
-              setCv(reader.result);
-            }
-          };
-          reader.readAsDataURL(e.target.files[0]);
-          setCvPreview(e.target.files[0]);
-          setCvName(e.target.files[0].name);
-        }
-      } else {
-        e.target.value = null;
-        Swal.fire(
-          "Oops !",
-          "Data yang bisa dimasukkan hanya berupa data PDF.",
-          "error"
-        );
-      }
-    }
-  };
+  // const onChangeCV = (e) => {
+  //   const type = ["application/pdf"];
+  //   if (e.target.files[0]) {
+  //     if (type.includes(e.target.files[0].type)) {
+  //       if (e.target.files[0].size > 2000000) {
+  //         e.target.value = null;
+  //         Swal.fire("Oops !", "Gambar maksimal 2 MB.", "error");
+  //       } else {
+  //         const reader = new FileReader();
+  //         reader.onload = () => {
+  //           if (reader.readyState === 2) {
+  //             setCv(reader.result);
+  //           }
+  //         };
+  //         reader.readAsDataURL(e.target.files[0]);
+  //         setCvPreview(e.target.files[0]);
+  //         setCvName(e.target.files[0].name);
+  //       }
+  //     } else {
+  //       e.target.value = null;
+  //       Swal.fire(
+  //         "Oops !",
+  //         "Data yang bisa dimasukkan hanya berupa data PDF.",
+  //         "error"
+  //       );
+  //     }
+  //   }
+  // };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -162,11 +163,11 @@ const InformasiEdit = ({ funcViewEdit, token }) => {
         nama_kontak_darurat: nameUrgent,
         nomor_handphone_darurat: nomorUrgent,
         file_ktp: ktp,
-        file_cv: cv,
-        portofolio: link,
         nomorHandphone,
         email,
       };
+      // file_cv: cv,
+      // portofolio: link,
       dispatch(updateProfileDataPribadi(data, token));
     } else {
       simpleValidator.current.showMessages();
@@ -184,27 +185,7 @@ const InformasiEdit = ({ funcViewEdit, token }) => {
       <Form onSubmit={handleSubmit}>
         <div className="informasi-pribadi">
           <h3 className="font-weight-bolder mb-5">Informasi Pribadi</h3>
-          <Form.Group className="mb-3">
-            <Form.Label>Deskripsi Diri</Form.Label>
-            <Form.Control
-              as="textarea"
-              rows={6}
-              placeholder="Masukan Deskripsi Diri"
-              value={deskripsi}
-              onChange={(e) => setDeskripsi(e.target.value)}
-              onBlur={() =>
-                simpleValidator.current.showMessageFor("deskripsi diri")
-              }
-            />
-            {simpleValidator.current.message(
-              "deskripsi diri",
-              deskripsi,
-              "required",
-              {
-                className: "text-danger",
-              }
-            )}
-          </Form.Group>
+
           <Form.Group className="mb-3">
             <Form.Label>Nama Lengkap</Form.Label>
             <Form.Control
@@ -440,7 +421,7 @@ const InformasiEdit = ({ funcViewEdit, token }) => {
               * JPG/PNG/PDF (Maksimal ukuran file 2 MB)
             </small>
           </div>
-          <div className="form-group mb-5">
+          {/* <div className="form-group mb-5">
             <label className="col-form-label">CV</label>
             <div className="d-flex">
               <div className="custom-file">
@@ -484,7 +465,7 @@ const InformasiEdit = ({ funcViewEdit, token }) => {
                 className: "text-danger",
               }
             )}
-          </Form.Group>
+          </Form.Group> */}
 
           <div className="button-aksi mt-5 float-right">
             <Button

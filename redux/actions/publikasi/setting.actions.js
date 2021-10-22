@@ -44,7 +44,7 @@ export const getSettingPublikasi = (token) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: SETTING_FAIL,
-            payload: error.message,
+            payload: error.response.data.message,
         });
     }
 }

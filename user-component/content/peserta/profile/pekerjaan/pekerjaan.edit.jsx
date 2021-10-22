@@ -63,6 +63,8 @@ const PekerjaanEdit = ({ funcViewEdit, token }) => {
     }
 
     if (success) {
+      console.log(success);
+      toast.success("Berhasil Update Data");
       funcViewEdit(false);
       dispatch({ type: UPDATE_PEKERJAAN_RESET });
     }

@@ -335,17 +335,14 @@ const ListTheme = ({ token }) => {
                             </td>
                             <td className="align-middle">
                               <p className="font-weight-bolder my-0 h6">
-                                {row.akademi}
+                                {row.slug}
                               </p>
-                              <div
-                                className="py-0"
-                                dangerouslySetInnerHTML={{
-                                  __html: row.deskripsi,
-                                }}
-                              ></div>
+                              <p>{row.akademi}</p>
                             </td>
                             <td className="align-middle">{row.name}</td>
-                            <td className="align-middle">500 Peminat</td>
+                            <td className="align-middle">
+                              {row.peminat} Peminat
+                            </td>
                             <td className="align-middle">
                               {row.status === "1" ? (
                                 <span className="label label-inline label-light-success font-weight-bold">

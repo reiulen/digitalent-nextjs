@@ -73,17 +73,6 @@
   border-radius: 5px;
 }
 
-.numberAnswer {
-  background: #04aa77;
-  border-radius: 5px;
-  border: #04aa77;
-  padding: 10px;
-  text-align: center;
-  margin-bottom: 12px;
-  width: 40px;
-  height: 40px;
-  cursor: pointer;
-}
 .textCardNumber {
   font-family: Poppins;
   font-style: normal;
@@ -336,10 +325,26 @@
 .boxAnswer:hover {
   background: #e6f2ff;
 
-  border: 2px solid #007cff;
+  border: 1px solid #007cff;
   box-sizing: border-box;
   border-radius: 8px;
 }
+.answer {
+  border-radius: 8px;
+  padding: 14px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 160%;
+  background: #e6f2ff;
+
+  /* border: 2px solid #007cff; */
+  box-sizing: border-box;
+}
+
 .btnBack {
   font-family: Poppins;
   font-style: normal;
@@ -434,4 +439,78 @@
   text-align: center;
 
   color: #0063cc;
+}
+.numberAnswer {
+  background: #0063cc;
+  border-radius: 5px;
+  border: #0063cc;
+  padding: 10px;
+  text-align: center;
+  margin-bottom: 12px;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 140%;
+  /* identical to box height, or 20px */
+
+  text-align: center;
+
+  /* Neutral/White */
+
+  color: #ffffff;
+}
+.btnBatal {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 160%;
+  text-align: center;
+  letter-spacing: 0.015em;
+  margin-right: 20px;
+  color: #007cff;
+}
+.btnBatal:hover {
+  text-decoration: none;
+}
+.btnMulai {
+  background: #007cff;
+  border-radius: 30px;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 160%;
+  text-align: center;
+  letter-spacing: 0.015em;
+  color: #ffffff;
+  padding: 8px 20px;
+}
+.headerKonfirmasi {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 155%;
+  /* identical to box height, or 31px */
+
+  /* Neutral/Heading */
+
+  color: #1f1f1f;
+}
+.bodyKonfirmasi {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 200%;
+  /* or 32px */
+
+  /* Neutral/Heading */
+
+  color: #1f1f1f;
 }

@@ -66,7 +66,7 @@ const LoginAdmin = () => {
 
   return (
     <>
-      <AuthWrapper image="bg-admin-1.png" title="Login">
+      <AuthWrapper image="bg-user-2.png" title="Login">
         <div
           className="col-lg-7 d-flex flex-wrap align-content-center"
           style={{ background: "#0063CC" }}
