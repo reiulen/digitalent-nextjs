@@ -24,8 +24,8 @@ import IconRegister from "../../components/assets/icon-dashboard-peserta/Registe
 const Navigationbar = () => {
   return (
     <>
-      <Navbar bg="white" expand="lg" className="shadow header-dashboards container-fluid">
-        <Container>
+      <Navbar bg="white" expand="lg" className="shadow header-dashboard" sticky="top">
+        
           <Navbar.Brand href="/">
             <Image
               src={`/assets/icon/mainlogo.svg`}
@@ -197,7 +197,7 @@ const Navigationbar = () => {
               </Link>
             </Nav>
           </Navbar.Collapse>
-        </Container>
+        
       </Navbar>
     </>
   );
