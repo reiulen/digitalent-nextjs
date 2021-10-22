@@ -74,14 +74,6 @@ export default function NamaPelatihan({ token }) {
     setDataTemaPelatihan(data);
   }, [academy, themeOptions]);
 
-  const handlePagination = pageNumber => {
-    dispatch(setPage(pageNumber));
-    // let link = `${router.pathname}?page=${pageNumber}`;
-    // if (search) link = link.concat(`&keyword=${search}`);
-    // if (limit) link = link.concat(`&limit=${limit}`);
-    // router.push(link);
-  };
-
   const handleSearch = e => {
     e.preventDefault();
     dispatch(searchKeyword(search));
@@ -130,8 +122,6 @@ export default function NamaPelatihan({ token }) {
     allCertificates.academy,
     allCertificates.limit,
   ]);
-
-  console.log(allCertificates);
 
   return (
     <PageWrapper>
@@ -376,7 +366,10 @@ export default function NamaPelatihan({ token }) {
                               </td>
                               <td className="align-middle d-flex">
                                 <Link
-                                  href={`/sertifikat/kelola-sertifikat/${certificate.theme.name}?id=${certificate.id}`}
+                                  href={`/sertifikat/kelola-sertifikat/${certificate.theme.name
+                                    .split(" ")
+                                    .join("-")
+                                    .toLowerCase()}?id=${certificate.id}`}
                                   passHref
                                 >
                                   <a
@@ -384,6 +377,12 @@ export default function NamaPelatihan({ token }) {
                                     data-toggle="tooltip"
                                     data-placement="bottom"
                                     title="Detail"
+                                    onClick={() => {
+                                      sessionStorage.setItem(
+                                        "tema_pelatihan_id",
+                                        certificate.id
+                                      );
+                                    }}
                                   >
                                     <i className="ri-eye-fill p-0 text-white"></i>
                                   </a>

@@ -1,5 +1,5 @@
 // #Next & React
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
@@ -28,11 +28,14 @@ export default function NamaPelatihanID({ token }) {
   const [search, setSearch] = useState("");
   // #Pagination
 
-  if (!certificate) {
-    router.replace(`/sertifikat/kelola-sertifikat`);
-  }
-
   const [status, setStatus] = useState(null);
+
+  useEffect(() => {
+    const id = sessionStorage.getItem("tema_pelatihan_id");
+    if (!certificate) {
+      router.replace(router.asPath + `?id=${id}`);
+    }
+  }, [certificate, router]);
 
   let { page = 1, keyword, success } = router.query;
 
