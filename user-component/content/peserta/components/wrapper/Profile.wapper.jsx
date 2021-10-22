@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import ReactCrop from "react-image-crop";
 import {
   Col,
@@ -22,6 +23,7 @@ const ProfileWrapper = ({
   propsViewProfile,
   funcViewEdit,
   funcViewProfile,
+  token,
 }) => {
   const router = useRouter();
 
@@ -40,14 +42,29 @@ const ProfileWrapper = ({
 
     const base64Image = canvas.toDataURL("image/jpeg");
 
-    // const data = {
-    //   foto: base64Image,
-    // };
-    // await axios.post(
-    //   process.env.END_POINT_API_PELATIHAN + "api/v1/auth/update-foto"
-    // );
+    const data = {
+      foto: base64Image,
+    };
 
-    // console.log(base64Image);
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    await axios
+      .post(
+        process.env.END_POINT_API_PELATIHAN + "api/v1/auth/update-foto",
+        data,
+        config
+      )
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("gagal");
+      });
 
     // UNTUK DOWNLOAD GAMBAR
     // canvas.toBlob(

@@ -203,6 +203,9 @@
 .btnHelp:hover {
   text-decoration: none;
 }
+.btnHelp:active {
+  text-decoration: none;
+}
 .bantuan {
   font-family: Poppins;
   font-style: normal;

@@ -643,20 +643,23 @@ const Sidebar = ({ session }) => {
                     // onClick={e => handleOpenMenu(index)}
                   >
                     {/* <Link href={items.href} passHref> */}
-                      <button className="btn menu-link" onClick={()=>router.push('/dashboard')}>
-                        <span className="svg-icon menu-icon d-flex align-items-center">
-                          {/* icon sidebar */}
-                          <Image
-                            alt="icon-sidebar-logo"
-                            src={`/${items.icon}`}
-                            width={24}
-                            height={24}
-                          />
-                        </span>
-                        <span className="menu-text ml-2">{items.name}</span>
+                    <button
+                      className="btn menu-link"
+                      onClick={() => router.push("/dashboard")}
+                    >
+                      <span className="svg-icon menu-icon d-flex align-items-center">
+                        {/* icon sidebar */}
+                        <Image
+                          alt="icon-sidebar-logo"
+                          src={`/${items.icon}`}
+                          width={24}
+                          height={24}
+                        />
+                      </span>
+                      <span className="menu-text ml-2">{items.name}</span>
 
-                        {/* <i className="menu-arrow"></i> */}
-                      </button>{" "}
+                      {/* <i className="menu-arrow"></i> */}
+                    </button>{" "}
                     {/* </Link> */}
                   </li>
                 ) : (

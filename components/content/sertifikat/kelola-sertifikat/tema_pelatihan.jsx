@@ -22,9 +22,12 @@ import {
   getAllSertifikat,
   searchKeyword,
   setValueAcademy,
+  setValueLimit,
+  setValuePage,
   setValueTheme,
 } from "../../../../redux/actions/sertifikat/kelola-sertifikat.action";
 import { RESET_VALUE_FILTER } from "../../../../redux/types/sertifikat/kelola-sertifikat.type";
+import Cookies from "js-cookie";
 
 export default function NamaPelatihan({ token }) {
   const router = useRouter();
@@ -34,7 +37,7 @@ export default function NamaPelatihan({ token }) {
     useSelector(state => state.allCertificates);
 
   const allCertificates = useSelector(state => state.allCertificates);
-
+  console.log(allCertificates);
   const [academy, setAcademy] = useState("");
   const [temaPelatihan, setTemaPelatihan] = useState("");
   const [disable, setDisable] = useState(true);
@@ -72,18 +75,6 @@ export default function NamaPelatihan({ token }) {
     setDataTemaPelatihan(data);
   }, [academy, themeOptions]);
 
-  const handlePagination = pageNumber => {
-    let link = `${router.pathname}?page=${pageNumber}`;
-    if (search) link = link.concat(`&keyword=${search}`);
-    if (limit) link = link.concat(`&limit=${limit}`);
-    router.push(link);
-  };
-
-  const handleLimit = val => {
-    setLimit(val);
-    router.push(`${router.pathname}?page=1&limit=${val}`);
-  };
-
   const handleSearch = e => {
     e.preventDefault();
     dispatch(searchKeyword(search));
@@ -92,9 +83,7 @@ export default function NamaPelatihan({ token }) {
   const handleSelectAcademy = e => {
     setAcademy(e);
     setDisable(false);
-    if (academy) {
-      temaRef.select.clearValue();
-    }
+    temaRef.select.clearValue();
   };
 
   const handleFilter = e => {
@@ -376,7 +365,10 @@ export default function NamaPelatihan({ token }) {
                               </td>
                               <td className="align-middle d-flex">
                                 <Link
-                                  href={`/sertifikat/kelola-sertifikat/${certificate.theme.name}?id=${certificate.id}`}
+                                  href={`/sertifikat/kelola-sertifikat/${certificate.theme.name
+                                    .split(" ")
+                                    .join("-")
+                                    .toLowerCase()}?id=${certificate.id}`}
                                   passHref
                                 >
                                   <a
@@ -384,6 +376,12 @@ export default function NamaPelatihan({ token }) {
                                     data-toggle="tooltip"
                                     data-placement="bottom"
                                     title="Detail"
+                                    onClick={() => {
+                                      Cookies.set(
+                                        "tema_pelatihan_id",
+                                        certificate.id
+                                      );
+                                    }}
                                   >
                                     <i className="ri-eye-fill p-0 text-white"></i>
                                   </a>
@@ -405,11 +403,11 @@ export default function NamaPelatihan({ token }) {
                 {certificate && (
                   <div className="table-pagination my-auto">
                     <Pagination
-                      activePage={+page}
+                      activePage={allCertificates.page}
                       itemsCountPerPage={certificate.perPage}
                       totalItemsCount={certificate.total}
                       pageRangeDisplayed={3}
-                      onChange={handlePagination}
+                      onChange={page => dispatch(setValuePage(page))}
                       nextPageText={">"}
                       prevPageText={"<"}
                       firstPageText={"<<"}
@@ -419,42 +417,37 @@ export default function NamaPelatihan({ token }) {
                     />
                   </div>
                 )}
-                {certificate && certificate.total ? (
-                  <div className="table-total ml-auto">
-                    <div className="row mt-4">
-                      <div className="col-4 mr-0 p-0 my-auto">
-                        <select
-                          className="form-control"
-                          id="exampleFormControlSelect2"
-                          style={{
-                            width: "65px",
-                            background: "#F3F6F9",
-                            borderColor: "#F3F6F9",
-                            color: "#9E9E9E",
-                          }}
-                          onChange={e => handleLimit(e.target.value)}
-                          onBlur={e => handleLimit(e.target.value)}
-                        >
-                          <option>5</option>
-                          <option>10</option>
-                          <option>30</option>
-                          <option>40</option>
-                          <option>50</option>
-                        </select>
-                      </div>
-                      <div className="col-8 my-auto">
-                        <p
-                          className="align-middle my-auto"
-                          style={{ color: "#B5B5C3" }}
-                        >
-                          Total Data {certificate.total}
-                        </p>
-                      </div>
+                <div className="table-total ml-auto">
+                  <div className="row mt-4">
+                    <div className="col-4 mr-0 p-0 my-auto">
+                      <select
+                        className="form-control"
+                        id="exampleFormControlSelect2"
+                        style={{
+                          width: "65px",
+                          background: "#F3F6F9",
+                          borderColor: "#F3F6F9",
+                          color: "#9E9E9E",
+                        }}
+                        onChange={e => dispatch(setValueLimit(e.target.value))}
+                      >
+                        <option>5</option>
+                        <option>10</option>
+                        <option>30</option>
+                        <option>40</option>
+                        <option>50</option>
+                      </select>
+                    </div>
+                    <div className="col-8 my-auto">
+                      <p
+                        className="align-middle my-auto"
+                        style={{ color: "#B5B5C3" }}
+                      >
+                        Total Data {certificate.total}
+                      </p>
                     </div>
                   </div>
-                ) : (
-                  ""
-                )}
+                </div>
               </div>
               {/* End Pagination */}
             </div>

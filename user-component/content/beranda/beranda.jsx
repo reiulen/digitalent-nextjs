@@ -165,7 +165,7 @@ const Beranda = () => {
 
         {/* Carousel 1 */}
         {
-          publikasi.imagetron.length !== 0 ?
+          publikasi && publikasi.imagetron.length !== 0 ?
             <div className="container-fluid max-container">
               <div className="carousel-primarys">
                 <Splide
@@ -241,7 +241,70 @@ const Beranda = () => {
                       )
                     })
                   }
-                  {/* <SplideSlide>
+                </Splide>
+              </div>
+            </div>
+          :
+            <div className="container-fluid max-container">
+              <div className="carousel-primarys">
+                <Splide
+                  active={() => handleActiveImagetron(1)}
+                  options={{
+                    type: "loop",
+                    gap: "1rem",
+                    autoplay: true,
+                    padding: "5rem",
+                    height: "600px",
+                    focus: "center",
+                    breakpoints: {
+                      1669: {
+                        height: "500px",
+                      },
+                      1262: {
+                        height: "400px",
+                      },
+                      1062: {
+                        height: "300px",
+                      },
+                      833: {
+                        height: "270px",
+                      },
+                      726: {
+                        height: "230px",
+                      },
+                      629: {
+                        height: "210px",
+                      },
+                      590: {
+                        height: "180px",
+                        padding: "0",
+                        gap: "0",
+                      },
+                      514: {
+                        height: "160px",
+                        padding: "0",
+                        gap: "0",
+                      },
+                      450: {
+                        height: "160px",
+                        padding: "0",
+                        gap: "0",
+                      },
+                      425: {
+                        height: "160px",
+                        padding: "0",
+                        gap: "0",
+                      },
+                      320: {
+                        height: "150px",
+                        padding: "0",
+                        gap: "0",
+                      },
+                    },
+                  }}
+                  hasSliderWrapper
+                >
+                  <SplideSlide>
                     <Image
                       layout="fill"
                       // width="1000vw"
@@ -278,12 +341,23 @@ const Beranda = () => {
                       alt="First slide"
                       className="mx-5"
                     />
-                  </SplideSlide> */}
+                  </SplideSlide>
+
+                  <SplideSlide>
+                    <Image
+                      layout="fill"
+                      // width="1000vw"
+                      // height="500vh"
+                      objectFit="fill"
+                      // src={`/assets/media/banner-3.svg`}
+                      src={`/assets/media/carousel-01.svg`}
+                      alt="First slide"
+                      className="mx-5"
+                    />
+                  </SplideSlide>
                 </Splide>
               </div>
             </div>
-          :
-            null
         }
         
 

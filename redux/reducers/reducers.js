@@ -92,6 +92,8 @@ import {
 import {
   allSubtanceQuestionDetailReducer,
   randomSubtanceQuestionDetailReducer,
+  getDashboardReducer,
+  postResultReducer,
   newSubtanceQuestionDetailReducer,
   deleteSubtanceQuestionDetailReducer,
   detailSubtanceQuestionDetailReducer,
@@ -265,7 +267,7 @@ import {
 import { allPromptReducer } from "./site-management/settings/pelatihan.reducers";
 
 // ============== pelatihan ===============
-import {allDataZonasiReducer} from './site-management/dashboard.reducers'
+import { allDataZonasiReducer } from "./site-management/dashboard.reducers";
 
 // End Site Management
 
@@ -367,6 +369,12 @@ import {
   detailAkademiReducer,
   allPelatihanReducer,
 } from "../reducers/beranda/detail-akademi.reducers";
+
+// ========== detail pelatihan ========
+import {
+  detailPelatihanReducer,
+  checkRegisteredPelatihanReducer
+} from "../reducers/beranda/detail-pelatihan.reducers"
 //END BERANDA
 
 const reducer = combineReducers({
@@ -448,6 +456,8 @@ const reducer = combineReducers({
 
   allSubtanceQuestionDetail: allSubtanceQuestionDetailReducer,
   randomSubtanceQuestionDetail: randomSubtanceQuestionDetailReducer,
+  dashboardSubvit: getDashboardReducer,
+  postResultSubvit: postResultReducer,
   newSubtanceQuestionDetail: newSubtanceQuestionDetailReducer,
   detailSubtanceQuestionDetail: detailSubtanceQuestionDetailReducer,
   updateSubtanceQuestionDetail: updateSubtanceQuestionDetailReducer,
@@ -673,6 +683,12 @@ const reducer = combineReducers({
   // ========== detail akademi ========
   detailAkademi: detailAkademiReducer,
   allPelatihan: allPelatihanReducer,
+
+  // ========== detail pelatihan ========
+  detailPelatihan: detailPelatihanReducer,
+  checkRegisteredPelatihan: checkRegisteredPelatihanReducer,
+
+
   //END BERANDA
 });
 
