@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 import { wrapper } from "../../../../redux/store";
 import { getSession } from "next-auth/client";
-
+import { getAllMitraSite } from "../../../../redux/actions/site-management/user/mitra-site.actions";
 const ListUser = dynamic(
   () =>
     import(
@@ -41,14 +41,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
-      // await store.dispatch(
-      //   getAllRoles(
-      //     query.page,
-      //     query.keyword,
-      //     query.limit,
-      //     session.user.user.data.token
-      //   )
-      // );
+      await store.dispatch(getAllMitraSite(session.user.user.data.token));
 
       return {
         props: { session, title: "List User Mitra - Site Management" },

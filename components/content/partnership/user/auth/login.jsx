@@ -117,7 +117,7 @@ const LoginAdmin = () => {
                 <div className="form-group mt-6">
                   <label className="form-auth-label">Password</label>
                   <Link
-                    href="/partnership/user/auth/recorveryPassword" passHref
+                    href="/partnership/user/auth/recorveryPassword"
                   >
                     <a className="float-right text-primary">Lupa Password ?</a>
                   </Link>

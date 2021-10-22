@@ -14,12 +14,12 @@ import IconSearch from "../../../../assets/icon/Search";
 const DetailApi = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
+  const detailApi = useSelector(state => state.detailApi)
 
-  const onNewReset = () => {
-    router.replace("/site-management/api", undefined, {
-      shallow: true,
-    });
-  };
+  console.log("detailApi",detailApi)
+
+
+ 
   return (
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">
@@ -36,15 +36,15 @@ const DetailApi = ({ token }) => {
             <div>
               <div className="form-group d-flex flex-column mt-4">
                 <p htmlFor="exampleSelect1" style={{color: "#6C6C6C"}}>Nama API </p>
-                <p htmlFor="exampleSelect1" className="fw-400 fz-16" style={{color: "#1F1F1F"}}>API Peserta IBM</p>
+                <p htmlFor="exampleSelect1" className="fw-400 fz-16" style={{color: "#1F1F1F"}}>{detailApi.apies.data.api_name}</p>
               </div>
               <div className="form-group d-flex flex-column mt-4">
                 <p htmlFor="exampleSelect1" style={{color: "#6C6C6C"}}>Status</p>
-                <p htmlFor="exampleSelect1" className="fw-400 fz-16" style={{color: "#1F1F1F"}}>Aktif</p>
+                <p htmlFor="exampleSelect1" className="fw-400 fz-16" style={{color: "#1F1F1F"}}>{detailApi.apies.data.status == 1 ?"Aktif":"Tidak Aktif"}</p>
               </div>
               <div className="form-group d-flex flex-column mt-4">
                 <p htmlFor="exampleSelect1" style={{color: "#6C6C6C"}}>Pengguna</p>
-                <p htmlFor="exampleSelect1" className="fw-400 fz-16" style={{color: "#1F1F1F"}}>IBM</p>
+                <p htmlFor="exampleSelect1" className="fw-400 fz-16" style={{color: "#1F1F1F"}}>{detailApi.apies.data.username}</p>
               </div>
               <div className="form-group d-flex flex-column mt-4">
                 <p htmlFor="exampleSelect1" style={{color: "#6C6C6C"}}>Masa Berlaku</p>
@@ -52,11 +52,11 @@ const DetailApi = ({ token }) => {
               </div>
               <div className="form-group d-flex flex-column mt-4">
                 <p htmlFor="exampleSelect1" style={{color: "#6C6C6C"}}>URL</p>
-                <p htmlFor="exampleSelect1" className="fw-400 fz-16" style={{color: "#1F1F1F"}}>xxxxxxxxxxxxxxxxxxxxx</p>
+                <p htmlFor="exampleSelect1" className="fw-400 fz-16" style={{color: "#1F1F1F"}}>{detailApi.apies.data.api_url}</p>
               </div>
               <div className="form-group d-flex flex-column mt-4">
                 <p htmlFor="exampleSelect1" style={{color: "#6C6C6C"}}>API Key</p>
-                <p htmlFor="exampleSelect1" className="fw-400 fz-16" style={{color: "#1F1F1F"}}>xxxxxxxxxxxxxxxxxxxxx</p>
+                <p htmlFor="exampleSelect1" className="fw-400 fz-16" style={{color: "#1F1F1F"}}>{detailApi.apies.data.api_key}</p>
               </div>
             </div>
             <div className="form-group row">
@@ -66,12 +66,21 @@ const DetailApi = ({ token }) => {
                       Kembali
                     </a>
                   </Link>
-                  <button
+
+                  {/* <button
                     type="button"
                     className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
                   >
                     View log
-                  </button>
+                  </button> */}
+
+                  <Link href={`/site-management/setting/api/log-api/${router.query.id}`} passHref>
+
+                    <a className="btn btn-sm btn-rounded-full bg-blue-primary text-white">
+                      View log
+                    </a>
+                  </Link>
+
                 </div>
               </div>
           </div>
