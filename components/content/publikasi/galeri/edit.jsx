@@ -257,12 +257,9 @@ const EditGaleri = ({ token }) => {
                         // list[index].imageFile = e.target.files[0];
                         // list[index].imagePreview = URL.createObjectURL(e.target.files[0]);
                         // list[index].imageName = e.target.files[0].name;
-                        // console.log("List :", list)
                         setImage(list);
                     }
                 };
-
-                // console.log("IMAGE :", image);
                 reader.readAsDataURL(e.target.files[0]);
                 list[index].imageName = e.target.files[0].name;
             }
@@ -317,9 +314,7 @@ const EditGaleri = ({ token }) => {
     };
 
     const handleChangePublish = (e) => {
-        // setPublish(e.target.checked);
         setDisablePublishDate(!disablePublishDate)
-        // console.log (e.target.checked)
 
         if (e.target.checked === false) {
             setPublishDate(null)
@@ -330,11 +325,8 @@ const EditGaleri = ({ token }) => {
     };
 
     const handlePublishDate = (date) => {
-        // let result = moment(date).format("YYYY-MM-DD")
         if (disablePublishDate === false) {
-            // setPublishDate(result)
             setPublishDate(date)
-            // console.log (result)
         }
     }
 
@@ -380,14 +372,12 @@ const EditGaleri = ({ token }) => {
     }
 
     const handleTag = (data) => {
-        // console.log(data);
         for (let i = 0; i < data.length; i++) {
             if (hasWhiteSpace(data[i])) {
                 data.splice([i], 1);
             }
         }
         setTag(data);
-        // setTag(data)
     }
 
     const handleData = (temps, onCall) => {
@@ -408,12 +398,7 @@ const EditGaleri = ({ token }) => {
                 _method,
                 image_delete: deleteImg
             }
-
-            // dispatch(newGaleri(data, token))
             dispatch(onCall(data, token))
-            // console.log("Unpublish : ", data)
-            // console.log(image)
-
         } else {
             const data = {
                 judul,
@@ -431,8 +416,6 @@ const EditGaleri = ({ token }) => {
             }
 
             dispatch(onCall(data, token))
-            // console.log("Publish : ", data)
-            // console.log(image)
         }
     }
 
@@ -469,7 +452,6 @@ const EditGaleri = ({ token }) => {
                 handleData(temps, updateGaleri)
             }
         }
-        // console.log("Temp :", temps)
     }
 
     // const onSubmit = (e) => {

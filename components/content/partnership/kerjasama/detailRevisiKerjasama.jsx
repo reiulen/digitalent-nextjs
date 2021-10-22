@@ -89,7 +89,7 @@ const DetailRevisiKerjasama = ({ token }) => {
       setPeriodUnit(data.data.period_unit);
       setNote(data.data.note);
     } catch (error) {
-      console.log("action getSIngle gagal", error);
+      notify(error.response.data.message);
     }
 
     }

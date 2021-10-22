@@ -365,7 +365,6 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
         tuna_daksa,
       };
       dispatch(storeTrainingStep1(data));
-      // console.log(data);
       propsStep(2);
     } else {
       simpleValidator.current.showMessages();
@@ -872,7 +871,6 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                   onChange={(event, editor) => {
                     const data = editor.getData();
                     setDescription(data);
-                    // console.log({ event, editor, data });
                   }}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("deskripsi")

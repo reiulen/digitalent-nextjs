@@ -128,7 +128,7 @@ const Table = ({token}) => {
         setIsProfile(true);
       }
     } catch (error) {
-      console.log("gagal get province", error);
+      notify(error.response.data.message);
     }
   };
 
@@ -144,7 +144,7 @@ const Table = ({token}) => {
       );
       setSumWillExpire(data.data.total);
     } catch (error) {
-      console.log("object", error);
+      notify(error.response.data.message);
     }
   };
 

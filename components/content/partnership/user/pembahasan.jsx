@@ -31,7 +31,7 @@ function Pembahasan({token}) {
       );
       setStatus(data.data.status_migrates_id.status);
     } catch (error) {
-      console.log("gagal get province", error);
+      notify(error.response.data.message);
     }
       
     }

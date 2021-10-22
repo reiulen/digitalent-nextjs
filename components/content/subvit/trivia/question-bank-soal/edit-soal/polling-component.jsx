@@ -50,7 +50,6 @@ const PollingComponent = ({
 
   const handleInputChange = (e, index) => {
     const { name, value } = e.target;
-    console.log("hello");
     const list = [...answer];
     list[index][name] = value;
     if (name === "question_image") {

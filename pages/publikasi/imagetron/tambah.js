@@ -38,8 +38,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ params, req }) => {
       const session = await getSession({ req });
-      // console.log (`from artikel create ${session}`)
-
       if (!session) {
         return {
           redirect: {

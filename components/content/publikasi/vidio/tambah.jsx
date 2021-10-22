@@ -90,8 +90,6 @@ const TambahVidio = ({ token }) => {
 
     const onChangeGambar = (e) => {
         const type = ["image/jpg", "image/png", "image/jpeg"]
-        // console.log (e.target.files[0])
-        // console.log ("check")
 
         if (type.includes(e.target.files[0].type)) {
             if (e.target.files[0].size > parseInt(setting[0].max_size) + '000000') {
@@ -107,7 +105,6 @@ const TambahVidio = ({ token }) => {
                 };
                 reader.readAsDataURL(e.target.files[0])
                 setGambarName(e.target.files[0].name)
-                // console.log (reader.readAsDataURL(e.target.files[0]))
             }
         }
 
@@ -137,9 +134,7 @@ const TambahVidio = ({ token }) => {
     }
 
     const handleChangePublish = (e) => {
-        // setPublish(e.target.checked);
         setDisablePublishDate(!disablePublishDate)
-        // console.log (e.target.checked)
 
         if (e.target.checked === false) {
             setPublishDate(null)
@@ -150,11 +145,8 @@ const TambahVidio = ({ token }) => {
     };
 
     const handlePublishDate = (date) => {
-        // let result = moment(date).format("YYYY-MM-DD")
         if (disablePublishDate === false) {
-            // setPublishDate(result)
             setPublishDate(date)
-            // console.log (result)
         }
     }
 
@@ -192,9 +184,7 @@ const TambahVidio = ({ token }) => {
                     publish,
                     tanggal_publish: moment(today).format("YYYY-MM-DD")
                 }
-
                 dispatch(newVideo(data, token))
-                // console.log("Unpublish :", data)
             } else {
 
                 const data = {
@@ -208,9 +198,7 @@ const TambahVidio = ({ token }) => {
                     publish,
                     tanggal_publish: moment(publishDate).format("YYYY-MM-DD")
                 }
-
                 dispatch(newVideo(data, token))
-                // console.log("Publish :", data)
             }
 
         } else {

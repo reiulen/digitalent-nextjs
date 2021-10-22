@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
 
 export default function SeleksiAdministrasi() {
-  // console.log(props, "ini props");
+  
   const router = useRouter();
   return (
     <PesertaWrapper>

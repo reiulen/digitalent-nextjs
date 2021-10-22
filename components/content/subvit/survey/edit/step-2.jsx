@@ -68,7 +68,6 @@ const StepTwo = ({ token }) => {
         status: status,
         questions_to_share: jumlah_soal,
       };
-      console.log(data);
       dispatch(updateSurveyQuestionBanksPublish(data, id, token));
     } else {
       simpleValidator.current.showMessages();
@@ -118,7 +117,6 @@ const StepTwo = ({ token }) => {
           status: status,
           questions_to_share: jumlah_soal,
         };
-        console.log(data);
         dispatch(updateSurveyQuestionBanksPublish(data, id, token));
       } else {
         simpleValidator.current.showMessages();

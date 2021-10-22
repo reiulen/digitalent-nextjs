@@ -47,18 +47,11 @@ export const getAllArtikelPeserta =
           },
         };
 
-        console.log (token)
-        // console.log (config)
-
         const { data } = await axios.get(link, config);
-
         dispatch({
           type: ARTIKEL_PESERTA_SUCCESS,
           payload: data,
         });
-
-        
-
       } catch (error) {
         dispatch({
           type: ARTIKEL_PESERTA_FAIL,
@@ -149,16 +142,11 @@ export const updateArtikelPeserta = (artikelPesertaData, token) => async (dispat
       type: UPDATE_ARTIKEL_PESERTA_SUCCESS,
       payload: data,
     });
-
-    // console.log (data)
-
   } catch (error) {
     dispatch({
       type: UPDATE_ARTIKEL_PESERTA_FAIL,
       payload: error.response.data.message,
     });
-
-    console.log(error)
   }
 };
 

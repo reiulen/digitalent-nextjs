@@ -107,12 +107,9 @@ const EditImagetron = ({ token }) => {
             }
         }
     }
-    // console.log("IMAGE PREVIEW : ",gambarPreview)
 
     const handleChangePublish = (e) => {
-        // setPublish(e.target.checked);
         setDisablePublishDate(!disablePublishDate)
-        // console.log (e.target.checked)
 
         if (e.target.checked === false) {
             setPublishDate(null)
@@ -123,11 +120,8 @@ const EditImagetron = ({ token }) => {
     };
 
     const handlePublishDate = (date) => {
-        // let result = moment(date).format("YYYY-MM-DD")
         if (disablePublishDate === false) {
-            // setPublishDate(result)
             setPublishDate(date)
-            // console.log (result)
         }
     }
 
@@ -174,9 +168,7 @@ const EditImagetron = ({ token }) => {
                     })
                         .then((result) => {
                             if (result.isConfirmed) {
-
                                 dispatch(updateImagetron(data, token));
-                                // console.log(data)
                             }
                         });
                 } else {
@@ -204,9 +196,7 @@ const EditImagetron = ({ token }) => {
                     })
                         .then((result) => {
                             if (result.isConfirmed) {
-
                                 dispatch(updateImagetron(data, token));
-                                // console.log(data)
                             }
                         });
                 }
@@ -241,9 +231,7 @@ const EditImagetron = ({ token }) => {
                     })
                         .then((result) => {
                             if (result.isConfirmed) {
-
                                 dispatch(updateImagetron(data, token));
-                                // console.log(data)
                             }
                         });
                 } else {
@@ -271,9 +259,7 @@ const EditImagetron = ({ token }) => {
                     })
                         .then((result) => {
                             if (result.isConfirmed) {
-
                                 dispatch(updateImagetron(data, token));
-                                // console.log(data)
                             }
                         });
                 }

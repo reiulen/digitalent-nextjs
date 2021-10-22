@@ -60,7 +60,6 @@ const ListSubstansi = ({ token }) => {
   };
 
   const handleSearch = () => {
-    console.log(search);
     if (limit != null) {
       router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`);
     } else {

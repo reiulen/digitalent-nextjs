@@ -94,7 +94,6 @@ export const newKategoriReducer = (state = { kategori: {} }, action) => {
             }
 
         case NEW_KATEGORI_SUCCESS:
-            console.log("Reducer Kategori Success :", action.payload.data)
             return {
                 loading: false,
                 success: action.payload.message,
