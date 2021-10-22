@@ -57,7 +57,7 @@ export default function FormPendaftaran(props) {
         });
       });
     dispatch(storeFormRegister(data));
-  }, [dataForm]);
+  }, [dataForm, dispatch]);
   return (
     <>
       <Layout title="Form Pendaftaran Peserta - Pelatihan" session={session}>
