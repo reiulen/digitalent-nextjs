@@ -23,7 +23,9 @@ const NavbarComponent = ({ session }) => {
   );
 
   const handlerLogout = () => {
-    signOut();
+    signOut({
+      callbackUrl: `${window.location.origin}/login`,
+    });
   };
 
   return (
