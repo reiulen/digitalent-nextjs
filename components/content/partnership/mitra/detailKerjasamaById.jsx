@@ -78,8 +78,6 @@ const EditDokumentKerjasamaById = ({ token }) => {
         setPdfFile(null);
         setPdfFileError("Please selet valid pdf file !!");
       }
-    } else {
-      console.log("select your file");
     }
   };
 
@@ -135,7 +133,7 @@ const EditDokumentKerjasamaById = ({ token }) => {
         setDocument(data.data.document_file);
         setEmail(data.data.email);
       } catch (error) {
-        console.log("action getSIngle gagal", error);
+        notify(error.response.data.message);
       }
     }
     setDataSingle(router.query.id, token);

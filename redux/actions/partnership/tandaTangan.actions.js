@@ -40,7 +40,7 @@ export const fetchSignature = (token) => {
       let { data } = await fetchSignatureApi(params, token);
       dispatch(successFetchSignature(data));
     } catch (error) {
-      console.log("error data signature action", error.response.data.message);
+      notify(error.response.data.message);
     }
   };
 };
@@ -82,7 +82,7 @@ export const deleteTandaTangan = (id, token) => {
       let { data } = await deleteTtd(id, token);
       dispatch({ type: SUCESS_DELETE_TD });
     } catch (error) {
-      console.log("gagal delete ttd", error);
+      notify(error.response.data.message);
     }
   };
 };
@@ -103,7 +103,7 @@ export const fetchOptionTtdAdmin = (token) => {
         payload: data,
       });
     } catch (error) {
-      console.log("eror fetchOptionTtdAdmin", error);
+      notify(error.response.data.message);
     }
   };
 };
@@ -116,7 +116,7 @@ export const fetchTtdPartner = (token, id) => {
         payload: data,
       });
     } catch (error) {
-      console.log("eror fetchTtdPartner", error);
+      notify(error.response.data.message);
     }
   };
 };
@@ -127,7 +127,7 @@ export const changeStatusList = (token, formData, id) => {
       let { data } = await statusListChange(token, formData, id);
       dispatch(successChangeStatusList());
     } catch (error) {
-      console.log("error change status list", error.response.data.message);
+      notify(error.response.data.message);
     }
   };
 };
@@ -151,7 +151,7 @@ export const addTttd = (token, formData) => {
         payload: data,
       });
     } catch (error) {
-      console.log("error.response.data.message", error.response.data.message);
+      notify(error.response.data.message);
     }
   };
 };

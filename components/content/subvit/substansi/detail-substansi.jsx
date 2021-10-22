@@ -73,7 +73,6 @@ const DetailSubstansi = ({ token }) => {
   };
 
   const handleDelete = (id) => {
-    console.log(id);
     Swal.fire({
       title: "Apakah anda yakin ?",
       text: "Data ini tidak bisa dikembalikan !",
@@ -147,7 +146,6 @@ const DetailSubstansi = ({ token }) => {
   };
 
   const handleReset = () => {
-    // console.log("work");
     setShowModal(false);
     setStatus("");
     setKategori("");

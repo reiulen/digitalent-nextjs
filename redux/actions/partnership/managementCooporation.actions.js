@@ -115,7 +115,6 @@ let debouncedFetchMC = debounce(getMCooporation, 0);
 let debouncedFetchEmail = debounce(getEmail, 0);
 
 export const fetchAllMK = token => {
-  console.log("token", token);
   return async (dispatch, getState) => {
     dispatch({ type: MANAGEMENT_COOPORATION_REQUEST });
 
@@ -203,7 +202,6 @@ export const fetchAllMK = token => {
         )
       );
     } catch (error) {
-      console.log(error);
       dispatch(errorfetchAllMK());
     }
   };
@@ -510,7 +508,7 @@ export const deleteCooperation = (token, id) => {
       );
       dispatch(successDeleteCooperation());
     } catch (error) {
-      console.log("action delete gagal", error);
+      notify(error.response.data.message);
     }
   };
 };
@@ -534,7 +532,7 @@ export const getSingleCooperation = (token, id) => {
       );
       dispatch(successGetSingleCooperation(data));
     } catch (error) {
-      console.log("action getSIngle gagal", error);
+      notify(error.response.data.message);
     }
   };
 };
@@ -559,7 +557,7 @@ export const changeStatusList = (token, formData, id) => {
       );
       dispatch(successChangeStatusList());
     } catch (error) {
-      console.log("error change status list");
+      notify(error.response.data.message);
     }
   };
 };
@@ -621,17 +619,16 @@ export const exportFileCSV = token => {
           var _url = window.URL.createObjectURL(blob);
           window.open(_url, "_blank").focus();
         })
-        .catch(err => {
-          console.log(err);
+        .catch(error => {
+          notify(error.response.data.message);
         });
     } catch (error) {
-      console.log("object", error);
+      notify(error.response.data.message);
     }
   };
 };
 
 export const rejectCooperation = (token, id) => {
-  console.log("token mm", token);
   return async dispatch => {
     try {
       let { data } = await axios.put(
@@ -644,9 +641,8 @@ export const rejectCooperation = (token, id) => {
         }
       );
       dispatch({ type: REJECT_COOPERATION });
-      console.log("berhasil");
     } catch (error) {
-      console.log("error rejectCooperation", error);
+      notify(error.response.data.message);
     }
   };
 };

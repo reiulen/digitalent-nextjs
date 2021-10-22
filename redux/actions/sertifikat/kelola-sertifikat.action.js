@@ -226,9 +226,6 @@ export const getPublishedSertifikat = (id, token) => async dispatch => {
 export const updateSertifikat = (id, formData, token) => async dispatch => {
   try {
     dispatch({ type: UPDATE_SERTIFIKAT_REQUEST });
-    // for (var pair of formData.entries()) {
-    //   console.log(pair[0] + ", " + pair[1]);
-    // }
 
     let link =
       process.env.END_POINT_API_SERTIFIKAT +

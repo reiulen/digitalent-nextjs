@@ -49,7 +49,6 @@ const EditCommitmentStep3 = () => {
         commitment,
         description,
       };
-      console.log(data);
       router.push("/pelatihan/pelatihan");
     } else {
       simpleValidator.current.showMessages();
@@ -132,7 +131,6 @@ const EditCommitmentStep3 = () => {
                         onChange={(event, editor) => {
                           const data = editor.getData();
                           setDescription(data);
-                          // console.log({ event, editor, data });
                         }}
                         config={{
                           placeholder: "Silahkan Masukan Deskripsi Detail",

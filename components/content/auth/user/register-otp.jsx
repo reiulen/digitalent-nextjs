@@ -36,8 +36,6 @@ const RegisterUser = () => {
         setSecond(timeLeftVar.s);
       }, 1000);
       return () => clearInterval(secondsLeft);
-    } else {
-      console.log("time out");
     }
   }, [count]);
 

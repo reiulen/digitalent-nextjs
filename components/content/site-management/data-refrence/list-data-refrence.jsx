@@ -22,9 +22,7 @@ import {
 const Table = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
-
   const allDataReference = useSelector((state) => state.allDataReference);
-console.log("allDataReference",allDataReference)
   const [valueSearch, setValueSearch] = useState("");
   const handleChangeValueSearch = (value) => {
     setValueSearch(value);

@@ -29,7 +29,7 @@ export const loadDataPrompt = (token) => {
         payload: data,
       });
     } catch (error) {
-      console.log(error);
+      notify(error.response.data.message);
     }
   };
 };
@@ -102,7 +102,6 @@ export const postKetentuan = (
   statusNotPassedTraining,
   noTrainingAccepted
 ) => {
-  console.log("action", numberOfTraining);
   return (dispatch) => {
     axios
       .post(
@@ -168,7 +167,7 @@ export const postViaFilter = (token, title, year, academy, theme, organizer, tra
         console.log("BEHASIL")
       })
       .catch((error) => {
-      console.log("GAGAL")
+        notify(error.response.data.message);
       });
   };
 };
@@ -177,7 +176,6 @@ export const postFileSize = (
   token,
   image, document
 ) => {
-  console.log("action", numberOfTraining);
   return (dispatch) => {
     axios
       .post(

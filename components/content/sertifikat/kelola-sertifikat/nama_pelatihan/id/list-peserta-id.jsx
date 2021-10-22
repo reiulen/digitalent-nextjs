@@ -62,14 +62,12 @@ export default function ListPesertaID({ token }) {
   };
 
   const handleDownload = async () => {
-    // const data = await convertDivToPng(divReference.current);
     const data = await convertDivToPng(divReference.current);
     if (data) {
       const link = document.createElement("a");
       link.download = `Sertifikat - ${query.name}.png`;
       link.href = data;
       link.click();
-      // router.reload();
     }
     if (type == "2 lembar") {
       const image = document.getElementById("image2").getAttribute("src");

@@ -184,8 +184,6 @@ const ListTraining = ({ token }) => {
       revisi.map((row, i) => {
         setNote(row.revisi);
       });
-      // console.log(Object.keys(revisi).length);
-      // console.log(revisi);
     }
   }, [isDeleted, statusSuccess, dispatch, token, revisi]);
 

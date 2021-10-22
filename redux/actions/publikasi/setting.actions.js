@@ -67,7 +67,6 @@ export const updateSettingImagePublikasi = (settingData, token) => async (dispat
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         }
-        // console.log("Update Image Action :", config)
 
         const { dataImage } = await axios.put(linkImage, params, config)
         // const { dataImagetron } = await axios.put(linkImagetron, settingData.upload_imagetron)
@@ -133,7 +132,6 @@ export const updateSettingImagetronPublikasi = (settingData, token) => async (di
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         }
-        // console.log("Update Imagetron Action :", config)
 
         const { dataImagetron } = await axios.put(linkImagetron, params, config)
 

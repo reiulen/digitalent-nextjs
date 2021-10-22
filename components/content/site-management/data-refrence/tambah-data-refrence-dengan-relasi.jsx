@@ -16,7 +16,6 @@ const Tambah = ({ token }) => {
   const [status, setStatus] = useState("");
   const [idReference, setIdReference] = useState("");
   const [optionReference, setOptionReference] = useState([]);
-  console.log("optionReference", optionReference);
   const [optionFromReference, setOptionFromReference] = useState([]);
   const [formValue, setFormValue] = useState([]);
   const [formReferenceAndText, setFormReferenceAndText] = useState([
@@ -30,15 +29,13 @@ const Tambah = ({ token }) => {
     },
   ]);
 
-  console.log("formReferenceAndText",formReferenceAndText)
   const [valueOptionJustText, setValueOptionJustText] = useState([
     {
       label: "",
     },
   ]);
-  const [nameListFromReference, setNameListFromReference] = useState("");
-  console.log("nameListFromReference", nameListFromReference);
 
+  const [nameListFromReference, setNameListFromReference] = useState("");
   const submit = async (e) => {
     e.preventDefault();
     if (nameReference === "") {
@@ -73,11 +70,6 @@ const Tambah = ({ token }) => {
         // ],
       };
 
-      console.log("sendData",sendData)
-
-
-
-
       try {
         let { data } = await axios.post(
           `${process.env.END_POINT_API_SITE_MANAGEMENT}api/reference/store-relasi`,
@@ -106,7 +98,6 @@ const Tambah = ({ token }) => {
   };
 
   const handleAddInput = (idx, index) => {
-    console.log("index", index);
     // let _temp = [...valueOptionJustText];
     // _temp.push({
     //   label:""
@@ -125,7 +116,6 @@ const Tambah = ({ token }) => {
   };
 
   const handleDelete = (parent, child) => {
-    console.log("child", child);
     let _temp = [...formReferenceAndText];
 
     if (child === 0) {
@@ -181,10 +171,7 @@ const Tambah = ({ token }) => {
         );
         setOptionReference(data);
       } catch (error) {
-        console.log(
-          "error get all data reference",
-          error.response.data.message
-        );
+        notify(error.response.data.message);
       }
     }
 
@@ -203,10 +190,7 @@ const Tambah = ({ token }) => {
           );
           setOptionFromReference(data);
         } catch (error) {
-          console.log(
-            "error get all data reference",
-            error.response.data.message
-          );
+          notify(error.response.data.message);
         }
       }
 

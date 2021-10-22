@@ -84,7 +84,6 @@ const Pengaturan = ({ token }) => {
                 });
             } else {
                 dispatch(updateSettingImagePublikasi(upload_image, token))
-                // console.log("TOKEN :", token)
             }
             // if (error) {
             //     dispatch(clearErrors())
@@ -116,7 +115,6 @@ const Pengaturan = ({ token }) => {
                 });
             } else {
                 dispatch(updateSettingImagetronPublikasi(upload_imagetron, token))
-                // console.log("TOKEN :", token)
             }
             // if (error) {
             //     dispatch(clearErrors())

@@ -384,9 +384,8 @@ export default function TambahMasterSertifikat({ token }) {
         forceUpdate(1);
         Swal.fire("Oops !", "Isi data dengan benar.", "error");
       }
-    } catch (e) {
-      return;
-      // console.log(e, "Masuk sini errornya");
+    } catch (error) {
+      notify(error.response.data.message);
     }
   };
 

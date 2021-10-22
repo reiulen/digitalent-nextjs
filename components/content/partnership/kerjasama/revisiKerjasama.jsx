@@ -196,7 +196,7 @@ const RevisiKerjasama = ({ token }) => {
         setTgl_ttd(data.data.signing_date);
         setDokument(data.data.document);
       } catch (error) {
-        console.log("action getSIngle gagal", error);
+        notify(error.response.data.message);
       }
     }
     setDataSingle(router.query.id, token);

@@ -158,8 +158,6 @@ const Berita = ({ token }) => {
     };
 
     const handleSearchDate = () => {
-        // console.log (startDate)
-
         if (moment(startDate).format("YYYY-MM-DD") > moment(endDate).format("YYYY-MM-DD")) {
             Swal.fire(
                 'Oops !',

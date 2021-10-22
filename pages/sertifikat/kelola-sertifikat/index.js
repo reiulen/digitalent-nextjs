@@ -40,7 +40,6 @@ export default function KelokaSertifikatPage(props) {
 export const getServerSideProps = wrapper.getServerSideProps(
   store =>
     async ({ query, req }) => {
-      // console.log(query, "INI QUERY");
       const session = await getSession({ req });
       if (!session) {
         return {
