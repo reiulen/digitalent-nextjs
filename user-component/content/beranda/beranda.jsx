@@ -67,7 +67,7 @@ const Beranda = () => {
   const handleHoverCard = () => {
     let arr = []
 
-    if (tema.length !== 0 ){
+    if (tema && tema.length !== 0 ){
       for (let i = 0; i < tema.length; i++){
         let obj = {
           id: tema[i].id,
