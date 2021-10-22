@@ -5,7 +5,7 @@ import IconArrow from "../../../components/assets/icon/Arrow2";
 
 
 
-export default function infoVideos() {
+export default function infoVideos({ video }) {
   return (
     <div style={{backgroundColor:"white"}} className="py-0 py-xl-30 info-video max-container">
       <div className="container-fluid">

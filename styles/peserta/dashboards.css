@@ -138,9 +138,9 @@
 .cards-items .top {
   min-height: 180px;
   height: 180px;
-   /* background-image: url("../../public/assets/media/dummy-banner.png"); */
+   background-image: url("../../public/assets/media/default-card.png");
   /* background-image: url("../../public/assets/media/default-thumbnail.svg"); */
-  background-color: blue;
+  /* background-color: blue; */
   padding: 20px;
 }
 
