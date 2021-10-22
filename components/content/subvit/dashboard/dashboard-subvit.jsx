@@ -12,187 +12,38 @@ import imageTrivia from "../../../../public/assets/media/logos/trivia.png";
 import {
   PieChart,
   Pie,
-  Sector,
   Cell,
   ResponsiveContainer,
   Label,
-  Legend,
   Tooltip,
 } from "recharts";
 import { useRouter } from "next/dist/client/router";
-
-// import { getSession } from "next-auth/client";
+import { useSelector } from "react-redux";
 
 const DashbardSubvit = () => {
-  const [dataDummy, setDataDummy] = useState({
-    status: true,
-    message: "Berhasil Mendapatkan Data",
-    data: {
-      substansi: {
-        perPage: 5,
-        total: 13,
-        totalFiltered: 3,
-        list: [
-          {
-            id: 13,
-            academy_id: 3,
-            theme_id: 6,
-            training_id: 7,
-            category: "Test Substansi",
-            all_participant: 0,
-            participant_finished: 0,
-            academy: {
-              id: 3,
-              name: "PRO",
-              created_at: "2021-10-14T00:54:03.000000Z",
-              updated_at: "2021-10-14T00:54:03.000000Z",
-            },
-            theme: {
-              id: 6,
-              academy_id: 3,
-              name: "Get Connected",
-              created_at: "2021-10-14T00:54:15.000000Z",
-              updated_at: "2021-10-14T00:54:15.000000Z",
-            },
-            training: {
-              id: 7,
-              theme_id: 1,
-              name: "Frontend Web React Js",
-              created_at: "2021-10-14T00:54:26.000000Z",
-              updated_at: "2021-10-14T00:54:26.000000Z",
-            },
-          },
-          {
-            id: 22,
-            academy_id: 3,
-            theme_id: 2,
-            training_id: 8,
-            category: "Test Substansi",
-            all_participant: 0,
-            participant_finished: 0,
-            academy: {
-              id: 3,
-              name: "PRO",
-              created_at: "2021-10-14T00:54:03.000000Z",
-              updated_at: "2021-10-14T00:54:03.000000Z",
-            },
-            theme: {
-              id: 2,
-              academy_id: 1,
-              name: "Data Management Staff",
-              created_at: "2021-10-14T00:54:15.000000Z",
-              updated_at: "2021-10-14T00:54:15.000000Z",
-            },
-            training: {
-              id: 8,
-              theme_id: 2,
-              name: "Frontend Web Vue Js",
-              created_at: "2021-10-14T00:54:26.000000Z",
-              updated_at: "2021-10-14T00:54:26.000000Z",
-            },
-          },
-          {
-            id: 17,
-            academy_id: 1,
-            theme_id: 1,
-            training_id: 8,
-            category: "Test Substansi",
-            all_participant: 3,
-            participant_finished: 1,
-            academy: {
-              id: 1,
-              name: "VSGA",
-              created_at: "2021-10-14T00:54:03.000000Z",
-              updated_at: "2021-10-14T00:54:03.000000Z",
-            },
-            theme: {
-              id: 1,
-              academy_id: 1,
-              name: "Cloud Computing Analyst",
-              created_at: "2021-10-14T00:54:15.000000Z",
-              updated_at: "2021-10-14T00:54:15.000000Z",
-            },
-            training: {
-              id: 8,
-              theme_id: 2,
-              name: "Frontend Web Vue Js",
-              created_at: "2021-10-14T00:54:26.000000Z",
-              updated_at: "2021-10-14T00:54:26.000000Z",
-            },
-          },
-        ],
-      },
-      survey: {
-        perPage: 5,
-        total: 9,
-        totalFiltered: 0,
-        list: [],
-      },
-      trivia: {
-        perPage: 5,
-        total: 1,
-        totalFiltered: 1,
-        list: [
-          {
-            id: 17,
-            academy_id: 1,
-            theme_id: 6,
-            training_id: 5,
-            all_participant: 1,
-            participant_finished: 0,
-            academy: {
-              id: 1,
-              name: "VSGA",
-              created_at: "2021-10-14T00:54:03.000000Z",
-              updated_at: "2021-10-14T00:54:03.000000Z",
-            },
-            theme: {
-              id: 6,
-              academy_id: 3,
-              name: "Get Connected",
-              created_at: "2021-10-14T00:54:15.000000Z",
-              updated_at: "2021-10-14T00:54:15.000000Z",
-            },
-            training: {
-              id: 5,
-              theme_id: 5,
-              name: "Web Backend Node Js",
-              created_at: "2021-10-14T00:54:26.000000Z",
-              updated_at: "2021-10-14T00:54:26.000000Z",
-            },
-          },
-        ],
-      },
-      chart: {
-        total_substansi: 5,
-        total_survey: 2,
-        total_trivia: 1,
-        total: 8,
-      },
-    },
-  });
+  const router = useRouter();
+
+  const { dashboard_subvit } = useSelector((state) => state.dashboardSubvit);
+
+  console.log(dashboard_subvit);
 
   const data = [];
 
-  Object.entries(dataDummy.data.chart).map((item, index) => {
-    // return console.log(item[0]);
+  const [dataDummy] = useState(dashboard_subvit);
+
+  Object.entries(dataDummy.chart).map((item) => {
     return data.push({ name: item[0], value: item[1] });
   });
 
-  // const data = [
-  //   {
-  //     name: Object.keys(dataDummy.data.chart[0]),
-  //     value: Object.values(dataDummy.data.chart[0]),
-  //   },
-  //   {
-  //     name: Object.keys(dataDummy.data.chart[1]),
-  //     value: Object.values(dataDummy.data.chart[1]),
-  //   },
-  //   {
-  //     name: Object.keys(dataDummy.data.chart[2]),
-  //     value: Object.values(dataDummy.data.chart[2]),
-  //   },
-  // ];
+  const handleNextPagination = (category) => {
+    const page = parseInt(router.query.page_substansi) + 1;
+    router.push(`${router.pathname}?page_substansi=${page}`);
+  };
+
+  const handleBackPagination = (category) => {
+    const page = parseInt(router.query.page_substansi) - 1;
+    router.push(`${router.pathname}?page_substansi=${page}`);
+  };
 
   const dummy = [
     {
@@ -233,13 +84,6 @@ const DashbardSubvit = () => {
   ];
 
   const COLORS = ["#4299E1", "#215480", "##4CBDE2"];
-
-  const router = useRouter();
-  // useEffect(() => {
-  //   getSession().then((session) => {
-  //     console.log(session.user.user);
-  //   });
-  // }, [getSession]);
 
   const handleAddPage = (e) => {
     if (e.target.value === "1") {
@@ -424,25 +268,13 @@ const DashbardSubvit = () => {
                           ></Cell>
                         </>
                       ))}
-                      {/* {Object.values(dataDummy.data.chart).map(
-                        (item, index) => {
-                          console.log(item);
-                          return (
-                            <>
-                              <Cell
-                                key={item}
-                                fill={COLORS[index % COLORS.length]}
-                              ></Cell>
-                            </>
-                          );
-                        }
-                      )} */}
+
                       <Label
                         width={30}
                         position="center"
                         className={styles.labelChart}
                       >
-                        {dataDummy.data.chart.total}
+                        {dataDummy && dataDummy.chart.total}
                       </Label>
                     </Pie>
                   </PieChart>
@@ -462,7 +294,7 @@ const DashbardSubvit = () => {
                         />
                       </div>
                       <div className={`${styles.substansi} col-sm-8 col-xs-8`}>
-                        {dataDummy.data.chart.total_substansi}
+                        {dataDummy && dataDummy.chart.total_substansi}
                         <br />
                         <span className={styles.subTextTotal}>Substansi</span>
                       </div>
@@ -483,7 +315,7 @@ const DashbardSubvit = () => {
                         />
                       </div>
                       <div className={`${styles.survey} col-sm-8 col-xs-8`}>
-                        {dataDummy.data.chart.total_survey}
+                        {dataDummy && dataDummy.chart.total_survey}
                         <br />
                         <span className={styles.subTextTotal}>Survey</span>
                       </div>
@@ -503,7 +335,7 @@ const DashbardSubvit = () => {
                         />
                       </div>
                       <div className={`${styles.trivia} col-sm-8 col-xs-8`}>
-                        {dataDummy.data.chart.total_trivia}
+                        {dataDummy && dataDummy.chart.total_trivia}
                         <br />
                         <span className={styles.subTextTotal}>Trivia</span>
                       </div>
@@ -518,7 +350,7 @@ const DashbardSubvit = () => {
               <div className={`${styles.cardPesertaBody} card-body`}>
                 <h1 className={`${styles.headPeserta}`}>Test Substansi</h1>
                 <p className={`${styles.subHeadPeserta}`}>yang sudah publish</p>
-                {dummy.map((item, index) => {
+                {dataDummy.substansi.list.map((item, index) => {
                   return (
                     <>
                       <div className={`${styles.cardList} card`} key={index}>
@@ -528,20 +360,24 @@ const DashbardSubvit = () => {
                               className={`${styles.cardNumber} card`}
                               style={{ width: "100%", height: "100%" }}
                             >
-                              {item.no}
+                              {index +
+                                1 * router.query.page_substansi * 5 -
+                                (5 - 1)}
                             </div>
                           </div>
                           <div className={`${styles.theme} col-sm-5`}>
-                            {item.theme}
+                            {item.theme.name}
                             <br />
                             <span className={styles.training}>
-                              {item.training}
+                              {item.training.name}
                             </span>
                           </div>
                           <div className={`${styles.total} col-sm-6`}>
-                            {item.total}
+                            {item.all_participant} / {item.participant_finished}
                             <br />
-                            <span className={styles.note}>{item.note}</span>
+                            <span className={styles.note}>
+                              yang sudah mengerjakan
+                            </span>
                           </div>
                         </div>
                       </div>
@@ -550,16 +386,28 @@ const DashbardSubvit = () => {
                 })}
                 <div className={`${styles.rowBottom} row`}>
                   <div className={`${styles.total} col-sm-6 mt-5`}>
-                    Total: 120.000 Peserta
+                    Total: 0 Peserta
                   </div>
                   <div className="col-sm-6" style={{ textAlign: "right" }}>
-                    <button className={`${styles.btnNext} btn btn-primary`}>
+                    <button
+                      className={`${styles.btnNext} btn btn-primary`}
+                      onClick={() => handleBackPagination()}
+                      disabled={parseInt(router.query.page_substansi) === 1}
+                    >
                       <i
                         className="ri-arrow-left-s-line"
                         style={{ padding: "0px" }}
                       ></i>
                     </button>
-                    <button className={`${styles.btnNext} btn btn-primary`}>
+                    <button
+                      className={`${styles.btnNext} btn btn-primary`}
+                      onClick={() => handleNextPagination()}
+                      disabled={
+                        parseInt(router.query.page_substansi) ===
+                        dataDummy.substansi.total /
+                          dataDummy.substansi.totalFiltered
+                      }
+                    >
                       <i
                         className="ri-arrow-right-s-line"
                         style={{ padding: "0px" }}
@@ -579,7 +427,7 @@ const DashbardSubvit = () => {
                 <p className={`${styles.subHeadPeserta}`}>
                   yang sedang berlangsung
                 </p>
-                {dummy.map((item, index) => {
+                {dataDummy.trivia.list.map((item, index) => {
                   return (
                     <>
                       <div className={`${styles.cardList} card`} key={index}>
@@ -589,20 +437,24 @@ const DashbardSubvit = () => {
                               className={`${styles.cardNumber} card`}
                               style={{ width: "100%", height: "100%" }}
                             >
-                              {item.no}
+                              {index +
+                                1 * router.query.page_substansi * 5 -
+                                (5 - 1)}
                             </div>
                           </div>
                           <div className={`${styles.theme} col-sm-5`}>
-                            {item.theme}
+                            {item.theme.name}
                             <br />
                             <span className={styles.training}>
-                              {item.training}
+                              {item.training.name}
                             </span>
                           </div>
                           <div className={`${styles.total} col-sm-6`}>
-                            {item.total}
+                            {item.all_participant} / {item.participant_finished}
                             <br />
-                            <span className={styles.note}>{item.note}</span>
+                            <span className={styles.note}>
+                              yang sudah mengerjakan
+                            </span>
                           </div>
                         </div>
                       </div>
@@ -611,16 +463,27 @@ const DashbardSubvit = () => {
                 })}
                 <div className={`${styles.rowBottom} row`}>
                   <div className={`${styles.total} col-sm-6 mt-5`}>
-                    Total: 120.000 Peserta
+                    Total: 0 Peserta
                   </div>
                   <div className="col-sm-6" style={{ textAlign: "right" }}>
-                    <button className={`${styles.btnNext} btn btn-primary`}>
+                    <button
+                      className={`${styles.btnNext} btn btn-primary`}
+                      onClick={handleBackPagination}
+                      disabled={parseInt(router.query.page_trivia) === 1}
+                    >
                       <i
                         className="ri-arrow-left-s-line"
                         style={{ padding: "0px" }}
                       ></i>
                     </button>
-                    <button className={`${styles.btnNext} btn btn-primary`}>
+                    <button
+                      className={`${styles.btnNext} btn btn-primary`}
+                      onClick={handleNextPagination}
+                      disabled={
+                        parseInt(router.query.page_trivia) ===
+                        dataDummy.trivia.total / dataDummy.trivia.totalFiltered
+                      }
+                    >
                       <i
                         className="ri-arrow-right-s-line"
                         style={{ padding: "0px" }}

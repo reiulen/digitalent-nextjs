@@ -140,6 +140,7 @@ const SubtansiUser = ({ token }) => {
       list.push(key);
     }
     setListAnswer(list);
+    console.log(data);
   };
 
   let number = [];
@@ -208,7 +209,7 @@ const SubtansiUser = ({ token }) => {
                 {data && data.total_questions}
               </p>
               <h1 className={styles.soal}>
-                {data.list_questions.question_image &&
+                {data.list_questions &&
                 data.list_questions[parseInt(router.query.id) - 1]
                   .question_image !== null ? (
                   <div className="d-flex flex-row">
@@ -223,12 +224,12 @@ const SubtansiUser = ({ token }) => {
                     </div>
                   </div>
                 ) : (
-                  data.list_questions.question &&
+                  data.list_questions &&
                   data.list_questions[parseInt(router.query.id) - 1].question
                 )}
               </h1>
               <hr />
-              {data.list_questions.answer &&
+              {data.list_questions &&
                 JSON.parse(
                   data.list_questions[parseInt(router.query.id) - 1].answer
                 ).map((item, index) => {
@@ -335,13 +336,7 @@ const SubtansiUser = ({ token }) => {
                     <Button
                       className={styles.btnNext}
                       onClick={handleDone}
-                      disabled={
-                        listAnswer.length -
-                          (listAnswer.includes("ally-support-cache")
-                            ? 2
-                            : 1) !==
-                        data.total_questions
-                      }
+                      disabled={listAnswer.includes(data.total_questions)}
                     >
                       Selesai
                     </Button>

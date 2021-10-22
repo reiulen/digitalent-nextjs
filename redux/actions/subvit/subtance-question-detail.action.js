@@ -5,9 +5,15 @@ import {
   SUBTANCE_QUESTION_RANDOM_DETAIL_REQUEST,
   SUBTANCE_QUESTION_RANDOM_DETAIL_SUCCESS,
   SUBTANCE_QUESTION_RANDOM_DETAIL_FAIL,
+  DASHBOARD_SUBVIT_REQUEST,
+  DASHBOARD_SUBVIT_SUCCESS,
+  DASHBOARD_SUBVIT_FAIL,
   NEW_SUBTANCE_QUESTION_DETAIL_REQUEST,
   NEW_SUBTANCE_QUESTION_DETAIL_SUCCESS,
   NEW_SUBTANCE_QUESTION_DETAIL_FAIL,
+  POST_RESULT_REQUEST,
+  POST_RESULT_SUCCESS,
+  POST_RESULT_FAIL,
   DELETE_SUBTANCE_QUESTION_DETAIL_REQUEST,
   DELETE_SUBTANCE_QUESTION_DETAIL_SUCCESS,
   DELETE_SUBTANCE_QUESTION_DETAIL_FAIL,
@@ -94,7 +100,7 @@ export const getRandomSubtanceQuestionDetail =
       };
 
       const { data } = await axios.get(link, config);
-      console.log(data);
+      console.log(data.data.list_questions);
 
       dispatch({
         type: SUBTANCE_QUESTION_RANDOM_DETAIL_SUCCESS,
@@ -104,6 +110,42 @@ export const getRandomSubtanceQuestionDetail =
       // console.log(error.response.data);
       dispatch({
         type: SUBTANCE_QUESTION_RANDOM_DETAIL_FAIL,
+        payload: error.message,
+      });
+    }
+  };
+
+export const getDashboardSubvit =
+  (page_substansi = 1, page_trivia = 1, page_survey = 1, token) =>
+  async (dispatch) => {
+    try {
+      // console.log(token);
+      dispatch({ type: DASHBOARD_SUBVIT_REQUEST });
+
+      let link = process.env.END_POINT_API_SUBVIT + `api/dashboard?`;
+
+      if (page_survey) link = link.concat(`&page_survey=${page_survey}`);
+      if (page_trivia) link = link.concat(`&page_trivia=${page_trivia}`);
+      if (page_substansi)
+        link = link.concat(`&page_substansi=${page_substansi}`);
+      // console.log(link);
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      };
+
+      const { data } = await axios.get(link, config);
+      // console.log(data);
+
+      dispatch({
+        type: DASHBOARD_SUBVIT_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      // console.log(error.response.data);
+      dispatch({
+        type: DASHBOARD_SUBVIT_FAIL,
         payload: error.message,
       });
     }
@@ -139,6 +181,36 @@ export const newSubtanceQuestionDetail =
       });
     }
   };
+
+export const postResult = (resultData, token) => async (dispatch) => {
+  try {
+    dispatch({
+      type: POST_RESULT_REQUEST,
+    });
+
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    const { data } = await axios.post(
+      process.env.END_POINT_API_SUBVIT + "api/subtance-question-banks/result",
+      resultData,
+      config
+    );
+
+    dispatch({
+      type: POST_RESULT_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: POST_RESULT_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
 
 export const detailSubtanceQuestionDetail = (id, token) => async (dispatch) => {
   try {
