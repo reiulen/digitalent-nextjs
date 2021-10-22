@@ -618,7 +618,7 @@ const ListTraining = ({ token }) => {
                         <th>Status Publish</th>
                         <th>Status Substansi</th>
                         <th>Status Pelatihan</th>
-                        <th class="row-aksi-pelatihan">Aksi</th>
+                        <th className="row-aksi-pelatihan">Aksi</th>
                       </tr>
                     </thead>
                     <tbody className="w-100">
