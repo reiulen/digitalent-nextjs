@@ -30,11 +30,11 @@ const DetailAkademi = () => {
     } = useSelector((state) => state.allPelatihan);
 
 
-    const [ akademiId, setAkademiId ] = useState (akademi.id)
-    const [ akademiLogo, setAkademiLogo ] = useState (akademi.logo)
+    // const [ akademiId, setAkademiId ] = useState (akademi.id)
+    // const [ akademiLogo, setAkademiLogo ] = useState (akademi.logo)
     const [ akademiName, setAkademiName ] = useState (akademi.name)
-    const [ akademiSlug, setAkademiSlug ] = useState (akademi.slug)
-    const [ akademiDeskripsi, setAkademiDeskripsi ] = useState (akademi.deskripsi)
+    // const [ akademiSlug, setAkademiSlug ] = useState (akademi.slug)
+    // const [ akademiDeskripsi, setAkademiDeskripsi ] = useState (akademi.deskripsi)
 
     const [ show, setShow ] = useState([])
     const [ showDetail, setShowDetail ] = useState([])
@@ -177,7 +177,7 @@ const DetailAkademi = () => {
             }
 
             {
-                console.log (pelatihan)
+                // console.log (pelatihan)
             }
 
             {
@@ -192,7 +192,7 @@ const DetailAkademi = () => {
                             <div className="col-2 py-3 ml-4">
                                 <Image 
                                     // src={`/assets/media/logo-vsga-1.svg`}
-                                    src={`https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/${akademiLogo}`}
+                                    src={`https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/${akademi.logo}`}
                                     width={150}
                                     height={150}
                                 />
@@ -201,10 +201,10 @@ const DetailAkademi = () => {
                             <div className="col-9">
                                 
                                 <h3 className="font-weight-bolder mt-5">
-                                    {akademiName} ({akademiSlug})
+                                    {akademi.name} ({akademi.slug})
                                 </h3>
 
-                                <div dangerouslySetInnerHTML={{ __html: akademiDeskripsi}}></div>
+                                <div dangerouslySetInnerHTML={{ __html: akademi.deskripsi}}></div>
 
                                 <div className="my-2 text-primary" style={{cursor:"pointer"}}>
                                     <Link href="#home" c> 
@@ -236,7 +236,7 @@ const DetailAkademi = () => {
                                 return (
                                     showDetail[i] === false ?
                                         <Card   
-                                            style={{ width: '30rem', height:"35rem", cursor:"pointer"}} 
+                                            style={{ width: '30rem', height:"47rem", cursor:"pointer"}} 
                                             className="m-3 shadow"
                                             key={i}
                                             onMouseEnter={() => handleMouseEnter(i)}
