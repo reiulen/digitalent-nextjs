@@ -48,7 +48,7 @@ module.exports = {
     //sertifikat
     END_POINT_API_SERTIFIKAT: "http://dts-sertifikat-dev.majapahit.id/",
     END_POINT_API_IMAGE_SERTIFIKAT:
-      "https://dts-publikasi-dev.s3.ap-southeast-1.amazonaws.com/",
+      "https://dts-sertifikat-dev.s3.ap-southeast-1.amazonaws.com/",
 
     // Beasiswa
     END_POINT_API_IMAGE_BEASISWA:
