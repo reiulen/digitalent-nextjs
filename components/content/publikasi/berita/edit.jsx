@@ -89,9 +89,6 @@ const EditBerita = ({ token }) => {
 
     const onChangeGambar = (e) => {
         const type = ["image/jpg", "image/png", "image/jpeg"]
-        // console.log (e.target.files[0].type)
-        // console.log (e.target.files[0])
-        // console.log ("check")
 
         if (type.includes(e.target.files[0].type)) {
             if (e.target.files[0].size > parseInt(setting[0].max_size) + '000000') {
@@ -106,7 +103,6 @@ const EditBerita = ({ token }) => {
                     }
                 };
                 reader.readAsDataURL(e.target.files[0])
-                // console.log (reader.readAsDataURL(e.target.files[0]))
                 setGambarName(e.target.files[0].name)
             }
         }
@@ -128,19 +124,14 @@ const EditBerita = ({ token }) => {
     const handleChangePublish = (e) => {
         setPublish(e.target.checked);
         setDisablePublishDate(!disablePublishDate)
-        // console.log (e.target.checked)
-
         if (e.target.checked === false) {
             setPublishDate(null)
         }
     };
 
     const handlePublishDate = (date) => {
-        // let result = moment(date).format("YYYY-MM-DD")
         if (disablePublishDate === false) {
-            // setPublishDate(result)
             setPublishDate(date)
-            // console.log (result)
         }
     }
 
@@ -149,14 +140,12 @@ const EditBerita = ({ token }) => {
       }
     
       const handleTag = (data) => {
-        // console.log(data);
         for (let i = 0; i < data.length; i++) {
           if (hasWhiteSpace(data[i])) {
             data.splice([i], 1);
           }
         }
         setTag(data);
-        // setTag(data)
       }
 
     const onSubmit = (e) => {
@@ -212,7 +201,6 @@ const EditBerita = ({ token }) => {
                         .then((result) => {
                             if (result.isConfirmed) {
                                 dispatch(updateBerita(data, token));
-                                // console.log(data)
                             }
                         });
 
@@ -244,7 +232,6 @@ const EditBerita = ({ token }) => {
                         .then((result) => {
                             if (result.isConfirmed) {
                                 dispatch(updateBerita(data, token));
-                                // console.log(data)
                             }
                         });
                 }
@@ -281,7 +268,6 @@ const EditBerita = ({ token }) => {
                         .then((result) => {
                             if (result.isConfirmed) {
                                 dispatch(updateBerita(data, token));
-                                // console.log(data)
                             }
                         });
 
@@ -312,7 +298,6 @@ const EditBerita = ({ token }) => {
                         .then((result) => {
                             if (result.isConfirmed) {
                                 dispatch(updateBerita(data, token));
-                                // console.log(data)
                             }
                         });
                 }
@@ -411,7 +396,6 @@ const EditBerita = ({ token }) => {
                                                 onChange={(event, editor) => {
                                                     const data = editor.getData()
                                                     setIsiBerita(data);
-                                                    // console.log({ event, editor, data })
                                                 }}
                                                 onBlur={() =>
                                                     simpleValidator.current.showMessageFor(

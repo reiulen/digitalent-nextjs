@@ -174,7 +174,6 @@ const TambahPage = ({ token }) => {
                           onChange={(event, editor) => {
                             const data = editor.getData();
                             setIsiArtikel(data);
-                            // console.log({ event, editor, data });
                           }}
                           // onBlur={() =>
                           //   simpleValidator.current.showMessageFor(

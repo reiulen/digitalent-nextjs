@@ -37,7 +37,6 @@ const Kategori = ({ token }) => {
     state => state.deleteKategori
   );
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
-  // console.log("PAGINATION KATEGORI : ", paginateKategori)
 
   let { page = 1, success } = router.query;
   page = Number(page);

@@ -18,13 +18,9 @@ import "react-toastify/dist/ReactToastify.css";
 const Table = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
-
   const [array, setArray] = useState([]);
-  console.log("array", array);
-
   const firstPush = () => {
     let _temp = [...array];
-
     _temp.push({
       name: "",
       link: "",
@@ -77,47 +73,32 @@ const Table = ({ token }) => {
   };
 
   const handleChangeInput = (e, i) => {
-    console.log("e.target.value,i");
-    console.log(e.target.value, i);
-
     let _temp = [...array];
     if (e.target.name === "inputName") {
       _temp[i].name = e.target.value;
     } else {
       _temp[i].link = e.target.value;
     }
-
-    console.log("_temp", _temp);
     setArray(_temp);
   };
 
   const handleChangeInput1 = (e, i, j) => {
-    console.log("e.target.value,i");
-    console.log(e.target.value, i);
-
     let _temp = [...array];
     if (e.target.name === "inputName") {
       _temp[i].child[j].name = e.target.value;
     } else {
       _temp[i].child[j].link = e.target.value;
     }
-
-    console.log("_temp", _temp);
     setArray(_temp);
   };
 
   const handleChangeInput2 = (e, i, j, k) => {
-    console.log("e.target.value,i");
-    console.log(e.target.value, i);
-
     let _temp = [...array];
     if (e.target.name === "inputName") {
       _temp[i].child[j].child[k].name = e.target.value;
     } else {
       _temp[i].child[j].child[k].link = e.target.value;
     }
-
-    console.log("_temp", _temp);
     setArray(_temp);
   };
 
@@ -147,10 +128,7 @@ const Table = ({ token }) => {
 
   const submit = async (e) => {
     e.preventDefault();
-
     const sendData = { menu: array };
-    // console.log("sendData",sendData)
-
     try {
       // const sendData = {menu:array};
 
@@ -191,9 +169,7 @@ const Table = ({ token }) => {
             },
           }
         );
-
         setArray(data.data);
-        console.log("response data berhasil", data);
       } catch (error) {
         notify(error.response.data.message);
       }

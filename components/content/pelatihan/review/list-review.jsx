@@ -198,8 +198,7 @@ const ListReview = ({ token }) => {
   const handlePublish = (val, type) => {
     setPage(1);
     const label = val.charAt(0).toUpperCase() + val.slice(1);
-    // console.log(label);
-    // console.log(val);
+    
     if (type === "pelatihan") {
       setStatusPelatihan({ label, value: val });
       dispatch(
