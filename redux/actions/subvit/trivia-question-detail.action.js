@@ -125,7 +125,7 @@ export const detailTriviaQuestionDetail = (id, token) => async dispatch => {
                 Authorization: "Bearer " + token,
             },
         };
-        console.log("masukkesiniiiiaaa");
+        
         const { data } = await axios.get(
             process.env.END_POINT_API_SUBVIT +
                 `api/trivia-question-bank-details/${id}`

@@ -204,7 +204,6 @@ const EditSoalSubstansi = ({ token }) => {
         answer_key,
         question_type_id: question_type,
       };
-      console.log(data);
       dispatch(updateSubtanceQuestionDetail(id, data, token));
     }
   };

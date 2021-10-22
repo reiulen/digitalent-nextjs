@@ -150,7 +150,7 @@ const Edit = ({ token }) => {
       setCategoryCooporation(data.data.cooperation_categories);
       setStatus(data.data.status);
     } catch (error) {
-      console.log(error);
+      notify(error.response.data.message);
     }
 
     } 

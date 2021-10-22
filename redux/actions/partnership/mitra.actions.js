@@ -112,7 +112,7 @@ export const deleteMitra = (token, id) => {
       );
       dispatch({ type: SUCESS_DELETE_MITRA });
     } catch (error) {
-      console.log("gagal delete mitra", error);
+      notify(error.response.data.message);
     }
   };
 };
@@ -124,7 +124,6 @@ export const setPage = (page) => {
 };
 
 export const setLimit = (value) => {
-  console.log("value", value);
   return {
     type: SET_LIMIT,
     limitValue: value,
@@ -150,7 +149,7 @@ export const getProvinces = (token) => {
 
       dispatch(successGetProvinces(dataNewProvinces));
     } catch (error) {
-      console.log("gagal get province", error);
+      notify(error.response.data.message);
     }
   };
 };
@@ -191,11 +190,11 @@ export const exportFileCSV = (token) => {
           var _url = window.URL.createObjectURL(blob);
           window.open(_url, "_blank").focus();
         })
-        .catch((err) => {
-          console.log(err);
+        .catch((error) => {
+          notify(error.response.data.message);
         });
     } catch (error) {
-      console.log("object", error);
+      notify(error.response.data.message);
     }
   };
 };
@@ -305,13 +304,13 @@ export const exportFileCSVDetail = (token, id) => {
           var _url = window.URL.createObjectURL(blob);
           window.open(_url, "_blank").focus();
         })
-        .catch((err) => {
-          console.log(err);
+        .catch((error) => {
+          notify(error.response.data.message);
         });
 
       // router.push(urlExport.config.url);
     } catch (error) {
-      console.log("object", error);
+      notify(error.response.data.message);
     }
   };
 };
@@ -335,7 +334,7 @@ export const fetchListSelectCooperation = (token) => {
       });
       dispatch(successFetchListSelectCooperation(dataNewKerjasama));
     } catch (error) {
-      console.log("eror get list cooperation", error);
+      notify(error.response.data.message);
     }
   };
 };
@@ -365,7 +364,7 @@ export const fetchListSelectStatus = (token) => {
       });
       dispatch(successFetchListSelectStatus(dataNewStateus));
     } catch (error) {
-      console.log("eror get list status", error);
+      notify(error.response.data.message);
     }
   };
 };
@@ -401,7 +400,7 @@ export const deleteCooperation = (token, id) => {
       );
       dispatch(successDeleteCooperation());
     } catch (error) {
-      console.log("action delete gagal", error);
+      notify(error.response.data.message);
     }
   };
 };
@@ -432,7 +431,7 @@ export const changeStatusList = (token, formData, id) => {
       );
       dispatch(successChangeStatusList());
     } catch (error) {
-      console.log("error change status list");
+      notify(error.response.data.message);
     }
   };
 };
@@ -457,7 +456,7 @@ export const changeStatusListCooperation = (token, formData, id) => {
       );
       dispatch(successChangeStatusListCooperation());
     } catch (error) {
-      console.log("error change status list");
+      notify(error.response.data.message);
     }
   };
 };

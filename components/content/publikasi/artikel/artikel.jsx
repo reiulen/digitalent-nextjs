@@ -34,13 +34,12 @@ const Artikel = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  // console.log(artikel, 'INI ARTIKEL')
   const {
     loading: allLoading,
     error,
     artikel,
   } = useSelector((state) => state.allArtikel);
-  // console.log(artikel,"Ini ARTIKEL")
+
   const {
     loading: deleteLoading,
     error: deleteError,
@@ -102,8 +101,6 @@ const Artikel = ({ token }) => {
         dispatch(deleteArtikel(id, token));
       }
     });
-
-    // console.log (token)
   };
 
   const handlePagination = (pageNumber) => {

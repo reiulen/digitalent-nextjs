@@ -18,9 +18,8 @@ import styles from "./step.module.css";
 const StepOne = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
-  // console.log('INI TOKEN WOY', token);
-
   let { id } = router.query;
+
   const { error: detailData, trivia } = useSelector(
     (state) => state.detailTriviaQuestionBanks
   );
@@ -82,8 +81,6 @@ const StepOne = ({ token }) => {
       _method: "put",
     };
     dispatch(updatewTriviaQuestionBanks(id, data, token));
-
-    console.log(data);
   };
 
   const handleResetError = () => {
@@ -93,17 +90,14 @@ const StepOne = ({ token }) => {
   };
 
   const handleTheme = (e) => {
-    console.log(e.target.value);
     setThemeId(e.target.value);
   };
 
   const handleAcademy = (e) => {
-    console.log(e.target.value);
     setAcademyId(e.target.value);
   };
 
   const handleTraining = (e) => {
-    console.log(e.target.value);
     setTrainingId(e.target.value);
   };
   return (

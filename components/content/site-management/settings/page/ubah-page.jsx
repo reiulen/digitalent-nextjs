@@ -42,7 +42,6 @@ const UbahPage = ({ token }) => {
     pagesUpdate,
     isUpdateSuccess,
   } = useSelector((state) => state.updatePage);
-  console.log("pages detail", pages);
 
   const [isi_artikel, setIsiArtikel] = useState(pages.content);
   const [pageName, setPageName] = useState(pages.name);

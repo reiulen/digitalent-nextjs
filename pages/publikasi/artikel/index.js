@@ -25,7 +25,6 @@ const Artikel = dynamic(
 
 export default function ArtikelPage(props) {
   const session = props.session.user.user.data;
-  // console.log (session.token)
   return (
     <>
       <div className="d-flex flex-column flex-root">

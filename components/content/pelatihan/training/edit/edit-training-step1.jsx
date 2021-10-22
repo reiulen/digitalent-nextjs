@@ -98,7 +98,6 @@ const EditTrainingStep1 = () => {
         const reader = new FileReader();
         reader.onload = () => {
           if (reader.readyState === 2) {
-            console.log(reader.result);
             setLogoBase(reader.result);
           }
         };
@@ -126,7 +125,7 @@ const EditTrainingStep1 = () => {
         const reader = new FileReader();
         reader.onload = () => {
           if (reader.readyState === 2) {
-            console.log(reader.result);
+
             setThumbnailBase(reader.result);
           }
         };
@@ -237,7 +236,6 @@ const EditTrainingStep1 = () => {
         city,
         disabilitas,
       };
-      console.log(data);
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -745,7 +743,6 @@ const EditTrainingStep1 = () => {
                       onChange={(event, editor) => {
                         const data = editor.getData();
                         setDescription(data);
-                        // console.log({ event, editor, data });
                       }}
                       onBlur={() =>
                         simpleValidator.current.showMessageFor("deskripsi")

@@ -23,7 +23,6 @@ const Tambah = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const {formSubmit} = router.query
-  console.log("formSubmit",formSubmit)
   const allMK = useSelector((state) => state.allMK);
   // state form data 1
   const [institution_name, setInstitution_name] = useState("");

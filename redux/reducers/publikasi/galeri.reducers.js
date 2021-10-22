@@ -37,7 +37,6 @@ export const allGaleriReducer = (state = { galeri: [] }, action) => {
             }
 
         case GALERI_SUCCESS:
-            // console.log("REDUCER GALERI :", action.payload.data)
             return {
                 loading: false,
                 galeri: action.payload.data
@@ -67,7 +66,6 @@ export const newGaleriReducer = (state = { galeri: {} }, action) => {
             }
 
         case NEW_GALERI_SUCCESS:
-            // console.log("REDUCER GET GALERI : ", action.payload)
             return {
                 loading: false,
                 success: action.payload.message,

@@ -23,13 +23,10 @@ const Tambah = ({ token }) => {
   const [email, setEmail] = useState("");
   const [wesite, setWesite] = useState("");
   const [agency_logo, setAgency_logo] = useState("");
-  // const [agency_logo_api, setAgency_logo_api] = useState("");
   const [imageview, setImageview] = useState("");
   const [address, setAddress] = useState("");
   const [indonesia_provinces_id, setIndonesia_provinces_id] = useState("");
-  // console.log("indonesia_provinces_id",indonesia_provinces_id)
   const [indonesia_cities_id, setIndonesia_cities_id] = useState("");
-  // console.log("indonesia_cities_id",indonesia_cities_id)
   const [postal_code, setPostal_code] = useState("");
   const [pic_name, setPic_name] = useState("");
   const [pic_contact_number, setPic_contact_number] = useState("");
@@ -129,12 +126,9 @@ const Tambah = ({ token }) => {
           let formData = new FormData();
           formData.append("institution_name", institution_name);
 
-          if (agency_logo === "") {
-            console.log("no send image");
-          } else {
+          if (agency_logo !== "") {
             formData.append("agency_logo", agency_logo);
           }
-          // formData.append("agency_logo", agency_logo);
 
           formData.append("website", wesite);
           formData.append("address", address);
@@ -236,7 +230,7 @@ const Tambah = ({ token }) => {
 
   // pertama kali load provinces set kesini
   const [allProvinces, setAllProvinces] = useState([]);
-  // console.log("allProvinces",allProvinces)
+
   // ketika load cities state ini save data
   const [citiesAll, setCitiesAll] = useState([]);
 
@@ -270,7 +264,7 @@ const Tambah = ({ token }) => {
         // dataNewProvinces.splice(0, 0, { label: "Pilih Provinsi", value: "" });
         setAllProvinces(dataNewProvinces);
       } catch (error) {
-        console.log("gagal get province", error);
+        notify(error.response.data.message);
       }
     }
 
@@ -321,12 +315,10 @@ const Tambah = ({ token }) => {
             };
             setIndonesia_cities_id(citiesss);
             setIndonesia_provinces_id(provinciesss);
-          } else {
-            console.log("log");
           }
         }
       } catch (error) {
-        console.log("gagal get province", error);
+        notify(error.response.data.message);
       }
     }
 
@@ -336,9 +328,7 @@ const Tambah = ({ token }) => {
 
   useEffect(() => {
     // get data cities
-    if (indonesia_provinces_id === "") {
-      console.log("kosong");
-    } else {
+    if (indonesia_provinces_id !== "") {
       async function fetchAPI() {
         try {
           let { data } = await axios.get(
@@ -347,15 +337,14 @@ const Tambah = ({ token }) => {
           let dataNewCitites = data.data.map((items) => {
             return { ...items, label: items.name, value: items.id };
           });
-          // dataNewCitites.splice(0, 0, { label: "Pilih Kab/Kota", value: "" });
           setCitiesAll(dataNewCitites);
         } catch (error) {
-          console.log("gagal get cities", error);
+          notify(error.response.data.message);
         }
       }
-
       fetchAPI();
     }
+    
   }, [indonesia_provinces_id]);
 
   const onNewReset = () => {
