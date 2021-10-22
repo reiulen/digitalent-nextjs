@@ -20,7 +20,7 @@ const Sidebar = () => {
   const [dropBeasiswa, setDropBeasiswa] = useState(false);
   const [clickBeasiswa, setClickBeasiswa] = useState(1);
 
-  const handleDown = e => {
+  const handleDown = (e) => {
     if (e.target.innerHTML === "Digital Talent Schoolarship") {
       setClick(click + 1);
 
@@ -53,14 +53,12 @@ const Sidebar = () => {
     }
   };
 
-  console.log(router);
-
   return (
     <>
       <div className={styles.titlePlatform}>PLATFORM</div>
       <div
         className={drop ? styles.active : styles.subMenuTitle}
-        onClick={event => handleDown(event)}
+        onClick={(event) => handleDown(event)}
       >
         <div className="d-flex flex-row">
           <div className="p-2">
@@ -68,7 +66,7 @@ const Sidebar = () => {
               src={Logo}
               alt=""
               className={styles.img}
-              onClick={event => handleDown(event)}
+              onClick={(event) => handleDown(event)}
             />
           </div>
           <div className="p-2">
@@ -171,7 +169,7 @@ const Sidebar = () => {
       )}
       <div
         className={dropSimonas ? styles.active : styles.subMenuTitle}
-        onClick={event => handleDown(event)}
+        onClick={(event) => handleDown(event)}
       >
         <div className="d-flex flex-row">
           <div className="p-2">
@@ -184,7 +182,7 @@ const Sidebar = () => {
       </div>
       <div
         className={dropBeasiswa ? styles.active : styles.subMenuTitle}
-        onClick={event => handleDown(event)}
+        onClick={(event) => handleDown(event)}
       >
         <div className="d-flex flex-row">
           <div className="p-2">

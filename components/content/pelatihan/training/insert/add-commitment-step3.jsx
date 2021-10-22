@@ -111,9 +111,7 @@ const AddCommitmentStep3 = ({ propsStep, token }) => {
       data.pelatihan_selesai = moment(data.pelatihan_selesai).format(
         "YYYY-MM-DD"
       );
-      console.log(data);
       dispatch(newTrainingStep1(data, token));
-      // router.push("/pelatihan/pelatihan");
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
