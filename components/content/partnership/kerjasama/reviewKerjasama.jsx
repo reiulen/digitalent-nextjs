@@ -224,8 +224,7 @@ const ReviewKerjasama = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3
-              className="card-title font-weight-bolder text-dark mb-0"
-              style={{ fontSize: "24px" }}
+              className="card-title font-weight-bolder text-dark titles-1"
             >
               Review Kerjasama {mitra && mitra}
             </h3>
@@ -419,35 +418,6 @@ const ReviewKerjasama = ({ token }) => {
                   />
                 </div>
 
-                {/* <div className="row mb-4">
-                <div className="col-12 col-sm-12">
-                  <div className="form-group mb-0">
-                    <label>Periode</label>
-                    <div className="input-group">
-                      <input
-                        onFocus={() => setError({ ...error, period: "" })}
-                        type="text"
-                        value={period}
-                        disabled
-                        className="form-control mb-lg-0 border-0"
-                        placeholder="Masukkan Lama Kerjasama"
-                        onChange={(e) => onChangePeriod(e)}
-                      />
-                      <div className="input-group-append">
-                        <button
-                          className="btn btn-secondary"
-                          type="button"
-                          disabled
-                        >
-                          Tahun
-                        </button>
-                      </div>
-                      
-                    </div>
-                  </div>
-                </div>
-              </div> */}
-
                 <div className="form-group">
                   <label htmlFor="staticEmail" className="col-form-label">
                     Periode
@@ -494,11 +464,11 @@ const ReviewKerjasama = ({ token }) => {
                     })}
 
                 <div className="form-group row">
-                  <div className="col-sm-12 d-flex justify-content-end">
+                  <div className="col-sm-12 d-flex flex-wrap justify-content-start justify-content-sm-end">
                     <button
                       type="button"
                       onClick={(e) => rejectDokument(e)}
-                      className="btn btn-sm btn-rounded-full bg-red-primary text-white"
+                      className="btn btn-sm btn-rounded-full bg-red-primary text-white mt-2 ml-3 ml-sm-0"
                     >
                       Tolak
                     </button>
@@ -506,7 +476,7 @@ const ReviewKerjasama = ({ token }) => {
                     <button
                       type="button"
                       onClick={(e) => ajukanRevisi(e)}
-                      className="btn btn-sm btn-rounded-full bg-yellow-primary text-white mx-5"
+                      className="btn btn-sm btn-rounded-full bg-yellow-primary text-white mx-3 mt-2"
                     >
                       Ajukan Revisi
                     </button>
@@ -514,7 +484,7 @@ const ReviewKerjasama = ({ token }) => {
                     <button
                       type="button"
                       onClick={(e) => acceptDokument(e)}
-                      className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
+                      className="btn btn-sm btn-rounded-full bg-blue-primary text-white mt-2 ml-3 ml-sm-0"
                     >
                       Terima
                     </button>

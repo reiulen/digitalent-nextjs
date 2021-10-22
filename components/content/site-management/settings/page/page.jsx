@@ -25,6 +25,7 @@ const Table = ({ token }) => {
   const router = useRouter();
 
   const allPage = useSelector((state) => state.allPage);
+  console.log("allPage",allPage)
   const {
     loading: deleteLoading,
     error: deleteError,
@@ -174,12 +175,21 @@ const Table = ({ token }) => {
                                 {items.url}
                               </td>
                               <td className="align-middle text-left">
-                                <p
-                                  className="status-div-red mb-0"
-                                  style={{ width: "max-content" }}
-                                >
-                                  {items.status}
-                                </p>
+                                {items.status == 1 ? (
+                                    <p
+                                      className="status-div-green mb-0"
+                                      style={{ width: "max-content" }}
+                                    >
+                                      Aktif
+                                    </p>
+                                  ) : (
+                                    <p
+                                      className="status-div-red mb-0"
+                                      style={{ width: "max-content" }}
+                                    >
+                                      Tidak Aktif
+                                    </p>
+                                  )}
                               </td>
                               <td className="align-middle text-left">
                                 <div className="d-flex align-items-center">

@@ -114,25 +114,6 @@ const Edit = ({ token }) => {
             formData.append("status", statusPro);
           }
         }
-        // try {
-        //   let { data } = await axios.post(
-        //     `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/${id}`,
-        //     formData,
-        //     {
-        //       headers: {
-        //         authorization: `Bearer ${token}`,
-        //       },
-        //     }
-        //   );
-
-        //   router.push({
-        //     pathname: `/partnership/master-kategori-kerjasama`,
-        //     query: { update: true },
-        //   });
-        // } catch (error) {
-        //   notify(error.response.data.message);
-        // }
-
         dispatch(updateMasterCategory(token, formData, router.query.id));
       }
     });
@@ -207,13 +188,12 @@ const Edit = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3
-              className="card-title font-weight-bolder text-dark"
-              style={{ fontSize: "24px" }}
+              className="card-title font-weight-bolder text-dark titles-1"
             >
               Ubah Master Kategori Kerjasama
             </h3>
           </div>
-          <div className="card-body">
+          <div className="card-body pt-0">
             <form>
               <div className="form-group">
                 <label htmlFor="staticEmail" className="col-form-label">

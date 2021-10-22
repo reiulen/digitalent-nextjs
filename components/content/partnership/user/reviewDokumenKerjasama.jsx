@@ -9,6 +9,8 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import IconCalender from "../../../assets/icon/Calender";
 import DatePicker from "react-datepicker";
+import BtnIcon from "../components/BtnIcon";
+import AlertBar from "../components/BarAlert";
 
 import { addDays } from "date-fns";
 
@@ -201,31 +203,7 @@ function ReviewDokumenKerjasama({ token }) {
   return (
     <PageWrapper>
       {revisiDone ? (
-        <div
-          className="alert alert-custom alert-light-success fade show mb-5"
-          role="alert"
-          style={{ backgroundColor: "#C9F7F5" }}
-        >
-          <div className="alert-icon">
-            <i className="flaticon2-checkmark" style={{ color: "#1BC5BD" }}></i>
-          </div>
-          <div className="alert-text" style={{ color: "#1BC5BD" }}>
-            Berhasil merevisi data
-          </div>
-          <div className="alert-close">
-            <button
-              type="button"
-              className="close"
-              data-dismiss="alert"
-              aria-label="Close"
-              onClick={() => onNewReset()}
-            >
-              <span aria-hidden="true">
-                <i className="ki ki-close"></i>
-              </span>
-            </button>
-          </div>
-        </div>
+        <AlertBar text="Berhasil merevisi data" className="alert-light-success" onClick={() => onNewReset()}/>
       ) : (
         ""
       )}
@@ -243,7 +221,7 @@ function ReviewDokumenKerjasama({ token }) {
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3 className="card-title fz-20 fw-500 text-dark">
+            <h3 className="card-title titles-1 fw-500 text-dark">
               Review Dokumen Kerjasama
             </h3>
           </div>
@@ -251,7 +229,6 @@ function ReviewDokumenKerjasama({ token }) {
             <div className="row mt-8 mb-10 position-relative">
               <div className="col-2 p-0">
                 <div className="progress-items">
-                  {/* <div className="line-progress"></div> */}
                   <div className="circle-progress active-circle">
                     <span className="title-progress">Submit Kerjasama</span>
                   </div>
@@ -328,7 +305,7 @@ function ReviewDokumenKerjasama({ token }) {
                 </div>
                 <div className="col-12 col-sm-6">
                   <div className="d-flex flex-column align-items-start justify-content-center h-100">
-                    <h1 className="fz-40 fw-700" style={{ color: "#6C6C6C" }}>
+                    <h1 className="titles-2 fw-700" style={{ color: "#6C6C6C" }}>
                       Dokumen Kerjasama Terkirim!
                     </h1>
                     <p className="mt-5 fz-16">

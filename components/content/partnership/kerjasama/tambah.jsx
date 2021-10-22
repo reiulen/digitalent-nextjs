@@ -56,34 +56,27 @@ const Tambah = ({ token }) => {
 
     if (institution_name === "") {
       setError({ ...error, institution_name: "Harus pilih nama lembaga" });
-      // notify("Harus pilih nama lembaga");
     } else if (date === "") {
       setError({ ...error, date: "Filed tanggal tidak boleh kosong" });
-      // notify("Filed tanggal tidak boleh kosong");
     } else if (title === "") {
       setError({ ...error, title: "Filed judul kerjasama tidak boleh kosong" });
-      // notify("Filed judul kerjasama tidak boleh kosong");
     } else if (cooperationC_id === "") {
       setError({
         ...error,
         cooperationC_id: "Filed kategori kerjasama tidak boleh kosong",
       });
-      // notify("Filed kategori kerjasama tidak boleh kosong");
     } else if (period === "") {
       setError({ ...error, period: "Filed periode tidak boleh kosong" });
-      // notify("Filed periode tidak boleh kosong");
     } else if (periodUnit === "") {
       setError({
         ...error,
         periodUnit: "Filed period unit tidak boleh kosong",
-      });
-      // notify("Filed period unit tidak boleh kosong");
+      });;
     } else if (AllCooperation === "") {
       setError({
         ...error,
         AllCooperation: "Filed kerjasama form tidak boleh kosong",
       });
-      // notify("Filed kerjasama form tidak boleh kosong");
     } else {
       Swal.fire({
         title: "Apakah anda yakin ?",
@@ -110,11 +103,6 @@ const Tambah = ({ token }) => {
           ];
 
           sessionStorage.setItem("dataBefore", JSON.stringify(allDataPart));
-
-          // router.push({
-          //   pathname: "/partnership/kerjasama/submit",
-          //   query:{formSubmit:true}
-          // });
           router.push({
             pathname: "/partnership/kerjasama/tambah",
             query:{formSubmit:true}
@@ -155,7 +143,6 @@ const Tambah = ({ token }) => {
   useEffect(() => {
     dispatch(fetchDataEmail(token));
     dispatch(fetchListSelectCooperation(token));
-    // get cooperation active select
     dispatch(fetchListCooperationSelect(token));
     dispatch(fetchListCooperationSelectById(token, cooperationC_id));
     dispatch(fetchListSelectMitra(token));
@@ -186,8 +173,7 @@ const Tambah = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3
-              className="card-title font-weight-bolder text-dark"
-              style={{ fontSize: "24px" }}
+              className="card-title font-weight-bolder text-dark titles-1"
             >
               Tambah Kerjasama
             </h3>
@@ -196,12 +182,6 @@ const Tambah = ({ token }) => {
             <form onSubmit={submit}>
               <div className="fv-row mb-10">
                 <label className="required fw-bold fs-6 mb-2">Tanggal</label>
-                {/* <input
-                  readOnly
-                  value={date}
-                  type="text"
-                  className="form-control mb-3 mb-lg-0"
-                /> */}
 
                 <input
                   disabled
@@ -209,7 +189,6 @@ const Tambah = ({ token }) => {
                   value={date}
                   name="text_input"
                   className="form-control mb-3 mb-lg-0 border-0"
-                  // placeholder="Masukan Alamat E-mail"
                   style={{backgroundColor:"transparent"}}
                 />
 
@@ -254,48 +233,13 @@ const Tambah = ({ token }) => {
                       value={allMK.email}
                       name="text_input"
                       className="form-control mb-3 mb-lg-0 border-0"
-                      // placeholder="Masukan Alamat E-mail"
                       style={{backgroundColor:"transparent"}}
                     />
                   </div>
                 </div>
               </div>
 
-              {/* <div className="row">
-                <div className="col-12 col-sm-6">
-                  <div className="fv-row mb-6">
-                    <label className="required fw-bold fs-6 mb-2">
-                      Periode Kerjasama
-                    </label>
-                    <input
-                      onFocus={() => setError({ ...error, period: "" })}
-                      value={period}
-                      type="text"
-                      name="text_input"
-                      className="form-control mb-3 mb-lg-0"
-                      placeholder="Masukkan Lama Kerjasama"
-                      onChange={(e) => onChangePeriod(e)}
-                    />
-                    {error.period ? (
-                      <p className="error-text">{error.period}</p>
-                    ) : (
-                      ""
-                    )}
-                  </div>
-                </div>
-                <div className="col-12 col-sm-6">
-                  <div className="fv-row mb-6">
-                    <label className="required fw-bold fs-6 mb-2"></label>
-                    <input
-                      disabled
-                      type="text"
-                      name="text_input"
-                      className="form-control mb-3 mb-lg-0 mt-2"
-                      placeholder="Tahun"
-                    />
-                  </div>
-                </div>
-              </div> */}
+            
 
               <div className="row mb-4">
                 <div className="col-12 col-sm-6">
