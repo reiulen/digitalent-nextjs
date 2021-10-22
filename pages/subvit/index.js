@@ -40,6 +40,17 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
       console.log(query);
+
+      const middleware = middlewareAuthAdminSession(session);
+      if (!middleware.status) {
+        return {
+          redirect: {
+            destination: middleware.redirect,
+            permanent: false,
+          },
+        };
+      }
+
       await store.dispatch(
         getDashboardSubvit(
           query.page_substansi,
@@ -48,18 +59,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
           session.user.user.data.token
         )
       );
-export async function getServerSideProps(context) {
-  const session = await getSession({ req: context.req });
-
-  const middleware = middlewareAuthAdminSession(session);
-  if (!middleware.status) {
-    return {
-      redirect: {
-        destination: middleware.redirect,
-        permanent: false,
-      },
-    };
-  }
 
       return {
         props: { session, title: "Dashboard - Subvit" },

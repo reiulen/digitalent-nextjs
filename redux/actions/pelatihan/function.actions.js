@@ -49,7 +49,6 @@ export const getDataPribadi = (token) => async (dispatch) => {
     };
 
     const { data } = await axios.get(link, config);
-    console.log(link);
 
     dispatch({
       type: GET_DATA_PRIBADI_SUCCESS,
