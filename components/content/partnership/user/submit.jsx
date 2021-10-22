@@ -203,7 +203,7 @@ const SubmitKerjasama = ({ token }) => {
 
         setPeriodValue(data.data.period);
       } catch (error) {
-        console.log("gagal get province", error);
+        notify(error.response.data.message);
       }
     }
     cekProgresStatus(router.query.id);

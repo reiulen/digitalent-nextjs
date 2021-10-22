@@ -113,7 +113,6 @@ const AlamatEdit = ({ funcViewEdit, token }) => {
     }
 
     if (success) {
-      console.log(success);
       toast.success("Berhasil Update Data");
       funcViewEdit(false);
       dispatch({ type: UPDATE_ALAMAT_RESET });
@@ -401,7 +400,6 @@ const AlamatEdit = ({ funcViewEdit, token }) => {
         kode_pos: kodePosDomisili,
       };
       dispatch(updateProfileAlamat(data, token));
-      console.log(data);
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);

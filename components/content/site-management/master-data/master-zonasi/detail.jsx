@@ -15,9 +15,7 @@ import axios from "axios";
 const Table = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
-
   const [formInput, setFormInput] = useState([]);
-  console.log("formInput",formInput)
 
   useEffect(() => {
     async function getDetailZonasi(id, token) {
@@ -30,14 +28,9 @@ const Table = ({ token }) => {
             },
           }
         );
-        // console.log("data", data);
-        // setNamaZonation(data.data.name);
-        // setStatus(data.data.status);
-
         setFormInput(data.data.data);
-        // setValueForm(data.data.data);
       } catch (error) {
-        console.log("error, get", error);
+        notify(error.response.data.message);
       }
     }
 

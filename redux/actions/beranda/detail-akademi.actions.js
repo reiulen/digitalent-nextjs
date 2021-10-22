@@ -50,8 +50,6 @@ export const getAllPelatihanByAkademi =
     try {
       dispatch({ type: PELATIHAN_AKADEMI_REQUEST });
 
-      // console.log (`Artikel: ${token}`)
-
       let link =
         process.env.END_POINT_API_PELATIHAN + `api/v1/akademi/kategori-akademi?akademi_id=${id}`;
 

@@ -70,10 +70,8 @@ const UploadEvidence = () => {
         list[index].imageFile = e.target.files[0];
         list[index].imagePreview = URL.createObjectURL(e.target.files[0]);
         list[index].imageName = e.target.files[0].name;
-        console.log(list)
         setImage(list);
       }
-      console.log(image);
       // const reader = new FileReader();
       // reader.onload = () => {
       //   if (reader.readyState === 2) {
@@ -139,7 +137,6 @@ const UploadEvidence = () => {
         linkVideo,
         teacher,
       };
-      console.log(data);
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -248,8 +245,7 @@ const UploadEvidence = () => {
                       }}
                       onChange={(event, editor) => {
                         const data = editor.getData();
-                        setDescription(data);
-                        // console.log({ event, editor, data });
+                        setDescription(data); 
                       }}
                       onBlur={() =>
                         simpleValidator.current.showMessageFor("deskripsi")

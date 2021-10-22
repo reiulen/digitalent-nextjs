@@ -173,7 +173,7 @@ const ReviewKerjasama = ({ token }) => {
         setPeriod(data.data.period);
         setPeriodUnit(data.data.period_unit);
       } catch (error) {
-        console.log("action getSIngle gagal", error);
+        notify(error.response.data.message);
       }
     }
     setDataSingle(router.query.id, token);
@@ -197,7 +197,7 @@ const ReviewKerjasama = ({ token }) => {
         setNoteView(data.data.note);
         setMitra(data.data.mitra);
       } catch (error) {
-        console.log("action getSIngle gagal", error);
+        notify(error.response.data.message);
       }
     }
 

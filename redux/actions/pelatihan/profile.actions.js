@@ -86,7 +86,6 @@ export const getProfileAlamat = (token) => async (dispatch) => {
       payload: data,
     });
   } catch (error) {
-    console.log(error);
     dispatch({
       type: GET_ALAMAT_FAIL,
       payload: error.response.data.message,

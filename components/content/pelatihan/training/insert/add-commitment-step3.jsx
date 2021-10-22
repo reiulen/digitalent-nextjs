@@ -111,7 +111,6 @@ const AddCommitmentStep3 = ({ propsStep, token }) => {
       data.pelatihan_selesai = moment(data.pelatihan_selesai).format(
         "YYYY-MM-DD"
       );
-      console.log(data);
       dispatch(newTrainingStep1(data, token));
       // router.push("/pelatihan/pelatihan");
     } else {
@@ -192,7 +191,6 @@ const AddCommitmentStep3 = ({ propsStep, token }) => {
                       onChange={(event, editor) => {
                         const data = editor.getData();
                         setDescription(data);
-                        // console.log({ event, editor, data });
                       }}
                       config={{
                         placeholder: "Silahkan Masukan Deskripsi Detail",
