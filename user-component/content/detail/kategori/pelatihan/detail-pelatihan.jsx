@@ -20,9 +20,6 @@ const DetailPelatihan = () => {
         pelatihan,
     } = useSelector((state) => state.detailPelatihan);
 
-    const [ pelatihanId, setPelatihanId ] = useState (pelatihan.id)
-    const [ pelatihanName, setPelatihanName ] = useState (pelatihan.name)
-
     return (
         <Layout title="Detail Pelatihan">
             {
@@ -35,7 +32,7 @@ const DetailPelatihan = () => {
             {
                 pelatihan ?
                     <div className="row mt-3">
-                        <div className="col-9">
+                        <div className="col-12 col-md-9">
                             <div className="bg-white rounded my-5">
                                 <div className="ml-2 mb-3">
                                     <h1 className="font-weight-bolder">
@@ -119,13 +116,16 @@ const DetailPelatihan = () => {
                             
                         </div>
 
-                        <div className="col-3">
+                        <div className="col-12 col-md-3">
 
                             <div className="bg-white border rounded">
                                 <div className="row mt-5 p-3">
                                     <h4 className="font-weight-bolder ml-3">
                                         Ikuti Pelatihan
                                     </h4>
+                                    <div className="ml-3 mb-5">
+                                        {moment(pelatihan.pelatihan_mulai).format("DD MMMM YYYY")} - {moment(pelatihan.pelatihan_selesai).format("DD MMMM YYYY")} 
+                                    </div>
                                     <button className="btn btn-info rounded-pill col-11 mb-3 mx-3">
                                         Daftar Pelatihan
                                     </button>

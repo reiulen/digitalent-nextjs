@@ -347,6 +347,12 @@ import {
   detailAkademiReducer,
   allPelatihanReducer,
 } from "../reducers/beranda/detail-akademi.reducers";
+
+// ========== detail pelatihan ========
+import {
+  detailPelatihanReducer,
+  checkRegisteredPelatihanReducer
+} from "../reducers/beranda/detail-pelatihan.reducers"
 //END BERANDA
 
 const reducer = combineReducers({
