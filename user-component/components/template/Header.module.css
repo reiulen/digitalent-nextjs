@@ -8,7 +8,10 @@
 }
 
 .body {
-  padding: 40px 10px 45px 10px;
+  padding: 40px 0px 45px 0px;
+}
+.testBody {
+  padding: 40px 0px 50px 0px;
 }
 .cardBody {
   background-color: transparent;
@@ -16,6 +19,16 @@
   box-sizing: border-box;
   border-radius: 36px;
   padding: 10px 30px;
+}
+.cardBodyTest {
+  background-color: transparent;
+  border: 1px solid #d7e1ea;
+  box-sizing: border-box;
+  border-radius: 36px;
+  padding: 8px 25px;
+  width: 30%;
+  float: right;
+  margin: 20px 0px;
 }
 .textCardLeft {
   font-family: Poppins;

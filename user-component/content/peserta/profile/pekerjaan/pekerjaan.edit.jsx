@@ -1,41 +1,87 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Form, Button, Col, Row } from "react-bootstrap";
 import Select from "react-select";
 import Swal from "sweetalert2";
 import SimpleReactValidator from "simple-react-validator";
 import style from "../style.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  updateProfilePekerjaan,
+  clearErrors,
+} from "../../../../../redux/actions/pelatihan/profile.actions";
+import { UPDATE_PEKERJAAN_RESET } from "../../../../../redux/types/pelatihan/profile.type";
 
-const PekerjaanEdit = ({ funcViewEdit }) => {
+const PekerjaanEdit = ({ funcViewEdit, token }) => {
+  const dispatch = useDispatch();
+
+  const { error: errorPekerjaan, pekerjaan } = useSelector(
+    (state) => state.dataPekerjaan
+  );
+  const { error: errorStatusPekerjaan, data: dataStatusPekerjaan } =
+    useSelector((state) => state.drowpdownStatusPekerjaan);
+  const {
+    error: errorUpdateData,
+    loading,
+    success,
+  } = useSelector((state) => state.updatePekerjaan);
+
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
 
-  const [statusPekerjaan, setStatusPekerjaan] = useState({
-    value: "0",
-    label: "Bisa",
-  });
-  const [pekerjaan, setPekerjaan] = useState("Ojol");
-  const [perusahaan, setPerusahaan] = useState("teknologi");
-  const [penghasilan, setPenghasilan] = useState("121938918933");
-  const [sekolah, setSekolah] = useState("0979898989");
-  const [tahunMasuk, setTahunMasuk] = useState("");
+  const [statusPekerjaan, setStatusPekerjaan] = useState(null);
+  const [pekerjaanNama, setPekerjaan] = useState(
+    (pekerjaan && pekerjaan.pekerjaan) || ""
+  );
+  const [perusahaan, setPerusahaan] = useState(
+    (pekerjaan && pekerjaan.perusahaan) || ""
+  );
+  const [penghasilan, setPenghasilan] = useState(
+    (pekerjaan && pekerjaan.penghasilan) || ""
+  );
+  const [sekolah, setSekolah] = useState(
+    (pekerjaan && pekerjaan.sekolah) || ""
+  );
+  const [tahunMasuk, setTahunMasuk] = useState(
+    (pekerjaan && pekerjaan.tahun_masuk) || ""
+  );
 
-  const optionsStatusPekerjaan = [
-    { value: "0", label: "Bisa" },
-    { value: "1", label: "Tidak Bisa" },
-  ];
+  const optionsStatusPekerjaan = [];
+  if (dataStatusPekerjaan) {
+    for (let index = 0; index < dataStatusPekerjaan.data.length; index++) {
+      let val = {
+        value: dataStatusPekerjaan.data[index].id,
+        label: dataStatusPekerjaan.data[index].label,
+      };
+      optionsStatusPekerjaan.push(val);
+    }
+  }
+
+  useEffect(() => {
+    if (errorUpdateData) {
+      toast.error(errorUpdateData);
+      dispatch(clearErrors());
+    }
+
+    if (success) {
+      console.log(success);
+      toast.success("Berhasil Update Data");
+      funcViewEdit(false);
+      dispatch({ type: UPDATE_PEKERJAAN_RESET });
+    }
+  }, [errorUpdateData, success, dispatch]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
       const data = {
-        statusPekerjaan: statusPekerjaan.valuie,
-        pekerjaan,
+        status_pekerjaan: statusPekerjaan.label,
+        pekerjaan: pekerjaanNama,
         perusahaan,
         penghasilan,
         sekolah,
-        tahunMasuk,
+        tahun_masuk: parseInt(tahunMasuk),
       };
-      console.log(data);
+      dispatch(updateProfilePekerjaan(data, token));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -81,7 +127,7 @@ const PekerjaanEdit = ({ funcViewEdit }) => {
                 <Form.Label>Pekerjaan</Form.Label>
                 <Form.Control
                   placeholder="Silahkan Masukan Pekerjaan"
-                  value={pekerjaan}
+                  value={pekerjaanNama}
                   onChange={(e) => setPekerjaan(e.target.value)}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("pekerjaan")
@@ -89,7 +135,7 @@ const PekerjaanEdit = ({ funcViewEdit }) => {
                 />
                 {simpleValidator.current.message(
                   "pekerjaan",
-                  pekerjaan,
+                  pekerjaanNama,
                   "required",
                   {
                     className: "text-danger",
@@ -133,7 +179,7 @@ const PekerjaanEdit = ({ funcViewEdit }) => {
             {simpleValidator.current.message(
               "penghasilan",
               penghasilan,
-              "required",
+              "required|integer",
               {
                 className: "text-danger",
               }
@@ -178,7 +224,7 @@ const PekerjaanEdit = ({ funcViewEdit }) => {
                 {simpleValidator.current.message(
                   "tahun masuk",
                   tahunMasuk,
-                  "required",
+                  "required|integer",
                   {
                     className: "text-danger",
                   }

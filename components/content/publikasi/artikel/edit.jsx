@@ -49,6 +49,7 @@ const EditArtikel = ({ token }) => {
     error: allError,
     kategori,
   } = useSelector(state => state.allKategori);
+  const { setting } = useSelector(state => state.allSettingPublikasi)
   // const session = getSession({ req });
 
   // if (!session) {
@@ -123,8 +124,8 @@ const EditArtikel = ({ token }) => {
   );
   const [gambarName, setGambarName] = useState(artikel.gambar);
   const [kategori_id, setKategoriId] = useState(artikel.kategori_id); //belum
-  const [users_id, setUserId] = useState(3);
-  // const [users_id, setUserId] = useState(artikel.users_id);
+  // const [users_id, setUserId] = useState(87);
+  const [users_id, setUserId] = useState(artikel.users_id);
   const [tag, setTag] = useState(artikel.tag);
   // const [publish, setPublish] = useState(artikel.publish === 1 ? true : false);
   const [publish, setPublish] = useState(artikel.publish);
@@ -144,9 +145,9 @@ const EditArtikel = ({ token }) => {
     // console.log ("check")
 
     if (type.includes(e.target.files[0].type)) {
-      if (e.target.files[0].size > 5000000) {
+      if (e.target.files[0].size > parseInt(setting[0].max_size) + '000000') {
         e.target.value = null;
-        Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
+        Swal.fire("Oops !", "Data Image Melebihi Ketentuan", "error");
       } else {
         const reader = new FileReader();
         reader.onload = () => {
@@ -196,34 +197,19 @@ const EditArtikel = ({ token }) => {
     }
   };
 
-  const handleTag = (data) => {
-    for (let i = 0; i < data.length; i++) {
-      for (let j = 0; j < data[i].length; j++) {
-        if (data[i][j] === " ") {
-          setDisableTag(true)
-        } else {
-          setDisableTag(false)
-        }
-      }
-    }
-    // console.log("Data Tag :", data)
-    setTag(data)
+  function hasWhiteSpace(s) {
+    return s.indexOf(' ') >= 0;
   }
 
-  const keyPressTag = (value) => {
-
-    if (value === '' || value === null) {
-      value.replace(/\s/g, '')
-    } else {
-      setTag(value)
+  const handleTag = (data) => {
+    // console.log(data);
+    for (let i = 0; i < data.length; i++) {
+      if (hasWhiteSpace(data[i])) {
+        data.splice([i], 1);
+      }
     }
-    // if(event.key === 13){
-    //   console.log('enter press here! ')
-    //   setDisableTag(true)
-    // }else{
-    //   setDisableTag(false)
-    // }
-    // setTag(event)
+    setTag(data);
+    // setTag(data)
   }
 
   const onSubmit = e => {
@@ -580,9 +566,6 @@ const EditArtikel = ({ token }) => {
     <>
       <PageWrapper>
         {/* {console.log(artikel)} */}
-        {/* {
-          console.log (kategori)
-        } */}
 
         {error ? (
           <div

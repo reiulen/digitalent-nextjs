@@ -9,6 +9,7 @@ import { wrapper } from "../../../redux/store";
 
 import LoadingPage from "../../../components/LoadingPage";
 import { getAllKategori } from "../../../redux/actions/publikasi/kategori.actions";
+import { getSettingPublikasi } from "../../../redux/actions/publikasi/setting.actions";
 
 const EditImagetron = dynamic(
   () => import("../../../components/content/publikasi/imagetron/edit"),
@@ -47,6 +48,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   }
   await store.dispatch(getAllKategori(session.user.user.data.token))
   await store.dispatch(getDetailImagetron(params.id, session.user.user.data.token));
+  await store.dispatch(getSettingPublikasi(session.user.user.data.token));
   return {
     props: { session, title: "Ubah Imagetron - Publikasi" },
   };

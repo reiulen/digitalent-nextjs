@@ -51,7 +51,7 @@ const DetailAkademi = () => {
         if ( pelatihan.list.length !== 0){
             for (let i = 0; i < pelatihan.list.length; i++){
                 arr.push (false)
-                console.log ("check1")
+                // console.log ("check1")
             }
 
             setShow (arr)

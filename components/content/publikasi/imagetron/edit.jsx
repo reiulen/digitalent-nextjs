@@ -42,6 +42,7 @@ const EditImagetron = ({ token }) => {
         error: allError,
         kategori,
     } = useSelector((state) => state.allKategori);
+    const { setting } = useSelector(state => state.allSettingPublikasi)
 
     useEffect(() => {
 
@@ -81,16 +82,17 @@ const EditImagetron = ({ token }) => {
     const [gambarName, setGambarName] = useState(imagetron.gambar)
     const [url_link, setUrlRedirect] = useState(imagetron.url_link)
     const [publish, setPublish] = useState(imagetron.publish)
-    const [users_id, setUserId] = useState(3)
+    const [users_id, setUserId] = useState(imagetron.users_id)
+    // const [users_id, setUserId] = useState(87)
     const [_method, setMethod] = useState("put");
     const [publishDate, setPublishDate] = useState(imagetron.tanggal_publish ? new Date(imagetron.tanggal_publish) : null);
     const [disablePublishDate, setDisablePublishDate] = useState(imagetron.publish === 0 ? true : false)
 
     const onChangeGambar = (e) => {
         if (e.target.name === 'gambar') {
-            if (e.target.files[0].size > 5000000) {
+            if (e.target.files[0].size > parseInt(setting[0].max_size) + '000000') {
                 e.target.value = null;
-                Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
+                Swal.fire("Oops !", "Data Image Melebihi Ketentuan", "error");
             } else {
                 const reader = new FileReader()
                 reader.onload = () => {
@@ -311,12 +313,12 @@ const EditImagetron = ({ token }) => {
 
     return (
         <PageWrapper>
-            {
+            {/* {
                 console.log(imagetron)
             }
             {
-                console.log(kategori)
-            }
+                console.log(setting)
+            } */}
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
                     <div className="alert-icon"><i className="flaticon-warning"></i></div>

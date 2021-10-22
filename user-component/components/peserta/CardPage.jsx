@@ -12,13 +12,13 @@ const CardPage = ({ backgroundImage, background, color, link, text, desc }) => {
     return newDate;
   }
 
-  const handlePage = () => {
-    router.push("/peserta/subvit/subtansi/1");
-    const date = new Date(); // Fri Feb 26 2021 20:08:30
-    const target = addHours(date, 1); // Fri Feb 26 2021 21:08:30
-    const count = (target - date) / 1000;
-    sessionStorage.setItem("targetDate", count);
-  };
+  // const handlePage = () => {
+  //   router.push("/peserta/subvit/subtansi/1");
+  //   const date = new Date(); // Fri Feb 26 2021 20:08:30
+  //   const target = addHours(date, 1); // Fri Feb 26 2021 21:08:30
+  //   const count = (target - date) / 1000;
+  //   sessionStorage.setItem("targetDate", count);
+  // };
   return (
     <>
       <Col md={6} className="mb-4 px-2">
@@ -44,11 +44,7 @@ const CardPage = ({ backgroundImage, background, color, link, text, desc }) => {
             </p>
 
             <Link href={`${link}`} passHref>
-              <Button
-                variant={background}
-                className="font-weight-bolder"
-                onClick={text === "Lakukan Test Substansi" && handlePage}
-              >
+              <Button variant={background} className="font-weight-bolder">
                 {text}
               </Button>
             </Link>

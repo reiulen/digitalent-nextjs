@@ -36,6 +36,7 @@ const TambahImagetron = ({ token }) => {
     error: allError,
     kategori,
   } = useSelector((state) => state.allKategori);
+  const { setting } = useSelector(state => state.allSettingPublikasi)
   const [, forceUpdate] = useState();
 
   useEffect(() => {
@@ -71,7 +72,7 @@ const TambahImagetron = ({ token }) => {
   const [gambarName, setGambarName] = useState(null)
   const [url_link, setUrlRedirect] = useState('')
   const [publish, setPublish] = useState(0)
-  const [users_id, setUserId] = useState(3)
+  const [users_id, setUserId] = useState(87)
   const [publishDate, setPublishDate] = useState(null);
   const [disablePublishDate, setDisablePublishDate] = useState(true)
 
@@ -82,9 +83,9 @@ const TambahImagetron = ({ token }) => {
     // console.log ("check")
 
     if (type.includes(e.target.files[0].type)) {
-      if (e.target.files[0].size > 5000000) {
+      if (e.target.files[0].size > parseInt(setting[0].max_size) + '000000') {
         e.target.value = null;
-        Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
+        Swal.fire("Oops !", "Data Image Melebihi Ketentuan", "error");
       } else {
         const reader = new FileReader();
         reader.onload = () => {
@@ -176,7 +177,7 @@ const TambahImagetron = ({ token }) => {
           .then((result) => {
             if (result.isConfirmed) {
               dispatch(newImagetron(data, token))
-              console.log("Unpublish :", data)
+              // console.log("Unpublish :", data)
             }
           });
 
@@ -204,7 +205,7 @@ const TambahImagetron = ({ token }) => {
           .then((result) => {
             if (result.isConfirmed) {
               dispatch(newImagetron(data, token))
-              console.log("Publish :", data)
+              // console.log("Publish :", data)
             }
           });
       }
@@ -228,6 +229,7 @@ const TambahImagetron = ({ token }) => {
 
   return (
     <PageWrapper>
+      {/* {console.log(setting)} */}
       {error ?
         <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
           <div className="alert-icon"><i className="flaticon-warning"></i></div>

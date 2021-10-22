@@ -9,6 +9,8 @@ import { TagsInput } from "react-tag-input-component";
 import Swal from "sweetalert2";
 import SimpleReactValidator from "simple-react-validator";
 import DatePicker from 'react-datepicker'
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import { updateVideo, clearErrors } from '../../../../redux/actions/publikasi/video.actions'
 import { NEW_ARTIKEL_RESET, UPDATE_VIDEO_RESET } from '../../../../redux/types/publikasi/video.type'
@@ -34,6 +36,7 @@ const EditVideo = ({ token }) => {
     const { video } = useSelector(state => state.detailVideo)
     const { error, success, loading } = useSelector(state => state.updatedVideo)
     const { loading: allLoading, error: allError, kategori } = useSelector((state) => state.allKategori);
+    const { setting } = useSelector(state => state.allSettingPublikasi)
 
     useEffect(() => {
 
@@ -70,6 +73,7 @@ const EditVideo = ({ token }) => {
     const [gambarName, setGambarName] = useState(video.gambar)
     // const [kategori_id, setKategoriId] = useState(video.kategori) 
     const [kategori_id, setKategoriId] = useState(video.kategori_id)
+    // const [users_id, setUserId] = useState(87)
     const [users_id, setUserId] = useState(video.users_id)
     const [tag, setTag] = useState(video.tag)
     const [publish, setPublish] = useState(video.publish)
@@ -79,17 +83,19 @@ const EditVideo = ({ token }) => {
     const [disablePublishDate, setDisablePublishDate] = useState(video.publish === 0 ? true : false)
     const [disableTag, setDisableTag] = useState(false)
 
+    function hasWhiteSpace(s) {
+        return s.indexOf(' ') >= 0;
+    }
+
     const handleTag = (data) => {
+        // console.log(data);
         for (let i = 0; i < data.length; i++) {
-            for (let j = 0; j < data[i].length; j++) {
-                if (data[i][j] === " ") {
-                    setDisableTag(true)
-                } else {
-                    setDisableTag(false)
-                }
+            if (hasWhiteSpace(data[i])) {
+                data.splice([i], 1);
             }
         }
-        setTag(data)
+        setTag(data);
+        // setTag(data)
     }
 
     const onChangeGambar = (e) => {
@@ -99,9 +105,9 @@ const EditVideo = ({ token }) => {
         // console.log ("check")
 
         if (type.includes(e.target.files[0].type)) {
-            if (e.target.files[0].size > 5000000) {
+            if (e.target.files[0].size > parseInt(setting[0].max_size) + '000000') {
                 e.target.value = null;
-                Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
+                Swal.fire("Oops !", "Data Image Melebihi Ketentuan", "error");
             } else {
                 const reader = new FileReader();
                 reader.onload = () => {
@@ -215,7 +221,7 @@ const EditVideo = ({ token }) => {
                                 // }
 
                                 dispatch(updateVideo(data, token));
-                                console.log(data)
+                                // console.log(data)
                             }
                         });
                 } else {
@@ -256,7 +262,7 @@ const EditVideo = ({ token }) => {
                                 // }
 
                                 dispatch(updateVideo(data, token));
-                                console.log(data)
+                                // console.log(data)
                             }
                         });
                 }
@@ -302,7 +308,7 @@ const EditVideo = ({ token }) => {
                                 // }
 
                                 dispatch(updateVideo(data, token));
-                                console.log(data)
+                                // console.log(data)
                             }
                         });
 
@@ -343,7 +349,7 @@ const EditVideo = ({ token }) => {
                                 // }
 
                                 dispatch(updateVideo(data, token));
-                                console.log(data)
+                                // console.log(data)
                             }
                         });
                 }
@@ -405,57 +411,11 @@ const EditVideo = ({ token }) => {
             type: UPDATE_VIDEO_RESET
         })
     }
-
-    // const onSetPublish = (e) => {
-    //     Swal.fire({
-    //         title: 'Ubah status publikasi?',
-    //         text: "Status publikasi akan berubah",
-    //         icon: 'warning',
-    //         showCancelButton: true,
-    //         confirmButtonColor: "#3085d6",
-    //         cancelButtonColor: "#d33",
-    //         confirmButtonText: "Ya !",
-    //         cancelButtonText: "Batal",
-    //       })
-
-    //       .then((result) => {
-    //         if (result.isConfirmed) {
-    //           Swal.fire(
-    //             'Berhasil',
-    //             'Status publikasi telah diubah',
-    //             'success'
-    //           )
-
-    //         //   console.log (e)
-    //           setPublish(e)
-
-    //         } else {
-    //             Swal.fire(
-    //                 'Batal',
-    //                 'Status publikasi telah batal diubah',
-    //                 'info'
-    //               )
-
-    //             // console.log (!e)
-    //             setPublish(!e)
-    //         }
-    //       })
-
-    //     // Swal.fire (
-    //     //     'Berhasil',
-    //     //     'Status publikasi telah diubah',
-    //     //     'success'
-    //     // )
-
-    //     // setPublish(e)
-    // }
-
+    
     return (
         <>
             <PageWrapper>
-                {/* {
-                    console.log("Cek Data Awal :", video)
-                } */}
+                {/* {console.log(video)} */}
                 {error ?
                     <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
                         <div className="alert-icon"><i className="flaticon-warning"></i></div>

@@ -9,6 +9,7 @@ import SimpleReactValidator from "simple-react-validator";
 import Swal from "sweetalert2";
 import { TagsInput } from "react-tag-input-component";
 import DatePicker from 'react-datepicker'
+import Select from 'react-select'
 
 // import Editor from 'ckeditor5-custom-build/build/ckeditor';
 // import { CKEditor } from '@ckeditor/ckeditor5-react'
@@ -65,6 +66,7 @@ const TambahArtikel = ({ token }) => {
   // const forceUpdate = React.useReducer(() => ({}))[1]
 
   const { loading, error, success } = useSelector((state) => state.newArtikel);
+  const { setting } = useSelector(state => state.allSettingPublikasi)
   const {
     loading: allLoading,
     error: allError,
@@ -188,7 +190,7 @@ const TambahArtikel = ({ token }) => {
   );
   const [gambarName, setGambarName] = useState(null)
   const [kategori_id, setKategoriId] = useState("");
-  const [users_id, setUserId] = useState(3);
+  const [users_id, setUserId] = useState(87);
   const [tag, setTag] = useState([]);
   const [publish, setPublish] = useState(0);
   const [publishDate, setPublishDate] = useState(null);
@@ -203,9 +205,9 @@ const TambahArtikel = ({ token }) => {
     // console.log ("check")
 
     if (type.includes(e.target.files[0].type)) {
-      if (e.target.files[0].size > 5000000) {
+      if (e.target.files[0].size > parseInt(setting[0].max_size) + '000000') {
         e.target.value = null;
-        Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
+        Swal.fire("Oops !", "Data Image Melebihi Ketentuan", "error");
       } else {
         const reader = new FileReader();
         reader.onload = () => {
@@ -256,19 +258,19 @@ const TambahArtikel = ({ token }) => {
     }
   }
 
+  function hasWhiteSpace(s) {
+    return s.indexOf(' ') >= 0;
+  }
+
   const handleTag = (data) => {
+    // console.log(data);
     for (let i = 0; i < data.length; i++) {
-      for (let j = 0; j < data[i].length; j++) {
-        if (data[i][j] === " ") {
-          setDisableTag(true)
-        } else {
-          setDisableTag(false)
-        }
+      if (hasWhiteSpace(data[i])) {
+        data.splice([i], 1);
       }
     }
-
-    setTag(data)
-
+    setTag(data);
+    // setTag(data)
   }
 
   const onSubmit = (e) => {
@@ -386,9 +388,9 @@ const TambahArtikel = ({ token }) => {
 
   return (
     <>
-      {
-        // console.log (kategori)
-      }
+      {/* {
+        console.log (setting)
+      } */}
       <PageWrapper>
         {error ? (
           <div
@@ -873,7 +875,7 @@ const TambahArtikel = ({ token }) => {
                       onChange={(data) => handleTag(data)}
                       // onChange={setTag}
                       name="fruits"
-                      placeHolder="Isi Tag disini dan tekan `Enter` atau `Tab`."
+                      placeHolder="Isi Tag disini"
                       // onBlur={() => simpleValidator.current.showMessageFor('tag')}
                       seprators={["Enter", "Tab"]}
                     />

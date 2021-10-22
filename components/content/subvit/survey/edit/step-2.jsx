@@ -12,6 +12,7 @@ import DatePicker from "react-datepicker";
 import SimpleReactValidator from "simple-react-validator";
 import Swal from "sweetalert2";
 import moment from "moment";
+import "moment/locale/id";
 
 import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInputPublish from "/components/StepInputPublish";
@@ -47,8 +48,8 @@ const StepTwo = ({ token }) => {
     }
   }, [dispatch, error, success, router]);
 
-  const [startDate, setStartDate] = useState(new Date(survey.start_at));
-  const [endDate, setEndDate] = useState(new Date(survey.end_at));
+  const [startDate, setStartDate] = useState();
+  const [endDate, setEndDate] = useState();
   const [duration, setDuration] = useState(survey.duration);
   const [jumlah_soal, setJumlahSoal] = useState(survey.questions_to_share);
   const [status, setStatus] = useState(survey.status);
@@ -201,6 +202,7 @@ const StepTwo = ({ token }) => {
                     dateFormat="dd/MM/yyyy"
                     autoComplete="off"
                     value={startDate ? startDate : new Date(Date.now())}
+                    placeholderText={moment().format("LL")}
                   />
 
                   {simpleValidator.current.message(
@@ -232,7 +234,8 @@ const StepTwo = ({ token }) => {
                     minDate={startDate}
                     dateFormat="dd/MM/yyyy"
                     autoComplete="off"
-                    value={endDate ? endDate : new Date(Date.now())}
+                    value={endDate}
+                    disabled={!startDate}
                   />
                   {simpleValidator.current.message(
                     "tanggal sampai",

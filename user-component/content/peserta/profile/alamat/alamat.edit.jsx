@@ -1,39 +1,124 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
 import Select from "react-select";
 import Swal from "sweetalert2";
 import SimpleReactValidator from "simple-react-validator";
 import style from "../style.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import {
+  dropdownKabupaten,
+  dropdownKabupatenDomisili,
+} from "../../../../../redux/actions/pelatihan/function.actions";
+import {
+  updateProfileAlamat,
+  clearErrors,
+} from "../../../../../redux/actions/pelatihan/profile.actions";
+import { UPDATE_ALAMAT_RESET } from "../../../../../redux/types/pelatihan/profile.type";
 
-const AlamatEdit = ({ funcViewEdit }) => {
+const AlamatEdit = ({ funcViewEdit, token }) => {
+  const dispatch = useDispatch();
+
+  const { error: errorAlamat, alamat } = useSelector(
+    (state) => state.dataAlamat
+  );
+  const { error: errorProvinsi, data: dataProvinsi } = useSelector(
+    (state) => state.drowpdownProvinsi
+  );
+  const { error: errorKabupaten, data: dataKabupaten } = useSelector(
+    (state) => state.drowpdownKabupaten
+  );
+  const { error: errorKabupatenDomisili, data: dataKabupatenDomisili } =
+    useSelector((state) => state.drowpdownKabupatenDomisili);
+
+  const {
+    error: errorUpdateData,
+    loading,
+    success,
+  } = useSelector((state) => state.updateAlamat);
+
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
 
   const [sesuai, setSesuai] = useState(false);
 
-  const [alamatKtp, setAlamatKtp] = useState("Lala depok");
-  const [provinsiKtp, setProvinsiKtp] = useState({
-    value: "0",
-    label: "Jawa Barat",
-  });
-  const [kotaKtp, setKotaKtp] = useState({ value: "0", label: "Bandung" });
-  const [kecamatanKtp, setKecamatanKtp] = useState("Ciamis");
-  const [kodePosKtp, setKodePosKtp] = useState("78978");
+  const [alamatKtp, setAlamatKtp] = useState(
+    (alamat && alamat.address_ktp) || ""
+  );
+  const [provinsiKtp, setProvinsiKtp] = useState(
+    (alamat && alamat.provinsi_ktp) || null
+  );
+  const [kotaKtp, setKotaKtp] = useState((alamat && alamat.kota_ktp) || null);
+  const [kecamatanKtp, setKecamatanKtp] = useState(
+    (alamat && alamat.kecamatan_ktp) || ""
+  );
+  const [kodePosKtp, setKodePosKtp] = useState(
+    (alamat && alamat.kode_pos_ktp) || ""
+  );
 
-  const [alamatDomisili, setAlamatDomisili] = useState();
-  const [provinsiDomisili, setProvinsiDomisili] = useState(null);
-  const [kotaDomisili, setKotaDomisili] = useState(null);
-  const [kecamatanDomisili, setKecamatanDomisili] = useState();
-  const [kodePosDomisili, setKodePosDomisili] = useState();
+  const [alamatDomisili, setAlamatDomisili] = useState(
+    (alamat && alamat.address) || ""
+  );
+  const [provinsiDomisili, setProvinsiDomisili] = useState(
+    (alamat && alamat.provinsi) || null
+  );
+  const [kotaDomisili, setKotaDomisili] = useState(
+    (alamat && alamat.kota) || null
+  );
+  const [kecamatanDomisili, setKecamatanDomisili] = useState(
+    (alamat && alamat.kecamatan) || ""
+  );
+  const [kodePosDomisili, setKodePosDomisili] = useState(
+    (alamat && alamat.kode_pos) || ""
+  );
 
-  const optionsProvinsi = [
-    { value: "0", label: "Jawa Barat" },
-    { value: "1", label: "Jakarta" },
-  ];
-  const optionsKota = [
-    { value: "0", label: "Bandung" },
-    { value: "1", label: "Jakarta" },
-  ];
+  const optionsProvinsi = [];
+  if (dataProvinsi) {
+    for (let index = 0; index < dataProvinsi.data.length; index++) {
+      let val = {
+        value: dataProvinsi.data[index].id,
+        label: dataProvinsi.data[index].label,
+      };
+      optionsProvinsi.push(val);
+    }
+  }
+
+  let selectRefKabupatenDomisili = null;
+  let selectRefKabupaten = null;
+  const optionsKabupaten = [];
+  if (dataKabupaten.length !== 0) {
+    for (let index = 0; index < dataKabupaten.data.length; index++) {
+      let val = {
+        value: dataKabupaten.data[index].id,
+        label: dataKabupaten.data[index].value,
+      };
+      optionsKabupaten.push(val);
+    }
+  }
+  const optionsKabupatenDomisili = [];
+  if (dataKabupatenDomisili.length !== 0) {
+    for (let index = 0; index < dataKabupatenDomisili.data.length; index++) {
+      let val = {
+        value: dataKabupatenDomisili.data[index].id,
+        label: dataKabupatenDomisili.data[index].value,
+      };
+      optionsKabupatenDomisili.push(val);
+    }
+  }
+
+  useEffect(() => {
+    if (errorUpdateData) {
+      toast.error(errorUpdateData);
+      dispatch(clearErrors());
+    }
+
+    if (success) {
+      console.log(success);
+      toast.success("Berhasil Update Data");
+      funcViewEdit(false);
+      dispatch({ type: UPDATE_ALAMAT_RESET });
+    }
+  }, [errorUpdateData, success, dispatch]);
 
   const handleSesuaiKtp = (val) => {
     setSesuai(val);
@@ -89,9 +174,11 @@ const AlamatEdit = ({ funcViewEdit }) => {
                 placeholder="Silahkan Pilih Provinsi"
                 options={optionsProvinsi}
                 defaultValue={provinsiDomisili}
-                onChange={(e) =>
-                  setProvinsiDomisili({ label: e.label, value: e.value })
-                }
+                onChange={(e) => {
+                  selectRefKabupatenDomisili.select.clearValue();
+                  setProvinsiDomisili({ label: e?.label, value: e?.value });
+                  dispatch(dropdownKabupatenDomisili(token, e.value));
+                }}
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("provinsi domisili")
                 }
@@ -109,11 +196,12 @@ const AlamatEdit = ({ funcViewEdit }) => {
               <Form.Label>Kota / Kabupaten</Form.Label>
               <Select
                 key={1}
+                ref={(ref) => (selectRefKabupatenDomisili = ref)}
                 placeholder="Silahkan Pilih Kota / Kabupaten"
-                options={optionsKota}
+                options={optionsKabupatenDomisili}
                 defaultValue={kotaDomisili}
                 onChange={(e) =>
-                  setKotaDomisili({ label: e.label, value: e.value })
+                  setKotaDomisili({ label: e?.label, value: e?.value })
                 }
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("kota domisili")
@@ -204,9 +292,11 @@ const AlamatEdit = ({ funcViewEdit }) => {
                 placeholder="Silahkan Pilih Provinsi"
                 options={optionsProvinsi}
                 defaultValue={provinsiDomisili}
-                onChange={(e) =>
-                  setProvinsiDomisili({ label: e.label, value: e.value })
-                }
+                onChange={(e) => {
+                  selectRefKabupatenDomisili.select.clearValue();
+                  setProvinsiDomisili({ label: e?.label, value: e?.value });
+                  dispatch(dropdownKabupatenDomisili(token, e.value));
+                }}
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("provinsi domisili")
                 }
@@ -226,11 +316,12 @@ const AlamatEdit = ({ funcViewEdit }) => {
               <Form.Label>Kota / Kabupaten</Form.Label>
               <Select
                 key={2}
+                ref={(ref) => (selectRefKabupatenDomisili = ref)}
                 placeholder="Silahkan Pilih Kota / Kabupaten"
-                options={optionsKota}
+                options={optionsKabupatenDomisili}
                 defaultValue={kotaDomisili}
                 onChange={(e) =>
-                  setKotaDomisili({ label: e.label, value: e.value })
+                  setKotaDomisili({ label: e?.label, value: e?.value })
                 }
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("kota domisili")
@@ -298,17 +389,18 @@ const AlamatEdit = ({ funcViewEdit }) => {
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
       const data = {
-        alamatKtp,
-        provinsi: provinsiKtp.value,
-        kodePosKtp,
-        kecamatanKtp,
-        kota: kotaKtp.value,
-        alamatDomisili,
-        provinsiDomisili: provinsiDomisili.value,
-        kotaDomisili: kotaDomisili.value,
-        kecamatanDomisili,
-        kodePosDomisili,
+        address_ktp: alamatKtp,
+        provinsi_ktp: provinsiKtp.label,
+        kode_pos_ktp: kodePosKtp,
+        kecamatan_ktp: kecamatanKtp,
+        kota_ktp: kotaKtp.label,
+        address: alamatDomisili,
+        provinsi: provinsiDomisili.label,
+        kota: kotaDomisili.label,
+        kecamatan: kecamatanDomisili,
+        kode_pos: kodePosDomisili,
       };
+      dispatch(updateProfileAlamat(data, token));
       console.log(data);
     } else {
       simpleValidator.current.showMessages();
@@ -352,9 +444,11 @@ const AlamatEdit = ({ funcViewEdit }) => {
                 placeholder="Silahkan Pilih Provinsi"
                 options={optionsProvinsi}
                 defaultValue={provinsiKtp}
-                onChange={(e) =>
-                  setProvinsiKtp({ label: e.label, value: e.value })
-                }
+                onChange={(e) => {
+                  selectRefKabupaten.select.clearValue();
+                  setProvinsiKtp({ label: e?.label, value: e?.value });
+                  dispatch(dropdownKabupaten(token, e.value));
+                }}
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("provinsi ktp")
                 }
@@ -371,10 +465,13 @@ const AlamatEdit = ({ funcViewEdit }) => {
             <Form.Group as={Col} md={6} controlId="formGridKelamin">
               <Form.Label>Kota / Kabupaten</Form.Label>
               <Select
+                ref={(ref) => (selectRefKabupaten = ref)}
                 placeholder="Silahkan Pilih Kota / Kabupaten"
-                options={optionsKota}
+                options={optionsKabupaten}
                 defaultValue={kotaKtp}
-                onChange={(e) => setKotaKtp({ label: e.label, value: e.value })}
+                onChange={(e) =>
+                  setKotaKtp({ label: e?.label, value: e?.value })
+                }
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("kota ktp")
                 }

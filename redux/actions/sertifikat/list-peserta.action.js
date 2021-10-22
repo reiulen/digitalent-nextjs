@@ -17,7 +17,7 @@ export const getAllParticipant =
 
     token
   ) =>
-  async dispatch => {
+  async (dispatch) => {
     try {
       dispatch({ type: LIST_PESERTA_REQUEST });
       let link =
@@ -37,13 +37,16 @@ export const getAllParticipant =
         dispatch({ type: LIST_PESERTA_SUCCESS, payload: data });
       }
     } catch (error) {
-      dispatch({ type: LIST_PESERTA_FAIL, payload: error.message });
+      dispatch({
+        type: LIST_PESERTA_FAIL,
+        payload: error.response.data.message,
+      });
     }
   };
 
 export const getDetailParticipant =
   (id, page = 1, keyword = "", limit = 5, token) =>
-  async dispatch => {
+  async (dispatch) => {
     try {
       dispatch({ type: DETAIL_LIST_PESERTA_REQUEST });
       let link =
@@ -63,6 +66,9 @@ export const getDetailParticipant =
         dispatch({ type: DETAIL_LIST_PESERTA_SUCCESS, payload: data });
       }
     } catch (error) {
-      dispatch({ type: DETAIL_LIST_PESERTA_FAIL, payload: error.message });
+      dispatch({
+        type: DETAIL_LIST_PESERTA_FAIL,
+        payload: error.response.data.message,
+      });
     }
   };

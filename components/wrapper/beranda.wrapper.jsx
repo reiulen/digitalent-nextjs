@@ -1,5 +1,6 @@
 import React from 'react'
 import Head from "next/head";
+// import Footer from "../../user-component/components/beranda/footer"
 import "../../styles/beranda.module.css"
 
 const BerandaWrapper = ({ children, title }) => {
@@ -11,6 +12,8 @@ const BerandaWrapper = ({ children, title }) => {
             <div>
                 {children}
             </div>
+
+            {/* <Footer /> */}
         </>
         
     )
