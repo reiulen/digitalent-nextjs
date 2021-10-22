@@ -101,7 +101,7 @@ export default function SeleksiAdministrasi() {
                         className="btn-rounded-full ml-auto btn-block d-flex justify-content-center"
                         size="sm"
                         style={{ backgroundColor: "#007CFF" }}
-                        onClick={(e) => {
+                        onClick={e => {
                           e.preventDefault();
                         }}
                       >

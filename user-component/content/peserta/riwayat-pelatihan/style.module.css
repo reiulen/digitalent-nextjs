@@ -14,8 +14,7 @@
   background-color: #007cff;
 }
 
-.text-secondary {
-}
+.text-secondary {}
 
 .text-muted {
   color: #6c6c6c;
@@ -46,6 +45,7 @@
   background-color: #007cff;
   color: white;
 }
+
 /* 
 border-radius: 50%,
 width: 64px,

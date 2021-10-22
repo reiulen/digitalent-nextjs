@@ -15,8 +15,9 @@ import LulusPelatihan from "./pelatihan-lulus-pelatihan";
 import IsiSurvey from "./survey-isi-survey";
 import IsiLpj from "./survey-isi-lpj";
 import style from "../style.module.css";
+import TestCardTemplate from "./testCardTemplate";
 
-const Administrasi = (props) => {
+const Administrasi = props => {
   switch (props.status) {
     case "menunggu jadwal":
       return (
@@ -82,6 +83,12 @@ const Administrasi = (props) => {
       return (
         <Fragment>
           <IsiLpj />
+        </Fragment>
+      );
+    case "test":
+      return (
+        <Fragment>
+          <TestCardTemplate data={props} />
         </Fragment>
       );
     default:

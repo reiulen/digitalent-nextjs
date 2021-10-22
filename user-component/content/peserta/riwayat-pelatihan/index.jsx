@@ -65,9 +65,9 @@ export default function RiwayatPelatihan() {
                     </button>
                   </div>
                 </Col>
-                <Col lg={4}>
+                <Col lg={4} className="w-100">
                   <button
-                    className=" btn border d-flex align-items-center justify-content-between border-2 border-primary w-100"
+                    className="btn border d-flex align-items-center justify-content-between border-2 border-primary w-100"
                     data-toggle="modal"
                     style={{
                       color: "#464646",
@@ -82,20 +82,25 @@ export default function RiwayatPelatihan() {
                     <IconArrow fill="#ADB5BD" width="10" height="6" />
                   </button>
                 </Col>
-                <Col className="pt-4 d-flex justify-content-evenly" lg={12}>
+                <Row className="pt-4 d-flex justify-content-between w-100">
                   {filter.map((item, i) => {
                     return (
-                      <Button
-                        variant={selected == i ? "primary" : "outline-primary"}
-                        onClick={() => {
-                          setSelected(i);
-                        }}
-                        className={`rounded-full mx-5 w-100 text-capitalize`}
-                      >
-                        {item}
-                      </Button>
+                      <Col key={i}>
+                        <Button
+                          variant={
+                            selected == i ? "primary" : "outline-primary"
+                          }
+                          onClick={() => {
+                            setSelected(i);
+                          }}
+                          className={`rounded-full mx-5 w-100 text-capitalize`}
+                        >
+                          {item}
+                        </Button>
+                      </Col>
                     );
                   })}
+
                   {/* <Button className={`rounded-full mx-5 w-100`}>
                     Test Substansi
                   </Button>
@@ -109,24 +114,33 @@ export default function RiwayatPelatihan() {
                     Survey & LPJ
                   </Button>
                   <Button className={`rounded-full mx-5 w-100`}>Selesai</Button> */}
-                </Col>
+                </Row>
               </Row>
             </Card.Body>
           </Card>
         </Col>
         {/* <Administrasi /> */}
+        <CardPeserta
+          status={"test"}
+          img_figure={"/assets/media/mitra-icon/bukalapak-1.svg"}
+          img_mitra={"/assets/media/mitra-icon/bukalapak-1.svg"}
+          mitra_name={"bukalapak"}
+          pelatihan_name={"Intermediate Multimedia Designer"}
+          label={"warning"}
+          location={"Pasaraya Blok M Gedung B Lt. 6, Jakarta Barat, Indonesia"}
+        />
+        {/* <CardPeserta totalButton={2} status={"seleksi administrasi"} />
         <CardPeserta totalButton={2} status={"menunggu jadwal"} />
         <CardPeserta totalButton={2} status={"tes substansi"} />
         <CardPeserta totalButton={2} status={"lolos substansi"} />
         <CardPeserta totalButton={2} status={"tidak lulus"} />
         <CardPeserta totalButton={2} status={"isi survey"} />
-        <CardPeserta totalButton={2} status={"seleksi administrasi"} />
         <CardPeserta totalButton={2} status={"lolos administrasi"} />
         <CardPeserta totalButton={2} status={"ikuti pelatihan"} />
         <CardPeserta totalButton={2} status={"kerjakan mid test"} />
         <CardPeserta totalButton={2} status={"kerjakan trivia"} />
         <CardPeserta totalButton={2} status={"lulus pelatihan"} />
-        <CardPeserta totalButton={2} status={"isi lpj"} />
+        <CardPeserta totalButton={2} status={"isi lpj"} /> */}
       </PesertaWrapper>
       <Modal show={showModal} onHide={handleClose} centered>
         <Modal.Header>
@@ -134,7 +148,7 @@ export default function RiwayatPelatihan() {
         </Modal.Header>
         <Modal.Body>
           <Select
-            ref={(ref) => (refSelect = ref)}
+            ref={ref => (refSelect = ref)}
             className="basic-single"
             classNamePrefix="select"
             placeholder="Semua"
@@ -145,7 +159,7 @@ export default function RiwayatPelatihan() {
             isRtl={false}
             isSearchable={true}
             name="color"
-            onChange={(e) => {
+            onChange={e => {
               setStatus(e?.value);
             }}
             options={options}

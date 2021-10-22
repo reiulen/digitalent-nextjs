@@ -11,7 +11,6 @@ import "../components/Table/tableStyle.css";
 import "../components/content/sertifikat/style.css";
 import SimpleReactValidator from "simple-react-validator";
 import { wrapper } from "../redux/store";
-
 import Layout from "../components/templates/layout.component";
 
 function MyApp({ Component, pageProps }) {
