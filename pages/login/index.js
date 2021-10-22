@@ -28,6 +28,14 @@ export async function getServerSideProps(context) {
   const session = await getSession({ req: context.req });
   if (session) {
     const data = session.user.user.data;
+    if (data.user.roles[0] !== "user") {
+      return {
+        redirect: {
+          destination: "/login/admin",
+          permanent: false,
+        },
+      };
+    }
     if (data.user.roles[0] === "user") {
       return {
         redirect: {

@@ -39,6 +39,14 @@
   font-size: 14px;
 }
 
+.button_profile_batal {
+  background-color: transparent !important;
+  border: none !important;
+  color: #007cff !important;
+  font-weight: 600;
+  font-size: 14px;
+}
+
 .navbar_profile_wrapper {
   color: #6c6c6c;
   font-size: 14px;
@@ -52,4 +60,9 @@
 
 .navbar_responsive {
   overflow-x: auto;
+}
+
+.btn_edit_triger {
+  background: #007cff;
+  color: #ffffff;
 }

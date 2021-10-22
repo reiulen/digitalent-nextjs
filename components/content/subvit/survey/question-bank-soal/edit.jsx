@@ -182,6 +182,11 @@ const EditSoalTrivia = ({ token }) => {
     }
   };
 
+  const handleStatus = (status) => {
+    console.log(status);
+    setStatus(status);
+  };
+
   const handleMethodeInput = () => {
     switch (methodAdd) {
       case "objective":
@@ -190,7 +195,7 @@ const EditSoalTrivia = ({ token }) => {
             propsAnswer={answer}
             propsStatus={status}
             sendPropsAnswer={(answers) => setAnswer(answers)}
-            sendPropsStatus={(status) => setStatus(status)}
+            sendPropsStatus={(status) => handleStatus(status)}
           />
         );
         break;
@@ -200,7 +205,7 @@ const EditSoalTrivia = ({ token }) => {
             propsAnswer={answer}
             propsStatus={status}
             sendPropsAnswer={(answers) => setAnswer(answers)}
-            sendPropsStatus={(status) => setStatus(status)}
+            sendPropsStatus={(status) => handleStatus(status)}
           />
         );
         break;
@@ -208,7 +213,7 @@ const EditSoalTrivia = ({ token }) => {
         return (
           <PertanyaanTerbukaComponent
             propsStatus={status}
-            sendPropsStatus={(status) => setStatus(status)}
+            sendPropsStatus={(status) => handleStatus(status)}
           />
         );
       case "triggered_question":
@@ -217,7 +222,7 @@ const EditSoalTrivia = ({ token }) => {
             propsAnswer={answer}
             propsStatus={status}
             sendPropsAnswer={(answers) => setAnswer(answers)}
-            sendPropsStatus={(status) => setStatus(status)}
+            sendPropsStatus={(status) => handleStatus(status)}
           />
         );
         break;
@@ -227,7 +232,7 @@ const EditSoalTrivia = ({ token }) => {
             propsAnswer={answer}
             propsStatus={status}
             sendPropsAnswer={(answers) => setAnswer(answers)}
-            sendPropsStatus={(status) => setStatus(status)}
+            sendPropsStatus={(status) => handleStatus(status)}
           />
         );
         break;

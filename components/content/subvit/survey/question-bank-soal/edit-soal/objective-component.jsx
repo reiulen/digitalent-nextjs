@@ -35,6 +35,11 @@ const ObjectiveComponent = ({
     ]);
   };
 
+  const handleStatus = (e) => {
+    setStatus(e.target.value);
+    sendPropsStatus(e.target.value);
+  };
+
   const handleInputChange = (e, index) => {
     const { name, value } = e.target;
     const list = [...answer];
@@ -129,13 +134,11 @@ const ObjectiveComponent = ({
           <select
             name="training_id"
             className="form-control"
-            onChange={(e) => {
-              setStatus(e.target.value);
-              sendPropsStatus(e.target.value);
+            onChange={(event) => {
+              handleStatus(event);
             }}
-            onBlur={(e) => {
-              setStatus(e.target.value);
-              sendPropsStatus(e.target.value);
+            onBlur={(event) => {
+              handleStatus(event);
             }}
             value={status}
           >
