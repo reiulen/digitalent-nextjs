@@ -547,7 +547,7 @@ const Beranda = () => {
                                             />
                                           }
 
-                                          
+
                                         > 
                                           <div className="rounded mt-0 pt-0">
                                             <Image 
@@ -751,7 +751,7 @@ const Beranda = () => {
 
             <div className="d-flex justify-content-center mt-10">
               
-              <a href={`/detail/akademi/1`}>
+              <a href={`/detail/akademi/4`}>
                 <button className="btn btn-sm btn-login-peserta px-12 py-3">
                   Lebih Banyak Tema
                   <IconArrow
