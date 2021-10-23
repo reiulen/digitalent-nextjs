@@ -265,6 +265,7 @@ const Kategori = ({ token }) => {
   const resetValueSort = () => {
     setSearchKategori(null);
     $("#selectKategori").prop("selectedIndex", 0);
+    router.replace("/publikasi/kategori", undefined, { shallow: true });
   };
 
   return (
@@ -568,7 +569,7 @@ const Kategori = ({ token }) => {
                                   </span>
                                 )}
                               </td>
-                              <td className="align-middle">
+                              <td className="align-middle" className="align-middle" style={{overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',maxWidth:'180px'}}>
                                 {row.nama_kategori}
                               </td>
                               <td className="align-middle">
@@ -617,13 +618,7 @@ const Kategori = ({ token }) => {
                   ""
                 )}
               </div>
-
-              {/* {
-                                console.log("KATEGORI : ", kategori)
-                            }
-                            {
-                                console.log("PAGINATE KATEGORI : ", paginateKategori)
-                            } */}
+              
               {kategori && paginateKategori ? (
                 <div className="row">
                   {paginateKategori.perPage < kategori.total && (
