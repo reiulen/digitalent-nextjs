@@ -24,7 +24,7 @@ import ComeJoin from "../../components/beranda/come-join";
 import Footer from "../../components/beranda/footer";
 
 const Navigationbar = dynamic(
-  () => import("../../../components/templates/navbar.component"),
+  () => import("../../components/template/Navbar.component"),
   {
     ssr: false,
   }
@@ -40,6 +40,7 @@ const Beranda = () => {
   // const { pelatihan } = useSelector(state => state.pelatihanByTema);
 
   const [ activeTab, setActiveTab ] = useState(0);
+  const [ akademiId, setAkademiId ] = useState(null)
   const [ show, setShow ] = useState(null);
   const [ cardImage, setCardImage ] = useState(null)
   const [ cardStatus, setCardStatus ] = useState(null)
@@ -54,6 +55,7 @@ const Beranda = () => {
   const [ cardPendaftaranSelesai, setCardPendaftaranSelesai ] = useState(null)
   
   useEffect(() => {
+    handleAkademiStart()
     handleHoverCard()
   }, [])
 
@@ -63,6 +65,13 @@ const Beranda = () => {
   //   }
     
   // }, [tema])
+
+  const handleAkademiStart = () => {
+    if (akademi && akademi.length !== 0){
+        // console.log ("check")
+        dispatch (getTemaByAkademi(akademi[0].id))
+    }
+  }
 
   const handleHoverCard = () => {
     let arr = []
@@ -119,9 +128,10 @@ const Beranda = () => {
     setShow(obj)
 }
 
-  const handleActive = (index) => {
+  const handleActive = (index, id) => {
     setActiveTab(index);
-    dispatch (getTemaByAkademi(index))
+    setAkademiId(id)
+    dispatch (getTemaByAkademi(id))
   };
 
   const handleQuickView = (indexTema, image, status, image_mitra, akademi, deskripsi, name, kuota_pendaftar, mitra, alamat, pendaftaran_mulai, pendaftaran_selesai) => {
@@ -228,14 +238,14 @@ const Beranda = () => {
                   {
                     publikasi.imagetron.map ((el, i) => {
                       return (
-                        <SplideSlide key={i}>
+                        <SplideSlide key={i} className="rounded">
                           <Image
                             layout="fill"
                             objectFit="fill"
-                            // src={process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + el.gambar}
-                            src={`/assets/media/carousel-01.svg`}
+                            src={process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + el.gambar}
+                            // src={`/assets/media/carousel-01.svg`}
                             alt="Imagetron Slide"
-                            className="mx-5"
+                            className="mx-5 rounded"
                           />
                         </SplideSlide>
                       )
@@ -433,7 +443,7 @@ const Beranda = () => {
                       {activeTab !== i ? (
                         <div
                           className="d-flex align-items-center h-100"
-                          onClick={() => handleActive(i)}
+                          onClick={() => handleActive(i, el.id)}
                           style={{ cursor: "pointer" }}
                         >
                           <div className="card-1">
@@ -748,23 +758,26 @@ const Beranda = () => {
                   </div>
                 </div>
               }
-
-            <div className="d-flex justify-content-center mt-10">
-              
-              <a href={`/detail/akademi/4`}>
-                <button className="btn btn-sm btn-login-peserta px-12 py-3">
-                  Lebih Banyak Tema
-                  <IconArrow
-                    width="8"
-                    height="10"
-                    fill="#0063CC"
-                    className="ml-2"
-                    style={{ transform: "rotate(0)" }}
-                  />
-                </button>
-              </a>
+            {
+              tema ?
+                <div className="d-flex justify-content-center mt-10">
+                  <a href={`/detail/akademi/4`}>
+                    <button className="btn btn-sm btn-login-peserta px-12 py-3">
+                      Lebih Banyak Tema
+                      <IconArrow
+                        width="8"
+                        height="10"
+                        fill="#0063CC"
+                        className="ml-2"
+                        style={{ transform: "rotate(0)" }}
+                      />
+                    </button>
+                  </a>
+                </div>
+              :
+                null
+            }
             
-            </div>
           </div>
         </div>
 
