@@ -188,7 +188,7 @@ const DashboardSiteManagement = ({ token }) => {
                   <tr>
                     <th>
                       <div className="data-peserta">Data Peserta</div>
-                      <div className="berdasarkan">Berdasarkan Daerah</div>
+                      <div className="berdasarkan">Berdasarkan {typePeserta === "city" ? "Daerah" : "Provinsi"}</div>
                     </th>
                     <th>
                       <div
@@ -288,7 +288,7 @@ const DashboardSiteManagement = ({ token }) => {
                   <tr>
                     <th>
                       <div className="data-peserta">Data Zonasi</div>
-                      <div className="berdasarkan">Berdasarkan Daerah</div>
+                      <div className="berdasarkan">Berdasarkan {type === "city" ? "Daerah" : "Provinsi"}</div>
                     </th>
                     <th>
                       <div
