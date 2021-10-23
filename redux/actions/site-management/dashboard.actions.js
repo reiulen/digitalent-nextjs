@@ -70,7 +70,7 @@ export const loadDataPeserta = (token, type, page) => {
       }else{
         dispatch({
           type: DRAW_LOAD_DATA_PESERTA_CITY_DASHBOARD_SITE_MANAGEMENT,
-          payload: data.data,
+          payload: data,
           page,
         });
       }

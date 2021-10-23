@@ -28,9 +28,6 @@ const DashboardSiteManagement = ({ token }) => {
   const [pagePeserta, setPagePeserta] = useState(1);
   const [type, setType] = useState("province");
   const [typePeserta, setTypePeserta] = useState("province");
-  const [totalPage, setTotalPage] = useState(0);
-  const [totalZonasi, setTotalZonasi] = useState(0)
-  const [totalPeserta, setTotalPeserta] = useState(0)
 
   let dispatch = useDispatch();
 
