@@ -120,7 +120,6 @@ const TriggeredQuestionComponent = ({
   };
 
   const handleAddClick = (type, index, parent) => {
-    console.log(type, index, parent);
     const list = [...answer];
 
     if (index == null && parent == null) {
@@ -250,6 +249,11 @@ const TriggeredQuestionComponent = ({
         list[parent].sub.splice(children + 1);
       }
     }
+
+    const handleStatus = (e) => {
+      setStatus(e.target.value);
+      sendPropsStatus(e.target.value);
+    };
 
     setAnswer(list);
     sendPropsAnswer(list);
@@ -623,13 +627,11 @@ const TriggeredQuestionComponent = ({
           <select
             name="training_id"
             className="form-control"
-            onChange={(e) => {
-              setStatus(e.target.value);
-              sendPropsStatus(e.target.value);
+            onChange={(event) => {
+              handleStatus(event);
             }}
-            onBlur={(e) => {
-              setStatus(e.target.value);
-              sendPropsStatus(e.target.value);
+            onBlur={(event) => {
+              handleStatus(event);
             }}
             value={status}
           >

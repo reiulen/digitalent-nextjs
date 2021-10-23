@@ -1,5 +1,6 @@
 import React from 'react'
 import Head from "next/head";
+// import Footer from "../../user-component/components/beranda/footer"
 import "../../styles/beranda.module.css"
 
 const BerandaWrapper = ({ children, title }) => {
@@ -8,11 +9,11 @@ const BerandaWrapper = ({ children, title }) => {
             <Head>
                 <title>{title}</title>
             </Head>
-            <div className="d-flex flex-column-fluid "style={{backgroundColor: "#ffffff"}}>
-                <div className="container">
-                    {children}
-                </div>
+            <div>
+                {children}
             </div>
+
+            {/* <Footer /> */}
         </>
         
     )

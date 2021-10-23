@@ -57,6 +57,7 @@ export const allDataReferenceReducer = (state = initialState, action) => {
       return {
         ...state,
         status: statuslist.error,
+        error: null,
       };
 
     case SEARCH_COORPORATION:
@@ -184,7 +185,7 @@ export const detailDataReferenceReducer = (
     case DETAIL_DATA_REFERENCE_FAIL:
       return {
         loading: false,
-        error: action.payload,
+        error: null,
       };
 
     case DETAIL_DATA_REFERENCE_RESET:

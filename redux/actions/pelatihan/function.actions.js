@@ -12,6 +12,10 @@ import {
   ERROR_DROPDOWN_TEMA,
   GET_DROPDOWN_PELATIHAN,
   ERROR_DROPDOWN_PELATIHAN,
+  GET_DROPDOWN_STATUS_PEKERJAAN,
+  ERROR_DROPDOWN_STATUS_PEKERJAAN,
+  GET_DROPDOWN_PENDIDIKAN,
+  ERROR_DROPDOWN_PENDIDIKAN,
   GET_DROPDOWN_LEVEL_PELATIHAN,
   ERROR_DROPDOWN_LEVEL_PELATIHAN,
   GET_DROPDOWN_MITRA,
@@ -22,12 +26,41 @@ import {
   ERROR_DROPDOWN_PROVINSI,
   GET_DROPDOWN_KABUPATEN,
   ERROR_DROPDOWN_KABUPATEN,
+  GET_DROPDOWN_KABUPATEN_DOMISILI,
+  ERROR_DROPDOWN_KABUPATEN_DOMISILI,
   GET_DROPDOWN_PENYELENGGARA,
   ERROR_DROPDOWN_PENYELENGGARA,
+  GET_DATA_PRIBADI_SUCCESS,
+  GET_DATA_PRIBADI_FAIL,
   CLEAR_ERRORS,
 } from "../../types/pelatihan/function.type";
 
 import axios from "axios";
+
+export const getDataPribadi = (token) => async (dispatch) => {
+  try {
+    let link =
+      process.env.END_POINT_API_PELATIHAN + `/api/v1/auth/get-data-pribadi`;
+
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    const { data } = await axios.get(link, config);
+
+    dispatch({
+      type: GET_DATA_PRIBADI_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_DATA_PRIBADI_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
 
 export const getTrainingStep1 = () => async (dispatch) => {
   const data = {
@@ -116,7 +149,7 @@ export const storeRegistrationStep2 = (data) => async (dispatch) => {
 export const getCommitmentStep3 = () => async (dispatch) => {
   const data = {
     komitmen: "",
-    deskripsi: "",
+    deskripsi_komitmen: "",
   };
   dispatch({
     type: GET_COMMITMENT_STEP3,
@@ -149,7 +182,7 @@ export const dropdownAkademi = (token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ERROR_DROPDOWN_AKADEMI,
-      payload: error.message,
+      payload: error.response.data.message,
     });
   }
 };
@@ -172,7 +205,7 @@ export const dropdownTema = (token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ERROR_DROPDOWN_TEMA,
-      payload: error.message,
+      payload: error.response.data.message,
     });
   }
 };
@@ -195,7 +228,53 @@ export const dropdownPelatihan = (token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ERROR_DROPDOWN_PELATIHAN,
-      payload: error.message,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const dropdownStatusPekerjaan = (token) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    const { data } = await axios.get(
+      process.env.END_POINT_API_SITE_MANAGEMENT + `api/option/job-status`,
+      config
+    );
+    dispatch({
+      type: GET_DROPDOWN_STATUS_PEKERJAAN,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ERROR_DROPDOWN_STATUS_PEKERJAAN,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const dropdownPendidikan = (token) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    const { data } = await axios.get(
+      process.env.END_POINT_API_SITE_MANAGEMENT + `api/option/education`,
+      config
+    );
+    dispatch({
+      type: GET_DROPDOWN_PENDIDIKAN,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ERROR_DROPDOWN_PENDIDIKAN,
+      payload: error.response.data.message,
     });
   }
 };
@@ -208,7 +287,7 @@ export const dropdownLevelPelatihan = (token) => async (dispatch) => {
       },
     };
     const { data } = await axios.get(
-      process.env.END_POINT_API_SITE_MANAGEMENT + `api/reference/detail/5`,
+      process.env.END_POINT_API_SITE_MANAGEMENT + `api/option/training-level`,
       config
     );
     dispatch({
@@ -218,7 +297,7 @@ export const dropdownLevelPelatihan = (token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ERROR_DROPDOWN_LEVEL_PELATIHAN,
-      payload: error.message,
+      payload: error.response.data.message,
     });
   }
 };
@@ -241,7 +320,7 @@ export const dropdownMitra = (token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ERROR_DROPDOWN_MITRA,
-      payload: error.message,
+      payload: error.response.data.message,
     });
   }
 };
@@ -264,7 +343,7 @@ export const dropdownZonasi = (token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ERROR_DROPDOWN_ZONASI,
-      payload: error.message,
+      payload: error.response.data.message,
     });
   }
 };
@@ -277,7 +356,7 @@ export const dropdownProvinsi = (token) => async (dispatch) => {
       },
     };
     const { data } = await axios.get(
-      process.env.END_POINT_API_SITE_MANAGEMENT + `api/reference/detail/8`,
+      process.env.END_POINT_API_SITE_MANAGEMENT + `api/option/provinsi`,
       config
     );
     dispatch({
@@ -287,12 +366,12 @@ export const dropdownProvinsi = (token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ERROR_DROPDOWN_PROVINSI,
-      payload: error.message,
+      payload: error.response.data.message,
     });
   }
 };
 
-export const dropdownKabupaten = (token) => async (dispatch) => {
+export const dropdownKabupaten = (token, id) => async (dispatch) => {
   try {
     const config = {
       headers: {
@@ -300,7 +379,8 @@ export const dropdownKabupaten = (token) => async (dispatch) => {
       },
     };
     const { data } = await axios.get(
-      process.env.END_POINT_API_SITE_MANAGEMENT + `api/reference/detail/10`,
+      process.env.END_POINT_API_SITE_MANAGEMENT +
+        `api/option/provinsi-choose/${id}`,
       config
     );
     dispatch({
@@ -310,7 +390,31 @@ export const dropdownKabupaten = (token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ERROR_DROPDOWN_KABUPATEN,
-      payload: error.message,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const dropdownKabupatenDomisili = (token, id) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    const { data } = await axios.get(
+      process.env.END_POINT_API_SITE_MANAGEMENT +
+        `api/option/provinsi-choose/${id}`,
+      config
+    );
+    dispatch({
+      type: GET_DROPDOWN_KABUPATEN_DOMISILI,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ERROR_DROPDOWN_KABUPATEN_DOMISILI,
+      payload: error.response.data.message,
     });
   }
 };
@@ -323,7 +427,7 @@ export const dropdownPenyelenggara = (token) => async (dispatch) => {
       },
     };
     const { data } = await axios.get(
-      process.env.END_POINT_API_SITE_MANAGEMENT + `api/reference/detail/13`,
+      process.env.END_POINT_API_SITE_MANAGEMENT + `api/option/organizer`,
       config
     );
     dispatch({
@@ -333,7 +437,13 @@ export const dropdownPenyelenggara = (token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ERROR_DROPDOWN_PENYELENGGARA,
-      payload: error.message,
+      payload: error.response.data.message,
     });
   }
+};
+
+export const clearErrors = () => async (dispatch) => {
+  dispatch({
+    type: CLEAR_ERRORS,
+  });
 };

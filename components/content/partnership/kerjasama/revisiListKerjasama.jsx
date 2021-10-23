@@ -3,12 +3,13 @@ import PageWrapper from "../../../wrapper/page.wrapper";
 import { useRouter } from "next/router";
 import axios from "axios";
 import Link from "next/link";
+import DetailRevisiKerjasama from './detailRevisiKerjasama'
 
 function RevisiList({ token }) {
   const router = useRouter();
   const cardContainer = {
     background: "#FFFFFF",
-    boxShadow: "8px 8px 20px rgba(0, 0, 0, 0.15)",
+    border: "1px solid #D7E1EA",
     borderRadius: "5px",
     padding: "16px 32px",
     borderRadius: "12px",
@@ -20,6 +21,7 @@ function RevisiList({ token }) {
     background: "#FFF6E6",
     borderRadius: "4px",
     padding: "4px 10px",
+    width:"max-content"
   };
 
   const styleList = {
@@ -43,7 +45,7 @@ function RevisiList({ token }) {
 
       setListCardREvisi(data.data);
     } catch (error) {
-      console.log("action getCardREviewList", error);
+      notify(error.response.data.message);
     }
 
     }
@@ -68,10 +70,10 @@ function RevisiList({ token }) {
                     return (
                       <li key={index} className="mt-5">
                         <div
-                          className="d-flex align-items-center justify-content-between"
+                          className="row align-items-center justify-content-between"
                           style={cardContainer}
                         >
-                          <div>
+                          <div className="col-12 col-sm-6">
                             <h1
                               className="fw-500 fz-20"
                               style={{ color: "#6C6C6C" }}
@@ -81,11 +83,11 @@ function RevisiList({ token }) {
                             <p className="mt-4" style={{ color: "#ADB5BD" }}>
                               {items.information1}
                             </p>
-                            <p style={{ color: "#ADB5BD" }}>
+                            <p style={{ color: "red" }}>
                               Revisi Versi.{items.version}
                             </p>
                           </div>
-
+<div className="col-12 col-sm-6 d-flex justify-content-end">
                           {items.information2 === "Menunggu Mitra" ? (
                             <Link
                               href={{
@@ -98,7 +100,7 @@ function RevisiList({ token }) {
                                 },
                               }}
                             >
-                              <a style={labelStyle}>{items.information2}</a>
+                              <a className="mt-10 mt-sm-0" style={labelStyle}>{items.information2}</a>
                             </Link>
                           ) : (
                             <Link
@@ -112,18 +114,36 @@ function RevisiList({ token }) {
                                 },
                               }}
                             >
-                              <a className="btn btn-sm btn-rounded-full bg-blue-primary text-white">
+                              <a className="btn btn-sm btn-rounded-full bg-blue-primary text-white mt-10 mt-sm-0">
                                 {items.information2}
                               </a>
                             </Link>
                           )}
                         </div>
+                        </div>
                       </li>
                     );
                   })}
             </ul>
+
+            <div className="form-group row mt-10">
+                <div className="col-sm-12 d-flex justify-content-end">
+                  <Link
+                    href={{
+                      pathname: `/partnership/kerjasama`
+                    }}
+                  >
+                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
+                      Kembali
+                    </a>
+                  </Link>
+                </div>
+              </div>
           </div>
         </div>
+
+        
+
       </div>
     </PageWrapper>
   );

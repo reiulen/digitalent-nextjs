@@ -7,6 +7,7 @@ import SimpleReactValidator from 'simple-react-validator'
 import { useDispatch, useSelector } from "react-redux";
 import { useDropzone } from 'react-dropzone';
 import { useRouter } from "next/router";
+// import { withContext as ReactTags } from "react-tag-input"
 import { TagsInput } from "react-tag-input-component";
 import Swal from "sweetalert2";
 import DatePicker from 'react-datepicker'
@@ -54,6 +55,7 @@ const img = {
     height: '100%'
 };
 
+
 const EditGaleri = ({ token }) => {
     const dispatch = useDispatch();
     const router = useRouter();
@@ -66,10 +68,9 @@ const EditGaleri = ({ token }) => {
     // const { artikel, error, success } = useSelector(state => state.detailArtikel)
     const simpleValidator = useRef(new SimpleReactValidator({ locale: 'id' }))
     const { galeri } = useSelector((state) => state.detailGaleri);
-    const { error, success, loading } = useSelector(
-        (state) => state.updatedGaleri
-    );
+    const { error, success, loading } = useSelector((state) => state.updatedGaleri);
     const { loading: allLoading, error: allError, kategori } = useSelector((state) => state.allKategori);
+    const { setting } = useSelector(state => state.allSettingPublikasi)
 
     const [files, setFiles] = useState([]);
     const { getRootProps, getInputProps } = useDropzone({
@@ -104,12 +105,13 @@ const EditGaleri = ({ token }) => {
         </div>
     ));
 
+    // useEffect(() => {
+    //     handleDataToArr(galeri.gambar)
+    // })
+
     useEffect(() => {
+
         handleDataToArr(galeri.gambar)
-    })
-
-    useEffect(() => {
-
         // dispatch(getAllKategori())
 
         files.forEach(file => URL.revokeObjectURL(file.preview));
@@ -151,7 +153,7 @@ const EditGaleri = ({ token }) => {
     //     "/assets/media/default.jpg"
     //   ); //belum
     const [kategori_id, setKategoriId] = useState(galeri.kategori_id); //belum
-    const [users_id, setUserId] = useState(3);
+    const [users_id, setUserId] = useState(87);
     const [tag, setTag] = useState(galeri.tag);
     // const [publish, setPublish] = useState(galeri.publish === 1 ? true : false);
     const [publish, setPublish] = useState(galeri.publish);
@@ -161,11 +163,11 @@ const EditGaleri = ({ token }) => {
     const [image, setImage] = useState(null)
     const [totalImage, setTotalImage] = useState(1)
     const [disableTag, setDisableTag] = useState(false)
+    const [deleteImg, setDeleteImg] = useState([])
 
     const handleDataToArr = (data) => {
         let arr = []
-
-
+        // for (let i = 0; i < data.length; i++) {
         for (let i = 0; i < data.length; i++) {
             // const reader = new FileReader();
             // getBase64FromUrl(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + data[i].gambar)
@@ -242,25 +244,65 @@ const EditGaleri = ({ token }) => {
         const type = ["image/jpg", "image/png", "image/jpeg"];
         let list = [...image];
         if (type.includes(e.target.files[0].type)) {
-            // list[index].imageFile = e.target.files[0];
-            const reader = new FileReader();
+            if (e.target.files[0].size > parseInt(setting[0].max_size) + '000000') {
+                e.target.value = null;
+                Swal.fire("Oops !", "Data Image Melebihi Ketentuan", "error");
+            } else {
+                list[index].imageFile = e.target.files[0];
+                const reader = new FileReader();
+                reader.onload = () => {
+                    if (reader.readyState === 2) {
+                        list[index].imagePreview = reader.result;
+                        list[index].imageBase64 = reader.result;
+                        // list[index].imageFile = e.target.files[0];
+                        // list[index].imagePreview = URL.createObjectURL(e.target.files[0]);
+                        // list[index].imageName = e.target.files[0].name;
+                        setImage(list);
+                    }
+                };
+                reader.readAsDataURL(e.target.files[0]);
+                list[index].imageName = e.target.files[0].name;
+            }
+            // } else {
+            //     list[index].imageFile = e.target.files[0];
+            //     list[index].imagePreview = URL.createObjectURL(e.target.files[0]);
+            //     list[index].imageName = e.target.files[0].name;
+            //     console.log("List :", list)
+            //     setImage(list);
 
-            reader.onload = () => {
-                if (reader.readyState === 2) {
-                    list[index].imagePreview = reader.result;
-                    list[index].imageBase64 = reader.result;
-                }
-                // router.reload(window.location.pathname)
-                setImage([
-                    ...image,
-                ]);
-            };
+            //     console.log("IMAGE :", image);
+            //     // reader.readAsDataURL(e.target.files[0]);
+            //     // list[index].imageName = e.target.files[0].name;
+            //     // setImage(list);
+            // }
+            // if (e.target.files[0].size > 5000000) {
+            //     e.target.value = null;
+            //     Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
+            // } else {
+            //     // list[index].imageFile = e.target.files[0];
+            //     const reader = new FileReader();
 
-            reader.readAsDataURL(e.target.files[0]);
-            list[index].imageName = e.target.files[0].name;
-            setImage(list);
+            //     reader.onload = () => {
+            //         if (reader.readyState === 2) {
+            //             // list[index].imagePreview = reader.result;
+            //             // list[index].imageBase64 = reader.result;
+            //             list[index].imageFile = e.target.files[0];
+            //             list[index].imagePreview = URL.createObjectURL(e.target.files[0]);
+            //             list[index].imageName = e.target.files[0].name;
+            //             // console.log("List :", list)
+            //             setImage(list);
+            //         }
+            //         // router.reload(window.location.pathname)
+            //         // setImage([
+            //         //     ...image,
+            //         // ]);
+            //     };
 
-
+            //     console.log("IMAGE :", image);
+            //     reader.readAsDataURL(e.target.files[0]);
+            //     // list[index].imageName = e.target.files[0].name;
+            //     // setImage(list);
+            // }
         } else {
             e.target.value = null;
             Swal.fire(
@@ -272,9 +314,7 @@ const EditGaleri = ({ token }) => {
     };
 
     const handleChangePublish = (e) => {
-        // setPublish(e.target.checked);
         setDisablePublishDate(!disablePublishDate)
-        // console.log (e.target.checked)
 
         if (e.target.checked === false) {
             setPublishDate(null)
@@ -285,11 +325,8 @@ const EditGaleri = ({ token }) => {
     };
 
     const handlePublishDate = (date) => {
-        // let result = moment(date).format("YYYY-MM-DD")
         if (disablePublishDate === false) {
-            // setPublishDate(result)
             setPublishDate(date)
-            // console.log (result)
         }
     }
 
@@ -306,8 +343,14 @@ const EditGaleri = ({ token }) => {
             list.splice(index, 1);
             setImage(list);
             setTotalImage((totalImage) - 1)
+            setDeleteImg([
+                ...deleteImg,
+                {
+                    gambar: gambar[index].gambar,
+                    id: gambar[index].id
+                }
+            ])
         }
-
     };
 
     const onAddImage = () => {
@@ -323,17 +366,18 @@ const EditGaleri = ({ token }) => {
         setTotalImage((totalImage) + 1)
     };
 
+    
+    function hasWhiteSpace(s) {
+        return s.indexOf(' ') >= 0;
+    }
+
     const handleTag = (data) => {
         for (let i = 0; i < data.length; i++) {
-            for (let j = 0; j < data[i].length; j++) {
-                if (data[i][j] === " ") {
-                    setDisableTag(true)
-                } else {
-                    setDisableTag(false)
-                }
+            if (hasWhiteSpace(data[i])) {
+                data.splice([i], 1);
             }
         }
-        setTag(data)
+        setTag(data);
     }
 
     const handleData = (temps, onCall) => {
@@ -352,13 +396,9 @@ const EditGaleri = ({ token }) => {
                 tanggal_publish: moment(today).format("YYYY-MM-DD"),
                 id,
                 _method,
+                image_delete: deleteImg
             }
-
-            // dispatch(newGaleri(data, token))
             dispatch(onCall(data, token))
-            console.log("Unpublish : ", data)
-            // console.log(image)
-
         } else {
             const data = {
                 judul,
@@ -372,11 +412,10 @@ const EditGaleri = ({ token }) => {
                 tanggal_publish: moment(publishDate).format("YYYY-MM-DD"),
                 id,
                 _method,
+                image_delete: deleteImg
             }
 
             dispatch(onCall(data, token))
-            console.log("Publish : ", data)
-            // console.log(image)
         }
     }
 
@@ -388,7 +427,7 @@ const EditGaleri = ({ token }) => {
 
         if (success) {
             dispatch({
-                type: NEW_GALERI_RESET,
+                type: UPDATE_GALERI_RESET,
             });
         }
 
@@ -406,13 +445,13 @@ const EditGaleri = ({ token }) => {
         for (let i = 0; i < image.length; i++) {
             flag += 1
 
+            // temps.push(image[i])
             temps.push(image[i].imageBase64)
 
             if (flag === image.length) {
                 handleData(temps, updateGaleri)
             }
         }
-
     }
 
     // const onSubmit = (e) => {
@@ -518,13 +557,9 @@ const EditGaleri = ({ token }) => {
 
     return (
         <PageWrapper>
-            {
-                console.log("Cek Edit Image :", galeri)
-            }
-
             {/* {
-                console.log (image)
-            }       */}
+                console.log("Cek Edit Image :", galeri)
+            } */}
 
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
@@ -576,20 +611,27 @@ const EditGaleri = ({ token }) => {
                             <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Judul</label>
                                 <div className="col-sm-12">
-                                    <input type="text" className="form-control" placeholder="Masukkan Judul disini" value={judul} onChange={(e) => setJudulGaleri(e.target.value)} />
+                                    <input type="text" className="form-control" placeholder="Masukkan Judul disini" value={judul} onChange={(e) => setJudulGaleri(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("judul_galeri")} />
+                                    {simpleValidator.current.message(
+                                        "judul_galeri",
+                                        judul,
+                                        "required|min:5|max:200",
+                                        { className: "text-danger" }
+                                    )}
                                 </div>
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Deskripsi Galeri</label>
+                                <label htmlFor="staticEmail" className="col-sm-4 col-form-label font-weight-bolder">Deskripsi Galeri</label>
                                 <div className="col-sm-12">
-                                    <textarea className='form-control' placeholder='isi deskripsi foto disini' name="deskripsi" id="" rows="10" onChange={e => setIsiGaleri(e.target.value)} value={isi_galleri}></textarea>
+                                    <textarea className='form-control' placeholder='isi deskripsi foto disini' name="deskripsi" id="" rows="10" onChange={e => setIsiGaleri(e.target.value)} value={isi_galleri} onBlur={() => simpleValidator.current.showMessageFor("isi_galleri")}></textarea>
+                                    {simpleValidator.current.message("isi_galleri", isi_galleri, "required|min:5|max:5000", { className: "text-danger" })}
                                     {/* <small className='text-danger'>*Maksimal 160 Karakter</small> */}
                                 </div>
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Upload Gambar</label>
+                                <label htmlFor="staticEmail" className="col-sm-4 col-form-label font-weight-bolder">Upload Gambar</label>
                                 {/* <div className="col-sm-12">
                                     <div {...getRootProps({ className: 'dropzone' })} style={{ background: '#f3f6f9', border: ' 1px dashed #3699FF', height: '100px' }}>
                                         <input {...getInputProps()} />
@@ -648,6 +690,7 @@ const EditGaleri = ({ token }) => {
                                                             <div className="position-relative">
                                                                 <label
                                                                     className="circle-bottom"
+                                                                    id={`inputGroupFile${i}`}
                                                                     // htmlFor={`inputGroupFile${i}`}
                                                                     onClick={() => onDeleteImage(i)}
                                                                 >
@@ -689,7 +732,7 @@ const EditGaleri = ({ token }) => {
                                                 </button>
                                             </div>
 
-                                            <div className="mt-3 col-sm-3 text-muted">
+                                            <div className="mt-3 col-sm-6 col-md-6 col-lg-7 col-xl-3 text-muted">
                                                 <p>Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar.</p>
                                             </div>
                                         </div>
@@ -705,7 +748,7 @@ const EditGaleri = ({ token }) => {
                                     <select name="" id="" className='form-control' value={kategori_id} onChange={e => setKategoriId(e.target.value)} onBlur={e => { setKategoriId(e.target.value); simpleValidator.current.showMessageFor('kategori_id') }} >
                                         <option selected disabled value=''>-- Galeri --</option>
                                         {!kategori || (kategori && kategori.length === 0) ? (
-                                            <option value="">Data kosong</option>
+                                            <option value="">Data Tidak Ditemukan</option>
                                         ) : (
                                             kategori && kategori.kategori && kategori.kategori.map((row) => {
                                                 return (
@@ -732,7 +775,7 @@ const EditGaleri = ({ token }) => {
                                         value={tag}
                                         onChange={(data) => handleTag(data)}
                                         name="fruits"
-                                        placeHolder="Isi Tag disini dan Enter"
+                                        placeHolder="Isi Tag disini"
                                     // onBlur={() => simpleValidator.current.showMessageFor('tag')}
                                     />
                                     {

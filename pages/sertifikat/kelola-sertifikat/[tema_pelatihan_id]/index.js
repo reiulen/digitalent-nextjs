@@ -8,6 +8,7 @@ import Pagination from "react-js-pagination";
 import { wrapper } from "../../../../redux/store";
 import { getSession } from "next-auth/client";
 import { getDetailSertifikat } from "../../../../redux/actions/sertifikat/kelola-sertifikat.action";
+import Cookies from "js-cookie";
 
 const KelolaSertifikatNamaPelatihanID = dynamic(
   () =>
@@ -24,7 +25,6 @@ const KelolaSertifikatNamaPelatihanID = dynamic(
 
 export default function KelokaSertifikatPage(props) {
   const session = props.session.user.user.data;
-
   return (
     <>
       <div className="d-flex flex-column flex-root">
@@ -41,21 +41,21 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (!session) {
         return {
           redirect: {
-            destination: "/login/admin",
+            destination: "http://dts-dev.majapahit.id/login/admin",
             permanent: false,
           },
         };
       }
-
+      // const id = Cookies.get("tema_pelatihan_id");
+      // console.log(req.cookies.tema_pelatihan_id, " ini id");
+      // sessionStorage.getItem()
       await store.dispatch(
         getDetailSertifikat(
-          query.tema_pelatihan_id,
+          query.id ? query.id : req.cookies.tema_pelatihan_id,
           query.page,
           query.keyword,
           query.limit,
-          query.publish,
-          query.startdate,
-          query.enddate,
+          query.status,
           session.user.user.data.token
         )
       );

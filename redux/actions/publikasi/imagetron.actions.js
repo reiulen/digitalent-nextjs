@@ -48,7 +48,6 @@ export const getAllImagetron = (page = 1, keyword = "", limit = 5, publish = nul
                 Authorization: "Bearer " + token,
             },
         };
-        console.log("GetAll Imagetron actions :", config)
 
         const data = await axios.get(link, config);
 
@@ -60,7 +59,7 @@ export const getAllImagetron = (page = 1, keyword = "", limit = 5, publish = nul
     } catch (error) {
         dispatch({
             type: IMAGETRON_FAIL,
-            payload: error.message
+            payload: error.response.data.message
         })
     }
 }
@@ -76,8 +75,6 @@ export const getDetailImagetron = (id, token) => async (dispatch) => {
         };
 
         const { data } = await axios.get(link, config);
-        console.log("Detail Imagetron Action : ", data)
-
         dispatch({
             type: DETAIL_IMAGETRON_SUCCESS,
             payload: data.data,
@@ -104,9 +101,7 @@ export const newImagetron = (imagetronData, token) => async (dispatch) => {
                 Authorization: "Bearer " + token,
             },
         };
-
         const { data } = await axios.post(process.env.END_POINT_API_PUBLIKASI + 'api/imagetron', imagetronData, config)
-        console.log("Data IMAGETRON : ", data)
 
         dispatch({
             type: NEW_IMAGETRON_SUCCESS,
@@ -157,7 +152,6 @@ export const deleteImagetron = (id, token) => async (dispatch) => {
                 Authorization: "Bearer " + token,
             },
         };
-        console.log("Delete Imagetron actions :", config)
 
         const { data } = await axios.delete(process.env.END_POINT_API_PUBLIKASI + "api/imagetron/" + id, config)
 
@@ -165,10 +159,6 @@ export const deleteImagetron = (id, token) => async (dispatch) => {
             type: DELETE_IMAGETRON_SUCCESS,
             payload: data.status
         })
-
-        // console.log("delete")
-        // console.log(data)
-
     } catch (error) {
         dispatch({
             type: DELETE_IMAGETRON_FAIL,

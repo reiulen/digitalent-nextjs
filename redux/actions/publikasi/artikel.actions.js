@@ -33,39 +33,36 @@ export const getAllArtikel =
     enddate = null,
     token
   ) =>
-  async dispatch => {
-    try {
-      dispatch({ type: ARTIKEL_REQUEST });
+    async dispatch => {
+      try {
+        dispatch({ type: ARTIKEL_REQUEST });
+        let link =
+          process.env.END_POINT_API_PUBLIKASI + `api/artikel?page=${page}`;
+        if (keyword) link = link.concat(`&keyword=${keyword}`);
+        if (limit) link = link.concat(`&limit=${limit}`);
+        if (publish) link = link.concat(`&publish=${publish}`);
+        if (startdate) link = link.concat(`&startdate=${startdate}`);
+        if (enddate) link = link.concat(`&enddate=${enddate}`);
 
-      // console.log (`Artikel: ${token}`)
+        const config = {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        };
 
-      let link =
-        process.env.END_POINT_API_PUBLIKASI + `api/artikel?page=${page}`;
-      if (keyword) link = link.concat(`&keyword=${keyword}`);
-      if (limit) link = link.concat(`&limit=${limit}`);
-      if (publish) link = link.concat(`&publish=${publish}`);
-      if (startdate) link = link.concat(`&startdate=${startdate}`);
-      if (enddate) link = link.concat(`&enddate=${enddate}`);
+        const { data } = await axios.get(link, config);
 
-      const config = {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      };
-
-      const { data } = await axios.get(link, config);
-
-      dispatch({
-        type: ARTIKEL_SUCCESS,
-        payload: data,
-      });
-    } catch (error) {
-      dispatch({
-        type: ARTIKEL_FAIL,
-        payload: error.message,
-      });
-    }
-  };
+        dispatch({
+          type: ARTIKEL_SUCCESS,
+          payload: data,
+        });
+      } catch (error) {
+        dispatch({
+          type: ARTIKEL_FAIL,
+          payload: error.response.data.message,
+        });
+      }
+    };
 
 export const getDetailArtikel = (id, token) => async dispatch => {
   try {
@@ -108,13 +105,10 @@ export const newArtikel = (artikelData, token) => async dispatch => {
       artikelData,
       config
     );
-
     dispatch({
       type: NEW_ARTIKEL_SUCCESS,
       payload: data,
     });
-
-    // console.log(artikelData)
   } catch (error) {
     dispatch({
       type: NEW_ARTIKEL_FAIL,
@@ -143,8 +137,6 @@ export const updateArtikel = (artikelData, token) => async dispatch => {
       type: UPDATE_ARTIKEL_SUCCESS,
       payload: data,
     });
-
-    // console.log (`from artikel action ${data}`)
   } catch (error) {
     dispatch({
       type: UPDATE_ARTIKEL_FAIL,
@@ -162,9 +154,6 @@ export const deleteArtikel = (id, token) => async dispatch => {
         Authorization: "Bearer " + token,
       },
     };
-
-    console.log(`token-delete: ${token}`);
-
     const { data } = await axios.delete(
       process.env.END_POINT_API_PUBLIKASI + `api/artikel/${id}`,
       config

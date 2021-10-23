@@ -1,97 +1,262 @@
 .test * {
-    margin-bottom: 0px;
+  margin-bottom: 0px;
 }
 
-/* @font-face {
-    font-family: "futura"; */
-/* src: url('../../../public/assets/font/Futura-Heavy-font.ttf'); */
-/* font-style: ; */
-/* font-weight: 800; */
-/* font-display: swap; */
-/* }  */
-
-
 .futura {
-    font-family: 'futura';
+  font-family: "futura";
 }
 
 .tandatangan {
-    overflow: inherit
+  overflow: inherit;
 }
 
 .h-100px {
-    height: auto !important
+  height: auto !important;
 }
 
 .a4-paper {
-    height: 21cm/2;
-    width: 29.7cm/2;
+  height: 595px !important;
+  width: 842px !important;
 }
 
 .a4-font-header {
-    font-size: 4.8vw;
+  font-size: 4.8vw;
 }
 
 .a4-font-normal {
-    font-size: 3.8vw;
+  font-size: 3.8vw;
 }
 
-.responsive-margin {
-    margin-top: 35px;
+.responsive-margin-peserta {
+  top: 38px !important;
 }
 
-.responsive-font-size {
-    font-size: 3vw;
+.responsive-margin-publish {
+  top: 42px;
+}
+
+.responsive-font-size-peserta {
+  font-size: 8px !important;
 }
 
 .responsive-width {
-    width: 842px !important;
-    height: 595px !important;
+  width: 842px !important;
+  height: 595px !important;
 }
 
-@media(min-width: 768px) {
-    .responsive-margin {
-        margin-top: 115px;
-    }
+.responsive-nomor-sertifikat {
+  top: 10%;
+  left: 10%;
+}
 
-    .responsive-font-size {
-        font-size: 1.5vw;
-    }
+.responsive-date-from {
+  top: 95px;
+  left: 59%;
+}
+
+.responsive-date-from-without-background {
+  top: 93px;
+  left: 59%;
+}
+
+.responsive-year {
+  top: 105px;
+  left: 60%;
+}
+
+.responsive-year-without-background {
+  top: 102px;
+  left: 60%;
+}
+
+.responsive-date-text {
+  font-size: 5px;
+}
+
+.responsive-font-size-nama-peserta {
+  font-size: 12px;
+}
+
+.responsive-font-size-sertifikat {
+  font-size: 16px;
+}
+
+.responsive-margin-without-background {
+  top: 38px;
+}
+
+@media (min-width: 768px) {
+  .responsive-margin-peserta {
+    top: 120px !important;
+  }
+
+  .responsive-font-size-peserta {
+    font-size: 16px !important;
+  }
+
+  .responsive-margin-publish {
+    top: 135px;
+  }
+
+  .responsive-date-from {
+    top: 260px;
+  }
+
+  .responsive-date-from-without-background {
+    top: 252px;
+    left: 59%;
+  }
+
+  .responsive-date-text {
+    font-size: 12px;
+  }
+
+  .responsive-year {
+    top: 287px;
+    left: 60%;
+  }
+
+  .responsive-year-without-background {
+    top: 278px;
+    left: 60%;
+  }
+
+  .responsive-font-size-nama-peserta {
+    font-size: 16px;
+  }
+
+
+
+  .responsive-font-size-sertifikat {
+    font-size: 24px;
+  }
+
+  .responsive-margin-without-background {
+    top: 120px;
+  }
+}
+
+
+#sertifikat-ck-editor .ck-editor__editable_inline {
+  min-height: 46px;
+}
+
+#syllabus-ck-editor .ck-editor__editable_inline {
+  min-height: 46px;
 }
 
 @media (min-width: 992px) {
-    .h-100px {
-        height: 100px !important
-    }
+  .h-100px {
+    height: 100px !important;
+  }
 
-    .tandatangan {
-        overflow: auto;
-    }
+  .tandatangan {
+    overflow: auto;
+  }
 
-    .a4-font-header {
-        font-size: 1.8vw;
-    }
+  .a4-font-header {
+    font-size: 1.8vw;
+  }
 
-    .a4-font-normal {
-        font-size: 0.75vw;
-    }
+  .a4-font-normal {
+    font-size: 0.75vw;
+  }
 
-    .responsive-margin {
-        margin-top: 140px;
-    }
+  .responsive-margin-peserta {
+    top: 110px !important;
+  }
 
-    .responsive-font-size {
-        font-size: 1.5vw;
-    }
+  .responsive-font-size-peserta {
+    font-size: 20px !important;
+  }
+
+  .responsive-margin-publish {
+    top: 125px;
+  }
+
+  .responsive-date-from {
+    top: 245px;
+  }
+
+  .responsive-date-from-without-background {
+    top: 237px;
+    left: 59%;
+  }
+
+  .responsive-date-text {
+    font-size: 14px;
+  }
+
+  .responsive-year {
+    top: 270px;
+    left: 60%;
+  }
+
+  .responsive-year-without-background {
+    top: 262px;
+    left: 60%;
+  }
+
+  .responsive-font-size-nama-peserta {
+    font-size: 16px;
+  }
+
+  .responsive-font-size-sertifikat {
+    font-size: 24px;
+  }
+
+  .responsive-margin-without-background {
+    top: 107px;
+  }
+
 }
 
+
 @media (min-width: 1200px) {
-    .responsive-margin {
-        margin-top: 143px;
-    }
+  .responsive-margin-peserta {
+    top: 135px !important;
+  }
 
-    .responsive-font-size {
-        font-size: 1vw;
-    }
+  .responsive-font-size-peserta {
+    font-size: 24px !important;
+  }
 
+  .responsive-margin-publish {
+    top: 155px !important;
+  }
+
+  .responsive-date-from {
+    top: 307px;
+  }
+
+  .responsive-date-from-without-background {
+    top: 298px;
+    left: 59%;
+  }
+
+  .responsive-font-size-nama-peserta {
+    font-size: 20px;
+  }
+
+  .responsive-date-text {
+    font-size: 16px;
+  }
+
+  .responsive-year {
+    top: 340px;
+    left: 60%;
+  }
+
+  .responsive-year-without-background {
+    top: 328px;
+    left: 60%;
+  }
+
+  .responsive-font-size-sertifikat {
+    font-size: 32px;
+  }
+
+  .responsive-margin-without-background {
+    top: 138px;
+  }
 }

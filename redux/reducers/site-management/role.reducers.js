@@ -1,42 +1,90 @@
 import {
-  ROLE_REQUEST,
-  ROLE_SUCCESS,
-  ROLE_FAIL,
-  NEW_ROLE_REQUEST,
-  NEW_ROLE_SUCCESS,
-  NEW_ROLE_RESET,
-  NEW_ROLE_FAIL,
-  UPDATE_ROLE_REQUEST,
-  UPDATE_ROLE_SUCCESS,
-  UPDATE_ROLE_RESET,
-  UPDATE_ROLE_FAIL,
-  DELETE_ROLE_REQUEST,
-  DELETE_ROLE_SUCCESS,
-  DELETE_ROLE_RESET,
-  DELETE_ROLE_FAIL,
-  DETAIL_ROLE_REQUEST,
-  DETAIL_ROLE_SUCCESS,
-  DETAIL_ROLE_FAIL,
+  ROLES_REQUEST,
+  ROLES_SUCCESS,
+  ROLES_FAIL,
+  DETAIL_ROLES_REQUEST,
+  DETAIL_ROLES_SUCCESS,
+  DETAIL_ROLES_FAIL,
+  DETAIL_ROLES_RESET,
+  DELETE_ROLES_SUCCESS,
+  DELETE_ROLES_FAIL,
+  DELETE_ROLES_REQUEST,
+  DELETE_ROLES_RESET,
+  POST_ROLES_REQUEST,
+  POST_ROLES_SUCCESS,
+  POST_ROLES_FAIL,
+  POST_ROLES_RESET,
+  UPDATE_ROLES_REQUEST,
+  UPDATE_ROLES_SUCCESS,
+  UPDATE_ROLES_FAIL,
+  UPDATE_ROLES_RESET,
+  LIMIT_CONFIGURATION,
+  SET_PAGE,
+  SEARCH_COORPORATION,
   CLEAR_ERRORS,
+  RELOAD_TABLE,
 } from "../../types/site-management/role.type";
 
-export const allRolesReducer = (state = { role: [] }, action) => {
+const statuslist = {
+  idle: "idle",
+  process: "process",
+  success: "success",
+  error: "error",
+};
+
+const initialState = {
+  page: 1,
+  limit: 5,
+  cari: "",
+  status: statuslist.idle,
+  reload: true,
+};
+
+export const allRolesReducer = (state = initialState, action) => {
   switch (action.type) {
-    case ROLE_REQUEST:
+    case RELOAD_TABLE:
       return {
-        loading: true,
+        ...state,
+        reload: state.reload ? false : true,
+      };
+    case ROLES_REQUEST:
+      return {
+        ...state,
+        status: statuslist.process,
       };
 
-    case ROLE_SUCCESS:
+    case ROLES_SUCCESS:
       return {
-        loading: false,
-        role: action.payload.data,
+        ...state,
+        status: statuslist.success,
+        data: action.payload.data,
       };
 
-    case ROLE_FAIL:
+    case ROLES_FAIL:
       return {
-        loading: false,
-        error: action.payload,
+        ...state,
+        status: statuslist.error,
+        error: null,
+      };
+
+    case SEARCH_COORPORATION:
+      return {
+        ...state,
+        cari: action.text,
+        page: 1,
+      };
+
+    case SET_PAGE:
+      return {
+        ...state,
+        page: action.page,
+      };
+
+    case LIMIT_CONFIGURATION:
+      return {
+        ...state,
+        limit: action.limitValue,
+        page: 1,
       };
 
     case CLEAR_ERRORS:
@@ -51,25 +99,25 @@ export const allRolesReducer = (state = { role: [] }, action) => {
 
 export const newRolesReducer = (state = { role: {} }, action) => {
   switch (action.type) {
-    case NEW_ROLE_REQUEST:
+    case POST_ROLES_REQUEST:
       return {
         loading: true,
       };
 
-    case NEW_ROLE_SUCCESS:
+    case POST_ROLES_SUCCESS:
       return {
         loading: false,
         success: action.payload.message,
         role: action.payload.data,
       };
 
-    case NEW_ROLE_FAIL:
+    case POST_ROLES_FAIL:
       return {
         loading: false,
-        error: action.payload,
+        error: null,
       };
 
-    case NEW_ROLE_RESET:
+    case POST_ROLES_RESET:
       return {
         success: false,
       };
@@ -86,21 +134,21 @@ export const newRolesReducer = (state = { role: {} }, action) => {
 
 export const detailRolesReducer = (state = { role: {} }, action) => {
   switch (action.type) {
-    case DETAIL_ROLE_REQUEST:
+    case DETAIL_ROLES_REQUEST:
       return {
         loading: true,
       };
 
-    case DETAIL_ROLE_SUCCESS:
+    case DETAIL_ROLES_SUCCESS:
       return {
         loading: false,
         role: action.payload,
       };
 
-    case DETAIL_ROLE_FAIL:
+    case DETAIL_ROLES_FAIL:
       return {
         loading: false,
-        error: action.payload,
+        error: null,
       };
 
     case CLEAR_ERRORS:
@@ -116,27 +164,27 @@ export const detailRolesReducer = (state = { role: {} }, action) => {
 
 export const updateRolesReducer = (state = {}, action) => {
   switch (action.type) {
-    case UPDATE_ROLE_REQUEST:
+    case UPDATE_ROLES_REQUEST:
       return {
         loading: true,
       };
 
-    case UPDATE_ROLE_SUCCESS:
+    case UPDATE_ROLES_SUCCESS:
       return {
         loading: false,
         isUpdated: action.payload,
       };
 
-    case UPDATE_ROLE_RESET:
+    case UPDATE_ROLES_RESET:
       return {
         loading: false,
         isUpdated: false,
       };
 
-    case UPDATE_ROLE_FAIL:
+    case UPDATE_ROLES_FAIL:
       return {
         loading: false,
-        error: action.payload,
+        error: null,
       };
 
     case CLEAR_ERRORS:
@@ -152,27 +200,27 @@ export const updateRolesReducer = (state = {}, action) => {
 
 export const deleteRolesReducer = (state = {}, action) => {
   switch (action.type) {
-    case DELETE_ROLE_REQUEST:
+    case DELETE_ROLES_REQUEST:
       return {
         loading: true,
       };
 
-    case DELETE_ROLE_SUCCESS:
+    case DELETE_ROLES_SUCCESS:
       return {
         loading: false,
         isDeleted: action.payload,
       };
 
-    case DELETE_ROLE_RESET:
+    case DELETE_ROLES_RESET:
       return {
         loading: false,
         isDeleted: false,
       };
 
-    case DELETE_ROLE_FAIL:
+    case DELETE_ROLES_FAIL:
       return {
         loading: false,
-        error: action.payload,
+        error: null,
       };
 
     case CLEAR_ERRORS:

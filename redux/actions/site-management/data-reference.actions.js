@@ -57,7 +57,6 @@ export const getAllDataReference = (token) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: DATA_REFERENCE_FAIL,
-      payload: error.response.data.message,
     });
   }
 };
@@ -131,8 +130,7 @@ export const getDetailDataReference = (id, token) => async (dispatch) => {
     };
 
     let link =
-      process.env.END_POINT_API_SITE_MANAGEMENT +
-      `api/setting-page/detail/${id}`;
+      process.env.END_POINT_API_SITE_MANAGEMENT + `api/reference/detail/${id}`;
 
     const { data } = await axios.get(link, config);
 
@@ -143,7 +141,6 @@ export const getDetailDataReference = (id, token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: DETAIL_DATA_REFERENCE_FAIL,
-      payload: error.response.data.message,
     });
   }
 };

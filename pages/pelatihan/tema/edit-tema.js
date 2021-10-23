@@ -3,6 +3,7 @@ import React from "react";
 import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
 // import EditTheme from "../../../components/content/pelatihan/theme/edit-theme";
+import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
 import { getDetailTheme } from "../../../redux/actions/pelatihan/theme.actions";
 import { dropdownAkademi } from "../../../redux/actions/pelatihan/function.actions";
 
@@ -34,10 +35,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
-      if (!session) {
+      const middleware = middlewareAuthAdminSession(session);
+      if (!middleware.status) {
         return {
           redirect: {
-            destination: "/login/admin",
+            destination: middleware.redirect,
             permanent: false,
           },
         };

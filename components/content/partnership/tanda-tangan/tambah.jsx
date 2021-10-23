@@ -111,7 +111,7 @@ const TambahTandaTangan = ({token}) => {
   };
 
   const notify = (value) =>
-    toast.info(`🦄 ${value}`, {
+    toast.info(`${value}`, {
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,
@@ -200,12 +200,11 @@ const TambahTandaTangan = ({token}) => {
                         simpleValidator.current.showMessageFor("tandaTangan")
                       }
                     />
-                    {simpleValidator.current.message(
-                      "tandaTangan",
-                      tandaTangan,
-                      "required",
-                      { className: "text-danger" }
-                    )}
+                    {error.tandaTangan ? (
+                  <p className="error-text">{error.tandaTangan}</p>
+                ) : (
+                  ""
+                )}
                   </div>
                   <div className="d-flex align-items-center mt-5">
                     <a

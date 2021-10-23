@@ -42,7 +42,6 @@ const UbahPage = ({ token }) => {
     pagesUpdate,
     isUpdateSuccess,
   } = useSelector((state) => state.updatePage);
-  console.log("pages detail", pages);
 
   const [isi_artikel, setIsiArtikel] = useState(pages.content);
   const [pageName, setPageName] = useState(pages.name);
@@ -61,7 +60,7 @@ const UbahPage = ({ token }) => {
   };
 
   const notify = (value) =>
-    toast.info(`🦄 ${value}`, {
+    toast.info(`${value}`, {
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,

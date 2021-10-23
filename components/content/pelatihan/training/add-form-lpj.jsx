@@ -46,7 +46,6 @@ const AddFormLpj = () => {
   };
 
   const submitHandler = (e) => {
-    console.log(formLpj);
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
     } else {

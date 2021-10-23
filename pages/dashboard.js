@@ -1,4 +1,5 @@
 import { getSession } from "next-auth/client";
+import { middlewareAuthAdminSession } from "../utils/middleware/authMiddleware";
 
 export default function DashboardPage() {
   return (
@@ -10,10 +11,12 @@ export default function DashboardPage() {
 
 export async function getServerSideProps(context) {
   const session = await getSession({ req: context.req });
-  if (!session) {
+
+  const middleware = middlewareAuthAdminSession(session);
+  if (!middleware.status) {
     return {
       redirect: {
-        destination: "/login/admin",
+        destination: middleware.redirect,
         permanent: false,
       },
     };

@@ -284,7 +284,8 @@ select,
 optgroup,
 textarea {
   margin: 0;
-  font-family: inherit;
+  /* font-family: Poppins; */
+  /* font-family: inherit; */
   font-size: inherit;
   line-height: inherit;
 }
@@ -4016,13 +4017,13 @@ fieldset:disabled a.btn {
 }
 .btn-white-navbar:hover {
   color: var(--white);
-  background-color: var(--primary);
-  border-color: var(--primary);
+  background-color: #007CFF;
+  border-color: #007CFF;
 }
 .btn-white-navbar:focus, .btn-white-navbar.focus {
   color: var(--white);
-  background-color: var(--primary);
-  border-color: var(--primary);
+  background-color: #007CFF;
+  border-color: #007CFF;
   -webkit-box-shadow: 0 0 0 0.2rem rgba(220, 221, 224, 0.5);
   box-shadow: 0 0 0 0.2rem rgba(220, 221, 224, 0.5);
 }
@@ -5323,7 +5324,7 @@ input[type=button].btn-block {
   color: var(--white);
   text-decoration: none;
   /* background-color: #EBEDF3; */
-  background-color: var(--primary);
+  background-color: #007CFF;
 }
 
 .dropdown-item.active,
@@ -5331,7 +5332,7 @@ input[type=button].btn-block {
   color: #ffffff;
   /* color: var(--white); */
   text-decoration: none;
-  background-color: var(--primary);
+  background-color: #007CFF;
   /* background-color: #3699FF; */
 }
 

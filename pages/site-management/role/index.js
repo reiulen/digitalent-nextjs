@@ -3,6 +3,7 @@ import dynamic from "next/dynamic";
 import LoadingPage from "../../../components/LoadingPage";
 import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
+import { getAllRoles } from "../../../redux/actions/site-management/role.actions";
 
 const ListRole = dynamic(
   () => import("../../../components/content/site-management/role/list-role"),
@@ -32,20 +33,13 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (!session) {
         return {
           redirect: {
-            destination: "/login/admin",
+            destination: "http://dts-dev.majapahit.id/login/admin",
             permanent: false,
           },
         };
       }
 
-      // await store.dispatch(
-      //   getAllRoles(
-      //     query.page,
-      //     query.keyword,
-      //     query.limit,
-      //     session.user.user.data.token
-      //   )
-      // );
+      await store.dispatch(getAllRoles(session.user.user.data.token));
 
       return {
         props: { session, title: "List Role - Site Management" },

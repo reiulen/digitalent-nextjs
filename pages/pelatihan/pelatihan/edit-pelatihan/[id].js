@@ -34,11 +34,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req, params }) => {
       const session = await getSession({ req });
-      console.log(params);
+      
       if (!session) {
         return {
           redirect: {
-            destination: "/login/admin",
+            destination: "http://dts-dev.majapahit.id/login/admin",
             permanent: false,
           },
         };

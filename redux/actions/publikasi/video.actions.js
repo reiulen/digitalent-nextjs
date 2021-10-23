@@ -27,6 +27,7 @@ import {
     PLAY_VIDEO_FAIL,
 
     CLEAR_ERRORS,
+    SET_FILTER_CARD
 } from '../../types/publikasi/video.type'
 
 import axios from 'axios'
@@ -70,7 +71,7 @@ export const getAllVideo = (page = 1, keyword = "", limit = 5, publish = null, s
     } catch (error) {
         dispatch({
             type: VIDEO_FAIL,
-            payload: error.message
+            payload: error.response.data.message
         })
     }
 }
@@ -85,11 +86,7 @@ export const getDetailVideo = (id, token) => async (dispatch) => {
         };
 
         let link = process.env.END_POINT_API_PUBLIKASI + `api/video/${id}`
-
         const { data } = await axios.get(link, config)
-
-        // console.log ("test")
-        // console.log (data)
 
         dispatch({
             type: DETAIL_VIDEO_SUCCESS,
@@ -132,9 +129,6 @@ export const newVideo = (videoData, token) => async (dispatch) => {
             type: NEW_VIDEO_SUCCESS,
             payload: data
         })
-
-        // console.log("Action Add Video :", videoData)
-
     } catch (error) {
         dispatch({
             type: NEW_VIDEO_FAIL,
@@ -149,21 +143,6 @@ export const updateVideo = (videoData, token) => async (dispatch) => {
 
         let link = process.env.END_POINT_API_PUBLIKASI + `api/video/${videoData.id}`
 
-        // const dataToSend ={
-        //     users_id: 3,
-        //     judul_video: videoData.judul_video,
-        //     isi_video: videoData.isi_video,
-        //     url_video: "www.youtube.com/watch?v=JxPj3GAYYZ0&ab_channel=Epitaph",
-        //     gambar: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAPFBMVEUAAAAcEDAcEDAXBiVlPQh4Vwu3sQ2dhwxjPgaRIzvACxv4OUr/bnaBDiGkCxr/o6HmCyHv2sigO1f///8kjhRLAAAAA3RSTlMAQHBaCvrnAAAAAWJLR0QTDLtclgAAAAd0SU1FB+IDBwApN7HUaKQAAAB0SURBVBjTXc5REsIwCARQ0lUrSyHY+x/WtDGNykw+eLOzQWQM5H++BcAP4HZ/ADPY9hVPDMK5K2gbZoPT4UPg4dwqrVqeAnVaWn1ZssPuwUyzzLjgkGT4p6QLGePj3Q+JEejSeuI6HqoOnYGytNNKe0sReQMksgUhPSgEAAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAxOC0wMy0wNlQyMzo0MTo1NSswMTowMJImYPsAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMTgtMDMtMDZUMjM6NDE6NTUrMDE6MDDje9hHAAAAAElFTkSuQmCC",
-        //     // gambar: videoData.gambar,
-        //     tag: ["check"],
-        //     _method: "put",
-        //     publish: 1,
-        //     kategori_id: 76
-        // }
-
-        // const { data } = await axios.post (link, dataToSend)
-
         const config = {
             headers: {
                 Authorization: 'Bearer ' + token,
@@ -171,14 +150,10 @@ export const updateVideo = (videoData, token) => async (dispatch) => {
         };
 
         const { data } = await axios.post(link, videoData, config)
-        console.log("Update Data : ", data)
         dispatch({
             type: UPDATE_VIDEO_SUCCESS,
             payload: data
         })
-        // console.log ("check")
-        // console.log("Video Data : ", videoData)
-
     } catch (error) {
         dispatch({
             type: UPDATE_VIDEO_FAIL,
@@ -222,12 +197,10 @@ export const playVideo = (videoData, token) => async (dispatch) => {
                 Authorization: 'Bearer ' + token,
             },
         };
-        
+
         let link = process.env.END_POINT_API_PUBLIKASI + `api/video/play/${videoData.id}`
-        
         const { data } = await axios.post(link, videoData, config)
-        // console.log("Play Video Actions :", data)
-        
+
         dispatch({
             type: PLAY_VIDEO_SUCCESS,
             payload: data
@@ -247,3 +220,63 @@ export const clearErrors = () => async (dispatch) => {
         type: CLEAR_ERRORS
     })
 }
+
+// Card
+// export const changeStatusCard = (data) => {
+//     return {
+//         type: SET_FILTER_CARD,
+//         payload: data
+//     }
+// }
+
+// export const filterCard = (token) => {
+//     return async (dispatch, getState) => {
+//         dispatch({ type: VIDEO_SUCCESS });
+
+//         let pageState = getState().allFilter.page || 1;
+//         let cardState = getState().allFilter.card || "";
+//         let limitState = getState().allFilter.limit || 5;
+//         let keywordState = getState().allFilter.keyword || "";
+//         let startDateState = getState().allFilter.startdate || null;
+//         let endDateState = getState().allFilter.enddate || null;
+
+//         const params = {
+//             page: pageState,
+//             card: cardState,
+//             limit: limitState,
+//             keyword: keywordState,
+//             startDate: startDateState,
+//             endDate: endDateState
+//         }
+
+//         try {
+//             const { data } = await axios.get(
+//                 process.env.END_POINT_API_PUBLIKASI + `api/video`,
+//                 {
+//                     params,
+//                     headers: {
+//                         authorization: `Bearer ${token}`,
+//                     },
+//                 }
+//             )
+//             const sortData = await axios.get(
+//                 process.env.END_POINT_API_PUBLIKASI + `api/video?page=1`,
+//                 {
+//                     params,
+//                     headers: {
+//                         authorization: `Bearer ${token}`,
+//                     },
+//                 }
+//             )
+
+//             console.log("Cek Data Video :",data)
+//             // let totalData = sortData.data
+
+//         } catch (error) {
+//             dispatch({
+//                 type: VIDEO_FAIL,
+//                 payload: error.message
+//             })
+//         }
+//     }
+// }

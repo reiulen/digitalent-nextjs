@@ -1,120 +1,257 @@
 .text-dark {
-    color: black !important;
+  color: black !important;
 }
 
-.bg-white{
-    background-color: white;
+.bg-white {
+  background-color: white;
 }
 
-.rectangle-primary{
-    background-color: #215480;
-    fill: #215480;
-    color: #215480;
-    width: 180px;
-    height: 5px;
-    border: #215480;
-    border-radius: 5px;
+.rectangle-primary {
+  background-color: #215480;
+  fill: #215480;
+  color: #215480;
+  width: 180px;
+  height: 5px;
+  border: #215480;
+  border-radius: 5px;
 }
 
 .text-link-tab:link {
-    color: black;
-    text-decoration: none;
+  color: black;
+  text-decoration: none;
 }
 
 .text-link-tab:hover {
-    color: black;
-    text-decoration: none;
+  color: black;
+  text-decoration: none;
 }
 
 .text-link-tab:active {
-    color: black;
-    text-decoration: none;
+  color: black;
+  text-decoration: none;
 }
 
-/* .navdropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
-    background-color:#215480 !important;
-} */
-
-.navdropdown{
-    background-color: white !important; 
+.navdropdown {
+  background-color: white !important;
 }
 
-.navdropdown :hover{
-    background-color: #215480 !important;
-    color: white;
+.navdropdown :hover {
+  background-color: #007cff !important;
+  color: white;
 }
 
-.navdropdown :focus{
-    background-color: #215480 !important;
-    color: white;
+.navdropdown :focus {
+  background-color: #007cff !important;
+  color: white;
 }
 
-.navdropdown :active{
-    background-color: #215480 !important;
-    color: white;
+.navdropdown :active {
+  background-color: #007cff !important;
+  color: white;
 }
 
 .navdropdown-child {
-    background-color: white !important;
-    color: gray;
+  background-color: white !important;
+  color: gray;
 }
 
 .navdropdown-child:hover {
-    background-color: #215480 !important;
-    color: white;
+  background-color: #007cff !important;
+  color: white;
 }
 
 .navdropdown-child:focus {
-    background-color: #215480 !important;
-    color: white;
+  background-color: #007cff !important;
+  color: white;
 }
 
 .navdropdown-child:active {
-    background-color: #215480 !important;
-    color: white;
+  background-color: #007cff !important;
+  color: white;
 }
 
 .clickable {
-    cursor: pointer;
-    -webkit-user-select: none; /* Safari */        
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* IE10+/Edge */
-    user-select: none; /* Standard */
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .img-grayed-out {
-    filter: grayscale(100%);
-    opacity: 50%;
+  filter: grayscale(100%);
+  opacity: 50%;
 }
 
 .items-carousel-space-60px {
-   padding-right: 1000px;
-   padding-left: 1000px;
-   margin-right: 1000px;
-   margin-left: 1000px;
+  padding-right: 1000px;
+  padding-left: 1000px;
+  margin-right: 1000px;
+  margin-left: 1000px;
 }
 
-/* .react-multi-carousel-item{
-    max-width: 40rem;
-    min-width:40rem;
-} */
-
-/* the slides */
 .slick-slide {
-    margin: 0 1000px;
+  margin: 0 1000px;
 }
-/* the parent */
+
 .slick-list {
-    margin: 0 -1000px;
+  margin: 0 -1000px;
 }
 
 .rti--container {
-    --rti-bg: "#fffff" !important;
-    --rti-border: "#ccc";
-    --rti-main: "#3182ce";
-    --rti-radius: "0.375rem";
-    --rti-s: "0.5rem"; /* spacing */
-    --rti-tag: "#edf2f7";
-    --rti-tag-remove: "#e53e3e";
+  --rti-bg: "#fffff" !important;
+  --rti-border: "#ccc";
+  --rti-main: "#3182ce";
+  --rti-radius: "0.375rem";
+  --rti-s: "0.5rem";
+  --rti-tag: "#edf2f7";
+  --rti-tag-remove: "#e53e3e";
 }
 
+.my__carousel_main .div .ol .li {
+  background-color: red;
+  border-radius: 50%;
+  height: 10px;
+  width: 10px;
+}
+
+.dropdown-explore {
+  background: #f2f7fc;
+  border-radius: 40px;
+  padding: 3px 15px;
+  font-weight: 600;
+  font-size: 13px;
+  color: #6c6c6c;
+}
+.btn-login-peserta {
+  display: flex;
+  align-items: center;
+  padding: 8px 15px;
+  font-weight: 600;
+  font-size: 13px;
+  border: 1px solid #007cff;
+  border-radius: 19px;
+  color: #007cff;
+  margin-right: 10px;
+}
+.btn-register-peserta {
+  background-color: #007cff;
+  display: flex;
+  align-items: center;
+  padding: 8px 15px;
+  font-weight: 600;
+  font-size: 13px;
+  border: 1px solid #007cff;
+  border-radius: 19px;
+  color: white;
+  margin-right: 10px;
+}
+
+.header-dashboards {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+}
+.carousel-primarys {
+  padding-top: 70px;
+}
+.carousel-secondarys {
+  padding-top: 0px;
+}
+.carousel-primarys .splide__arrow--next,
+.carousel-primarys .splide__arrow--prev {
+  display: none !important;
+}
+
+.carousel-primarys .splide__pagination__page.is-active {
+  width: 16px;
+  height: 8px;
+  background: #007cff !important;
+  border-radius: 16px;
+  margin: 0 7px;
+}
+.carousel-primarys .splide__pagination__page {
+  width: 8px;
+  height: 8px;
+  background: #d7e1ea;
+  border-radius: 16px;
+}
+
+.carousel-secondarys .splide__pagination {
+  display: none !important;
+}
+.carousel-secondarys .splide__slider {
+  margin: 0 60px;
+}
+
+@media (max-width: 768px) {
+  .carousel-secondarys .splide__slider {
+    margin: 0 0px;
+  }
+}
+
+.card-1 {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  border: 1px solid #d7e1ea;
+  border-radius: 8px;
+  color: #adb5bd;
+  width: 100%;
+}
+.card-1.active-card-1 {
+  border: 1px solid #007cff;
+  color: white;
+  background-color: #007cff;
+}
+
+.cards-items {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  filter: drop-shadow(0px 4px 24px rgba(31, 31, 31, 0.1));
+  border: 1px solid gray;
+  margin-top: 1.5rem;
+}
+.cards-items .bottom .rounded {
+  width: 64px;
+  height: 64px;
+  filter: drop-shadow(0px 4px 8px rgba(31, 31, 31, 0.1));
+  border-radius: 50% !important;
+  position: absolute;
+  left: 20px;
+  top: -14%;
+  background-color: white;
+  overflow: hidden;
+}
+.cards-items .top {
+  min-height: 180px;
+  height: 180px;
+  background-color: blue;
+  padding: 20px;
+}
+.cards-items .top label {
+  background: #e6f2ff;
+  border-radius: 40px;
+  font-weight: 600;
+  font-size: 12px;
+  padding: 4px 12px;
+}
+.cards-items .bottom {
+  min-height: 238px;
+  height: 238px;
+  background-color: white;
+  padding: 20px;
+  position: relative;
+}
+.btn-green-rounded {
+  background: #e6fff7;
+  border-radius: 40px;
+  color: #00996a;
+  padding: 4px 12px;
+  font-weight: 600;
+  font-size: 12px;
+  margin-bottom: 0;
+}

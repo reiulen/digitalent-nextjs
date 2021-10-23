@@ -1,30 +1,48 @@
 import React from "react";
+import Image from "next/image";
 
 const TrainingReminder = () => {
    return (
-       <div className="bg-primary text-white my-5 rounded">
+       <div className="my-5 rounded" style={{backgroundColor:"#E6F2FF"}}>
            <div className="p-5">
-                <h3>
-                    Buat Pengingat Pelatihan
-                </h3>
-                <p>
+                <div className="row d-flex align-items-center">
+                    <div className="ml-3">
+                        <Image 
+                            src={`/assets/media/logo-bell.svg`}
+                            width={40}
+                            height={40}
+                        />
+                    </div>
+                    
+                    <div className="ml-3">
+                        <h4 className="font-weight-bolder text-dark">
+                            Buat Pengingat Pelatihan
+                        </h4>
+                    </div>
+                </div>
+                <p className="text-muted">
                         Buat Pengingat Pelatihan Sekarang juga.
                         Jangan Sampai Ketinggalan Informasi Terbaru.
                 </p>
-                <div>
+                <div className="row">
                     <input 
-                            type="text" 
-                            placeholder="Cari Tema"
-                            className="form-control col-12"
-                        />
+                        type="text" 
+                        placeholder="Cari Tema"
+                        className="form-control col-md-8 col-12 mb-3 rounded-pill"
+                    />
+                    <div className="col-md-3 col-12">
+                        <button className="btn btn-primary rounded-pill">
+                            Buat
+                        </button>
+                    </div>
+                    
                 </div>
                 
-                    <button className="btn btn-primary my-5">
-                        Buat Pengingat Pelatihan
-                    </button>
+                    
            </div>
         </div>
    ) 
 }
+
 
 export default TrainingReminder

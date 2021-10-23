@@ -25,7 +25,6 @@ const Artikel = dynamic(
 
 export default function ArtikelPage(props) {
   const session = props.session.user.user.data;
-  // console.log (session.token)
   return (
     <>
       <div className="d-flex flex-column flex-root">
@@ -39,14 +38,14 @@ export default function ArtikelPage(props) {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  store =>
+  (store) =>
     async ({ query, req }) => {
       // await store.dispatch(getAllArtikel(query.page, query.keyword, query.limit, query.publish, query.startdate, query.enddate))
       const session = await getSession({ req });
       if (!session) {
         return {
           redirect: {
-            destination: "/login/admin",
+            destination: "http://dts-dev.majapahit.id/login/admin",
             permanent: false,
           },
         };

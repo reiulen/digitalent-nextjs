@@ -52,7 +52,7 @@ const TambahFaq = ({token}) => {
     const [judul, setJudulPertanyaan] = useState('')
     const [jawaban, setJawaban] = useState('');
     const [kategori_id, setKategoriId] = useState('')
-    const [users_id, setUsersId] = useState(3)
+    const [users_id, setUsersId] = useState(87)
     const [pinned, setPinnedFaq] = useState(0)
     const [publish, setPublish] = useState(0)
     const [publishDate, setPublishDate] = useState(null);
@@ -61,9 +61,7 @@ const TambahFaq = ({token}) => {
     // const forceUpdate = React.useReducer(() => ({}))[1]
 
     const handleChangePublish = (e) => {
-        // setPublish(e.target.checked);
         setDisablePublishDate(!disablePublishDate)
-        // console.log (e.target.checked)
     
         if (e.target.checked === false){
             setPublishDate (null)
@@ -74,18 +72,12 @@ const TambahFaq = ({token}) => {
     };
 
     const handlePublishDate = (date) => {
-        // let result = moment(date).format("YYYY-MM-DD")
         if (disablePublishDate === false) {
-            // setPublishDate(result)
             setPublishDate(date)
-            // console.log (result)
         }
     }
 
     const handleChangePinned = (e) => {
-        // setPinnedFaq(e.target.checked);
-        // console.log (e.target.checked)
-
         if (e.target.checked === false){
             setPinnedFaq(0)
 
@@ -180,12 +172,12 @@ const TambahFaq = ({token}) => {
                 {loading ? <LoadingPage loading={loading} /> : ""}
                 <div className="card card-custom card-stretch gutter-b">
                     <div className="card-header">
-                        <h3 className="card-title font-weight-bolder text-dark">Tambah FAQ</h3>
+                        <h3 className="col-sm-4 card-title font-weight-bolder text-dark">Tambah FAQ</h3>
                     </div>
                     <div className="card-body">
                         <form onSubmit={onSubmit}>
                             <div className="form-group">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Judul Pertanyaan</label>
+                                <label htmlFor="staticEmail" className="col-sm-4 col-form-label font-weight-bolder">Judul Pertanyaan</label>
                                 <div className="col-sm-12">
                                     <input
                                         type="text"
@@ -195,7 +187,7 @@ const TambahFaq = ({token}) => {
                                         onChange={(e) => setJudulPertanyaan(e.target.value)}
                                         onBlur={() => simpleValidator.current.showMessageFor("judul pertanyaan")}
                                     />
-                                    {simpleValidator.current.message("judul pertanyaan", judul, "required|min:5|max:50", { className: "text-danger" })}
+                                    {simpleValidator.current.message("judul pertanyaan", judul, "required|min:5|max:200", { className: "text-danger" })}
                                 </div>
                             </div>
 
@@ -229,7 +221,7 @@ const TambahFaq = ({token}) => {
                                     >
                                         <option value="" disabled selected>-- FAQ --</option>
                                         {!kategori || (kategori && kategori.length === 0) ? (
-                                            <option value="">Data kosong</option>
+                                            <option value="">Data Tidak Ditemukan</option>
                                         ) : (
                                             kategori &&
                                             kategori.kategori &&

@@ -76,7 +76,7 @@ const AddCommitmentStep3 = ({ propsStep, token }) => {
     if (simpleValidator.current.allValid()) {
       const dataStep3 = {
         komitmen: commitment,
-        deskripsi: description,
+        deskripsi_komitmen: description,
       };
       dispatch(storeCommitmentStep3(dataStep3));
       const data = {
@@ -88,14 +88,14 @@ const AddCommitmentStep3 = ({ propsStep, token }) => {
       data.tema_id = data.tema_id.value;
       data.kuota_pendaftar = parseInt(data.kuota_pendaftar);
       data.kuota_peserta = parseInt(data.kuota_peserta);
-      data.batch = data.batch.value && data.batch.value;
-      data.kabupaten = data.kabupaten.value && data.kabupaten.value;
+      data.batch = data.batch.value && toString(data.batch.value);
+      data.kabupaten = data.kabupaten.label && data.kabupaten.label;
       data.level_pelatihan =
-        data.level_pelatihan.value && data.level_pelatihan.value;
-      data.mitra = data.mitra.value && data.mitra.value;
-      data.penyelenggara = data.penyelenggara.value && data.penyelenggara.value;
-      data.provinsi = data.provinsi.value && data.provinsi.value;
-      data.zonasi_id = data.zonasi_id.value && data.zonasi_id.value;
+        data.level_pelatihan.label && data.level_pelatihan.label;
+      data.mitra = data.mitra.id && toString(data.mitra.id);
+      data.penyelenggara = data.penyelenggara.label && data.penyelenggara.label;
+      data.provinsi = data.provinsi.label && data.provinsi.label;
+      data.zonasi_id = data.zonasi_id.label && data.zonasi_id.label;
       data.tuna_daksa = data.tuna_daksa ? "1" : "0";
       data.tuna_netra = data.tuna_netra ? "1" : "0";
       data.tuna_rungu = data.tuna_rungu ? "1" : "0";
@@ -111,9 +111,7 @@ const AddCommitmentStep3 = ({ propsStep, token }) => {
       data.pelatihan_selesai = moment(data.pelatihan_selesai).format(
         "YYYY-MM-DD"
       );
-      console.log(data);
       dispatch(newTrainingStep1(data, token));
-      // router.push("/pelatihan/pelatihan");
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -192,7 +190,6 @@ const AddCommitmentStep3 = ({ propsStep, token }) => {
                       onChange={(event, editor) => {
                         const data = editor.getData();
                         setDescription(data);
-                        // console.log({ event, editor, data });
                       }}
                       config={{
                         placeholder: "Silahkan Masukan Deskripsi Detail",

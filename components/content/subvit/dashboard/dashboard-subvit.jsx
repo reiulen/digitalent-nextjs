@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -12,23 +12,36 @@ import imageTrivia from "../../../../public/assets/media/logos/trivia.png";
 import {
   PieChart,
   Pie,
-  Sector,
   Cell,
   ResponsiveContainer,
   Label,
-  Legend,
+  Tooltip,
 } from "recharts";
 import { useRouter } from "next/dist/client/router";
-import { Tooltip } from "bootstrap";
-
-// import { getSession } from "next-auth/client";
+import { useSelector } from "react-redux";
 
 const DashbardSubvit = () => {
-  const data = [
-    { name: "Group A", value: 400 },
-    { name: "Group B", value: 200 },
-    { name: "Group C", value: 500 },
-  ];
+  const router = useRouter();
+
+  const { dashboard_subvit } = useSelector((state) => state.dashboardSubvit);
+
+  const data = [];
+
+  const [dataDummy] = useState(dashboard_subvit);
+
+  Object.entries(dataDummy.data.chart).map((item, index) => {
+    return data.push({ name: item[0], value: item[1] });
+  });
+
+  const handleNextPagination = (category) => {
+    const page = parseInt(router.query.page_substansi) + 1;
+    router.push(`${router.pathname}?page_substansi=${page}`);
+  };
+
+  const handleBackPagination = (category) => {
+    const page = parseInt(router.query.page_substansi) - 1;
+    router.push(`${router.pathname}?page_substansi=${page}`);
+  };
 
   const dummy = [
     {
@@ -69,13 +82,6 @@ const DashbardSubvit = () => {
   ];
 
   const COLORS = ["#4299E1", "#215480", "##4CBDE2"];
-
-  const router = useRouter();
-  // useEffect(() => {
-  //   getSession().then((session) => {
-  //     console.log(session.user.user);
-  //   });
-  // }, [getSession]);
 
   const handleAddPage = (e) => {
     if (e.target.value === "1") {
@@ -240,11 +246,12 @@ const DashbardSubvit = () => {
                 <p className={`${styles.subHeadPeserta}`}>
                   Total Peserta dari Test Substansi, Survey dan TRIVIA
                 </p>
-                <ResponsiveContainer width="100%" height={300}>
+                <ResponsiveContainer height={300}>
                   <PieChart width={500} height={300}>
+                    <Tooltip />
                     <Pie
-                      data={data}
-                      cx={200}
+                      data={data.slice(0, 3)}
+                      cx={250}
                       cy={150}
                       innerRadius={60}
                       outerRadius={80}
@@ -259,23 +266,25 @@ const DashbardSubvit = () => {
                           ></Cell>
                         </>
                       ))}
+
                       <Label
                         width={30}
                         position="center"
                         className={styles.labelChart}
                       >
-                        200k
+                        {dataDummy && dataDummy.chart.total}
                       </Label>
                     </Pie>
                   </PieChart>
                 </ResponsiveContainer>
-                <div className="row" style={{ padding: "0px 20px" }}>
-                  <div className="col-sm-4 col-xs-4">
-                    <div className="row">
-                      <div
-                        className="col-sm-4 col-xs-4"
-                        style={{ padding: "0px" }}
-                      >
+
+                <div
+                  className="d-flex flex-row "
+                  style={{ padding: "0px 20px" }}
+                >
+                  <div className="p-5">
+                    <div className="d-flex flex-row">
+                      <div className="p-2" style={{ padding: "0px" }}>
                         <Image
                           src={imageSubstansi}
                           alt=""
@@ -283,19 +292,16 @@ const DashbardSubvit = () => {
                           height={50}
                         />
                       </div>
-                      <div className={`${styles.substansi} col-sm-8 col-xs-8`}>
-                        100.00
+                      <div className={`${styles.substansi} p-2`}>
+                        {dataDummy && dataDummy.chart.total_substansi}
                         <br />
                         <span className={styles.subTextTotal}>Substansi</span>
                       </div>
                     </div>
                   </div>
-                  <div className="col-sm-4 col-xs-4">
-                    <div className="row">
-                      <div
-                        className="col-sm-4 col-xs-4"
-                        style={{ padding: "0px" }}
-                      >
+                  <div className="p-5">
+                    <div className="d-flex flex-row">
+                      <div className="p-2" style={{ padding: "0px" }}>
                         {" "}
                         <Image
                           src={imageSurvey}
@@ -304,19 +310,16 @@ const DashbardSubvit = () => {
                           height={50}
                         />
                       </div>
-                      <div className={`${styles.survey} col-sm-8 col-xs-8`}>
-                        50.000
+                      <div className={`${styles.survey} p-2`}>
+                        {dataDummy && dataDummy.chart.total_survey}
                         <br />
                         <span className={styles.subTextTotal}>Survey</span>
                       </div>
                     </div>
                   </div>
-                  <div className="col-sm-4 col-xs-4">
-                    <div className="row">
-                      <div
-                        className="col-sm-4 col-xs-4"
-                        style={{ padding: "0px" }}
-                      >
+                  <div className="p-5">
+                    <div className="d-flex flex-row">
+                      <div className="p-2" style={{ padding: "0px" }}>
                         <Image
                           src={imageTrivia}
                           alt=""
@@ -324,8 +327,8 @@ const DashbardSubvit = () => {
                           height={50}
                         />
                       </div>
-                      <div className={`${styles.trivia} col-sm-8 col-xs-8`}>
-                        50.000
+                      <div className={`${styles.trivia} p-2`}>
+                        {dataDummy && dataDummy.chart.total_trivia}
                         <br />
                         <span className={styles.subTextTotal}>Trivia</span>
                       </div>
@@ -340,7 +343,8 @@ const DashbardSubvit = () => {
               <div className={`${styles.cardPesertaBody} card-body`}>
                 <h1 className={`${styles.headPeserta}`}>Test Substansi</h1>
                 <p className={`${styles.subHeadPeserta}`}>yang sudah publish</p>
-                {dummy.map((item, index) => {
+
+                {dataDummy.substansi.list.map((item, index) => {
                   return (
                     <>
                       <div className={`${styles.cardList} card`} key={index}>
@@ -350,20 +354,24 @@ const DashbardSubvit = () => {
                               className={`${styles.cardNumber} card`}
                               style={{ width: "100%", height: "100%" }}
                             >
-                              {item.no}
+                              {index +
+                                1 * router.query.page_substansi * 5 -
+                                (5 - 1)}
                             </div>
                           </div>
                           <div className={`${styles.theme} col-sm-5`}>
-                            {item.theme}
+                            {item.theme.name}
                             <br />
                             <span className={styles.training}>
-                              {item.training}
+                              {item.training.name}
                             </span>
                           </div>
                           <div className={`${styles.total} col-sm-6`}>
-                            {item.total}
+                            {item.all_participant} / {item.participant_finished}
                             <br />
-                            <span className={styles.note}>{item.note}</span>
+                            <span className={styles.note}>
+                              yang sudah mengerjakan
+                            </span>
                           </div>
                         </div>
                       </div>
@@ -372,16 +380,28 @@ const DashbardSubvit = () => {
                 })}
                 <div className={`${styles.rowBottom} row`}>
                   <div className={`${styles.total} col-sm-6 mt-5`}>
-                    Total: 120.000 Peserta
+                    Total: 0 Peserta
                   </div>
                   <div className="col-sm-6" style={{ textAlign: "right" }}>
-                    <button className={`${styles.btnNext} btn btn-primary`}>
+                    <button
+                      className={`${styles.btnNext} btn btn-primary`}
+                      onClick={() => handleBackPagination()}
+                      disabled={parseInt(router.query.page_substansi) === 1}
+                    >
                       <i
                         className="ri-arrow-left-s-line"
                         style={{ padding: "0px" }}
                       ></i>
                     </button>
-                    <button className={`${styles.btnNext} btn btn-primary`}>
+                    <button
+                      className={`${styles.btnNext} btn btn-primary`}
+                      onClick={() => handleNextPagination()}
+                      disabled={
+                        parseInt(router.query.page_substansi) ===
+                        dataDummy.substansi.total /
+                          dataDummy.substansi.totalFiltered
+                      }
+                    >
                       <i
                         className="ri-arrow-right-s-line"
                         style={{ padding: "0px" }}
@@ -401,7 +421,7 @@ const DashbardSubvit = () => {
                 <p className={`${styles.subHeadPeserta}`}>
                   yang sedang berlangsung
                 </p>
-                {dummy.map((item, index) => {
+                {dataDummy.trivia.list.map((item, index) => {
                   return (
                     <>
                       <div className={`${styles.cardList} card`} key={index}>
@@ -411,20 +431,24 @@ const DashbardSubvit = () => {
                               className={`${styles.cardNumber} card`}
                               style={{ width: "100%", height: "100%" }}
                             >
-                              {item.no}
+                              {index +
+                                1 * router.query.page_substansi * 5 -
+                                (5 - 1)}
                             </div>
                           </div>
                           <div className={`${styles.theme} col-sm-5`}>
-                            {item.theme}
+                            {item.theme.name}
                             <br />
                             <span className={styles.training}>
-                              {item.training}
+                              {item.training.name}
                             </span>
                           </div>
                           <div className={`${styles.total} col-sm-6`}>
-                            {item.total}
+                            {item.all_participant} / {item.participant_finished}
                             <br />
-                            <span className={styles.note}>{item.note}</span>
+                            <span className={styles.note}>
+                              yang sudah mengerjakan
+                            </span>
                           </div>
                         </div>
                       </div>
@@ -433,16 +457,27 @@ const DashbardSubvit = () => {
                 })}
                 <div className={`${styles.rowBottom} row`}>
                   <div className={`${styles.total} col-sm-6 mt-5`}>
-                    Total: 120.000 Peserta
+                    Total: 0 Peserta
                   </div>
                   <div className="col-sm-6" style={{ textAlign: "right" }}>
-                    <button className={`${styles.btnNext} btn btn-primary`}>
+                    <button
+                      className={`${styles.btnNext} btn btn-primary`}
+                      onClick={handleBackPagination}
+                      disabled={parseInt(router.query.page_trivia) === 1}
+                    >
                       <i
                         className="ri-arrow-left-s-line"
                         style={{ padding: "0px" }}
                       ></i>
                     </button>
-                    <button className={`${styles.btnNext} btn btn-primary`}>
+                    <button
+                      className={`${styles.btnNext} btn btn-primary`}
+                      onClick={handleNextPagination}
+                      disabled={
+                        parseInt(router.query.page_trivia) ===
+                        dataDummy.trivia.total / dataDummy.trivia.totalFiltered
+                      }
+                    >
                       <i
                         className="ri-arrow-right-s-line"
                         style={{ padding: "0px" }}

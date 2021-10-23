@@ -53,7 +53,7 @@ export const allMKCooporationReducer = (state = initialState, action) => {
       return {
         ...state,
         status: statuslist.error,
-        error: data,
+        error: null,
       };
     case SEARCH_COORPORATION:
       return {

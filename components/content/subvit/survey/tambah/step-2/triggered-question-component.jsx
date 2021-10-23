@@ -14,6 +14,7 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
       key: "A",
       option: "",
       image: "",
+      imageName: "Choose File",
       type: "choose",
       is_next: true,
       sub: [
@@ -21,6 +22,7 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
           key: 1,
           question: "",
           image: "",
+          imageName: "Choose File",
           is_next: false,
           answer: [
             { key: "A", option: "", image: "", type: "choose" },
@@ -34,6 +36,7 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
       key: "B",
       option: "",
       image: "",
+      imageName: "Choose File",
       type: "choose",
       is_next: false,
       sub: [],
@@ -42,6 +45,7 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
       key: "C",
       option: "",
       image: "",
+      imageName: "Choose File",
       type: "choose",
       is_next: false,
       sub: [],
@@ -149,7 +153,6 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
   };
 
   const handleAddClick = (type, index, parent) => {
-    console.log(type, index, parent);
     const list = [...answer];
 
     if (index == null && parent == null) {
@@ -278,7 +281,7 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
                           className="custom-file-label"
                           htmlFor="customFile"
                         >
-                          Choose file
+                          {x.imageName}
                         </label>
                       </div>
                     </div>

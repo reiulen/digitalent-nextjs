@@ -15,12 +15,10 @@ import moment from "moment";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const SubmitKerjasama = ({token}) => {
+const SubmitKerjasama = ({ token }) => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
-  // pdf file
-  // Create new plugin instance
   const [pdfFile, setPdfFile] = useState(null);
   const [pdfFileError, setPdfFileError] = useState("");
   const [viewPDF, setViewPDF] = useState(null);
@@ -33,17 +31,15 @@ const SubmitKerjasama = ({token}) => {
   });
 
   const router = useRouter();
-  const {id} = router.query.id
+  const { id } = router.query.id;
   const [period_date_start, setPeriod_date_start] = useState("");
   const [agreement_number_partner, setAgreement_number_partner] = useState("");
   const [agreement_number_kemkominfo, setAgreement_number_kemkominfo] =
     useState("");
   const [signing_date, setSigning_date] = useState("");
   const [document, setDocument] = useState("");
-  // form data send
 
   const [NamePDF, setNamePDF] = useState(null);
-  // onchange pdf
 
   const fileType = ["application/pdf"];
   const handlePdfFileChange = (e) => {
@@ -69,9 +65,7 @@ const SubmitKerjasama = ({token}) => {
     }
   };
 
-  
   const submit = (e) => {
-
     e.preventDefault();
 
     if (period_date_start === "") {
@@ -79,25 +73,20 @@ const SubmitKerjasama = ({token}) => {
         ...error,
         period_date_start: "Harus isi tanggal priode kerjasama",
       });
-      notify("Harus isi tanggal priode kerjasama");
     } else if (agreement_number_partner === "") {
       setError({
         ...error,
-        agreement_number_partner: "Harus isi nomer perjanjian lembaga",
+        agreement_number_partner: "Harus isi nomor perjanjian lembaga",
       });
-      notify("Harus isi nomer perjanjian lembaga");
     } else if (agreement_number_kemkominfo === "") {
       setError({
         ...error,
-        agreement_number_kemkominfo: "Harus isi nomer perjanjian kemkominfo",
+        agreement_number_kemkominfo: "Harus isi nomor perjanjian kemkominfo",
       });
-      notify("Harus isi nomer perjanjian kemkominfo");
     } else if (signing_date === "") {
-      setError({ ...error, signing_date: "Harus isi tanggal penandantangan" });
-      notify("Harus isi tanggal penandantangan");
+      setError({ ...error, signing_date: "Harus isi tanggal penandatangan" });
     } else if (document === "") {
       setError({ ...error, document: "Harus unggah file" });
-      notify("Harus unggah file");
     } else {
       Swal.fire({
         title: "Apakah anda yakin ingin simpan ?",
@@ -120,7 +109,6 @@ const SubmitKerjasama = ({token}) => {
             agreement_number_kemkominfo
           );
           formData.append("signing_date", signing_date);
-          // formData.append("document", document);
           formData.append("document", document);
 
           try {
@@ -135,11 +123,13 @@ const SubmitKerjasama = ({token}) => {
             );
             router.push({
               pathname: `/partnership/user/kerjasama/review-dokumen-kerjasama`,
-              query: { successSubmitDokumentKerjasama: true, id:router.query.id },
+              query: {
+                successSubmitDokumentKerjasama: true,
+                id: router.query.id,
+              },
             });
           } catch (error) {
-            notify(error.response.data.message)
-            // alert("gagal menambahkan data tipe file harus pdf");
+            notify(error.response.data.message);
           }
         }
       });
@@ -166,9 +156,7 @@ const SubmitKerjasama = ({token}) => {
         .format("YYYY-MM-DD");
 
       setNewDate(futureMonth);
-    }
-    // jika tahun
-    else {
+    } else {
       let futureYear = moment(dateNow)
         .add(parseInt(periodValue), "y")
         .format("YYYY-MM-DD");
@@ -183,7 +171,7 @@ const SubmitKerjasama = ({token}) => {
   };
 
   const notify = (value) =>
-    toast.info(`🦄 ${value}`, {
+    toast.info(`${value}`, {
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,
@@ -201,37 +189,25 @@ const SubmitKerjasama = ({token}) => {
   const [cooperationC_id, setCooperationC_id] = useState("");
   const [AllCooperation, setAllCooperation] = useState("");
 
-
-  // const cekProgresStatus = async (id) => {
-    
-  // };
-
   useEffect(() => {
-
-    // api cek progress
     async function cekProgresStatus(id) {
       try {
-      let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/cek-progres/${id}`,
-        {
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-        }
-      );
+        let { data } = await axios.get(
+          `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/cek-progres/${id}`,
+          {
+            headers: {
+              authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
-      // console.log("data a a a ssss", data);
-      setPeriodValue(data.data.period)
-    } catch (error) {
-      console.log("gagal get province", error);
-    }
-      
+        setPeriodValue(data.data.period);
+      } catch (error) {
+        notify(error.response.data.message);
+      }
     }
     cekProgresStatus(router.query.id);
-
-
-  }, [router.query.id,token]);
-
+  }, [router.query.id, token]);
 
   return (
     <PageWrapper>
@@ -255,10 +231,9 @@ const SubmitKerjasama = ({token}) => {
           </div>
 
           <div className="card-body">
-            <div className="row mt-8 mb-10">
+            <div className="row mt-8 mb-10 position-relative">
               <div className="col-2 p-0">
                 <div className="progress-items">
-                  {/* <div className="line-progress"></div> */}
                   <div className="circle-progress active-circle">
                     <span className="title-progress">Submit Kerjasama</span>
                   </div>
@@ -282,10 +257,15 @@ const SubmitKerjasama = ({token}) => {
               </div>
               <div className="col-2">
                 <div className="progress-items">
-                  <div className="line-progress"></div>
-                  <div className="circle-progress">
-                    <span className="title-progress text-center" style={{top:"-4rem"}}>
-                      Submit Dokumen<br/>Kerjasama
+                  <div className="line-progress active-line"></div>
+                  <div className="circle-progress active-circle">
+                    <span
+                      className="title-progress text-center active"
+                      style={{ top: "-4rem" }}
+                    >
+                      Submit Dokumen
+                      <br />
+                      Kerjasama
                     </span>
                   </div>
                 </div>
@@ -294,8 +274,13 @@ const SubmitKerjasama = ({token}) => {
                 <div className="progress-items">
                   <div className="line-progress"></div>
                   <div className="circle-progress">
-                    <span className="title-progress text-center" style={{top:"-4rem"}}>
-                      Review Dokumen<br/>Kerjasama
+                    <span
+                      className="title-progress text-center"
+                      style={{ top: "-4rem" }}
+                    >
+                      Review Dokumen
+                      <br />
+                      Kerjasama
                     </span>
                   </div>
                 </div>
@@ -311,7 +296,6 @@ const SubmitKerjasama = ({token}) => {
             </div>
 
             <form onSubmit={submit}>
-              
               <div className="form-group">
                 <label htmlFor="staticEmail" className="col-form-label">
                   Periode Kerjasama
@@ -323,7 +307,7 @@ const SubmitKerjasama = ({token}) => {
                         onFocus={() =>
                           setError({ ...error, period_date_start: "" })
                         }
-                        className="form-search-date form-control-sm form-control cursor-pointer"
+                        className="form-search-date form-control cursor-pointer"
                         selected={startDate}
                         onChange={(date) => onChangePeriodeDateStart(date)}
                         selectsStart
@@ -348,7 +332,7 @@ const SubmitKerjasama = ({token}) => {
                   <div className="col-12 col-sm-6">
                     <div className="d-flex align-items-center position-relative datepicker-w mt-2 disabled-form">
                       <DatePicker
-                        className="form-search-date form-control-sm form-control cursor-pointer"
+                        className="form-control cursor-pointer border-0"
                         selected={endDate}
                         onChange={(date) => setEndDate(date)}
                         readOnly
@@ -356,7 +340,6 @@ const SubmitKerjasama = ({token}) => {
                         value={newDate}
                         startDate={startDate}
                         endDate={endDate}
-                        // minDate={startDate}
                         minDate={moment().toDate()}
                         maxDate={addDays(startDate, 20)}
                         dateFormat="dd/MM/yyyy"
@@ -371,14 +354,9 @@ const SubmitKerjasama = ({token}) => {
                 </div>
               </div>
 
-
-
-
-
-
               <div className="form-group">
                 <label htmlFor="staticEmail" className="col-form-label">
-                  Nomer Perjanjian Lembaga
+                  Nomor Perjanjian Lembaga
                 </label>
                 <input
                   onFocus={() =>
@@ -398,7 +376,7 @@ const SubmitKerjasama = ({token}) => {
 
               <div className="form-group">
                 <label htmlFor="staticEmail" className="col-form-label">
-                  Nomer Perjanjian Kemkominfo
+                  Nomor Perjanjian Kemkominfo
                 </label>
                 <input
                   onFocus={() =>
@@ -422,11 +400,11 @@ const SubmitKerjasama = ({token}) => {
 
               <div className="form-group">
                 <label htmlFor="staticEmail" className="col-form-label">
-                  Tanggal Penandantangan
+                  Tanggal Penandatangan
                 </label>
                 <div className="d-flex align-items-center position-relative datepicker-w w-100">
                   <DatePicker
-                    className="form-search-date form-control-sm form-control cursor-pointer"
+                    className="form-search-date form-control cursor-pointer"
                     selected={endDate}
                     onFocus={() => setError({ ...error, signing_date: "" })}
                     onChange={(date) =>
@@ -436,7 +414,6 @@ const SubmitKerjasama = ({token}) => {
                     selectsEnd
                     startDate={startDate}
                     endDate={endDate}
-                    // minDate={startDate}
                     minDate={moment().toDate()}
                     maxDate={addDays(startDate, 20)}
                     dateFormat="dd/MM/yyyy"

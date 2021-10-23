@@ -3,6 +3,7 @@ import Head from "next/head";
 import dynamic from "next/dynamic";
 
 // import Navigationbar from '../../../components/templates/navbar.component';
+// import Footer from "../../../components/templates/footer.component"
 import "../../../styles/beranda.module.css"
 
 const NavigationBar = dynamic (() => import ("../../../components/templates/navbar.component"), {
@@ -18,12 +19,12 @@ const Layout = ({ children, title }) => {
     return (
         <>
             <Head>
-                {title}
+                <title>{title}</title>
             </Head>
 
             <NavigationBar />
 
-            <div className="d-flex flex-column-fluid" style={{backgroundColor:"#E5E5E5"}}>
+            <div className="d-flex flex-column-fluid bg-white">
                 <div className="container">
                     {children}
                 </div>

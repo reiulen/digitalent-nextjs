@@ -6,6 +6,7 @@ import DatePicker from "react-datepicker";
 import SimpleReactValidator from "simple-react-validator";
 import Swal from "sweetalert2";
 import moment from "moment";
+import "moment/locale/id";
 
 import {
   updateSurveyQuestionBanksPublish,
@@ -130,7 +131,6 @@ const StepThree = ({ token }) => {
   };
 
   const handleChange = (e) => {
-    console.log(e.target.value);
     setStatus(e.target.value);
   };
 
@@ -193,6 +193,7 @@ const StepThree = ({ token }) => {
                     endDate={endDate}
                     dateFormat="dd/MM/yyyy"
                     autoComplete="off"
+                    placeholderText={moment().format("LL")}
                   />
 
                   {simpleValidator.current.message(
@@ -224,6 +225,7 @@ const StepThree = ({ token }) => {
                     minDate={startDate}
                     dateFormat="dd/MM/yyyy"
                     autoComplete="off"
+                    disabled={!startDate}
                   />
                   {simpleValidator.current.message(
                     "tanggal sampai",

@@ -202,7 +202,6 @@ const StepTwo = ({ token }) => {
   };
 
   const handleDelete = (id) => {
-    console.log(id);
     Swal.fire({
       title: "Apakah anda yakin ?",
       text: "Data ini tidak bisa dikembalikan !",
@@ -329,7 +328,7 @@ const StepTwo = ({ token }) => {
                       onChange={(e) => setQuestionFile(e.target.files[0])}
                     />
                     <label className="custom-file-label" htmlFor="customFile">
-                      Choose file
+                      {question_file ? question_file.name : "Choose File"}
                     </label>
                   </div>
                   <span className="text-muted">
@@ -360,7 +359,7 @@ const StepTwo = ({ token }) => {
                       onChange={(e) => setImageFile(e.target.files[0])}
                     />
                     <label className="custom-file-label" htmlFor="customFile">
-                      Choose file
+                      {image_file ? image_file.name : "Choose File"}
                     </label>
                   </div>
                   <span className="text-muted">

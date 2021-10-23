@@ -3,6 +3,9 @@ import {
   TRAINING_REQUEST,
   TRAINING_SUCCESS,
   TRAINING_FAIL,
+  //CARD TRAINING
+  CARD_TRAINING_SUCCESS,
+  CARD_TRAINING_FAIL,
   // NEW TRAINING STEP 1
   NEW_TRAINING_STEP1_REQUEST,
   NEW_TRAINING_STEP1_SUCCESS,
@@ -95,7 +98,8 @@ export const getAllTraining =
     penyelenggara,
     akademi,
     tema,
-    token
+    token,
+    whereIn = null
   ) =>
   async (dispatch) => {
     try {
@@ -117,6 +121,7 @@ export const getAllTraining =
       if (penyelenggara) link = link.concat(`&penyelenggara=${penyelenggara}`);
       if (akademi) link = link.concat(`&akademi=${akademi}`);
       if (tema) link = link.concat(`&tema=${tema}`);
+      if (whereIn) link = link.concat(`&WhereInPelatihan=${whereIn}`);
 
       const config = {
         headers: {
@@ -133,11 +138,38 @@ export const getAllTraining =
     } catch (error) {
       dispatch({
         type: TRAINING_FAIL,
-        payload: error.message,
+        payload: error.response.data.message,
       });
     }
   };
 //END ALL TRAINING
+
+//CARD TRAINING
+export const getCardTraining = (token) => async (dispatch) => {
+  try {
+    let link =
+      process.env.END_POINT_API_PELATIHAN + `/api/v1/pelatihan/list-count`;
+
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    const { data } = await axios.get(link, config);
+
+    dispatch({
+      type: CARD_TRAINING_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: CARD_TRAINING_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+//END CARD REVIEW
 
 //DETAIL TRAINING
 export const getDetailTrainingStep1 = (id, token) => async (dispatch) => {
@@ -444,7 +476,8 @@ export const deleteTraining = (id, token) => async (dispatch) => {
     };
 
     const { data } = await axios.delete(
-      process.env.END_POINT_API_PELATIHAN + `api/pelatihan/${id}`,
+      process.env.END_POINT_API_PELATIHAN +
+        `api/pelatihan/pelatihan-delete?pelatihan_id=${id}`,
       config
     );
 

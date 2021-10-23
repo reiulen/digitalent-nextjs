@@ -1,10 +1,14 @@
-import React, { Suspense } from "react";
+import React from "react";
 
 import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
 // import ListTraining from "../../../components/content/pelatihan/training/list-training";
+import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
 
-import { getAllTraining } from "../../../redux/actions/pelatihan/training.actions";
+import {
+  getAllTraining,
+  getCardTraining,
+} from "../../../redux/actions/pelatihan/training.actions";
 import {
   dropdownAkademi,
   dropdownTema,
@@ -39,10 +43,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
-      if (!session) {
+      const middleware = middlewareAuthAdminSession(session);
+      if (!middleware.status) {
         return {
           redirect: {
-            destination: "/login/admin",
+            destination: middleware.redirect,
             permanent: false,
           },
         };
@@ -77,6 +82,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         )
       );
 
+      await store.dispatch(getCardTraining(session.user.user.data.token));
       await store.dispatch(dropdownAkademi(session.user.user.data.token));
       await store.dispatch(dropdownTema(session.user.user.data.token));
       await store.dispatch(dropdownPenyelenggara(session.user.user.data.token));

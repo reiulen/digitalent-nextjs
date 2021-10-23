@@ -17,58 +17,77 @@ import IconFilter from "../../../assets/icon/Filter";
 import { useSelector } from "react-redux";
 import moment from "moment";
 import Select from "react-select";
+import { useDispatch } from "react-redux";
+import {
+  getAllSertifikat,
+  searchKeyword,
+  setValueAcademy,
+  setValueLimit,
+  setValuePage,
+  setValueTheme,
+} from "../../../../redux/actions/sertifikat/kelola-sertifikat.action";
+import { RESET_VALUE_FILTER } from "../../../../redux/types/sertifikat/kelola-sertifikat.type";
+import Cookies from "js-cookie";
 
 export default function NamaPelatihan({ token }) {
-  // console.log(token);
   const router = useRouter();
+  const dispatch = useDispatch();
 
-  const { loading, error, certificate } = useSelector(
-    state => state.allCertificates
-  );
+  const { loading, error, certificate, academyOptions, themeOptions } =
+    useSelector(state => state.allCertificates);
 
-  const resetValueSort = () => {
-    setStartDate(null);
-    setEndDate(null);
-  };
-
-  console.log(certificate);
-  // #DatePicker
-
-  // #Pagination, search, filter
+  const allCertificates = useSelector(state => state.allCertificates);
+  console.log(allCertificates);
+  const [academy, setAcademy] = useState("");
+  const [temaPelatihan, setTemaPelatihan] = useState("");
+  const [disable, setDisable] = useState(true);
+  const [dataTemaPelatihan, setDataTemaPelatihan] = useState([]);
+  const [dataAcademy, setDataAcademy] = useState([]);
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(null);
 
-  const handlePagination = pageNumber => {
-    let link = `${router.pathname}?page=${pageNumber}`;
-    if (search) link = link.concat(`&keyword=${search}`);
-    if (limit) link = link.concat(`&limit=${limit}`);
-    router.push(link);
+  let { page = 1 } = router.query;
+
+  let selectRefAkademi = null;
+  let temaRef = null;
+
+  const resetValueSort = e => {
+    e.preventDefault();
+    temaRef.select.clearValue();
+    selectRefAkademi.select.clearValue();
+    setDisable(true);
+    dispatch({ type: RESET_VALUE_FILTER });
   };
 
-  const handleLimit = val => {
-    setLimit(val);
-    router.push(`${router.pathname}?page=1&limit=${val}`);
+  useEffect(() => {
+    let arr = [];
+    academyOptions.forEach(el => {
+      arr.push({ id: el.id, value: el.name, label: el.name });
+    });
+    setDataAcademy(arr);
+  }, [academyOptions]);
+
+  useEffect(() => {
+    const filteredTheme = themeOptions.filter(items => items.id == academy?.id);
+    const data = filteredTheme.map(el => {
+      return { ...el, value: el.name, label: el.name };
+    });
+    setDataTemaPelatihan(data);
+  }, [academy, themeOptions]);
+
+  const handleSearch = e => {
+    e.preventDefault();
+    dispatch(searchKeyword(search));
   };
 
-  const handleSearch = () => {
-    let link = `${router.pathname}?page=1&keyword=${search}`;
-    if (limit) link = link.concat(`&limit=${limit}`);
-    router.push(link);
+  const handleSelectAcademy = e => {
+    setAcademy(e);
+    setDisable(false);
+    temaRef.select.clearValue();
   };
-  // #Pagination
 
-  const options = [
-    { value: "FGA", label: "FGA" },
-    { value: "GTA", label: "GTA" },
-    { value: "ASD", label: "ASD" },
-  ];
-
-  const [academy, setAcademy] = useState("");
-  const [temaPelatihan, setTemaPelatihan] = useState("");
-
-  let { page = 1, keyword, success } = router.query;
-
-  const handleFilter = () => {
+  const handleFilter = e => {
+    e.preventDefault();
     if (!academy && !temaPelatihan) {
       Swal.fire(
         "Oops !",
@@ -76,15 +95,32 @@ export default function NamaPelatihan({ token }) {
         "error"
       );
     } else {
-      if (!academy && temaPelatihan) {
-        router.push(`${router.pathname}?page=1&limit=${limit}`);
+      if (academy) {
+        dispatch(setValueAcademy(academy.value));
       }
-
-      if (!temaPelatihan && academy) {
-        router.push(`${router.pathname}?page=1&keyword=${academy}`);
+      if (temaPelatihan) {
+        dispatch(setValueTheme(temaPelatihan.value));
       }
     }
   };
+
+  const handleResetError = () => {
+    if (error) {
+      dispatch(clearErrors);
+    }
+  };
+
+  useEffect(() => {
+    dispatch(getAllSertifikat(token));
+  }, [
+    dispatch,
+    token,
+    allCertificates.keyword,
+    allCertificates.page,
+    allCertificates.theme,
+    allCertificates.academy,
+    allCertificates.limit,
+  ]);
 
   return (
     <PageWrapper>
@@ -145,7 +181,9 @@ export default function NamaPelatihan({ token }) {
                         borderTopLeftRadius: "0",
                         borderBottomLeftRadius: "0",
                       }}
-                      onClick={handleSearch}
+                      onClick={e => {
+                        handleSearch(e);
+                      }}
                     >
                       Cari
                     </button>
@@ -207,10 +245,10 @@ export default function NamaPelatihan({ token }) {
                                   Akademi
                                 </label>
                                 <Select
+                                  ref={ref => (selectRefAkademi = ref)}
                                   className="basic-single"
                                   classNamePrefix="select"
                                   placeholder="Semua"
-                                  defaultValue={options[0].value}
                                   isDisabled={false}
                                   isLoading={false}
                                   isClearable={false}
@@ -218,9 +256,9 @@ export default function NamaPelatihan({ token }) {
                                   isSearchable={true}
                                   name="color"
                                   onChange={e => {
-                                    setAcademy(e.value);
+                                    handleSelectAcademy(e);
                                   }}
-                                  options={options}
+                                  options={dataAcademy}
                                 />
                               </div>
                               <div className="fv-row mb-10">
@@ -228,18 +266,21 @@ export default function NamaPelatihan({ token }) {
                                   Tema Pelatihan
                                 </label>
                                 <Select
+                                  ref={ref => (temaRef = ref)}
                                   className="basic-single"
                                   classNamePrefix="select"
-                                  placeholder="Semua"
-                                  defaultValue={options[0].value}
-                                  isDisabled={false}
+                                  placeholder={
+                                    disable ? "Isi kolom akademi" : "Semua"
+                                  }
+                                  // defaultValue={options[0].value}
+                                  isDisabled={!academy ? true : false}
                                   isLoading={false}
                                   isClearable={false}
                                   isRtl={false}
                                   isSearchable={true}
                                   name="color"
-                                  onChange={e => setTemaPelatihan(e.value)}
-                                  options={options}
+                                  onChange={e => setTemaPelatihan(e?.value)}
+                                  options={dataTemaPelatihan}
                                 />
                               </div>
                             </div>
@@ -250,7 +291,7 @@ export default function NamaPelatihan({ token }) {
                                   type="button"
                                   data-dismiss="modal"
                                   aria-label="Close"
-                                  onClick={() => resetValueSort()}
+                                  onClick={e => resetValueSort(e)}
                                 >
                                   Reset
                                 </button>
@@ -282,7 +323,7 @@ export default function NamaPelatihan({ token }) {
                       <tr>
                         <th className="text-center">No</th>
                         <th>Akademi</th>
-                        <th>Nama Pelatihan</th>
+                        <th>Tema Pelatihan</th>
                         <th>Jumlah Sertifikat</th>
                         <th>Aksi</th>
                       </tr>
@@ -293,7 +334,7 @@ export default function NamaPelatihan({ token }) {
                         certificate.list_certificate.length === 0) ? (
                         <tr>
                           <td className="text-center" colSpan={6}>
-                            Data Masih Kosong
+                            Data Tidak Ditemukan
                           </td>
                         </tr>
                       ) : (
@@ -324,7 +365,10 @@ export default function NamaPelatihan({ token }) {
                               </td>
                               <td className="align-middle d-flex">
                                 <Link
-                                  href={`/sertifikat/kelola-sertifikat/${certificate.theme.academy.id}`}
+                                  href={`/sertifikat/kelola-sertifikat/${certificate.theme.name
+                                    .split(" ")
+                                    .join("-")
+                                    .toLowerCase()}?id=${certificate.id}`}
                                   passHref
                                 >
                                   <a
@@ -332,6 +376,12 @@ export default function NamaPelatihan({ token }) {
                                     data-toggle="tooltip"
                                     data-placement="bottom"
                                     title="Detail"
+                                    onClick={() => {
+                                      Cookies.set(
+                                        "tema_pelatihan_id",
+                                        certificate.id
+                                      );
+                                    }}
                                   >
                                     <i className="ri-eye-fill p-0 text-white"></i>
                                   </a>
@@ -350,14 +400,14 @@ export default function NamaPelatihan({ token }) {
               </div>
               {/* START Pagination */}
               <div className="row">
-                {certificate && certificate.perPage < certificate.total && (
-                  <div className="table-pagination">
+                {certificate && (
+                  <div className="table-pagination my-auto">
                     <Pagination
-                      activePage={page}
+                      activePage={allCertificates.page}
                       itemsCountPerPage={certificate.perPage}
                       totalItemsCount={certificate.total}
                       pageRangeDisplayed={3}
-                      onChange={handlePagination}
+                      onChange={page => dispatch(setValuePage(page))}
                       nextPageText={">"}
                       prevPageText={"<"}
                       firstPageText={"<<"}
@@ -367,42 +417,37 @@ export default function NamaPelatihan({ token }) {
                     />
                   </div>
                 )}
-                {certificate && certificate.total ? (
-                  <div className="table-total ml-auto">
-                    <div className="row mt-3">
-                      <div className="col-4 mr-0 p-0 my-auto">
-                        <select
-                          className="form-control"
-                          id="exampleFormControlSelect2"
-                          style={{
-                            width: "65px",
-                            background: "#F3F6F9",
-                            borderColor: "#F3F6F9",
-                            color: "#9E9E9E",
-                          }}
-                          onChange={e => handleLimit(e.target.value)}
-                          onBlur={e => handleLimit(e.target.value)}
-                          defaultValue={"5"}
-                        >
-                          <option>5</option>
-                          <option>10</option>
-                          <option>15</option>
-                          <option>20</option>
-                        </select>
-                      </div>
-                      <div className="col-8 my-auto">
-                        <p
-                          className="align-middle my-auto"
-                          style={{ color: "#B5B5C3" }}
-                        >
-                          Total Data {certificate.total}
-                        </p>
-                      </div>
+                <div className="table-total ml-auto">
+                  <div className="row mt-4">
+                    <div className="col-4 mr-0 p-0 my-auto">
+                      <select
+                        className="form-control"
+                        id="exampleFormControlSelect2"
+                        style={{
+                          width: "65px",
+                          background: "#F3F6F9",
+                          borderColor: "#F3F6F9",
+                          color: "#9E9E9E",
+                        }}
+                        onChange={e => dispatch(setValueLimit(e.target.value))}
+                      >
+                        <option>5</option>
+                        <option>10</option>
+                        <option>30</option>
+                        <option>40</option>
+                        <option>50</option>
+                      </select>
+                    </div>
+                    <div className="col-8 my-auto">
+                      <p
+                        className="align-middle my-auto"
+                        style={{ color: "#B5B5C3" }}
+                      >
+                        Total Data {certificate.total}
+                      </p>
                     </div>
                   </div>
-                ) : (
-                  ""
-                )}
+                </div>
               </div>
               {/* End Pagination */}
             </div>

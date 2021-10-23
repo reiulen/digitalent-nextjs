@@ -301,12 +301,12 @@ const ListSurvey = ({ token }) => {
                       ) : (
                         survey &&
                         survey.list_survey.map((row, i) => {
+                          const paginate = i + 1 * (page * limit);
+                          const dividers = limit - 1;
                           return (
                             <tr key={row.id}>
                               <td className="align-middle text-center">
-                                <span className="">
-                                  {i + 1 * (page * 5 || limit) - 4}
-                                </span>
+                                <span className="">{paginate - dividers}</span>
                               </td>
                               <td className="align-middle">
                                 <b>
@@ -317,7 +317,7 @@ const ListSurvey = ({ token }) => {
                                 <p>
                                   {row.training !== null
                                     ? row.training.name
-                                    : row.theme.name}
+                                    : "-"}
                                 </p>
                               </td>
                               <td className="align-middle">
@@ -422,7 +422,7 @@ const ListSurvey = ({ token }) => {
                           className="form-control"
                           id="exampleFormControlSelect2"
                           style={{
-                            width: "65px",
+                            width: "68px",
                             background: "#F3F6F9",
                             borderColor: "#F3F6F9",
                             color: "#9E9E9E",

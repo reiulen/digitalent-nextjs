@@ -9,16 +9,7 @@ import {
 } from "../../types/sertifikat/list-peserta.type";
 
 export const getAllParticipant =
-  (
-    id,
-    page = 1,
-    keyword = "",
-    limit = 5,
-    publish = null,
-    startdate = null,
-    enddate = null,
-    token
-  ) =>
+  (id, page = 1, keyword = "", limit = 5, token) =>
   async dispatch => {
     try {
       dispatch({ type: LIST_PESERTA_REQUEST });
@@ -27,9 +18,6 @@ export const getAllParticipant =
         `api/manage_certificates/detail-mitra/${id}?page=${page}`;
       if (keyword) link = link.concat(`&keyword=${keyword}`);
       if (limit) link = link.concat(`&limit=${limit}`);
-      if (publish) link = link.concat(`&publish=${publish}`);
-      if (startdate) link = link.concat(`&startdate=${startdate}`);
-      if (enddate) link = link.concat(`&enddate=${enddate}`);
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -37,26 +25,19 @@ export const getAllParticipant =
       };
 
       const { data } = await axios.get(link, config);
-      console.log(data);
       if (data) {
         dispatch({ type: LIST_PESERTA_SUCCESS, payload: data });
       }
     } catch (error) {
-      dispatch({ type: LIST_PESERTA_FAIL, payload: error.message });
+      dispatch({
+        type: LIST_PESERTA_FAIL,
+        payload: error.response.data.message,
+      });
     }
   };
 
 export const getDetailParticipant =
-  (
-    id,
-    page = 1,
-    keyword = "",
-    limit = 5,
-    publish = null,
-    startdate = null,
-    enddate = null,
-    token
-  ) =>
+  (id, page = 1, keyword = "", limit = 5, token) =>
   async dispatch => {
     try {
       dispatch({ type: DETAIL_LIST_PESERTA_REQUEST });
@@ -65,9 +46,7 @@ export const getDetailParticipant =
         `api/manage_certificates/detail-mitra/${id}?page=${page}`;
       if (keyword) link = link.concat(`&keyword=${keyword}`);
       if (limit) link = link.concat(`&limit=${limit}`);
-      if (publish) link = link.concat(`&publish=${publish}`);
-      if (startdate) link = link.concat(`&startdate=${startdate}`);
-      if (enddate) link = link.concat(`&enddate=${enddate}`);
+
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -79,6 +58,9 @@ export const getDetailParticipant =
         dispatch({ type: DETAIL_LIST_PESERTA_SUCCESS, payload: data });
       }
     } catch (error) {
-      dispatch({ type: DETAIL_LIST_PESERTA_FAIL, payload: error.message });
+      dispatch({
+        type: DETAIL_LIST_PESERTA_FAIL,
+        payload: error.response.data.message,
+      });
     }
   };

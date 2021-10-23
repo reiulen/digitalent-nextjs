@@ -192,7 +192,6 @@ const AddTheme = ({ token }) => {
                       onChange={(event, editor) => {
                         const data = editor.getData();
                         setDescription(data);
-                        // console.log({ event, editor, data });
                       }}
                       onBlur={() =>
                         simpleValidator.current.showMessageFor("deskripsi")

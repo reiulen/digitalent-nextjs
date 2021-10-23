@@ -49,6 +49,7 @@ const EditArtikel = ({ token }) => {
     error: allError,
     kategori,
   } = useSelector(state => state.allKategori);
+  const { setting } = useSelector(state => state.allSettingPublikasi)
   // const session = getSession({ req });
 
   // if (!session) {
@@ -103,13 +104,13 @@ const EditArtikel = ({ token }) => {
   const [isi_artikel, setIsiArtikel] = useState(artikel.isi_artikel);
   const [gambar, setGambar] = useState(
     process.env.END_POINT_API_IMAGE_PUBLIKASI +
-      "publikasi/images/" +
-      artikel.gambar
+    "publikasi/images/" +
+    artikel.gambar
   );
   const [gambarDB, setGambardb] = useState(
     process.env.END_POINT_API_IMAGE_PUBLIKASI +
-      "publikasi/images/" +
-      artikel.gambar
+    "publikasi/images/" +
+    artikel.gambar
   );
   // const [gambar, setGambar] = useState(artikel.gambar);
   // const [gambarPreview, setGambarPreview] = useState(
@@ -118,14 +119,16 @@ const EditArtikel = ({ token }) => {
   const [iconPlus, setIconPlus] = useState("/assets/icon/Add.svg");
   const [gambarPreview, setGambarPreview] = useState(
     process.env.END_POINT_API_IMAGE_PUBLIKASI +
-      "publikasi/images/" +
-      artikel.gambar
+    "publikasi/images/" +
+    artikel.gambar
   );
   const [gambarName, setGambarName] = useState(artikel.gambar);
   const [kategori_id, setKategoriId] = useState(artikel.kategori_id); //belum
+  // const [users_id, setUserId] = useState(87);
   const [users_id, setUserId] = useState(artikel.users_id);
   const [tag, setTag] = useState(artikel.tag);
-  const [publish, setPublish] = useState(artikel.publish === 1 ? true : false);
+  // const [publish, setPublish] = useState(artikel.publish === 1 ? true : false);
+  const [publish, setPublish] = useState(artikel.publish);
   const [publishDate, setPublishDate] = useState(
     artikel.tanggal_publish ? new Date(artikel.tanggal_publish) : null
   );
@@ -137,21 +140,22 @@ const EditArtikel = ({ token }) => {
 
   const onChangeGambar = e => {
     const type = ["image/jpg", "image/png", "image/jpeg"];
-    // console.log (e.target.files[0].type)
-    // console.log (e.target.files[0])
-    // console.log ("check")
 
     if (type.includes(e.target.files[0].type)) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-          setGambar(reader.result);
-          setGambarPreview(reader.result);
-        }
-      };
-      reader.readAsDataURL(e.target.files[0]);
-      // console.log (reader.readAsDataURL(e.target.files[0]))
-      setGambarName(e.target.files[0].name);
+      if (e.target.files[0].size > parseInt(setting[0].max_size) + '000000') {
+        e.target.value = null;
+        Swal.fire("Oops !", "Data Image Melebihi Ketentuan", "error");
+      } else {
+        const reader = new FileReader();
+        reader.onload = () => {
+          if (reader.readyState === 2) {
+            setGambar(reader.result);
+            setGambarPreview(reader.result);
+          }
+        };
+        reader.readAsDataURL(e.target.files[0]);
+        setGambarName(e.target.files[0].name);
+      }
     } else {
       // setGambar("")
       // setGambarPreview("/assets/media/default.jpg")
@@ -168,9 +172,7 @@ const EditArtikel = ({ token }) => {
   };
 
   const handleChangePublish = e => {
-    // setPublish(e.target.checked);
     setDisablePublishDate(!disablePublishDate);
-    // console.log (e.target.checked)
 
     if (e.target.checked === false) {
       setPublishDate(null);
@@ -181,27 +183,22 @@ const EditArtikel = ({ token }) => {
   };
 
   const handlePublishDate = date => {
-    // let result = moment(date).format("YYYY-MM-DD")
     if (disablePublishDate === false) {
-      // setPublishDate(result)
       setPublishDate(date);
-      // console.log (result)
     }
   };
 
+  function hasWhiteSpace(s) {
+    return s.indexOf(' ') >= 0;
+  }
+
   const handleTag = (data) => {
-    for (let i = 0; i < data.length; i++){
-      for (let j = 0; j < data[i].length; j++){
-        if (data[i][j] === " "){
-          setDisableTag (true)
-        } else {
-          setDisableTag (false)
-        }
+    for (let i = 0; i < data.length; i++) {
+      if (hasWhiteSpace(data[i])) {
+        data.splice([i], 1);
       }
     }
-
-    setTag(data)
-    
+    setTag(data);
   }
 
   const onSubmit = e => {
@@ -310,8 +307,6 @@ const EditArtikel = ({ token }) => {
         if (publishDate === null) {
           let today = new Date();
 
-          // console.log (today)
-
           const data = {
             judul_artikel,
             isi_artikel,
@@ -336,15 +331,7 @@ const EditArtikel = ({ token }) => {
             cancelButtonText: "Batal",
           }).then(result => {
             if (result.isConfirmed) {
-              // if (success) {
-              //   dispatch({
-              //     // type: NEW_ARTIKEL_RESET
-              //     type: UPDATE_ARTIKEL_RESET,
-              //   });
-              // }
-
               dispatch(updateArtikel(data, token));
-              // console.log(data)
             }
           });
         } else {
@@ -372,15 +359,7 @@ const EditArtikel = ({ token }) => {
             cancelButtonText: "Batal",
           }).then(result => {
             if (result.isConfirmed) {
-              // if (success) {
-              //   dispatch({
-              //     // type: NEW_ARTIKEL_RESET
-              //     type: UPDATE_ARTIKEL_RESET,
-              //   });
-              // }
-
               dispatch(updateArtikel(data, token));
-              // console.log(data)
             }
           });
         }
@@ -449,15 +428,7 @@ const EditArtikel = ({ token }) => {
             cancelButtonText: "Batal",
           }).then(result => {
             if (result.isConfirmed) {
-              // if (success) {
-              //   dispatch({
-              //     // type: NEW_ARTIKEL_RESET
-              //     type: UPDATE_ARTIKEL_RESET,
-              //   });
-              // }
-
               dispatch(updateArtikel(data, token));
-              // console.log(data)
             }
           });
         } else {
@@ -485,15 +456,7 @@ const EditArtikel = ({ token }) => {
             cancelButtonText: "Batal",
           }).then(result => {
             if (result.isConfirmed) {
-              // if (success) {
-              //   dispatch({
-              //     // type: NEW_ARTIKEL_RESET
-              //     type: UPDATE_ARTIKEL_RESET,
-              //   });
-              // }
-
               dispatch(updateArtikel(data, token));
-              // console.log(data)
             }
           });
         }
@@ -557,10 +520,7 @@ const EditArtikel = ({ token }) => {
   return (
     <>
       <PageWrapper>
-        {/* {console.log (artikel)} */}
-        {/* {
-          console.log (kategori)
-        } */}
+        {/* {console.log(artikel)} */}
 
         {error ? (
           <div
@@ -618,7 +578,7 @@ const EditArtikel = ({ token }) => {
           {loading ? <LoadingPage loading={loading} /> : ""}
           <div className="card card-custom card-stretch gutter-b">
             <div className="card-header">
-              <h3 className="card-title font-weight-bolder text-dark">
+              <h3 className="col-sm-4 card-title font-weight-bolder text-dark">
                 Ubah Artikel
               </h3>
             </div>
@@ -645,7 +605,7 @@ const EditArtikel = ({ token }) => {
                     {simpleValidator.current.message(
                       "judul_artikel",
                       judul_artikel,
-                      "required|min:5|max:50",
+                      "required|min:5|max:200",
                       { className: "text-danger" }
                     )}
                   </div>
@@ -654,7 +614,7 @@ const EditArtikel = ({ token }) => {
                 <div className="form-group">
                   <label
                     htmlFor="staticEmail"
-                    className="col-sm-2 col-form-label font-weight-bolder"
+                    className="col-sm-4 col-form-label font-weight-bolder"
                   >
                     Isi Artikel
                   </label>
@@ -672,24 +632,23 @@ const EditArtikel = ({ token }) => {
                           onChange={(event, editor) => {
                             const data = editor.getData();
                             setIsiArtikel(data);
-                            // console.log({ event, editor, data });
                           }}
                           onBlur={() =>
                             simpleValidator.current.showMessageFor(
                               "isi_artikel"
                             )
                           }
-                          // config={
-                          //   {
-                          //     //   ckfinder: {
-                          //     //   // Upload the images to the server using the CKFinder QuickUpload command.
-                          //     //   // uploadUrl: 'https://example.com/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images&responseType=json',
-                          //     //   uploadUrl: process.env.END_POINT_API_PUBLIKASI + `api/artikel/${id}`
-                          //     // }
-                          //     allowedContent: true
+                        // config={
+                        //   {
+                        //     //   ckfinder: {
+                        //     //   // Upload the images to the server using the CKFinder QuickUpload command.
+                        //     //   // uploadUrl: 'https://example.com/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images&responseType=json',
+                        //     //   uploadUrl: process.env.END_POINT_API_PUBLIKASI + `api/artikel/${id}`
+                        //     // }
+                        //     allowedContent: true
 
-                          //   }
-                          // }
+                        //   }
+                        // }
                         />
                       ) : (
                         <p>Tunggu Sebentar</p>
@@ -697,7 +656,7 @@ const EditArtikel = ({ token }) => {
                       {simpleValidator.current.message(
                         "isi_artikel",
                         isi_artikel,
-                        "required|min:100|max:2500",
+                        "required|min:100|max:12000",
                         { className: "text-danger" }
                       )}
                     </div>
@@ -707,7 +666,7 @@ const EditArtikel = ({ token }) => {
                 <div className="form-group">
                   <label
                     htmlFor="staticEmail"
-                    className="col-sm-2 col-form-label font-weight-bolder"
+                    className="col-sm-4 col-form-label font-weight-bolder"
                   >
                     Upload Thumbnail
                   </label>
@@ -780,7 +739,7 @@ const EditArtikel = ({ token }) => {
                     ) : null}
                   </div>
 
-                  <div className="mt-3 col-sm-3 text-muted">
+                  <div className="mt-3 col-sm-6 col-md-6 col-lg-7 text-muted">
                     <p>
                       Resolusi yang direkomendasikan adalah 1024 * 512. Fokus
                       visual pada bagian tengah gambar
@@ -856,7 +815,7 @@ const EditArtikel = ({ token }) => {
                         -- Artikel --
                       </option>
                       {!kategori || (kategori && kategori.length === 0) ? (
-                        <option value="">Data kosong</option>
+                        <option value="">Data Tidak Ditemukan</option>
                       ) : (
                         kategori &&
                         kategori.kategori &&
@@ -894,17 +853,21 @@ const EditArtikel = ({ token }) => {
                     <TagsInput
                       value={tag}
                       // onChange={setTag}
-                      onChange={data => handleTag(data)}
+                      onChange={(data) => handleTag(data)}
+                      // onKeyPress={(data) => keyPressTag(data)}
                       name="fruits"
                       placeHolder="Isi Tag disini dan tekan `Enter` atau `Tab`."
                       seprators={["Enter", "Tab"]}
-                      // onBlur={() => simpleValidator.current.showMessageFor('tag')}
+                    // onBlur={() => simpleValidator.current.showMessageFor('tag')}
                     />
-                    {disableTag === true ? (
-                      <p className="text-danger">
-                        Tag tidak bisa terdiri dari 1 character "SPACE"
-                      </p>
-                    ) : null}
+                    {
+                      disableTag === true ?
+                        <p className="text-danger">
+                          Tag tidak bisa terdiri dari "SPACE" character saja
+                        </p>
+                        :
+                        null
+                    }
                     {/* <input type="text" className="form-control" placeholder="Isi Tag disini" value={tag} onChange={e => setTag(e.target.value)} /> */}
                   </div>
                 </div>
@@ -928,9 +891,8 @@ const EditArtikel = ({ token }) => {
                           onChange={e => handleChangePublish(e)}
                         />
                         <span
-                          className={`sliders round ${
-                            publish ? "text-white" : "pl-2"
-                          }`}
+                          className={`sliders round ${publish ? "text-white" : "pl-2"
+                            }`}
                         ></span>
                       </label>
                     </div>

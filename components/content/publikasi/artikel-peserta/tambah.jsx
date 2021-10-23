@@ -69,15 +69,12 @@ const TambahArtikel = () => {
   );
   const [gambarName, setGambarName] = useState (null)
   const [kategori_id, setKategoriId] = useState("");
-  const [users_id, setUserId] = useState(8);
+  const [users_id, setUserId] = useState(87);
   const [tag, setTag] = useState([]);
   const [publish, setPublish] = useState(0);
 
   const onChangeGambar = (e) => {
     const type = ["image/jpg", "image/png", "image/jpeg"]
-    // console.log (e.target.files[0].type)
-    // console.log (e.target.files[0])
-    // console.log ("check")
 
     if (type.includes (e.target.files[0].type)){
       const reader = new FileReader();
@@ -88,7 +85,6 @@ const TambahArtikel = () => {
         }
       };
       reader.readAsDataURL(e.target.files[0])
-      // console.log (reader.readAsDataURL(e.target.files[0]))
       setGambarName(e.target.files[0].name)
     } 
     else {
@@ -106,9 +102,30 @@ const TambahArtikel = () => {
     }
   };
 
+  function hasWhiteSpace(s) {
+    return s.indexOf(' ') >= 0;
+  }
+
+  const handleTag = (data) => {
+    for (let i = 0; i < data.length; i++) {
+      if (hasWhiteSpace(data[i])) {
+        data.splice([i], 1);
+      }
+      // if(data[i] === " "){
+      //     data.splice(i, 1);
+      // }
+      // for (let j = 0; j < data[i].length; j++) {
+      //     if (data[i][j] === " ") {
+      //         data.splice(index, 1);
+      //         // setDisableTag(true)
+      //     }
+      // }
+    }
+    setTag(data);
+  }
+
   const handleChangePublish = (e) => {
     setPublish(e.target.checked);
-    console.log (e.target.checked)
   };
 
   const onSubmit = (e) => {
@@ -155,9 +172,7 @@ const TambahArtikel = () => {
       })
         .then((result) => {
           if (result.isConfirmed) {
-
             dispatch(newArtikelPeserta(data));
-            console.log(data);
           }
       });
 
@@ -232,7 +247,7 @@ const TambahArtikel = () => {
                     {simpleValidator.current.message(
                       "judul_artikel",
                       judul_artikel,
-                      "required|max:50",
+                      "required|max:200",
                       { className: "text-danger" }
                     )}
                   </div>
@@ -253,12 +268,11 @@ const TambahArtikel = () => {
                           data={isi_artikel}
                           onReady={(editor) => {
                             // You can store the "editor" and use when it is needed.
-                            console.log("Editor is ready to use!", editor);
+                            // console.log("Editor is ready to use!", editor);
                           }}
                           onChange={(event, editor) => {
                             const data = editor.getData();
                             setIsiArtikel(data);
-                            console.log({ event, editor, data });
                           }}
                           onBlur={() =>
                             simpleValidator.current.showMessageFor(
@@ -272,7 +286,7 @@ const TambahArtikel = () => {
                       {simpleValidator.current.message(
                         "isi_artikel",
                         isi_artikel,
-                        "required|min:100",
+                        "required|min:100|max:12000",
                         { className: "text-danger" }
                       )}
                     </div>

@@ -37,7 +37,7 @@ export const fetchAllMKCooporation = (token) => {
       const { data } = await getAllMasterCategory(params, token);
       dispatch(successFetchAllMKCooporation(data));
     } catch (error) {
-      dispatch(errorfetchAllMKCooporation(error.response.data.message));
+      dispatch(errorfetchAllMKCooporation());
     }
   };
 };
@@ -51,7 +51,6 @@ export const successFetchAllMKCooporation = (data) => {
 export const errorfetchAllMKCooporation = (data) => {
   return {
     type: MK_COOPORATION_FAIL,
-    data,
   };
 };
 
@@ -118,7 +117,6 @@ export const errorDeleteCooporation = (data) => {
 };
 
 export const updateMasterCategory = (token, formData, id) => {
-  console.log(token);
   return async (dispatch) => {
     try {
       let { data } = await masterCategoryUpdate(token, formData, id);

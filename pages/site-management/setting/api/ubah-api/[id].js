@@ -2,7 +2,10 @@ import dynamic from "next/dynamic";
 import { getSession } from "next-auth/client";
 import { wrapper } from "../../../../../redux/store";
 import LoadingPage from "../../../../../components/LoadingPage";
-import { getDetailApi } from "../../../../../redux/actions/site-management/settings/api.actions";
+import {
+  getDetailApi,
+  getListApi,
+} from "../../../../../redux/actions/site-management/settings/api.actions";
 const UbahApi = dynamic(
   () =>
     import(
@@ -34,7 +37,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (!session) {
         return {
           redirect: {
-            destination: "/login/admin",
+            destination: "http://dts-dev.majapahit.id/login/admin",
             permanent: false,
           },
         };
@@ -43,6 +46,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       await store.dispatch(
         getDetailApi(params.id, session.user.user.data.token)
       );
+      await store.dispatch(getListApi(session.user.user.data.token));
       return {
         props: { session, title: "Ubah API - Site Management" },
       };

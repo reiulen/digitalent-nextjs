@@ -52,7 +52,6 @@ export const getAllGeneral =
     } catch (error) {
       dispatch({
         type: GENERAL_FAIL,
-        payload: error.message,
       });
     }
   };

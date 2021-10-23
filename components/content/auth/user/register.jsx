@@ -108,7 +108,7 @@ const RegisterUser = () => {
       <AuthWrapper image="bg-user-1.png" title="Register">
         <div
           className="col-lg-7 d-flex flex-wrap align-content-center"
-          style={{ background: "#1A4367" }}
+          style={{ background: "#0063CC" }}
         >
           <div className="container ">
             <div className="title-login text-center mt-6">
@@ -381,7 +381,12 @@ const RegisterUser = () => {
                 <p style={{ fontSize: "12px", color: "#ffffff" }}>
                   Sudah punya akun?
                   <Link href="/login">
-                    <a className="text-primary ml-2">Masuk</a>
+                    <a
+                      className="font-weight-bolder ml-2"
+                      style={{ color: "#4CBDE2" }}
+                    >
+                      Masuk
+                    </a>
                   </Link>
                 </p>
               </div>

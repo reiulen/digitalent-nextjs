@@ -24,55 +24,90 @@ import {
   UPDATE_SERTIFIKAT_REQUEST,
   UPDATE_SERTIFIKAT_SUCCESS,
   UPDATE_SERTIFIKAT_FAIL,
+  OPTIONS_ACADEMY_FAIL,
+  OPTIONS_ACADEMY_REQUEST,
+  OPTIONS_ACADEMY_SUCCESS,
+  OPTIONS_THEME_FAIL,
+  OPTIONS_THEME_REQUEST,
+  OPTIONS_THEME_SUCCESS,
+  SET_KEYWORD_VALUE,
+  SET_ACADEMY_VALUE,
+  SET_THEME_VALUE,
+  SET_PAGE_VALUE,
+  SET_LIMIT_VALUE,
 } from "../../types/sertifikat/kelola-sertifikat.type";
 
-export const getAllSertifikat =
-  (
-    page = 1,
-    keyword = "",
-    limit = 5,
-    publish = null,
-    startdate = null,
-    enddate = null,
-    token
-  ) =>
-  async dispatch => {
-    try {
-      dispatch({ type: SERTIFIKAT_REQUEST });
-      let link =
-        process.env.END_POINT_API_SERTIFIKAT +
-        `api/manage_certificates?limit=${limit}&page=${page}`;
-      if (keyword) link = link.concat(`&keyword=${keyword}`);
-      if (publish) link = link.concat(`&publish=${publish}`);
-      if (startdate) link = link.concat(`&startdate=${startdate}`);
-      if (enddate) link = link.concat(`&enddate=${enddate}`);
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
+export const getAllSertifikat = token => async (dispatch, getState) => {
+  try {
+    dispatch({ type: SERTIFIKAT_REQUEST });
+    let link = process.env.END_POINT_API_SERTIFIKAT + `api/manage_certificates`;
+    let pageState = getState().allCertificates.page || 1;
+    let limitState = getState().allCertificates.limit || 5;
+    let themeState = getState().allCertificates.theme || "";
+    let academyState = getState().allCertificates.academy || "";
+    let keywordState = getState().allCertificates.keyword || "";
 
-      const { data } = await axios.get(link, config);
+    const params = {
+      page: pageState,
+      limit: limitState,
+      theme: themeState,
+      academy: academyState,
+      keyword: keywordState,
+    };
 
-      if (data) {
-        dispatch({ type: SERTIFIKAT_SUCCESS, payload: data });
-      }
-    } catch (error) {
-      dispatch({ type: SERTIFIKAT_FAIL, payload: error.message });
+    const config = {
+      params,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const { data } = await axios.get(link, config);
+    if (data) {
+      dispatch({ type: SERTIFIKAT_SUCCESS, payload: data });
     }
+  } catch (error) {
+    dispatch({ type: SERTIFIKAT_FAIL, payload: error.response.data.message });
+  }
+};
+
+export const searchKeyword = text => {
+  return {
+    type: SET_KEYWORD_VALUE,
+    text,
   };
+};
+
+export const setValueAcademy = text => {
+  return {
+    type: SET_ACADEMY_VALUE,
+    text,
+  };
+};
+
+export const setValueTheme = text => {
+  return {
+    type: SET_THEME_VALUE,
+    text,
+  };
+};
+
+export const setValuePage = text => {
+  return {
+    type: SET_PAGE_VALUE,
+    text,
+  };
+};
+
+export const setValueLimit = text => {
+  return {
+    type: SET_LIMIT_VALUE,
+    text,
+  };
+};
 
 export const getDetailSertifikat =
-  (
-    id,
-    page = 1,
-    keyword = "",
-    limit = 5,
-    publish = null,
-    startdate = null,
-    enddate = null,
-    token
-  ) =>
+  (id, page = 1, keyword = "", limit = 5, status = null, token) =>
   async dispatch => {
     try {
       dispatch({ type: DETAIL_SERTIFIKAT_REQUEST });
@@ -81,9 +116,7 @@ export const getDetailSertifikat =
         `api/manage_certificates/detail/${id}?page=${page}`;
       if (keyword) link = link.concat(`&keyword=${keyword}`);
       if (limit) link = link.concat(`&limit=${limit}`);
-      if (publish) link = link.concat(`&publish=${publish}`);
-      if (startdate) link = link.concat(`&startdate=${startdate}`);
-      if (enddate) link = link.concat(`&enddate=${enddate}`);
+      if (status) link = link.concat(`&status=${status}`);
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -92,27 +125,24 @@ export const getDetailSertifikat =
 
       const { data } = await axios.get(link, config);
 
-      // console.log(data.data.list_certificate[0], " ini data nya");
-
       if (data) {
         dispatch({ type: DETAIL_SERTIFIKAT_SUCCESS, payload: data });
       }
     } catch (error) {
-      dispatch({ type: DETAIL_SERTIFIKAT_FAIL, payload: error.message });
+      dispatch({
+        type: DETAIL_SERTIFIKAT_FAIL,
+        payload: error.response.data.message,
+      });
     }
   };
 
 export const newSertifikat = (id, formData, token) => async dispatch => {
   try {
-    for (var pair of formData.entries()) {
-      console.log(pair[0] + ", " + pair[1]);
-    }
     dispatch({ type: NEW_SERTIFIKAT_REQUEST });
     let link =
       process.env.END_POINT_API_SERTIFIKAT +
       `api/manage_certificates/store/${id}`;
 
-    // console.log(token, "INI TOKENNNNNNNNNNN!!");
     const config = {
       headers: {
         Authorization: `Bearer ${token.token}`,
@@ -125,11 +155,9 @@ export const newSertifikat = (id, formData, token) => async dispatch => {
       dispatch({ type: NEW_SERTIFIKAT_SUCCESS, payload: data });
     }
   } catch (error) {
-    console.log(error.response.data.message, "masukedispatch");
     dispatch({
       type: NEW_SERTIFIKAT_FAIL,
-      payload: error.message,
-      // payload: error.response.data.message,
+      payload: error.response.data.message,
     });
   }
 };
@@ -154,13 +182,15 @@ export const getSingleSertifikat = (id, token) => async dispatch => {
 
     const { data } = await axios.get(link, config);
 
-    console.log(data.data.signature, " ini data nya");
-
     if (data) {
       dispatch({ type: SINGLE_SERTIFIKAT_SUCCESS, payload: data });
     }
   } catch (error) {
-    dispatch({ type: SINGLE_SERTIFIKAT_FAIL, payload: error.message });
+    dispatch({
+      type: SINGLE_SERTIFIKAT_FAIL,
+      // payload: error.message
+      payload: error.response.data.message,
+    });
   }
 };
 
@@ -180,19 +210,22 @@ export const getPublishedSertifikat = (id, token) => async dispatch => {
     const { data } = await axios.get(link, config);
 
     if (data) {
-      dispatch({ type: PUBLISHED_SERTIFIKAT_SUCCESS, payload: data });
+      dispatch({
+        type: PUBLISHED_SERTIFIKAT_SUCCESS,
+        payload: data,
+      });
     }
   } catch (error) {
-    dispatch({ type: PUBLISHED_SERTIFIKAT_FAIL, payload: error.message });
+    dispatch({
+      type: PUBLISHED_SERTIFIKAT_FAIL,
+      payload: error.response.data.message,
+    });
   }
 };
 
 export const updateSertifikat = (id, formData, token) => async dispatch => {
   try {
     dispatch({ type: UPDATE_SERTIFIKAT_REQUEST });
-    for (var pair of formData.entries()) {
-      console.log(pair[0] + ", " + pair[1]);
-    }
 
     let link =
       process.env.END_POINT_API_SERTIFIKAT +
@@ -207,16 +240,60 @@ export const updateSertifikat = (id, formData, token) => async dispatch => {
     const { data } = await axios.post(link, formData, config);
 
     if (data) {
-      console.log("ini dari update sertifikat", data);
       dispatch({ type: UPDATE_SERTIFIKAT_SUCCESS, payload: data });
     }
   } catch (error) {
-    // console.log("ERRRRRRRRROR", error.response.data.message, "masukedispatch");
-    console.log(error.response);
     dispatch({
       type: UPDATE_SERTIFIKAT_FAIL,
-      payload: error.message,
-      // payload: error.response.data.message,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const getOptionsAcademy = token => async dispatch => {
+  try {
+    dispatch({ type: OPTIONS_ACADEMY_REQUEST });
+    let link = process.env.END_POINT_API_SERTIFIKAT + `api/option/academy`;
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const { data } = await axios.get(link, config);
+
+    if (data) {
+      dispatch({ type: OPTIONS_ACADEMY_SUCCESS, payload: data });
+    }
+  } catch (error) {
+    dispatch({
+      type: OPTIONS_ACADEMY_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const getOptionsTheme = token => async dispatch => {
+  try {
+    dispatch({ type: OPTIONS_THEME_REQUEST });
+    let link = process.env.END_POINT_API_SERTIFIKAT + `api/option/theme`;
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const { data } = await axios.get(link, config);
+
+    if (data) {
+      dispatch({ type: OPTIONS_THEME_SUCCESS, payload: data });
+    }
+  } catch (error) {
+    dispatch({
+      type: OPTIONS_THEME_FAIL,
+      payload: error.response.data.message,
     });
   }
 };

@@ -204,7 +204,6 @@ const EditSoalSubstansi = ({ token }) => {
         answer_key,
         question_type_id: question_type,
       };
-      console.log(data);
       dispatch(updateSubtanceQuestionDetail(id, data, token));
     }
   };
@@ -292,7 +291,9 @@ const EditSoalSubstansi = ({ token }) => {
                       accept="image/png, image/gif, image/jpeg , image/jpg"
                     />
                     <label className="custom-file-label" htmlFor="customFile">
-                      Choose file
+                      {subtance_question_detail.question_image
+                        ? question_image
+                        : "Choose file"}
                     </label>
                   </div>
                 </div>

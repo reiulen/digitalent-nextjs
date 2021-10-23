@@ -30,10 +30,6 @@ const listNumber = {
 //   inset:"0",
 // }
 
-
-
-//   console.log("pages detail preview",pages)
-
 const TentangKami = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();

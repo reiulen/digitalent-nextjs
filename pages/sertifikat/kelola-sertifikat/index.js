@@ -5,7 +5,11 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { getSession } from "next-auth/client";
 import Pagination from "react-js-pagination";
-import { getAllSertifikat } from "../../../redux/actions/sertifikat/kelola-sertifikat.action";
+import {
+  getAllSertifikat,
+  getOptionsAcademy,
+  getOptionsTheme,
+} from "../../../redux/actions/sertifikat/kelola-sertifikat.action";
 import { wrapper } from "../../../redux/store";
 
 const KelolaSertifikat = dynamic(
@@ -23,7 +27,6 @@ const KelolaSertifikat = dynamic(
 
 export default function KelokaSertifikatPage(props) {
   const session = props.session.user.user.data;
-
   return (
     <>
       <div className="d-flex flex-column flex-root">
@@ -37,27 +40,20 @@ export default function KelokaSertifikatPage(props) {
 export const getServerSideProps = wrapper.getServerSideProps(
   store =>
     async ({ query, req }) => {
-      // console.log(query, "INI QUERY");
       const session = await getSession({ req });
       if (!session) {
         return {
           redirect: {
-            destination: "/login/admin",
+            destination: "http://dts-dev.majapahit.id/login/admin",
             permanent: false,
           },
         };
       }
-      await store.dispatch(
-        getAllSertifikat(
-          query.page,
-          query.keyword,
-          query.limit,
-          query.publish,
-          query.startdate,
-          query.enddate,
-          session.user.user.data.token
-        )
-      );
+
+      await store.dispatch(getAllSertifikat(session.user.user.data.token));
+      await store.dispatch(getOptionsAcademy(session.user.user.data.token));
+      await store.dispatch(getOptionsTheme(session.user.user.data.token));
+
       return {
         props: { session, title: "List Akademi - Sertifikat" },
       };

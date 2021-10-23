@@ -21,8 +21,6 @@ const Table = ({ token }) => {
   const router = useRouter();
 
   const allUnitWork = useSelector((state) => state.allUnitWork);
-  console.log("object",allUnitWork)
-
   const [valueSearch, setValueSearch] = useState("");
   const handleChangeValueSearch = (value) => {
     setValueSearch(value);
@@ -36,9 +34,6 @@ const Table = ({ token }) => {
   useEffect(() => {
     dispatch(getAllUnitWork(token));
   }, [dispatch, allUnitWork.cari, allUnitWork.page, allUnitWork.limit, token]);
-
-
-
 
 
   return (
@@ -137,33 +132,47 @@ const Table = ({ token }) => {
                       </td>
                       <td className="align-middle text-left">{items.name}</td>
                       <td className="align-middle text-left">
+                        {items.status == 1 ?
                         <p
-                          className="status-div-red mb-0"
-                          style={{ width: "max-content" }}
+                        className="status-div-green mb-0"
+                        style={{ width: "max-content" }}
                         >
-                          {items.status}
+                          Aktif
                         </p>
+                        :
+
+                        <p
+                        className="status-div-red mb-0"
+                        style={{ width: "max-content" }}
+                        >
+                          Tidak Aktif
+                        </p>
+                        }
+
                       </td>
                       <td className="align-middle text-left">
                         <div className="d-flex align-items-center">
-                          <button
+
+                          
+                          <Link href={`/site-management/master-data/master-satuan-kerja-penyelenggara/ubah-satuan-kerja-penyelenggara/${items.id}`}>
+                          
+                          <a
                             className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                            onClick={() =>
-                              router.push(`/site-management/master-data/master-satuan-kerja-penyelenggara/ubah-satuan-kerja-penyelenggara`)
-                            }
                           >
                             <IconPencil width="16" height="16" />
                             <div className="text-hover-show-hapus">Ubah</div>
-                          </button>
-                          <button
+                          </a>
+                          </Link>
+
+                          <Link href={`/site-management/master-data/master-satuan-kerja-penyelenggara/detail-satuan-kerja-penyelenggara/${items.id}`}>
+                          <a
                             className="btn btn-link-action bg-blue-secondary ml-3 position-relative btn-delete"
-                            onClick={() =>
-                              router.push(`/site-management/master-data/master-satuan-kerja-penyelenggara/detail-satuan-kerja-penyelenggara`)
-                            }
                           >
                             <IconEye width="16" height="16" />
                             <div className="text-hover-show-hapus">Detail</div>
-                          </button>
+                          </a>
+                          </Link>
+                          
                         </div>
                       </td>
                     </tr>

@@ -36,6 +36,7 @@ const TambahImagetron = ({ token }) => {
     error: allError,
     kategori,
   } = useSelector((state) => state.allKategori);
+  const { setting } = useSelector(state => state.allSettingPublikasi)
   const [, forceUpdate] = useState();
 
   useEffect(() => {
@@ -71,27 +72,28 @@ const TambahImagetron = ({ token }) => {
   const [gambarName, setGambarName] = useState(null)
   const [url_link, setUrlRedirect] = useState('')
   const [publish, setPublish] = useState(0)
-  const [users_id, setUserId] = useState(3)
+  const [users_id, setUserId] = useState(87)
   const [publishDate, setPublishDate] = useState(null);
   const [disablePublishDate, setDisablePublishDate] = useState(true)
 
   const onChangeGambar = (e) => {
     const type = ["image/jpg", "image/png", "image/jpeg"]
-    // console.log (e.target.files[0].type)
-    // console.log(e.target.files[0])
-    // console.log ("check")
 
     if (type.includes(e.target.files[0].type)) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-          setGambar(reader.result);
-          setGambarPreview(reader.result);
-        }
-      };
-      reader.readAsDataURL(e.target.files[0])
-      // console.log (reader.readAsDataURL(e.target.files[0]))
-      setGambarName(e.target.files[0].name)
+      if (e.target.files[0].size > parseInt(setting[0].max_size) + '000000') {
+        e.target.value = null;
+        Swal.fire("Oops !", "Data Image Melebihi Ketentuan", "error");
+      } else {
+        const reader = new FileReader();
+        reader.onload = () => {
+          if (reader.readyState === 2) {
+            setGambar(reader.result);
+            setGambarPreview(reader.result);
+          }
+        };
+        reader.readAsDataURL(e.target.files[0])
+        setGambarName(e.target.files[0].name)
+      }
     }
     else {
       // setGambar("")
@@ -109,9 +111,7 @@ const TambahImagetron = ({ token }) => {
   };
 
   const handleChangePublish = (e) => {
-    // setPublish(e.target.checked);
     setDisablePublishDate(!disablePublishDate)
-    // console.log (e.target.checked)
 
     if (e.target.checked === false) {
       setPublishDate(null)
@@ -122,11 +122,8 @@ const TambahImagetron = ({ token }) => {
   };
 
   const handlePublishDate = (date) => {
-    // let result = moment(date).format("YYYY-MM-DD")
     if (disablePublishDate === false) {
-      // setPublishDate(result)
       setPublishDate(date)
-      // console.log (result)
     }
   }
 
@@ -171,7 +168,6 @@ const TambahImagetron = ({ token }) => {
           .then((result) => {
             if (result.isConfirmed) {
               dispatch(newImagetron(data, token))
-              console.log("Unpublish :",data)
             }
           });
 
@@ -199,7 +195,6 @@ const TambahImagetron = ({ token }) => {
           .then((result) => {
             if (result.isConfirmed) {
               dispatch(newImagetron(data, token))
-              console.log("Publish :",data)
             }
           });
       }
@@ -223,6 +218,7 @@ const TambahImagetron = ({ token }) => {
 
   return (
     <PageWrapper>
+      {/* {console.log(setting)} */}
       {error ?
         <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
           <div className="alert-icon"><i className="flaticon-warning"></i></div>
@@ -250,7 +246,7 @@ const TambahImagetron = ({ token }) => {
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header">
-            <h3 className="card-title font-weight-bolder text-dark">Tambah Imagetron</h3>
+            <h3 className="col-sm-4 card-title font-weight-bolder text-dark">Tambah Imagetron</h3>
           </div>
           <div className="card-body">
             <form onSubmit={onSubmit}>
@@ -277,7 +273,7 @@ const TambahImagetron = ({ token }) => {
                       -- Imagetron --
                     </option>
                     {!kategori || (kategori && kategori.length === 0) ? (
-                      <option value="">Data kosong</option>
+                      <option value="">Data Tidak Ditemukan</option>
                     ) : (
                       kategori &&
                       kategori.kategori &&
@@ -316,14 +312,14 @@ const TambahImagetron = ({ token }) => {
                   {simpleValidator.current.message(
                     "judul",
                     judul,
-                    "required|min:5|max:50",
+                    "required|min:5|max:200",
                     { className: "text-danger" }
                   )}
                 </div>
               </div>
 
               <div className="form-group">
-                <label className='col-sm-2 col-form-label font-weight-bolder'>Link URL</label>
+                <label className='col-sm-4 col-form-label font-weight-bolder'>Link URL</label>
                 <div className="col-sm-12">
                   <div className="input-group">
                     {/* <div className="input-group-prepend">
@@ -344,7 +340,7 @@ const TambahImagetron = ({ token }) => {
               <div className="form-group">
                 <label
                   htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label font-weight-bolder"
+                  className="col-sm-4 col-form-label font-weight-bolder"
                 >
                   Upload Thumbnail
                 </label>
@@ -403,7 +399,7 @@ const TambahImagetron = ({ token }) => {
                   }
                 </div>
 
-                <div className="mt-3 col-sm-3 text-muted">
+                <div className="mt-3 col-sm-6 col-md-6 col-lg-7 col-xl-3 text-muted">
                   <p>
                     Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar
                   </p>

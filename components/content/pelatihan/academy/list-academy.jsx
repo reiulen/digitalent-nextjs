@@ -14,6 +14,7 @@ import LoadingTable from "../../../LoadingTable";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deleteAcademy,
+  getAllAcademy,
   clearErrors,
 } from "../../../../redux/actions/pelatihan/academy.actions";
 import { DELETE_ACADEMY_RESET } from "../../../../redux/types/pelatihan/academy.type";
@@ -33,8 +34,7 @@ const ListAcademy = ({ token }) => {
     isDeleted,
   } = useSelector((state) => state.deleteAcademy);
 
-  let { page = 1, success } = router.query;
-  page = Number(page);
+  let { success } = router.query;
 
   let loading = false;
   if (allLoading) {
@@ -50,6 +50,7 @@ const ListAcademy = ({ token }) => {
     error = deleteError;
   }
 
+  const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(null);
 
@@ -58,7 +59,7 @@ const ListAcademy = ({ token }) => {
       Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
         (result) => {
           if (result.isConfirmed) {
-            window.location.reload();
+            dispatch(getAllAcademy(1, null, null, token));
           }
         }
       );
@@ -66,24 +67,26 @@ const ListAcademy = ({ token }) => {
         type: DELETE_ACADEMY_RESET,
       });
     }
-  }, [isDeleted, dispatch]);
+  }, [isDeleted, dispatch, token]);
 
   const handlePagination = (pageNumber) => {
-    let link = `${router.pathname}?page=${pageNumber}`;
-    if (limit) link = link.concat(`&limit=${limit}`);
-    if (search) link = link.concat(`&keyword=${search}`);
-    router.push(link);
+    setPage(pageNumber);
+    dispatch(getAllAcademy(pageNumber, search, limit, token));
   };
 
   const handleSearch = () => {
-    let link = `${router.pathname}?page=1&keyword=${search}`;
-    if (limit) link = link.concat(`&limit=${limit}`);
-    router.push(link);
+    // let link = `${router.pathname}?page=1&keyword=${search}`;
+    // if (limit) link = link.concat(`&limit=${limit}`);
+    // router.push(link);
+    setPage(1);
+    dispatch(getAllAcademy(1, search, limit, token));
   };
 
   const handleLimit = (val) => {
     setLimit(val);
-    router.push(`${router.pathname}?page=1&limit=${val}`);
+    // router.push(`${router.pathname}?page=1&limit=${val}`);
+    setPage(1);
+    dispatch(getAllAcademy(1, search, val, token));
   };
 
   const onNewReset = () => {
@@ -220,7 +223,7 @@ const ListAcademy = ({ token }) => {
                   <table className="table table-separate table-head-custom table-checkable">
                     <thead
                       style={{ background: "#F3F6F9" }}
-                      className="font-weight-bolder"
+                      className="font-weight-bolder w-100"
                     >
                       <tr>
                         <th className="text-center">No</th>
@@ -341,14 +344,15 @@ const ListAcademy = ({ token }) => {
                             borderColor: "#F3F6F9",
                             color: "#9E9E9E",
                           }}
+                          value={limit}
                           onChange={(e) => handleLimit(e.target.value)}
                           onBlur={(e) => handleLimit(e.target.value)}
                         >
-                          <option>5</option>
-                          <option>10</option>
-                          <option>30</option>
-                          <option>40</option>
-                          <option>50</option>
+                          <option value="5">5</option>
+                          <option value="10">10</option>
+                          <option value="30">30</option>
+                          <option value="40">40</option>
+                          <option value="50">50</option>
                         </select>
                       </div>
                       <div className="col-8 my-auto pt-3">

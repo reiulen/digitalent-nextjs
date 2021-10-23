@@ -40,7 +40,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (!session) {
         return {
           redirect: {
-            destination: "/login/admin",
+            destination: "http://dts-dev.majapahit.id/login/admin",
             permanent: false,
           },
         };
@@ -57,9 +57,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
           session.user.user.data.token
         )
       );
-      await store.dispatch(
-        getDetailGaleri(session.user.user.data.token)
-      );
+      // await store.dispatch(
+      //   getDetailGaleri(session.user.user.data.token)
+      // );
       // await store.dispatch(getAllKategori(session.user.user.data.token))
       return {
         props: { session, title: "Galeri - Publikasi" },

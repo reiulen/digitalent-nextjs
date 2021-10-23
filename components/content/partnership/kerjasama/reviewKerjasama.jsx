@@ -70,7 +70,8 @@ const ReviewKerjasama = ({ token }) => {
       if (result.value) {
         try {
           let { data } = await axios.put(
-            `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/accept/${router.query.id}`,null,
+            `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/accept/${router.query.id}`,
+            null,
             {
               headers: {
                 authorization: `Bearer ${token}`,
@@ -82,7 +83,13 @@ const ReviewKerjasama = ({ token }) => {
             query: { successTerima: true },
           });
         } catch (error) {
-          console.log("error acceptDokument", error);
+          Swal.fire("Gagal", `${error.response.data.message}`, "error").then(
+            () => {
+              router.push({
+                pathname: `/partnership/kerjasama`,
+              });
+            }
+          );
         }
       }
     });
@@ -105,7 +112,8 @@ const ReviewKerjasama = ({ token }) => {
       if (result.value) {
         try {
           let { data } = await axios.put(
-            `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/reject/${router.query.id}`,null,
+            `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/reject/${router.query.id}`,
+            null,
             {
               headers: {
                 authorization: `Bearer ${token}`,
@@ -118,11 +126,35 @@ const ReviewKerjasama = ({ token }) => {
             query: { successReject: true },
           });
         } catch (error) {
-          console.log("error acceptDokument", error);
+
+
+
+          Swal.fire("Gagal", `${error.response.data.message}`, "error").then(
+            () => {
+              router.push({
+                pathname: `/partnership/kerjasama`,
+              });
+            }
+          );
+
+
+
         }
       }
     });
   };
+
+  const notify = (value) =>
+    toast.info(`${value}`, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+
   const [statusInfo, setstatusInfo] = useState("");
   useEffect(() => {
     async function setDataSingle(id, token) {
@@ -141,7 +173,7 @@ const ReviewKerjasama = ({ token }) => {
         setPeriod(data.data.period);
         setPeriodUnit(data.data.period_unit);
       } catch (error) {
-        console.log("action getSIngle gagal", error);
+        notify(error.response.data.message);
       }
     }
     setDataSingle(router.query.id, token);
@@ -165,7 +197,7 @@ const ReviewKerjasama = ({ token }) => {
         setNoteView(data.data.note);
         setMitra(data.data.mitra);
       } catch (error) {
-        console.log("action getSIngle gagal", error);
+        notify(error.response.data.message);
       }
     }
 
@@ -206,11 +238,10 @@ const ReviewKerjasama = ({ token }) => {
                     Tanggal
                   </label>
                   <input
-                    readOnly
                     type="date"
                     required
                     value={dateView && dateView}
-                    className="form-control"
+                    className="form-control border-0"
                   />
                 </div>
                 <div className="form-group">
@@ -223,7 +254,7 @@ const ReviewKerjasama = ({ token }) => {
                     value={titleView && titleView}
                     onChange={(e) => setTitle(e.target.value)}
                     type="text"
-                    className="form-control"
+                    className="form-control border-0"
                     placeholder="Judul Kerjasama"
                   />
                 </div>
@@ -234,8 +265,8 @@ const ReviewKerjasama = ({ token }) => {
                   <select
                     name=""
                     id=""
-                    className="form-control"
-                    disabled
+                    className="form-control border-0 remove-icon-default"
+                    readOnly
                     value={cooperationIDView.id}
                   >
                     <option>{cooperationIDView.name}</option>
@@ -252,13 +283,13 @@ const ReviewKerjasama = ({ token }) => {
                         required
                         readOnly
                         type="number"
-                        className="form-control mt-2"
+                        className="form-control mt-2 border-0"
                         onChange={(e) => setPeriod(e.target.value)}
                         value={periodView}
                       />
                     </div>
                     <div className="col-12 col-sm-6">
-                      <div className="form-control mt-2">Tahun</div>
+                      <div className="form-control mt-2 border-0">Tahun</div>
                     </div>
                   </div>
                 </div>
@@ -283,7 +314,7 @@ const ReviewKerjasama = ({ token }) => {
                                 id={i}
                                 cols="30"
                                 rows="5"
-                                className="form-control"
+                                className="form-control border-0"
                               ></textarea>
                             </div>
                           </div>
@@ -302,7 +333,7 @@ const ReviewKerjasama = ({ token }) => {
                                 id={i}
                                 cols="30"
                                 rows="5"
-                                className="form-control"
+                                className="form-control border-0"
                               ></textarea>
                             </div>
                           </div>
@@ -319,11 +350,12 @@ const ReviewKerjasama = ({ token }) => {
                       onChange={(e) => setNote(e.target.value)}
                       name="cooperation"
                       id=""
+                      style={{backgroundColor:"transparent"}}
                       disabled
                       value={noteView && noteView}
                       cols="30"
                       rows="5"
-                      className="form-control"
+                      className="form-control border-0"
                       placeholder="Tuliskan Catatan Tambahan"
                     ></textarea>
                   </div>
@@ -356,7 +388,7 @@ const ReviewKerjasama = ({ token }) => {
                     type="date"
                     required
                     value={date && date}
-                    className="form-control"
+                    className="form-control border-0"
                   />
                 </div>
                 <div className="form-group">
@@ -369,7 +401,7 @@ const ReviewKerjasama = ({ token }) => {
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                     type="text"
-                    className="form-control"
+                    className="form-control border-0"
                     placeholder="Judul Kerjasama"
                   />
                 </div>
@@ -377,16 +409,44 @@ const ReviewKerjasama = ({ token }) => {
                   <label htmlFor="staticEmail" className="col-form-label">
                     Kategori kerjasama
                   </label>
-                  <select
+                  <input
                     name=""
                     id=""
-                    className="form-control"
+                    className="form-control border-0"
                     disabled
-                    value={cooperationID.id}
-                  >
-                    <option>{cooperationID.name}</option>
-                  </select>
+                    value={cooperationID.name}
+                    style={{ backgroundColor: "transparent" }}
+                  />
                 </div>
+
+                {/* <div className="row mb-4">
+                <div className="col-12 col-sm-12">
+                  <div className="form-group mb-0">
+                    <label>Periode</label>
+                    <div className="input-group">
+                      <input
+                        onFocus={() => setError({ ...error, period: "" })}
+                        type="text"
+                        value={period}
+                        disabled
+                        className="form-control mb-lg-0 border-0"
+                        placeholder="Masukkan Lama Kerjasama"
+                        onChange={(e) => onChangePeriod(e)}
+                      />
+                      <div className="input-group-append">
+                        <button
+                          className="btn btn-secondary"
+                          type="button"
+                          disabled
+                        >
+                          Tahun
+                        </button>
+                      </div>
+                      
+                    </div>
+                  </div>
+                </div>
+              </div> */}
 
                 <div className="form-group">
                   <label htmlFor="staticEmail" className="col-form-label">
@@ -398,13 +458,13 @@ const ReviewKerjasama = ({ token }) => {
                         required
                         readOnly
                         type="number"
-                        className="form-control mt-2"
+                        className="form-control mt-2 border-0"
                         onChange={(e) => setPeriod(e.target.value)}
                         value={period}
                       />
                     </div>
                     <div className="col-12 col-sm-6">
-                      <div className="form-control mt-2">Tahun</div>
+                      <div className="form-control mt-2 border-0">Tahun</div>
                     </div>
                   </div>
                 </div>
@@ -427,7 +487,7 @@ const ReviewKerjasama = ({ token }) => {
                             id={i}
                             cols="30"
                             rows="5"
-                            className="form-control"
+                            className="form-control border-0"
                           ></textarea>
                         </div>
                       );

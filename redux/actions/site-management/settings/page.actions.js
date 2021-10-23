@@ -57,7 +57,6 @@ export const getAllPage = (token) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: PAGE_FAIL,
-      payload: error.message,
     });
   }
 };
@@ -185,7 +184,6 @@ export const setPage = (page) => {
 };
 
 export const searchCooporation = (text) => {
-  console.log("text", text);
   return {
     type: SEARCH_COORPORATION,
     text,

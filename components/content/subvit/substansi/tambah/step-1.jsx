@@ -246,7 +246,6 @@ const StepOne = ({ token }) => {
                   onChange={(e) => setTrainingId(e.target.value)}
                   onBlur={(e) => setTrainingId(e.target.value)}
                   className="form-control"
-                  defaultValue={training_id}
                 >
                   <option selected disabled>
                     {" "}
@@ -286,8 +285,8 @@ const StepOne = ({ token }) => {
                     {" "}
                     -Pilih Kategori-
                   </option>
-                  <option value="Test Substansi"> Tes Substansi </option>
-                  <option value="Mid Test"> Mid Tes </option>
+                  <option value="Test Substansi"> Test Substansi </option>
+                  <option value="Mid Test"> Mid Test </option>
                 </select>
                 {simpleValidator.current.message(
                   "category",

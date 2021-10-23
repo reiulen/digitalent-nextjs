@@ -48,22 +48,24 @@ const TambahMitra = ({ token }) => {
 
   const submit = (e) => {
     e.preventDefault();
-    if (agency_logo === "") {
+     if (institution_name === "") {
+      setError({ ...error, institution_name: "Harus isi nama lembaga" });
+      // notify("Harus isi nama lembaga");
+    } else if (wesite === "") {
+      setError({ ...error, wesite: "Harus isi nama website" });
+      // notify("Harus isi nama website");
+    }else if (email === "") {
+      setError({ ...error, email: "Harus isi email" });
+      // notify("Harus isi email");
+    } 
+    else if (agency_logo === "") {
       setError({
         ...error,
         agency_logo: "Harus isi gambar logo dengan format png/jpg",
       });
       // notify("Harus isi gambar logo dengan format png");
-    } else if (institution_name === "") {
-      setError({ ...error, institution_name: "Harus isi nama lembaga" });
-      // notify("Harus isi nama lembaga");
-    } else if (email === "") {
-      setError({ ...error, email: "Harus isi email" });
-      // notify("Harus isi email");
-    } else if (wesite === "") {
-      setError({ ...error, wesite: "Harus isi nama website" });
-      // notify("Harus isi nama website");
-    } else if (address === "") {
+    }
+     else if (address === "") {
       setError({ ...error, address: "Harus isi alamat" });
       // notify("Harus isi alamat");
     } else if (indonesia_provinces_id === "") {
@@ -145,7 +147,7 @@ const TambahMitra = ({ token }) => {
   };
 
   const notify = (value) =>
-    toast.info(`🦄 ${value}`, {
+    toast.info(`${value}`, {
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,
@@ -205,10 +207,10 @@ const TambahMitra = ({ token }) => {
         let dataNewProvinces = data.data.map((items) => {
           return { ...items, label: items.name, value: items.id };
         });
-        dataNewProvinces.splice(0, 0, { label: "Pilih Provinsi", value: "" });
+        // dataNewProvinces.splice(0, 0, { label: "Pilih Provinsi", value: "" });
         setAllProvinces(dataNewProvinces);
       } catch (error) {
-        console.log("gagal get province", error);
+        notify(error.response.data.message);
       }
     }
     getDataProvinces(token);
@@ -216,9 +218,7 @@ const TambahMitra = ({ token }) => {
 
   useEffect(() => {
     // get data cities
-    if (indonesia_provinces_id === "") {
-      console.log("kosong");
-    } else {
+    if (indonesia_provinces_id !== "") {
       async function fetchAPI() {
         try {
           let { data } = await axios.get(
@@ -232,13 +232,12 @@ const TambahMitra = ({ token }) => {
           let dataNewCitites = data.data.map((items) => {
             return { ...items, label: items.name, value: items.id };
           });
-          dataNewCitites.splice(0, 0, { label: "Pilih Kab/Kota", value: "" });
+          // dataNewCitites.splice(0, 0, { label: "Pilih Kab/Kota", value: "" });
           setCitiesAll(dataNewCitites);
         } catch (error) {
-          console.log("gagal get cities", error);
+          notify(error.response.data.message);
         }
       }
-
       fetchAPI();
     }
   }, [indonesia_provinces_id, token]);
@@ -457,7 +456,7 @@ const TambahMitra = ({ token }) => {
                       className="basic-single"
                       classNamePrefix="select"
                       placeholder="Pilih provinsi"
-                      defaultValue={allProvinces[0]}
+                      // defaultValue={allProvinces[0]}
                       isDisabled={false}
                       isLoading={false}
                       isClearable={false}
@@ -489,7 +488,7 @@ const TambahMitra = ({ token }) => {
                       className="basic-single"
                       classNamePrefix="select"
                       placeholder="Pilih data Kab/Kota"
-                      defaultValue={citiesAll[0]}
+                      // defaultValue={citiesAll[0]}
                       isDisabled={false}
                       isLoading={false}
                       isClearable={false}
@@ -512,6 +511,7 @@ const TambahMitra = ({ token }) => {
                 <label htmlFor="staticEmail" className="col-form-label">
                   Kode Pos
                 </label>
+                <div className="position-relative">
                 <input
                   onFocus={() => setError({ ...error, postal_code: "" })}
                   type="number"
@@ -519,6 +519,9 @@ const TambahMitra = ({ token }) => {
                   placeholder="Masukkan Kode Pos"
                   onChange={(e) => setPostal_code(e.target.value)}
                 />
+                <div className="box-hide-arrow"></div>
+                </div>
+
                 {error.postal_code ? (
                   <p className="error-text">{error.postal_code}</p>
                 ) : (
@@ -532,6 +535,7 @@ const TambahMitra = ({ token }) => {
                     <label htmlFor="staticEmail" className="col-form-label">
                       Nama Person In Charge (PIC)
                     </label>
+                    <div className="position-relative">
                     <input
                       onFocus={() => setError({ ...error, pic_name: "" })}
                       type="text"
@@ -544,6 +548,9 @@ const TambahMitra = ({ token }) => {
                     ) : (
                       ""
                     )}
+                    <div className="box-hide-arrow"></div>
+
+                  </div>
                   </div>
                 </div>
                 <div className="col-12 col-sm-6">
@@ -551,6 +558,7 @@ const TambahMitra = ({ token }) => {
                     <label htmlFor="staticEmail" className="col-form-label">
                       Nomor Handphone Person In Charge (PIC)
                     </label>
+                    <div className="position-relative">
                     <input
                       onFocus={() =>
                         setError({ ...error, pic_contact_number: "" })
@@ -562,6 +570,8 @@ const TambahMitra = ({ token }) => {
                       placeholder="Masukkan NO. Kontak"
                       onChange={(e) => setPic_contact_number(e.target.value)}
                     />
+                    <div className="box-hide-arrow"></div>
+                </div>
                     {error.pic_contact_number ? (
                       <p className="error-text">{error.pic_contact_number}</p>
                     ) : (

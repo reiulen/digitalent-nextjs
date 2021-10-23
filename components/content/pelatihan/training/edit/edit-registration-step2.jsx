@@ -324,7 +324,6 @@ const EditRegistrationStep2 = () => {
       title,
       formBuilder,
     };
-    console.log(data);
     if (simpleValidator.current.allValid()) {
     } else {
       simpleValidator.current.showMessages();

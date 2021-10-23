@@ -74,8 +74,6 @@ const EditDokumentKerjasama = ({ token }) => {
         setPdfFile(null);
         setPdfFileError("Please selet valid pdf file !!");
       }
-    } else {
-      console.log("select your file");
     }
   };
 
@@ -121,9 +119,7 @@ const EditDokumentKerjasama = ({ token }) => {
         formData.append("period", period);
         formData.append("period_unit", periodUnit);
 
-        if (documentLocal === "") {
-          console.log("object");
-        } else {
+        if (document !== "") {
           formData.append("document", documentLocal);
         }
 
@@ -217,7 +213,7 @@ const EditDokumentKerjasama = ({ token }) => {
   };
 
   const notify = (value) =>
-    toast.info(`🦄 ${value}`, {
+    toast.info(`${value}`, {
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,
@@ -255,7 +251,7 @@ const EditDokumentKerjasama = ({ token }) => {
       setDocument(data.data.document_file);
       setEmail(data.data.email);
     } catch (error) {
-      console.log("action getSIngle gagal", error);
+      notify(error.response.data.message);
     }
     }
     setDataSingle(router.query.id);
@@ -331,8 +327,9 @@ const EditDokumentKerjasama = ({ token }) => {
                       type="text"
                       value={date}
                       name="text_input"
-                      className="form-control mb-3 mb-lg-0"
+                      className="form-control mb-3 mb-lg-0 border-0"
                       // placeholder="Masukan Alamat E-mail"
+                      style={{backgroundColor:"transparent"}}
                     />
               </div>
 
@@ -506,8 +503,9 @@ const EditDokumentKerjasama = ({ token }) => {
                       type="text"
                       value={isntitusiName}
                       name="text_input"
-                      className="form-control mb-3 mb-lg-0"
+                      className="form-control mb-3 mb-lg-0 border-0"
                       placeholder="Masukan Alamat E-mail"
+                      style={{backgroundColor:"transparent"}}
                     />
                   </div>
                 </div>
@@ -521,8 +519,9 @@ const EditDokumentKerjasama = ({ token }) => {
                       type="text"
                       value={email}
                       name="text_input"
-                      className="form-control mb-3 mb-lg-0"
+                      className="form-control mb-3 mb-lg-0 border-0"
                       placeholder="Masukan Alamat E-mail"
+                      style={{backgroundColor:"transparent"}}
                     />
                   </div>
                 </div>

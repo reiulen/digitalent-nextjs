@@ -102,7 +102,7 @@ const Table = ({ token }) => {
     allTandaTanganUser.status_reload,
     allTandaTanganUser.page,
     allTandaTanganUser.limit,
-    token
+    token,
   ]);
 
   return (
@@ -243,41 +243,42 @@ const Table = ({ token }) => {
           </div>
 
           <div className="card-body pt-0">
-            <form onSubmit={handleSubmit}>
-              <div className="table-filter">
-                <div className="row align-items-center">
-                  <div className="col-lg-10 col-xl-10">
-                    <div className="row w-100 my-5">
-                      <div className="col-12 col-sm-6">
-                        <div className="position-relative overflow-hidden w-100">
-                          <IconSearch
-                            style={{ left: "10" }}
-                            className="left-center-absolute"
-                          />
-                          <input
-                            id="kt_datatable_search_query"
-                            type="text"
-                            className="form-control pl-10"
-                            placeholder="Ketik disini untuk Pencarian..."
-                            onChange={(e) => setKeyWord(e.target.value)}
-                          />
-                          <button
-                            type="submit"
-                            className="btn bg-blue-primary text-white right-center-absolute"
-                            style={{
-                              borderTopLeftRadius: "0",
-                              borderBottomLeftRadius: "0",
-                            }}
-                          >
-                            Cari
-                          </button>
-                        </div>
+            {/* <form onSubmit={handleSubmit}> */}
+            <div className="table-filter">
+              <div className="row align-items-center">
+                <div className="col-lg-10 col-xl-10">
+                  <div className="row w-100 my-5">
+                    <div className="col-12 col-sm-6">
+                      <div className="position-relative overflow-hidden w-100">
+                        <IconSearch
+                          style={{ left: "10" }}
+                          className="left-center-absolute"
+                        />
+                        <input
+                          id="kt_datatable_search_query"
+                          type="text"
+                          className="form-control pl-10"
+                          placeholder="Ketik disini untuk Pencarian..."
+                          onChange={(e) => setKeyWord(e.target.value)}
+                        />
+                        <button
+                          type="button"
+                          onClick={(e) => handleSubmit(e)}
+                          className="btn bg-blue-primary text-white right-center-absolute"
+                          style={{
+                            borderTopLeftRadius: "0",
+                            borderBottomLeftRadius: "0",
+                          }}
+                        >
+                          Cari
+                        </button>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </form>
+            </div>
+            {/* </form> */}
 
             <div className="table-page mt-5">
               <div className="table-responsive">
@@ -370,19 +371,21 @@ const Table = ({ token }) => {
                                 </td>
                                 <td className="align-middle text-left">
                                   <div className="d-flex align-items-center">
-                                    <button
-                                      className="btn btn-link-action bg-blue-secondary mr-3 position-relative btn-delete"
-                                      onClick={() =>
-                                        router.push(
-                                          `/partnership/user/tanda-tangan-digital/${items.id}`
-                                        )
-                                      }
+                                    <Link
+                                      href={{
+                                        pathname:
+                                          "/partnership/user/tanda-tangan-digital/ubah-tanda-tangan-digital",
+                                        query: { id: items.id },
+                                      }}
                                     >
-                                      <IconPencil width="16" height="16" />
-                                      <div className="text-hover-show-hapus">
-                                        Ubah
-                                      </div>
-                                    </button>
+                                      <a className="btn btn-link-action bg-blue-secondary mr-3 position-relative btn-delete">
+                                        <IconPencil width="16" height="16" />
+                                        <div className="text-hover-show-hapus">
+                                          Ubah
+                                        </div>
+                                      </a>
+                                    </Link>
+
                                     <button
                                       className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
                                       onClick={() => handleDelete(items.id)}
@@ -442,6 +445,9 @@ const Table = ({ token }) => {
                         <option value="10">10</option>
                         <option value="15">15</option>
                         <option value="20">20</option>
+                        <option value="30">30</option>
+                        <option value="40">40</option>
+                        <option value="50">50</option>
                       </select>
                     </div>
                     <div className="col-8 my-auto">

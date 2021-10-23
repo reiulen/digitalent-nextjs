@@ -38,12 +38,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ params, req }) => {
       const session = await getSession({ req });
-      console.log(`from kategori create ${session}`);
-
       if (!session) {
         return {
           redirect: {
-            destination: "/login/admin",
+            destination: "http://dts-dev.majapahit.id/login/admin",
             permanent: false,
           },
         };

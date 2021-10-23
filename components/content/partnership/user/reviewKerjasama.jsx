@@ -2,30 +2,33 @@ import React, { useState, useRef, useEffect } from "react";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import Image from "next/image";
 import Link from "next/link";
-import {useRouter} from 'next/router'
+import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 
 import Style from "../../../../styles/progressbar.module.css";
 
 import {
   rejectCooperation,
-  reloadTable
+  reloadTable,
 } from "../../../../redux/actions/partnership/user/cooperation.actions";
 
 import axios from "axios";
 
-function ReviewKerjasama({token}) {
-  const router = useRouter()
+function ReviewKerjasama({ token }) {
+  const router = useRouter();
   let dispatch = useDispatch();
-  
 
-  const {successSubmitKerjasama} = router.query
+  const { successSubmitKerjasama } = router.query;
 
   const onNewReset = () => {
-    router.replace("/partnership/user/kerjasama/review-kerjasama-1", undefined, { shallow: true });
+    router.replace(
+      "/partnership/user/kerjasama/review-kerjasama-1",
+      undefined,
+      { shallow: true }
+    );
   };
 
-  const cooperationRejection = () =>{
+  const cooperationRejection = () => {
     // e.preventDefault()
 
     Swal.fire({
@@ -39,63 +42,66 @@ function ReviewKerjasama({token}) {
       dismissOnDestroy: false,
     }).then(async (result) => {
       if (result.value) {
-        dispatch(rejectCooperation(router.query.id,token));
+        dispatch(rejectCooperation(router.query.id, token));
         // setDeleteBar(true);
         // setIsStatusBar(true);
         router.push({
-              pathname: `/partnership/user/kerjasama/`,
-              query: { successUpdateStatus: true },
-            });
+          pathname: `/partnership/user/kerjasama/`,
+          query: { successUpdateStatus: true },
+        });
         // router.push("/partnership/user/kerjasama");
-        
       } else {
         dispatch(reloadTable());
       }
     });
-
-  }
+  };
 
   const [status, setStatus] = useState("");
 
   useEffect(() => {
-
-    async function cekProgresStatus(id,token){
+    async function cekProgresStatus(id, token) {
       try {
-      let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/cek-progres/${id}`,
-        {
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
+        let { data } = await axios.get(
+          `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/cek-progres/${id}`,
+          {
+            headers: {
+              authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (data.data.status_migrates_id.status === "pengajuan-revisi") {
+          router.push({
+            pathname: "/partnership/user/kerjasama/review-list-kerjasama",
+            query: { id: router.query.id },
+          });
         }
-      );
-
-      // console.log("data a a a ssss", data.data.status_migrates_id.status);
-      if(data.data.status_migrates_id.status === "pengajuan-revisi"){
-        router.push({
-          pathname:"/partnership/user/kerjasama/review-kerjasama-2",
-          query:{id:router.query.id}
-        })
+        if (
+          data.data.status_migrates_id.status === "pengajuan-selesai" ||
+          data.data.status_migrates_id.status === "pengajuan-pembahasan"
+        ) {
+          router.push({
+            pathname: "/partnership/user/kerjasama/pembahasan",
+            query: { id: router.query.id },
+          });
+        }
+        if (data.data.status_migrates_id.status === "dibatalkan") {
+          router.push({
+            pathname: "/partnership/user/kerjasama/hasil",
+            query: {
+              id: router.query.id,
+              statusKerjasama: data.data.status_migrates_id.status,
+            },
+          });
+        }
+        setStatus(data.data.status_migrates_id.status);
+      } catch (error) {
+        notify(error.response.data.message);
       }
-      if((data.data.status_migrates_id.status === "pengajuan-selesai") || (data.data.status_migrates_id.status === "pengajuan-pembahasan")  ){
-        router.push({
-          pathname:"/partnership/user/kerjasama/pembahasan-2",
-          query:{id:router.query.id}
-        })
-      }
-      setStatus(data.data.status_migrates_id.status);
-    } catch (error) {
-      console.log("gagal get province", error);
     }
 
-    }
-
-
-
-    cekProgresStatus(router.query.id,token);
-
-
-  }, [router.query.id,router,token])
+    cekProgresStatus(router.query.id, token);
+  }, [router.query.id, router, token]);
 
   // const onNewReset = () => {
   //   router.replace(`/partnership/user/kerjasama/review-kerjasama-1`);
@@ -140,12 +146,14 @@ function ReviewKerjasama({token}) {
             </h3>
           </div>
           <div className="card-body pb-28">
-            <div className="row mt-8 mb-10">
-              <div className="col-2 p-0">
+            <div className="row mt-8 mb-10 position-relative">
+              <div className="col-2 p-0 relative-progress">
                 <div className="progress-items">
                   {/* <div className="line-progress"></div> */}
                   <div className="circle-progress active-circle">
-                    <span className="title-progress">Submit Kerjasama</span>
+                    <span className="title-progress active">
+                      Submit Kerjasama
+                    </span>
                   </div>
                 </div>
               </div>
@@ -169,8 +177,13 @@ function ReviewKerjasama({token}) {
                 <div className="progress-items">
                   <div className="line-progress"></div>
                   <div className="circle-progress">
-                    <span className="title-progress text-center" style={{top:"-4rem"}}>
-                      Submit Dokumen<br/>Kerjasama
+                    <span
+                      className="title-progress text-center"
+                      style={{ top: "-4rem" }}
+                    >
+                      Submit Dokumen
+                      <br />
+                      Kerjasama
                     </span>
                   </div>
                 </div>
@@ -179,8 +192,13 @@ function ReviewKerjasama({token}) {
                 <div className="progress-items">
                   <div className="line-progress"></div>
                   <div className="circle-progress">
-                    <span className="title-progress text-center" style={{top:"-4rem"}}>
-                      Review Dokumen<br/>Kerjasama
+                    <span
+                      className="title-progress text-center"
+                      style={{ top: "-4rem" }}
+                    >
+                      Review Dokumen
+                      <br />
+                      Kerjasama
                     </span>
                   </div>
                 </div>
@@ -206,42 +224,33 @@ function ReviewKerjasama({token}) {
               </div>
               <div className="col-12 col-sm-6">
                 <div className="d-flex flex-column align-items-start justify-content-center h-100">
-                  <h1 className="fz-40 fw-700" style={{color:"#6C6C6C"}}>Terima Kasih</h1>
-                  <p className="mt-5 fz-16">Kamu telah berhasil melakukan pengajuan kerjasama dengan kami</p>
-                  <p className="fz-16">Dibutuhkan beberapa waktu untuk melakukan proses review pada pengajuanmu.</p>
+                  <h1 className="fz-40 fw-700" style={{ color: "#6C6C6C" }}>
+                    Pengajuan Terkirim!
+                  </h1>
+                  <p className="mt-5 fz-16">
+                    Terima kasih telah mengajukan kerjasama bersama Kami. Mohon
+                    tunggu dalam beberapa waktu karena Kami akan segera
+                    memproses pengajuan kerjasamamu.{" "}
+                  </p>
                 </div>
 
                 <div className="form-group row">
-                <div className="col-sm-12 d-flex justify-content-end">
+                  <div className="col-sm-12 d-flex justify-content-end">
+                    <Link href="/partnership/user/kerjasama" passHref>
+                      <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
+                        Kembali
+                      </a>
+                    </Link>
 
-                  <Link href="/partnership/user/kerjasama" passHref>
-                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
-                      Kembali
-                    </a>
-                  </Link>
-
-                      <button
-                    type="button"
-                    className="btn btn-sm btn-rounded-full bg-red-primary text-white"
-                    onClick={() =>
-                                          cooperationRejection(router.query.id)
-                                        }
-                  >
-                    Batalkan Kerjasama
-                  </button>
-
-
-
-                  
-
-
+                    <button
+                      type="button"
+                      className="btn btn-sm btn-rounded-full bg-red-primary text-white"
+                      onClick={() => cooperationRejection(router.query.id)}
+                    >
+                      Batalkan Kerjasama
+                    </button>
+                  </div>
                 </div>
-              </div>
-
-
-
-
-
               </div>
             </div>
           </div>

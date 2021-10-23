@@ -1,5 +1,5 @@
 // #Next & React
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
@@ -15,46 +15,103 @@ import IconArrow from "../../../../../assets/icon/Arrow";
 import IconClose from "../../../../../assets/icon/Close";
 import IconFilter from "../../../../../assets/icon/Filter";
 import { useSelector } from "react-redux";
+import { clearErrors } from "../../../../../../redux/actions/sertifikat/kelola-sertifikat.action";
+import Cookies from "js-cookie";
 
 export default function ListPeserta() {
   const router = useRouter();
   const { query } = router;
-
-  // #DatePicker
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
-  const resetValueSort = () => {
-    setStartDate(null);
-    setEndDate(null);
-  };
   // #DatePicker
   const { loading, error, participant } = useSelector(
     state => state.detailParticipant
   );
-  console.log(participant);
+  // console.log(error);
+  // useEffect(() => {
+  //   const id = sessionStorage.getItem("nama_pelatihan_id");
+  //   if (!participant) {
+  //     router.replace(router.asPath + `?id=${id}`);
+  //   }
+  // }, [participant, router]);
+
   // #Pagination
+  const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(null);
   // #Pagination
 
   let { page = 1, keyword, success } = router.query;
 
-  const handleLimit = () => {
-    console.log("");
+  const handleLimit = val => {
+    setLimit(val);
+    router.push(
+      `/sertifikat/kelola-sertifikat/${
+        query.tema_pelatihan_id
+      }/sertifikat-peserta?id=${
+        query.id ? query.id : Cookies.get("nama_pelatihan_id")
+      }&page=1&limit=${val}`
+    );
   };
 
   const handleSearch = () => {
-    console.log("");
+    let link = `/sertifikat/kelola-sertifikat/${
+      query.tema_pelatihan_id
+    }/sertifikat-peserta?id=${
+      query.id ? query.id : Cookies.get("nama_pelatihan_id")
+    }&page=1&keyword=${search}`;
+    if (limit) link = link.concat(`&limit=${limit}`);
+    router.push(link);
   };
 
+  const handlePagination = pageNumber => {
+    let link = `/sertifikat/kelola-sertifikat/${
+      query.tema_pelatihan_id
+    }/sertifikat-peserta?id=${
+      query.id ? query.id : Cookies.get("nama_pelatihan_id")
+    }&page=${pageNumber}`;
+    if (search) link = link.concat(`&keyword=${search}`);
+    if (limit) link = link.concat(`&limit=${limit}`);
+    router.push(link);
+  };
+
+  const handleResetError = () => {
+    if (error) {
+      dispatch(clearErrors());
+    }
+  };
   return (
     <PageWrapper>
       {/* error START */}
+      {error ? (
+        <div
+          className="alert alert-custom alert-light-danger fade show mb-5"
+          role="alert"
+        >
+          <div className="alert-icon">
+            <i className="flaticon-warning"></i>
+          </div>
+          <div className="alert-text">{error}</div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={handleResetError}
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
       {/* error END */}
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark">
-              Kelola Sertifikataa
+              Sertifikat Peserta {participant?.training}
             </h3>
           </div>
 
@@ -79,7 +136,9 @@ export default function ListPeserta() {
                         borderTopLeftRadius: "0",
                         borderBottomLeftRadius: "0",
                       }}
-                      onClick={handleSearch}
+                      onClick={() => {
+                        handleSearch();
+                      }}
                     >
                       Cari
                     </button>
@@ -90,11 +149,7 @@ export default function ListPeserta() {
             {/* START TABLE */}
             <div className="table-page mt-5">
               <div className="table-responsive">
-                <LoadingTable
-                  // UNFISNISH
-                  loading={loading}
-                  // Isi dengan loading dari dispatch
-                />
+                <LoadingTable loading={loading} />
 
                 {loading === false ? (
                   <table className="table table-separate table-head-custom table-checkable">
@@ -114,16 +169,15 @@ export default function ListPeserta() {
                         participant.data.list_certificate.length === 0) ? (
                         <tr>
                           <td className="text-center" colSpan={6}>
-                            Data Masih Kosong
+                            Data Tidak Ditemukan
                           </td>
                         </tr>
                       ) : (
                         participant &&
-                        // participant.participant &&
                         participant.data.list_certificate.map(
                           (participant, i) => {
                             return (
-                              <tr key={participant.id}>
+                              <tr key={i}>
                                 <td className="align-middle text-center">
                                   {limit === null ? (
                                     <span className="badge badge-secondary text-muted">
@@ -162,13 +216,21 @@ export default function ListPeserta() {
                                   {participant.status == 1 ? (
                                     <>
                                       <Link
-                                        href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${query.nama_pelatihan_id}/list-peserta/${participant.name}`}
+                                        // href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${query.nama_pelatihan_id}/list-peserta/${participant.name}`}
+                                        href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/sertifikat-peserta/${participant.name}?id=${query.id}`}
+                                        // ?id=${certificate.id}
                                       >
                                         <a
                                           className="btn btn-link-action bg-blue-secondary text-white mr-2"
                                           data-toggle="tooltip"
                                           data-placement="bottom"
                                           title="Detail"
+                                          onClick={() => {
+                                            Cookies.set(
+                                              "nama_pelatihan_id",
+                                              query.id
+                                            );
+                                          }}
                                         >
                                           <i className="ri-eye-fill p-0 text-white"></i>
                                         </a>
@@ -192,24 +254,23 @@ export default function ListPeserta() {
               </div>
               {/* START Pagination */}
               <div className="row">
-                {participant &&
-                  participant.data.perPage < participant.data.total && (
-                    <div className="table-pagination">
-                      <Pagination
-                        activePage={page}
-                        itemsCountPerPage={participant.data.perPage}
-                        totalItemsCount={participant.data.total}
-                        pageRangeDisplayed={3}
-                        onChange={handlePagination}
-                        nextPageText={">"}
-                        prevPageText={"<"}
-                        firstPageText={"<<"}
-                        lastPageText={">>"}
-                        itemClass="page-item"
-                        linkClass="page-link"
-                      />
-                    </div>
-                  )}
+                {participant && (
+                  <div className="table-pagination">
+                    <Pagination
+                      activePage={+page}
+                      itemsCountPerPage={participant.data.perPage}
+                      totalItemsCount={participant.data.total}
+                      pageRangeDisplayed={3}
+                      onChange={handlePagination}
+                      nextPageText={">"}
+                      prevPageText={"<"}
+                      firstPageText={"<<"}
+                      lastPageText={">>"}
+                      itemClass="page-item"
+                      linkClass="page-link"
+                    />
+                  </div>
+                )}
                 {participant ? (
                   <div className="table-total ml-auto">
                     <div className="row mt-3">
@@ -226,30 +287,10 @@ export default function ListPeserta() {
                           onChange={e => handleLimit(e.target.value)}
                           onBlur={e => handleLimit(e.target.value)}
                         >
-                          <option
-                            value="5"
-                            selected={limit == "5" ? true : false}
-                          >
-                            5
-                          </option>
-                          <option
-                            value="10"
-                            selected={limit == "10" ? true : false}
-                          >
-                            10
-                          </option>
-                          <option
-                            value="15"
-                            selected={limit == "15" ? true : false}
-                          >
-                            15
-                          </option>
-                          <option
-                            value="20"
-                            selected={limit == "20" ? true : false}
-                          >
-                            20
-                          </option>
+                          <option value="5">5</option>
+                          <option value="10">10</option>
+                          <option value="15">15</option>
+                          <option value="20">20</option>
                         </select>
                       </div>
                       <div className="col-8 my-auto">

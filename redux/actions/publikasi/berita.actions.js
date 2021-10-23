@@ -65,7 +65,7 @@ export const getAllBerita = (page = 1, keyword = '', limit = 5, publish = null, 
     } catch (error) {
         dispatch({
             type: BERITA_FAIL,
-            payload: error.message
+            payload: error.response.data.message
         })
     }
 }
@@ -127,9 +127,6 @@ export const getDetailBerita = (id, token) => async (dispatch) => {
             type: DETAIL_BERITA_SUCCESS,
             payload: data.data
         })
-
-        // console.log (data.data)
-
     } catch (error) {
         dispatch({
             type: DETAIL_BERITA_FAIL,
@@ -164,8 +161,6 @@ export const updateBerita = (beritaData, token) => async (dispatch) => {
             type: UPDATE_BERITA_FAIL,
             payload: error.response.data.message
         })
-
-        // console.log (payload)
     }
 }
 
