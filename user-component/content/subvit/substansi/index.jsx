@@ -227,9 +227,9 @@ const SubtansiUser = ({ token }) => {
                       <Image
                         src={
                           process.env.END_POINT_API_IMAGE_SUBVIT +
-                          "subtance/images/" +
-                          data.list_questions[parseInt(router.query.id) - 1]
-                            .question_image
+                            "subtance/images/" +
+                            data.list_questions[parseInt(router.query.id) - 1]
+                              .question_image || defaultImage
                         }
                         alt=""
                         width={150}
@@ -261,8 +261,8 @@ const SubtansiUser = ({ token }) => {
                             <Image
                               src={
                                 process.env.END_POINT_API_IMAGE_SUBVIT +
-                                "subtance/images/" +
-                                item.image
+                                  "subtance/images/" +
+                                  item.image || defaultImage
                               }
                               alt=""
                               width={70}
