@@ -23,7 +23,6 @@ export default function SubstansiMenungguJadwal() {
             className="p-0"
             variant="white"
             onClick={(e) =>{
-              console.log(e);
               e.preventDefault();
               clickHandle(1);
             }}>
@@ -114,7 +113,6 @@ export default function SubstansiMenungguJadwal() {
                   <Col md={6}>
                     <a
                       onClick={(e) =>{
-                          console.log(e);
                           e.preventDefault();
                           clickHandle(2);
                       }}

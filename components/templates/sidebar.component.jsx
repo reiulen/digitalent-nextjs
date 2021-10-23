@@ -486,9 +486,6 @@ const Sidebar = ({ session }) => {
 
   const handleOpenMenuSubMenu = (e, iMenu, iSubMenu) => {
 
-    console.log(e);
-    console.log(iMenu);
-    console.log(iSubMenu);
 
     let _temp = [...menu];
     _temp.map((items, index) => {
