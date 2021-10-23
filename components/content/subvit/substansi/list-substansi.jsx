@@ -35,7 +35,7 @@ const ListSubstansi = ({ token }) => {
   page = Number(page);
 
   const [search, setSearch] = useState("");
-  const [limit, setLimit] = useState(null);
+  const [limit, setLimit] = useState(5);
 
   useEffect(() => {
     if (isDeleted) {
