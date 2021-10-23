@@ -37,7 +37,7 @@ export default function SubstansiMenungguJadwal() {
             />
           </Col>
           <Col md={9}>
-            <Row className="h-100">
+            <Row className="h-100 pb-lg-0 pb-10">
               <Col
                 lg={2}
                 className="d-flex justify-content-center align-items-center my-10 my-lg-0 order-2 order-md-1"
@@ -103,11 +103,11 @@ export default function SubstansiMenungguJadwal() {
         </Row>
       </Card.Body>
       <Row
-        className={`position-absolute w-100 ${style.responsive_position_button}`}
-        style={{ top: "170px" }}
+        className={`position-absolute w-100 ml-4 ${style.responsive_position_button}`}
+        // style={{ top: "170px" }}
       >
         <Col lg={3} />
-        <Col className="d-flex justify-content-center order-6 ml-0 ml-lg-6">
+        <Col className="order-6 mr-5 mr-lg-0">
           <Button
             className={`rounded-full  font-weight-bold btn-block justify-content-center mt-5 ${style.background_outline_primary}`}
             style={{
@@ -123,7 +123,7 @@ export default function SubstansiMenungguJadwal() {
             Bukti Pendaftaran
           </Button>
         </Col>
-        <Col className="d-flex justify-content-center order-6 ">
+        <Col className="d-flex justify-content-center order-6 mr-5">
           <Button
             className="btn-rounded-full font-weight-bold btn-block justify-content-center mt-5"
             style={{

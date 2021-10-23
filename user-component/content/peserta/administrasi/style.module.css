@@ -58,24 +58,3 @@
   width: 64px,
   height: 64px,
   backgroundColor: red, */
-.responsive_position_button {
-  bottom: 0px !important;
-}
-
-@media (min-width: 768px) {
-  .responsive_position_button {
-    bottom: 0px !important;
-  }
-}
-
-@media (min-width: 992px) {
-  .responsive_position_button {
-    top: 180px !important;
-  }
-}
-
-@media (min-width: 1200px) {
-  .responsive_position_button {
-    top: 170px !important;
-  }
-}

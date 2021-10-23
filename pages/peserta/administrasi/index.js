@@ -20,6 +20,19 @@ const SeleksiAdministrasi = dynamic(
   }
 );
 
+const BelumTersedia = dynamic(
+  () =>
+    import(
+      "../../../user-component/content/peserta/administrasi/belum-tersedia.jsx"
+    ),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
+
 const Layout = dynamic(() =>
   import("../../../user-component/components/template/Layout.component")
 );
@@ -31,7 +44,7 @@ export default function RiwayatPelatihanPage(props) {
   return (
     <>
       <Layout title="Administrasi" session={session}>
-        <SeleksiAdministrasi />
+        {router.query.status ? <SeleksiAdministrasi /> : <BelumTersedia />}
       </Layout>
     </>
   );
