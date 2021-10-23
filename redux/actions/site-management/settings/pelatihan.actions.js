@@ -38,9 +38,8 @@ export const postTemplate = (token, subject, body, status) => {
   return (dispatch) => {
     axios
       .post(
-        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-trainings/update-template-email/tes substansi`,
+        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-trainings/update-template-email/${status}`,
         {
-          status: status,
           subject: subject,
           body: body,
         },
@@ -130,7 +129,23 @@ export const postKetentuan = (
   };
 };
 
-export const postViaFilter = (token, title, year, academy, theme, organizer, training, profileStatus, selectionStatus, participantSelectionStatusUpdate, status ,broadcastEmailSendNotification, emailSubject, emailContent, via) => {
+export const postViaFilter = (
+  token,
+  title,
+  year,
+  academy,
+  theme,
+  organizer,
+  training,
+  profileStatus,
+  selectionStatus,
+  participantSelectionStatusUpdate,
+  status,
+  broadcastEmailSendNotification,
+  emailSubject,
+  emailContent,
+  via
+) => {
   let data = {
     title,
     year,
@@ -147,27 +162,81 @@ export const postViaFilter = (token, title, year, academy, theme, organizer, tra
     emailContent,
   };
 
-  let subm = new FormData()
-  subm.append("status_types", via)
-  subm.append("training_rules", JSON.stringify(data))
+  let subm = new FormData();
+  subm.append("status_types", via);
+  subm.append("training_rules", JSON.stringify(data));
 
   return (dispatch) => {
     axios
       .post(
         `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-trainings/subm`,
-        subm, 
+        subm,
         {
-          headers: {  
-            authorization: `Bearer ${token}`
+          headers: {
+            authorization: `Bearer ${token}`,
           },
         }
       )
       .then((response) => {
-        console.log(response)
-        console.log("BEHASIL")
+        Swal.fire("Berhasil", "Data berhasil tersimpan", "success").then(() => {
+          router.push("/partnership/user/auth/login");
+        });
       })
       .catch((error) => {
-        notify(error.response.data.message);
+        Swal.fire("Gagal", "Gagal tidak berhasil tersimpan, mohon isi data yang lengkap", "error");
+
+      });
+  };
+};
+
+export const postViaTemplate = (token,title, file, participantSelectionStatusUpdate,
+  status,
+  broadcastEmailSendNotification,
+  emailSubject,
+  emailContent, via) => {
+  const data = {
+    title,
+    year: "",
+    academy: "",
+    theme: "",
+    organizer: "",
+    training: "",
+    profileStatus: "",
+    selectionStatus: "",
+    participantSelectionStatusUpdate,
+    status,
+    broadcastEmailSendNotification,
+    emailSubject,
+    emailContent,
+  };
+
+
+  let subm = new FormData();
+
+  subm.append("status_types", via);
+  subm.append("participant", file);
+  subm.append("training_rules", JSON.stringify(data));
+
+  return (dispatch) => {
+    axios
+      .post(
+        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-trainings/subm`,
+        subm,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+            "content-type": "multipart/form-data",
+          },
+        }
+      )
+      .then((response) => {
+        Swal.fire("Berhasil", "Data berhasil tersimpan", "success").then(() => {
+          router.push("/partnership/user/auth/login");
+        });
+        console.log(response)
+      })
+      .catch((error) => {
+        Swal.fire("Gagal", "Gagal tidak berhasil tersimpan, mohon isi data dengan lengkap", "error");
       });
   };
 };
@@ -181,17 +250,17 @@ export const postFileSize = (
       .post(
         `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-trainings/update-file-size`,
         {
-          "image": [
-              {
-                  "size": image
-              }
+          image: [
+            {
+              size: image,
+            },
           ],
-          "document" : [
-              {
-                  "size": document
-              }
-          ]
-      },
+          document: [
+            {
+              size: document,
+            },
+          ],
+        },
         {
           headers: {
             authorization: `Bearer ${token}`,

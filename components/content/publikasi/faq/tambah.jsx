@@ -32,11 +32,6 @@ const TambahFaq = ({ token, id }) => {
     const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
 
     useEffect(() => {
-        // dispatch(getAllKategori())
-        // if (error) {
-        //     dispatch(clearErrors())
-        // }
-
         if (success) {
             dispatch({
                 type: NEW_FAQ_RESET
@@ -124,7 +119,6 @@ const TambahFaq = ({ token, id }) => {
                 }
 
                 dispatch(newFaq(data, token))
-                // console.log(data)
 
             } else {
                 const data = {
@@ -138,15 +132,12 @@ const TambahFaq = ({ token, id }) => {
                 }
 
                 dispatch(newFaq(data, token))
-                // console.log(data)
-
             }
 
 
         } else {
             simpleValidator.current.showMessages();
             forceUpdate(1);
-            // forceUpdate;
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
@@ -208,9 +199,6 @@ const TambahFaq = ({ token, id }) => {
                                     {simpleValidator.current.message("jawaban", jawaban, "required|max:350", { className: "text-danger" })}
                                 </div>
                             </div>
-                            {
-                                // console.log (kategori)
-                            }
 
                             <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Kategori</label>
@@ -293,12 +281,6 @@ const TambahFaq = ({ token, id }) => {
                                                 // minDate={addDays(new Date(), 20)}
                                                 />
                                             </div>
-                                            {/* {
-                                                disablePublishDate === true ?
-                                                    <small className="text-muted">Harap ubah status publikasi menjadi aktif untuk mengisi Tanggal Publish</small>
-                                                :
-                                                    null
-                                            } */}
                                         </div>
                                     </div>
                                     :
@@ -334,41 +316,6 @@ const TambahFaq = ({ token, id }) => {
                                     </div>
                                 </div>
                             </div>
-
-
-
-
-                            {/* <div className="form-group row">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Pin FAQ</label>
-                                <div className="col-sm-1">
-                                    <SwitchButton
-                                        checked={pinned}
-                                        onlabel=' '
-                                        onstyle='primary'
-                                        offlabel=' '
-                                        offstyle='danger'
-                                        size='sm'
-                                        width={30}
-                                        onChange={(checked) => setPinnedFaq(checked)}
-                                    />
-                                </div>
-                            </div> */}
-
-                            {/* <div className="form-group row">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Publish</label>
-                                <div className="col-sm-1">
-                                    <SwitchButton
-                                        checked={publish}
-                                        onlabel=' '
-                                        onstyle='primary'
-                                        offlabel=' '
-                                        offstyle='danger'
-                                        size='sm'
-                                        width={30}
-                                        onChange={(checked) => setPublish(checked)}
-                                    />
-                                </div>
-                            </div> */}
 
                             <div className="form-group row">
                                 <div className="col-sm-2"></div>
