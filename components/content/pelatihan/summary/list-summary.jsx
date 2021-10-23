@@ -423,6 +423,7 @@ const ListSummary = ({ token }) => {
                   </table>
                 )}
               </div>
+
               <div className="row">
                 {summary && summary.perPage < summary.total && (
                   <div className="table-pagination table-pagination pagination-custom col-12 col-md-6">
