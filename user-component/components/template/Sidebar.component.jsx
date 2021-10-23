@@ -253,10 +253,22 @@ const Sidebar = () => {
       </div>
       <div className={styles.titleAkun}>AKUN</div>
       <Link href="/peserta/profile" passHref>
-        <div className={styles.akunMenu}>
+        <div
+          className={
+            router.pathname === "/peserta/profile"
+              ? styles.akunMenuActive
+              : styles.akunMenu
+          }
+        >
           <div className="d-flex flex-row">
             <div className="p-2">
-              <i className="ri-user-line"></i>
+              <i
+                className={`${
+                  router.pathname === "/peserta/profile"
+                    ? styles.activeIconMenu
+                    : styles.iconMenu
+                } ri-user-line`}
+              ></i>
             </div>
             <div className="p-2">
               <td>Profile</td>
