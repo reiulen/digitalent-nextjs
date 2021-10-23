@@ -144,10 +144,6 @@ const SubmitKerjasama = ({ token }) => {
               pathname: `/partnership/kerjasama/detail-kerjasama`,
               query: { id:data.data.id,success: true },
             });
-            // router.push({
-            //   pathname: `/partnership/kerjasama/view/${data.data.id}`,
-            //   query: { success: true },
-            // });
           } catch (error) {
             notify(error.response.data.message);
           }
@@ -242,8 +238,8 @@ const SubmitKerjasama = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3
-              className="card-title font-weight-bolder text-dark"
-              style={{ fontSize: "24px" }}
+              className="card-title font-weight-bolder text-dark titles-1"
+            
             >
               Dokumen Kerjasama
             </h3>

@@ -16,7 +16,6 @@ const DetailRefrence = ({ token }) => {
   const router = useRouter();
 
   const detailDataReference = useSelector((state) => state.detailDataReference);
-  console.log("detailDataReference", detailDataReference);
   return (
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">
@@ -73,15 +72,6 @@ const DetailRefrence = ({ token }) => {
                   </li>
                     )
                   })}
-                  {/* <li>
-                    <p
-                      htmlFor="exampleSelect1"
-                      className="fw-400 fz-16 mb-0"
-                      style={{ color: "#1F1F1F" }}
-                    >
-                      Jawa Barat
-                    </p>
-                  </li> */}
                 </ul>
               </div>{" "}
             </div>
