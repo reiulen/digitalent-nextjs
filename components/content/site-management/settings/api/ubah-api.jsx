@@ -52,15 +52,16 @@ const [defaultValueListField, setDefaultValueListField] = useState(detailApi.api
   };
 
   const changeListApi = (e) => {
-    let resultSelect = e.map((items) => {
-      return items.label;
-    });
-    setField(resultSelect);
+    console.log("e",e)
+    // let resultSelect = e.map((items) => {
+    //   return items.label;
+    // });
+    // setField(resultSelect);
+    setApiChoice(e.id)
   };
 
   useEffect(() => {
-
-     if (apiChoice) {
+    if (apiChoice) {
       async function getListField(id, token) {
         try {
           let { data } = await axios.get(
@@ -71,6 +72,7 @@ const [defaultValueListField, setDefaultValueListField] = useState(detailApi.api
               },
             }
           );
+          console.log("response get list field", data);
           let optionListFieldResult = data.data.map((items) => {
             return {
               ...items,
@@ -78,6 +80,8 @@ const [defaultValueListField, setDefaultValueListField] = useState(detailApi.api
               value: items.field_name,
             };
           });
+
+          console.log("optionListFieldResult",optionListFieldResult)
 
           setOptionListField(optionListFieldResult);
 
@@ -89,9 +93,6 @@ const [defaultValueListField, setDefaultValueListField] = useState(detailApi.api
 
       getListField(apiChoice, token);
     }
-
-
-
   }, [apiChoice,token])
 
   return (
@@ -160,6 +161,7 @@ const [defaultValueListField, setDefaultValueListField] = useState(detailApi.api
                   isClearable={false}
                   isRtl={false}
                   isSearchable={true}
+                  onChange={(e)=>changeListApi(e)}
                   name="color"
                   options={optionListApi}
                 />
@@ -181,7 +183,7 @@ const [defaultValueListField, setDefaultValueListField] = useState(detailApi.api
                   isRtl={false}
                   isSearchable={true}
                   name="color"
-                  onChange={(e) => changeListApi(e)}
+                  // onChange={(e) => changeListApi(e)}
                   options={optionListField}
                 />
               </div>
