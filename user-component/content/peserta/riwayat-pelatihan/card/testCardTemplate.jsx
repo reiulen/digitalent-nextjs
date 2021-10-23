@@ -27,7 +27,7 @@ export default function CardTemplateOriginal({ data }) {
                   className="d-flex justify-content-center align-items-center my-10 my-lg-0 order-2 order-md-1"
                 >
                   <img
-                    src={data.img_mitra}
+                    src="/assets/media/mitra-icon/bukalapak-1.svg"
                     width={58}
                     height={58}
                     alt="test2"

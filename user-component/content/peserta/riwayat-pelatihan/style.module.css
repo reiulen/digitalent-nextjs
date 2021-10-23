@@ -14,7 +14,8 @@
   background-color: #007cff;
 }
 
-.text-secondary {}
+.text-secondary {
+}
 
 .text-muted {
   color: #6c6c6c;
@@ -37,8 +38,10 @@
 }
 
 .background_outline_primary {
-  background-color: white;
-  color: #007cff;
+  background-color: white !important;
+  color: #007cff !important;
+  font-family: poppins;
+  font-size: 14px;
 }
 
 .background_outline_primary:hover {
