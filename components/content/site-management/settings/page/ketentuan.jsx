@@ -36,7 +36,7 @@ export default function Ketentuan(props) {
   };
 
   return (
-    <div className="col styling-content-pelatihan">
+    <div className="col-xl-8 styling-content-pelatihan">
       <form onSubmit={handleSubmit}>
         <div className="notification-title">
           <h1>Ketentuan Pelatihan</h1>

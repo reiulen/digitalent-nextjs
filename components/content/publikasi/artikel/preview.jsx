@@ -34,9 +34,7 @@ const Preview = () => {
     const [created_at, setCreatedAt] = useState(new Date(artikel.created_at).toLocaleDateString("en-IN"))
     const [nama, setNamaKategori] = useState(artikel.nama)
     const [gambar, setGambar] = useState(artikel.gambar)
-    // const [gambar, setGambar] = useState('/assets/media/default.jpg')
     const [user, setUser] = useState(artikel.dibuat)
-    // const [isi_artikel, setIsiArtikel] = useState( () => decodeHTML(artikel.isi_artikel))
     const [isi_artikel, setIsiArtikel] = useState(artikel.isi_artikel)
     const [tags, setTags] = useState(artikel.tag)
 
@@ -55,7 +53,6 @@ const Preview = () => {
 
     return (
         <>
-            {/* {console.log("Data Awal :", artikel)} */}
             {/* <div className="" style={{ height: '150px' }}>
                 <Image
                     // className={styles['title-Pratinjau']}
@@ -112,14 +109,14 @@ const Preview = () => {
                                         </div>
                                     </div>
 
-                                    <div className="col-sm-4 col-md-2 col-1 d-flex align-items-center justify-content-end">
+                                    {/* <div className="col-sm-4 col-md-2 col-1 d-flex align-items-center justify-content-end">
                                         <div className={styles['iconBorder']}>
                                             <i className={`${styles.icon} socicon-sharethis`}></i>
                                         </div>
                                         <div className={styles['iconBorder']}>
                                             <i className={`${styles.icon} flaticon-black`}></i>
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                         </div>
@@ -147,10 +144,6 @@ const Preview = () => {
                                         />
                                     </div>
 
-                                    {/* {
-                                    console.log (artikel)
-                                } */}
-
                                     <div className="text-justify my-5 p-3" style={{ border: '1px solid #d7e1ea', borderRadius: '10px' }}>
                                         {/* To render html Tag */}
                                         <div dangerouslySetInnerHTML={{ __html: isi_artikel }} style={{ overflowWrap: 'break-word' }}></div>
@@ -176,14 +169,14 @@ const Preview = () => {
                                                 </div>
                                             </div>
 
-                                            <div className="col-sm-4 col-md-2 col-1 d-flex align-items-center justify-content-end">
+                                            {/* <div className="col-sm-4 col-md-2 col-1 d-flex align-items-center justify-content-end">
                                                 <div className={styles['iconBorder']}>
                                                     <i className={`${styles.icon} socicon-sharethis`}></i>
                                                 </div>
                                                 <div className={styles['iconBorder']}>
                                                     <i className={`${styles.icon} flaticon-black`}></i>
                                                 </div>
-                                            </div>
+                                            </div> */}
                                         </div>
                                     </div>
 

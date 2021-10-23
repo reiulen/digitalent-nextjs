@@ -59,10 +59,6 @@ const Berita = ({ token }) => {
     page = Number(page);
 
     useEffect(() => {
-        // if (limit) {
-        // router.push(`${router.pathname}?page=1&limit=${limit}`);
-        // }
-
         if (isDeleted) {
             Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
                 (result) => {
@@ -205,7 +201,6 @@ const Berita = ({ token }) => {
                     `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
                 )
 
-
             } else if (limit !== null && search === null && startDate === null && endDate === null) {
                 router.push(
                     `${router.pathname}?page=1&limit=${limit}`
@@ -277,6 +272,7 @@ const Berita = ({ token }) => {
         setStartDate(null)
         setEndDate(null)
         setDisableEndDate(true)
+        router.replace("/publikasi/berita", undefined, { shallow: false });
     }
 
     const handleStartDate = (date) => {
@@ -287,10 +283,6 @@ const Berita = ({ token }) => {
 
     return (
         <PageWrapper>
-            {
-                // console.log (berita)
-            }
-
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
                     <div className="alert-icon"><i className="flaticon-warning"></i></div>
@@ -336,8 +328,6 @@ const Berita = ({ token }) => {
                         background='bg-light-info'
                         icon="new/open-book.svg"
                         color='#ffffff'
-                        // icon='mail-purple.svg' 
-                        // color='#8A50FC' 
                         value={berita && berita.publish != "" ? berita.publish : 0}
                         titleValue='Berita'
                         title='Total Publish'
@@ -348,10 +338,8 @@ const Berita = ({ token }) => {
                         background='bg-light-warning'
                         icon="new/mail-white.svg"
                         color="#ffffff"
-                        // icon='garis-yellow.svg' 
-                        // color='#634100' 
-                        value='64'
-                        titleValue='Berita'
+                        value='0'
+                        titleValue='Orang'
                         title='Total Author'
                         publishedVal=""
                         routePublish={() => handlePublish("")}
@@ -360,9 +348,7 @@ const Berita = ({ token }) => {
                         background='bg-light-success'
                         icon='user-white.svg'
                         color='#ffffff'
-                        // icon='orang-tambah-green.svg' 
-                        // color='#74BBB7' 
-                        value='64'
+                        value='0'
                         // value={berita && berita.total_views !== null ? berita.total_views : 0} 
                         titleValue='Orang'
                         title='Total Pembaca'
@@ -373,8 +359,6 @@ const Berita = ({ token }) => {
                         background='bg-light-danger'
                         icon="Library.svg"
                         color='#ffffff'
-                        // icon='kotak-kotak-red.svg' 
-                        // color='#F65464' 
                         value={berita && berita.unpublish != "" ? berita.unpublish : 0}
                         titleValue='Berita'
                         title='Total Belum Dipublish'
@@ -395,9 +379,6 @@ const Berita = ({ token }) => {
                                     <i className="ri-add-line pb-1 text-white mr-2 "></i>
                                     Tambah Berita
                                 </a>
-                                {/* <a className="btn btn-light-success px-6 font-weight-bold btn-block ">
-                                    Tambah Berita
-                                </a> */}
                             </Link>
                         </div>
                     </div>
@@ -664,7 +645,7 @@ const Berita = ({ token }) => {
                                                             </td>
 
                                                             <td className='align-middle'>{row.kategori}</td>
-                                                            <td className='align-middle'>{row.judul_berita}</td>
+                                                            <td className='align-middle' style={{overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',maxWidth:'11rem'}}>{row.judul_berita}</td>
                                                             <td className='align-middle'>
                                                                 {
                                                                     row.publish === 1 ? (
@@ -677,8 +658,7 @@ const Berita = ({ token }) => {
                                                                 }
                                                             </td>
                                                             <td className='align-middle'>
-                                                                {/* {row.dibuat} */}
-                                                                Super Admin
+                                                                {row.name}
                                                             </td>
                                                             <td className='align-middle'>
                                                                 {row.publish === 1 ?
@@ -693,8 +673,7 @@ const Berita = ({ token }) => {
 
                                                             </td>
                                                             <td className='align-middle'>
-                                                                {/* {row.role} */}
-                                                                Super Admin
+                                                                {row.role[0].name}
                                                             </td>
                                                             <td className="align-middle d-flex">
 

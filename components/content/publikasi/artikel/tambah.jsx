@@ -49,7 +49,7 @@ import { NEW_ARTIKEL_RESET } from "../../../../redux/types/publikasi/artikel.typ
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingPage from "../../../LoadingPage";
 
-const TambahArtikel = ({ token }) => {
+const TambahArtikel = ({ token, id }) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -190,7 +190,7 @@ const TambahArtikel = ({ token }) => {
   );
   const [gambarName, setGambarName] = useState(null)
   const [kategori_id, setKategoriId] = useState("");
-  const [users_id, setUserId] = useState(87);
+  const [users_id, setUserId] = useState(id);
   const [tag, setTag] = useState([]);
   const [publish, setPublish] = useState(0);
   const [publishDate, setPublishDate] = useState(null);
@@ -342,7 +342,6 @@ const TambahArtikel = ({ token }) => {
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
-      // forceUpdate;
       Swal.fire({
         icon: "error",
         title: "Oops...",
@@ -353,9 +352,6 @@ const TambahArtikel = ({ token }) => {
 
   return (
     <>
-      {/* {
-        console.log (setting)
-      } */}
       <PageWrapper>
         {error ? (
           <div
@@ -435,7 +431,6 @@ const TambahArtikel = ({ token }) => {
                           data={isi_artikel}
                           onReady={(editor) => {
                             // You can store the "editor" and use when it is needed.
-                            // console.log("Editor is ready to use!", editor);
                           }}
                           onChange={(event, editor) => {
                             const data = editor.getData();
@@ -659,7 +654,6 @@ const TambahArtikel = ({ token }) => {
                         className="custom-file-input"
                         id="inputGroupFile04"
                         onChange={onChangeGambar}
-                        // onChange={(e) => onChangeGambar(e)}
                         accept="image/*"
                         onBlur={() =>
                           simpleValidator.current.showMessageFor("gambar")
@@ -789,7 +783,7 @@ const TambahArtikel = ({ token }) => {
                     <select
                       name=""
                       id=""
-                      className="form-control"
+                      className="form-control dropdownArt"
                       value={kategori_id}
                       onChange={(e) => setKategoriId(e.target.value)}
                       onBlur={(e) => {
@@ -837,7 +831,6 @@ const TambahArtikel = ({ token }) => {
                     <TagsInput
                       value={tag}
                       onChange={(data) => handleTag(data)}
-                      // onChange={setTag}
                       name="fruits"
                       placeHolder="Isi Tag disini"
                       // onBlur={() => simpleValidator.current.showMessageFor('tag')}
@@ -905,12 +898,6 @@ const TambahArtikel = ({ token }) => {
                             disabled={disablePublishDate === true || disablePublishDate === null}
                           />
                         </div>
-                        {
-                          // disablePublishDate === true ?
-                          //   <small className="text-muted">Harap ubah status publikasi menjadi aktif untuk mengisi Tanggal Publish</small>
-                          // :
-                          //   null
-                        }
                       </div>
                     </div>
                     :

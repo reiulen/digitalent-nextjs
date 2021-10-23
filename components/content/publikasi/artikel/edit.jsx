@@ -9,7 +9,6 @@ import { TagsInput } from "react-tag-input-component";
 import Swal from "sweetalert2";
 import SimpleReactValidator from "simple-react-validator";
 import DatePicker from "react-datepicker";
-// import { getSession } from "next-auth/client";
 
 import {
   updateArtikel,
@@ -19,11 +18,10 @@ import {
   NEW_ARTIKEL_RESET,
   UPDATE_ARTIKEL_RESET,
 } from "../../../../redux/types/publikasi/artikel.type";
-// import { getAllKategori } from '../../../../redux/actions/publikasi/kategori.actions'
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingPage from "../../../LoadingPage";
 
-const EditArtikel = ({ token }) => {
+const EditArtikel = ({ token, idUser }) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -36,10 +34,8 @@ const EditArtikel = ({ token }) => {
     ssr: false,
   });
 
-  // const { artikel, error, success } = useSelector(state => state.detailArtikel)
   const simpleValidator = useRef(new SimpleReactValidator({ locale: 'id' }))
   const [, forceUpdate] = useState();
-  // const forceUpdate = React.useReducer(() => ({}))[1]
   const { artikel } = useSelector((state) => state.detailArtikel);
   const { error, success, loading } = useSelector(
     state => state.updatedArtikel
@@ -50,32 +46,8 @@ const EditArtikel = ({ token }) => {
     kategori,
   } = useSelector(state => state.allKategori);
   const { setting } = useSelector(state => state.allSettingPublikasi)
-  // const session = getSession({ req });
-
-  // if (!session) {
-  //   return {
-  //     redirect: {
-  //       destination:"/login/admin",
-  //       permanent: false,
-  //     },
-  //   };
-  // }
-
-  // if (allLoading){
-  //   loading = allLoading
-
-  // } else if (updateLoading)
-  //   loading = updateLoading
-
-  // if (allError){
-  //   error = allError
-
-  // } else if (updateError){
-  //   error = updateError
-  // }
 
   useEffect(() => {
-    // dispatch(getAllKategori(session.user.user.data.token))
 
     editorRef.current = {
       CKEditor: require('@ckeditor/ckeditor5-react').CKEditor, //Added .CKEditor
@@ -124,7 +96,6 @@ const EditArtikel = ({ token }) => {
   );
   const [gambarName, setGambarName] = useState(artikel.gambar);
   const [kategori_id, setKategoriId] = useState(artikel.kategori_id); //belum
-  // const [users_id, setUserId] = useState(87);
   const [users_id, setUserId] = useState(artikel.users_id);
   const [tag, setTag] = useState(artikel.tag);
   // const [publish, setPublish] = useState(artikel.publish === 1 ? true : false);
@@ -210,7 +181,6 @@ const EditArtikel = ({ token }) => {
 
       if (success) {
         dispatch({
-          // type: NEW_ARTIKEL_RESET
           type: UPDATE_ARTIKEL_RESET,
         });
       }
@@ -220,88 +190,6 @@ const EditArtikel = ({ token }) => {
       } else if (publish === false) {
         setPublish(0);
       }
-
-      // if (publishDate === null) {
-
-      //   let today = new Date
-
-      //   console.log (today)
-
-      //   const data = {
-      //     judul_artikel,
-      //     isi_artikel,
-      //     gambar,
-      //     kategori_id,
-      //     users_id,
-      //     tag,
-      //     publish,
-      //     id,
-      //     _method,
-      //     tanggal_publish : moment(today).format("YYYY-MM-DD")
-      //   };
-
-      //   Swal.fire({
-      //     title: "Apakah anda yakin ?",
-      //     text: "Data ini akan diedit !",
-      //     icon: "warning",
-      //     showCancelButton: true,
-      //     confirmButtonColor: "#3085d6",
-      //     cancelButtonColor: "#d33",
-      //     confirmButtonText: "Ya !",
-      //     cancelButtonText: "Batal",
-      //   })
-      //     .then((result) => {
-      //       if (result.isConfirmed) {
-      //         // if (success) {
-      //         //   dispatch({
-      //         //     // type: NEW_ARTIKEL_RESET
-      //         //     type: UPDATE_ARTIKEL_RESET,
-      //         //   });
-      //         // }
-
-      //         dispatch(updateArtikel(data));
-      //         console.log(data)
-      //       }
-      //   });
-
-      // } else {
-      //   const data = {
-      //     judul_artikel,
-      //     isi_artikel,
-      //     gambar,
-      //     kategori_id,
-      //     users_id,
-      //     tag,
-      //     publish,
-      //     id,
-      //     _method,
-      //     tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
-      //   };
-
-      //   Swal.fire({
-      //     title: "Apakah anda yakin ?",
-      //     text: "Data ini akan diedit !",
-      //     icon: "warning",
-      //     showCancelButton: true,
-      //     confirmButtonColor: "#3085d6",
-      //     cancelButtonColor: "#d33",
-      //     confirmButtonText: "Ya !",
-      //     cancelButtonText: "Batal",
-      //   })
-      //     .then((result) => {
-      //       if (result.isConfirmed) {
-      //         // if (success) {
-      //         //   dispatch({
-      //         //     // type: NEW_ARTIKEL_RESET
-      //         //     type: UPDATE_ARTIKEL_RESET,
-      //         //   });
-      //         // }
-
-      //         dispatch(updateArtikel(data));
-      //         console.log(data)
-      //       }
-      //   });
-      // }
 
       if (gambarDB !== gambar) {
         if (publishDate === null) {
@@ -364,42 +252,6 @@ const EditArtikel = ({ token }) => {
           });
         }
 
-        // const data = {
-        //   judul_artikel,
-        //   isi_artikel,
-        //   gambar,
-        //   kategori_id,
-        //   users_id,
-        //   tag,
-        //   publish,
-        //   id,
-        //   _method,
-        //   tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
-        // };
-
-        // Swal.fire({
-        //   title: "Apakah anda yakin ?",
-        //   text: "Data ini akan diedit !",
-        //   icon: "warning",
-        //   showCancelButton: true,
-        //   confirmButtonColor: "#3085d6",
-        //   cancelButtonColor: "#d33",
-        //   confirmButtonText: "Ya !",
-        //   cancelButtonText: "Batal",
-        // })
-        //   .then((result) => {
-        //     if (result.isConfirmed) {
-        //       // if (success) {
-        //       //   dispatch({
-        //       //     // type: NEW_ARTIKEL_RESET
-        //       //     type: UPDATE_ARTIKEL_RESET,
-        //       //   });
-        //       // }
-
-        //       dispatch(updateArtikel(data));
-        //       console.log(data)
-        //     }
-        // });
       } else {
         if (publishDate === null) {
           let today = new Date();
@@ -460,48 +312,10 @@ const EditArtikel = ({ token }) => {
             }
           });
         }
-
-        // const data = {
-        //   judul_artikel,
-        //   isi_artikel,
-        //   gambar : "",
-        //   kategori_id,
-        //   users_id,
-        //   tag,
-        //   publish,
-        //   id,
-        //   _method,
-        //   tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
-        // };
-
-        // Swal.fire({
-        //   title: "Apakah anda yakin ?",
-        //   text: "Data ini akan diedit !",
-        //   icon: "warning",
-        //   showCancelButton: true,
-        //   confirmButtonColor: "#3085d6",
-        //   cancelButtonColor: "#d33",
-        //   confirmButtonText: "Ya !",
-        //   cancelButtonText: "Batal",
-        // })
-        //   .then((result) => {
-        //     if (result.isConfirmed) {
-        //       // if (success) {
-        //       //   dispatch({
-        //       //     // type: NEW_ARTIKEL_RESET
-        //       //     type: UPDATE_ARTIKEL_RESET,
-        //       //   });
-        //       // }
-
-        //       dispatch(updateArtikel(data));
-        //       console.log(data)
-        //     }
-        // });
       }
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
-      // forceUpdate;
       Swal.fire({
         icon: "error",
         title: "Oops...",
@@ -512,7 +326,6 @@ const EditArtikel = ({ token }) => {
 
   const onNewReset = () => {
     dispatch({
-      // type: NEW_ARTIKEL_RESET
       type: UPDATE_ARTIKEL_RESET,
     });
   };
@@ -520,7 +333,6 @@ const EditArtikel = ({ token }) => {
   return (
     <>
       <PageWrapper>
-        {/* {console.log(artikel)} */}
 
         {error ? (
           <div
@@ -627,7 +439,6 @@ const EditArtikel = ({ token }) => {
                           data={isi_artikel}
                           onReady={editor => {
                             // You can store the "editor" and use when it is needed.
-                            // console.log("Editor is ready to use!", editor);
                           }}
                           onChange={(event, editor) => {
                             const data = editor.getData();
@@ -694,7 +505,6 @@ const EditArtikel = ({ token }) => {
                         className="custom-file-input"
                         id="inputGroupFile04"
                         onChange={onChangeGambar}
-                        // onChange={(e) => onChangeGambar(e)}
                         accept="image/*"
                         onBlur={() =>
                           simpleValidator.current.showMessageFor("gambar")
@@ -702,29 +512,6 @@ const EditArtikel = ({ token }) => {
                         style={{ display: "none" }}
                       />
                     </div>
-                    {/* <div>
-                      <label htmlFor="inputGroupFile04" className="icon-plus">
-                        <Image
-                          src={iconPlus}
-                          alt="plus"
-                          width={60}
-                          height={60} 
-                        />
-                      </label>
-                      
-                      <input
-                        type="file"
-                        name="gambar"
-                        className="custom-file-input"
-                        id="inputGroupFile04"
-                        onChange={onChangeGambar}
-                        accept="image/*"
-                        onBlur={() =>
-                          simpleValidator.current.showMessageFor("gambar")
-                        }
-                        style={{display: "none"}}
-                      />
-                    </div> */}
                   </div>
 
                   <div className="ml-3">
@@ -746,51 +533,6 @@ const EditArtikel = ({ token }) => {
                     </p>
                   </div>
                 </div>
-
-                {/* <div className="form-group row">
-                  <label
-                    htmlFor="staticEmail"
-                    className="col-sm-2 col-form-label"
-                  >
-                    Upload Thumbnail
-                  </label>
-                  <div className="col-sm-1">
-                    <figure
-                      className="avatar item-rtl"
-                      data-toggle="modal"
-                      data-target="#exampleModalCenter"
-                    >
-                      <Image
-                        loader={() => gambarPreview}
-                        src={gambarPreview}
-                        alt="image"
-                        width={60}
-                        height={60}
-                      />
-                    </figure>
-                  </div>
-                  <div className="col-sm-9">
-                    <div className="input-group">
-                      <div className="custom-file">
-                        <input
-                          type="file"
-                          name="gambar"
-                          className="custom-file-input"
-                          id="inputGroupFile04"
-                          accept="image/*"
-                          onChange={onChangeGambar}
-                        />
-                        <label
-                          className="custom-file-label"
-                          htmlFor="inputGroupFile04"
-                        >
-                          Pilih gambar
-                        </label>
-                      </div>
-                    </div>
-                    <small>{gambarName}</small>
-                  </div>
-                </div> */}
 
                 <div className="form-group">
                   <label
@@ -852,11 +594,9 @@ const EditArtikel = ({ token }) => {
                   <div className="col-sm-12">
                     <TagsInput
                       value={tag}
-                      // onChange={setTag}
                       onChange={(data) => handleTag(data)}
-                      // onKeyPress={(data) => keyPressTag(data)}
                       name="fruits"
-                      placeHolder="Isi Tag disini dan tekan `Enter` atau `Tab`."
+                      placeHolder="Isi Tag disini"
                       seprators={["Enter", "Tab"]}
                     // onBlur={() => simpleValidator.current.showMessageFor('tag')}
                     />
@@ -868,7 +608,6 @@ const EditArtikel = ({ token }) => {
                         :
                         null
                     }
-                    {/* <input type="text" className="form-control" placeholder="Isi Tag disini" value={tag} onChange={e => setTag(e.target.value)} /> */}
                   </div>
                 </div>
 
@@ -887,7 +626,6 @@ const EditArtikel = ({ token }) => {
                           className="checkbox"
                           checked={publish}
                           type="checkbox"
-                          // onChange={(checked) => setPublish(checked)}
                           onChange={e => handleChangePublish(e)}
                         />
                         <span

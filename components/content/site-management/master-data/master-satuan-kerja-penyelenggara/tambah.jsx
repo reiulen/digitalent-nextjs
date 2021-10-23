@@ -19,7 +19,6 @@ const TambahApi = ({ token }) => {
   let selectRefProvinsi = null;
 
   const drowpdownProvinsi = useSelector((state) => state.allProvincesSite);
-  console.log("drowpdownProvinsi", drowpdownProvinsi);
   let tempOptionsProvinsi = drowpdownProvinsi?.data;
   const [provinsi, setProvinsi] = useState([]);
   const [nameUnitWork, setNameUnitWork] = useState("");
@@ -50,7 +49,6 @@ const TambahApi = ({ token }) => {
           };
 
 
-          console.log("sendData",sendData)
 
     if (nameUnitWork === "") {
       Swal.fire(

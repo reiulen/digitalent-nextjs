@@ -39,7 +39,6 @@ const Artikel = ({ token }) => {
     error,
     artikel,
   } = useSelector((state) => state.allArtikel);
-
   const {
     loading: deleteLoading,
     error: deleteError,
@@ -63,10 +62,6 @@ const Artikel = ({ token }) => {
   page = Number(page);
 
   useEffect(() => {
-    // if (limit) {
-    //   router.push(`${router.pathname}?page=1&limit=${limit}`);
-    // }
-
     if (isDeleted) {
       Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
         (result) => {
@@ -281,6 +276,7 @@ const Artikel = ({ token }) => {
     setStartDate(null)
     setEndDate(null)
     setDisableEndDate(true)
+    router.push('/publikasi/artikel', undefined, { shallow: false })
   }
 
   const handleStartDate = (date) => {
@@ -288,19 +284,8 @@ const Artikel = ({ token }) => {
     setDisableEndDate(false)
   }
 
-  // const handleEndDate = (date) => {
-  //   if (startDate === null) {
-  //     setDisableEndDate (true)
-
-  //   } else {
-  //     setEndDate (date)
-  //   }
-  // }
-
   return (
     <PageWrapper>
-      {/* {console.log(artikel)} */}
-      {/* {console.log(token)} */}
       {error ? (
         <div
           className="alert alert-custom alert-light-danger fade show mb-5"
@@ -359,8 +344,6 @@ const Artikel = ({ token }) => {
             background="bg-light-info"
             icon="new/open-book.svg"
             color='#ffffff'
-            // icon="mail-purple.svg"
-            // color="#8A50FC"
             value={artikel && artikel.publish != "" ? artikel.publish : 0}
             titleValue="Artikel"
             title="Total Publish"
@@ -372,10 +355,8 @@ const Artikel = ({ token }) => {
             background="bg-light-warning"
             icon="new/mail-white.svg"
             color='#ffffff'
-            // icon="garis-yellow.svg"
-            // color="#634100"
-            value="64"
-            titleValue="Artikel"
+            value="0"
+            titleValue="Orang"
             title="Total Author"
             publishedVal=""
             routePublish={() => handlePublish("")}
@@ -384,10 +365,8 @@ const Artikel = ({ token }) => {
             background="bg-light-success"
             icon='user-white.svg'
             color='#ffffff'
-            // icon="orang-tambah-green.svg"
-            // color="#74BBB7"
-            value="64"
-            titleValue="K"
+            value="0"
+            titleValue="Orang"
             title="Total Pembaca"
             publishedVal=""
             routePublish={() => handlePublish("")}
@@ -396,8 +375,6 @@ const Artikel = ({ token }) => {
             background="bg-light-danger"
             icon="Library.svg"
             color='#ffffff'
-            // icon="kotak-kotak-red.svg"
-            // color="#F65464"
             value={artikel && artikel.unpublish != "" ? artikel.unpublish : 0}
             titleValue="Artikel"
             title="Total Belum Dipublish"
@@ -467,11 +444,7 @@ const Artikel = ({ token }) => {
 
                     {/* modal */}
                     <form
-                      // id="kt_docs_formvalidation_text"
                       className="form text-left"
-                    // action="#"
-                    // autoComplete="off"
-                    // onSubmit={handleSubmitSearchMany}
                     >
                       <div
                         className="modal fade"
@@ -524,8 +497,6 @@ const Artikel = ({ token }) => {
                                     dateFormat="dd/MM/yyyy"
                                     placeholderText="Silahkan Isi Tanggal Dari"
                                     wrapperClassName="col-12 col-lg-12 col-xl-12"
-                                  // minDate={moment().toDate()}
-                                  // minDate={addDays(new Date(), 20)}
                                   />
                                 </div>
                               </div>
@@ -545,12 +516,10 @@ const Artikel = ({ token }) => {
                                     endDate={endDate}
                                     dateFormat="dd/MM/yyyy"
                                     minDate={startDate}
-                                    // minDate={moment().toDate()}
                                     maxDate={addDays(startDate, 20)}
                                     placeholderText="Silahkan Isi Tanggal Sampai"
                                     wrapperClassName="col-12 col-lg-12 col-xl-12"
                                     disabled={disableEndDate === true || disableEndDate === null}
-                                  // minDate={addDays(new Date(), 20)}
                                   />
                                 </div>
                                 {
@@ -591,49 +560,7 @@ const Artikel = ({ token }) => {
                   </div>
                 </div>
               </div>
-              {/* <div className="row align-items-right">
-                <div className="col-lg-2 col-xl-2">
-                  <small className="form-text text-muted">Dari Tanggal</small>
-                  <DatePicker
-                    className="form-search-date form-control-sm form-control"
-                    selected={startDate}
-                    onChange={(date) => setStartDate(date)}
-                    selectsStart
-                    startDate={startDate}
-                    endDate={endDate}
-                    dateFormat="dd/MM/yyyy"
-                  />
-                  
-                </div>
-                <div className="col-lg-2 col-xl-2">
-                  <small className="form-text text-muted">Sampai Tanggal</small>
-                  <DatePicker
-                    className="form-search-date form-control-sm form-control"
-                    selected={endDate}
-                    onChange={(date) => setEndDate(date)}
-                    selectsEnd
-                    startDate={startDate}
-                    endDate={endDate}
-                    minDate={startDate}
-                    maxDate={addDays(startDate, 20)}
-                    dateFormat="dd/MM/yyyy"
-                  />
-                  
-                </div>
-                <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
-                  <button
-                    type="button"
-                    className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block"
-                    onClick={handleSearchDate}
-                  >
-                    Cari
-                  </button>
-                </div>
-              </div> */}
             </div>
-            {/* {
-              console.log (artikel)
-            } */}
 
             <div className="table-page mt-5">
               <div className="table-responsive">
@@ -656,21 +583,11 @@ const Artikel = ({ token }) => {
                     </thead>
                     <tbody>
                       {!artikel || (artikel && artikel.artikel.length === 0) ? (
-                        // <tr>
-                          <td className='align-middle text-center' colSpan={9}>Data Tidak Ditemukan</td>
-                        // </tr>
+                        <td className='align-middle text-center' colSpan={9}>Data Tidak Ditemukan</td>
                       ) : (
-                        artikel &&
-                        // artikel.artikel &&
-                        artikel.artikel.map((artikel, i) => {
+                        artikel && artikel.artikel.map((artikel, i) => {
                           return (
                             <tr key={artikel.id}>
-                              {/* <td className="align-middle text-center">
-                                <span className="badge badge-secondary text-muted">
-                                  {i + 1 * (page * 5 || limit) - 4}
-                                </span>
-                              </td> */}
-
                               <td className='align-middle text-center'>
                                 {
                                   limit === null ?
@@ -694,9 +611,7 @@ const Artikel = ({ token }) => {
                                   loader={process.env.END_POINT_API_IMAGE_PUBLIKASI +
                                     "publikasi/images/" +
                                     artikel.gambar
-                                    // artikel.gambar + `?w=80&q=75`
                                   }
-                                  // src={artikel.gambar}
                                   src={
                                     process.env.END_POINT_API_IMAGE_PUBLIKASI +
                                     "publikasi/images/" +
@@ -707,10 +622,9 @@ const Artikel = ({ token }) => {
                                 />
                               </td>
                               <td className="align-middle">
-                                {/* {artikel.jenis_kategori} */}
                                 {artikel.nama_kategori}
                               </td>
-                              <td className="align-middle">
+                              <td className="align-middle" style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '11rem' }}>
                                 {artikel.judul_artikel}
                               </td>
                               <td className="align-middle">
@@ -723,8 +637,7 @@ const Artikel = ({ token }) => {
                                 )}
                               </td>
                               <td className="align-middle">
-                                {/* {artikel.dibuat} */}
-                                Super Admin
+                                {artikel.name}
                               </td>
                               <td className="align-middle">
                                 {artikel.publish === 1 ? (
@@ -738,8 +651,7 @@ const Artikel = ({ token }) => {
                                 )}
                               </td>
                               <td className="align-middle">
-                                {/* {artikel.role} */}
-                                Super Admin
+                                {artikel.role[0].name}
                               </td>
                               <td className="align-middle d-flex">
 
@@ -774,37 +686,6 @@ const Artikel = ({ token }) => {
                                     Hapus
                                   </div>
                                 </button>
-
-                                {/* <ButtonNewTab
-                                  icon="setting.svg"
-                                  link={`/publikasi/artikel/preview/${artikel.id}`}
-                                  title="Preview"
-                                /> */}
-
-                                {/* <ButtonAction
-                                  icon="write.svg"
-                                  link={`/publikasi/artikel/${artikel.id}`}
-                                  title="Edit"
-                                /> */}
-
-                                {/* <button
-                                  onClick={() => handleDelete(artikel.id)}
-                                  className="btn mr-1"
-                                  style={{
-                                    background: "#F3F6F9",
-                                    borderRadius: "6px",
-                                  }}
-                                  data-toggle="tooltip" 
-                                  data-placement="bottom" 
-                                  title="Hapus"
-                                >
-                                  <Image
-                                    alt="button-action"
-                                    src={`/assets/icon/trash.svg`}
-                                    width={18}
-                                    height={18}
-                                  />
-                                </button> */}
                               </td>
                             </tr>
                           );

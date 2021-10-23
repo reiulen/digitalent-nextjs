@@ -49,7 +49,7 @@ const img = {
     height: '100%'
 };
 
-const TambahGaleri = ({ token }) => {
+const TambahGaleri = ({ token, id }) => {
     const dispatch = useDispatch()
     const router = useRouter();
 
@@ -77,7 +77,6 @@ const TambahGaleri = ({ token }) => {
 
     const thumbs = files.map(file => (
         <div style={thumb} key={file.name}>
-            {/* {console.log("IMAGE : ", file)} */}
             <div style={thumbInner}>
                 <Image
                     loader={() => file.preview}
@@ -90,16 +89,6 @@ const TambahGaleri = ({ token }) => {
                     objectFit="fill"
                     unoptimized={true}
                 />
-                {/* <img
-                    src={file.preview}
-                    alt="thumb"
-                    width= '10vh'
-                    height= '10vh'>
-                </img> */}
-
-                {/* {
-                    console.log (file)
-                } */}
             </div>
         </div>
     ));
@@ -144,17 +133,12 @@ const TambahGaleri = ({ token }) => {
     const [judul, setJudulGaleri] = useState('')
     const [isi_galleri, setIsiGaleri] = useState('');
     const [gambar, setGambar] = useState([])
-    // const [gambarPreview, setGambarPreview] = useState(null)
-    // const [gambarPreview, setGambarPreview] = useState(
-    //     "/assets/media/default.jpg"
-    //   );
     const [gambarPreview, setGambarPreview] = useState([]);
     const [image, setImage] = useState([
         { key: 1, imagePreview: "", imageFile: "", imageName: "" },
     ]);
     const [kategori_id, setKategoriId] = useState(null)
-    // const [kategori_id, setKategoriId] = useState(1)
-    const [users_id, setUserId] = useState(87)
+    const [users_id, setUserId] = useState(id)
     const [tag, setTag] = useState([])
     const [publish, setPublish] = useState(0)
     const [publishDate, setPublishDate] = useState(null);
@@ -177,7 +161,6 @@ const TambahGaleri = ({ token }) => {
     const handlePublishDate = (date) => {
         if (disablePublishDate === false) {
             setPublishDate(date)
-
         }
     }
 
@@ -224,53 +207,6 @@ const TambahGaleri = ({ token }) => {
 
         setGambarPreview(arr)
     }
-
-    // const handleTemps = () => {
-    //     let temps = []
-
-    //     for (let i = 0; i < files.length; i++) {
-    //         const reader = new FileReader()
-
-    //         reader.onload = () => {
-    //             temps.push(reader.result)
-    //             console.log ("check")
-    //         }
-
-    //         reader.readAsDataURL(files[i])
-    //         // console.log (`Temps: ${temps}`)
-    //     }
-    // }
-
-    // const onChangeImage = (e, index) => {
-    //     const type = ["image/jpg", "image/png", "image/jpeg"];
-    //     let list = [...image];
-    //     if (type.includes(e.target.files[0].type)) {
-    //         if (e.target.files[0].size > 5000000) {
-    //             e.target.value = null;
-    //             Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
-    //         } else {
-    //             list[index].imageFile = e.target.files[0];
-    //             list[index].imagePreview = URL.createObjectURL(e.target.files[0]);
-    //             list[index].imageName = e.target.files[0].name;
-    //             console.log(list)
-    //             setImage(list);
-    //         }
-    //         console.log(image);
-    //         // const reader = new FileReader();
-    //         // reader.onload = () => {
-    //         //   if (reader.readyState === 2) {
-    //         //   }
-    //         // };
-    //         // reader.readAsDataURL(e.target.files[0]);
-    //     } else {
-    //         e.target.value = null;
-    //         Swal.fire(
-    //             "Oops !",
-    //             "Data yang bisa dimasukkan hanya berupa data gambar.",
-    //             "error"
-    //         );
-    //     }
-    // };
 
     const onChangeImage = (e, index) => {
         const type = ["image/jpg", "image/png", "image/jpeg"];
@@ -359,7 +295,6 @@ const TambahGaleri = ({ token }) => {
             const data = {
                 judul,
                 isi_galleri,
-                // gambar,
                 gambar: temps,
                 kategori_id: Number(kategori_id),
                 users_id,
@@ -372,7 +307,6 @@ const TambahGaleri = ({ token }) => {
             const data = {
                 judul,
                 isi_galleri,
-                // gambar,
                 gambar: temps,
                 kategori_id: Number(kategori_id),
                 users_id,
@@ -410,83 +344,21 @@ const TambahGaleri = ({ token }) => {
         for (let i = 0; i < image.length; i++) {
             flag += 1
 
-            temps.push(image[i].imagePreview)
+            if (image[i].imagePreview !== "") {
+                temps.push(image[i].imagePreview)
+            }
+
 
             if (flag === image.length) {
                 handleData(temps, newGaleri)
             }
         }
-
-        // for (let i = 0; i < files.length; i++) {
-        //     const reader = new FileReader()
-
-        //     // flag += 1
-
-        //     reader.onload = () => {
-        //         temps.push(reader.result)
-
-        //         // console.log ("check")
-
-        //         flag += 1
-
-        //         if (flag === files.length){
-        //             handleData (temps, newGaleri)
-        //         }
-        //     }
-
-        //     reader.readAsDataURL(files[i])
-        //     // console.log (`Temps: ${temps}`)
-        // }
-
-        // setGambar(temps)
-
-
-
-        // if (publishDate === null) {
-        //     let today = new Date
-
-        //     const data = {
-        //         judul,
-        //         isi_galleri,
-        //         gambar,
-        //         // gambar: temps,
-        //         kategori_id: Number(kategori_id),
-        //         users_id,
-        //         tag,
-        //         publish,
-        //         tanggal_publish: moment(today).format("YYYY-MM-DD")
-        //     }
-
-        //     dispatch(newGaleri(data, token))
-
-        //     // console.log(data)
-        // } else {
-        //     const data = {
-        //         judul,
-        //         isi_galleri,
-        //         gambar,
-        //         // gambar: temps,
-        //         kategori_id: Number(kategori_id),
-        //         users_id,
-        //         tag,
-        //         publish,
-        //         tanggal_publish: moment(publishDate).format("YYYY-MM-DD")
-        //     }
-
-        //     dispatch(newGaleri(data, token))
-        //     // console.log(data)
-        // }
-
-
     }
 
 
 
     return (
         <PageWrapper>
-            {/* {
-                console.log("Cek Kategori Awal", kategori)
-            } */}
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
                     <div className="alert-icon"><i className="flaticon-warning"></i></div>
@@ -530,7 +402,6 @@ const TambahGaleri = ({ token }) => {
                                         "required|min:5|max:5000",
                                         { className: "text-danger" }
                                     )}
-                                    {/* <small className='text-danger'>*Maksimal 160 Karakter</small> */}
                                 </div>
                             </div>
 
@@ -1563,12 +1434,6 @@ const TambahGaleri = ({ token }) => {
                                 </div> */}
 
                                 <div className="form-group mb-4">
-                                    {/* <label
-                                        htmlFor="staticEmail"
-                                        className="col-form-label font-weight-bold"
-                                        >
-                                        Upload Gambar
-                                        </label> */}
                                     <div className="row align-items-center">
                                         {image.map((row, i) => (
                                             <div className="col-4 col-md-2 col-lg-2 p-0 ml-5" key={row.key} >
@@ -1663,10 +1528,9 @@ const TambahGaleri = ({ token }) => {
                                             style={{ borderRadius: '10px', textAlign: 'center', width: '45px' }}
                                             onClick={onAddImage}
                                             type="button"
-                                            disabled={totalImage === 6 ? true : false}
+                                            disabled={totalImage === 5 ? true : false}
                                         >
                                             <i className="ri-add-line text-white"></i>
-                                            {/* <i className="ri-add-line text-white"></i> Tambah Gambar */}
                                         </button>
                                     </div>
 
@@ -1676,14 +1540,6 @@ const TambahGaleri = ({ token }) => {
                                 </div>
 
                             </div>
-
-                            {/* {
-                                console.log (kategori)
-                            } */}
-
-                            {/* {
-                                console.log (gambarPreview)
-                            } */}
 
                             <div className="form-group">
                                 <label
@@ -1804,35 +1660,11 @@ const TambahGaleri = ({ token }) => {
                                                 // minDate={addDays(new Date(), 20)}
                                                 />
                                             </div>
-                                            {/* {
-                                                disablePublishDate === true ?
-                                                    <small className="text-muted">Harap ubah status publikasi menjadi aktif untuk mengisi Tanggal Publish</small>
-                                                :
-                                                    null
-                                            } */}
                                         </div>
                                     </div>
                                     :
                                     null
                             }
-
-
-
-                            {/* <div className="form-group row">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Publish</label>
-                                <div className="col-sm-1">
-                                    <SwitchButton
-                                        checked={publish}
-                                        onlabel=' '
-                                        onstyle='primary'
-                                        offlabel=' '
-                                        offstyle='danger'
-                                        size='sm'
-                                        width={30}
-                                        onChange={(checked) => setPublish(checked)}
-                                    />
-                                </div>
-                            </div> */}
 
                             <div className="form-group row">
                                 <div className="col-sm-2"></div>

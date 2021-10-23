@@ -8,11 +8,6 @@ import CardDashboardSiteManagement from "../../../CardDashboardSiteManagement";
 import { getSession } from "next-auth/client";
 
 const DashboardSetting = () => {
-  useEffect(() => {
-    getSession().then((session) => {
-      console.log(session.user.user);
-    });
-  }, []);
   return (
     <>
       <PageWrapper>

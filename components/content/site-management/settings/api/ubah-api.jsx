@@ -13,36 +13,87 @@ import IconSearch from "../../../../assets/icon/Search";
 import DatePicker from "react-datepicker";
 import axios from "axios";
 import IconCalender from "../../../../assets/icon/Calender";
+import Select from "react-select";
+
 
 const UbahApi = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
+  let selectRefListApi = null;
+  let selectRefListField = null;
 
   const detailApi = useSelector((state) => state.detailApi);
- 
+   const [optionListField, setOptionListField] = useState([]);
   const listApi = useSelector(state => state.listApi)
+
  
 
   const [optionListApi, setOptionListApi] = useState(listApi.listApi.map((items)=>{
     return {label:items.api_url,value:items.api_url,id:items.id}
   }))
-  const [nameApi, setNameApi] = useState(detailApi.apies.api_name);
-  const [nameUser, setNameUser] = useState(detailApi.apies.username);
-  const [status, setStatus] = useState(detailApi.apies.status);
-  const [apiChoice, setApiChoice] = useState(detailApi.apies.id_api);
-  const [nameApiChoice, setNameApiChoice] = useState(detailApi.apies.api_url)
-
-  const [from, setFrom] = useState(detailApi.apies.from_date);
-  const [to, setTo] = useState(detailApi.apies.to_date);
+  const [nameApi, setNameApi] = useState(detailApi.apies.data.api_name);
+  const [nameUser, setNameUser] = useState(detailApi.apies.data.username);
+  const [status, setStatus] = useState(detailApi.apies.data.status);
+  const [apiChoice, setApiChoice] = useState(detailApi.apies.data.id_api);
+  const [defaultOptionListApi, setDefaultOptionListApi] = useState({label:detailApi.apies.data.api_url,value:detailApi.apies.data.api_url})
+  const [nameApiChoice, setNameApiChoice] = useState(detailApi.apies.data.api_url)
+const [defaultValueListField, setDefaultValueListField] = useState(detailApi.apies.data.fields.map((items)=>{
+  return {label:items,value:items}
+}))
+  const [from, setFrom] = useState(detailApi.apies.data.from_date);
+  const [to, setTo] = useState(detailApi.apies.data.to_date);
+  const [field, setField] = useState([]);
 
   const onChangePeriodeDateStart = (date) => {
     setFrom(moment(date).format("YYYY-MM-DD"));
-    // checkPeriod(moment(date).format("YYYY-MM-DD"));
   };
   const onChangePeriodeDateEnd = (date) => {
     setTo(moment(date).format("YYYY-MM-DD"));
-    // checkPeriod(moment(date).format("YYYY-MM-DD"));
   };
+
+  const changeListApi = (e) => {
+    console.log("e",e)
+    // let resultSelect = e.map((items) => {
+    //   return items.label;
+    // });
+    // setField(resultSelect);
+    setApiChoice(e.id)
+  };
+
+  useEffect(() => {
+    if (apiChoice) {
+      async function getListField(id, token) {
+        try {
+          let { data } = await axios.get(
+            `${process.env.END_POINT_API_SITE_MANAGEMENT}api/api-list/fields/${id}`,
+            {
+              headers: {
+                authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          console.log("response get list field", data);
+          let optionListFieldResult = data.data.map((items) => {
+            return {
+              ...items,
+              label: items.field_name,
+              value: items.field_name,
+            };
+          });
+
+          console.log("optionListFieldResult",optionListFieldResult)
+
+          setOptionListField(optionListFieldResult);
+
+          // change list add label and value sisa implementasi ke render html list field and set state needed
+        } catch (error) {
+          return;
+        }
+      }
+
+      getListField(apiChoice, token);
+    }
+  }, [apiChoice,token])
 
   return (
     <PageWrapper>
@@ -99,17 +150,42 @@ const UbahApi = ({ token }) => {
 
               <div className="form-group">
                 <label>Pilih API</label>
-                <select className="form-control">
-                  <option>{nameApiChoice}</option>
-                </select>
+                <Select
+                  ref={(ref) => (selectRefListApi = ref)}
+                  className="basic-single"
+                  classNamePrefix="select"
+                  placeholder="Pilih provinsi"
+                  defaultValue={defaultOptionListApi}
+                  isDisabled={false}
+                  isLoading={false}
+                  isClearable={false}
+                  isRtl={false}
+                  isSearchable={true}
+                  onChange={(e)=>changeListApi(e)}
+                  name="color"
+                  options={optionListApi}
+                />
               </div>
 
 
               <div className="form-group">
                 <label>Field</label>
-                <select className="form-control">
-                  <option>Placeholder</option>
-                </select>
+                 <Select
+                  ref={(ref) => (selectRefListField = ref)}
+                  isMulti
+                  className="basic-single"
+                  classNamePrefix="select"
+                  placeholder="Pilih provinsi"
+                  defaultValue={defaultValueListField}
+                  isDisabled={false}
+                  isLoading={false}
+                  isClearable={false}
+                  isRtl={false}
+                  isSearchable={true}
+                  name="color"
+                  // onChange={(e) => changeListApi(e)}
+                  options={optionListField}
+                />
               </div>
               <div className="form-group row">
                 <div className="col-12 col-sm-6">
