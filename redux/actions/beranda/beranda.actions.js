@@ -43,7 +43,7 @@ export const getAllAkademi = () => async dispatch => {
 }
 
 // GET TEMA
-export const getTemaByAkademi = (akademi_id = 1) => async dispatch => {
+export const getTemaByAkademi = (akademi_id) => async dispatch => {
     try {
         dispatch({ type: BERANDA_TEMA_REQUEST });
 
