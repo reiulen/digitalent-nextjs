@@ -42,7 +42,7 @@ function Hasil({ token }) {
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3 className="card-title fz-20 fw-500 text-dark">Hasil</h3>
+            <h3 className="card-title titles-1 fw-500 text-dark">Hasil</h3>
           </div>
           <div className="card-body pb-28">
             <div className="row mt-8 mb-10 position-relative">
@@ -114,7 +114,7 @@ function Hasil({ token }) {
                 </div>
                 <div className="col-12 col-sm-6">
                   <div className="d-flex flex-column align-items-start justify-content-center h-100">
-                    <h1 className="fz-40 fw-700" style={{ color: "#6C6C6C" }}>
+                    <h1 className="titles-2 fw-700" style={{ color: "#6C6C6C" }}>
                       Selamat, Pengajuan Diterima!
                     </h1>
                     <p className="mt-5 fz-16">
@@ -123,29 +123,13 @@ function Hasil({ token }) {
 
                   <div className="form-group row">
                     <div className="col-sm-12 d-flex justify-content-end">
-                      {/* <Link href="/partnership/kerjasama">
-                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
-                      Kembali
-                    </a>
-                  </Link> */}
-{/* 
-                      <button
-                        className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
-                        onClick={() =>
-                          router.push(
-                            `/partnership/user/kerjasama/${idKerjsama}`
-                          )
-                        }
-                      >
-                        Kembali
-                      </button> */}
+                     
 
                       <Link href="/partnership/user/kerjasama">
                     <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
                       Kembali
                     </a>
                   </Link>
-
 
 
                     </div>
@@ -164,7 +148,7 @@ function Hasil({ token }) {
                 </div>
                 <div className="col-12 col-sm-6">
                   <div className="d-flex flex-column align-items-start justify-content-center h-100">
-                    <h1 className="fz-40 fw-700" style={{ color: "#6C6C6C" }}>
+                    <h1 className="titles-2 fw-700" style={{ color: "#6C6C6C" }}>
                       Kerjasama Berakhir!
                     </h1>
                     <p className="mt-5 fz-16">
@@ -174,11 +158,6 @@ function Hasil({ token }) {
 
                   <div className="form-group row">
                     <div className="col-sm-12 d-flex justify-content-end">
-                      {/* <Link href="/partnership/kerjasama">
-                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
-                      Kembali
-                    </a>
-                  </Link> */}
                       <Link href="/partnership/user/kerjasama">
                     <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
                       Kembali
@@ -200,7 +179,7 @@ function Hasil({ token }) {
                 </div>
                 <div className="col-12 col-sm-6">
                   <div className="d-flex flex-column align-items-start justify-content-center h-100">
-                    <h1 className="fz-40 fw-700" style={{ color: "#6C6C6C" }}>
+                    <h1 className="titles-2 fw-700" style={{ color: "#6C6C6C" }}>
                       Maaf, Pengajuan Ditolak
                     </h1>
                     <p className="mt-5 fz-16">
@@ -210,11 +189,6 @@ function Hasil({ token }) {
 
                   <div className="form-group row">
                     <div className="col-sm-12 d-flex justify-content-end">
-                      {/* <Link href="/partnership/kerjasama">
-                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
-                      Kembali
-                    </a>
-                  </Link> */}
                       <Link href="/partnership/user/kerjasama">
                     <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
                       Kembali

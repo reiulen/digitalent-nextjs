@@ -27,10 +27,15 @@ const InformasiEdit = ({ funcViewEdit, token }) => {
     loading,
     success,
   } = useSelector((state) => state.updateDataPribadi);
+  const { error: errorAgama, data: dataAgama } = useSelector(
+    (state) => state.drowpdownAgama
+  );
 
   const [name, setName] = useState((dataPribadi && dataPribadi.name) || "");
   const [email, setEmail] = useState((dataPribadi && dataPribadi.email) || "");
-  const [kelamin, setKelamin] = useState({ value: "0", label: "Laki - Laki" });
+  const [kelamin, setKelamin] = useState(
+    (dataPribadi && dataPribadi.jenis_kelamin) || ""
+  );
   const [nik, setNik] = useState((dataPribadi && dataPribadi.nik) || "");
   const [nomorHandphone, setNomorHandphone] = useState(
     (dataPribadi && dataPribadi.nomor_handphone) || ""
@@ -76,6 +81,17 @@ const InformasiEdit = ({ funcViewEdit, token }) => {
     { value: "0", label: "Laki - Laki" },
     { value: "1", label: "Perempuan" },
   ];
+
+  const optionsAgama = [];
+  if (dataAgama) {
+    for (let index = 0; index < dataAgama.data.length; index++) {
+      let val = {
+        value: dataAgama.data[index].id,
+        label: dataAgama.data[index].label,
+      };
+      optionsAgama.push(val);
+    }
+  }
 
   useEffect(() => {
     if (errorUpdateData) {
@@ -155,7 +171,7 @@ const InformasiEdit = ({ funcViewEdit, token }) => {
         nik,
         name,
         jenis_kelamin: kelamin.label,
-        agama,
+        agama: agama.label,
         tempat_lahir: tempatLahir,
         tanggal_lahir: tanggalLahir,
         hubungan: hubunganUrgent,
@@ -216,6 +232,9 @@ const InformasiEdit = ({ funcViewEdit, token }) => {
             <Form.Group as={Col} md={6} controlId="formGridKelamin">
               <Form.Label>Jenis Kelamin</Form.Label>
               <Select
+                placeholder={`${
+                  kelamin === "" ? "Silahkan Pilih Jenis Kelamin" : kelamin
+                }`}
                 options={optionsKelamin}
                 defaultValue={kelamin}
                 onChange={(e) => setKelamin({ label: e.label, value: e.value })}
@@ -271,14 +290,19 @@ const InformasiEdit = ({ funcViewEdit, token }) => {
           </Row>
           <Form.Group className="mb-3">
             <Form.Label>Agama</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Masukan Agama"
-              value={agama}
-              onChange={(e) => setAgama(e.target.value)}
-              onBlur={() => simpleValidator.current.showMessageFor("agama")}
+            <Select
+              placeholder={`${
+                agama === "" ? "Silahkan Pilih Agama" : dataPribadi.agama
+              }`}
+              options={optionsAgama}
+              defaultValue={agama}
+              onChange={(e) => setAgama({ label: e.label, value: e.value })}
+              onBlur={() =>
+                simpleValidator.current.showMessageFor("jenis kelamin")
+              }
             />
-            {simpleValidator.current.message("agama", agama, "required", {
+
+            {simpleValidator.current.message("agama", agama.value, "required", {
               className: "text-danger",
             })}
           </Form.Group>
@@ -410,9 +434,14 @@ const InformasiEdit = ({ funcViewEdit, token }) => {
                   {ktpName}
                 </label>
                 <label style={{ marginTop: "15px" }}>
-                  {simpleValidator.current.message("ktp", ktp, "required", {
-                    className: "text-danger",
-                  })}
+                  {simpleValidator.current.message(
+                    "ktp",
+                    ktpName || ktp,
+                    "required",
+                    {
+                      className: "text-danger",
+                    }
+                  )}
                 </label>
               </div>
             </div>

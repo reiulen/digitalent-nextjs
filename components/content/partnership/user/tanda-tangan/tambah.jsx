@@ -70,19 +70,16 @@ const TambahTandaTangan = ({token}) => {
     e.preventDefault();
     if (nama === "") {
       setError({ ...error, nama: "Harus isi nama" });
-      // notify("Harus isi nama");
+   
     } else if (jabatan === "") {
       setError({ ...error, jabatan: "Harus isi jabatan" });
-      // notify("Harus isi jabatan");
+  
     } else if (tandaTangan === "") {
       setError({
         ...error,
         tandaTangan:
           "Pastikan sudah mengisi tanda tangan dan tekan tombol Buat tanda tangan",
       });
-      // notify(
-      //   "Pastikan sudah mengisi tanda tangan dan tekan tombol Buat tanda tangan"
-      // );
     } else {
       Swal.fire({
         title: "Apakah anda yakin ingin simpan ?",
@@ -155,13 +152,12 @@ const TambahTandaTangan = ({token}) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3
-              className="card-title font-weight-bolder text-dark"
-              style={{ fontSize: "24px" }}
+              className="card-title font-weight-bolder text-dark titles-1"
             >
               Tambah Tanda Tangan Digital
             </h3>
           </div>
-          <div className="card-body">
+          <div className="card-body pt-0">
             <form onSubmit={submit}>
               <div className="form-group">
                 <label htmlFor="staticEmail" className="col-form-label">
@@ -217,16 +213,16 @@ const TambahTandaTangan = ({token}) => {
                         simpleValidator.current.showMessageFor("tandaTangan")
                       }
                     />
-                    {simpleValidator.current.message(
-                      "tandaTangan",
-                      tandaTangan,
-                      "required",
-                      { className: "text-danger" }
-                    )}
+                   
                   </div>
-                  <div className="d-flex align-items-center mt-5">
+                  {error.tandaTangan ? (
+                  <p className="error-text">{error.tandaTangan}</p>
+                ) : (
+                  ""
+                )}
+                  <div className="d-flex flex-wrap align-items-center">
                     <a
-                      className="btn btn-sm btn-rounded-full text-blue-primary border-primary mr-5"
+                      className="btn btn-sm btn-rounded-full text-blue-primary border-primary mr-5 mt-3"
                       onClick={() => dataTandaTangan()}
                     >
                       Buat Tanda Tangan
@@ -234,7 +230,7 @@ const TambahTandaTangan = ({token}) => {
                     <button
                       type="button"
                       onClick={clear}
-                      className="btn btn-sm btn-rounded-full bg-yellow-primary text-white"
+                      className="btn btn-sm btn-rounded-full bg-yellow-primary text-white mt-3"
                     >
                       Buat Ulang Tanda Tangan
                     </button>

@@ -9,6 +9,7 @@ import LoadingContent from "../../../user-component/content/peserta/components/l
 import {
   getDataPribadi,
   dropdownProvinsi,
+  dropdownAgama,
   dropdownKabupaten,
   dropdownPendidikan,
   dropdownStatusPekerjaan,
@@ -71,6 +72,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       await store.dispatch(getProfilePendidikan(data.user.token));
 
       await store.dispatch(dropdownProvinsi(data.user.token));
+      await store.dispatch(dropdownAgama(data.user.token));
       await store.dispatch(dropdownStatusPekerjaan(data.user.token));
       await store.dispatch(dropdownPendidikan(data.user.token));
       await store.dispatch(getProfilePekerjaan(data.user.token));

@@ -11,6 +11,8 @@ import Select from "react-select";
 import axios from "axios";
 import IconClose from "../../../../assets/icon/Close";
 import Image from "next/image";
+import BtnIcon from "../../components/BtnIcon";
+import AlertBar from "../../components/BarAlert";
 
 const Tambah = ({ token }) => {
   const router = useRouter();
@@ -264,7 +266,8 @@ const Tambah = ({ token }) => {
         // dataNewProvinces.splice(0, 0, { label: "Pilih Provinsi", value: "" });
         setAllProvinces(dataNewProvinces);
       } catch (error) {
-        notify(error.response.data.message);
+        // notify(error.response.data.message);
+        return;
       }
     }
 
@@ -318,7 +321,7 @@ const Tambah = ({ token }) => {
           }
         }
       } catch (error) {
-        notify(error.response.data.message);
+        return;
       }
     }
 
@@ -339,7 +342,8 @@ const Tambah = ({ token }) => {
           });
           setCitiesAll(dataNewCitites);
         } catch (error) {
-          notify(error.response.data.message);
+          // notify(error.response.data.message);
+          return;
         }
       }
       fetchAPI();
@@ -359,31 +363,7 @@ const Tambah = ({ token }) => {
   return (
     <PageWrapper>
       {successInputProfile ? (
-        <div
-          className="alert alert-custom alert-light-success fade show mb-5"
-          role="alert"
-          style={{ backgroundColor: "#C9F7F5" }}
-        >
-          <div className="alert-icon">
-            <i className="flaticon2-checkmark" style={{ color: "#1BC5BD" }}></i>
-          </div>
-          <div className="alert-text" style={{ color: "#1BC5BD" }}>
-            Berhasil menyimpan data
-          </div>
-          <div className="alert-close">
-            <button
-              type="button"
-              className="close"
-              data-dismiss="alert"
-              aria-label="Close"
-              onClick={() => onNewReset()}
-            >
-              <span aria-hidden="true">
-                <i className="ki ki-close"></i>
-              </span>
-            </button>
-          </div>
-        </div>
+         <AlertBar text="Berhasil menyimpan data" className="alert-light-success" onClick={() => onNewReset()}/>
       ) : (
         ""
       )}
@@ -401,17 +381,12 @@ const Tambah = ({ token }) => {
         />
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3 className="card-title text-dark fw-600 fz-20 mb-0">
+            <h3 className="card-title text-dark fw-600 titles-1">
               Profile Lembaga
             </h3>
           </div>
           <div className="card-body pt-0">
             <form
-            // id="kt_docs_formvalidation_text"
-            // className="form"
-            // action="#"
-            // autoComplete="off"
-            // onSubmit={submit}
             >
               <div className="form-group mb-6">
                 <label htmlFor="staticE mail" className="col-form-label">
@@ -422,7 +397,6 @@ const Tambah = ({ token }) => {
                   type="text"
                   name="text_input"
                   className="form-control border-0"
-                  // placeholder="Masukan Nama Lembaga"
                   value={institution_name}
                   style={{backgroundColor:"transparent"}}
                 />
@@ -466,7 +440,6 @@ const Tambah = ({ token }) => {
                       type="text"
                       name="text_input"
                       className="form-control border-0"
-                      // placeholder="Masukan Alamat E-mail"
                       value={email}
                       style={{backgroundColor:"transparent"}}
                     />

@@ -22,11 +22,14 @@ export default function FileSize(props) {
       headers: {
         authorization: `Bearer ${props.token}`,
       },
-    }).then()
+    }).then(response => {
+      setImage(response.data.data.training_rules.image[0].size)
+      setDocument(response.data.data.training_rules.document[0].size)
+    })
   }, [props.token])
 
   return (
-    <div className="col styling-content-pelatihan">
+    <div className="col-xl-8 styling-content-pelatihan">
       <form onSubmit={handleSubmit}>
         <div className="notification-title">
           <h1>File Size</h1>
@@ -38,6 +41,7 @@ export default function FileSize(props) {
               type="number"
               className="form-control"
               placeholder="Size Image"
+              value={image}
               onChange={e => {
                 setImage(e.target.value)
               }}
@@ -53,6 +57,7 @@ export default function FileSize(props) {
           <div className="input-group mb-3">
             <input
               type="number"
+              value={document}
               className="form-control"
               placeholder="Size Document"
               onChange={e => {
@@ -65,8 +70,11 @@ export default function FileSize(props) {
             </span>
           </div>
         </div>
-        <div className="d-flex justify-content-end mb-4">
-          <button type="reset" className="btn btn-reset">
+        <div className="d-flex justify-content-end mt-5">
+          <button type="reset" className="btn btn-reset" onClick={() => {
+            setImage("");
+            setDocument("")
+          }}>
             Reset
           </button>
           <button

@@ -43,9 +43,10 @@ const Layout = ({ children, title = "Dashboard" }) => {
   const [user, setUser] = useState();
   const [session, setSession] = useState();
   const handlerLogout = () => {
-    signOut({
-      callbackUrl: `${window.location.origin}/login/admin`,
-    });
+    signOut();
+    // {
+    //   callbackUrl: `${window.location.origin}/login/admin`,
+    // } LAGI DEVELOP JANGAN DIHAPUS
   };
 
   const activeProfileAndOverlay = () => {

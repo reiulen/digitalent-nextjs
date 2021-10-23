@@ -145,82 +145,76 @@ const Table = ({ token }) => {
                           </td>
                         </tr>
                       ) : (
-                        allDataReference.data.list_reference.map((items, index) => {
-                          return (
-                            <tr key={index}>
-                              <td className="align-middle text-left">
-                                {" "}
-                                {allDataReference.page === 1
-                                  ? index + 1
-                                  : (allDataReference.page - 1) *
-                                      allDataReference.limit +
-                                    (index + 1)}
-                              </td>
-                              <td className="align-middle text-left">
-                                {items.name}
-                              </td>
-                              <td className="align-middle text-left">
-                                 {items.status == 1 ?
-                        <p
-                        className="status-div-green mb-0"
-                        style={{ width: "max-content" }}
-                        >
-                          Aktif
-                        </p>
-                        :
+                        allDataReference.data.list_reference.map(
+                          (items, index) => {
+                            return (
+                              <tr key={index}>
+                                <td className="align-middle text-left">
+                                  {" "}
+                                  {allDataReference.page === 1
+                                    ? index + 1
+                                    : (allDataReference.page - 1) *
+                                        allDataReference.limit +
+                                      (index + 1)}
+                                </td>
+                                <td className="align-middle text-left">
+                                  {items.name}
+                                </td>
+                                <td className="align-middle text-left">
+                                  {items.status == 1 ? (
+                                    <p
+                                      className="status-div-green mb-0"
+                                      style={{ width: "max-content" }}
+                                    >
+                                      Aktif
+                                    </p>
+                                  ) : (
+                                    <p
+                                      className="status-div-red mb-0"
+                                      style={{ width: "max-content" }}
+                                    >
+                                      Tidak Aktif
+                                    </p>
+                                  )}
+                                </td>
+                                <td className="align-middle text-left">
+                                  <div className="d-flex align-items-center">
+                                    {items.data_references_relasi_id ? (
+                                      <Link
+                                        href={`/site-management/reference/ubah-reference-dengan-relasi/${items.id}`}
+                                      >
+                                        <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
+                                          <IconPencil width="16" height="16" />
+                                          <div className="text-hover-show-hapus">
+                                            Ubah
+                                          </div>
+                                        </a>
+                                      </Link>
+                                    ) : (
+                                      <Link
+                                        href={`/site-management/reference/ubah-reference-tanpa-relasi/${items.id}`}
+                                      >
+                                        <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
+                                          <IconPencil width="16" height="16" />
+                                          <div className="text-hover-show-hapus">
+                                            Ubah
+                                          </div>
+                                        </a>
+                                      </Link>
+                                    )}
 
-                        <p
-                        className="status-div-red mb-0"
-                        style={{ width: "max-content" }}
-                        >
-                          Tidak Aktif
-                        </p>
-                        }
-                              </td>
-                              <td className="align-middle text-left">
-                                <div className="d-flex align-items-center">
+                                    <Link
+                                      href={`/site-management/reference/detail-reference/${items.id}`}
+                                    >
+                                      <a className="btn btn-link-action bg-blue-secondary ml-3 position-relative btn-delete">
+                                        <IconEye width="16" height="16" />
+                                        <div className="text-hover-show-hapus">
+                                          Detail
+                                        </div>
+                                      </a>
+                                    </Link>
 
-                                  
-                                  {items.data_references_relasi_id ?
-                                  <Link
-                                    href={`/site-management/reference/ubah-reference-dengan-relasi/${items.id}`}
-                                  >
-                                    <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
-                                      <IconPencil width="16" height="16" />
-                                      <div className="text-hover-show-hapus">
-                                        Ubah
-                                      </div>
-                                    </a>
-                                  </Link>
-                                  :
-                                  <Link
-                                    href={`/site-management/reference/ubah-reference-tanpa-relasi/${items.id}`}
-                                  >
-                                    <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
-                                      <IconPencil width="16" height="16" />
-                                      <div className="text-hover-show-hapus">
-                                        Ubah
-                                      </div>
-                                    </a>
-                                  </Link>
-                                  }
-
-                                  
-
-                                  <Link
-                                    href={`/site-management/reference/detail-reference/${items.id}`}
-                                  >
-                                    <a className="btn btn-link-action bg-blue-secondary ml-3 position-relative btn-delete">
-                                      <IconEye width="16" height="16" />
-                                    <div className="text-hover-show-hapus">
-                                      Detail
-                                    </div>
-                                    </a>
-                                  </Link>
-
-
-
-{/* 
+                                    {/* 
                                   <button
                                     className="btn btn-link-action bg-blue-secondary ml-3 position-relative btn-delete"
                                     onClick={() =>
@@ -234,16 +228,12 @@ const Table = ({ token }) => {
                                       Detail
                                     </div>
                                   </button> */}
-
-
-
-
-
-                                </div>
-                              </td>
-                            </tr>
-                          );
-                        })
+                                  </div>
+                                </td>
+                              </tr>
+                            );
+                          }
+                        )
                       )}
                     </tbody>
                   </table>
