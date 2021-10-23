@@ -27,7 +27,7 @@ export default function TambahPage(props) {
     <>
       <div className="d-flex flex-column flex-root">
         {/* <Layout title='Tambah Imagetron - Publikasi'> */}
-        <Tambah token={session.token} />
+        <Tambah token={session.token} id={session.user.id} />
         {/* </Layout> */}
       </div>
     </>

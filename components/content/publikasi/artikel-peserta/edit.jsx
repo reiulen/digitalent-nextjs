@@ -676,7 +676,7 @@ const EditArtikel = ({token}) => {
                       value={tag}
                       onChange={setTag}
                       name="fruits"
-                      placeHolder="Isi Tag disini dan Enter"
+                      placeHolder="Isi Tag disini"
                       // onBlur={() => simpleValidator.current.showMessageFor('tag')}
                     />
                     {/* <input type="text" className="form-control" placeholder="Isi Tag disini" value={tag} onChange={e => setTag(e.target.value)} /> */}

@@ -48,19 +48,6 @@ export const getAllFaq = (token) => async (dispatch) => {
         };
 
         let link = process.env.END_POINT_API_PUBLIKASI + `api/faq`;
-        // if (keyword) link = link.concat(`&keyword=${keyword}`);
-        // if (limit) link = link.concat(`&limit=${limit}`);
-        // if (publish) link = link.concat(`&publish=${publish}`);
-        // if (startdate) link = link.concat(`&startdate=${startdate}`)
-        // if (enddate) link = link.concat(`&enddate=${enddate}`)
-
-        // const config = {
-        //     headers: {
-        //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
-        //         'Access-Control-Allow-Origin': '*',
-        //         'apikey': process.env.END_POINT_KEY_AUTH
-        //     }
-        // }
 
         const { data } = await axios.get(link, config)
 
@@ -116,14 +103,6 @@ export const newFaq = (faqData, token) => async (dispatch) => {
         dispatch({
             type: NEW_FAQ_REQUEST
         })
-
-        // const config = {
-        //     headers: {
-        //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
-        //         'Access-Control-Allow-Origin': '*',
-        //         'apikey': process.env.END_POINT_KEY_AUTH
-        //     }
-        // }
 
         const config = {
             headers: {

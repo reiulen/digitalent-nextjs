@@ -277,6 +277,7 @@ const Berita = ({ token }) => {
         setStartDate(null)
         setEndDate(null)
         setDisableEndDate(true)
+        router.replace("/publikasi/berita", undefined, { shallow: true });
     }
 
     const handleStartDate = (date) => {
@@ -350,8 +351,8 @@ const Berita = ({ token }) => {
                         color="#ffffff"
                         // icon='garis-yellow.svg' 
                         // color='#634100' 
-                        value='64'
-                        titleValue='Berita'
+                        value='0'
+                        titleValue='Orang'
                         title='Total Author'
                         publishedVal=""
                         routePublish={() => handlePublish("")}
@@ -362,7 +363,7 @@ const Berita = ({ token }) => {
                         color='#ffffff'
                         // icon='orang-tambah-green.svg' 
                         // color='#74BBB7' 
-                        value='64'
+                        value='0'
                         // value={berita && berita.total_views !== null ? berita.total_views : 0} 
                         titleValue='Orang'
                         title='Total Pembaca'
@@ -664,7 +665,7 @@ const Berita = ({ token }) => {
                                                             </td>
 
                                                             <td className='align-middle'>{row.kategori}</td>
-                                                            <td className='align-middle'>{row.judul_berita}</td>
+                                                            <td className='align-middle' className="align-middle" style={{overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',maxWidth:'180px'}}>{row.judul_berita}</td>
                                                             <td className='align-middle'>
                                                                 {
                                                                     row.publish === 1 ? (
@@ -677,8 +678,7 @@ const Berita = ({ token }) => {
                                                                 }
                                                             </td>
                                                             <td className='align-middle'>
-                                                                {/* {row.dibuat} */}
-                                                                Super Admin
+                                                                {row.name}
                                                             </td>
                                                             <td className='align-middle'>
                                                                 {row.publish === 1 ?
@@ -693,8 +693,7 @@ const Berita = ({ token }) => {
 
                                                             </td>
                                                             <td className='align-middle'>
-                                                                {/* {row.role} */}
-                                                                Super Admin
+                                                                {row.role[0].name}
                                                             </td>
                                                             <td className="align-middle d-flex">
 

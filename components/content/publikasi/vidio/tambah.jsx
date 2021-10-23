@@ -16,7 +16,7 @@ import { getAllKategori } from "../../../../redux/actions/publikasi/kategori.act
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingPage from '../../../LoadingPage';
 
-const TambahVidio = ({ token }) => {
+const TambahVidio = ({ token, id }) => {
     const editorRef = useRef()
     const dispatch = useDispatch()
     const router = useRouter();
@@ -72,7 +72,7 @@ const TambahVidio = ({ token }) => {
 
 
     const [kategori_id, setKategoriId] = useState('')
-    const [users_id, setUserId] = useState(87)
+    const [users_id, setUserId] = useState(id)
     const [judul_video, setJudulVideo] = useState('')
     const [isi_video, setIsiVideo] = useState('');
     const [url_video, setUrlVideo] = useState('')

@@ -273,6 +273,7 @@ const ArtikelPeserta = ({ token }) => {
         setStartDate(null)
         setEndDate(null)
         setDisableEndDate(true)
+        router.replace("/publikasi/artikel-peserta", undefined, { shallow: true });
     }
 
     const handleStartDate = (date) => {
@@ -283,12 +284,6 @@ const ArtikelPeserta = ({ token }) => {
 
     return (
         <PageWrapper>
-            {/* {
-                console.log(artikel_peserta)
-            } */}
-            {/* {
-                console.log (token)
-            } */}
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
                     <div className="alert-icon"><i className="flaticon-warning"></i></div>
@@ -574,6 +569,7 @@ const ArtikelPeserta = ({ token }) => {
                                                 !artikel_peserta || artikel_peserta && artikel_peserta.artikel.length === 0 ?
                                                     <td className='align-middle text-center' colSpan={9}>Data Tidak Ditemukan</td> :
                                                     artikel_peserta && artikel_peserta.artikel && artikel_peserta.artikel.map((row, i) => {
+                                                        // console.log("DATA ROW :", row)
                                                         return <tr key={row.id}>
                                                             <td className='align-middle text-center'>
                                                                 {
@@ -598,7 +594,7 @@ const ArtikelPeserta = ({ token }) => {
                                                                 />
                                                             </td>
                                                             <td className='align-middle'>{row.nama_kategori}</td>
-                                                            <td className='align-middle'>{row.judul_artikel}</td>
+                                                            <td className='align-middle' className="align-middle" style={{overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',maxWidth:'180px'}}>{row.judul_artikel}</td>
                                                             <td className="align-middle">
                                                                 {row.publish === 1 ? (
                                                                     row.tanggal_publish
@@ -608,7 +604,7 @@ const ArtikelPeserta = ({ token }) => {
                                                                     </span>
                                                                 )}
                                                             </td>
-                                                            <td className='align-middle'>{row.dibuat}</td>
+                                                            <td className='align-middle'>{row.name}</td>
                                                             <td className='align-middle'>
                                                                 {row.publish === 1 ?
                                                                     <span className="label label-inline label-light-success font-weight-bold">
@@ -621,7 +617,7 @@ const ArtikelPeserta = ({ token }) => {
                                                                 }
 
                                                             </td>
-                                                            <td className='align-middle'>Peserta</td>
+                                                            <td className='align-middle'>{row.role[0].name}</td>
                                                             <td className='align-middle d-flex'>
                                                                 <Link
                                                                     href={`/publikasi/artikel-peserta/preview/${row.id}`}

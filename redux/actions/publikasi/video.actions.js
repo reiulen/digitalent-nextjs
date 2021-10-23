@@ -52,14 +52,6 @@ export const getAllVideo = (page = 1, keyword = "", limit = 5, publish = null, s
             },
         };
 
-        // const config = {
-        //     headers: {
-        //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
-        //         'Access-Control-Allow-Origin': '*',
-        //         'apikey': process.env.END_POINT_KEY_AUTH
-        //     }
-        // }
-
         // const { data } = await axios.get(process.env.END_POINT_API_PUBLIKASI + 'api/video')
         const { data } = await axios.get(link, config)
 
@@ -108,14 +100,6 @@ export const newVideo = (videoData, token) => async (dispatch) => {
         dispatch({
             type: NEW_VIDEO_REQUEST
         })
-
-        // const config = {
-        //     headers: {
-        //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
-        //         'Access-Control-Allow-Origin': '*',
-        //         'apikey': process.env.END_POINT_KEY_AUTH
-        //     }
-        // }
 
         const config = {
             headers: {
