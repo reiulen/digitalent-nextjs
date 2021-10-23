@@ -23,7 +23,7 @@ import {
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingPage from "../../../LoadingPage";
 
-const EditArtikel = ({ token }) => {
+const EditArtikel = ({ token, idUser }) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -520,7 +520,6 @@ const EditArtikel = ({ token }) => {
   return (
     <>
       <PageWrapper>
-        {/* {console.log(artikel)} */}
 
         {error ? (
           <div
@@ -856,7 +855,7 @@ const EditArtikel = ({ token }) => {
                       onChange={(data) => handleTag(data)}
                       // onKeyPress={(data) => keyPressTag(data)}
                       name="fruits"
-                      placeHolder="Isi Tag disini dan tekan `Enter` atau `Tab`."
+                      placeHolder="Isi Tag disini"
                       seprators={["Enter", "Tab"]}
                     // onBlur={() => simpleValidator.current.showMessageFor('tag')}
                     />

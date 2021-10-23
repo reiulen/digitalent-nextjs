@@ -280,38 +280,6 @@ const Imagetron = ({ token }) => {
 
     };
 
-    // const handlePublish = (val) => {
-    //     if (val !== null || val !== "") {
-    //         setPublishValue(val)
-
-    //         if (startDate === null && endDate === null && limit === null && search === null) {
-    //             router.push(`${router.pathname}?publish=${val}`);
-
-    //         } else if (startDate !== null && endDate !== null && limit === null && search === null) {
-    //             router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
-
-    //         } else if (startDate !== null && endDate !== null && limit !== null && search === null) {
-    //             router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`)
-
-    //         } else if (startDate !== null && endDate !== null && limit === null && search !== null) {
-    //             router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&keyword=${search}`)
-
-    //         } else if (startDate === null && endDate === null && limit !== null && search === null) {
-    //             router.push(`${router.pathname}?publish=${val}&limit=${limit}`);
-
-    //         } else if (startDate === null && endDate === null && limit === null && search !== null) {
-    //             router.push(`${router.pathname}?publish=${val}&keyword=${search}`);
-
-    //         } else if (startDate === null && endDate === null && limit !== null && search !== null) {
-    //             router.push(`${router.pathname}?publish=${val}&limit=${limit}&keyword=${search}`);
-
-    //         } else if (startDate !== null && endDate !== null && limit !== null && search !== null) {
-    //             router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}&keyword=${search}`)
-    //         }
-    //     }
-
-    // }
-
     const handlePublish = (val) => {
         if (val !== null || val !== "") {
             setPublishValue(val)
@@ -349,40 +317,13 @@ const Imagetron = ({ token }) => {
         setStartDate(null)
         setEndDate(null)
         setDisableEndDate(true)
+        router.replace("/publikasi/imagetron", undefined, { shallow: true });
     }
 
     const handleStartDate = (date) => {
         setStartDate(date)
         setDisableEndDate(false)
     }
-
-    // const printImage = () => {
-    //     <Image
-    //         loader={() => (process.env.END_POINT_API_IMAGE_PUBLIKASI +
-    //             "publikasi/images/" +
-    //             imagetron.imagetron.data.imagetron)}
-    //         src={
-    //             process.env.END_POINT_API_IMAGE_PUBLIKASI +
-    //             "publikasi/images/" +
-    //             imagetron.imagetron.data.imagetron
-    //         }
-
-    //         alt='image'
-    //         layout='fill'
-    //         objectFit='fill'
-    //     />
-    // }
-
-    // const printData = () => {
-    //     { console.log("CEK Imagetron :", imagetron) }
-
-    // }
-
-    // caches.open('v1').then(function(cache) {
-    //     cache.delete('/images/image.png').then(function(response) {
-    //         someUIUpdateFunction();
-    //     });
-    // })
 
     return (
         <PageWrapper>
@@ -474,8 +415,8 @@ const Imagetron = ({ token }) => {
                         color='#ffffff'
                         // icon='orang-tambah-green.svg' 
                         // color='#74BBB7' 
-                        value='64'
-                        titleValue='K'
+                        value='0'
+                        titleValue='Orang'
                         title='Total Author'
                         publishedVal=""
                         routePublish={() => handlePublish("")}
@@ -681,58 +622,10 @@ const Imagetron = ({ token }) => {
                                     </div>
                                 </div>
                             </div>
-                            {/* <div className="row align-items-right">
-                                <div className="col-lg-2 col-xl-2">
-                                    <small className="form-text text-muted">
-                                        Dari Tanggal
-                                    </small>
-                                    <DatePicker
-                                        className="form-search-date form-control-sm form-control"
-                                        selected={startDate}
-                                        onChange={(date) => setStartDate(date)}
-                                        selectsStart
-                                        startDate={startDate}
-                                        endDate={endDate}
-                                        dateFormat="dd/MM/yyyy"
-                                    // minDate={addDays(new Date(), 20)}
-                                    />
-                                    
-                                </div>
-                                <div className="col-lg-2 col-xl-2">
-                                    <small className="form-text text-muted">
-                                        Sampai Tanggal
-                                    </small>
-                                    <DatePicker
-                                        className="form-search-date form-control-sm form-control"
-                                        selected={endDate}
-                                        onChange={(date) => setEndDate(date)}
-                                        selectsEnd
-                                        startDate={startDate}
-                                        endDate={endDate}
-                                        minDate={startDate}
-                                        maxDate={addDays(startDate, 20)}
-                                        dateFormat="dd/MM/yyyy"
-                                    />
-                                    
-                                </div>
-                                <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
-                                    <button
-                                        type="button"
-                                        className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block"
-                                        onClick={handleSearchDate}
-                                    >
-                                        Cari
-                                    </button>
-                                </div>
-                            </div> */}
                         </div>
 
                         <div className="table-page mt-5">
                             <div className="table-responsive">
-
-                                {/* <div className="loading text-center justify-content-center">
-                                    <BeatLoader color='#3699FF' loading={loading} css={override} size={10} />
-                                </div> */}
 
                                 <LoadingTable loading={loading} />
 
@@ -792,7 +685,7 @@ const Imagetron = ({ token }) => {
                                                                 {/* <Image alt='name_image' src='https://statik.tempo.co/data/2018/11/29/id_800478/800478_720.jpg' width={80} height={50} /> */}
                                                             </td>
                                                             <td className='align-middle'>{row.nama_kategori}</td>
-                                                            <td className='align-middle'>{row.judul}</td>
+                                                            <td className='align-middle' className="align-middle" style={{overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',maxWidth:'180px'}}>{row.judul}</td>
                                                             <td className="align-middle">
                                                                 {row.publish === 1 ? (
                                                                     row.tanggal_publish
@@ -803,7 +696,7 @@ const Imagetron = ({ token }) => {
                                                                 )}
                                                             </td>
                                                             {/* <td className='align-middle'>{row.dibuat}</td> */}
-                                                            <td className='align-middle'>{row.dibuat}</td>
+                                                            <td className='align-middle'>{row.name}</td>
                                                             <td className="align-middle">
                                                                 {row.publish === 1 ? (
                                                                     <span className="label label-inline label-light-success font-weight-bold">
@@ -815,8 +708,8 @@ const Imagetron = ({ token }) => {
                                                                     </span>
                                                                 )}
                                                             </td>
-                                                            <td className='align-middle'>Super Admin</td>
-                                                            {/* <td className='align-middle'>{row.role}</td> */}
+                                                            {/* <td className='align-middle'>Super Admin</td> */}
+                                                            <td className='align-middle'>{row.role[0].name}</td>
                                                             <td className="align-middle d-flex justify-content-center">
 
                                                                 <Link
