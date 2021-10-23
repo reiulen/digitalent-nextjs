@@ -720,8 +720,8 @@ const Beranda = () => {
 
                                       <div className="row ml-5">
                                         <div className="mt-3 ml-3 col-12">
-                                          {cardDeskripsi}
-                                          {/* <div dangerouslySetInnerHTML={cardDeskripsi}></div> */}
+                                          {/* {cardDeskripsi} */}
+                                          <div dangerouslySetInnerHTML={{ __html: cardDeskripsi }} style={{ overflowWrap: 'break-word' }}></div>
                                         </div>
                                       </div>
 
