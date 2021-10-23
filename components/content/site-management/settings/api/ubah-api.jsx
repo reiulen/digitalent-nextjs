@@ -26,8 +26,6 @@ const UbahApi = ({ token }) => {
    const [optionListField, setOptionListField] = useState([]);
   const listApi = useSelector(state => state.listApi)
 
-  console.log("detailApi",detailApi)
-  console.log("listApi",listApi)
  
 
   const [optionListApi, setOptionListApi] = useState(listApi.listApi.map((items)=>{
@@ -48,19 +46,15 @@ const [defaultValueListField, setDefaultValueListField] = useState(detailApi.api
 
   const onChangePeriodeDateStart = (date) => {
     setFrom(moment(date).format("YYYY-MM-DD"));
-    // checkPeriod(moment(date).format("YYYY-MM-DD"));
   };
   const onChangePeriodeDateEnd = (date) => {
     setTo(moment(date).format("YYYY-MM-DD"));
-    // checkPeriod(moment(date).format("YYYY-MM-DD"));
   };
 
   const changeListApi = (e) => {
-    console.log("changeListApi ee", e);
     let resultSelect = e.map((items) => {
       return items.label;
     });
-    console.log("resultSelect", resultSelect);
     setField(resultSelect);
   };
 
@@ -77,7 +71,6 @@ const [defaultValueListField, setDefaultValueListField] = useState(detailApi.api
               },
             }
           );
-          // console.log("berhasil get field", data);
           let optionListFieldResult = data.data.map((items) => {
             return {
               ...items,
@@ -85,13 +78,12 @@ const [defaultValueListField, setDefaultValueListField] = useState(detailApi.api
               value: items.field_name,
             };
           });
-          // console.log("optionListField", optionListField);
 
           setOptionListField(optionListFieldResult);
 
           // change list add label and value sisa implementasi ke render html list field and set state needed
         } catch (error) {
-          console.log("error get list api", error);
+          return;
         }
       }
 
@@ -169,7 +161,6 @@ const [defaultValueListField, setDefaultValueListField] = useState(detailApi.api
                   isRtl={false}
                   isSearchable={true}
                   name="color"
-                  // onChange={(e) => changeListProvinsi(e)}
                   options={optionListApi}
                 />
               </div>

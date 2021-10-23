@@ -16,7 +16,6 @@ const DetailApi = ({ token }) => {
   const router = useRouter();
   const detailApi = useSelector(state => state.detailApi)
 
-  console.log("detailApi",detailApi)
 
 
  

@@ -16,8 +16,6 @@ const Edit = ({ token }) => {
   const [categoryCooporation, setCategoryCooporation] = useState("");
   const [stateDataSingleOld, setStateDataSingleOld] = useState([]);
   const [stateDataSingle, setStateDataSingle] = useState([]);
-  console.log("stateDataSingleOld",stateDataSingleOld)
-  console.log("stateDataSingle",stateDataSingle)
   const handleChange = (e, index) => {
     const { name, value } = e.target;
 
@@ -160,7 +158,7 @@ const Edit = ({ token }) => {
         setCategoryCooporation(data.data.cooperation_categories);
         setStatus(data.data.status);
       } catch (error) {
-        console.log(error);
+        notify(error.response.data.message);
       }
     }
     getSingleData(router.query.id, token);

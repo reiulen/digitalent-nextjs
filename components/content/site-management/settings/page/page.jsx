@@ -25,7 +25,6 @@ const Table = ({ token }) => {
   const router = useRouter();
 
   const allPage = useSelector((state) => state.allPage);
-  console.log("allPage",allPage)
   const {
     loading: deleteLoading,
     error: deleteError,
