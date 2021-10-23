@@ -111,7 +111,9 @@ const EditTipeSoal = ({ token }) => {
         {loading ? <LoadingPage loading={loading} /> : ""}
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h2 className="card-title h2 text-dark">Ubah Tipe Soal</h2>
+            <h2 className="card-title h2 text-dark">
+              Ubah Tipe Soal Test Substansi
+            </h2>
           </div>
           <div className="card-body">
             <form onSubmit={onSubmit}>
