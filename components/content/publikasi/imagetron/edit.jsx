@@ -16,7 +16,7 @@ import { NEW_IMAGETRON_RESET, UPDATE_IMAGETRON_RESET } from '../../../../redux/t
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingPage from "../../../LoadingPage";
 
-const EditImagetron = ({ token }) => {
+const EditImagetron = ({ token,idUser }) => {
     const editorRef = useRef()
     const dispatch = useDispatch()
     const router = useRouter();
@@ -82,8 +82,7 @@ const EditImagetron = ({ token }) => {
     const [gambarName, setGambarName] = useState(imagetron.gambar)
     const [url_link, setUrlRedirect] = useState(imagetron.url_link)
     const [publish, setPublish] = useState(imagetron.publish)
-    const [users_id, setUserId] = useState(imagetron.users_id)
-    // const [users_id, setUserId] = useState(87)
+    const [users_id, setUserId] = useState(idUser)
     const [_method, setMethod] = useState("put");
     const [publishDate, setPublishDate] = useState(imagetron.tanggal_publish ? new Date(imagetron.tanggal_publish) : null);
     const [disablePublishDate, setDisablePublishDate] = useState(imagetron.publish === 0 ? true : false)
@@ -301,9 +300,6 @@ const EditImagetron = ({ token }) => {
         <PageWrapper>
             {/* {
                 console.log(imagetron)
-            }
-            {
-                console.log(setting)
             } */}
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">

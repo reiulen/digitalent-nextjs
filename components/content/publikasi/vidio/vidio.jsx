@@ -233,17 +233,6 @@ const Vidio = ({ token }) => {
         }
     };
 
-    // const handleLimit = (val) => {
-    //     setLimit(val)
-    //     if (search === "") {
-    //         router.push(`${router.pathname}?page=1&limit=${val}`);
-
-    //     } else {
-    //         router.push(`${router.pathname}?page=1&keyword=${search}&limit=${val}`)
-    //     }
-
-    // };
-
     const handleLimit = (val) => {
         setLimit(val)
         if (search === "" && publishValue === null) {
@@ -304,14 +293,6 @@ const Vidio = ({ token }) => {
     }
 
     const handlePreview = (url, id, judul_video, tanggal_publish, kategori, isi_video, tag) => {
-        // const data = {
-        //     id,
-        //     _method: "PUT",
-        //     isplay: "1"
-        // }
-
-        // dispatch(playVideo(data, token))
-
         setIdVideo(id)
         setVideoPlaying(true)
         setUrlVideo(url)
@@ -335,6 +316,7 @@ const Vidio = ({ token }) => {
         setStartDate(null)
         setEndDate(null)
         setDisableEndDate(true)
+        router.replace('/publikasi/video', undefined, { shallow: true })
     }
 
     const handleStartDate = (date) => {
@@ -407,8 +389,8 @@ const Vidio = ({ token }) => {
                         color='#ffffff'
                         // icon='garis-yellow.svg' 
                         // color='#634100' 
-                        value='64'
-                        titleValue='Video'
+                        value='0'
+                        titleValue='Orang'
                         title='Total Author'
                         publishedVal=""
                         routePublish={() => handlePublish("")}
@@ -730,7 +712,7 @@ const Vidio = ({ token }) => {
                                                                 />
                                                             </td>
                                                             <td className='align-middle'>{row.kategori}</td>
-                                                            <td className='align-middle'>{row.judul_video}</td>
+                                                            <td className='align-middle' className="align-middle" style={{overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',maxWidth:'180px'}}>{row.judul_video}</td>
                                                             <td className='align-middle'>
                                                                 {
                                                                     row.publish === 1 ? (
@@ -742,8 +724,7 @@ const Vidio = ({ token }) => {
                                                                     )
                                                                 }
                                                             </td>
-                                                            {/* <td className='align-middle'>{row.dibuat}</td> */}
-                                                            <td className='align-middle'>Super Admin</td>
+                                                            <td className='align-middle'>{row.name}</td>
                                                             <td className='align-middle'>
                                                                 {row.publish === 1 ?
                                                                     <span className="label label-inline label-light-success font-weight-bold">
@@ -756,8 +737,7 @@ const Vidio = ({ token }) => {
                                                                 }
 
                                                             </td>
-                                                            {/* <td className='align-middle'>{row.role}</td> */}
-                                                            <td className='align-middle'>Super Admin</td>
+                                                            <td className='align-middle'>{row.role[0].name}</td>
                                                             <td className="align-middle d-flex">
 
                                                                 <button

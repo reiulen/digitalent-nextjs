@@ -579,6 +579,7 @@ const Galeri = ({ token }) => {
         setStartDate(null);
         setEndDate(null);
         setDisableEndDate(true);
+        router.replace("/publikasi/galeri", undefined, { shallow: true });
     };
 
     const handleStartDate = date => {
@@ -662,8 +663,8 @@ const Galeri = ({ token }) => {
                         color="#ffffff"
                         // icon='garis-yellow.svg'
                         // color='#634100'
-                        value="64"
-                        titleValue="Galeri"
+                        value="0"
+                        titleValue="Orang"
                         title="Total Author"
                         publishedVal=""
                         routePublish={() => handlePublish("")}
@@ -674,8 +675,8 @@ const Galeri = ({ token }) => {
                         color="#ffffff"
                         // icon='orang-tambah-green.svg'
                         // color='#74BBB7'
-                        value="64"
-                        titleValue="K"
+                        value="0"
+                        titleValue="Orang"
                         title="Total Dilihat"
                         publishedVal=""
                         routePublish={() => handlePublish("")}
@@ -944,7 +945,7 @@ const Galeri = ({ token }) => {
                                                             <td className="align-middle">
                                                                 {row.nama_kategori}
                                                             </td>
-                                                            <td className="align-middle">{row.judul}</td>
+                                                            <td className="align-middle" className="align-middle" style={{overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',maxWidth:'180px'}}>{row.judul}</td>
                                                             <td className="align-middle">
                                                                 {row.publish === 1 ? (
                                                                     row.tanggal_publish
@@ -955,8 +956,8 @@ const Galeri = ({ token }) => {
                                                                 )}
                                                             </td>
                                                             <td className="align-middle">
-                                                                {/* {row.role} */}
-                                                                Super Admin
+                                                                {row.name}
+                                                                {/* Super Admin */}
                                                             </td>
                                                             <td className="align-middle">
                                                                 {row.publish === 1 ? (
@@ -969,7 +970,7 @@ const Galeri = ({ token }) => {
                                                                     </span>
                                                                 )}
                                                             </td>
-                                                            <td className="align-middle">{row.role}</td>
+                                                            <td className="align-middle">{row.role[0].name}</td>
                                                             <td className="align-middle d-flex">
                                                                 <button
                                                                     onClick={() =>
