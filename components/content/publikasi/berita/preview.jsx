@@ -79,14 +79,14 @@ const Preview = () => {
                                         </div>
                                     </div>
 
-                                    <div className="col-sm-4 col-md-2 col-1 d-flex align-items-center justify-content-end">
+                                    {/* <div className="col-sm-4 col-md-2 col-1 d-flex align-items-center justify-content-end">
                                         <div className={styles['iconBorder']}>
                                             <i className={`${styles.icon} socicon-sharethis`}></i>
                                         </div>
                                         <div className={styles['iconBorder']}>
                                             <i className={`${styles.icon} flaticon-black`}></i>
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                         </div>
@@ -142,14 +142,14 @@ const Preview = () => {
                                                 </div>
                                             </div>
 
-                                            <div className="col-sm-4 col-md-2 col-1 d-flex align-items-center justify-content-end">
+                                            {/* <div className="col-sm-4 col-md-2 col-1 d-flex align-items-center justify-content-end">
                                                 <div className={styles['iconBorder']}>
                                                     <i className={`${styles.icon} socicon-sharethis`}></i>
                                                 </div>
                                                 <div className={styles['iconBorder']}>
                                                     <i className={`${styles.icon} flaticon-black`}></i>
                                                 </div>
-                                            </div>
+                                            </div> */}
                                         </div>
                                     </div>
 

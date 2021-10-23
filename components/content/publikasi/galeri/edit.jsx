@@ -112,29 +112,8 @@ const EditGaleri = ({ token }) => {
     useEffect(() => {
 
         handleDataToArr(galeri.gambar)
-        // dispatch(getAllKategori())
 
         files.forEach(file => URL.revokeObjectURL(file.preview));
-
-        // if (success) {
-        //     dispatch({
-        //         type: NEW_GALERI_RESET
-        //     })
-        // }
-
-        // let temps = []
-
-        // for (let i = 0; i < files.length; i++) {
-        //     const reader = new FileReader()
-
-        //     reader.onload = () => {
-        //         temps.push(reader.result)
-        //     }
-
-        //     reader.readAsDataURL(files[i])
-        // }
-
-        // setGambar(temps)
 
         if (success) {
             router.push({
@@ -145,7 +124,6 @@ const EditGaleri = ({ token }) => {
     }, [dispatch, error, success, files, router, galeri.gambar]);
 
     const [id, setId] = useState(galeri.id_gallery);
-    // const [id, setId] = useState(galeri.id);
     const [judul, setJudulGaleri] = useState(galeri.judul);
     const [isi_galleri, setIsiGaleri] = useState(galeri.isi_galeri);
     const [gambar, setGambar] = useState(galeri.gambar);
@@ -167,7 +145,6 @@ const EditGaleri = ({ token }) => {
 
     const handleDataToArr = (data) => {
         let arr = []
-        // for (let i = 0; i < data.length; i++) {
         for (let i = 0; i < data.length; i++) {
             // const reader = new FileReader();
             // getBase64FromUrl(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + data[i].gambar)
@@ -210,46 +187,6 @@ const EditGaleri = ({ token }) => {
                 reader.readAsDataURL(e.target.files[0]);
                 list[index].imageName = e.target.files[0].name;
             }
-            // } else {
-            //     list[index].imageFile = e.target.files[0];
-            //     list[index].imagePreview = URL.createObjectURL(e.target.files[0]);
-            //     list[index].imageName = e.target.files[0].name;
-            //     console.log("List :", list)
-            //     setImage(list);
-
-            //     console.log("IMAGE :", image);
-            //     // reader.readAsDataURL(e.target.files[0]);
-            //     // list[index].imageName = e.target.files[0].name;
-            //     // setImage(list);
-            // }
-            // if (e.target.files[0].size > 5000000) {
-            //     e.target.value = null;
-            //     Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
-            // } else {
-            //     // list[index].imageFile = e.target.files[0];
-            //     const reader = new FileReader();
-
-            //     reader.onload = () => {
-            //         if (reader.readyState === 2) {
-            //             // list[index].imagePreview = reader.result;
-            //             // list[index].imageBase64 = reader.result;
-            //             list[index].imageFile = e.target.files[0];
-            //             list[index].imagePreview = URL.createObjectURL(e.target.files[0]);
-            //             list[index].imageName = e.target.files[0].name;
-            //             // console.log("List :", list)
-            //             setImage(list);
-            //         }
-            //         // router.reload(window.location.pathname)
-            //         // setImage([
-            //         //     ...image,
-            //         // ]);
-            //     };
-
-            //     console.log("IMAGE :", image);
-            //     reader.readAsDataURL(e.target.files[0]);
-            //     // list[index].imageName = e.target.files[0].name;
-            //     // setImage(list);
-            // }
         } else {
             e.target.value = null;
             Swal.fire(
@@ -301,11 +238,9 @@ const EditGaleri = ({ token }) => {
     };
 
     const onAddImage = () => {
-        // const newKey = image[image.length - 1] + 1;
         setImage([
             ...image,
             {
-                // index: image.length + 1,
                 imageName: "",
                 id: ""
             },
@@ -313,7 +248,7 @@ const EditGaleri = ({ token }) => {
         setTotalImage((totalImage) + 1)
     };
 
-    
+
     function hasWhiteSpace(s) {
         return s.indexOf(' ') >= 0;
     }
@@ -334,7 +269,6 @@ const EditGaleri = ({ token }) => {
             const data = {
                 judul,
                 isi_galleri,
-                // gambar,
                 gambar: temps,
                 kategori_id: Number(kategori_id),
                 users_id,
@@ -346,12 +280,10 @@ const EditGaleri = ({ token }) => {
                 image_delete: deleteImg
             }
             dispatch(onCall(data, token))
-            // console.log("UNPUBLISH :", data)
         } else {
             const data = {
                 judul,
                 isi_galleri,
-                // gambar,
                 gambar: temps,
                 kategori_id: Number(kategori_id),
                 users_id,
@@ -364,7 +296,6 @@ const EditGaleri = ({ token }) => {
             }
 
             dispatch(onCall(data, token))
-            // console.log("PUBLISH :", data)
         }
     }
 
@@ -407,12 +338,11 @@ const EditGaleri = ({ token }) => {
 
     const onNewReset = () => {
         dispatch({
-            // type: NEW_ARTIKEL_RESET
             type: UPDATE_GALERI_RESET,
         });
     };
 
-    
+
     return (
         <PageWrapper>
             {error ?
@@ -428,32 +358,6 @@ const EditGaleri = ({ token }) => {
                 : ''
             }
 
-            {/* {success ? (
-                <div
-                    className="alert alert-custom alert-light-success fade show mb-5"
-                    role="alert"
-                >
-                    <div className="alert-icon">
-                        <i className="flaticon2-checkmark"></i>
-                    </div>
-                    <div className="alert-text">{success}</div>
-                    <div className="alert-close">
-                        <button
-                            type="button"
-                            className="close"
-                            data-dismiss="alert"
-                            aria-label="Close"
-                            onClick={onNewReset}
-                        >
-                            <span aria-hidden="true">
-                            <i className="ki ki-close"></i>
-                            </span>
-                        </button>
-                    </div>
-                </div>
-                ) : (
-                ""
-            )} */}
             <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
                 {loading ? <LoadingPage loading={loading} /> : ""}
                 <div className="card card-custom card-stretch gutter-b">
@@ -480,7 +384,6 @@ const EditGaleri = ({ token }) => {
                                 <div className="col-sm-12">
                                     <textarea className='form-control' placeholder='isi deskripsi foto disini' name="deskripsi" id="" rows="10" onChange={e => setIsiGaleri(e.target.value)} value={isi_galleri} onBlur={() => simpleValidator.current.showMessageFor("isi_galleri")}></textarea>
                                     {simpleValidator.current.message("isi_galleri", isi_galleri, "required|min:5|max:5000", { className: "text-danger" })}
-                                    {/* <small className='text-danger'>*Maksimal 160 Karakter</small> */}
                                 </div>
                             </div>
 
@@ -582,7 +485,6 @@ const EditGaleri = ({ token }) => {
                                                     disabled={totalImage === 6 ? true : false}
                                                 >
                                                     <i className="ri-add-line text-white"></i>
-                                                    {/* <i className="ri-add-line text-white"></i> Tambah Gambar */}
                                                 </button>
                                             </div>
 
@@ -693,35 +595,11 @@ const EditGaleri = ({ token }) => {
                                                     disabled={disablePublishDate === true || disablePublishDate === null}
                                                 />
                                             </div>
-                                            {/* {
-                                                disablePublishDate === true ?
-                                                    <small className="text-muted">Harap ubah status publikasi menjadi aktif untuk mengisi Tanggal Publish</small>
-                                                :
-                                                    null
-                                            } */}
                                         </div>
                                     </div>
                                     :
                                     null
                             }
-
-
-
-                            {/* <div className="form-group row">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Publish</label>
-                                <div className="col-sm-1">
-                                    <SwitchButton
-                                        checked={publish}
-                                        onlabel=' '
-                                        onstyle='primary'
-                                        offlabel=' '
-                                        offstyle='danger'
-                                        size='sm'
-                                        width={30}
-                                        onChange={(checked) => setPublish(checked)}
-                                    />
-                                </div>
-                            </div> */}
 
                             <div className="form-group row">
                                 <div className="col-sm-2"></div>
