@@ -7,13 +7,7 @@ import DetailRevisiKerjasama from './detailRevisiKerjasama'
 
 function RevisiList({ token }) {
   const router = useRouter();
-  const cardContainer = {
-    background: "#FFFFFF",
-    border: "1px solid #D7E1EA",
-    borderRadius: "5px",
-    padding: "16px 32px",
-    borderRadius: "12px",
-  };
+  
   const labelStyle = {
     color: "#E69700",
     fontSize: "14px",
@@ -57,7 +51,7 @@ function RevisiList({ token }) {
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3 className="card-title fz-20 fw-500 text-dark mb-0">
+            <h3 className="card-title titles-1 fw-500 text-dark mb-0">
               Review Kerjasama
             </h3>
           </div>
@@ -70,12 +64,11 @@ function RevisiList({ token }) {
                     return (
                       <li key={index} className="mt-5">
                         <div
-                          className="row align-items-center justify-content-between"
-                          style={cardContainer}
+                          className="row  cardContainer"
                         >
                           <div className="col-12 col-sm-6">
                             <h1
-                              className="fw-500 fz-20"
+                              className="fw-500 titles-1"
                               style={{ color: "#6C6C6C" }}
                             >
                               {items.title}

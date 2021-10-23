@@ -42,6 +42,10 @@ const Beranda = () => {
   const [ activeTab, setActiveTab ] = useState(0);
   const [ akademiId, setAkademiId ] = useState(null)
   const [ show, setShow ] = useState(null);
+  const [ defaultImage, setDefaultImage ] = useState(`/assets/media/carousel-01.svg`)
+  const [ imageError, setImageError ] = useState(false)
+  const [ imagetronImg, setImagetronImg ] = useState (null)
+  const [ cardId, setCardId ] = useState(null)
   const [ cardImage, setCardImage ] = useState(null)
   const [ cardStatus, setCardStatus ] = useState(null)
   const [ cardImageMitra, setCardImageMitra ] = useState(null)
@@ -59,16 +63,15 @@ const Beranda = () => {
     handleHoverCard()
   }, [])
 
-  // useEffect(() => {
-  //   if (tema){
-  //     window.location.reload();
-  //   }
-    
-  // }, [tema])
+  useEffect(() => {
+    if (tema){
+      // window.location.reload();
+      handleHoverCard()
+    }
+  }, [tema])
 
   const handleAkademiStart = () => {
     if (akademi && akademi.length !== 0){
-        // console.log ("check")
         dispatch (getTemaByAkademi(akademi[0].id))
     }
   }
@@ -84,17 +87,34 @@ const Beranda = () => {
           showDetail: false,
           pelatihan: []
         }
+
         if (tema[i].pelatihan !== 0 && tema[i].pelatihan !== null){
           for (let j = 0; j < tema[i].pelatihan.length; j++){
             let objPelatihan = {
               id: tema[i].pelatihan[j].id,
               name: tema[i].pelatihan[j].name,
+              gambar: tema[i].pelatihan[j].gambar,
+              akademi: tema[i].pelatihan[j].akademi, 
+              tema: tema[i].pelatihan[j].tema,
+              alamat: tema[i].pelatihan[j].alamat,
+              kuota_peserta: tema[i].pelatihan[j].kuota_peserta,
+              metode_pelatihan: tema[i].pelatihan[j].metode_pelatihan,
+              gambar_mitra: tema[i].pelatihan[j].gambar_mitra,
+              mitra: tema[i].pelatihan[j].mitra,
+              pendaftaran_mulai: tema[i].pelatihan[j].pendafataran_mulai,
+              pendaftaran_selesai: tema[i].pelatihan[j].pendafataran_selesai,
+              deskripsi: tema[i].pelatihan[j].deskripsi,
+              status: tema[i].pelatihan[j].status,
+              kuota_pendaftar: tema[i].pelatihan[j].kuota_pendaftar,
               hover: false,
               // showDetail: false
             }
-
             obj.pelatihan.push (objPelatihan)
           }
+          arr.push (obj)
+        } else {
+          let objPelatihan = false
+          obj.pelatihan = (objPelatihan)
           arr.push (obj)
         }
         
@@ -134,7 +154,7 @@ const Beranda = () => {
     dispatch (getTemaByAkademi(id))
   };
 
-  const handleQuickView = (indexTema, image, status, image_mitra, akademi, deskripsi, name, kuota_pendaftar, mitra, alamat, pendaftaran_mulai, pendaftaran_selesai) => {
+  const handleQuickView = (indexTema, image, status, image_mitra, akademi, deskripsi, name, kuota_pendaftar, mitra, alamat, pendaftaran_mulai, pendaftaran_selesai, id) => {
     let obj = [...show]
 
     for (let i = 0; i < obj.length; i++){
@@ -143,6 +163,7 @@ const Beranda = () => {
       }
     }
     setShow(obj)
+    setCardId (id)
     setCardImage(image)
     setCardStatus(status)
     setCardImageMitra(image_mitra)
@@ -166,6 +187,18 @@ const Beranda = () => {
     }
     setShow(obj)
   };
+
+  const handleErrorImage = (props) => {
+    if (imagetronImg === defaultImage){
+      setImageError(true)
+      setImagetronImg (props)
+      // console.log(false)
+
+    } else {
+      setImageError(false)
+      setImagetronImg (defaultImage)
+    }
+  }
 
   return (
     <BerandaWrapper title="Digitalent">
@@ -242,10 +275,12 @@ const Beranda = () => {
                           <Image
                             layout="fill"
                             objectFit="fill"
-                            src={process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + el.gambar}
-                            // src={`/assets/media/carousel-01.svg`}
+                            // src={imageError === true ? defaultImage : process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + el.gambar}
+                            src={imageError === true ? defaultImage : process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + el.gambar}
                             alt="Imagetron Slide"
                             className="mx-5 rounded"
+                            onError={() => handleErrorImage(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + el.gambar)}
+                            // onChange={() => setImageError(false)}
                           />
                         </SplideSlide>
                       )
@@ -511,10 +546,10 @@ const Beranda = () => {
                       <div className="container-fluid">
                         <div className="row mt-10">
                           {
-                            show !== null && show[i] !== undefined && show[i] !== null?
+                            show !== null && show[i] !== undefined ?
                               show[i].showDetail !== true ?
-                                el.pelatihan ? 
-                                  el.pelatihan.map ((element, index) => {
+                                show[i].pelatihan !== false ? 
+                                show[i].pelatihan.map ((element, index) => {
                                     return (
                                       
                                       <div 
@@ -522,7 +557,7 @@ const Beranda = () => {
                                         key={index} 
                                         onMouseEnter={() => handleMouseEnter(i, index)}
                                         onMouseLeave={() => handleMouseLeave(i, index)}
-                                      >
+                                      > 
                                         <Cardss 
                                           label={<label>Pelatihan {element.metode_pelatihan}</label>}
 
@@ -605,7 +640,7 @@ const Beranda = () => {
                                               </div>
                                             :
                                               <div className="mt-2">
-                                                <Button className="btn btn-outline-info rounded-pill col-12" onClick={() => handleQuickView(i, element.gambar, element.status, element.gambar_mitra, element.akademi, element.deskripsi, element.name, element.kuota_peserta, element.mitra, element.alamat, element.pendaftaran_mulai, element.pendaftaran_selesai)}>
+                                                <Button className="btn btn-outline-info rounded-pill col-12" onClick={() => handleQuickView(i, element.gambar, element.status, element.gambar_mitra, element.akademi, element.deskripsi, element.name, element.kuota_peserta, element.mitra, element.alamat, element.pendaftaran_mulai, element.pendaftaran_selesai, element.id)}>
                                                     Quick View
                                                 </Button>
                                               </div>
@@ -685,7 +720,8 @@ const Beranda = () => {
 
                                       <div className="row ml-5">
                                         <div className="mt-3 ml-3 col-12">
-                                          {cardDeskripsi}
+                                          {/* {cardDeskripsi} */}
+                                          <div dangerouslySetInnerHTML={{ __html: cardDeskripsi }} style={{ overflowWrap: 'break-word' }}></div>
                                         </div>
                                       </div>
 
@@ -713,9 +749,15 @@ const Beranda = () => {
                                           </Button>
                                         </div>
                                         <div className="col-12 col-md-6 mt-5">
-                                          <Button className="btn btn-info rounded-pill btn-block">
-                                            Daftar Pelatihan
-                                          </Button>
+                                          <Link href={`/peserta/form-pendaftaran?id=${cardId}`} passHref>
+                                            <a>
+                                              <Button className="btn btn-info rounded-pill btn-block">
+                                                Daftar Pelatihan
+                                              </Button>
+                                            </a>
+                                          </Link>
+                                          
+                                          
                                         </div>
                                       </div>
 
@@ -798,5 +840,6 @@ const Beranda = () => {
     </BerandaWrapper>
   );
 };
+
 
 export default Beranda;

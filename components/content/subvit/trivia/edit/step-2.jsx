@@ -68,8 +68,7 @@ const StepTwo = ({ token }) => {
         start_at,
         end_at,
         duration,
-        passing_grade,
-        status: 0,
+        status: status,
         questions_to_share: jumlah_soal,
       };
 
@@ -155,7 +154,7 @@ const StepTwo = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <StepInputPublish step="2"></StepInputPublish>
           <div className="card-header border-0">
-            <h2 className="card-title h2 text-dark">Publish Soal Cloning</h2>
+            <h2 className="card-title h2 text-dark">Publish Soal </h2>
           </div>
           <div className="card-body pt-0">
             <form onSubmit={onSubmit}>
@@ -214,6 +213,7 @@ const StepTwo = ({ token }) => {
                     dateFormat="dd/MM/yyyy"
                     autoComplete="off"
                     value={endDate}
+                    disabled={!startDate}
                   />
 
                   {simpleValidator.current.message(
