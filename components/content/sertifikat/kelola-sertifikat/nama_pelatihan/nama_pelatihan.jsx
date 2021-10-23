@@ -1,12 +1,10 @@
 // #Next & React
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
 // #Page, Component & Library
 import PageWrapper from "../../../../wrapper/page.wrapper";
-import DatePicker from "react-datepicker";
-import { addDays } from "date-fns";
 import LoadingTable from "../../../../LoadingTable";
 import Pagination from "react-js-pagination";
 import Select from "react-select";
@@ -22,7 +20,7 @@ export default function NamaPelatihanID({ token }) {
   const router = useRouter();
   const { query } = router;
   const { loading, error, certificate } = useSelector(
-    state => state.detailCertificates
+    (state) => state.detailCertificates
   );
   // #Pagination
   const [limit, setLimit] = useState(null);
@@ -31,16 +29,9 @@ export default function NamaPelatihanID({ token }) {
 
   const [status, setStatus] = useState(null);
 
-  // useEffect(() => {
-  //   const id = sessionStorage.getItem("tema_pelatihan_id");
-  //   if (!certificate) {
-  //     router.replace(router.asPath + `?id=${id}`);
-  //   }
-  // }, [certificate, router]);
+  let { page = 1 } = router.query;
 
-  let { page = 1, keyword, success } = router.query;
-
-  const handleLimit = val => {
+  const handleLimit = (val) => {
     setLimit(val);
     router.push(
       `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}?id=${
@@ -65,7 +56,7 @@ export default function NamaPelatihanID({ token }) {
     { value: "publish", label: "Publish" },
   ];
 
-  const handleFilter = e => {
+  const handleFilter = (e) => {
     if (!status) {
       Swal.fire("Oops !", "Harap memilih Status terlebih dahulu.", "error");
     } else {
@@ -80,7 +71,7 @@ export default function NamaPelatihanID({ token }) {
     }
   };
 
-  const handlePagination = pageNumber => {
+  const handlePagination = (pageNumber) => {
     let link = `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}?page=${pageNumber}`;
     if (search) link = link.concat(`&keyword=${search}`);
     if (limit) link = link.concat(`&limit=${limit}`);
@@ -223,7 +214,7 @@ export default function NamaPelatihanID({ token }) {
                       type="text"
                       className="form-control pl-10"
                       placeholder="Ketik disini untuk Pencarian..."
-                      onChange={e => setSearch(e.target.value)}
+                      onChange={(e) => setSearch(e.target.value)}
                     />
                     <button
                       className="btn bg-blue-primary text-white right-center-absolute"
@@ -293,18 +284,17 @@ export default function NamaPelatihanID({ token }) {
                                   Status
                                 </label>
                                 <Select
-                                  ref={ref => (refSelect = ref)}
+                                  ref={(ref) => (refSelect = ref)}
                                   className="basic-single"
                                   classNamePrefix="select"
                                   placeholder="Semua"
-                                  // defaultValue={options[0].value}
                                   isDisabled={false}
                                   isLoading={false}
                                   isClearable={false}
                                   isRtl={false}
                                   isSearchable={true}
                                   name="color"
-                                  onChange={e => {
+                                  onChange={(e) => {
                                     setStatus(e?.value);
                                   }}
                                   options={options}
@@ -418,7 +408,6 @@ export default function NamaPelatihanID({ token }) {
                                   {certificate.status.name == "draft" ? (
                                     <>
                                       <Link
-                                        // href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.id}`}
                                         href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.name}?id=${certificate.id}&theme_id=${certificate.theme.id}&status=view`}
                                         passHref
                                       >
@@ -462,9 +451,7 @@ export default function NamaPelatihanID({ token }) {
                                       </Link>
                                       <Link
                                         passHref
-                                        // href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.id}/list-peserta`}
                                         href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/sertifikat-peserta?id=${certificate.id}`}
-                                        // nama pelatihan id pake certificate.id
                                       >
                                         <a
                                           className="btn btn-link-action bg-blue-secondary text-white mr-2"
@@ -479,7 +466,6 @@ export default function NamaPelatihanID({ token }) {
                                   ) : (
                                     <Link
                                       href={`/sertifikat/kelola-sertifikat/certificate-builder?id=${certificate.id}&theme_id=${certificate.theme.id}&theme_name=${certificate.theme.name}`}
-                                      // ${query.tema_pelatihan_id}
                                       passHref
                                     >
                                       <a
@@ -537,8 +523,8 @@ export default function NamaPelatihanID({ token }) {
                             borderColor: "#F3F6F9",
                             color: "#9E9E9E",
                           }}
-                          onChange={e => handleLimit(e.target.value)}
-                          onBlur={e => handleLimit(e.target.value)}
+                          onChange={(e) => handleLimit(e.target.value)}
+                          onBlur={(e) => handleLimit(e.target.value)}
                         >
                           <option value="5">5</option>
                           <option value="10">10</option>
