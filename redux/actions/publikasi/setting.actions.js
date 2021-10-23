@@ -69,51 +69,17 @@ export const updateSettingImagePublikasi = (settingData, token) => async (dispat
         }
 
         const { dataImage } = await axios.put(linkImage, params, config)
-        // const { dataImagetron } = await axios.put(linkImagetron, settingData.upload_imagetron)
-        // const { dataSlider } = await axios.put(linkSlider, settingData.batas_slider)
-        // const { dataFaq } = await axios.put(linkFaq, settingData.maxfaq)
 
         dispatch({
             type: UPDATE_SETTING_IMAGE_SUCCESS,
             payload: dataImage,
         });
 
-        // dispatch({
-        //     type: UPDATE_SETTING_IMAGETRON_SUCCESS,
-        //     payload: dataImagetron,
-        // });
-
-        // dispatch({
-        //     type: UPDATE_SETTING_SLIDER_SUCCESS,
-        //     payload: dataSlider,
-        // });
-
-        // dispatch({
-        //     type: UPDATE_SETTING_FAQ_SUCCESS,
-        //     payload: dataFaq,
-        // });
-
-
     } catch (error) {
         dispatch({
             type: UPDATE_SETTING_IMAGE_FAIL,
             payload: error.response.data.message,
         });
-
-        // dispatch({
-        //     type: UPDATE_SETTING_IMAGETRON_FAIL,
-        //     payload: error.response.data.message,
-        // });
-
-        // dispatch({
-        //     type: UPDATE_SETTING_SLIDER_FAIL,
-        //     payload: error.response.data.message,
-        // });
-
-        // dispatch({
-        //     type: UPDATE_SETTING_FAQ_FAIL,
-        //     payload: error.response.data.message,
-        // });
     }
 }
 

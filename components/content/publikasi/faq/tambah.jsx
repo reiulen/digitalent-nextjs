@@ -17,7 +17,7 @@ import LoadingPage from '../../../LoadingPage';
 
 import "../../../../styles/publikasi.module.css"
 
-const TambahFaq = ({token}) => {
+const TambahFaq = ({ token, id }) => {
     const dispatch = useDispatch()
     const router = useRouter()
 
@@ -52,7 +52,7 @@ const TambahFaq = ({token}) => {
     const [judul, setJudulPertanyaan] = useState('')
     const [jawaban, setJawaban] = useState('');
     const [kategori_id, setKategoriId] = useState('')
-    const [users_id, setUsersId] = useState(87)
+    const [users_id, setUsersId] = useState(id)
     const [pinned, setPinnedFaq] = useState(0)
     const [publish, setPublish] = useState(0)
     const [publishDate, setPublishDate] = useState(null);
@@ -67,7 +67,7 @@ const TambahFaq = ({token}) => {
             setPublishDate (null)
             setPublish (0)
         } else {
-            setPublish (1)
+            setPublish(1)
         }
     };
 
@@ -96,21 +96,21 @@ const TambahFaq = ({token}) => {
 
             if (publish === true) {
                 setPublish(1)
-              
+
             } else if (publish === false) {
                 setPublish(0)
-            
+
             }
 
             if (pinned === true) {
                 setPinnedFaq(1)
-              
+
             } else if (pinned === false) {
                 setPinnedFaq(0)
-    
+
             }
 
-            if (publishDate === null){
+            if (publishDate === null) {
                 let today = new Date
 
                 const data = {
@@ -120,10 +120,11 @@ const TambahFaq = ({token}) => {
                     users_id,
                     publish,
                     pinned,
-                    tanggal_publish : moment(today).format("YYYY-MM-DD")
+                    tanggal_publish: moment(today).format("YYYY-MM-DD")
                 }
 
                 dispatch(newFaq(data, token))
+                // console.log(data)
 
             } else {
                 const data = {
@@ -133,14 +134,15 @@ const TambahFaq = ({token}) => {
                     users_id,
                     publish,
                     pinned,
-                    tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
+                    tanggal_publish: moment(publishDate).format("YYYY-MM-DD")
                 }
 
                 dispatch(newFaq(data, token))
+                // console.log(data)
 
             }
 
-            
+
         } else {
             simpleValidator.current.showMessages();
             forceUpdate(1);
@@ -231,7 +233,7 @@ const TambahFaq = ({token}) => {
                                                         <option key={row.id} value={row.id}>
                                                             {row.nama_kategori}
                                                         </option>
-                                                    :
+                                                        :
                                                         null
                                                 );
                                             })
@@ -252,17 +254,16 @@ const TambahFaq = ({token}) => {
                                     <div className="">
                                         <label className="switches">
                                             <input
-                                            // required
-                                            className="checkbox"
-                                            checked={publish}
-                                            type="checkbox"
-                                            // onChange={(checked) => setPublish(checked)}
-                                            onChange={(e) => handleChangePublish(e)}
+                                                // required
+                                                className="checkbox"
+                                                checked={publish}
+                                                type="checkbox"
+                                                // onChange={(checked) => setPublish(checked)}
+                                                onChange={(e) => handleChangePublish(e)}
                                             />
                                             <span
-                                            className={`sliders round ${
-                                                publish ? "text-white" : "pl-2"
-                                            }`}
+                                                className={`sliders round ${publish ? "text-white" : "pl-2"
+                                                    }`}
                                             >
                                             </span>
                                         </label>
@@ -276,21 +277,21 @@ const TambahFaq = ({token}) => {
                                         <label className='col-sm-5 col-form-label font-weight-bolder'>Set Tanggal Publish</label>
                                         <div className="col-sm-12">
                                             <div className="input-group">
-                                            <DatePicker
-                                                className="form-search-date form-control-sm form-control"
-                                                selected={publishDate}
-                                                onChange={(date) => handlePublishDate(date)}
-                                                // onChange={(date) => setPublishDate(date)}
-                                                selectsStart
-                                                startDate={publishDate}
-                                                // endDate={endDate}
-                                                dateFormat="dd/MM/yyyy"
-                                                placeholderText="Silahkan Isi Tanggal Publish"
-                                                wrapperClassName="col-12 col-lg-12 col-xl-12"
-                                                // minDate={moment().toDate()}
-                                                disabled = {disablePublishDate === true || disablePublishDate === null}
-                                            // minDate={addDays(new Date(), 20)}
-                                            />
+                                                <DatePicker
+                                                    className="form-search-date form-control-sm form-control"
+                                                    selected={publishDate}
+                                                    onChange={(date) => handlePublishDate(date)}
+                                                    // onChange={(date) => setPublishDate(date)}
+                                                    selectsStart
+                                                    startDate={publishDate}
+                                                    // endDate={endDate}
+                                                    dateFormat="dd/MM/yyyy"
+                                                    placeholderText="Silahkan Isi Tanggal Publish"
+                                                    wrapperClassName="col-12 col-lg-12 col-xl-12"
+                                                    // minDate={moment().toDate()}
+                                                    disabled={disablePublishDate === true || disablePublishDate === null}
+                                                // minDate={addDays(new Date(), 20)}
+                                                />
                                             </div>
                                             {/* {
                                                 disablePublishDate === true ?
@@ -300,11 +301,11 @@ const TambahFaq = ({token}) => {
                                             } */}
                                         </div>
                                     </div>
-                                :
+                                    :
                                     null
                             }
 
-                            
+
 
                             <div className="form-group row">
                                 <label
@@ -317,17 +318,16 @@ const TambahFaq = ({token}) => {
                                     <div className="">
                                         <label className="switches">
                                             <input
-                                            // required
-                                            className="checkbox"
-                                            checked={pinned}
-                                            type="checkbox"
-                                            // onChange={(checked) => setPublish(checked)}
-                                            onChange={(e) => handleChangePinned(e)}
+                                                // required
+                                                className="checkbox"
+                                                checked={pinned}
+                                                type="checkbox"
+                                                // onChange={(checked) => setPublish(checked)}
+                                                onChange={(e) => handleChangePinned(e)}
                                             />
                                             <span
-                                            className={`sliders round ${
-                                                publish ? "text-white" : "pl-2"
-                                            }`}
+                                                className={`sliders round ${publish ? "text-white" : "pl-2"
+                                                    }`}
                                             >
                                             </span>
                                         </label>
@@ -335,7 +335,7 @@ const TambahFaq = ({token}) => {
                                 </div>
                             </div>
 
-                            
+
 
 
                             {/* <div className="form-group row">

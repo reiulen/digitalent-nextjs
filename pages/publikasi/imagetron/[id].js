@@ -29,7 +29,7 @@ export default function EditImagetronPage(props) {
     <>
       <div className="d-flex flex-column flex-root">
         {/* <Layout title="Ubah Imagetron"> */}
-        <EditImagetron token={session.token} />
+        <EditImagetron token={session.token} idUser={session.user.id} />
         {/* </Layout> */}
       </div>
     </>

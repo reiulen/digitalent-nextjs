@@ -50,8 +50,8 @@ export const getAllGaleri = (page = 1, keyword = '', limit = 5, publish = null, 
                 Authorization: 'Bearer ' + token,
             },
         };
-
         const { data } = await axios.get(link, config)
+        
         dispatch({
             type: GALERI_SUCCESS,
             payload: data
@@ -96,14 +96,6 @@ export const newGaleri = (galeriData, token) => async (dispatch) => {
         dispatch({
             type: NEW_GALERI_REQUEST
         })
-
-        // const config = {
-        //     headers: {
-        //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
-        //         'Access-Control-Allow-Origin': '*',
-        //         'apikey': process.env.END_POINT_KEY_AUTH
-        //     }
-        // }
 
         const config = {
             headers: {

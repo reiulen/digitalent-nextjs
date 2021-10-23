@@ -49,7 +49,7 @@ import { NEW_ARTIKEL_RESET } from "../../../../redux/types/publikasi/artikel.typ
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingPage from "../../../LoadingPage";
 
-const TambahArtikel = ({ token }) => {
+const TambahArtikel = ({ token, id }) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -190,7 +190,7 @@ const TambahArtikel = ({ token }) => {
   );
   const [gambarName, setGambarName] = useState(null)
   const [kategori_id, setKategoriId] = useState("");
-  const [users_id, setUserId] = useState(87);
+  const [users_id, setUserId] = useState(id);
   const [tag, setTag] = useState([]);
   const [publish, setPublish] = useState(0);
   const [publishDate, setPublishDate] = useState(null);
@@ -789,7 +789,7 @@ const TambahArtikel = ({ token }) => {
                     <select
                       name=""
                       id=""
-                      className="form-control"
+                      className="form-control dropdownArt"
                       value={kategori_id}
                       onChange={(e) => setKategoriId(e.target.value)}
                       onBlur={(e) => {

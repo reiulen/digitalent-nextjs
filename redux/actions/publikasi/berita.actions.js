@@ -47,14 +47,6 @@ export const getAllBerita = (page = 1, keyword = '', limit = 5, publish = null, 
             },
         };
 
-        // const config = {
-        //     headers: {
-        //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
-        //         'Access-Control-Allow-Origin': '*',
-        //         'apikey': process.env.END_POINT_KEY_AUTH
-        //     }
-        // }
-
         const { data } = await axios.get (link, config)
 
         dispatch({
@@ -82,14 +74,6 @@ export const newBerita = (beritaData, token) => async (dispatch) => {
                 Authorization: 'Bearer ' + token,
             },
         };
-
-        // const config = {
-        //     headers: {
-        //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
-        //         'Access-Control-Allow-Origin': '*',
-        //         'apikey': process.env.END_POINT_KEY_AUTH
-        //     }
-        // }
 
         const { data } = await axios.post(process.env.END_POINT_API_PUBLIKASI + 'api/berita', beritaData, config)
 
