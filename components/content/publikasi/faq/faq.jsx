@@ -302,6 +302,7 @@ const Faq = ({ token }) => {
         setStartDate(null)
         setEndDate(null)
         setDisableEndDate(true)
+        router.replace("/publikasi/faq", undefined, { shallow: true });
     }
 
     const handleStartDate = (date) => {
@@ -374,8 +375,8 @@ const Faq = ({ token }) => {
                         color="#ffffff"
                         // icon='garis-yellow.svg' 
                         // color='#634100' 
-                        value='64'
-                        titleValue='FAQ'
+                        value='0'
+                        titleValue='Orang'
                         title='Total Author'
                         publishedVal=""
                         routePublish={() => handlePublish("")}
@@ -644,6 +645,7 @@ const Faq = ({ token }) => {
                                                 !faq || faq && faq.faq.length === 0 ?
                                                     <td className='align-middle text-center' colSpan={9}>Data Tidak Ditemukan</td> :
                                                     faq && faq.faq.map((row, i) => {
+                                                        // console.log("Data row :",row)
                                                         return <tr key={row.id}>
                                                             {/* <td className='align-middle text-center'>
                                                                 <span className="badge badge-secondary text-muted">
@@ -663,7 +665,7 @@ const Faq = ({ token }) => {
                                                                 }
 
                                                             </td>
-                                                            <td className='align-middle'>{row.judul}</td>
+                                                            <td className='align-middle' className="align-middle" style={{overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',maxWidth:'180px'}}>{row.judul}</td>
                                                             <td className='align-middle'>{row.kategori}</td>
                                                             <td className='align-middle'>
                                                                 {row.publish === 1 ? (
@@ -675,8 +677,7 @@ const Faq = ({ token }) => {
                                                                 )}
                                                             </td>
                                                             <td className='align-middle'>
-                                                                {/* {row.dibuat} */}
-                                                                Super Admin
+                                                                {row.name}
                                                             </td>
                                                             <td className='align-middle'>
                                                                 {
@@ -723,8 +724,7 @@ const Faq = ({ token }) => {
                                                                 )}
                                                             </td>
                                                             <td className='align-middle'>
-                                                                {/* {row.role} */}
-                                                                Super Admin
+                                                                {row.role[0].name}
                                                             </td>
                                                             <td className="align-middle d-flex justify-content-center">
 

@@ -39,7 +39,6 @@ const Artikel = ({ token }) => {
     error,
     artikel,
   } = useSelector((state) => state.allArtikel);
-
   const {
     loading: deleteLoading,
     error: deleteError,
@@ -281,6 +280,7 @@ const Artikel = ({ token }) => {
     setStartDate(null)
     setEndDate(null)
     setDisableEndDate(true)
+    router.replace('/publikasi/artikel', undefined, { shallow: true })
   }
 
   const handleStartDate = (date) => {
@@ -288,19 +288,8 @@ const Artikel = ({ token }) => {
     setDisableEndDate(false)
   }
 
-  // const handleEndDate = (date) => {
-  //   if (startDate === null) {
-  //     setDisableEndDate (true)
-
-  //   } else {
-  //     setEndDate (date)
-  //   }
-  // }
-
   return (
     <PageWrapper>
-      {/* {console.log(artikel)} */}
-      {/* {console.log(token)} */}
       {error ? (
         <div
           className="alert alert-custom alert-light-danger fade show mb-5"
@@ -374,8 +363,8 @@ const Artikel = ({ token }) => {
             color='#ffffff'
             // icon="garis-yellow.svg"
             // color="#634100"
-            value="64"
-            titleValue="Artikel"
+            value="0"
+            titleValue="Orang"
             title="Total Author"
             publishedVal=""
             routePublish={() => handlePublish("")}
@@ -386,8 +375,8 @@ const Artikel = ({ token }) => {
             color='#ffffff'
             // icon="orang-tambah-green.svg"
             // color="#74BBB7"
-            value="64"
-            titleValue="K"
+            value="0"
+            titleValue="Orang"
             title="Total Pembaca"
             publishedVal=""
             routePublish={() => handlePublish("")}
@@ -657,12 +646,13 @@ const Artikel = ({ token }) => {
                     <tbody>
                       {!artikel || (artikel && artikel.artikel.length === 0) ? (
                         // <tr>
-                          <td className='align-middle text-center' colSpan={9}>Data Tidak Ditemukan</td>
+                        <td className='align-middle text-center' colSpan={9}>Data Tidak Ditemukan</td>
                         // </tr>
                       ) : (
                         artikel &&
                         // artikel.artikel &&
                         artikel.artikel.map((artikel, i) => {
+                          // console.log("Data Row",artikel)
                           return (
                             <tr key={artikel.id}>
                               {/* <td className="align-middle text-center">
@@ -710,7 +700,7 @@ const Artikel = ({ token }) => {
                                 {/* {artikel.jenis_kategori} */}
                                 {artikel.nama_kategori}
                               </td>
-                              <td className="align-middle">
+                              <td className="align-middle" style={{overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',maxWidth:'180px'}}>
                                 {artikel.judul_artikel}
                               </td>
                               <td className="align-middle">
@@ -723,8 +713,8 @@ const Artikel = ({ token }) => {
                                 )}
                               </td>
                               <td className="align-middle">
-                                {/* {artikel.dibuat} */}
-                                Super Admin
+                                {artikel.name}
+                                {/* Super Admin */}
                               </td>
                               <td className="align-middle">
                                 {artikel.publish === 1 ? (
@@ -738,8 +728,8 @@ const Artikel = ({ token }) => {
                                 )}
                               </td>
                               <td className="align-middle">
-                                {/* {artikel.role} */}
-                                Super Admin
+                                {artikel.role[0].name}
+                                {/* Super Admin */}
                               </td>
                               <td className="align-middle d-flex">
 
