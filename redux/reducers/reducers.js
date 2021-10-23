@@ -266,8 +266,9 @@ import {
 // ============== pelatihan ===============
 import { allPromptReducer } from "./site-management/settings/pelatihan.reducers";
 
-// ============== pelatihan ===============
+// ============== dashboard ===============
 import { allDataZonasiReducer } from "./site-management/dashboard.reducers";
+import { allDataPesertaReducer } from "./site-management/dashboard-data-peserta.reducers";
 
 // End Site Management
 
@@ -602,6 +603,7 @@ const reducer = combineReducers({
   allPrompt: allPromptReducer,
   // ============ Dashboatd =======
   allDataZonasi: allDataZonasiReducer,
+  allDataPeserta: allDataPesertaReducer,
 
   // END SITE MANAGEMENT
 
