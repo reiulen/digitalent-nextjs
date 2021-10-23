@@ -14,6 +14,8 @@ import {
   fetchListCooperationSelectById,
 } from "../../../../../redux/actions/partnership/user/cooperation.actions";
 import axios from "axios";
+import BtnIcon from "../../components/BtnIcon";
+import AlertBar from "../../components/BarAlert";
 const DetailDokumenKerjasama = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -52,31 +54,25 @@ const DetailDokumenKerjasama = ({ token }) => {
 
     if (date === "") {
       setError({ ...error, date: "Harus isi data tanggal" });
-      // notify("Harus isi data tanggal");
     } else if (title === "") {
       setError({ ...error, title: "Judul kerjasama tidak boleh kosong" });
-      // notify("Judul kerjasama tidak boleh kosong");
     } else if (cooperationC_id === "") {
       setError({
         ...error,
         cooperationC_id: "Kategori kerjasama tidak boleh kosong",
       });
-      // notify("Kategori kerjasama tidak boleh kosong");
     } else if (period === "") {
       setError({
         ...error,
         period: "Periode tidak boleh kosong",
       });
-      // notify("Periode tidak boleh kosong");
     } else if (periodUnit === "") {
       setError({ ...error, periodUnit: "Period unit tidak boleh kosong" });
-      // notify("Period unit tidak boleh kosong");
     } else if (AllCooperation === "") {
       setError({
         ...error,
         AllCooperation: "Kerjasama form tidak boleh kosong",
       });
-      // notify("Kerjasama form tidak boleh kosong");
     } else {
       Swal.fire({
         title: "Apakah anda yakin ingin simpan ?",
@@ -122,24 +118,6 @@ const DetailDokumenKerjasama = ({ token }) => {
           } catch (error) {
             notify(error.response.data.message);
           }
-
-          // let allDataPart = [
-          //   {
-          //     institution_name: institution_name,
-          //     date: date,
-          //     title: title,
-          //     period: period,
-          //     periodUnit: periodUnit,
-          //     cooperationC_id: cooperationC_id,
-          //     AllCooperation: AllCooperation,
-          //   },
-          // ];
-
-          // sessionStorage.setItem("dataBefore", JSON.stringify(allDataPart));
-
-          // router.push({
-          //   pathname: "/partnership/kerjasama/submit",
-          // });
         }
       });
     }
@@ -186,31 +164,7 @@ const DetailDokumenKerjasama = ({ token }) => {
   return (
     <PageWrapper>
       {isProfile ? (
-        <div
-          className="alert alert-custom alert-light-success fade show mb-5"
-          role="alert"
-          style={{ backgroundColor: "#C9F7F5" }}
-        >
-          <div className="alert-icon">
-            <i className="flaticon2-checkmark" style={{ color: "#1BC5BD" }}></i>
-          </div>
-          <div className="alert-text" style={{ color: "#1BC5BD" }}>
-            Berhasil menyimpan data profile
-          </div>
-          <div className="alert-close">
-            <button
-              type="button"
-              className="close"
-              data-dismiss="alert"
-              aria-label="Close"
-              onClick={() => onNewReset()}
-            >
-              <span aria-hidden="true">
-                <i className="ki ki-close"></i>
-              </span>
-            </button>
-          </div>
-        </div>
+       <AlertBar text="Berhasil menyimpan data profile" className="alert-light-success" onClick={() => onNewReset()}/>
       ) : (
         ""
       )}
@@ -228,12 +182,12 @@ const DetailDokumenKerjasama = ({ token }) => {
         />
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3 className="card-title fz-20 fw-500 text-dark">
+            <h3 className="card-title fw-500 text-dark titles-1 ">
               Submit Kerjasama
             </h3>
           </div>
 
-          <div className="card-body">
+          <div className="card-body pt-0">
             <div className="row mt-8 mb-10 position-relative">
               <div className="col-2 p-0 relative-progress">
                 <div className="progress-items">

@@ -31,7 +31,6 @@ const TambahApi = ({ token }) => {
   let selectRefField = null;
 
   const listApi = useSelector((state) => state.listApi);
-  console.log("listApi", listApi);
 
   const [nameApi, setNameApi] = useState("");
   const [nameUser, setNameUser] = useState("");
@@ -40,24 +39,19 @@ const TambahApi = ({ token }) => {
   const [field, setField] = useState([]);
   const [optionListField, setOptionListField] = useState([]);
   const [from, setFrom] = useState("");
-  // console.log("from", from);
   const [to, setTo] = useState("");
 
   const onChangePeriodeDateStart = (date) => {
     setFrom(moment(date).format("YYYY-MM-DD"));
-    // checkPeriod(moment(date).format("YYYY-MM-DD"));
   };
   const onChangePeriodeDateEnd = (date) => {
     setTo(moment(date).format("YYYY-MM-DD"));
-    // checkPeriod(moment(date).format("YYYY-MM-DD"));
   };
 
   const changeListApi = (e) => {
-    console.log("changeListApi ee", e);
     let resultSelect = e.map((items) => {
       return items.label;
     });
-    console.log("resultSelect", resultSelect);
     setField(resultSelect);
   };
 
@@ -141,7 +135,6 @@ const TambahApi = ({ token }) => {
               },
             }
           );
-          // console.log("berhasil get field", data);
           let optionListFieldResult = data.data.map((items) => {
             return {
               ...items,
@@ -149,13 +142,11 @@ const TambahApi = ({ token }) => {
               value: items.field_name,
             };
           });
-          // console.log("optionListField", optionListField);
 
           setOptionListField(optionListFieldResult);
 
           // change list add label and value sisa implementasi ke render html list field and set state needed
-        } catch (error) {
-          console.log("error get list api", error);
+        } catch (error) {return;
         }
       }
 

@@ -128,7 +128,9 @@ const TambahTipeSoal = ({ token }) => {
         {loading ? <LoadingPage loading={loading} /> : ""}
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h2 className="card-title h2 text-dark">Tambah Tipe Soal</h2>
+            <h2 className="card-title h2 text-dark">
+              Tambah Tipe Soal Test Substansi
+            </h2>
           </div>
           <div className="card-body">
             <form onSubmit={onSubmit}>
@@ -185,6 +187,10 @@ const TambahTipeSoal = ({ token }) => {
                     onBlur={(event) => handleChange(event)}
                     className="form-control"
                   >
+                    <option value="" selected>
+                      {" "}
+                      -Pilih Status-{" "}
+                    </option>
                     <option value={1}> Publish </option>
                     <option value={0}> Draft </option>
                   </select>

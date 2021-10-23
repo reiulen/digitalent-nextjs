@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useRef, createRef } from "react";
+import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import Swal from "sweetalert2";
 // #Page, Component & Library
 
 import Image from "next/image";
@@ -12,13 +11,12 @@ import { useDispatch } from "react-redux";
 // #Icon
 
 export default function KelolasertifikatID({ token }) {
- 
   const dispatch = useDispatch();
   const router = useRouter();
   const { query } = router;
 
   const { loading, error, certificate } = useSelector(
-    state => state.singleCertificate
+    (state) => state.singleCertificate
   );
 
   const handleResetError = () => {
@@ -65,12 +63,7 @@ export default function KelolasertifikatID({ token }) {
               <div className="card-title d-flex">
                 <div className="text-dark">Nama Sertifikat :</div>
                 <div className="mx-6">
-                  <div
-                    type="text"
-                    className="form-control "
-                    // placeholder="Masukan Nama Sertifikat"
-                    // value={certificate.data.certificate.name}
-                  >
+                  <div type="text" className="form-control ">
                     {certificate?.data?.certificate?.name
                       ? certificate?.data?.certificate?.name
                       : "Nama Sertifikat"}
@@ -102,8 +95,6 @@ export default function KelolasertifikatID({ token }) {
                       <Image
                         src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/background/${certificate.data.certificate.background}`}
                         alt="fitur"
-                        // height={495}
-                        // width={1400}
                         layout="fill"
                         objectFit="fill"
                       />
@@ -147,7 +138,6 @@ export default function KelolasertifikatID({ token }) {
                           className="text-center font-weight-bolder border-2 w-100"
                           style={{
                             fontSize: "125%",
-                            // fontWeight: "bold",
                           }}
                         >
                           {certificate?.data?.certificate?.theme?.name}
@@ -217,7 +207,6 @@ export default function KelolasertifikatID({ token }) {
                                     style={{
                                       borderStyle: el.name ? "" : "dashed",
                                     }}
-                                    //   placeholder="Nama Lengkap"
                                   >
                                     {el.name ? (
                                       <div
@@ -276,8 +265,6 @@ export default function KelolasertifikatID({ token }) {
                         <Image
                           src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/background-syllabus/${certificate.data.certificate.background_syllabus}`}
                           alt="fitur"
-                          // height={495}
-                          // width={700}
                           layout="fill"
                           objectFit="cover"
                         />
@@ -379,7 +366,6 @@ export default function KelolasertifikatID({ token }) {
                                       style={{
                                         borderStyle: el.name ? "" : "dashed",
                                       }}
-                                      //   placeholder="Nama Lengkap"
                                     >
                                       {el.name ? (
                                         <div

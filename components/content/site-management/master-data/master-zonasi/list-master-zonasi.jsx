@@ -24,7 +24,6 @@ const Table = ({ token }) => {
   const router = useRouter();
 
   const allZonasi = useSelector((state) => state.allZonasi);
-  console.log("allZonasi",allZonasi)
 
   const [valueSearch, setValueSearch] = useState("");
   const handleChangeValueSearch = (value) => {

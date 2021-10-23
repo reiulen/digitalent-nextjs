@@ -13,6 +13,8 @@ import {
 } from "../../../../redux/actions/partnership/user/cooperation.actions";
 
 import axios from "axios";
+import BtnIcon from "../components/BtnIcon";
+import AlertBar from "../components/BarAlert";
 
 function ReviewKerjasama({ token }) {
   const router = useRouter();
@@ -22,7 +24,7 @@ function ReviewKerjasama({ token }) {
 
   const onNewReset = () => {
     router.replace(
-      "/partnership/user/kerjasama/review-kerjasama-1",
+      "/partnership/user/kerjasama/review-kerjasama",
       undefined,
       { shallow: true }
     );
@@ -103,49 +105,23 @@ function ReviewKerjasama({ token }) {
     cekProgresStatus(router.query.id, token);
   }, [router.query.id, router, token]);
 
-  // const onNewReset = () => {
-  //   router.replace(`/partnership/user/kerjasama/review-kerjasama-1`);
-  // };
+  
 
   return (
     <PageWrapper>
       {successSubmitKerjasama ? (
-        <div
-          className="alert alert-custom alert-light-success fade show mb-5"
-          role="alert"
-          style={{ backgroundColor: "#C9F7F5" }}
-        >
-          <div className="alert-icon">
-            <i className="flaticon2-checkmark" style={{ color: "#1BC5BD" }}></i>
-          </div>
-          <div className="alert-text" style={{ color: "#1BC5BD" }}>
-            Berhasil menyimpan data
-          </div>
-          <div className="alert-close">
-            <button
-              type="button"
-              className="close"
-              data-dismiss="alert"
-              aria-label="Close"
-              onClick={() => onNewReset()}
-            >
-              <span aria-hidden="true">
-                <i className="ki ki-close"></i>
-              </span>
-            </button>
-          </div>
-        </div>
+        <AlertBar text="Berhasil menyimpan data" className="alert-light-success" onClick={() => onNewReset()}/>
       ) : (
         ""
       )}
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3 className="card-title fz-20 fw-500 text-dark">
+            <h3 className="card-title titles-1 fw-500 text-dark">
               Review Kerjasama
             </h3>
           </div>
-          <div className="card-body pb-28">
+          <div className="card-body pb-28 pt-0">
             <div className="row mt-8 mb-10 position-relative">
               <div className="col-2 p-0 relative-progress">
                 <div className="progress-items">
@@ -224,7 +200,7 @@ function ReviewKerjasama({ token }) {
               </div>
               <div className="col-12 col-sm-6">
                 <div className="d-flex flex-column align-items-start justify-content-center h-100">
-                  <h1 className="fz-40 fw-700" style={{ color: "#6C6C6C" }}>
+                  <h1 className="titles-2 fw-700" style={{ color: "#6C6C6C" }}>
                     Pengajuan Terkirim!
                   </h1>
                   <p className="mt-5 fz-16">
@@ -235,16 +211,16 @@ function ReviewKerjasama({ token }) {
                 </div>
 
                 <div className="form-group row">
-                  <div className="col-sm-12 d-flex justify-content-end">
+                  <div className="col-sm-12 d-flex flex-wrap justify-content-end">
                     <Link href="/partnership/user/kerjasama" passHref>
-                      <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
+                      <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5 mt-2">
                         Kembali
                       </a>
                     </Link>
 
                     <button
                       type="button"
-                      className="btn btn-sm btn-rounded-full bg-red-primary text-white"
+                      className="btn btn-sm btn-rounded-full bg-red-primary text-white mt-2"
                       onClick={() => cooperationRejection(router.query.id)}
                     >
                       Batalkan Kerjasama

@@ -15,7 +15,6 @@ const Tambah = ({ token }) => {
   const router = useRouter();
 
   const detailDataReference = useSelector((state) => state.detailDataReference);
-  console.log("detailDataReference tanpa relasi",detailDataReference)
 
   const [nameReference, setNameReference] = useState(detailDataReference.dataReference.name);
   const [number, setNumber] = useState(1);
@@ -26,8 +25,6 @@ const Tambah = ({ token }) => {
   const [formInput, setFormInput] = useState(detailDataReference.dataReference.value_reference.map((items)=>{
     return {value_old:items.value,value:items.value}
   }))
-  console.log("formInput state",formInput)
-  console.log("values state",values)
 
 
   const handleAdd = () => {
