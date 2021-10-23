@@ -460,14 +460,36 @@ const Sidebar = ({ session }) => {
     setMenu(_temp);
   }, []);
   
-  const handleOpenMenu = (e,i) => {    
-    // localStorage.setItem('openMenu',i);
-    initializeMenu[i].selected = true;
+  const handleOpenMenu = (e,i, condition) => {    
+
+    const pathRoute = router.route;
+    const splitRouteToMakingActive = pathRoute.split("/");
+
+    console.log(splitRouteToMakingActive);
+
+    if(splitRouteToMakingActive[1]){
+      initializeMenu[i].selected = !condition;
+
+      // if(initializeMenu[i].length > 0 && splitRouteToMakingActive[2]){
+      //   initializeMenu[i].child.map((rowChild, indexChild) => {
+      //     if(splitRouteToMakingActive[2] == rowChild[indexChild].name.toLowerCase()){
+      //       rowChild[indexChild].selected = true;
+      //     }
+      //   });
+      // }
+
+    }
+
     let _temp = [...initializeMenu];
     setMenu(_temp);
   };
 
   const handleOpenMenuSubMenu = (e, iMenu, iSubMenu) => {
+
+    console.log(e);
+    console.log(iMenu);
+    console.log(iSubMenu);
+
     let _temp = [...menu];
     _temp.map((items, index) => {
       if (index === iMenu) {
@@ -478,6 +500,7 @@ const Sidebar = ({ session }) => {
         };
       }
     });
+
     setMenu(_temp);
     e.stopPropagation();
   };
@@ -562,8 +585,7 @@ const Sidebar = ({ session }) => {
       <div
         className="aside-menu-wrapper flex-column-fluid"
         id="kt_aside_menu_wrapper"
-        style={{ zIndex: "999999999" }}
-      >
+        style={{ zIndex: "999999999" }}>
         <div
           id="kt_aside_menu"
           className="aside-menu my-4"
@@ -666,10 +688,7 @@ const Sidebar = ({ session }) => {
                     key={index}
                     id="main-menu"
                     onClick={(e) => {
-                      handleOpenMenu(e, index);
-                      // console.log("render");
-                      // items.selected = !items.selected;
-                      // console.log(items.selected);
+                      handleOpenMenu(e, index, items.selected );
                     }}>
 
                     <a className="menu-link menu-toggle">
@@ -723,8 +742,8 @@ const Sidebar = ({ session }) => {
                                 id="sub-menu"
                                 onClick={(e) =>
                                   handleOpenMenuSubMenu(e, index, i)
-                                }
-                              >
+                                }>
+
                                 <a
                                   className="menu-link menu-toggle"
                                   style={{ paddingLeft: "5.5rem" }}>
