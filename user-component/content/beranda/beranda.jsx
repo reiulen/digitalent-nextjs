@@ -317,8 +317,6 @@ const Beranda = () => {
                   <SplideSlide>
                     <Image
                       layout="fill"
-                      // width="1000vw"
-                      // height="500vh"
                       objectFit="fill"
                       // src={`/assets/media/banner-3.svg`}
                       src={`/assets/media/carousel-01.svg`}
@@ -331,8 +329,6 @@ const Beranda = () => {
                     <Image
                       layout="fill"
                       objectFit="fill"
-                      // width="1000vw"
-                      // height="500vh"
                       // src={`/assets/media/image27.png`}
                       src={`/assets/media/carousel-01.svg`}
                       alt="First slide"
@@ -343,8 +339,6 @@ const Beranda = () => {
                   <SplideSlide>
                     <Image
                       layout="fill"
-                      // width="1000vw"
-                      // height="500vh"
                       objectFit="fill"
                       // src={`/assets/media/banner-3.svg`}
                       src={`/assets/media/carousel-01.svg`}
@@ -356,8 +350,6 @@ const Beranda = () => {
                   <SplideSlide>
                     <Image
                       layout="fill"
-                      // width="1000vw"
-                      // height="500vh"
                       objectFit="fill"
                       // src={`/assets/media/banner-3.svg`}
                       src={`/assets/media/carousel-01.svg`}
