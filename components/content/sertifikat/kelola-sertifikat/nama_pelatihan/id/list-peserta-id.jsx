@@ -1,36 +1,23 @@
-import React, {
-  useState,
-  useEffect,
-  useRef,
-  createRef,
-  useCallback,
-  Fragment,
-} from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import Swal from "sweetalert2";
 // #Page, Component & Library
 
 import Image from "next/image";
 import { useSelector } from "react-redux";
 import PageWrapper from "../../../../../wrapper/page.wrapper";
 import { clearErrors } from "../../../../../../redux/actions/sertifikat/kelola-sertifikat.action";
-import { toPng, toJpeg } from "html-to-image";
-import html2canvas from "html2canvas";
+import { toPng } from "html-to-image";
 // #Icon
 
 export default function ListPesertaID({ token }) {
   const router = useRouter();
   const { query } = router;
 
-  const { loading, error, certificate } = useSelector(
-    state => state.publishCertificate
+  const { error, certificate } = useSelector(
+    (state) => state.publishCertificate
   );
-  const {
-    loading: loadingParticipant,
-    error: errorParticipant,
-    participant,
-  } = useSelector(state => state.detailParticipant);
+  const { participant } = useSelector((state) => state.detailParticipant);
 
   const [type, setType] = useState(
     certificate.data.certificate.certificate_type
@@ -38,7 +25,7 @@ export default function ListPesertaID({ token }) {
   const [currentUser, setCurrentUser] = useState([]);
   useEffect(() => {
     const data = participant.data.list_certificate.filter(
-      el => el.name == query.name
+      (el) => el.name == query.name
     );
     setCurrentUser(data);
   }, [participant, query.name]);
@@ -51,7 +38,7 @@ export default function ListPesertaID({ token }) {
   const divReference = useRef(null);
   const divReferenceSyllabus = useRef(null);
 
-  const convertDivToPng = async div => {
+  const convertDivToPng = async (div) => {
     const data = await toPng(div, {
       cacheBust: true,
       canvasWidth: 842,
@@ -168,13 +155,11 @@ export default function ListPesertaID({ token }) {
                     src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-images/${certificate.data.certificate.certificate_result}`}
                     alt={`image ${certificate.data.certificate.certificate_result}`}
                     objectFit="fill"
-                    // layout="fill"
                     width={842}
                     height={595}
                     key={certificate.data.certificate.certificate_result}
                   />
                   <div
-                    // className={`position-absolute w-100 text-center responsive-margin-publish`}
                     className={`position-absolute w-100 text-center ${
                       certificate.data.certificate.background
                         ? "responsive-margin-publish"
@@ -193,7 +178,7 @@ export default function ListPesertaID({ token }) {
               <div className="row mx-0 mt-10 col-12">
                 <div className="position-relative text-center col-12 col-md-2 btn bg-blue-secondary text-white rounded-full font-weight-bolder px-10 py-4">
                   <a
-                    onClick={e => {
+                    onClick={(e) => {
                       handleDownload(e);
                     }}
                   >
@@ -231,7 +216,7 @@ export default function ListPesertaID({ token }) {
               </div>
               <div className="row mt-10 col-12 p-0 m-0">
                 <div
-                  onClick={e => {
+                  onClick={(e) => {
                     handleDownload();
                   }}
                   className="position-relative col-12 col-md-2 btn bg-blue-secondary text-white rounded-full font-weight-bolder px-10 py-4"

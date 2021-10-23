@@ -28,7 +28,7 @@ export default function EditBeritaPage(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <EditBerita token={session.token} />
+        <EditBerita token={session.token} idUser={session.user.id} />
       </div>
     </>
   );

@@ -33,7 +33,7 @@ const DetailAkademi = () => {
 
     // const [ akademiId, setAkademiId ] = useState (akademi.id)
     // const [ akademiLogo, setAkademiLogo ] = useState (akademi.logo)
-    const [ akademiName, setAkademiName ] = useState (akademi.name)
+    // const [ akademiName, setAkademiName ] = useState (akademi.name)
     // const [ akademiSlug, setAkademiSlug ] = useState (akademi.slug)
     // const [ akademiDeskripsi, setAkademiDeskripsi ] = useState (akademi.deskripsi)
 
@@ -173,15 +173,15 @@ const DetailAkademi = () => {
     return (
         <Layout title="Detail Akademi">
             {
-                // console.log (akademi)
+                console.log (akademi)
             }
 
             {
-                // console.log (pelatihan)
+                console.log (pelatihan)
             }
 
             {
-                // console.log (show)
+                console.log (show)
             }
             <SubHeaderComponent />
             

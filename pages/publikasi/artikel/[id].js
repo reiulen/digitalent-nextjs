@@ -40,7 +40,7 @@ export default function EditArtikelPage(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <EditArtikel token={session.token} />
+        <EditArtikel token={session.token} idUser={session.user.id} />
       </div>
     </>
   );

@@ -16,7 +16,7 @@ import { NEW_BERITA_RESET, UPDATE_BERITA_RESET } from '../../../../redux/types/p
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingPage from '../../../LoadingPage';
 
-const EditBerita = ({ token }) => {
+const EditBerita = ({ token, idUser }) => {
     const editorRef = useRef()
     const dispatch = useDispatch()
     const router = useRouter();
@@ -141,9 +141,9 @@ const EditBerita = ({ token }) => {
     
       const handleTag = (data) => {
         for (let i = 0; i < data.length; i++) {
-          if (hasWhiteSpace(data[i])) {
-            data.splice([i], 1);
-          }
+            if (hasWhiteSpace(data[i])) {
+                data.splice([i], 1);
+            }
         }
         setTag(data);
       }
@@ -326,9 +326,6 @@ const EditBerita = ({ token }) => {
         <>
             {/* {
                 console.log(berita)
-            } */}
-            {/* {
-                console.log(setting)
             } */}
             <PageWrapper>
                 {error ?
@@ -544,7 +541,7 @@ const EditBerita = ({ token }) => {
                                             onChange={(data) => handleTag(data)}
                                             // onChange={setTag}
                                             name="tag"
-                                            placeHolder="Isi Tag disini dan tekan `Enter` atau `Tab`."
+                                            placeHolder="Isi Tag disini"
                                             seprators={["Enter", "Tab"]}
                                         />
                                         {
