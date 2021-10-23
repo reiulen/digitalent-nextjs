@@ -10,6 +10,7 @@ import Swal from "sweetalert2";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import ButtonAction from "../../../ButtonAction";
 import LoadingTable from "../../../LoadingTable";
+import styles from "./listSubstansi.module.css";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -25,6 +26,7 @@ const ListSubstansi = ({ token }) => {
   const { loading, error, subtance } = useSelector(
     (state) => state.allSubtanceQuestionBanks
   );
+
   const {
     loading: loadingDelete,
     error: errorDelete,
@@ -69,7 +71,11 @@ const ListSubstansi = ({ token }) => {
 
   const handleLimit = (val) => {
     setLimit(val);
-    router.push(`${router.pathname}?page=1&limit=${val}`);
+    if (search) {
+      router.push(`${router.pathname}?page=1&keyword=${search}&limit=${val}`);
+    } else {
+      router.push(`${router.pathname}?page=1&limit=${val}`);
+    }
   };
 
   const onNewReset = () => {
@@ -223,14 +229,15 @@ const ListSubstansi = ({ token }) => {
 
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
-          <div className="card-header border-0 mt-3">
+          <div className={`${styles.top} card-header  border-0 mt-3`}>
             <h1
               className="card-title text-dark mt-2"
               style={{ fontSize: "24px" }}
             >
               List Test Substansi
             </h1>
-            <div className="card-toolbar">
+
+            <div className={`${styles.cardToolbar} card-toolbar`}>
               <Link href="/subvit/substansi/tipe-soal">
                 <a className="text-white btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2 mr-2">
                   <i className="ri-book-read-fill"></i>
@@ -255,28 +262,14 @@ const ListSubstansi = ({ token }) => {
           <div className="card-body pt-0">
             <div className="table-filter">
               <div className="row align-items-center">
-                <div className="col-lg-5 col-xl-5">
-                  {/* <div className="input-icon">
-                    <input
-                      style={{ background: "#F3F6F9", border: "none" }}
-                      type="text"
-                      className="form-control"
-                      placeholder="Search..."
-                      id="kt_datatable_search_query"
-                      onChange={(e) => setSearch(e.target.value)}
-                    />
-                    <span>
-                      <i className="flaticon2-search-1 text-muted"></i>
-                    </span>
-                  </div> */}
+                <div className="col-lg-6 col-xl-6">
                   <div
-                    className="position-relative overflow-hidden mt-3"
-                    style={{ maxWidth: "330px" }}
+                    className={`${styles.baseSearch} position-relative overflow-hidden mt-3`}
                   >
                     <i className="ri-search-line left-center-absolute ml-2"></i>
                     <input
                       type="text"
-                      className="form-control pl-10"
+                      className={`${styles.inputSearch} form-control pl-10`}
                       placeholder="Ketik disini untuk Pencarian..."
                       onChange={(e) => setSearch(e.target.value)}
                     />
@@ -426,7 +419,7 @@ const ListSubstansi = ({ token }) => {
                 )}
               </div>
 
-              <div className="row">
+              <div className={`${styles.rowPagination} row`}>
                 {subtance && subtance.perPage < subtance.total && (
                   <div className="table-pagination table-pagination pagination-custom col-12 col-md-6">
                     <Pagination

@@ -70,6 +70,24 @@
   padding: 0px 40px !important ;
   cursor: pointer;
 }
+
+.activeMenuItem {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 160%;
+  /* or 22px */
+
+  letter-spacing: 0.015em;
+
+  /* Neutral/Body */
+  background-color: #e6f2ff !important;
+  border-radius: 8px;
+  color: #007cff;
+  padding: 0px 40px !important ;
+  cursor: pointer;
+}
 .proSidebar {
   background-color: #fff !important;
 }
@@ -101,7 +119,7 @@
 .iconMenu {
   font-size: 20px !important;
 }
-.iconMenu:hover {
+.activeIconMenu {
   color: #007cff !important;
 }
 .active {

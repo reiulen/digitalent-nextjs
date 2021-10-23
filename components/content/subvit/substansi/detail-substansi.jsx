@@ -320,7 +320,9 @@ const DetailSubstansi = ({ token }) => {
                         <p className="font-weight-bolder text-dark">Tema</p>
                       </td>
                       <td>
-                        <p className="pl-5">{subtance.theme.name || "-"}</p>
+                        <p className="pl-5">
+                          {subtance.theme ? subtance.theme.name : "-"}
+                        </p>
                       </td>
                     </tr>
                     <tr>
@@ -505,16 +507,16 @@ const DetailSubstansi = ({ token }) => {
                               </td>
                               <td className="align-middle">CC{question.id}</td>
                               <td className="align-middle">
-                                {question.question}
+                                {question && question.question}
                               </td>
                               <td className="align-middle">
-                                {question.type.name}
+                                {question.type && question.type.name}
                               </td>
                               <td className="align-middle">
-                                {question.type.value} Poin
+                                {question.type && question.type.value} Poin
                               </td>
                               <td className="align-middle">
-                                {question.status ? (
+                                {question.type && question.status ? (
                                   <span className="label label-inline label-light-success font-weight-bold">
                                     Publish
                                   </span>
