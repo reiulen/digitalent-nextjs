@@ -25,13 +25,16 @@ const DashbardSubvit = () => {
 
   const { dashboard_subvit } = useSelector((state) => state.dashboardSubvit);
 
-  const data = [];
-
   const [dataDummy] = useState(dashboard_subvit);
 
-  Object.entries(dataDummy.data.chart).map((item, index) => {
-    return data.push({ name: item[0], value: item[1] });
-  });
+  console.log(dataDummy);
+
+  const data = [];
+  if (dataDummy && dataDummy.chart) {
+    Object.entries(dataDummy.data.chart).map((item, index) => {
+      return data.push({ name: item[0], value: item[1] });
+    });
+  }
 
   const handleNextPagination = (category) => {
     const page = parseInt(router.query.page_substansi) + 1;
@@ -272,7 +275,7 @@ const DashbardSubvit = () => {
                         position="center"
                         className={styles.labelChart}
                       >
-                        {dataDummy && dataDummy.chart.total}
+                        {dataDummy && dataDummy.chart && dataDummy.chart.total}
                       </Label>
                     </Pie>
                   </PieChart>
@@ -293,7 +296,9 @@ const DashbardSubvit = () => {
                         />
                       </div>
                       <div className={`${styles.substansi} p-2`}>
-                        {dataDummy && dataDummy.chart.total_substansi}
+                        {dataDummy &&
+                          dataDummy.chart &&
+                          dataDummy.chart.total_substansi}
                         <br />
                         <span className={styles.subTextTotal}>Substansi</span>
                       </div>
@@ -311,7 +316,9 @@ const DashbardSubvit = () => {
                         />
                       </div>
                       <div className={`${styles.survey} p-2`}>
-                        {dataDummy && dataDummy.chart.total_survey}
+                        {dataDummy &&
+                          dataDummy.chart &&
+                          dataDummy.chart.total_survey}
                         <br />
                         <span className={styles.subTextTotal}>Survey</span>
                       </div>
@@ -328,7 +335,9 @@ const DashbardSubvit = () => {
                         />
                       </div>
                       <div className={`${styles.trivia} p-2`}>
-                        {dataDummy && dataDummy.chart.total_trivia}
+                        {dataDummy &&
+                          dataDummy.chart &&
+                          dataDummy.chart.total_trivia}
                         <br />
                         <span className={styles.subTextTotal}>Trivia</span>
                       </div>
@@ -344,40 +353,46 @@ const DashbardSubvit = () => {
                 <h1 className={`${styles.headPeserta}`}>Test Substansi</h1>
                 <p className={`${styles.subHeadPeserta}`}>yang sudah publish</p>
 
-                {dataDummy.substansi.list.map((item, index) => {
-                  return (
-                    <>
-                      <div className={`${styles.cardList} card`} key={index}>
-                        <div className="row">
-                          <div className="col-sm-1" style={{ padding: "0px" }}>
+                {dataDummy &&
+                  dataDummy.substansi &&
+                  dataDummy.substansi.list.map((item, index) => {
+                    return (
+                      <>
+                        <div className={`${styles.cardList} card`} key={index}>
+                          <div className="row">
                             <div
-                              className={`${styles.cardNumber} card`}
-                              style={{ width: "100%", height: "100%" }}
+                              className="col-sm-1"
+                              style={{ padding: "0px" }}
                             >
-                              {index +
-                                1 * router.query.page_substansi * 5 -
-                                (5 - 1)}
+                              <div
+                                className={`${styles.cardNumber} card`}
+                                style={{ width: "100%", height: "100%" }}
+                              >
+                                {index +
+                                  1 * router.query.page_substansi * 5 -
+                                  (5 - 1)}
+                              </div>
+                            </div>
+                            <div className={`${styles.theme} col-sm-5`}>
+                              {item.theme.name}
+                              <br />
+                              <span className={styles.training}>
+                                {item.training.name}
+                              </span>
+                            </div>
+                            <div className={`${styles.total} col-sm-6`}>
+                              {item.all_participant} /{" "}
+                              {item.participant_finished}
+                              <br />
+                              <span className={styles.note}>
+                                yang sudah mengerjakan
+                              </span>
                             </div>
                           </div>
-                          <div className={`${styles.theme} col-sm-5`}>
-                            {item.theme.name}
-                            <br />
-                            <span className={styles.training}>
-                              {item.training.name}
-                            </span>
-                          </div>
-                          <div className={`${styles.total} col-sm-6`}>
-                            {item.all_participant} / {item.participant_finished}
-                            <br />
-                            <span className={styles.note}>
-                              yang sudah mengerjakan
-                            </span>
-                          </div>
                         </div>
-                      </div>
-                    </>
-                  );
-                })}
+                      </>
+                    );
+                  })}
                 <div className={`${styles.rowBottom} row`}>
                   <div className={`${styles.total} col-sm-6 mt-5`}>
                     Total: 0 Peserta
@@ -397,9 +412,11 @@ const DashbardSubvit = () => {
                       className={`${styles.btnNext} btn btn-primary`}
                       onClick={() => handleNextPagination()}
                       disabled={
-                        parseInt(router.query.page_substansi) ===
-                        dataDummy.substansi.total /
-                          dataDummy.substansi.totalFiltered
+                        parseInt(router.query.page_substansi) === dataDummy &&
+                        dataDummy.substansi &&
+                        dataDummy.substansi.total / dataDummy &&
+                        dataDummy.substansi &&
+                        dataDummy.substansi.totalFiltered
                       }
                     >
                       <i
@@ -421,40 +438,46 @@ const DashbardSubvit = () => {
                 <p className={`${styles.subHeadPeserta}`}>
                   yang sedang berlangsung
                 </p>
-                {dataDummy.trivia.list.map((item, index) => {
-                  return (
-                    <>
-                      <div className={`${styles.cardList} card`} key={index}>
-                        <div className="row">
-                          <div className="col-sm-1" style={{ padding: "0px" }}>
+                {dataDummy &&
+                  dataDummy.trivia &&
+                  dataDummy.trivia.list.map((item, index) => {
+                    return (
+                      <>
+                        <div className={`${styles.cardList} card`} key={index}>
+                          <div className="row">
                             <div
-                              className={`${styles.cardNumber} card`}
-                              style={{ width: "100%", height: "100%" }}
+                              className="col-sm-1"
+                              style={{ padding: "0px" }}
                             >
-                              {index +
-                                1 * router.query.page_substansi * 5 -
-                                (5 - 1)}
+                              <div
+                                className={`${styles.cardNumber} card`}
+                                style={{ width: "100%", height: "100%" }}
+                              >
+                                {index +
+                                  1 * router.query.page_substansi * 5 -
+                                  (5 - 1)}
+                              </div>
+                            </div>
+                            <div className={`${styles.theme} col-sm-5`}>
+                              {item.theme.name}
+                              <br />
+                              <span className={styles.training}>
+                                {item.training.name}
+                              </span>
+                            </div>
+                            <div className={`${styles.total} col-sm-6`}>
+                              {item.all_participant} /{" "}
+                              {item.participant_finished}
+                              <br />
+                              <span className={styles.note}>
+                                yang sudah mengerjakan
+                              </span>
                             </div>
                           </div>
-                          <div className={`${styles.theme} col-sm-5`}>
-                            {item.theme.name}
-                            <br />
-                            <span className={styles.training}>
-                              {item.training.name}
-                            </span>
-                          </div>
-                          <div className={`${styles.total} col-sm-6`}>
-                            {item.all_participant} / {item.participant_finished}
-                            <br />
-                            <span className={styles.note}>
-                              yang sudah mengerjakan
-                            </span>
-                          </div>
                         </div>
-                      </div>
-                    </>
-                  );
-                })}
+                      </>
+                    );
+                  })}
                 <div className={`${styles.rowBottom} row`}>
                   <div className={`${styles.total} col-sm-6 mt-5`}>
                     Total: 0 Peserta
@@ -474,8 +497,11 @@ const DashbardSubvit = () => {
                       className={`${styles.btnNext} btn btn-primary`}
                       onClick={handleNextPagination}
                       disabled={
-                        parseInt(router.query.page_trivia) ===
-                        dataDummy.trivia.total / dataDummy.trivia.totalFiltered
+                        parseInt(router.query.page_trivia) === dataDummy &&
+                        dataDummy.trivia &&
+                        dataDummy.trivia.total / dataDummy &&
+                        dataDummy.trivia &&
+                        dataDummy.trivia.totalFiltered
                       }
                     >
                       <i
@@ -489,6 +515,89 @@ const DashbardSubvit = () => {
             </div>
           </div>
           <div className="col-lg-6 col-xxl-6 order-1 order-xxl-2">
+            <div className={`${styles.cardSubstansi} card`}>
+              <div className={`${styles.cardPesertaBody} card-body`}>
+                <h1 className={`${styles.headPeserta}`}>Survey</h1>
+                <p className={`${styles.subHeadPeserta}`}>
+                  yang sedang berlangsung
+                </p>
+                {dataDummy &&
+                  dataDummy.survey &&
+                  dataDummy.survey.list.map((item, index) => {
+                    return (
+                      <>
+                        <div className={`${styles.cardList} card`} key={index}>
+                          <div className="row">
+                            <div
+                              className="col-sm-1"
+                              style={{ padding: "0px" }}
+                            >
+                              <div
+                                className={`${styles.cardNumber} card`}
+                                style={{ width: "100%", height: "100%" }}
+                              >
+                                {index +
+                                  1 * router.query.page_survey * 5 -
+                                  (5 - 1)}
+                              </div>
+                            </div>
+                            <div className={`${styles.theme} col-sm-5`}>
+                              {item.theme.name}
+                              <br />
+                              <span className={styles.training}>
+                                {item.training.name}
+                              </span>
+                            </div>
+                            <div className={`${styles.total} col-sm-6`}>
+                              {item.all_participant} /{" "}
+                              {item.participant_finished}
+                              <br />
+                              <span className={styles.note}>
+                                yang sudah mengerjakan
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </>
+                    );
+                  })}
+                <div className={`${styles.rowBottom} row`}>
+                  <div className={`${styles.total} col-sm-6 mt-5`}>
+                    Total: 0 Peserta
+                  </div>
+                  <div className="col-sm-6" style={{ textAlign: "right" }}>
+                    <button
+                      className={`${styles.btnNext} btn btn-primary`}
+                      onClick={handleBackPagination}
+                      disabled={parseInt(router.query.page_survey) === 1}
+                    >
+                      <i
+                        className="ri-arrow-left-s-line"
+                        style={{ padding: "0px" }}
+                      ></i>
+                    </button>
+                    <button
+                      className={`${styles.btnNext} btn btn-primary`}
+                      onClick={handleNextPagination}
+                      disabled={
+                        parseInt(router.query.page_survey) === dataDummy &&
+                        dataDummy.survey &&
+                        dataDummy.survey.total / dataDummy &&
+                        dataDummy.survey &&
+                        dataDummy.survey.totalFiltered
+                      }
+                    >
+                      <i
+                        className="ri-arrow-right-s-line"
+                        style={{ padding: "0px" }}
+                      ></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* <div className="col-lg-6 col-xxl-6 order-1 order-xxl-2">
             <div className={`${styles.cardSubstansi} card`}>
               <div className={`${styles.cardPesertaBody} card-body`}>
                 <h1 className={`${styles.headPeserta}`}>Survey</h1>
@@ -544,7 +653,7 @@ const DashbardSubvit = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </PageWrapper>
     </>
