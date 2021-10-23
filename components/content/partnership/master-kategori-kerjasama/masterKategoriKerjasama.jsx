@@ -16,6 +16,8 @@ import IconEye from "../../../assets/icon/Eye";
 import IconPencil from "../../../assets/icon/Pencil";
 import IconDelete from "../../../assets/icon/Delete";
 import IconAdd from "../../../assets/icon/Add";
+import BtnIcon from "../components/BtnIcon";
+import AlertBar from "../components/BarAlert";
 
 import IconSearch from "../../../assets/icon/Search";
 
@@ -76,90 +78,18 @@ const Table = ({ token }) => {
 
   return (
     <PageWrapper>
-      {success ? (
-        <div
-          className="alert alert-custom alert-light-success fade show mb-5"
-          role="alert"
-          style={{ backgroundColor: "#C9F7F5" }}
-        >
-          <div className="alert-icon">
-            <i className="flaticon2-checkmark" style={{ color: "#1BC5BD" }}></i>
-          </div>
-          <div className="alert-text" style={{ color: "#1BC5BD" }}>
-            Berhasil menambahkan data
-          </div>
-          <div className="alert-close">
-            <button
-              type="button"
-              className="close"
-              data-dismiss="alert"
-              aria-label="Close"
-              onClick={onNewReset}
-            >
-              <span aria-hidden="true">
-                <i className="ki ki-close"></i>
-              </span>
-            </button>
-          </div>
-        </div>
+     {success ? (
+        <AlertBar text="Berhasil menyimpan data" className="alert-light-success" onClick={() => onNewReset()}/>
       ) : (
         ""
       )}
       {successDelete ? (
-        <div
-          className="alert alert-custom alert-light-success fade show mb-5"
-          role="alert"
-          style={{ backgroundColor: "#f7c9c9" }}
-        >
-          <div className="alert-icon">
-            <i className="flaticon2-checkmark" style={{ color: "#c51b1b" }}></i>
-          </div>
-          <div className="alert-text" style={{ color: "#c51b1b" }}>
-            Berhasil menghapus data
-          </div>
-          <div className="alert-close">
-            <button
-              type="button"
-              className="close"
-              data-dismiss="alert"
-              aria-label="Close"
-              onClick={onNewReset}
-            >
-              <span aria-hidden="true">
-                <i className="ki ki-close"></i>
-              </span>
-            </button>
-          </div>
-        </div>
+        <AlertBar text="Berhasil menghapus data" className="alert-light-danger" onClick={() => onNewReset()}/>
       ) : (
         ""
       )}
       {update ? (
-        <div
-          className="alert alert-custom alert-light-success fade show mb-5"
-          role="alert"
-          style={{ backgroundColor: "#C9F7F5" }}
-        >
-          <div className="alert-icon">
-            <i className="flaticon2-checkmark" style={{ color: "#1BC5BD" }}></i>
-          </div>
-          <div className="alert-text" style={{ color: "#1BC5BD" }}>
-            Berhasil mengubah data
-          </div>
-          <div className="alert-close">
-            <button
-              type="button"
-              className="close"
-              data-dismiss="alert"
-              aria-label="Close"
-              onClick={onNewReset}
-            >
-              <span aria-hidden="true">
-                <i className="ki ki-close"></i>
-              </span>
-            </button>
-          </div>
-        </div>
+        <AlertBar text="Berhasil mengubah data" className="alert-light-warning" onClick={() => onNewReset()}/>
       ) : (
         ""
       )}
@@ -168,8 +98,7 @@ const Table = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3
-              className="card-title font-weight-bolder text-dark"
-              style={{ fontSize: "24px" }}
+              className="card-title font-weight-bolder text-dark titles-1"
             >
               Master Kategori Kerjasama
             </h3>
@@ -264,7 +193,7 @@ const Table = ({ token }) => {
                                       (index + 1)}
                                   {/* {index + 1} */}
                                 </td>
-                                <td className="align-middle text-left">
+                                <td className="align-middle text-left text-overflow-ens">
                                   {cooperation_categorie.cooperation_categories}
                                 </td>
                                 <td className="align-middle text-left">

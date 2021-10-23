@@ -43,15 +43,6 @@ let sortirOptionTempProvList = allProvincesSite?.data
 
 
 
-// const [optionProvinces, setOptionProvinces] = useState([])
-
-  // console.log("detailUnitWork", detailUnitWork);
-  // let tempOptionsProvinsi = drowpdownProvinsi.data.data;
-  // let defaultOptionFromApi = detailUnitWork.unitWork.provinsi;
-  // const [provinsi, setProvinsi] = useState([]);
-  // const [defaultValueProvisniApi, setDefaultValueProvisniApi] = useState([])
-  // console.log("defaultValueProvisniApi",defaultValueProvisniApi)
-  // const [kabupaten, setKabupaten] = useState([]);
 
   // filter data just region show
   const changeListProvinsi = (e) => {

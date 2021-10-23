@@ -13,8 +13,8 @@ export default function KelolasertifikatID({ token }) {
   const router = useRouter();
   const { query } = router;
 
-  const { loading, error, certificate } = useSelector(
-    state => state.publishCertificate
+  const { error, certificate } = useSelector(
+    (state) => state.publishCertificate
   );
 
   const divReference = useRef(null);
@@ -26,7 +26,7 @@ export default function KelolasertifikatID({ token }) {
     }
   };
 
-  const handleDownload = async e => {
+  const handleDownload = async (e) => {
     try {
       const data = await convertDivToPng(divReference.current);
       if (data) {
@@ -145,7 +145,7 @@ export default function KelolasertifikatID({ token }) {
             {certificate.data.certificate_type == "1 lembar" && (
               <div className="row mt-10 mx-0 col-12">
                 <button
-                  onClick={e => handleDownload(e)}
+                  onClick={(e) => handleDownload(e)}
                   className="position-relative col-12 col-md-2 btn bg-blue-secondary text-white rounded-full font-weight-bolder px-10 py-4"
                 >
                   Unduh
@@ -180,7 +180,7 @@ export default function KelolasertifikatID({ token }) {
               </div>
               <div className="row mt-10 col-12">
                 <button
-                  onClick={e => handleDownload(e)}
+                  onClick={(e) => handleDownload(e)}
                   className="position-relative col-12 col-md-2 btn bg-blue-secondary text-white rounded-full font-weight-bolder px-10 py-4"
                 >
                   Unduh

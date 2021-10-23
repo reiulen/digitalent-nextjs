@@ -1,19 +1,13 @@
 // #Next & React
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
 // #Page, Component & Library
 import PageWrapper from "../../../../../wrapper/page.wrapper";
-import DatePicker from "react-datepicker";
-import { addDays } from "date-fns";
 import LoadingTable from "../../../../../LoadingTable";
 import Pagination from "react-js-pagination";
 
-// #Icon
-import IconArrow from "../../../../../assets/icon/Arrow";
-import IconClose from "../../../../../assets/icon/Close";
-import IconFilter from "../../../../../assets/icon/Filter";
 import { useSelector } from "react-redux";
 import { clearErrors } from "../../../../../../redux/actions/sertifikat/kelola-sertifikat.action";
 import Cookies from "js-cookie";
@@ -23,24 +17,17 @@ export default function ListPeserta() {
   const { query } = router;
   // #DatePicker
   const { loading, error, participant } = useSelector(
-    state => state.detailParticipant
+    (state) => state.detailParticipant
   );
-  // console.log(error);
-  // useEffect(() => {
-  //   const id = sessionStorage.getItem("nama_pelatihan_id");
-  //   if (!participant) {
-  //     router.replace(router.asPath + `?id=${id}`);
-  //   }
-  // }, [participant, router]);
 
   // #Pagination
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(null);
   // #Pagination
 
-  let { page = 1, keyword, success } = router.query;
+  let { page = 1 } = router.query;
 
-  const handleLimit = val => {
+  const handleLimit = (val) => {
     setLimit(val);
     router.push(
       `/sertifikat/kelola-sertifikat/${
@@ -61,7 +48,7 @@ export default function ListPeserta() {
     router.push(link);
   };
 
-  const handlePagination = pageNumber => {
+  const handlePagination = (pageNumber) => {
     let link = `/sertifikat/kelola-sertifikat/${
       query.tema_pelatihan_id
     }/sertifikat-peserta?id=${
@@ -128,7 +115,7 @@ export default function ListPeserta() {
                       type="text"
                       className="form-control pl-10"
                       placeholder="Ketik disini untuk Pencarian..."
-                      onChange={e => setSearch(e.target.value)}
+                      onChange={(e) => setSearch(e.target.value)}
                     />
                     <button
                       className="btn bg-blue-primary text-white right-center-absolute"
@@ -216,9 +203,7 @@ export default function ListPeserta() {
                                   {participant.status == 1 ? (
                                     <>
                                       <Link
-                                        // href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${query.nama_pelatihan_id}/list-peserta/${participant.name}`}
                                         href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/sertifikat-peserta/${participant.name}?id=${query.id}`}
-                                        // ?id=${certificate.id}
                                       >
                                         <a
                                           className="btn btn-link-action bg-blue-secondary text-white mr-2"
@@ -284,8 +269,8 @@ export default function ListPeserta() {
                             borderColor: "#F3F6F9",
                             color: "#9E9E9E",
                           }}
-                          onChange={e => handleLimit(e.target.value)}
-                          onBlur={e => handleLimit(e.target.value)}
+                          onChange={(e) => handleLimit(e.target.value)}
+                          onBlur={(e) => handleLimit(e.target.value)}
                         >
                           <option value="5">5</option>
                           <option value="10">10</option>
@@ -299,9 +284,6 @@ export default function ListPeserta() {
                           style={{ color: "#B5B5C3" }}
                         >
                           Total Data {participant.data.list_certificate.length}
-                          {
-                            // participant.total
-                          }
                         </p>
                       </div>
                     </div>

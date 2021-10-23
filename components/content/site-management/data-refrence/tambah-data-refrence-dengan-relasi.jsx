@@ -77,7 +77,6 @@ const Tambah = ({ token }) => {
   };
 
   const changeListDataReference = (e) => {
-    console.log("e.key",e.key)
     setIdReference(e.key);
     setNameListFromReference(e.value);
   };
@@ -98,7 +97,6 @@ const Tambah = ({ token }) => {
 
   const handleDelete = (parent, child) => {
     let _temp = [...formReferenceAndText];
-    console.log("_temp", _temp);
 
     if (child === 0) {
       let resultTemp = _temp.filter((items, idz) => idz !== parent);
@@ -154,7 +152,6 @@ const Tambah = ({ token }) => {
         let resultOptionReference = data.data.map((items) => {
           return { ...items, label: items.value };
         });
-        console.log("resultOptionReference", resultOptionReference);
         setOptionReference(resultOptionReference);
       } catch (error) {
         notify(error.response.data.message);
@@ -177,7 +174,6 @@ const Tambah = ({ token }) => {
           let resultOptionReferenceChooce = data.data.map((items) => {
             return { ...items, label: items.value };
           });
-          console.log("data sub", data);
           setOptionFromReference(resultOptionReferenceChooce);
         } catch (error) {
           notify(error.response.data.message);
