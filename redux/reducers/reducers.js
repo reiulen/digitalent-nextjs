@@ -318,7 +318,18 @@ import {
   formRegisterReducer,
 } from "./pelatihan/peserta/register-training.reducers";
 // ================ pendaftaran pelatihan ===============
-import { allSummaryReducer } from "./pelatihan/admin/summary.reducers";
+import {
+  allSummaryReducer,
+  getAkademiByPelatihanReducer,
+  getPendaftaranPesertaReducer,
+  getStatusPendaftarReducer,
+  getReminderBerkasReducer,
+  getDataPribadiRowReducer,
+  getRiwayatPelatihanReducer,
+  getBerkasPendaftaranReducer,
+  getFormKomitmenReducer,
+  getFormLpjReducer,
+} from "./pelatihan/admin/summary.reducers";
 
 // ================ profile peserta ===============
 import {
@@ -332,6 +343,8 @@ import {
   updateKeterampilanReducer,
   updatePekerjaanReducer,
 } from "./pelatihan/peserta/profile.reducers";
+
+import { dashboardPesertaReducer } from "./pelatihan/peserta/dashboard-reducers";
 //END PELATIHAN
 
 // functional reducer
@@ -343,6 +356,7 @@ import {
   drowpdownAkademiReducers,
   drowpdownTemaReducers,
   drowpdownPelatihanReducers,
+  drowpdownAgamaReducers,
   drowpdownPendidikanReducers,
   drowpdownStatusPekerjaanReducers,
   drowpdownLevelPelatihanReducers,
@@ -374,8 +388,8 @@ import {
 // ========== detail pelatihan ========
 import {
   detailPelatihanReducer,
-  checkRegisteredPelatihanReducer
-} from "../reducers/beranda/detail-pelatihan.reducers"
+  checkRegisteredPelatihanReducer,
+} from "../reducers/beranda/detail-pelatihan.reducers";
 //END BERANDA
 
 const reducer = combineReducers({
@@ -638,6 +652,15 @@ const reducer = combineReducers({
 
   // ========== rekap pelatihan ========
   allSummary: allSummaryReducer,
+  getAkademiByPelatihan: getAkademiByPelatihanReducer,
+  getPendaftaranPeserta: getPendaftaranPesertaReducer,
+  getStatusPendaftar: getStatusPendaftarReducer,
+  getReminderBerkas: getReminderBerkasReducer,
+  getDataPribadiRow: getDataPribadiRowReducer,
+  getRiwayatPelatihan: getRiwayatPelatihanReducer,
+  getBerkasPendaftaran: getBerkasPendaftaranReducer,
+  getFormKomitmen: getFormKomitmenReducer,
+  getFormLpj: getFormLpjReducer,
 
   // ========== pendaftaran pelatihan ========
   getFormBuilder: getFormBuilderReducer,
@@ -649,9 +672,14 @@ const reducer = combineReducers({
   trainingStep1: trainingStep1Reducer,
   registrationStep2: registrationStep2Reducer,
   commitmentStep3: commitmentStep3Reducer,
+
+  dashboardPeserta: dashboardPesertaReducer,
+
+  // ======= dropdown ==========
   drowpdownAkademi: drowpdownAkademiReducers,
   drowpdownTema: drowpdownTemaReducers,
   drowpdownPelatihan: drowpdownPelatihanReducers,
+  drowpdownAgama: drowpdownAgamaReducers,
   drowpdownPendidikan: drowpdownPendidikanReducers,
   drowpdownStatusPekerjaan: drowpdownStatusPekerjaanReducers,
   drowpdownLevelPelatihan: drowpdownLevelPelatihanReducers,
@@ -689,7 +717,6 @@ const reducer = combineReducers({
   // ========== detail pelatihan ========
   detailPelatihan: detailPelatihanReducer,
   checkRegisteredPelatihan: checkRegisteredPelatihanReducer,
-
 
   //END BERANDA
 });
