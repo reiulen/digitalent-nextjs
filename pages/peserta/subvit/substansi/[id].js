@@ -41,7 +41,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
-      console.log(query);
 
       await store.dispatch(getDataPribadi(session.user.user.data.user.token));
 
@@ -55,7 +54,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       );
 
       const data = session.user.user.data;
-      
+
       if (data.user.roles[0] !== "user") {
         return {
           redirect: {
