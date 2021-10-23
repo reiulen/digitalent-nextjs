@@ -147,11 +147,11 @@
 }
 
 .cards-items .top label {
-  /* background: #e6f2ff; */
-  /* border-radius: 40px; */
-  /* font-weight: 600; */
-  /* font-size: 12px; */
-  /* padding: 4px 12px; */
+  background: #e6f2ff;
+  border-radius: 40px;
+  font-weight: 600;
+  font-size: 12px;
+  padding: 4px 12px;
   position: relative;
   z-index: 1;
 }
