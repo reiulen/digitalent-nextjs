@@ -70,7 +70,6 @@ export const newTriviaQuestionBanks = (triviaData, token) => async dispatch => {
         dispatch({
             type: NEW_TRIVIA_QUESTION_BANKS_REQUEST,
         });
-        console.log("MASUK KESINIIIIIIIIIIIIIIIAAAAAAAAAAAAAA");
         const config = {
             headers: {
                 Authorization: "Bearer " + token,
@@ -189,7 +188,6 @@ export const deleteTriviaQuestionBanks = (id, token) => async dispatch => {
             },
         };
 
-        console.log("MASUK SINI TOKEN", token);
         const { data } = await axios.delete(
             process.env.END_POINT_API_SUBVIT +
                 `api/trivia-question-banks/${id}`,

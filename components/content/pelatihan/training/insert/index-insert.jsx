@@ -42,7 +42,12 @@ const IndexInsert = ({ token }) => {
   const stepView = () => {
     switch (view) {
       case 1:
-        return <AddTrainingStep1 propsStep={(value) => setView(value)} />;
+        return (
+          <AddTrainingStep1
+            propsStep={(value) => setView(value)}
+            token={token}
+          />
+        );
         break;
       case 2:
         return <AddRegistrationStep2 propsStep={(value) => setView(value)} />;
@@ -56,7 +61,12 @@ const IndexInsert = ({ token }) => {
         );
         break;
       default:
-        return <AddTrainingStep1 propsStep={(value) => setView(value)} />;
+        return (
+          <AddTrainingStep1
+            propsStep={(value) => setView(value)}
+            token={token}
+          />
+        );
         break;
     }
   };

@@ -157,7 +157,6 @@ const AddAcademy = ({ token }) => {
         brosur: brosurPreview,
         status,
       };
-      console.log(data);
       dispatch(newAcademy(data, token));
     } else {
       simpleValidator.current.showMessages();
@@ -329,7 +328,6 @@ const AddAcademy = ({ token }) => {
                       onChange={(event, editor) => {
                         const data = editor.getData();
                         setDescription(data);
-                        // console.log({ event, editor, data });
                       }}
                       onBlur={() =>
                         simpleValidator.current.showMessageFor("deskripsi")

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import dynamic from "next/dynamic";
-import LoadingSkeleton from "../../../components/LoadingSkeleton";
+import LoadingContentFull from "../../../user-component/content/peserta/components/loader/LoadingContentFull";
 import { useDispatch, useSelector } from "react-redux";
 
 import { wrapper } from "../../../redux/store";
@@ -24,7 +24,7 @@ const IndexForm = dynamic(
     ),
   {
     loading: function loadingNow() {
-      return <LoadingSkeleton />;
+      return <LoadingContentFull />;
     },
     ssr: false,
   }
@@ -57,7 +57,7 @@ export default function FormPendaftaran(props) {
         });
       });
     dispatch(storeFormRegister(data));
-  }, [dataForm]);
+  }, [dataForm, dispatch]);
   return (
     <>
       <Layout title="Form Pendaftaran Peserta - Pelatihan" session={session}>
@@ -74,7 +74,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (!session) {
         return {
           redirect: {
-            destination: "/login",
+            destination: "http://dts-dev.majapahit.id/login",
             permanent: false,
           },
         };
@@ -83,7 +83,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (data.user.roles[0] !== "user") {
         return {
           redirect: {
-            destination: "/login",
+            destination: "http://dts-dev.majapahit.id/login",
             permanent: false,
           },
         };

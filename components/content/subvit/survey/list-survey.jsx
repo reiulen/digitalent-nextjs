@@ -317,7 +317,7 @@ const ListSurvey = ({ token }) => {
                                 <p>
                                   {row.training !== null
                                     ? row.training.name
-                                    : row.theme.name}
+                                    : "-"}
                                 </p>
                               </td>
                               <td className="align-middle">

@@ -48,22 +48,24 @@ const TambahMitra = ({ token }) => {
 
   const submit = (e) => {
     e.preventDefault();
-    if (agency_logo === "") {
+     if (institution_name === "") {
+      setError({ ...error, institution_name: "Harus isi nama lembaga" });
+      // notify("Harus isi nama lembaga");
+    } else if (wesite === "") {
+      setError({ ...error, wesite: "Harus isi nama website" });
+      // notify("Harus isi nama website");
+    }else if (email === "") {
+      setError({ ...error, email: "Harus isi email" });
+      // notify("Harus isi email");
+    } 
+    else if (agency_logo === "") {
       setError({
         ...error,
         agency_logo: "Harus isi gambar logo dengan format png/jpg",
       });
       // notify("Harus isi gambar logo dengan format png");
-    } else if (institution_name === "") {
-      setError({ ...error, institution_name: "Harus isi nama lembaga" });
-      // notify("Harus isi nama lembaga");
-    } else if (email === "") {
-      setError({ ...error, email: "Harus isi email" });
-      // notify("Harus isi email");
-    } else if (wesite === "") {
-      setError({ ...error, wesite: "Harus isi nama website" });
-      // notify("Harus isi nama website");
-    } else if (address === "") {
+    }
+     else if (address === "") {
       setError({ ...error, address: "Harus isi alamat" });
       // notify("Harus isi alamat");
     } else if (indonesia_provinces_id === "") {
@@ -208,7 +210,7 @@ const TambahMitra = ({ token }) => {
         // dataNewProvinces.splice(0, 0, { label: "Pilih Provinsi", value: "" });
         setAllProvinces(dataNewProvinces);
       } catch (error) {
-        console.log("gagal get province", error);
+        notify(error.response.data.message);
       }
     }
     getDataProvinces(token);
@@ -216,9 +218,7 @@ const TambahMitra = ({ token }) => {
 
   useEffect(() => {
     // get data cities
-    if (indonesia_provinces_id === "") {
-      console.log("kosong");
-    } else {
+    if (indonesia_provinces_id !== "") {
       async function fetchAPI() {
         try {
           let { data } = await axios.get(
@@ -235,10 +235,9 @@ const TambahMitra = ({ token }) => {
           // dataNewCitites.splice(0, 0, { label: "Pilih Kab/Kota", value: "" });
           setCitiesAll(dataNewCitites);
         } catch (error) {
-          console.log("gagal get cities", error);
+          notify(error.response.data.message);
         }
       }
-
       fetchAPI();
     }
   }, [indonesia_provinces_id, token]);

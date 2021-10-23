@@ -65,8 +65,6 @@ function ReviewDokumenKerjasama({ token }) {
         setPdfFile(null);
         setPdfFileError("Please selet valid pdf file !!");
       }
-    } else {
-      console.log("select your file");
     }
   };
 
@@ -123,14 +121,7 @@ function ReviewDokumenKerjasama({ token }) {
         formData.append("agreement_number_partner", no_perjanjianLembaga);
         formData.append("agreement_number_kemkominfo", no_perjanjianKoninfo);
         formData.append("signing_date", tgl_ttd);
-        // formData.append("period", period);
-        // formData.append("period_unit", periodUnit);
-
         formData.append("document", documentLocal);
-        // if (documentLocal === "") {
-        //   console.log("object");
-        // } else {
-        // }
 
         try {
           let { data } = await axios.post(
@@ -146,9 +137,7 @@ function ReviewDokumenKerjasama({ token }) {
             pathname: "/partnership/user/kerjasama/review-dokumen-kerjasama/",
             query: { revisiDone: true, id: router.query.id },
           });
-        } catch (error) {
-          console.log("object skdmksdmksdmksdmkk");
-          // console.log("sdfsddfs",error.response.data.message);
+        } catch (error) {         
           notify(error.response.data.message);
         }
       }
@@ -201,9 +190,8 @@ function ReviewDokumenKerjasama({ token }) {
             },
           });
         }
-        console.log("data.data.status_migrates_id.status",data.data.status_migrates_id.status)
       } catch (error) {
-        console.log("action getSIngle gagal", error);
+        notify(error.response.data.message);
       }
     }
 

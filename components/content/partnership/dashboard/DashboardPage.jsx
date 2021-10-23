@@ -19,7 +19,6 @@ import axios from "axios";
 export default function DashboardPage({ token }) {
   let dispatch = useDispatch();
   const allDashboard = useSelector((state) => state.allDashboard);
-  console.log("allDashboard", allDashboard);
   const [user, setUser] = useState("");
 
   const colors = ["#215480", "#4299E1", "#357AB4"];

@@ -92,7 +92,7 @@ const EditTandaTangan = ({ token }) => {
               query: { update: true },
             });
           } catch (error) {
-            console.log("error put api ttd", error.response.data.message);
+            notify(error.response.data.message);
           }
         }
       });
@@ -133,7 +133,7 @@ const EditTandaTangan = ({ token }) => {
                 query: { update: true },
               });
             } catch (error) {
-              console.log("error put api ttd", error.response);
+              notify(error.response.data.message);
             }
           }
         });
@@ -171,7 +171,7 @@ const EditTandaTangan = ({ token }) => {
       setJabatan(data.data.position);
       setTandaTangan(data.data.signature_image);
     } catch (error) {
-      console.log("error get single");
+      notify(error.response.data.message);
     }
   };
 

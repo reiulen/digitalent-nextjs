@@ -191,7 +191,7 @@ const RegisterMitra = () => {
                   />
                 </div>
                 <div className="form-group mb-6">
-                  <label className="form-auth-label">Passwdord</label>
+                  <label className="form-auth-label">Password</label>
                   <div className="position-relative mb-4">
                     <input
                       id="input-password"

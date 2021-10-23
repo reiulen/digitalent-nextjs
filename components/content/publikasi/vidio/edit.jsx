@@ -73,6 +73,7 @@ const EditVideo = ({ token }) => {
     const [gambarName, setGambarName] = useState(video.gambar)
     // const [kategori_id, setKategoriId] = useState(video.kategori) 
     const [kategori_id, setKategoriId] = useState(video.kategori_id)
+    // const [users_id, setUserId] = useState(87)
     const [users_id, setUserId] = useState(video.users_id)
     const [tag, setTag] = useState(video.tag)
     const [publish, setPublish] = useState(video.publish)
@@ -82,40 +83,15 @@ const EditVideo = ({ token }) => {
     const [disablePublishDate, setDisablePublishDate] = useState(video.publish === 0 ? true : false)
     const [disableTag, setDisableTag] = useState(false)
 
-    // const handleTag = (data) => {
-    //     for (let i = 0; i < data.length; i++) {
-    //         for (let j = 0; j < data[i].length; j++) {
-    //             if (data[i][j] === " ") {
-    //                 setDisableTag(true)
-    //             } else {
-    //                 setDisableTag(false)
-    //             }
-    //         }
-    //     }
-    //     setTag(data)
-    // }
-
     function hasWhiteSpace(s) {
         return s.indexOf(' ') >= 0;
     }
 
     const handleTag = (data) => {
-        console.log(data);
         for (let i = 0; i < data.length; i++) {
             if (hasWhiteSpace(data[i])) {
                 data.splice([i], 1);
             }
-            // console.log(hasWhiteSpace(data[i]));
-            // if(data[i] === " "){
-            //     console.log(data[i]);
-            //     data.splice(i, 1);
-            // }
-            // for (let j = 0; j < data[i].length; j++) {
-            //     if (data[i][j] === " ") {
-            //         data.splice(index, 1);
-            //         // setDisableTag(true)
-            //     }
-            // }
         }
         setTag(data);
         // setTag(data)
@@ -123,10 +99,7 @@ const EditVideo = ({ token }) => {
 
     const onChangeGambar = (e) => {
         const type = ["image/jpg", "image/png", "image/jpeg"]
-        // console.log (e.target.files[0].type)
-        // console.log (e.target.files[0])
-        // console.log ("check")
-
+        
         if (type.includes(e.target.files[0].type)) {
             if (e.target.files[0].size > parseInt(setting[0].max_size) + '000000') {
                 e.target.value = null;
@@ -135,14 +108,11 @@ const EditVideo = ({ token }) => {
                 const reader = new FileReader();
                 reader.onload = () => {
                     if (reader.readyState === 2) {
-                        // console.log(reader)
                         setGambar(reader.result);
                         setGambarPreview(reader.result);
                     }
                 };
-                // console.log(reader.onload)
                 reader.readAsDataURL(e.target.files[0])
-                // console.log (reader.readAsDataURL(e.target.files[0]))
                 setGambarName(e.target.files[0].name)
             }
         }
@@ -162,9 +132,7 @@ const EditVideo = ({ token }) => {
     };
 
     const handleChangePublish = (e) => {
-        // setPublish(e.target.checked);
         setDisablePublishDate(!disablePublishDate)
-        // console.log (e.target.checked)
 
         if (e.target.checked === false) {
             setPublishDate(null)
@@ -175,11 +143,8 @@ const EditVideo = ({ token }) => {
     };
 
     const handlePublishDate = (date) => {
-        // let result = moment(date).format("YYYY-MM-DD")
         if (disablePublishDate === false) {
-            // setPublishDate(result)
             setPublishDate(date)
-            // console.log (result)
         }
     }
 
@@ -242,9 +207,7 @@ const EditVideo = ({ token }) => {
                                 //     type: UPDATE_ARTIKEL_RESET,
                                 //   });
                                 // }
-
                                 dispatch(updateVideo(data, token));
-                                // console.log(data)
                             }
                         });
                 } else {
@@ -283,9 +246,7 @@ const EditVideo = ({ token }) => {
                                 //     type: UPDATE_ARTIKEL_RESET,
                                 //   });
                                 // }
-
                                 dispatch(updateVideo(data, token));
-                                // console.log(data)
                             }
                         });
                 }
@@ -329,9 +290,7 @@ const EditVideo = ({ token }) => {
                                 //     type: UPDATE_ARTIKEL_RESET,
                                 //   });
                                 // }
-
                                 dispatch(updateVideo(data, token));
-                                // console.log(data)
                             }
                         });
 
@@ -370,9 +329,7 @@ const EditVideo = ({ token }) => {
                                 //     type: UPDATE_ARTIKEL_RESET,
                                 //   });
                                 // }
-
                                 dispatch(updateVideo(data, token));
-                                // console.log(data)
                             }
                         });
                 }
@@ -434,55 +391,11 @@ const EditVideo = ({ token }) => {
             type: UPDATE_VIDEO_RESET
         })
     }
-
-    // const onSetPublish = (e) => {
-    //     Swal.fire({
-    //         title: 'Ubah status publikasi?',
-    //         text: "Status publikasi akan berubah",
-    //         icon: 'warning',
-    //         showCancelButton: true,
-    //         confirmButtonColor: "#3085d6",
-    //         cancelButtonColor: "#d33",
-    //         confirmButtonText: "Ya !",
-    //         cancelButtonText: "Batal",
-    //       })
-
-    //       .then((result) => {
-    //         if (result.isConfirmed) {
-    //           Swal.fire(
-    //             'Berhasil',
-    //             'Status publikasi telah diubah',
-    //             'success'
-    //           )
-
-    //         //   console.log (e)
-    //           setPublish(e)
-
-    //         } else {
-    //             Swal.fire(
-    //                 'Batal',
-    //                 'Status publikasi telah batal diubah',
-    //                 'info'
-    //               )
-
-    //             // console.log (!e)
-    //             setPublish(!e)
-    //         }
-    //       })
-
-    //     // Swal.fire (
-    //     //     'Berhasil',
-    //     //     'Status publikasi telah diubah',
-    //     //     'success'
-    //     // )
-
-    //     // setPublish(e)
-    // }
-
+    
     return (
         <>
             <PageWrapper>
-                {console.log(video)}
+                {/* {console.log(video)} */}
                 {error ?
                     <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
                         <div className="alert-icon"><i className="flaticon-warning"></i></div>

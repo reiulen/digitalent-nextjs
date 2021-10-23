@@ -63,7 +63,7 @@ const ListReview = ({ token }) => {
     for (let index = 0; index < dataPenyelenggara.data.length; index++) {
       let val = {
         value: dataPenyelenggara.data[index].id,
-        label: dataPenyelenggara.data[index].value,
+        label: dataPenyelenggara.data[index].label,
       };
       optionsPenyelenggara.push(val);
     }
@@ -198,8 +198,7 @@ const ListReview = ({ token }) => {
   const handlePublish = (val, type) => {
     setPage(1);
     const label = val.charAt(0).toUpperCase() + val.slice(1);
-    // console.log(label);
-    // console.log(val);
+    
     if (type === "pelatihan") {
       setStatusPelatihan({ label, value: val });
       dispatch(

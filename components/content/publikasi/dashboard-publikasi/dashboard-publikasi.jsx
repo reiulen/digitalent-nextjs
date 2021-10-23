@@ -211,7 +211,7 @@ const DashbardPublikasi = ({ token }) => {
                                 </div>
 
                                 <div className="d-flex align-items-center justify-content-center">
-                                    <PieChart width={450} height={350}>
+                                    <PieChart width={350} height={350}>
                                         <Pie
                                             data={dataPieChart}
                                             // dataKey="value"
@@ -248,7 +248,7 @@ const DashbardPublikasi = ({ token }) => {
 
                             </div>
                             <div className="card-body" style={{ marginTop: "20vh" }}>
-                                <div className="mb-10 flex-column ">
+                                <div className="mb-10 flex-column">
                                     {/* <h3 className="card-title font-weight-bolder text-muted">Total Konten</h3> */}
                                     <div className="row">
                                         <div className="col-6 d-flex flex-row d-flex justify-content-center">

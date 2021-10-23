@@ -19,16 +19,13 @@ import "react-toastify/dist/ReactToastify.css";
 const GeneralPage = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
-
   const [imageLogo, setImageLogo] = useState("");
-  const [caption, setCaption] = useState("");
   const [description, setDescription] = useState("");
   const [address, setAddress] = useState("");
   const [imageLogoApi, setImageLogoApi] = useState("");
+  const [imageLogoApiFooter, setImageLogoApiFooter] = useState("");
   const [imageLogoApiOld, setImageLogoApiOld] = useState("");
   const [isUpdate, setIsUpdate] = useState(false);
-  console.log("imageLogoApi", imageLogoApi);
-
   const [color, setColor] = useState([
     {
       name: "Primary",
@@ -62,10 +59,6 @@ const GeneralPage = ({ token }) => {
       link_social_media: "",
     },
   ]);
-
-
-  console.log("formSocialMedia",formSocialMedia)
-
   const [formExternalLink, setFormExternalLink] = useState([
     {
       nama: "",
@@ -84,10 +77,11 @@ const GeneralPage = ({ token }) => {
 
     if (imageLogo === "") {
       Swal.fire("Gagal simpan", "Form image logo tidak boleh kosong", "error");
-    } else 
-    if (caption === "") {
-      Swal.fire("Gagal simpan", "Form caption tidak boleh kosong", "error");
-    } else if (description === "") {
+    } 
+    // else if (caption === "") {
+    //   Swal.fire("Gagal simpan", "Form caption tidak boleh kosong", "error");
+    // } 
+    else if (description === "") {
       Swal.fire("Gagal simpan", "Form caption tidak boleh kosong", "error");
     } else {
       Swal.fire({
@@ -102,48 +96,21 @@ const GeneralPage = ({ token }) => {
         dismissOnDestroy: false,
       }).then(async (result) => {
         if (result.value) {
-          // let formData = new FormData();
-          // formData.append("name", lembaga);
-          // formData.append("email", email);
-          // formData.append("password", password);
-          // formData.append("password_confirmation", confirmPassword);
-
-          // dispatch(mitraRegister(formData));
 
           const sendData = {
             alamat: address,
             external_link: formExternalLink,
             logo: {
-              image_logo: imageLogo,
-              caption: caption,
-              description: description,
+              header_logo: imageLogo,
+              footer_logo: imageLogoApiFooter,
             },
+            logo_description: description,
             social_media: formSocialMedia,
             color: color,
           };
 
-          try {
-            let { data } = await axios.post(
-              `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting/general/store`,
-              sendData,
-              {
-                headers: {
-                  authorization: `Bearer ${token}`,
-                },
-              }
-            );
 
-            console.log("data berhasil", data);
-
-            Swal.fire("Berhasil", "Data berhasil disimpan", "succes");
-          } catch (error) {
-            console.log(error);
-            Swal.fire(
-              "Gagal simpan",
-              `${error.response.data.message}`,
-              "error"
-            );
-          }
+         
         }
       });
     }
@@ -325,25 +292,10 @@ const GeneralPage = ({ token }) => {
             },
           }
         );
-        console.log("data geeneral", data);
-        if (data) {
-          setIsUpdate(true);
-          setAddress(data.data.alamat);
 
-
-          
-          setFormSocialMedia(data.data.social_media);
-
-          setFormExternalLink(data.data.external_link)
-          setColor(data.data.color)
-          setImageLogoApi(data.data.logo);
-          setImageLogoApiOld(data.data.logo);
-        }
+        if (data) {  }
       } catch (error) {
-        console.log(
-          "gagal mendapatkan data general",
-          error.response.data.message
-        );
+        notify(error.response.data.message);
       }
     }
 
@@ -376,15 +328,14 @@ const GeneralPage = ({ token }) => {
             </div>
             <div className="card-body pt-0">
               <div>
-                <form onSubmit={submit}>
-                  <div className="row">
-                    <div className="col-12 col-sm-3">
+                <form>
+                  <div className="d-flex">
 
 
                       
                       <div className="form-group">
                         <label className="mb-8" style={{ fontSize: "16px" }}>
-                          Logo Digitalent Scholarship
+                          Logo Header
                         </label>
                         <div>
                           <div className="image-input image-input-outline">
@@ -454,32 +405,88 @@ const GeneralPage = ({ token }) => {
                         </div>
                       </div>
 
+                       <div className="form-group ml-24">
+                        <label className="mb-8" style={{ fontSize: "16px" }}>
+                          Logo Footer
+                        </label>
+                        <div>
+                          <div className="image-input image-input-outline">
+                            <div className="image-input-wrapper">
+                              {imageLogoApi === ""
+                                ? imageLogo && (
+                                    <Image
+                                      src={imageLogo}
+                                      layout="fill"
+                                      objectFit="fill"
+                                      alt="imageLogo"
+                                    />
+                                  )
+                                : imageLogoApi && (
+                                    <Image
+                                      src={`${process.env.END_POINT_API_IMAGE_SITE_MANAGEMENT}site-management/images/${imageLogoApi}`}
+                                      layout="fill"
+                                      objectFit="fill"
+                                      alt="imageLogo"
+                                    />
+                                  )}
+                            </div>
 
+                            <label
+                              className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                              data-action="change"
+                              data-toggle="tooltip"
+                              title=""
+                              data-original-title="Change avatar"
+                            >
+                              <i className="fa fa-pen icon-sm text-muted"></i>
+                              <input
+                                type="file"
+                                name="profile_avatar"
+                                accept=".png, .jpg, .jpeg .svg"
+                                onChange={(e) => onChangeImage(e)}
+                              />
+                              <input
+                                type="hidden"
+                                name="profile_avatar_remove"
+                              />
+                            </label>
 
+                            <span
+                              className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                              data-action="cancel"
+                              data-toggle="tooltip"
+                              title="Cancel avatar"
+                            >
+                              <i className="ki ki-bold-close icon-xs text-muted"></i>
+                            </span>
 
-
-
-
-
-
-
-                    </div>
-                    <div className="col-12 col-sm-9">
-                      <div className="h-100 d-flex align-items-center">
-                        <div className="form-group w-100">
-                          <label>Caption :</label>
-                          <input
-                            onChange={(e) => setCaption(e.target.value)}
-                            type="text"
-                            className="form-control"
-                            placeholder="Lalaracing@gmail.com"
-                          />
-                          {/* <span className="form-text text-muted">
-                            Please enter your full name
-                          </span> */}
+                            <span
+                              className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                              data-action="remove"
+                              data-toggle="tooltip"
+                            >
+                              <i
+                                className="ki ki-bold-close icon-xs text-muted"
+                                onClick={() => removeImageLogo()}
+                              ></i>
+                            </span>
+                          </div>
+                          <span className="form-text text-muted mt-6">
+                            (Maksimal ukuran file 5 MB)
+                          </span>
                         </div>
                       </div>
-                    </div>
+                     
+
+
+
+
+
+
+
+
+
+
                   </div>
                   <div className="form-group">
                     <label>Desciption:</label>
@@ -489,9 +496,9 @@ const GeneralPage = ({ token }) => {
                       className="form-control"
                       placeholder="Lalaracing@gmail.com"
                     />
-                    <span className="form-text text-muted">
+                    {/* <span className="form-text text-muted">
                       Please enter your full name
-                    </span>
+                    </span> */}
                   </div>
 
                   {/* start social media */}
@@ -750,6 +757,7 @@ const GeneralPage = ({ token }) => {
                     <div className="form-group row">
                       <div className="col-sm-12 d-flex justify-content-end">
                         <button
+                        type="button"
                           className="btn btn-rounded-full bg-blue-secondary text-white"
                           onClick={() => addExternalLink()}
                         >
@@ -821,8 +829,9 @@ const GeneralPage = ({ token }) => {
                   <div className="form-group row mt-10">
                     <div className="col-sm-12 d-flex justify-content-end">
                       <button
-                        type="submit"
+                        type="button"
                         className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
+                        onClick={(e) =>submit(e)}
                       >
                         Simpan
                       </button>

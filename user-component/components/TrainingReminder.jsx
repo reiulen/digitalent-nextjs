@@ -6,7 +6,7 @@ const TrainingReminder = () => {
        <div className="my-5 rounded" style={{backgroundColor:"#E6F2FF"}}>
            <div className="p-5">
                 <div className="row d-flex align-items-center">
-                    <div className="p-3 ml-3">
+                    <div className="ml-3">
                         <Image 
                             src={`/assets/media/logo-bell.svg`}
                             width={40}
@@ -14,8 +14,8 @@ const TrainingReminder = () => {
                         />
                     </div>
                     
-                    <div className="font-weight-bolder text-dark">
-                        <h4>
+                    <div className="ml-3">
+                        <h4 className="font-weight-bolder text-dark">
                             Buat Pengingat Pelatihan
                         </h4>
                     </div>
@@ -28,9 +28,9 @@ const TrainingReminder = () => {
                     <input 
                         type="text" 
                         placeholder="Cari Tema"
-                        className="form-control col-8 rounded-pill"
+                        className="form-control col-md-8 col-12 mb-3 rounded-pill"
                     />
-                    <div className="col-3 ml-2">
+                    <div className="col-md-3 col-12">
                         <button className="btn btn-primary rounded-pill">
                             Buat
                         </button>
@@ -43,5 +43,6 @@ const TrainingReminder = () => {
         </div>
    ) 
 }
+
 
 export default TrainingReminder

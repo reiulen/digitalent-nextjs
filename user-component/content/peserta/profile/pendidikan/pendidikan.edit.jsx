@@ -73,6 +73,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
     }
 
     if (success) {
+      toast.success("Berhasil Update Data");
       funcViewEdit(false);
       dispatch({ type: UPDATE_PENDIDIKAN_RESET });
     }
@@ -119,7 +120,6 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
         tahun_masuk: parseInt(tahunMasuk),
         ijasah: ijazah,
       };
-      console.log(data);
       dispatch(updateProfilePendidikan(data, token));
     } else {
       simpleValidator.current.showMessages();

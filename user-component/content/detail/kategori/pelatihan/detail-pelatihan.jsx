@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useDispatch, useSelector } from "react-redux";
+import moment from "moment";
 
 import { 
     Badge
@@ -13,239 +15,222 @@ import TrainingReminder from "../../../../components/TrainingReminder";
 // import FilterBar from "../../../../components/FilterBar";
 
 const DetailPelatihan = () => {
+
+    const {
+        pelatihan,
+    } = useSelector((state) => state.detailPelatihan);
+
     return (
-        <Layout title="Detail Kategori">
+        <Layout title="Detail Pelatihan">
+            {
+                console.log (pelatihan)
+            }
+
             {/* <FilterBar /> */}
             <SubHeaderComponent />
 
-            <div className="row">
-                <div className="col-9">
-                    <div className="bg-white rounded my-5">
-                        <div className="ml-2 mb-3">
-                            <h1 className="font-weight-bolder">
-                                Intermediate Pemograman menggunakan Laravel
-                            </h1>
+            {
+                pelatihan ?
+                    <div className="row mt-3">
+                        <div className="col-12 col-md-9">
+                            <div className="bg-white rounded my-5">
+                                <div className="ml-2 mb-3">
+                                    <h1 className="font-weight-bolder">
+                                        { pelatihan.name }
+                                    </h1>
 
-                            <div className="row">
-                                <div className="text-muted font-weight-bolder mr-3 ml-4">
-                                    Vocational School Graduate Academy (VSGA)
+                                    <div className="row">
+                                        <div className="text-muted font-weight-bolder mr-3 ml-4">
+                                            {pelatihan.akademi} 
+                                        </div>
+                                        <div>
+                                            <Badge bg="light">
+                                                <span className="text-success">{pelatihan.Status}</span>
+                                            </Badge>
+                                        </div>
+                                    </div>
+
+                                    <div className="row d-flex justify-content-between">
+                                        <div className="d-flex flex-column mx-4">
+                                            <div>
+                                                Registrasi
+                                            </div>
+                                            <div>
+                                                {moment(pelatihan.pendaftaran_mulai).format("DD MMMM YYYY")} - {moment(pelatihan.pendaftaran_selesai).format("DD MMMM YYYY")}
+                                            </div>
+                                        </div>
+
+                                        <div className="d-flex flex-column mx-2">
+                                            <div>
+                                                Pelaksanaan
+                                            </div>
+                                            <div>
+                                                {pelatihan.metode_pelatihan}
+                                            </div>
+                                        </div>
+
+                                        <div className="d-flex flex-column mx-2">
+                                            <div>
+                                                Pendaftar
+                                            </div>
+                                            <div>
+                                                {pelatihan.kuota_peserta} Peserta
+                                            </div>
+                                        </div>
+
+                                        <div className="d-flex flex-row mx-3">
+                                            <button className="btn btn-white mr-3 p-3 rounded-circle">
+                                                <i className="ri-share-line"></i>
+                                            </button>
+                                            <button className="btn btn-white p-3 rounded-circle">
+                                                <i className="ri-heart-line"></i>
+                                            </button>
+                                        </div>
+
+
+
+                                    </div>
+                                    
                                 </div>
-                                <div>
-                                    <Badge bg="light">
-                                        <span className="text-success">Open</span>
-                                    </Badge>
+                                <Image
+                                    // src={`/assets/media/image_28.svg`}
+                                    src={`https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/${pelatihan.logo}`}
+                                    objectFit="cover"
+                                    width="1500vh"
+                                    height="500vh"
+                                    className="rounded"
+                                />
+
+                                {/* Border */}
+                                <div className="row ml-3 my-5 mr-5" style={{height:"2px", backgroundColor:"#ADB5BD"}}></div>
+
+                                <div className="my-5 mx-3 text-justify">
+                                    {
+                                        pelatihan.deskripsi
+                                    } 
+                                    
                                 </div>
+                                
                             </div>
 
-                            <div className="row d-flex justify-content-between">
-                                <div className="d-flex flex-column mx-4">
-                                    <div>
-                                        Registrasi
-                                    </div>
-                                    <div>
-                                        1 - 30 Juni 2021
-                                    </div>
-                                </div>
+                            
+                        </div>
 
-                                <div className="d-flex flex-column mx-2">
-                                    <div>
-                                        Pelaksanaan
-                                    </div>
-                                    <div>
-                                        Online / Offline
-                                    </div>
-                                </div>
+                        <div className="col-12 col-md-3">
 
-                                <div className="d-flex flex-column mx-2">
-                                    <div>
-                                        Pendaftar
+                            <div className="bg-white border rounded">
+                                <div className="row mt-5 p-3">
+                                    <h4 className="font-weight-bolder ml-3">
+                                        Ikuti Pelatihan
+                                    </h4>
+                                    <div className="ml-3 mb-5">
+                                        {moment(pelatihan.pelatihan_mulai).format("DD MMMM YYYY")} - {moment(pelatihan.pelatihan_selesai).format("DD MMMM YYYY")} 
                                     </div>
-                                    <div>
-                                        300 Peserta
-                                    </div>
-                                </div>
-
-                                <div className="d-flex flex-row mx-3">
-                                    <button className="btn btn-primary mr-3 p-3 rounded-circle">
-                                        <i className="ri-heart-line"></i>
+                                    <button className="btn btn-info rounded-pill col-11 mb-3 mx-3">
+                                        Daftar Pelatihan
                                     </button>
-                                    <button className="btn btn-primary p-3 rounded-circle">
-                                        <i className="ri-share-forward-line"></i>
+                                    <button className="btn btn-outline-info rounded-pill col-11 mx-3">
+                                        <i className="ri-download-cloud-fill"></i>
+                                        <span>Unduh Silabus</span>
                                     </button>
                                 </div>
 
+                                {/* Border */}
+                                <div className="row ml-3 my-5 mr-5" style={{height:"2px", backgroundColor:"#ADB5BD", opacity:"0.4"}}>
 
+                                </div>
+                                <div className="row mt-5 p-3">
+                                    <div className="col-2">
+                                        <Image 
+                                            src={`/assets/icon/alamat-1.svg`}
+                                            width={50}
+                                            height={50}
+                                        />
+                                    </div>
+                                    <div className="col-10">
+                                        <div className="font-weight-bolder">
+                                            Alamat
+                                        </div>
+                                        <div>
+                                            {pelatihan.alamat}
+                                        </div>
+                                    </div>
+                                </div>
 
+                                <div className="row mt-5 p-3">
+                                    <div className="col-2">
+                                        <Image 
+                                            src={`/assets/icon/jam-1.svg`}
+                                            width={50}
+                                            height={50}
+                                        />
+                                    </div>
+                                    <div className="col-10">
+                                        <div className="font-weight-bolder">
+                                            Jadwal Pelatihan
+                                        </div>
+                                        <div>
+                                            {moment(pelatihan.pelatihan_mulai).format("DD MMMM YYYY")} - {moment(pelatihan.pelatihan_selesai).format("DD MMMM YYYY")}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="row mt-5 p-3">
+                                    <div className="col-2">
+                                        <Image 
+                                            src={`/assets/icon/kuota-1.svg`}
+                                            width={50}
+                                            height={50}
+                                        />
+                                    </div>
+                                    <div className="col-10">
+                                        <div className="font-weight-bolder">
+                                            Kuota
+                                        </div>
+                                        <div>
+                                            {pelatihan.kuota_pendaftar} orang
+                                        </div>
+                                    </div>
+                                </div>
+
+                                
                             </div>
-                            
+
+                            <div className="bg-white border rounded mt-5">
+                                <div className="row">
+                                    <h4 className="font-weight-bolder ml-5 p-3">
+                                        Mitra Pelatihan
+                                    </h4>
+                                </div>
+
+                                <div className="row mb-3">
+                                    <div className="col-3 ml-3">
+                                        <Image 
+                                            src={`/assets/icon/kuota-1.svg`}
+                                            // src={`https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/${pelatihan.gambar_mitra}`}
+                                            width={50}
+                                            height={50}
+                                        />
+                                    </div>
+                                    <div className="col-5">
+                                        <div className="font-weight-bolder">
+                                            Mitra Nama { pelatihan.mitra_nama }
+                                        </div>
+                                        <div className="text-muted">
+                                            Mitra { pelatihan.mitra }
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+
+                            <TrainingReminder />
                         </div>
-                        <Image
-                            src={`/assets/media/image_28.svg`}
-                            objectFit="cover"
-                            width="1500vh"
-                            height="500vh"
-                        />
-
-                        <div className="row ml-3 my-5 mr-5" style={{height:"5px", backgroundColor:"#ADB5BD"}}>
-
-                        </div>
-
-                        <div className="my-5 mx-3 text-justify">
-                            <div>
-                                    Intermediate Multimedia Designer merupakan salah satu skema pelatihan dalam Pelatihan Intensif dan Sertifikasi (Daring) yang berbasis Standar Kompetensi Kerja Nasional Indonesia (SKKNI) dengan skema Intermediate Multimedia Designer. Peserta pelatihan Intermediate Multimedia Designer akan mampu membuat rancangan desain visual berbasis multimedia linear maupun interaktif dan membuat prototype interaktif untuk kebutuhan klien. Di akhir pelatihan peserta akan mengikuti uji kompetensi dan sertifikasi Intermediate Multimedia Designer, bagi yang dinyatakan kompeten akan mendapatkan Sertifikat Kompetensi Intermediate Multimedia Designer dari BNSP.
-                                Pelatihan akan dilaksanakan secara daring (online) kurang lebih 6 (enam) minggu dengan pengantar live session dalam Bahasa Indonesia.
-                                Peserta akan mendapatkan fasilitas secara gratis, diantaranya:
-                            </div>
-                            <div>
-                                <div>
-                                    1. Materi pelatihan
-                                </div>
-                                <div>
-                                    2. Penggantian pulsa/biaya komunikasi
-                                </div>
-                                <div>
-                                    3. Sertifikat Keikutsertaan (Completion) dari Kementerian Kominfo bagi peserta yang menyelesaikan pelatihan hingga akhir
-                                </div>
-                                <div>
-                                    4. Kesempatan untuk mengikuti Uji Kompetensi (Sertifikasi) bagi peserta yang menyelesaikan pelatihan hingga akhir dan Sertifikat Kompetensi bagi yang dinyatakan Kompeten
-                                </div>
-                                <div>
-                                    5. Kesempatan untuk mengikuti program pasca pelatihan (pelatihan pengembangan soft skills)
-                                </div>
-                            </div>
-                            <div>
-                                <div>
-                                    Prospect Career pelatihan ini diantaranya:
-                                </div>
-                                <div>
-                                    1. Multimedia Designer in web developer industry
-                                </div>
-                                <div>
-                                    2. Multimedia Designer in Software Developer Industry
-                                </div>
-                                <div>
-                                    3. Multimedia Designer in Apps developer industry
-                                </div>
-                                <div>
-                                    4. Multimedia Designer in game developer
-                                </div>
-                                <div>
-                                    5. Multimedia Designer in private sector
-                                </div>
-                            </div>
-                            <div>
-                                <div>
-                                    Spesifikasi Laptop yang disarankan untuk disiapkan oleh peserta pelatihan:
-                                </div>
-                                <div>
-                                    1. RAM minimal 4 GB (disarankan 8 GB)
-                                </div>
-                                <div>
-                                    2. Storage minimal sebesar 500 GB
-                                </div>
-                            <div>
-                                    3. Laptop dengan processor core i5 32/64-bit
-                            </div>
-                            <div>
-                                    4. Laptop dengan Operating System Windows 7, 8, 10, Linux, atau MAC OSX
-                            </div>
-                            <div>
-                                    5. Laptop dengan konektivitas WiFi dan memiliki Webcam
-                            </div>
-                            <div>
-                                    6. Akses Internet Dedicated 128 kbps per peserta per perangkat
-                            </div>
-                            <div>
-                                    Bagi calon peserta penyandang disabilitas dapat mendaftar pelatihan dengan menyediakan sarana dan prasarana pendukung pelatihan secara mandiri.`
-                            </div>
-                            </div>
-                            
-                            
-                        </div>
-                        
                     </div>
-
-                    
-                </div>
-
-                <div className="col-3">
-
-                    <div className="bg-white border rounded">
-                        <div className="row mt-5 p-3">
-                            <h4 className="font-weight-bolder">
-                                Ikuti Pelatihan
-                            </h4>
-                            <button className="btn btn-primary rounded-pill col-12 mb-3">
-                                Daftar Pelatihan
-                            </button>
-                            <button className="btn btn-outline-primary rounded-pill col-12">
-                                <i className="ri-download-cloud-fill"></i>
-                                <span>Unduh Silabus/Kurikulum</span>
-                            </button>
-                        </div>
-                        <div className="row ml-3 my-5 mr-5" style={{height:"5px", backgroundColor:"#ADB5BD", opacity:"0.4"}}>
-
-                        </div>
-                        <div className="row mt-5 p-3">
-                            <div className="col-2">
-                                <Image 
-                                    src={`/assets/icon/alamat.svg`}
-                                    width={50}
-                                    height={50}
-                                />
-                            </div>
-                            <div className="col-10">
-                                <div className="font-weight-bolder">
-                                    Alamat
-                                </div>
-                                <div>
-                                    Pelatihan ini dilaksanakan secara Online
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="row mt-5 p-3">
-                            <div className="col-2">
-                                <Image 
-                                    src={`/assets/icon/jam.svg`}
-                                    width={50}
-                                    height={50}
-                                />
-                            </div>
-                            <div className="col-10">
-                                <div className="font-weight-bolder">
-                                    Jadwal Pelatihan
-                                </div>
-                                <div>
-                                    12 Juli 21 - 22 Okt 21
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="row mt-5 p-3">
-                            <div className="col-2">
-                                <Image 
-                                    src={`/assets/icon/kuota.svg`}
-                                    width={50}
-                                    height={50}
-                                />
-                            </div>
-                            <div className="col-10">
-                                <div className="font-weight-bolder">
-                                    Kuota
-                                </div>
-                                <div>
-                                    1000 orang
-                                </div>
-                            </div>
-                        </div>
-
-                        
-                    </div>
-
-                    <TrainingReminder />
-                </div>
-            </div>
+                :
+                    null
+            }
+            
         </Layout>
         
     )

@@ -12,8 +12,7 @@ import { useDispatch } from "react-redux";
 // #Icon
 
 export default function KelolasertifikatID({ token }) {
-  // console.log(token);
-
+ 
   const dispatch = useDispatch();
   const router = useRouter();
   const { query } = router;

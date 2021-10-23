@@ -34,7 +34,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req, params }) => {
       const session = await getSession({ req });
-      console.log(params);
+      
       if (!session) {
         return {
           redirect: {

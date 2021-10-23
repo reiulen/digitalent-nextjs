@@ -210,7 +210,6 @@ const StepTwo = ({ token }) => {
   };
 
   const handleDelete = (id) => {
-    console.log(id);
     Swal.fire({
       title: "Apakah anda yakin ?",
       text: "Data ini tidak bisa dikembalikan !",
