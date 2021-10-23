@@ -129,8 +129,8 @@ export default function RiwayatPelatihan() {
           label={"warning"}
           location={"Pasaraya Blok M Gedung B Lt. 6, Jakarta Barat, Indonesia"}
         />
-        {/* <CardPeserta totalButton={2} status={"seleksi administrasi"} />
-        <CardPeserta totalButton={2} status={"menunggu jadwal"} />
+        {/* <CardPeserta totalButton={2} status={"seleksi administrasi"} /> */}
+        {/* <CardPeserta totalButton={2} status={"menunggu jadwal"} />
         <CardPeserta totalButton={2} status={"tes substansi"} />
         <CardPeserta totalButton={2} status={"lolos substansi"} />
         <CardPeserta totalButton={2} status={"tidak lulus"} />
