@@ -41,26 +41,6 @@ const TambahVidio = ({ token, id }) => {
     const { setting } = useSelector(state => state.allSettingPublikasi)
 
     useEffect(() => {
-        // dispatch(getAllKategori());
-        // if (error) {
-        //     dispatch(clearErrors())
-        // }
-
-        // if (success) {
-        //     setKategoriId('')
-        //     setJudulVideo('')
-        //     setIsiVideo('')
-        //     setUrlVideo('')
-        //     setGambar('')
-        //     setPublish(false)
-        //     setTag('')
-        //     setGambarPreview('/assets/media/default.jpg')
-        //     // dispatch({
-        //     //     type: NEW_ARTIKEL_RESET
-        //     // })
-        // }
-
-        // setEditorLoaded(true)
         if (success) {
             router.push({
                 pathname: `/publikasi/video`,
@@ -107,23 +87,12 @@ const TambahVidio = ({ token, id }) => {
                 setGambarName(e.target.files[0].name)
             }
         }
-
-        // if (e.target.name === 'gambar') {
-        //     const reader = new FileReader()
-        //     reader.onload = () => {
-        //         if (reader.readyState === 2) {
-        //             setGambar(reader.result)
-        //             setGambarPreview(reader.result)
-        //         }
-        //     }
-        //     reader.readAsDataURL(e.target.files[0])
-        // }
     }
 
     function hasWhiteSpace(s) {
         return s.indexOf(' ') >= 0;
     }
-    
+
     const handleTag = (data) => {
         for (let i = 0; i < data.length; i++) {
             if (hasWhiteSpace(data[i])) {
@@ -231,18 +200,6 @@ const TambahVidio = ({ token, id }) => {
                 </div>
                 : ''
             }
-            {/* {success ?
-                <div className="alert alert-custom alert-light-success fade show mb-5" role="alert">
-                    <div className="alert-icon"><i className="flaticon2-checkmark"></i></div>
-                    <div className="alert-text">{success}</div>
-                    <div className="alert-close">
-                        <button type="button" className="close" data-dismiss="alert" aria-label="Close" onClick={onNewReset} >
-                            <span aria-hidden="true"><i className="ki ki-close"></i></span>
-                        </button>
-                    </div>
-                </div>
-                : ''
-            } */}
             <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
                 {
                     loading ?
@@ -273,7 +230,6 @@ const TambahVidio = ({ token, id }) => {
                                 <div className="col-sm-12">
                                     <textarea className='form-control' placeholder='Tulis Deskripsi' name="deskripsi" id="" rows="10" onChange={e => setIsiVideo(e.target.value)} value={isi_video} onBlur={() => simpleValidator.current.showMessageFor("isi_video")}></textarea>
                                     {simpleValidator.current.message("isi_video", isi_video, "required|min:5|max:5000", { className: "text-danger" })}
-                                    {/* <small className='text-danger'>*Minimum 50 Karakter dan Maksimal 160 Karakter</small> */}
                                 </div>
                             </div>
 
@@ -352,9 +308,6 @@ const TambahVidio = ({ token, id }) => {
                                 <label className='col-sm-4 col-form-label font-weight-bolder'>Link URL Video</label>
                                 <div className="col-sm-12">
                                     <div className="input-group">
-                                        {/* <div className="input-group-prepend">
-                                            <div className="input-group-text">https://</div>
-                                        </div> */}
                                         <input type="text" className="form-control" value={url_video} onChange={e => setUrlVideo(e.target.value)} placeholder="https://www.example.com" onBlur={() => simpleValidator.current.showMessageFor("url video")} />
 
                                     </div>
@@ -465,22 +418,6 @@ const TambahVidio = ({ token, id }) => {
                                 </div>
                             </div>
 
-                            {/* <div className="form-group row">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Publish</label>
-                                <div className="col-sm-1">
-                                    <SwitchButton
-                                        checked={publish}
-                                        onlabel=' '
-                                        onstyle='primary'
-                                        offlabel=' '
-                                        offstyle='danger'
-                                        size='sm'
-                                        width={30}
-                                        onChange={(checked) => setPublish(checked)}
-                                    />
-                                </div>
-                            </div> */}
-
                             {
                                 disablePublishDate === false ?
                                     <div className="form-group">
@@ -504,12 +441,6 @@ const TambahVidio = ({ token, id }) => {
                                                 />
 
                                             </div>
-                                            {/* {
-                                                disablePublishDate === true ?
-                                                    <small className="text-muted">Harap ubah status publikasi menjadi aktif untuk mengisi Tanggal Publish</small>
-                                                :
-                                                    null
-                                            } */}
                                         </div>
                                     </div>
                                     :
