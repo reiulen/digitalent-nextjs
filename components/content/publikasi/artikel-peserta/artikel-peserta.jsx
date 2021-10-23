@@ -149,6 +149,7 @@ const ArtikelPeserta = ({ token }) => {
 
         } else {
             router.push(`${router.pathname}?page=1&keyword=${search}`)
+            // router.replace("/publikasi/artikel-peserta", undefined, { shallow: true });
         }
 
     };
@@ -273,7 +274,7 @@ const ArtikelPeserta = ({ token }) => {
         setStartDate(null)
         setEndDate(null)
         setDisableEndDate(true)
-        router.replace("/publikasi/artikel-peserta", undefined, { shallow: true });
+        router.replace("/publikasi/artikel-peserta", undefined, { shallow: false });
     }
 
     const handleStartDate = (date) => {
@@ -284,6 +285,7 @@ const ArtikelPeserta = ({ token }) => {
 
     return (
         <PageWrapper>
+            {console.log("Data Awal", artikel_peserta)}
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
                     <div className="alert-icon"><i className="flaticon-warning"></i></div>
@@ -330,8 +332,6 @@ const ArtikelPeserta = ({ token }) => {
                         background="bg-light-info"
                         icon="new/open-book.svg"
                         color='#ffffff'
-                        // icon="mail-purple.svg"
-                        // color="#8A50FC"
                         value={artikel_peserta && artikel_peserta.publish != "" ? artikel_peserta.publish : 0}
                         titleValue="Artikel"
                         title="Total Publish"
@@ -343,8 +343,6 @@ const ArtikelPeserta = ({ token }) => {
                         background="bg-light-danger"
                         icon="Library.svg"
                         color='#ffffff'
-                        // icon="kotak-kotak-red.svg"
-                        // color="#F65464"
                         value={artikel_peserta && artikel_peserta.unpublish != "" ? artikel_peserta.unpublish : 0}
                         titleValue="Artikel"
                         title="Total Belum Publish"
@@ -594,7 +592,7 @@ const ArtikelPeserta = ({ token }) => {
                                                                 />
                                                             </td>
                                                             <td className='align-middle'>{row.nama_kategori}</td>
-                                                            <td className='align-middle' className="align-middle" style={{overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',maxWidth:'180px'}}>{row.judul_artikel}</td>
+                                                            <td className='align-middle' style={{overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',maxWidth:'11rem'}}>{row.judul_artikel}</td>
                                                             <td className="align-middle">
                                                                 {row.publish === 1 ? (
                                                                     row.tanggal_publish
@@ -680,7 +678,6 @@ const ArtikelPeserta = ({ token }) => {
                                     </div>
                                 }
                                 {artikel_peserta ?
-                                    // <div className="table-total ml-auto">
                                     <div className={`${stylesPag.rightPag} table-total ml-auto`}>
                                         <div className="row">
                                             <div className="col-4 mr-0 mt-3">
@@ -712,7 +709,6 @@ const ArtikelPeserta = ({ token }) => {
                                                 </p>
                                             </div>
                                         </div>
-                                        {/* </div> */}
                                     </div> : ''
                                 }
                             </div>

@@ -228,6 +228,7 @@ const StepThree = ({ token }) => {
                     minDate={startDate}
                     dateFormat="dd/MM/yyyy"
                     autoComplete="off"
+                    disabled={!startDate}
                   />
 
                   {simpleValidator.current.message(
