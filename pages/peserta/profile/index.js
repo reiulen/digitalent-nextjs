@@ -20,6 +20,7 @@ import {
   getProfileKeterampilan,
   getProfilePekerjaan,
 } from "../../../redux/actions/pelatihan/profile.actions";
+import { middlewareAuthPesertaSession } from "../../../utils/middleware/authMiddleware";
 
 const Profile = dynamic(
   () => import("../../../user-component/content/peserta/profile/index"),
@@ -50,19 +51,12 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
-      if (!session) {
+      const middleware = middlewareAuthPesertaSession(session);
+
+      if (!middleware.status) {
         return {
           redirect: {
-            destination: "http://dts-dev.majapahit.id/login",
-            permanent: false,
-          },
-        };
-      }
-      const data = session.user.user.data;
-      if (data.user.roles[0] !== "user") {
-        return {
-          redirect: {
-            destination: "http://dts-dev.majapahit.id/login",
+            destination: middleware.redirect,
             permanent: false,
           },
         };
