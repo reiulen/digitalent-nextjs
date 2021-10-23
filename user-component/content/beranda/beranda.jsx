@@ -45,6 +45,7 @@ const Beranda = () => {
   const [ defaultImage, setDefaultImage ] = useState(`/assets/media/carousel-01.svg`)
   const [ imageError, setImageError ] = useState(false)
   const [ imagetronImg, setImagetronImg ] = useState (null)
+  const [ cardId, setCardId ] = useState(null)
   const [ cardImage, setCardImage ] = useState(null)
   const [ cardStatus, setCardStatus ] = useState(null)
   const [ cardImageMitra, setCardImageMitra ] = useState(null)
@@ -153,7 +154,7 @@ const Beranda = () => {
     dispatch (getTemaByAkademi(id))
   };
 
-  const handleQuickView = (indexTema, image, status, image_mitra, akademi, deskripsi, name, kuota_pendaftar, mitra, alamat, pendaftaran_mulai, pendaftaran_selesai) => {
+  const handleQuickView = (indexTema, image, status, image_mitra, akademi, deskripsi, name, kuota_pendaftar, mitra, alamat, pendaftaran_mulai, pendaftaran_selesai, id) => {
     let obj = [...show]
 
     for (let i = 0; i < obj.length; i++){
@@ -162,6 +163,7 @@ const Beranda = () => {
       }
     }
     setShow(obj)
+    setCardId (id)
     setCardImage(image)
     setCardStatus(status)
     setCardImageMitra(image_mitra)
@@ -638,7 +640,7 @@ const Beranda = () => {
                                               </div>
                                             :
                                               <div className="mt-2">
-                                                <Button className="btn btn-outline-info rounded-pill col-12" onClick={() => handleQuickView(i, element.gambar, element.status, element.gambar_mitra, element.akademi, element.deskripsi, element.name, element.kuota_peserta, element.mitra, element.alamat, element.pendaftaran_mulai, element.pendaftaran_selesai)}>
+                                                <Button className="btn btn-outline-info rounded-pill col-12" onClick={() => handleQuickView(i, element.gambar, element.status, element.gambar_mitra, element.akademi, element.deskripsi, element.name, element.kuota_peserta, element.mitra, element.alamat, element.pendaftaran_mulai, element.pendaftaran_selesai, element.id)}>
                                                     Quick View
                                                 </Button>
                                               </div>
@@ -719,6 +721,7 @@ const Beranda = () => {
                                       <div className="row ml-5">
                                         <div className="mt-3 ml-3 col-12">
                                           {cardDeskripsi}
+                                          {/* <div dangerouslySetInnerHTML={cardDeskripsi}></div> */}
                                         </div>
                                       </div>
 
@@ -746,9 +749,15 @@ const Beranda = () => {
                                           </Button>
                                         </div>
                                         <div className="col-12 col-md-6 mt-5">
-                                          <Button className="btn btn-info rounded-pill btn-block">
-                                            Daftar Pelatihan
-                                          </Button>
+                                          <Link href={`/peserta/form-pendaftaran?id=${cardId}`} passHref>
+                                            <a>
+                                              <Button className="btn btn-info rounded-pill btn-block">
+                                                Daftar Pelatihan
+                                              </Button>
+                                            </a>
+                                          </Link>
+                                          
+                                          
                                         </div>
                                       </div>
 
