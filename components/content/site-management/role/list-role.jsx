@@ -10,35 +10,72 @@ import IconPencil from "../../../assets/icon/Pencil";
 import IconDelete from "../../../assets/icon/Delete";
 import IconAdd from "../../../assets/icon/Add";
 import IconSearch from "../../../assets/icon/Search";
-import AlertBar from '../../partnership/components/BarAlert'
+import AlertBar from "../../partnership/components/BarAlert";
+import Swal from "sweetalert2";
+import {
+  getAllRoles,
+  setPage,
+  limitCooporation,
+  deleteRoles,
+} from "../../../../redux/actions/site-management/role.actions";
+import axios from "axios";
+
+import { DELETE_ROLES_RESET } from "../../../../redux/types/site-management/role.type";
 
 const Table = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
 
-  // function delete
-  const roleDelete = (id) => {
+  const allRoles = useSelector((state) => state.allRoles);
+
+  const { isDeleted } = useSelector((state) => state.deleteRoles);
+
+  const [valueSearch, setValueSearch] = useState("");
+  const handleChangeValueSearch = (value) => {
+    setValueSearch(value);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    dispatch(searchCooporation(valueSearch));
+  };
+
+  const handleDelete = (id, token) => {
     Swal.fire({
-      title: "Apakah anda yakin ingin menghapus data ?",
+      title: "Apakah anda yakin menghapus data ?",
+      text: "Data ini tidak bisa dikembalikan !",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      cancelButtonText: "Batal",
       confirmButtonText: "Ya !",
-      dismissOnDestroy: false,
-    }).then(async (result) => {
-      if (result.value) {
-        // dispatch delete
+      cancelButtonText: "Batal",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(deleteRoles(id, token));
       }
     });
   };
 
-  const onNewReset = () => {
-    router.replace("/site-management/role", undefined, {
-      shallow: true,
+  useEffect(() => {
+    dispatch(getAllRoles(token));
+  }, [dispatch, allRoles.cari, allRoles.page, allRoles.limit, token]);
+
+  useEffect(() => {
+    if (isDeleted) {
+      Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
+        (result) => {
+          if (result.isConfirmed) {
+            dispatch(getAllRoles(token));
+          }
+        }
+      );
+    }
+    dispatch({
+      type: DELETE_ROLES_RESET,
     });
-  };
+  }, [isDeleted, dispatch, token]);
+
   return (
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">
@@ -64,7 +101,7 @@ const Table = ({ token }) => {
               <div className="row align-items-center">
                 <div className="col-lg-12 col-xl-12">
                   <form
-                    // onSubmit={handleSubmit}
+                    onSubmit={handleSubmit}
                     className="d-flex align-items-center w-100"
                   >
                     <div className="row w-100">
@@ -79,9 +116,9 @@ const Table = ({ token }) => {
                             type="text"
                             className="form-control pl-10"
                             placeholder="Ketik disini untuk Pencarian..."
-                            // onChange={(e) =>
-                            //   handleChangeValueSearch(e.target.value)
-                            // }
+                            onChange={(e) =>
+                              handleChangeValueSearch(e.target.value)
+                            }
                           />
                           <button
                             type="submit"
@@ -102,86 +139,126 @@ const Table = ({ token }) => {
             </div>
             <div className="table-page mt-5">
               <div className="table-responsive">
-                <table className="table table-separate table-head-custom table-checkable">
-                  <thead style={{ background: "#F3F6F9" }}>
-                    <tr>
-                      <th className="text-left">No</th>
-                      <th className="text-left align-middle">Nama Role</th>
-                      <th className="text-left align-middle">Editable</th>
-                      <th className="text-left align-middle">Status</th>
-                      <th className="text-left align-middle">Aksi</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="align-middle text-left">1</td>
-                      <td className="align-middle text-left">name</td>
-                      <td className="align-middle text-left">editable</td>
-                      <td className="align-middle text-left">
+                {allRoles.status === "process" ? (
+                  <LoadingTable />
+                ) : (
+                  <table className="table table-separate table-head-custom table-checkable">
+                    <thead style={{ background: "#F3F6F9" }}>
+                      <tr>
+                        <th className="text-left">No</th>
+                        <th className="text-left align-middle">Nama Role</th>
+                        <th className="text-left align-middle">Editable</th>
+                        <th className="text-left align-middle">Status</th>
+                        <th className="text-left align-middle">Aksi</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {allRoles.data.list_role.length === 0 ? (
+                        <tr>
+                          <td colSpan="5" className="text-center">
+                            <h4>Data tidak ditemukan</h4>
+                          </td>
+                        </tr>
+                      ) : (
+                        allRoles.data.list_role.map((items, index) => {
+                          return (
+                            <tr key={index}>
+                              <td className="align-middle text-left">
+                                {allRoles.page === 1
+                                  ? index + 1
+                                  : (allRoles.page - 1) * allRoles.limit +
+                                    (index + 1)}
+                              </td>
+                              <td className="align-middle text-left">
+                                {items.name}
+                              </td>
+                              <td className="align-middle text-left">
+                                {items.type == 1 ? "Yes" : "No"}
+                              </td>
+                              <td className="align-middle text-left">
+                                 {items.status == 1 ?
                         <p
-                          className="status-div-red mb-0"
-                          style={{ width: "max-content" }}
+                        className="status-div-green mb-0"
+                        style={{ width: "max-content" }}
                         >
-                          Tidak aktif
+                          Aktif
                         </p>
-                      </td>
-                      <td className="align-middle text-left">
-                        <div className="d-flex align-items-center">
-                          <button
-                            className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                            onClick={() =>
-                              router.push(`/site-management/role/ubah-role`)
-                            }
-                          >
-                            <IconPencil width="16" height="16" />
-                            <div className="text-hover-show-hapus">Ubah</div>
-                          </button>
-                          <button
-                            className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete"
-                            onClick={() =>
-                              router.push(`/site-management/role/detail-role`)
-                            }
-                          >
-                            <IconEye width="16" height="16" />
-                            <div className="text-hover-show-hapus">Detail</div>
-                          </button>
+                        :
 
-                          <button
-                            className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                            // onClick={() =>
-                            //   roleDelete(items.id)
-                            // }
-                          >
-                            <IconDelete width="16" height="16" />
-                            <div className="text-hover-show-hapus">Hapus</div>
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                        <p
+                        className="status-div-red mb-0"
+                        style={{ width: "max-content" }}
+                        >
+                          Tidak Aktif
+                        </p>
+                        }
+                              </td>
+                              <td className="align-middle text-left">
+                                <div className="d-flex align-items-center">
+                                  <button
+                                    className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                    onClick={() =>
+                                      router.push(
+                                        `/site-management/role/ubah-role`
+                                      )
+                                    }
+                                  >
+                                    <IconPencil width="16" height="16" />
+                                    <div className="text-hover-show-hapus">
+                                      Ubah
+                                    </div>
+                                  </button>
+                                  <button
+                                    className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete"
+                                    onClick={() =>
+                                      router.push(
+                                        `/site-management/role/detail-role`
+                                      )
+                                    }
+                                  >
+                                    <IconEye width="16" height="16" />
+                                    <div className="text-hover-show-hapus">
+                                      Detail
+                                    </div>
+                                  </button>
+
+                                  <button
+                                    className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                    onClick={() =>
+                                      handleDelete(items.id, token)
+                                    }
+                                  >
+                                    <IconDelete width="16" height="16" />
+                                    <div className="text-hover-show-hapus">
+                                      Hapus
+                                    </div>
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          );
+                        })
+                      )}
+                    </tbody>
+                  </table>
+                )}
               </div>
 
               <div className="row">
                 <div className="table-pagination paginate-cs">
-                  pagination
-                  {/* <Pagination
-                    activePage={allMKCooporation.page}
-                    itemsCountPerPage={
-                      allMKCooporation?.mk_cooporation?.data?.perPage
-                    }
-                    totalItemsCount={
-                      allMKCooporation?.mk_cooporation?.data?.total
-                    }
+                  <Pagination
+                    activePage={allRoles.page}
+                    itemsCountPerPage={allRoles.data.perPage}
+                    totalItemsCount={allRoles.data.total}
                     pageRangeDisplayed={3}
                     onChange={(page) => dispatch(setPage(page))}
                     nextPageText={">"}
                     prevPageText={"<"}
                     firstPageText={"<<"}
                     lastPageText={">>"}
-                    itemclassName="page-item"
-                    linkclassName="page-link"
-                  /> */}
+                    itemClass="page-item"
+                    linkClass="page-link"
+                  />
                 </div>
 
                 <div className="table-total ml-auto">
@@ -197,6 +274,9 @@ const Table = ({ token }) => {
                           borderColor: "#F3F6F9",
                           color: "#9E9E9E",
                         }}
+                        onChange={(e) =>
+                          dispatch(limitCooporation(e.target.value, token))
+                        }
                       >
                         <option value="5">5</option>
                         <option value="10">10</option>
@@ -210,7 +290,8 @@ const Table = ({ token }) => {
                         className="align-middle mt-3"
                         style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}
                       >
-                        Total Data 9 List Data
+                        Total Data {allRoles.data && allRoles.data.total} List
+                        Data
                       </p>
                     </div>
                   </div>

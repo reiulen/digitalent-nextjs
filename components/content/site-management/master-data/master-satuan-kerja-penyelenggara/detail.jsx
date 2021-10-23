@@ -15,29 +15,8 @@ const Table = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
 
-  // function delete
-  const apiDelete = (id) => {
-    Swal.fire({
-      title: "Apakah anda yakin ingin menghapus data ?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      cancelButtonText: "Batal",
-      confirmButtonText: "Ya !",
-      dismissOnDestroy: false,
-    }).then(async (result) => {
-      if (result.value) {
-        // dispatch delete
-      }
-    });
-  };
+  const detailUnitWork = useSelector(state => state.detailUnitWork)
 
-  const onNewReset = () => {
-    router.replace("/site-management/setting/api", undefined, {
-      shallow: true,
-    });
-  };
   return (
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">
@@ -47,7 +26,7 @@ const Table = ({ token }) => {
               className="card-title font-weight-bolder text-dark"
               style={{ fontSize: "24px" }}
             >
-              Zonasi 1
+              Detail Satuan Kerja Penyelenggara
             </h3>{" "}
           </div>
           <div className="card-body pt-0">
@@ -62,10 +41,16 @@ const Table = ({ token }) => {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td className="align-middle text-left">1</td>
-                      <td className="align-middle text-left">provinsi</td>{" "}
+                    {detailUnitWork?.unitWork.provinsi.map((items,index)=>{
+                      return(
+                        <tr key={index}>
+                      <td className="align-middle text-left">{index+1}</td>
+                      <td className="align-middle text-left">{items.provinsi}</td>{" "}
                     </tr>
+
+                      )
+                    })}
+                    
                   </tbody>
                 </table>
               </div>{" "}

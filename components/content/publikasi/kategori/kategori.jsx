@@ -48,18 +48,7 @@ const Kategori = ({ token }) => {
   const [publishValue, setPublishValue] = useState(null);
   const [searchKategori, setSearchKategori] = useState(null);
 
-  // useEffect (() => {
-  //     dispatch (getAllKategori())
-  // }, [])
-
   useEffect(() => {
-    // if (limit !== null && search === "") {
-    //     router.push(`${router.pathname}?page=1&limit=${limit}`)
-
-    // } else if (limit !== null && search !== ""){
-    //     router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`)
-    // }
-
     if (isDeleted) {
       Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
         result => {
@@ -74,7 +63,7 @@ const Kategori = ({ token }) => {
     }
   }, [dispatch, isDeleted]);
 
-  const handleDelete = id => {
+  const handleDelete = (id) => {
     Swal.fire({
       title: "Apakah anda yakin ?",
       text: "Data ini tidak bisa dikembalikan !",
@@ -94,72 +83,6 @@ const Kategori = ({ token }) => {
   const onNewReset = () => {
     router.replace("/publikasi/kategori", undefined, { shallow: true });
   };
-
-  // const handleSearchDate = () => {
-  //     if (moment(startDate).format("YYYY-MM-DD") > moment(endDate).format("YYYY-MM-DD")) {
-  //         Swal.fire(
-  //             'Oops !',
-  //             'Tanggal sebelum tidak boleh melebihi tanggal sesudah.',
-  //             'error'
-  //         )
-  //         setStartDate(null)
-  //         setEndDate(null)
-
-  //     } else if (startDate === null && endDate !== null) {
-  //         Swal.fire(
-  //             'Oops !',
-  //             'Tanggal sebelum tidak boleh kosong',
-  //             'error'
-  //         )
-  //         setStartDate(null)
-  //         setEndDate(null)
-
-  //     } else if (startDate !== null && endDate === null) {
-  //         Swal.fire(
-  //             'Oops !',
-  //             'Tanggal sesudah tidak boleh kosong',
-  //             'error'
-  //         )
-  //         setStartDate(null)
-  //         setEndDate(null)
-
-  //     } else if (startDate === null && endDate === null) {
-  //         Swal.fire(
-  //             'Oops !',
-  //             'Harap mengisi tanggal terlebih dahulu.',
-  //             'error'
-  //         )
-  //         setStartDate(null)
-  //         setEndDate(null)
-
-  //     } else {
-  //         if (limit !== null && search !== null && startDate !== null && endDate !== null) {
-  //             router.push(
-  //                 `${router.pathname}?page=1&keyword=${search}startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
-  //             );
-
-  //         } else if (limit !== null && search === null && startDate !== null && endDate !== null) {
-  //             router.push(
-  //                 `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
-  //             )
-
-  //         } else if (limit !== null && search === null && startDate === null && endDate === null) {
-  //             router.push(
-  //                 `${router.pathname}?page=1&limit=${limit}`
-  //             )
-
-  //         } else if (limit !== null && search !== null && startDate === null && endDate === null) {
-  //             router.push(
-  //                 `${router.pathname}?page=1&limit=${limit}&keyword=${search}`
-  //             )
-
-  //         } else {
-  //             router.push(
-  //                 `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`
-  //             );
-  //         }
-  //     }
-  // };
 
   const handleSearchKategori = () => {
     if (searchKategori === null) {
@@ -186,40 +109,12 @@ const Kategori = ({ token }) => {
       router.push(
         `${router.pathname}?page=${pageNumber}&limit=${limit}&keyword=${searchKategori}`
       );
-
-      // } else if (limit !== null && search !== "" && startDate !== null && endDate !== null && publishValue === null) {
-      //     router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
-
-      // } else if (limit === null && search !== "" && startDate !== null && endDate !== null && publishValue === null) {
-      //     router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
-
-      // } else if (limit !== null && search === "" && startDate === null && endDate === null && publishValue !== null) {
-      //     router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&publish=${publishValue}`)
-
-      // } else if (limit !== null && search !== "" && startDate === null && endDate === null && publishValue !== null) {
-      //     router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&publish=${publishValue}`)
-
-      // } else if (limit === null && search !== "" && startDate === null && endDate === null && publishValue !== null) {
-      //     router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&publish=${publishValue}`)
-
-      // } else if (limit === null && search === "" && startDate === null && endDate === null && publishValue !== null) {
-      //     router.push(`${router.pathname}?page=${pageNumber}&publish=${publishValue}`)
-
-      // } else if (limit !== null && search === "" && startDate !== null && endDate !== null && publishValue !== null) {
-      //     router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
-
-      // } else if (limit !== null && search !== "" && startDate !== null && endDate !== null && publishValue !== null) {
-      //     router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
-
-      // } else if (limit === null && search !== "" && startDate !== null && endDate !== null && publishValue !== null) {
-      //     router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
     } else {
       router.push(`${router.pathname}?page=${pageNumber}`);
     }
   };
 
   const handleSearch = () => {
-    // console.log("SEARCH : ", `${router.pathname}?page=1&keyword=${search}&limit=${limit}`)
     if (limit != null && startDate === null && endDate === null) {
       router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`);
     } else if (limit !== null && startDate !== null && endDate !== null) {
@@ -251,30 +146,14 @@ const Kategori = ({ token }) => {
     }
   };
 
-  // const handleLimit = (val) => {
-  //     setLimit(val)
-  //     if (search === "") {
-  //         router.push(`${router.pathname}?page=1&limit=${val}`);
-
-  //     } else {
-  //         router.push(`${router.pathname}?page=1&keyword=${val}&limit=${limit}`)
-  //     }
-
-  // };
-
   const resetValueSort = () => {
     setSearchKategori(null);
     $("#selectKategori").prop("selectedIndex", 0);
+    router.replace("/publikasi/kategori", undefined, { shallow: false });
   };
 
   return (
     <PageWrapper>
-      {/* {
-                console.log(kategori)
-            }
-            {
-                console.log(paginateKategori)
-            } */}
       {error ? (
         <div
           className="alert alert-custom alert-light-danger fade show mb-5"
@@ -555,8 +434,6 @@ const Kategori = ({ token }) => {
                         paginateKategori.kategori.map((row, i) => {
                           return (
                             <tr key={row.id}>
-                              {/* {console.log("KATEGORI : ",row.nama_kategori)} */}
-                              {/* <td className='align-middle text-center'>{i + 1 * (page * 5 || limit) - 4}</td> */}
                               <td className="align-middle text-center">
                                 {limit === null ? (
                                   <span>
@@ -568,7 +445,7 @@ const Kategori = ({ token }) => {
                                   </span>
                                 )}
                               </td>
-                              <td className="align-middle">
+                              <td className="align-middle" style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '11rem' }}>
                                 {row.nama_kategori}
                               </td>
                               <td className="align-middle">
@@ -618,17 +495,11 @@ const Kategori = ({ token }) => {
                 )}
               </div>
 
-              {/* {
-                                console.log("KATEGORI : ", kategori)
-                            }
-                            {
-                                console.log("PAGINATE KATEGORI : ", paginateKategori)
-                            } */}
               {kategori && paginateKategori ? (
                 <div className="row">
                   {paginateKategori.perPage < kategori.total && (
                     <div className={`${stylesPag.pagination} table-pagination`}>
-                    {/* <div className="table-pagination"> */}
+                      {/* <div className="table-pagination"> */}
                       <Pagination
                         activePage={page}
                         itemsCountPerPage={paginateKategori.perPage}
@@ -644,36 +515,7 @@ const Kategori = ({ token }) => {
                       />
                     </div>
                   )}
-                  {/* {kategori && kategori.total > 5 ?
-                                            <div className="table-total ml-auto">
-                                                <div className="row">
-                                                    <div className="col-4 mr-0 p-0">
-                                                        <select
-                                                            className="form-control"
-                                                            id="exampleFormControlSelect2"
-                                                            style={{
-                                                                width: "65px",
-                                                                background: "#F3F6F9",
-                                                                borderColor: "#F3F6F9",
-                                                                color: "#9E9E9E",
-                                                            }}
-                                                            onChange={e => handleLimit(e.target.value)}
-                                                            onBlur={e => handleLimit(e.target.value)}
-                                                        >
-                                                            <option value='5' selected={limit == "5" ? true: false}>5</option>
-                                                            <option value='10' selected={limit == "10" ? true: false}>10</option>
-                                                            <option value='15' selected={limit === "15" ? true: false}>15</option>
-                                                            <option value='20' selected={limit === "20" ? true: false}>20</option>
-                                                        </select>
-                                                    </div>
-                                                    <div className="col-8 my-auto">
-                                                        <p className='align-middle mt-3' style={{ color: '#B5B5C3' }}>Total Data {kategori.total}</p>
-                                                    </div>
-                                                </div>
-                                            </div> : ''
-                                        } */}
                   <div className={`${stylesPag.rightPag} table-total ml-auto`}>
-                  {/* <div className="table-total ml-auto"> */}
                     <div className="row">
                       <div className="col-4 mr-0 mt-3">
                         <select

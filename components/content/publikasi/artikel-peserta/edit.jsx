@@ -133,9 +133,7 @@ const EditArtikel = ({token}) => {
   };
 
   const handlePublishDate = (date) => {
-    // let result = moment(date).format("YYYY-MM-DD")
     if (disablePublishDate === false) {
-      // setPublishDate(result)
       setPublishDate(date)
     }
   }
@@ -150,15 +148,6 @@ const EditArtikel = ({token}) => {
       if (hasWhiteSpace(data[i])) {
         data.splice([i], 1);
       }
-      // if(data[i] === " "){
-      //     data.splice(i, 1);
-      // }
-      // for (let j = 0; j < data[i].length; j++) {
-      //     if (data[i][j] === " ") {
-      //         data.splice(index, 1);
-      //         // setDisableTag(true)
-      //     }
-      // }
     }
     setTag(data);
   }
@@ -174,7 +163,6 @@ const EditArtikel = ({token}) => {
   
       if (success) {
         dispatch({
-          // type: NEW_ARTIKEL_RESET
           type: UPDATE_ARTIKEL_PESERTA_RESET,
         });
       }
@@ -312,49 +300,8 @@ const EditArtikel = ({token}) => {
                 dispatch(updateArtikelPeserta(data, token));
               }
           });
-
         }
-
-        
       }
-  
-      // const data = {
-      //   judul_artikel,
-      //   isi_artikel,
-      //   gambar,
-      //   kategori_id,
-      //   users_id,
-      //   tag,
-      //   publish,
-      //   id,
-      //   _method,
-      // };
-
-      // dispatch(updateArtikel(data));
-      
-      // Swal.fire({
-      //   title: "Apakah anda yakin ?",
-      //   text: "Data ini akan diedit !",
-      //   icon: "warning",
-      //   showCancelButton: true,
-      //   confirmButtonColor: "#3085d6",
-      //   cancelButtonColor: "#d33",
-      //   confirmButtonText: "Ya !",
-      //   cancelButtonText: "Batal",
-      // })
-      //   .then((result) => {
-      //     if (result.isConfirmed) {
-      //       // if (success) {
-      //       //   dispatch({
-      //       //     // type: NEW_ARTIKEL_RESET
-      //       //     type: UPDATE_ARTIKEL_RESET,
-      //       //   });
-      //       // }
-
-      //       dispatch(updateArtikelPeserta(data));
-      //       // console.log(data)
-      //     }
-      // });
       
     } else {
       simpleValidator.current.showMessages();
@@ -370,7 +317,6 @@ const EditArtikel = ({token}) => {
 
   const onNewReset = () => {
     dispatch({
-      // type: NEW_ARTIKEL_RESET
       type: UPDATE_ARTIKEL_RESET,
     });
   };
@@ -378,10 +324,6 @@ const EditArtikel = ({token}) => {
   return (
     <>
       <PageWrapper>
-        {/* {console.log (artikel_peserta)}
-        {
-          console.log (kategori)
-        } */}
         {error ? (
           <div
             className="alert alert-custom alert-light-danger fade show mb-5"
@@ -674,9 +616,10 @@ const EditArtikel = ({token}) => {
                   <div className="col-sm-12">
                     <TagsInput
                       value={tag}
-                      onChange={setTag}
+                      onChange={(data) => handleTag(data)}
                       name="fruits"
-                      placeHolder="Isi Tag disini dan Enter"
+                      placeHolder="Isi Tag disini"
+                      seprators={["Enter", "Tab"]}
                       // onBlur={() => simpleValidator.current.showMessageFor('tag')}
                     />
                     {/* <input type="text" className="form-control" placeholder="Isi Tag disini" value={tag} onChange={e => setTag(e.target.value)} /> */}

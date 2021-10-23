@@ -67,7 +67,15 @@ const Edit = ({ token }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    Swal.fire({
+
+    if(categoryCooporation === ""){
+      notify("Kategory kerjasama tidak boleh kosong")
+
+    }else if(stateDataSingle[0].name === ""){
+      notify("Form kerjasama tidak boleh kosong")
+    }
+    else{
+      Swal.fire({
       title: "Apakah anda yakin ingin ubah data?",
       // text: "Data ini tidak bisa dikembalikan !",
       icon: "warning",
@@ -107,9 +115,9 @@ const Edit = ({ token }) => {
         dispatch(updateMasterCategory(token, formData, router.query.id));
       }
     });
+    }
+    
   };
-
-  
 
   const notify = (value) =>
     toast.info(`${value}`, {
@@ -123,45 +131,44 @@ const Edit = ({ token }) => {
     });
 
   useEffect(() => {
-    async function getSingleData (id,token) {
+    async function getSingleData(id, token) {
       try {
-      let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/${id}`,
-        {
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-        }
-      );
+        let { data } = await axios.get(
+          `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/${id}`,
+          {
+            headers: {
+              authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
-      let arr = [],
-        arr_new = [];
-      data.data.cooperation_category_forms.forEach((item) => {
-        item.isTipe = "old";
-        arr.push(item);
-      });
-      data.data.cooperation_category_forms.forEach((item) => {
-        item.name = item.cooperation_form;
-        item.isTipe = "old";
-        arr_new.push(item);
-      });
-      setStateDataSingle(arr_new);
-      setStateDataSingleOld(arr);
-      setCategoryCooporation(data.data.cooperation_categories);
-      setStatus(data.data.status);
-    } catch (error) {
-      notify(error.response.data.message);
+        let arr = [],
+          arr_new = [];
+        data.data.cooperation_category_forms.forEach((item) => {
+          item.isTipe = "old";
+          arr.push(item);
+        });
+        data.data.cooperation_category_forms.forEach((item) => {
+          item.name = item.cooperation_form;
+          item.isTipe = "old";
+          arr_new.push(item);
+        });
+        setStateDataSingle(arr_new);
+        setStateDataSingleOld(arr);
+        setCategoryCooporation(data.data.cooperation_categories);
+        setStatus(data.data.status);
+      } catch (error) {
+        notify(error.response.data.message);
+      }
     }
-
-    } 
-    getSingleData(router.query.id,token);
+    getSingleData(router.query.id, token);
     if (allMKCooporation.status === "success") {
       router.push({
         pathname: "/partnership/master-kategori-kerjasama",
         query: { update: true },
       });
     }
-  }, [router.query.id, allMKCooporation.status,router,token]);
+  }, [router.query.id, allMKCooporation.status, router, token]);
   return (
     <PageWrapper>
       <ToastContainer
@@ -179,13 +186,12 @@ const Edit = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3
-              className="card-title font-weight-bolder text-dark"
-              style={{ fontSize: "24px" }}
+              className="card-title font-weight-bolder text-dark titles-1"
             >
               Ubah Master Kategori Kerjasama
             </h3>
           </div>
-          <div className="card-body">
+          <div className="card-body pt-0">
             <form>
               <div className="form-group">
                 <label htmlFor="staticEmail" className="col-form-label">
@@ -208,17 +214,16 @@ const Edit = ({ token }) => {
                     return (
                       <div key={index}>
                         <div className="form-group">
-                            {index === 0 ? 
-                          <label
-                            htmlFor="staticEmail"
-                            className="col-form-label"
+                          {index === 0 ? (
+                            <label
+                              htmlFor="staticEmail"
+                              className="col-form-label"
                             >
-                            Form Kerjasama
-                            
-                          </label>
-                            : 
-                            
-                            ""}
+                              Form Kerjasama
+                            </label>
+                          ) : (
+                            ""
+                          )}
                           <div className="position-relative d-flex align-items-center">
                             <input
                               type="text"
@@ -235,7 +240,7 @@ const Edit = ({ token }) => {
                                 type="button"
                                 onClick={() => handleDelete(index)}
                                 className="btn"
-                          style={{ backgroundColor:"#EE2D41" }}
+                                style={{ backgroundColor: "#EE2D41" }}
                               >
                                 <svg
                                   className="position-relative"
@@ -267,17 +272,16 @@ const Edit = ({ token }) => {
                     return (
                       <div key={index} className="d-none">
                         <div className="form-group">
-                            {index === 0 ? 
-                          <label
-                            htmlFor="staticEmail"
-                            className="col-form-label"
+                          {index === 0 ? (
+                            <label
+                              htmlFor="staticEmail"
+                              className="col-form-label"
                             >
-                            Form Kerjasama
-                            
-                          </label>
-                            : ""
-                            
-                            }
+                              Form Kerjasama
+                            </label>
+                          ) : (
+                            ""
+                          )}
                           <input
                             required
                             type="text"

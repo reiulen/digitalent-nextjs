@@ -8,9 +8,13 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import IconAdd from "../../../assets/icon/Add";
 import IconDelete from "../../../assets/icon/Delete";
+import Select from "react-select";
 
 const Tambah = ({ token }) => {
   const router = useRouter();
+
+  let selectRefDataReference = null;
+  let selectRefDataFromReference = null;
 
   const [nameReference, setNameReference] = useState("");
   const [status, setStatus] = useState("");
@@ -26,12 +30,6 @@ const Tambah = ({ token }) => {
           label: "",
         },
       ],
-    },
-  ]);
-
-  const [valueOptionJustText, setValueOptionJustText] = useState([
-    {
-      label: "",
     },
   ]);
 
@@ -51,23 +49,11 @@ const Tambah = ({ token }) => {
         "error"
       );
     } else {
-
-
       let sendData = {
         name: nameReference,
         status: status,
         data_references_relasi_id: idReference,
-        data:formReferenceAndText
-        // data: [
-        //   {
-        //     relasi_id: "coba",
-        //     value: ["cakung", "buaran"],
-        //   },
-        //   {
-        //     relasi_id: 4,
-        //     value: ["tegalega", "ciamis"],
-        //   },
-        // ],
+        data: formReferenceAndText,
       };
 
       try {
@@ -90,19 +76,13 @@ const Tambah = ({ token }) => {
     }
   };
 
-  const handleChangeOptionValueTextReference = (event) => {
-    setIdReference(event.target.value);
-    const { options, selectedIndex } = event.target;
-    const text = options[selectedIndex].text;
-    setNameListFromReference(text);
+  const changeListDataReference = (e) => {
+    setIdReference(e.key);
+    setNameListFromReference(e.value);
   };
 
   const handleAddInput = (idx, index) => {
-    // let _temp = [...valueOptionJustText];
-    // _temp.push({
-    //   label:""
-    // });
-    // setValueOptionJustText(_temp);
+ 
     let _temp = [...formReferenceAndText];
     _temp.map((items, ids) => {
       if (ids === idx) {
@@ -124,12 +104,13 @@ const Tambah = ({ token }) => {
     } else {
       _temp.map((items, ids) => {
         if (ids === parent) {
-          items.text = items.text.filter((itemx, inc) => inc !== child);
+          items.value = items.value.filter((itemx, inc) => inc !== child);
         }
       });
       setFormReferenceAndText(_temp);
     }
   };
+
   const handleAddFormReferenceText = () => {
     let _temp = [...formReferenceAndText];
     _temp.push({
@@ -143,20 +124,19 @@ const Tambah = ({ token }) => {
     setFormReferenceAndText(_temp);
   };
 
-  const handleCHangeNameReference = (e,index) => {
-    let _temp = [...formReferenceAndText]
-    _temp[index].relasi_id = e.target.value
-    setFormReferenceAndText(_temp)
-  }
+  const handleCHangeNameReference = (e, index) => {
+    let _temp = [...formReferenceAndText];
+    _temp[index].relasi_id = e.key;
+    setFormReferenceAndText(_temp);
+  };
 
-  const handleChangeTextForm = (e,idx,index) => {
+  const handleChangeTextForm = (e, idx, index) => {
     let _temp = [...formReferenceAndText];
 
-    _temp[idx].value[index].label = e.target.value
+    _temp[idx].value[index].label = e.target.value;
 
-    setFormReferenceAndText(_temp)
-  }
-
+    setFormReferenceAndText(_temp);
+  };
 
   useEffect(() => {
     async function getAllDataReference(token) {
@@ -169,7 +149,10 @@ const Tambah = ({ token }) => {
             },
           }
         );
-        setOptionReference(data);
+        let resultOptionReference = data.data.map((items) => {
+          return { ...items, label: items.value };
+        });
+        setOptionReference(resultOptionReference);
       } catch (error) {
         notify(error.response.data.message);
       }
@@ -188,7 +171,10 @@ const Tambah = ({ token }) => {
               },
             }
           );
-          setOptionFromReference(data);
+          let resultOptionReferenceChooce = data.data.map((items) => {
+            return { ...items, label: items.value };
+          });
+          setOptionFromReference(resultOptionReferenceChooce);
         } catch (error) {
           notify(error.response.data.message);
         }
@@ -238,21 +224,21 @@ const Tambah = ({ token }) => {
               <div className="form-group">
                 <label>Pilih Data Reference</label>
 
-                <select
-                  onChange={(e) => handleChangeOptionValueTextReference(e)}
-                  className="form-control"
-                >
-                  <option value="">Pilih data reference</option>
-                  {optionReference.length === 0
-                    ? ""
-                    : optionReference.data.map((items, index) => {
-                        return (
-                          <option key={index} value={items.key}>
-                            {items.value}
-                          </option>
-                        );
-                      })}
-                </select>
+                <Select
+                  ref={(ref) => (selectRefDataReference = ref)}
+                  className="basic-single"
+                  classNamePrefix="select"
+                  placeholder="Pilih provinsi"
+                  // defaultValue={allMK.stateListMitra[0]}
+                  isDisabled={false}
+                  isLoading={false}
+                  isClearable={false}
+                  isRtl={false}
+                  isSearchable={true}
+                  name="color"
+                  onChange={(e) => changeListDataReference(e)}
+                  options={optionReference}
+                />
               </div>
 
               {/*  */}
@@ -262,18 +248,22 @@ const Tambah = ({ token }) => {
                     <div className="col-12 col-sm-6">
                       <div className="form-group mt-4">
                         <label>List {nameListFromReference}</label>
-                        <select className="form-control" onChange={(e) => handleCHangeNameReference(e,idx) }>
-                          <option value="">Pilih Data</option>
-                          {optionFromReference.length === 0
-                            ? ""
-                            : optionFromReference.data.map((items, index) => {
-                                return (
-                                  <option key={index} value={items.key}>
-                                    {items.value}
-                                  </option>
-                                );
-                              })}
-                        </select>
+
+                        <Select
+                          ref={(ref) => (selectRefDataFromReference = ref)}
+                          className="basic-single"
+                          classNamePrefix="select"
+                          placeholder="Pilih provinsi"
+                          // defaultValue={allMK.stateListMitra[0]}
+                          isDisabled={false}
+                          isLoading={false}
+                          isClearable={false}
+                          isRtl={false}
+                          isSearchable={true}
+                          name="color"
+                          onChange={(e) => handleCHangeNameReference(e, idx)}
+                          options={optionFromReference}
+                        />
                       </div>
                     </div>
                     <div className="col-12 col-sm-6">
@@ -285,11 +275,12 @@ const Tambah = ({ token }) => {
                             <div className="position-relative d-flex align-items-start w-100">
                               <div className="w-100 mr-6">
                                 <input
-                                  // value={items.label}
                                   type="text"
                                   className="form-control"
                                   placeholder="Masukan data value"
-                                  onChange={(e)=>handleChangeTextForm(e,idx,index)}
+                                  onChange={(e) =>
+                                    handleChangeTextForm(e, idx, index)
+                                  }
                                 />
                               </div>
 
@@ -319,41 +310,6 @@ const Tambah = ({ token }) => {
                           </div>
                         );
                       })}
-                      {/* {valueOptionJustText.map((items, index) => {
-                    return (
-                      <div className="form-group mt-12" key={index}>
-                        <div className="position-relative d-flex align-items-start w-100">
-                          <div className="w-100 mr-6">
-                            <input
-                              value={items.label}
-                              type="text"
-                              className="form-control"
-                              placeholder="Masukan data value"
-                            />
-                          </div>
-
-                          <div className="d-flex align-items-center">
-                            <button
-                              type="button"
-                              className="btn mr-4"
-                              style={{ backgroundColor: "#04AA77" }}
-                              onClick={() => handleAddInput()}
-                            >
-                              <IconAdd />
-                            </button>
-                            <button
-                              type="button"
-                              className="btn"
-                              style={{ backgroundColor: "#EE2D41" }}
-                              onClick={()=>handleDelete(index)}
-                            >
-                              <IconDelete />
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })} */}
 
                       {/* end loop */}
                     </div>
@@ -393,7 +349,7 @@ const Tambah = ({ token }) => {
                   <button
                     type="button"
                     className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
-                    onClick={(e)=>submit(e)}
+                    onClick={(e) => submit(e)}
                   >
                     Simpan
                   </button>

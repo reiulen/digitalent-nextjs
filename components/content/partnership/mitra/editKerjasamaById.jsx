@@ -162,16 +162,11 @@ const EditDokumentKerjasamaById = ({ token }) => {
             `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/${router.query.id}`,
             formData,
             {
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-        }
+              headers: {
+                authorization: `Bearer ${token}`,
+              },
+            }
           );
-
-          //           Swal.fire(
-          //   'Berhasil update data!',
-          //   'success'
-          // )
 
           router.push({
             pathname: `/partnership/mitra/detail/${idDetail}`,
@@ -188,8 +183,6 @@ const EditDokumentKerjasamaById = ({ token }) => {
     setCooperationC_id(value);
     dispatch(changeCooperationSelectByID(value));
   };
-
-  
 
   const [AllCooperation, setAllCooperation] = useState("");
   const changeFormCooporation = (index, e) => {
@@ -243,44 +236,43 @@ const EditDokumentKerjasamaById = ({ token }) => {
     });
 
   useEffect(() => {
-    async function setDataSingle (id,token){
+    async function setDataSingle(id, token) {
       try {
-      let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/${id}`,
-        {
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      setIsntitusiName(data.data.institution_name);
-      setTitle(data.data.title);
-      setDate(data.data.submission_date);
-      setCooperationID(data.data.cooperation_category);
-      setPeriod(data.data.period);
-      setPeriodUnit(data.data.period_unit);
-      setPeriodDateStart(data.data.period_date_start);
-      setPeriodDateEnd(data.data.period_date_end);
-      setAggrementNumber(data.data.agreement_number_partner);
-      setAggrementNumberInfo(data.data.agreement_number_kemkominfo);
-      setSigninDate(data.data.signing_date);
-      setDocument(data.data.document_file);
-      setEmail(data.data.email);
-    } catch (error) {
-      notify(error.response.data.message);
+        let { data } = await axios.get(
+          `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/${id}`,
+          {
+            headers: {
+              authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setIsntitusiName(data.data.institution_name);
+        setTitle(data.data.title);
+        setDate(data.data.submission_date);
+        setCooperationID(data.data.cooperation_category);
+        setPeriod(data.data.period);
+        setPeriodUnit(data.data.period_unit);
+        setPeriodDateStart(data.data.period_date_start);
+        setPeriodDateEnd(data.data.period_date_end);
+        setAggrementNumber(data.data.agreement_number_partner);
+        setAggrementNumberInfo(data.data.agreement_number_kemkominfo);
+        setSigninDate(data.data.signing_date);
+        setDocument(data.data.document_file);
+        setEmail(data.data.email);
+      } catch (error) {
+        notify(error.response.data.message);
+      }
     }
-
-    } 
-    setDataSingle(router.query.id,token);
+    setDataSingle(router.query.id, token);
     dispatch(cancelChangeCategory());
     dispatch(cancelChangeNamaLembaga());
-  }, [dispatch, router.query.id,token]);
+  }, [dispatch, router.query.id, token]);
   useEffect(() => {
-    dispatch(fetchListCooperationSelectById(token,cooperationC_id));
-  }, [dispatch, allMK.idCooporationSelect, cooperationC_id,token]);
+    dispatch(fetchListCooperationSelectById(token, cooperationC_id));
+  }, [dispatch, allMK.idCooporationSelect, cooperationC_id, token]);
   useEffect(() => {
     dispatch(fetchDataEmail(token));
-  }, [dispatch, allMK.institution_name, allMK.stateListMitra,token]);
+  }, [dispatch, allMK.institution_name, allMK.stateListMitra, token]);
 
   useEffect(() => {
     function periodCheck(date) {
@@ -318,8 +310,8 @@ const EditDokumentKerjasamaById = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3
-              className="card-title font-weight-bolder text-dark"
-              style={{ fontSize: "24px" }}
+              className="card-title font-weight-bolder text-dark titles-1"
+           
             >
               Edit Kerjasama
             </h3>
@@ -331,26 +323,15 @@ const EditDokumentKerjasamaById = ({ token }) => {
                 <label htmlFor="staticEmail" className="col-form-label">
                   Tanggal
                 </label>
-
-
-                {/* <input
-                  readOnly
-                  type="date"
-                  required
-                  value={date}
-                  className="form-control"
-                /> */}
-
                 <input
-                      disabled
-                      type="text"
-                      value={date}
-                      name="text_input"
-                      className="form-control mb-3 mb-lg-0"
-                      // placeholder="Masukan Alamat E-mail"
-                    />
-
-
+                  disabled
+                  type="text"
+                  value={date}
+                  name="text_input"
+                  className="form-control mb-3 mb-lg-0 border-0"
+                  style={{backgroundColor:"transparent"}}
+             
+                />
               </div>
 
               <div className="form-group">
@@ -382,7 +363,6 @@ const EditDokumentKerjasamaById = ({ token }) => {
                         className="form-control mt-2"
                         disabled
                         value={cooperationID.id}
-                        // onChange={(e) => setKategoriId(e.target.value)}
                       >
                         <option>{cooperationID.name}</option>
                       </select>
@@ -391,7 +371,9 @@ const EditDokumentKerjasamaById = ({ token }) => {
                       <button
                         type="button"
                         className="btn btn-sm btn-rounded-full bg-blue-primary text-white mr-3 mt-2 w-100 d-flex justify-content-center"
-                        onClick={() => dispatch(fetchListCooperationSelect(token))}
+                        onClick={() =>
+                          dispatch(fetchListCooperationSelect(token))
+                        }
                       >
                         Ubah Kategory
                       </button>
@@ -460,8 +442,9 @@ const EditDokumentKerjasamaById = ({ token }) => {
                       disabled
                       type="text"
                       name="text_input"
-                      className="form-control mb-3 mb-lg-0"
+                      className="form-control mb-3 mb-lg-0 border-0"
                       placeholder="Tahun"
+                      style={{backgroundColor:"transparent"}}
                     />
                   </div>
                 </div>
@@ -515,17 +498,15 @@ const EditDokumentKerjasamaById = ({ token }) => {
                     <label htmlFor="staticEmail" className="col-form-label">
                       Lembaga
                     </label>
-                    {/* <div aria-readonly disabled className="form-control">
-                      {isntitusiName}
-                    </div> */}
 
                     <input
                       disabled
                       type="text"
                       value={isntitusiName}
                       name="text_input"
-                      className="form-control mb-3 mb-lg-0"
+                      className="form-control mb-3 mb-lg-0 border-0"
                       placeholder="Masukan Alamat E-mail"
+                      style={{backgroundColor:"transparent"}}
                     />
                   </div>
                 </div>
@@ -534,14 +515,14 @@ const EditDokumentKerjasamaById = ({ token }) => {
                     <label htmlFor="staticEmail" className="col-form-label">
                       Email
                     </label>
-                    {/* <p className="form-control">{email}</p> */}
                     <input
                       disabled
                       type="text"
                       value={email}
                       name="text_input"
-                      className="form-control mb-3 mb-lg-0"
+                      className="form-control mb-3 mb-lg-0 border-0"
                       placeholder="Masukan Alamat E-mail"
+                      style={{backgroundColor:"transparent"}}
                     />
                   </div>
                 </div>
@@ -561,10 +542,7 @@ const EditDokumentKerjasamaById = ({ token }) => {
               </div>
 
               <div className="form-group">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-form-label"
-                >
+                <label htmlFor="staticEmail" className="col-form-label">
                   Nomor Perjanjian KemKominfo
                 </label>
                 <input
@@ -762,7 +740,11 @@ const EditDokumentKerjasamaById = ({ token }) => {
 
               <div className="form-group row">
                 <div className="col-sm-12 d-flex justify-content-end">
-                  <Link href={`/partnership/mitra/detail/${idDetail}`}>
+                  <Link href={{
+                      pathname:
+                        "/partnership/mitra/detail-data-kerjasama-mitra",
+                      query: { id: router.query.id },
+                    }}>
                     <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary">
                       Kembali
                     </a>

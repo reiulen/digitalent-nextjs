@@ -270,7 +270,7 @@ const EditMitra = ({ token }) => {
       setPic_contact_number(data.data.pic_contact_number);
       setPic_email(data.data.pic_email);
     } catch (error) {
-      notify(error.response.data.message);
+      notify(error.response.data.message)
     }
 
     } 
@@ -278,13 +278,16 @@ const EditMitra = ({ token }) => {
   }, [router.query.id,token]);
 
   useEffect(() => {
-    if (indonesia_provinces_id === "") {
-      return;
-    } else {
+    if (indonesia_provinces_id !== "") {
       async function fetchAPI() {
         try {
           let { data } = await axios.get(
-            `${process.env.END_POINT_API_PARTNERSHIP}api/option/cities/${indonesia_provinces_id}`
+            `${process.env.END_POINT_API_PARTNERSHIP}api/option/cities/${indonesia_provinces_id}`,
+             {
+                headers: {
+                  authorization: `Bearer ${token}`,
+                },
+              }
           );
           let dataNewCitites = data.data.map((items) => {
             return { ...items, label: items.name, value: items.id };
@@ -292,12 +295,12 @@ const EditMitra = ({ token }) => {
           dataNewCitites.splice(0, 0, { label: "Pilih Kab/Kota", value: "" });
           setCitiesAll(dataNewCitites);
         } catch (error) {
-          notify(error.response.data.message);
+          notify(error.response.data.message)
         }
       }
       fetchAPI();
     }
-  }, [statuLoadCities, indonesia_provinces_id]);
+  }, [indonesia_provinces_id,token]);
 
   return (
     <PageWrapper>
@@ -334,7 +337,7 @@ const EditMitra = ({ token }) => {
                 readOnly
                   onFocus={() => setError({ ...error, institution_name: "" })}
                   type="text"
-                  className="form-control"
+                  className="form-control border-0"
                   placeholder="Masukkan Nama Lembaga"
                   value={institution_name}
                   onChange={(e) => setInstitution_name(e.target.value)}
@@ -376,7 +379,7 @@ const EditMitra = ({ token }) => {
                     readOnly
                       onFocus={() => setError({ ...error, email: "" })}
                       type="email"
-                      className="form-control"
+                      className="form-control border-0"
                       placeholder="Masukkan Email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}

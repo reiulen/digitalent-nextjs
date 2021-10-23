@@ -76,10 +76,6 @@ const Galeri = ({ token }) => {
     page = Number(page);
 
     useEffect(() => {
-        // if (limit) {
-        //   router.push(`${router.pathname}?page=1&limit=${limit}`)
-        // }
-
         if (isDeleted) {
             Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
                 result => {
@@ -93,10 +89,6 @@ const Galeri = ({ token }) => {
             });
         }
     }, [isDeleted, dispatch]);
-
-    // const override = css`
-    //     margin: 0 auto;
-    // `;
 
     const onNewReset = () => {
         router.replace("/publikasi/galeri", undefined, { shallow: true });
@@ -356,17 +348,6 @@ const Galeri = ({ token }) => {
         }
     };
 
-    // const handleLimit = (val) => {
-    //     setLimit(val)
-    //     if (search === "") {
-    //         router.push(`${router.pathname}?page=1&limit=${val}`);
-
-    //     } else {
-    //         router.push(`${router.pathname}?page=1&keyword=${search}&limit=${val}`)
-    //     }
-
-    // };
-
     const handleLimit = val => {
         setLimit(val);
         if (search === "" && publishValue === null) {
@@ -507,9 +488,7 @@ const Galeri = ({ token }) => {
                     >
                         {isViewed && isViewed.length !== 0
                             ? isViewed.gambar.map((row, i) => {
-                                // console.log("DAta :", row.id);
                                 return (
-                                    // <div className="carousel-item active">
                                     <div className={i === 0 ? "carousel-item active" : "carousel-item"} key={i}>
                                         <div className={styles["img-prevModal"]}>
                                             <Image
@@ -579,6 +558,7 @@ const Galeri = ({ token }) => {
         setStartDate(null);
         setEndDate(null);
         setDisableEndDate(true);
+        router.replace("/publikasi/galeri", undefined, { shallow: false });
     };
 
     const handleStartDate = date => {
@@ -588,7 +568,6 @@ const Galeri = ({ token }) => {
 
     return (
         <PageWrapper>
-            {/* {console.log("Data Awal : ", galeri)} */}
             {error ? (
                 <div
                     className="alert alert-custom alert-light-danger fade show mb-5"
@@ -648,8 +627,6 @@ const Galeri = ({ token }) => {
                         background="bg-light-info"
                         icon="new/open-book.svg"
                         color="#ffffff"
-                        // icon='mail-purple.svg'
-                        // color='#8A50FC'
                         value={galeri && galeri.publish != "" ? galeri.publish : 0}
                         titleValue="Galeri"
                         title="Total Publish"
@@ -660,10 +637,8 @@ const Galeri = ({ token }) => {
                         background="bg-light-warning"
                         icon="new/mail-white.svg"
                         color="#ffffff"
-                        // icon='garis-yellow.svg'
-                        // color='#634100'
-                        value="64"
-                        titleValue="Galeri"
+                        value="0"
+                        titleValue="Orang"
                         title="Total Author"
                         publishedVal=""
                         routePublish={() => handlePublish("")}
@@ -672,10 +647,8 @@ const Galeri = ({ token }) => {
                         background="bg-light-success"
                         icon="user-white.svg"
                         color="#ffffff"
-                        // icon='orang-tambah-green.svg'
-                        // color='#74BBB7'
-                        value="64"
-                        titleValue="K"
+                        value="0"
+                        titleValue="Orang"
                         title="Total Dilihat"
                         publishedVal=""
                         routePublish={() => handlePublish("")}
@@ -684,8 +657,6 @@ const Galeri = ({ token }) => {
                         background="bg-light-danger"
                         icon="Library.svg"
                         color="#ffffff"
-                        // icon='kotak-kotak-red.svg'
-                        // color='#F65464'
                         value={galeri && galeri.unpublish != "" ? galeri.unpublish : 0}
                         titleValue="Galeri"
                         title="Total Belum Dipublish"
@@ -907,7 +878,6 @@ const Galeri = ({ token }) => {
                                             ) : (
                                                 galeri &&
                                                 galeri.gallery.map((row, i) => {
-                                                    // { console.log("INI ROWW ID : ", i + 1, row) }
                                                     return (
                                                         <tr key={row.id}>
                                                             <td className="align-middle text-center">
@@ -944,7 +914,7 @@ const Galeri = ({ token }) => {
                                                             <td className="align-middle">
                                                                 {row.nama_kategori}
                                                             </td>
-                                                            <td className="align-middle">{row.judul}</td>
+                                                            <td className="align-middle" style={{overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',maxWidth:'11rem'}}>{row.judul}</td>
                                                             <td className="align-middle">
                                                                 {row.publish === 1 ? (
                                                                     row.tanggal_publish
@@ -955,8 +925,7 @@ const Galeri = ({ token }) => {
                                                                 )}
                                                             </td>
                                                             <td className="align-middle">
-                                                                {/* {row.role} */}
-                                                                Super Admin
+                                                                {row.name}
                                                             </td>
                                                             <td className="align-middle">
                                                                 {row.publish === 1 ? (
@@ -969,7 +938,7 @@ const Galeri = ({ token }) => {
                                                                     </span>
                                                                 )}
                                                             </td>
-                                                            <td className="align-middle">{row.role}</td>
+                                                            <td className="align-middle">{row.role[0].name}</td>
                                                             <td className="align-middle d-flex">
                                                                 <button
                                                                     onClick={() =>
@@ -1123,7 +1092,6 @@ const Galeri = ({ token }) => {
                                                 </select>
                                             </div>
                                             <div className="col-8 my-auto">
-                                                {/* { console.log("Cek Total Galeri : ", galeri.total) } */}
                                                 <p
                                                     className="align-middle mt-5 pt-1"
                                                     style={{ color: "#B5B5C3" }}
@@ -1162,7 +1130,6 @@ const Galeri = ({ token }) => {
                         <div className="modal-body">
                             <div className={`${styles.fullBar} row`}>
                                 <div className="col-sm-12 col-md-6 col-lg-6">
-                                    {/* {console.log("Cek Modal Image :", galeri.gallery)} */}
                                     <div className={styles["img-left"]}>
                                         {
                                             isViewed &&
@@ -1280,9 +1247,6 @@ const Galeri = ({ token }) => {
                                 </div>
                             </div>
                         </div>
-                        {/* <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                        </div> */}
                     </div>
                 </div>
             </div>

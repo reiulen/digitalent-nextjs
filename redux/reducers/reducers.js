@@ -190,6 +190,10 @@ import {
   detailPageReducer,
   updatePageReducer,
 } from "./site-management/settings/page.reducers";
+// ============== provinces site ===============
+import { allProvincesSiteReducer } from "./site-management/option/option-provinces.reducers";
+// ============== option reference site ===============
+import { allOptionReferenceSiteReducer } from "./site-management/option/option-reference.reducers";
 // ============== api ===============
 import {
   allApiReducer,
@@ -199,7 +203,23 @@ import {
   detailApiReducer,
   listApiReducer,
   listFieldReducer,
+  listLogReducer,
 } from "./site-management/settings/api.reducers";
+// ============== mitra site ===============
+import {
+  allMitraSiteReducer,
+  newMitraSiteReducer,
+  updateMitraSiteReducer,
+  detailMitraSiteReducer,
+} from "./site-management/user/mitra-site.reducers";
+// ============== mitra site ===============
+import {
+  allAdminSiteReducer,
+  newAdminSiteReducer,
+  updateAdminSiteReducer,
+  detailAdminSiteReducer,
+  deleteAdminSiteReducer,
+} from "./site-management/user/admin-site.reducers";
 // ============== data reference ===============
 import {
   allDataReferenceReducer,
@@ -527,12 +547,28 @@ const reducer = combineReducers({
   updatePage: updatePageReducer,
   listApi: listApiReducer,
   listField: listFieldReducer,
+  listLog: listLogReducer,
+  // ============ PAGE =======
+  allProvincesSite: allProvincesSiteReducer,
+  allOptionReferenceSite: allOptionReferenceSiteReducer,
   // ============ API =======
   allApi: allApiReducer,
   deleteApi: deleteApiReducer,
   newApi: newApiReducer,
   detailApi: detailApiReducer,
   updateApi: updateApiReducer,
+  // ============ MITRA SITE =======
+  allMitraSite: allMitraSiteReducer,
+  newMitraSite: newMitraSiteReducer,
+  detailMitraSite: detailMitraSiteReducer,
+  updateMitraSite: updateMitraSiteReducer,
+  // ============ MITRA SITE =======
+  allAdminSite: allAdminSiteReducer,
+  newAdminSite: newAdminSiteReducer,
+  updateAdminSite: updateAdminSiteReducer,
+  detailAdminSite: detailAdminSiteReducer,
+  deleteAdminSite: deleteAdminSiteReducer,
+
   // ============ DATA REFERENCE =======
   allDataReference: allDataReferenceReducer,
   deleteDataReference: deleteDataReferenceReducer,

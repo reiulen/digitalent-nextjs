@@ -4,10 +4,12 @@ import { getSession } from "next-auth/client";
 import { wrapper } from "../../../../../redux/store";
 import LoadingPage from "../../../../../components/LoadingPage";
 
-const TambahApi = dynamic(
+import { getAllOptionProvinces } from "../../../../../redux/actions/site-management/option/option-provinces.actions";
+import { getDetailZonasi } from "../../../../../redux/actions/site-management/zonasi.actions";
+const DetailRole = dynamic(
   () =>
     import(
-      "../../../../../components/content/site-management/settings/api/log-api"
+      "../../../../../components/content/site-management/master-data/master-zonasi/ubah"
     ),
   {
     loading: function loadingNow() {
@@ -17,12 +19,12 @@ const TambahApi = dynamic(
   }
 );
 
-export default function LogApiPage(props) {
+export default function DetailRoles(props) {
   const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <TambahApi token={session.token} />
+        <DetailRole token={session.token} />
       </div>
     </>
   );
@@ -30,30 +32,24 @@ export default function LogApiPage(props) {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
-    async ({ query, req }) => {
+    async ({ params, req }) => {
       const session = await getSession({ req });
       if (!session) {
         return {
           redirect: {
-            destination: "http://dts-dev.majapahit.id/login/admin",
+            destination: "/",
             permanent: false,
           },
         };
       }
 
-      // await store.dispatch(
-      //   getAllArtikel(
-      //     query.page,
-      //     query.keyword,
-      //     query.limit,
-      //     query.publish,
-      //     query.startdate,
-      //     query.enddate,
-      //     session.user.user.data.token
-      //   )
-      // );
+      await store.dispatch(getAllOptionProvinces(session.user.user.data.token));
+      await store.dispatch(
+        getDetailZonasi(params.id, session.user.user.data.token)
+      );
+
       return {
-        props: { session, title: "Log API - Site Management" },
+        props: { session, title: "Ubah Zonasi - Site Management" },
       };
     }
 );

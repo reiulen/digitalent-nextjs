@@ -10,29 +10,91 @@ import IconPencil from "../../../../assets/icon/Pencil";
 import IconDelete from "../../../../assets/icon/Delete";
 import IconAdd from "../../../../assets/icon/Add";
 import IconSearch from "../../../../assets/icon/Search";
+import DatePicker from "react-datepicker";
+import axios from "axios";
+import IconCalender from "../../../../assets/icon/Calender";
+import Select from "react-select";
+
 
 const UbahApi = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
+  let selectRefListApi = null;
+  let selectRefListField = null;
 
-  const {
-    loading: allLoading,
-    error,
-    apies,
-    success,
-  } = useSelector((state) => state.detailApi);
-  const [nameApi, setNameApi] = useState(apies.api_name)
-  const [nameUser, setNameUser] = useState(apies.username)
-  const [status, setStatus] = useState(apies.status)
-  const [choiceApi, setChoiceApi] = useState(apies.id_api)
-  const [field, setField] = useState(apies.field)
-  const [from, setFrom] = useState(apies.from)
-  const [to, setTo] = useState(apies.to)
-  const onNewReset = () => {
-    router.replace("/site-management/api", undefined, {
-      shallow: true,
-    });
+  const detailApi = useSelector((state) => state.detailApi);
+   const [optionListField, setOptionListField] = useState([]);
+  const listApi = useSelector(state => state.listApi)
+
+ 
+
+  const [optionListApi, setOptionListApi] = useState(listApi.listApi.map((items)=>{
+    return {label:items.api_url,value:items.api_url,id:items.id}
+  }))
+  const [nameApi, setNameApi] = useState(detailApi.apies.data.api_name);
+  const [nameUser, setNameUser] = useState(detailApi.apies.data.username);
+  const [status, setStatus] = useState(detailApi.apies.data.status);
+  const [apiChoice, setApiChoice] = useState(detailApi.apies.data.id_api);
+  const [defaultOptionListApi, setDefaultOptionListApi] = useState({label:detailApi.apies.data.api_url,value:detailApi.apies.data.api_url})
+  const [nameApiChoice, setNameApiChoice] = useState(detailApi.apies.data.api_url)
+const [defaultValueListField, setDefaultValueListField] = useState(detailApi.apies.data.fields.map((items)=>{
+  return {label:items,value:items}
+}))
+  const [from, setFrom] = useState(detailApi.apies.data.from_date);
+  const [to, setTo] = useState(detailApi.apies.data.to_date);
+  const [field, setField] = useState([]);
+
+  const onChangePeriodeDateStart = (date) => {
+    setFrom(moment(date).format("YYYY-MM-DD"));
   };
+  const onChangePeriodeDateEnd = (date) => {
+    setTo(moment(date).format("YYYY-MM-DD"));
+  };
+
+  const changeListApi = (e) => {
+    console.log("e",e)
+    // let resultSelect = e.map((items) => {
+    //   return items.label;
+    // });
+    // setField(resultSelect);
+    setApiChoice(e.id)
+  };
+
+  useEffect(() => {
+    if (apiChoice) {
+      async function getListField(id, token) {
+        try {
+          let { data } = await axios.get(
+            `${process.env.END_POINT_API_SITE_MANAGEMENT}api/api-list/fields/${id}`,
+            {
+              headers: {
+                authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          console.log("response get list field", data);
+          let optionListFieldResult = data.data.map((items) => {
+            return {
+              ...items,
+              label: items.field_name,
+              value: items.field_name,
+            };
+          });
+
+          console.log("optionListFieldResult",optionListFieldResult)
+
+          setOptionListField(optionListFieldResult);
+
+          // change list add label and value sisa implementasi ke render html list field and set state needed
+        } catch (error) {
+          return;
+        }
+      }
+
+      getListField(apiChoice, token);
+    }
+  }, [apiChoice,token])
+
   return (
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">
@@ -50,116 +112,133 @@ const UbahApi = ({ token }) => {
               <div className="form-group">
                 <label>Nama API</label>
                 <input
-                value={nameApi}
-                onChange={(e)=>setNameApi(e.target.value)}
+                  value={nameApi}
+                  onChange={(e) => setNameApi(e.target.value)}
                   type="text"
                   className="form-control"
-                  placeholder="Placeholder"
+                  placeholder="Masukan nama api"
                 />
-                {/* <span className="form-text text-muted">
-                    Please enter your full name
-                  </span> */}
               </div>
               <div className="form-group">
                 <label>Nama Pengguna</label>
                 <input
-                value={nameUser}
-                onChange={(e)=>setNameUser(e.target.value)}
+                  value={nameUser}
+                  onChange={(e) => setNameUser(e.target.value)}
                   type="text"
                   className="form-control"
-                  placeholder="Placeholder"
+                  placeholder="Masukan nama user"
                 />
-                {/* <span className="form-text text-muted">
-                    Please enter your full name
-                  </span> */}
+              </div>
+
+              {status === "Aktif" ? (
+                <div className="form-group">
+                  <label>Status</label>
+                  <select onChange={(e)=>setStatus(e.target.value)} className="form-control">
+                    <option value="Aktif">Aktif</option>
+                    <option value="Nonaktif">Nonaktif</option>
+                  </select>
+                </div>
+              ) : (
+                <div className="form-group">
+                  <label>Status</label>
+                  <select onChange={(e)=>setStatus(e.target.value)} className="form-control">
+                    <option value="Nonaktif">Nonaktif</option>
+                    <option value="Aktif">Aktif</option>
+                  </select>
+                </div>
+              )}
+
+              <div className="form-group">
+                <label>Pilih API</label>
+                <Select
+                  ref={(ref) => (selectRefListApi = ref)}
+                  className="basic-single"
+                  classNamePrefix="select"
+                  placeholder="Pilih provinsi"
+                  defaultValue={defaultOptionListApi}
+                  isDisabled={false}
+                  isLoading={false}
+                  isClearable={false}
+                  isRtl={false}
+                  isSearchable={true}
+                  onChange={(e)=>changeListApi(e)}
+                  name="color"
+                  options={optionListApi}
+                />
               </div>
 
 
-              {apies.status === "Aktif" ? 
-
               <div className="form-group">
-                <label htmlhtmlhtmlhtmlFor="exampleSelect1">Status</label>
-                <select className="form-control" id="exampleSelect1">
-                  <option value="Aktif">Aktif</option>
-                  <option value="Nonaktif">Nonaktif</option>
-                </select>
-                {/* <span className="form-text text-muted">
-                    Please enter your full name
-                  </span> */}
-              </div>
-              :   
-              <div className="form-group">
-                <label htmlhtmlhtmlhtmlFor="exampleSelect1">Status</label>
-                <select className="form-control" id="exampleSelect1">
-                  <option value="Nonaktif">Nonaktif</option>
-                  <option value="Aktif">Aktif</option>
-                </select>
-                {/* <span className="form-text text-muted">
-                    Please enter your full name
-                  </span> */}
-              </div>
-            }
-
-
-
-              <div className="form-group">
-                <label htmlhtmlhtmlhtmlFor="exampleSelect1">Pilih API</label>
-                <select className="form-control" id="exampleSelect1">
-                  <option>Placeholder</option>
-                </select>
-                {/* <span className="form-text text-muted">
-                    Please enter your full name
-                  </span> */}
-              </div>
-              <div className="form-group">
-                <label htmlhtmlhtmlhtmlFor="exampleSelect1">Field</label>
-                <select className="form-control" id="exampleSelect1">
-                  <option>Placeholder</option>
-                </select>
-                {/* <span className="form-text text-muted">
-                    Please enter your full name
-                  </span> */}
+                <label>Field</label>
+                 <Select
+                  ref={(ref) => (selectRefListField = ref)}
+                  isMulti
+                  className="basic-single"
+                  classNamePrefix="select"
+                  placeholder="Pilih provinsi"
+                  defaultValue={defaultValueListField}
+                  isDisabled={false}
+                  isLoading={false}
+                  isClearable={false}
+                  isRtl={false}
+                  isSearchable={true}
+                  name="color"
+                  // onChange={(e) => changeListApi(e)}
+                  options={optionListField}
+                />
               </div>
               <div className="form-group row">
-                <div className="col-lg-6">
+                <div className="col-12 col-sm-6">
                   <label>From</label>
-                  <input
-                    type="date"
-                    className="form-control"
-                    placeholder="Enter full name"
-                  />
-                  {/* <span className="form-text text-muted">
-                    Please enter your full name
-                  </span> */}
+                  <div className="d-flex align-items-center position-relative datepicker-w mt-2">
+                    <DatePicker
+                      className="form-search-date form-control cursor-pointer"
+                      onChange={(date) => onChangePeriodeDateStart(date)}
+                      value={from}
+                      dateFormat="YYYY-MM-DD"
+                      placeholderText="From"
+                      minDate={moment().toDate()}
+                    />
+                    <IconCalender
+                      className="right-center-absolute"
+                      style={{ right: "10px" }}
+                    />
+                  </div>
                 </div>
                 <div className="col-lg-6">
                   <label>To</label>
-                  <input
-                    type="date"
-                    className="form-control"
-                    placeholder="Enter contact number"
-                  />
-                  <span className="form-text text-muted">
-                    Please enter your contact number
-                  </span>
+                  <div className="d-flex align-items-center position-relative datepicker-w mt-2">
+                    <DatePicker
+                      className="form-search-date form-control cursor-pointer"
+                      onChange={(date) => onChangePeriodeDateEnd(date)}
+                      value={to}
+                      dateFormat="YYYY-MM-DD"
+                      placeholderText="To"
+                      minDate={moment().toDate()}
+                    />
+                    <IconCalender
+                      className="right-center-absolute"
+                      style={{ right: "10px" }}
+                    />
+                  </div>
                 </div>
               </div>
             </form>
             <div className="form-group row">
-                <div className="col-sm-12 d-flex justify-content-end">
-                  <Link href="/site-management/setting/api">
-                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
-                      Kembali
-                    </a>
-                  </Link>
-                  <button
-                    type="button"
-                    className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
-                  >
-                    Simpan
-                  </button>
-                </div>
+              <div className="col-sm-12 d-flex justify-content-end">
+                <Link href="/site-management/setting/api">
+                  <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
+                    Kembali
+                  </a>
+                </Link>
+                <button
+                  type="button"
+                  className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
+                >
+                  Simpan
+                </button>
               </div>
+            </div>
           </div>
         </div>
       </div>

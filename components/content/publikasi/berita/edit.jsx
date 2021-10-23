@@ -16,7 +16,7 @@ import { NEW_BERITA_RESET, UPDATE_BERITA_RESET } from '../../../../redux/types/p
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingPage from '../../../LoadingPage';
 
-const EditBerita = ({ token }) => {
+const EditBerita = ({ token, idUser }) => {
     const editorRef = useRef()
     const dispatch = useDispatch()
     const router = useRouter();
@@ -137,16 +137,16 @@ const EditBerita = ({ token }) => {
 
     function hasWhiteSpace(s) {
         return s.indexOf(' ') >= 0;
-      }
-    
-      const handleTag = (data) => {
+    }
+
+    const handleTag = (data) => {
         for (let i = 0; i < data.length; i++) {
-          if (hasWhiteSpace(data[i])) {
-            data.splice([i], 1);
-          }
+            if (hasWhiteSpace(data[i])) {
+                data.splice([i], 1);
+            }
         }
         setTag(data);
-      }
+    }
 
     const onSubmit = (e) => {
         e.preventDefault()
@@ -157,7 +157,6 @@ const EditBerita = ({ token }) => {
 
             if (success) {
                 dispatch({
-                    // type: NEW_BERITA_RESET
                     type: UPDATE_BERITA_RESET
                 })
             }
@@ -316,20 +315,13 @@ const EditBerita = ({ token }) => {
     }
 
     const onNewReset = () => {
-        dispatch({
-            // type: NEW_BERITA_RESET 
+        dispatch({ 
             type: UPDATE_BERITA_RESET
         })
     }
 
     return (
         <>
-            {/* {
-                console.log(berita)
-            } */}
-            {/* {
-                console.log(setting)
-            } */}
             <PageWrapper>
                 {error ?
                     <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
@@ -391,7 +383,6 @@ const EditBerita = ({ token }) => {
                                                 data={isi_berita}
                                                 onReady={editor => {
                                                     // You can store the "editor" and use when it is needed.
-                                                    // console.log('Editor is ready to use!', editor);
                                                 }}
                                                 onChange={(event, editor) => {
                                                     const data = editor.getData()
@@ -542,9 +533,8 @@ const EditBerita = ({ token }) => {
                                         <TagsInput
                                             value={tag}
                                             onChange={(data) => handleTag(data)}
-                                            // onChange={setTag}
                                             name="tag"
-                                            placeHolder="Isi Tag disini dan tekan `Enter` atau `Tab`."
+                                            placeHolder="Isi Tag disini"
                                             seprators={["Enter", "Tab"]}
                                         />
                                         {
@@ -555,7 +545,6 @@ const EditBerita = ({ token }) => {
                                                 :
                                                 null
                                         }
-                                        {/* <input type="text" className="form-control" placeholder="Isi Tag disini" value={tag} onChange={e => setTag(e.target.value)} /> */}
                                     </div>
                                 </div>
 
@@ -609,12 +598,6 @@ const EditBerita = ({ token }) => {
                                                         disabled={disablePublishDate === true || disablePublishDate === null}
                                                     />
                                                 </div>
-                                                {/* {
-                                                    disablePublishDate === true ?
-                                                        <small className="text-muted">Harap ubah status publikasi menjadi aktif untuk mengisi Tanggal Publish</small>
-                                                    :
-                                                        null
-                                                } */}
                                             </div>
                                         </div>
                                         :

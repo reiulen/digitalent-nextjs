@@ -17,59 +17,41 @@ const Tambah = ({ token }) => {
   let selectRefProvinsi = null;
   let selectRefKabupaten = null;
 
-  const drowpdownProvinsi = useSelector((state) => state.drowpdownProvinsi);
-  let tempOptionsProvinsi = drowpdownProvinsi?.data?.data?.value_reference;
-  const [provinsi, setProvinsi] = useState([]);
-  const [namaZonation, setNamaZonation] = useState("");
+  const [nameZonation, setNameZonation] = useState("");
   const [status, setStatus] = useState("");
-
-  const [formInput, setFormInput] = useState([]);
-  const [valueForm, setValueForm] = useState([
+  // state provinsi for set in option provinsi
+  const [provincesOption, setProvincesOption] = useState([]);
+  // state kabupaten for set in option kabupaten
+  const [kabupatenOption, setKabupatenOption] = useState([]);
+  // state id provinsi just for get kabputaen value
+  const [idProvinsi, setIdProvinsi] = useState("");
+  // value for option list dinamic
+  const [formInput, setFormInput] = useState([
+    {
+      provinsi: [],
+      kabupaten: [],
+    },
+  ]);
+  // value to send api
+  const [valueSend, setValueSend] = useState([
     {
       provinsi: "",
       kota_kabupaten: [],
     },
   ]);
 
-  const handleAddInput = () => {
-    let _temp = [...formInput];
-    let _tempValue = [...valueForm];
-    _temp.push({
-      provinces: provinsi,
-      kabupaten: [],
-    });
-    _tempValue.push({
-      provinsi: "",
-      kota_kabupaten: [],
-    });
-    setFormInput(_temp);
-    setValueForm(_tempValue);
-  };
-  const handleDelete = (index) => {
-    let _temp = [...formInput];
-    let _tempValue = [...valueForm];
-    let filterHasil = _temp.filter((items, idx) => {
-      return idx !== index;
-    });
-    let filterHasilValue = _tempValue.filter((items, idx) => {
-      return idx !== index;
-    });
-    setFormInput(filterHasil);
-    setValueForm(filterHasilValue);
-  };
-  const changeListKabupaten = (e, index) => {
-    let _tempValue = [...valueForm];
-    _tempValue[index].kota_kabupaten = e.map((items) => {
-      return { label: items.label };
-    });
-    setValueForm(_tempValue);
-  };
+  const drowpdownProvinsi = useSelector((state) => state.allProvincesSite);
+
+  let tempOptionsProvinsi = drowpdownProvinsi?.data;
+
+  // onchange set value to form input loop
   const changeListProvinces = async (e, index) => {
     let _temp = [...formInput];
-    let _tempValue = [...valueForm];
+    let _tempValue = [...valueSend];
+
     try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/reference/choose-provinsi/${e.id}`,
+        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/option/provinsi-choose/${e.id}`,
         {
           headers: {
             authorization: `Bearer ${token}`,
@@ -79,56 +61,124 @@ const Tambah = ({ token }) => {
       let optionProvinsiKab = data.data.map((items) => {
         return { ...items, label: items.value };
       });
-
       _temp[index].kabupaten = optionProvinsiKab;
-      setFormInput(_temp);
-
       _tempValue[index].provinsi = e.label;
-    } catch (error) {
-      notify(error.response.data.message);
+      setFormInput(_temp);
+      setValueSend(_tempValue);
+    } catch (error) {return;
     }
   };
+  // onchange set value to form input loop
+  const changeListKabupaten = (e, index) => {
+    let _tempValue = [...valueSend];
+    _tempValue[index].kota_kabupaten = e.map((items) => {
+      return { label: items.label };
+    });
+    setValueSend(_tempValue);
+  };
 
-  const handleSubmit = async (e) => {
+  // function add array state form for loop
+
+  const handleAddInput = () => {
+    let _temp = [...formInput];
+    let _tempValue = [...valueSend];
+    _temp.push({
+      provinsi: [],
+      kabupaten: [],
+    });
+    _tempValue.push({
+      provinsi: "",
+      kabupaten: [],
+    });
+    setFormInput(_temp);
+    setValueSend(_tempValue);
+  };
+
+  const handleDelete = (index) => {
+    let _temp = [...formInput];
+    let _tempValue = [...valueSend];
+    let filterHasil = _temp.filter((items, idx) => {
+      return idx !== index;
+    });
+    let filterHasilValue = _tempValue.filter((items, idx) => {
+      return idx !== index;
+    });
+    setFormInput(filterHasil);
+    setValueSend(filterHasilValue);
+  };
+
+  const submit = (e) => {
     e.preventDefault();
 
-   
-    try {
-      let sendData = {
-        name: namaZonation,
-        status: status,
-        data: valueForm,
-      };
-      let { data } = await axios.post(
-        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/zonasi/store`,
-        sendData,
-        {
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-        }
+    if (nameZonation === "") {
+      Swal.fire(
+        "Gagal simpan",
+        "Nama zonasi tidak boleh kosong",
+        "error"
       );
+    } else if (status === "") {
+      Swal.fire("Gagal simpan", "Form status tidak boleh kosong", "error");
+    } 
+    // else if (valueProvinsi === "") {
+    //   Swal.fire("Gagal simpan", "Form provinsi tidak boleh kosong", "error");
+    // } 
+    else {
+      Swal.fire({
+        title: "Apakah anda yakin simpan ?",
+        // text: "Data ini tidak bisa dikembalikan !",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        cancelButtonText: "Batal",
+        confirmButtonText: "Ya !",
+        dismissOnDestroy: false,
+      }).then(async (result) => {
+        if (result.value) {
+          const sendData = {
+            name: nameZonation,
+            status: status,
+            data: valueSend,
+          };
 
-      Swal.fire("Berhasil", "Data berhasil disimpan", "success").then(() => {
-        router.push("/site-management/master-data/master-zonasi");
+          try {
+            let { data } = await axios.post(
+              `${process.env.END_POINT_API_SITE_MANAGEMENT}api/zonasi/store`,
+              sendData,
+              {
+                headers: {
+                  authorization: `Bearer ${token}`,
+                },
+              }
+            );
+
+            Swal.fire("Berhasil", "Data berhasil disimpan", "success").then(
+              () => {
+                router.push(
+                  `/site-management/master-data/master-zonasi`
+                );
+              }
+            );
+          } catch (error) {
+            Swal.fire(
+              "Gagal simpan",
+              `${error.response.data.message}`,
+              "error"
+            );
+          }
+        }
       });
-    } catch (error) {
-      Swal.fire("Gagal simpan", `${error.response.data.message}`, "error");
     }
   };
 
+  // add value and label in response api for react select first load page
   useEffect(() => {
     let optionProvinsi = tempOptionsProvinsi?.map((items) => {
-      return { ...items, label: items.value };
+      return { ...items, value: items.label };
     });
-    setProvinsi(optionProvinsi);
-    setFormInput([
-      {
-        provinces: optionProvinsi,
-        kabupaten: [],
-      },
-    ]);
+    setProvincesOption(optionProvinsi);
   }, [tempOptionsProvinsi]);
+
   return (
     <PageWrapper>
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
@@ -144,15 +194,13 @@ const Tambah = ({ token }) => {
           <form>
             <div className="card-body">
               <div className="form-group">
-                <label htmlFor="staticEmail" className="col-form-label">
+                <label>
                   Nama Zonasi
                 </label>
                 <input
-                  required
-                  onChange={(e) => setNamaZonation(e.target.value)}
-                  placeholder="Provinsi"
+                  onChange={(e) => setNameZonation(e.target.value)}
+                  placeholder="Masukan nama zonasi"
                   type="text"
-                  name="category_cooperation"
                   className="form-control"
                 />
               </div>
@@ -161,7 +209,6 @@ const Tambah = ({ token }) => {
                 <label>Status</label>
                 <select
                   className="form-control"
-                  id="exampleSelect1"
                   onChange={(e) => setStatus(e.target.value)}
                 >
                   <option value="">Pilih Status</option>
@@ -170,75 +217,74 @@ const Tambah = ({ token }) => {
                 </select>
               </div>
 
-              {formInput &&
-                formInput.map((items, index) => {
-                  return (
-                    <div className="row" key={index}>
-                      <div className="col-12 col-sm-6">
-                        <div className="form-group mt-4">
-                          <label htmlFor="exampleSelect1">Provinsi</label>
+              {formInput.map((items, index) => {
+                return (
+                  <div className="row" key={index}>
+                    <div className="col-12 col-sm-6">
+                      <div className="form-group mt-4">
+                        <label>Provinsi</label>
 
-                          <Select
-                            ref={(ref) => (selectRefProvinsi = ref)}
-                            className="basic-single"
-                            classNamePrefix="select"
-                            placeholder="Pilih provinsi"
-                            isDisabled={false}
-                            isLoading={false}
-                            isClearable={false}
-                            isRtl={false}
-                            isSearchable={true}
-                            name="color"
-                            onChange={(e) => changeListProvinces(e, index)}
-                            options={items.provinces}
-                          />
-                        </div>
+                        <Select
+                          ref={(ref) => (selectRefProvinsi = ref)}
+                          className="basic-single"
+                          classNamePrefix="select"
+                          placeholder="Pilih provinsi"
+                          isDisabled={false}
+                          isLoading={false}
+                          isClearable={false}
+                          isRtl={false}
+                          isSearchable={true}
+                          name="color"
+                          onChange={(e) => changeListProvinces(e, index)}
+                          options={provincesOption}
+                        />
                       </div>
-                      <div className="col-12 col-sm-6">
-                        <div className="form-group mt-4">
-                          <div className="position-relative d-flex align-items-center w-100">
-                            <div className="form-group w-100 mr-6 mb-1">
-                              <label htmlFor="exampleSelect1">
-                                Kota / Kabupaten
-                              </label>
-                              <Select
-                                ref={(ref) => (selectRefKabupaten = ref)}
-                                className="basic-single"
-                                classNamePrefix="select"
-                                placeholder="Pilih kabupaten"
-                                isMulti
-                                isDisabled={false}
-                                isLoading={false}
-                                isClearable={false}
-                                isRtl={false}
-                                isSearchable={true}
-                                name="color"
-                                onChange={(e) => changeListKabupaten(e, index)}
-                                options={items.kabupaten}
-                              />
-                              <span className="form-text text-muted">
-                                Please enter your full name
-                              </span>
-                            </div>
-
-                            {index === 0 ? (
-                              ""
-                            ) : (
-                              <button
-                                type="button"
-                                className="btn"
-                                style={{ backgroundColor: "#EE2D41" }}
-                                onClick={() => handleDelete(index)}
-                              >
-                                <IconDelete />
-                              </button>
-                            )}
+                    </div>
+                    <div className="col-12 col-sm-6">
+                      <div className="form-group mt-4">
+                        <div className="position-relative d-flex align-items-end w-100">
+                          <div className="form-group w-100 mr-6 mb-1">
+                            <label htmlFor="exampleSelect1">
+                              Kota / Kabupaten
+                            </label>
+                            <Select
+                              ref={(ref) => (selectRefKabupaten = ref)}
+                              className="basic-single"
+                              classNamePrefix="select"
+                              placeholder="Pilih kabupaten"
+                              isMulti
+                              isDisabled={false}
+                              isLoading={false}
+                              isClearable={false}
+                              isRtl={false}
+                              isSearchable={true}
+                              name="color"
+                              onChange={(e) => changeListKabupaten(e, index)}
+                              options={items.kabupaten}
+                            />
                           </div>
+
+                          {index === 0 ? (
+                            ""
+                          ) : (
+                            <button
+                              type="button"
+                              className="btn position-relative"
+                              style={{
+                                backgroundColor: "#EE2D41",
+                                top: "-3px",
+                              }}
+                              onClick={() => handleDelete(index)}
+                            >
+                              <IconDelete />
+                            </button>
+                          )}
                         </div>
                       </div>
                     </div>
-                  );
-                })}
+                  </div>
+                );
+              })}
 
               <div className="d-flex align-items-center justify-content-end">
                 <div className="form-group">
@@ -272,7 +318,7 @@ const Tambah = ({ token }) => {
                   <button
                     type="button"
                     className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
-                    onClick={(e) => handleSubmit(e)}
+                    onClick={(e) => submit(e)}
                   >
                     Simpan
                   </button>

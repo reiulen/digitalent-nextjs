@@ -16,7 +16,7 @@ import { NEW_IMAGETRON_RESET, UPDATE_IMAGETRON_RESET } from '../../../../redux/t
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingPage from "../../../LoadingPage";
 
-const EditImagetron = ({ token }) => {
+const EditImagetron = ({ token,idUser }) => {
     const editorRef = useRef()
     const dispatch = useDispatch()
     const router = useRouter();
@@ -45,27 +45,12 @@ const EditImagetron = ({ token }) => {
     const { setting } = useSelector(state => state.allSettingPublikasi)
 
     useEffect(() => {
-
-        // dispatch(getAllKategori());
-
         if (success) {
             router.push({
                 pathname: `/publikasi/imagetron`,
                 query: { successEdit: true },
             });
         }
-        // window.location.reload()
-
-        // if (error) {
-        //     dispatch(clearErrors())
-        // }
-
-        // if (success) {
-        //     dispatch({
-        //         type: NEW_IMAGETRON_RESET
-        //     })
-        // }
-
     }, [dispatch, error, success, simpleValidator, router]);
 
     const [id, setId] = useState(imagetron.id);
@@ -82,8 +67,7 @@ const EditImagetron = ({ token }) => {
     const [gambarName, setGambarName] = useState(imagetron.gambar)
     const [url_link, setUrlRedirect] = useState(imagetron.url_link)
     const [publish, setPublish] = useState(imagetron.publish)
-    const [users_id, setUserId] = useState(imagetron.users_id)
-    // const [users_id, setUserId] = useState(87)
+    const [users_id, setUserId] = useState(idUser)
     const [_method, setMethod] = useState("put");
     const [publishDate, setPublishDate] = useState(imagetron.tanggal_publish ? new Date(imagetron.tanggal_publish) : null);
     const [disablePublishDate, setDisablePublishDate] = useState(imagetron.publish === 0 ? true : false)
@@ -134,7 +118,6 @@ const EditImagetron = ({ token }) => {
 
             if (success) {
                 dispatch({
-                    // type: NEW_ARTIKEL_RESET
                     type: UPDATE_IMAGETRON_RESET,
                 });
             }
@@ -273,24 +256,6 @@ const EditImagetron = ({ token }) => {
                 text: "Isi data dengan benar !",
             });
         }
-        // e.preventDefault()
-        // if (error) {
-        //     dispatch(clearErrors())
-        // }
-
-        // const data = {
-        //     id,
-        //     kategori_id,
-        //     judul,
-        //     url_link,
-        //     gambar,
-        //     publish,
-        //     users_id,
-        //     _method
-        // }
-
-        // dispatch(updateImagetron(data))
-        // console.log(data)
     }
 
     const onNewReset = () => {
@@ -299,12 +264,6 @@ const EditImagetron = ({ token }) => {
 
     return (
         <PageWrapper>
-            {/* {
-                console.log(imagetron)
-            }
-            {
-                console.log(setting)
-            } */}
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
                     <div className="alert-icon"><i className="flaticon-warning"></i></div>
@@ -317,18 +276,6 @@ const EditImagetron = ({ token }) => {
                 </div>
                 : ''
             }
-            {/* {success ?
-                <div className="alert alert-custom alert-light-success fade show mb-5" role="alert">
-                    <div className="alert-icon"><i className="flaticon2-checkmark"></i></div>
-                    <div className="alert-text">{success}</div>
-                    <div className="alert-close">
-                        <button type="button" className="close" data-dismiss="alert" aria-label="Close" onClick={onNewReset} >
-                            <span aria-hidden="true"><i className="ki ki-close"></i></span>
-                        </button>
-                    </div>
-                </div>
-                : ''
-            } */}
             <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
                 <div className="card card-custom card-stretch gutter-b">
                     <div className="card-header">

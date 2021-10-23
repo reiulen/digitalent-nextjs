@@ -33,7 +33,7 @@ import {
   changeValueStatusCard,
   limitCooporation,
   deleteCooperation,
-  exportFileCSV
+  exportFileCSV,
 } from "../../../../../redux/actions/partnership/user/cooperation.actions";
 
 import { RESET_VALUE_SORTIR } from "../../../../../redux/types/partnership/user/cooperation.type";
@@ -48,11 +48,17 @@ import IconFilter from "../../../../assets/icon/Filter";
 import IconEye from "../../../../assets/icon/Eye";
 import IconPencil from "../../../../assets/icon/Pencil";
 import IconDelete from "../../../../assets/icon/Delete";
+import BtnIcon from "../../components/BtnIcon";
+import AlertBar from "../../components/BarAlert";
 
-const Table = ({token}) => {
+const Table = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const { successInputProfile,successSubmitDokumentKerjasama,successUpdateStatus } = router.query;
+  const {
+    successInputProfile,
+    successSubmitDokumentKerjasama,
+    successUpdateStatus,
+  } = router.query;
   let selectRefKerjasama = null;
   let selectRefStatus = null;
 
@@ -106,7 +112,7 @@ const Table = ({token}) => {
     allCooperationUser.status,
     allCooperationUser.card,
     allCooperationUser.status_delete,
-    token
+    token,
   ]);
 
   const [isProfile, setIsProfile] = useState("");
@@ -120,8 +126,6 @@ const Table = ({token}) => {
           },
         }
       );
-      // jika data profile sudah terisi cek salah satunya misal agency logo
-      // jika ada set state isProfile true
       if (data.data.agency_logo === "-") {
         setIsProfile(false);
       } else {
@@ -136,7 +140,8 @@ const Table = ({token}) => {
   const getWillExpire = async (token) => {
     try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/index?page=1&card=will_expire&limit=1000`,{
+        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/index?page=1&card=will_expire&limit=1000`,
+        {
           headers: {
             authorization: `Bearer ${token}`,
           },
@@ -148,7 +153,7 @@ const Table = ({token}) => {
     }
   };
 
-  const cooperationDelete = (id,token) => {
+  const cooperationDelete = (id, token) => {
     Swal.fire({
       title: "Apakah anda yakin ingin menghapus data ?",
       icon: "warning",
@@ -160,7 +165,7 @@ const Table = ({token}) => {
       dismissOnDestroy: false,
     }).then(async (result) => {
       if (result.value) {
-        dispatch(deleteCooperation(id,token));
+        dispatch(deleteCooperation(id, token));
         setDeleteBar(true);
         // setIsStatusBar(false);
         // router.replace("/partnership/kerjasama");
@@ -175,123 +180,43 @@ const Table = ({token}) => {
     dispatch(fetchListSelectCooperation(token));
     getProfiles(token);
     getWillExpire(token);
-  }, [dispatch,token]);
+  }, [dispatch, token]);
 
   return (
     <PageWrapper>
       {deleteBar ? (
-        <div
-          className="alert alert-custom alert-light-success fade show mb-5"
-          role="alert"
-          style={{ backgroundColor: "#f7c9c9" }}
-        >
-          <div className="alert-icon">
-            <i className="flaticon2-checkmark" style={{ color: "#c51b1b" }}></i>
-          </div>
-          <div className="alert-text" style={{ color: "#c51b1b" }}>
-            Berhasil menghapus data
-          </div>
-          <div className="alert-close">
-            <button
-              type="button"
-              className="close"
-              data-dismiss="alert"
-              aria-label="Close"
-              onClick={() => onNewReset()}
-            >
-              <span aria-hidden="true">
-                <i className="ki ki-close"></i>
-              </span>
-            </button>
-          </div>
-        </div>
+        <AlertBar
+          text="Berhasil menghapus data"
+          className="alert-light-danger"
+          onClick={() => onNewReset()}
+        />
       ) : (
         ""
       )}
       {successInputProfile ? (
-        <div
-          className="alert alert-custom alert-light-success fade show mb-5"
-          role="alert"
-          style={{ backgroundColor: "#C9F7F5" }}
-        >
-          <div className="alert-icon">
-            <i className="flaticon2-checkmark" style={{ color: "#1BC5BD" }}></i>
-          </div>
-          <div className="alert-text" style={{ color: "#1BC5BD" }}>
-            Berhasil menyimpan data
-          </div>
-          <div className="alert-close">
-            <button
-              type="button"
-              className="close"
-              data-dismiss="alert"
-              aria-label="Close"
-              onClick={() => onNewReset()}
-            >
-              <span aria-hidden="true">
-                <i className="ki ki-close"></i>
-              </span>
-            </button>
-          </div>
-        </div>
+        <AlertBar
+          text="Berhasil menyimpan data"
+          className="alert-light-success"
+          onClick={() => onNewReset()}
+        />
       ) : (
         ""
       )}
       {successSubmitDokumentKerjasama ? (
-        <div
-          className="alert alert-custom alert-light-success fade show mb-5"
-          role="alert"
-          style={{ backgroundColor: "#C9F7F5" }}
-        >
-          <div className="alert-icon">
-            <i className="flaticon2-checkmark" style={{ color: "#1BC5BD" }}></i>
-          </div>
-          <div className="alert-text" style={{ color: "#1BC5BD" }}>
-            Berhasil menyimpan data
-          </div>
-          <div className="alert-close">
-            <button
-              type="button"
-              className="close"
-              data-dismiss="alert"
-              aria-label="Close"
-              onClick={() => onNewReset()}
-            >
-              <span aria-hidden="true">
-                <i className="ki ki-close"></i>
-              </span>
-            </button>
-          </div>
-        </div>
+        <AlertBar
+          text="Berhasil menyimpan data"
+          className="alert-light-success"
+          onClick={() => onNewReset()}
+        />
       ) : (
         ""
       )}
       {successUpdateStatus ? (
-        <div
-          className="alert alert-custom alert-light-success fade show mb-5"
-          role="alert"
-          style={{ backgroundColor: "#C9F7F5" }}
-        >
-          <div className="alert-icon">
-            <i className="flaticon2-checkmark" style={{ color: "#1BC5BD" }}></i>
-          </div>
-          <div className="alert-text" style={{ color: "#1BC5BD" }}>
-            Berhasil membatalkan kerjasama
-          </div>
-          <div className="alert-close">
-            <button
-              type="button"
-              className="close"
-              data-dismiss="alert"
-              aria-label="Close"
-              onClick={() => onNewReset()}
-            >
-              <span aria-hidden="true">
-                <i className="ki ki-close"></i>
-              </span>
-            </button>
-          </div>
-        </div>
+        <AlertBar
+          text="Berhasil membatalkan kerjasama"
+          className="alert-light-success"
+          onClick={() => onNewReset()}
+        />
       ) : (
         ""
       )}
@@ -337,10 +262,7 @@ const Table = ({token}) => {
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="d-flex flex-wrap align-items-center justify-content-between p-8">
-            <h1
-              className="card-title font-weight-bolder text-dark"
-              style={{ fontSize: "24px" }}
-            >
+            <h1 className="card-title font-weight-bolder text-dark titles-1">
               Kerjasama
             </h1>
 
@@ -349,8 +271,8 @@ const Table = ({token}) => {
             ) : isProfile === false ? (
               <Link
                 href={{
-                  pathname:"/partnership/user/profile-lembaga",
-                  query:{isProfile:false},
+                  pathname: "/partnership/user/profile-lembaga",
+                  query: { isProfile: false },
                 }}
                 passHref
               >
@@ -359,7 +281,7 @@ const Table = ({token}) => {
                   Tambah kerjasama
                 </a>
               </Link>
-             ) : (
+            ) : (
               <Link
                 href="/partnership/user/kerjasama/submit-kerjasama"
                 passHref
@@ -369,7 +291,7 @@ const Table = ({token}) => {
                   Tambah kerjasama
                 </a>
               </Link>
-            )} 
+            )}
           </div>
 
           <div className="card-body pt-0">
@@ -377,178 +299,174 @@ const Table = ({token}) => {
               <div className="row align-items-center">
                 <div className="col-lg-12 col-xl-12">
                   {/* <form onSubmit={handleSubmit}> */}
-                    <div className="row">
-                      <div className="col-12 col-sm-6">
-                        <div className="position-relative overflow-hidden w-100 mt-5">
-                          <IconSearch
-                            style={{ left: "10" }}
-                            className="left-center-absolute"
-                          />
-                          <input
-                            id="kt_datatable_search_query"
-                            type="text"
-                            className="form-control pl-10"
-                            placeholder="Ketik disini untuk Pencarian..."
-                            onChange={(e) =>
-                              handleChangeValueSearch(e.target.value)
-                            }
-                          />
-                          <button
-                            type="button"
-                            onClick={(e)=>handleSubmit(e)}
-                            className="btn bg-blue-primary text-white right-center-absolute"
-                            style={{
-                              borderTopLeftRadius: "0",
-                              borderBottomLeftRadius: "0",
-                            }}
-                          >
-                            Cari
-                          </button>
-                        </div>
+                  <div className="row">
+                    <div className="col-12 col-sm-6">
+                      <div className="position-relative overflow-hidden w-100 mt-5">
+                        <IconSearch
+                          style={{ left: "10" }}
+                          className="left-center-absolute"
+                        />
+                        <input
+                          id="kt_datatable_search_query"
+                          type="text"
+                          className="form-control pl-10"
+                          placeholder="Ketik disini untuk Pencarian..."
+                          onChange={(e) =>
+                            handleChangeValueSearch(e.target.value)
+                          }
+                        />
+                        <button
+                          type="button"
+                          onClick={(e) => handleSubmit(e)}
+                          className="btn bg-blue-primary text-white right-center-absolute"
+                          style={{
+                            borderTopLeftRadius: "0",
+                            borderBottomLeftRadius: "0",
+                          }}
+                        >
+                          Cari
+                        </button>
                       </div>
-                      <div className="col-12 col-sm-6">
-                        <div className="d-flex flex-wrap align-items-center justify-content-end mt-2">
-                          {/* sorotir by modal */}
-                          <button
-                            className="avatar item-rtl btn border d-flex align-items-center justify-content-between mt-2"
-                            data-toggle="modal"
-                            data-target="#exampleModalCenter"
-                            style={{ color: "#464646", minWidth: "230px" }}
-                            type="button"
-                          >
-                            <div className="d-flex align-items-center">
-                              <IconFilter className="mr-3" />
-                              Pilih Filter
-                            </div>
-                            <IconArrow fill="#E4E6EF" width="11" height="11" />
-                          </button>
-                          {/* modal */}
+                    </div>
+                    <div className="col-12 col-sm-6">
+                      <div className="d-flex flex-wrap align-items-center justify-content-end mt-2">
+                        {/* sorotir by modal */}
+                        <button
+                          className="avatar item-rtl btn border d-flex align-items-center justify-content-between mt-2"
+                          data-toggle="modal"
+                          data-target="#exampleModalCenter"
+                          style={{ color: "#464646", minWidth: "230px" }}
+                          type="button"
+                        >
+                          <div className="d-flex align-items-center">
+                            <IconFilter className="mr-3" />
+                            Pilih Filter
+                          </div>
+                          <IconArrow fill="#E4E6EF" width="11" height="11" />
+                        </button>
+                        {/* modal */}
+                        <div
+                          className="modal fade"
+                          id="exampleModalCenter"
+                          tabIndex="-1"
+                          role="dialog"
+                          aria-labelledby="exampleModalCenterTitle"
+                          aria-hidden="true"
+                        >
                           <div
-                            className="modal fade"
-                            id="exampleModalCenter"
-                            tabIndex="-1"
-                            role="dialog"
-                            aria-labelledby="exampleModalCenterTitle"
-                            aria-hidden="true"
+                            className="modal-dialog modal-dialog-centered"
+                            role="document"
                           >
-                            <div
-                              className="modal-dialog modal-dialog-centered"
-                              role="document"
-                            >
-                              <div className="modal-content">
-                                <div className="modal-header">
-                                  <h5
-                                    className="modal-title"
-                                    id="exampleModalLongTitle"
-                                  >
-                                    Filter
-                                  </h5>
+                            <div className="modal-content">
+                              <div className="modal-header">
+                                <h5
+                                  className="modal-title"
+                                  id="exampleModalLongTitle"
+                                >
+                                  Filter
+                                </h5>
+                                <button
+                                  type="button"
+                                  className="close"
+                                  data-dismiss="modal"
+                                  aria-label="Close"
+                                >
+                                  <IconClose />
+                                </button>
+                              </div>
+
+                              <div
+                                className="modal-body text-left"
+                                style={{ height: "400px" }}
+                              >
+                                <div className="fv-row mb-10">
+                                  <label className="required fw-bold fs-6 mb-2">
+                                    Kategori
+                                  </label>
+                                  <Select
+                                    ref={(ref) => (selectRefKerjasama = ref)}
+                                    className="basic-single"
+                                    classNamePrefix="select"
+                                    placeholder="Semua"
+                                    defaultValue={
+                                      allCooperationUser.stateListKerjaSama[0]
+                                    }
+                                    isDisabled={false}
+                                    isLoading={false}
+                                    isClearable={false}
+                                    isRtl={false}
+                                    isSearchable={true}
+                                    name="color"
+                                    onChange={(e) =>
+                                      setValueKerjaSama(
+                                        e?.cooperation_categories
+                                      )
+                                    }
+                                    options={
+                                      allCooperationUser.stateListKerjaSama
+                                    }
+                                  />
+                                </div>
+                                <div className="fv-row mb-10">
+                                  <label className="required fw-bold fs-6 mb-2">
+                                    Status
+                                  </label>
+                                  <Select
+                                    ref={(ref) => (selectRefStatus = ref)}
+                                    className="basic-single"
+                                    classNamePrefix="select"
+                                    placeholder="Semua"
+                                    defaultValue={
+                                      allCooperationUser.stateListStatus[0]
+                                    }
+                                    isDisabled={false}
+                                    isLoading={false}
+                                    isClearable={false}
+                                    isRtl={false}
+                                    isSearchable={true}
+                                    name="color"
+                                    onChange={(e) => setValueStatus(e?.name_en)}
+                                    options={allCooperationUser.stateListStatus}
+                                  />
+                                </div>
+                              </div>
+                              <div className="modal-footer">
+                                <div className="d-flex justify-content-end align-items-center">
                                   <button
+                                    className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5"
                                     type="button"
-                                    className="close"
                                     data-dismiss="modal"
                                     aria-label="Close"
+                                    onClick={() => resetValueSort()}
                                   >
-                                    <IconClose />
+                                    Reset
                                   </button>
-                                </div>
-
-                                <div
-                                  className="modal-body text-left"
-                                  style={{ height: "400px" }}
-                                >
-                                  <div className="fv-row mb-10">
-                                    <label className="required fw-bold fs-6 mb-2">
-                                      Kategori
-                                    </label>
-                                    <Select
-                                      ref={(ref) => (selectRefKerjasama = ref)}
-                                      className="basic-single"
-                                      classNamePrefix="select"
-                                      placeholder="Semua"
-                                      defaultValue={
-                                        allCooperationUser.stateListKerjaSama[0]
-                                      }
-                                      isDisabled={false}
-                                      isLoading={false}
-                                      isClearable={false}
-                                      isRtl={false}
-                                      isSearchable={true}
-                                      name="color"
-                                      onChange={(e) =>
-                                        setValueKerjaSama(
-                                          e?.cooperation_categories
-                                        )
-                                      }
-                                      options={
-                                        allCooperationUser.stateListKerjaSama
-                                      }
-                                    />
-                                  </div>
-                                  <div className="fv-row mb-10">
-                                    <label className="required fw-bold fs-6 mb-2">
-                                      Status
-                                    </label>
-                                    <Select
-                                      ref={(ref) => (selectRefStatus = ref)}
-                                      className="basic-single"
-                                      classNamePrefix="select"
-                                      placeholder="Semua"
-                                      defaultValue={
-                                        allCooperationUser.stateListStatus[0]
-                                      }
-                                      isDisabled={false}
-                                      isLoading={false}
-                                      isClearable={false}
-                                      isRtl={false}
-                                      isSearchable={true}
-                                      name="color"
-                                      onChange={(e) =>
-                                        setValueStatus(e?.name_en)
-                                      }
-                                      options={
-                                        allCooperationUser.stateListStatus
-                                      }
-                                    />
-                                  </div>
-                                </div>
-                                <div className="modal-footer">
-                                  <div className="d-flex justify-content-end align-items-center">
-                                    <button
-                                      className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5"
-                                      type="button"
-                                      data-dismiss="modal"
-                                      aria-label="Close"
-                                      onClick={() => resetValueSort()}
-                                    >
-                                      Reset
-                                    </button>
-                                    <button
-                                      className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
-                                      type="button"
-                                      onClick={(e) => handleSubmitSearchMany(e)}
-                                    >
-                                      Terapkan
-                                    </button>
-                                  </div>
+                                  <button
+                                    className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
+                                    type="button"
+                                    onClick={(e) => handleSubmitSearchMany(e)}
+                                  >
+                                    Terapkan
+                                  </button>
                                 </div>
                               </div>
                             </div>
                           </div>
+                        </div>
 
-                          {/* end modal */}
+                        {/* end modal */}
 
-                          {/* btn export */}
-                          {/* <button
+                        {/* btn export */}
+                        {/* <button
                             className="btn btn-rounded-full bg-blue-secondary text-white ml-4 mt-2"
                             type="button"
                             onClick={() => dispatch(exportFileCSV(token))}
                           >
                             Export .xlxs
                           </button> */}
-                        </div>
                       </div>
                     </div>
+                  </div>
                   {/* </form> */}
                 </div>
               </div>
@@ -600,19 +518,12 @@ const Table = ({token}) => {
                                         allCooperationUser.limit +
                                       (index + 1)}
                                 </td>
-                                {/* <td className="align-middle text-left">
-                                  {items.partner === null ? (
-                                    "Tidak ada"
-                                  ) : (
-                                    <p className="p-part-t">
-                                      {items.partner.user.name}
-                                    </p>
-                                  )}
-                                </td> */}
                                 <td className="d-flex justify-content-start">
                                   <div className="d-flex align-items-start justify-content-center flex-column">
-                                    <p className="p-part-t">{items.title}</p>
-                                    <p className="p-part-d">
+                                    <p className="p-part-t text-overflow-ens">
+                                      {items.title}
+                                    </p>
+                                    <p className="p-part-d text-overflow-ens">
                                       (
                                       {items.cooperation_category === null
                                         ? "tidak ada kategori kerjasama"
@@ -630,7 +541,7 @@ const Table = ({token}) => {
                                 </td>
                                 <td className="align-middle text-left">
                                   <p className="p-part-t">
-                                   {items.period_date_start === null
+                                    {items.period_date_start === null
                                       ? "-"
                                       : moment(items.period_date_start).format(
                                           "DD MMMM YYYY"
@@ -658,22 +569,10 @@ const Table = ({token}) => {
                                         disabled
                                         className="form-control remove-icon-default dropdown-arrows-green"
                                         key={index}
-                                        // onChange={(e) =>
-                                        //   changeListStatus(
-                                        //     e.target.value,
-                                        //     items.id
-                                        //   )
-                                        // }
                                       >
                                         <option value="1">Disetujui</option>
                                         <option value="2">Tidak Aktif</option>
                                       </select>
-                                      {/* <IconArrow
-                                        className="right-center-absolute"
-                                        style={{ right: "10px" }}
-                                        width="7"
-                                        height="7"
-                                      /> */}
                                     </div>
                                   ) : items.status.name === "aktif" &&
                                     moment(items.period_date_start).format(
@@ -686,25 +585,12 @@ const Table = ({token}) => {
                                         id=""
                                         className="form-control remove-icon-default dropdown-arrows-green"
                                         key={index}
-                                        // onChange={(e) =>
-                                        //   changeListStatus(
-                                        //     e,
-                                        //     items.id,
-                                        //     items.status.name
-                                        //   )
-                                        // }
                                       >
                                         <option value="1">
                                           {items.status.name}
                                         </option>
                                         <option value="2">Tidak Aktif</option>
                                       </select>
-                                      {/* <IconArrow
-                                        className="right-center-absolute"
-                                        style={{ right: "10px" }}
-                                        width="7"
-                                        height="7"
-                                      /> */}
                                     </div>
                                   ) : items.status.name === "tidak aktif" ? (
                                     <div className="position-relative w-max-content">
@@ -714,24 +600,10 @@ const Table = ({token}) => {
                                         id=""
                                         className="form-control remove-icon-default dropdown-arrows-red-primary  pr-10"
                                         key={index}
-                                        // onChange={(e) =>
-                                        //   changeListStatus(
-                                        //     e,
-                                        //     items.id,
-                                        //     items.status.name
-                                        //   )
-                                        // }
                                       >
                                         <option value="2">Tidak Aktif</option>
                                         <option value="1">Aktif</option>
                                       </select>
-                                      {/* <IconArrow
-                                        className="right-center-absolute"
-                                        style={{ right: "10px" }}
-                                        fill="#F65464"
-                                        width="7"
-                                        height="7"
-                                      /> */}
                                     </div>
                                   ) : items.status.name ===
                                     "pengajuan-review" ? (
@@ -741,13 +613,6 @@ const Table = ({token}) => {
                                         name=""
                                         id=""
                                         className="form-control remove-icon-default dropdown-arrows-blue"
-                                        // key={index}
-                                        // onChange={(e) =>
-                                        //   changeListStatus(
-                                        //     e.target.value,
-                                        //     items.id
-                                        //   )
-                                        // }
                                       >
                                         <option value="">
                                           Pengajuan - Review
@@ -762,13 +627,6 @@ const Table = ({token}) => {
                                         name=""
                                         id=""
                                         className="form-control remove-icon-default dropdown-arrows-yellow"
-                                        // key={index}
-                                        // onChange={(e) =>
-                                        //   changeListStatus(
-                                        //     e.target.value,
-                                        //     items.id
-                                        //   )
-                                        // }
                                       >
                                         <option value="">
                                           Pengajuan - Revisi
@@ -783,13 +641,6 @@ const Table = ({token}) => {
                                         name=""
                                         id=""
                                         className="form-control remove-icon-default dropdown-arrows-blue pr-10"
-                                        // key={index}
-                                        // onChange={(e) =>
-                                        //   changeListStatus(
-                                        //     e.target.value,
-                                        //     items.id
-                                        //   )
-                                        // }
                                       >
                                         <option value="5">
                                           Pengajuan-Pembahasan
@@ -798,12 +649,6 @@ const Table = ({token}) => {
                                           Pengajuan-Selesai
                                         </option>
                                       </select>
-                                      {/* <IconArrow
-                                        className="right-center-absolute"
-                                        style={{ right: "10px" }}
-                                        width="7"
-                                        height="7"
-                                      /> */}
                                     </div>
                                   ) : items.status.name ===
                                     "pengajuan-selesai" ? (
@@ -813,13 +658,6 @@ const Table = ({token}) => {
                                         name=""
                                         id=""
                                         className="form-control remove-icon-default dropdown-arrows-blue"
-                                        // key={index}
-                                        // onChange={(e) =>
-                                        //   changeListStatus(
-                                        //     e.target.value,
-                                        //     items.id
-                                        //   )
-                                        // }
                                       >
                                         <option value="">
                                           Pengajuan - Selesai
@@ -834,13 +672,6 @@ const Table = ({token}) => {
                                         name=""
                                         id=""
                                         className="form-control remove-icon-default dropdown-arrows-blue"
-                                        // key={index}
-                                        // onChange={(e) =>
-                                        //   changeListStatus(
-                                        //     e.target.value,
-                                        //     items.id
-                                        //   )
-                                        // }
                                       >
                                         <option value="">
                                           Pengajuan - Dokumen
@@ -854,13 +685,6 @@ const Table = ({token}) => {
                                         name=""
                                         id=""
                                         className="form-control remove-icon-default dropdown-arrows-red-primary"
-                                        // key={index}
-                                        // onChange={(e) =>
-                                        //   changeListStatus(
-                                        //     e.target.value,
-                                        //     items.id
-                                        //   )
-                                        // }
                                       >
                                         <option value="">Ditolak</option>
                                       </select>
@@ -871,137 +695,131 @@ const Table = ({token}) => {
                                 <td className="align-middle text-left">
                                   <div className="d-flex align-items-center">
                                     {items.status.name === "aktif" &&
-                                  moment(items.period_date_start).format(
-                                    "YYYY MM DD"
-                                  ) > moment().format("YYYY MM DD") ? (
-                                    <div className="d-flex align-items-center">
-                                      <button
-                                        className="btn btn-link-action bg-blue-secondary position-relative btn-delete mr-3"
-                                        onClick={() =>
-                                          router.push(
-                                            `/partnership/user/kerjasama/${items.id}`
-                                          )
-                                        }
-                                      >
-                                        <IconEye
-                                          width="16"
-                                          height="16"
-                                          fill="rgba(255,255,255,1)"
-                                        />
-                                        <div className="text-hover-show-hapus">
-                                          Detail
-                                        </div>
-                                      </button>
-                                      <Link href={{
-                                         pathname:"/partnership/user/kerjasama/hasil",
-                                         query:{statusKerjasama:items.status.name,id:items.id}
-                                       }}>
-
-                                      <a
-                                        className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                                        // onClick={() =>
-                                        //   router.push(
-                                        //     `/partnership/user/kerjasama/${items.id}`
-                                        //   )
-                                        // }
-                                      >
-                                        <IconReview />
-                                        <div className="text-hover-show-hapus">
-                                          Review
-                                        </div>
-                                      </a>
-                                      </Link>
-                                      </div>
-                                  ) : items.status.name === "aktif" &&
                                     moment(items.period_date_start).format(
                                       "YYYY MM DD"
-                                    ) <= moment().format("YYYY MM DD") ? (
-                                     <div className="d-flex align-items-center">
-                                      <button
-                                        className="btn btn-link-action bg-blue-secondary position-relative btn-delete mr-3"
-                                        onClick={() =>
-                                          router.push(
-                                            `/partnership/user/kerjasama/${items.id}`
-                                          )
-                                        }
-                                      >
-                                        <IconEye
-                                          width="16"
-                                          height="16"
-                                          fill="rgba(255,255,255,1)"
-                                        />
-                                        <div className="text-hover-show-hapus">
-                                          Detail
-                                        </div>
-                                      </button>
-                                      <Link href={{
-                                         pathname:"/partnership/user/kerjasama/hasil",
-                                         query:{statusKerjasama:items.status.name,id:items.id}
-                                       }}>
-
-                                      <a
-                                        className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                                        // onClick={() =>
-                                        //   router.push(
-                                        //     `/partnership/user/kerjasama/${items.id}`
-                                        //   )
-                                        // }
-                                      >
-                                        <IconTodoLine
-                                        />
-                                        <div className="text-hover-show-hapus">
-                                          Review
-                                        </div>
-                                      </a>
-                                      </Link>
+                                    ) > moment().format("YYYY MM DD") ? (
+                                      <div className="d-flex align-items-center">
+                                        <button
+                                          className="btn btn-link-action bg-blue-secondary position-relative btn-delete mr-3"
+                                          onClick={() =>
+                                            router.push(
+                                              `/partnership/user/kerjasama/${items.id}`
+                                            )
+                                          }
+                                        >
+                                          <IconEye
+                                            width="16"
+                                            height="16"
+                                            fill="rgba(255,255,255,1)"
+                                          />
+                                          <div className="text-hover-show-hapus">
+                                            Detail
+                                          </div>
+                                        </button>
+                                        <Link
+                                          href={{
+                                            pathname:
+                                              "/partnership/user/kerjasama/hasil",
+                                            query: {
+                                              statusKerjasama:
+                                                items.status.name,
+                                              id: items.id,
+                                            },
+                                          }}
+                                        >
+                                          <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
+                                            <IconReview />
+                                            <div className="text-hover-show-hapus">
+                                              Review
+                                            </div>
+                                          </a>
+                                        </Link>
                                       </div>
-                                  ) : items.status.name === "tidak aktif" ? (
-                                    <div className="d-flex align-items-center">
-                                      
-
-                                      <Link href={{
-                                         pathname:"/partnership/user/kerjasama/hasil",
-                                         query:{statusKerjasama:items.status.name,id:items.id}
-                                       }}>
-
-                                      <a
-                                        className="btn btn-link-action bg-blue-secondary position-relative btn-delete mr-3"
-                                        // onClick={() =>
-                                        //   router.push(
-                                        //     `/partnership/user/kerjasama/${items.id}`
-                                        //   )
-                                        // }
-                                      >
-                                        <IconEye
-                                          width="16"
-                                          height="16"
-                                          fill="rgba(255,255,255,1)"
-                                        />
-                                        <div className="text-hover-show-hapus">
-                                          Review
-                                        </div>
-                                      </a>
-                                      </Link>
-
-                                       <button
-                                        className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                                        onClick={() =>
-                                          cooperationDelete(items.id)
-                                        }
-                                      >
-                                        <IconDelete width="16" height="16" />
-                                        <div className="text-hover-show-hapus">
-                                          Hapus
-                                        </div>
-                                      </button>
+                                    ) : items.status.name === "aktif" &&
+                                      moment(items.period_date_start).format(
+                                        "YYYY MM DD"
+                                      ) <= moment().format("YYYY MM DD") ? (
+                                      <div className="d-flex align-items-center">
+                                        <button
+                                          className="btn btn-link-action bg-blue-secondary position-relative btn-delete mr-3"
+                                          onClick={() =>
+                                            router.push(
+                                              `/partnership/user/kerjasama/${items.id}`
+                                            )
+                                          }
+                                        >
+                                          <IconEye
+                                            width="16"
+                                            height="16"
+                                            fill="rgba(255,255,255,1)"
+                                          />
+                                          <div className="text-hover-show-hapus">
+                                            Detail
+                                          </div>
+                                        </button>
+                                        <Link
+                                          href={{
+                                            pathname:
+                                              "/partnership/user/kerjasama/hasil",
+                                            query: {
+                                              statusKerjasama:
+                                                items.status.name,
+                                              id: items.id,
+                                            },
+                                          }}
+                                        >
+                                          <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
+                                            <IconTodoLine />
+                                            <div className="text-hover-show-hapus">
+                                              Review
+                                            </div>
+                                          </a>
+                                        </Link>
                                       </div>
-                                  
-                                  ) :items.status.name ===
-                                    "pengajuan-review" ? (
+                                    ) : items.status.name === "tidak aktif" ? (
+                                      <div className="d-flex align-items-center">
+                                        <Link
+                                          href={{
+                                            pathname:
+                                              "/partnership/user/kerjasama/hasil",
+                                            query: {
+                                              statusKerjasama:
+                                                items.status.name,
+                                              id: items.id,
+                                            },
+                                          }}
+                                        >
+                                          <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete mr-3">
+                                            <IconEye
+                                              width="16"
+                                              height="16"
+                                              fill="rgba(255,255,255,1)"
+                                            />
+                                            <div className="text-hover-show-hapus">
+                                              Review
+                                            </div>
+                                          </a>
+                                        </Link>
+
+                                        <button
+                                          className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                          onClick={() =>
+                                            cooperationDelete(items.id)
+                                          }
+                                        >
+                                          <IconDelete width="16" height="16" />
+                                          <div className="text-hover-show-hapus">
+                                            Hapus
+                                          </div>
+                                        </button>
+                                      </div>
+                                    ) : items.status.name ===
+                                      "pengajuan-review" ? (
                                       <Link
                                         href={{
-                                          pathname:"/partnership/user/kerjasama/review-kerjasama",
-                                          query:{id:items.id}
+                                          pathname:
+                                            "/partnership/user/kerjasama/review-kerjasama",
+                                          query: { id: items.id },
                                         }}
                                         passHref
                                       >
@@ -1015,13 +833,11 @@ const Table = ({token}) => {
                                     ) : items.status.name ===
                                       "pengajuan-revisi" ? (
                                       <Link
-
-                                      href={{
-                                        pathname:"/partnership/user/kerjasama/review-list-kerjasama",
-                                        query:{id:items.id}
-                                      }}
-
-                                        // href="/partnership/user/kerjasama/review-kerjasama-2"
+                                        href={{
+                                          pathname:
+                                            "/partnership/user/kerjasama/review-list-kerjasama",
+                                          query: { id: items.id },
+                                        }}
                                         passHref
                                       >
                                         <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
@@ -1034,17 +850,11 @@ const Table = ({token}) => {
                                     ) : items.status.name ===
                                       "pengajuan-pembahasan" ? (
                                       <Link
-
-
-
                                         href={{
-                                          pathname:"/partnership/user/kerjasama/pembahasan",
-                                          query:{id:items.id}
+                                          pathname:
+                                            "/partnership/user/kerjasama/pembahasan",
+                                          query: { id: items.id },
                                         }}
-
-
-
-
                                         passHref
                                       >
                                         <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
@@ -1056,43 +866,28 @@ const Table = ({token}) => {
                                       </Link>
                                     ) : items.status.name ===
                                       "pengajuan-selesai" ? (
-
-
-
-
-                                        <Link
-
-
-
+                                      <Link
                                         href={{
-                                          pathname:"/partnership/user/kerjasama/pembahasan",
-                                          query:{id:items.id}
+                                          pathname:
+                                            "/partnership/user/kerjasama/pembahasan",
+                                          query: { id: items.id },
                                         }}
-
-                                        
-
-
                                         passHref
                                       >
-
                                         <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
                                           <IconReview />
                                           <div className="text-hover-show-hapus">
                                             Review
                                           </div>
                                         </a>
-
-
-                                        </Link>
-
-
-
+                                      </Link>
                                     ) : items.status.name ===
                                       "pengajuan-document" ? (
                                       <Link
                                         href={{
-                                          pathname:"/partnership/user/kerjasama/review-dokumen-kerjasama",
-                                          query:{id:items.id}
+                                          pathname:
+                                            "/partnership/user/kerjasama/review-dokumen-kerjasama",
+                                          query: { id: items.id },
                                         }}
                                         passHref
                                       >
@@ -1105,48 +900,42 @@ const Table = ({token}) => {
                                       </Link>
                                     ) : (
                                       <div className="d-flex align-items-center">
-                                      
-                                      {/* <Link href={{
-                                         pathname:"/partnership/user/kerjasama/hasil",
-                                         query:{statusKerjasama:items.status.name}
-                                       }}> */}
-
-                                     
-                                      {/* </Link> */}
-                                      <Link href={{
-                                         pathname:"/partnership/user/kerjasama/hasil",
-                                         query:{statusKerjasama:items.status.name,id:items.id}
-                                       }}>
-
-                                      <a
-                                        className="btn btn-link-action bg-blue-secondary position-relative btn-delete mr-3"
-                                        // onClick={() =>
-                                        //   router.push(
-                                        //     `/partnership/user/kerjasama/${items.id}`
-                                        //   )
-                                        // }
-                                      >
-                                        <IconEye
-                                          width="16"
-                                          height="16"
-                                          fill="rgba(255,255,255,1)"
-                                        />
-                                        <div className="text-hover-show-hapus">
-                                          Review
-                                        </div>
-                                      </a>
-                                      </Link>
-                                       <button
-                                        className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                                        onClick={() =>
-                                          cooperationDelete(items.id)
-                                        }
-                                      >
-                                        <IconDelete width="16" height="16" />
-                                        <div className="text-hover-show-hapus">
-                                          Hapus
-                                        </div>
-                                      </button>
+                                        <Link
+                                          href={{
+                                            pathname:
+                                              "/partnership/user/kerjasama/hasil",
+                                            query: {
+                                              statusKerjasama:
+                                                items.status.name,
+                                              id: items.id,
+                                            },
+                                          }}
+                                        >
+                                          <a
+                                            className="btn btn-link-action bg-blue-secondary position-relative btn-delete mr-3"
+                                           
+                                          >
+                                            <IconEye
+                                              width="16"
+                                              height="16"
+                                              fill="rgba(255,255,255,1)"
+                                            />
+                                            <div className="text-hover-show-hapus">
+                                              Review
+                                            </div>
+                                          </a>
+                                        </Link>
+                                        <button
+                                          className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                          onClick={() =>
+                                            cooperationDelete(items.id)
+                                          }
+                                        >
+                                          <IconDelete width="16" height="16" />
+                                          <div className="text-hover-show-hapus">
+                                            Hapus
+                                          </div>
+                                        </button>
                                       </div>
                                     )}
                                   </div>

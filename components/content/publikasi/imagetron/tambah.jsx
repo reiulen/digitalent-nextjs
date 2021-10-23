@@ -19,7 +19,7 @@ import { NEW_IMAGETRON_RESET } from "../../../../redux/types/publikasi/imagetron
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingPage from "../../../LoadingPage";
 
-const TambahImagetron = ({ token }) => {
+const TambahImagetron = ({ token, id }) => {
   const editorRef = useRef()
   const dispatch = useDispatch()
   const router = useRouter();
@@ -40,25 +40,12 @@ const TambahImagetron = ({ token }) => {
   const [, forceUpdate] = useState();
 
   useEffect(() => {
-
-    // dispatch(getAllKategori());
-
     if (success) {
       router.push({
         pathname: `/publikasi/imagetron`,
         query: { success: true },
       });
     }
-
-    // if (error) {
-    //     dispatch(clearErrors())
-    // }
-
-    // if (success) {
-    //     dispatch({
-    //         type: NEW_IMAGETRON_RESET
-    //     })
-    // }
 
   }, [dispatch, error, success, simpleValidator, router]);
 
@@ -72,7 +59,7 @@ const TambahImagetron = ({ token }) => {
   const [gambarName, setGambarName] = useState(null)
   const [url_link, setUrlRedirect] = useState('')
   const [publish, setPublish] = useState(0)
-  const [users_id, setUserId] = useState(87)
+  const [users_id, setUserId] = useState(id)
   const [publishDate, setPublishDate] = useState(null);
   const [disablePublishDate, setDisablePublishDate] = useState(true)
 
@@ -218,7 +205,6 @@ const TambahImagetron = ({ token }) => {
 
   return (
     <PageWrapper>
-      {/* {console.log(setting)} */}
       {error ?
         <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
           <div className="alert-icon"><i className="flaticon-warning"></i></div>
@@ -231,18 +217,6 @@ const TambahImagetron = ({ token }) => {
         </div>
         : ''
       }
-      {/* {success ?
-                <div className="alert alert-custom alert-light-success fade show mb-5" role="alert">
-                    <div className="alert-icon"><i className="flaticon2-checkmark"></i></div>
-                    <div className="alert-text">{success}</div>
-                    <div className="alert-close">
-                        <button type="button" className="close" data-dismiss="alert" aria-label="Close" onClick={onNewReset} >
-                            <span aria-hidden="true"><i className="ki ki-close"></i></span>
-                        </button>
-                    </div>
-                </div>
-                : ''
-            } */}
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header">
@@ -322,9 +296,6 @@ const TambahImagetron = ({ token }) => {
                 <label className='col-sm-4 col-form-label font-weight-bolder'>Link URL</label>
                 <div className="col-sm-12">
                   <div className="input-group">
-                    {/* <div className="input-group-prepend">
-                                <div className="input-group-text">https://</div>
-                            </div> */}
                     <input type="text" className="form-control" value={url_link} onChange={e => setUrlRedirect(e.target.value)} placeholder="https://www.example.com" onBlur={() => simpleValidator.current.showMessageFor("url_link")} />
 
                   </div>
@@ -475,46 +446,11 @@ const TambahImagetron = ({ token }) => {
                           disabled={disablePublishDate === true || disablePublishDate === null}
                         />
                       </div>
-                      {/* {
-                          disablePublishDate === true ?
-                            <small className="text-muted">Harap ubah status publikasi menjadi aktif untuk mengisi Tanggal Publish</small>
-                          :
-                            null
-                        } */}
                     </div>
                   </div>
                   :
                   null
               }
-
-              {/* <div className="form-group">
-                  <label className='col-sm-5 col-form-label font-weight-bolder'>Set Tanggal Publish</label>
-                  <div className="col-sm-12">
-                    <div className="input-group">
-                      <DatePicker
-                        className="form-search-date form-control-sm form-control"
-                        selected={publishDate}
-                        onChange={(date) => handlePublishDate(date)}
-                        // onChange={(date) => setPublishDate(date)}
-                        selectsStart
-                        startDate={publishDate}
-                        // endDate={endDate}
-                        dateFormat="dd/MM/yyyy"
-                        placeholderText="Silahkan Isi Tanggal Publish"
-                        wrapperClassName="col-12 col-lg-12 col-xl-12"
-                        minDate={moment().toDate()}
-                        // minDate={addDays(new Date(), 20)}
-                        disabled = {disablePublishDate === true || disablePublishDate === null}
-                      />
-                    </div>
-                    {
-                      disablePublishDate === true ?
-                        <small className="text-muted">Harap ubah status publikasi menjadi aktif untuk mengisi Tanggal Publish</small>
-                      :
-                        null
-                    }
-                  </div>
-                </div> */}
 
               <div className="form-group row">
                 <div className="col-sm-2"></div>

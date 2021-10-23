@@ -18,6 +18,8 @@ const Table = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
 
+  const listLog = useSelector(state => state.listLog)
+
   const onNewReset = () => {
     router.replace("/site-management/api", undefined, {
       shallow: true,
