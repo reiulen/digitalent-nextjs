@@ -14,12 +14,14 @@ module.exports = {
   env: {
     NEXTAUTH_URL: "http://dts-dev.majapahit.id/",
 
+    PATH_URL: "http://dts-dev.majapahit.id",
+
     CAPTCHA_SITE_KEY: "6LeUmtIbAAAAAMltXjRDmRqns6MThDowaaYHz3YU",
     CAPTCHA_SECRET_KEY: "6LeUmtIbAAAAAAbA9yada3LOIktctPbfQ86SjhNn",
 
     // END_POINT_API_PUBLIKASI: "http://dts-publikasi-dev.majapahit.id/",
     END_POINT_API_PUBLIKASI: "http://api-dts-dev.majapahit.id/publikasi/",
-    END_POINT_API_PUBLIKASI_1:"http://dts-publikasi-dev.majapahit.id/",
+    END_POINT_API_PUBLIKASI_1: "http://dts-publikasi-dev.majapahit.id/",
     END_POINT_API_IMAGE_PUBLIKASI:
       "https://dts-publikasi-dev.s3.ap-southeast-1.amazonaws.com/",
 
@@ -52,6 +54,6 @@ module.exports = {
 
     // Beasiswa
     END_POINT_API_IMAGE_BEASISWA:
-    "https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/"
+      "https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/",
   },
 };
