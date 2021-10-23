@@ -27,8 +27,6 @@ const DashbardSubvit = () => {
 
   const [dataDummy] = useState(dashboard_subvit);
 
-  console.log(dataDummy);
-
   const data = [];
   if (dataDummy && dataDummy.chart) {
     Object.entries(dataDummy.data.chart).map((item, index) => {
@@ -597,63 +595,6 @@ const DashbardSubvit = () => {
               </div>
             </div>
           </div>
-          {/* <div className="col-lg-6 col-xxl-6 order-1 order-xxl-2">
-            <div className={`${styles.cardSubstansi} card`}>
-              <div className={`${styles.cardPesertaBody} card-body`}>
-                <h1 className={`${styles.headPeserta}`}>Survey</h1>
-                <p className={`${styles.subHeadPeserta}`}>yang sudah publish</p>
-                {dummy.map((item, index) => {
-                  return (
-                    <>
-                      <div className={`${styles.cardList} card`} key={index}>
-                        <div className="row">
-                          <div className="col-sm-1" style={{ padding: "0px" }}>
-                            <div
-                              className={`${styles.cardNumber} card`}
-                              style={{ width: "100%", height: "100%" }}
-                            >
-                              {item.no}
-                            </div>
-                          </div>
-                          <div className={`${styles.theme} col-sm-5`}>
-                            {item.theme}
-                            <br />
-                            <span className={styles.training}>
-                              {item.training}
-                            </span>
-                          </div>
-                          <div className={`${styles.total} col-sm-6`}>
-                            {item.total}
-                            <br />
-                            <span className={styles.note}>{item.note}</span>
-                          </div>
-                        </div>
-                      </div>
-                    </>
-                  );
-                })}
-                <div className={`${styles.rowBottom} row`}>
-                  <div className={`${styles.total} col-sm-6 mt-5`}>
-                    Total: 120.000 Peserta
-                  </div>
-                  <div className="col-sm-6" style={{ textAlign: "right" }}>
-                    <button className={`${styles.btnNext} btn btn-primary`}>
-                      <i
-                        className="ri-arrow-left-s-line"
-                        style={{ padding: "0px" }}
-                      ></i>
-                    </button>
-                    <button className={`${styles.btnNext} btn btn-primary`}>
-                      <i
-                        className="ri-arrow-right-s-line"
-                        style={{ padding: "0px" }}
-                      ></i>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div> */}
         </div>
       </PageWrapper>
     </>
