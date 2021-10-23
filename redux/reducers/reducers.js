@@ -92,6 +92,8 @@ import {
 import {
   allSubtanceQuestionDetailReducer,
   randomSubtanceQuestionDetailReducer,
+  getDashboardReducer,
+  postResultReducer,
   newSubtanceQuestionDetailReducer,
   deleteSubtanceQuestionDetailReducer,
   detailSubtanceQuestionDetailReducer,
@@ -188,6 +190,10 @@ import {
   detailPageReducer,
   updatePageReducer,
 } from "./site-management/settings/page.reducers";
+// ============== provinces site ===============
+import { allProvincesSiteReducer } from "./site-management/option/option-provinces.reducers";
+// ============== option reference site ===============
+import { allOptionReferenceSiteReducer } from "./site-management/option/option-reference.reducers";
 // ============== api ===============
 import {
   allApiReducer,
@@ -197,7 +203,23 @@ import {
   detailApiReducer,
   listApiReducer,
   listFieldReducer,
+  listLogReducer,
 } from "./site-management/settings/api.reducers";
+// ============== mitra site ===============
+import {
+  allMitraSiteReducer,
+  newMitraSiteReducer,
+  updateMitraSiteReducer,
+  detailMitraSiteReducer,
+} from "./site-management/user/mitra-site.reducers";
+// ============== mitra site ===============
+import {
+  allAdminSiteReducer,
+  newAdminSiteReducer,
+  updateAdminSiteReducer,
+  detailAdminSiteReducer,
+  deleteAdminSiteReducer,
+} from "./site-management/user/admin-site.reducers";
 // ============== data reference ===============
 import {
   allDataReferenceReducer,
@@ -245,7 +267,7 @@ import {
 import { allPromptReducer } from "./site-management/settings/pelatihan.reducers";
 
 // ============== pelatihan ===============
-import {allDataZonasiReducer} from './site-management/dashboard.reducers'
+import { allDataZonasiReducer } from "./site-management/dashboard.reducers";
 
 // End Site Management
 
@@ -320,6 +342,7 @@ import {
   drowpdownAkademiReducers,
   drowpdownTemaReducers,
   drowpdownPelatihanReducers,
+  drowpdownAgamaReducers,
   drowpdownPendidikanReducers,
   drowpdownStatusPekerjaanReducers,
   drowpdownLevelPelatihanReducers,
@@ -347,6 +370,12 @@ import {
   detailAkademiReducer,
   allPelatihanReducer,
 } from "../reducers/beranda/detail-akademi.reducers";
+
+// ========== detail pelatihan ========
+import {
+  detailPelatihanReducer,
+  checkRegisteredPelatihanReducer,
+} from "../reducers/beranda/detail-pelatihan.reducers";
 //END BERANDA
 
 const reducer = combineReducers({
@@ -428,6 +457,8 @@ const reducer = combineReducers({
 
   allSubtanceQuestionDetail: allSubtanceQuestionDetailReducer,
   randomSubtanceQuestionDetail: randomSubtanceQuestionDetailReducer,
+  dashboardSubvit: getDashboardReducer,
+  postResultSubvit: postResultReducer,
   newSubtanceQuestionDetail: newSubtanceQuestionDetailReducer,
   detailSubtanceQuestionDetail: detailSubtanceQuestionDetailReducer,
   updateSubtanceQuestionDetail: updateSubtanceQuestionDetailReducer,
@@ -516,12 +547,28 @@ const reducer = combineReducers({
   updatePage: updatePageReducer,
   listApi: listApiReducer,
   listField: listFieldReducer,
+  listLog: listLogReducer,
+  // ============ PAGE =======
+  allProvincesSite: allProvincesSiteReducer,
+  allOptionReferenceSite: allOptionReferenceSiteReducer,
   // ============ API =======
   allApi: allApiReducer,
   deleteApi: deleteApiReducer,
   newApi: newApiReducer,
   detailApi: detailApiReducer,
   updateApi: updateApiReducer,
+  // ============ MITRA SITE =======
+  allMitraSite: allMitraSiteReducer,
+  newMitraSite: newMitraSiteReducer,
+  detailMitraSite: detailMitraSiteReducer,
+  updateMitraSite: updateMitraSiteReducer,
+  // ============ MITRA SITE =======
+  allAdminSite: allAdminSiteReducer,
+  newAdminSite: newAdminSiteReducer,
+  updateAdminSite: updateAdminSiteReducer,
+  detailAdminSite: detailAdminSiteReducer,
+  deleteAdminSite: deleteAdminSiteReducer,
+
   // ============ DATA REFERENCE =======
   allDataReference: allDataReferenceReducer,
   deleteDataReference: deleteDataReferenceReducer,
@@ -601,9 +648,12 @@ const reducer = combineReducers({
   trainingStep1: trainingStep1Reducer,
   registrationStep2: registrationStep2Reducer,
   commitmentStep3: commitmentStep3Reducer,
+
+  // ======= dropdown ==========
   drowpdownAkademi: drowpdownAkademiReducers,
   drowpdownTema: drowpdownTemaReducers,
   drowpdownPelatihan: drowpdownPelatihanReducers,
+  drowpdownAgama: drowpdownAgamaReducers,
   drowpdownPendidikan: drowpdownPendidikanReducers,
   drowpdownStatusPekerjaan: drowpdownStatusPekerjaanReducers,
   drowpdownLevelPelatihan: drowpdownLevelPelatihanReducers,
@@ -637,6 +687,11 @@ const reducer = combineReducers({
   // ========== detail akademi ========
   detailAkademi: detailAkademiReducer,
   allPelatihan: allPelatihanReducer,
+
+  // ========== detail pelatihan ========
+  detailPelatihan: detailPelatihanReducer,
+  checkRegisteredPelatihan: checkRegisteredPelatihanReducer,
+
   //END BERANDA
 });
 

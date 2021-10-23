@@ -22,6 +22,7 @@ const NavbarComponent = ({ session }) => {
     (state) => state.getDataPribadi
   );
 
+  console.log(dataPribadi);
   const handlerLogout = () => {
     signOut();
     // {

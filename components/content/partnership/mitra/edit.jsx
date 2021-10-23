@@ -334,7 +334,7 @@ const EditMitra = ({ token }) => {
                 readOnly
                   onFocus={() => setError({ ...error, institution_name: "" })}
                   type="text"
-                  className="form-control"
+                  className="form-control border-0"
                   placeholder="Masukkan Nama Lembaga"
                   value={institution_name}
                   onChange={(e) => setInstitution_name(e.target.value)}
@@ -376,7 +376,7 @@ const EditMitra = ({ token }) => {
                     readOnly
                       onFocus={() => setError({ ...error, email: "" })}
                       type="email"
-                      className="form-control"
+                      className="form-control border-0"
                       placeholder="Masukkan Email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}

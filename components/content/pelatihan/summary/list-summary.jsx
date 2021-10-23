@@ -391,7 +391,7 @@ const ListSummary = ({ token }) => {
                             <td className="align-middle">
                               <div className="d-flex">
                                 <Link
-                                  href={`/pelatihan/rekap-pendaftaran/detail-rekap-pendaftaran/${row.id}`}
+                                  href={`/pelatihan/pelatihan/view-pelatihan/${row.id}`}
                                 >
                                   <a
                                     className="btn btn-link-action bg-blue-secondary text-white mr-2"
@@ -403,7 +403,7 @@ const ListSummary = ({ token }) => {
                                   </a>
                                 </Link>
                                 <Link
-                                  href={`/pelatihan/pelatihan/view-pelatihan/${row.id}`}
+                                  href={`/pelatihan/rekap-pendaftaran/detail-rekap-pendaftaran/${row.id}`}
                                 >
                                   <a
                                     className="btn btn-link-action bg-blue-secondary text-white mr-2"

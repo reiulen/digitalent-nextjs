@@ -312,7 +312,7 @@ const DetailAkademi = () => {
 
                                                 <div className="text-muted">
                                                     {
-                                                        akademiName
+                                                        akademi.name
                                                     }
                                                 </div>
 
@@ -358,7 +358,7 @@ const DetailAkademi = () => {
                                                         <div className="col-9">
                                                             <div className="text-muted">
                                                                 {
-                                                                    akademiName
+                                                                    akademi.name
                                                                 }
                                                             </div>
                                                             <div>

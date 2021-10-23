@@ -67,7 +67,7 @@ const Beranda = () => {
   const handleHoverCard = () => {
     let arr = []
 
-    if (tema.length !== 0 ){
+    if (tema && tema.length !== 0 ){
       for (let i = 0; i < tema.length; i++){
         let obj = {
           id: tema[i].id,
@@ -162,13 +162,6 @@ const Beranda = () => {
 
       <div style={{ backgroundColor: "white" }}>
         <Navigationbar />
-        {
-          // console.log (publikasi)
-        }
-
-        {
-          // console.log (tema)
-        }
 
         {/* Carousel 1 */}
         {
@@ -248,44 +241,6 @@ const Beranda = () => {
                       )
                     })
                   }
-                  {/* <SplideSlide>
-                    <Image
-                      layout="fill"
-                      // width="1000vw"
-                      // height="500vh"
-                      objectFit="fill"
-                      // src={`/assets/media/banner-3.svg`}
-                      src={`/assets/media/carousel-01.svg`}
-                      alt="First slide"
-                      className="mx-5"
-                    />
-                  </SplideSlide>
-
-                  <SplideSlide>
-                    <Image
-                      layout="fill"
-                      objectFit="fill"
-                      // width="1000vw"
-                      // height="500vh"
-                      // src={`/assets/media/image27.png`}
-                      src={`/assets/media/carousel-01.svg`}
-                      alt="First slide"
-                      className="mx-5"
-                    />
-                  </SplideSlide>
-
-                  <SplideSlide>
-                    <Image
-                      layout="fill"
-                      // width="1000vw"
-                      // height="500vh"
-                      objectFit="fill"
-                      // src={`/assets/media/banner-3.svg`}
-                      src={`/assets/media/carousel-01.svg`}
-                      alt="First slide"
-                      className="mx-5"
-                    />
-                  </SplideSlide> */}
                 </Splide>
               </div>
             </div>
@@ -369,6 +324,19 @@ const Beranda = () => {
                       // width="1000vw"
                       // height="500vh"
                       // src={`/assets/media/image27.png`}
+                      src={`/assets/media/carousel-01.svg`}
+                      alt="First slide"
+                      className="mx-5"
+                    />
+                  </SplideSlide>
+
+                  <SplideSlide>
+                    <Image
+                      layout="fill"
+                      // width="1000vw"
+                      // height="500vh"
+                      objectFit="fill"
+                      // src={`/assets/media/banner-3.svg`}
                       src={`/assets/media/carousel-01.svg`}
                       alt="First slide"
                       className="mx-5"

@@ -74,99 +74,97 @@ const Sidebar = () => {
           </div>
         </div>
       </div>
-      {drop && (
-        <>
-          <div>
-            <Link href="/peserta" passHref>
-              <div className={`${styles.menuItem} d-flex flex-row`}>
-                <div className="p-2">
-                  <i className={`${styles.iconMenu} ri-pie-chart-line`}></i>
-                </div>
-                <div className="p-2">
-                  <td>Dashboard</td>
-                </div>
-              </div>
-            </Link>
-          </div>
-          <div>
-            <Link href="/peserta/riwayat-pelatihan" passHref>
-              <div className={`${styles.menuItem} d-flex flex-row`}>
-                <div className="p-2">
-                  <i className={`${styles.iconMenu} ri-history-line`}></i>
-                </div>
-                <div className="p-2">
-                  <td>Riwayat Pelatihan</td>
-                </div>
-              </div>
-            </Link>
-          </div>
-          <div>
-            <div className={`${styles.menuItem} d-flex flex-row`}>
-              <div className="p-2">
-                <i className={`${styles.iconMenu} ri-heart-3-line`}></i>
-              </div>
-              <div className="p-2">
-                <td>Bookmark</td>
-              </div>
-            </div>
-          </div>
-          <div>
-            <Link href="/peserta/test-substansi" passHref>
-              <div className={`${styles.menuItem} d-flex flex-row`}>
-                <div className="p-2">
-                  <i className={`${styles.iconMenu} ri-article-line`}></i>
-                </div>
-                <div className="p-2">
-                  <td>Test Substansi</td>
-                </div>
-              </div>
-            </Link>
-          </div>
 
-          <div>
-            <Link href="/peserta/survey" passHref>
-              <div className={`${styles.menuItem} d-flex flex-row`}>
-                <div className="p-2">
-                  <i className={`${styles.iconMenu} ri-chat-smile-line`}></i>
-                </div>
-                <div className="p-2">
-                  <td>Survey</td>
-                </div>
-              </div>
-            </Link>
-          </div>
-          <div>
-            <div className={`${styles.menuItem} d-flex flex-row`}>
-              <div className="p-2">
-                <i className={`${styles.iconMenu} ri-lightbulb-line`}></i>
-              </div>
-              <div className="p-2">
-                <td>TRIVIA</td>
-              </div>
+      <div>
+        <Link href="/peserta" passHref>
+          <div className={`${styles.menuItem} d-flex flex-row`}>
+            <div className="p-2">
+              <i className={`${styles.iconMenu} ri-pie-chart-line`}></i>
+            </div>
+            <div className="p-2">
+              <td>Dashboard</td>
             </div>
           </div>
-          <div>
-            <div className={`${styles.menuItem} d-flex flex-row`}>
-              <div className="p-2">
-                <i className={`${styles.iconMenu} ri-pie-chart-line`}></i>
-              </div>
-              <div className="p-2">
-                <td>Artikel</td>
-              </div>
+        </Link>
+      </div>
+      <div>
+        <Link href="/peserta/riwayat-pelatihan" passHref>
+          <div className={`${styles.menuItem} d-flex flex-row`}>
+            <div className="p-2">
+              <i className={`${styles.iconMenu} ri-history-line`}></i>
+            </div>
+            <div className="p-2">
+              <td>Riwayat Pelatihan</td>
             </div>
           </div>
-          <div>
-            <div className={`${styles.menuItem} d-flex flex-row`}>
-              <div className="p-2">
-                <i className={`${styles.iconMenu} ri-survey-line`}></i>
-              </div>
-              <div className="p-2">
-                <td>Administrasi</td>
-              </div>
+        </Link>
+      </div>
+      <div>
+        <div className={`${styles.menuItem} d-flex flex-row`}>
+          <div className="p-2">
+            <i className={`${styles.iconMenu} ri-heart-3-line`}></i>
+          </div>
+          <div className="p-2">
+            <td>Bookmark</td>
+          </div>
+        </div>
+      </div>
+      <div>
+        <Link href="/peserta/test-substansi" passHref>
+          <div className={`${styles.menuItem} d-flex flex-row`}>
+            <div className="p-2">
+              <i className={`${styles.iconMenu} ri-article-line`}></i>
+            </div>
+            <div className="p-2">
+              <td>Test Substansi</td>
             </div>
           </div>
-        </>
-      )}
+        </Link>
+      </div>
+
+      <div>
+        <Link href="/peserta/survey" passHref>
+          <div className={`${styles.menuItem} d-flex flex-row`}>
+            <div className="p-2">
+              <i className={`${styles.iconMenu} ri-chat-smile-line`}></i>
+            </div>
+            <div className="p-2">
+              <td>Survey</td>
+            </div>
+          </div>
+        </Link>
+      </div>
+      <div>
+        <div className={`${styles.menuItem} d-flex flex-row`}>
+          <div className="p-2">
+            <i className={`${styles.iconMenu} ri-lightbulb-line`}></i>
+          </div>
+          <div className="p-2">
+            <td>TRIVIA</td>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div className={`${styles.menuItem} d-flex flex-row`}>
+          <div className="p-2">
+            <i className={`${styles.iconMenu} ri-pie-chart-line`}></i>
+          </div>
+          <div className="p-2">
+            <td>Artikel</td>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div className={`${styles.menuItem} d-flex flex-row`}>
+          <div className="p-2">
+            <i className={`${styles.iconMenu} ri-survey-line`}></i>
+          </div>
+          <div className="p-2">
+            <td>Administrasi</td>
+          </div>
+        </div>
+      </div>
+
       <div
         className={dropSimonas ? styles.active : styles.subMenuTitle}
         onClick={(event) => handleDown(event)}

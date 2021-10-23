@@ -2,179 +2,60 @@ import {
   ROLES_REQUEST,
   ROLES_SUCCESS,
   ROLES_FAIL,
-  NEW_ROLES_REQUEST,
-  NEW_ROLES_SUCCESS,
-  NEW_ROLES_FAIL,
-  DELETE_ROLES_REQUEST,
+  DETAIL_ROLES_REQUEST,
+  DETAIL_ROLES_SUCCESS,
+  DETAIL_ROLES_FAIL,
+  DETAIL_ROLES_RESET,
   DELETE_ROLES_SUCCESS,
   DELETE_ROLES_FAIL,
-  DETAIL_ONE_ROLES_REQUEST,
-  DETAIL_ONE_ROLES_SUCCESS,
-  DETAIL_ONE_ROLES_FAIL,
+  DELETE_ROLES_REQUEST,
+  DELETE_ROLES_RESET,
+  POST_ROLES_REQUEST,
+  POST_ROLES_SUCCESS,
+  POST_ROLES_FAIL,
+  POST_ROLES_RESET,
+  UPDATE_ROLES_REQUEST,
+  UPDATE_ROLES_SUCCESS,
+  UPDATE_ROLES_FAIL,
+  LIMIT_CONFIGURATION,
+  SET_PAGE,
+  SEARCH_COORPORATION,
   CLEAR_ERRORS,
 } from "../../types/site-management/role.type";
 
 import axios from "axios";
-import { getSession } from "next-auth/client";
 
-// get all data
-export const getAllRoles =
-  (page = 1, keyword = "", limit = 5, token) =>
-  async (dispatch) => {
-    try {
-      dispatch({ type: ROLES_REQUEST });
-
-      let link =
-        process.env.END_POINT_API_SITE_MANAGEMENT +
-        `api/subtance-question-banks?page=${page}`;
-      if (keyword) link = link.concat(`&keyword=${keyword}`);
-      if (limit) link = link.concat(`&limit=${limit}`);
-
-      const config = {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      };
-
-      //   const { data } = await axios.get(link, config);
-      const { data } = {
-        perPage: 5,
-        total: 6,
-        totalFiltered: 6,
-        list_role: [
-          {
-            id: 1,
-            name: "Admin verifikator",
-            editable: "Yes",
-            Status: "Aktif",
-          },
-          {
-            id: 2,
-            name: "Admin Ke 1",
-            editable: "Yes",
-            Status: "Aktif",
-          },
-          {
-            id: 3,
-            name: "Admin Pokja",
-            editable: "Yes",
-            Status: "Aktif",
-          },
-          {
-            id: 4,
-            name: "Admin Akademi",
-            editable: "Yes",
-            Status: "Aktif",
-          },
-          {
-            id: 5,
-            name: "Admin Pelatihan",
-            editable: "Yes",
-            Status: "Aktif",
-          },
-          {
-            id: 6,
-            name: "Admin Tema",
-            editable: "Yes",
-            Status: "Aktif",
-          },
-        ],
-      };
-
-      dispatch({
-        type: ROLES_SUCCESS,
-        payload: data,
-      });
-    } catch (error) {
-      dispatch({
-        type: ROLES_FAIL,
-      });
-    }
-  };
-
-export const newRoles = (subtanceData, token) => async (dispatch) => {
+export const getAllRoles = (token) => async (dispatch, getState) => {
   try {
-    dispatch({
-      type: NEW_ROLES_REQUEST,
-    });
+    dispatch({ type: ROLES_REQUEST });
 
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
+    let pageState = getState().allRoles.page || 1;
+    let cariState = getState().allRoles.cari || "";
+    let limitState = getState().allRoles.limit || 5;
+
+    const params = {
+      page: pageState,
+      cari: cariState,
+      limit: limitState,
     };
 
-    const { data } = await axios.post(
-      process.env.END_POINT_API_SUBVIT + "api/subtance-question-banks",
-      subtanceData,
-      config
+    const { data } = await axios.get(
+      `${process.env.END_POINT_API_SITE_MANAGEMENT}api/role/all`,
+      {
+        params,
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }
     );
 
     dispatch({
-      type: NEW_ROLES_SUCCESS,
+      type: ROLES_SUCCESS,
       payload: data,
     });
   } catch (error) {
     dispatch({
-      type: NEW_ROLES_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
-
-export const getOneRoles = (id, token) => async (dispatch) => {
-  try {
-    dispatch({ type: DETAIL_ONE_ROLES_REQUEST });
-
-    let link =
-      process.env.END_POINT_API_SUBVIT + `api/subtance-question-banks/${id}`;
-
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
-
-    const { data } = await axios.get(link, config);
-
-    dispatch({
-      type: DETAIL_ONE_ROLES_SUCCESS,
-      payload: data.data,
-    });
-  } catch (error) {
-    dispatch({
-      type: DETAIL_ONE_ROLES_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
-
-export const updatewRoles = (id, RoleData, token) => async (dispatch) => {
-  try {
-    dispatch({
-      type: UPDATE_ROLES_REQUEST,
-    });
-
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
-
-    const { data } = await axios.post(
-      process.env.END_POINT_API_SUBVIT + `api/subtance-question-banks/${id}`,
-      RoleData,
-      config
-    );
-
-    dispatch({
-      type: UPDATE_ROLES_SUCCESS,
-      payload: data.status,
-    });
-  } catch (error) {
-    dispatch({
-      type: UPDATE_ROLES_FAIL,
-      payload: error.response.data.message,
+      type: ROLES_FAIL,
     });
   }
 };
@@ -189,25 +70,121 @@ export const deleteRoles = (id, token) => async (dispatch) => {
       },
     };
 
-    const data = await axios.delete(
-      process.env.END_POINT_API_SUBVIT + `api/subtance-question-banks/${id}`,
+    const { data } = await axios.get(
+      process.env.END_POINT_API_SITE_MANAGEMENT + `api/role/delete/${id}`,
       config
     );
 
     dispatch({
       type: DELETE_ROLES_SUCCESS,
-      payload: data.status,
+      payload: data,
     });
   } catch (error) {
     dispatch({
       type: DELETE_ROLES_FAIL,
-      payload: error.response.data.message,
     });
   }
 };
-// Clear Error
-export const clearErrors = () => async (dispatch) => {
-  dispatch({
-    type: CLEAR_ERRORS,
-  });
+
+export const postRoles = (sendData, token) => {
+  return async (dispatch) => {
+    try {
+      dispatch({
+        type: POST_ROLES_REQUEST,
+      });
+      const { data } = await axios.post(
+        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/role/store`,
+        sendData,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      dispatch({
+        type: POST_ROLES_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: POST_ROLES_FAIL,
+      });
+    }
+  };
+};
+
+export const getDetailRoles = (id, token) => async (dispatch) => {
+  try {
+    dispatch({
+      type: DETAIL_ROLES_REQUEST,
+    });
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    let link =
+      process.env.END_POINT_API_SITE_MANAGEMENT + `api/role/detail/${id}`;
+
+    const { data } = await axios.get(link, config);
+
+    dispatch({
+      type: DETAIL_ROLES_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: DETAIL_ROLES_FAIL,
+    });
+  }
+};
+
+export const updateRoles = (sendData, token) => async (dispatch) => {
+  try {
+    dispatch({
+      type: UPDATE_ROLES_REQUEST,
+    });
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    const { data } = await axios.post(
+      process.env.END_POINT_API_SITE_MANAGEMENT + `/api/satuan/update`,
+      sendData,
+      config
+    );
+
+    dispatch({
+      type: UPDATE_ROLES_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: UPDATE_ROLES_FAIL,
+    });
+  }
+};
+
+export const setPage = (page) => {
+  return {
+    type: SET_PAGE,
+    page,
+  };
+};
+
+export const searchCooporation = (text) => {
+  return {
+    type: SEARCH_COORPORATION,
+    text,
+  };
+};
+
+export const limitCooporation = (value) => {
+  return {
+    type: LIMIT_CONFIGURATION,
+    limitValue: value,
+  };
 };
