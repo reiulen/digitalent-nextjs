@@ -289,3 +289,9 @@ a {
     -webkit-transform-origin: 0 0;
   }
 }
+
+@-moz-document url-prefix() {
+  .row-aksi-pelatihan {
+    width: 300px;
+  }
+}

@@ -184,7 +184,6 @@ export const setPage = (page) => {
 };
 
 export const searchCooporation = (text) => {
-  console.log("text", text);
   return {
     type: SEARCH_COORPORATION,
     text,

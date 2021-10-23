@@ -70,8 +70,11 @@ export default function FileSize(props) {
             </span>
           </div>
         </div>
-        <div className="d-flex justify-content-end mb-4">
-          <button type="reset" className="btn btn-reset">
+        <div className="d-flex justify-content-end mt-5">
+          <button type="reset" className="btn btn-reset" onClick={() => {
+            setImage("");
+            setDocument("")
+          }}>
             Reset
           </button>
           <button

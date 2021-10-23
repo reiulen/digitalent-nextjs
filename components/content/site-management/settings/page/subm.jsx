@@ -10,7 +10,6 @@ import {
 } from "../../../../../redux/actions/site-management/settings/pelatihan.actions";
 
 export default function SUBM(props) {
-
   let dispatch = useDispatch();
 
   const [via, setVia] = useState("template");
@@ -32,10 +31,17 @@ export default function SUBM(props) {
   const [emailSubject, setEmailSubject] = useState("");
   const [emailContent, setEmailContent] = useState("");
   const [file, setFile] = useState("");
-  const [link, setLink] = useState("")
+  const [link, setLink] = useState("");
+
+  const[listYear, setListYear] = useState([])
+  const[listAcademy, setListAcademy] = useState([])
+  const[listTheme, setListTheme] = useState([])
+  const[listOrganizer, setListOrganizer] = useState([])
+  const[listTraining, setListTraining] = useState([])
+  const[listProfileStatus, setListProfileStatus] = useState([])
+  const[listSelectionStatus, setListSelectionStatus] = useState([])
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
 
     if (via === "filter") {
       dispatch(
@@ -63,7 +69,16 @@ export default function SUBM(props) {
         )
       );
     } else {
-      dispatch(postViaTemplate(props.token, file, `via ${via}`));
+      dispatch(postViaTemplate(props.token,title, file, participantSelectionStatusUpdate ||
+        participantSelectionStatusUpdate === 1
+        ? "1"
+        : "0",
+      status,
+      broadcastEmailSendNotification || broadcastEmailSendNotification === 1
+        ? "1"
+        : "0",
+      emailSubject,
+      emailContent, `via ${via}`));
     }
   };
 
@@ -78,9 +93,124 @@ export default function SUBM(props) {
         }
       )
       .then((data) => {
-        setLink(data.data.data)
+        setLink(data.data.data);
       });
+
+      axios
+      .get(
+        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/option/year`,
+        {
+          headers: {
+            authorization: `Bearer ${props.token}`,
+          },
+        }
+      )
+      .then((data) => {
+        setListYear(data.data.data)
+      });
+
+      axios
+      .get(
+        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/option/theme`,
+        {
+          headers: {
+            authorization: `Bearer ${props.token}`,
+          },
+        }
+      )
+      .then((data) => {
+        setListTheme(data.data.data)
+      });
+
+      axios
+      .get(
+        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/option/academy`,
+        {
+          headers: {
+            authorization: `Bearer ${props.token}`,
+          },
+        }
+      )
+      .then((data) => {
+        setListAcademy(data.data.data)
+      });
+
+      axios
+      .get(
+        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/option/organizer`,
+        {
+          headers: {
+            authorization: `Bearer ${props.token}`,
+          },
+        }
+      )
+      .then((data) => {
+        setListOrganizer(data.data.data)
+      });
+
+      axios
+      .get(
+        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/option/training`,
+        {
+          headers: {
+            authorization: `Bearer ${props.token}`,
+          },
+        }
+      )
+      .then((data) => {
+        setListTraining(data.data.data)
+      });
+
+      axios
+      .get(
+        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/option/status-profile`,
+        {
+          headers: {
+            authorization: `Bearer ${props.token}`,
+          },
+        }
+      )
+      .then((data) => {
+        setListProfileStatus(data.data.data)
+      });
+
   }, [props.token]);
+
+  const listYears = listYear.map((item, index) => {
+    return (
+      <option value={item.value} key={index} >{item.value}</option>
+    )
+  })
+
+  const optAcademy = listAcademy.map((item, index) => {
+    return (
+      <option value={item.value} key={index} >{item.label}</option>
+    )
+  })
+
+  const optTheme = listTheme.map((item, index) => {
+    return (
+      <option value={item.value} key={index} >{item.label}</option>
+    )
+  })
+
+  const optOrganizer = listOrganizer.map((item, index) => {
+    return (
+      <option value={item.label} key={index} >{item.label}</option>
+    )
+  })
+  
+  const optTraining = listTraining.map((item, index) => {
+    return (
+      <option value={item.value} key={index} >{item.label}</option>
+    )
+  })
+
+  const optStatusProfile = listProfileStatus.map((item, index) => {
+    return (
+      <option value={item.value} key={index} >{item.value}</option>
+    )
+  })
 
   return (
     <div className="col-xl-8 styling-content-pelatihan">
@@ -96,6 +226,7 @@ export default function SUBM(props) {
             className="form-control"
             id="formGroupExampleInput"
             placeholder="Example input"
+            required
             onChange={(e) => {
               setTitle(e.target.value);
             }}
@@ -139,10 +270,13 @@ export default function SUBM(props) {
                   <h3 className="judul">Unduh Template Data Peserta</h3>
                 </div>
                 <div className="justify-content-start">
-                  <div className="mr-4 styling-unduh d-flex" onClick={e => {
-                    e.preventDefault()
-                    window.location = link
-                  }}>
+                  <div
+                    className="mr-4 styling-unduh d-flex"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      window.location = link;
+                    }}
+                  >
                     <div className="position-relative">
                       <i
                         className="fas fa-download"
@@ -161,7 +295,7 @@ export default function SUBM(props) {
                 </div>
               </div>
               <div className="col">
-                <div className="title-unduh">
+                <div className="title-unduh mb-5">
                   <h3 className="judul">Upload Data Peserta</h3>
                 </div>
                 <div className="justify-content-start">
@@ -180,6 +314,7 @@ export default function SUBM(props) {
                       ></i>
                       <input
                         type="file"
+                        required
                         onChange={(e) => {
                           setFile(e.target.files[0]);
                         }}
@@ -205,14 +340,12 @@ export default function SUBM(props) {
                   onChange={(e) => {
                     setYear(e.target.value);
                   }}
+                  required
                 >
                   <option disabled selected>
                     --------------- PILIH TAHUN ------------------
                   </option>
-                  <option value="2021">2021</option>
-                  <option value="2022">2022</option>
-                  <option value="2021">2021</option>
-                  <option value="2021">2021</option>
+                  {listYears}
                 </select>
               </div>
               <div className="form-group col-xl-6">
@@ -222,11 +355,12 @@ export default function SUBM(props) {
                   onChange={(e) => {
                     setAcademy(e.target.value);
                   }}
+                  required
                 >
                   <option disabled selected>
                     --------------- PILIH AKADEMI ------------------
                   </option>
-                  <option value="01">01</option>
+                  {optAcademy}
                 </select>
               </div>
               <div className="form-group col-xl-6">
@@ -236,11 +370,12 @@ export default function SUBM(props) {
                   onChange={(e) => {
                     setTheme(e.target.value);
                   }}
+                  required
                 >
                   <option disabled selected>
                     --------------- PILIH TEMA ------------------
                   </option>
-                  <option value="02">02</option>
+                  {optTheme}
                 </select>
               </div>
               <div className="form-group col-xl-6">
@@ -250,11 +385,12 @@ export default function SUBM(props) {
                   onChange={(e) => {
                     setOrganizer(e.target.value);
                   }}
+                  required
                 >
                   <option disabled selected>
                     --------------- PILIH PENYELENGGARA ------------------
                   </option>
-                  <option value="03">03</option>
+                  {optOrganizer}
                 </select>
               </div>
               <div className="form-group col-xl-6">
@@ -264,11 +400,12 @@ export default function SUBM(props) {
                   onChange={(e) => {
                     setTraining(e.target.value);
                   }}
+                  required
                 >
                   <option disabled selected>
                     --------------- PILIH PELATIHAN ------------------
                   </option>
-                  <option value="04">04</option>
+                  {optTraining}
                 </select>
               </div>
               <div className="form-group col-xl-6">
@@ -278,11 +415,12 @@ export default function SUBM(props) {
                   onChange={(e) => {
                     setProfileStatus(e.target.value);
                   }}
+                  required
                 >
                   <option disabled selected>
                     --------------- PILIH STATUS PROFIL ------------------
                   </option>
-                  <option value="05">05</option>
+                  {optStatusProfile}
                 </select>
               </div>
               <div className="form-group col-xl-6">
@@ -292,11 +430,12 @@ export default function SUBM(props) {
                   onChange={(e) => {
                     setSelectionStatus(e.target.value);
                   }}
+                  required
                 >
                   <option disabled selected>
                     --------------- PILIH STATUS SELEKSI ------------------
                   </option>
-                  <option value="06">06</option>
+                  <option value="06">Lulus</option>
                 </select>
               </div>
             </div>
@@ -335,6 +474,7 @@ export default function SUBM(props) {
               onChange={(e) => {
                 setStatus(e.target.value);
               }}
+              required
             >
               <option disabled selected>
                 {" "}
@@ -370,10 +510,11 @@ export default function SUBM(props) {
                 onChange={(e) => {
                   setBroadcastEmailSendNotification(e.target.checked);
                 }}
+                required
               />
               <span></span>
             </label>
-            <h3 className="mt-2 judul">
+            <h3 className="mt-2 isAktif">
               {broadcastEmailSendNotification ? "Aktif" : "Tidak Aktif"}
             </h3>
           </span>
@@ -389,13 +530,14 @@ export default function SUBM(props) {
             onChange={(e) => {
               setEmailSubject(e.target.value);
             }}
+            required
           />
         </div>
         <div className="form-group">
           <h3 className="judul">Konten Email</h3>
           <CKEditor
             editor={ClassicEditor}
-            data=""
+            data={emailContent}
             onChange={(event, editor) => {
               let data = editor.getData();
               setEmailContent(data);
@@ -403,7 +545,24 @@ export default function SUBM(props) {
           />
         </div>
         <div className="d-flex justify-content-end mb-4">
-          <button type="reset" className="btn btn-reset">
+          <button type="reset" className="btn btn-reset" onClick={() => {
+             setVia("template");
+             setTitle("");
+             setYear("");
+             setAcademy("");
+             setTheme("");
+             setOrganizer("");
+             setTraining("");
+             setProfileStatus("");
+             setSelectionStatus("");
+             setParticipantSelectionStatusUpdate(0);
+             setStatus("");
+             setBroadcastEmailSendNotification(0);
+             setEmailSubject("");
+             setEmailContent("");
+             setFile("");
+             setLink("");
+          }}>
             Reset
           </button>
           <button

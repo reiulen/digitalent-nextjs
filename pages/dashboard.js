@@ -1,4 +1,5 @@
 import { getSession } from "next-auth/client";
+import { middlewareAuthAdminSession } from "../utils/middleware/authMiddleware";
 
 export default function DashboardPage() {
   return (
@@ -10,20 +11,12 @@ export default function DashboardPage() {
 
 export async function getServerSideProps(context) {
   const session = await getSession({ req: context.req });
-  if (!session) {
-    return {
-      redirect: {
-        destination: "http://dts-dev.majapahit.id/login/admin",
-        permanent: false,
-      },
-    };
-  }
 
-  const data = session.user.user.data;
-  if (data.user.roles[0] === "user") {
+  const middleware = middlewareAuthAdminSession(session);
+  if (!middleware.status) {
     return {
       redirect: {
-        destination: "/peserta",
+        destination: middleware.redirect,
         permanent: false,
       },
     };

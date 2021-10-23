@@ -1,7 +1,8 @@
 import Cardss from "./card";
 import Link from "next/link";
 import IconArrow from "../../../components/assets/icon/Arrow2";
-export default function rilisMedia() {
+import { Badge } from "react-bootstrap";
+export default function rilisMedia({berita}) {
   return (
     <div className="py-0 py-xl-20 rillirs-media max-container">
       <h1
@@ -10,48 +11,122 @@ export default function rilisMedia() {
       >
         Rilis Media & Informasi Terbaru
       </h1>
+      {
+        // console.log (berita)
+      }
       <div className="container-fluid mt-20">
         <div className="row">
           <div className="col-12 col-sm-6 col-md-6 col-xl-4">
             <Cardss>
-               {/* <div className="rounded"></div> */}
-                    <div className="d-flex align-items-center justify-content-between" >
-                      <p className="fw-600" style={{ color: "#6C6C6C" }}>
-                        Gojek
-                      </p>
-                      <button className="btn btn-green-rounded">OPEN</button>
-                    </div>
-                    <h1
-                      className="fz-18 fw-600 mt-4"
-                      style={{ color: "#1F1F1F" }}
-                    >
-                      Pengumuman Kelulusan Peserta Pelatihan Daring Gelombang 1 Program VSGA DTS 2021
-                    </h1>
-
-                    <div className="d-flex align-items-center justify-content-end" style={{
-                      position: "absolute",
-    bottom: "28px",
-    right: "24px"
-                    }}>
-                <p className="mb-0 fz-14 fw-600" style={{ color: "#6C6C6C" }}>
-                  Lihat Detail
+               
+              <div className="d-flex align-items-center justify-content-between" >
+                <p className="fw-600" style={{ color: "#6C6C6C" }}>
+                  12 Mei 2021
                 </p>
-                <IconArrow
-                  width="8"
-                  height="10"
-                  fill="#6C6C6C"
-                  className="ml-2"
-                  style={{ transform: "rotate(0)" }}
-                />
+                <div>
+
+                </div>
+                <Badge bg="light">
+                  <div className="text-info font-weight-bolder">
+                    Kategori
+                  </div>
+                </Badge>
+              </div>
+              <h1
+                className="fz-18 fw-600 mt-4"
+                style={{ color: "#1F1F1F" }}
+              >
+                Pengumuman Kelulusan Peserta Pelatihan Daring Gelombang 1 Program VSGA DTS 2021
+              </h1>
+
+              <div className="d-flex align-items-center justify-content-end" style={{
+                position: "absolute",
+                bottom: "28px",
+                right: "24px"
+              }}>
+            
+                <div className="font-weight-bolder" style={{ color: "#6C6C6C" }}>
+                  Lihat Detail
+                </div>
+                <i className="ri-arrow-right-line" style={{ color: "#6C6C6C" }}></i>
               </div>
                   
             </Cardss>
           </div>
           <div className="col-12 col-sm-6 col-md-6 col-xl-4">
-            <Cardss />
+            <Cardss>
+               
+              <div className="d-flex align-items-center justify-content-between" >
+                <p className="fw-600" style={{ color: "#6C6C6C" }}>
+                  12 Mei 2021
+                </p>
+                <div>
+
+                </div>
+                <Badge bg="light">
+                  <div className="text-info font-weight-bolder">
+                    Kategori
+                  </div>
+                </Badge>
+              </div>
+              <h1
+                className="fz-18 fw-600 mt-4"
+                style={{ color: "#1F1F1F" }}
+              >
+                Pengumuman Kelulusan Peserta Pelatihan Daring Gelombang 1 Program VSGA DTS 2021
+              </h1>
+
+              <div className="d-flex align-items-center justify-content-end" style={{
+                position: "absolute",
+                bottom: "28px",
+                right: "24px", 
+                cursor:"pointer"
+              }}>
+            
+                <div className="font-weight-bolder" style={{ color: "#6C6C6C" }}>
+                  Lihat Detail
+                </div>
+                <i className="ri-arrow-right-line" style={{ color: "#6C6C6C" }}></i>
+              </div>
+                  
+            </Cardss>
           </div>
           <div className="col-12 col-sm-6 col-md-6 col-xl-4">
-            <Cardss />
+            <Cardss>
+               
+              <div className="d-flex align-items-center justify-content-between" >
+                <p className="fw-600" style={{ color: "#6C6C6C" }}>
+                  12 Mei 2021
+                </p>
+                <div>
+
+                </div>
+                <Badge bg="light">
+                  <div className="text-info font-weight-bolder">
+                    Kategori
+                  </div>
+                </Badge>
+              </div>
+              <h1
+                className="fz-18 fw-600 mt-4"
+                style={{ color: "#1F1F1F" }}
+              >
+                Pengumuman Kelulusan Peserta Pelatihan Daring Gelombang 1 Program VSGA DTS 2021
+              </h1>
+
+              <div className="d-flex align-items-center justify-content-end" style={{
+                position: "absolute",
+                bottom: "28px",
+                right: "24px"
+              }}>
+            
+                <div className="font-weight-bolder" style={{ color: "#6C6C6C" }}>
+                  Lihat Detail
+                </div>
+                <i className="ri-arrow-right-line" style={{ color: "#6C6C6C" }}></i>
+              </div>
+                  
+            </Cardss>
           </div>
         </div>
       </div>

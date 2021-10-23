@@ -4,6 +4,7 @@ import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 import { getRandomSubtanceQuestionDetail } from "../../../../redux/actions/subvit/subtance-question-detail.action";
 import { wrapper } from "../../../../redux/store";
 import Layout from "../../../../user-component/components/template/Layout.component";
+import { getDataPribadi } from "../../../../redux/actions/pelatihan/function.actions";
 
 const SubtansiUser = dynamic(
   () => import("../../../../user-component/content/subvit/substansi"),
@@ -32,7 +33,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
-      // console.log(session.user.user.data.user);
       if (!session) {
         return {
           redirect: {
@@ -41,6 +41,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+      console.log(query);
+
+      await store.dispatch(getDataPribadi(session.user.user.data.user.token));
 
       await store.dispatch(
         getRandomSubtanceQuestionDetail(
@@ -52,7 +55,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       );
 
       const data = session.user.user.data;
-      // console.log(data);
+      
       if (data.user.roles[0] !== "user") {
         return {
           redirect: {

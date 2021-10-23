@@ -92,6 +92,8 @@ import {
 import {
   allSubtanceQuestionDetailReducer,
   randomSubtanceQuestionDetailReducer,
+  getDashboardReducer,
+  postResultReducer,
   newSubtanceQuestionDetailReducer,
   deleteSubtanceQuestionDetailReducer,
   detailSubtanceQuestionDetailReducer,
@@ -244,8 +246,9 @@ import {
 // ============== pelatihan ===============
 import { allPromptReducer } from "./site-management/settings/pelatihan.reducers";
 
-// ============== pelatihan ===============
-import {allDataZonasiReducer} from './site-management/dashboard.reducers'
+// ============== dashboard ===============
+import { allDataZonasiReducer } from "./site-management/dashboard.reducers";
+import { allDataPesertaReducer } from "./site-management/dashboard-data-peserta.reducers";
 
 // End Site Management
 
@@ -339,6 +342,7 @@ import {
   allAkademiReducer,
   temaByAkademiReducer,
   pelatihanByTemaReducer,
+  allPublikasiBerandaReducer,
 } from "../reducers/beranda/beranda.reducers";
 
 // ========== detail akademi ========
@@ -346,6 +350,12 @@ import {
   detailAkademiReducer,
   allPelatihanReducer,
 } from "../reducers/beranda/detail-akademi.reducers";
+
+// ========== detail pelatihan ========
+import {
+  detailPelatihanReducer,
+  checkRegisteredPelatihanReducer
+} from "../reducers/beranda/detail-pelatihan.reducers"
 //END BERANDA
 
 const reducer = combineReducers({
@@ -427,6 +437,8 @@ const reducer = combineReducers({
 
   allSubtanceQuestionDetail: allSubtanceQuestionDetailReducer,
   randomSubtanceQuestionDetail: randomSubtanceQuestionDetailReducer,
+  dashboardSubvit: getDashboardReducer,
+  postResultSubvit: postResultReducer,
   newSubtanceQuestionDetail: newSubtanceQuestionDetailReducer,
   detailSubtanceQuestionDetail: detailSubtanceQuestionDetailReducer,
   updateSubtanceQuestionDetail: updateSubtanceQuestionDetailReducer,
@@ -555,6 +567,7 @@ const reducer = combineReducers({
   allPrompt: allPromptReducer,
   // ============ Dashboatd =======
   allDataZonasi: allDataZonasiReducer,
+  allDataPeserta: allDataPesertaReducer,
 
   // END SITE MANAGEMENT
 
@@ -631,10 +644,17 @@ const reducer = combineReducers({
   allAkademi: allAkademiReducer,
   temaByAkademi: temaByAkademiReducer,
   pelatihanByTema: pelatihanByTemaReducer,
+  allPublikasiBeranda: allPublikasiBerandaReducer,
 
   // ========== detail akademi ========
   detailAkademi: detailAkademiReducer,
   allPelatihan: allPelatihanReducer,
+
+  // ========== detail pelatihan ========
+  detailPelatihan: detailPelatihanReducer,
+  checkRegisteredPelatihan: checkRegisteredPelatihanReducer,
+
+
   //END BERANDA
 });
 

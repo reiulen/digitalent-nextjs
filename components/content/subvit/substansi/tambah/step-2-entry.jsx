@@ -85,7 +85,6 @@ const StepTwo = ({ token }) => {
           pathname: `/subvit/substansi/tambah-step-3`,
           query: { id },
         });
-        console.log(typeSave);
       } else if (typeSave === "draft") {
         handleResetForm();
         router.push({

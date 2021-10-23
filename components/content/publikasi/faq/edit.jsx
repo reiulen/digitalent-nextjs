@@ -54,26 +54,20 @@ const EditFaq = ({token}) => {
     const [judul, setJudulPertanyaan] = useState(faq.judul)
     const [jawaban, setJawaban] = useState(faq.jawaban);
     const [kategori_id, setKategoriId] = useState(faq.kategori_id)
-    // const [users_id, setUsersId] = useState(87)
     const [users_id, setUsersId] = useState(faq.users_id)
-    // const [pinned, setPinnedFaq] = useState(faq.pinned === 1 ? true : false)
     const [pinned, setPinnedFaq] = useState(faq.pinned)
-    // const [publish, setPublish] = useState(faq.publish === 1 ? true : false)
     const [publish, setPublish] = useState(faq.publish )
     const [publishDate, setPublishDate] = useState(faq.tanggal_publish ? new Date (faq.tanggal_publish) : null);
     const [disablePublishDate, setDisablePublishDate] = useState(faq.publish === 0 ? true : false)
     const [, forceUpdate] = useState();
-    // const forceUpdate = React.useReducer(() => ({}))[1]
 
     const handleChangePinned = (e) => {
         setPinnedFaq(e.target.checked);
-        // console.log (e.target.checked)
+
     };
 
     const handleChangePublish = (e) => {
-        // setPublish(e.target.checked);
         setDisablePublishDate(!disablePublishDate)
-        // console.log (e.target.checked)
 
         if (e.target.checked === false){
             setPublishDate (null)
@@ -84,11 +78,8 @@ const EditFaq = ({token}) => {
     };
 
     const handlePublishDate = (date) => {
-        // let result = moment(date).format("YYYY-MM-DD")
         if (disablePublishDate === false) {
-            // setPublishDate(result)
             setPublishDate(date)
-            // console.log (result)
         }
     }
 

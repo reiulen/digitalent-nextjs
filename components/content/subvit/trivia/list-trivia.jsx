@@ -64,7 +64,6 @@ const ListTrivia = ({ token }) => {
   };
 
   const handleLimit = (e) => {
-    console.log(e.target.value);
     setLimit(e.target.value);
     router.push(`${router.pathname}?page=1&limit=${e.target.value}`);
   };
@@ -81,7 +80,6 @@ const ListTrivia = ({ token }) => {
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
-        console.log("dari handle delete", token);
         dispatch(deleteTriviaQuestionBanks(id, token));
       }
     });

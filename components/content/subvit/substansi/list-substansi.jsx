@@ -60,7 +60,6 @@ const ListSubstansi = ({ token }) => {
   };
 
   const handleSearch = () => {
-    console.log(search);
     if (limit != null) {
       router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`);
     } else {
@@ -343,7 +342,7 @@ const ListSubstansi = ({ token }) => {
                                 <p>
                                   {subtance.training !== null
                                     ? subtance.training.name
-                                    : subtance.theme.name}
+                                    : "-"}
                                 </p>
                               </td>
                               <td className="align-middle">

@@ -36,7 +36,6 @@ const MultipleChoiceComponent = ({
   };
 
   const handleStatus = (e) => {
-    console.log(e.target.value);
     setStatus(e.target.value);
     sendPropsStatus(e.target.value);
   };

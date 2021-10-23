@@ -36,12 +36,10 @@ const RevisiSubmit = ({token}) => {
       dismissOnDestroy: false,
     }).then(async (result) => {
       if (result.value) {
-        // console.log("sdfsdf")
         let formData = new FormData();
 
         const method = "PUT";
         formData.append("_method", method);
-        // formData.append("note", note);
 
         let dataee = allCooperation.map((items, i) => {
           return items.form_content;
@@ -54,9 +52,6 @@ const RevisiSubmit = ({token}) => {
         dataee.forEach((item, i) => {
           formData.append(`cooperation_form_content[${i}]`, item);
         });
-
-        // console.log("note",note)
-        // console.log(object)
 
         try {
           let respoonse = await axios.post(
@@ -128,7 +123,7 @@ const RevisiSubmit = ({token}) => {
       setAllCooperation(data.data.cooperation_category.data_content);
       setNote(data.data.note);
     } catch (error) {
-      console.log("action getSIngle gagal", error);
+      notify(error.response.data.message);
     }
     }
 
@@ -144,7 +139,7 @@ const RevisiSubmit = ({token}) => {
       );
       setLengthListCard(data.data.length - 1)
     } catch (error) {
-      console.log("action getSIngle gagal", error);
+      notify(error.response.data.message);
     }
       
     }

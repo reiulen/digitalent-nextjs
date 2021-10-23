@@ -29,7 +29,7 @@ export const loadDataPrompt = (token) => {
         payload: data,
       });
     } catch (error) {
-      console.log(error);
+      notify(error.response.data.message);
     }
   };
 };
@@ -38,9 +38,8 @@ export const postTemplate = (token, subject, body, status) => {
   return (dispatch) => {
     axios
       .post(
-        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-trainings/update-template-email/tes substansi`,
+        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-trainings/update-template-email/${status}`,
         {
-          status: status,
           subject: subject,
           body: body,
         },
@@ -184,29 +183,33 @@ export const postViaFilter = (
         });
       })
       .catch((error) => {
-        Swal.fire("Gagal", "Gagal tidak berhasil tersimpan", "error");
+        Swal.fire("Gagal", "Gagal tidak berhasil tersimpan, mohon isi data yang lengkap", "error");
+
       });
   };
 };
 
-export const postViaTemplate = (token, file, via) => {
+export const postViaTemplate = (token,title, file, participantSelectionStatusUpdate,
+  status,
+  broadcastEmailSendNotification,
+  emailSubject,
+  emailContent, via) => {
   const data = {
-    title: "jobs",
-    year: "2021",
-    academy: "01",
-    theme: "02",
-    organizer: "03",
-    training: "04",
-    profileStatus: "05",
-    selectionStatus: "06",
-    participantSelectionStatusUpdate: "1",
-    status: "lulus",
-    broadcastEmailSendNotification: "0",
-    emailSubject: "DTS",
-    emailContent: "Sebuah lembaga amal jariyah",
+    title,
+    year: "",
+    academy: "",
+    theme: "",
+    organizer: "",
+    training: "",
+    profileStatus: "",
+    selectionStatus: "",
+    participantSelectionStatusUpdate,
+    status,
+    broadcastEmailSendNotification,
+    emailSubject,
+    emailContent,
   };
 
-  console.log(file)
 
   let subm = new FormData();
 
@@ -230,14 +233,18 @@ export const postViaTemplate = (token, file, via) => {
         Swal.fire("Berhasil", "Data berhasil tersimpan", "success").then(() => {
           router.push("/partnership/user/auth/login");
         });
+        console.log(response)
       })
       .catch((error) => {
-        Swal.fire("Gagal", "Gagal tidak berhasil tersimpan", "error");
+        Swal.fire("Gagal", "Gagal tidak berhasil tersimpan, mohon isi data dengan lengkap", "error");
       });
   };
 };
 
-export const postFileSize = (token, image, document) => {
+export const postFileSize = (
+  token,
+  image, document
+) => {
   return (dispatch) => {
     axios
       .post(

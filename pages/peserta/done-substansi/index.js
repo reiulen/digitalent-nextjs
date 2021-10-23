@@ -3,6 +3,7 @@ import { getSession } from "next-auth/client";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
 import dynamic from "next/dynamic";
 import { wrapper } from "../../../redux/store";
+import { getDataPribadi } from "../../../redux/actions/pelatihan/function.actions";
 
 const Done = dynamic(() => import("../../../user-component/content/done"), {
   loading: function loadingNow() {
@@ -32,7 +33,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
-      // console.log(session.user.user.data); untuk cek role user
+      // console.log(session.user.user.data.user.token);
+
       if (!session) {
         return {
           redirect: {
@@ -41,6 +43,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+
+      await store.dispatch(getDataPribadi(session.user.user.data.user.token));
 
       return {
         props: { data: "auth", session, title: "Selesai Test Substansi" },

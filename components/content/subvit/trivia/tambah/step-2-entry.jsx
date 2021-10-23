@@ -360,7 +360,6 @@ const StepTwo = ({ token }) => {
             type: methodAdd,
             answer_key: null,
           };
-          // console.log(data)
           dispatch(newTriviaQuestionDetail(data, token));
         }
         break;

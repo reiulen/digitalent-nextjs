@@ -70,7 +70,6 @@ function ReviewKerjasama({ token }) {
           }
         );
 
-        // console.log("data a a a ssss", data.data.status_migrates_id.status);
         if (data.data.status_migrates_id.status === "pengajuan-revisi") {
           router.push({
             pathname: "/partnership/user/kerjasama/review-list-kerjasama",
@@ -97,7 +96,7 @@ function ReviewKerjasama({ token }) {
         }
         setStatus(data.data.status_migrates_id.status);
       } catch (error) {
-        console.log("gagal get province", error);
+        notify(error.response.data.message);
       }
     }
 

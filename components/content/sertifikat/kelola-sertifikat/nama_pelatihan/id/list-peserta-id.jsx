@@ -20,7 +20,6 @@ import html2canvas from "html2canvas";
 // #Icon
 
 export default function ListPesertaID({ token }) {
-  // console.log(token);
   const router = useRouter();
   const { query } = router;
 
@@ -33,8 +32,6 @@ export default function ListPesertaID({ token }) {
     participant,
   } = useSelector(state => state.detailParticipant);
 
-  console.log(certificate);
-  console.log(participant);
   const [type, setType] = useState(
     certificate.data.certificate.certificate_type
   );
@@ -59,20 +56,18 @@ export default function ListPesertaID({ token }) {
       cacheBust: true,
       canvasWidth: 842,
       canvasHeight: 595,
+      backgroundColor: "white",
     });
     return data;
   };
 
   const handleDownload = async () => {
-    // const data = await convertDivToPng(divReference.current);
     const data = await convertDivToPng(divReference.current);
     if (data) {
-      console.log(data);
       const link = document.createElement("a");
       link.download = `Sertifikat - ${query.name}.png`;
       link.href = data;
       link.click();
-      // router.reload();
     }
     if (type == "2 lembar") {
       const image = document.getElementById("image2").getAttribute("src");
@@ -150,11 +145,23 @@ export default function ListPesertaID({ token }) {
                   <div className="position-absolute p-6 font-weight-boldest responsive-font-size-peserta zindex-1">
                     {currentUser[0]?.registration_number}
                   </div>
-                  <div className="position-absolute responsive-date-from font-weight-boldest zindex-1 responsive-date-text">
+                  <div
+                    className={`position-absolute ${
+                      certificate.data.certificate.background
+                        ? "responsive-date-from"
+                        : "responsive-date-from-without-background"
+                    } font-weight-boldest zindex-1 responsive-date-text`}
+                  >
                     {currentUser[0]?.date_from.split("-").reverse().join("-")} -{" "}
                     {currentUser[0]?.date_to.split("-").reverse().join("-")}
                   </div>
-                  <div className="position-absolute responsive-year font-weight-boldest zindex-1 responsive-date-text">
+                  <div
+                    className={`position-absolute ${
+                      certificate.data.certificate.background
+                        ? "responsive-year"
+                        : "responsive-year-without-background"
+                    } font-weight-boldest zindex-1 responsive-date-text`}
+                  >
                     {currentUser[0]?.year}
                   </div>
                   <Image
@@ -167,7 +174,12 @@ export default function ListPesertaID({ token }) {
                     key={certificate.data.certificate.certificate_result}
                   />
                   <div
-                    className={`position-absolute w-100 text-center responsive-margin-publish`}
+                    // className={`position-absolute w-100 text-center responsive-margin-publish`}
+                    className={`position-absolute w-100 text-center ${
+                      certificate.data.certificate.background
+                        ? "responsive-margin-publish"
+                        : "responsive-margin-without-background"
+                    }`}
                   >
                     <span className="responsive-font-size-peserta font-weight-bolder">
                       {query.name}

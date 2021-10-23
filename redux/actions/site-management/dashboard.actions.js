@@ -1,66 +1,108 @@
-import { DRAW_LOAD_DATA_DASHBOARD_SITE_MANAGEMENT, LOAD_DATA_DASHBOARD_SITE_MANAGEMENT } from '../../types/site-management/dashboard.type'
+import {
+  DRAW_LOAD_DATA_DASHBOARD_SITE_MANAGEMENT,
+  DRAW_LOAD_DATA_PESERTA_CITY_DASHBOARD_SITE_MANAGEMENT,
+  DRAW_LOAD_DATA_PESERTA_DASHBOARD_SITE_MANAGEMENT,
+  LOAD_DATA_DASHBOARD_SITE_MANAGEMENT,
+} from "../../types/site-management/dashboard.type";
 
 import axios from "axios";
 
 export const loadDataZonasi = (token, type, page) => {
-    const params = {
-        type,
-        page
+  const params = {
+    type,
+    page,
+  };
+
+  return async (dispatch) => {
+    try {
+      dispatch({
+        type: DRAW_LOAD_DATA_DASHBOARD_SITE_MANAGEMENT,
+      });
+
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_SITE_MANAGEMENT}/api/dashboard/zonasi`,
+        {
+          params,
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      dispatch({
+        type: LOAD_DATA_DASHBOARD_SITE_MANAGEMENT,
+        payload: data,
+        page,
+      });
+    } catch (error) {
+      notify(error.response.data.message);
     }
+  };
+};
 
-    return async (dispatch) => {
+export const loadDataPeserta = (token, type, page) => {
+  const params = {
+    type,
+    page,
+  };
 
-        
+  return async (dispatch) => {
+    try {
+      dispatch({
+        type: DRAW_LOAD_DATA_DASHBOARD_SITE_MANAGEMENT,
+      });
 
-      try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/dashboard/participant`,
+        {
+          params,
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if(type === "province"){
         dispatch({
-            type: DRAW_LOAD_DATA_DASHBOARD_SITE_MANAGEMENT
-        })
-        
-        let { data } = await axios.get(
-          `${process.env.END_POINT_API_SITE_MANAGEMENT}/api/dashboard/zonasi`,
-          {
-            params,
-            headers: {
-              authorization: `Bearer ${token}`,
-            },
-          }
-        );
+          type: DRAW_LOAD_DATA_PESERTA_DASHBOARD_SITE_MANAGEMENT,
+          payload: data,
+          page,
+        });
+      }else{
         dispatch({
-          type: LOAD_DATA_DASHBOARD_SITE_MANAGEMENT,
+          type: DRAW_LOAD_DATA_PESERTA_CITY_DASHBOARD_SITE_MANAGEMENT,
           payload: data.data,
-          page
+          page,
         });
-      } catch (error) {
-        console.log(error);
       }
-    };
-  };
-
-  export const loadDataZonasiNext = (token, type, page) => {
-    const params = {
-        type,
-        page
+    } catch (error) {
+      notify(error.response.data.message);
     }
+  };
+};
 
-    return async (dispatch) => {
-      try {
-        let { data } = await axios.get(
-          `${process.env.END_POINT_API_SITE_MANAGEMENT}/api/dashboard/zonasi`,
-          {
-            params,
-            headers: {
-              authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        dispatch({
-          type: DRAW_LOAD_DATA_DASHBOARD_SITE_MANAGEMENT,
-          payload: data.data.list_zonasi,
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    };
+export const loadDataZonasiNext = (token, type, page) => {
+  const params = {
+    type,
+    page,
   };
 
+  return async (dispatch) => {
+    try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_SITE_MANAGEMENT}/api/dashboard/zonasi`,
+        {
+          params,
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      dispatch({
+        type: DRAW_LOAD_DATA_DASHBOARD_SITE_MANAGEMENT,
+        payload: data.data.list_zonasi,
+      });
+    } catch (error) {
+      notify(error.response.data.message);
+    }
+  };
+};

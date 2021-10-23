@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const SubHeaderComponent = () => {
     return (
-        <div className="row mt-3 mx-1 p-3 bg-white rounded d-flex align-items-center border">
+        <div className="row my-5 mx-1 p-3 bg-white rounded-pill d-flex align-items-center border">
             <span>
                 <Link href="#">
                     Beranda 

@@ -82,9 +82,8 @@ const StepTwo = ({ token }) => {
   };
 
   const onSubmit = (e) => {
+    
     e.preventDefault();
-
-    console.log(startDate);
 
     if (simpleValidator.current.allValid()) {
       const start_at = moment(startDate).format("YYYY-MM-DD");

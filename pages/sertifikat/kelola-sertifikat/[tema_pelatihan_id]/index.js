@@ -8,6 +8,7 @@ import Pagination from "react-js-pagination";
 import { wrapper } from "../../../../redux/store";
 import { getSession } from "next-auth/client";
 import { getDetailSertifikat } from "../../../../redux/actions/sertifikat/kelola-sertifikat.action";
+import Cookies from "js-cookie";
 
 const KelolaSertifikatNamaPelatihanID = dynamic(
   () =>
@@ -45,10 +46,12 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
-
+      // const id = Cookies.get("tema_pelatihan_id");
+      // console.log(req.cookies.tema_pelatihan_id, " ini id");
+      // sessionStorage.getItem()
       await store.dispatch(
         getDetailSertifikat(
-          query.id,
+          query.id ? query.id : req.cookies.tema_pelatihan_id,
           query.page,
           query.keyword,
           query.limit,

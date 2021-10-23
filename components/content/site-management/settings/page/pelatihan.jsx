@@ -25,11 +25,7 @@ export default function Pelatihan({ token }) {
   }, [token, dispatch]);
 
   const initialState = {
-    page: "Prompt",
-    isEmail: false,
-    isStatus: false,
-    notification: false,
-    isPromptEmail: "",
+    page: "SUBM",
   };
 
   const [{ page }, setState] =

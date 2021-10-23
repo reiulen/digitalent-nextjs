@@ -19,6 +19,7 @@ module.exports = {
 
     // END_POINT_API_PUBLIKASI: "http://dts-publikasi-dev.majapahit.id/",
     END_POINT_API_PUBLIKASI: "http://api-dts-dev.majapahit.id/publikasi/",
+    END_POINT_API_PUBLIKASI_1: "http://dts-publikasi-dev.majapahit.id/",
     END_POINT_API_IMAGE_PUBLIKASI:
       "https://dts-publikasi-dev.s3.ap-southeast-1.amazonaws.com/",
 
@@ -47,6 +48,10 @@ module.exports = {
     //sertifikat
     END_POINT_API_SERTIFIKAT: "http://dts-sertifikat-dev.majapahit.id/",
     END_POINT_API_IMAGE_SERTIFIKAT:
-      "https://dts-partnership-dev.s3.ap-southeast-1.amazonaws.com/",
+      "https://dts-publikasi-dev.s3.ap-southeast-1.amazonaws.com/",
+
+    // Beasiswa
+    END_POINT_API_IMAGE_BEASISWA:
+      "https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/",
   },
 };

@@ -78,9 +78,6 @@ const TambahImagetron = ({ token }) => {
 
   const onChangeGambar = (e) => {
     const type = ["image/jpg", "image/png", "image/jpeg"]
-    // console.log (e.target.files[0].type)
-    // console.log(e.target.files[0])
-    // console.log ("check")
 
     if (type.includes(e.target.files[0].type)) {
       if (e.target.files[0].size > parseInt(setting[0].max_size) + '000000') {
@@ -95,7 +92,6 @@ const TambahImagetron = ({ token }) => {
           }
         };
         reader.readAsDataURL(e.target.files[0])
-        // console.log (reader.readAsDataURL(e.target.files[0]))
         setGambarName(e.target.files[0].name)
       }
     }
@@ -115,9 +111,7 @@ const TambahImagetron = ({ token }) => {
   };
 
   const handleChangePublish = (e) => {
-    // setPublish(e.target.checked);
     setDisablePublishDate(!disablePublishDate)
-    // console.log (e.target.checked)
 
     if (e.target.checked === false) {
       setPublishDate(null)
@@ -128,11 +122,8 @@ const TambahImagetron = ({ token }) => {
   };
 
   const handlePublishDate = (date) => {
-    // let result = moment(date).format("YYYY-MM-DD")
     if (disablePublishDate === false) {
-      // setPublishDate(result)
       setPublishDate(date)
-      // console.log (result)
     }
   }
 
@@ -177,7 +168,6 @@ const TambahImagetron = ({ token }) => {
           .then((result) => {
             if (result.isConfirmed) {
               dispatch(newImagetron(data, token))
-              // console.log("Unpublish :", data)
             }
           });
 
@@ -205,7 +195,6 @@ const TambahImagetron = ({ token }) => {
           .then((result) => {
             if (result.isConfirmed) {
               dispatch(newImagetron(data, token))
-              // console.log("Publish :", data)
             }
           });
       }
