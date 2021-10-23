@@ -516,8 +516,11 @@ const Beranda = () => {
                         <div>
                           {
                             el.pelatihan !== null ?
+                            
+                              // console.log (el.id)
+                            
+                            <Link href={`/detail/akademi/akademi_id=${akademiId}&tema_id=${akademiId}`}>
                               <a 
-                                href={`/detail/akademi/${el.id}`}
                                 className="d-flex align-items-center"
                               >
                                 <>
@@ -536,6 +539,8 @@ const Beranda = () => {
                                   /> 
                                 </>
                               </a>
+                            </Link>
+                              
                             :
                               null
                           }
@@ -576,12 +581,24 @@ const Beranda = () => {
                                           }
                                         
                                           thumbnail={
-                                            <Image 
-                                              src={process.env.END_POINT_API_IMAGE_BEASISWA + element.gambar}
-                                              // src={`https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/${element.gambar}`}
-                                              layout="fill" 
-                                              objectFit="cover"
-                                            />
+                                            show[i].pelatihan[index].hover === true ?
+                                              
+                                              <Image 
+                                                src={process.env.END_POINT_API_IMAGE_BEASISWA + element.gambar}
+                                                // src={`https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/${element.gambar}`}
+                                                layout="fill" 
+                                                objectFit="cover"
+                                                style={{filter:"brightness(50%)"}}
+                                              />
+                                              
+                                            :
+                                              <Image 
+                                                src={process.env.END_POINT_API_IMAGE_BEASISWA + element.gambar}
+                                                // src={`https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/${element.gambar}`}
+                                                layout="fill" 
+                                                objectFit="cover"
+                                              />
+                                            
                                           }
 
 
