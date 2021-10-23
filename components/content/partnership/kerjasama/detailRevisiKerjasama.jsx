@@ -101,12 +101,12 @@ const DetailRevisiKerjasama = ({ token }) => {
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3 className="card-title fz-20 fw-500 text-dark">
+            <h3 className="card-title titles-1 fw-500 text-dark">
               Revisi Kerjasama
             </h3>
           </div>
 
-          <div className="card-body">
+          <div className="card-body pt-0">
             <form>
               <div className="form-group mb-10">
                 <label className="required mb-2">Tanggal</label>

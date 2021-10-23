@@ -40,7 +40,9 @@ export const fetchSignature = (token) => {
       let { data } = await fetchSignatureApi(params, token);
       dispatch(successFetchSignature(data));
     } catch (error) {
-      notify(error.response.data.message);
+      dispatch({
+        type: TANDA_TANGAN_FAIL,
+      });
     }
   };
 };
