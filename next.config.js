@@ -55,5 +55,8 @@ module.exports = {
     // Beasiswa
     END_POINT_API_IMAGE_BEASISWA:
       "https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/",
+
+    END_POINT_API_IMAGE_LOGO_MITRA:
+      "https://dts-partnership-dev.s3-ap-southeast-1.amazonaws.com",
   },
 };
