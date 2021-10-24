@@ -17,12 +17,9 @@ import "../styles/peserta/dashboards.css";
 
 import SimpleReactValidator from "simple-react-validator";
 import { wrapper } from "../redux/store";
-<<<<<<< HEAD
-=======
 import moment from "moment";
 import "moment/locale/id";
 
->>>>>>> 807b4a7de637fc677572fdc6da5861f3727a8ddd
 import Layout from "../components/templates/layout.component";
 
 function MyApp({ Component, pageProps }) {

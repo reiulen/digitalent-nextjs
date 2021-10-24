@@ -5,11 +5,7 @@ import dynamic from "next/dynamic";
 import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
-<<<<<<< HEAD
-import { getDataPribadi } from "../../../redux/actions/pelatihan/function.actions";
-=======
 import { middlewareAuthPesertaSession } from "../../../utils/middleware/authMiddleware";
->>>>>>> 807b4a7de637fc677572fdc6da5861f3727a8ddd
 
 const RiwayatPelatihan = dynamic(
   () =>
@@ -42,22 +38,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
     async ({ query, req }) => {
       const session = await getSession({ req });
 
-<<<<<<< HEAD
-      if (!session) {
-        return {
-          redirect: {
-            destination: "http://dts-dev.majapahit.id/login",
-            permanent: false,
-          },
-        };
-      }
-      const data = session.user.user.data;
-      if (data.user.roles[0] !== "user") {
-=======
       const middleware = middlewareAuthPesertaSession(session);
 
       if (!middleware.status) {
->>>>>>> 807b4a7de637fc677572fdc6da5861f3727a8ddd
         return {
           redirect: {
             destination: middleware.redirect,

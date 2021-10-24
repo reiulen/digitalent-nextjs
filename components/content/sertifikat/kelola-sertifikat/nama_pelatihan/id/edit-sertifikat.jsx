@@ -25,17 +25,6 @@ export default function EditSertifikat({ token }) {
   const dispatch = useDispatch();
   const { query } = router;
   // #Div Reference Lembar 1
-<<<<<<< HEAD
-  const { loading, error, certificate } = useSelector(
-    (state) => state.singleCertificate
-  );
-
-  const {
-    error: updateError,
-    loading: updateLoading,
-    isUpdated,
-  } = useSelector((state) => state.updateCertificates);
-=======
   const { error, certificate } = useSelector(
     (state) => state.singleCertificate
   );
@@ -53,7 +42,6 @@ export default function EditSertifikat({ token }) {
       { shallow: false }
     );
   }
->>>>>>> 807b4a7de637fc677572fdc6da5861f3727a8ddd
 
   useEffect(() => {
     if (isUpdated) {

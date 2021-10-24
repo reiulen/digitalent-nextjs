@@ -189,24 +189,6 @@ const Navigationbar = ({ session }) => {
             </div>
           </Form>
           <Nav>
-<<<<<<< HEAD
-            <Link href="/login">
-              <a>
-                <button className="btn btn-sm btn-login-peserta">
-                  <IconLogin className="mr-2" />
-                  Masuk
-                </button>
-              </a>
-            </Link>
-            <Link href="/register">
-              <a>
-                <button className="btn btn-register-peserta btn-sm">
-                  <IconRegister className="mr-2" />
-                  Daftar
-                </button>
-              </a>
-            </Link>
-=======
             {session ? (
               <button
                 className="btn btn-sm btn-login-peserta"
@@ -235,7 +217,6 @@ const Navigationbar = ({ session }) => {
                 </Link>
               </>
             )}
->>>>>>> 807b4a7de637fc677572fdc6da5861f3727a8ddd
           </Nav>
         </Navbar.Collapse>
       </Navbar>
