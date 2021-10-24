@@ -1,0 +1,11 @@
+.headTitle {
+    font-size: 25px;
+    font-weight: 600;
+    margin-top: 18px;
+    /* border: 1px solid red; */
+}
+
+.btnTambah {
+      /* border: 1px solid blue; */
+    margin-top: 10px;
+  }

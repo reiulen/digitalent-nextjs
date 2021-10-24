@@ -259,14 +259,14 @@ export default function KelolasertifikatID({ token }) {
               <div className="card-body border-top">
                 <div className="row p-0 justify-content-center">
                   {/* START COL */}
-                  <div className="border-primary p-0 border col-lg-8 col-12">
+                  <div className="border-primary p-0 border col-lg-8 col-12 position-relative">
                     <div className="p-0">
                       {certificate.data.certificate.background_syllabus ? (
                         <Image
                           src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/background-syllabus/${certificate.data.certificate.background_syllabus}`}
                           alt="fitur"
                           layout="fill"
-                          objectFit="cover"
+                          objectFit="fill"
                         />
                       ) : (
                         ""
