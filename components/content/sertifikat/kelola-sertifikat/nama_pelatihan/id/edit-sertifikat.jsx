@@ -199,10 +199,7 @@ export default function EditSertifikat({ token }) {
   };
   // #END MODAL
 
-<<<<<<< HEAD
-=======
   // #START LEMBAR 2
->>>>>>> 807b4a7de637fc677572fdc6da5861f3727a8ddd
   const handleImageTandaTanganSyllabus = (e, i) => {
     if (e.target.files[0].size > 5000000) {
       e.target.value = null;
