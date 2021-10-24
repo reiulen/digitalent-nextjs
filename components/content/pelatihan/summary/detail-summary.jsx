@@ -309,37 +309,45 @@ const DetailSummary = ({ token }) => {
                             </td>
                             <td>
                               <p className="font-weight-bolder my-0">
-                                Cristiano Messi
+                                {row.name}
                               </p>
-                              <p className="my-0">00019989893</p>
+                              <p className="my-0">{row.nik}</p>
                             </td>
-                            <td>3</td>
+                            <td>{row.jumlah_pelatihan || "-"}</td>
                             <td>
-                              <p className="my-0 text-success">Lulus</p>
-                              <p className="my-0">90</p>
-                              <p className="my-0">00:50:21</p>
+                              <p className="my-0 text-success">
+                                {row.subtansi_status || "-"}
+                              </p>
+                              <p className="my-0">{row.nilai || "-"}</p>
+                              <p className="my-0">{row.waktu || "-"}</p>
                             </td>
                             <td>
                               <span className="label label-inline label-light-success font-weight-bold">
-                                Disetujui
+                                {row.administrasi}
                               </span>
                             </td>
                             <td>
                               <span className="label label-inline label-light-success font-weight-bold">
-                                Publish
+                                {row.status}
                               </span>
                             </td>
                             <td>
                               <p className="font-weight-bolder my-0">
-                                Admin Verifikasi
+                                {row.update_by}
                               </p>
-                              <p className="my-0">1 Oktober 2021</p>
-                              <p className="my-0">00:50:21</p>
+                              <p className="my-0">
+                                {moment(row.update_time).format("DD MMMM YYYY")}
+                              </p>
+                              <p className="my-0">
+                                {moment(row.update_time).format("hh:mm:ss")}
+                              </p>
                             </td>
                             <td>
                               <div className="d-flex">
                                 <Link
-                                  href={`/pelatihan/rekap-pendaftaran/detail-rekap-pendaftaran/data-peserta/${1}`}
+                                  href={`/pelatihan/rekap-pendaftaran/detail-rekap-pendaftaran/data-peserta?pelatihan_id=${id}&index=${
+                                    i + 1
+                                  }`}
                                 >
                                   <a
                                     className="btn btn-link-action bg-blue-secondary text-white mr-2"
