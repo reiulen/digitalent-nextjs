@@ -23,9 +23,6 @@ const DetailPelatihan = () => {
 
     return (
         <Layout title="Detail Pelatihan">
-            {
-                console.log (pelatihan)
-            }
 
             {/* <FilterBar /> */}
             <SubHeaderComponent />

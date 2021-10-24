@@ -56,7 +56,7 @@ const DetailAkademi = () => {
             let str = null
 
             if (akademi.deskripsi.length > textToTrim){
-                // console.log (true)
+    
                 str = akademi.deskripsi.slice(0, textToTrim) + "..."
             }
 
@@ -139,12 +139,6 @@ const DetailAkademi = () => {
         <Layout title="Detail Akademi">
             
             <SubHeaderComponent />
-            {
-                console.log (akademi)
-            }
-            {
-                console.log (pelatihan)
-            }
             {
                 akademi ?
                     <div className="my-5 bg-white rounded border">
