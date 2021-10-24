@@ -339,7 +339,6 @@ export default function EditSertifikat({ token }) {
           setNomerSertifikat("");
           const data = await convertDivToPng(divReference.current); // convert bg 1
           formData.append("certificate_result", data);
-          console.log(data);
         }
         formData.append("_method", "put");
         formData.append("name", certificate_name);
