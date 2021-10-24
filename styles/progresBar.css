@@ -129,3 +129,104 @@
     font-size: 23px !important;
   }
 }
+
+.wrap-accouts{
+  position: relative;
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border: 1px solid #dddddd;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-right: 10px;
+  padding-left: 10px;
+  cursor: pointer;
+  border-radius: 20px;
+  /* z-index: 99; */
+  
+}
+.wrap-accouts .titles-accounts {
+  white-space: nowrap;
+  margin: 0 10px;
+  font-weight: 600;
+  max-width: 90px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Safari */
+  -khtml-user-select: none;
+  /* Konqueror HTML */
+  -moz-user-select: none;
+  /* Old versions of Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none;
+  /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
+.dot-accouts{
+  min-width: 30px;
+  width: 30px;
+  min-height: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid #dddddd;
+  background-color: red;
+  padding-left: 10px;
+}
+
+.list-wrap-accounts{
+  margin-left: 0;
+  padding-left: 0;
+  position: absolute;
+  width: 90%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-top: NONE;
+  border-left: 1px solid #dddddd;
+  border-right: 1px solid #dddddd;
+  top: 85%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  z-index: 9;
+
+
+}
+.list-wrap-accounts .items-lists {
+  padding-left: 10px;
+  border-radius: 7px;
+  transition: 0.2s;
+  display: flex;
+  align-items: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  cursor: pointer;
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Safari */
+  -khtml-user-select: none;
+  /* Konqueror HTML */
+  -moz-user-select: none;
+  /* Old versions of Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none;
+  /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+
+}
+.list-wrap-accounts .items-lists:hover {
+  background-color: #007CFF;
+  color: white;
+
+}
+.list-wrap-accounts .items-lists:last-child:hover {
+  background-color: white !important;
+  /* color: none; */
+
+}
