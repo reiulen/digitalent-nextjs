@@ -431,15 +431,21 @@ const DetailAkademi = () => {
                                                             </a>
                                                         </Link>
                                                       </div>
-                                                      <div className="col-12 col-md-6 mt-5">
-                                                        <Link href={`/peserta/form-pendaftaran?id=${el.id}`} passHref className="col-12">
-                                                            <a>
-                                                            <button className="btn btn-primary-dashboard rounded-pill btn-block">
-                                                                Daftar Pelatihan
-                                                            </button>
-                                                            </a>
-                                                        </Link>
-                                                      </div>
+                                                      {
+                                                        el.status === "Closed" ?
+                                                            <div className="col-12 col-md-6 mt-5">
+                                                                <Link href={`/peserta/form-pendaftaran?id=${el.id}`} passHref className="col-12">
+                                                                    <a>
+                                                                    <button className="btn btn-primary-dashboard rounded-pill btn-block">
+                                                                        Daftar Pelatihan
+                                                                    </button>
+                                                                    </a>
+                                                                </Link>
+                                                            </div>
+                                                            :
+                                                            null
+                                                      }
+                                                      
                                                     </div>
                                               </div>
                                               

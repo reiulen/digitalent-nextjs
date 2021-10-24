@@ -124,15 +124,21 @@ const DetailPelatihan = () => {
                                     <div className="ml-3 mb-5">
                                         {moment(pelatihan.pelatihan_mulai).format("DD MMMM YYYY")} - {moment(pelatihan.pelatihan_selesai).format("DD MMMM YYYY")} 
                                     </div>
-                                    <div className="col-12 my-3">
-                                        <Link href={`/peserta/form-pendaftaran?id=${pelatihan.id}`} passHref>
-                                            <a>
-                                                <button className="btn btn-primary-dashboard rounded-pill btn-block ">
-                                                Daftar Pelatihan
-                                                </button>
-                                            </a>
-                                        </Link>
-                                    </div>
+                                    {
+                                        pelatihan.status === "Closed" ?
+                                            <div className="col-12 my-3">
+                                                <Link href={`/peserta/form-pendaftaran?id=${pelatihan.id}`} passHref>
+                                                    <a>
+                                                        <button className="btn btn-primary-dashboard rounded-pill btn-block ">
+                                                        Daftar Pelatihan
+                                                        </button>
+                                                    </a>
+                                                </Link>
+                                            </div>
+                                        :
+                                            null
+                                    }
+                                    
                                     
                                     
                                     <button className="btn btn-outline-primary-new  rounded-pill btn-block col-11 mx-3">
