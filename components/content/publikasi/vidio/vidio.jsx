@@ -64,24 +64,7 @@ const Vidio = ({ token }) => {
 
     page = Number(page)
 
-    // useEffect(()=>{
-    //     dispatch(filterCard(token));
-    // },[
-    //     dispatch,
-    //     allFilter.page,
-    //     allFilter.card,
-    //     allFilter.limit,
-    //     allFilter.keyword,
-    //     allFilter.startdate,
-    //     allFilter.enddate,
-    //     token
-    // ])
-
     useEffect(() => {
-        // if (limit) {
-        //   router.push(`${router.pathname}?page=1&limit=${limit}`)
-        // }
-
         if (isDeleted) {
             Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then((result) => {
                 if (result.isConfirmed) {
@@ -252,9 +235,6 @@ const Vidio = ({ token }) => {
 
         } else if (search !== "" && publishValue === '0') {
             router.push(`${router.pathname}?page=1&publish=${publishValue}&limit=${val}`)
-
-            // } else if (search !== "" && publishValue === '0' && limit !== null) {
-            //     router.push(`${router.pathname}?page=1&publish=${publishValue}&limit=${val}`)
         }
 
     };
@@ -316,7 +296,7 @@ const Vidio = ({ token }) => {
         setStartDate(null)
         setEndDate(null)
         setDisableEndDate(true)
-        router.replace('/publikasi/video', undefined, { shallow: true })
+        router.replace('/publikasi/video', undefined, { shallow: false })
     }
 
     const handleStartDate = (date) => {
@@ -326,9 +306,6 @@ const Vidio = ({ token }) => {
 
     return (
         <PageWrapper>
-            {/* {
-                console.log(video)
-            } */}
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
                     <div className="alert-icon"><i className="flaticon-warning"></i></div>
@@ -375,8 +352,6 @@ const Vidio = ({ token }) => {
                         background='bg-light-info'
                         icon="new/open-book.svg"
                         color='#ffffff'
-                        // icon='mail-purple.svg' 
-                        // color='#8A50FC'
                         value={video && video.publish != "" ? video.publish : 0}
                         titleValue='Video'
                         title='Total Publish'
@@ -387,8 +362,6 @@ const Vidio = ({ token }) => {
                         background='bg-light-warning'
                         icon="new/mail-white.svg"
                         color='#ffffff'
-                        // icon='garis-yellow.svg' 
-                        // color='#634100' 
                         value='0'
                         titleValue='Orang'
                         title='Total Author'
@@ -399,8 +372,6 @@ const Vidio = ({ token }) => {
                         background='bg-light-success'
                         icon='user-white.svg'
                         color='#ffffff'
-                        // icon='orang-tambah-green.svg' 
-                        // color='#74BBB7' 
                         value={video && video.total_views != "" ? video.total_views : 0}
                         titleValue='Orang'
                         title='Total Dilihat'
@@ -411,8 +382,6 @@ const Vidio = ({ token }) => {
                         background='bg-light-danger'
                         icon="Library.svg"
                         color='#ffffff'
-                        // icon='kotak-kotak-red.svg' 
-                        // color='#F65464' 
                         value={video && video.unpublish != "" ? video.unpublish : 0}
                         titleValue='Video'
                         title='Total Belum Dipublish'
@@ -607,53 +576,6 @@ const Vidio = ({ token }) => {
                                     </div>
                                 </div>
                             </div>
-
-
-
-                            {/* <div className="row align-items-right">
-                                <div className="col-lg-2 col-xl-2">
-                                    <small className="form-text text-muted">
-                                        Dari Tanggal
-                                    </small>
-                                    <DatePicker
-                                        className="form-search-date form-control-sm form-control"
-                                        selected={startDate}
-                                        onChange={(date) => setStartDate(date)}
-                                        selectsStart
-                                        startDate={startDate}
-                                        endDate={endDate}
-                                        dateFormat="dd/MM/yyyy"
-                                    // minDate={addDays(new Date(), 20)}
-                                    />
-                                    
-                                </div>
-                                <div className="col-lg-2 col-xl-2">
-                                    <small className="form-text text-muted">
-                                        Sampai Tanggal
-                                    </small>
-                                    <DatePicker
-                                        className="form-search-date form-control-sm form-control"
-                                        selected={endDate}
-                                        onChange={(date) => setEndDate(date)}
-                                        selectsEnd
-                                        startDate={startDate}
-                                        endDate={endDate}
-                                        minDate={startDate}
-                                        maxDate={addDays(startDate, 20)}
-                                        dateFormat="dd/MM/yyyy"
-                                    />
-                                    
-                                </div>
-                                <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
-                                    <button
-                                        type="button"
-                                        className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block"
-                                        onClick={handleSearchDate}
-                                    >
-                                        Cari
-                                    </button>
-                                </div>
-                            </div> */}
                         </div>
 
                         <div className="table-page mt-5">
@@ -683,11 +605,6 @@ const Vidio = ({ token }) => {
                                                     video && video.video.map((row, i) => {
                                                         
                                                         return <tr key={row.id}>
-                                                            {/* <td className="align-middle text-center">
-                                                                <span className="badge badge-secondary text-muted">
-                                                                {i + 1 * (page * 5 || limit) - 4}
-                                                                </span>
-                                                            </td> */}
                                                             <td className='align-middle text-center'>
                                                                 {
                                                                     limit === null ?
@@ -712,7 +629,7 @@ const Vidio = ({ token }) => {
                                                                 />
                                                             </td>
                                                             <td className='align-middle'>{row.kategori}</td>
-                                                            <td className='align-middle' className="align-middle" style={{overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',maxWidth:'180px'}}>{row.judul_video}</td>
+                                                            <td className='align-middle' style={{overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',maxWidth:'11rem'}}>{row.judul_video}</td>
                                                             <td className='align-middle'>
                                                                 {
                                                                     row.publish === 1 ? (
@@ -774,29 +691,6 @@ const Vidio = ({ token }) => {
                                                                 </button>
 
                                                             </td>
-
-                                                            {/* <td className='align-middle'>
-                                                                <button 
-                                                                    onClick={() => handlePreview(row.url_video)}
-                                                                    // onClick={() => setUrlVideo(row.url_video)} 
-                                                                    className='btn mr-1' 
-                                                                    style={{ background: '#F3F6F9', borderRadius: '6px' }} 
-                                                                    data-target="#exampleModalCenter" 
-                                                                    data-toggle="modal">
-                                                                    <Image alt='button-action' src={`/assets/icon/setting.svg`} width={18} height={18} />
-                                                                </button>
-                                                                <ButtonAction icon='write.svg' link={`/publikasi/video/${row.id}`} title="Edit"/>
-                                                                <button 
-                                                                    onClick={() => handleDelete(row.id)}
-                                                                    className='btn mr-1' 
-                                                                    style={{ background: '#F3F6F9', borderRadius: '6px' }}
-                                                                    data-toggle="tooltip" 
-                                                                    data-placement="bottom" 
-                                                                    title="Hapus"
-                                                                >
-                                                                    <Image alt='button-action' src={`/assets/icon/trash.svg`} width={18} height={18} />
-                                                                </button>
-                                                            </td> */}
                                                         </tr>
                                                     })
                                             }
@@ -826,7 +720,6 @@ const Vidio = ({ token }) => {
                                 {video ?
                                     <div className={`${stylesPag.rightPag} table-total ml-auto`}>
                                         <div className="row">
-                                            {/* <div className="col-4 mr-0 p-0 mt-3"> */}
                                             <div className="col-4 mr-0 mt-3">
                                                 <select
                                                     className="form-control"
@@ -935,9 +828,6 @@ const Vidio = ({ token }) => {
                                 </span>
                             </div>
                         </div>
-                        {/* <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={() => setVideoPlaying(false)}>Tutup</button>
-                        </div> */}
                     </div>
                 </div>
             </div>

@@ -41,13 +41,14 @@ const ListTipeSoal = ({ token }) => {
     loading = deleteLoading;
   }
 
-  const [limit, setLimit] = useState(null);
+  const [limit, setLimit] = useState(5);
   const [search, setSearch] = useState("");
 
   useEffect(() => {
     if (limit) {
       router.push(`${router.pathname}?page=1&limit=${limit}`);
     }
+
     if (isDeleted) {
       Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
         (result) => {
@@ -60,7 +61,8 @@ const ListTipeSoal = ({ token }) => {
         type: DELETE_SUBTANCE_QUESTION_TYPE_RESET,
       });
     }
-  }, [dispatch, limit, isDeleted, router]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, isDeleted, limit]);
 
   const onNewReset = () => {
     router.replace("/subvit/substansi/tipe-soal", undefined, { shallow: true });
@@ -83,6 +85,12 @@ const ListTipeSoal = ({ token }) => {
   };
 
   const handleLimit = (val) => {
+    if (val) {
+      router.push(`${router.pathname}?page=1&limit=${val}`);
+    } else {
+      router.push(`${router.pathname}?page=1&limit=5`);
+    }
+
     setLimit(val);
   };
 
@@ -290,12 +298,12 @@ const ListTipeSoal = ({ token }) => {
                       ) : (
                         subtance_question_type &&
                         subtance_question_type.list_types.map((row, i) => {
+                          const paginate = i + 1 * (page * limit);
+                          const dividers = limit - 1;
                           return (
                             <tr key={row.id}>
                               <td className="align-middle text-center">
-                                <span className="">
-                                  {i + 1 * (page * 5 || limit) - 4}
-                                </span>
+                                <span className="">{paginate - dividers}</span>
                               </td>
                               <td className="align-middle">{row.name}</td>
                               <td className="align-middle">{row.value}</td>
@@ -382,7 +390,9 @@ const ListTipeSoal = ({ token }) => {
                           onChange={(e) => handleLimit(e.target.value)}
                           onBlur={(e) => handleLimit(e.target.value)}
                         >
-                          <option value="5">5</option>
+                          <option value="5" selected>
+                            5
+                          </option>
                           <option value="10">10</option>
                           <option value="15">15</option>
                           <option value="20">20</option>

@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useSelector, useDispatch } from "react-redux";
 import { Row, Col, Card, Button, Badge, Modal } from "react-bootstrap";
-import style from "../../../../styles/peserta/dashboard.module.css";
 
+import style from "../../../../styles/peserta/dashboard.module.css";
 import CardPill from "../../../components/peserta/CardPill";
 import CardPage from "../../../components/peserta/CardPage";
 import { useRouter } from "next/router";
@@ -11,6 +12,12 @@ import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
 
 const Dashboard = ({ session }) => {
   const router = useRouter();
+
+  const { error: errorDashboard, dataDashboard } = useSelector(
+    (state) => state.dashboardPeserta
+  );
+
+  const { count, pelatihan, subvit } = dataDashboard;
 
   const [cardPelatihan, setCardPelatihan] = useState([
     {
@@ -29,6 +36,12 @@ const Dashboard = ({ session }) => {
     },
   ]);
 
+  useEffect(() => {
+    if (errorDashboard) {
+      toast.error(errorDashboard);
+    }
+  }, [errorDashboard]);
+
   const handleHoverCard = (index, status) => {
     let list = [...cardPelatihan];
     list[index].hover = status;
@@ -45,7 +58,7 @@ const Dashboard = ({ session }) => {
             backgroundImg="new-duplicate.svg"
             icon="new/open-book.svg"
             color="#FFFFFF"
-            value={0}
+            value={count[0].count}
             title="Total Pelatihan"
           />
           <CardPill
@@ -53,7 +66,7 @@ const Dashboard = ({ session }) => {
             backgroundImg="new-award.svg"
             icon="new/done-circle.svg"
             color="#FFFFFF"
-            value={0}
+            value={count[1].count}
             title="Lulus Pelatihan"
           />
           <CardPill
@@ -61,7 +74,7 @@ const Dashboard = ({ session }) => {
             backgroundImg="new-shield.svg"
             icon="new/error-circle.svg"
             color="#FFFFFF"
-            value={0}
+            value={count[2].count}
             title="Tidak Lulus Pelatihan"
           />
         </Row>
@@ -100,135 +113,164 @@ const Dashboard = ({ session }) => {
           />
         </Row>
         <Row className="mx-1">
-          {cardPelatihan.map((row, i) => (
-            <Col md={6} className="mb-4 px-2" key={i}>
-              <Card className="rounded-xl h-100">
-                <Card.Body>
-                  <Card.Title>
-                    <p className={style.card_title}>{row.title}</p>
-                  </Card.Title>
+          <Col md={6} className="mb-4 px-2">
+            <Card className="rounded-xl h-100">
+              <Card.Body>
+                <Card.Title>
+                  <p className={style.card_title}>Pelatihan Terkini</p>
+                </Card.Title>
 
-                  <Card
-                    className="shadow rounded-md"
-                    onMouseOver={() => handleHoverCard(i, true)}
-                    onMouseLeave={() => handleHoverCard(i, false)}
-                  >
-                    <Image
-                      className={`${style.image_dashboard}`}
-                      src="/assets/media/default-card.png"
-                      width={400}
-                      height={180}
-                      objectFit="cover"
-                    />
-                    <Card.ImgOverlay>
-                      <Badge bg={` rounded-xl py-3 px-4 ${style.badge_card}`}>
-                        Pelatihan Online
-                      </Badge>
-                      {row.hover && (
-                        <>
-                          <Button
-                            variant="light"
-                            className={`float-right d-flex justify-content-center align-items-center ${style.wishlist_card}`}
-                          >
-                            <i
-                              className="ri-heart-line p-0"
-                              style={{ color: "#6C6C6C" }}
-                            ></i>
-                          </Button>
-                          <Button
-                            variant="light"
-                            className={`float-right d-flex justify-content-center align-items-center mr-2 ${style.wishlist_card}`}
-                          >
-                            <i
-                              className="ri-share-line p-0"
-                              style={{ color: "#6C6C6C" }}
-                            ></i>
-                          </Button>
-                        </>
-                      )}
-                    </Card.ImgOverlay>
-                    <Card.Body className="position-relative">
-                      <div className={style.bungkus_mitra_pelatihan}>
-                        <Image
-                          src="/assets/media/logo-filter.svg"
-                          width={62}
-                          height={62}
-                          objectFit="cover"
-                          thumbnail
-                          roundedCircle
-                          className={`${style.image_card_pelatihan} img-fluild`}
-                        />
-                      </div>
-                      <div
-                        className="d-flex justify-content-between position-relative pb-0 mb-0"
-                        style={{ top: "-15px" }}
-                      >
-                        <p className={`pl-20 my-0 ${style.text_mitra}`}>
-                          {row.mitra}
-                        </p>
-                        {row.status === "open" && (
-                          <p
-                            className={`${style.status_mitra_open} text-uppercase font-weight-bolder my-0`}
-                          >
-                            Open
-                          </p>
-                        )}
-                        {row.status === "close" && (
-                          <p
-                            className={`${style.status_mitra_close} text-uppercase font-weight-bolder my-0`}
-                          >
-                            Close
-                          </p>
-                        )}
-                      </div>
+                <Card className="shadow rounded-md">
+                  <Image
+                    className={`${style.image_dashboard}`}
+                    src="/assets/media/default-card.png"
+                    width={400}
+                    height={180}
+                    objectFit="cover"
+                  />
+                  <Card.ImgOverlay>
+                    <Badge bg={` rounded-xl py-3 px-4 ${style.badge_card}`}>
+                      Pelatihan Online
+                    </Badge>
+                  </Card.ImgOverlay>
+                  <Card.Body className="position-relative">
+                    <div className={style.bungkus_mitra_pelatihan}>
+                      <Image
+                        src="/assets/media/logo-filter.svg"
+                        width={62}
+                        height={62}
+                        objectFit="cover"
+                        thumbnail
+                        roundedCircle
+                        className={`${style.image_card_pelatihan} img-fluild`}
+                      />
+                    </div>
+                    <div
+                      className="d-flex justify-content-between position-relative pb-0 mb-0"
+                      style={{ top: "-15px" }}
+                    >
+                      <p className={`pl-20 my-0 ${style.text_mitra}`}>Gojek</p>
+                    </div>
 
-                      <p className={`my-0 ${style.title_card}`}>
-                        Intermediate Multimedia Designer
-                      </p>
-                      <p style={{ fontSize: "14px", color: "#6C6C6C" }}>
-                        Vocational School Graduate Academy
-                      </p>
-                      <hr />
-                      {row.hover != true ? (
-                        <div className="d-flex flex-column">
-                          <div className="date d-flex align-items-center align-middle mr-7">
-                            <i className="ri-time-line"></i>
-                            <span
-                              className={`${style.text_date_register} pl-2`}
-                            >
-                              Registrasi : 05 Jul 21 - 31 Jul 21
-                            </span>
-                          </div>
-                          <div className="date d-flex align-items-center align-middle">
-                            <i className="ri-group-line"></i>
-                            <span
-                              className={`${style.text_date_register} pl-2`}
-                            >
-                              Kuota : 1000 Peserta
-                            </span>
-                          </div>
-                          <div className="date d-flex align-items-center align-middle">
-                            <i className="ri-history-fill"></i>
-                            <span
-                              className={`${style.text_date_register} pl-2`}
-                            >
-                              Status : Test Substansi
-                            </span>
-                          </div>
-                        </div>
+                    <p className={`my-0 ${style.title_card}`}>
+                      Intermediate Multimedia Designer
+                    </p>
+                    <p style={{ fontSize: "14px", color: "#6C6C6C" }}>
+                      Vocational School Graduate Academy
+                    </p>
+                    <hr />
+                    <div className="d-flex flex-column">
+                      <div className="date d-flex align-items-center align-middle mr-7">
+                        <i className="ri-time-line"></i>
+                        <span className={`${style.text_date_register} pl-2`}>
+                          Registrasi : 05 Jul 21 - 31 Jul 21
+                        </span>
+                      </div>
+                      <div className="date d-flex align-items-center align-middle">
+                        <i className="ri-group-line"></i>
+                        <span className={`${style.text_date_register} pl-2`}>
+                          Kuota : 1000 Peserta
+                        </span>
+                      </div>
+                      <div className="date d-flex align-items-center align-middle">
+                        <i className="ri-history-fill"></i>
+                        <span className={`${style.text_date_register} pl-2`}>
+                          Status : Test Substansi
+                        </span>
+                      </div>
+                    </div>
+                    {/* {row.hover != true ? (
                       ) : (
                         <Button
                           className={`btn-block rounded-xl ${style.btn_quick_view}`}
                         >
                           Quick View
                         </Button>
-                      )}
-                    </Card.Body>
-                  </Card>
-                </Card.Body>
-              </Card>
-            </Col>
-          ))}
+                      )} */}
+                  </Card.Body>
+                </Card>
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col md={6} className="mb-4 px-2">
+            <Card className="rounded-xl h-100">
+              <Card.Body>
+                <Card.Title>
+                  <p className={style.card_title}>Pelatihan Sebelumnya</p>
+                </Card.Title>
+
+                <Card className="shadow rounded-md">
+                  <Image
+                    className={`${style.image_dashboard}`}
+                    src="/assets/media/default-card.png"
+                    width={400}
+                    height={180}
+                    objectFit="cover"
+                  />
+                  <Card.ImgOverlay>
+                    <Badge bg={` rounded-xl py-3 px-4 ${style.badge_card}`}>
+                      Pelatihan Online
+                    </Badge>
+                  </Card.ImgOverlay>
+                  <Card.Body className="position-relative">
+                    <div className={style.bungkus_mitra_pelatihan}>
+                      <Image
+                        src="/assets/media/logo-filter.svg"
+                        width={62}
+                        height={62}
+                        objectFit="cover"
+                        thumbnail
+                        roundedCircle
+                        className={`${style.image_card_pelatihan} img-fluild`}
+                      />
+                    </div>
+                    <div
+                      className="d-flex justify-content-between position-relative pb-0 mb-0"
+                      style={{ top: "-15px" }}
+                    >
+                      <p className={`pl-20 my-0 ${style.text_mitra}`}>Gojek</p>
+                    </div>
+
+                    <p className={`my-0 ${style.title_card}`}>
+                      Intermediate Multimedia Designer
+                    </p>
+                    <p style={{ fontSize: "14px", color: "#6C6C6C" }}>
+                      Vocational School Graduate Academy
+                    </p>
+                    <hr />
+                    <div className="d-flex flex-column">
+                      <div className="date d-flex align-items-center align-middle mr-7">
+                        <i className="ri-time-line"></i>
+                        <span className={`${style.text_date_register} pl-2`}>
+                          Registrasi : 05 Jul 21 - 31 Jul 21
+                        </span>
+                      </div>
+                      <div className="date d-flex align-items-center align-middle">
+                        <i className="ri-group-line"></i>
+                        <span className={`${style.text_date_register} pl-2`}>
+                          Kuota : 1000 Peserta
+                        </span>
+                      </div>
+                      <div className="date d-flex align-items-center align-middle">
+                        <i className="ri-history-fill"></i>
+                        <span className={`${style.text_date_register} pl-2`}>
+                          Status : Test Substansi
+                        </span>
+                      </div>
+                    </div>
+                    {/* {row.hover != true ? (
+                      ) : (
+                        <Button
+                          className={`btn-block rounded-xl ${style.btn_quick_view}`}
+                        >
+                          Quick View
+                        </Button>
+                      )} */}
+                  </Card.Body>
+                </Card>
+              </Card.Body>
+            </Card>
+          </Col>
         </Row>
         <Row className="mx-1">
           <Col md={6} className="mb-4 px-2">

@@ -38,27 +38,6 @@ const RevisiKerjasama = ({ token }) => {
       progress: undefined,
     });
 
-  // const setDataSingle = async (id) => {
-  //   try {
-  //     let { data } = await axios.get(
-  //       `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/cek-progres/${id}`,
-  //       {
-  //         headers: {
-  //           authorization: `Bearer ${token}`,
-  //         },
-  //       }
-  //     );
-  //     setPeriod_start(data.data.period_date_start);
-  //     setPeriod_end(data.data.period_date_end);
-  //     setNo_perjanjianLembaga(data.data.agreement_number_partner);
-  //     setNo_perjanjianKoninfo(data.data.agreement_number_kemkominfo);
-  //     setTgl_ttd(data.data.signing_date);
-  //     setDokument(data.data.document);
-  //   } catch (error) {
-  //     console.log("action getSIngle gagal", error);
-  //   }
-  // };
-
   const acceptDokument = (e) => {
     e.preventDefault();
     Swal.fire({
@@ -219,8 +198,7 @@ const RevisiKerjasama = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3
-              className="card-title font-weight-bolder text-dark mb-0"
-              style={{ fontSize: "24px" }}
+              className="card-title font-weight-bolder text-dark titles-1"
             >
               Submit Dokumen Kerjasama Revisi
             </h3>
@@ -382,22 +360,22 @@ const RevisiKerjasama = ({ token }) => {
               </div>
 
               <div className="form-group row">
-                <div className="col-sm-12 d-flex justify-content-end">
+                <div className="col-sm-12 d-flex flex-wrap justify-content-start justify-content-sm-end">
                   <button
                     onClick={(e) => rejectDokument(e)}
-                    className="btn btn-sm btn-rounded-full bg-red-primary text-white"
+                    className="btn btn-sm btn-rounded-full bg-red-primary text-white ml-3 ml-sm-0 mt-2"
                   >
                     Tolak
                   </button>
                   <button
                     onClick={(e) => ajukanRevisiDokumen(e)}
-                    className="btn btn-sm btn-rounded-full bg-yellow-primary text-white mx-5"
+                    className="btn btn-sm btn-rounded-full bg-yellow-primary text-white mx-3 mt-2"
                   >
                     Ajukan Revisi
                   </button>
                   <button
                     onClick={(e) => acceptDokument(e)}
-                    className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
+                    className="btn btn-sm btn-rounded-full bg-blue-primary text-white ml-3 ml-sm-0 mt-2"
                   >
                     Terima
                   </button>

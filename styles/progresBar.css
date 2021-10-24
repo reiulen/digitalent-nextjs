@@ -88,3 +88,44 @@
 .active-circle {
   background: #4cbde2 !important;
 }
+
+.titles-1 {
+  font-size: 24px !important;
+}
+
+.titles-2 {
+  font-size: 40px !important;
+}
+
+
+
+.text-overflow-ens {
+  max-width: 11rem;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+
+.cardContainer {
+  background: #FFFFFF;
+  border: 1px solid #D7E1EA;
+  border-radius: 5px;
+  padding: 16px 32px;
+  border-radius: 12px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media (max-width: 575.98px) {
+  .titles-1 {
+    font-size: 17px !important;
+    margin-bottom: 20px !important;
+  }
+
+  .cardContainer {
+    padding: 16px 4px;
+  }
+  .titles-2 {
+    font-size: 23px !important;
+  }
+}

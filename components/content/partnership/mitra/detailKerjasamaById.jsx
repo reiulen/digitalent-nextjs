@@ -18,7 +18,7 @@ import moment from "moment";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Image from 'next/image'
+import Image from "next/image";
 
 const EditDokumentKerjasamaById = ({ token }) => {
   const dispatch = useDispatch();
@@ -163,28 +163,14 @@ const EditDokumentKerjasamaById = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3
-              className="card-title font-weight-bolder text-dark"
-              style={{ fontSize: "24px" }}
+              className="card-title font-weight-bolder text-dark titles-1"
             >
               Detail Kerjasama
             </h3>
           </div>
 
-          <div className="card-body">
+          <div className="card-body pt-0">
             <form>
-              {/* <div className="form-group">
-                <label htmlFor="staticEmail" className="col-form-label">
-                  Tanggal
-                </label>
-                <input
-                  readOnly
-                  type="date"
-                  required
-                  value={date}
-                  className="form-control"
-                />
-              </div> */}
-
               <label
                 htmlFor="staticEmail"
                 className="col-form-label fz-14"
@@ -193,21 +179,6 @@ const EditDokumentKerjasamaById = ({ token }) => {
                 Tanggal
               </label>
               <p className="fz-16">{date}</p>
-
-              {/* <div className="form-group">
-                <label htmlFor="staticEmail" className="col-form-label">
-                  Judul kerjasama
-                </label>
-                <input
-                  required
-                  readOnly
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                  type="text"
-                  className="form-control"
-                  placeholder="Judul Kerjasama"
-                />
-              </div> */}
 
               <label
                 htmlFor="staticEmail"
@@ -218,23 +189,6 @@ const EditDokumentKerjasamaById = ({ token }) => {
               </label>
               <p className="fz-16">{title}</p>
 
-              {/* start list kategory */}
-
-              {/* <div className="form-group">
-                <label htmlFor="staticEmail" className="col-form-label">
-                  Kategori kerjasama
-                </label>
-                <select
-                  name=""
-                  id=""
-                  className="form-control"
-                  disabled
-                  value={cooperationID.id}
-                >
-                  <option>{cooperationID.name}</option>
-                </select>
-              </div> */}
-
               <label
                 htmlFor="staticEmail"
                 className="col-form-label fz-14"
@@ -243,74 +197,6 @@ const EditDokumentKerjasamaById = ({ token }) => {
                 Kategori kerjasama
               </label>
               <p className="fz-16">{cooperationID.name}</p>
-
-              {/* end list kategory */}
-              {/* <div className="form-group">
-                <label htmlFor="staticEmail" className="col-form-label">
-                  Periode
-                </label>
-                <div className="row">
-                  <div className="col-12 col-sm-6">
-                    <input
-                      required
-                      readOnly
-                      type="number"
-                      className="form-control mt-2"
-                      onChange={(e) => setPeriod(e.target.value)}
-                      value={period}
-                    />
-                  </div>
-                  <div className="col-12 col-sm-6">
-                    <div className="form-control mt-2">Tahun</div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="staticEmail" className="col-form-label">
-                  Periode Kerjasama
-                </label>
-                <div className="row">
-                  <div className="col-12 col-sm-6">
-                    <div className="d-flex align-items-center position-relative datepicker-w mt-2">
-                      <DatePicker
-                        readOnly
-                        className="form-search-date form-control-sm form-control cursor-pointer"
-                        onChange={(date) =>
-                          setPeriodDateStart(moment(date).format("YYYY-MM-DD"))
-                        }
-                        value={periodDateStart}
-                        minDate={moment().toDate()}
-                        dateFormat="dd/MM/yyyy"
-                        placeholderText="Sampai Tanggal"
-                      />
-                      <IconCalender
-                        className="right-center-absolute"
-                        style={{ right: "10px" }}
-                      />
-                    </div>
-                  </div>
-                  <div className="col-12 col-sm-6">
-                    <div className="d-flex align-items-center position-relative datepicker-w mt-2">
-                      <DatePicker
-                        readOnly
-                        className="form-search-date form-control-sm form-control cursor-pointer"
-                        onChange={(date) =>
-                          setPeriodDateEnd(moment(date).format("YYYY-MM-DD"))
-                        }
-                        value={periodDateEnd}
-                        minDate={moment().toDate()}
-                        dateFormat="dd/MM/yyyy"
-                        placeholderText="Sampai Tanggal"
-                      />
-                      <IconCalender
-                        className="right-center-absolute"
-                        style={{ right: "10px" }}
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div> */}
 
               <label
                 htmlFor="staticEmail"
@@ -326,15 +212,6 @@ const EditDokumentKerjasamaById = ({ token }) => {
                 {moment(periodDateEnd).format("DD MMMM YYYY")})
               </p>
 
-              {/* <div className="form-group">
-                <label htmlFor="staticEmail" className="col-form-label">
-                  Nama Lembaga
-                </label>
-                <div aria-readonly disabled className="form-control">
-                  {isntitusiName}
-                </div>
-              </div> */}
-
               <label
                 htmlFor="staticEmail"
                 className="col-form-label fz-14"
@@ -344,13 +221,6 @@ const EditDokumentKerjasamaById = ({ token }) => {
               </label>
               <p className="fz-16">{isntitusiName}</p>
 
-              {/* <div className="form-group">
-                <label htmlFor="staticEmail" className="col-form-label">
-                  Email
-                </label>
-                <p className="form-control">{email}</p>
-              </div> */}
-
               <label
                 htmlFor="staticEmail"
                 className="col-form-label fz-14"
@@ -359,34 +229,6 @@ const EditDokumentKerjasamaById = ({ token }) => {
                 Email
               </label>
               <p className="fz-16">{email}</p>
-
-              {/* <div className="form-group">
-                <label htmlFor="staticEmail" className="col-form-label">
-                  Nomor Perjanjian Lembaga
-                </label>
-                <input
-                  required
-                  readOnly
-                  onChange={(e) => setAggrementNumber(e.target.value)}
-                  type="text"
-                  value={aggrementNumber}
-                  className="form-control"
-                />
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="staticEmail" className="col-form-label">
-                  Nomor Perjanjian KemKominfo
-                </label>
-                <input
-                  readOnly
-                  required
-                  type="text"
-                  onChange={(e) => setAggrementNumberInfo(e.target.value)}
-                  value={aggrementNumberInfo}
-                  className="form-control"
-                />
-              </div> */}
 
               <div className="row">
                 <div className="col-12 col-sm-6">
@@ -419,37 +261,13 @@ const EditDokumentKerjasamaById = ({ token }) => {
                 Tanggal Penandatanganan
               </label>
               <p className="fz-16">{signinDate}</p>
-
-              {/* <div className="form-group">
-                    <label htmlFor="staticEmail" className="col-form-label">
-                      Dokumen Kerjasama
-                    </label>
-                    <div className="position-relative overflow-hidden w-100 ">
-                      <input
-                        disabled
-                        type="text"
-                        className="form-control"
-                        placeholder={`${document}`}
-                      />
-                      <button
-                        type="button"
-                        className="btn right-center-absolute"
-                        style={{
-                          borderTopLeftRadius: "0",
-                          borderBottomLeftRadius: "0",
-                          backgroundColor: "#D7E1EA",
-                          color: "#6C6C6C",
-                        }}
-                        onClick={() =>
-                          window.open(
-                            `https://dts-partnership-dev.s3.ap-southeast-1.amazonaws.com/partnership/files/document_cooperations/${document}`
-                          )
-                        }
-                      >
-                        Buka File
-                      </button>
-                    </div>
-                  </div> */}
+              <label
+                htmlFor="staticEmail"
+                className="col-form-label fz-14"
+                style={{ color: "#6C6C6C" }}
+              >
+                Dokumen Kerjasama
+              </label>
 
               <div className="border-bottom pb-6">
                 <button
@@ -471,37 +289,6 @@ const EditDokumentKerjasamaById = ({ token }) => {
                 </button>
               </div>
 
-              {/* <div className="row">
-                <div className="col-12 col-sm-6">
-                  <div className="form-group">
-                    <label htmlFor="staticEmail" className="col-form-label">
-                      Tanggal Penandatanganan
-                    </label>
-
-                    <div className="d-flex align-items-center position-relative datepicker-w">
-                      <DatePicker
-                        readOnly
-                        className="form-search-date form-control-sm form-control cursor-pointer"
-                        onChange={(date) =>
-                          setSigninDate(moment(date).format("YYYY-MM-DD"))
-                        }
-                        value={signinDate}
-                        minDate={moment().toDate()}
-                        dateFormat="dd/MM/yyyy"
-                        placeholderText="Sampai Tanggal"
-                      />
-                      <IconCalender
-                        className="right-center-absolute"
-                        style={{ right: "10px" }}
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div className="col-12 col-sm-6">
-                 
-                </div>
-              </div> */}
-
               {cooperationID === ""
                 ? ""
                 : cooperationID.data_content.map((items, i) => {
@@ -512,34 +299,14 @@ const EditDokumentKerjasamaById = ({ token }) => {
                           allMK.stateListKerjaSama.length !== 0 ? "d-none" : ""
                         }`}
                       >
-                        {/* <label htmlFor="staticEmail" className="col-form-label">
+                        <label
+                          htmlFor="staticEmail"
+                          className="col-form-label fz-14"
+                          style={{ color: "#6C6C6C" }}
+                        >
                           {items.cooperation_form}
                         </label>
-                        <textarea
-                          readOnly
-                          onChange={(e) => changeDataContentDefault(e, i)}
-                          value={items.form_content}
-                          name=""
-                          id={i}
-                          cols="30"
-                          rows="5"
-                          className="form-control"
-                          placeholder="Masukkan Tujuan Kerjasama disini"
-                        ></textarea> */}
-
-                        
-                        <label
-                htmlFor="staticEmail"
-                className="col-form-label fz-14"
-                style={{ color: "#6C6C6C" }}
-              >
-                {items.cooperation_form}
-              </label>
-              <p className="fz-16">
-                {items.form_content}
-              </p>
-
-              
+                        <p className="fz-16">{items.form_content}</p>
                       </div>
                     );
                   })}
@@ -586,8 +353,9 @@ const EditDokumentKerjasamaById = ({ token }) => {
                 <div className="col-sm-12 d-flex justify-content-end">
                   <Link
                     href={{
-                      pathname:"/partnership/mitra/detail-data-kerjasama-mitra",
-                      query:{id:router.query.id}
+                      pathname:
+                        "/partnership/mitra/detail-data-kerjasama-mitra",
+                      query: { id: router.query.id },
                     }}
                     className="mr-2"
                   >

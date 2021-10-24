@@ -48,11 +48,6 @@ const Imagetron = ({ token }) => {
         isDeleted,
     } = useSelector((state) => state.deleteImagetron);
 
-    // const {
-    //     error: updateError,
-    //     isUpdated
-    // } = useSelector(state => state.updatedImagetron)
-
     const [search, setSearch] = useState("");
     const [limit, setLimit] = useState(null);
     const [startDate, setStartDate] = useState(null);
@@ -77,16 +72,6 @@ const Imagetron = ({ token }) => {
     // }, [dispatch])
 
     useEffect(() => {
-        // if (limit) {
-        //     router.push(`${router.pathname}?page=1&limit=${limit}`);
-        // }
-
-        // if (success) {
-        //     dispatch({
-        //         type: UPDATE_IMAGETRON_REQUEST
-        //     })
-        // }
-
         if (isDeleted) {
             Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
                 (result) => {
@@ -101,10 +86,6 @@ const Imagetron = ({ token }) => {
         }
 
     }, [isDeleted, dispatch]);
-
-    // const override = css`
-    //     margin: 0 auto;
-    // `;
 
     const onNewReset = () => {
         router.replace("/publikasi/imagetron", undefined, { shallow: true });
@@ -252,17 +233,6 @@ const Imagetron = ({ token }) => {
         }
     };
 
-    // const handleLimit = (val) => {
-    //     setLimit(val)
-    //     if (search === "") {
-    //         router.push(`${router.pathname}?page=1&limit=${val}`);
-
-    //     } else {
-    //         router.push(`${router.pathname}?page=1&keyword=${search}&limit=${val}`)
-    //     }
-
-    // };
-
     const handleLimit = (val) => {
         setLimit(val)
         if (search === "" && publishValue === null) {
@@ -301,7 +271,6 @@ const Imagetron = ({ token }) => {
 
             } else if (startDate === null && endDate === null && limit === null && search !== null) {
                 router.push(`${router.pathname}?publish=${val}`);
-                // router.push(`${router.pathname}?publish=${val}&keyword=${search}`);
 
             } else if (startDate === null && endDate === null && limit !== null && search !== null) {
                 router.push(`${router.pathname}?publish=${val}&limit=${limit}&keyword=${search}`);
@@ -317,7 +286,7 @@ const Imagetron = ({ token }) => {
         setStartDate(null)
         setEndDate(null)
         setDisableEndDate(true)
-        router.replace("/publikasi/imagetron", undefined, { shallow: true });
+        router.replace("/publikasi/imagetron", undefined, { shallow: false });
     }
 
     const handleStartDate = (date) => {
@@ -327,9 +296,6 @@ const Imagetron = ({ token }) => {
 
     return (
         <PageWrapper>
-            {/* {
-                console.log(imagetron)
-            } */}
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
                     <div className="alert-icon"><i className="flaticon-warning"></i></div>
@@ -401,8 +367,6 @@ const Imagetron = ({ token }) => {
                         background='bg-light-info'
                         icon="new/open-book.svg"
                         color='#ffffff'
-                        // icon='mail-purple.svg' 
-                        // color='#8A50FC' 
                         value={imagetron.data && imagetron.data.publish != "" ? imagetron.data.publish : 0}
                         titleValue='Imagetron'
                         title='Total Publish'
@@ -413,8 +377,6 @@ const Imagetron = ({ token }) => {
                         background='bg-light-success'
                         icon='user-white.svg'
                         color='#ffffff'
-                        // icon='orang-tambah-green.svg' 
-                        // color='#74BBB7' 
                         value='0'
                         titleValue='Orang'
                         title='Total Author'
@@ -425,8 +387,6 @@ const Imagetron = ({ token }) => {
                         background='bg-light-danger'
                         icon="Library.svg"
                         color='#ffffff'
-                        // icon='kotak-kotak-red.svg' 
-                        // color='#F65464' 
                         value={imagetron.data && imagetron.data.unpublish != "" ? imagetron.data.unpublish : 0}
                         titleValue='Imagetron'
                         title='Total Belum Dipublish'
@@ -654,7 +614,6 @@ const Imagetron = ({ token }) => {
                                                             <td className='align-middle text-center'>
                                                                 {
                                                                     limit === null ?
-                                                                        // <span className="badge badge-secondary text-muted">
                                                                         <span>
                                                                             {i + 1 * (page * 5) - (5 - 1)}
                                                                         </span>
@@ -685,7 +644,7 @@ const Imagetron = ({ token }) => {
                                                                 {/* <Image alt='name_image' src='https://statik.tempo.co/data/2018/11/29/id_800478/800478_720.jpg' width={80} height={50} /> */}
                                                             </td>
                                                             <td className='align-middle'>{row.nama_kategori}</td>
-                                                            <td className='align-middle' className="align-middle" style={{overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',maxWidth:'180px'}}>{row.judul}</td>
+                                                            <td className='align-middle' style={{overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',maxWidth:'11rem'}}>{row.judul}</td>
                                                             <td className="align-middle">
                                                                 {row.publish === 1 ? (
                                                                     row.tanggal_publish
@@ -695,7 +654,6 @@ const Imagetron = ({ token }) => {
                                                                     </span>
                                                                 )}
                                                             </td>
-                                                            {/* <td className='align-middle'>{row.dibuat}</td> */}
                                                             <td className='align-middle'>{row.name}</td>
                                                             <td className="align-middle">
                                                                 {row.publish === 1 ? (
@@ -708,7 +666,6 @@ const Imagetron = ({ token }) => {
                                                                     </span>
                                                                 )}
                                                             </td>
-                                                            {/* <td className='align-middle'>Super Admin</td> */}
                                                             <td className='align-middle'>{row.role[0].name}</td>
                                                             <td className="align-middle d-flex justify-content-center">
 

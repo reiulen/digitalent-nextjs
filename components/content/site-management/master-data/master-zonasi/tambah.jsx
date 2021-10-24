@@ -32,7 +32,6 @@ const Tambah = ({ token }) => {
       kabupaten: [],
     },
   ]);
-  console.log("formInput", formInput);
   // value to send api
   const [valueSend, setValueSend] = useState([
     {
@@ -40,17 +39,13 @@ const Tambah = ({ token }) => {
       kota_kabupaten: [],
     },
   ]);
-  console.log("valueSend", valueSend);
 
   const drowpdownProvinsi = useSelector((state) => state.allProvincesSite);
-  // console.log("drowpdownProvinsi",drowpdownProvinsi)
 
   let tempOptionsProvinsi = drowpdownProvinsi?.data;
-  // console.log("tempOptionsProvinsi",tempOptionsProvinsi)
 
   // onchange set value to form input loop
   const changeListProvinces = async (e, index) => {
-    console.log("event change provinsices", e.id);
     let _temp = [...formInput];
     let _tempValue = [...valueSend];
 
@@ -70,13 +65,11 @@ const Tambah = ({ token }) => {
       _tempValue[index].provinsi = e.label;
       setFormInput(_temp);
       setValueSend(_tempValue);
-    } catch (error) {
-      console.log(error);
+    } catch (error) {return;
     }
   };
   // onchange set value to form input loop
   const changeListKabupaten = (e, index) => {
-    console.log("event change kabupaten", e, index);
     let _tempValue = [...valueSend];
     _tempValue[index].kota_kabupaten = e.map((items) => {
       return { label: items.label };

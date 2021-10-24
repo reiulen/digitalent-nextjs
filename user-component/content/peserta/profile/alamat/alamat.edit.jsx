@@ -170,7 +170,7 @@ const AlamatEdit = ({ funcViewEdit, token }) => {
               <Form.Label>Provinsi</Form.Label>
               <Select
                 key={1}
-                placeholder="Silahkan Pilih Provinsi"
+                placeholder={`${alamat.provinsi}`}
                 options={optionsProvinsi}
                 defaultValue={provinsiDomisili}
                 onChange={(e) => {
@@ -196,7 +196,7 @@ const AlamatEdit = ({ funcViewEdit, token }) => {
               <Select
                 key={1}
                 ref={(ref) => (selectRefKabupatenDomisili = ref)}
-                placeholder="Silahkan Pilih Kota / Kabupaten"
+                placeholder={`${alamat.kota}`}
                 options={optionsKabupatenDomisili}
                 defaultValue={kotaDomisili}
                 onChange={(e) =>
@@ -288,7 +288,7 @@ const AlamatEdit = ({ funcViewEdit, token }) => {
               <Form.Label>Provinsi</Form.Label>
               <Select
                 key={2}
-                placeholder="Silahkan Pilih Provinsi"
+                placeholder={`${alamat.provinsi}`}
                 options={optionsProvinsi}
                 defaultValue={provinsiDomisili}
                 onChange={(e) => {
@@ -316,7 +316,7 @@ const AlamatEdit = ({ funcViewEdit, token }) => {
               <Select
                 key={2}
                 ref={(ref) => (selectRefKabupatenDomisili = ref)}
-                placeholder="Silahkan Pilih Kota / Kabupaten"
+                placeholder={`${alamat.kota}`}
                 options={optionsKabupatenDomisili}
                 defaultValue={kotaDomisili}
                 onChange={(e) =>
@@ -439,7 +439,7 @@ const AlamatEdit = ({ funcViewEdit, token }) => {
             <Form.Group as={Col} md={6} controlId="formGridEmail">
               <Form.Label>Provinsi</Form.Label>
               <Select
-                placeholder="Silahkan Pilih Provinsi"
+                placeholder={`${alamat.provinsi_ktp}`}
                 options={optionsProvinsi}
                 defaultValue={provinsiKtp}
                 onChange={(e) => {
@@ -464,7 +464,7 @@ const AlamatEdit = ({ funcViewEdit, token }) => {
               <Form.Label>Kota / Kabupaten</Form.Label>
               <Select
                 ref={(ref) => (selectRefKabupaten = ref)}
-                placeholder="Silahkan Pilih Kota / Kabupaten"
+                placeholder={`${alamat.kota_ktp}`}
                 options={optionsKabupaten}
                 defaultValue={kotaKtp}
                 onChange={(e) =>

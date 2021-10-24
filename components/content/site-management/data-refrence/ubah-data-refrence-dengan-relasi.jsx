@@ -17,13 +17,11 @@ const Tambah = ({ token }) => {
   let selectRefDataFromReference = null;
 
   const detailDataReference = useSelector((state) => state.detailDataReference);
-  console.log("detailDataReference", detailDataReference);
   const allOptionReferenceSite = useSelector(
     (state) => state.allOptionReferenceSite
   );
   let tempOptionsReference = allOptionReferenceSite?.data;
 
-  // console.log("allOptionReferenceSite", allOptionReferenceSite);
   const [defaultDataReference, setDefaultDataReference] = useState([
     detailDataReference.dataReference.data_reference,
   ]);
@@ -42,7 +40,6 @@ const Tambah = ({ token }) => {
   const [nameListFromReference, setNameListFromReference] = useState("");
   const [optionFromReference, setOptionFromReference] = useState([]);
   const changeListDataReference = (e) => {
-    console.log("data reference parents", e.key);
     setIdReference(e.key);
     setNameListFromReference(e.value);
   };
@@ -52,7 +49,6 @@ const Tambah = ({ token }) => {
       return { ...items, value: { label: items.value, value: items.value } };
     }
   );
-  console.log("manipulate1", manipulate1);
   const transformed = manipulate1.map(
     ({ data_references_id, relasi, value, relasi_id, id }) => ({
       value: relasi,
@@ -61,7 +57,6 @@ const Tambah = ({ token }) => {
       label: value,
     })
   );
-  console.log("transformed", transformed);
 
   const [formReferenceAndText, setFormReferenceAndText] = useState(
     transformed.map((items) => {
@@ -73,7 +68,6 @@ const Tambah = ({ token }) => {
       };
     })
   );
-  console.log("formReferenceAndText", formReferenceAndText);
   const [formReferenceAndTextValue, setFormReferenceAndTextValue] = useState(
     transformed.map((items) => {
       return {
@@ -137,7 +131,6 @@ const Tambah = ({ token }) => {
   };
 
   const handleCHangeNameReference = (e, index) => {
-    console.log("ketika pilih data reference sub", e.key);
 
     let _temp = [...formReferenceAndText];
     let _tempValue = [...formReferenceAndTextValue];
@@ -276,13 +269,9 @@ const Tambah = ({ token }) => {
           let resultOptionReferenceChooce = data.data.map((items) => {
             return { ...items, label: items.value };
           });
-          // console.log("data sub",data)
           setOptionFromReference(resultOptionReferenceChooce);
         } catch (error) {
-          console.log(
-            "error get all data reference",
-            error.response.data.message
-          );
+          return;
         }
       }
 

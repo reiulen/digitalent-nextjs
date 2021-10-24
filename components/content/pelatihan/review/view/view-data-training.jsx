@@ -313,7 +313,10 @@ const ViewReviewTraining = ({ token }) => {
             <div className="row mt-2">
               <div className="col-md-12">
                 <p className="text-neutral-body">Deskripsi</p>
-                <p className="text-dark">{dataPelatihan.deskripsi}</p>
+                <div
+                  dangerouslySetInnerHTML={{ __html: dataPelatihan.deskripsi }}
+                  style={{ overflowWrap: "break-word" }}
+                ></div>
               </div>
             </div>
 

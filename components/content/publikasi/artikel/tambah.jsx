@@ -342,7 +342,6 @@ const TambahArtikel = ({ token, id }) => {
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
-      // forceUpdate;
       Swal.fire({
         icon: "error",
         title: "Oops...",
@@ -353,9 +352,6 @@ const TambahArtikel = ({ token, id }) => {
 
   return (
     <>
-      {/* {
-        console.log (setting)
-      } */}
       <PageWrapper>
         {error ? (
           <div
@@ -435,7 +431,6 @@ const TambahArtikel = ({ token, id }) => {
                           data={isi_artikel}
                           onReady={(editor) => {
                             // You can store the "editor" and use when it is needed.
-                            // console.log("Editor is ready to use!", editor);
                           }}
                           onChange={(event, editor) => {
                             const data = editor.getData();
@@ -659,7 +654,6 @@ const TambahArtikel = ({ token, id }) => {
                         className="custom-file-input"
                         id="inputGroupFile04"
                         onChange={onChangeGambar}
-                        // onChange={(e) => onChangeGambar(e)}
                         accept="image/*"
                         onBlur={() =>
                           simpleValidator.current.showMessageFor("gambar")
@@ -837,7 +831,6 @@ const TambahArtikel = ({ token, id }) => {
                     <TagsInput
                       value={tag}
                       onChange={(data) => handleTag(data)}
-                      // onChange={setTag}
                       name="fruits"
                       placeHolder="Isi Tag disini"
                       // onBlur={() => simpleValidator.current.showMessageFor('tag')}
@@ -905,12 +898,6 @@ const TambahArtikel = ({ token, id }) => {
                             disabled={disablePublishDate === true || disablePublishDate === null}
                           />
                         </div>
-                        {
-                          // disablePublishDate === true ?
-                          //   <small className="text-muted">Harap ubah status publikasi menjadi aktif untuk mengisi Tanggal Publish</small>
-                          // :
-                          //   null
-                        }
                       </div>
                     </div>
                     :

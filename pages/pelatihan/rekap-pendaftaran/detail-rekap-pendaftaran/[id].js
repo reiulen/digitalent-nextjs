@@ -6,6 +6,11 @@ import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 
 import { wrapper } from "../../../../redux/store";
 import { getSession } from "next-auth/client";
+import {
+  getAkademiByPelatihan,
+  getStatusPendaftar,
+  getPendaftaranPeserta,
+} from "../../../../redux/actions/pelatihan/summary.actions";
 
 const DetailSummary = dynamic(
   () =>
@@ -18,11 +23,12 @@ const DetailSummary = dynamic(
   }
 );
 
-export default function DetailSummaryPage() {
+export default function DetailSummaryPage(props) {
+  const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <DetailSummary />
+        <DetailSummary token={session.token} />
       </div>
     </>
   );
@@ -40,6 +46,16 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+
+      await store.dispatch(
+        getAkademiByPelatihan(session.user.user.data.token, params.id)
+      );
+      await store.dispatch(
+        getStatusPendaftar(session.user.user.data.token, params.id)
+      );
+      await store.dispatch(
+        getPendaftaranPeserta(session.user.user.data.token, params.id)
+      );
 
       return {
         props: { session, title: "Detail Rekap Pendaftaran - Pelatihan" },

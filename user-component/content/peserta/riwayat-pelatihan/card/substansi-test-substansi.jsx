@@ -5,17 +5,28 @@ import Image from "next/image";
 import style from "../style.module.css";
 
 export default function SubstansiMenungguJadwal() {
+
+  async function clickHandle(param){
+    if(param == 1){
+      console.log("atas");
+    }else{
+      console.log("bawah");
+    }
+  }
+
   return (
     <div>
       <Col lg={12} className="order-1 px-0">
+
         <Card className="card-custom card-stretch gutter-b p-0">
-          <Button
+          <Card.Body
             className="p-0"
             variant="white"
-            onclick={() => {
-              console.log("isi survey");
-            }}
-          >
+            onClick={(e) =>{
+              e.preventDefault();
+              clickHandle(1);
+            }}>
+
             <Row className="p-12 m-0">
               <Col md={3} className="p-0">
                 <Image
@@ -100,19 +111,23 @@ export default function SubstansiMenungguJadwal() {
                     </Button>
                   </Col>
                   <Col md={6}>
-                    <Button
+                    <a
+                      onClick={(e) =>{
+                          e.preventDefault();
+                          clickHandle(2);
+                      }}
+                      type="button"
                       variant="primary"
                       className="btn-rounded-full ml-auto btn-block d-flex justify-content-center"
-                      size="sm"
-                    >
+                      size="sm">
                       Test Substansi
                       <i className="ri-arrow-right-s-line ml-2"></i>
-                    </Button>
+                    </a>
                   </Col>
                 </Row>
               </Col>
             </Row>
-          </Button>
+          </Card.Body>
         </Card>
       </Col>
     </div>

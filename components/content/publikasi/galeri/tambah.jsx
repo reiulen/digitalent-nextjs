@@ -77,7 +77,6 @@ const TambahGaleri = ({ token, id }) => {
 
     const thumbs = files.map(file => (
         <div style={thumb} key={file.name}>
-            {/* {console.log("IMAGE : ", file)} */}
             <div style={thumbInner}>
                 <Image
                     loader={() => file.preview}
@@ -90,16 +89,6 @@ const TambahGaleri = ({ token, id }) => {
                     objectFit="fill"
                     unoptimized={true}
                 />
-                {/* <img
-                    src={file.preview}
-                    alt="thumb"
-                    width= '10vh'
-                    height= '10vh'>
-                </img> */}
-
-                {/* {
-                    console.log (file)
-                } */}
             </div>
         </div>
     ));
@@ -149,7 +138,6 @@ const TambahGaleri = ({ token, id }) => {
         { key: 1, imagePreview: "", imageFile: "", imageName: "" },
     ]);
     const [kategori_id, setKategoriId] = useState(null)
-    // const [kategori_id, setKategoriId] = useState(1)
     const [users_id, setUserId] = useState(id)
     const [tag, setTag] = useState([])
     const [publish, setPublish] = useState(0)
@@ -173,7 +161,6 @@ const TambahGaleri = ({ token, id }) => {
     const handlePublishDate = (date) => {
         if (disablePublishDate === false) {
             setPublishDate(date)
-
         }
     }
 
@@ -308,7 +295,6 @@ const TambahGaleri = ({ token, id }) => {
             const data = {
                 judul,
                 isi_galleri,
-                // gambar,
                 gambar: temps,
                 kategori_id: Number(kategori_id),
                 users_id,
@@ -321,7 +307,6 @@ const TambahGaleri = ({ token, id }) => {
             const data = {
                 judul,
                 isi_galleri,
-                // gambar,
                 gambar: temps,
                 kategori_id: Number(kategori_id),
                 users_id,
@@ -374,9 +359,6 @@ const TambahGaleri = ({ token, id }) => {
 
     return (
         <PageWrapper>
-            {/* {
-                console.log("Cek Kategori Awal", kategori)
-            } */}
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
                     <div className="alert-icon"><i className="flaticon-warning"></i></div>
@@ -420,7 +402,6 @@ const TambahGaleri = ({ token, id }) => {
                                         "required|min:5|max:5000",
                                         { className: "text-danger" }
                                     )}
-                                    {/* <small className='text-danger'>*Maksimal 160 Karakter</small> */}
                                 </div>
                             </div>
 
@@ -1453,12 +1434,6 @@ const TambahGaleri = ({ token, id }) => {
                                 </div> */}
 
                                 <div className="form-group mb-4">
-                                    {/* <label
-                                        htmlFor="staticEmail"
-                                        className="col-form-label font-weight-bold"
-                                        >
-                                        Upload Gambar
-                                        </label> */}
                                     <div className="row align-items-center">
                                         {image.map((row, i) => (
                                             <div className="col-4 col-md-2 col-lg-2 p-0 ml-5" key={row.key} >
@@ -1556,7 +1531,6 @@ const TambahGaleri = ({ token, id }) => {
                                             disabled={totalImage === 5 ? true : false}
                                         >
                                             <i className="ri-add-line text-white"></i>
-                                            {/* <i className="ri-add-line text-white"></i> Tambah Gambar */}
                                         </button>
                                     </div>
 
@@ -1566,14 +1540,6 @@ const TambahGaleri = ({ token, id }) => {
                                 </div>
 
                             </div>
-
-                            {/* {
-                                console.log (kategori)
-                            } */}
-
-                            {/* {
-                                console.log (gambarPreview)
-                            } */}
 
                             <div className="form-group">
                                 <label
@@ -1694,35 +1660,11 @@ const TambahGaleri = ({ token, id }) => {
                                                 // minDate={addDays(new Date(), 20)}
                                                 />
                                             </div>
-                                            {/* {
-                                                disablePublishDate === true ?
-                                                    <small className="text-muted">Harap ubah status publikasi menjadi aktif untuk mengisi Tanggal Publish</small>
-                                                :
-                                                    null
-                                            } */}
                                         </div>
                                     </div>
                                     :
                                     null
                             }
-
-
-
-                            {/* <div className="form-group row">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Publish</label>
-                                <div className="col-sm-1">
-                                    <SwitchButton
-                                        checked={publish}
-                                        onlabel=' '
-                                        onstyle='primary'
-                                        offlabel=' '
-                                        offstyle='danger'
-                                        size='sm'
-                                        width={30}
-                                        onChange={(checked) => setPublish(checked)}
-                                    />
-                                </div>
-                            </div> */}
 
                             <div className="form-group row">
                                 <div className="col-sm-2"></div>

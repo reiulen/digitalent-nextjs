@@ -16,7 +16,6 @@ const Table = ({ token }) => {
   const router = useRouter();
 
   const detailUnitWork = useSelector(state => state.detailUnitWork)
-  console.log("detailUnitWork",detailUnitWork)
 
   return (
     <PageWrapper>
