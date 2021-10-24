@@ -19,6 +19,7 @@ const Table = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
   const [array, setArray] = useState([]);
+  console.log("array",array)
   const firstPush = () => {
     let _temp = [...array];
     _temp.push({
@@ -227,9 +228,6 @@ const Table = ({ token }) => {
                               className="form-control"
                               placeholder="Masukan Menu"
                             />
-                            {/* <span className="form-text text-muted">
-                            Please enter your full name
-                          </span> */}
                           </div>
                         </div>
                         <div className="col-md-12 col-xl-5">
@@ -243,9 +241,6 @@ const Table = ({ token }) => {
                               className="form-control"
                               placeholder="Masukan link"
                             />
-                            {/* <span className="form-text text-muted">
-                            Please enter your full name
-                          </span> */}
                           </div>
                         </div>
                         <div className="col-md-12 col-xl-2">
@@ -299,9 +294,6 @@ const Table = ({ token }) => {
                                   className="form-control"
                                   placeholder="Masukan sub menu"
                                 />
-                                {/* <span className="form-text text-muted">
-                                Please enter your full name
-                              </span> */}
                               </div>
                             </div>
                             <div className="col-md-12 col-xl-5">
@@ -315,9 +307,6 @@ const Table = ({ token }) => {
                                   className="form-control"
                                   placeholder="Masukan sub link"
                                 />
-                                {/* <span className="form-text text-muted">
-                                Please enter your full name
-                              </span> */}
                               </div>
                             </div>
                             <div className="col-md-12 col-xl-2">
@@ -357,9 +346,6 @@ const Table = ({ token }) => {
                                       className="form-control"
                                       placeholder="Masukan sub sub menu"
                                     />
-                                    {/* <span className="form-text text-muted">
-                                    Please enter your full name
-                                  </span> */}
                                   </div>
                                 </div>
                                 <div className="col-md-12 col-xl-5">
@@ -374,9 +360,6 @@ const Table = ({ token }) => {
                                       className="form-control"
                                       placeholder="Masukan sub sub link"
                                     />
-                                    {/* <span className="form-text text-muted">
-                                    Please enter your full name
-                                  </span> */}
                                   </div>
                                 </div>
                                 <div className="col-md-12 col-xl-2">

@@ -35,7 +35,7 @@ module.exports = {
     END_POINT_API_PARTNERSHIP_MITRA: "http://dts-partnership-dev.majapahit.id/",
 
     END_POINT_API_IMAGE_PARTNERSHIP:
-      "http://dts-partnership-dev.s3.ap-southeast-1.amazonaws.com/",
+      "http://dts-partnership-dev.s3.ap-southeast-1.amazonaws.com",
 
     // site management
     END_POINT_API_SITE_MANAGEMENT: "http://api-dts-dev.majapahit.id/sso/",

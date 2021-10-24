@@ -461,9 +461,7 @@ const Tambah = ({ token }) => {
                     }}
                   >
                     <Image
-                      src={process.env.END_POINT_API_IMAGE_PARTNERSHIP +
-                          "partnership/images/profile-images/" +
-                          imageview}
+                      src={process.env.END_POINT_API_IMAGE_PARTNERSHIP + imageview}
                       alt="Picture of the author"
                       layout="fill"
                       objectFit="fill"
