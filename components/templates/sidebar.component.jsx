@@ -458,34 +458,40 @@ const Sidebar = ({ session }) => {
     });
     let _temp = [...initializeMenu];
     setMenu(_temp);
+
+
+    return() => {
+      localStorage.removeItem("submenuActive");
+    };
+
   }, []);
   
   const handleOpenMenu = (e,i, condition) => {    
 
+    // console.log("hap");
+
+    console.log(e);
+    console.log(i);
+    console.log(condition);
+
     const pathRoute = router.route;
     const splitRouteToMakingActive = pathRoute.split("/");
 
-    console.log(splitRouteToMakingActive);
-
-    if(splitRouteToMakingActive[1]){
-      initializeMenu[i].selected = !condition;
-
-      // if(initializeMenu[i].length > 0 && splitRouteToMakingActive[2]){
-      //   initializeMenu[i].child.map((rowChild, indexChild) => {
-      //     if(splitRouteToMakingActive[2] == rowChild[indexChild].name.toLowerCase()){
-      //       rowChild[indexChild].selected = true;
-      //     }
-      //   });
-      // }
-
+    if(i){
+      if(splitRouteToMakingActive[1]){
+        initializeMenu[i].selected = !condition;
+        if(initializeMenu[i].name.toLowerCase() === splitRouteToMakingActive[1]){
+          const idSubmenuActive = localStorage.getItem("submenuActive");
+          initializeMenu[i].child[idSubmenuActive].selected = true;
+        }
+      }
     }
-
+    
     let _temp = [...initializeMenu];
     setMenu(_temp);
   };
 
   const handleOpenMenuSubMenu = (e, iMenu, iSubMenu) => {
-
 
     let _temp = [...menu];
     _temp.map((items, index) => {
@@ -503,12 +509,19 @@ const Sidebar = ({ session }) => {
   };
 
   const handleActiveSubmenu = (e, iMenu, iSubMenu) => {
+
     let _temp = [...menu];
     _temp.map((items, index) => {
       if (index === iMenu) {
         _temp[iMenu] = { ...items, selected: true };
         items.child.map((itemsp, indxx) => {
           if (indxx === iSubMenu) {
+            // console.log("open");
+
+            localStorage.setItem("submenuActive", indxx);
+
+            // console.log(localStorage.getItem("submenuActive"));
+
             _temp[iMenu].child[indxx] = {
               ...itemsp,
               selected: itemsp.selected ? false : true,
@@ -528,6 +541,7 @@ const Sidebar = ({ session }) => {
     let _temp = [...menu];
     _temp.map((items, index) => {
       if (index === iMenu) {
+        
         _temp[iMenu] = { ...items, selected: true };
         items.child.map((itemsp, indxx) => {
           if (indxx === iSubMenu) {
@@ -550,6 +564,7 @@ const Sidebar = ({ session }) => {
                 };
               }
             });
+
           }
         });
       }
@@ -587,8 +602,8 @@ const Sidebar = ({ session }) => {
           id="kt_aside_menu"
           className="aside-menu my-4"
           data-menu-vertical="1"
-          data-menu-scroll="1"
-        >
+          data-menu-scroll="1">
+            
           {!session ? (
             ""
           ) : session?.user?.user?.data?.user?.roles[0] === "mitra" ? (
@@ -672,7 +687,9 @@ const Sidebar = ({ session }) => {
                           height={24}
                         />
                       </span>
-                      <span className="menu-text ml-2">{items.name}</span>
+                      <span className="menu-text ml-2" onClick={(e)=> {
+                         handleOpenMenu(null, null, null); 
+                      }}>{items.name}</span>
                     </button>
                   </li>
                 ) : (
@@ -720,11 +737,12 @@ const Sidebar = ({ session }) => {
                                 <Link href={child.href} passHref>
                                   <a
                                     className="menu-link"
-                                    style={{ paddingLeft: "5.5rem" }}
-                                  >
+                                    style={{ paddingLeft: "5.5rem" }}>
+
                                     <span className="menu-text">
                                       {child.name}
                                     </span>
+
                                   </a>
                                 </Link>
 
@@ -770,13 +788,12 @@ const Sidebar = ({ session }) => {
                                               idx
                                             )
                                           }
-                                          key={idx}
-                                        >
+                                          key={idx}>
+
                                           <Link href={child2.href} passHref>
-                                            <a
-                                              className="menu-link"
-                                              style={{ paddingLeft: "6.5rem" }}
-                                            >
+                                            <a className="menu-link"
+                                              style={{ paddingLeft: "6.5rem" }}>
+
                                               <span className="menu-text">
                                                 {child2.name}
                                               </span>

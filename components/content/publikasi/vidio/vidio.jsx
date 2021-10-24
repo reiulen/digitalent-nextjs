@@ -253,7 +253,8 @@ const Vidio = ({ token }) => {
                 router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`)
 
             } else if (startDate !== null && endDate !== null && limit === null && search !== null) {
-                router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&keyword=${search}`)
+                router.push(`${router.pathname}?publish=${val}`)
+                // router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&keyword=${search}`)
 
             } else if (startDate === null && endDate === null && limit !== null && search === null) {
                 router.push(`${router.pathname}?publish=${val}&limit=${limit}`);
