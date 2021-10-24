@@ -29,7 +29,7 @@ const PekerjaanEdit = ({ funcViewEdit, token }) => {
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
 
-  const [statusPekerjaan, setStatusPekerjaan] = useState(null);
+  const [statusPekerjaan, setStatusPekerjaan] = useState(17);
   const [pekerjaanNama, setPekerjaan] = useState(
     (pekerjaan && pekerjaan.pekerjaan) || ""
   );
@@ -37,7 +37,7 @@ const PekerjaanEdit = ({ funcViewEdit, token }) => {
     (pekerjaan && pekerjaan.perusahaan) || ""
   );
   const [penghasilan, setPenghasilan] = useState(
-    (pekerjaan && pekerjaan.penghasilan) || ""
+    (pekerjaan && pekerjaan.penghasilan) || "1"
   );
   const [sekolah, setSekolah] = useState(
     (pekerjaan && pekerjaan.sekolah) || ""
@@ -73,14 +73,39 @@ const PekerjaanEdit = ({ funcViewEdit, token }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
-      const data = {
-        status_pekerjaan: statusPekerjaan.label,
-        pekerjaan: pekerjaanNama,
-        perusahaan,
-        penghasilan,
-        sekolah,
-        tahun_masuk: parseInt(tahunMasuk),
-      };
+      let data = {};
+      if (statusPekerjaan === 17 || statusPekerjaan.value === 17) {
+        console.log("masuk 17");
+        data = {
+          status_pekerjaan: statusPekerjaan.label,
+          pekerjaan: "-",
+          perusahaan: "-",
+          penghasilan: "1",
+          sekolah: "-",
+          tahun_masuk: parseInt(0),
+        };
+      } else if (statusPekerjaan === 16 || statusPekerjaan.value === 16) {
+        console.log("masuk 16");
+        data = {
+          status_pekerjaan: statusPekerjaan.label,
+          pekerjaan: pekerjaanNama,
+          perusahaan,
+          penghasilan,
+          sekolah,
+          tahun_masuk: parseInt(0),
+        };
+      } else if (statusPekerjaan === 18 || statusPekerjaan.value === 18) {
+                console.log("masuk 18");
+        data = {
+          status_pekerjaan: statusPekerjaan.label,
+          pekerjaan: "-",
+          perusahaan: "-",
+          penghasilan: "1",
+          sekolah,
+          tahun_masuk: parseInt(tahunMasuk),
+        };
+      }
+
       dispatch(updateProfilePekerjaan(data, token));
     } else {
       simpleValidator.current.showMessages();
@@ -91,6 +116,7 @@ const PekerjaanEdit = ({ funcViewEdit, token }) => {
         text: "Isi data dengan benar !",
       });
     }
+    console.log(statusPekerjaan);
   };
 
   return (
@@ -101,7 +127,10 @@ const PekerjaanEdit = ({ funcViewEdit, token }) => {
           <Form.Group className="mb-3" controlId="formGridAddress1">
             <Form.Label>Status Pekerjaan</Form.Label>
             <Select
-              placeholder={`${pekerjaan.status_pekerjaan}`}
+              placeholder={
+                (pekerjaan && pekerjaan.status_pekerjaan) ||
+                "Silahkan Pilih Status Pekerjaan"
+              }
               options={optionsStatusPekerjaan}
               defaultValue={statusPekerjaan}
               onChange={(e) =>
@@ -121,119 +150,127 @@ const PekerjaanEdit = ({ funcViewEdit, token }) => {
             )}
           </Form.Group>
         </div>
-        <div className="kontak-darurat mt-6">
-          <Row>
-            <Col md={6}>
-              <Form.Group className="mb-3" controlId="formGridAddress1">
-                <Form.Label>Pekerjaan</Form.Label>
-                <Form.Control
-                  placeholder="Silahkan Masukan Pekerjaan"
-                  value={pekerjaanNama}
-                  onChange={(e) => setPekerjaan(e.target.value)}
-                  onBlur={() =>
-                    simpleValidator.current.showMessageFor("pekerjaan")
-                  }
-                />
-                {simpleValidator.current.message(
-                  "pekerjaan",
-                  pekerjaanNama,
-                  "required",
-                  {
-                    className: "text-danger",
-                  }
-                )}
-              </Form.Group>
-            </Col>
-            <Col md={6}>
-              <Form.Group className="mb-3" controlId="formGridAddress1">
-                <Form.Label>Perusahaan / Institut Tempat Bekerja</Form.Label>
-                <Form.Control
-                  placeholder="Silahkan Masukan Perusahaan"
-                  value={perusahaan}
-                  onChange={(e) => setPerusahaan(e.target.value)}
-                  onBlur={() =>
-                    simpleValidator.current.showMessageFor("perusahaan")
-                  }
-                />
-                {simpleValidator.current.message(
-                  "perusahaan",
-                  perusahaan,
-                  "required",
-                  {
-                    className: "text-danger",
-                  }
-                )}
-              </Form.Group>
-            </Col>
-          </Row>
+        {statusPekerjaan.value === 17 && <div className=""></div>}
 
-          <Form.Group className="mb-3" controlId="formGridAddress1">
-            <Form.Label>Penghasilan</Form.Label>
-            <Form.Control
-              placeholder="Silahkan Masukan Penghasilan"
-              value={penghasilan}
-              onChange={(e) => setPenghasilan(e.target.value)}
-              onBlur={() =>
-                simpleValidator.current.showMessageFor("penghasilan")
-              }
-            />
-            {simpleValidator.current.message(
-              "penghasilan",
-              penghasilan,
-              "required|integer",
-              {
-                className: "text-danger",
-              }
-            )}
-          </Form.Group>
-        </div>
-        <div className="unggah-berkas-pribadi mt-6">
-          <h3 className="font-weight-bolder">Status Pelajar Mahasiswa</h3>
-          <Row>
-            <Col md={6}>
-              <Form.Group className="mb-3" controlId="formGridAddress1">
-                <Form.Label>Sekolah / Perguruan Tinggi</Form.Label>
-                <Form.Control
-                  placeholder="Silahkan Masukan Sekolah"
-                  value={sekolah}
-                  onChange={(e) => setSekolah(e.target.value)}
-                  onBlur={() =>
-                    simpleValidator.current.showMessageFor("sekolah")
-                  }
-                />
-                {simpleValidator.current.message(
-                  "sekolah",
-                  sekolah,
-                  "required",
-                  {
-                    className: "text-danger",
-                  }
-                )}
-              </Form.Group>
-            </Col>
-            <Col md={6}>
-              <Form.Group className="mb-3" controlId="formGridAddress1">
-                <Form.Label>Tahun Masuk</Form.Label>
-                <Form.Control
-                  placeholder="Silahkan Masukan Tahun Masuk"
-                  value={tahunMasuk}
-                  onChange={(e) => setTahunMasuk(e.target.value)}
-                  onBlur={() =>
-                    simpleValidator.current.showMessageFor("tahun masuk")
-                  }
-                />
-                {simpleValidator.current.message(
-                  "tahun masuk",
-                  tahunMasuk,
-                  "required|integer",
-                  {
-                    className: "text-danger",
-                  }
-                )}
-              </Form.Group>
-            </Col>
-          </Row>
-        </div>
+        {statusPekerjaan.value === 16 && (
+          <div className="kontak-darurat mt-6">
+            <Row>
+              <Col md={6}>
+                <Form.Group className="mb-3" controlId="formGridAddress1">
+                  <Form.Label>Pekerjaan</Form.Label>
+                  <Form.Control
+                    placeholder="Silahkan Masukan Pekerjaan"
+                    value={pekerjaanNama}
+                    onChange={(e) => setPekerjaan(e.target.value)}
+                    onBlur={() =>
+                      simpleValidator.current.showMessageFor("pekerjaan")
+                    }
+                  />
+                  {simpleValidator.current.message(
+                    "pekerjaan",
+                    pekerjaanNama,
+                    statusPekerjaan.value === 16 ? "required" : "",
+                    {
+                      className: "text-danger",
+                    }
+                  )}
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group className="mb-3" controlId="formGridAddress1">
+                  <Form.Label>Perusahaan / Institut Tempat Bekerja</Form.Label>
+                  <Form.Control
+                    placeholder="Silahkan Masukan Perusahaan"
+                    value={perusahaan}
+                    onChange={(e) => setPerusahaan(e.target.value)}
+                    onBlur={() =>
+                      simpleValidator.current.showMessageFor("perusahaan")
+                    }
+                  />
+                  {simpleValidator.current.message(
+                    "perusahaan",
+                    perusahaan,
+                    statusPekerjaan.value === 16 ? "required" : "",
+                    {
+                      className: "text-danger",
+                    }
+                  )}
+                </Form.Group>
+              </Col>
+            </Row>
+
+            <Form.Group className="mb-3" controlId="formGridAddress1">
+              <Form.Label>Penghasilan</Form.Label>
+              <Form.Control
+                placeholder="Silahkan Masukan Penghasilan"
+                value={penghasilan}
+                onChange={(e) => setPenghasilan(e.target.value)}
+                onBlur={() =>
+                  simpleValidator.current.showMessageFor("penghasilan")
+                }
+              />
+              {simpleValidator.current.message(
+                "penghasilan",
+                penghasilan,
+                statusPekerjaan.value === 16 ? "required|integer" : "",
+                {
+                  className: "text-danger",
+                }
+              )}
+            </Form.Group>
+          </div>
+        )}
+
+        {statusPekerjaan.value === 18 && (
+          <div className="unggah-berkas-pribadi mt-6">
+            <h3 className="font-weight-bolder">Status Pelajar Mahasiswa</h3>
+            <Row>
+              <Col md={6}>
+                <Form.Group className="mb-3" controlId="formGridAddress1">
+                  <Form.Label>Sekolah / Perguruan Tinggi</Form.Label>
+                  <Form.Control
+                    placeholder="Silahkan Masukan Sekolah"
+                    value={sekolah}
+                    onChange={(e) => setSekolah(e.target.value)}
+                    onBlur={() =>
+                      simpleValidator.current.showMessageFor("sekolah")
+                    }
+                  />
+                  {simpleValidator.current.message(
+                    "sekolah",
+                    sekolah,
+                    statusPekerjaan.value === 18 ? "required" : "",
+                    {
+                      className: "text-danger",
+                    }
+                  )}
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group className="mb-3" controlId="formGridAddress1">
+                  <Form.Label>Tahun Masuk</Form.Label>
+                  <Form.Control
+                    placeholder="Silahkan Masukan Tahun Masuk"
+                    value={tahunMasuk}
+                    onChange={(e) => setTahunMasuk(e.target.value)}
+                    onBlur={() =>
+                      simpleValidator.current.showMessageFor("tahun masuk")
+                    }
+                  />
+                  {simpleValidator.current.message(
+                    "tahun masuk",
+                    tahunMasuk,
+                    statusPekerjaan.value === 18 ? "required|integer" : "",
+                    {
+                      className: "text-danger",
+                    }
+                  )}
+                </Form.Group>
+              </Col>
+            </Row>
+          </div>
+        )}
+
         <div className="button-aksi mt-5 float-right">
           <Button
             className={`${style.button_profile_batal} rounded-xl mr-2`}

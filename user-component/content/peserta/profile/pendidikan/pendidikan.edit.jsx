@@ -10,6 +10,7 @@ import style from "../style.module.css";
 import {
   updateProfilePendidikan,
   clearErrors,
+  getProfilePendidikan
 } from "../../../../../redux/actions/pelatihan/profile.actions";
 import { UPDATE_PENDIDIKAN_RESET } from "../../../../../redux/types/pelatihan/profile.type";
 
@@ -31,20 +32,18 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
   } = useSelector((state) => state.updatePendidikan);
 
   const [jengjangPendidikan, setJenjangPendidikan] = useState(
-    (pendidikan && pendidikan.jenjang_pendidikan) || null
+    (pendidikan && pendidikan.jenjang) || ""
   );
   const [asalSekolah, setAsalSekolah] = useState(
-    (pendidikan && pendidikan.asal_sekolah) || null
+    (pendidikan && pendidikan.asal_sekolah) || ""
   );
-  const [lainya, setLainya] = useState(
-    (pendidikan && pendidikan.lainya) || null
-  );
+  const [lainya, setLainya] = useState((pendidikan && pendidikan.lainya) || "");
   const [programStudi, setProgramStudi] = useState(
-    (pendidikan && pendidikan.program_studi) || null
+    (pendidikan && pendidikan.program_studi) || ""
   );
-  const [ipk, setIpk] = useState((pendidikan && pendidikan.ipk) || null);
+  const [ipk, setIpk] = useState((pendidikan && pendidikan.ipk) || "");
   const [tahunMasuk, setTahunMasuk] = useState(
-    (pendidikan && pendidikan.tahun_masuk) || null
+    (pendidikan && pendidikan.tahun_masuk) || "0"
   );
 
   const [ijazahName, setIjazahName] = useState("Belum ada file");
@@ -61,12 +60,27 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
       optionsJenjangPendidikan.push(val);
     }
   }
-  const optionsAsalSekolah = [
-    { value: "0", label: "SMP" },
-    { value: "1", label: "SMA" },
-  ];
+
+  let optionsAsalSekolah = [];
 
   useEffect(() => {
+
+    if (jengjangPendidikan.value <= 19) {
+      return;
+    } else if (
+      jengjangPendidikan.value === 20 ||
+      jengjangPendidikan.value === 21 ||
+      jengjangPendidikan.value === 22 ||
+      jengjangPendidikan.value === 23
+    ) {
+      return optionsAsalSekolah.push(
+        { value: "0", label: "TK" },
+        { value: "1", label: "SD" },
+        { value: "2", label: "SMP" },
+        { value: "3", label: "SMA" }
+      );
+    }
+
     if (errorUpdateData) {
       toast.error(errorUpdateData);
       dispatch(clearErrors());
@@ -77,7 +91,14 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
       funcViewEdit(false);
       dispatch({ type: UPDATE_PENDIDIKAN_RESET });
     }
-  }, [errorUpdateData, success, dispatch]);
+  }, [
+    errorUpdateData,
+    success,
+    dispatch,
+    jengjangPendidikan.value,
+    funcViewEdit,
+    optionsAsalSekolah,
+  ]);
 
   const onChangeIjazah = (e) => {
     const type = ["image/jpeg", "image/jpg", "application/pdf"];
@@ -140,7 +161,10 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
           <Form.Group className="mb-3" controlId="formGridAddress1">
             <Form.Label>Jenjang Pendidikan</Form.Label>
             <Select
-              placeholder={`${pendidikan.jenjang}`}
+              placeholder={
+                (pendidikan && pendidikan.jenjang) ||
+                "Silahkan Pilih Asal Jenjang Pendidikan"
+              }
               options={optionsJenjangPendidikan}
               defaultValue={jengjangPendidikan}
               onChange={(e) =>
@@ -159,134 +183,231 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
               }
             )}
           </Form.Group>
-          <Form.Group className="mb-3" controlId="formGridAddress1">
-            <Form.Label>Asal Sekolah / Perguruan Tinggi</Form.Label>
-            <Select
-              placeholder={`${pendidikan.asal_pendidikan}`}
-              options={optionsAsalSekolah}
-              defaultValue={asalSekolah}
-              onChange={(e) =>
-                setAsalSekolah({ label: e.label, value: e.value })
-              }
-              onBlur={() =>
-                simpleValidator.current.showMessageFor("jenjang pendidikan")
-              }
-            />
-            {simpleValidator.current.message(
-              "jenjang pendidikan",
-              jengjangPendidikan,
-              "required",
-              {
-                className: "text-danger",
-              }
-            )}
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formGridAddress1">
-            <Form.Label>Lainnya ( Sekolah / PT)</Form.Label>
-            <Form.Control
-              placeholder="Silahkan Masukan Lainnya ( Sekolah / PT)"
-              value={lainya}
-              onChange={(e) => setLainya(e.target.value)}
-              onBlur={() =>
-                simpleValidator.current.showMessageFor("lainya ( sekolah/ pt )")
-              }
-            />
-            {simpleValidator.current.message(
-              "lainya ( sekolah/ pt )",
-              lainya,
-              "required",
-              {
-                className: "text-danger",
-              }
-            )}
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formGridAddress1">
-            <Form.Label>Program Studi</Form.Label>
-            <Form.Control
-              placeholder="Silahkan Masukan Program Studi"
-              value={programStudi}
-              onChange={(e) => setProgramStudi(e.target.value)}
-              onBlur={() =>
-                simpleValidator.current.showMessageFor("program studi")
-              }
-            />
-            {simpleValidator.current.message(
-              "program studi",
-              programStudi,
-              "required",
-              {
-                className: "text-danger",
-              }
-            )}
-          </Form.Group>
-          <Row className="mb-3">
-            <Form.Group as={Col} md={6} controlId="formGridIpk">
-              <Form.Label>IPK</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Silahkan Masukan IPK"
-                value={ipk}
-                onChange={(e) => setIpk(e.target.value)}
-                onBlur={() => simpleValidator.current.showMessageFor("ipk")}
-              />
-              {simpleValidator.current.message("ipk", ipk, "required|integer", {
-                className: "text-danger",
-              })}
-            </Form.Group>
-            <Form.Group as={Col} md={6} controlId="formGridTahun">
-              <Form.Label>Tahun Masuk</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Silahkan Masukan Tahun Masuk"
-                value={tahunMasuk}
-                onChange={(e) => setTahunMasuk(e.target.value)}
+
+          {jengjangPendidikan.value === 19 && <div className=""></div>}
+
+          {jengjangPendidikan.value >= 20 && jengjangPendidikan.value <= 23 && (
+            <Form.Group className="mb-3" controlId="formGridAddress1">
+              <Form.Label>Asal Sekolah / Perguruan Tinggi</Form.Label>
+              <Select
+                placeholder={
+                  (pendidikan && pendidikan.asal_pendidikan) ||
+                  "Silahkan Pilih Asal Sekolah"
+                }
+                options={optionsAsalSekolah}
+                defaultValue={asalSekolah}
+                onChange={(e) =>
+                  setAsalSekolah({ label: e.label, value: e.value })
+                }
                 onBlur={() =>
-                  simpleValidator.current.showMessageFor("tahun masuk")
+                  simpleValidator.current.showMessageFor("asal sekolah")
                 }
               />
               {simpleValidator.current.message(
-                "tahun masuk",
-                tahunMasuk,
-                "required|integer",
+                "asal sekolah",
+                asalSekolah,
+                jengjangPendidikan.value >= 20 && jengjangPendidikan.value <= 23 ? "required" : "",
                 {
                   className: "text-danger",
                 }
               )}
             </Form.Group>
-          </Row>
-          <div className="form-group">
-            <label className="col-form-label">Unggah Ijazah</label>
-            <div className="d-flex">
-              <div className="custom-file">
-                <input
-                  type="file"
-                  className="custom-file-input"
-                  name="question_image"
-                  accept="image/jpeg , image/jpg ,application/pdf"
-                  onChange={onChangeIjazah}
+          )}
+
+          {jengjangPendidikan.value >= 20 && jengjangPendidikan.value <= 23 && (
+            <Form.Group className="mb-3" controlId="formGridAddress1">
+              <Form.Label>Lainnya ( Sekolah / PT)</Form.Label>
+              <Form.Control
+                placeholder="Silahkan Masukan Lainnya ( Sekolah / PT)"
+                value={lainya}
+                onChange={(e) => setLainya(e.target.value)}
+                onBlur={() =>
+                  simpleValidator.current.showMessageFor(
+                    "lainya ( sekolah/ pt )"
+                  )
+                }
+              />
+              {simpleValidator.current.message(
+                "lainya ( sekolah/ pt )",
+                lainya,
+                jengjangPendidikan.value >= 20 && jengjangPendidikan.value <= 23 ? "required" : "",
+                {
+                  className: "text-danger",
+                }
+              )}
+            </Form.Group>
+          )}
+
+          {jengjangPendidikan.value >= 20 && jengjangPendidikan.value <= 23 && (
+            <Row className="mb-3">
+              <Form.Group as={Col} md={6} controlId="formGridTahun">
+                <Form.Label>Tahun Masuk</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Silahkan Masukan Tahun Masuk"
+                  value={tahunMasuk}
+                  onChange={(e) => setTahunMasuk(e.target.value)}
                   onBlur={() =>
-                    simpleValidator.current.showMessageFor("ijazah")
+                    simpleValidator.current.showMessageFor("tahun masuk")
                   }
                 />
-                <label className="custom-file-label" htmlFor="customFile">
-                  {ijazahName}
-                </label>
-                <label style={{ marginTop: "15px" }}>
-                  {simpleValidator.current.message(
-                    "ijazah",
-                    ijazah,
-                    "required",
-                    {
-                      className: "text-danger",
+                {simpleValidator.current.message(
+                  "tahun masuk",
+                  tahunMasuk,
+                  jengjangPendidikan >= 20 && jengjangPendidikan <= 24
+                    ? ""
+                    : "required|integer",
+                  {
+                    className: "text-danger",
+                  }
+                )}
+              </Form.Group>
+            </Row>
+          )}
+
+          {jengjangPendidikan.value >= 21 && jengjangPendidikan.value <= 23 && (
+            <div className="form-group">
+              <label className="col-form-label">Unggah Ijazah</label>
+              <div className="d-flex">
+                <div className="custom-file">
+                  <input
+                    type="file"
+                    className="custom-file-input"
+                    name="question_image"
+                    accept="image/jpeg , image/jpg ,application/pdf"
+                    onChange={onChangeIjazah}
+                    onBlur={() =>
+                      simpleValidator.current.showMessageFor("ijazah")
                     }
-                  )}
-                </label>
+                  />
+                  <label className="custom-file-label" htmlFor="customFile">
+                    {ijazahName}
+                  </label>
+                  <label style={{ marginTop: "15px" }}>
+                    {simpleValidator.current.message(
+                      "ijazah",
+                      ijazah,
+                      jengjangPendidikan.value >= 21 && jengjangPendidikan.value <= 23 ? "required" : "",
+                      {
+                        className: "text-danger",
+                      }
+                    )}
+                  </label>
+                </div>
               </div>
+              <small className="text-muted">
+                *JPG/JPEG/PDF (Maksimal ukuran file 5 MB)
+              </small>
             </div>
-            <small className="text-muted">
-              *JPG/JPEG/PDF (Maksimal ukuran file 5 MB)
-            </small>
-          </div>
+          )}
+
+          {jengjangPendidikan.value >= 24 && jengjangPendidikan.value <= 27 && (
+            <Form.Group className="mb-3" controlId="formGridAddress1">
+              <Form.Label>Program Studi</Form.Label>
+              <Form.Control
+                placeholder="Silahkan Masukan Program Studi"
+                value={programStudi}
+                onChange={(e) => setProgramStudi(e.target.value)}
+                onBlur={() =>
+                  simpleValidator.current.showMessageFor("program studi")
+                }
+              />
+              {simpleValidator.current.message(
+                "program studi",
+                programStudi,
+                jengjangPendidikan >= 24 && jengjangPendidikan <= 27
+                  ? "required"
+                  : "",
+                {
+                  className: "text-danger",
+                }
+              )}
+            </Form.Group>
+          )}
+
+          {jengjangPendidikan.value >= 24 && jengjangPendidikan.value <= 27 && (
+            <Row className="mb-3">
+              <Form.Group as={Col} md={6} controlId="formGridIpk">
+                <Form.Label>IPK</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Silahkan Masukan IPK"
+                  value={ipk}
+                  onChange={(e) => setIpk(e.target.value)}
+                  onBlur={() => simpleValidator.current.showMessageFor("ipk")}
+                />
+                {simpleValidator.current.message(
+                  "ipk",
+                  ipk,
+                  jengjangPendidikan >= 24 && jengjangPendidikan <= 27
+                    ? "required|integer"
+                    : "",
+                  {
+                    className: "text-danger",
+                  }
+                )}
+              </Form.Group>
+              <Form.Group as={Col} md={6} controlId="formGridTahun">
+                <Form.Label>Tahun Masuk</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Silahkan Masukan Tahun Masuk"
+                  value={tahunMasuk}
+                  onChange={(e) => setTahunMasuk(e.target.value)}
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("tahun masuk")
+                  }
+                />
+                {simpleValidator.current.message(
+                  "tahun masuk",
+                  tahunMasuk,
+                  jengjangPendidikan >= 24 && jengjangPendidikan <= 27
+                    ? "required|integer"
+                    : "",
+                  {
+                    className: "text-danger",
+                  }
+                )}
+              </Form.Group>
+            </Row>
+          )}
+          {jengjangPendidikan.value >= 24 && jengjangPendidikan.value <= 27 && (
+            <div className="form-group">
+              <label className="col-form-label">Unggah Ijazah</label>
+              <div className="d-flex">
+                <div className="custom-file">
+                  <input
+                    type="file"
+                    className="custom-file-input"
+                    name="question_image"
+                    accept="image/jpeg , image/jpg ,application/pdf"
+                    onChange={onChangeIjazah}
+                    onBlur={() =>
+                      simpleValidator.current.showMessageFor("ijazah")
+                    }
+                  />
+                  <label className="custom-file-label" htmlFor="customFile">
+                    {ijazahName}
+                  </label>
+                  <label style={{ marginTop: "15px" }}>
+                    {simpleValidator.current.message(
+                      "ijazah",
+                      ijazah,
+                      jengjangPendidikan >= 24 && jengjangPendidikan <= 27
+                        ? "required"
+                        : "",
+                      {
+                        className: "text-danger",
+                      }
+                    )}
+                  </label>
+                </div>
+              </div>
+              <small className="text-muted">
+                *JPG/JPEG/PDF (Maksimal ukuran file 5 MB)
+              </small>
+            </div>
+          )}
         </div>
 
         <div className="button-aksi mt-5 float-right">

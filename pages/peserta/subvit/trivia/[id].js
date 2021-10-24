@@ -4,6 +4,7 @@ import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 import { getRandomSubtanceQuestionDetail } from "../../../../redux/actions/subvit/subtance-question-detail.action";
 import { wrapper } from "../../../../redux/store";
 import Layout from "../../../../user-component/components/template/Layout.component";
+import { middlewareAuthPesertaSession } from "../../../../utils/middleware/authMiddleware";
 
 const SubtansiUser = dynamic(
   () => import("../../../../user-component/content/subvit/substansi"),
@@ -32,10 +33,12 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
-      if (!session) {
+      const middleware = middlewareAuthPesertaSession(session);
+
+      if (!middleware.status) {
         return {
           redirect: {
-            destination: "http://dts-dev.majapahit.id/login",
+            destination: middleware.redirect,
             permanent: false,
           },
         };
@@ -49,15 +52,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
           session.user.user.data.token
         )
       );
-      const data = session.user.user.data;
-      if (data.user.roles[0] !== "user") {
-        return {
-          redirect: {
-            destination: "http://dts-dev.majapahit.id/login",
-            permanent: false,
-          },
-        };
-      }
+
       return {
         props: {
           data: "auth",

@@ -170,7 +170,9 @@ const AlamatEdit = ({ funcViewEdit, token }) => {
               <Form.Label>Provinsi</Form.Label>
               <Select
                 key={1}
-                placeholder={`${alamat.provinsi}`}
+                placeholder={
+                  (alamat && alamat.provinsi) || "Silahkan Pilih Provinsi"
+                }
                 options={optionsProvinsi}
                 defaultValue={provinsiDomisili}
                 onChange={(e) => {
@@ -184,7 +186,7 @@ const AlamatEdit = ({ funcViewEdit, token }) => {
               />
               {simpleValidator.current.message(
                 "provinsi domisili",
-                provinsiDomisili.value,
+                provinsiDomisili,
                 "required",
                 {
                   className: "text-danger",
@@ -196,7 +198,7 @@ const AlamatEdit = ({ funcViewEdit, token }) => {
               <Select
                 key={1}
                 ref={(ref) => (selectRefKabupatenDomisili = ref)}
-                placeholder={`${alamat.kota}`}
+                placeholder={(alamat && alamat.kota) || "Silahkan Pilih Kota"}
                 options={optionsKabupatenDomisili}
                 defaultValue={kotaDomisili}
                 onChange={(e) =>
@@ -208,7 +210,7 @@ const AlamatEdit = ({ funcViewEdit, token }) => {
               />
               {simpleValidator.current.message(
                 "kota domisili",
-                kotaDomisili.value,
+                kotaDomisili,
                 "required",
                 {
                   className: "text-danger",
@@ -288,7 +290,9 @@ const AlamatEdit = ({ funcViewEdit, token }) => {
               <Form.Label>Provinsi</Form.Label>
               <Select
                 key={2}
-                placeholder={`${alamat.provinsi}`}
+                placeholder={
+                  (alamat && alamat.provinsi) || "Silahkan Pilih Provinsi"
+                }
                 options={optionsProvinsi}
                 defaultValue={provinsiDomisili}
                 onChange={(e) => {
@@ -316,7 +320,7 @@ const AlamatEdit = ({ funcViewEdit, token }) => {
               <Select
                 key={2}
                 ref={(ref) => (selectRefKabupatenDomisili = ref)}
-                placeholder={`${alamat.kota}`}
+                placeholder={(alamat && alamat.kota) || "Silahkan Pilih Kota"}
                 options={optionsKabupatenDomisili}
                 defaultValue={kotaDomisili}
                 onChange={(e) =>
@@ -439,6 +443,9 @@ const AlamatEdit = ({ funcViewEdit, token }) => {
             <Form.Group as={Col} md={6} controlId="formGridEmail">
               <Form.Label>Provinsi</Form.Label>
               <Select
+                placeholder={
+                  (alamat && alamat.provinsi_ktp) || "Silahkan Pilih Provinsi"
+                }
                 options={optionsProvinsi}
                 defaultValue={provinsiKtp}
                 onChange={(e) => {
@@ -463,6 +470,9 @@ const AlamatEdit = ({ funcViewEdit, token }) => {
               <Form.Label>Kota / Kabupaten</Form.Label>
               <Select
                 ref={(ref) => (selectRefKabupaten = ref)}
+                placeholder={
+                  (alamat && alamat.kota_ktp) || "Silahkan Pilih Kota"
+                }
                 options={optionsKabupaten}
                 defaultValue={kotaKtp}
                 onChange={(e) =>

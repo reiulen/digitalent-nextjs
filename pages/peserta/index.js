@@ -7,6 +7,7 @@ import { getSession } from "next-auth/client";
 import { getDataPribadi } from "../../redux/actions/pelatihan/function.actions";
 import { getDashboardPeserta } from "../../redux/actions/pelatihan/dashboard-peserta.actions";
 import LoadingContent from "../../user-component/content/peserta/components/loader/LoadingContent";
+import { middlewareAuthPesertaSession } from "../../utils/middleware/authMiddleware";
 
 const Dashboard = dynamic(
   () => import("../../user-component/content/peserta/dashboard"),
@@ -37,19 +38,13 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
-      if (!session) {
+
+      const middleware = middlewareAuthPesertaSession(session);
+
+      if (!middleware.status) {
         return {
           redirect: {
-            destination: "http://dts-dev.majapahit.id/login",
-            permanent: false,
-          },
-        };
-      }
-      const data = session.user.user.data;
-      if (data.user.roles[0] !== "user") {
-        return {
-          redirect: {
-            destination: "http://dts-dev.majapahit.id/login",
+            destination: middleware.redirect,
             permanent: false,
           },
         };

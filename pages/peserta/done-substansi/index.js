@@ -4,6 +4,7 @@ import LoadingSkeleton from "../../../components/LoadingSkeleton";
 import dynamic from "next/dynamic";
 import { wrapper } from "../../../redux/store";
 import { getDataPribadi } from "../../../redux/actions/pelatihan/function.actions";
+import { middlewareAuthPesertaSession } from "../../../utils/middleware/authMiddleware";
 
 const Done = dynamic(() => import("../../../user-component/content/done"), {
   loading: function loadingNow() {
@@ -33,17 +34,17 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
-      // console.log(session.user.user.data.user.token);
 
-      if (!session) {
+      const middleware = middlewareAuthPesertaSession(session);
+
+      if (!middleware.status) {
         return {
           redirect: {
-            destination: "http://dts-dev.majapahit.id/login",
+            destination: middleware.redirect,
             permanent: false,
           },
         };
       }
-
       await store.dispatch(getDataPribadi(session.user.user.data.user.token));
 
       return {
