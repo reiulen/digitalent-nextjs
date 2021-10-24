@@ -439,7 +439,6 @@ const AlamatEdit = ({ funcViewEdit, token }) => {
             <Form.Group as={Col} md={6} controlId="formGridEmail">
               <Form.Label>Provinsi</Form.Label>
               <Select
-                placeholder={`${alamat.provinsi_ktp}`}
                 options={optionsProvinsi}
                 defaultValue={provinsiKtp}
                 onChange={(e) => {
@@ -464,7 +463,6 @@ const AlamatEdit = ({ funcViewEdit, token }) => {
               <Form.Label>Kota / Kabupaten</Form.Label>
               <Select
                 ref={(ref) => (selectRefKabupaten = ref)}
-                placeholder={`${alamat.kota_ktp}`}
                 options={optionsKabupaten}
                 defaultValue={kotaKtp}
                 onChange={(e) =>
