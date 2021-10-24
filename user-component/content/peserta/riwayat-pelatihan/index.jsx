@@ -147,23 +147,32 @@ export default function RiwayatPelatihan({ session }) {
         {/* <Administrasi /> */}
         {dataRiwayatPelatihan.listPelatihan.list.map((el) => {
           return (
-            <CardPeserta
-              status={"test"}
-              data={el}
-              // img_figure={"/assets/media/mitra-icon/bukalapak-1.svg"}
-              // img_mitra={"/assets/media/mitra-icon/bukalapak-1.svg"}
-              // mitra_name={"bukalapak"}
-              // pelatihan_name={"Intermediate Multimedia Designer"}
-              // label={"warning"}
-              // location={
-              //   "Pasaraya Blok M Gedung B Lt. 6, Jakarta Barat, Indonesia"
-              // }
-            />
+            <CardPeserta status={"test"} data={el} />
+            // img_figure={"/assets/media/mitra-icon/bukalapak-1.svg"}
+            // img_mitra={"/assets/media/mitra-icon/bukalapak-1.svg"}
+            // mitra_name={"bukalapak"}
+            // pelatihan_name={"Intermediate Multimedia Designer"}
+            // label={"warning"}
+            // location={
+            //   "Pasaraya Blok M Gedung B Lt. 6, Jakarta Barat, Indonesia"
+            // }
           );
         })}
-        <CardPeserta totalButton={2} status={"lolos administrasi"} />
+        {dataRiwayatPelatihan.listPelatihan.list.map((el) => {
+          if (el.survei) {
+            return <CardPeserta status={"test"} data={el} />;
+          }
+          if (el.lpj) {
+            return <CardPeserta status={"test"} data={el} />;
+          }
+          if (el.lpj && el.survei) {
+            return <CardPeserta status={"test"} data={el} />;
+          }
+        })}
+        <CardPeserta totalButton={2} status={"isi survey"} />
+        {/* <CardPeserta totalButton={2} status={"lolos administrasi"} />
         <CardPeserta totalButton={2} status={"tes substansi"} />
-        <CardPeserta totalButton={2} status={"menunggu jadwal"} />
+        <CardPeserta totalButton={2} status={"menunggu jadwal"} /> */}
         {/* 
         <CardPeserta
               totalButton={2}
@@ -177,7 +186,6 @@ export default function RiwayatPelatihan({ session }) {
         <CardPeserta totalButton={2} status={"kerjakan mid test"} />
         <CardPeserta totalButton={2} status={"kerjakan trivia"} />
         <CardPeserta totalButton={2} status={"lulus pelatihan"} />
-        <CardPeserta totalButton={2} status={"isi survey"} />
         <CardPeserta totalButton={2} status={"isi lpj"} /> */}
       </PesertaWrapper>
       <Modal show={showModal} onHide={handleClose} centered>

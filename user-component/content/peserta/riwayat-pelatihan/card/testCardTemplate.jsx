@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { Col, Row, Card, Button, Container } from "react-bootstrap";
 import Link from "next/link";
 import style from "../style.module.css";
@@ -6,9 +6,29 @@ import moment from "moment";
 
 export default function CardTemplateOriginal({ props }) {
   const data = props.data;
-  // console.log(data);
+  console.log(data);
   const dateFrom = moment(data.pendaftaran_mulai).format("LL");
   const dateTo = moment(data.pendaftaran_selesai).format("LL");
+  // const gambarMitra = data.gambarMitra
+  const [label, setLabel] = useState();
+  useEffect(() => {
+    switch (data.status) {
+      case "menunggu":
+        return setLabel("warning");
+      case "lulus pelatihan":
+        return setLabel("success");
+      case "menunggu administrasi":
+        return setLabel("warning");
+      case "menunggu tes substansi":
+        return setLabel("warning");
+      case "pelatihan":
+        return setLabel("primary");
+      default:
+        return setLabel("danger");
+    }
+  }, []);
+
+  const variant = ["download", "upload", "rightarrow", "pencil", "paper"];
   return (
     <Card className="position-relative">
       <Card.Body
@@ -37,7 +57,7 @@ export default function CardTemplateOriginal({ props }) {
                   // src="/assets/media/default-card.png"
                   src={
                     data.gambar_mitra
-                      ? `${process.env.END_POINT_API_IMAGE_BEASISWA}${data.gambar_mitra}`
+                      ? `${process.env.END_POINT_API_IMAGE_LOGO_MITRA}${data.gambar_mitra}`
                       : "/assets/media/default-card.png"
                   }
                   width={58}
@@ -71,9 +91,9 @@ export default function CardTemplateOriginal({ props }) {
               >
                 <p
                   style={{ borderRadius: "50px" }}
-                  className={`label label-inline label-light-warning font-weight-bolder p-0 px-4`}
+                  className={`label label-inline label-light-${label} font-weight-bolder p-0 px-4 text-capitalize`}
                 >
-                  {data.status}
+                  {data.status == "pelatihan" ? "ikuti pelatihan" : data.status}
                 </p>
               </Col>
               <Col md={12} className="my-auto order-4">
@@ -99,18 +119,75 @@ export default function CardTemplateOriginal({ props }) {
         style={{ bottom: 0 }}
       >
         <Col lg={3} />
-        <Col className="d-flex justify-content-center ">
-          <Button
-            className={`btn-rounded-full font-weight-bold btn-block justify-content-center mt-5 `}
-            style={{ height: "40px", fontSize: "14px" }}
-            onClick={() => {
-              console.log("ini click button 2 ");
-            }}
-          >
-            <i className="ri-download-2-fill mr-2"></i>
-            Bukti Pendaftaran
-          </Button>
-        </Col>
+        {data.status == "menunggu" ? (
+          <Col className="d-flex justify-content-center ">
+            <Button
+              className={`btn-rounded-full font-weight-bold btn-block justify-content-center mt-5 `}
+              style={{ height: "40px", fontSize: "14px" }}
+              onClick={() => {
+                console.log("ini click button 2 ");
+              }}
+            >
+              <i className="ri-download-2-fill mr-2"></i>
+              Bukti Pendaftaran
+            </Button>
+          </Col>
+        ) : data.status == "lulus pelatihan" ? (
+          <Fragment>
+            <Col className="d-flex justify-content-center ">
+              <Button
+                className={`btn-rounded-full font-weight-bold btn-block justify-content-center mt-5 ${style.background_outline_primary}`}
+                style={{ height: "40px", fontSize: "14px" }}
+                onClick={() => {
+                  console.log("ini click button 2 ");
+                }}
+              >
+                <i className="ri-upload-2-fill mr-2"></i>
+                Bukti Pendaftaran
+              </Button>
+            </Col>
+            <Col className="d-flex justify-content-center ">
+              <Button
+                className={`btn-rounded-full font-weight-bold btn-block justify-content-center mt-5 `}
+                style={{ height: "40px", fontSize: "14px" }}
+                onClick={() => {
+                  console.log("ini click button 2 ");
+                }}
+              >
+                <i className="ri-download-2-fill mr-2"></i>
+                Bukti Pendaftaran
+              </Button>
+            </Col>
+          </Fragment>
+        ) : data.status == "menunggu administrasi" ? (
+          <Col className="d-flex justify-content-center ">
+            <Button
+              className={`btn-rounded-full font-weight-bold btn-block justify-content-center mt-5 `}
+              style={{ height: "40px", fontSize: "14px" }}
+              onClick={() => {
+                console.log("ini click button 2 ");
+              }}
+            >
+              <i className="ri-download-2-fill mr-2"></i>
+              Bukti Pendaftaran
+            </Button>
+          </Col>
+        ) : data.status == "menunggu tes substansi" ? (
+          <Col className="d-flex justify-content-center ">
+            <Button
+              className={`btn-rounded-full font-weight-bold btn-block justify-content-center mt-5 `}
+              style={{ height: "40px", fontSize: "14px" }}
+              onClick={() => {
+                console.log("ini click button 2 ");
+              }}
+            >
+              <i className="ri-download-2-fill mr-2"></i>
+              Bukti Pendaftaran
+            </Button>
+          </Col>
+        ) : (
+          ""
+        )}
       </div>
     </Card>
   );
