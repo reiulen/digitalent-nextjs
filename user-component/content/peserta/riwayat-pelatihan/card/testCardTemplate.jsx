@@ -6,7 +6,11 @@ export default function CardTemplateOriginal({ data }) {
   console.log(data);
   return (
     <Card className="position-relative">
-      <Card.Body>
+      <Card.Body
+        onClick={() => {
+          console.log("card body");
+        }}
+      >
         <Row>
           <Col md={3}>
             <img
@@ -85,6 +89,9 @@ export default function CardTemplateOriginal({ data }) {
           <Button
             className="btn-rounded-full btn-block justify-content-center mt-5"
             style={{ height: "40px" }}
+            onClick={() => {
+              console.log("ini click button 2 ");
+            }}
           >
             <i className="ri-download-2-fill mr-2"></i>
             Bukti Pendaftaran{" "}
@@ -94,6 +101,9 @@ export default function CardTemplateOriginal({ data }) {
           <Button
             className="btn-rounded-full btn-block justify-content-center mt-5"
             style={{ height: "40px" }}
+            onClick={() => {
+              console.log("ini click button 1");
+            }}
           >
             <i className="ri-download-2-fill mr-2"></i>
             Bukti Pendaftaran{" "}
