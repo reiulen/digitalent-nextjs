@@ -3,7 +3,7 @@ import { Col, Card, Button } from "react-bootstrap";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-const CardPage = ({ backgroundImage, background, color, link, text, desc }) => {
+const CardPage = ({ backgroundImage, background, color, link, text, desc, total, isSubvit }) => {
   const router = useRouter();
 
   function addHours(date, hours) {
@@ -12,6 +12,8 @@ const CardPage = ({ backgroundImage, background, color, link, text, desc }) => {
     return newDate;
   }
 
+  
+
   // const handlePage = () => {
   //   router.push("/peserta/subvit/subtansi/1");
   //   const date = new Date(); // Fri Feb 26 2021 20:08:30
@@ -19,9 +21,11 @@ const CardPage = ({ backgroundImage, background, color, link, text, desc }) => {
   //   const count = (target - date) / 1000;
   //   sessionStorage.setItem("targetDate", count);
   // };
+
+  console.log(total)
   return (
     <>
-      <Col md={6} className="mb-4 px-2">
+      <Col md={total ? 12 : 6} className="mb-4 px-2">
         <Card
           className="rounded-xl h-100"
           style={{
@@ -36,7 +40,7 @@ const CardPage = ({ backgroundImage, background, color, link, text, desc }) => {
               style={{
                 fontSize: "16px",
                 fontWeight: "600",
-                width: "140px",
+                width: isSubvit ? "140px" : "max-content",
                 color: color,
               }}
             >
@@ -44,7 +48,7 @@ const CardPage = ({ backgroundImage, background, color, link, text, desc }) => {
             </p>
 
             <Link href={`${link}`} passHref>
-              <Button variant={background} className="font-weight-bolder">
+              <Button variant={background} className="font-weight-bolder rounded-full">
                 {text}
               </Button>
             </Link>

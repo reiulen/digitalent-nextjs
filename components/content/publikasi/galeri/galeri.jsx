@@ -418,13 +418,14 @@ const Galeri = ({ token }) => {
                 limit === null &&
                 search !== null
             ) {
-                router.push(
-                    `${router.pathname}?publish=${val}&startdate=${moment(
-                        startDate
-                    ).format("YYYY-MM-DD")}&enddate=${moment(endDate).format(
-                        "YYYY-MM-DD"
-                    )}&keyword=${search}`
-                );
+                router.push(`${router.pathname}?publish=${val}`)
+                // router.push(
+                //     `${router.pathname}?publish=${val}&startdate=${moment(
+                //         startDate
+                //     ).format("YYYY-MM-DD")}&enddate=${moment(endDate).format(
+                //         "YYYY-MM-DD"
+                //     )}&keyword=${search}`
+                // );
             } else if (
                 startDate === null &&
                 endDate === null &&
@@ -438,7 +439,7 @@ const Galeri = ({ token }) => {
                 limit === null &&
                 search !== null
             ) {
-                router.push(`${router.pathname}?publish=${val}&keyword=${search}`);
+                router.push(`${router.pathname}?publish=${val}`);
             } else if (
                 startDate === null &&
                 endDate === null &&
@@ -1229,14 +1230,14 @@ const Galeri = ({ token }) => {
                                                                 })
                                                                 : null}
                                                         </div>
-                                                        <div className="col-sm-4 col-md-3 col-3 d-flex align-items-center justify-content-end">
+                                                        {/* <div className="col-sm-4 col-md-3 col-3 d-flex align-items-center justify-content-end">
                                                             <div className={styles['iconBorderGaleri']}>
                                                                 <i className="socicon-sharethis" style={{ color: '#fff' }}></i>
                                                             </div>
                                                             <div className={styles['iconBorderGaleri']}>
                                                                 <i className="flaticon-black" style={{ color: '#fff' }}></i>
                                                             </div>
-                                                        </div>
+                                                        </div> */}
                                                     </div>
                                                 </div>
                                             </>

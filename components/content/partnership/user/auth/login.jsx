@@ -117,7 +117,7 @@ const LoginAdmin = () => {
                 <div className="form-group mt-6">
                   <label className="form-auth-label">Password</label>
                   <Link
-                    href="/partnership/user/auth/recorveryPassword"
+                    href="/login/mitra/recorveryPassword"
                   >
                     <a className="float-right text-primary">Lupa Password ?</a>
                   </Link>
@@ -185,7 +185,7 @@ const LoginAdmin = () => {
               <div className="bottom mt-9 text-center">
                 <p style={{ fontSize: "12px", color: "#ffffff" }}>
                   Belum punya akun?
-                  <Link href="/partnership/user/auth/register" passHref>
+                  <Link href="/login/mitra/register" passHref>
                     <a className="text-primary ml-2">Buat Akun</a>
                   </Link>
                 </p>

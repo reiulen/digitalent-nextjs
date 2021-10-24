@@ -125,8 +125,6 @@
     font-size: 16px;
   }
 
-
-
   .responsive-font-size-sertifikat {
     font-size: 24px;
   }
@@ -135,7 +133,6 @@
     top: 120px;
   }
 }
-
 
 #sertifikat-ck-editor .ck-editor__editable_inline {
   min-height: 46px;
@@ -208,9 +205,7 @@
   .responsive-margin-without-background {
     top: 107px;
   }
-
 }
-
 
 @media (min-width: 1200px) {
   .responsive-margin-peserta {

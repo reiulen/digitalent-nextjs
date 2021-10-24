@@ -275,7 +275,7 @@ const EditDokumentKerjasamaById = ({ token }) => {
                   className="btn bg-blue-secondary text-white rounded-full d-flex align-items-center"
                   onClick={() =>
                     window.open(
-                      `https://dts-partnership-dev.s3.ap-southeast-1.amazonaws.com/partnership/files/document_cooperations/${document}`
+                      `https://dts-partnership-dev.s3.ap-southeast-1.amazonaws.com${document}`
                     )
                   }
                 >

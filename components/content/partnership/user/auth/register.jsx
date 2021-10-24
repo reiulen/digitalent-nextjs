@@ -108,7 +108,8 @@ const RegisterMitra = () => {
     } else if (allAuthentication.status === "success"){
       // jika sukses
       Swal.fire("Berhasil Daftar", "Silahkan login", "success").then(() => {
-        router.push("/partnership/user/auth/login")
+        // router.push("/partnership/user/auth/login")
+        router.push("/login/mitra")
       });
     }else{
       ""
@@ -257,7 +258,10 @@ const RegisterMitra = () => {
               <div className="bottom mt-9 text-center">
                 <p style={{ fontSize: "12px", color: "#ffffff" }}>
                   Sudah punya akun?
-                  <Link href="/partnership/user/auth/login" passHref>
+                  {/* <Link href="/partnership/user/auth/login" passHref>
+                    <a className="text-primary ml-2">Masuk</a>
+                  </Link> */}
+                  <Link href="/login/mitra" passHref>
                     <a className="text-primary ml-2">Masuk</a>
                   </Link>
                 </p>

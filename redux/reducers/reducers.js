@@ -354,7 +354,9 @@ import {
   trainingStep1Reducer,
   registrationStep2Reducer,
   commitmentStep3Reducer,
+  drowpdownTemabyAkademiReducers,
   drowpdownAkademiReducers,
+  drowpdownPelatihanbyTemaReducers,
   drowpdownTemaReducers,
   drowpdownPelatihanReducers,
   drowpdownAgamaReducers,
@@ -392,6 +394,7 @@ import {
   checkRegisteredPelatihanReducer,
 } from "../reducers/beranda/detail-pelatihan.reducers";
 //END BERANDA
+import { geAllRiwayatPelatihanPesertaReducer } from "../reducers/pelatihan/peserta/riwayat-pelatihan.reducer";
 
 const reducer = combineReducers({
   // PUBLIKASI
@@ -680,7 +683,9 @@ const reducer = combineReducers({
   // ======= dropdown ==========
   drowpdownAkademi: drowpdownAkademiReducers,
   drowpdownTema: drowpdownTemaReducers,
+  drowpdownTemabyAkademi: drowpdownTemabyAkademiReducers,
   drowpdownPelatihan: drowpdownPelatihanReducers,
+  drowpdownPelatihanbyTema: drowpdownPelatihanbyTemaReducers,
   drowpdownAgama: drowpdownAgamaReducers,
   drowpdownPendidikan: drowpdownPendidikanReducers,
   drowpdownStatusPekerjaan: drowpdownStatusPekerjaanReducers,
@@ -721,6 +726,8 @@ const reducer = combineReducers({
   checkRegisteredPelatihan: checkRegisteredPelatihanReducer,
 
   //END BERANDA
+  // ========== Riwayat Pelatihan ========
+  getAllRiwayatPelatihanPeserta: geAllRiwayatPelatihanPesertaReducer,
 });
 
 export default reducer;

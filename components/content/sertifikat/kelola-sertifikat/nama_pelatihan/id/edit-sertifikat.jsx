@@ -280,7 +280,6 @@ export default function EditSertifikat({ token }) {
   // # END BACKGROUND IMAGE 1
 
   // # START BACKGROUND IMAGE 2
-
   const onChangeBackgroundLembar2 = (e) => {
     if (e.target.files[0].size > 5000000) {
       e.target.value = null;
@@ -322,12 +321,7 @@ export default function EditSertifikat({ token }) {
   const handlePost = async (e, status) => {
     try {
       e.preventDefault();
-      if (status == 1) {
-        setTahun("");
-        setTanggal("");
-        setNamaPeserta("");
-        setNomerSertifikat("");
-      }
+
       if (certificate_type == "1 lembar") {
         simpleValidator.current.fields.Jabatan = true;
         simpleValidator.current.fields.Nama = true;
@@ -338,7 +332,14 @@ export default function EditSertifikat({ token }) {
 
       if (simpleValidator.current.allValid()) {
         let formData = new FormData();
-
+        if (status == 1) {
+          setTahun("");
+          setTanggal("");
+          setNamaPeserta("");
+          setNomerSertifikat("");
+          const data = await convertDivToPng(divReference.current); // convert bg 1
+          formData.append("certificate_result", data);
+        }
         formData.append("_method", "put");
         formData.append("name", certificate_name);
         formData.append("certificate_type", certificate_type);
@@ -363,17 +364,18 @@ export default function EditSertifikat({ token }) {
               `signature_certificate_image[${i}]`,
               signature[i].localSignature
             );
-          } else {
-            formData.append(`signature_certificate_image[${i}]`, "");
           }
+
           formData.append(
             `signature_certificate_position[${i}]`,
             signature[i].position
           ); //jabatan
+
           formData.append(
             `signature_certificate_set_position[${i}]`,
             signature[i].set_position
           );
+
           formData.append(
             `signature_certificate_name[${i}]`,
             signature[i].name
@@ -381,6 +383,13 @@ export default function EditSertifikat({ token }) {
         }
 
         if (certificate_type == "2 lembar") {
+          if (status == 1) {
+            const dataSyllabus = await convertDivToPng(
+              divReferenceSilabus.current
+            ); //convert bg 2
+            formData.append("certificate_result_syllabus", dataSyllabus);
+          }
+
           for (let i = 0; i < number_of_signature_syllabus; i++) {
             formData.append(
               `signature_certificate_position_syllabus[${i}]`,
@@ -399,26 +408,18 @@ export default function EditSertifikat({ token }) {
                 `signature_certificate_image_syllabus[${i}]`,
                 signatureSyllabus[i].localSignature
               );
-            } else {
-              formData.append(`signature_certificate_image_syllabus[${i}]`, "");
             }
           }
-
-          const dataSyllabus = await convertDivToPng(
-            divReferenceSilabus.current
-          ); //convert bg 2
-          formData.append("certificate_result_syllabus", dataSyllabus);
 
           syllabus.forEach((item, i) => {
             formData.append(`syllabus[${i}]`, item);
           });
         }
 
-        const data = await convertDivToPng(divReference.current); // convert bg 1
-        formData.append("certificate_result", data);
         formData.append("status_migrate_id", status);
+        console.log();
 
-        dispatch(updateSertifikat(id, formData, token));
+        // dispatch(updateSertifikat(id, formData, token));
       } else {
         simpleValidator.current.showMessages();
         forceUpdate(1);
@@ -518,18 +519,24 @@ export default function EditSertifikat({ token }) {
                 <div className="border-primary border col-lg-8 col-12 position-relative">
                   <div className="p-0" ref={divReference}>
                     {localBackground ? (
-                      <Image
+                      <img
+                        className="position-absolute w-100 h-100"
                         src={localBackground}
                         alt="LocalBackground.png"
                         layout="fill"
                         objectFit="fill"
+                        key={localBackground}
+                        id={localBackground}
                       />
                     ) : background ? (
-                      <Image
+                      <img
+                        className="position-absolute w-100 h-100"
                         src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/background/${background}`}
                         alt={`Background Image ${background}`}
                         layout="fill"
                         objectFit="fill"
+                        key={background}
+                        id={background}
                       />
                     ) : (
                       ""
@@ -635,16 +642,20 @@ export default function EditSertifikat({ token }) {
                                     }}
                                   >
                                     {signature[i]?.localSignature ? (
-                                      <Image
+                                      <img
+                                        id={signature[i]?.localSignature}
                                         src={signature[i]?.localSignature}
                                         layout="fill"
                                         alt={`Tanda tangan ${i + 1} `}
+                                        className="position-absolute w-100 h-100"
                                       />
                                     ) : signature[i]?.signature ? (
-                                      <Image
+                                      <img
+                                        id={`TTD ke ${i + 1}`}
                                         src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/signature-certificate-images/${signature[i].signature}`}
                                         layout="fill"
                                         alt={`Tanda tangan ${i + 1} `}
+                                        className="position-absolute w-100 h-100"
                                       />
                                     ) : (
                                       "TTD"
@@ -1190,20 +1201,22 @@ export default function EditSertifikat({ token }) {
           {certificate_type == "2 lembar" ? (
             <div className="card card-custom card-stretch gutter-b">
               {/* START BODY */}
-              <div className="card-body border-top">
+              <div className="card-body border-top" style={{ width: "100%" }}>
                 <div className="row p-0">
                   {/* START COL */}
-                  <div className="border-primary p-0 border col-lg-8 col-12">
+                  <div className="border-primary p-0 border col-lg-8 col-12 position-relative">
                     <div className="p-0" ref={divReferenceSilabus}>
                       {localBackgroundSyllabus ? (
-                        <Image
+                        <img
+                          className="position-absolute w-100 h-100"
                           src={localBackgroundSyllabus}
                           alt="LocalBackground.png"
                           layout="fill"
                           objectFit="fill"
                         />
                       ) : background_syllabus ? (
-                        <Image
+                        <img
+                          className="position-absolute w-100 h-100"
                           src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/background-syllabus/${background_syllabus}`}
                           alt={`Background Image ${background_syllabus}`}
                           layout="fill"
@@ -1294,7 +1307,8 @@ export default function EditSertifikat({ token }) {
                                       >
                                         {signatureSyllabus[i]
                                           ?.localSignature ? (
-                                          <Image
+                                          <img
+                                            className="position-absolute w-100 h-100"
                                             src={
                                               signatureSyllabus[i]
                                                 ?.localSignature
@@ -1303,7 +1317,8 @@ export default function EditSertifikat({ token }) {
                                             alt={`Tanda tangan ${i + 1} `}
                                           />
                                         ) : signatureSyllabus[i]?.signature ? (
-                                          <Image
+                                          <img
+                                            className="position-absolute w-100 h-100"
                                             src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/signature-certificate-image-syllabus/${signatureSyllabus[i]?.signature}`}
                                             layout="fill"
                                             alt={`Tanda tangan ${i + 1} `}
@@ -2016,7 +2031,7 @@ export default function EditSertifikat({ token }) {
               className="btn btn-primary-rounded-full px-6 font-weight-bolder px-6 py-3 text-center"
               onClick={(e) => {
                 setConfirmModal(false);
-                handlePost(e, 1);
+                handlePost(e, 1); // publish
               }}
             >
               Publish
