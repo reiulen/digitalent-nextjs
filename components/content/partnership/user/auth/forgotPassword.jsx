@@ -108,7 +108,8 @@ const ForgotPassword = () => {
       // jika sukses
       Swal.fire("Berhasil", "Password berhasil di reset", "success").then(
         () => {
-          router.push("/partnership/user/auth/login");
+          // router.push("/partnership/user/auth/login");
+          router.push("/login/mitra");
         }
       );
     } else {
