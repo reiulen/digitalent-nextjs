@@ -32,16 +32,26 @@ const SubtansiUser = ({ token }) => {
 
   const router = useRouter();
 
-  localStorage.setItem("data", JSON.stringify(random_subtance_question_detail));
+  if (!random_subtance_question_detail) {
+    localStorage.setItem(
+      "data",
+      JSON.stringify(random_subtance_question_detail)
+    );
+  }
 
-  const [data] = useState(JSON.parse(localStorage.getItem("data")));
+  const [data] = useState(
+    !localStorage.getItem("data") === "undefined" &&
+      JSON.parse(localStorage.getItem("data"))
+  );
   const [answer, setAnswer] = useState("");
   const [listAnswer, setListAnswer] = useState([]);
   const [numberPage, setNumberPage] = useState("");
   const [numberAnswer, setNumberAnswer] = useState(false);
   const [modalSoal, setModalSoal] = useState(false);
 
-  const [count, setCount] = useState(random_subtance_question_detail.time_left);
+  const [count, setCount] = useState(
+    random_subtance_question_detail && random_subtance_question_detail.time_left
+  );
   const [modalDone, setModalDone] = useState(false);
 
   const [hour, setHour] = useState(0);
@@ -154,7 +164,12 @@ const SubtansiUser = ({ token }) => {
 
   let number = [];
 
-  for (let i = 0; i < random_subtance_question_detail.total_questions; i++) {
+  for (
+    let i = 0;
+    i < random_subtance_question_detail &&
+    random_subtance_question_detail.total_questions;
+    i++
+  ) {
     number.push(i);
   }
 
@@ -255,6 +270,7 @@ const SubtansiUser = ({ token }) => {
                     </div>
                   </div>
                 ) : (
+                  data &&
                   data.list_questions &&
                   data.list_questions[parseInt(router.query.id) - 1].question
                 )}
