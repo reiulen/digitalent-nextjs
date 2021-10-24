@@ -461,7 +461,7 @@ const DetailDokumenKerjasama = ({ token }) => {
               <div className="border-bottom pb-6">
               <button type="button" className="btn bg-blue-secondary text-white rounded-full d-flex align-items-center" onClick={() =>
                       window.open(
-                        `https://dts-partnership-dev.s3.ap-southeast-1.amazonaws.com/partnership/files/document_cooperations/${pdfFIle}`
+                        `https://dts-partnership-dev.s3.ap-southeast-1.amazonaws.com${pdfFIle}`
                       )
                     }>
                 

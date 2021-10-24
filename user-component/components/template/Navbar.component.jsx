@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
 import { signOut } from "next-auth/client";
+import IconArrow from "../../../components/assets/icon/Arrow2";
 
 import Image from "next/image";
 
@@ -22,6 +23,8 @@ import IconLogin from "../../../components/assets/icon-dashboard-peserta/Login";
 import IconRegister from "../../../components/assets/icon-dashboard-peserta/Register";
 
 const Navigationbar = ({ session }) => {
+  const [isShowDropdown, setIsShowDropdown] = useState(false);
+  console.log("isShowDropdown", isShowDropdown);
   const { error: errorDataPribadi, dataPribadi } = useSelector(
     (state) => state.getDataPribadi
   );
@@ -190,13 +193,43 @@ const Navigationbar = ({ session }) => {
           </Form>
           <Nav>
             {session ? (
-              <button
-                className="btn btn-sm btn-login-peserta"
-                onClick={() => handlerLogout()}
-              >
-                <IconLogin className="mr-2" />
-                Logout
-              </button>
+              <div className="position-relative">
+                <div
+                  className="wrap-accouts"
+                  onClick={() =>
+                    setIsShowDropdown(isShowDropdown ? false : true)
+                  }
+                >
+                  <div className="dot-accouts"></div>
+                  <span className="titles-accounts">{session?.name}</span>
+                  <IconArrow
+                    fill="#6c6c6c"
+                    width="14"
+                    height="11"
+                    style={{ transform: "rotate(90deg)" }}
+                  />
+                </div>
+
+                {isShowDropdown ? (
+                  <ul className="list-wrap-accounts">
+                    <li className="items-lists">asdasd</li>
+                    <li className="items-lists">asdasd</li>
+                    <li className="items-lists">asdasd</li>
+                    <li className="items-lists">asdasd</li>
+                    <li className="items-lists">
+                      <button
+                        className="btn btn-sm btn-login-peserta w-100 d-flex align-items-center justify-content-center"
+                        onClick={() => handlerLogout()}
+                      >
+                        <IconLogin className="mr-2" />
+                        Logout
+                      </button>
+                    </li>
+                  </ul>
+                ) : (
+                  ""
+                )}
+              </div>
             ) : (
               <>
                 <Link href="/login">
