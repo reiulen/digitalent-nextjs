@@ -146,9 +146,15 @@ const ViewFormCommitment = ({ token }) => {
               {komitmenPeserta === "1" && (
                 <div className="col-md-12">
                   <p className="text-neutral-body">Form Komitmen</p>
-                  <textarea rows="6" className="form-control" disabled>
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: formKomitmen,
+                    }}
+                    style={{ overflowWrap: "break-word" }}
+                  ></div>
+                  {/* <textarea rows="6" className="form-control" disabled>
                     {formKomitmen}
-                  </textarea>
+                  </textarea> */}
                 </div>
               )}
             </div>

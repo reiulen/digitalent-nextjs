@@ -140,7 +140,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
           <Form.Group className="mb-3" controlId="formGridAddress1">
             <Form.Label>Jenjang Pendidikan</Form.Label>
             <Select
-              placeholder="Silahkan Pilih Jenjang Pendidikan"
+              placeholder={`${pendidikan.jenjang}`}
               options={optionsJenjangPendidikan}
               defaultValue={jengjangPendidikan}
               onChange={(e) =>
@@ -162,7 +162,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
           <Form.Group className="mb-3" controlId="formGridAddress1">
             <Form.Label>Asal Sekolah / Perguruan Tinggi</Form.Label>
             <Select
-              placeholder="Silahkan Pilih Asal Sekolah / Perguruan Tinggi"
+              placeholder={`${pendidikan.asal_pendidikan}`}
               options={optionsAsalSekolah}
               defaultValue={asalSekolah}
               onChange={(e) =>
