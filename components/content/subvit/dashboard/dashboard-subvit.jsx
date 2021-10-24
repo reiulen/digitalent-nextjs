@@ -19,70 +19,83 @@ import {
 } from "recharts";
 import { useRouter } from "next/dist/client/router";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { getDashboardSubvit } from "../../../../redux/actions/subvit/subtance-question-detail.action";
 
-const DashbardSubvit = () => {
+const DashbardSubvit = ({ token }) => {
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const { dashboard_subvit } = useSelector((state) => state.dashboardSubvit);
 
-  const [dataDummy] = useState(dashboard_subvit);
+  // Object.entries(dashboard_subvit.chart).map((item, index) => {
+  //   return data.push({ name: item[0], value: item[1] });
+  // });
 
   const data = [];
-  // if (dataDummy && dataDummy.chart) {
-  //   Object.entries(dataDummy.data.chart).map((item, index) => {
-  //     return data.push({ name: item[0], value: item[1] });
-  //   });
-  // } else {
-  //   data.push({ name: "", value: 0 });
-  // }
+  useEffect(() => {
+    dispatch(
+      getDashboardSubvit(
+        router.query.page_substansi,
+        router.query.page_survey,
+        router.query.page_trivia,
+        token
+      )
+    );
+  }, [
+    token,
+    router.query.page_substansi,
+    router.query.page_survey,
+    router.query.page_trivia,
+    dispatch,
+  ]);
 
-  const handleNextPagination = (category) => {
+  // const [dashboard_subvit] = useState(dashboard_subvit);
+
+  console.log(dashboard_subvit);
+
+  const handleNextPagination = () => {
     const page = parseInt(router.query.page_substansi) + 1;
-    router.push(`${router.pathname}?page_substansi=${page}`);
+    router.push(
+      `${router.pathname}?page_substansi=${page}&page_trivia=${router.query.page_trivia}&page_survey=${router.query.page_survey}`
+    );
+    dispatch(getDashboardSubvit(token));
   };
 
-  const handleBackPagination = (category) => {
+  const handleBackPagination = () => {
     const page = parseInt(router.query.page_substansi) - 1;
-    router.push(`${router.pathname}?page_substansi=${page}`);
+    router.push(
+      `${router.pathname}?page_substansi=${page}&page_trivia=${router.query.page_trivia}&page_survey=${router.query.page_survey}`
+    );
   };
 
-  const dummy = [
-    {
-      no: 1,
-      theme: "FGA",
-      training: "Cloud Computing",
-      total: "2.000/15.000",
-      note: "yang sudah mengerjakan",
-    },
-    {
-      no: 2,
-      theme: "FGA",
-      training: "Cloud Computing",
-      total: "2.000/15.000",
-      note: "yang sudah mengerjakan",
-    },
-    {
-      no: 3,
-      theme: "FGA",
-      training: "Cloud Computing",
-      total: "2.000/15.000",
-      note: "yang sudah mengerjakan",
-    },
-    {
-      no: 4,
-      theme: "FGA",
-      training: "Cloud Computing",
-      total: "2.000/15.000",
-      note: "yang sudah mengerjakan",
-    },
-    {
-      no: 5,
-      theme: "FGA",
-      training: "Cloud Computing",
-      total: "2.000/15.000",
-      note: "yang sudah mengerjakan",
-    },
-  ];
+  const handleNextPaginationSurvey = () => {
+    const page = parseInt(router.query.page_survey) + 1;
+    router.push(
+      `${router.pathname}?page_substansi=${router.query.page_substansi}&page_trivia=${router.query.page_trivia}&page_survey=${page}`
+    );
+  };
+
+  const handleBackPaginationSurvey = () => {
+    const page = parseInt(router.query.page_survey) - 1;
+    router.push(
+      `${router.pathname}?page_substansi=${router.query.page_substansi}&page_trivia=${router.query.page_trivia}&page_survey=${page}`
+    );
+  };
+
+  const handleNextPaginationTrivia = () => {
+    const page = parseInt(router.query.page_trivia) + 1;
+    router.push(
+      `${router.pathname}?page_substansi=${router.query.page_substansi}&page_trivia=${page}&page_survey=${router.query.page_survey}`
+    );
+  };
+
+  const handleBackPaginationTrivia = () => {
+    const page = parseInt(router.query.page_trivia) - 1;
+    router.push(
+      `${router.pathname}?page_substansi=${router.query.page_substansi}&page_trivia=${page}&page_survey=${router.query.page_survey}`
+    );
+  };
 
   const COLORS = ["#4299E1", "#215480", "##4CBDE2"];
 
@@ -166,7 +179,7 @@ const DashbardSubvit = () => {
                 <div className="d-flex align-items-center mb-10">
                   <div className="d-flex flex-column flex-grow-1 font-weight-bold">
                     <div className="row">
-                      <div className="col-md-5">
+                      <div className="col-md-12 col-xl-5 col-sm-12">
                         <div className="col-md-10 mt-16">
                           <h4
                             className={`${styles.textCardTwo} font-weight-bolder text-primary`}
@@ -176,7 +189,9 @@ const DashbardSubvit = () => {
                         </div>
                       </div>
 
-                      <div className="col-md-7  mt-25">
+                      <div
+                        className={`${styles.colCard} col-md-12 col-xl-7 col-sm-12 mt-25 `}
+                      >
                         <center>
                           <select
                             className={`${styles.btnDropdown} form-select`}
@@ -214,10 +229,9 @@ const DashbardSubvit = () => {
               <div className="col-lg-4 col-xxl-4 order-1 order-xxl-2">
                 <CardDashboardMini
                   link="/subvit/substansi"
-                  background="bg-primary"
+                  background="bg-white"
                   icon="book-white.svg"
-                  color="text-white"
-                  title="Tes Subtansi"
+                  title="Test Substansi"
                 />
               </div>
               <div className="col-lg-4 col-xxl-4 order-1 order-xxl-2">
@@ -225,7 +239,6 @@ const DashbardSubvit = () => {
                   link="/subvit/survey"
                   background="bg-white"
                   icon="blok4-secondary.svg"
-                  color="text-muted"
                   title="Survey"
                 />
               </div>
@@ -234,7 +247,6 @@ const DashbardSubvit = () => {
                   link="/subvit/trivia"
                   background="bg-white"
                   icon="movie-secondary.svg"
-                  color="text-muted"
                   title="Trivia"
                 />
               </div>
@@ -275,7 +287,9 @@ const DashbardSubvit = () => {
                         position="center"
                         className={styles.labelChart}
                       >
-                        {dataDummy && dataDummy.chart && dataDummy.chart.total}
+                        {dashboard_subvit &&
+                          dashboard_subvit.chart &&
+                          dashboard_subvit.chart.total}
                       </Label>
                     </Pie>
                   </PieChart>
@@ -296,9 +310,9 @@ const DashbardSubvit = () => {
                         />
                       </div>
                       <div className={`${styles.substansi} p-2`}>
-                        {dataDummy &&
-                          dataDummy.chart &&
-                          dataDummy.chart.total_substansi}
+                        {dashboard_subvit &&
+                          dashboard_subvit.chart &&
+                          dashboard_subvit.chart.total_substansi}
                         <br />
                         <span className={styles.subTextTotal}>Substansi</span>
                       </div>
@@ -316,9 +330,9 @@ const DashbardSubvit = () => {
                         />
                       </div>
                       <div className={`${styles.survey} p-2`}>
-                        {dataDummy &&
-                          dataDummy.chart &&
-                          dataDummy.chart.total_survey}
+                        {dashboard_subvit &&
+                          dashboard_subvit.chart &&
+                          dashboard_subvit.chart.total_survey}
                         <br />
                         <span className={styles.subTextTotal}>Survey</span>
                       </div>
@@ -335,9 +349,9 @@ const DashbardSubvit = () => {
                         />
                       </div>
                       <div className={`${styles.trivia} p-2`}>
-                        {dataDummy &&
-                          dataDummy.chart &&
-                          dataDummy.chart.total_trivia}
+                        {dashboard_subvit &&
+                          dashboard_subvit.chart &&
+                          dashboard_subvit.chart.total_trivia}
                         <br />
                         <span className={styles.subTextTotal}>Trivia</span>
                       </div>
@@ -353,36 +367,47 @@ const DashbardSubvit = () => {
                 <h1 className={`${styles.headPeserta}`}>Test Substansi</h1>
                 <p className={`${styles.subHeadPeserta}`}>yang sudah publish</p>
 
-                {dataDummy &&
-                  dataDummy.substansi &&
-                  dataDummy.substansi.list.map((item, index) => {
+                {dashboard_subvit &&
+                  dashboard_subvit.substansi &&
+                  dashboard_subvit.substansi.list.map((item, index) => {
                     return (
                       <>
                         <div className={`${styles.cardList} card`} key={index}>
                           <div className="row">
                             <div
-                              className="col-sm-1"
+                              className="col-sm-1 col-xs-1"
                               style={{ padding: "0px" }}
                             >
                               <div
                                 className={`${styles.cardNumber} card`}
                                 style={{ width: "100%", height: "100%" }}
                               >
-                                {index +
-                                  1 * router.query.page_substansi * 5 -
-                                  (5 - 1)}
+                                {router.query.page_substansi
+                                  ? index +
+                                    1 * router.query.page_substansi * 5 -
+                                    (5 - 1)
+                                  : index + 1 * 1 * 5 - (5 - 1)}
                               </div>
                             </div>
-                            <div className={`${styles.theme} col-sm-5`}>
-                              {item.theme.name}
+                            <div
+                              className={`${styles.theme} col-sm-5 col-xs-8`}
+                            >
+                              {item.theme ? item.theme.name : "-"}
                               <br />
                               <span className={styles.training}>
-                                {item.training.name}
+                                {item.training ? item.training.name : "-"}
                               </span>
                             </div>
-                            <div className={`${styles.total} col-sm-6`}>
-                              {item.all_participant} /{" "}
-                              {item.participant_finished}
+                            <div
+                              className={`${styles.total} col-sm-6 col-xs-3`}
+                            >
+                              {item.all_participant
+                                ? item.all_participant
+                                : "0"}{" "}
+                              /{" "}
+                              {item.participant_finished
+                                ? item.participant_finished
+                                : "0"}
                               <br />
                               <span className={styles.note}>
                                 yang sudah mengerjakan
@@ -412,11 +437,13 @@ const DashbardSubvit = () => {
                       className={`${styles.btnNext} btn btn-primary`}
                       onClick={() => handleNextPagination()}
                       disabled={
-                        parseInt(router.query.page_substansi) === dataDummy &&
-                        dataDummy.substansi &&
-                        dataDummy.substansi.total / dataDummy &&
-                        dataDummy.substansi &&
-                        dataDummy.substansi.totalFiltered
+                        parseInt(router.query.page_substansi)
+                          ? 1
+                          : parseInt(router.query.page_substansi) ===
+                              dashboard_subvit &&
+                            dashboard_subvit.substansi.total /
+                              dashboard_subvit &&
+                            dashboard_subvit.substansi.totalFiltered
                       }
                     >
                       <i
@@ -438,9 +465,9 @@ const DashbardSubvit = () => {
                 <p className={`${styles.subHeadPeserta}`}>
                   yang sedang berlangsung
                 </p>
-                {dataDummy &&
-                  dataDummy.trivia &&
-                  dataDummy.trivia.list.map((item, index) => {
+                {dashboard_subvit &&
+                  dashboard_subvit.trivia &&
+                  dashboard_subvit.trivia.list.map((item, index) => {
                     return (
                       <>
                         <div className={`${styles.cardList} card`} key={index}>
@@ -453,21 +480,28 @@ const DashbardSubvit = () => {
                                 className={`${styles.cardNumber} card`}
                                 style={{ width: "100%", height: "100%" }}
                               >
-                                {index +
-                                  1 * router.query.page_substansi * 5 -
-                                  (5 - 1)}
+                                {router.query.page_trivia
+                                  ? index +
+                                    1 * router.query.page_trivia * 5 -
+                                    (5 - 1)
+                                  : index + 1 * 1 * 5 - (5 - 1)}
                               </div>
                             </div>
                             <div className={`${styles.theme} col-sm-5`}>
-                              {item.theme.name}
+                              {item.theme ? item.theme.name : "-"}
                               <br />
                               <span className={styles.training}>
-                                {item.training.name}
+                                {item.training ? item.training.name : "-"}
                               </span>
                             </div>
                             <div className={`${styles.total} col-sm-6`}>
-                              {item.all_participant} /{" "}
-                              {item.participant_finished}
+                              {item.all_participant
+                                ? item.all_participant
+                                : "0"}{" "}
+                              /{" "}
+                              {item.participant_finished
+                                ? item.participant_finished
+                                : "0"}
                               <br />
                               <span className={styles.note}>
                                 yang sudah mengerjakan
@@ -485,7 +519,7 @@ const DashbardSubvit = () => {
                   <div className="col-sm-6" style={{ textAlign: "right" }}>
                     <button
                       className={`${styles.btnNext} btn btn-primary`}
-                      onClick={handleBackPagination}
+                      onClick={handleBackPaginationTrivia}
                       disabled={parseInt(router.query.page_trivia) === 1}
                     >
                       <i
@@ -495,13 +529,14 @@ const DashbardSubvit = () => {
                     </button>
                     <button
                       className={`${styles.btnNext} btn btn-primary`}
-                      onClick={handleNextPagination}
+                      onClick={handleNextPaginationTrivia}
                       disabled={
-                        parseInt(router.query.page_trivia) === dataDummy &&
-                        dataDummy.trivia &&
-                        dataDummy.trivia.total / dataDummy &&
-                        dataDummy.trivia &&
-                        dataDummy.trivia.totalFiltered
+                        parseInt(router.query.page_trivia)
+                          ? 1
+                          : parseInt(router.query.page_trivia) ===
+                              dashboard_subvit &&
+                            dashboard_subvit.trivia.total / dashboard_subvit &&
+                            dashboard_subvit.trivia.totalFiltered
                       }
                     >
                       <i
@@ -521,9 +556,9 @@ const DashbardSubvit = () => {
                 <p className={`${styles.subHeadPeserta}`}>
                   yang sedang berlangsung
                 </p>
-                {dataDummy &&
-                  dataDummy.survey &&
-                  dataDummy.survey.list.map((item, index) => {
+                {dashboard_subvit &&
+                  dashboard_subvit.survey &&
+                  dashboard_subvit.survey.list.map((item, index) => {
                     return (
                       <>
                         <div className={`${styles.cardList} card`} key={index}>
@@ -536,21 +571,28 @@ const DashbardSubvit = () => {
                                 className={`${styles.cardNumber} card`}
                                 style={{ width: "100%", height: "100%" }}
                               >
-                                {index +
-                                  1 * router.query.page_survey * 5 -
-                                  (5 - 1)}
+                                {router.query.page_survey
+                                  ? index +
+                                    1 * router.query.page_survey * 5 -
+                                    (5 - 1)
+                                  : index + 1 * 1 * 5 - (5 - 1)}
                               </div>
                             </div>
                             <div className={`${styles.theme} col-sm-5`}>
-                              {item.theme.name}
+                              {item.theme ? item.theme.name : "-"}
                               <br />
                               <span className={styles.training}>
-                                {item.training.name}
+                                {item.training ? item.training.name : "-"}
                               </span>
                             </div>
                             <div className={`${styles.total} col-sm-6`}>
-                              {item.all_participant} /{" "}
-                              {item.participant_finished}
+                              {item.all_participant
+                                ? item.all_participant
+                                : "0"}{" "}
+                              /{" "}
+                              {item.participant_finished
+                                ? item.participant_finished
+                                : "0"}
                               <br />
                               <span className={styles.note}>
                                 yang sudah mengerjakan
@@ -568,7 +610,7 @@ const DashbardSubvit = () => {
                   <div className="col-sm-6" style={{ textAlign: "right" }}>
                     <button
                       className={`${styles.btnNext} btn btn-primary`}
-                      onClick={handleBackPagination}
+                      onClick={handleBackPaginationSurvey}
                       disabled={parseInt(router.query.page_survey) === 1}
                     >
                       <i
@@ -578,13 +620,14 @@ const DashbardSubvit = () => {
                     </button>
                     <button
                       className={`${styles.btnNext} btn btn-primary`}
-                      onClick={handleNextPagination}
+                      onClick={handleNextPaginationSurvey}
                       disabled={
-                        parseInt(router.query.page_survey) === dataDummy &&
-                        dataDummy.survey &&
-                        dataDummy.survey.total / dataDummy &&
-                        dataDummy.survey &&
-                        dataDummy.survey.totalFiltered
+                        parseInt(router.query.page_survey)
+                          ? 1
+                          : parseInt(router.query.page_survey) ===
+                              dashboard_subvit &&
+                            dashboard_subvit.survey.total / dashboard_subvit &&
+                            dashboard_subvit.survey.totalFiltered
                       }
                     >
                       <i

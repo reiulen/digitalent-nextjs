@@ -99,7 +99,6 @@ export const getRandomSubtanceQuestionDetail =
       };
 
       const { data } = await axios.get(link, config);
-
       dispatch({
         type: SUBTANCE_QUESTION_RANDOM_DETAIL_SUCCESS,
         payload: data,
@@ -131,7 +130,7 @@ export const getDashboardSubvit =
       };
 
       const { data } = await axios.get(link, config);
-
+      console.log(link);
       dispatch({
         type: DASHBOARD_SUBVIT_SUCCESS,
         payload: data,

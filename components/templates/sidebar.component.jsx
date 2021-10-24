@@ -278,7 +278,7 @@ const Sidebar = ({ session }) => {
         {
           id: 1,
           name: "Dashboard",
-          href: "/subvit",
+          href: "/subvit?page_substansi=1&page_trivia=1&page_survey=1",
           selected: false,
           child: [],
         },
@@ -452,22 +452,21 @@ const Sidebar = ({ session }) => {
     const splitRouteToMakingActive = pathRoute.split("/");
 
     initializeMenu.map((row, index) => {
-      if(splitRouteToMakingActive[1] == row.name.toLowerCase()){
+      if (splitRouteToMakingActive[1] == row.name.toLowerCase()) {
         initializeMenu[index].selected = true;
       }
     });
     let _temp = [...initializeMenu];
     setMenu(_temp);
   }, []);
-  
-  const handleOpenMenu = (e,i, condition) => {    
 
+  const handleOpenMenu = (e, i, condition) => {
     const pathRoute = router.route;
     const splitRouteToMakingActive = pathRoute.split("/");
 
     console.log(splitRouteToMakingActive);
 
-    if(splitRouteToMakingActive[1]){
+    if (splitRouteToMakingActive[1]) {
       initializeMenu[i].selected = !condition;
 
       // if(initializeMenu[i].length > 0 && splitRouteToMakingActive[2]){
@@ -477,7 +476,6 @@ const Sidebar = ({ session }) => {
       //     }
       //   });
       // }
-
     }
 
     let _temp = [...initializeMenu];
@@ -485,8 +483,6 @@ const Sidebar = ({ session }) => {
   };
 
   const handleOpenMenuSubMenu = (e, iMenu, iSubMenu) => {
-
-
     let _temp = [...menu];
     _temp.map((items, index) => {
       if (index === iMenu) {
@@ -524,14 +520,12 @@ const Sidebar = ({ session }) => {
   };
 
   const handleActiveSubSubmenu = (e, iMenu, iSubMenu, iSubSubMenu) => {
-
     let _temp = [...menu];
     _temp.map((items, index) => {
       if (index === iMenu) {
         _temp[iMenu] = { ...items, selected: true };
         items.child.map((itemsp, indxx) => {
           if (indxx === iSubMenu) {
-
             _temp[iMenu].child[indxx] = {
               ...itemsp,
               selected: true,
@@ -566,9 +560,8 @@ const Sidebar = ({ session }) => {
           : ""
       } `}
       id="kt_aside"
-      style={{ overflow: "scroll" }}>
-
-
+      style={{ overflow: "scroll" }}
+    >
       <div className="brand flex-column-auto" id="kt_brand">
         <a className="brand-logo">
           <Image
@@ -582,7 +575,8 @@ const Sidebar = ({ session }) => {
       <div
         className="aside-menu-wrapper flex-column-fluid"
         id="kt_aside_menu_wrapper"
-        style={{ zIndex: "999999999" }}>
+        style={{ zIndex: "999999999" }}
+      >
         <div
           id="kt_aside_menu"
           className="aside-menu my-4"
@@ -624,16 +618,19 @@ const Sidebar = ({ session }) => {
                               : ""
                           }`}
                           aria-haspopup="true"
-                          onClick={() => activeSubItemPartnershipMitra()}>
+                          onClick={() => activeSubItemPartnershipMitra()}
+                        >
                           <Link href={items.href} passHref>
                             <a
                               className="menu-link"
-                              style={{ paddingLeft: "1.5rem" }}>
+                              style={{ paddingLeft: "1.5rem" }}
+                            >
                               <Image
                                 alt="icon-sidebar-logo"
                                 src={`/${items.icon}`}
                                 width={24}
-                                height={24}/>
+                                height={24}
+                              />
                               <span className="menu-text ml-6">
                                 {items.name}
                               </span>
@@ -648,9 +645,7 @@ const Sidebar = ({ session }) => {
             </ul>
           ) : (
             <ul className="menu-nav">
-
               {menu.map((items, index) => {
-
                 return index === 0 ? (
                   <li
                     className={`menu-item menu-item-submenu ${
@@ -659,11 +654,12 @@ const Sidebar = ({ session }) => {
                     aria-haspopup="true"
                     data-menu-toggle="hover"
                     key={index}
-                    id="main-menu">
-
+                    id="main-menu"
+                  >
                     <button
                       className="btn menu-link"
-                      onClick={() => router.push("/dashboard")}>
+                      onClick={() => router.push("/dashboard")}
+                    >
                       <span className="svg-icon menu-icon d-flex align-items-center">
                         <Image
                           alt="icon-sidebar-logo"
@@ -678,16 +674,16 @@ const Sidebar = ({ session }) => {
                 ) : (
                   <li
                     className={`menu-item menu-item-submenu ${
-                      items.selected  &&  "menu-item-open"
+                      items.selected && "menu-item-open"
                     }`}
                     aria-haspopup="true"
                     data-menu-toggle="hover"
                     key={index}
                     id="main-menu"
                     onClick={(e) => {
-                      handleOpenMenu(e, index, items.selected );
-                    }}>
-
+                      handleOpenMenu(e, index, items.selected);
+                    }}
+                  >
                     <a className="menu-link menu-toggle">
                       <span className="svg-icon menu-icon d-flex align-items-center">
                         <Image
@@ -715,8 +711,8 @@ const Sidebar = ({ session }) => {
                                 aria-haspopup="true"
                                 onClick={(e) =>
                                   handleActiveSubmenu(e, index, i)
-                                }>
-
+                                }
+                              >
                                 <Link href={child.href} passHref>
                                   <a
                                     className="menu-link"
@@ -727,7 +723,6 @@ const Sidebar = ({ session }) => {
                                     </span>
                                   </a>
                                 </Link>
-
                               </li>
                             ) : (
                               <li
@@ -739,11 +734,12 @@ const Sidebar = ({ session }) => {
                                 id="sub-menu"
                                 onClick={(e) =>
                                   handleOpenMenuSubMenu(e, index, i)
-                                }>
-
+                                }
+                              >
                                 <a
                                   className="menu-link menu-toggle"
-                                  style={{ paddingLeft: "5.5rem" }}>
+                                  style={{ paddingLeft: "5.5rem" }}
+                                >
                                   <span className="menu-text">
                                     {child.name}
                                   </span>
@@ -756,11 +752,9 @@ const Sidebar = ({ session }) => {
                                       return (
                                         <li
                                           className={`menu-item ${
-
-                                            child2.selected && "menu-item-active"
-
+                                            child2.selected &&
+                                            "menu-item-active"
                                           }`}
-
                                           aria-haspopup="true"
                                           onClick={(e) =>
                                             handleActiveSubSubmenu(
@@ -798,19 +792,16 @@ const Sidebar = ({ session }) => {
               })}
             </ul>
           )}
-        </div> 
+        </div>
       </div>
-      { 
-
-        ( allFunctionls.isOverlayMobileSidebar && allFunctionls.isOverlayMobileSidebar ) && (
+      {allFunctionls.isOverlayMobileSidebar &&
+        allFunctionls.isOverlayMobileSidebar && (
           <div
             className="aside-overlay"
             style={{ zIndex: "1" }}
-            onClick={() => activeProfileAndOverlay()}/>
-        )
-
-      }
-
+            onClick={() => activeProfileAndOverlay()}
+          />
+        )}
     </div>
   );
 };

@@ -16,16 +16,21 @@ import { useRouter } from "next/router";
 import Image from "next/dist/client/image";
 import { useSelector } from "react-redux";
 import ModalHeader from "react-bootstrap/esm/ModalHeader";
-import { postResult } from "../../../../redux/actions/subvit/subtance-question-detail.action";
+import {
+  getRandomSubtanceQuestionDetail,
+  postResult,
+} from "../../../../redux/actions/subvit/subtance-question-detail.action";
 
 import defaultImage from "../../../../public/assets/media/logos/Gambar.png";
 import { useDispatch } from "react-redux";
 
 const SubtansiUser = ({ token }) => {
+  const dispatch = useDispatch();
   const { random_subtance_question_detail } = useSelector(
     (state) => state.randomSubtanceQuestionDetail
   );
-  const dispatch = useDispatch();
+
+  localStorage.setItem("data", JSON.stringify(random_subtance_question_detail));
   const router = useRouter();
   const [data] = useState(JSON.parse(localStorage.getItem("data")));
   const [answer, setAnswer] = useState("");
@@ -33,6 +38,7 @@ const SubtansiUser = ({ token }) => {
   const [numberPage, setNumberPage] = useState("");
   const [numberAnswer, setNumberAnswer] = useState(false);
   const [modalSoal, setModalSoal] = useState(false);
+
   const [count, setCount] = useState(random_subtance_question_detail.time_left);
   const [modalDone, setModalDone] = useState(false);
 
@@ -43,7 +49,9 @@ const SubtansiUser = ({ token }) => {
     sessionStorage.getItem("targetDate")
   );
 
-  localStorage.setItem("data", JSON.stringify(random_subtance_question_detail));
+  // useEffect(() => {
+  //   dispatch(getRandomSubtanceQuestionDetail(token));
+  // }, [dispatch, token]);
 
   const handleModalSoal = () => {
     setModalSoal(true);
@@ -108,6 +116,7 @@ const SubtansiUser = ({ token }) => {
       }, 1000);
       return () => clearInterval(secondsLeft);
     } else {
+      localStorage.clear();
       router.push(`/peserta/done-substansi`);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -136,8 +145,9 @@ const SubtansiUser = ({ token }) => {
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i);
       list.push(key);
+      setListAnswer(key);
     }
-    setListAnswer(list);
+    console.log(listAnswer);
   };
 
   let number = [];
@@ -164,6 +174,7 @@ const SubtansiUser = ({ token }) => {
       type: router.query.category === "Test Substansi" && "substansi",
     };
     dispatch(postResult(setData, token));
+    localStorage.clear();
     router.push(`/peserta/done-substansi`);
   };
 
@@ -178,9 +189,7 @@ const SubtansiUser = ({ token }) => {
             <Col style={{ marginTop: "8px" }}>
               <table>
                 <tr>
-                  <td className={styles.academy}>
-                    Thematic Academy ({data && data.academy})
-                  </td>
+                  <td className={styles.academy}>{data && data.academy}</td>
 
                   <td>&nbsp;</td>
                   <td className={styles.training}>{data && data.theme}</td>
@@ -359,7 +368,7 @@ const SubtansiUser = ({ token }) => {
                     <Button
                       className={styles.btnNext}
                       onClick={handleDone}
-                      disabled={listAnswer.includes(data.total_questions)}
+                      disabled={!listAnswer.includes(data.total_questions)}
                     >
                       Selesai
                     </Button>

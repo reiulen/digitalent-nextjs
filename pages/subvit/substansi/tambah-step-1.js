@@ -4,7 +4,9 @@ import { getSession } from "next-auth/client";
 import {
   dropdownAkademi,
   dropdownPelatihan,
+  dropdownPelatihanbyTema,
   dropdownTema,
+  dropdownTemabyAkademi,
 } from "../../../redux/actions/pelatihan/function.actions";
 import { wrapper } from "../../../redux/store";
 import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
@@ -51,8 +53,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       await store.dispatch(dropdownAkademi(session.user.user.data.token));
-      await store.dispatch(dropdownTema(session.user.user.data.token));
-      await store.dispatch(dropdownPelatihan(session.user.user.data.token));
 
       return {
         props: { session, title: "Tambah Bank Soal Test Substansi - Subvit" },
