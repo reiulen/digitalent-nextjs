@@ -4,9 +4,14 @@ import Link from "next/link";
 import Image from "next/image";
 import style from "../style.module.css";
 import { useRouter } from "next/router";
+import moment from "moment";
 
-export default function SeleksiAdministrasi() {
+export default function SeleksiAdministrasi({ props }) {
   const router = useRouter();
+  console.log(props.data, "ini data");
+  const data = props.data;
+  const dateFrom = moment(data.pendaftaran_mulai).format("LL");
+  const dateTo = moment(data.pendaftaran_selesai).format("LL");
   return (
     <Card className="position-relative">
       <Card.Body
@@ -71,17 +76,14 @@ export default function SeleksiAdministrasi() {
                 <div className="d-flex align-items-center align-middle ">
                   <i className="ri-time-line"></i>
                   <span className={` pl-2`}>
-                    Pelatihan : 05 Jul 21 - 21 Jul 21
+                    Pelatihan : {dateFrom} - {dateTo}
                   </span>
                 </div>{" "}
               </Col>
               <Col md={12} className="my-auto order-5 pb-40 pb-md-30 pb-lg-20">
                 <div className="d-flex align-items-center align-middle ">
                   <i className="ri-map-pin-line"></i>
-                  <span className={` pl-2`}>
-                    Lokasi : Pasaraya Blok M Gedung B Lt. 6, Jakarta Barat,
-                    Indonesia{" "}
-                  </span>
+                  <span className={` pl-2`}>Lokasi : {data.alamat}</span>
                 </div>{" "}
               </Col>
             </Row>

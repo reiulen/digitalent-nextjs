@@ -28,7 +28,7 @@ export default function RiwayatPelatihanPage(props) {
   return (
     <>
       <Layout title="Pelatihan Peserta - Pelatihan" session={session}>
-        <RiwayatPelatihan />
+        <RiwayatPelatihan session={session} />
       </Layout>
     </>
   );

@@ -108,7 +108,7 @@ export default function SubstansiMenungguJadwal() {
             }}
           >
             <i className="ri-download-2-fill mr-2"></i>
-            Bukti Pendaftaran asdasd{" "}
+            Bukti Pendaftaran
           </Button>
         </Col>
         <Col className="d-flex justify-content-center">

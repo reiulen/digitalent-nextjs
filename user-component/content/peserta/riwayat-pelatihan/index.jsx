@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, Button, Col, Row, Modal } from "react-bootstrap";
 import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
 import IconFilter from "../../../../components/assets/icon/Filter";
@@ -10,14 +10,20 @@ import Administrasi from "./administrasi";
 import style from "./style.module.css";
 import Image from "next/image";
 import { useSelector } from "react-redux";
-export default function RiwayatPelatihan() {
+import {
+  getAllRiwayatPelatihanPeserta,
+  setValuePeserta,
+} from "../../../../redux/actions/pelatihan/riwayat-pelatihan.actions";
+import { useDispatch } from "react-redux";
+
+export default function RiwayatPelatihan({ session }) {
+  const dispatch = useDispatch();
+
   let refSelect = null;
   const [showModal, setShowModal] = useState(false);
-  const { error, listPelatihan } = useSelector(
+  const dataRiwayatPelatihan = useSelector(
     (state) => state.getAllRiwayatPelatihanPeserta
   );
-
-  console.log(listPelatihan, " ini list pelatihan");
 
   const handleClose = () => setShowModal(false);
   const handleShow = () => setShowModal(true);
@@ -33,12 +39,23 @@ export default function RiwayatPelatihan() {
 
   const [selected, setSelected] = useState(0);
   const [filter, setFilter] = useState([
-    "semua",
-    "test substansi",
-    "administrasi",
-    "pelatihan",
-    "survey & lpj",
-    "selesai",
+    { name: "semua", value: "all" },
+    { name: "test substansi", value: "test substansi" },
+    { name: "administrasi", value: "all" },
+    { name: "pelatihan", value: "pelatihan" },
+    { name: "survey & lpj", value: "test" },
+    { name: "selesai", value: "1" },
+  ]);
+
+  useEffect(() => {
+    dispatch(getAllRiwayatPelatihanPeserta(session.token));
+  }, [
+    dispatch,
+    session.token,
+    dataRiwayatPelatihan.keyword,
+    dataRiwayatPelatihan.page,
+    dataRiwayatPelatihan.peserta,
+    dataRiwayatPelatihan.limit,
   ]);
 
   return (
@@ -96,12 +113,14 @@ export default function RiwayatPelatihan() {
                           variant={
                             selected == i ? "primary" : "outline-primary"
                           }
-                          onClick={() => {
+                          onClick={(e) => {
                             setSelected(i);
+                            // console.log(filter[i].value);
+                            dispatch(setValuePeserta(filter[i].value));
                           }}
                           className={`rounded-full mx-5 w-100 text-capitalize`}
                         >
-                          {item}
+                          {item.name}
                         </Button>
                       </Col>
                     );
@@ -126,27 +145,40 @@ export default function RiwayatPelatihan() {
           </Card>
         </Col>
         {/* <Administrasi /> */}
-        <CardPeserta
-          status={"test"}
-          img_figure={"/assets/media/mitra-icon/bukalapak-1.svg"}
-          img_mitra={"/assets/media/mitra-icon/bukalapak-1.svg"}
-          mitra_name={"bukalapak"}
-          pelatihan_name={"Intermediate Multimedia Designer"}
-          label={"warning"}
-          location={"Pasaraya Blok M Gedung B Lt. 6, Jakarta Barat, Indonesia"}
-        />
-        <CardPeserta totalButton={2} status={"seleksi administrasi"} />
-        <CardPeserta totalButton={2} status={"menunggu jadwal"} />
+        {dataRiwayatPelatihan.listPelatihan.list.map((el) => {
+          return (
+            <CardPeserta
+              status={"test"}
+              data={el}
+              // img_figure={"/assets/media/mitra-icon/bukalapak-1.svg"}
+              // img_mitra={"/assets/media/mitra-icon/bukalapak-1.svg"}
+              // mitra_name={"bukalapak"}
+              // pelatihan_name={"Intermediate Multimedia Designer"}
+              // label={"warning"}
+              // location={
+              //   "Pasaraya Blok M Gedung B Lt. 6, Jakarta Barat, Indonesia"
+              // }
+            />
+          );
+        })}
+        <CardPeserta totalButton={2} status={"lolos administrasi"} />
         <CardPeserta totalButton={2} status={"tes substansi"} />
+        <CardPeserta totalButton={2} status={"menunggu jadwal"} />
+        {/* 
+        <CardPeserta
+              totalButton={2}
+              data={el}
+              status={"seleksi administrasi"}
+            />
+        <CardPeserta totalButton={2} status={"seleksi administrasi"} />
         <CardPeserta totalButton={2} status={"lolos substansi"} />
         <CardPeserta totalButton={2} status={"tidak lulus"} />
-        <CardPeserta totalButton={2} status={"lolos administrasi"} />
         <CardPeserta totalButton={2} status={"ikuti pelatihan"} />
         <CardPeserta totalButton={2} status={"kerjakan mid test"} />
         <CardPeserta totalButton={2} status={"kerjakan trivia"} />
         <CardPeserta totalButton={2} status={"lulus pelatihan"} />
         <CardPeserta totalButton={2} status={"isi survey"} />
-        <CardPeserta totalButton={2} status={"isi lpj"} />
+        <CardPeserta totalButton={2} status={"isi lpj"} /> */}
       </PesertaWrapper>
       <Modal show={showModal} onHide={handleClose} centered>
         <Modal.Header>
