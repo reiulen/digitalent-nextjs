@@ -324,7 +324,7 @@ const RevisiKerjasama = ({ token }) => {
                         }}
                         onClick={() =>
                           window.open(
-                            `https://dts-partnership-dev.s3.ap-southeast-1.amazonaws.com/partnership/files/document_cooperations/${dokument}`
+                            `https://dts-partnership-dev.s3.ap-southeast-1.amazonaws.com${dokument}`
                           )
                         }
                       >

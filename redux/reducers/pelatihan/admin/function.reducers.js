@@ -15,8 +15,12 @@ import {
   ERROR_DROPDOWN_AKADEMI,
   GET_DROPDOWN_TEMA,
   ERROR_DROPDOWN_TEMA,
+  GET_DROPDOWN_TEMA_BY_AKADEMI,
+  ERROR_DROPDOWN_TEMA_BY_AKADEMI,
   GET_DROPDOWN_PELATIHAN,
   ERROR_DROPDOWN_PELATIHAN,
+  GET_DROPDOWN_PELATIHAN_BY_TEMA,
+  ERROR_DROPDOWN_PELATIHAN_BY_TEMA,
   GET_DROPDOWN_STATUS_PEKERJAAN,
   ERROR_DROPDOWN_STATUS_PEKERJAAN,
   GET_DROPDOWN_PENDIDIKAN,
@@ -175,6 +179,29 @@ export const drowpdownTemaReducers = (state = { data: [] }, action) => {
   }
 };
 
+export const drowpdownTemabyAkademiReducers = (
+  state = { data: [] },
+  action
+) => {
+  switch (action.type) {
+    case GET_DROPDOWN_TEMA_BY_AKADEMI:
+      return {
+        data: action.payload,
+      };
+    case ERROR_DROPDOWN_TEMA_BY_AKADEMI:
+      return {
+        error: action.payload,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};
+
 export const drowpdownPelatihanReducers = (state = { data: [] }, action) => {
   switch (action.type) {
     case GET_DROPDOWN_PELATIHAN:
@@ -182,6 +209,29 @@ export const drowpdownPelatihanReducers = (state = { data: [] }, action) => {
         data: action.payload,
       };
     case ERROR_DROPDOWN_PELATIHAN:
+      return {
+        error: action.payload,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};
+
+export const drowpdownPelatihanbyTemaReducers = (
+  state = { data: [] },
+  action
+) => {
+  switch (action.type) {
+    case GET_DROPDOWN_PELATIHAN_BY_TEMA:
+      return {
+        data: action.payload,
+      };
+    case ERROR_DROPDOWN_PELATIHAN_BY_TEMA:
       return {
         error: action.payload,
       };

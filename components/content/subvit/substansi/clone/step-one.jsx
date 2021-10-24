@@ -14,6 +14,10 @@ import { NEW_CLONE_SUBTANCE_QUESTION_BANKS_RESET } from "../../../../../redux/ty
 import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInput from "/components/StepInputClone";
 import LoadingPage from "../../../../LoadingPage";
+import {
+  dropdownPelatihanbyTema,
+  dropdownTemabyAkademi,
+} from "../../../../../redux/actions/pelatihan/function.actions";
 
 const StepOne = ({ token }) => {
   const dispatch = useDispatch();
@@ -22,6 +26,11 @@ const StepOne = ({ token }) => {
   const { loading, error, success, subtance } = useSelector(
     (state) => state.newCloneSubtanceQuestionBanks
   );
+
+  const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(
+    (state) => state.drowpdownAkademi.data
+  );
+
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
   const [typeSave, setTypeSave] = useState("lanjut");
@@ -114,6 +123,20 @@ const StepOne = ({ token }) => {
     }
   };
 
+  const handleChangeTema = (e) => {
+    setAcademyId(e.target.value);
+    e.target.value && dispatch(dropdownTemabyAkademi(e.target.value, token));
+  };
+
+  const handleChangePelatihan = (e) => {
+    setThemeId(e.target.value);
+    e.target.value && dispatch(dropdownPelatihanbyTema(e.target.value, token));
+  };
+
+  const { data } = useSelector((state) => state.drowpdownTemabyAkademi);
+
+  const { drowpdownPelatihanbyTema } = useSelector((state) => state);
+
   const handleResetError = () => {
     if (error) {
       dispatch(clearErrors());
@@ -170,9 +193,9 @@ const StepOne = ({ token }) => {
                     name="academy_id"
                     id=""
                     value={academy_id}
-                    onChange={(e) => setAcademyId(e.target.value)}
-                    onBlur={(e) => {
-                      setAcademyId(e.target.value);
+                    onChange={(event) => handleChangeTema(event)}
+                    onBlur={(event) => {
+                      handleChangeTema(event);
                       simpleValidator.current.showMessageFor("academy_id");
                     }}
                     className="form-control"
@@ -181,8 +204,16 @@ const StepOne = ({ token }) => {
                       {" "}
                       -Pilih Akademi -
                     </option>
-                    <option value="1"> Computer Scientist </option>
-                    <option value="2"> Designer </option>
+                    {dataAkademi.map((item, index) => {
+                      return (
+                        <>
+                          <option value={item.value} key={index}>
+                            {" "}
+                            {item.label}{" "}
+                          </option>
+                        </>
+                      );
+                    })}
                   </select>
                   {simpleValidator.current.message(
                     "academy_id",
@@ -204,9 +235,9 @@ const StepOne = ({ token }) => {
                   <select
                     name="the_id"
                     id=""
-                    onChange={(e) => setThemeId(e.target.value)}
-                    onBlur={(e) => {
-                      setThemeId(e.target.value);
+                    onChange={(event) => handleChangePelatihan(event)}
+                    onBlur={(event) => {
+                      handleChangePelatihan(event);
                       simpleValidator.current.showMessageFor("theme_id");
                     }}
                     className="form-control"
@@ -215,8 +246,16 @@ const StepOne = ({ token }) => {
                       {" "}
                       -Pilih Tema-
                     </option>
-                    <option value="1"> Cloud Computing </option>
-                    <option value="2"> UI/UX Designer </option>
+                    {data.data &&
+                      data.data.map((item, index) => {
+                        return (
+                          <>
+                            <option value={item.value} key={index}>
+                              {item.label}
+                            </option>
+                          </>
+                        );
+                      })}
                   </select>
                   {simpleValidator.current.message(
                     "theme_id",
@@ -242,12 +281,21 @@ const StepOne = ({ token }) => {
                     onBlur={(e) => setTrainingId(e.target.value)}
                     className="form-control"
                   >
-                    <option selected disabled>
+                    <option selected disabled value="">
                       {" "}
                       -Pilih Pelatihan-
                     </option>
-                    <option value="1"> Google Cloud Computing </option>
-                    <option value="1"> Adobe UI/UX Designer </option>
+                    {drowpdownPelatihanbyTema.data.data &&
+                      drowpdownPelatihanbyTema.data.data.map((item, index) => {
+                        return (
+                          <>
+                            <option value={item.value} key={index}>
+                              {" "}
+                              {item.label}
+                            </option>
+                          </>
+                        );
+                      })}
                   </select>
                 </div>
               </div>
@@ -286,7 +334,7 @@ const StepOne = ({ token }) => {
                 </div>
               </div>
 
-              <div className="form-group mb-3">
+              <div className="form-group mb-3 mt-12">
                 <div className=""></div>
                 <div className=" col-md-12 text-right">
                   <button

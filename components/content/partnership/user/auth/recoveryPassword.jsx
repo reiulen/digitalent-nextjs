@@ -7,6 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Swal from "sweetalert2";
 import { useSelector, useDispatch } from "react-redux";
+import axios from 'axios'
 import { vericationEmail } from "../../../../../redux/actions/partnership/user/authentication.actions";
 import { RESET_STATUS } from "../../../../../redux/types/partnership/user/authentication.type";
 const RegisterMitra = () => {
@@ -45,11 +46,20 @@ const RegisterMitra = () => {
         cancelButtonText: "Batal",
         confirmButtonText: "Ya !",
         dismissOnDestroy: false,
-      }).then((result) => {
+      }).then(async(result) => {
         if (result.value) {
           let formData = new FormData();
           formData.append("email", email);
-          dispatch(vericationEmail(formData));
+          // dispatch(vericationEmail(formData));
+
+          try {
+            const { data } = await axios.post(
+              `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/authentication/forgot-password`,
+              formData
+            );
+          } catch (error) {
+            notify(error.response.data.message);
+          }
         }
       });
     }
@@ -58,19 +68,27 @@ const RegisterMitra = () => {
   useEffect(() => {
     if (allAuthentication.status === "error") {
       notify(allAuthentication.errorRegister);
-    } else if (allAuthentication.status === "success"){
+    } else if (allAuthentication.status === "success") {
       // jika sukses
-      Swal.fire("Berhasil", "Link reset password telah dikirm, silahkan cek email anda", "success")
-    }else{
-      ""
+      Swal.fire(
+        "Berhasil",
+        "Link reset password telah dikirm, silahkan cek email anda",
+        "success"
+      );
+    } else {
+      ("");
     }
     return () => {
       dispatch({
-        type:RESET_STATUS
-      })
-    }
-
-  }, [allAuthentication.status, allAuthentication.errorRegister,dispatch,router]);
+        type: RESET_STATUS,
+      });
+    };
+  }, [
+    allAuthentication.status,
+    allAuthentication.errorRegister,
+    dispatch,
+    router,
+  ]);
 
   return (
     <>
@@ -135,30 +153,22 @@ const RegisterMitra = () => {
                 >
                   Kirim E-mail
                 </button>
-              
-              <div className="bottom mt-9 text-center">
-                <p style={{ fontSize: "12px", color: "#ffffff" }}>
-                  Belum menerima e-mail?
 
-
-
-                  {/* <Link href="/partnership/user/auth/login" passHref> */}
-                  <button
-                  type="submit"
-                  className="text-primary ml-2 bg-transparent btn"
-                >
-                  Kirim E-mail
-                </button>
-
+                <div className="bottom mt-9 text-center">
+                  <p style={{ fontSize: "12px", color: "#ffffff" }}>
+                    Belum menerima e-mail?
+                    {/* <Link href="/partnership/user/auth/login" passHref> */}
+                    <button
+                      type="submit"
+                      className="text-primary ml-2 bg-transparent btn"
+                    >
+                      Kirim E-mail
+                    </button>
                     {/* <a className="text-primary ml-2">Kirim Ulang</a> */}
-
-                  {/* </Link> */}
-                </p>
-              </div>
-
+                    {/* </Link> */}
+                  </p>
+                </div>
               </form>
-
-
             </div>
           </div>
         </div>

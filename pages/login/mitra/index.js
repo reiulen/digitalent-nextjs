@@ -1,11 +1,11 @@
-import ForgotPassword from "../../../../components/content/partnership/user/auth/forgotPassword";
+import LoginUser from "../../../components/content/partnership/user/auth/login";
 import { getSession } from "next-auth/client";
 
-export default function ForgotPasswordMitra() {
+export default function LoginMitra() {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <ForgotPassword />
+        <LoginUser />
       </div>
     </>
   );
@@ -25,7 +25,7 @@ export async function getServerSideProps(context) {
   return {
     props: {
       data: "auth",
-      title: "Lupa Password - Partnership",
+      title: "Login - Partnership",
     },
   };
 }

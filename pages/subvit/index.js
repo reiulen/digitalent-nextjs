@@ -17,11 +17,12 @@ const DashboardSubvit = dynamic(
   }
 );
 
-export default function Dashboard() {
+export default function Dashboard(props) {
+  const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <DashboardSubvit />
+        <DashboardSubvit token={session.token} />
       </div>
     </>
   );
@@ -39,7 +40,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
-      console.log(query);
 
       const middleware = middlewareAuthAdminSession(session);
       if (!middleware.status) {
@@ -51,14 +51,14 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
-      await store.dispatch(
-        getDashboardSubvit(
-          query.page_substansi,
-          query.page_trivia,
-          query.page_survey,
-          session.user.user.data.token
-        )
-      );
+      // await store.dispatch(
+      //   getDashboardSubvit(
+      //     query.page_substansi,
+      //     query.page_trivia,
+      //     query.page_survey,
+      //     session.user.user.data.token
+      //   )
+      // );
 
       return {
         props: { session, title: "Dashboard - Subvit" },
