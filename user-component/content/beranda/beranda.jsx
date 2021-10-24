@@ -89,6 +89,12 @@ const Beranda = ({ session }) => {
     }
   };
 
+  const handleTemaId = () => {
+    if (tema) {
+      setTemaId(tema.id)
+    }
+  }
+
   const handleHoverCard = () => {
     let arr = [];
 
