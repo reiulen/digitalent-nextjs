@@ -202,9 +202,7 @@ const Beranda = ({session}) => {
   }
 
   return (
-    <BerandaWrapper title="Digitalent">
-
-      <div style={{ backgroundColor: "white" }}>
+    <div style={{ backgroundColor: "white" }}>
         {/* <Navigationbar /> */}
 
         {/* Carousel 1 */}
@@ -866,11 +864,6 @@ const Beranda = ({session}) => {
         {/* Footer */}
         {/* <Footer /> */}
       </div>
-
-      {/* Footer
-      <Footer /> */}
-
-    </BerandaWrapper>
   );
 };
 
