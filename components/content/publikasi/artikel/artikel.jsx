@@ -586,6 +586,7 @@ const Artikel = ({ token }) => {
                         <td className='align-middle text-center' colSpan={9}>Data Tidak Ditemukan</td>
                       ) : (
                         artikel && artikel.artikel.map((artikel, i) => {
+                          console.log("ROW :", artikel)
                           return (
                             <tr key={artikel.id}>
                               <td className='align-middle text-center'>
@@ -652,6 +653,11 @@ const Artikel = ({ token }) => {
                               </td>
                               <td className="align-middle">
                                 {artikel.role[0].name}
+                                {/* {
+                                  typeof row.role === "string" ?
+                                    row.role
+                                    : row.role[0].name
+                                } */}
                               </td>
                               <td className="align-middle d-flex">
 

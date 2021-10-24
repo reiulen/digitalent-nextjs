@@ -73,9 +73,9 @@ const Preview = () => {
                         <div className="container">
                             <nav aria-label="breadcrumb">
                                 <ol className="breadcrumb bg-transparent my-5 ps-5" style={{ border: '1px solid gray', borderRadius: '20px' }}>
-                                    <li className="breadcrumb-item" style={{ color: 'blue' }}><a href="#">Beranda</a></li>
-                                    <li className="breadcrumb-item" style={{ color: 'blue' }}><a href="#">Artikel Peserta</a></li>
-                                    <li className="breadcrumb-item" aria-current="page"><a href="#">Detail Artikel Peserta</a></li>
+                                    <li className="breadcrumb-item" style={{ color: 'blue' }}>Beranda</li>
+                                    <li className="breadcrumb-item" style={{ color: 'blue' }}>Artikel Peserta</li>
+                                    <li className="breadcrumb-item" aria-current="page">Detail Artikel Peserta</li>
                                 </ol>
                             </nav>
 

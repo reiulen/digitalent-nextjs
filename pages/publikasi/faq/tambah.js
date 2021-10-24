@@ -1,7 +1,8 @@
 import dynamic from "next/dynamic";
 import { getSession } from "next-auth/client";
+import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
 
-import Layout from "../../../components/templates/layout.component";
+// import Layout from "../../../components/templates/layout.component";
 // import Tambah from "../../../components/content/publikasi/faq/tambah";
 
 import { getAllKategoriInput } from "../../../redux/actions/publikasi/kategori.actions";
@@ -12,8 +13,6 @@ import LoadingPage from "../../../components/LoadingPage";
 const Tambah = dynamic(
   () => import("../../../components/content/publikasi/faq/tambah"),
   {
-    // suspense: true,
-    // loading: () => <LoadingSkeleton />,
     loading: function loadingNow() {
       return <LoadingPage />;
     },
@@ -36,11 +35,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ params, req }) => {
       const session = await getSession({ req });
-
-      if (!session) {
+      const middleware = middlewareAuthAdminSession(session);
+      if (!middleware.status) {
         return {
           redirect: {
-            destination: "http://dts-dev.majapahit.id/login/admin",
+            destination: middleware.redirect,
             permanent: false,
           },
         };
@@ -55,7 +54,3 @@ export const getServerSideProps = wrapper.getServerSideProps(
       };
     }
 );
-
-// export const getServerSideProps = wrapper.getServerSideProps((store) => async () => {
-//     await store.dispatch(getAllKategoriInput("Faq"));
-// });
