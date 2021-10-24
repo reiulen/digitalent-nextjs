@@ -41,6 +41,7 @@ const Beranda = ({session}) => {
 
   const [ activeTab, setActiveTab ] = useState(0);
   const [ akademiId, setAkademiId ] = useState(null)
+  const [ temaId, setTemaId ] = useState (null)
   const [ show, setShow ] = useState(null);
   const [ defaultImage, setDefaultImage ] = useState(`/assets/media/carousel-01.svg`)
   const [ imageError, setImageError ] = useState(false)
@@ -68,12 +69,19 @@ const Beranda = ({session}) => {
     if (tema){
       // window.location.reload();
       handleHoverCard()
+      handleTemaId()
     }
   }, [tema])
 
   const handleAkademiStart = () => {
     if (akademi && akademi.length !== 0){
         dispatch (getTemaByAkademi(akademi[0].id))
+    }
+  }
+
+  const handleTemaId = () => {
+    if (tema) {
+      setTemaId(tema.id)
     }
   }
 
@@ -275,8 +283,9 @@ const Beranda = ({session}) => {
                           <Image
                             layout="fill"
                             objectFit="fill"
+                            src={`/assets/media/carousel-01.svg`}
                             // src={imageError === true ? defaultImage : process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + el.gambar}
-                            src={imageError === true ? defaultImage : process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + el.gambar}
+                            // src={imageError === true ? defaultImage : process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + el.gambar}
                             alt="Imagetron Slide"
                             className="mx-5 rounded"
                             onError={() => handleErrorImage(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + el.gambar)}
@@ -517,7 +526,7 @@ const Beranda = ({session}) => {
                           {
                             el.pelatihan !== null ?
                                                         
-                            <Link href={`/detail/akademi/akademi_id=${akademiId}&tema_id=${akademiId}`}>
+                            <Link href={`/detail/akademi/akademi_id=${akademiId}&tema_id=${el.id}`}>
                               <a 
                                 className="d-flex align-items-center"
                               >
@@ -773,9 +782,13 @@ const Beranda = ({session}) => {
 
                                       <div className="row ml-5 border-top my-5">
                                         <div className="col-12 col-md-6 mt-5">
-                                          <button className="btn btn-outline-primary-new  rounded-pill btn-block">
-                                            Lihat Selengkapnya
-                                          </button>
+                                          <Link href={`/detail/pelatihan/${cardId}`} passHref>
+                                            <a>
+                                              <button className="btn btn-outline-primary-new  rounded-pill btn-block">
+                                                Lihat Selengkapnya
+                                              </button>
+                                            </a>
+                                          </Link>
                                         </div>
 
                                         {
@@ -826,7 +839,7 @@ const Beranda = ({session}) => {
             {
               tema ?
                 <div className="d-flex justify-content-center mt-10">
-                  <a href={`/detail/akademi/4`}>
+                  <a href={`/detail/akademi/${akademiId}`}>
                     <button className="btn btn-sm btn-login-peserta px-12 py-3">
                       Lebih Banyak Tema
                       <IconArrow
