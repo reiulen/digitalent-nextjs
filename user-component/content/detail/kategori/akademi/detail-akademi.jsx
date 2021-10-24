@@ -69,7 +69,6 @@ const DetailAkademi = () => {
         }
     
         setShow(arr)
-        console.log ("mouse Enter")
     }
 
     const handleMouseLeave = (index) =>{
@@ -81,7 +80,6 @@ const DetailAkademi = () => {
             }
         }
         setShow(arr)
-        console.log ("mouse Leaves")
     }
 
     const handleQuickView = (index) => {
@@ -174,17 +172,6 @@ const DetailAkademi = () => {
 
     return (
         <Layout title="Detail Akademi">
-            {
-                console.log (akademi)
-            }
-
-            {
-                console.log (pelatihan)
-            }
-
-            {
-                console.log (show)
-            }
             <SubHeaderComponent />
             
             {
