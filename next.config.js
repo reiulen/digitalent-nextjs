@@ -12,9 +12,9 @@ module.exports = {
     ],
   },
   env: {
-    NEXTAUTH_URL: "http://dts-dev.majapahit.id/",
+    NEXTAUTH_URL: "http://dts-dev.majapahit.id",
 
-    PATH_URL: "http://dts-dev.majapahit.id",
+    // PATH_URL: "http://dts-dev.majapahit.id",
 
     CAPTCHA_SITE_KEY: "6LeUmtIbAAAAAMltXjRDmRqns6MThDowaaYHz3YU",
     CAPTCHA_SECRET_KEY: "6LeUmtIbAAAAAAbA9yada3LOIktctPbfQ86SjhNn",
