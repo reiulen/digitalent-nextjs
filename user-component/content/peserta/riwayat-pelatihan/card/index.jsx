@@ -15,6 +15,7 @@ import LulusPelatihan from "./pelatihan-lulus-pelatihan";
 import IsiSurvey from "./survey-isi-survey";
 import IsiLpj from "./survey-isi-lpj";
 import style from "../style.module.css";
+import TestCardTemplate from "./testCardTemplate";
 
 const Administrasi = (props) => {
   switch (props.status) {
@@ -27,7 +28,7 @@ const Administrasi = (props) => {
     case "tes substansi":
       return (
         <Fragment>
-          <TestSubstansi />
+          <TestSubstansi props={props} />
         </Fragment>
       );
     case "lolos substansi":
@@ -39,13 +40,13 @@ const Administrasi = (props) => {
     case "seleksi administrasi":
       return (
         <Fragment>
-          <SeleksiAdministrasi />
+          <SeleksiAdministrasi props={props} />
         </Fragment>
       );
     case "lolos administrasi":
       return (
         <Fragment>
-          <LolosAdministrasi />
+          <LolosAdministrasi props={props} />
         </Fragment>
       );
     case "ikuti pelatihan":
@@ -82,6 +83,12 @@ const Administrasi = (props) => {
       return (
         <Fragment>
           <IsiLpj />
+        </Fragment>
+      );
+    case "test":
+      return (
+        <Fragment>
+          <TestCardTemplate props={props} />
         </Fragment>
       );
     default:
