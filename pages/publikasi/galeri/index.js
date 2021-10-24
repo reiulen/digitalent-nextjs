@@ -1,7 +1,8 @@
 import dynamic from "next/dynamic";
 import { getSession } from "next-auth/client";
+import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
 
-import Layout from "../../../components/templates/layout.component";
+// import Layout from "../../../components/templates/layout.component";
 // import Galeri from "../../../components/content/publikasi/galeri/galeri";
 
 import { getAllGaleri, getDetailGaleri } from "../../../redux/actions/publikasi/galeri.actions";
@@ -13,8 +14,6 @@ import LoadingSkeleton from "../../../components/LoadingSkeleton";
 const Galeri = dynamic(
   () => import("../../../components/content/publikasi/galeri/galeri"),
   {
-    // suspense: true,
-    // loading: () => <LoadingSkeleton />,
     loading: function loadingNow() {
       return <LoadingSkeleton />;
     },
@@ -37,10 +36,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
     async ({ query, req }) => {
       // await store.dispatch(getAllArtikel(query.page, query.keyword, query.limit, query.publish, query.startdate, query.enddate))
       const session = await getSession({ req });
-      if (!session) {
+      const middleware = middlewareAuthAdminSession(session);
+      if (!middleware.status) {
         return {
           redirect: {
-            destination: "http://dts-dev.majapahit.id/login/admin",
+            destination: middleware.redirect,
             permanent: false,
           },
         };
@@ -66,6 +66,3 @@ export const getServerSideProps = wrapper.getServerSideProps(
       };
     }
 );
-// export const getServerSideProps = wrapper.getServerSideProps(store => async ({ query }) => {
-//     await store.dispatch(getAllGaleri(query.page, query.keyword, query.limit, query.publish, query.startdate, query.enddate))
-// })

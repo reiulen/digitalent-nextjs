@@ -1,7 +1,9 @@
 import { getSession } from "next-auth/client";
 
-import LoginAdmin from "../components/content/auth/admin/login";
+// import LoginAdmin from "../components/content/auth/admin/login";
 import Beranda from "../user-component/content/beranda/beranda"
+
+import { middlewareAuthAdminSession } from "../utils/middleware/authMiddleware";
 
 import { wrapper } from "../redux/store";
 import { getAllAkademi } from "../redux/actions/beranda/beranda.actions";
@@ -21,6 +23,17 @@ export default function HomePage() {
 }
 
 export const getStaticProps = wrapper.getStaticProps((store) => async({ query, req }) => {
+  const session = await getSession({ req });
+  // const middleware = middlewareAuthAdminSession(session);
+  // if (!middleware.status) {
+  //   return {
+  //     redirect: {
+  //       destination: middleware.redirect,
+  //       permanent: false,
+  //     },
+  //   };
+  // }
+
   await store.dispatch(
     getAllAkademi()
   );
@@ -40,6 +53,7 @@ export const getStaticProps = wrapper.getStaticProps((store) => async({ query, r
   return {
     props: {
       data: "auth",
+      session,
     },
   };
 })

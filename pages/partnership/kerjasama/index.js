@@ -8,6 +8,8 @@ import {
   fetchListSelectCooperation,
   fetchListSelectStatus,
 } from "../../../redux/actions/partnership/managementCooporation.actions";
+
+import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
 const Table = dynamic(
   () =>
     import("../../../components/content/partnership/kerjasama/tableKerjasama"),
@@ -29,14 +31,23 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ req }) => {
       const session = await getSession({ req });
-      if (!session) {
+      const middleware = middlewareAuthAdminSession(session);
+      if (!middleware.status) {
         return {
           redirect: {
-            destination: "http://dts-dev.majapahit.id/login/admin",
+            destination: middleware.redirect,
             permanent: false,
           },
         };
       }
+      // if (!session) {
+      //   return {
+      //     redirect: {
+      //       destination: "http://dts-dev.majapahit.id/login/admin",
+      //       permanent: false,
+      //     },
+      //   };
+      // }
 
       await store.dispatch(fetchAllMK(session.user.user.data.token));
       await store.dispatch(fetchListSelectMitra(session.user.user.data.token));

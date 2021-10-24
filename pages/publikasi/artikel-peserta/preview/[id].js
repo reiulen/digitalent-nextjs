@@ -1,5 +1,6 @@
 import Preview from "../../../../components/content/publikasi/artikel-peserta/preview";
 import Footer from "../../../../components/templates/footer.component";
+import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
 
 import { getDetailArtikelPeserta } from "../../../../redux/actions/publikasi/artikel-peserta.actions";
 import { wrapper } from "../../../../redux/store";
@@ -17,10 +18,6 @@ export default function PreviewArtikel(props) {
         <Footer />
       </div>
     </div>
-    // <div className="d-flex flex-column flex-root">
-    //     <Preview />
-    //     <Footer />
-    // </div>
   );
 }
 
@@ -28,14 +25,16 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ params, req }) => {
       const session = await getSession({ req });
-      if (!session) {
+      const middleware = middlewareAuthAdminSession(session);
+      if (!middleware.status) {
         return {
           redirect: {
-            destination: "http://dts-dev.majapahit.id/login/admin",
+            destination: middleware.redirect,
             permanent: false,
           },
         };
       }
+
       await store.dispatch(
         getDetailArtikelPeserta(params.id, session.user.user.data.token)
       );
@@ -49,16 +48,3 @@ export const getServerSideProps = wrapper.getServerSideProps(
       };
     }
 );
-
-// export const getServerSideProps = wrapper.getServerSideProps(store => async ({ params, req }) => {
-//     const session = await getSession({ req });
-//     if (!session) {
-//         return {
-//             redirect: {
-//                 destination:"/login/admin",
-//                 permanent: false,
-//             },
-//         };
-//     }
-//     await store.dispatch(getDetailArtikelPeserta(params.id, session.user.user.data.token))
-// })

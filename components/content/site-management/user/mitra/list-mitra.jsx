@@ -141,19 +141,19 @@ const Table = ({ token }) => {
                                 : (allMitraSite.page - 1) * allMitraSite.limit +
                                   (index + 1)}
                       </td>
-                      <td className="align-middle text-left">{!items.agency_logo ? "-" : <Image
+                      <td className="align-middle text-left">
+                        {!items.agency_logo ? "-" : <Image
                               unoptimized={
                                 process.env.ENVIRONMENT !== "PRODUCTION"
                               }
                               src={
-                                process.env.END_POINT_API_IMAGE_PARTNERSHIP +
-                                "partnership/images/profile-images/" +
-                                items.agency_logo
+                                process.env.END_POINT_API_IMAGE_PARTNERSHIP + items.agency_logo
                               }
                               width={40}
                               height={40}
                               alt="logo"
-                            />}</td>
+                            />}
+                            </td>
                       <td className="align-middle text-left">{items.user.name}</td>
                       <td className="align-middle text-left">
                             {!items.website ? "-" : items.website}

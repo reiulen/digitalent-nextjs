@@ -260,7 +260,6 @@ const Table = ({ token }) => {
                                 }
                                 src={
                                   process.env.END_POINT_API_IMAGE_PARTNERSHIP +
-                                  "partnership/images/profile-images/" +
                                   item.agency_logo
                                 }
                                 width={40}
