@@ -36,7 +36,22 @@ const Dashboard = ({ session }) => {
     },
   ]);
 
+  let totalSubvit = 0
+
   useEffect(() => {
+    if(dataDashboard.subvit.sertifikat.status){
+      totalSubvit = totalSubvit + 1
+    }
+    if(dataDashboard.subvit.subvit.status){
+      totalSubvit = totalSubvit + 1
+    }
+    if(dataDashboard.subvit.survei.status){
+      totalSubvit = totalSubvit + 1
+    }
+    if(dataDashboard.subvit.trivia.status){
+      totalSubvit = totalSubvit + 1
+    }
+    
     if (errorDashboard) {
       toast.error(errorDashboard);
     }
@@ -86,6 +101,7 @@ const Dashboard = ({ session }) => {
             link="/peserta/subvit/substansi/1"
             text="Lakukan Test Substansi"
             desc="Anda Belum Melakukan Test Substansi"
+            total={totalSubvit}
           />
           <CardPage
             backgroundImage="new-game-3.svg"
@@ -94,6 +110,7 @@ const Dashboard = ({ session }) => {
             link="/peserta"
             text="Lakukan Survey"
             desc="Anda Belum Melakukan Test Survey"
+            total={totalSubvit}
           />
           <CardPage
             backgroundImage="new-game-1.svg"
@@ -102,15 +119,19 @@ const Dashboard = ({ session }) => {
             link="/peserta"
             text="Lakukan TRIVIA"
             desc="Anda Belum Melakukan TRIVIA"
+            total={totalSubvit}
           />
-          <CardPage
-            backgroundImage="new-game-2.svg"
-            background="warning"
-            color="#FFA800"
-            link="/peserta"
-            text="Unduh Sertifikat"
-            desc="Anda Sudah bisa mengunduh Sertifikat"
-          />
+          {dataDashboard.subvit.sertifikat.status && (
+            <CardPage
+              backgroundImage="new-game-2.svg"
+              background="warning"
+              color="#FFA800"
+              link="/peserta"
+              text="Unduh Sertifikat"
+              desc="Anda Sudah bisa mengunduh Sertifikat"
+              total={totalSubvit}
+            />
+          )}
         </Row>
         <Row className="mx-1">
           <Col md={6} className="mb-4 px-2">
@@ -130,7 +151,7 @@ const Dashboard = ({ session }) => {
                   />
                   <Card.ImgOverlay>
                     <Badge bg={` rounded-xl py-3 px-4 ${style.badge_card}`}>
-                      Pelatihan Online
+                      Pelatihan {pelatihan.pelatihan_berjalan.metode_pelatihan}
                     </Badge>
                   </Card.ImgOverlay>
                   <Card.Body className="position-relative">
@@ -149,27 +170,37 @@ const Dashboard = ({ session }) => {
                       className="d-flex justify-content-between position-relative pb-0 mb-0"
                       style={{ top: "-15px" }}
                     >
-                      <p className={`pl-20 my-0 ${style.text_mitra}`}>Gojek</p>
+                      <p className={`pl-20 my-0 ${style.text_mitra}`}>
+                        {pelatihan.pelatihan_berjalan.mitra || "-"}
+                      </p>
                     </div>
 
                     <p className={`my-0 ${style.title_card}`}>
-                      Intermediate Multimedia Designer
+                      {pelatihan.pelatihan_berjalan.name}
                     </p>
                     <p style={{ fontSize: "14px", color: "#6C6C6C" }}>
-                      Vocational School Graduate Academy
+                      {pelatihan.pelatihan_berjalan.akademi}
                     </p>
                     <hr />
                     <div className="d-flex flex-column">
                       <div className="date d-flex align-items-center align-middle mr-7">
                         <i className="ri-time-line"></i>
                         <span className={`${style.text_date_register} pl-2`}>
-                          Registrasi : 05 Jul 21 - 31 Jul 21
+                          Registrasi :{" "}
+                          {moment(
+                            pelatihan.pelatihan_berjalan.pendaftaran_mulai
+                          ).format("DD MMM YYYY")}{" "}
+                          -{" "}
+                          {moment(
+                            pelatihan.pelatihan_berjalan.pendaftaran_selesai
+                          ).format("DD MMM YYYY")}{" "}
                         </span>
                       </div>
                       <div className="date d-flex align-items-center align-middle">
                         <i className="ri-group-line"></i>
                         <span className={`${style.text_date_register} pl-2`}>
-                          Kuota : 1000 Peserta
+                          Kuota : {pelatihan.pelatihan_berjalan.kuota_peserta}{" "}
+                          Peserta
                         </span>
                       </div>
                       <div className="date d-flex align-items-center align-middle">
@@ -196,7 +227,7 @@ const Dashboard = ({ session }) => {
             <Card className="rounded-xl h-100">
               <Card.Body>
                 <Card.Title>
-                  <p className={style.card_title}>Pelatihan Sebelumnya</p>
+                  <p className={style.card_title}>Pelatihan Selesai</p>
                 </Card.Title>
 
                 <Card className="shadow rounded-md">
@@ -209,7 +240,7 @@ const Dashboard = ({ session }) => {
                   />
                   <Card.ImgOverlay>
                     <Badge bg={` rounded-xl py-3 px-4 ${style.badge_card}`}>
-                      Pelatihan Online
+                      Pelatihan {pelatihan.pelatihan_selesi.metode_pelatihan}
                     </Badge>
                   </Card.ImgOverlay>
                   <Card.Body className="position-relative">
@@ -228,27 +259,37 @@ const Dashboard = ({ session }) => {
                       className="d-flex justify-content-between position-relative pb-0 mb-0"
                       style={{ top: "-15px" }}
                     >
-                      <p className={`pl-20 my-0 ${style.text_mitra}`}>Gojek</p>
+                      <p className={`pl-20 my-0 ${style.text_mitra}`}>
+                        {pelatihan.pelatihan_selesi.mitra || "-"}
+                      </p>
                     </div>
 
                     <p className={`my-0 ${style.title_card}`}>
-                      Intermediate Multimedia Designer
+                      {pelatihan.pelatihan_selesi.name}
                     </p>
                     <p style={{ fontSize: "14px", color: "#6C6C6C" }}>
-                      Vocational School Graduate Academy
+                      {pelatihan.pelatihan_selesi.akademi}
                     </p>
                     <hr />
                     <div className="d-flex flex-column">
                       <div className="date d-flex align-items-center align-middle mr-7">
                         <i className="ri-time-line"></i>
                         <span className={`${style.text_date_register} pl-2`}>
-                          Registrasi : 05 Jul 21 - 31 Jul 21
+                          Registrasi :{" "}
+                          {moment(
+                            pelatihan.pelatihan_selesi.pendaftaran_mulai
+                          ).format("DD MMM YYYY")}{" "}
+                          -{" "}
+                          {moment(
+                            pelatihan.pelatihan_selesi.pendaftaran_selesai
+                          ).format("DD MMM YYYY")}{" "}
                         </span>
                       </div>
                       <div className="date d-flex align-items-center align-middle">
                         <i className="ri-group-line"></i>
                         <span className={`${style.text_date_register} pl-2`}>
-                          Kuota : 1000 Peserta
+                          Kuota : {pelatihan.pelatihan_selesi.kuota_peserta}{" "}
+                          Peserta
                         </span>
                       </div>
                       <div className="date d-flex align-items-center align-middle">

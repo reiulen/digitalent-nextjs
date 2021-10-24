@@ -3,7 +3,7 @@ import { Col, Card, Button } from "react-bootstrap";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-const CardPage = ({ backgroundImage, background, color, link, text, desc }) => {
+const CardPage = ({ backgroundImage, background, color, link, text, desc, total }) => {
   const router = useRouter();
 
   function addHours(date, hours) {
