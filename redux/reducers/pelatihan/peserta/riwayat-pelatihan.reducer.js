@@ -4,8 +4,14 @@ import {
   RIWAYAT_PELATIHAN_SUCCESS,
 } from "../../../types/pelatihan/riwayat-pelatihan.type";
 
-export const riwayatPelatihanReducer = (
-  state = { listPelatihan: [] },
+const initialStates = {
+  listPelatihan: [],
+  peserta: "all",
+  keyword: "",
+};
+
+export const geAllRiwayatPelatihanPesertaReducer = (
+  state = initialStates,
   action
 ) => {
   switch (action.type) {

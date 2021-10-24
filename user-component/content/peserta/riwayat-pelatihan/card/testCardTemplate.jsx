@@ -90,7 +90,7 @@ export default function CardTemplateOriginal({ data }) {
             className="btn-rounded-full btn-block justify-content-center mt-5"
             style={{ height: "40px" }}
             onClick={() => {
-              console.log("ini click button 2 ");
+              console.log("ini click button ");
             }}
           >
             <i className="ri-download-2-fill mr-2"></i>

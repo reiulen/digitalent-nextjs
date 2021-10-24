@@ -9,9 +9,15 @@ import CardPeserta from "./card";
 import Administrasi from "./administrasi";
 import style from "./style.module.css";
 import Image from "next/image";
+import { useSelector } from "react-redux";
 export default function RiwayatPelatihan() {
   let refSelect = null;
   const [showModal, setShowModal] = useState(false);
+  const { error, listPelatihan } = useSelector(
+    (state) => state.getAllRiwayatPelatihanPeserta
+  );
+
+  console.log(listPelatihan, " ini list pelatihan");
 
   const handleClose = () => setShowModal(false);
   const handleShow = () => setShowModal(true);
