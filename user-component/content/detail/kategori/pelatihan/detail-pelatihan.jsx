@@ -11,6 +11,7 @@ import {
 import Layout from "../../../wrapper/layout.wrapper";
 import SubHeaderComponent from "../../../../components/template/Subheader.component";
 import TrainingReminder from "../../../../components/TrainingReminder";
+import style from "../../../../../styles/peserta/dashboard.module.css"
 // import DownloadButton from "../../../../components/DownloadButton";
 // import FilterBar from "../../../../components/FilterBar";
 
@@ -22,9 +23,6 @@ const DetailPelatihan = () => {
 
     return (
         <Layout title="Detail Pelatihan">
-            {
-                console.log (pelatihan)
-            }
 
             {/* <FilterBar /> */}
             <SubHeaderComponent />
@@ -126,10 +124,24 @@ const DetailPelatihan = () => {
                                     <div className="ml-3 mb-5">
                                         {moment(pelatihan.pelatihan_mulai).format("DD MMMM YYYY")} - {moment(pelatihan.pelatihan_selesai).format("DD MMMM YYYY")} 
                                     </div>
-                                    <button className="btn btn-info rounded-pill col-11 mb-3 mx-3">
-                                        Daftar Pelatihan
-                                    </button>
-                                    <button className="btn btn-outline-info rounded-pill col-11 mx-3">
+                                    {
+                                        pelatihan.status === "Closed" ?
+                                            <div className="col-12 my-3">
+                                                <Link href={`/peserta/form-pendaftaran?id=${pelatihan.id}`} passHref>
+                                                    <a>
+                                                        <button className="btn btn-primary-dashboard rounded-pill btn-block ">
+                                                        Daftar Pelatihan
+                                                        </button>
+                                                    </a>
+                                                </Link>
+                                            </div>
+                                        :
+                                            null
+                                    }
+                                    
+                                    
+                                    
+                                    <button className="btn btn-outline-primary-new  rounded-pill btn-block col-11 mx-3">
                                         <i className="ri-download-cloud-fill"></i>
                                         <span>Unduh Silabus</span>
                                     </button>
