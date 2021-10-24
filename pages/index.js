@@ -11,28 +11,21 @@ import { getTemaByAkademi } from "../redux/actions/beranda/beranda.actions";
 import { getAllPublikasi } from "../redux/actions/beranda/beranda.actions"
 // import { getPelatihanByTema } from "../redux/actions/beranda/beranda.actions";
 
-export default function HomePage() {
+export default function HomePage(props) {
+
+  const session = props.session.user.user.data;
+
   return (
     <>
       <div className="d-flex flex-column flex-root">
         {/* <LoginAdmin /> */}
-        <Beranda />
+        <Beranda session = {session}/>
       </div>
     </>
   );
 }
 
-export const getStaticProps = wrapper.getStaticProps((store) => async({ query, req }) => {
-  const session = await getSession({ req });
-  // const middleware = middlewareAuthAdminSession(session);
-  // if (!middleware.status) {
-  //   return {
-  //     redirect: {
-  //       destination: middleware.redirect,
-  //       permanent: false,
-  //     },
-  //   };
-  // }
+export const getServerSideProps = wrapper.getServerSideProps((store) => async({req}) => {
 
   await store.dispatch(
     getAllAkademi()
@@ -53,7 +46,7 @@ export const getStaticProps = wrapper.getStaticProps((store) => async({ query, r
   return {
     props: {
       data: "auth",
-      session,
+      session
     },
   };
 })

@@ -29,7 +29,7 @@ import ComeJoin from "../../components/beranda/come-join";
 //   }
 // );
 
-const Beranda = () => {
+const Beranda = ({session}) => {
   const dispatch = useDispatch();
   // const router = useRouter();
 
@@ -57,6 +57,7 @@ const Beranda = () => {
   const [ cardAlamat, setCardAlamat ] = useState(null)
   const [ cardPendaftaranMulai, setCardPendaftaranMulai ] = useState(null)
   const [ cardPendaftaranSelesai, setCardPendaftaranSelesai ] = useState(null)
+  const [ cardMetode, setCardMetode ] = useState(null)
   
   useEffect(() => {
     handleAkademiStart()
@@ -154,7 +155,7 @@ const Beranda = () => {
     dispatch (getTemaByAkademi(id))
   };
 
-  const handleQuickView = (indexTema, image, status, image_mitra, akademi, deskripsi, name, kuota_pendaftar, mitra, alamat, pendaftaran_mulai, pendaftaran_selesai, id) => {
+  const handleQuickView = (indexTema, image, status, image_mitra, akademi, deskripsi, name, kuota_pendaftar, mitra, alamat, pendaftaran_mulai, pendaftaran_selesai, id, metode_pelatihan) => {
     let obj = [...show]
 
     for (let i = 0; i < obj.length; i++){
@@ -175,6 +176,7 @@ const Beranda = () => {
     setCardAlamat(alamat)
     setCardPendaftaranMulai(pendaftaran_mulai)
     setCardPendaftaranSelesai(pendaftaran_selesai)
+    setCardMetode(metode_pelatihan)
   };
 
   const handleCloseQuickView = (indexTema) => {
@@ -665,7 +667,7 @@ const Beranda = () => {
                                               </div>
                                             :
                                               <div className="mt-2 text-center">
-                                                <button className="btn btn-outline-primary-new rounded-pill col-12" onClick={() => handleQuickView(i, element.gambar, element.status, element.gambar_mitra, element.akademi, element.deskripsi, element.name, element.kuota_peserta, element.mitra, element.alamat, element.pendaftaran_mulai, element.pendaftaran_selesai, element.id)}>
+                                                <button className="btn btn-outline-primary-new rounded-pill col-12" onClick={() => handleQuickView(i, element.gambar, element.status, element.gambar_mitra, element.akademi, element.deskripsi, element.name, element.kuota_peserta, element.mitra, element.alamat, element.pendaftaran_mulai, element.pendaftaran_selesai, element.id, element.metode_pelatihan)}>
                                                   Quick View
                                                 </button>
                                                 {/* <Button className="btn rounded-pill col-12" onClick={() => handleQuickView(i, element.gambar, element.status, element.gambar_mitra, element.akademi, element.deskripsi, element.name, element.kuota_peserta, element.mitra, element.alamat, element.pendaftaran_mulai, element.pendaftaran_selesai, element.id)}>
@@ -701,7 +703,7 @@ const Beranda = () => {
                                       />
                                       <div className="position-absolute mt-5">
                                         <Badge pill bg="light" className="text-info">
-                                          Pelatihan {cardStatus}
+                                          Pelatihan {cardMetode}
                                         </Badge>
                                       </div>
                                     </div>
@@ -777,22 +779,24 @@ const Beranda = () => {
                                             Lihat Selengkapnya
                                           </button>
                                         </div>
-                                        <div className="col-12 col-md-6 mt-5">
-                                          <Link href={`/peserta/form-pendaftaran?id=${cardId}`} passHref>
-                                            <a>
-                                              <button className="btn btn-primary-dashboard rounded-pill btn-block">
-                                                Daftar Pelatihan
-                                              </button>
-                                            </a>
-                                          </Link>
-                                          
-                                          
-                                        </div>
+
+                                        {
+                                          cardStatus == "Closed" ?
+                                            null
+                                          :
+                                            <div className="col-12 col-md-6 mt-5">
+                                              <Link href={`/peserta/form-pendaftaran?id=${cardId}`} passHref>
+                                                <a>
+                                                  <button className="btn btn-primary-dashboard rounded-pill btn-block">
+                                                    Daftar Pelatihan
+                                                  </button>
+                                                </a>
+                                              </Link>
+                                              
+                                              
+                                            </div>
+                                        }
                                       </div>
-
-                                      
-
-
                                     </div>
                                   </div>
                                 </div>
