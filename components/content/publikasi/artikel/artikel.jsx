@@ -254,13 +254,15 @@ const Artikel = ({ token }) => {
         router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`)
 
       } else if (startDate !== null && endDate !== null && limit === null && search !== null) {
-        router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&keyword=${search}`)
+        // router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&keyword=${search}`)
+        router.push(`${router.pathname}?publish=${val}`)
 
       } else if (startDate === null && endDate === null && limit !== null && search === null) {
         router.push(`${router.pathname}?publish=${val}&limit=${limit}`);
 
       } else if (startDate === null && endDate === null && limit === null && search !== null) {
-        router.push(`${router.pathname}?publish=${val}&keyword=${search}`);
+        router.push(`${router.pathname}?publish=${val}`);
+        // router.push(`${router.pathname}?publish=${val}&keyword=${search}`);
 
       } else if (startDate === null && endDate === null && limit !== null && search !== null) {
         router.push(`${router.pathname}?publish=${val}&limit=${limit}&keyword=${search}`);
@@ -586,7 +588,6 @@ const Artikel = ({ token }) => {
                         <td className='align-middle text-center' colSpan={9}>Data Tidak Ditemukan</td>
                       ) : (
                         artikel && artikel.artikel.map((artikel, i) => {
-                          console.log("ROW :", artikel)
                           return (
                             <tr key={artikel.id}>
                               <td className='align-middle text-center'>
