@@ -101,7 +101,10 @@ const PekerjaanEdit = ({ funcViewEdit, token }) => {
           <Form.Group className="mb-3" controlId="formGridAddress1">
             <Form.Label>Status Pekerjaan</Form.Label>
             <Select
-              placeholder={`${pekerjaan.status_pekerjaan}`}
+              placeholder={
+                (pekerjaan && pekerjaan.status_pekerjaan) ||
+                "Silahkan Pilih Status Pekerjaan"
+              }
               options={optionsStatusPekerjaan}
               defaultValue={statusPekerjaan}
               onChange={(e) =>

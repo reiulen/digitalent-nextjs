@@ -17,6 +17,8 @@ import "../styles/peserta/dashboards.css";
 
 import SimpleReactValidator from "simple-react-validator";
 import { wrapper } from "../redux/store";
+import moment from "moment";
+import "moment/locale/id";
 
 import Layout from "../components/templates/layout.component";
 
@@ -61,6 +63,7 @@ function MyApp({ Component, pageProps }) {
     url: "Harus :attribute yang valid.",
     // url: ":attribute harus berupa url.",
   });
+  moment.locale("id");
 
   return (
     <>
