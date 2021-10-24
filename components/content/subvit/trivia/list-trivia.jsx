@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import ButtonAction from "../../../ButtonAction";
 import LoadingTable from "../../../LoadingTable";
+import styles from "../../../../styles/subvit.module.css";
 
 import {
   deleteTriviaQuestionBanks,
@@ -219,16 +220,14 @@ const ListTrivia = ({ token }) => {
 
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
-          <div className="card-header border-0 mt-3">
-            <h1
-              className="card-title text-dark mt-2"
-              style={{ fontSize: "24px" }}
-            >
+          <div className="card-header row border-0 mt-3" style={{ border: '1px solid black' }}>
+            <h1 className={`${styles.headTitle} col-sm-12 col-md-8 col-lg-8 col-xl-9`}>
               List TRIVIA
             </h1>
-            <div className="card-toolbar">
+            <div className="col-sm-12 col-md-4 col-lg-4 col-xl-3 card-toolbar">
               <Link href="/subvit/trivia/tambah">
-                <a className="text-white btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2 mr-2">
+                {/* <a className="text-white btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2 mr-2"> */}
+                <a className={`${styles.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bolder btn-block`}>
                   <i className="ri-add-fill"></i>
                   Tambah TRIVIA
                 </a>
@@ -258,7 +257,7 @@ const ListTrivia = ({ token }) => {
                         borderBottomLeftRadius: "0",
                       }}
                       onClick={handleSearch}
-                      // UNFINISH
+                    // UNFINISH
                     >
                       Cari
                     </button>
@@ -282,13 +281,13 @@ const ListTrivia = ({ token }) => {
                         <th>Pelaksanaan</th>
                         <th>Bank Soal</th>
                         <th>Status</th>
-                        <th>Aksi</th>
+                        <th style={{ width: '10px' }}>Aksi</th>
                       </tr>
                     </thead>
                     <tbody>
                       {!trivia ||
-                      (trivia && trivia.list_trivia.length === 0) ? (
-                        <td className="align-middle text-center" colSpan={8}>
+                        (trivia && trivia.list_trivia.length === 0) ? (
+                        <td className="align-middle text-center" colSpan={6}>
                           Data Masih Kosong
                         </td>
                       ) : (
@@ -299,7 +298,17 @@ const ListTrivia = ({ token }) => {
                           return (
                             <tr key={row.id}>
                               <td className="align-middle text-center">
-                                <span className="">{paginate - dividers}</span>
+                                {/* <span className="">{paginate - dividers}</span> */}
+                                {
+                                  limit === null ?
+                                    <span>
+                                      {i + 1 * (page * 5) - (5 - 1)}
+                                    </span>
+                                    :
+                                    <span>
+                                      {i + 1 * (page * limit) - (limit - 1)}
+                                    </span>
+                                }
                               </td>
                               <td className="align-middle">
                                 <b>
@@ -412,7 +421,7 @@ const ListTrivia = ({ token }) => {
                 {trivia && trivia.total > 5 ? (
                   <div className="table-total ml-auto">
                     <div className="row">
-                      <div className="col-4 mr-0 p-0">
+                      <div className="col-4 mr-0">
                         <select
                           className="form-control"
                           id="exampleFormControlSelect2"
@@ -426,11 +435,16 @@ const ListTrivia = ({ token }) => {
                           onBlur={(event) => handleLimit(event)}
                           value={limit}
                         >
-                          <option>5</option>
+                          <option value='5' selected={limit == "5" ? true : false}>5</option>
+                          <option value='10' selected={limit == "10" ? true : false}>10</option>
+                          <option value='30' selected={limit == "30" ? true : false}>30</option>
+                          <option value='40' selected={limit == "40" ? true : false}>40</option>
+                          <option value='50' selected={limit == "50" ? true : false}>50</option>
+                          {/* <option>5</option>
                           <option>10</option>
                           <option>30</option>
                           <option>40</option>
-                          <option>50</option>
+                          <option>50</option> */}
                         </select>
                       </div>
                       <div className="col-8 my-auto">
@@ -438,7 +452,7 @@ const ListTrivia = ({ token }) => {
                           className="align-middle mt-3"
                           style={{ color: "#B5B5C3" }}
                         >
-                          Total Data {trivia.total}
+                          Total Data {trivia.total} List Data
                         </p>
                       </div>
                     </div>
