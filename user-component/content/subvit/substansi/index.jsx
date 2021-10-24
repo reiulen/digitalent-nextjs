@@ -39,10 +39,7 @@ const SubtansiUser = ({ token }) => {
     );
   }
 
-  const [data] = useState(
-    !localStorage.getItem("data") === "undefined" &&
-      JSON.parse(localStorage.getItem("data"))
-  );
+  const [data] = useState(random_subtance_question_detail);
   const [answer, setAnswer] = useState("");
   const [listAnswer, setListAnswer] = useState([]);
   const [numberPage, setNumberPage] = useState("");
@@ -164,12 +161,7 @@ const SubtansiUser = ({ token }) => {
 
   let number = [];
 
-  for (
-    let i = 0;
-    i < random_subtance_question_detail &&
-    random_subtance_question_detail.total_questions;
-    i++
-  ) {
+  for (let i = 0; i < random_subtance_question_detail.total_questions; i++) {
     number.push(i);
   }
 
