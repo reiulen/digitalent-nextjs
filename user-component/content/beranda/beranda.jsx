@@ -282,8 +282,8 @@ const Beranda = ({session}) => {
                         <SplideSlide key={i} className="rounded">
                           <Image
                             layout="fill"
-                            objectFit="fill"
-                            src={`/assets/media/carousel-01.svg`}
+                            objectFit="cover"
+                            src={`/assets/media/imagetron-default-2.png`}
                             // src={imageError === true ? defaultImage : process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + el.gambar}
                             // src={imageError === true ? defaultImage : process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + el.gambar}
                             alt="Imagetron Slide"
@@ -361,7 +361,7 @@ const Beranda = ({session}) => {
                   <SplideSlide>
                     <Image
                       layout="fill"
-                      objectFit="fill"
+                      objectFit="cover"
                       // src={`/assets/media/banner-3.svg`}
                       src={`/assets/media/carousel-01.svg`}
                       alt="First slide"
@@ -372,7 +372,7 @@ const Beranda = ({session}) => {
                   <SplideSlide>
                     <Image
                       layout="fill"
-                      objectFit="fill"
+                      objectFit="cover"
                       // src={`/assets/media/image27.png`}
                       src={`/assets/media/carousel-01.svg`}
                       alt="First slide"
@@ -383,7 +383,7 @@ const Beranda = ({session}) => {
                   <SplideSlide>
                     <Image
                       layout="fill"
-                      objectFit="fill"
+                      objectFit="cover"
                       // src={`/assets/media/banner-3.svg`}
                       src={`/assets/media/carousel-01.svg`}
                       alt="First slide"

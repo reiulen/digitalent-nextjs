@@ -365,3 +365,11 @@
   -webkit-box-shadow: 0 0 0 0.2rem rgba(54, 153, 255, 0.5);
   box-shadow: 0 0 0 0.2rem rgba(54, 153, 255, 0.5);
 }
+
+.card-overlay {
+  filter: brightness(100%);
+}
+
+.card-overlay:hover {
+  filter: brightness(100%);
+}
