@@ -1,4 +1,4 @@
-import RegisterUser from "../../../../components/content/partnership/user/auth/register";
+import RegisterUser from "../../../components/content/partnership/user/auth/register";
 import { getSession } from "next-auth/client";
 
 export default function LoginMitra() {
