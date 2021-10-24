@@ -24,7 +24,9 @@ const GeneralPage = ({ token }) => {
   const [description, setDescription] = useState("");
   const [address, setAddress] = useState("");
   const [imageLogoApi, setImageLogoApi] = useState("");
+  console.log("imageLogoApi",imageLogoApi)
   const [imageLogoApi2, setImageLogoApi2] = useState("");
+  console.log("imageLogoApi2",imageLogoApi2)
   const [imageLogoApiOld, setImageLogoApiOld] = useState("");
   const [imageLogoApiOld2, setImageLogoApiOld2] = useState("");
   const [isUpdate, setIsUpdate] = useState(false);
@@ -63,22 +65,21 @@ const GeneralPage = ({ token }) => {
   ]);
   const [formExternalLink, setFormExternalLink] = useState([
     {
-      nama: "",
+      name: "",
       link: "",
     },
   ]);
 
-
   const submit = (e) => {
     e.preventDefault();
 
-    if (imageLogo === "") {
-      Swal.fire("Gagal simpan", "Form image logo tidak boleh kosong", "error");
-    } 
+    // if (imageLogo === "") {
+    //   Swal.fire("Gagal simpan", "Form image logo tidak boleh kosong", "error");
+    // }
     // else if (caption === "") {
     //   Swal.fire("Gagal simpan", "Form caption tidak boleh kosong", "error");
-    // } 
-    else if (description === "") {
+    // }
+    if (description === "") {
       Swal.fire("Gagal simpan", "Form caption tidak boleh kosong", "error");
     } else {
       Swal.fire({
@@ -93,11 +94,10 @@ const GeneralPage = ({ token }) => {
         dismissOnDestroy: false,
       }).then(async (result) => {
         if (result.value) {
-
           const sendData = {
             logo: {
-              header_logo: imageLogo,
-              footer_logo: imageLogo2,
+              header_logo: !imageLogo?imageLogoApi:imageLogo,
+              footer_logo: !imageLogo2?imageLogoApi2:imageLogo2
             },
             logo_description: description,
             social_media: formSocialMedia,
@@ -106,10 +106,27 @@ const GeneralPage = ({ token }) => {
             color: color,
           };
 
-          console.log("sendData",sendData)
+          console.log("sendData", sendData);
 
-
-         
+          try {
+            const { data } = await axios.post(
+              `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting/general/store`,
+              sendData,
+              {
+                headers: {
+                  authorization: `Bearer ${token}`,
+                },
+              }
+            );
+            console.log("response berhasil simpan",data)
+            Swal.fire("Berhasil", "Berhasil simpan data", "success")
+          } catch (error) {
+            Swal.fire(
+              "Gagal simpan",
+              `${error.response.data.message}`,
+              "error"
+            );
+          }
         }
       });
     }
@@ -117,7 +134,7 @@ const GeneralPage = ({ token }) => {
 
   const addExternalLink = () => {
     let _temp = [...formExternalLink];
-    _temp.push({ nama: "", link: "" });
+    _temp.push({ name: "", link: "" });
     setFormExternalLink(_temp);
   };
 
@@ -131,7 +148,7 @@ const GeneralPage = ({ token }) => {
     let _temp = [...formExternalLink];
     _temp.map((items, idx) => {
       if (idx === index) {
-        _temp[index].nama = e.target.value;
+        _temp[index].name = e.target.value;
       }
     });
     setFormExternalLink(_temp);
@@ -281,8 +298,6 @@ const GeneralPage = ({ token }) => {
 
   const [imageSocialTemp, setImageSocialTemp] = useState("");
   const handleChangeSocialMedia = (e, index) => {
-
-
     let selectedFile = e.target.files[0];
 
     let _temp = [...formSocialMedia];
@@ -306,9 +321,6 @@ const GeneralPage = ({ token }) => {
         }
       }
     });
-
-
-
   };
 
   const handleRemoveImageSocial = (index) => {
@@ -334,9 +346,23 @@ const GeneralPage = ({ token }) => {
           }
         );
 
-        setIsUpdate(true)
- 
-        // if (data) {  }
+        console.log("data",data)
+
+        if (data) {
+          setIsUpdate(true)
+          setAddress(data.data.alamat)
+          setColor(data.data.color)
+          setFormExternalLink(data.data.external_link)
+          setImageLogoApi(data.data.header_logo)
+          setImageLogoApi2(data.data.footer_logo)
+          setDescription(data.data.logo_description)
+          setFormSocialMedia(data.data.social_media)
+
+
+
+
+
+        }
       } catch (error) {
         notify(error.response.data.message);
       }
@@ -348,16 +374,16 @@ const GeneralPage = ({ token }) => {
   return (
     <PageWrapper>
       <ToastContainer
-          position="bottom-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <div className="row">
         <div className="col-12 order-1">
           <div className="card card-custom card-stretch gutter-b">
@@ -373,157 +399,148 @@ const GeneralPage = ({ token }) => {
               <div>
                 <form>
                   <div className="d-flex">
-
-
-                      
-                      <div className="form-group">
-                        <label className="mb-8" style={{ fontSize: "16px" }}>
-                          Logo Header
-                        </label>
-                        <div>
-                          <div className="image-input image-input-outline">
-                            <div className="image-input-wrapper">
-                              {imageLogoApi === ""
-                                ? imageLogo && (
-                                    <Image
-                                      src={imageLogo}
-                                      layout="fill"
-                                      objectFit="fill"
-                                      alt="imageLogo"
-                                    />
-                                  )
-                                : imageLogoApi && (
-                                    <Image
-                                      src={`${process.env.END_POINT_API_IMAGE_SITE_MANAGEMENT}site-management/images/${imageLogoApi}`}
-                                      layout="fill"
-                                      objectFit="fill"
-                                      alt="imageLogo"
-                                    />
-                                  )}
-                            </div>
-
-                            <label
-                              className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
-                              data-action="change"
-                              data-toggle="tooltip"
-                              title=""
-                              data-original-title="Change avatar"
-                            >
-                              <i className="fa fa-pen icon-sm text-muted"></i>
-                              <input
-                                type="file"
-                                name="profile_avatar"
-                                accept=".png, .jpg, .jpeg .svg"
-                                onChange={(e) => onChangeImage(e)}
-                              />
-                              <input
-                                type="hidden"
-                                name="profile_avatar_remove"
-                              />
-                            </label>
-
-                            <span
-                              className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
-                              data-action="cancel"
-                              data-toggle="tooltip"
-                              title="Cancel avatar"
-                            >
-                              <i className="ki ki-bold-close icon-xs text-muted"></i>
-                            </span>
-
-                            <span
-                              className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
-                              data-action="remove"
-                              data-toggle="tooltip"
-                            >
-                              <i
-                                className="ki ki-bold-close icon-xs text-muted"
-                                onClick={() => removeImageLogo()}
-                              ></i>
-                            </span>
+                    <div className="form-group">
+                      <label className="mb-8" style={{ fontSize: "16px" }}>
+                        Logo Header
+                      </label>
+                      <div>
+                        <div className="image-input image-input-outline">
+                          <div className="image-input-wrapper">
+                            {imageLogoApi === ""
+                              ? imageLogo && (
+                                  <Image
+                                    src={imageLogo}
+                                    layout="fill"
+                                    objectFit="fill"
+                                    alt="imageLogo"
+                                  />
+                                )
+                              : imageLogoApi && (
+                                  <Image
+                                    src={`${process.env.END_POINT_API_IMAGE_SITE_MANAGEMENT}site-management/images/${imageLogoApi}`}
+                                    layout="fill"
+                                    objectFit="fill"
+                                    alt="imageLogo"
+                                  />
+                                )}
                           </div>
-                          <span className="form-text text-muted mt-6">
-                            (Maksimal ukuran file 5 MB)
+
+                          <label
+                            className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                            data-action="change"
+                            data-toggle="tooltip"
+                            title=""
+                            data-original-title="Change avatar"
+                          >
+                            <i className="fa fa-pen icon-sm text-muted"></i>
+                            <input
+                              type="file"
+                              name="profile_avatar"
+                              accept=".png, .jpg, .jpeg .svg"
+                              onChange={(e) => onChangeImage(e)}
+                            />
+                            <input type="hidden" name="profile_avatar_remove" />
+                          </label>
+
+                          <span
+                            className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                            data-action="cancel"
+                            data-toggle="tooltip"
+                            title="Cancel avatar"
+                          >
+                            <i className="ki ki-bold-close icon-xs text-muted"></i>
+                          </span>
+
+                          <span
+                            className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                            data-action="remove"
+                            data-toggle="tooltip"
+                          >
+                            <i
+                              className="ki ki-bold-close icon-xs text-muted"
+                              onClick={() => removeImageLogo()}
+                            ></i>
                           </span>
                         </div>
+                        <span className="form-text text-muted mt-6">
+                          (Maksimal ukuran file 5 MB)
+                        </span>
                       </div>
+                    </div>
 
-                       <div className="form-group ml-24">
-                        <label className="mb-8" style={{ fontSize: "16px" }}>
-                          Logo Footer
-                        </label>
-                        <div>
-                          <div className="image-input image-input-outline">
-                            <div className="image-input-wrapper">
-                              {imageLogoApi2 === ""
-                                ? imageLogo2 && (
-                                    <Image
-                                      src={imageLogo2}
-                                      layout="fill"
-                                      objectFit="fill"
-                                      alt="imageLogo"
-                                    />
-                                  )
-                                : imageLogoApi2 && (
-                                    <Image
-                                      src={`${process.env.END_POINT_API_IMAGE_SITE_MANAGEMENT}site-management/images/${imageLogoApi2}`}
-                                      layout="fill"
-                                      objectFit="fill"
-                                      alt="imageLogo"
-                                    />
-                                  )}
-                            </div>
-
-                            <label
-                              className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
-                              data-action="change"
-                              data-toggle="tooltip"
-                              title=""
-                              data-original-title="Change avatar"
-                            >
-                              <i className="fa fa-pen icon-sm text-muted"></i>
-                              <input
-                                type="file"
-                                name="profile_avatar"
-                                accept=".png, .jpg, .jpeg .svg"
-                                onChange={(e) => onChangeImage2(e)}
-                              />
-                              <input
-                                type="hidden"
-                                name="profile_avatar_remove"
-                              />
-                            </label>
-
-                            <span
-                              className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
-                              data-action="cancel"
-                              data-toggle="tooltip"
-                              title="Cancel avatar"
-                            >
-                              <i className="ki ki-bold-close icon-xs text-muted"></i>
-                            </span>
-
-                            <span
-                              className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
-                              data-action="remove"
-                              data-toggle="tooltip"
-                            >
-                              <i
-                                className="ki ki-bold-close icon-xs text-muted"
-                                onClick={() => removeImageLogo2()}
-                              ></i>
-                            </span>
+                    <div className="form-group ml-24">
+                      <label className="mb-8" style={{ fontSize: "16px" }}>
+                        Logo Footer
+                      </label>
+                      <div>
+                        <div className="image-input image-input-outline">
+                          <div className="image-input-wrapper">
+                            {imageLogoApi2 === ""
+                              ? imageLogo2 && (
+                                  <Image
+                                    src={imageLogo2}
+                                    layout="fill"
+                                    objectFit="fill"
+                                    alt="imageLogo"
+                                  />
+                                )
+                              : imageLogoApi2 && (
+                                  <Image
+                                    src={`${process.env.END_POINT_API_IMAGE_SITE_MANAGEMENT}site-management/images/${imageLogoApi2}`}
+                                    layout="fill"
+                                    objectFit="fill"
+                                    alt="imageLogo"
+                                  />
+                                )}
                           </div>
-                          <span className="form-text text-muted mt-6">
-                            (Maksimal ukuran file 5 MB)
+
+                          <label
+                            className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                            data-action="change"
+                            data-toggle="tooltip"
+                            title=""
+                            data-original-title="Change avatar"
+                          >
+                            <i className="fa fa-pen icon-sm text-muted"></i>
+                            <input
+                              type="file"
+                              name="profile_avatar"
+                              accept=".png, .jpg, .jpeg .svg"
+                              onChange={(e) => onChangeImage2(e)}
+                            />
+                            <input type="hidden" name="profile_avatar_remove" />
+                          </label>
+
+                          <span
+                            className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                            data-action="cancel"
+                            data-toggle="tooltip"
+                            title="Cancel avatar"
+                          >
+                            <i className="ki ki-bold-close icon-xs text-muted"></i>
+                          </span>
+
+                          <span
+                            className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                            data-action="remove"
+                            data-toggle="tooltip"
+                          >
+                            <i
+                              className="ki ki-bold-close icon-xs text-muted"
+                              onClick={() => removeImageLogo2()}
+                            ></i>
                           </span>
                         </div>
+                        <span className="form-text text-muted mt-6">
+                          (Maksimal ukuran file 5 MB)
+                        </span>
                       </div>
-                     
+                    </div>
                   </div>
                   <div className="form-group">
                     <label>Desciption:</label>
                     <input
+                    value={description}
                       onChange={(e) => setDescription(e.target.value)}
                       type="text"
                       className="form-control"
@@ -547,8 +564,10 @@ const GeneralPage = ({ token }) => {
                             <div>
                               <div className="image-input image-input-outline">
                                 <div className="image-input-wrapper">
-
-                                  {isUpdate && (/\.(gif|jpe?g|tiff?|png|webp|bmp)$/i).test(items.image_logo)
+                                  {isUpdate &&
+                                  /\.(gif|jpe?g|tiff?|png|webp|bmp)$/i.test(
+                                    items.image_logo
+                                  )
                                     ? items.image_logo && (
                                         <Image
                                           src={`${process.env.END_POINT_API_IMAGE_SITE_MANAGEMENT}site-management/images/${items.image_logo}`}
@@ -718,7 +737,7 @@ const GeneralPage = ({ token }) => {
                                     handleChangeNameExternal(e, index)
                                   }
                                   type="text"
-                                  value={items.nama}
+                                  value={items.name}
                                   className="form-control"
                                   placeholder="Lalaracing@gmail.com"
                                 />
@@ -790,7 +809,7 @@ const GeneralPage = ({ token }) => {
                     <div className="form-group row">
                       <div className="col-sm-12 d-flex justify-content-end">
                         <button
-                        type="button"
+                          type="button"
                           className="btn btn-rounded-full bg-blue-secondary text-white"
                           onClick={() => addExternalLink()}
                         >
@@ -864,7 +883,7 @@ const GeneralPage = ({ token }) => {
                       <button
                         type="button"
                         className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
-                        onClick={(e) =>submit(e)}
+                        onClick={(e) => submit(e)}
                       >
                         Simpan
                       </button>

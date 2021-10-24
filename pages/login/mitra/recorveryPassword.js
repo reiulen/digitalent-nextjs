@@ -1,4 +1,4 @@
-import RecoveryPassword from "../../../../components/content/partnership/user/auth/recoveryPassword";
+import RecoveryPassword from "../../../components/content/partnership/user/auth/recoveryPassword";
 import { getSession } from "next-auth/client";
 
 export default function RecoveryPasswordMitra() {

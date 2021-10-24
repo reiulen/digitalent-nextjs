@@ -8,13 +8,14 @@ import Swal from "sweetalert2";
 import SimpleReactValidator from "simple-react-validator";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {addTttd} from '../../../../redux/actions/partnership/tandaTangan.actions'
-import {useDispatch,useSelector} from 'react-redux'
+import { addTttd } from "../../../../redux/actions/partnership/tandaTangan.actions";
+import { useDispatch, useSelector } from "react-redux";
+import axios from 'axios'
 
-const TambahTandaTangan = ({token}) => {
+const TambahTandaTangan = ({ token }) => {
   const signCanvas = useRef({});
   const router = useRouter();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const clear = () => {
     Swal.fire({
@@ -94,12 +95,34 @@ const TambahTandaTangan = ({token}) => {
           formData.append("signature_image", tandaTangan);
 
           // dispatch add ttd here
-          dispatch(addTttd(token,formData))
-          router.push({
-                pathname: `/partnership/tanda-tangan`,
-                query: { success: true },
-              });
+          // dispatch(addTttd(token, formData));
 
+          try {
+            let { data } = await axios.post(
+              `${process.env.END_POINT_API_PARTNERSHIP}api/signatures/create`,
+              formData,
+              {
+                headers: {
+                  authorization: `Bearer ${token}`,
+                },
+              }
+            );
+            // router.push({
+            //   pathname: "/partnership/tanda-tangan",
+            //   query: { success: true },
+            // });
+            // dispatch({
+            //   type: SUCCESS_ADD_TTD,
+            //   payload: data,
+            // });
+
+            router.push({
+              pathname: `/partnership/tanda-tangan`,
+              query: { success: true },
+            });
+          } catch (error) {
+            notify(error.response.data.message);
+          }
         }
       });
     }
@@ -132,9 +155,7 @@ const TambahTandaTangan = ({token}) => {
         />
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3
-              className="card-title font-weight-bolder text-dark titles-1"
-            >
+            <h3 className="card-title font-weight-bolder text-dark titles-1">
               Tambah Tanda Tangan Digital
             </h3>
           </div>
@@ -195,11 +216,11 @@ const TambahTandaTangan = ({token}) => {
                       }
                     />
                   </div>
-                    {error.tandaTangan ? (
-                  <p className="error-text">{error.tandaTangan}</p>
-                ) : (
-                  ""
-                )}
+                  {error.tandaTangan ? (
+                    <p className="error-text">{error.tandaTangan}</p>
+                  ) : (
+                    ""
+                  )}
                   <div className="d-flex flex-wrap align-items-center">
                     <a
                       className="btn btn-sm btn-rounded-full text-blue-primary border-primary mr-5 mt-3"
