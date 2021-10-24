@@ -9,7 +9,6 @@ export default function CardTemplateOriginal({ props }) {
   // console.log(data);
   const dateFrom = moment(data.pendaftaran_mulai).format("LL");
   const dateTo = moment(data.pendaftaran_selesai).format("LL");
-  moment;
   return (
     <Card className="position-relative">
       <Card.Body

@@ -154,7 +154,7 @@ export const updateProfilePendidikan =
 
       let link =
         process.env.END_POINT_API_PELATIHAN +
-        `/api/v1/auth/update-data-pendidikan`;
+        `api/v1/auth/update-data-pendidikan`;
 
       const config = {
         headers: {
@@ -238,7 +238,7 @@ export const updateProfileKeterampilan =
 export const getProfilePekerjaan = (token) => async (dispatch) => {
   try {
     let link =
-      process.env.END_POINT_API_PELATIHAN + `/api/v1/auth/get-data-pekerjaan`;
+      process.env.END_POINT_API_PELATIHAN + `api/v1/auth/get-data-pekerjaan`;
 
     const config = {
       headers: {

@@ -47,6 +47,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
+      // console.log(session.user.user.data.user.token);
+
       await store.dispatch(getDataPribadi(session.user.user.data.user.token));
 
       return {

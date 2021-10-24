@@ -7,6 +7,7 @@ import styles from "./Sidebar.module.css";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { signOut } from "next-auth/client";
 
 const Sidebar = () => {
   const router = useRouter();
@@ -288,7 +289,9 @@ const Sidebar = () => {
           </div>
         </div>
       </div>
-      <div className={styles.akunMenu}>
+      <div className={styles.akunMenu} onClick={() => {
+        signOut()
+      }}>
         <div className="d-flex flex-row">
           <div className="p-2">
             <i className="ri-logout-circle-line"></i>

@@ -291,24 +291,28 @@ export default function TambahMasterSertifikat({ token }) {
       const id = query.id;
 
       if (simpleValidator.current.allValid()) {
-        dispatch(newSertifikat(id, formData, token));
-
+        let formData = new FormData();
         if (status == 1) {
           setTahun("");
           setTanggal("");
           setNamaPeserta("");
           setNomerSertifikat("");
+          const data = await convertDivToPng(divReference.current); // convert bg 1
+          formData.append("certificate_result", data);
         }
 
-        let formData = new FormData();
         formData.append("name", certificate_name);
-
         formData.append("certificate_type", certificate_type);
         formData.append("number_of_signatures", number_of_signatures);
+
         formData.append(
           "number_of_signature_syllabus",
           number_of_signature_syllabus
         );
+
+        formData.append("background", background);
+        formData.append("background_syllabus", background_syllabus);
+        // bagian image2
 
         for (let i = 0; i < number_of_signatures; i++) {
           formData.append(
@@ -329,45 +333,36 @@ export default function TambahMasterSertifikat({ token }) {
           );
         }
 
-        for (let i = 0; i < number_of_signature_syllabus; i++) {
-          formData.append(
-            `signature_certificate_name_syllabus[${i}]`,
-            signature_certificate_name_syllabus[i]
-          );
-          formData.append(
-            `signature_certificate_position_syllabus[${i}]`,
-            signature_certificate_position_syllabus[i]
-          );
-          formData.append(
-            `signature_certificate_set_position_syllabus[${i}]`,
-            signature_certificate_set_position_syllabus[i]
-          );
-          formData.append(
-            `signature_certificate_image_syllabus[${i}]`,
-            signature_certificate_set_position_syllabus[i]
-          );
+        if (certificate_type == "2 lembar") {
+          if (status == 1) {
+            const dataSyllabus = await convertDivToPng(
+              divReferenceSilabus.current
+            ); //convert bg 2
+            formData.append("certificate_result_syllabus", dataSyllabus);
+          }
+          for (let i = 0; i < number_of_signature_syllabus; i++) {
+            formData.append(
+              `signature_certificate_name_syllabus[${i}]`,
+              signature_certificate_name_syllabus[i]
+            );
+            formData.append(
+              `signature_certificate_position_syllabus[${i}]`,
+              signature_certificate_position_syllabus[i]
+            );
+            formData.append(
+              `signature_certificate_set_position_syllabus[${i}]`,
+              signature_certificate_set_position_syllabus[i]
+            );
+            formData.append(
+              `signature_certificate_image_syllabus[${i}]`,
+              signature_certificate_image_syllabus[i]
+            );
+          }
         }
 
         syllabus.forEach((item, i) => {
           formData.append(`syllabus[${i}]`, item);
         });
-
-        formData.append("background_syllabus", background_syllabus);
-
-        // bagian image2
-        formData.append("background", background);
-
-        const data = await convertDivToPng(divReference.current); // convert bg 1
-
-        formData.append("certificate_result", data);
-
-        if (certificate_type == "2 lembar") {
-          const dataSyllabus = await convertDivToPng(
-            divReferenceSilabus.current
-          ); //convert bg 2
-
-          formData.append("certificate_result_syllabus", dataSyllabus);
-        }
 
         formData.append("status_migrate_id", status);
 
@@ -470,11 +465,10 @@ export default function TambahMasterSertifikat({ token }) {
               >
                 <div className="p-0 col-12" ref={divReference}>
                   {background ? (
-                    <Image
+                    <img
                       src={background}
                       alt="Background"
-                      layout="fill"
-                      objectFit="fill"
+                      className="position-absolute w-100 h-100"
                     />
                   ) : (
                     ""
@@ -585,10 +579,11 @@ export default function TambahMasterSertifikat({ token }) {
                                   }}
                                 >
                                   {signature_certificate_image[i] ? (
-                                    <Image
+                                    <img
                                       src={signature_certificate_image[i]}
                                       layout="fill"
                                       alt={`Tanda tangan ${i + 1} `}
+                                      className="position-absolute w-100 h-100"
                                     />
                                   ) : (
                                     "TTD"
@@ -1126,11 +1121,12 @@ export default function TambahMasterSertifikat({ token }) {
                 >
                   <div className="p-0" ref={divReferenceSilabus}>
                     {background_syllabus ? (
-                      <Image
+                      <img
                         src={background_syllabus}
                         alt="Background Silabus"
                         layout="fill"
                         objectFit="fill"
+                        className="position-absolute w-100 h-100"
                       />
                     ) : (
                       ""
@@ -1217,7 +1213,7 @@ export default function TambahMasterSertifikat({ token }) {
                                       {signature_certificate_image_syllabus[
                                         i
                                       ] ? (
-                                        <Image
+                                        <img
                                           src={
                                             signature_certificate_image_syllabus[
                                               i
@@ -1225,6 +1221,7 @@ export default function TambahMasterSertifikat({ token }) {
                                           }
                                           layout="fill"
                                           alt={`Tanda tangan ${i + 1} `}
+                                          className="position-absolute w-100 h-100"
                                         />
                                       ) : (
                                         "TTD"

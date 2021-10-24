@@ -186,7 +186,7 @@ const AlamatEdit = ({ funcViewEdit, token }) => {
               />
               {simpleValidator.current.message(
                 "provinsi domisili",
-                provinsiDomisili.value,
+                provinsiDomisili,
                 "required",
                 {
                   className: "text-danger",
@@ -210,7 +210,7 @@ const AlamatEdit = ({ funcViewEdit, token }) => {
               />
               {simpleValidator.current.message(
                 "kota domisili",
-                kotaDomisili.value,
+                kotaDomisili,
                 "required",
                 {
                   className: "text-danger",

@@ -37,17 +37,17 @@ const Pendidikan = ({ token }) => {
           </Col>
           <Col md={6}>
             <p className="text-neutral-body my-1">Program Studi</p>
-            <p>{(pendidikan && pendidikan.program_studi) || "-"}</p>
+            <p>{(pendidikan && pendidikan.program_studi === 0) || "-"}</p>
           </Col>
         </Row>
         <Row>
           <Col md={6}>
             <p className="text-neutral-body my-1">IPK</p>
-            <p>{(pendidikan && pendidikan.ipk) || "-"}</p>
+            <p>{(pendidikan && pendidikan.ipk === 0) || "-"}</p>
           </Col>
           <Col md={6}>
             <p className="text-neutral-body my-1">Tahun Masuk</p>
-            <p>{(pendidikan && pendidikan.tahun_masuk) || "-"}</p>
+            <p>{(pendidikan && pendidikan.tahun_masuk === 0) || "-"}</p>
           </Col>
         </Row>
         <Row>
