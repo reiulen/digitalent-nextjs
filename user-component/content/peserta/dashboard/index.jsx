@@ -36,21 +36,8 @@ const Dashboard = ({ session }) => {
     },
   ]);
 
-  let totalSubvit = 0
-
   useEffect(() => {
-    if(dataDashboard.subvit.sertifikat.status){
-      totalSubvit = totalSubvit + 1
-    }
-    if(dataDashboard.subvit.subvit.status){
-      totalSubvit = totalSubvit + 1
-    }
-    if(dataDashboard.subvit.survei.status){
-      totalSubvit = totalSubvit + 1
-    }
-    if(dataDashboard.subvit.trivia.status){
-      totalSubvit = totalSubvit + 1
-    }
+   
     
     if (errorDashboard) {
       toast.error(errorDashboard);
@@ -94,44 +81,59 @@ const Dashboard = ({ session }) => {
           />
         </Row>
         <Row className="mx-1">
-          <CardPage
+          
+        <CardPage
+            backgroundImage="new-game-4.svg"
+            background="primary"
+            color="#6C6C6C"
+            link="/peserta/subvit/substansi/1"
+            text="Pilih Pelatihan"
+            desc="Anda Belum Memilih pelatihan, silahkan pilih pelatihan yang Anda inginkan"
+            total={true}
+            isSubvit={false}
+          />
+          
+        {/* <CardPage
             backgroundImage="new-game-4.svg"
             background="primary"
             color="#6C6C6C"
             link="/peserta/subvit/substansi/1"
             text="Lakukan Test Substansi"
             desc="Anda Belum Melakukan Test Substansi"
-            total={totalSubvit}
-          />
-          <CardPage
+            total={dataDashboard.subvit.subvit.status}
+            isSubvit={true}
+          /> */}
+          {dataDashboard.subvit.survei.status &&  <CardPage
             backgroundImage="new-game-3.svg"
             background="success"
             color="#00B27A"
             link="/peserta"
             text="Lakukan Survey"
             desc="Anda Belum Melakukan Test Survey"
-            total={totalSubvit}
-          />
-          <CardPage
+            total={dataDashboard.subvit.survei.status}
+            isSubvit={true}
+          />}
+          {dataDashboard.subvit.trivia.status &&  <CardPage
             backgroundImage="new-game-1.svg"
             background="danger"
             color="#EE2D41"
             link="/peserta"
             text="Lakukan TRIVIA"
             desc="Anda Belum Melakukan TRIVIA"
-            total={totalSubvit}
-          />
-          {dataDashboard.subvit.sertifikat.status && (
-            <CardPage
+            total={dataDashboard.subvit.trivia.status}
+            isSubvit={true}
+          />}
+          {dataDashboard.subvit.sertifikat.status &&  <CardPage
               backgroundImage="new-game-2.svg"
               background="warning"
               color="#FFA800"
               link="/peserta"
               text="Unduh Sertifikat"
               desc="Anda Sudah bisa mengunduh Sertifikat"
-              total={totalSubvit}
-            />
-          )}
+              total={dataDashboard.subvit.sertifikat.status}
+              isSubvit={true}
+            />}
+           
         </Row>
         <Row className="mx-1">
           <Col md={6} className="mb-4 px-2">
