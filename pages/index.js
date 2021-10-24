@@ -11,12 +11,14 @@ import { getTemaByAkademi } from "../redux/actions/beranda/beranda.actions";
 import { getAllPublikasi } from "../redux/actions/beranda/beranda.actions";
 // import { getPelatihanByTema } from "../redux/actions/beranda/beranda.actions";
 
-export default function HomePage() {
+export default function HomePage(props) {
+  const session = props.session.user.user.data;
+
   return (
     <>
       <div className="d-flex flex-column flex-root">
         {/* <LoginAdmin /> */}
-        <Beranda />
+        <Beranda session={session} />
       </div>
     </>
   );
