@@ -4,12 +4,12 @@ import Link from "next/link";
 import Image from "next/image";
 import style from "../style.module.css";
 
-export default function IsiSurvey(props) {
-  // const data = props.data;
+export default function IsiSurvey({ props }) {
+  const data = props.data;
   // console.log(data);
-  // const dateFrom = moment(data.pendaftaran_mulai).format("LL");
-  // const dateTo = moment(data.pendaftaran_selesai).format("LL");
-  // const gambarMitra = data.gambarMitra
+  const dateFrom = moment(data.pendaftaran_mulai).format("LL");
+  const dateTo = moment(data.pendaftaran_selesai).format("LL");
+  const gambarMitra = data.gambarMitra;
   const [label, setLabel] = useState();
   return (
     <Card className="position-relative">
@@ -47,7 +47,7 @@ export default function IsiSurvey(props) {
                 // style={{ marginLeft: "-10px" }}
               >
                 <h4 className="font-weight-bolder my-0 p-0 col-12 order-2 order-lg-1">
-                  TES CARD TEMPLATE
+                  {data.name}
                 </h4>
                 <div
                   className="d-flex align-items-center justify-content-lg-start justify-content-center order-1 order-lg-2"
@@ -75,18 +75,15 @@ export default function IsiSurvey(props) {
                 <div className="d-flex align-items-center align-middle ">
                   <i className="ri-time-line"></i>
                   <span className={` pl-2`}>
-                    {/* Pelatihan : {dateFrom} - {dateTo} */}
-                    Pelatihan : ini isi survey
+                    Pelatihan : {dateFrom} - {dateTo}
+                    {/* Pelatihan : ini isi survey */}
                   </span>
                 </div>{" "}
               </Col>
               <Col md={12} className="my-auto order-5 pb-40 pb-md-30 pb-lg-20">
                 <div className="d-flex align-items-center align-middle ">
                   <i className="ri-map-pin-line"></i>
-                  <span className={` pl-2`}>
-                    Lokasi :{/* {data.alamat} */}
-                    Ini data alamat
-                  </span>
+                  <span className={` pl-2`}>Lokasi :{data.alamat}</span>
                 </div>{" "}
               </Col>
             </Row>

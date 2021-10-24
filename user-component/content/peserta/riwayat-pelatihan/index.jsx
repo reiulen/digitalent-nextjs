@@ -160,7 +160,9 @@ export default function RiwayatPelatihan({ session }) {
         })}
         {dataRiwayatPelatihan.listPelatihan.list.map((el) => {
           if (el.survei) {
-            return <CardPeserta status={"test"} data={el} />;
+            return (
+              <CardPeserta totalButton={2} data={el} status={"isi survey"} />
+            );
           }
           if (el.lpj) {
             return <CardPeserta status={"test"} data={el} />;
@@ -169,7 +171,9 @@ export default function RiwayatPelatihan({ session }) {
             return <CardPeserta status={"test"} data={el} />;
           }
         })}
-        <CardPeserta totalButton={2} status={"isi survey"} />
+        <CardPeserta totalButton={2} status={"isi lpj"} />
+        {/* <CardPeserta totalButton={2} data={el} status={"isi survey"} /> */}
+
         {/* <CardPeserta totalButton={2} status={"lolos administrasi"} />
         <CardPeserta totalButton={2} status={"tes substansi"} />
         <CardPeserta totalButton={2} status={"menunggu jadwal"} /> */}
@@ -186,7 +190,7 @@ export default function RiwayatPelatihan({ session }) {
         <CardPeserta totalButton={2} status={"kerjakan mid test"} />
         <CardPeserta totalButton={2} status={"kerjakan trivia"} />
         <CardPeserta totalButton={2} status={"lulus pelatihan"} />
-        <CardPeserta totalButton={2} status={"isi lpj"} /> */}
+         */}
       </PesertaWrapper>
       <Modal show={showModal} onHide={handleClose} centered>
         <Modal.Header>
