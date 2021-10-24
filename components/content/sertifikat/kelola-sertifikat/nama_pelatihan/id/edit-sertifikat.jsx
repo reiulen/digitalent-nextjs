@@ -643,19 +643,6 @@ export default function EditSertifikat({ token }) {
                                   >
                                     {signature[i]?.localSignature ? (
                                       <img
-<<<<<<< HEAD
-                                        src={signature[i]?.localSignature}
-                                        layout="fill"
-                                        alt={`Tanda tangan ${i + 1} `}
-                                        className="position-relative w-100 h-100"
-                                      />
-                                    ) : signature[i]?.signature ? (
-                                      <img
-                                        src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/signature-certificate-images/${signature[i].signature}`}
-                                        layout="fill"
-                                        alt={`Tanda tangan ${i + 1} `}
-                                        className="position-relative w-100 h-100"
-=======
                                         id={signature[i]?.localSignature}
                                         src={signature[i]?.localSignature}
                                         layout="fill"
@@ -669,7 +656,6 @@ export default function EditSertifikat({ token }) {
                                         layout="fill"
                                         alt={`Tanda tangan ${i + 1} `}
                                         className="position-absolute w-100 h-100"
->>>>>>> a5ea6ed70ac4ae3ae7b2c7d1cc4e23f4338e443c
                                       />
                                     ) : (
                                       "TTD"
@@ -846,12 +832,6 @@ export default function EditSertifikat({ token }) {
                                       config={{
                                         toolbar: ["bold", "italic"],
                                       }}
-<<<<<<< HEAD
-                                      onReady={(editor) => {
-                                        // You can store the "editor" and use when it is needed.
-                                      }}
-=======
->>>>>>> 807b4a7de637fc677572fdc6da5861f3727a8ddd
                                       data={signature[i]?.name}
                                       onChange={(event, editor) => {
                                         const data = editor.getData();
@@ -1510,12 +1490,6 @@ export default function EditSertifikat({ token }) {
                                             "underline",
                                           ],
                                         }}
-<<<<<<< HEAD
-                                        onReady={(editor) => {
-                                          // You can store the "editor" and use when it is needed.
-                                        }}
-=======
->>>>>>> 807b4a7de637fc677572fdc6da5861f3727a8ddd
                                         data={signatureSyllabus[i]?.name}
                                         onChange={(event, editor) => {
                                           const data = editor.getData();
@@ -1701,13 +1675,6 @@ export default function EditSertifikat({ token }) {
                                       </div>
                                       <CKEditor
                                         editor={ClassicEditor}
-<<<<<<< HEAD
-                                        // config={editorConfig}
-                                        onReady={(editor) => {
-                                          // You can store the "editor" and use when it is needed.
-                                        }}
-=======
->>>>>>> 807b4a7de637fc677572fdc6da5861f3727a8ddd
                                         data={signatureSyllabus[i]?.position}
                                         onChange={(event, editor) => {
                                           const data = editor.getData();
