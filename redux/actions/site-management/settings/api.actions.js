@@ -232,23 +232,56 @@ export const getDetailApi = (id, token) => async (dispatch) => {
   }
 };
 
-export const getDetailLog = (id, token) => async (dispatch) => {
+export const getDetailLog = (id, token) => async (dispatch, getState) => {
+  // try {
+  //   dispatch({
+  //     type: DETAIL_LOG_API_REQUEST,
+  //   });
+  //   const config = {
+  //     headers: {
+  //       Authorization: "Bearer " + token,
+  //     },
+  //   };
+
+  //   let link =
+  //     process.env.END_POINT_API_SITE_MANAGEMENT +
+  //     `api/setting-api/detail/log/${id}`;
+
+  //   const { data } = await axios.get(link, config);
+  //   console.log("data sdafdsaf", data);
+
+  //   dispatch({
+  //     type: DETAIL_LOG_API_SUCCESS,
+  //     payload: data,
+  //   });
+  // } catch (error) {
+  //   dispatch({
+  //     type: DETAIL_LOG_API_FAIL,
+  //   });
+  // }
+
   try {
-    dispatch({
-      type: DETAIL_LOG_API_REQUEST,
-    });
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
+    dispatch({ type: DETAIL_LOG_API_REQUEST });
+
+    let pageState = getState().listLog.page || 1;
+    let cariState = getState().listLog.cari || "";
+    let limitState = getState().listLog.limit || 5;
+
+    const params = {
+      page: pageState,
+      cari: cariState,
+      limit: limitState,
     };
 
-    let link =
-      process.env.END_POINT_API_SITE_MANAGEMENT +
-      `api/setting-api/detail/log/${id}`;
-
-    const { data } = await axios.get(link, config);
-    console.log("data sdafdsaf", data);
+    const { data } = await axios.get(
+      `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-api/detail/log/${id}`,
+      {
+        params,
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     dispatch({
       type: DETAIL_LOG_API_SUCCESS,

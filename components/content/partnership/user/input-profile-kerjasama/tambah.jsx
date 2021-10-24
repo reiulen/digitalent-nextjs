@@ -55,13 +55,10 @@ const Tambah = ({ token }) => {
         ...error,
         institution_name: "Harus isi nama lembaga",
       });
-      notify("Harus isi nama lembaga");
     } else if (wesite === "") {
       setError({ ...error, wesite: "Harus isi nama website" });
-      notify("Harus isi nama website");
     } else if (email === "") {
       setError({ ...error, email: "Harus isi email" });
-      notify("Harus isi email");
     }
 
     // jika pertama kali data profile kosong
@@ -79,16 +76,14 @@ const Tambah = ({ token }) => {
 
      else if (address === "") {
       setError({ ...error, address: "Harus isi alamat" });
-      notify("Harus isi alamat");
     } else if (indonesia_provinces_id === "") {
       setError({
         ...error,
         indonesia_provinces_id: "Harus isi pilih provinsi",
       });
-      notify("Harus isi pilih provinsi");
     } else if (indonesia_cities_id === "") {
       setError({ ...error, indonesia_cities_id: "Harus isi pilih kota/kab" });
-      notify("Harus isi pilih kota/kab");
+
     } else if (
       postal_code === "" ||
       postal_code.length < 5 ||
@@ -98,19 +93,15 @@ const Tambah = ({ token }) => {
         ...error,
         postal_code: "Harus isi kode pos minimal dan maksimal 5 karakter",
       });
-      notify("Harus isi kode pos minimal dan maksimal 5 karakter");
     } else if (pic_name === "") {
       setError({ ...error, pic_name: "Harus isi nama PIC" });
-      notify("Harus isi nama PIC");
     } else if (pic_contact_number === "" || pic_contact_number.length < 9) {
       setError({
         ...error,
         pic_contact_number: "Harus isi No. Kontak PIC dan minimal 9 karakter",
       });
-      notify("Harus isi No. Kontak PIC");
     } else if (pic_email === "") {
       setError({ ...error, pic_email: "Harus isi Email PIC" });
-      notify("Harus isi Email PIC");
     } else {
       //
       Swal.fire({
@@ -281,6 +272,7 @@ const Tambah = ({ token }) => {
             },
           }
         );
+        console.log("data",data)
 
         if (data) {
           // setAgency_logo_api(
@@ -470,9 +462,7 @@ const Tambah = ({ token }) => {
                     }}
                   >
                     <Image
-                      src={process.env.END_POINT_API_IMAGE_PARTNERSHIP +
-                          "partnership/images/profile-images/" +
-                          imageview}
+                      src={process.env.END_POINT_API_IMAGE_PARTNERSHIP + imageview}
                       alt="Picture of the author"
                       layout="fill"
                       objectFit="fill"

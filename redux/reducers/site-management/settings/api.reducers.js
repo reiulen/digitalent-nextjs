@@ -284,24 +284,46 @@ export const listFieldReducer = (state = { listField: [] }, action) => {
       return state;
   }
 };
-export const listLogReducer = (state = { listLog: [] }, action) => {
+export const listLogReducer = (state = initialState, action) => {
   switch (action.type) {
     case DETAIL_LOG_API_REQUEST:
       return {
-        loading: true,
+        ...state,
+        status: statuslist.process,
       };
 
     case DETAIL_LOG_API_SUCCESS:
       return {
-        loading: false,
-        listLog: action.payload,
-        data: action.payload,
+        ...state,
+        status: statuslist.success,
+        data: action.payload.data,
       };
 
     case DETAIL_LOG_API_FAIL:
       return {
-        loading: false,
+        ...state,
+        status: statuslist.error,
         error: null,
+      };
+
+    case SEARCH_COORPORATION:
+      return {
+        ...state,
+        cari: action.text,
+        page: 1,
+      };
+
+    case SET_PAGE:
+      return {
+        ...state,
+        page: action.page,
+      };
+
+    case LIMIT_CONFIGURATION:
+      return {
+        ...state,
+        limit: action.limitValue,
+        page: 1,
       };
 
     default:
