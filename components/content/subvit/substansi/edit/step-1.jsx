@@ -15,10 +15,25 @@ import LoadingPage from "../../../../LoadingPage";
 import styles from "../../trivia/edit/step.module.css";
 
 import { useRouter } from "next/router";
+import {
+  dropdownPelatihanbyTema,
+  dropdownTemabyAkademi,
+} from "../../../../../redux/actions/pelatihan/function.actions";
 
 const StepOne = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
+
+  const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(
+    (state) => state.drowpdownAkademi
+  );
+
+  const { data: dataTema } = useSelector((state) => state.drowpdownTema.data);
+  useSelector((state) => console.log(state.drowpdownTema.data));
+
+  const { data: dataPelatihan } = useSelector(
+    (state) => state.drowpdownPelatihan.data
+  );
 
   let { id } = router.query;
   const { error: detailData, subtance } = useSelector(
@@ -80,6 +95,21 @@ const StepOne = ({ token }) => {
     dispatch(updatewSubtanceQuestionBanks(id, data, token));
   };
 
+  const handleChangeTema = (e) => {
+    setAcademyId(e.target.value);
+
+    dispatch(dropdownTemabyAkademi(e.target.value, token));
+  };
+
+  const handleChangePelatihan = (e) => {
+    setThemeId(e.target.value);
+    e.target.value && dispatch(dropdownPelatihanbyTema(e.target.value, token));
+  };
+
+  const { data } = useSelector((state) => state.drowpdownTemabyAkademi);
+
+  const { drowpdownPelatihanbyTema } = useSelector((state) => state);
+
   return (
     <PageWrapper>
       {error ? (
@@ -127,21 +157,24 @@ const StepOne = ({ token }) => {
                   <select
                     name="academy_id"
                     id=""
-                    onChange={(e) => setAcademyId(e.target.value)}
+                    onChange={(event) => handleChangeTema(event)}
                     className="form-control"
                     defaultValue={academy_id}
                   >
-                    <option value="" disabled>
+                    <option selected disabled value="">
                       {" "}
                       -Pilih Akademi -
                     </option>
-                    <option value="1"> VSGA </option>
-                    <option value="2"> FGA </option>
-                    <option value="3">PRO</option>
-                    <option value="4">TA</option>
-                    <option value="5">GTA</option>
-                    <option value="6">DEA</option>
-                    <option value="7"> TSA</option>
+                    {dataAkademi.data.map((item, index) => {
+                      return (
+                        <>
+                          <option value={item.value} key={index}>
+                            {" "}
+                            {item.label}{" "}
+                          </option>
+                        </>
+                      );
+                    })}
                   </select>
                 </div>
               </div>
@@ -157,20 +190,23 @@ const StepOne = ({ token }) => {
                   <select
                     name="the_id"
                     id=""
-                    onChange={(e) => setThemeId(e.target.value)}
+                    onChange={(event) => handleChangePelatihan(event)}
                     className="form-control"
                     defaultValue={theme_id}
                   >
-                    <option value="" disabled>
+                    <option selected disabled value="">
                       {" "}
                       -Pilih Tema-
                     </option>
-                    <option value="1"> Cloud Computing Analyst </option>
-                    <option value="2"> Data Management Staff </option>
-                    <option value="3"> Artificial Intelligence </option>
-                    <option value="4"> Cloud Computing </option>
-                    <option value="5"> Data Science Fundamental </option>
-                    <option value="6">Get Connected</option>
+                    {dataTema.map((item, index) => {
+                      return (
+                        <>
+                          <option value={item.value} key={index}>
+                            {item.label}
+                          </option>
+                        </>
+                      );
+                    })}
                   </select>
                 </div>
               </div>
@@ -190,20 +226,20 @@ const StepOne = ({ token }) => {
                     className="form-control"
                     defaultValue={training_id}
                   >
-                    <option value="" disabled>
+                    <option selected disabled value="">
                       {" "}
                       -Pilih Pelatihan-
                     </option>
-                    <option value="1"> Mobile App Flutter</option>
-                    <option value="2"> Mobile App React Native </option>
-                    <option value="3"> Web Backend Laravel </option>
-                    <option value="4"> Web Backend Golang </option>
-                    <option value="5"> Web Backend Node Js </option>
-                    <option value="6"> Web Backend Python </option>
-                    <option value="7"> Frontend Web React Js </option>
-                    <option value="8"> Frontend Web Vue Js </option>
-                    <option value="9"> Machine Learning </option>
-                    <option value="10">UI / UX Design</option>
+                    {dataPelatihan.map((item, index) => {
+                      return (
+                        <>
+                          <option value={item.value} key={index}>
+                            {" "}
+                            {item.label}
+                          </option>
+                        </>
+                      );
+                    })}
                   </select>
                 </div>
               </div>

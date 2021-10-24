@@ -35,6 +35,10 @@ import {
   GET_DATA_PRIBADI_SUCCESS,
   GET_DATA_PRIBADI_FAIL,
   CLEAR_ERRORS,
+  GET_DROPDOWN_TEMA_BY_AKADEMI,
+  ERROR_DROPDOWN_TEMA_BY_AKADEMI,
+  GET_DROPDOWN_PELATIHAN_BY_TEMA,
+  ERROR_DROPDOWN_PELATIHAN_BY_TEMA,
 } from "../../types/pelatihan/function.type";
 
 import axios from "axios";
@@ -212,6 +216,32 @@ export const dropdownTema = (token) => async (dispatch) => {
   }
 };
 
+export const dropdownTemabyAkademi = (id, token) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    const { data } = await axios.get(
+      process.env.END_POINT_API_PELATIHAN +
+        `api/v1/tema/dropdown-tema-by-akademi?akademi_id=${id}`,
+      config
+    );
+
+    console.log(data);
+    dispatch({
+      type: GET_DROPDOWN_TEMA_BY_AKADEMI,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ERROR_DROPDOWN_TEMA_BY_AKADEMI,
+      payload: error.response.data.message,
+    });
+  }
+};
+
 export const dropdownPelatihan = (token) => async (dispatch) => {
   try {
     const config = {
@@ -230,6 +260,30 @@ export const dropdownPelatihan = (token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ERROR_DROPDOWN_PELATIHAN,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const dropdownPelatihanbyTema = (id, token) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    const { data } = await axios.get(
+      process.env.END_POINT_API_PELATIHAN +
+        `api/v1/pelatihan/dropdown-pelatihan-tema?id=${id}`,
+      config
+    );
+    dispatch({
+      type: GET_DROPDOWN_PELATIHAN_BY_TEMA,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ERROR_DROPDOWN_PELATIHAN_BY_TEMA,
       payload: error.response.data.message,
     });
   }
