@@ -30,8 +30,10 @@ const SubtansiUser = ({ token }) => {
     (state) => state.randomSubtanceQuestionDetail
   );
 
-  localStorage.setItem("data", JSON.stringify(random_subtance_question_detail));
   const router = useRouter();
+
+  localStorage.setItem("data", JSON.stringify(random_subtance_question_detail));
+
   const [data] = useState(JSON.parse(localStorage.getItem("data")));
   const [answer, setAnswer] = useState("");
   const [listAnswer, setListAnswer] = useState([]);

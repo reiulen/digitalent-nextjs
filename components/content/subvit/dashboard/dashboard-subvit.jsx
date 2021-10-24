@@ -28,10 +28,6 @@ const DashbardSubvit = ({ token }) => {
 
   const { dashboard_subvit } = useSelector((state) => state.dashboardSubvit);
 
-  // Object.entries(dashboard_subvit.chart).map((item, index) => {
-  //   return data.push({ name: item[0], value: item[1] });
-  // });
-
   const data = [];
   useEffect(() => {
     dispatch(
@@ -49,10 +45,6 @@ const DashbardSubvit = ({ token }) => {
     router.query.page_trivia,
     dispatch,
   ]);
-
-  // const [dashboard_subvit] = useState(dashboard_subvit);
-
-  console.log(dashboard_subvit);
 
   const handleNextPagination = () => {
     const page = parseInt(router.query.page_substansi) + 1;

@@ -130,7 +130,7 @@ export const getDashboardSubvit =
       };
 
       const { data } = await axios.get(link, config);
-      console.log(link);
+
       dispatch({
         type: DASHBOARD_SUBVIT_SUCCESS,
         payload: data,
