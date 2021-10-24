@@ -12,6 +12,7 @@ import {
   getFormRegister,
   storeFormRegister,
 } from "../../../redux/actions/pelatihan/register-training.actions";
+import { middlewareAuthPesertaSession } from "../../../utils/middleware/authMiddleware";
 
 const Layout = dynamic(() =>
   import("../../../user-component/components/template/Layout.component")
@@ -71,19 +72,12 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
-      if (!session) {
+      const middleware = middlewareAuthPesertaSession(session);
+
+      if (!middleware.status) {
         return {
           redirect: {
-            destination: "http://dts-dev.majapahit.id/login",
-            permanent: false,
-          },
-        };
-      }
-      const data = session.user.user.data;
-      if (data.user.roles[0] !== "user") {
-        return {
-          redirect: {
-            destination: "http://dts-dev.majapahit.id/login",
+            destination: middleware.redirect,
             permanent: false,
           },
         };

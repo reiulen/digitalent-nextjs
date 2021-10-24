@@ -5,6 +5,7 @@ import { getRandomSubtanceQuestionDetail } from "../../../../redux/actions/subvi
 import { wrapper } from "../../../../redux/store";
 import Layout from "../../../../user-component/components/template/Layout.component";
 import { getDataPribadi } from "../../../../redux/actions/pelatihan/function.actions";
+import { middlewareAuthPesertaSession } from "../../../../utils/middleware/authMiddleware";
 
 const SubtansiUser = dynamic(
   () => import("../../../../user-component/content/subvit/substansi"),
@@ -33,10 +34,12 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
-      if (!session) {
+      const middleware = middlewareAuthPesertaSession(session);
+
+      if (!middleware.status) {
         return {
           redirect: {
-            destination: "http://dts-dev.majapahit.id/login",
+            destination: middleware.redirect,
             permanent: false,
           },
         };
@@ -53,6 +56,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         )
       );
 
+<<<<<<< HEAD
       // console.log(session.user.user.data.user.token);
 
       const data = session.user.user.data;
@@ -65,6 +69,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+=======
+>>>>>>> 807b4a7de637fc677572fdc6da5861f3727a8ddd
       return {
         props: {
           data: "auth",

@@ -646,7 +646,7 @@ const EditDokumentKerjasama = ({ token }) => {
                 {showDokument ? (
                   <iframe
                     className="my-4 border"
-                    src={`${process.env.END_POINT_API_IMAGE_PARTNERSHIP}partnership/files/document_cooperations/${document}`}
+                    src={`${process.env.END_POINT_API_IMAGE_PARTNERSHIP}${document}`}
                     frameBorder="0"
                     scrolling="auto"
                     height={"500px"}

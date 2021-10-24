@@ -147,10 +147,7 @@ const EditTandaTangan = ({token}) => {
     }
   };
 
-  const imgSignature = process.env.END_POINT_API_IMAGE_PARTNERSHIP;
-  const myLoader = ({ src }) => {
-    return `${imgSignature}/partnership/images/signatures/${tandaTangan}`;
-  };
+ 
 
   const [nama, setNama] = useState("");
   const [jabatan, setJabatan] = useState("");
@@ -244,7 +241,6 @@ const EditTandaTangan = ({token}) => {
                         unoptimized={process.env.ENVIRONMENT !== "PRODUCTION"}
                         src={
                           process.env.END_POINT_API_IMAGE_PARTNERSHIP +
-                          "partnership/images/signatures/" +
                           tandaTangan
                         }
                         width={400}

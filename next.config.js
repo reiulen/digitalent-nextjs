@@ -12,7 +12,7 @@ module.exports = {
     ],
   },
   env: {
-    NEXTAUTH_URL: "http://dts-dev.majapahit.id/",
+    NEXTAUTH_URL: "http://dts-dev.majapahit.id",
 
     PATH_URL: "http://dts-dev.majapahit.id",
 

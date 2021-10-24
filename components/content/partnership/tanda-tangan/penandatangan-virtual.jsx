@@ -172,7 +172,6 @@ export default function PenandatanganVirtual({ token }) {
                     <Image
                       src={
                         process.env.END_POINT_API_IMAGE_PARTNERSHIP +
-                        "partnership/images/signatures/" +
                         ttdAdmin
                       }
                       width={400}
@@ -194,7 +193,6 @@ export default function PenandatanganVirtual({ token }) {
                     <Image
                       src={
                         process.env.END_POINT_API_IMAGE_PARTNERSHIP +
-                        "partnership/images/signatures/" +
                         ttdMitra
                       }
                       width={400}

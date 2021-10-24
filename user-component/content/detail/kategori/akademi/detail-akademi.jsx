@@ -49,7 +49,7 @@ const DetailAkademi = () => {
     const handleHoverCard = () => {
         let arr = [...show]
 
-        if ( pelatihan.list.length !== 0){
+        if (pelatihan !== undefined && pelatihan.list.length !== 0){
             for (let i = 0; i < pelatihan.list.length; i++){
                 arr.push (false)
             }
@@ -172,17 +172,6 @@ const DetailAkademi = () => {
 
     return (
         <Layout title="Detail Akademi">
-            {
-                console.log (akademi)
-            }
-
-            {
-                console.log (pelatihan)
-            }
-
-            {
-                console.log (show)
-            }
             <SubHeaderComponent />
             
             {
@@ -228,13 +217,110 @@ const DetailAkademi = () => {
                     <FilterSide />
                 </div>
 
-                <div className="col-12 col-md-9 mt-2 d-flex flex-row flex-wrap justify-content-between">
+                <div className="row">
+                {/* <div className="col-12 col-md-9 mt-2 d-flex flex-row flex-wrap justify-content-between"> */}
                     {
                         pelatihan && pelatihan.list !== 0 && show.length !== 0  ?
                             
                             pelatihan.list.map ((el, i) => {
                                 return (
                                     showDetail[i] === false ?
+                                    <div 
+                                        className="col-12 col-md-9 d-flex flex-row flex-wrap " 
+                                        key={i}
+                                        onMouseEnter={() => handleMouseEnter(i)}
+                                        onMouseLeave={() => handleMouseLeave(i)}
+                                    >
+                                        <Cardss
+                                            label={<label>Pelatihan {el.metode_pelatihan}</label>}
+                                            button={
+                                                show[i] === true ?
+                                                  <div className="d-flex flex-row justify-content-end">
+                                                    <Button className="btn btn-white py-1 pl-2 pr-1 rounded-circle mr-2">
+                                                        <i className="ri-share-line" />
+                                                    </Button>
+                                                    <Button className="btn btn-white py-1 pl-2 pr-1 mr-2 rounded-circle">
+                                                        <i className="ri-heart-line" />
+                                                    </Button>
+                                                  </div>
+                                                :
+                                                  null
+                                              }
+                                            thumbnail={
+                                                <Image 
+                                                    src={process.env.END_POINT_API_IMAGE_BEASISWA + el.gambar}
+                                                    // src={`https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/${element.gambar}`}
+                                                    layout="fill" 
+                                                    objectFit="cover"
+                                                />
+                                            }
+
+                                        >
+
+                                            <div className="rounded mt-0 pt-0">
+                                                <Image 
+                                                    src={process.env.END_POINT_API_IMAGE_PARTNERSHIP + el.gambar_mitra}
+                                                    // src={`https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/${element.gambar_mitra}`}
+                                                    layout="fill" 
+                                                    objectFit="cover"
+                                                />
+                                            </div>
+
+                                            <div className="d-flex align-items-center justify-content-between pl-24">
+                                                <p
+                                                    className="fw-600"
+                                                    style={{ color: "#6C6C6C" }}
+                                                >
+                                                    {el.mitra}
+                                                </p>
+                                                {
+                                                    el.status !== "Closed" ?
+                                                    <button className="btn btn-green-rounded mb-5">
+                                                        {el.status}
+                                                    </button>
+                                                    :
+                                                    <button className="btn btn-green-rounded text-danger mb-5">
+                                                        {el.status}
+                                                    </button>
+                                                }
+                                                
+                                            </div>
+
+                                            <h1
+                                                className="fz-18 fw-600 mt-4"
+                                                style={{ color: "#1F1F1F" }}
+                                            >
+                                                {el.name}
+                                            </h1>
+                                            <h3
+                                                className="mb-0 fz-18 fw-400 mt-4"
+                                                style={{ color: "#6C6C6C" }}
+                                            >
+                                                {el.akademi}
+                                            </h3>
+                                            
+                                            <hr />
+
+                                            {
+                                                show[i] !== true ?
+                                                    <div className="mt-2">
+                                                        <div className="d-flex align-items-center">
+                                                            Registrasi: {moment(el.pendafataran_mulai).format("DD MMMM YYYY")} - {moment(el.pendafataran_selesai).format("DD MMMM YYYY")}
+                                                        </div>
+                                                        <div className="d-flex align-items-center mt-2">
+                                                            Kuota: {el.kuota_peserta} Peserta
+                                                        </div>
+                                                    </div>
+                                                :
+                                                    <div className="mt-2">
+                                                        <Button className="btn btn-outline-info rounded-pill col-12" >
+                                                            Quick View
+                                                        </Button>
+                                                    </div>
+                                                }
+
+                                        </Cardss>
+                                    </div>
                                         // <Cardss
                                         //     key={i}
                                         //     label={<label>Pelatihan {el.metode_pelatihan}</label>}
@@ -263,72 +349,133 @@ const DetailAkademi = () => {
                                         //     onMouseLeave={() => handleMouseLeave(i)}
                                         // >
 
+                                        //     <div className="rounded mt-0 pt-0">
+                                        //         <Image 
+                                        //             src={process.env.END_POINT_API_IMAGE_PARTNERSHIP + el.gambar_mitra}
+                                        //             // src={`https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/${element.gambar_mitra}`}
+                                        //             layout="fill" 
+                                        //             objectFit="cover"
+                                        //         />
+                                        //     </div>
+
+                                        //     <div className="d-flex align-items-center justify-content-between pl-24">
+                                        //         <p
+                                        //             className="fw-600"
+                                        //             style={{ color: "#6C6C6C" }}
+                                        //         >
+                                        //             {el.mitra}
+                                        //         </p>
+                                        //         {
+                                        //             el.status !== "Closed" ?
+                                        //             <button className="btn btn-green-rounded mb-5">
+                                        //                 {el.status}
+                                        //             </button>
+                                        //             :
+                                        //             <button className="btn btn-green-rounded text-danger mb-5">
+                                        //                 {el.status}
+                                        //             </button>
+                                        //         }
+                                                
+                                        //     </div>
+
+                                        //     <h1
+                                        //         className="fz-18 fw-600 mt-4"
+                                        //         style={{ color: "#1F1F1F" }}
+                                        //     >
+                                        //         {el.name}
+                                        //     </h1>
+                                        //     <h3
+                                        //         className="mb-0 fz-18 fw-400 mt-4"
+                                        //         style={{ color: "#6C6C6C" }}
+                                        //     >
+                                        //         {el.akademi}
+                                        //     </h3>
+                                        //     <hr />
+
+                                        //     {
+                                        //         show[i] !== true ?
+                                        //             <div className="mt-2">
+                                        //             <div className="d-flex align-items-center">
+                                        //                 Registrasi: {moment(el.pendafataran_mulai).format("DD MMMM YYYY")} - {moment(el.pendafataran_selesai).format("DD MMMM YYYY")}
+                                        //             </div>
+                                        //             <div className="d-flex align-items-center mt-2">
+                                        //                 Kuota: {el.kuota_peserta} Peserta
+                                        //             </div>
+                                        //             </div>
+                                        //         :
+                                        //             <div className="mt-2">
+                                        //             <Button className="btn btn-outline-info rounded-pill col-12" >
+                                        //                 Quick View
+                                        //             </Button>
+                                        //             </div>
+                                        //         }
+
                                         // </Cardss>
-                                        <Card   
-                                            style={{ width: '30rem', height:"47rem", cursor:"pointer"}} 
-                                            className="m-3 shadow"
-                                            key={i}
-                                            onMouseEnter={() => handleMouseEnter(i)}
-                                            onMouseLeave={() => handleMouseLeave(i)}
-                                        >   
-                                            {
-                                                renderShare(show[i], el.metode_pelatihan)
-                                            }
+                                        // <Card   
+                                        //     style={{ width: '30rem', height:"47rem", cursor:"pointer"}} 
+                                        //     className="m-3 shadow"
+                                        //     key={i}
+                                        //     onMouseEnter={() => handleMouseEnter(i)}
+                                        //     onMouseLeave={() => handleMouseLeave(i)}
+                                        // >   
+                                        //     {
+                                        //         renderShare(show[i], el.metode_pelatihan)
+                                        //     }
 
-                                            <div className='rounded'>
-                                                <Card.Img
-                                                    variant="top"
-                                                    src={process.env.END_POINT_API_IMAGE_BEASISWA + el.gambar}
-                                                    // src={`https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/${el.gambar}`} 
-                                                />
-                                            </div>
+                                        //     <div className='rounded'>
+                                        //         <Card.Img
+                                        //             variant="top"
+                                        //             src={process.env.END_POINT_API_IMAGE_BEASISWA + el.gambar}
+                                        //             // src={`https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/${el.gambar}`} 
+                                        //         />
+                                        //     </div>
 
-                                            <div className="ml-2 " style={{position:"absolute", marginTop:"28vh"}}>
-                                                <Image 
-                                                    src={`/assets/media/Logo.svg`}
-                                                    // src={`https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/${el.gambar_mitra}`}
-                                                    width="50vh"
-                                                    height="50vh"
-                                                    className="rounded"
-                                                />
-                                            </div>
+                                        //     <div className="ml-2 " style={{position:"absolute", marginTop:"28vh"}}>
+                                        //         <Image 
+                                        //             src={`/assets/media/Logo.svg`}
+                                        //             // src={`https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/${el.gambar_mitra}`}
+                                        //             width="50vh"
+                                        //             height="50vh"
+                                        //             className="rounded"
+                                        //         />
+                                        //     </div>
 
-                                            <div className="row d-flex justify-content-between mx-5 mt-3">
-                                                <div style={{marginLeft:"7vh"}}>
-                                                    {el.mitra}
-                                                </div>
-                                                <Badge bg="light">
-                                                    <div className="text-danger mt-1">
-                                                        {el.status}
-                                                    </div>
-                                                </Badge>
-                                            </div>
+                                        //     <div className="row d-flex justify-content-between mx-5 mt-3">
+                                        //         <div style={{marginLeft:"7vh"}}>
+                                        //             {el.mitra}
+                                        //         </div>
+                                        //         <Badge bg="light">
+                                        //             <div className="text-danger mt-1">
+                                        //                 {el.status}
+                                        //             </div>
+                                        //         </Badge>
+                                        //     </div>
 
-                                            <Card.Body>
+                                        //     <Card.Body>
                                                                     
-                                                <div>
-                                                    <h4>{el.name}</h4>
-                                                </div>
+                                        //         <div>
+                                        //             <h4>{el.name}</h4>
+                                        //         </div>
 
-                                                <div className="text-muted">
-                                                    {
-                                                        akademi.name
-                                                    }
-                                                </div>
+                                        //         <div className="text-muted">
+                                        //             {
+                                        //                 akademi.name
+                                        //             }
+                                        //         </div>
 
-                                                <div 
-                                                    className="row my-3" 
-                                                    style={{height:"2px", backgroundColor:"#ADB5BD"}}
-                                                >
-                                                </div>
+                                        //         <div 
+                                        //             className="row my-3" 
+                                        //             style={{height:"2px", backgroundColor:"#ADB5BD"}}
+                                        //         >
+                                        //         </div>
                                                 
-                                                {
-                                                    renderButton(show[i], el.pendaftaran_mulai, el.pendaftaran_selesai, el.kuota_peserta, el.id, i)
-                                                }
+                                        //         {
+                                        //             renderButton(show[i], el.pendaftaran_mulai, el.pendaftaran_selesai, el.kuota_peserta, el.id, i)
+                                        //         }
                                                 
-                                            </Card.Body>
+                                        //     </Card.Body>
 
-                                        </Card>
+                                        // </Card>
                                     :
                                         <Card
                                             key={i}

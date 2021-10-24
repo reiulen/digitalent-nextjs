@@ -18,6 +18,7 @@ import {
   changeStatusListCooperation,
 } from "../../../redux/actions/partnership/mitra.actions";
 
+import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
 const DetailDataKerjasama = dynamic(
   () =>
     import("../../../components/content/partnership/mitra/detailDataKerjasama"),
@@ -38,14 +39,23 @@ export const getServerSideProps = wrapper.getServerSideProps(
   () =>
     async ({ params, req }) => {
       const session = await getSession({ req });
-      if (!session) {
+      const middleware = middlewareAuthAdminSession(session);
+      if (!middleware.status) {
         return {
           redirect: {
-            destination: "http://dts-dev.majapahit.id/login/admin",
+            destination: middleware.redirect,
             permanent: false,
           },
         };
       }
+      // if (!session) {
+      //   return {
+      //     redirect: {
+      //       destination: "http://dts-dev.majapahit.id/login/admin",
+      //       permanent: false,
+      //     },
+      //   };
+      // }
 
       dispatch(getSingleValue(token, params.id));
       dispatch(fetchListSelectCooperation(token));

@@ -140,7 +140,10 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
           <Form.Group className="mb-3" controlId="formGridAddress1">
             <Form.Label>Jenjang Pendidikan</Form.Label>
             <Select
-              placeholder={`${pendidikan.jenjang}`}
+              placeholder={
+                (pendidikan && pendidikan.jenjang) ||
+                "Silahkan Pilih Asal Jenjang Pendidikan"
+              }
               options={optionsJenjangPendidikan}
               defaultValue={jengjangPendidikan}
               onChange={(e) =>
@@ -162,19 +165,22 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
           <Form.Group className="mb-3" controlId="formGridAddress1">
             <Form.Label>Asal Sekolah / Perguruan Tinggi</Form.Label>
             <Select
-              placeholder={`${pendidikan.asal_pendidikan}`}
+              placeholder={
+                (pendidikan && pendidikan.asal_pendidikan) ||
+                "Silahkan Pilih Asal Sekolah"
+              }
               options={optionsAsalSekolah}
               defaultValue={asalSekolah}
               onChange={(e) =>
                 setAsalSekolah({ label: e.label, value: e.value })
               }
               onBlur={() =>
-                simpleValidator.current.showMessageFor("jenjang pendidikan")
+                simpleValidator.current.showMessageFor("asal sekolah")
               }
             />
             {simpleValidator.current.message(
-              "jenjang pendidikan",
-              jengjangPendidikan,
+              "asal sekolah",
+              asalSekolah,
               "required",
               {
                 className: "text-danger",

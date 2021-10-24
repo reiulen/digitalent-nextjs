@@ -1,7 +1,8 @@
 import dynamic from "next/dynamic";
 import { getSession } from "next-auth/client";
+import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
 
-import Layout from "../../../components/templates/layout.component";
+// import Layout from "../../../components/templates/layout.component";
 // import EditImagetron from "../../../components/content/publikasi/imagetron/edit";
 
 import { getDetailImagetron } from "../../../redux/actions/publikasi/imagetron.actions";
@@ -38,14 +39,16 @@ export default function EditImagetronPage(props) {
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ params, req }) => {
   const session = await getSession({ req });
-  if (!session) {
+  const middleware = middlewareAuthAdminSession(session);
+  if (!middleware.status) {
     return {
       redirect: {
-        destination: "/",
+        destination: middleware.redirect,
         permanent: false,
       },
     };
   }
+
   await store.dispatch(getAllKategori(session.user.user.data.token))
   await store.dispatch(getDetailImagetron(params.id, session.user.user.data.token));
   await store.dispatch(getSettingPublikasi(session.user.user.data.token));
