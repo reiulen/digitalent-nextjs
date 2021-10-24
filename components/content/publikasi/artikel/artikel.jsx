@@ -601,7 +601,6 @@ const Artikel = ({ token }) => {
                                       {i + 1 * (page * limit) - (limit - 1)}
                                     </span>
                                 }
-
                               </td>
 
                               <td>
