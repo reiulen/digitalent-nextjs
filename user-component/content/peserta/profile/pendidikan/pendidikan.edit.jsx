@@ -10,7 +10,7 @@ import style from "../style.module.css";
 import {
   updateProfilePendidikan,
   clearErrors,
-  getProfilePendidikan
+  getProfilePendidikan,
 } from "../../../../../redux/actions/pelatihan/profile.actions";
 import { UPDATE_PENDIDIKAN_RESET } from "../../../../../redux/types/pelatihan/profile.type";
 
@@ -64,7 +64,6 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
   let optionsAsalSekolah = [];
 
   useEffect(() => {
-
     if (jengjangPendidikan.value <= 19) {
       return;
     } else if (
@@ -206,7 +205,9 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
               {simpleValidator.current.message(
                 "asal sekolah",
                 asalSekolah,
-                jengjangPendidikan.value >= 20 && jengjangPendidikan.value <= 23 ? "required" : "",
+                jengjangPendidikan.value >= 20 && jengjangPendidikan.value <= 23
+                  ? "required"
+                  : "",
                 {
                   className: "text-danger",
                 }
@@ -230,7 +231,9 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
               {simpleValidator.current.message(
                 "lainya ( sekolah/ pt )",
                 lainya,
-                jengjangPendidikan.value >= 20 && jengjangPendidikan.value <= 23 ? "required" : "",
+                jengjangPendidikan.value >= 20 && jengjangPendidikan.value <= 23
+                  ? "required"
+                  : "",
                 {
                   className: "text-danger",
                 }
@@ -287,7 +290,10 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
                     {simpleValidator.current.message(
                       "ijazah",
                       ijazah,
-                      jengjangPendidikan.value >= 21 && jengjangPendidikan.value <= 23 ? "required" : "",
+                      jengjangPendidikan.value >= 21 &&
+                        jengjangPendidikan.value <= 23
+                        ? "required"
+                        : "",
                       {
                         className: "text-danger",
                       }
@@ -299,6 +305,36 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
                 *JPG/JPEG/PDF (Maksimal ukuran file 5 MB)
               </small>
             </div>
+          )}
+
+          {jengjangPendidikan.value >= 24 && jengjangPendidikan.value <= 27 && (
+            <Form.Group className="mb-3" controlId="formGridAddress1">
+              <Form.Label>Asal Sekolah / Perguruan Tinggi</Form.Label>
+              <Select
+                placeholder={
+                  (pendidikan && pendidikan.asal_pendidikan) ||
+                  "Silahkan Pilih Asal Sekolah"
+                }
+                options={optionsAsalSekolah}
+                defaultValue={asalSekolah}
+                onChange={(e) =>
+                  setAsalSekolah({ label: e.label, value: e.value })
+                }
+                onBlur={() =>
+                  simpleValidator.current.showMessageFor("asal sekolah")
+                }
+              />
+              {simpleValidator.current.message(
+                "asal sekolah",
+                asalSekolah,
+                jengjangPendidikan.value >= 20 && jengjangPendidikan.value <= 23
+                  ? "required"
+                  : "",
+                {
+                  className: "text-danger",
+                }
+              )}
+            </Form.Group>
           )}
 
           {jengjangPendidikan.value >= 24 && jengjangPendidikan.value <= 27 && (
