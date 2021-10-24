@@ -161,7 +161,12 @@ const SubtansiUser = ({ token }) => {
 
   let number = [];
 
-  for (let i = 0; i < random_subtance_question_detail.total_questions; i++) {
+  for (
+    let i = 0;
+    i < random_subtance_question_detail &&
+    random_subtance_question_detail.total_questions;
+    i++
+  ) {
     number.push(i);
   }
 
@@ -237,7 +242,8 @@ const SubtansiUser = ({ token }) => {
                 {data && data.total_questions}
               </p>
               <h1 className={styles.soal}>
-                {data.list_questions &&
+                {data &&
+                data.list_questions &&
                 data.list_questions[parseInt(router.query.id) - 1]
                   .question_image !== null ? (
                   <div className="d-flex flex-row">
@@ -255,10 +261,9 @@ const SubtansiUser = ({ token }) => {
                       />
                     </div>
                     <div className="p-5">
-                      {
+                      {data &&
                         data.list_questions[parseInt(router.query.id) - 1]
-                          .question
-                      }
+                          .question}
                     </div>
                   </div>
                 ) : (
@@ -268,7 +273,8 @@ const SubtansiUser = ({ token }) => {
                 )}
               </h1>
               <hr />
-              {data.list_questions &&
+              {data &&
+                data.list_questions &&
                 JSON.parse(
                   data.list_questions[parseInt(router.query.id) - 1].answer
                 ).map((item, index) => {
@@ -369,12 +375,13 @@ const SubtansiUser = ({ token }) => {
                     className={styles.btnSkip}
                     onClick={handleNext}
                     disabled={
-                      parseInt(router.query.id) === data.total_questions
+                      parseInt(router.query.id) === data && data.total_questions
                     }
                   >
                     Lewati
                   </Button>
-                  {parseInt(router.query.id) === data.total_questions ? (
+                  {parseInt(router.query.id) === data &&
+                  data.total_questions ? (
                     <Button
                       className={styles.btnNext}
                       onClick={handleDone}
@@ -387,7 +394,8 @@ const SubtansiUser = ({ token }) => {
                       className={styles.btnNext}
                       onClick={handleNext}
                       disabled={
-                        parseInt(router.query.id) === data.total_questions
+                        parseInt(router.query.id) === data &&
+                        data.total_questions
                       }
                     >
                       <div className="d-flex flex-row">
