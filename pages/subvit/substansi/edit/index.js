@@ -3,6 +3,11 @@ import { getSession } from "next-auth/client";
 
 import { getDetailSubtanceQuestionBanks } from "../../../../redux/actions/subvit/subtance.actions";
 import { wrapper } from "../../../../redux/store";
+import {
+  dropdownAkademi,
+  dropdownPelatihan,
+  dropdownTema,
+} from "../../../../redux/actions/pelatihan/function.actions";
 
 export default function EditSubstansiStep1Page(props) {
   const session = props.session.user.user.data;
@@ -27,6 +32,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+
+      await store.dispatch(dropdownAkademi(session.user.user.data.token));
+      await store.dispatch(dropdownTema(session.user.user.data.token));
+      await store.dispatch(dropdownPelatihan(session.user.user.data.token));
 
       await store.dispatch(
         getDetailSubtanceQuestionBanks(query.id, session.user.user.data.token)

@@ -56,6 +56,18 @@ export const getServerSideProps = wrapper.getServerSideProps(
         )
       );
 
+      // console.log(session.user.user.data.user.token);
+
+      const data = session.user.user.data;
+
+      if (data.user.roles[0] !== "user") {
+        return {
+          redirect: {
+            destination: "http://dts-dev.majapahit.id/login",
+            permanent: false,
+          },
+        };
+      }
       return {
         props: {
           data: "auth",

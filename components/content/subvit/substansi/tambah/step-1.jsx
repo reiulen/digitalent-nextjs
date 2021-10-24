@@ -15,6 +15,10 @@ import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInput from "/components/StepInput";
 import LoadingPage from "../../../../LoadingPage";
 import styles from "../../trivia/edit/step.module.css";
+import {
+  dropdownPelatihanbyTema,
+  dropdownTemabyAkademi,
+} from "../../../../../redux/actions/pelatihan/function.actions";
 
 const StepOne = ({ token }) => {
   const dispatch = useDispatch();
@@ -27,18 +31,6 @@ const StepOne = ({ token }) => {
   const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(
     (state) => state.drowpdownAkademi
   );
-
-  const { error: dropdownErrorTema, data: dataTema } = useSelector(
-    (state) => state.drowpdownTema
-  );
-
-  const { error: dropdownErrorPelatihan, data: dataPelatihan } = useSelector(
-    (state) => state.drowpdownPelatihan
-  );
-
-  console.log(dataAkademi);
-  console.log(dataTema);
-  console.log(dataPelatihan);
 
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
@@ -66,6 +58,20 @@ const StepOne = ({ token }) => {
       }
     }
   }, [dispatch, success, typeSave, metode, subtance, router]);
+
+  const handleChangeTema = (e) => {
+    setAcademyId(e.target.value);
+    e.target.value && dispatch(dropdownTemabyAkademi(e.target.value, token));
+  };
+
+  const handleChangePelatihan = (e) => {
+    setThemeId(e.target.value);
+    e.target.value && dispatch(dropdownPelatihanbyTema(e.target.value, token));
+  };
+
+  const { data } = useSelector((state) => state.drowpdownTemabyAkademi);
+
+  const { drowpdownPelatihanbyTema } = useSelector((state) => state);
 
   const saveDraft = () => {
     setTypeSave("draft");
@@ -185,9 +191,9 @@ const StepOne = ({ token }) => {
                   name="academy_id"
                   id=""
                   value={academy_id}
-                  onChange={(e) => setAcademyId(e.target.value)}
-                  onBlur={(e) => {
-                    setAcademyId(e.target.value);
+                  onChange={(event) => handleChangeTema(event)}
+                  onBlur={(event) => {
+                    handleChangeTema(event);
                     simpleValidator.current.showMessageFor("academy_id");
                   }}
                   className="form-control"
@@ -225,9 +231,9 @@ const StepOne = ({ token }) => {
                 <select
                   name="the_id"
                   id=""
-                  onChange={(e) => setThemeId(e.target.value)}
-                  onBlur={(e) => {
-                    setThemeId(e.target.value);
+                  onChange={(event) => handleChangePelatihan(event)}
+                  onBlur={(event) => {
+                    handleChangePelatihan(event);
                     simpleValidator.current.showMessageFor("theme_id");
                   }}
                   className="form-control"
@@ -237,15 +243,16 @@ const StepOne = ({ token }) => {
                     {" "}
                     -Pilih Tema-
                   </option>
-                  {dataTema.data.map((item, index) => {
-                    return (
-                      <>
-                        <option value={item.value} key={index}>
-                          {item.label}
-                        </option>
-                      </>
-                    );
-                  })}
+                  {data.data &&
+                    data.data.map((item, index) => {
+                      return (
+                        <>
+                          <option value={item.value} key={index}>
+                            {item.label}
+                          </option>
+                        </>
+                      );
+                    })}
                 </select>
                 {simpleValidator.current.message(
                   "theme_id",
@@ -269,20 +276,21 @@ const StepOne = ({ token }) => {
                   onBlur={(e) => setTrainingId(e.target.value)}
                   className="form-control"
                 >
-                  <option selected disabled>
+                  <option selected disabled value="">
                     {" "}
                     -Pilih Pelatihan-
                   </option>
-                  {dataPelatihan.data.map((item, index) => {
-                    return (
-                      <>
-                        <option value={item.value} key={index}>
-                          {" "}
-                          {item.label}
-                        </option>
-                      </>
-                    );
-                  })}
+                  {drowpdownPelatihanbyTema.data.data &&
+                    drowpdownPelatihanbyTema.data.data.map((item, index) => {
+                      return (
+                        <>
+                          <option value={item.value} key={index}>
+                            {" "}
+                            {item.label}
+                          </option>
+                        </>
+                      );
+                    })}
                 </select>
               </div>
 
