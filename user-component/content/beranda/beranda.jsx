@@ -589,7 +589,7 @@ const Beranda = () => {
                                               //     objectFit="cover"
                                               //   />
                                               // </div>
-                                              
+
                                               <Image 
                                                 src={process.env.END_POINT_API_IMAGE_BEASISWA + element.gambar}
                                                 // src={`https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/${element.gambar}`}
@@ -615,7 +615,8 @@ const Beranda = () => {
                                               // src={`https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/${element.gambar_mitra}`}
                                               layout="fill" 
                                               objectFit="cover"
-                                            />
+                                            /> 
+                                            
                                           </div>
 
                                           <div className="d-flex align-items-center justify-content-between pl-24">
@@ -715,7 +716,8 @@ const Beranda = () => {
                                             height="80vh" 
                                             objectFit="cover"
                                             className="rounded-circle"
-                                          />
+                                          /> 
+                                          
                                         </div>
                                         
                                         <div className="col-6 col-md-6 mt-5">

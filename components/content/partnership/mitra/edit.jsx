@@ -517,7 +517,6 @@ const EditMitra = ({ token }) => {
                             <Image
                               src={
                                 process.env.END_POINT_API_IMAGE_PARTNERSHIP +
-                                
                                 imageview
                               }
                               alt="images"
