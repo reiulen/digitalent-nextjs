@@ -31,9 +31,17 @@ const DashbardSubvit = ({ token }) => {
   const data = [];
   dashboard_subvit &&
     dashboard_subvit.chart &&
-    Object.values(dashboard_subvit.chart).map(function (key, index) {
-      console.log(key);
+    dashboard_subvit.chart.map((item) => {
+      data.push(item);
     });
+
+  let dataItem = [];
+
+  data.map((item) => {
+    return Object.entries(item).map((item) =>
+      dataItem.push({ name: item[0], value: item[1] })
+    );
+  });
 
   // console.log(dashboard_subvit && dashboard_subvit.chart);
 
@@ -272,14 +280,15 @@ const DashbardSubvit = ({ token }) => {
                   <PieChart width={500} height={300}>
                     <Tooltip />
                     <Pie
-                      data={dashboard_subvit && dashboard_subvit.chart}
+                      data={dataItem}
                       cx={250}
                       cy={150}
                       innerRadius={60}
                       outerRadius={80}
                       fill="#8884d8"
+                      dataKey="value"
                     >
-                      {data.map((entry, index) => (
+                      {dataItem.map((entry, index) => (
                         <>
                           <Cell
                             key={`cell-${index}`}
@@ -295,7 +304,7 @@ const DashbardSubvit = ({ token }) => {
                       >
                         {dashboard_subvit &&
                           dashboard_subvit.chart &&
-                          dashboard_subvit.chart.total}
+                          dashboard_subvit.chart[3].total}
                       </Label>
                     </Pie>
                   </PieChart>
