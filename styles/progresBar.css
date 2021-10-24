@@ -142,8 +142,8 @@
   padding-left: 10px;
   cursor: pointer;
   border-radius: 20px;
-  /* z-index: 99; */
-  
+  margin-right: 33px;
+  width: 200px;
 }
 .wrap-accouts .titles-accounts {
   white-space: nowrap;
@@ -180,21 +180,21 @@
 
 .list-wrap-accounts{
   margin-left: 0;
-  padding-left: 0;
-  position: absolute;
-  width: 90%;
-  left: 50%;
-  transform: translateX(-50%);
-  border-top: NONE;
-  border-left: 1px solid #dddddd;
-  border-right: 1px solid #dddddd;
-  top: 85%;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  background-color: white;
-  z-index: 9;
-
-
+    position: absolute;
+    width: 190px;
+    left: 43%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    border-top: NONE;
+    border-left: 1px solid #dddddd;
+    border-right: 1px solid #dddddd;
+    top: 85%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: white;
+    z-index: 9;
+    padding-left: 1px;
+    padding-right: 10px;
 }
 .list-wrap-accounts .items-lists {
   padding-left: 10px;
