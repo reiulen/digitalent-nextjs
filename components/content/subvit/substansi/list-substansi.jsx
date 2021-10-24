@@ -311,7 +311,7 @@ const ListSubstansi = ({ token }) => {
                     </thead>
                     <tbody>
                       {!subtance ||
-                      (subtance && subtance.list_substance.length === 0) ? (
+                        (subtance && subtance.list_substance.length === 0) ? (
                         <td className="align-middle text-center" colSpan={8}>
                           Data Masih Kosong
                         </td>
@@ -324,7 +324,17 @@ const ListSubstansi = ({ token }) => {
                           return (
                             <tr key={subtance.id}>
                               <td className="align-middle text-center">
-                                <span className="">{paginate - dividers}</span>
+                                {/* <span className="">{paginate - dividers}</span> */}
+                                {
+                                  limit === null ?
+                                    <span>
+                                      {i + 1 * (page * 5) - (5 - 1)}
+                                    </span>
+                                    :
+                                    <span>
+                                      {i + 1 * (page * limit) - (limit - 1)}
+                                    </span>
+                                }
                               </td>
                               <td className="align-middle">
                                 <b>
@@ -440,12 +450,12 @@ const ListSubstansi = ({ token }) => {
                 {subtance && subtance.total > 5 ? (
                   <div className="table-total ml-auto">
                     <div className="row">
-                      <div className="col-4 mr-0 p-0">
+                      <div className="col-4 mr-0">
                         <select
                           className="form-control"
                           id="exampleFormControlSelect2"
                           style={{
-                            width: "68px",
+                            width: "70px",
                             background: "#F3F6F9",
                             borderColor: "#F3F6F9",
                             color: "#9E9E9E",
@@ -453,11 +463,16 @@ const ListSubstansi = ({ token }) => {
                           onChange={(e) => handleLimit(e.target.value)}
                           onBlur={(e) => handleLimit(e.target.value)}
                         >
-                          <option>5</option>
+                          <option value='5' selected={limit == "5" ? true : false}>5</option>
+                          <option value='10' selected={limit == "10" ? true : false}>10</option>
+                          <option value='30' selected={limit == "30" ? true : false}>30</option>
+                          <option value='40' selected={limit == "40" ? true : false}>40</option>
+                          <option value='50' selected={limit == "50" ? true : false}>50</option>
+                          {/* <option>5</option>
                           <option>10</option>
                           <option>30</option>
                           <option>40</option>
-                          <option>50</option>
+                          <option>50</option> */}
                         </select>
                       </div>
                       <div className="col-8 my-auto">
@@ -465,7 +480,7 @@ const ListSubstansi = ({ token }) => {
                           className="align-middle mt-3"
                           style={{ color: "#B5B5C3" }}
                         >
-                          Total Data {subtance.total}
+                          Total Data {subtance.total} List Data
                         </p>
                       </div>
                     </div>

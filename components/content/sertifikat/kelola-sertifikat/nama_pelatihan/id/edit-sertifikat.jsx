@@ -364,8 +364,6 @@ export default function EditSertifikat({ token }) {
               `signature_certificate_image[${i}]`,
               signature[i].localSignature
             );
-          } else {
-            formData.append(`signature_certificate_image[${i}]`, "");
           }
 
           formData.append(
@@ -410,8 +408,6 @@ export default function EditSertifikat({ token }) {
                 `signature_certificate_image_syllabus[${i}]`,
                 signatureSyllabus[i].localSignature
               );
-            } else {
-              formData.append(`signature_certificate_image_syllabus[${i}]`, "");
             }
           }
 
@@ -523,7 +519,8 @@ export default function EditSertifikat({ token }) {
                 <div className="border-primary border col-lg-8 col-12 position-relative">
                   <div className="p-0" ref={divReference}>
                     {localBackground ? (
-                      <Image
+                      <img
+                        className="position-absolute w-100 h-100"
                         src={localBackground}
                         alt="LocalBackground.png"
                         layout="fill"
@@ -532,7 +529,8 @@ export default function EditSertifikat({ token }) {
                         id={localBackground}
                       />
                     ) : background ? (
-                      <Image
+                      <img
+                        className="position-absolute w-100 h-100"
                         src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/background/${background}`}
                         alt={`Background Image ${background}`}
                         layout="fill"
@@ -1209,14 +1207,16 @@ export default function EditSertifikat({ token }) {
                   <div className="border-primary p-0 border col-lg-8 col-12 position-relative">
                     <div className="p-0" ref={divReferenceSilabus}>
                       {localBackgroundSyllabus ? (
-                        <Image
+                        <img
+                          className="position-absolute w-100 h-100"
                           src={localBackgroundSyllabus}
                           alt="LocalBackground.png"
                           layout="fill"
                           objectFit="fill"
                         />
                       ) : background_syllabus ? (
-                        <Image
+                        <img
+                          className="position-absolute w-100 h-100"
                           src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/background-syllabus/${background_syllabus}`}
                           alt={`Background Image ${background_syllabus}`}
                           layout="fill"
@@ -1307,7 +1307,8 @@ export default function EditSertifikat({ token }) {
                                       >
                                         {signatureSyllabus[i]
                                           ?.localSignature ? (
-                                          <Image
+                                          <img
+                                            className="position-absolute w-100 h-100"
                                             src={
                                               signatureSyllabus[i]
                                                 ?.localSignature
@@ -1316,7 +1317,8 @@ export default function EditSertifikat({ token }) {
                                             alt={`Tanda tangan ${i + 1} `}
                                           />
                                         ) : signatureSyllabus[i]?.signature ? (
-                                          <Image
+                                          <img
+                                            className="position-absolute w-100 h-100"
                                             src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/signature-certificate-image-syllabus/${signatureSyllabus[i]?.signature}`}
                                             layout="fill"
                                             alt={`Tanda tangan ${i + 1} `}
