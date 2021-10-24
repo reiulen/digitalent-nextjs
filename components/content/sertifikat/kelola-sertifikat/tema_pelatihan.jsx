@@ -342,15 +342,11 @@ export default function NamaPelatihan({ token }) {
                           return (
                             <tr key={certificate.id}>
                               <td className="align-middle text-center">
-                                {limit === null ? (
-                                  <span className="badge ">
-                                    {i + 1 * (page * 5) - (5 - 1)}
-                                  </span>
-                                ) : (
-                                  <span className="badge ">
-                                    {i + 1 * (page * limit) - (limit - 1)}
-                                  </span>
-                                )}
+                                {allCertificates.page === 1
+                                  ? i + 1
+                                  : (allCertificates.page - 1) *
+                                      allCertificates.limit +
+                                    (i + 1)}
                               </td>
                               {/* START TABLE DATA */}
                               <td className="align-middle">
