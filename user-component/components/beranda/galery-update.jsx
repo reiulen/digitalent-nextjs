@@ -11,7 +11,7 @@ export default function galeryUpdate({gambar}) {
       <div className="images-shapes">
         <Image src={ImageShapes2}  layout="fill" objectFit="fill"/>
       </div>
-    <div style={{ backgroundColor: "#FAFAFB" }} className="py-0 py-xl-30">
+    <div style={{ backgroundColor: "#FAFAFB" }} className="py-0 py-xl-15">
       <div className="container-fluid">
             <div className="row">
               <div className="col-12 col-xl-6">
@@ -27,7 +27,7 @@ export default function galeryUpdate({gambar}) {
                     Scholarship
                   </p>
                   <Link href="/login">
-                    <a>
+                    {/* <a>
                       <button className="btn btn-sm btn-login-peserta px-12 py-3 mt-20">
                         Lihat Selengkapnya
                         <IconArrow
@@ -38,7 +38,19 @@ export default function galeryUpdate({gambar}) {
                           style={{ transform: "rotate(0)" }}
                         />
                       </button>
-                    </a>
+                    </a> */}
+                    <a>
+              <button className="btn btn-outline-primary-new rounded-pill py-3 px-12 mt-20">
+                Lihat Selengkapnya
+                <IconArrow
+                  width="8"
+                  height="10"
+                  fill="#0063CC"
+                  className="ml-2"
+                  style={{ transform: "rotate(0)" }}
+                />
+              </button>
+            </a>
                   </Link>
                 </div>
               </div>
