@@ -57,10 +57,7 @@ const Navigationbar = ({ session }) => {
               id="basic-nav-dropdown"
               className="navdropdown-child"
             >
-              <NavDropdown.Item
-                href="/"
-                className="navdropdown-child"
-              >
+              <NavDropdown.Item href="/" className="navdropdown-child">
                 Beranda
               </NavDropdown.Item>
               <div className="btn-group dropright">
@@ -205,11 +202,20 @@ const Navigationbar = ({ session }) => {
               <div className="position-relative">
                 <div
                   className="wrap-accouts"
+                  style={!isShowDropdown ? {borderRadius: "20px"} : {}}
                   onClick={() =>
                     setIsShowDropdown(isShowDropdown ? false : true)
                   }
                 >
-                  <div className="dot-accouts"></div>
+                  {/* <div className="dot-accouts"></div> */}
+                  <Image
+                  className="rounded-circle"
+                    src={`${dataPribadi.file_path + dataPribadi.foto}`}
+                    width={32}
+                    height={32}
+                    alt="brand-navbar"
+                    />
+                    {console.log(dataPribadi)}
                   <span className="titles-accounts">
                     {dataPribadi.name || "-"}
                   </span>
@@ -237,18 +243,15 @@ const Navigationbar = ({ session }) => {
                       <li className="items-lists">
                         <i className="ri-book-read-line mr-2"></i>PELATIHAN
                       </li>
-                    </Link>
-                      {" "}
-                      <li className="items-lists">
-                        <i className="ri-bar-chart-horizontal-line mr-2"></i>
-                        ARTIKEL
-                      </li>
-                      {" "}
-                      <li className="items-lists">
-                        <i className="ri-settings-4-line mr-2"></i>
-                        PENGATURAN
-                      </li>
-
+                    </Link>{" "}
+                    <li className="items-lists">
+                      <i className="ri-bar-chart-horizontal-line mr-2"></i>
+                      ARTIKEL
+                    </li>{" "}
+                    <li className="items-lists">
+                      <i className="ri-settings-4-line mr-2"></i>
+                      PENGATURAN
+                    </li>
                     <li className="items-lists">
                       <button
                         className="btn btn-sm btn-login-peserta w-100 d-flex align-items-center justify-content-center"

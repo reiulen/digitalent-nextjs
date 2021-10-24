@@ -216,14 +216,16 @@ const Sidebar = () => {
         </div>
       </div>
       <div>
-        <div className={`${styles.menuItem} d-flex flex-row`}>
-          <div className="p-2">
-            <i className={`${styles.iconMenu} ri-survey-line`}></i>
+        <Link href="/peserta/administrasi" passHref>
+          <div className={`${styles.menuItem} d-flex flex-row`}>
+            <div className="p-2">
+              <i className={`${styles.iconMenu} ri-survey-line`}></i>
+            </div>
+            <div className="p-2">
+              <td>Administrasi</td>
+            </div>
           </div>
-          <div className="p-2">
-            <td>Administrasi</td>
-          </div>
-        </div>
+        </Link>
       </div>
 
       <div
