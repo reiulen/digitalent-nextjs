@@ -56,7 +56,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
         )
       );
 
-<<<<<<< HEAD
       // console.log(session.user.user.data.user.token);
 
       const data = session.user.user.data;
@@ -69,8 +68,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
-=======
->>>>>>> 807b4a7de637fc677572fdc6da5861f3727a8ddd
       return {
         props: {
           data: "auth",

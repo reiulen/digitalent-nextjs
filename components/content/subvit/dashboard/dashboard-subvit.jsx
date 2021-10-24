@@ -29,6 +29,21 @@ const DashbardSubvit = ({ token }) => {
   const { dashboard_subvit } = useSelector((state) => state.dashboardSubvit);
 
   const data = [];
+  dashboard_subvit &&
+    dashboard_subvit.chart &&
+    Object.values(dashboard_subvit.chart).map(function (key, index) {
+      console.log(key);
+    });
+
+  // console.log(dashboard_subvit && dashboard_subvit.chart);
+
+  // console.log(
+  //   dashboard_subvit &&
+  //     dashboard_subvit.chart.map((item) => {
+  //       console.log(item);
+  //     })
+  // );
+
   useEffect(() => {
     dispatch(
       getDashboardSubvit(
@@ -257,13 +272,12 @@ const DashbardSubvit = ({ token }) => {
                   <PieChart width={500} height={300}>
                     <Tooltip />
                     <Pie
-                      data={data.slice(0, 3)}
+                      data={dashboard_subvit && dashboard_subvit.chart}
                       cx={250}
                       cy={150}
                       innerRadius={60}
                       outerRadius={80}
                       fill="#8884d8"
-                      dataKey="value"
                     >
                       {data.map((entry, index) => (
                         <>
@@ -304,7 +318,7 @@ const DashbardSubvit = ({ token }) => {
                       <div className={`${styles.substansi} p-2`}>
                         {dashboard_subvit &&
                           dashboard_subvit.chart &&
-                          dashboard_subvit.chart.total_substansi}
+                          dashboard_subvit.chart[0].total_substansi}
                         <br />
                         <span className={styles.subTextTotal}>Substansi</span>
                       </div>
@@ -324,7 +338,7 @@ const DashbardSubvit = ({ token }) => {
                       <div className={`${styles.survey} p-2`}>
                         {dashboard_subvit &&
                           dashboard_subvit.chart &&
-                          dashboard_subvit.chart.total_survey}
+                          dashboard_subvit.chart[1].total_survey}
                         <br />
                         <span className={styles.subTextTotal}>Survey</span>
                       </div>
@@ -343,7 +357,7 @@ const DashbardSubvit = ({ token }) => {
                       <div className={`${styles.trivia} p-2`}>
                         {dashboard_subvit &&
                           dashboard_subvit.chart &&
-                          dashboard_subvit.chart.total_trivia}
+                          dashboard_subvit.chart[2].total_trivia}
                         <br />
                         <span className={styles.subTextTotal}>Trivia</span>
                       </div>
@@ -412,7 +426,11 @@ const DashbardSubvit = ({ token }) => {
                   })}
                 <div className={`${styles.rowBottom} row`}>
                   <div className={`${styles.total} col-sm-6 mt-5`}>
-                    Total: 0 Peserta
+                    Total:{" "}
+                    {dashboard_subvit &&
+                      dashboard_subvit.substansi &&
+                      dashboard_subvit.substansi.total_participant}{" "}
+                    Peserta
                   </div>
                   <div className="col-sm-6" style={{ textAlign: "right" }}>
                     <button
@@ -506,7 +524,11 @@ const DashbardSubvit = ({ token }) => {
                   })}
                 <div className={`${styles.rowBottom} row`}>
                   <div className={`${styles.total} col-sm-6 mt-5`}>
-                    Total: 0 Peserta
+                    Total:{" "}
+                    {dashboard_subvit &&
+                      dashboard_subvit.trivia &&
+                      dashboard_subvit.trivia.total_participant}{" "}
+                    Peserta
                   </div>
                   <div className="col-sm-6" style={{ textAlign: "right" }}>
                     <button
@@ -597,7 +619,11 @@ const DashbardSubvit = ({ token }) => {
                   })}
                 <div className={`${styles.rowBottom} row`}>
                   <div className={`${styles.total} col-sm-6 mt-5`}>
-                    Total: 0 Peserta
+                    Total:{" "}
+                    {dashboard_subvit &&
+                      dashboard_subvit.survey &&
+                      dashboard_subvit.survey.total_participant}{" "}
+                    Peserta
                   </div>
                   <div className="col-sm-6" style={{ textAlign: "right" }}>
                     <button
