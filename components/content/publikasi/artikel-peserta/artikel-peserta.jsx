@@ -285,7 +285,6 @@ const ArtikelPeserta = ({ token }) => {
 
     return (
         <PageWrapper>
-            {console.log("Data Awal", artikel_peserta)}
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
                     <div className="alert-icon"><i className="flaticon-warning"></i></div>
@@ -332,7 +331,8 @@ const ArtikelPeserta = ({ token }) => {
                         background="bg-light-info"
                         icon="new/open-book.svg"
                         color='#ffffff'
-                        value={artikel_peserta && artikel_peserta.publish != "" ? artikel_peserta.publish : 0}
+                        value={0}
+                        // value={artikel_peserta && artikel_peserta.publish != "" ? artikel_peserta.publish : 0}
                         titleValue="Artikel"
                         title="Total Publish"
                         publishedVal="1"
@@ -343,7 +343,8 @@ const ArtikelPeserta = ({ token }) => {
                         background="bg-light-danger"
                         icon="Library.svg"
                         color='#ffffff'
-                        value={artikel_peserta && artikel_peserta.unpublish != "" ? artikel_peserta.unpublish : 0}
+                        value={0}
+                        // value={artikel_peserta && artikel_peserta.unpublish != "" ? artikel_peserta.unpublish : 0}
                         titleValue="Artikel"
                         title="Total Belum Publish"
                         publishedVal="0"
@@ -356,7 +357,6 @@ const ArtikelPeserta = ({ token }) => {
             <div className="col-lg-12 order-1 px-0">
                 <div className="card card-custom card-stretch gutter-b">
                     <div className="card-header border-0">
-                        {/* <h3 className="card-title font-weight-bolder text-dark">Artikel Peserta</h3> */}
                         <h3 className={`${styles.headTitle}`}>Artikel Peserta</h3>
                         <div className="card-toolbar">
                             {/* <Link href="/publikasi/artikel-peserta/tambah">
@@ -566,93 +566,102 @@ const ArtikelPeserta = ({ token }) => {
                                             {
                                                 !artikel_peserta || artikel_peserta && artikel_peserta.artikel.length === 0 ?
                                                     <td className='align-middle text-center' colSpan={9}>Data Tidak Ditemukan</td> :
-                                                    artikel_peserta && artikel_peserta.artikel && artikel_peserta.artikel.map((row, i) => {
-                                                        // console.log("DATA ROW :", row)
-                                                        return <tr key={row.id}>
-                                                            <td className='align-middle text-center'>
-                                                                {
-                                                                    limit === null ?
-                                                                        <span>
-                                                                            {i + 1 * (page * 5) - (5 - 1)}
-                                                                        </span>
-                                                                        :
-                                                                        <span>
-                                                                            {i + 1 * (page * limit) - (limit - 1)}
-                                                                        </span>
-                                                                }
+                                                    <td className='align-middle text-center' colSpan={9}>Data Tidak Ditemukan</td>
+                                                    // artikel_peserta && artikel_peserta.artikel && artikel_peserta.artikel.map((row, i) => {
+                                                    //     // console.log("DATA ROW :", row)
+                                                    //     return <tr key={row.id}>
+                                                    //         <td className='align-middle text-center'>
+                                                    //             {
+                                                    //                 limit === null ?
+                                                    //                     <span>
+                                                    //                         {i + 1 * (page * 5) - (5 - 1)}
+                                                    //                     </span>
+                                                    //                     :
+                                                    //                     <span>
+                                                    //                         {i + 1 * (page * limit) - (limit - 1)}
+                                                    //                     </span>
+                                                    //             }
 
-                                                            </td>
-                                                            <td className='text-center'>
-                                                                <Image
-                                                                    alt={row.judul_artikel}
-                                                                    unoptimized={process.env.ENVIRONMENT !== "PRODUCTION"}
-                                                                    src={process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + row.gambar}
-                                                                    width={80}
-                                                                    height={50}
-                                                                />
-                                                            </td>
-                                                            <td className='align-middle'>{row.nama_kategori}</td>
-                                                            <td className='align-middle' style={{overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',maxWidth:'11rem'}}>{row.judul_artikel}</td>
-                                                            <td className="align-middle">
-                                                                {row.publish === 1 ? (
-                                                                    row.tanggal_publish
-                                                                ) : (
-                                                                    <span className="label label-inline label-light-danger font-weight-bold">
-                                                                        Belum dipublish
-                                                                    </span>
-                                                                )}
-                                                            </td>
-                                                            <td className='align-middle'>{row.name}</td>
-                                                            <td className='align-middle'>
-                                                                {row.publish === 1 ?
-                                                                    <span className="label label-inline label-light-success font-weight-bold">
-                                                                        Publish
-                                                                    </span>
-                                                                    :
-                                                                    <span className="label label-inline label-light-warning font-weight-bold">
-                                                                        Belum dipublish
-                                                                    </span>
-                                                                }
+                                                    //         </td>
+                                                    //         <td className='text-center'>
+                                                    //             <Image
+                                                    //                 alt={row.judul_artikel}
+                                                    //                 unoptimized={process.env.ENVIRONMENT !== "PRODUCTION"}
+                                                    //                 src={process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + row.gambar}
+                                                    //                 width={80}
+                                                    //                 height={50}
+                                                    //             />
+                                                    //         </td>
+                                                    //         <td className='align-middle'>{row.nama_kategori}</td>
+                                                    //         <td className='align-middle' style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '11rem' }}>{row.judul_artikel}</td>
+                                                    //         <td className="align-middle">
+                                                    //             {row.publish === 1 ? (
+                                                    //                 row.tanggal_publish
+                                                    //             ) : (
+                                                    //                 <span className="label label-inline label-light-danger font-weight-bold">
+                                                    //                     Belum dipublish
+                                                    //                 </span>
+                                                    //             )}
+                                                    //         </td>
+                                                    //         <td className='align-middle'>{row.name}</td>
+                                                    //         <td className='align-middle'>
+                                                    //             {row.publish === 1 ?
+                                                    //                 <span className="label label-inline label-light-success font-weight-bold">
+                                                    //                     Publish
+                                                    //                 </span>
+                                                    //                 :
+                                                    //                 <span className="label label-inline label-light-warning font-weight-bold">
+                                                    //                     Belum dipublish
+                                                    //                 </span>
+                                                    //             }
 
-                                                            </td>
-                                                            <td className='align-middle'>{row.role[0].name}</td>
-                                                            <td className='align-middle d-flex'>
-                                                                <Link
-                                                                    href={`/publikasi/artikel-peserta/preview/${row.id}`}
-                                                                >
-                                                                    <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete" target="_blank">
-                                                                        <i className="ri-todo-fill p-0 text-white"></i>
-                                                                        <div className="text-hover-show-hapus">
-                                                                            Pratinjau
-                                                                        </div>
-                                                                    </a>
-                                                                </Link>
+                                                    //         </td>
+                                                    //         <td className='align-middle'>
+                                                    //             {
+                                                    //                 // console.log(typeof row.role === "string")
+                                                    //                 typeof row.role === "string" ?
+                                                    //                     row.role
+                                                    //                     : row.role[0].name
+                                                    //             }
+                                                    //             {/* {row.role[0].name} */}
+                                                    //         </td>
+                                                    //         <td className='align-middle d-flex'>
+                                                    //             <Link
+                                                    //                 href={`/publikasi/artikel-peserta/preview/${row.id}`}
+                                                    //             >
+                                                    //                 <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete" target="_blank">
+                                                    //                     <i className="ri-todo-fill p-0 text-white"></i>
+                                                    //                     <div className="text-hover-show-hapus">
+                                                    //                         Pratinjau
+                                                    //                     </div>
+                                                    //                 </a>
+                                                    //             </Link>
 
-                                                                <Link
-                                                                    href={`/publikasi/artikel-peserta/${row.id}`}
-                                                                >
-                                                                    <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete">
-                                                                        <i className="ri-pencil-fill p-0 text-white"></i>
-                                                                        <div className="text-hover-show-hapus">
-                                                                            Ubah
-                                                                        </div>
-                                                                    </a>
-                                                                </Link>
+                                                    //             <Link
+                                                    //                 href={`/publikasi/artikel-peserta/${row.id}`}
+                                                    //             >
+                                                    //                 <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete">
+                                                    //                     <i className="ri-pencil-fill p-0 text-white"></i>
+                                                    //                     <div className="text-hover-show-hapus">
+                                                    //                         Ubah
+                                                    //                     </div>
+                                                    //                 </a>
+                                                    //             </Link>
 
-                                                                <button
-                                                                    className="btn btn-link-action bg-blue-secondary text-white my-5 position-relative btn-delete"
-                                                                    onClick={() => handleDelete(row.id)}
-                                                                >
-                                                                    <i className="ri-delete-bin-fill p-0 text-white"></i>
-                                                                    <div className="text-hover-show-hapus">
-                                                                        Hapus
-                                                                    </div>
-                                                                </button>
+                                                    //             <button
+                                                    //                 className="btn btn-link-action bg-blue-secondary text-white my-5 position-relative btn-delete"
+                                                    //                 onClick={() => handleDelete(row.id)}
+                                                    //             >
+                                                    //                 <i className="ri-delete-bin-fill p-0 text-white"></i>
+                                                    //                 <div className="text-hover-show-hapus">
+                                                    //                     Hapus
+                                                    //                 </div>
+                                                    //             </button>
 
-                                                            </td>
-                                                        </tr>
+                                                    //         </td>
+                                                    //     </tr>
 
-                                                    })
+                                                    // })
                                             }
                                         </tbody>
                                     </table> : ''
@@ -661,21 +670,22 @@ const ArtikelPeserta = ({ token }) => {
 
                             <div className="row">
                                 {artikel_peserta && artikel_peserta.perPage < artikel_peserta.total &&
-                                    <div className={`${stylesPag.pagination} table-pagination`}>
-                                        <Pagination
-                                            activePage={page}
-                                            itemsCountPerPage={artikel_peserta.perPage}
-                                            totalItemsCount={artikel_peserta.total}
-                                            pageRangeDisplayed={3}
-                                            onChange={handlePagination}
-                                            nextPageText={'>'}
-                                            prevPageText={'<'}
-                                            firstPageText={'<<'}
-                                            lastPageText={'>>'}
-                                            itemClass='page-item'
-                                            linkClass='page-link'
-                                        />
-                                    </div>
+                                null
+                                    // <div className={`${stylesPag.pagination} table-pagination`}>
+                                    //     <Pagination
+                                    //         activePage={page}
+                                    //         itemsCountPerPage={artikel_peserta.perPage}
+                                    //         totalItemsCount={artikel_peserta.total}
+                                    //         pageRangeDisplayed={3}
+                                    //         onChange={handlePagination}
+                                    //         nextPageText={'>'}
+                                    //         prevPageText={'<'}
+                                    //         firstPageText={'<<'}
+                                    //         lastPageText={'>>'}
+                                    //         itemClass='page-item'
+                                    //         linkClass='page-link'
+                                    //     />
+                                    // </div>
                                 }
                                 {artikel_peserta ?
                                     <div className={`${stylesPag.rightPag} table-total ml-auto`}>
@@ -705,7 +715,8 @@ const ArtikelPeserta = ({ token }) => {
                                                     className="align-middle mt-5 pt-1"
                                                     style={{ color: "#B5B5C3" }}
                                                 >
-                                                    Total Data {artikel_peserta.total} List Data
+                                                    Total Data 0 List Data
+                                                    {/* Total Data {artikel_peserta.total} List Data */}
                                                 </p>
                                             </div>
                                         </div>

@@ -1,5 +1,6 @@
 import dynamic from "next/dynamic";
 import { getSession } from "next-auth/client";
+import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
 
 // import Layout from "../../../components/templates/layout.component";
 // import EditFaq from "../../../components/content/publikasi/faq/edit";
@@ -13,8 +14,6 @@ import LoadingPage from "../../../components/LoadingPage";
 const EditFaq = dynamic(
   () => import("../../../components/content/publikasi/faq/edit"),
   {
-    // suspense: true,
-    // loading: () => <LoadingSkeleton />,
     loading: function loadingNow() {
       return <LoadingPage />;
     },
@@ -37,14 +36,16 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ params, req }) => {
       const session = await getSession({ req });
-      if (!session) {
+      const middleware = middlewareAuthAdminSession(session);
+      if (!middleware.status) {
         return {
           redirect: {
-            destination: "http://dts-dev.majapahit.id/login/admin",
+            destination: middleware.redirect,
             permanent: false,
           },
         };
       }
+
       await store.dispatch(
         getDetailFaq(params.id, session.user.user.data.token)
       );
@@ -57,8 +58,3 @@ export const getServerSideProps = wrapper.getServerSideProps(
       };
     }
 );
-
-// export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ params }) => {
-//     await store.dispatch(getDetailFaq(params.id));
-//     await store.dispatch(getAllKategoriInput("Faq"));
-// });

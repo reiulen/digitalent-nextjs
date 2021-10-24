@@ -645,7 +645,7 @@ const Berita = ({ token }) => {
                                                             </td>
 
                                                             <td className='align-middle'>{row.kategori}</td>
-                                                            <td className='align-middle' style={{overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',maxWidth:'11rem'}}>{row.judul_berita}</td>
+                                                            <td className='align-middle' style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '11rem' }}>{row.judul_berita}</td>
                                                             <td className='align-middle'>
                                                                 {
                                                                     row.publish === 1 ? (
@@ -674,6 +674,11 @@ const Berita = ({ token }) => {
                                                             </td>
                                                             <td className='align-middle'>
                                                                 {row.role[0].name}
+                                                                {/* {
+                                                                    typeof row.role === "string" ?
+                                                                        row.role
+                                                                        : row.role[0].name
+                                                                } */}
                                                             </td>
                                                             <td className="align-middle d-flex">
 
