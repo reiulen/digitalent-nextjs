@@ -17,7 +17,10 @@ const Beranda = dynamic(() =>
 const Wrapper = dynamic(() => import("../components/wrapper/beranda.wrapper"));
 
 export default function HomePage(props) {
-  const session = props.session.user.user.data;
+  let session = null;
+  if (props.session) {
+    session = props.session.user.user.data;
+  }
 
   return (
     <>
