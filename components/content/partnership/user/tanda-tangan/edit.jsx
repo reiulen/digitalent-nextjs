@@ -147,10 +147,7 @@ const EditTandaTangan = ({token}) => {
     }
   };
 
-  const imgSignature = process.env.END_POINT_API_IMAGE_PARTNERSHIP;
-  const myLoader = ({ src }) => {
-    return `${imgSignature}/partnership/images/signatures/${tandaTangan}`;
-  };
+ 
 
   const [nama, setNama] = useState("");
   const [jabatan, setJabatan] = useState("");

@@ -587,12 +587,13 @@ const Beranda = () => {
 
                                         > 
                                           <div className="rounded mt-0 pt-0">
-                                            <Image 
+                                           
+                                            {/* <Image 
                                               src={process.env.END_POINT_API_IMAGE_PARTNERSHIP + element.gambar_mitra}
-                                              // src={`https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/${element.gambar_mitra}`}
                                               layout="fill" 
                                               objectFit="cover"
-                                            />
+                                            /> */}
+                                            
                                           </div>
 
                                           <div className="d-flex align-items-center justify-content-between pl-24">
@@ -680,15 +681,15 @@ const Beranda = () => {
                                     <div className="col-12 col-md-8">
                                       <div className="row ml-5">
                                         <div className="col-12 col-md-2">
-                                          <Image 
-                                            // src={`/assets/media/logo-vsga-1.svg`}
-                                            src={process.env.END_POINT_API_IMAGE_PARTNERSHIP + cardImageMitra}
-                                            // src={`https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/${cardImageMitra}`}
+                                          
+                                          {/* <Image 
+                                           src={process.env.END_POINT_API_IMAGE_PARTNERSHIP + cardImageMitra}
                                             width="80vw"
                                             height="80vh" 
                                             objectFit="cover"
                                             className="rounded-circle"
-                                          />
+                                          /> */}
+                                          
                                         </div>
                                         
                                         <div className="col-6 col-md-6">
