@@ -3,7 +3,6 @@ import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddle
 
 import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
-// import ListAcademy from "../../../components/content/pelatihan/academy/list-academy";
 import { getAllAcademy } from "../../../redux/actions/pelatihan/academy.actions";
 
 import { wrapper } from "../../../redux/store";

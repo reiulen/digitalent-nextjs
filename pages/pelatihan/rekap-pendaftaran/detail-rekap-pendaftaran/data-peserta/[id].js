@@ -2,7 +2,15 @@ import React, { Suspense } from "react";
 
 import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../../../components/LoadingSkeleton";
-// import DataParticipant from "../../../../../components/content/pelatihan/summary/data-participant";
+import {
+  getReminderBerkas,
+  getDataPribadi,
+  getRiwayatPelatihan,
+  getBerkasPendaftaran,
+  getFormKomitmen,
+  getFormLpj,
+} from "../../../../../redux/actions/pelatihan/summary.actions";
+import { middlewareAuthAdminSession } from "../../../../../utils/middleware/authMiddleware";
 
 import { wrapper } from "../../../../../redux/store";
 import { getSession } from "next-auth/client";
@@ -34,10 +42,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req, params }) => {
       const session = await getSession({ req });
-      if (!session) {
+      const middleware = middlewareAuthAdminSession(session);
+      if (!middleware.status) {
         return {
           redirect: {
-            destination: "http://dts-dev.majapahit.id/login/admin",
+            destination: middleware.redirect,
             permanent: false,
           },
         };

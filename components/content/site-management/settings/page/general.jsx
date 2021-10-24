@@ -20,11 +20,13 @@ const GeneralPage = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
   const [imageLogo, setImageLogo] = useState("");
+  const [imageLogo2, setImageLogo2] = useState("");
   const [description, setDescription] = useState("");
   const [address, setAddress] = useState("");
   const [imageLogoApi, setImageLogoApi] = useState("");
-  const [imageLogoApiFooter, setImageLogoApiFooter] = useState("");
+  const [imageLogoApi2, setImageLogoApi2] = useState("");
   const [imageLogoApiOld, setImageLogoApiOld] = useState("");
+  const [imageLogoApiOld2, setImageLogoApiOld2] = useState("");
   const [isUpdate, setIsUpdate] = useState(false);
   const [color, setColor] = useState([
     {
@@ -66,11 +68,6 @@ const GeneralPage = ({ token }) => {
     },
   ]);
 
-  // const [error, setError] = useState({
-  //   imageLogo: "",
-  //   caption: "",
-  //   description: "",
-  // });
 
   const submit = (e) => {
     e.preventDefault();
@@ -98,16 +95,18 @@ const GeneralPage = ({ token }) => {
         if (result.value) {
 
           const sendData = {
-            alamat: address,
-            external_link: formExternalLink,
             logo: {
               header_logo: imageLogo,
-              footer_logo: imageLogoApiFooter,
+              footer_logo: imageLogo2,
             },
             logo_description: description,
             social_media: formSocialMedia,
+            external_link: formExternalLink,
+            alamat: address,
             color: color,
           };
+
+          console.log("sendData",sendData)
 
 
          
@@ -196,6 +195,40 @@ const GeneralPage = ({ token }) => {
       }
     }
   };
+  const onChangeImage2 = (e) => {
+    if (imageLogoApi2) {
+      setImageLogoApi2("");
+      let selectedFile = e.target.files[0];
+      if (selectedFile) {
+        if (selectedFile && selectedFile.size <= fileMax) {
+          let reader = new FileReader();
+          reader.readAsDataURL(selectedFile);
+          reader.onloadend = (e) => {
+            setImageLogo(e.target.result);
+          };
+        } else {
+          notify("gambar harus PNG atau JPG dan max size 2mb");
+        }
+      } else {
+        notify("upload gambar dulu");
+      }
+    } else {
+      let selectedFile = e.target.files[0];
+      if (selectedFile) {
+        if (selectedFile && selectedFile.size <= fileMax) {
+          let reader = new FileReader();
+          reader.readAsDataURL(selectedFile);
+          reader.onloadend = (e) => {
+            setImageLogo2(e.target.result);
+          };
+        } else {
+          notify("gambar harus PNG atau JPG dan max size 2mb");
+        }
+      } else {
+        notify("upload gambar dulu");
+      }
+    }
+  };
 
   const removeImageLogo = () => {
     if (imageLogoApi) {
@@ -203,6 +236,14 @@ const GeneralPage = ({ token }) => {
     } else {
       setImageLogo("");
       setImageLogoApi(imageLogoApiOld);
+    }
+  };
+  const removeImageLogo2 = () => {
+    if (imageLogoApi2) {
+      setImageLogoApi2("");
+    } else {
+      setImageLogo2("");
+      setImageLogoApi2(imageLogoApiOld2);
     }
   };
 
@@ -293,7 +334,9 @@ const GeneralPage = ({ token }) => {
           }
         );
 
-        if (data) {  }
+        setIsUpdate(true)
+ 
+        // if (data) {  }
       } catch (error) {
         notify(error.response.data.message);
       }
@@ -412,18 +455,18 @@ const GeneralPage = ({ token }) => {
                         <div>
                           <div className="image-input image-input-outline">
                             <div className="image-input-wrapper">
-                              {imageLogoApi === ""
-                                ? imageLogo && (
+                              {imageLogoApi2 === ""
+                                ? imageLogo2 && (
                                     <Image
-                                      src={imageLogo}
+                                      src={imageLogo2}
                                       layout="fill"
                                       objectFit="fill"
                                       alt="imageLogo"
                                     />
                                   )
-                                : imageLogoApi && (
+                                : imageLogoApi2 && (
                                     <Image
-                                      src={`${process.env.END_POINT_API_IMAGE_SITE_MANAGEMENT}site-management/images/${imageLogoApi}`}
+                                      src={`${process.env.END_POINT_API_IMAGE_SITE_MANAGEMENT}site-management/images/${imageLogoApi2}`}
                                       layout="fill"
                                       objectFit="fill"
                                       alt="imageLogo"
@@ -443,7 +486,7 @@ const GeneralPage = ({ token }) => {
                                 type="file"
                                 name="profile_avatar"
                                 accept=".png, .jpg, .jpeg .svg"
-                                onChange={(e) => onChangeImage(e)}
+                                onChange={(e) => onChangeImage2(e)}
                               />
                               <input
                                 type="hidden"
@@ -467,7 +510,7 @@ const GeneralPage = ({ token }) => {
                             >
                               <i
                                 className="ki ki-bold-close icon-xs text-muted"
-                                onClick={() => removeImageLogo()}
+                                onClick={() => removeImageLogo2()}
                               ></i>
                             </span>
                           </div>
@@ -477,16 +520,6 @@ const GeneralPage = ({ token }) => {
                         </div>
                       </div>
                      
-
-
-
-
-
-
-
-
-
-
                   </div>
                   <div className="form-group">
                     <label>Desciption:</label>

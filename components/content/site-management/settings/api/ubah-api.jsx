@@ -23,11 +23,9 @@ const UbahApi = ({ token }) => {
   let selectRefListField = null;
 
   const detailApi = useSelector((state) => state.detailApi);
+  console.log("detailApi",detailApi)
    const [optionListField, setOptionListField] = useState([]);
   const listApi = useSelector(state => state.listApi)
-
- 
-
   const [optionListApi, setOptionListApi] = useState(listApi.listApi.map((items)=>{
     return {label:items.api_url,value:items.api_url,id:items.id}
   }))
@@ -40,9 +38,11 @@ const UbahApi = ({ token }) => {
 const [defaultValueListField, setDefaultValueListField] = useState(detailApi.apies.data.fields.map((items)=>{
   return {label:items,value:items}
 }))
+
+const [valueField, setValueField] = useState([])
   const [from, setFrom] = useState(detailApi.apies.data.from_date);
   const [to, setTo] = useState(detailApi.apies.data.to_date);
-  const [field, setField] = useState([]);
+  const [field, setField] = useState(detailApi.apies.data.fields);
 
   const onChangePeriodeDateStart = (date) => {
     setFrom(moment(date).format("YYYY-MM-DD"));
@@ -52,13 +52,17 @@ const [defaultValueListField, setDefaultValueListField] = useState(detailApi.api
   };
 
   const changeListApi = (e) => {
-    console.log("e",e)
-    // let resultSelect = e.map((items) => {
-    //   return items.label;
-    // });
-    // setField(resultSelect);
     setApiChoice(e.id)
   };
+  
+  const changeListField = (e) => {
+    let resultSelect = e.map((items)=>{
+      return items.field_name
+    })
+    setValueField(resultSelect)
+  }
+
+
 
   useEffect(() => {
     if (apiChoice) {
@@ -94,6 +98,76 @@ const [defaultValueListField, setDefaultValueListField] = useState(detailApi.api
       getListField(apiChoice, token);
     }
   }, [apiChoice,token])
+
+  const submit = (e) => {
+    e.preventDefault();
+
+    if (nameApi === "") {
+      Swal.fire("Gagal simpan", "Nama api tidak boleh kosong", "error");
+    } else if (nameUser === "") {
+      Swal.fire("Gagal simpan", "Status tidak boleh kosong", "error");
+    }
+    else if(apiChoice === ""){
+      Swal.fire("Gagal simpan", "Api tidak boleh kosong", "error");
+    }
+    else if((valueField.length === 0) && (field.length === 0)){
+      Swal.fire("Gagal simpan", "Field tidak boleh kosong", "error");
+    }
+    // else if (valueProvinsi === "") {
+    //   Swal.fire("Gagal simpan", "Form provinsi tidak boleh kosong", "error");
+    // }
+    else {
+      Swal.fire({
+        title: "Apakah anda yakin simpan ?",
+        // text: "Data ini tidak bisa dikembalikan !",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        cancelButtonText: "Batal",
+        confirmButtonText: "Ya !",
+        dismissOnDestroy: false,
+      }).then(async (result) => {
+        if (result.value) {
+          const sendData = {
+            api_name: nameApi,
+            username: nameUser,
+            id_api: apiChoice,
+            from_date: from,
+            to_date: to,
+            status: status,
+            fields: !valueField ? field : valueField  ,
+          };
+
+          try {
+            let { data } = await axios.post(
+              `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-api/update/${router.query.id}`,
+              sendData,
+              {
+                headers: {
+                  authorization: `Bearer ${token}`,
+                },
+              }
+            );
+
+            Swal.fire("Berhasil", "Data berhasil disimpan", "success").then(
+              () => {
+                router.push(`/site-management/setting/api`);
+              }
+            );
+          } catch (error) {
+            Swal.fire(
+              "Gagal simpan",
+              `${error.response.data.message}`,
+              "error"
+            );
+          }
+        }
+      });
+    }
+  };
+
+
 
   return (
     <PageWrapper>
@@ -183,7 +257,7 @@ const [defaultValueListField, setDefaultValueListField] = useState(detailApi.api
                   isRtl={false}
                   isSearchable={true}
                   name="color"
-                  // onChange={(e) => changeListApi(e)}
+                  onChange={(e) => changeListField(e)}
                   options={optionListField}
                 />
               </div>
@@ -233,6 +307,7 @@ const [defaultValueListField, setDefaultValueListField] = useState(detailApi.api
                 </Link>
                 <button
                   type="button"
+                  onClick={(e)=>submit(e)}
                   className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
                 >
                   Simpan

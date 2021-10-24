@@ -1,4 +1,5 @@
 import dynamic from "next/dynamic";
+import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
 
 // import Layout from "../../../components/templates/layout.component";
 // import Tambah from "../../../components/content/publikasi/imagetron/tambah";
@@ -26,9 +27,7 @@ export default function TambahPage(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        {/* <Layout title='Tambah Imagetron - Publikasi'> */}
         <Tambah token={session.token} id={session.user.id} />
-        {/* </Layout> */}
       </div>
     </>
   );
@@ -38,10 +37,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ params, req }) => {
       const session = await getSession({ req });
-      if (!session) {
+      const middleware = middlewareAuthAdminSession(session);
+      if (!middleware.status) {
         return {
           redirect: {
-            destination: "http://dts-dev.majapahit.id/login/admin",
+            destination: middleware.redirect,
             permanent: false,
           },
         };

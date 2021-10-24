@@ -250,13 +250,14 @@ const Berita = ({ token }) => {
                 router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`)
 
             } else if (startDate !== null && endDate !== null && limit === null && search !== null) {
-                router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&keyword=${search}`)
+                router.push(`${router.pathname}?publish=${val}`)
+                // router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&keyword=${search}`)
 
             } else if (startDate === null && endDate === null && limit !== null && search === null) {
                 router.push(`${router.pathname}?publish=${val}&limit=${limit}`);
 
             } else if (startDate === null && endDate === null && limit === null && search !== null) {
-                router.push(`${router.pathname}?publish=${val}&keyword=${search}`);
+                router.push(`${router.pathname}?publish=${val}`);
 
             } else if (startDate === null && endDate === null && limit !== null && search !== null) {
                 router.push(`${router.pathname}?publish=${val}&limit=${limit}&keyword=${search}`);
@@ -645,7 +646,7 @@ const Berita = ({ token }) => {
                                                             </td>
 
                                                             <td className='align-middle'>{row.kategori}</td>
-                                                            <td className='align-middle' style={{overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',maxWidth:'11rem'}}>{row.judul_berita}</td>
+                                                            <td className='align-middle' style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '11rem' }}>{row.judul_berita}</td>
                                                             <td className='align-middle'>
                                                                 {
                                                                     row.publish === 1 ? (
@@ -674,6 +675,11 @@ const Berita = ({ token }) => {
                                                             </td>
                                                             <td className='align-middle'>
                                                                 {row.role[0].name}
+                                                                {/* {
+                                                                    typeof row.role === "string" ?
+                                                                        row.role
+                                                                        : row.role[0].name
+                                                                } */}
                                                             </td>
                                                             <td className="align-middle d-flex">
 
