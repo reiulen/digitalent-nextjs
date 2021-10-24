@@ -48,7 +48,7 @@ const CardPage = ({ backgroundImage, background, color, link, text, desc, total,
             </p>
 
             <Link href={`${link}`} passHref>
-              <Button variant={background} className="font-weight-bolder">
+              <Button variant={background} className="font-weight-bolder rounded-full">
                 {text}
               </Button>
             </Link>
