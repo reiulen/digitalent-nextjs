@@ -356,7 +356,7 @@ const Beranda = () => {
                       // src={`/assets/media/banner-3.svg`}
                       src={`/assets/media/carousel-01.svg`}
                       alt="First slide"
-                      className="mx-5"
+                      className="mx-5 rounded"
                     />
                   </SplideSlide>
 
@@ -367,7 +367,7 @@ const Beranda = () => {
                       // src={`/assets/media/image27.png`}
                       src={`/assets/media/carousel-01.svg`}
                       alt="First slide"
-                      className="mx-5"
+                      className="mx-5 rounded"
                     />
                   </SplideSlide>
 
@@ -378,7 +378,7 @@ const Beranda = () => {
                       // src={`/assets/media/banner-3.svg`}
                       src={`/assets/media/carousel-01.svg`}
                       alt="First slide"
-                      className="mx-5"
+                      className="mx-5 rounded"
                     />
                   </SplideSlide>
 
@@ -389,7 +389,7 @@ const Beranda = () => {
                       // src={`/assets/media/banner-3.svg`}
                       src={`/assets/media/carousel-01.svg`}
                       alt="First slide"
-                      className="mx-5"
+                      className="mx-5 rounded"
                     />
                   </SplideSlide>
                 </Splide>
@@ -581,6 +581,15 @@ const Beranda = () => {
                                           thumbnail={
                                             show[i].pelatihan[index].hover === true ?
                                               
+                                              // <div style={{filter:"brightness(50%)"}}>
+                                              //   <Image 
+                                              //     src={process.env.END_POINT_API_IMAGE_BEASISWA + element.gambar}
+                                              //     // src={`https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/${element.gambar}`}
+                                              //     layout="fill" 
+                                              //     objectFit="cover"
+                                              //   />
+                                              // </div>
+                                              
                                               <Image 
                                                 src={process.env.END_POINT_API_IMAGE_BEASISWA + element.gambar}
                                                 // src={`https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/${element.gambar}`}
@@ -588,7 +597,6 @@ const Beranda = () => {
                                                 objectFit="cover"
                                                 style={{filter:"brightness(50%)"}}
                                               />
-                                              
                                             :
                                               <Image 
                                                 src={process.env.END_POINT_API_IMAGE_BEASISWA + element.gambar}
@@ -603,7 +611,7 @@ const Beranda = () => {
                                         > 
                                           <div className="rounded mt-0 pt-0">
                                             <Image 
-                                              src={process.env.END_POINT_API_IMAGE_PARTNERSHIP + element.gambar_mitra}
+                                              src={process.env.END_POINT_API_IMAGE_PARTNERSHIP + "/" + element.gambar_mitra}
                                               // src={`https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/${element.gambar_mitra}`}
                                               layout="fill" 
                                               objectFit="cover"

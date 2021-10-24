@@ -224,14 +224,7 @@
   }
 }
 
-.splide__arrow {
-  background: #fff !important;
 
-  box-shadow: 0px 0px 16px rgba(31, 31, 31, 0.1);
-}
-.splide__arrow svg {
-  fill: #203e80;
-}
 
 .step-registers .images-shapes {
   width: 478px;
@@ -261,6 +254,15 @@
 }
 
 /* Splider */
+.splide__arrow {
+  background: #fff !important;
+
+  box-shadow: 0px 0px 16px rgba(31, 31, 31, 0.1);
+}
+.splide__arrow svg {
+  fill: #203e80;
+}
+
 .splide__track_carousel{
   overflow:none !important;
   position:relative;
