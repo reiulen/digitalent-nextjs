@@ -28,11 +28,13 @@ const DashbardSubvit = () => {
   const [dataDummy] = useState(dashboard_subvit);
 
   const data = [];
-  if (dataDummy && dataDummy.chart) {
-    Object.entries(dataDummy.data.chart).map((item, index) => {
-      return data.push({ name: item[0], value: item[1] });
-    });
-  }
+  // if (dataDummy && dataDummy.chart) {
+  //   Object.entries(dataDummy.data.chart).map((item, index) => {
+  //     return data.push({ name: item[0], value: item[1] });
+  //   });
+  // } else {
+  //   data.push({ name: "", value: 0 });
+  // }
 
   const handleNextPagination = (category) => {
     const page = parseInt(router.query.page_substansi) + 1;
