@@ -417,7 +417,6 @@ export default function EditSertifikat({ token }) {
         }
 
         formData.append("status_migrate_id", status);
-        console.log();
 
         dispatch(updateSertifikat(id, formData, token));
       } else {
