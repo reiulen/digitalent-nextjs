@@ -1,11 +1,11 @@
-import React, { Suspense } from "react";
+import React from "react";
 
 import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../../components/LoadingSkeleton";
-// import EditTraining from "../../../../components/content/pelatihan/training/edit/edit-training-step1";
 
 import { wrapper } from "../../../../redux/store";
 import { getSession } from "next-auth/client";
+import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
 
 const EditTraining = dynamic(
   () =>
@@ -34,11 +34,12 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req, params }) => {
       const session = await getSession({ req });
-      
-      if (!session) {
+
+      const middleware = middlewareAuthAdminSession(session);
+      if (!middleware.status) {
         return {
           redirect: {
-            destination: "http://dts-dev.majapahit.id/login/admin",
+            destination: middleware.redirect,
             permanent: false,
           },
         };

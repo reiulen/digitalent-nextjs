@@ -1,5 +1,6 @@
 import dynamic from "next/dynamic";
 import { getSession } from "next-auth/client";
+import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
 
 // import Layout from "../../../components/templates/layout.component";
 // import Vidio from "../../../components/content/publikasi/vidio/vidio";
@@ -41,10 +42,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
     async ({ query, req }) => {
       // await store.dispatch(getAllArtikel(query.page, query.keyword, query.limit, query.publish, query.startdate, query.enddate))
       const session = await getSession({ req });
-      if (!session) {
+      const middleware = middlewareAuthAdminSession(session);
+      if (!middleware.status) {
         return {
           redirect: {
-            destination: "http://dts-dev.majapahit.id/login/admin",
+            destination: middleware.redirect,
             permanent: false,
           },
         };

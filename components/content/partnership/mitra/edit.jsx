@@ -443,9 +443,7 @@ const EditMitra = ({ token }) => {
                     >
                       <Image
                         src={
-                          process.env.END_POINT_API_IMAGE_PARTNERSHIP +
-                          "partnership/images/profile-images/" +
-                          imageview
+                          process.env.END_POINT_API_IMAGE_PARTNERSHIP + imageview
                         }
                         alt="images"
                         layout="fill"
@@ -519,7 +517,7 @@ const EditMitra = ({ token }) => {
                             <Image
                               src={
                                 process.env.END_POINT_API_IMAGE_PARTNERSHIP +
-                                "partnership/images/profile-images/" +
+                                
                                 imageview
                               }
                               alt="images"
