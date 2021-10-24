@@ -50,16 +50,6 @@ const Faq = ({ token }) => {
     page = Number(page)
 
     useEffect(() => {
-        // dispatch (getAllFaqPagination())
-
-        // if (limit !== null && search === "") {
-        //     router.push(`${router.pathname}?page=1&limit=${limit}`)
-
-        // } else if (limit !== null && search !== ""){
-        //     router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`)
-        // }
-
-
         if (isDeleted) {
             Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then((result) => {
                 if (result.isConfirmed) {
@@ -280,13 +270,14 @@ const Faq = ({ token }) => {
                 router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`)
 
             } else if (startDate !== null && endDate !== null && limit === null && search !== null) {
-                router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&keyword=${search}`)
+                router.push(`${router.pathname}?publish=${val}`)
+                // router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&keyword=${search}`)
 
             } else if (startDate === null && endDate === null && limit !== null && search === null) {
                 router.push(`${router.pathname}?publish=${val}&limit=${limit}`);
 
             } else if (startDate === null && endDate === null && limit === null && search !== null) {
-                router.push(`${router.pathname}?publish=${val}&keyword=${search}`);
+                router.push(`${router.pathname}?publish=${val}`);
 
             } else if (startDate === null && endDate === null && limit !== null && search !== null) {
                 router.push(`${router.pathname}?publish=${val}&limit=${limit}&keyword=${search}`);
@@ -302,7 +293,7 @@ const Faq = ({ token }) => {
         setStartDate(null)
         setEndDate(null)
         setDisableEndDate(true)
-        router.replace("/publikasi/faq", undefined, { shallow: true });
+        router.replace("/publikasi/faq", undefined, { shallow: false });
     }
 
     const handleStartDate = (date) => {
@@ -313,9 +304,6 @@ const Faq = ({ token }) => {
 
     return (
         <PageWrapper>
-            {/* {
-                console.log (faq)
-            } */}
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
                     <div className="alert-icon"><i className="flaticon-warning"></i></div>
@@ -361,8 +349,6 @@ const Faq = ({ token }) => {
                         background='bg-light-info'
                         icon="new/open-book.svg"
                         color='#ffffff'
-                        // icon='mail-purple.svg' 
-                        // color='#8A50FC' 
                         value={faq && faq.publish != "" ? faq.publish : 0}
                         titleValue='FAQ'
                         title='Total Publish'
@@ -373,8 +359,6 @@ const Faq = ({ token }) => {
                         background='bg-light-success'
                         icon="new/mail-white.svg"
                         color="#ffffff"
-                        // icon='garis-yellow.svg' 
-                        // color='#634100' 
                         value='0'
                         titleValue='Orang'
                         title='Total Author'
@@ -385,8 +369,6 @@ const Faq = ({ token }) => {
                         background='bg-light-danger'
                         icon="Library.svg"
                         color='#ffffff'
-                        // icon='kotak-kotak-red.svg' 
-                        // color='#F65464' 
                         value={faq && faq.unpublish != "" ? faq.unpublish : 0}
                         titleValue='FAQ'
                         title='Total Unpublish'
@@ -580,43 +562,6 @@ const Faq = ({ token }) => {
                                     </div>
                                 </div>
                             </div>
-                            {/* <div className="row align-items-right">
-                                <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
-                                    <DatePicker
-                                        className="form-search-date form-control-sm form-control"
-                                        selected={startDate}
-                                        onChange={(date) => setStartDate(date)}
-                                        selectsStart
-                                        startDate={startDate}
-                                        endDate={endDate}
-                                        dateFormat="dd/MM/yyyy"
-                                    />
-                                    <small className="form-text text-muted">Dari Tanggal</small>
-                                </div>
-                                <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
-                                    <DatePicker
-                                        className="form-search-date form-control-sm form-control"
-                                        selected={endDate}
-                                        onChange={(date) => setEndDate(date)}
-                                        selectsEnd
-                                        startDate={startDate}
-                                        endDate={endDate}
-                                        minDate={startDate}
-                                        maxDate={addDays(startDate, 20)}
-                                        dateFormat="dd/MM/yyyy"
-                                    />
-                                    <small className="form-text text-muted">Sampai Tanggal</small>
-                                </div>
-                                <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
-                                    <button
-                                        type="button"
-                                        className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block"
-                                        onClick={handleSearchDate}
-                                    >
-                                        Cari
-                                    </button>
-                                </div>
-                            </div> */}
                         </div>
 
                         <div className="table-page mt-5">
@@ -645,13 +590,7 @@ const Faq = ({ token }) => {
                                                 !faq || faq && faq.faq.length === 0 ?
                                                     <td className='align-middle text-center' colSpan={9}>Data Tidak Ditemukan</td> :
                                                     faq && faq.faq.map((row, i) => {
-                                                        // console.log("Data row :",row)
                                                         return <tr key={row.id}>
-                                                            {/* <td className='align-middle text-center'>
-                                                                <span className="badge badge-secondary text-muted">
-                                                                    {i + 1 * (page * 5 || limit) - 4}
-                                                                </span>
-                                                            </td> */}
                                                             <td className='align-middle text-center'>
                                                                 {
                                                                     limit === null ?
@@ -665,7 +604,7 @@ const Faq = ({ token }) => {
                                                                 }
 
                                                             </td>
-                                                            <td className='align-middle' className="align-middle" style={{overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',maxWidth:'180px'}}>{row.judul}</td>
+                                                            <td className='align-middle' style={{overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',maxWidth:'11rem'}}>{row.judul}</td>
                                                             <td className='align-middle'>{row.kategori}</td>
                                                             <td className='align-middle'>
                                                                 {row.publish === 1 ? (
@@ -682,16 +621,6 @@ const Faq = ({ token }) => {
                                                             <td className='align-middle'>
                                                                 {
                                                                     row.publish === 1 ?
-                                                                        // <SwitchButton
-                                                                        //     checked={row.pinned === 1 ? true : false}
-                                                                        //     onlabel=" "
-                                                                        //     onstyle="primary"
-                                                                        //     offlabel=" "
-                                                                        //     offstyle="secondary"
-                                                                        //     size="sm"
-                                                                        //     width={30}
-                                                                        //     onChange={(checked) => onSetPin(checked, row.id)}
-                                                                        // />
                                                                         <label className="switches">
                                                                             <input
                                                                                 // required
@@ -750,27 +679,6 @@ const Faq = ({ token }) => {
                                                                 </button>
 
                                                             </td>
-                                                            {/* <td className='align-middle'>
-                                                                <ButtonAction icon='write.svg' link={`/publikasi/faq/${row.id}`} title="Edit"/>
-                                                                <button
-                                                                    onClick={() => handleDelete(row.id)}
-                                                                    className="btn mr-1"
-                                                                    style={{
-                                                                        background: "#F3F6F9",
-                                                                        borderRadius: "6px",
-                                                                    }}
-                                                                    data-toggle="tooltip" 
-                                                                    data-placement="bottom" 
-                                                                    title="Hapus"
-                                                                >
-                                                                    <Image
-                                                                        alt="button-action"
-                                                                        src={`/assets/icon/trash.svg`}
-                                                                        width={18}
-                                                                        height={18}
-                                                                    />
-                                                                </button>
-                                                            </td> */}
                                                         </tr>
                                                     })
                                             }
@@ -797,34 +705,6 @@ const Faq = ({ token }) => {
                                         />
                                     </div>
                                 }
-                                {/* {faq && faq.total > 5 ?
-                                    <div className="table-total ml-auto">
-                                        <div className="row">
-                                            <div className="col-4 mr-0 p-0">
-                                                <select
-                                                    className="form-control"
-                                                    id="exampleFormControlSelect2"
-                                                    style={{
-                                                        width: "65px",
-                                                        background: "#F3F6F9",
-                                                        borderColor: "#F3F6F9",
-                                                        color: "#9E9E9E",
-                                                    }}
-                                                    onChange={e => handleLimit(e.target.value)}
-                                                    onBlur={e => handleLimit(e.target.value)}
-                                                >
-                                                    <option value='5'>5</option>
-                                                    <option value='10'>10</option>
-                                                    <option value='15'>15</option>
-                                                    <option value='20'>20</option>
-                                                </select>
-                                            </div>
-                                            <div className="col-8 my-auto">
-                                                <p className='align-middle mt-3' style={{ color: '#B5B5C3' }}>Total Data {faq.total}</p>
-                                            </div>
-                                        </div>
-                                    </div> : ''
-                                } */}
                                 <div className={`${stylesPag.rightPag} table-total ml-auto`}>
                                     <div className="row">
                                         <div className="col-4 mr-0 mt-3">

@@ -147,18 +147,11 @@ const EditTandaTangan = ({token}) => {
     }
   };
 
-  const imgSignature = process.env.END_POINT_API_IMAGE_PARTNERSHIP;
-  const myLoader = ({ src }) => {
-    return `${imgSignature}/partnership/images/signatures/${tandaTangan}`;
-  };
+ 
 
   const [nama, setNama] = useState("");
   const [jabatan, setJabatan] = useState("");
   const [tandaTangan, setTandaTangan] = useState("");
-
-  // const setDataSingle = async (id) => {
-    
-  // };
 
   useEffect(() => {
     async function setDataSingle(id) {
@@ -243,21 +236,18 @@ const EditTandaTangan = ({token}) => {
                 <div className="row">
                   <div className="col-sm-2 ">
                     <div className="border my-3">
-                    <Image
-                              unoptimized={
-                                process.env.ENVIRONMENT !== "PRODUCTION"
-                              }
-
-                              
-                              src={
-                                process.env.END_POINT_API_IMAGE_PARTNERSHIP +
-                                "partnership/images/signatures/" +
-                                tandaTangan
-                              }
-                              width={400}
-                              height={400}
-                              alt="logo"
-                            /></div>
+                  {!tandaTangan ? "":
+                      <Image
+                        unoptimized={process.env.ENVIRONMENT !== "PRODUCTION"}
+                        src={
+                          process.env.END_POINT_API_IMAGE_PARTNERSHIP +
+                          tandaTangan
+                        }
+                        width={400}
+                        height={400}
+                        alt="logo"
+                      />
+                      }</div>
                   </div>
                   <div className="col-sm-12">
                     <div
@@ -280,9 +270,9 @@ const EditTandaTangan = ({token}) => {
                       />
                     </div>
                   </div>
-                  <div className="d-flex align-items-center mt-5">
+                  <div className="d-flex flex-wrap align-items-center">
                     <a
-                      className="btn btn-sm btn-rounded-full text-blue-primary border-primary text-blue-primary mr-5"
+                      className="btn btn-sm btn-rounded-full text-blue-primary border-primary text-blue-primary mr-5 mt-5"
                       onClick={() => dataTandaTangan()}
                     >
                       Buat Tanda Tangan Baru
@@ -291,7 +281,7 @@ const EditTandaTangan = ({token}) => {
                     <button
                       type="button"
                       onClick={clear}
-                      className="btn btn-sm btn-rounded-full bg-yellow-primary text-white"
+                      className="btn btn-sm btn-rounded-full bg-yellow-primary text-white mt-5"
                     >
                       Buat Ulang Tanda Tangan
                     </button>

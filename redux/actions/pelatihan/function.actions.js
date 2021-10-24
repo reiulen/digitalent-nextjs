@@ -6,6 +6,8 @@ import {
   GET_COMMITMENT_STEP3,
   STORE_COMMITMENT_STEP3,
   //dropdown
+  GET_DROPDOWN_AGAMA,
+  ERROR_DROPDOWN_AGAMA,
   GET_DROPDOWN_AKADEMI,
   ERROR_DROPDOWN_AKADEMI,
   GET_DROPDOWN_TEMA,
@@ -233,7 +235,34 @@ export const dropdownPelatihan = token => async dispatch => {
   }
 };
 
+<<<<<<< HEAD
 export const dropdownStatusPekerjaan = token => async dispatch => {
+=======
+export const dropdownAgama = (token) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    const { data } = await axios.get(
+      process.env.END_POINT_API_SITE_MANAGEMENT + `api/option/religion`,
+      config
+    );
+    dispatch({
+      type: GET_DROPDOWN_AGAMA,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ERROR_DROPDOWN_AGAMA,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const dropdownStatusPekerjaan = (token) => async (dispatch) => {
+>>>>>>> 807b4a7de637fc677572fdc6da5861f3727a8ddd
   try {
     const config = {
       headers: {

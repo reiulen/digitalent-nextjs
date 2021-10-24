@@ -33,11 +33,6 @@ const EditFaq = ({token}) => {
     const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
 
     useEffect(() => {
-        // dispatch(getAllKategori())
-        // if (error) {
-        //     dispatch(clearErrors())
-        // }
-
         if (isUpdated) {
             dispatch({
                 type: UPDATE_FAQ_RESET
@@ -152,12 +147,6 @@ const EditFaq = ({token}) => {
 
     return (
         <PageWrapper>
-            {/* {
-                console.log (faq)
-            } */}
-            {/* {
-                console.log (disablePublishDate)
-            } */}
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
                     <div className="alert-icon"><i className="flaticon-warning"></i></div>
@@ -294,46 +283,11 @@ const EditFaq = ({token}) => {
                                                     // minDate={addDays(new Date(), 20)}
                                                     />
                                                     </div>
-                                                    {/* {
-                                                        disablePublishDate === true ?
-                                                            <small className="text-muted">Harap ubah status publikasi menjadi aktif untuk mengisi Tanggal Publish</small>
-                                                        :
-                                                            null
-                                                    } */}
                                                 </div>
                                             </div>
                                         :
                                             null
                                     }
-
-                                    {/* <div className="form-group">
-                                        <label className='col-sm-5 col-form-label font-weight-bolder'>Set Tanggal Publish</label>
-                                        <div className="col-sm-12">
-                                            <div className="input-group">
-                                            <DatePicker
-                                                className="form-search-date form-control-sm form-control"
-                                                selected={publishDate}
-                                                nChange={(date) => handlePublishDate(date)}
-                                                // onChange={(date) => setPublishDate(date)}
-                                                selectsStart
-                                                startDate={publishDate}
-                                                // endDate={endDate}
-                                                dateFormat="dd/MM/yyyy"
-                                                placeholderText="Silahkan Isi Tanggal Publish"
-                                                wrapperClassName="col-12 col-lg-12 col-xl-12"
-                                                minDate={moment().toDate()}
-                                                disabled = {disablePublishDate === true || disablePublishDate === null}
-                                            // minDate={addDays(new Date(), 20)}
-                                            />
-                                            </div>
-                                            {
-                                                disablePublishDate === true ?
-                                                    <small className="text-muted">Harap ubah status publikasi menjadi aktif untuk mengisi Tanggal Publish</small>
-                                                :
-                                                    null
-                                            }
-                                        </div>
-                                    </div> */}
 
                                     <div className="form-group row">
                                         <label
@@ -363,38 +317,6 @@ const EditFaq = ({token}) => {
                                             </div>
                                         </div>
                                     </div>
-
-                                    {/* <div className="form-group row">
-                                        <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Pin FAQ</label>
-                                        <div className="col-sm-1">
-                                            <SwitchButton
-                                                checked={pinned}
-                                                onlabel=' '
-                                                onstyle='primary'
-                                                offlabel=' '
-                                                offstyle='danger'
-                                                size='sm'
-                                                width={30}
-                                                onChange={(checked) => setPinnedFaq(checked)}
-                                            />
-                                        </div>
-                                    </div> */}
-
-                                    {/* <div className="form-group row">
-                                        <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Publish</label>
-                                        <div className="col-sm-1">
-                                            <SwitchButton
-                                                checked={publish}
-                                                onlabel=' '
-                                                onstyle='primary'
-                                                offlabel=' '
-                                                offstyle='danger'
-                                                size='sm'
-                                                width={30}
-                                                onChange={(checked) => setPublish(checked)}
-                                            />
-                                        </div>
-                                    </div> */}
 
                                     <div className="form-group row">
                                         <div className="col-sm-2"></div>

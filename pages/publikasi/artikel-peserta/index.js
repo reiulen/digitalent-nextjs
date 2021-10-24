@@ -1,13 +1,10 @@
 import dynamic from "next/dynamic";
 import { getSession } from "next-auth/client";
-
-// import Layout from "../../../components/templates/layout.component";
-// import ArtikelPeserta from "../../../components/content/publikasi/artikel-peserta/artikel-peserta";
+import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
 
 import { getAllArtikelPeserta } from "../../../redux/actions/publikasi/artikel-peserta.actions";
 import { wrapper } from "../../../redux/store";
 
-// import LoadingPage from "../../../components/LoadingPage";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
 
 const ArtikelPeserta = dynamic(
@@ -16,8 +13,6 @@ const ArtikelPeserta = dynamic(
       "../../../components/content/publikasi/artikel-peserta/artikel-peserta"
     ),
   {
-    // suspense: true,
-    // loading: () => <LoadingSkeleton />,
     loading: function loadingNow() {
       return <LoadingSkeleton />;
     },
@@ -30,7 +25,7 @@ export default function ArtikelPesertaPage(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <ArtikelPeserta token={session.token} />
+        <ArtikelPeserta token={session.token} role={session.user.roles[0]} />
       </div>
     </>
   );
@@ -38,20 +33,23 @@ export default function ArtikelPesertaPage(props) {
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req }) => {
-      // await store.dispatch(getAllArtikel(query.page, query.keyword, query.limit, query.publish, query.startdate, query.enddate))
       const session = await getSession({ req });
-      if (!session) {
+      const middleware = middlewareAuthAdminSession(session);
+      if (!middleware.status) {
         return {
           redirect: {
-            destination: "http://dts-dev.majapahit.id/login/admin",
+            destination: middleware.redirect,
             permanent: false,
           },
         };
       }
 
+      const role = session.user.user.data.user.roles[0]
+
       await store.dispatch(
         getAllArtikelPeserta(
-          query.role,
+          role,
+          // query.role,
           query.page,
           query.keyword,
           query.limit,
@@ -61,22 +59,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
           session.user.user.data.token
         )
       );
-      // await store.dispatch(getAllKategori(session.user.user.data.token))
       return {
         props: { session, title: "Artikel Peserta - Publikasi" },
       };
     }
 );
-
-// export const getServerSideProps = wrapper.getServerSideProps(store => async ({ query, req }) => {
-//     const session = await getSession({ req });
-//     if (!session) {
-//         return {
-//             redirect: {
-//                 destination:"/login/admin",
-//                 permanent: false,
-//             },
-//         };
-//     }
-//     await store.dispatch(getAllArtikelPeserta(query.role, query.page, query.keyword, query.limit, query.publish, query.startdate, query.enddate, session.user.user.data.token))
-// })

@@ -45,27 +45,12 @@ const EditImagetron = ({ token,idUser }) => {
     const { setting } = useSelector(state => state.allSettingPublikasi)
 
     useEffect(() => {
-
-        // dispatch(getAllKategori());
-
         if (success) {
             router.push({
                 pathname: `/publikasi/imagetron`,
                 query: { successEdit: true },
             });
         }
-        // window.location.reload()
-
-        // if (error) {
-        //     dispatch(clearErrors())
-        // }
-
-        // if (success) {
-        //     dispatch({
-        //         type: NEW_IMAGETRON_RESET
-        //     })
-        // }
-
     }, [dispatch, error, success, simpleValidator, router]);
 
     const [id, setId] = useState(imagetron.id);
@@ -133,7 +118,6 @@ const EditImagetron = ({ token,idUser }) => {
 
             if (success) {
                 dispatch({
-                    // type: NEW_ARTIKEL_RESET
                     type: UPDATE_IMAGETRON_RESET,
                 });
             }
@@ -272,24 +256,6 @@ const EditImagetron = ({ token,idUser }) => {
                 text: "Isi data dengan benar !",
             });
         }
-        // e.preventDefault()
-        // if (error) {
-        //     dispatch(clearErrors())
-        // }
-
-        // const data = {
-        //     id,
-        //     kategori_id,
-        //     judul,
-        //     url_link,
-        //     gambar,
-        //     publish,
-        //     users_id,
-        //     _method
-        // }
-
-        // dispatch(updateImagetron(data))
-        // console.log(data)
     }
 
     const onNewReset = () => {
@@ -298,9 +264,6 @@ const EditImagetron = ({ token,idUser }) => {
 
     return (
         <PageWrapper>
-            {/* {
-                console.log(imagetron)
-            } */}
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
                     <div className="alert-icon"><i className="flaticon-warning"></i></div>
@@ -313,18 +276,6 @@ const EditImagetron = ({ token,idUser }) => {
                 </div>
                 : ''
             }
-            {/* {success ?
-                <div className="alert alert-custom alert-light-success fade show mb-5" role="alert">
-                    <div className="alert-icon"><i className="flaticon2-checkmark"></i></div>
-                    <div className="alert-text">{success}</div>
-                    <div className="alert-close">
-                        <button type="button" className="close" data-dismiss="alert" aria-label="Close" onClick={onNewReset} >
-                            <span aria-hidden="true"><i className="ki ki-close"></i></span>
-                        </button>
-                    </div>
-                </div>
-                : ''
-            } */}
             <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
                 <div className="card card-custom card-stretch gutter-b">
                     <div className="card-header">

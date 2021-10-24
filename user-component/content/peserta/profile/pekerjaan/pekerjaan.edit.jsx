@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { Form, Button, Col, Row } from "react-bootstrap";
 import Select from "react-select";
 import Swal from "sweetalert2";
+import { toast } from "react-toastify";
 import SimpleReactValidator from "simple-react-validator";
 import style from "../style.module.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -100,6 +101,10 @@ const PekerjaanEdit = ({ funcViewEdit, token }) => {
           <Form.Group className="mb-3" controlId="formGridAddress1">
             <Form.Label>Status Pekerjaan</Form.Label>
             <Select
+              placeholder={
+                (pekerjaan && pekerjaan.status_pekerjaan) ||
+                "Silahkan Pilih Status Pekerjaan"
+              }
               options={optionsStatusPekerjaan}
               defaultValue={statusPekerjaan}
               onChange={(e) =>

@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import ReactCrop from "react-image-crop";
+import { getDataPribadi } from "../../../../../redux/actions/pelatihan/function.actions";
 import {
   Col,
   Card,
@@ -26,6 +27,7 @@ const ProfileWrapper = ({
   token,
 }) => {
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const { error: errorDataPribadi, dataPribadi } = useSelector(
     (state) => state.getDataPribadi
@@ -59,7 +61,9 @@ const ProfileWrapper = ({
         config
       )
       .then((res) => {
-        console.log(res);
+        setShowUpdateGambar(false);
+        toast.success("Berhasil Update");
+        dispatch(getDataPribadi(token));
       })
       .catch((err) => {
         console.log(err);
@@ -160,7 +164,7 @@ const ProfileWrapper = ({
                   />
                   <div
                     className="position-absolute"
-                    style={{ right: "0" }}
+                    style={{ right: "10px" }}
                     onClick={() => setShowUpdateGambar(true)}
                   >
                     <label className={`circle-bottom ${style.btn_edit_triger}`}>

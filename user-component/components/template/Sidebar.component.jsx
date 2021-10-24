@@ -11,7 +11,7 @@ import Link from "next/link";
 const Sidebar = () => {
   const router = useRouter();
 
-  const [drop, setDrop] = useState(false);
+  const [drop, setDrop] = useState(true);
   const [click, setClick] = useState(1);
 
   const [dropSimonas, setDropSimonas] = useState(false);
@@ -77,9 +77,21 @@ const Sidebar = () => {
 
       <div>
         <Link href="/peserta" passHref>
-          <div className={`${styles.menuItem} d-flex flex-row`}>
+          <div
+            className={`${
+              router.pathname === "/peserta"
+                ? styles.activeMenuItem
+                : styles.menuItem
+            } d-flex flex-row`}
+          >
             <div className="p-2">
-              <i className={`${styles.iconMenu} ri-pie-chart-line`}></i>
+              <i
+                className={`${
+                  router.pathname === "/peserta"
+                    ? styles.activeIconMenu
+                    : styles.iconMenu
+                } ri-pie-chart-line`}
+              ></i>
             </div>
             <div className="p-2">
               <td>Dashboard</td>
@@ -89,9 +101,21 @@ const Sidebar = () => {
       </div>
       <div>
         <Link href="/peserta/riwayat-pelatihan" passHref>
-          <div className={`${styles.menuItem} d-flex flex-row`}>
+          <div
+            className={`${
+              router.pathname === "/peserta/riwayat-pelatihan"
+                ? styles.activeMenuItem
+                : styles.menuItem
+            } d-flex flex-row`}
+          >
             <div className="p-2">
-              <i className={`${styles.iconMenu} ri-history-line`}></i>
+              <i
+                className={`${
+                  router.pathname === "/peserta/riwayat-pelatihan"
+                    ? styles.activeIconMenu
+                    : styles.iconMenu
+                } ri-history-line`}
+              ></i>
             </div>
             <div className="p-2">
               <td>Riwayat Pelatihan</td>
@@ -100,9 +124,21 @@ const Sidebar = () => {
         </Link>
       </div>
       <div>
-        <div className={`${styles.menuItem} d-flex flex-row`}>
+        <div
+          className={`${
+            router.pathname === "/peserta/bookmark"
+              ? styles.activeMenuItem
+              : styles.menuItem
+          } d-flex flex-row`}
+        >
           <div className="p-2">
-            <i className={`${styles.iconMenu} ri-heart-3-line`}></i>
+            <i
+              className={`${
+                router.pathname === "/peserta/bookmark"
+                  ? styles.activeIconMenu
+                  : styles.iconMenu
+              } ri-heart-3-line`}
+            ></i>
           </div>
           <div className="p-2">
             <td>Bookmark</td>
@@ -111,9 +147,21 @@ const Sidebar = () => {
       </div>
       <div>
         <Link href="/peserta/test-substansi" passHref>
-          <div className={`${styles.menuItem} d-flex flex-row`}>
+          <div
+            className={`${
+              router.pathname === "/peserta/test-substansi"
+                ? styles.activeMenuItem
+                : styles.menuItem
+            } d-flex flex-row`}
+          >
             <div className="p-2">
-              <i className={`${styles.iconMenu} ri-article-line`}></i>
+              <i
+                className={`${
+                  router.pathname === "/peserta/test-substansi"
+                    ? styles.activeIconMenu
+                    : styles.iconMenu
+                } ri-article-line`}
+              ></i>
             </div>
             <div className="p-2">
               <td>Test Substansi</td>
@@ -124,9 +172,21 @@ const Sidebar = () => {
 
       <div>
         <Link href="/peserta/survey" passHref>
-          <div className={`${styles.menuItem} d-flex flex-row`}>
+          <div
+            className={`${
+              router.pathname === "/peserta/survey"
+                ? styles.activeMenuItem
+                : styles.menuItem
+            } d-flex flex-row`}
+          >
             <div className="p-2">
-              <i className={`${styles.iconMenu} ri-chat-smile-line`}></i>
+              <i
+                className={`${
+                  router.pathname === "/peserta/survey"
+                    ? styles.activeIconMenu
+                    : styles.iconMenu
+                } ri-chat-smile-line`}
+              ></i>
             </div>
             <div className="p-2">
               <td>Survey</td>
@@ -195,10 +255,22 @@ const Sidebar = () => {
       </div>
       <div className={styles.titleAkun}>AKUN</div>
       <Link href="/peserta/profile" passHref>
-        <div className={styles.akunMenu}>
+        <div
+          className={
+            router.pathname === "/peserta/profile"
+              ? styles.akunMenuActive
+              : styles.akunMenu
+          }
+        >
           <div className="d-flex flex-row">
             <div className="p-2">
-              <i className="ri-user-line"></i>
+              <i
+                className={`${
+                  router.pathname === "/peserta/profile"
+                    ? styles.activeIconMenu
+                    : styles.iconMenu
+                } ri-user-line`}
+              ></i>
             </div>
             <div className="p-2">
               <td>Profile</td>

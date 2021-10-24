@@ -286,7 +286,6 @@ const TambahBerita = ({ token, id }) => {
 
     return (
         <PageWrapper>
-            {/* {console.log(setting)} */}
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
                     <div className="alert-icon"><i className="flaticon-warning"></i></div>
@@ -299,7 +298,7 @@ const TambahBerita = ({ token, id }) => {
                 </div>
                 : ''
             }
-            {success ?
+            {/* {success ?
                 <div className="alert alert-custom alert-light-success fade show mb-5" role="alert">
                     <div className="alert-icon"><i className="flaticon2-checkmark"></i></div>
                     <div className="alert-text">{success}</div>
@@ -310,7 +309,7 @@ const TambahBerita = ({ token, id }) => {
                     </div>
                 </div>
                 : ''
-            }
+            } */}
             <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
                 {
                     loading ?

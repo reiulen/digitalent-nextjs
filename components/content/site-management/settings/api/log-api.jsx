@@ -13,19 +13,53 @@ import IconSearch from "../../../../assets/icon/Search";
 import IconClose from "../../../../assets/icon/Close";
 import IconFilter from "../../../../assets/icon/Filter";
 import IconArrow from "../../../../assets/icon/Arrow";
-
+import {
+  getDetailLog,
+  setPage,
+  searchCooporation,
+  limitCooporation,
+} from "../../../../../redux/actions/site-management/settings/api.actions";
+import moment from "moment";
+import DatePicker from "react-datepicker";
+import IconCalender from "../../../../assets/icon/Calender";
 const Table = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
 
-  const listLog = useSelector(state => state.listLog)
-  console.log("listLog",listLog)
+  const listLog = useSelector((state) => state.listLog);
+  console.log("listLog", listLog);
 
-  const onNewReset = () => {
-    router.replace("/site-management/api", undefined, {
-      shallow: true,
-    });
+  const [valueSearch, setValueSearch] = useState("");
+  const handleChangeValueSearch = (value) => {
+    setValueSearch(value);
   };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(searchCooporation(valueSearch));
+  };
+
+  const [from, setFrom] = useState("");
+  const [to, setTo] = useState("");
+
+  const onChangePeriodeDateStart = (date) => {
+    setFrom(moment(date).format("YYYY-MM-DD"));
+  };
+  const onChangePeriodeDateEnd = (date) => {
+    setTo(moment(date).format("YYYY-MM-DD"));
+  };
+
+  useEffect(() => {
+    dispatch(getDetailLog(router.query.id, token));
+  }, [
+    dispatch,
+    router.query.id,
+    listLog.cari,
+    listLog.page,
+    listLog.limit,
+    token,
+  ]);
+
   return (
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">
@@ -42,24 +76,25 @@ const Table = ({ token }) => {
             <div className="table-filter">
               <div className="row align-items-center">
                 <div className="col-lg-12 col-xl-12">
-                  <form
-                    // onSubmit={handleSubmit}
-                  >
-                 <div className="row">
-                      <div className="col-12 col-sm-6">
+                  <div className="row">
+                    <div className="col-12 col-sm-6">
+                      <form onSubmit={handleSubmit}>
                         <div className="position-relative overflow-hidden w-100 mt-5">
                           <IconSearch
                             style={{ left: "10" }}
                             className="left-center-absolute"
                           />
                           <input
-                            id="kt_datatable_search_query"
                             type="text"
                             className="form-control pl-10"
                             placeholder="Ketik disini untuk Pencarian..."
+                            onChange={(e) =>
+                              handleChangeValueSearch(e.target.value)
+                            }
                           />
                           <button
-                            type="submit"
+                            type="button"
+                            onClick={(e) => handleSubmit(e)}
                             className="btn bg-blue-primary text-white right-center-absolute"
                             style={{
                               borderTopLeftRadius: "0",
@@ -69,197 +104,218 @@ const Table = ({ token }) => {
                             Cari
                           </button>
                         </div>
-                      </div>
-                      <div className="col-12 col-sm-6">
-                        <div className="d-flex flex-wrap align-items-center justify-content-end mt-2">
-                          {/* sorotir by modal */}
-                          <button
+                      </form>
+                    </div>
+
+                    <div className="col-12 col-sm-6">
+                      <div className="d-flex flex-wrap align-items-center justify-content-end mt-2">
+                        {/* sorotir by modal */}
+                        <button
                           type="button"
-                            className="avatar item-rtl btn border d-flex align-items-center justify-content-between mt-2"
-                            data-toggle="modal"
-                            data-target="#exampleModalCenter"
-                            style={{ color: "#464646", minWidth: "230px" }}
-                          >
-                            <div className="d-flex align-items-center">
-                              <IconFilter className="mr-3" />
-                              Pilih Filter
-                            </div>
-                            <IconArrow fill="#E4E6EF" width="11" height="11" />
-                          </button>
-                          {/* modal */}
-                          <form
-                            className="form text-left"
+                          className="avatar item-rtl btn border d-flex align-items-center justify-content-between mt-2"
+                          data-toggle="modal"
+                          data-target="#exampleModalCenter"
+                          style={{ color: "#464646", minWidth: "230px" }}
+                        >
+                          <div className="d-flex align-items-center">
+                            <IconFilter className="mr-3" />
+                            Pilih Filter
+                          </div>
+                          <IconArrow fill="#E4E6EF" width="11" height="11" />
+                        </button>
+                        {/* modal */}
+                        <form className="form text-left">
+                          <div
+                            className="modal fade"
+                            id="exampleModalCenter"
+                            tabIndex="-1"
+                            role="dialog"
+                            aria-labelledby="exampleModalCenterTitle"
+                            aria-hidden="true"
                           >
                             <div
-                              className="modal fade"
-                              id="exampleModalCenter"
-                              tabIndex="-1"
-                              role="dialog"
-                              aria-labelledby="exampleModalCenterTitle"
-                              aria-hidden="true"
+                              className="modal-dialog modal-dialog-centered"
+                              role="document"
                             >
-                              <div
-                                className="modal-dialog modal-dialog-centered"
-                                role="document"
-                              >
-                                <div className="modal-content">
-                                  <div className="modal-header">
-                                    <h5
-                                      className="modal-title"
-                                      id="exampleModalLongTitle"
-                                    >
-                                      Filter
-                                    </h5>
+                              <div className="modal-content">
+                                <div className="modal-header">
+                                  <h5
+                                    className="modal-title"
+                                    id="exampleModalLongTitle"
+                                  >
+                                    Filter
+                                  </h5>
+                                  <button
+                                    type="button"
+                                    className="close"
+                                    data-dismiss="modal"
+                                    aria-label="Close"
+                                  >
+                                    <IconClose />
+                                  </button>
+                                </div>
+
+                                <div
+                                  className="modal-body text-left"
+                                  style={{ height: "400px" }}
+                                >
+                                  <div className="fv-row mb-10">
+                                    <label>From</label>
+                                    <div className="d-flex align-items-center position-relative datepicker-w mt-2">
+                                      <DatePicker
+                                        className="form-search-date form-control cursor-pointer"
+                                        onChange={(date) =>
+                                          onChangePeriodeDateStart(date)
+                                        }
+                                        value={from}
+                                        dateFormat="YYYY-MM-DD"
+                                        placeholderText="From"
+                                        minDate={moment().toDate()}
+                                      />
+                                      <IconCalender
+                                        className="right-center-absolute"
+                                        style={{ right: "10px" }}
+                                      />
+                                    </div>
+                                  </div>
+                                  <div className="fv-row mb-10">
+                                    <label>To</label>
+                                    <div className="d-flex align-items-center position-relative datepicker-w mt-2">
+                                      <DatePicker
+                                        className="form-search-date form-control cursor-pointer"
+                                        onChange={(date) =>
+                                          onChangePeriodeDateEnd(date)
+                                        }
+                                        value={to}
+                                        dateFormat="YYYY-MM-DD"
+                                        placeholderText="To"
+                                        minDate={moment().toDate()}
+                                      />
+                                      <IconCalender
+                                        className="right-center-absolute"
+                                        style={{ right: "10px" }}
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="modal-footer">
+                                  <div className="d-flex justify-content-end align-items-center">
                                     <button
+                                      className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5"
                                       type="button"
-                                      className="close"
                                       data-dismiss="modal"
                                       aria-label="Close"
                                     >
-                                      <IconClose />
+                                      Reset
                                     </button>
-                                  </div>
-
-                                  <div
-                                    className="modal-body text-left"
-                                    style={{ height: "400px" }}
-                                  >
-                                    <div className="fv-row mb-10">
-                                      <label className="required fw-bold fs-6 mb-2">
-                                        Kategori Kerjasama
-                                      </label>
-                                      React Select
-                                      {/* <Select
-                                        ref={(ref) =>
-                                          (selectRefKerjasama = ref)
-                                        }
-                                        className="basic-single"
-                                        classNamePrefix="select"
-                                        placeholder="Semua"
-                                        defaultValue={
-                                          allMK.stateListKerjaSama[0]
-                                        }
-                                        isDisabled={false}
-                                        isLoading={false}
-                                        isClearable={false}
-                                        isRtl={false}
-                                        isSearchable={true}
-                                        name="color"
-                                        onChange={(e) =>
-                                          setValueKerjaSama(
-                                            e?.cooperation_categories
-                                          )
-                                        }
-                                        options={allMK.stateListKerjaSama}
-                                      /> */}
-                                    </div>
-                                    <div className="fv-row mb-10">
-                                      <label className="required fw-bold fs-6 mb-2">
-                                        Status
-                                      </label>
-                                      React Select
-                                      {/* <Select
-                                        ref={(ref) => (selectRefStatus = ref)}
-                                        className="basic-single"
-                                        classNamePrefix="select"
-                                        placeholder="Semua"
-                                        defaultValue={allMK.stateListStatus[0]}
-                                        isDisabled={false}
-                                        isLoading={false}
-                                        isClearable={false}
-                                        isRtl={false}
-                                        isSearchable={true}
-                                        name="color"
-                                        onChange={(e) =>
-                                          setValueStatus(e?.name_en)
-                                        }
-                                        options={allMK.stateListStatus}
-                                      /> */}
-                                    </div>
-                                  </div>
-                                  <div className="modal-footer">
-                                    <div className="d-flex justify-content-end align-items-center">
-                                      <button
-                                        className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5"
-                                        type="button"
-                                        data-dismiss="modal"
-                                        aria-label="Close"
-                                      >
-                                        Reset
-                                      </button>
-                                      <button
-                                        className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
-                                        type="button"
-                                      >
-                                        Terapkan
-                                      </button>
-                                    </div>
+                                    <button
+                                      className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
+                                      type="button"
+                                    >
+                                      Terapkan
+                                    </button>
                                   </div>
                                 </div>
                               </div>
                             </div>
-                          </form>
-                          {/* end modal */}
+                          </div>
+                        </form>
+                        {/* end modal */}
 
-                          {/* btn export */}
-                          <button
-                            className="btn btn-rounded-full bg-blue-secondary text-white ml-4 mt-2"
-                            type="button"
-                          >
-                            Export .xlsx
-                          </button>
-                        </div>
+                        {/* btn export */}
+                        <button
+                          className="btn btn-rounded-full bg-blue-secondary text-white ml-4 mt-2"
+                          type="button"
+                        >
+                          Export .xlsx
+                        </button>
                       </div>
-                    </div> </form>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
             <div className="table-page mt-5">
               <div className="table-responsive">
-                <table className="table table-separate table-head-custom table-checkable">
-                  <thead style={{ background: "#F3F6F9" }}>
-                    <tr>
-                      <th className="text-left">No</th>
-                      <th className="text-left align-middle">API</th>
-                      <th className="text-left align-middle">URL</th>
-                      <th className="text-left align-middle">Key</th>
-                      <th className="text-left align-middle">Pengguna</th>
-                      <th className="text-left align-middle">Masa Berlaku</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="align-middle text-left">1</td>
-                      <td className="align-middle text-left">api</td>
-                      <td className="align-middle text-left">url</td>
-                      <td className="align-middle text-left">key</td>
-                      <td className="align-middle text-left">pengguna</td>
-                      <td className="align-middle text-left">masa berlaku</td>
-                    </tr>
-                  </tbody>
-                </table>
+                {listLog?.status === "process" ? (
+                  <LoadingTable />
+                ) : (
+                  <table className="table table-separate table-head-custom table-checkable">
+                    <thead style={{ background: "#F3F6F9" }}>
+                      <tr>
+                        <th className="text-left">No</th>
+                        <th className="text-left align-middle">API</th>
+                        <th className="text-left align-middle">URL</th>
+                        <th className="text-left align-middle">Key</th>
+                        <th className="text-left align-middle">Pengguna</th>
+                        <th className="text-left align-middle">Masa Berlaku</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {listLog?.data?.length === 0 ? (
+                        <tr>
+                          <td colSpan="8" className="text-center">
+                            <h4>Data tidak ditemukan</h4>
+                          </td>
+                        </tr>
+                      ) : (
+                        listLog?.data?.map((items, index) => {
+                          return (
+                            <tr key={index}>
+                              <td className="align-middle text-left">
+                                {listLog.page === 1
+                                  ? index + 1
+                                  : (listLog.page - 1) * listLog.limit +
+                                    (index + 1)}
+                              </td>
+                              <td className="align-middle text-left text-overflow-ens">
+                                {items.api_name}
+                              </td>
+                              <td className="align-middle text-left text-overflow-ens">
+                                {items.api_url}
+                              </td>
+                              <td className="align-middle text-left text-overflow-ens">
+                                {items.api_key}
+                              </td>
+                              <td className="align-middle text-left text-overflow-ens">
+                                {items.username}
+                              </td>
+                              <td className="align-middle text-left text-overflow-ens">
+                                <b>
+                                  {" "}
+                                  {moment(items.from_date).format(
+                                    "DD MMMM YYYY"
+                                  )}{" "}
+                                  s/d{" "}
+                                  {moment(items.to_date).format("DD MMMM YYYY")}{" "}
+                                </b>
+                              </td>
+                            </tr>
+                          );
+                        })
+                      )}
+                    </tbody>
+                  </table>
+                )}
               </div>
 
               <div className="row">
                 <div className="table-pagination paginate-cs">
-                  pagination
-                  {/* <Pagination
-                    activePage={allMKCooporation.page}
-                    itemsCountPerPage={
-                      allMKCooporation?.mk_cooporation?.data?.perPage
-                    }
-                    totalItemsCount={
-                      allMKCooporation?.mk_cooporation?.data?.total
-                    }
-                    pageRangeDisplayed={3}
-                    onChange={(page) => dispatch(setPage(page))}
-                    nextPageText={">"}
-                    prevPageText={"<"}
-                    firstPageText={"<<"}
-                    lastPageText={">>"}
-                    itemclassName="page-item"
-                    linkclassName="page-link"
-                  /> */}
+                  <div className="table-pagination">
+                    <Pagination
+                      activePage={listLog?.page}
+                      itemsCountPerPage={listLog?.data?.perPage}
+                      totalItemsCount={listLog?.data?.total}
+                      pageRangeDisplayed={3}
+                      onChange={(page) => dispatch(setPage(page))}
+                      nextPageText={">"}
+                      prevPageText={"<"}
+                      firstPageText={"<<"}
+                      lastPageText={">>"}
+                      itemClass="page-item"
+                      linkClass="page-link"
+                    />
+                  </div>
                 </div>
 
                 <div className="table-total ml-auto">
@@ -275,6 +331,9 @@ const Table = ({ token }) => {
                           borderColor: "#F3F6F9",
                           color: "#9E9E9E",
                         }}
+                        onChange={(e) =>
+                          dispatch(limitCooporation(e.target.value, token))
+                        }
                       >
                         <option value="5">5</option>
                         <option value="10">10</option>
@@ -288,7 +347,8 @@ const Table = ({ token }) => {
                         className="align-middle mt-3"
                         style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}
                       >
-                        Total Data 9 List Data
+                        Total Data {listLog?.data && listLog?.data?.total} List
+                        Data
                       </p>
                     </div>
                   </div>

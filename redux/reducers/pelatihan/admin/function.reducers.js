@@ -9,6 +9,8 @@ import {
   STORE_COMMITMENT_STEP3,
   RESET_COMMITMENT_STEP3,
   //dropdown
+  GET_DROPDOWN_AGAMA,
+  ERROR_DROPDOWN_AGAMA,
   GET_DROPDOWN_AKADEMI,
   ERROR_DROPDOWN_AKADEMI,
   GET_DROPDOWN_TEMA,
@@ -180,6 +182,26 @@ export const drowpdownPelatihanReducers = (state = { data: [] }, action) => {
         data: action.payload,
       };
     case ERROR_DROPDOWN_PELATIHAN:
+      return {
+        error: action.payload,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};
+
+export const drowpdownAgamaReducers = (state = { data: [] }, action) => {
+  switch (action.type) {
+    case GET_DROPDOWN_AGAMA:
+      return {
+        data: action.payload,
+      };
+    case ERROR_DROPDOWN_AGAMA:
       return {
         error: action.payload,
       };

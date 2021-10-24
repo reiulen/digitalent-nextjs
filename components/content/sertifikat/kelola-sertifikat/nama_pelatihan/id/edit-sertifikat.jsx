@@ -15,10 +15,8 @@ import { toPng } from "html-to-image";
 import { useDispatch } from "react-redux";
 import {
   clearErrors,
-  newSertifikat,
   updateSertifikat,
 } from "../../../../../../redux/actions/sertifikat/kelola-sertifikat.action";
-import axios from "axios";
 import * as moment from "moment";
 import { Modal } from "react-bootstrap";
 
@@ -27,6 +25,7 @@ export default function EditSertifikat({ token }) {
   const dispatch = useDispatch();
   const { query } = router;
   // #Div Reference Lembar 1
+<<<<<<< HEAD
   const { loading, error, certificate } = useSelector(
     (state) => state.singleCertificate
   );
@@ -36,6 +35,25 @@ export default function EditSertifikat({ token }) {
     loading: updateLoading,
     isUpdated,
   } = useSelector((state) => state.updateCertificates);
+=======
+  const { error, certificate } = useSelector(
+    (state) => state.singleCertificate
+  );
+
+  const { error: updateError, isUpdated } = useSelector(
+    (state) => state.updateCertificates
+  );
+
+  if (!certificate) {
+    router.replace(
+      {
+        pathname: `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}`,
+      },
+      null,
+      { shallow: false }
+    );
+  }
+>>>>>>> 807b4a7de637fc677572fdc6da5861f3727a8ddd
 
   useEffect(() => {
     if (isUpdated) {
@@ -193,6 +211,10 @@ export default function EditSertifikat({ token }) {
   };
   // #END MODAL
 
+<<<<<<< HEAD
+=======
+  // #START LEMBAR 2
+>>>>>>> 807b4a7de637fc677572fdc6da5861f3727a8ddd
   const handleImageTandaTanganSyllabus = (e, i) => {
     if (e.target.files[0].size > 5000000) {
       e.target.value = null;
@@ -804,9 +826,6 @@ export default function EditSertifikat({ token }) {
                                   </div>
                                   <div
                                     className="modal-body"
-                                    //   style={{
-                                    //     height: "400px",
-                                    //   }}
                                     id="sertifikat-ck-editor"
                                   >
                                     <div className="font-size-h5 mb-5">
@@ -817,9 +836,12 @@ export default function EditSertifikat({ token }) {
                                       config={{
                                         toolbar: ["bold", "italic"],
                                       }}
+<<<<<<< HEAD
                                       onReady={(editor) => {
                                         // You can store the "editor" and use when it is needed.
                                       }}
+=======
+>>>>>>> 807b4a7de637fc677572fdc6da5861f3727a8ddd
                                       data={signature[i]?.name}
                                       onChange={(event, editor) => {
                                         const data = editor.getData();
@@ -1199,8 +1221,6 @@ export default function EditSertifikat({ token }) {
                           className="position-absolute w-100 h-100"
                           src={localBackgroundSyllabus}
                           alt="LocalBackground.png"
-                          // height={495}
-                          // width={1400}
                           layout="fill"
                           objectFit="fill"
                         />
@@ -1209,8 +1229,6 @@ export default function EditSertifikat({ token }) {
                           className="position-absolute w-100 h-100"
                           src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/background-syllabus/${background_syllabus}`}
                           alt={`Background Image ${background_syllabus}`}
-                          // height={495}
-                          // width={1400}
                           layout="fill"
                           objectFit="fill"
                         />
@@ -1468,9 +1486,6 @@ export default function EditSertifikat({ token }) {
                                     </div>
                                     <div
                                       className="modal-body"
-                                      //   style={{
-                                      //     height: "400px",
-                                      //   }}
                                       id="syllabus-ck-editor"
                                     >
                                       <div className="font-size-h5 mb-5">
@@ -1485,9 +1500,12 @@ export default function EditSertifikat({ token }) {
                                             "underline",
                                           ],
                                         }}
+<<<<<<< HEAD
                                         onReady={(editor) => {
                                           // You can store the "editor" and use when it is needed.
                                         }}
+=======
+>>>>>>> 807b4a7de637fc677572fdc6da5861f3727a8ddd
                                         data={signatureSyllabus[i]?.name}
                                         onChange={(event, editor) => {
                                           const data = editor.getData();
@@ -1673,10 +1691,13 @@ export default function EditSertifikat({ token }) {
                                       </div>
                                       <CKEditor
                                         editor={ClassicEditor}
+<<<<<<< HEAD
                                         // config={editorConfig}
                                         onReady={(editor) => {
                                           // You can store the "editor" and use when it is needed.
                                         }}
+=======
+>>>>>>> 807b4a7de637fc677572fdc6da5861f3727a8ddd
                                         data={signatureSyllabus[i]?.position}
                                         onChange={(event, editor) => {
                                           const data = editor.getData();

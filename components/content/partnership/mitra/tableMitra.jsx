@@ -12,7 +12,8 @@ import IconDelete from "../../../assets/icon/Delete";
 import IconPencil from "../../../assets/icon/Pencil";
 import IconAdd from "../../../assets/icon/Add";
 import IconArrow from "../../../assets/icon/Arrow";
-
+import BtnIcon from "../components/BtnIcon";
+import AlertBar from "../components/BarAlert";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import {
   fetchMitra,
@@ -61,7 +62,7 @@ const Table = ({ token }) => {
         formData.append("status", e.target.value);
         dispatch(changeStatusList(token, formData, id));
         setSuccessDelete(false);
-        // setIsChangeOption(true);
+        setIsStatusBar(true);
         router.replace("/partnership/mitra", undefined, { shallow: true });
       } else {
         dispatch(reloadTable());
@@ -90,6 +91,7 @@ const Table = ({ token }) => {
   };
   const onNewReset = () => {
     setSuccessDelete(false);
+    setIsStatusBar(false);
     router.replace("/partnership/mitra", undefined, { shallow: true });
   };
 
@@ -110,99 +112,45 @@ const Table = ({ token }) => {
   return (
     <PageWrapper>
       {success ? (
-        <div
-          className="alert alert-custom alert-light-success fade show mb-5"
-          role="alert"
-          style={{ backgroundColor: "#C9F7F5" }}
-        >
-          <div className="alert-icon">
-            <i className="flaticon2-checkmark" style={{ color: "#1BC5BD" }}></i>
-          </div>
-          <div className="alert-text" style={{ color: "#1BC5BD" }}>
-            Berhasil menyimpan data
-          </div>
-          <div className="alert-close">
-            <button
-              type="button"
-              className="close"
-              data-dismiss="alert"
-              aria-label="Close"
-              onClick={() => onNewReset()}
-            >
-              <span aria-hidden="true">
-                <i className="ki ki-close"></i>
-              </span>
-            </button>
-          </div>
-        </div>
+        <AlertBar
+          text="Berhasil menyimpan data"
+          className="alert-light-success"
+          onClick={() => onNewReset()}
+        />
       ) : (
         ""
       )}
       {update ? (
-        <div
-          className="alert alert-custom alert-light-success fade show mb-5"
-          role="alert"
-          style={{ backgroundColor: "#C9F7F5" }}
-        >
-          <div className="alert-icon">
-            <i className="flaticon2-checkmark" style={{ color: "#1BC5BD" }}></i>
-          </div>
-          <div className="alert-text" style={{ color: "#1BC5BD" }}>
-            Berhasil merubah data
-          </div>
-          <div className="alert-close">
-            <button
-              type="button"
-              className="close"
-              data-dismiss="alert"
-              aria-label="Close"
-              onClick={() => onNewReset()}
-            >
-              <span aria-hidden="true">
-                <i className="ki ki-close"></i>
-              </span>
-            </button>
-          </div>
-        </div>
+        <AlertBar
+          text="Berhasil mengubah data"
+          className="alert-light-warning"
+          onClick={() => onNewReset()}
+        />
       ) : (
         ""
       )}
       {successDelete ? (
-        <div
-          className="alert alert-custom alert-light-success fade show mb-5"
-          role="alert"
-          style={{ backgroundColor: "#f7c9c9" }}
-        >
-          <div className="alert-icon">
-            <i className="flaticon2-checkmark" style={{ color: "#c51b1b" }}></i>
-          </div>
-          <div className="alert-text" style={{ color: "#c51b1b" }}>
-            Berhasil menghapus data
-          </div>
-          <div className="alert-close">
-            <button
-              type="button"
-              className="close"
-              data-dismiss="alert"
-              aria-label="Close"
-              onClick={() => onNewReset()}
-            >
-              <span aria-hidden="true">
-                <i className="ki ki-close"></i>
-              </span>
-            </button>
-          </div>
-        </div>
+        <AlertBar
+          text="Berhasil menghapus data"
+          className="alert-light-danger"
+          onClick={() => onNewReset()}
+        />
+      ) : (
+        ""
+      )}
+      {isStatusBar ? (
+        <AlertBar
+          text="Berhasil mengubah data"
+          className="alert-light-success"
+          onClick={() => onNewReset()}
+        />
       ) : (
         ""
       )}
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="d-flex flex-wrap align-items-center justify-content-between px-8 py-4">
-            <h1
-              className="card-title font-weight-bolder text-dark mb-0 mt-4"
-              style={{ fontSize: "24px" }}
-            >
+            <h1 className="card-title font-weight-bolder text-dark mb-0 mt-4 titles-1">
               Master Mitra
             </h1>
             <Link href="/partnership/mitra/tambah">
@@ -220,50 +168,49 @@ const Table = ({ token }) => {
           {/*  */}
 
           <div className="card-body pt-0">
-            {/* <form onSubmit={handleSubmit}> */}
-              <div className="row w-100">
-                <div className="col-12 col-sm-6">
-                  <div className="position-relative overflow-hidden w-100 mt-3">
-                    <IconSearch
-                      style={{ left: "10" }}
-                      className="left-center-absolute"
-                    />
-                    <input
-                      id="kt_datatable_search_query"
-                      type="text"
-                      className="form-control pl-10"
-                      placeholder="Ketik disini untuk Pencarian..."
-                      onChange={(e) => setKeyWord(e.target.value)}
-                    />
-                    <button
-                      type="button"
-                      onClick={(e)=>handleSubmit(e)}
-                      className="btn bg-blue-primary text-white right-center-absolute"
-                      style={{
-                        borderTopLeftRadius: "0",
-                        borderBottomLeftRadius: "0",
-                      }}
-                    >
-                      Cari
-                    </button>
-                  </div>
-                </div>
-
-                <div className="col-12 col-sm-6">
-                  <div className="d-flex align-items-center justify-content-end mt-2">
-                    {/* disini sortir modal */}
-
-                    <button
-                      type="button"
-                      onClick={() => dispatch(exportFileCSV(token))}
-                      className="btn btn-rounded-full bg-blue-secondary text-white ml-0"
-                      style={{ width: "max-content" }}
-                    >
-                      Export .xlsx
-                    </button>
-                  </div>
+            <div className="row w-100">
+              <div className="col-12 col-sm-6">
+                <div className="position-relative overflow-hidden w-100 mt-3">
+                  <IconSearch
+                    style={{ left: "10" }}
+                    className="left-center-absolute"
+                  />
+                  <input
+                    id="kt_datatable_search_query"
+                    type="text"
+                    className="form-control pl-10"
+                    placeholder="Ketik disini untuk Pencarian..."
+                    onChange={(e) => setKeyWord(e.target.value)}
+                  />
+                  <button
+                    type="button"
+                    onClick={(e) => handleSubmit(e)}
+                    className="btn bg-blue-primary text-white right-center-absolute"
+                    style={{
+                      borderTopLeftRadius: "0",
+                      borderBottomLeftRadius: "0",
+                    }}
+                  >
+                    Cari
+                  </button>
                 </div>
               </div>
+
+              <div className="col-12 col-sm-6">
+                <div className="d-flex align-items-center justify-content-end mt-2">
+                  {/* disini sortir modal */}
+
+                  <button
+                    type="button"
+                    onClick={() => dispatch(exportFileCSV(token))}
+                    className="btn btn-rounded-full bg-blue-secondary text-white ml-0"
+                    style={{ width: "max-content" }}
+                  >
+                    Export .xlsx
+                  </button>
+                </div>
+              </div>
+            </div>
             {/* </form> */}
             {
               <Tables
@@ -304,30 +251,33 @@ const Table = ({ token }) => {
                                 (index + 1)}
                           </td>
                           <td className="align-middle text-left">
-                            <Image
-                              unoptimized={
-                                process.env.ENVIRONMENT !== "PRODUCTION"
-                              }
-                              src={
-                                process.env.END_POINT_API_IMAGE_PARTNERSHIP +
-                                "partnership/images/profile-images/" +
-                                item.agency_logo
-                              }
-                              width={40}
-                              height={40}
-                              alt="logo"
-                            />
+                            {!item.agency_logo ? (
+                              ""
+                            ) : (
+                              <Image
+                                unoptimized={
+                                  process.env.ENVIRONMENT !== "PRODUCTION"
+                                }
+                                src={
+                                  process.env.END_POINT_API_IMAGE_PARTNERSHIP +
+                                  item.agency_logo
+                                }
+                                width={40}
+                                height={40}
+                                alt="logo"
+                              />
+                            )}
                           </td>
-                          <td className="align-middle text-left">
+                          <td className="align-middle text-left text-overflow-ens">
                             {item.user.name}
                           </td>
-                          <td className="align-middle text-left">
+                          <td className="align-middle text-left text-overflow-ens">
                             {item.website}
                           </td>
-                          <td className="align-middle text-left">
+                          <td className="align-middle text-left text-overflow-ens">
                             {item.cooperations_count} Kerjasama
                           </td>
-                          <td className="align-middle text-left">
+                          <td className="align-middle text-left ">
                             {item.status == "1" ? (
                               <div className="position-relative w-max-content">
                                 <select
@@ -375,33 +325,26 @@ const Table = ({ token }) => {
                           </td>
                           <td className="align-middle text-left">
                             <div className="d-flex align-items-center">
-
-
-                              <Link href={{
-                                pathname:"/partnership/mitra/detail-data-kerjasama-mitra",
-                                query:{id:item.id}
-                              }}>
-                              <a
-                                className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                                // onClick={() =>
-                                //   router.push(
-                                //     `/partnership/mitra/detail/${item.id}`
-                                //   )
-                                // }
+                              <Link
+                                href={{
+                                  pathname:
+                                    "/partnership/mitra/detail-data-kerjasama-mitra",
+                                  query: { id: item.id },
+                                }}
                               >
-                                <IconEye
-                                  width="14"
-                                  height="12"
-                                  fill="rgba(255,255,255,1)"
-                                />
-                                <div className="text-hover-show-hapus">
-                                  Detail
-                                </div>
-                              </a>
+                                <a
+                                  className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                >
+                                  <IconEye
+                                    width="14"
+                                    height="12"
+                                    fill="rgba(255,255,255,1)"
+                                  />
+                                  <div className="text-hover-show-hapus">
+                                    Detail
+                                  </div>
+                                </a>
                               </Link>
-
-
-
 
                               <button
                                 className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete"

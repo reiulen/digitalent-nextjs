@@ -13,36 +13,161 @@ import IconSearch from "../../../../assets/icon/Search";
 import DatePicker from "react-datepicker";
 import axios from "axios";
 import IconCalender from "../../../../assets/icon/Calender";
+import Select from "react-select";
+
 
 const UbahApi = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
+  let selectRefListApi = null;
+  let selectRefListField = null;
 
   const detailApi = useSelector((state) => state.detailApi);
- 
+  console.log("detailApi",detailApi)
+   const [optionListField, setOptionListField] = useState([]);
   const listApi = useSelector(state => state.listApi)
- 
-
   const [optionListApi, setOptionListApi] = useState(listApi.listApi.map((items)=>{
     return {label:items.api_url,value:items.api_url,id:items.id}
   }))
-  const [nameApi, setNameApi] = useState(detailApi.apies.api_name);
-  const [nameUser, setNameUser] = useState(detailApi.apies.username);
-  const [status, setStatus] = useState(detailApi.apies.status);
-  const [apiChoice, setApiChoice] = useState(detailApi.apies.id_api);
-  const [nameApiChoice, setNameApiChoice] = useState(detailApi.apies.api_url)
+  const [nameApi, setNameApi] = useState(detailApi.apies.data.api_name);
+  const [nameUser, setNameUser] = useState(detailApi.apies.data.username);
+  const [status, setStatus] = useState(detailApi.apies.data.status);
+  const [apiChoice, setApiChoice] = useState(detailApi.apies.data.id_api);
+  const [defaultOptionListApi, setDefaultOptionListApi] = useState({label:detailApi.apies.data.api_url,value:detailApi.apies.data.api_url})
+  const [nameApiChoice, setNameApiChoice] = useState(detailApi.apies.data.api_url)
+const [defaultValueListField, setDefaultValueListField] = useState(detailApi.apies.data.fields.map((items)=>{
+  return {label:items,value:items}
+}))
 
-  const [from, setFrom] = useState(detailApi.apies.from_date);
-  const [to, setTo] = useState(detailApi.apies.to_date);
+const [valueField, setValueField] = useState([])
+  const [from, setFrom] = useState(detailApi.apies.data.from_date);
+  const [to, setTo] = useState(detailApi.apies.data.to_date);
+  const [field, setField] = useState(detailApi.apies.data.fields);
 
   const onChangePeriodeDateStart = (date) => {
     setFrom(moment(date).format("YYYY-MM-DD"));
-    // checkPeriod(moment(date).format("YYYY-MM-DD"));
   };
   const onChangePeriodeDateEnd = (date) => {
     setTo(moment(date).format("YYYY-MM-DD"));
-    // checkPeriod(moment(date).format("YYYY-MM-DD"));
   };
+
+  const changeListApi = (e) => {
+    setApiChoice(e.id)
+  };
+  
+  const changeListField = (e) => {
+    let resultSelect = e.map((items)=>{
+      return items.field_name
+    })
+    setValueField(resultSelect)
+  }
+
+
+
+  useEffect(() => {
+    if (apiChoice) {
+      async function getListField(id, token) {
+        try {
+          let { data } = await axios.get(
+            `${process.env.END_POINT_API_SITE_MANAGEMENT}api/api-list/fields/${id}`,
+            {
+              headers: {
+                authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          console.log("response get list field", data);
+          let optionListFieldResult = data.data.map((items) => {
+            return {
+              ...items,
+              label: items.field_name,
+              value: items.field_name,
+            };
+          });
+
+          console.log("optionListFieldResult",optionListFieldResult)
+
+          setOptionListField(optionListFieldResult);
+
+          // change list add label and value sisa implementasi ke render html list field and set state needed
+        } catch (error) {
+          return;
+        }
+      }
+
+      getListField(apiChoice, token);
+    }
+  }, [apiChoice,token])
+
+  const submit = (e) => {
+    e.preventDefault();
+
+    if (nameApi === "") {
+      Swal.fire("Gagal simpan", "Nama api tidak boleh kosong", "error");
+    } else if (nameUser === "") {
+      Swal.fire("Gagal simpan", "Status tidak boleh kosong", "error");
+    }
+    else if(apiChoice === ""){
+      Swal.fire("Gagal simpan", "Api tidak boleh kosong", "error");
+    }
+    else if((valueField.length === 0) && (field.length === 0)){
+      Swal.fire("Gagal simpan", "Field tidak boleh kosong", "error");
+    }
+    // else if (valueProvinsi === "") {
+    //   Swal.fire("Gagal simpan", "Form provinsi tidak boleh kosong", "error");
+    // }
+    else {
+      Swal.fire({
+        title: "Apakah anda yakin simpan ?",
+        // text: "Data ini tidak bisa dikembalikan !",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        cancelButtonText: "Batal",
+        confirmButtonText: "Ya !",
+        dismissOnDestroy: false,
+      }).then(async (result) => {
+        if (result.value) {
+          const sendData = {
+            api_name: nameApi,
+            username: nameUser,
+            id_api: apiChoice,
+            from_date: from,
+            to_date: to,
+            status: status,
+            fields: !valueField ? field : valueField  ,
+          };
+
+          try {
+            let { data } = await axios.post(
+              `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-api/update/${router.query.id}`,
+              sendData,
+              {
+                headers: {
+                  authorization: `Bearer ${token}`,
+                },
+              }
+            );
+
+            Swal.fire("Berhasil", "Data berhasil disimpan", "success").then(
+              () => {
+                router.push(`/site-management/setting/api`);
+              }
+            );
+          } catch (error) {
+            Swal.fire(
+              "Gagal simpan",
+              `${error.response.data.message}`,
+              "error"
+            );
+          }
+        }
+      });
+    }
+  };
+
+
 
   return (
     <PageWrapper>
@@ -99,17 +224,42 @@ const UbahApi = ({ token }) => {
 
               <div className="form-group">
                 <label>Pilih API</label>
-                <select className="form-control">
-                  <option>{nameApiChoice}</option>
-                </select>
+                <Select
+                  ref={(ref) => (selectRefListApi = ref)}
+                  className="basic-single"
+                  classNamePrefix="select"
+                  placeholder="Pilih provinsi"
+                  defaultValue={defaultOptionListApi}
+                  isDisabled={false}
+                  isLoading={false}
+                  isClearable={false}
+                  isRtl={false}
+                  isSearchable={true}
+                  onChange={(e)=>changeListApi(e)}
+                  name="color"
+                  options={optionListApi}
+                />
               </div>
 
 
               <div className="form-group">
                 <label>Field</label>
-                <select className="form-control">
-                  <option>Placeholder</option>
-                </select>
+                 <Select
+                  ref={(ref) => (selectRefListField = ref)}
+                  isMulti
+                  className="basic-single"
+                  classNamePrefix="select"
+                  placeholder="Pilih provinsi"
+                  defaultValue={defaultValueListField}
+                  isDisabled={false}
+                  isLoading={false}
+                  isClearable={false}
+                  isRtl={false}
+                  isSearchable={true}
+                  name="color"
+                  onChange={(e) => changeListField(e)}
+                  options={optionListField}
+                />
               </div>
               <div className="form-group row">
                 <div className="col-12 col-sm-6">
@@ -157,6 +307,7 @@ const UbahApi = ({ token }) => {
                 </Link>
                 <button
                   type="button"
+                  onClick={(e)=>submit(e)}
                   className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
                 >
                   Simpan

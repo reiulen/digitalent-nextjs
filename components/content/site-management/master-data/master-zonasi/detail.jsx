@@ -16,6 +16,7 @@ const Table = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
   const [formInput, setFormInput] = useState([]);
+  const [nameZonation, setNameZonation] = useState("")
 
   useEffect(() => {
     async function getDetailZonasi(id, token) {
@@ -28,6 +29,7 @@ const Table = ({ token }) => {
             },
           }
         );
+        setNameZonation(data.data.name)
         setFormInput(data.data.data);
       } catch (error) {
         notify(error.response.data.message);
@@ -36,30 +38,6 @@ const Table = ({ token }) => {
 
     getDetailZonasi(router.query.id, token);
   }, [router.query.id, token]);
-
-  // function delete
-  const apiDelete = (id) => {
-    Swal.fire({
-      title: "Apakah anda yakin ingin menghapus data ?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      cancelButtonText: "Batal",
-      confirmButtonText: "Ya !",
-      dismissOnDestroy: false,
-    }).then(async (result) => {
-      if (result.value) {
-        // dispatch delete
-      }
-    });
-  };
-
-  const onNewReset = () => {
-    router.replace("/site-management/setting/api", undefined, {
-      shallow: true,
-    });
-  };
   return (
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">
@@ -69,7 +47,7 @@ const Table = ({ token }) => {
               className="card-title font-weight-bolder text-dark"
               style={{ fontSize: "24px" }}
             >
-              Zonasi 1
+              {nameZonation}
             </h3> </div>
           <div className="card-body pt-0"> <div className="table-page mt-5">
               <div className="table-responsive">

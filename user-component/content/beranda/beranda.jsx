@@ -21,27 +21,31 @@ import RilisMedia from "../../components/beranda/rilis-media";
 import GaleryUpdate from "../../components/beranda/galery-update";
 import InfoVideo from "../../components/beranda/info-videos";
 import ComeJoin from "../../components/beranda/come-join";
-import Footer from "../../components/beranda/footer";
 
-const Navigationbar = dynamic(
-  () => import("../../components/template/Navbar.component"),
-  {
-    ssr: false,
-  }
-);
+// const Navigationbar = dynamic(
+//   () => import("../../components/template/Navbar.component"),
+//   {
+//     ssr: false,
+//   }
+// );
 
-const Beranda = () => {
+const Beranda = ({session}) => {
   const dispatch = useDispatch();
   // const router = useRouter();
 
   const { akademi } = useSelector(state => state.allAkademi);
   const { tema } = useSelector(state => state.temaByAkademi);
   const { publikasi } = useSelector(state => state.allPublikasiBeranda);
+  const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
   // const { pelatihan } = useSelector(state => state.pelatihanByTema);
 
   const [ activeTab, setActiveTab ] = useState(0);
   const [ akademiId, setAkademiId ] = useState(null)
   const [ show, setShow ] = useState(null);
+  const [ defaultImage, setDefaultImage ] = useState(`/assets/media/carousel-01.svg`)
+  const [ imageError, setImageError ] = useState(false)
+  const [ imagetronImg, setImagetronImg ] = useState (null)
+  const [ cardId, setCardId ] = useState(null)
   const [ cardImage, setCardImage ] = useState(null)
   const [ cardStatus, setCardStatus ] = useState(null)
   const [ cardImageMitra, setCardImageMitra ] = useState(null)
@@ -53,22 +57,22 @@ const Beranda = () => {
   const [ cardAlamat, setCardAlamat ] = useState(null)
   const [ cardPendaftaranMulai, setCardPendaftaranMulai ] = useState(null)
   const [ cardPendaftaranSelesai, setCardPendaftaranSelesai ] = useState(null)
+  const [ cardMetode, setCardMetode ] = useState(null)
   
   useEffect(() => {
     handleAkademiStart()
     handleHoverCard()
   }, [])
 
-  // useEffect(() => {
-  //   if (tema){
-  //     window.location.reload();
-  //   }
-    
-  // }, [tema])
+  useEffect(() => {
+    if (tema){
+      // window.location.reload();
+      handleHoverCard()
+    }
+  }, [tema])
 
   const handleAkademiStart = () => {
     if (akademi && akademi.length !== 0){
-        // console.log ("check")
         dispatch (getTemaByAkademi(akademi[0].id))
     }
   }
@@ -84,17 +88,34 @@ const Beranda = () => {
           showDetail: false,
           pelatihan: []
         }
+
         if (tema[i].pelatihan !== 0 && tema[i].pelatihan !== null){
           for (let j = 0; j < tema[i].pelatihan.length; j++){
             let objPelatihan = {
               id: tema[i].pelatihan[j].id,
               name: tema[i].pelatihan[j].name,
+              gambar: tema[i].pelatihan[j].gambar,
+              akademi: tema[i].pelatihan[j].akademi, 
+              tema: tema[i].pelatihan[j].tema,
+              alamat: tema[i].pelatihan[j].alamat,
+              kuota_peserta: tema[i].pelatihan[j].kuota_peserta,
+              metode_pelatihan: tema[i].pelatihan[j].metode_pelatihan,
+              gambar_mitra: tema[i].pelatihan[j].gambar_mitra,
+              mitra: tema[i].pelatihan[j].mitra,
+              pendaftaran_mulai: tema[i].pelatihan[j].pendaftaran_mulai,
+              pendaftaran_selesai: tema[i].pelatihan[j].pendaftaran_selesai,
+              deskripsi: tema[i].pelatihan[j].deskripsi,
+              status: tema[i].pelatihan[j].status,
+              kuota_pendaftar: tema[i].pelatihan[j].kuota_pendaftar,
               hover: false,
               // showDetail: false
             }
-
             obj.pelatihan.push (objPelatihan)
           }
+          arr.push (obj)
+        } else {
+          let objPelatihan = false
+          obj.pelatihan = (objPelatihan)
           arr.push (obj)
         }
         
@@ -134,7 +155,7 @@ const Beranda = () => {
     dispatch (getTemaByAkademi(id))
   };
 
-  const handleQuickView = (indexTema, image, status, image_mitra, akademi, deskripsi, name, kuota_pendaftar, mitra, alamat, pendaftaran_mulai, pendaftaran_selesai) => {
+  const handleQuickView = (indexTema, image, status, image_mitra, akademi, deskripsi, name, kuota_pendaftar, mitra, alamat, pendaftaran_mulai, pendaftaran_selesai, id, metode_pelatihan) => {
     let obj = [...show]
 
     for (let i = 0; i < obj.length; i++){
@@ -143,6 +164,7 @@ const Beranda = () => {
       }
     }
     setShow(obj)
+    setCardId (id)
     setCardImage(image)
     setCardStatus(status)
     setCardImageMitra(image_mitra)
@@ -154,6 +176,7 @@ const Beranda = () => {
     setCardAlamat(alamat)
     setCardPendaftaranMulai(pendaftaran_mulai)
     setCardPendaftaranSelesai(pendaftaran_selesai)
+    setCardMetode(metode_pelatihan)
   };
 
   const handleCloseQuickView = (indexTema) => {
@@ -167,11 +190,20 @@ const Beranda = () => {
     setShow(obj)
   };
 
-  return (
-    <BerandaWrapper title="Digitalent">
+  const handleErrorImage = (props) => {
+    if (imagetronImg === defaultImage){
+      setImageError(true)
+      setImagetronImg (props)
 
-      <div style={{ backgroundColor: "white" }}>
-        <Navigationbar />
+    } else {
+      setImageError(false)
+      setImagetronImg (defaultImage)
+    }
+  }
+
+  return (
+    <div style={{ backgroundColor: "white" }}>
+        {/* <Navigationbar /> */}
 
         {/* Carousel 1 */}
         {
@@ -234,6 +266,7 @@ const Beranda = () => {
                     },
                   }}
                   hasSliderWrapper
+                  // style={{overflow: "none"}}
                 >
                   {
                     publikasi.imagetron.map ((el, i) => {
@@ -242,10 +275,12 @@ const Beranda = () => {
                           <Image
                             layout="fill"
                             objectFit="fill"
-                            src={process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + el.gambar}
-                            // src={`/assets/media/carousel-01.svg`}
+                            // src={imageError === true ? defaultImage : process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + el.gambar}
+                            src={imageError === true ? defaultImage : process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + el.gambar}
                             alt="Imagetron Slide"
                             className="mx-5 rounded"
+                            onError={() => handleErrorImage(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + el.gambar)}
+                            // onChange={() => setImageError(false)}
                           />
                         </SplideSlide>
                       )
@@ -321,7 +356,7 @@ const Beranda = () => {
                       // src={`/assets/media/banner-3.svg`}
                       src={`/assets/media/carousel-01.svg`}
                       alt="First slide"
-                      className="mx-5"
+                      className="mx-5 rounded"
                     />
                   </SplideSlide>
 
@@ -332,7 +367,7 @@ const Beranda = () => {
                       // src={`/assets/media/image27.png`}
                       src={`/assets/media/carousel-01.svg`}
                       alt="First slide"
-                      className="mx-5"
+                      className="mx-5 rounded"
                     />
                   </SplideSlide>
 
@@ -343,7 +378,7 @@ const Beranda = () => {
                       // src={`/assets/media/banner-3.svg`}
                       src={`/assets/media/carousel-01.svg`}
                       alt="First slide"
-                      className="mx-5"
+                      className="mx-5 rounded"
                     />
                   </SplideSlide>
 
@@ -354,7 +389,7 @@ const Beranda = () => {
                       // src={`/assets/media/banner-3.svg`}
                       src={`/assets/media/carousel-01.svg`}
                       alt="First slide"
-                      className="mx-5"
+                      className="mx-5 rounded"
                     />
                   </SplideSlide>
                 </Splide>
@@ -481,8 +516,9 @@ const Beranda = () => {
                         <div>
                           {
                             el.pelatihan !== null ?
+                                                        
+                            <Link href={`/detail/akademi/akademi_id=${akademiId}&tema_id=${akademiId}`}>
                               <a 
-                                href={`/detail/akademi/${el.id}`}
                                 className="d-flex align-items-center"
                               >
                                 <>
@@ -501,6 +537,8 @@ const Beranda = () => {
                                   /> 
                                 </>
                               </a>
+                            </Link>
+                              
                             :
                               null
                           }
@@ -511,10 +549,10 @@ const Beranda = () => {
                       <div className="container-fluid">
                         <div className="row mt-10">
                           {
-                            show !== null && show[i] !== undefined && show[i] !== null?
+                            show !== null && show[i] !== undefined ?
                               show[i].showDetail !== true ?
-                                el.pelatihan ? 
-                                  el.pelatihan.map ((element, index) => {
+                                show[i].pelatihan !== false ? 
+                                show[i].pelatihan.map ((element, index) => {
                                     return (
                                       
                                       <div 
@@ -522,7 +560,7 @@ const Beranda = () => {
                                         key={index} 
                                         onMouseEnter={() => handleMouseEnter(i, index)}
                                         onMouseLeave={() => handleMouseLeave(i, index)}
-                                      >
+                                      > 
                                         <Cardss 
                                           label={<label>Pelatihan {element.metode_pelatihan}</label>}
 
@@ -541,23 +579,44 @@ const Beranda = () => {
                                           }
                                         
                                           thumbnail={
-                                            <Image 
-                                              src={process.env.END_POINT_API_IMAGE_BEASISWA + element.gambar}
-                                              // src={`https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/${element.gambar}`}
-                                              layout="fill" 
-                                              objectFit="cover"
-                                            />
+                                            show[i].pelatihan[index].hover === true ?
+                                              
+                                              // <div style={{filter:"brightness(50%)"}}>
+                                              //   <Image 
+                                              //     src={process.env.END_POINT_API_IMAGE_BEASISWA + element.gambar}
+                                              //     // src={`https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/${element.gambar}`}
+                                              //     layout="fill" 
+                                              //     objectFit="cover"
+                                              //   />
+                                              // </div>
+
+                                              <Image 
+                                                src={process.env.END_POINT_API_IMAGE_BEASISWA + element.gambar}
+                                                // src={`https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/${element.gambar}`}
+                                                layout="fill" 
+                                                objectFit="cover"
+                                                style={{filter:"brightness(50%)"}}
+                                              />
+                                            :
+                                              <Image 
+                                                src={process.env.END_POINT_API_IMAGE_BEASISWA + element.gambar}
+                                                // src={`https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/${element.gambar}`}
+                                                layout="fill" 
+                                                objectFit="cover"
+                                              />
+                                            
                                           }
 
 
                                         > 
                                           <div className="rounded mt-0 pt-0">
                                             <Image 
-                                              src={process.env.END_POINT_API_IMAGE_PARTNERSHIP + element.gambar_mitra}
+                                              src={process.env.END_POINT_API_IMAGE_PARTNERSHIP + "/" + element.gambar_mitra}
                                               // src={`https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/${element.gambar_mitra}`}
                                               layout="fill" 
                                               objectFit="cover"
-                                            />
+                                            /> 
+                                            
                                           </div>
 
                                           <div className="d-flex align-items-center justify-content-between pl-24">
@@ -569,13 +628,13 @@ const Beranda = () => {
                                             </p>
                                             {
                                               element.status !== "Closed" ?
-                                                <button className="btn btn-green-rounded mb-5">
+                                                <Badge pill bg="light" className=" text-success mb-5">
                                                   {element.status}
-                                                </button>
+                                                </Badge>
                                               :
-                                                <button className="btn btn-green-rounded text-danger mb-5">
+                                                <Badge pill bg="light" className="text-danger mb-5">
                                                   {element.status}
-                                                </button>
+                                                </Badge>
                                             }
                                             
                                           </div>
@@ -597,17 +656,21 @@ const Beranda = () => {
                                             show[i].pelatihan[index].hover !== true ?
                                               <div className="mt-2">
                                                 <div className="d-flex align-items-center">
-                                                  Registrasi: {moment(element.pendafataran_mulai).format("DD MMMM YYYY")} - {moment(element.pendafataran_selesai).format("DD MMMM YYYY")}
+                                                  Registrasi: {moment(element.pendaftaran_mulai).format("DD MMMM YYYY")} - {moment(element.pendaftaran_selesai).format("DD MMMM YYYY")}
+                                                  {/* Registrasi: {(element.pendafataran_mulai).toLocaleDateString("en-GB", options)} - {(element.pendafataran_selesai).toLocaleDateString("en-GB", options)} */}
                                                 </div>
                                                 <div className="d-flex align-items-center mt-2">
                                                   Kuota: {element.kuota_peserta} Peserta
                                                 </div>
                                               </div>
                                             :
-                                              <div className="mt-2">
-                                                <Button className="btn btn-outline-info rounded-pill col-12" onClick={() => handleQuickView(i, element.gambar, element.status, element.gambar_mitra, element.akademi, element.deskripsi, element.name, element.kuota_peserta, element.mitra, element.alamat, element.pendaftaran_mulai, element.pendaftaran_selesai)}>
+                                              <div className="mt-2 text-center">
+                                                <button className="btn btn-outline-primary-new rounded-pill col-12" onClick={() => handleQuickView(i, element.gambar, element.status, element.gambar_mitra, element.akademi, element.deskripsi, element.name, element.kuota_peserta, element.mitra, element.alamat, element.pendaftaran_mulai, element.pendaftaran_selesai, element.id, element.metode_pelatihan)}>
+                                                  Quick View
+                                                </button>
+                                                {/* <Button className="btn rounded-pill col-12" onClick={() => handleQuickView(i, element.gambar, element.status, element.gambar_mitra, element.akademi, element.deskripsi, element.name, element.kuota_peserta, element.mitra, element.alamat, element.pendaftaran_mulai, element.pendaftaran_selesai, element.id)}>
                                                     Quick View
-                                                </Button>
+                                                </Button> */}
                                               </div>
                                           }
                                           
@@ -637,14 +700,14 @@ const Beranda = () => {
                                         className="rounded"
                                       />
                                       <div className="position-absolute mt-5">
-                                        <Badge pill bg="light">
-                                          Pelatihan {cardStatus}
+                                        <Badge pill bg="light" className="text-info">
+                                          Pelatihan {cardMetode}
                                         </Badge>
                                       </div>
                                     </div>
                                     <div className="col-12 col-md-8">
                                       <div className="row ml-5">
-                                        <div className="col-12 col-md-2">
+                                        <div className="col-12 col-md-2 mt-3">
                                           <Image 
                                             // src={`/assets/media/logo-vsga-1.svg`}
                                             src={process.env.END_POINT_API_IMAGE_PARTNERSHIP + cardImageMitra}
@@ -653,10 +716,11 @@ const Beranda = () => {
                                             height="80vh" 
                                             objectFit="cover"
                                             className="rounded-circle"
-                                          />
+                                          /> 
+                                          
                                         </div>
                                         
-                                        <div className="col-6 col-md-6">
+                                        <div className="col-6 col-md-6 mt-5">
                                           <div className="text-muted">
                                             {cardAkademi}
                                           </div>
@@ -669,11 +733,11 @@ const Beranda = () => {
                                         </div>
 
                                         <div className="col-6 col-md-4">
-                                          <div className="row d-flex justify-content-end mt-5">
-                                            <Button className="btn btn-white rounded-circle px-2 py-1 mr-2 border border-dark text-center">
+                                          <div className="row d-flex justify-content-end">
+                                            <Button className="mt-3 btn btn-white rounded-circle px-2 py-2 mr-2 border border-dark text-center">
                                                 <i className="ri-share-line" />
                                             </Button>
-                                            <Button className="btn btn-white mr-2 rounded-circle px-2 py-1 border border-dark text-center">
+                                            <Button className="mt-3 btn btn-white mr-2 rounded-circle px-2 py-2 border border-dark text-center">
                                                 <i className="ri-heart-line" />
                                             </Button>
                                             <label style={{cursor:"pointer"}} className="mr-5" onClick={() => handleCloseQuickView(i)}>
@@ -685,7 +749,8 @@ const Beranda = () => {
 
                                       <div className="row ml-5">
                                         <div className="mt-3 ml-3 col-12">
-                                          {cardDeskripsi}
+                                          {/* {cardDeskripsi} */}
+                                          <div dangerouslySetInnerHTML={{ __html: cardDeskripsi }} style={{ overflowWrap: 'break-word' }}></div>
                                         </div>
                                       </div>
 
@@ -708,20 +773,28 @@ const Beranda = () => {
 
                                       <div className="row ml-5 border-top my-5">
                                         <div className="col-12 col-md-6 mt-5">
-                                          <Button className="btn btn-outline-info rounded-pill btn-block">
+                                          <button className="btn btn-outline-primary-new  rounded-pill btn-block">
                                             Lihat Selengkapnya
-                                          </Button>
+                                          </button>
                                         </div>
-                                        <div className="col-12 col-md-6 mt-5">
-                                          <Button className="btn btn-info rounded-pill btn-block">
-                                            Daftar Pelatihan
-                                          </Button>
-                                        </div>
+
+                                        {
+                                          cardStatus == "Closed" ?
+                                            null
+                                          :
+                                            <div className="col-12 col-md-6 mt-5">
+                                              <Link href={`/peserta/form-pendaftaran?id=${cardId}`} passHref>
+                                                <a>
+                                                  <button className="btn btn-primary-dashboard rounded-pill btn-block">
+                                                    Daftar Pelatihan
+                                                  </button>
+                                                </a>
+                                              </Link>
+                                              
+                                              
+                                            </div>
+                                        }
                                       </div>
-
-                                      
-
-
                                     </div>
                                   </div>
                                 </div>
@@ -789,14 +862,10 @@ const Beranda = () => {
         <ComeJoin />
         
         {/* Footer */}
-        <Footer />
+        {/* <Footer /> */}
       </div>
-
-      {/* Footer
-      <Footer /> */}
-
-    </BerandaWrapper>
   );
 };
+
 
 export default Beranda;

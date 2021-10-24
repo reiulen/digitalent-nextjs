@@ -39,7 +39,8 @@ import {
 import IconArrow from "../../../assets/icon/Arrow";
 import IconCalender from "../../../assets/icon/Calender";
 import LoadingTable from "../../../LoadingTable";
-
+import BtnIcon from "../components/BtnIcon";
+import AlertBar from "../components/BarAlert";
 import { RESET_VALUE_SORTIR } from "../../../../redux/types/partnership/mitra.type";
 import moment from "moment";
 
@@ -84,7 +85,7 @@ const DetailDataKerjasama = ({ token }) => {
   const onNewReset = () => {
     setDeleteBar(false);
     setBarStatus(false);
-    router.replace(`/partnership/mitra/detail/${router.query.id}`, undefined, {
+    router.replace(`/partnership/mitra/detail-data-kerjasama-mitra?id=${router.query.id}`, undefined, {
       shallow: true,
     });
   };
@@ -158,115 +159,31 @@ const DetailDataKerjasama = ({ token }) => {
     <PageWrapper>
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
         {deleteBar ? (
-          <div
-            className="alert alert-custom alert-light-success fade show mb-5"
-            role="alert"
-            style={{ backgroundColor: "#f7c9c9" }}
-          >
-            <div className="alert-icon">
-              <i
-                className="flaticon2-checkmark"
-                style={{ color: "#c51b1b" }}
-              ></i>
-            </div>
-            <div className="alert-text" style={{ color: "#c51b1b" }}>
-              Berhasil menghapus data
-            </div>
-            <div className="alert-close">
-              <button
-                type="button"
-                className="close"
-                data-dismiss="alert"
-                aria-label="Close"
-                onClick={() => onNewReset()}
-              >
-                <span aria-hidden="true">
-                  <i className="ki ki-close"></i>
-                </span>
-              </button>
-            </div>
-          </div>
-        ) : (
-          ""
-        )}
+        <AlertBar text="Berhasil menghapus data" className="alert-light-danger" onClick={() => onNewReset()}/>
+      ) : (
+        ""
+      )}
         {update ? (
-          <div
-            className="alert alert-custom alert-light-success fade show mb-5"
-            role="alert"
-            style={{ backgroundColor: "#C9F7F5" }}
-          >
-            <div className="alert-icon">
-              <i
-                className="flaticon2-checkmark"
-                style={{ color: "#1BC5BD" }}
-              ></i>
-            </div>
-            <div className="alert-text" style={{ color: "#1BC5BD" }}>
-              Berhasil mengubah data
-            </div>
-            <div className="alert-close">
-              <button
-                type="button"
-                className="close"
-                data-dismiss="alert"
-                aria-label="Close"
-                onClick={() => onNewReset()}
-              >
-                <span aria-hidden="true">
-                  <i className="ki ki-close"></i>
-                </span>
-              </button>
-            </div>
-          </div>
-        ) : (
-          ""
-        )}
+        <AlertBar text="Berhasil mengubah data" className="alert-light-warning" onClick={() => onNewReset()}/>
+      ) : (
+        ""
+      )}
         {barStatus ? (
-          <div
-            className="alert alert-custom alert-light-success fade show mb-5"
-            role="alert"
-            style={{ backgroundColor: "#C9F7F5" }}
-          >
-            <div className="alert-icon">
-              <i
-                className="flaticon2-checkmark"
-                style={{ color: "#1BC5BD" }}
-              ></i>
-            </div>
-            <div className="alert-text" style={{ color: "#1BC5BD" }}>
-              Berhasil mengubah status
-            </div>
-            <div className="alert-close">
-              <button
-                type="button"
-                className="close"
-                data-dismiss="alert"
-                aria-label="Close"
-                onClick={() => onNewReset()}
-              >
-                <span aria-hidden="true">
-                  <i className="ki ki-close"></i>
-                </span>
-              </button>
-            </div>
-          </div>
-        ) : (
-          ""
-        )}
+         <AlertBar text="Berhasil mengubah data" className="alert-light-success" onClick={() => onNewReset()}/>
+      ) : (
+        ""
+      )}
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3
-              className="card-title font-weight-bolder text-dark"
-              style={{ fontSize: "24px" }}
+              className="card-title font-weight-bolder text-dark titles-1"
             >
-              {/* nanti diambil key baru dibuat diyar */}
               Kerjasama &nbsp;
               {mitraDetailAll?.mitraDetailAll?.data?.title}
             </h3>
           </div>
 
           <div className="card-body pt-0">
-            {/* <form onSubmit={handleSubmit}> */}
             <div className="row">
               <div className="col-12 col-sm-6">
                 <div className="position-relative overflow-hidden w-100 mt-5">
@@ -484,8 +401,8 @@ const DetailDataKerjasama = ({ token }) => {
                             </td>
                             <td className="d-flex justify-content-start">
                               <div className="d-flex align-items-start justify-content-center flex-column">
-                                <p className="p-part-t">{items.title}</p>
-                                <p className="p-part-d">
+                                <p className="p-part-t text-overflow-ens">{items.title}</p>
+                                <p className="p-part-d text-overflow-ens">
                                   (
                                   {items.cooperation_category === null
                                     ? "tidak ada kategori kerjasama"

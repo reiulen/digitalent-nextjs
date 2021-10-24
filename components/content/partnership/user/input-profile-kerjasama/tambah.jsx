@@ -11,6 +11,8 @@ import Select from "react-select";
 import axios from "axios";
 import IconClose from "../../../../assets/icon/Close";
 import Image from "next/image";
+import BtnIcon from "../../components/BtnIcon";
+import AlertBar from "../../components/BarAlert";
 
 const Tambah = ({ token }) => {
   const router = useRouter();
@@ -53,13 +55,10 @@ const Tambah = ({ token }) => {
         ...error,
         institution_name: "Harus isi nama lembaga",
       });
-      notify("Harus isi nama lembaga");
     } else if (wesite === "") {
       setError({ ...error, wesite: "Harus isi nama website" });
-      notify("Harus isi nama website");
     } else if (email === "") {
       setError({ ...error, email: "Harus isi email" });
-      notify("Harus isi email");
     }
 
     // jika pertama kali data profile kosong
@@ -77,16 +76,14 @@ const Tambah = ({ token }) => {
 
      else if (address === "") {
       setError({ ...error, address: "Harus isi alamat" });
-      notify("Harus isi alamat");
     } else if (indonesia_provinces_id === "") {
       setError({
         ...error,
         indonesia_provinces_id: "Harus isi pilih provinsi",
       });
-      notify("Harus isi pilih provinsi");
     } else if (indonesia_cities_id === "") {
       setError({ ...error, indonesia_cities_id: "Harus isi pilih kota/kab" });
-      notify("Harus isi pilih kota/kab");
+
     } else if (
       postal_code === "" ||
       postal_code.length < 5 ||
@@ -96,19 +93,15 @@ const Tambah = ({ token }) => {
         ...error,
         postal_code: "Harus isi kode pos minimal dan maksimal 5 karakter",
       });
-      notify("Harus isi kode pos minimal dan maksimal 5 karakter");
     } else if (pic_name === "") {
       setError({ ...error, pic_name: "Harus isi nama PIC" });
-      notify("Harus isi nama PIC");
     } else if (pic_contact_number === "" || pic_contact_number.length < 9) {
       setError({
         ...error,
         pic_contact_number: "Harus isi No. Kontak PIC dan minimal 9 karakter",
       });
-      notify("Harus isi No. Kontak PIC");
     } else if (pic_email === "") {
       setError({ ...error, pic_email: "Harus isi Email PIC" });
-      notify("Harus isi Email PIC");
     } else {
       //
       Swal.fire({
@@ -264,7 +257,8 @@ const Tambah = ({ token }) => {
         // dataNewProvinces.splice(0, 0, { label: "Pilih Provinsi", value: "" });
         setAllProvinces(dataNewProvinces);
       } catch (error) {
-        notify(error.response.data.message);
+        // notify(error.response.data.message);
+        return;
       }
     }
 
@@ -278,6 +272,7 @@ const Tambah = ({ token }) => {
             },
           }
         );
+        console.log("data",data)
 
         if (data) {
           // setAgency_logo_api(
@@ -318,7 +313,7 @@ const Tambah = ({ token }) => {
           }
         }
       } catch (error) {
-        notify(error.response.data.message);
+        return;
       }
     }
 
@@ -339,7 +334,8 @@ const Tambah = ({ token }) => {
           });
           setCitiesAll(dataNewCitites);
         } catch (error) {
-          notify(error.response.data.message);
+          // notify(error.response.data.message);
+          return;
         }
       }
       fetchAPI();
@@ -359,31 +355,7 @@ const Tambah = ({ token }) => {
   return (
     <PageWrapper>
       {successInputProfile ? (
-        <div
-          className="alert alert-custom alert-light-success fade show mb-5"
-          role="alert"
-          style={{ backgroundColor: "#C9F7F5" }}
-        >
-          <div className="alert-icon">
-            <i className="flaticon2-checkmark" style={{ color: "#1BC5BD" }}></i>
-          </div>
-          <div className="alert-text" style={{ color: "#1BC5BD" }}>
-            Berhasil menyimpan data
-          </div>
-          <div className="alert-close">
-            <button
-              type="button"
-              className="close"
-              data-dismiss="alert"
-              aria-label="Close"
-              onClick={() => onNewReset()}
-            >
-              <span aria-hidden="true">
-                <i className="ki ki-close"></i>
-              </span>
-            </button>
-          </div>
-        </div>
+         <AlertBar text="Berhasil menyimpan data" className="alert-light-success" onClick={() => onNewReset()}/>
       ) : (
         ""
       )}
@@ -401,17 +373,12 @@ const Tambah = ({ token }) => {
         />
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3 className="card-title text-dark fw-600 fz-20 mb-0">
+            <h3 className="card-title text-dark fw-600 titles-1">
               Profile Lembaga
             </h3>
           </div>
           <div className="card-body pt-0">
             <form
-            // id="kt_docs_formvalidation_text"
-            // className="form"
-            // action="#"
-            // autoComplete="off"
-            // onSubmit={submit}
             >
               <div className="form-group mb-6">
                 <label htmlFor="staticE mail" className="col-form-label">
@@ -422,7 +389,6 @@ const Tambah = ({ token }) => {
                   type="text"
                   name="text_input"
                   className="form-control border-0"
-                  // placeholder="Masukan Nama Lembaga"
                   value={institution_name}
                   style={{backgroundColor:"transparent"}}
                 />
@@ -466,7 +432,6 @@ const Tambah = ({ token }) => {
                       type="text"
                       name="text_input"
                       className="form-control border-0"
-                      // placeholder="Masukan Alamat E-mail"
                       value={email}
                       style={{backgroundColor:"transparent"}}
                     />
@@ -497,9 +462,7 @@ const Tambah = ({ token }) => {
                     }}
                   >
                     <Image
-                      src={process.env.END_POINT_API_IMAGE_PARTNERSHIP +
-                          "partnership/images/profile-images/" +
-                          imageview}
+                      src={process.env.END_POINT_API_IMAGE_PARTNERSHIP + imageview}
                       alt="Picture of the author"
                       layout="fill"
                       objectFit="fill"

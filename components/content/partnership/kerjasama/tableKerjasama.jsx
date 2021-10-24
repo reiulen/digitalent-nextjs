@@ -22,6 +22,8 @@ import LoadingTable from "../../../LoadingTable";
 import moment from "moment";
 import Image from "next/image";
 import Select from "react-select";
+import BtnIcon from "../components/BtnIcon";
+import AlertBar from "../components/BarAlert";
 
 import {
   fetchAllMK,
@@ -31,9 +33,6 @@ import {
   changeValueStatus,
   changeValueKerjaSama,
   limitCooporation,
-  fetchListSelectMitra,
-  fetchListSelectCooperation,
-  fetchListSelectStatus,
   changeValueStatusCard,
   deleteCooperation,
   changeStatusList,
@@ -177,9 +176,6 @@ const Table = ({ token }) => {
   };
 
   useEffect(() => {
-    // dispatch(fetchListSelectMitra(token));
-    // dispatch(fetchListSelectCooperation(token));
-    // dispatch(fetchListSelectStatus(token));
     async function getWillExpire(token) {
       try {
         let { data } = await axios.get(
@@ -200,176 +196,32 @@ const Table = ({ token }) => {
   return (
     <PageWrapper>
       {update ? (
-        <div
-          className="alert alert-custom alert-light-success fade show mb-5"
-          role="alert"
-          style={{ backgroundColor: "#C9F7F5" }}
-        >
-          <div className="alert-icon">
-            <i className="flaticon2-checkmark" style={{ color: "#1BC5BD" }}></i>
-          </div>
-          <div className="alert-text" style={{ color: "#1BC5BD" }}>
-            Berhasil mengubah data
-          </div>
-          <div className="alert-close">
-            <button
-              type="button"
-              className="close"
-              data-dismiss="alert"
-              aria-label="Close"
-              onClick={() => onNewReset()}
-            >
-              <span aria-hidden="true">
-                <i className="ki ki-close"></i>
-              </span>
-            </button>
-          </div>
-        </div>
+        <AlertBar text="Berhasil mengubah data" className="alert-light-warning" onClick={() => onNewReset()}/>
       ) : (
         ""
       )}
       {successMakeREvisi ? (
-        <div
-          className="alert alert-custom alert-light-success fade show mb-5"
-          role="alert"
-          style={{ backgroundColor: "#C9F7F5" }}
-        >
-          <div className="alert-icon">
-            <i className="flaticon2-checkmark" style={{ color: "#1BC5BD" }}></i>
-          </div>
-          <div className="alert-text" style={{ color: "#1BC5BD" }}>
-            Berhasil Menambahkan data revisi
-          </div>
-          <div className="alert-close">
-            <button
-              type="button"
-              className="close"
-              data-dismiss="alert"
-              aria-label="Close"
-              onClick={() => onNewReset()}
-            >
-              <span aria-hidden="true">
-                <i className="ki ki-close"></i>
-              </span>
-            </button>
-          </div>
-        </div>
+        <AlertBar text="Berhasil menambahkan data revisi" className="alert-light-success" onClick={() => onNewReset()}/>
       ) : (
         ""
       )}
       {successTerima ? (
-        <div
-          className="alert alert-custom alert-light-success fade show mb-5"
-          role="alert"
-          style={{ backgroundColor: "#C9F7F5" }}
-        >
-          <div className="alert-icon">
-            <i className="flaticon2-checkmark" style={{ color: "#1BC5BD" }}></i>
-          </div>
-          <div className="alert-text" style={{ color: "#1BC5BD" }}>
-            Berhasil mengubah data status
-          </div>
-          <div className="alert-close">
-            <button
-              type="button"
-              className="close"
-              data-dismiss="alert"
-              aria-label="Close"
-              onClick={() => onNewReset()}
-            >
-              <span aria-hidden="true">
-                <i className="ki ki-close"></i>
-              </span>
-            </button>
-          </div>
-        </div>
+        <AlertBar text="Berhasil mengubah data status" className="alert-light-success" onClick={() => onNewReset()}/>
       ) : (
         ""
       )}
       {isStatusBar ? (
-        <div
-          className="alert alert-custom alert-light-success fade show mb-5"
-          role="alert"
-          style={{ backgroundColor: "#C9F7F5" }}
-        >
-          <div className="alert-icon">
-            <i className="flaticon2-checkmark" style={{ color: "#1BC5BD" }}></i>
-          </div>
-          <div className="alert-text" style={{ color: "#1BC5BD" }}>
-            Berhasil mengubah status
-          </div>
-          <div className="alert-close">
-            <button
-              type="button"
-              className="close"
-              data-dismiss="alert"
-              aria-label="Close"
-              onClick={() => onNewReset()}
-            >
-              <span aria-hidden="true">
-                <i className="ki ki-close"></i>
-              </span>
-            </button>
-          </div>
-        </div>
+         <AlertBar text="Berhasil mengubah data status" className="alert-light-success" onClick={() => onNewReset()}/>
       ) : (
         ""
       )}
       {deleteBar ? (
-        <div
-          className="alert alert-custom alert-light-success fade show mb-5"
-          role="alert"
-          style={{ backgroundColor: "#f7c9c9" }}
-        >
-          <div className="alert-icon">
-            <i className="flaticon2-checkmark" style={{ color: "#c51b1b" }}></i>
-          </div>
-          <div className="alert-text" style={{ color: "#c51b1b" }}>
-            Berhasil menghapus data
-          </div>
-          <div className="alert-close">
-            <button
-              type="button"
-              className="close"
-              data-dismiss="alert"
-              aria-label="Close"
-              onClick={() => onNewReset()}
-            >
-              <span aria-hidden="true">
-                <i className="ki ki-close"></i>
-              </span>
-            </button>
-          </div>
-        </div>
+         <AlertBar text="Berhasil menghapus data" className="alert-light-danger" onClick={() => onNewReset()}/>
       ) : (
         ""
       )}
       {successReject ? (
-        <div
-          className="alert alert-custom alert-light-success fade show mb-5"
-          role="alert"
-          style={{ backgroundColor: "#f7c9c9" }}
-        >
-          <div className="alert-icon">
-            <i className="flaticon2-checkmark" style={{ color: "#c51b1b" }}></i>
-          </div>
-          <div className="alert-text" style={{ color: "#c51b1b" }}>
-            Berhasil mengubah data status
-          </div>
-          <div className="alert-close">
-            <button
-              type="button"
-              className="close"
-              data-dismiss="alert"
-              aria-label="Close"
-              onClick={() => onNewReset()}
-            >
-              <span aria-hidden="true">
-                <i className="ki ki-close"></i>
-              </span>
-            </button>
-          </div>
-        </div>
+        <AlertBar text="Berhasil mengubah data status" className="alert-light-success" onClick={() => onNewReset()}/>
       ) : (
         ""
       )}
@@ -416,8 +268,7 @@ const Table = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="d-flex flex-wrap align-items-center justify-content-between px-8 py-4">
             <h1
-              className="card-title font-weight-bolder text-dark mb-0 mt-4"
-              style={{ fontSize: "24px" }}
+              className="card-title font-weight-bolder text-dark mb-0 mt-4 titles-1"
             >
               Kerjasama
             </h1>
@@ -682,8 +533,8 @@ const Table = ({ token }) => {
                                 </td>
                                 <td className="d-flex justify-content-start">
                                   <div className="d-flex align-items-start justify-content-center flex-column">
-                                    <p className="p-part-t">{items.title}</p>
-                                    <p className="p-part-d">
+                                    <p className="p-part-t text-overflow-ens">{items.title}</p>
+                                    <p className="p-part-d text-overflow-ens">
                                       (
                                       {items.cooperation_category === null
                                         ? "tidak ada kategori kerjasama"
@@ -695,12 +546,12 @@ const Table = ({ token }) => {
                                   <br />
                                 </td>
                                 <td className="align-middle text-left">
-                                  <p className="p-part-t">
+                                  <p className="p-part-t text-overflow-ens">
                                     {items.period} {items.period_unit}
                                   </p>
                                 </td>
                                 <td className="align-middle text-left">
-                                  <p className="p-part-t">
+                                  <p className="p-part-t text-overflow-ens">
                                     {items.period_date_start === null
                                       ? "-"
                                       : moment(items.period_date_start).format(

@@ -14,6 +14,7 @@ import PageWrapper from "../../../wrapper/page.wrapper";
 import CardDashboardSiteManagement from "../../../CardDashboardSiteManagement";
 
 import {
+  loadDataPeserta,
   loadDataZonasi,
   loadDataZonasiNext,
 } from "../../../../redux/actions/site-management/dashboard.actions";
@@ -24,14 +25,15 @@ const DashboardSiteManagement = ({ token }) => {
   const [administrator, setAdministrator] = useState("0");
   const [mitra, setMitra] = useState(0);
   const [pageZonasi, setPageZonasi] = useState(1);
+  const [pagePeserta, setPagePeserta] = useState(1);
   const [type, setType] = useState("province");
-  const [totalPage, setTotalPage] = useState(0);
+  const [typePeserta, setTypePeserta] = useState("province");
 
   let dispatch = useDispatch();
 
   useEffect(() => {
     axios
-      .get(`${process.env.END_POINT_API_SITE_MANAGEMENT}/api/dashboard/card`, {
+      .get(`${process.env.END_POINT_API_SITE_MANAGEMENT}api/dashboard/card`, {
         headers: {
           authorization: `Bearer ${token}`,
         },
@@ -43,19 +45,24 @@ const DashboardSiteManagement = ({ token }) => {
       });
 
     dispatch(loadDataZonasi(token, type, pageZonasi));
-  }, [dispatch, token, type, pageZonasi]);
+    dispatch(loadDataPeserta(token, typePeserta, pagePeserta));
+  }, [dispatch, token, type, pageZonasi, typePeserta, pagePeserta]);
 
-  const { allDataZonasi } = useSelector(
+  const { allDataZonasi, allDataPeserta } = useSelector(
     (state) => ({
       allDataZonasi: state.allDataZonasi,
+      allDataPeserta: state.allDataPeserta,
     }),
     shallowEqual
   );
 
   function capitalize(s) {
-    return s.toLowerCase().replace(/\b./g, function (a) {
-      return a.toUpperCase();
-    });
+    let a = s.split(" ")
+    let result = []
+    for (let i = 0; i < a.length; i++) {
+       result.push(a[i].charAt(0).toUpperCase() + a[i].slice(1, a[i].length))
+    }
+    return result.join(" ")
   }
 
   function formatNumber(num) {
@@ -69,11 +76,25 @@ const DashboardSiteManagement = ({ token }) => {
           <span className="nomor mr-4">{item.nomor}</span>
           {capitalize(item.provinsi)}
         </td>
+        <td className="total-peserta">{formatNumber(item.total)} Zonasi</td>
+      </tr>
+    );
+  });
+
+  const tablePeserta = allDataPeserta.map((item, index) => {
+    return (
+      <tr key={index}>
+        <td className="data-daerah py-4">
+          <span className="nomor mr-4">{item.nomor}</span>
+          {capitalize(item.provinsi)}
+        </td>
         <td className="total-peserta">{formatNumber(item.total)} Peserta</td>
       </tr>
     );
   });
+
   
+
   return (
     <>
       <PageWrapper>
@@ -113,7 +134,7 @@ const DashboardSiteManagement = ({ token }) => {
         </div>
         <div className="container">
           <div className="row mx-0">
-            <div className="col-lg-6">
+            <div className="col-lg-6 mt-2">
               <div
                 className="position-relative br-12 bg-white py-10 px-6 overflow-hidden"
                 style={{ height: "197px", maxHeight: "197px" }}
@@ -134,11 +155,12 @@ const DashboardSiteManagement = ({ token }) => {
                 </p>
               </div>
             </div>
-            <div className="col-lg-3 mt-2">
+            <div className="col-lg-3 mt-2 hover-subm">
               <CardDashboardSiteManagement
                 background="bg-white"
                 icon="/assets/icon/Account.svg"
-                color="text-Black"
+                hover="/assets/icon/HoverSUBM.svg"
+                color="text-black"
                 title="SUBM"
                 link="/site-management/setting/pelatihan"
               ></CardDashboardSiteManagement>
@@ -146,10 +168,11 @@ const DashboardSiteManagement = ({ token }) => {
             <div className="col-lg-3 mt-2">
               <CardDashboardSiteManagement
                 background="bg-white"
+                hover="/assets/icon/HoverZonasi.svg"
                 icon="/assets/icon/Map.svg"
-                color="text-Black"
+                color="text-black"
                 title="Zonasi"
-                link="/site-management/dashboard"
+                link="/site-management/master-data/master-zonasi"
               ></CardDashboardSiteManagement>
             </div>
           </div>
@@ -160,43 +183,98 @@ const DashboardSiteManagement = ({ token }) => {
               <div className="content-data bg-white">
                 <table className="table table-borderless rounded mx-4">
                   <tr>
-                    <th> </th>
                     <th>
                       <div className="data-peserta">Data Peserta</div>
-                      <div className="berdasarkan">Berdasarkan Daerah</div>
+                      <div className="berdasarkan">Berdasarkan {typePeserta === "city" ? "Daerah" : "Provinsi"}</div>
                     </th>
                     <th>
-                      <div className="kota pt-3">
-                        <a href="#">Kota / Kabupaten</a>
+                      <div
+                        className={
+                          typePeserta === "city"
+                            ? "btn btn-primary text-white type-styling"
+                            : "text-gray pt-3"
+                        }
+                      >
+                        <a
+                          href="#"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setTypePeserta("city");
+                            setPagePeserta(1);
+                          }}
+                        >
+                          Kota / Kabupaten
+                        </a>
                       </div>
                     </th>
                     <th>
-                      <a href="#" className="btn btn-primary text-white">
-                        Kota / Kabupaten
-                      </a>
+                      <div
+                        className={
+                          typePeserta === "province"
+                            ? "btn btn-primary text-white type-styling"
+                            : "text-gray pt-3 provinsi-styling"
+                        }
+                      >
+                        <a
+                          href="#"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setTypePeserta("province");
+                            setPagePeserta(1);
+                          }}
+                        >
+                          Provinsi
+                        </a>
+                      </div>
                     </th>
                   </tr>
 
-                  <tr>
-                    <td className="text-center">
-                      <span className="nomor">1</span>
-                    </td>
-                    <td className="data-daerah py-4">DKI Jakarta</td>
-                    <td className="total-peserta">12.000 Peserta</td>
-                  </tr>
-                  <tr>
-                    <td className="text-center">
-                      <span className="nomor">1</span>
-                    </td>
-                    <td className="data-daerah">DKI Jakarta</td>
-                    <td className="total-peserta">12.000 Peserta</td>
-                  </tr>
+                  {tablePeserta}
+
                 </table>
                 <div className="d-flex mx-6">
-                  <p className="pt-6">Total: 120.000 Zonasi</p>
+                  <p className="pt-6">
+                    Total: {formatNumber(allDataPeserta[0].totalPeserta)} Peserta
+                  </p>
                   <div className="ml-auto mx-10 my-4">
-                    <button className="btn btn-primary mx-4">&lt;</button>
-                    <button className="btn btn-primary">&gt;</button>
+                    <button
+                      className={
+                        pagePeserta === 1
+                          ? "btn btn-primary mx-4 disabled"
+                          : "btn btn-primary mx-4"
+                      }
+                      onClick={(e) => {
+                        e.preventDefault();
+                        if (pagePeserta === 1) {
+                          setPagePeserta(pagePeserta);
+                        } else {
+                          setPagePeserta(pagePeserta - 1);
+                        }
+                      }}
+                    >
+                      &lt;
+                    </button>
+                    <button
+                      type="button"
+                      className={
+                        pagePeserta >= Math.ceil(allDataPeserta[0].totalPage / 5)
+                          ? "btn btn-primary disabled"
+                          : "btn btn-primary"
+                      }
+                      onClick={(e) => {
+                        e.preventDefault();
+                        if (
+                          pagePeserta >=
+                          Math.ceil(allDataPeserta[0].totalPage / 5)
+                        ) {
+                          setPagePeserta(pagePeserta);
+                        } else {
+                          setPagePeserta(pagePeserta + 1);
+                        }
+                      }}
+                    >
+                      &gt;
+                    </button>
                   </div>
                 </div>
               </div>
@@ -207,7 +285,7 @@ const DashboardSiteManagement = ({ token }) => {
                   <tr>
                     <th>
                       <div className="data-peserta">Data Zonasi</div>
-                      <div className="berdasarkan">Berdasarkan Daerah</div>
+                      <div className="berdasarkan">Berdasarkan {type === "city" ? "Daerah" : "Provinsi"}</div>
                     </th>
                     <th>
                       <div
@@ -234,14 +312,14 @@ const DashboardSiteManagement = ({ token }) => {
                         className={
                           type === "province"
                             ? "btn btn-primary text-white type-styling"
-                            : "text-gray pt-3"
+                            : "text-gray pt-3 provinsi-styling"
                         }
                       >
                         <a
                           href="#"
                           onClick={(e) => {
                             e.preventDefault();
-                            setType("province");120.000
+                            setType("province");
                             setPageZonasi(1);
                           }}
                         >
@@ -254,7 +332,9 @@ const DashboardSiteManagement = ({ token }) => {
                   {tableZonasi}
                 </table>
                 <div className="d-flex mx-6">
-                  <p className="pt-6">Total: {allDataZonasi[0].totalZonasi} Zonasi</p>
+                  <p className="pt-6">
+                    Total: {formatNumber(allDataZonasi[0].totalZonasi)} Zonasi
+                  </p>
                   <div className="ml-auto mx-10 my-4">
                     <button
                       className={
@@ -264,12 +344,11 @@ const DashboardSiteManagement = ({ token }) => {
                       }
                       onClick={(e) => {
                         e.preventDefault();
-                        if(pageZonasi === 1){
+                        if (pageZonasi === 1) {
                           setPageZonasi(pageZonasi);
-                        }else{
+                        } else {
                           setPageZonasi(pageZonasi - 1);
                         }
-                        
                       }}
                     >
                       &lt;
@@ -283,9 +362,12 @@ const DashboardSiteManagement = ({ token }) => {
                       }
                       onClick={(e) => {
                         e.preventDefault();
-                        if(pageZonasi >= Math.ceil(allDataZonasi[0].totalPage / 5)){
+                        if (
+                          pageZonasi >=
+                          Math.ceil(allDataZonasi[0].totalPage / 5)
+                        ) {
                           setPageZonasi(pageZonasi);
-                        }else{
+                        } else {
                           setPageZonasi(pageZonasi + 1);
                         }
                       }}

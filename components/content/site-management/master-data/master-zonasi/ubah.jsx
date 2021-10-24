@@ -42,14 +42,12 @@ const Tambah = ({ token }) => {
     })
   );
 
-  console.log("formInput", formInput);
   // value to send api
   const [valueSend, setValueSend] = useState(
     detailZonasi.data.data.data.map((items) => {
       return { ...items, provinsi_old: items.provinsi };
     })
   );
-  console.log("valueSend", valueSend);
 
   const handleAddInput = () => {
     let _temp = [...formInput];
@@ -82,7 +80,6 @@ const Tambah = ({ token }) => {
 
   // onchange set value to form input loop
   const changeListProvinces = async (e, index) => {
-    console.log("event change provinsices", e.id);
     let _temp = [...formInput];
     let _tempValue = [...valueSend];
 

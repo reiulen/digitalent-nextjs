@@ -51,6 +51,7 @@ const Table = ({ token }) => {
       if (result.value) {
         dispatch(deleteTandaTangan(id,token));
         setSuccessDelete(true);
+        setIsStatusBar(false);
         router.replace(`/partnership/tanda-tangan`);
       }
     });
@@ -116,31 +117,7 @@ const Table = ({ token }) => {
         ""
       )}
       {isStatusBar ? (
-        <div
-          className="alert alert-custom alert-light-success fade show mb-5"
-          role="alert"
-          style={{ backgroundColor: "#C9F7F5" }}
-        >
-          <div className="alert-icon">
-            <i className="flaticon2-checkmark" style={{ color: "#1BC5BD" }}></i>
-          </div>
-          <div className="alert-text" style={{ color: "#1BC5BD" }}>
-            Berhasil mengubah status
-          </div>
-          <div className="alert-close">
-            <button
-              type="button"
-              className="close"
-              data-dismiss="alert"
-              aria-label="Close"
-              onClick={() => onNewReset()}
-            >
-              <span aria-hidden="true">
-                <i className="ki ki-close"></i>
-              </span>
-            </button>
-          </div>
-        </div>
+         <AlertBar text="Berhasil mengubah data" className="alert-light-success" onClick={() => onNewReset()}/>
       ) : (
         ""
       )}
@@ -149,8 +126,7 @@ const Table = ({ token }) => {
 
           <div className="card-header border-0">
             <h3
-              className="card-title font-weight-bolder text-dark"
-              style={{ fontSize: "24px" }}
+              className="card-title font-weight-bolder text-dark titles-1"
             >
               Tanda Tangan Digital
             </h3>
@@ -239,10 +215,10 @@ const Table = ({ token }) => {
                                         allTandaTangan.limit +
                                       (index + 1)}
                                 </td>
-                                <td className="align-middle text-left">
+                                <td className="align-middle text-left text-overflow-ens">
                                   {items.name}
                                 </td>
-                                <td className="align-middle text-left">
+                                <td className="align-middle text-left text-overflow-ens">
                                   {items.position}
                                 </td>
                                 <td className="align-middle text-left">

@@ -29,7 +29,7 @@ import axios from "axios";
 
 // get all data
 export const getAllArtikelPeserta =
-  (role = 3, page = 1, keyword = "", limit = 5, publish = null, startdate = null, enddate = null, token) =>
+  (role, page = 1, keyword = "", limit = 5, publish = null, startdate = null, enddate = null, token) =>
     async (dispatch) => {
       try {
         dispatch({ type: ARTIKEL_PESERTA_REQUEST });
@@ -56,7 +56,6 @@ export const getAllArtikelPeserta =
         dispatch({
           type: ARTIKEL_PESERTA_FAIL,
           payload: error.response.data.message,
-          // payload: error.message,
         });
       }
     };
@@ -90,14 +89,6 @@ export const newArtikelPeserta = (artikelPesertaData , token) => async (dispatch
     dispatch({
       type: NEW_ARTIKEL_PESERTA_REQUEST,
     });
-
-    // const config = {
-    //     headers: {
-    //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
-    //         'Access-Control-Allow-Origin': '*',
-    //         'apikey': process.env.END_POINT_KEY_AUTH
-    //     }
-    // }
 
     const config = {
       headers: {
