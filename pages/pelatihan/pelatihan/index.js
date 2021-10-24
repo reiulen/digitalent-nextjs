@@ -2,7 +2,6 @@ import React from "react";
 
 import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
-// import ListTraining from "../../../components/content/pelatihan/training/list-training";
 import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
 
 import {

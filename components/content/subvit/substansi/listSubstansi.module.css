@@ -1,0 +1,33 @@
+@media (max-width: 1024px) {
+  .inputSearch {
+    width: 100% !important;
+  }
+  .baseSearch {
+    max-width: 100%;
+  }
+  .cardToolbar {
+    max-width: 500px;
+    width: auto;
+  }
+  .rowPagination {
+    margin-top: 20px;
+  }
+  .space {
+    padding: 0px !important;
+  }
+}
+.top {
+  padding: 15px 30px;
+}
+.baseSearch {
+  max-width: 330px !important;
+}
+.cardToolbar {
+  max-width: 100%;
+}
+.buttonGroup {
+  text-align: right !important;
+}
+.space {
+  padding: 0px 28px;
+}

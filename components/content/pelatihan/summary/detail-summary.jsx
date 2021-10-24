@@ -7,20 +7,34 @@ import { useRouter } from "next/router";
 import Pagination from "react-js-pagination";
 import Swal from "sweetalert2";
 import { Modal } from "react-bootstrap";
+import moment from "moment";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingTable from "../../../LoadingTable";
 import CardPage from "../../../CardPage";
+import { getPendaftaranPeserta } from "../../../../redux/actions/pelatihan/summary.actions";
 
 import { useDispatch, useSelector } from "react-redux";
 
-const DetailSummary = () => {
+const DetailSummary = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  let { page = 1, success } = router.query;
-  page = Number(page);
+  const { error: errorStatusPendaftar, statusPendaftar } = useSelector(
+    (state) => state.getStatusPendaftar
+  );
+  const { error: errorDataAkademi, data: dataPelatihan } = useSelector(
+    (state) => state.getAkademiByPelatihan
+  );
+  const {
+    loading,
+    error: errorPendaftarPeserta,
+    peserta,
+  } = useSelector((state) => state.getPendaftaranPeserta);
 
+  let { id } = router.query;
+
+  const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -28,43 +42,19 @@ const DetailSummary = () => {
   const [publishValue, setPublishValue] = useState(null);
 
   const handlePagination = (pageNumber) => {
-    let link = `${router.pathname}?page=${pageNumber}`;
-    if (limit) link = link.concat(`&limit=${limit}`);
-    if (search) link = link.concat(`&keyword=${search}`);
-    router.push(link);
+    setPage(pageNumber);
+    dispatch(getPendaftaranPeserta(token, id, search, limit, pageNumber));
   };
 
   const handleSearch = () => {
-    if (limit != null) {
-      router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`);
-    } else {
-      router.push(`${router.pathname}?page=1&keyword=${search}`);
-    }
+    setPage(1);
+    dispatch(getPendaftaranPeserta(token, id, search, limit, 1));
   };
 
   const handleLimit = (val) => {
     setLimit(val);
-    router.push(`${router.pathname}?page=1&limit=${val}`);
-  };
-
-  const onNewReset = () => {
-    router.replace("/subvit/substansi", undefined, { shallow: true });
-  };
-
-  const handleDelete = (id) => {
-    Swal.fire({
-      title: "Apakah anda yakin ?",
-      text: "Data ini tidak bisa dikembalikan !",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Ya !",
-      cancelButtonText: "Batal",
-    }).then((result) => {
-      if (result.isConfirmed) {
-      }
-    });
+    setPage(1);
+    dispatch(getPendaftaranPeserta(token, id, search, limit, 1));
   };
 
   const handlePublish = (val) => {
@@ -75,25 +65,20 @@ const DetailSummary = () => {
   };
 
   const handleExportReport = async () => {
-    let link = `http://dts-subvit-dev.majapahit.id/api/subtance-question-banks/report/export/${id}`;
-    if (search) link = link.concat(`&keyword=${search}`);
-    if (status) link = link.concat(`&status=${status}`);
-    if (nilai) link = link.concat(`&nilai=${nilai}`);
-    if (pelatihan) link = link.concat(`&pelatihan=${pelatihan}`);
-
-    await axios.get(link).then((res) => {
-      window.location.href = res.data.data;
-    });
+    // let link = `http://dts-subvit-dev.majapahit.id/api/subtance-question-banks/report/export/${id}`;
+    // if (search) link = link.concat(`&keyword=${search}`);
+    // if (status) link = link.concat(`&status=${status}`);
+    // if (nilai) link = link.concat(`&nilai=${nilai}`);
+    // if (pelatihan) link = link.concat(`&pelatihan=${pelatihan}`);
+    // await axios.get(link).then((res) => {
+    //   window.location.href = res.data.data;
+    // });
   };
 
   const handleResetError = () => {
     if (error) {
       dispatch(clearErrors());
     }
-  };
-
-  const handleModalRevisi = (id) => {
-    setShowModalRevisi(true);
   };
 
   return (
@@ -104,7 +89,7 @@ const DetailSummary = () => {
             background="bg-primary"
             icon="new/add-user.svg"
             color="#FFFFFF"
-            value={0}
+            value={statusPendaftar[0].count}
             titleValue=""
             title="Pendaftar"
             publishedVal=""
@@ -114,7 +99,7 @@ const DetailSummary = () => {
             background="bg-secondary"
             icon="new/done-circle.svg"
             color="#FFFFFF"
-            value={0}
+            value={statusPendaftar[1].count}
             titleValue=""
             title="Verivied Administrasi"
             publishedVal="sudah-mengerjakan"
@@ -124,7 +109,7 @@ const DetailSummary = () => {
             background="bg-success"
             icon="new/open-book.svg"
             color="#FFFFFF"
-            value={0}
+            value={statusPendaftar[2].count}
             titleValue=""
             title="Lulus Tes Substansi"
             publishedVal="sedang-mengerjakan"
@@ -134,7 +119,7 @@ const DetailSummary = () => {
             background="bg-warning"
             icon="new/mail-white.svg"
             color="#FFFFFF"
-            value={0}
+            value={statusPendaftar[3].count}
             titleValue=""
             title="Verified Administrasi Lulus Tes Substansi"
             publishedVal="belum-mengerjakan"
@@ -144,7 +129,7 @@ const DetailSummary = () => {
             background="bg-extras"
             icon="new/block-white.svg"
             color="#FFFFFF"
-            value={0}
+            value={statusPendaftar[4].count}
             titleValue=""
             title="Diterima"
             publishedVal="gagal-test"
@@ -160,7 +145,8 @@ const DetailSummary = () => {
               className="card-title text-dark mt-2"
               style={{ fontSize: "24px" }}
             >
-              Fresh Graduate Academy / Android Developer / _nama pelatihan_
+              {dataPelatihan.akademi} / {dataPelatihan.tema} /{" "}
+              {dataPelatihan.name}
             </h1>
           </div>
 
@@ -168,24 +154,38 @@ const DetailSummary = () => {
             <div className="row">
               <div className="col-md-6">
                 <p className="text-neutral-body my-0">Kuota Pendaftaran</p>
-                <p className="text-success">1500 Pendaftar</p>
+                <p className="text-success">
+                  {dataPelatihan.kuota_pendaftar} Pendaftar
+                </p>
               </div>
               <div className="col-md-6">
                 <p className="text-neutral-body my-0">Kuota Peserta</p>
-                <p className="text-success">150 Pendaftar</p>
+                <p className="text-success">
+                  {dataPelatihan.kuota_peserta} Pendaftar
+                </p>
               </div>
             </div>
             <div className="row">
               <div className="col-md-6">
                 <p className="text-neutral-body my-0">Jadwal Pendaftaran</p>
                 <p className="text-neutral-body">
-                  1 Oktober 2021 sampai 5 Oktober 2021
+                  {moment(dataPelatihan.pendaftaran_mulai).format(
+                    "DD MMMM YYYY"
+                  )}{" "}
+                  Sampai{" "}
+                  {moment(dataPelatihan.pendaftaran_selesai).format(
+                    "DD MMMM YYYY"
+                  )}{" "}
                 </p>
               </div>
               <div className="col-md-6">
                 <p className="text-neutral-body my-0">Jadwal Pelatihan</p>
                 <p className="text-neutral-body">
-                  1 Oktober 2021 sampai 5 Oktober 2021
+                  {moment(dataPelatihan.pelatihan_mulai).format("DD MMMM YYYY")}{" "}
+                  Sampai{" "}
+                  {moment(dataPelatihan.pelatihan_selesai).format(
+                    "DD MMMM YYYY"
+                  )}{" "}
                 </p>
               </div>
             </div>
@@ -193,7 +193,7 @@ const DetailSummary = () => {
               <div className="col-md-12">
                 <p className="text-neutral-body my-0">Alur Pendaftaran</p>
                 <p className="text-neutral-body">
-                  Administrasi {">"} Test Substansi
+                  {dataPelatihan.alur_pendaftaran}
                 </p>
               </div>
             </div>
@@ -216,10 +216,7 @@ const DetailSummary = () => {
             <div className="table-filter">
               <div className="row align-items-center">
                 <div className="col-lg-4 col-xl-4">
-                  <div
-                    className="position-relative overflow-hidden mt-3"
-                    style={{ maxWidth: "330px" }}
-                  >
+                  <div className="position-relative overflow-hidden mt-3">
                     <i className="ri-search-line left-center-absolute ml-2"></i>
                     <input
                       type="text"
@@ -242,9 +239,8 @@ const DetailSummary = () => {
 
                 <div className="col-lg-4 col-xl-4 justify-content-end d-flex">
                   <button
-                    className="btn border d-flex align-items-center justify-content-between mt-1"
+                    className="btn border d-flex align-items-center justify-content-between mt-1 btn-block"
                     style={{
-                      minWidth: "280px",
                       color: "#bdbdbd",
                       float: "right",
                     }}
@@ -281,72 +277,142 @@ const DetailSummary = () => {
 
             <div className="table-page mt-5">
               <div className="table-responsive">
-                {/* <LoadingTable loading={loading} /> */}
+                <LoadingTable loading={loading} />
+                {loading === false && (
+                  <table className="table table-separate table-head-custom table-checkable">
+                    <thead style={{ background: "#F3F6F9" }}>
+                      <tr>
+                        <th className="text-center ">No</th>
+                        <th>Peserta</th>
+                        <th>Pelatihan Sebelumnya</th>
+                        <th>Test Substansi</th>
+                        <th>Berkas</th>
+                        <th>Status Peserta</th>
+                        <th>Updated</th>
+                        <th>Aksi</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {!peserta ||
+                      (peserta && peserta.list === null) ||
+                      peserta.list.length === 0 ? (
+                        <td className="align-middle text-center" colSpan={8}>
+                          Data Masih Kosong
+                        </td>
+                      ) : (
+                        peserta.list.map((row, i) => (
+                          <tr key={i}>
+                            <td className="text-center">
+                              {limit === null
+                                ? i + 1 * (page * 5) - (5 - 1)
+                                : i + 1 * (page * limit) - (limit - 1)}
+                            </td>
+                            <td>
+                              <p className="font-weight-bolder my-0">
+                                Cristiano Messi
+                              </p>
+                              <p className="my-0">00019989893</p>
+                            </td>
+                            <td>3</td>
+                            <td>
+                              <p className="my-0 text-success">Lulus</p>
+                              <p className="my-0">90</p>
+                              <p className="my-0">00:50:21</p>
+                            </td>
+                            <td>
+                              <span className="label label-inline label-light-success font-weight-bold">
+                                Disetujui
+                              </span>
+                            </td>
+                            <td>
+                              <span className="label label-inline label-light-success font-weight-bold">
+                                Publish
+                              </span>
+                            </td>
+                            <td>
+                              <p className="font-weight-bolder my-0">
+                                Admin Verifikasi
+                              </p>
+                              <p className="my-0">1 Oktober 2021</p>
+                              <p className="my-0">00:50:21</p>
+                            </td>
+                            <td>
+                              <div className="d-flex">
+                                <Link
+                                  href={`/pelatihan/rekap-pendaftaran/detail-rekap-pendaftaran/data-peserta/${1}`}
+                                >
+                                  <a
+                                    className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                    data-toggle="tooltip"
+                                    data-placement="bottom"
+                                    title="Detail"
+                                  >
+                                    <i className="ri-eye-fill text-white p-0"></i>
+                                  </a>
+                                </Link>
+                              </div>
+                            </td>
+                          </tr>
+                        ))
+                      )}
+                    </tbody>
+                  </table>
+                )}
+              </div>
 
-                <table className="table table-separate table-head-custom table-checkable">
-                  <thead style={{ background: "#F3F6F9" }}>
-                    <tr>
-                      <th className="text-center ">No</th>
-                      <th>Peserta</th>
-                      <th>Pelatihan Sebelumnya</th>
-                      <th>Test Substansi</th>
-                      <th>Berkas</th>
-                      <th>Status Peserta</th>
-                      <th>Updated</th>
-                      <th>Aksi</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="text-center">1</td>
-                      <td>
-                        <p className="font-weight-bolder my-0">
-                          Cristiano Messi
+              <div className="row">
+                {peserta && peserta.perPage < peserta.total && (
+                  <div className="table-pagination table-pagination pagination-custom col-12 col-md-6">
+                    <Pagination
+                      activePage={page}
+                      itemsCountPerPage={peserta.perPage}
+                      totalItemsCount={peserta.total}
+                      pageRangeDisplayed={3}
+                      onChange={handlePagination}
+                      nextPageText={">"}
+                      prevPageText={"<"}
+                      firstPageText={"<<"}
+                      lastPageText={">>"}
+                      itemClass="page-item"
+                      linkClass="page-link"
+                    />
+                  </div>
+                )}
+                {peserta && peserta.total > 5 && (
+                  <div className="table-total ml-auto">
+                    <div className="row">
+                      <div className="col-4 mr-0 p-0 mt-3">
+                        <select
+                          className="form-control"
+                          id="exampleFormControlSelect2"
+                          style={{
+                            width: "65px",
+                            background: "#F3F6F9",
+                            borderColor: "#F3F6F9",
+                            color: "#9E9E9E",
+                          }}
+                          onChange={(e) => handleLimit(e.target.value)}
+                          onBlur={(e) => handleLimit(e.target.value)}
+                          value={limit}
+                        >
+                          <option value="5">5</option>
+                          <option value="10">10</option>
+                          <option value="30">30</option>
+                          <option value="40">40</option>
+                          <option value="50">50</option>
+                        </select>
+                      </div>
+                      <div className="col-8 my-auto pt-3">
+                        <p
+                          className="align-middle mt-3"
+                          style={{ color: "#B5B5C3" }}
+                        >
+                          Total Data {peserta.total}
                         </p>
-                        <p className="my-0">00019989893</p>
-                      </td>
-                      <td>3</td>
-                      <td>
-                        <p className="my-0 text-success">Lulus</p>
-                        <p className="my-0">90</p>
-                        <p className="my-0">00:50:21</p>
-                      </td>
-                      <td>
-                        <span className="label label-inline label-light-success font-weight-bold">
-                          Disetujui
-                        </span>
-                      </td>
-                      <td>
-                        <span className="label label-inline label-light-success font-weight-bold">
-                          Publish
-                        </span>
-                      </td>
-                      <td>
-                        <p className="font-weight-bolder my-0">
-                          Admin Verifikasi
-                        </p>
-                        <p className="my-0">1 Oktober 2021</p>
-                        <p className="my-0">00:50:21</p>
-                      </td>
-                      <td>
-                        <div className="d-flex">
-                          <Link
-                            href={`/pelatihan/rekap-pendaftaran/detail-rekap-pendaftaran/data-peserta/${1}`}
-                          >
-                            <a
-                              className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                              data-toggle="tooltip"
-                              data-placement="bottom"
-                              title="Detail"
-                            >
-                              <i className="ri-eye-fill text-white p-0"></i>
-                            </a>
-                          </Link>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>

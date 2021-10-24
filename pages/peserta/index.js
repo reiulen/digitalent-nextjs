@@ -5,7 +5,9 @@ import dynamic from "next/dynamic";
 import { wrapper } from "../../redux/store";
 import { getSession } from "next-auth/client";
 import { getDataPribadi } from "../../redux/actions/pelatihan/function.actions";
+import { getDashboardPeserta } from "../../redux/actions/pelatihan/dashboard-peserta.actions";
 import LoadingContent from "../../user-component/content/peserta/components/loader/LoadingContent";
+import { middlewareAuthPesertaSession } from "../../utils/middleware/authMiddleware";
 
 const Dashboard = dynamic(
   () => import("../../user-component/content/peserta/dashboard"),
@@ -36,26 +38,22 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
-      if (!session) {
+
+      const middleware = middlewareAuthPesertaSession(session);
+
+      if (!middleware.status) {
         return {
           redirect: {
-            destination: "http://dts-dev.majapahit.id/login",
-            permanent: false,
-          },
-        };
-      }
-      const data = session.user.user.data;
-      if (data.user.roles[0] !== "user") {
-        return {
-          redirect: {
-            destination: "http://dts-dev.majapahit.id/login",
+            destination: middleware.redirect,
             permanent: false,
           },
         };
       }
 
+      await store.dispatch(
+        getDashboardPeserta(session.user.user.data.user.token)
+      );
       await store.dispatch(getDataPribadi(session.user.user.data.user.token));
-
       return {
         props: { data: "auth", session, title: "Dashboard - Peserta" },
       };

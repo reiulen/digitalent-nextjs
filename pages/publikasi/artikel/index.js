@@ -1,5 +1,6 @@
 import dynamic from "next/dynamic";
 import { getSession } from "next-auth/client";
+import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
 
 // import Layout from "../../../components/templates/layout.component";
 // import Artikel from "../../../components/content/publikasi/artikel/artikel";
@@ -14,8 +15,6 @@ import LoadingSkeleton from "../../../components/LoadingSkeleton";
 const Artikel = dynamic(
   () => import("../../../components/content/publikasi/artikel/artikel"),
   {
-    // suspense: true,
-    // loading: () => <LoadingSkeleton />,
     loading: function loadingNow() {
       return <LoadingSkeleton />;
     },
@@ -28,9 +27,6 @@ export default function ArtikelPage(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        {/* <Layout title='Artikel - Publikasi'>
-                    <Artikel />
-                </Layout> */}
         <Artikel token={session.token} />
       </div>
     </>
@@ -42,10 +38,12 @@ export const getServerSideProps = wrapper.getServerSideProps(
     async ({ query, req }) => {
       // await store.dispatch(getAllArtikel(query.page, query.keyword, query.limit, query.publish, query.startdate, query.enddate))
       const session = await getSession({ req });
-      if (!session) {
+      const middleware = middlewareAuthAdminSession(session)
+      if (!middleware.status) {
         return {
           redirect: {
-            destination: "http://dts-dev.majapahit.id/login/admin",
+            destination: middleware.redirect,
+            // destination: "http://dts-dev.majapahit.id/login/admin",
             permanent: false,
           },
         };
@@ -68,21 +66,3 @@ export const getServerSideProps = wrapper.getServerSideProps(
       };
     }
 );
-
-// export const getStaticProps = wrapper.getStaticProps(
-//     store => async ({ query }) => {
-//             await store.dispatch(getAllArtikel(
-//                 // query.page, query.keyword, query.limit, query.publish, query.startdate, query.enddate
-//                 1,'',5,1,null,null
-//                 ))
-//             console.log('aaaaaaa')
-//         }
-// )
-
-// export const getStaticProps = async (ctx) =>{
-//     const resp = await fetch('http://dts-publikasi-dev.majapahit.id/api/artikel')
-//     const {data} = await resp.json()
-//     return {
-//         props : data
-//     }
-// }

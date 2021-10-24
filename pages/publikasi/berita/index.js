@@ -1,5 +1,6 @@
 import dynamic from "next/dynamic";
 import { getSession } from "next-auth/client";
+import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
 
 import Layout from "../../../components/templates/layout.component";
 // import Berita from "../../../components/content/publikasi/berita/berita";
@@ -13,8 +14,6 @@ import LoadingSkeleton from "../../../components/LoadingSkeleton";
 const Berita = dynamic(
   () => import("../../../components/content/publikasi/berita/berita"),
   {
-    // suspense: true,
-    // loading: () => <LoadingSkeleton />,
     loading: function loadingNow() {
       return <LoadingSkeleton />;
     },
@@ -37,14 +36,16 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
-      if (!session) {
+      const middleware = middlewareAuthAdminSession(session);
+      if (!middleware.status) {
         return {
           redirect: {
-            destination: "http://dts-dev.majapahit.id/login/admin",
+            destination: middleware.redirect,
             permanent: false,
           },
         };
       }
+
       await store.dispatch(
         getAllBerita(
           query.page,
