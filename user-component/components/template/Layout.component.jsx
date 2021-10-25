@@ -9,6 +9,7 @@ import LoadingHeader from "../../content/peserta/components/loader/LoadingHeader
 import LoadingNavbar from "../../content/peserta/components/loader/LoadingNavbar";
 import LoadingFooter from "../../content/peserta/components/loader/LoadingFooter";
 
+
 const Navbar = dynamic(
   () => import("../../../user-component/components/template/Navbar.component"),
   {
