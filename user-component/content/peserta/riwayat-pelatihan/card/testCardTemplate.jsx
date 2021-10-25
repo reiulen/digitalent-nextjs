@@ -41,7 +41,7 @@ export default function CardTemplateOriginal({ props }) {
             <img
               className="rounded-xl img-fluid d-block w-100 "
               // src="/assets/media/bg-admin-1.png"
-              src={`${process.env.END_POINT_API_IMAGE_BEASISWA}${data.gambar}`}
+              // src={`${process.env.END_POINT_API_IMAGE_BEASISWA}${data.gambar}`}
               alt="test1"
               style={{ height: "200px", objectFit: "fill" }}
             />

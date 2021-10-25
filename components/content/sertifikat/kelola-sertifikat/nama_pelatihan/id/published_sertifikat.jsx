@@ -131,11 +131,13 @@ export default function KelolasertifikatID({ token }) {
                 <div
                   className={`position-absolute w-100 text-center ${
                     certificate.data.certificate.background
-                      ? "responsive-margin-publish"
+                      ? "responsive-margin-peserta"
                       : "responsive-margin-without-background"
                   }`}
                 >
-                  <span className="font-weight-bolder responsive-font-size-peserta">
+                  <span
+                    className={`font-weight-bolder responsive-font-size-peserta `}
+                  >
                     Nama Peserta
                   </span>
                 </div>

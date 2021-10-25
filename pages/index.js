@@ -9,6 +9,7 @@ import { wrapper } from "../redux/store";
 import { getAllAkademi } from "../redux/actions/beranda/beranda.actions";
 import { getTemaByAkademi } from "../redux/actions/beranda/beranda.actions";
 import { getAllPublikasi } from "../redux/actions/beranda/beranda.actions";
+import { getDataPribadi } from "../redux/actions/pelatihan/function.actions";
 // import { getPelatihanByTema } from "../redux/actions/beranda/beranda.actions";
 
 const Beranda = dynamic(() =>
@@ -46,6 +47,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
       //     },
       //   };
       // }
+      if (session) {
+        await store.dispatch(getDataPribadi(session.user.user.data.user.token));
+      }
 
       await store.dispatch(getAllAkademi());
 

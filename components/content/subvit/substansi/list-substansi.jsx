@@ -11,6 +11,7 @@ import PageWrapper from "../../../wrapper/page.wrapper";
 import ButtonAction from "../../../ButtonAction";
 import LoadingTable from "../../../LoadingTable";
 import styles from "./listSubstansi.module.css";
+import stylesPag from "../../../../styles/pagination.module.css";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -311,7 +312,7 @@ const ListSubstansi = ({ token }) => {
                     </thead>
                     <tbody>
                       {!subtance ||
-                        (subtance && subtance.list_substance.length === 0) ? (
+                      (subtance && subtance.list_substance.length === 0) ? (
                         <td className="align-middle text-center" colSpan={8}>
                           Data Masih Kosong
                         </td>
@@ -325,38 +326,41 @@ const ListSubstansi = ({ token }) => {
                             <tr key={subtance.id}>
                               <td className="align-middle text-center">
                                 {/* <span className="">{paginate - dividers}</span> */}
-                                {
-                                  limit === null ?
-                                    <span>
-                                      {i + 1 * (page * 5) - (5 - 1)}
-                                    </span>
-                                    :
-                                    <span>
-                                      {i + 1 * (page * limit) - (limit - 1)}
-                                    </span>
-                                }
+                                {limit === null ? (
+                                  <span>{i + 1 * (page * 5) - (5 - 1)}</span>
+                                ) : (
+                                  <span>
+                                    {i + 1 * (page * limit) - (limit - 1)}
+                                  </span>
+                                )}
                               </td>
                               <td className="align-middle">
                                 <b>
-                                  {subtance.academy !== null
+                                  {subtance.academy
                                     ? subtance.academy.name
                                     : "-"}
                                 </b>
                                 <p>
-                                  {subtance.training !== null
+                                  {subtance.training
                                     ? subtance.training.name
                                     : "-"}
                                 </p>
                               </td>
                               <td className="align-middle">
-                                <b>{getStartAt(subtance.start_at)}</b>
-                                <p>{isFinish(subtance.end_at)}</p>
+                                <b>
+                                  {getStartAt(
+                                    subtance ? subtance.start_at : "-"
+                                  )}
+                                </b>
+                                <p>
+                                  {isFinish(subtance ? subtance.end_at : "-")}
+                                </p>
                               </td>
                               <td className="align-middle">
-                                {subtance.bank_soal} Soal
+                                {subtance ? subtance.bank_soal : "-"} Soal
                               </td>
                               <td className="align-middle">
-                                {subtance.category}
+                                {subtance ? subtance.category : "-"}
                               </td>
                               <td className="align-middle">
                                 {subtance.status ? (
@@ -431,7 +435,8 @@ const ListSubstansi = ({ token }) => {
 
               <div className={`${styles.rowPagination} row`}>
                 {subtance && subtance.perPage < subtance.total && (
-                  <div className="table-pagination table-pagination pagination-custom col-12 col-md-6">
+                  // <div className="table-pagination table-pagination pagination-custom col-12 col-md-6">
+                  <div className={`${stylesPag.pagination} table-pagination pagination-custom col-12 col-md-6`}>
                     <Pagination
                       activePage={page}
                       itemsCountPerPage={subtance.perPage}
@@ -448,7 +453,7 @@ const ListSubstansi = ({ token }) => {
                   </div>
                 )}
                 {subtance && subtance.total > 5 ? (
-                  <div className="table-total ml-auto">
+                  <div className={`${stylesPag.rightPag} table-total ml-auto`}>
                     <div className="row">
                       <div className="col-4 mr-0">
                         <select
@@ -463,11 +468,36 @@ const ListSubstansi = ({ token }) => {
                           onChange={(e) => handleLimit(e.target.value)}
                           onBlur={(e) => handleLimit(e.target.value)}
                         >
-                          <option value='5' selected={limit == "5" ? true : false}>5</option>
-                          <option value='10' selected={limit == "10" ? true : false}>10</option>
-                          <option value='30' selected={limit == "30" ? true : false}>30</option>
-                          <option value='40' selected={limit == "40" ? true : false}>40</option>
-                          <option value='50' selected={limit == "50" ? true : false}>50</option>
+                          <option
+                            value="5"
+                            selected={limit == "5" ? true : false}
+                          >
+                            5
+                          </option>
+                          <option
+                            value="10"
+                            selected={limit == "10" ? true : false}
+                          >
+                            10
+                          </option>
+                          <option
+                            value="30"
+                            selected={limit == "30" ? true : false}
+                          >
+                            30
+                          </option>
+                          <option
+                            value="40"
+                            selected={limit == "40" ? true : false}
+                          >
+                            40
+                          </option>
+                          <option
+                            value="50"
+                            selected={limit == "50" ? true : false}
+                          >
+                            50
+                          </option>
                           {/* <option>5</option>
                           <option>10</option>
                           <option>30</option>

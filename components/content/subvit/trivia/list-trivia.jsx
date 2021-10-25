@@ -11,6 +11,7 @@ import PageWrapper from "../../../wrapper/page.wrapper";
 import ButtonAction from "../../../ButtonAction";
 import LoadingTable from "../../../LoadingTable";
 import styles from "../../../../styles/subvit.module.css";
+import stylesPag from "../../../../styles/pagination.module.css";
 
 import {
   deleteTriviaQuestionBanks,
@@ -402,7 +403,7 @@ const ListTrivia = ({ token }) => {
 
               <div className="row">
                 {trivia && trivia.perPage < trivia.total && (
-                  <div className="table-pagination">
+                  <div className={`${stylesPag.pagination} table-pagination`}>
                     <Pagination
                       activePage={page}
                       itemsCountPerPage={trivia.perPage}
@@ -419,7 +420,7 @@ const ListTrivia = ({ token }) => {
                   </div>
                 )}
                 {trivia && trivia.total > 5 ? (
-                  <div className="table-total ml-auto">
+                  <div className={`${stylesPag.rightPag} table-total ml-auto`}>
                     <div className="row">
                       <div className="col-4 mr-0">
                         <select

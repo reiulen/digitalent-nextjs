@@ -24,11 +24,11 @@ import IconRegister from "../../../components/assets/icon-dashboard-peserta/Regi
 
 const Navigationbar = ({ session }) => {
   const [isShowDropdown, setIsShowDropdown] = useState(false);
-  console.log("isShowDropdown", isShowDropdown);
+  // console.log("isShowDropdown", isShowDropdown);
   const { error: errorDataPribadi, dataPribadi } = useSelector(
     (state) => state.getDataPribadi
   );
-
+  console.log(dataPribadi, " ini data pribadi");
   const handlerLogout = () => {
     signOut();
   };
@@ -51,136 +51,149 @@ const Navigationbar = ({ session }) => {
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto dropdown-explore">
-            <NavDropdown
-              title="Menu"
-              id="basic-nav-dropdown"
-              className="navdropdown-child"
-            >
-              <NavDropdown.Item href="/" className="navdropdown-child">
-                Beranda
-              </NavDropdown.Item>
-              <div className="btn-group dropright">
-                <button
-                  type="button"
-                  className="btn btn-white-navbar"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  <div className="row">
-                    <div className="col-9 text-left">Pelatihan</div>
-                    <div className="col-1 text-right">
-                      <i className="ri-arrow-right-s-line text-dark ml-1"> </i>
+          <Nav className="me-auto dropdown-explore btn-masuk-peserta mr-1">
+            {/* Menu */}
+            <div className="row mx-1 my-0">
+              <NavDropdown
+                title="Menu"
+                id="basic-nav-dropdown"
+                className="navdropdown-child position-relative w-100 text-menu"
+              >
+                <NavDropdown.Item href="/" className="navdropdown-child">
+                  Beranda
+                </NavDropdown.Item>
+                <div className="btn-group dropright">
+                  <button
+                    type="button"
+                    className="btn btn-white-navbar"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    <div className="row">
+                      <div className="col-9 text-left">Pelatihan</div>
+                      <div className="col-1 text-right">
+                        <i className="ri-arrow-right-s-line text-dark ml-1">
+                          {" "}
+                        </i>
+                      </div>
                     </div>
+                  </button>
+                  <div className="dropdown-menu ml-3">
+                    <Link href={`/detail/akademi/14`}>
+                      <a className="dropdown-item navdropdown-child">VSGA</a>
+                    </Link>
+
+                    <Link href={`/detail/akademi/13`}>
+                      <a className="dropdown-item navdropdown-child">FGA</a>
+                    </Link>
+
+                    <Link href={`/detail/akademi/16`}>
+                      <a className="dropdown-item navdropdown-child">PRO</a>
+                    </Link>
+
+                    <Link href={`/detail/akademi/6`}>
+                      <a className="dropdown-item navdropdown-child">TA</a>
+                    </Link>
+
+                    {/* <a className="dropdown-item navdropdown-child" href="#">
+                      GTA
+                    </a>
+                    <a className="dropdown-item navdropdown-child" href="#">
+                      DEA
+                    </a> */}
+
+                    <Link href={`/detail/akademi/18`}>
+                      <a className="dropdown-item navdropdown-child">TSA</a>
+                    </Link>
                   </div>
-                </button>
-                <div className="dropdown-menu ml-3">
-                  <a className="dropdown-item navdropdown-child" href="#">
-                    VSGA
-                  </a>
-                  <a className="dropdown-item navdropdown-child" href="#">
-                    FGA
-                  </a>
-                  <a className="dropdown-item navdropdown-child" href="#">
-                    PRO
-                  </a>
-                  <a className="dropdown-item navdropdown-child" href="#">
-                    TA
-                  </a>
-                  <a className="dropdown-item navdropdown-child" href="#">
-                    GTA
-                  </a>
-                  <a className="dropdown-item navdropdown-child" href="#">
-                    DEA
-                  </a>
-                  <a className="dropdown-item navdropdown-child" href="#">
-                    TSA
-                  </a>
                 </div>
-              </div>
-              <div className="btn-group dropright">
-                <button
-                  type="button"
-                  className="btn btn-white-navbar dropdown-toggle"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  Pusat Informasi
-                </button>
-                <div className="dropdown-menu ml-3">
-                  <a className="dropdown-item navdropdown-child" href="#">
-                    Panduan Test Substansi
-                  </a>
-                  <a className="dropdown-item navdropdown-child" href="#">
-                    Hak dan Kewajiban
-                  </a>
+                <div className="btn-group dropright">
+                  <button
+                    type="button"
+                    className="btn btn-white-navbar dropdown-toggle"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    Pusat Informasi
+                  </button>
+                  <div className="dropdown-menu ml-3">
+                    <a className="dropdown-item navdropdown-child" href="#">
+                      Panduan Test Substansi
+                    </a>
+                    <a className="dropdown-item navdropdown-child" href="#">
+                      Hak dan Kewajiban
+                    </a>
+                  </div>
                 </div>
-              </div>
-              <NavDropdown.Item
-                href="#action/3.4"
-                className="navdropdown-child"
-              >
-                Tentang Kami
-              </NavDropdown.Item>
-              <NavDropdown.Item
-                href="#action/3.4"
-                className="navdropdown-child"
-              >
-                Penyelenggara
-              </NavDropdown.Item>
-              <div className="btn-group dropright">
-                <button
-                  type="button"
-                  className="btn btn-white-navbar"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
+                <NavDropdown.Item
+                  href="#action/3.4"
+                  className="navdropdown-child"
                 >
-                  <div className="row">
-                    <div className="col-9 text-left">Rilis Media</div>
-                    <div className="col-1 text-right">
-                      <i className="ri-arrow-right-s-line text-dark"> </i>
+                  Tentang Kami
+                </NavDropdown.Item>
+                <NavDropdown.Item
+                  href="#action/3.4"
+                  className="navdropdown-child"
+                >
+                  Penyelenggara
+                </NavDropdown.Item>
+                <div className="btn-group dropright">
+                  <button
+                    type="button"
+                    className="btn btn-white-navbar"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    <div className="row">
+                      <div className="col-9 text-left">Rilis Media</div>
+                      <div className="col-1 text-right">
+                        <i className="ri-arrow-right-s-line text-dark"> </i>
+                      </div>
                     </div>
+                  </button>
+                  <div className="dropdown-menu ml-3">
+                    <a className="dropdown-item navdropdown-child" href="#">
+                      Berita
+                    </a>
+                    <a className="dropdown-item navdropdown-child" href="#">
+                      Artikel
+                    </a>
+                    <a className="dropdown-item navdropdown-child" href="#">
+                      Galeri
+                    </a>
+                    <a className="dropdown-item navdropdown-child" href="#">
+                      Video
+                    </a>
                   </div>
-                </button>
-                <div className="dropdown-menu ml-3">
-                  <a className="dropdown-item navdropdown-child" href="#">
-                    Berita
-                  </a>
-                  <a className="dropdown-item navdropdown-child" href="#">
-                    Artikel
-                  </a>
-                  <a className="dropdown-item navdropdown-child" href="#">
-                    Galeri
-                  </a>
-                  <a className="dropdown-item navdropdown-child" href="#">
-                    Video
-                  </a>
                 </div>
-              </div>
-              <NavDropdown.Item
-                href="#action/3.4"
-                className="navdropdown-child"
-              >
-                FAQ
-              </NavDropdown.Item>
-              <NavDropdown.Item
-                href="#action/3.4"
-                className="navdropdown-child"
-              >
-                Kontak
-              </NavDropdown.Item>
-            </NavDropdown>
+                <NavDropdown.Item
+                  href="#action/3.4"
+                  className="navdropdown-child"
+                >
+                  FAQ
+                </NavDropdown.Item>
+                <NavDropdown.Item
+                  href="#action/3.4"
+                  className="navdropdown-child"
+                >
+                  Kontak
+                </NavDropdown.Item>
+              </NavDropdown>
+            </div>
           </Nav>
-          <Form className="w-100 mx-5">
+
+          {/* Search Bar */}
+          <Form className="w-100 my-2 mx-1 row">
             <div className="position-relative w-100">
               <FormControl
                 type="search"
                 placeholder="Search"
-                className="pl-10 rounded-full"
+                className="pl-10 rounded-full border-search py-6"
                 aria-label="Search"
+                style={{ backgroundColor: "#F2F7FC", border: "0px !important" }}
               />
               <IconSearch
                 className="left-center-absolute"
@@ -188,15 +201,29 @@ const Navigationbar = ({ session }) => {
               />
             </div>
           </Form>
-          <a href="#">
-            <i className="ri-headphone-line ri-2x mx-3 text-gray"></i>
-          </a>
-          <a href="#">
-            <i className="ri-heart-line ri-2x mx-3 text-gray"></i>
-          </a>
-          <a href="#">
-            <i className="ri-notification-4-line ri-2x mx-3 text-gray"></i>
-          </a>
+
+          {/* Icon */}
+          <div className="row m-3">
+            <a
+              href="#"
+              className="col-4 col-sm-4 col-md-4 col-xl-4 text-center"
+            >
+              <i className="ri-headphone-line ri-2x mx-3 text-gray"></i>
+            </a>
+            <a
+              href="#"
+              className="col-4 col-sm-4 col-md-4 col-xl-4 text-center"
+            >
+              <i className="ri-heart-line ri-2x mx-3 text-gray"></i>
+            </a>
+            <a
+              href="#"
+              className="col-4 col-sm-4 col-md-4 col-xl-4 text-center"
+            >
+              <i className="ri-notification-4-line ri-2x mx-3 text-gray"></i>
+            </a>
+          </div>
+
           <Nav>
             {session ? (
               <div className="position-relative">
@@ -267,17 +294,18 @@ const Navigationbar = ({ session }) => {
               </div>
             ) : (
               <>
+                {/* Button Masuk dan Daftar */}
                 <Link href="/login">
-                  <a>
-                    <button className="btn btn-sm btn-login-peserta">
+                  <a className="mx-2">
+                    <button className="btn btn-sm btn-block btn-login-peserta m-2 justify-content-center py-3">
                       <IconLogin className="mr-2" />
                       Masuk
                     </button>
                   </a>
                 </Link>
                 <Link href="/register">
-                  <a>
-                    <button className="btn btn-register-peserta btn-sm">
+                  <a className="mx-2">
+                    <button className="btn btn-sm btn-block btn-register-peserta m-2 justify-content-center py-3">
                       <IconRegister className="mr-2" />
                       Daftar
                     </button>

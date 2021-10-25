@@ -76,13 +76,13 @@ const Administrasi = (props) => {
     case "isi survey":
       return (
         <Fragment>
-          <IsiSurvey />
+          <IsiSurvey props={props} />
         </Fragment>
       );
     case "isi lpj":
       return (
         <Fragment>
-          <IsiLpj />
+          <IsiLpj props={props} />
         </Fragment>
       );
     case "test":
