@@ -5,7 +5,6 @@ import moment from "moment";
 const ProfileUser = ({ profile }) => {
   return (
     <>
-      {console.log(profile)}
       <div className="card card-custom card-stretch gutter-b">
         <div className="card-body">
           <div className="row">
@@ -93,14 +92,14 @@ const ProfileUser = ({ profile }) => {
                   </div>
                 </div>
               </div>
-              <div className="data-pribadi">
+              <div className="data-alamat">
                 <h3 className="font-weight-bolder mb-4">Alamat</h3>
                 <div className="row mb-3">
                   <div className="col-md-12">
                     <p className="text-neutral-body my-0">
                       Alamat (Sesuai KTP)
                     </p>
-                    <p className="text-dark">{profile.alamat_ktp || "-"}</p>
+                    <p className="text-dark">{profile.address_ktp || "-"}</p>
                   </div>
                 </div>
                 <div className="row mb-3">
@@ -128,7 +127,7 @@ const ProfileUser = ({ profile }) => {
                     <p className="text-neutral-body my-0">
                       Alamat Domisili (Sesuai KTP)
                     </p>
-                    <p className="text-dark">{profile.alamat || "-"}</p>
+                    <p className="text-dark">{profile.address || "-"}</p>
                   </div>
                 </div>
                 <div className="row mb-3">
@@ -149,6 +148,23 @@ const ProfileUser = ({ profile }) => {
                   <div className="col-md-6">
                     <p className="text-neutral-body my-0">Pendidikan</p>
                     <p className="text-dark">{profile.kode_pos || "-"}</p>
+                  </div>
+                </div>
+              </div>
+              <div className="data-berkas">
+                <h3 className="font-weight-bolder mb-4">Berkas</h3>
+                <div className="row">
+                  <div className="col-md-12">
+                    <p className="text-neutral-body my-0">Scan KTP</p>
+                    <Image
+                      objectFit="cover"
+                      width={320}
+                      height={200}
+                      src={
+                        profile.file_path + profile.File_ktp ||
+                        "/assets/media/default.jpg"
+                      }
+                    />
                   </div>
                 </div>
               </div>

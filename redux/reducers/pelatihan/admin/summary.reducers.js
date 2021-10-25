@@ -25,6 +25,9 @@ import {
   UPDATE_STATUS_SUCCESS,
   UPDATE_STATUS_RESET,
   UPDATE_STATUS_FAIL,
+  UPDATE_REMINDER_SUCCESS,
+  UPDATE_REMINDER_RESET,
+  UPDATE_REMINDER_FAIL,
   CLEAR_ERRORS,
 } from "../../../types/pelatihan/summary.type";
 
@@ -305,6 +308,35 @@ export const updateStatusPesertaReducer = (state = { status: {} }, action) => {
       };
 
     case UPDATE_STATUS_RESET:
+      return {
+        success: false,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const updateReminderReducer = (state = { reminder: {} }, action) => {
+  switch (action.type) {
+    case UPDATE_REMINDER_SUCCESS:
+      return {
+        success: action.payload.message,
+        reminder: action.payload.data,
+      };
+
+    case UPDATE_REMINDER_FAIL:
+      return {
+        error: action.payload,
+      };
+
+    case UPDATE_REMINDER_RESET:
       return {
         success: false,
       };

@@ -202,20 +202,19 @@ const Navigationbar = ({ session }) => {
               <div className="position-relative">
                 <div
                   className="wrap-accouts"
-                  style={!isShowDropdown ? {borderRadius: "20px"} : {}}
+                  style={!isShowDropdown ? { borderRadius: "20px" } : {}}
                   onClick={() =>
                     setIsShowDropdown(isShowDropdown ? false : true)
                   }
                 >
                   {/* <div className="dot-accouts"></div> */}
                   <Image
-                  className="rounded-circle"
+                    className="rounded-circle"
                     src={`${dataPribadi.file_path + dataPribadi.foto}`}
                     width={32}
                     height={32}
                     alt="brand-navbar"
-                    />
-                    {console.log(dataPribadi)}
+                  />
                   <span className="titles-accounts">
                     {dataPribadi.name || "-"}
                   </span>

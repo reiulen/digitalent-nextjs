@@ -23,8 +23,9 @@ import {
   GET_FORM_LPJ_FAIL,
   UPDATE_STATUS_REQUEST,
   UPDATE_STATUS_SUCCESS,
-  UPDATE_STATUS_RESET,
   UPDATE_STATUS_FAIL,
+  UPDATE_REMINDER_SUCCESS,
+  UPDATE_REMINDER_FAIL,
   CLEAR_ERRORS,
 } from "../../types/pelatihan/summary.type";
 
@@ -118,7 +119,7 @@ export const getPendaftaranPeserta =
     token,
     pelatihanId,
     keyword = "",
-    limit = 5,
+    limit = null,
     page = null,
     administrasi = null,
     pelatihan = null
@@ -364,6 +365,33 @@ export const updateStatusPeserta = (statusData, token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: UPDATE_STATUS_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const updateReminder = (reminderData, token) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    const { data } = await axios.post(
+      process.env.END_POINT_API_PELATIHAN +
+        "api/v1/formPendaftaran/update-reminder",
+      reminderData,
+      config
+    );
+
+    dispatch({
+      type: UPDATE_REMINDER_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: UPDATE_REMINDER_FAIL,
       payload: error.response.data.message,
     });
   }

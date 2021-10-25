@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
 import Pagination from "react-js-pagination";
-import Swal from "sweetalert2";
 import { Modal } from "react-bootstrap";
 import moment from "moment";
+import Select from "react-select";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingTable from "../../../LoadingTable";
@@ -37,9 +36,36 @@ const DetailSummary = ({ token }) => {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(null);
+  const [statusTesSubstansi, setStatusTesSubstansi] = useState(null);
+  const [statusBerkas, setStatusBerkas] = useState(null);
+  const [statusPeserta, setStatusPeserta] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const [showModalRevisi, setShowModalRevisi] = useState(false);
-  const [publishValue, setPublishValue] = useState(null);
+
+  const optionsPeserta = [
+    { value: "menunggu", label: "Menunggu" },
+    { value: "tidak lulus administrasi", label: "Tidak Lulus Administrasi" },
+    { value: "tes substansi", label: "Tes Substansi" },
+    { value: "tidak lulus tes substansi", label: "Tidak Lulus Tes Substansi" },
+    { value: "lulus tes substansi", label: "Lulus Tes Substansi" },
+    { value: "ditolak", label: "Ditolak" },
+    { value: "diterima", label: "Diterima" },
+    { value: "pelatihan", label: "Pelatihan" },
+    { value: "lulus pelatihan", label: "Lulus Pelatihan" },
+    { value: "tidak lulus pelatihan", label: "Tidak Lulus Pelatihan" },
+  ];
+
+  const optionsBerkas = [
+    { value: "unverified", label: "Unverified" },
+    { value: "verified", label: "Verified" },
+    { value: "incomplete", label: "Incomplete" },
+  ];
+
+  const optionsSubstansi = [
+    { value: "belum tersedia", label: "Belum Tersedia" },
+    { value: "belum mengerjakan", label: "Belum Mengerjakan" },
+    { value: "gagal tes", label: "Gagal Tes" },
+    { value: "lulus tes", label: "Lulus Tes" },
+  ];
 
   const handlePagination = (pageNumber) => {
     setPage(pageNumber);
@@ -54,25 +80,21 @@ const DetailSummary = ({ token }) => {
   const handleLimit = (val) => {
     setLimit(val);
     setPage(1);
-    dispatch(getPendaftaranPeserta(token, id, search, limit, 1));
+    dispatch(getPendaftaranPeserta(token, id, search, val, 1));
   };
 
-  const handlePublish = (val) => {
-    setPublishValue(val);
-    let link = `${router.pathname}?page=${1}&card=${val}`;
-    if (search) link = link.concat(`&keyword=${search}`);
-    router.push(link);
+  const handleFilter = () => {
+    console.log(statusTesSubstansi.value);
   };
 
   const handleExportReport = async () => {
-    // let link = `http://dts-subvit-dev.majapahit.id/api/subtance-question-banks/report/export/${id}`;
-    // if (search) link = link.concat(`&keyword=${search}`);
-    // if (status) link = link.concat(`&status=${status}`);
-    // if (nilai) link = link.concat(`&nilai=${nilai}`);
-    // if (pelatihan) link = link.concat(`&pelatihan=${pelatihan}`);
-    // await axios.get(link).then((res) => {
-    //   window.location.href = res.data.data;
-    // });
+    let link =
+      process.env.END_POINT_API_PELATIHAN +
+      `/api/v1/pelatihan/export-rekap-pendaftaran`;
+    if (search) link = link.concat(`&cari=${search}`);
+    await axios.get(link).then((res) => {
+      window.location.href = res.data.data;
+    });
   };
 
   const handleResetError = () => {
@@ -445,44 +467,34 @@ const DetailSummary = ({ token }) => {
         </Modal.Header>
         <Modal.Body>
           <div className="form-group mb-5">
-            <label className="p-0">Penyelenggara</label>
-            <select className="form-control">
-              <option>Semua</option>
-            </select>
+            <label className="p-0">Tes Substansi</label>
+            <Select
+              placeholder="Silahkan Pilih Tes Substansi"
+              options={optionsSubstansi}
+              onChange={(e) =>
+                setStatusTesSubstansi({ label: e.label, value: e.value })
+              }
+            />
           </div>
           <div className="form-group mb-5">
-            <label className="p-0">Akademi</label>
-            <select className="form-control">
-              <option>Semua</option>
-            </select>
+            <label className="p-0">Status Berkas</label>
+            <Select
+              placeholder="Silahkan Pilih Status Berkas"
+              options={optionsBerkas}
+              onChange={(e) =>
+                setStatusBerkas({ label: e.label, value: e.value })
+              }
+            />
           </div>
           <div className="form-group mb-5">
-            <label className="p-0">Tema</label>
-            <select className="form-control">
-              <option>Semua</option>
-            </select>
-          </div>
-          <div className="form-group mb-5">
-            <label className="p-0">Status Substansi</label>
-            <select className="form-control">
-              <option>Semua</option>
-            </select>
-          </div>
-          <div className="form-group mb-5">
-            <label className="p-0">Status Pelatihan</label>
-            <select className="form-control">
-              <option>Semua</option>
-            </select>
-          </div>
-          <div className="row">
-            <div className="form-group mb-5 col-md-6">
-              <label className="p-0">Tanggal Pendaftaran</label>
-              <input type="date" name="" id="" className="form-control" />
-            </div>
-            <div className="form-group mb-5 col-md-6">
-              <label className="p-0">Tanggal Pelaksanaan</label>
-              <input type="date" name="" id="" className="form-control" />
-            </div>
+            <label className="p-0">Status Peserta</label>
+            <Select
+              placeholder="Silahkan Pilih Status Peserta"
+              options={optionsPeserta}
+              onChange={(e) =>
+                setStatusPeserta({ label: e.label, value: e.value })
+              }
+            />
           </div>
         </Modal.Body>
         <Modal.Footer>
@@ -492,42 +504,11 @@ const DetailSummary = ({ token }) => {
           >
             Reset
           </button>
-          <button className="btn btn-primary-rounded-full" type="button">
-            Terapkan
-          </button>
-        </Modal.Footer>
-      </Modal>
-
-      <Modal
-        show={showModalRevisi}
-        onHide={() => setShowModalRevisi(false)}
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-      >
-        <Modal.Header>
-          <Modal.Title>Catatan Revisi</Modal.Title>
           <button
+            className="btn btn-primary-rounded-full"
             type="button"
-            className="close"
-            onClick={() => setShowModalRevisi(false)}
+            onClick={() => handleFilter()}
           >
-            <i className="ri-close-fill" style={{ fontSize: "25px" }}></i>
-          </button>
-        </Modal.Header>
-        <Modal.Body>
-          <div className="form-group mb-5">
-            <label className="p-0">Isi Catatan</label>
-            <textarea rows="5" className="form-control"></textarea>
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <button
-            className="btn btn-light-ghost-rounded-full mr-2"
-            type="reset"
-          >
-            Reset
-          </button>
-          <button className="btn btn-primary-rounded-full" type="button">
             Terapkan
           </button>
         </Modal.Footer>

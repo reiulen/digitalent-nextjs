@@ -20,6 +20,7 @@ import SuportDocument from "./participant/suport-document";
 
 import {
   updateStatusPeserta,
+  updateReminder,
   getDataPribadi,
   getReminderBerkas,
   getRiwayatPelatihan,
@@ -28,7 +29,10 @@ import {
   getFormLpj,
   clearErrors,
 } from "../../../../redux/actions/pelatihan/summary.actions";
-import { UPDATE_STATUS_RESET } from "../../../../redux/types/pelatihan/summary.type";
+import {
+  UPDATE_STATUS_RESET,
+  UPDATE_REMINDER_RESET,
+} from "../../../../redux/types/pelatihan/summary.type";
 
 import { useDispatch, useSelector } from "react-redux";
 
@@ -66,6 +70,11 @@ const DataParticipant = ({ token }) => {
     status: statusRes,
     success: successStatus,
   } = useSelector((state) => state.updateStatusPeserta);
+  const {
+    error: errorReminderUp,
+    reminder: reminderRes,
+    success: successReminder,
+  } = useSelector((state) => state.updateReminder);
 
   const [step, setStep] = useState(1);
 
@@ -121,6 +130,11 @@ const DataParticipant = ({ token }) => {
       dispatch(clearErrors());
     }
 
+    if (errorReminderUp) {
+      toast.error(errorReminderUp);
+      dispatch(clearErrors());
+    }
+
     if (successStatus) {
       dispatch(getDataPribadi(token, peserta.list[0].id));
       dispatch(getReminderBerkas(token, peserta.list[0].id));
@@ -131,7 +145,25 @@ const DataParticipant = ({ token }) => {
       toast.success("Berhasil Mengubah Status");
       dispatch({ type: UPDATE_STATUS_RESET });
     }
-  }, [dispatch, peserta, errorUpdateStatus, successStatus]);
+
+    if (successReminder) {
+      dispatch(getDataPribadi(token, peserta.list[0].id));
+      dispatch(getReminderBerkas(token, peserta.list[0].id));
+      dispatch(getRiwayatPelatihan(token, peserta.list[0].id));
+      dispatch(getBerkasPendaftaran(token, peserta.list[0].id));
+      dispatch(getFormKomitmen(token, peserta.list[0].id));
+      dispatch(getFormLpj(token, peserta.list[0].id));
+      // toast.success("Berhasil Mengubah Reminder");
+      dispatch({ type: UPDATE_REMINDER_RESET });
+    }
+  }, [
+    dispatch,
+    peserta,
+    errorUpdateStatus,
+    errorReminderUp,
+    successStatus,
+    successReminder,
+  ]);
 
   const handleResetError = () => {
     if (error) {
@@ -170,6 +202,15 @@ const DataParticipant = ({ token }) => {
     };
 
     dispatch(updateStatusPeserta(data, token));
+  };
+
+  const handleUpdateReminder = (type, value) => {
+    const data = {
+      id: peserta.list[0].id,
+      status: value ? "1" : "0",
+      kolom: type,
+    };
+    dispatch(updateReminder(data, token));
   };
 
   return (
@@ -272,36 +313,60 @@ const DataParticipant = ({ token }) => {
             <div className="form-check form-check-inline mr-5">
               <input
                 type="checkbox"
-                name="reminder"
+                name="remender"
                 className="form-check-input"
-                value="profile"
+                checked={reminder.reminder_profile}
+                onClick={() =>
+                  handleUpdateReminder(
+                    "reminder_profile",
+                    !reminder.reminder_profile
+                  )
+                }
               />
               <label className="form-check-label">Profile</label>
             </div>
             <div className="form-check form-check-inline mr-5">
               <input
                 type="checkbox"
-                name="reminder"
+                name="remender"
                 className="form-check-input"
-                value="riwayat_pelatihan"
+                checked={reminder.reminder_riwayat}
+                onClick={() =>
+                  handleUpdateReminder(
+                    "reminder_riwayat",
+                    !reminder.reminder_riwayat
+                  )
+                }
               />
               <label className="form-check-label">Riwayat Pelatihan</label>
             </div>
             <div className="form-check form-check-inline mr-5">
               <input
                 type="checkbox"
-                name="reminder"
+                name="remender"
                 className="form-check-input"
-                value="berkas_pendaftaran"
+                checked={reminder.reminder_berkas}
+                onClick={() =>
+                  handleUpdateReminder(
+                    "reminder_berkas",
+                    !reminder.reminder_berkas
+                  )
+                }
               />
               <label className="form-check-label">Berkas Pendaftaran</label>
             </div>
             <div className="form-check form-check-inline">
               <input
                 type="checkbox"
-                name="reminder"
+                name="remender"
                 className="form-check-input"
-                value="dokumen_pendukung"
+                checked={reminder.reminder_dokumen}
+                onClick={() =>
+                  handleUpdateReminder(
+                    "reminder_dokumen",
+                    !reminder.reminder_dokumen
+                  )
+                }
               />
               <label className="form-check-label">Dokumen Pendukung</label>
             </div>
