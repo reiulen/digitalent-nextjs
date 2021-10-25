@@ -36,26 +36,38 @@ const Dashboard = ({ session }) => {
     },
   ]);
 
-  let totalSubvit = 0
+  const [totalSubvit, setTotalSubvit] = useState(4)
+  const [col, setCol] = useState([])
 
   useEffect(() => {
-    if(dataDashboard.subvit.sertifikat.status){
-      totalSubvit = totalSubvit + 1
-    }
-    if(dataDashboard.subvit.subvit.status){
-      totalSubvit = totalSubvit + 1
-    }
-    if(dataDashboard.subvit.survei.status){
-      totalSubvit = totalSubvit + 1
-    }
-    if(dataDashboard.subvit.trivia.status){
-      totalSubvit = totalSubvit + 1
-    }
-    
+    if (totalSubvit === 4) {
+        setCol([6,6,6,6])
+      }else if(totalSubvit === 3){
+        setCol([6,6,12])
+      } else if(totalSubvit === 2){
+        setCol([6,6])
+      }else if(totalSubvit === 1){
+        setCol([12])        
+      }else {
+
+      }
+    // if (dataDashboard.subvit.subvit.status) {
+    //   totalSubvit = totalSubvit + 1;
+    // }
+    // if (dataDashboard.subvit.survei.status) {
+    //   totalSubvit = totalSubvit + 1;
+    // }
+    // if (dataDashboard.subvit.trivia.status) {
+    //   totalSubvit = totalSubvit + 1;
+    // }
+    // if (dataDashboard.subvit.sertifikat.status) {
+    //   totalSubvit = totalSubvit + 1;
+    // }
+
     if (errorDashboard) {
       toast.error(errorDashboard);
     }
-  }, [errorDashboard]);
+  }, [errorDashboard, totalSubvit]);
 
   const handleHoverCard = (index, status) => {
     let list = [...cardPelatihan];
@@ -94,33 +106,60 @@ const Dashboard = ({ session }) => {
           />
         </Row>
         <Row className="mx-1">
-          <CardPage
-            backgroundImage="new-game-4.svg"
-            background="primary"
-            color="#6C6C6C"
-            link="/peserta/subvit/substansi/1"
-            text="Lakukan Test Substansi"
-            desc="Anda Belum Melakukan Test Substansi"
-            total={totalSubvit}
-          />
-          <CardPage
-            backgroundImage="new-game-3.svg"
-            background="success"
-            color="#00B27A"
-            link="/peserta"
-            text="Lakukan Survey"
-            desc="Anda Belum Melakukan Test Survey"
-            total={totalSubvit}
-          />
-          <CardPage
-            backgroundImage="new-game-1.svg"
-            background="danger"
-            color="#EE2D41"
-            link="/peserta"
-            text="Lakukan TRIVIA"
-            desc="Anda Belum Melakukan TRIVIA"
-            total={totalSubvit}
-          />
+          {dataDashboard.pelatihan.pelatihan_berjalan.length === 0 && ( 
+            <CardPage
+              backgroundImage="new-game-4.svg"
+              background="primary"
+              color="#6C6C6C"
+              link="/"
+              text="Pilih Pelatihan"
+              desc="Anda Belum Memilih pelatihan, silahkan pilih pelatihan yang Anda inginkan"
+              total={true}
+              isSubvit={false}
+              col={12}
+            />
+          )}
+
+          {dataDashboard.subvit.subvit.status && (
+            <CardPage
+              backgroundImage="new-game-4.svg"
+              background="primary"
+              color="#6C6C6C"
+              link="/peserta/subvit/substansi/1"
+              text="Lakukan Test Substansi"
+              desc="Anda Belum Melakukan Test Substansi"
+              total={dataDashboard.subvit.subvit.status}
+              isSubvit={true}
+              col={6 }
+            />
+          )}
+
+          {dataDashboard.subvit.survei.status && (
+            <CardPage
+              backgroundImage="new-game-3.svg"
+              background="success"
+              color="#00B27A"
+              link="/peserta"
+              text="Lakukan Survey"
+              desc="Anda Belum Melakukan Test Survey"
+              total={dataDashboard.subvit.survei.status}
+              isSubvit={true}
+              col={6}
+            />
+          )}
+          {dataDashboard.subvit.trivia.status && (
+            <CardPage
+              backgroundImage="new-game-1.svg"
+              background="danger"
+              color="#EE2D41"
+              link="/peserta"
+              text="Lakukan TRIVIA"
+              desc="Anda Belum Melakukan TRIVIA"
+              total={dataDashboard.subvit.trivia.status}
+              isSubvit={true}
+              col={6}
+            />
+          )}
           {dataDashboard.subvit.sertifikat.status && (
             <CardPage
               backgroundImage="new-game-2.svg"
@@ -129,88 +168,231 @@ const Dashboard = ({ session }) => {
               link="/peserta"
               text="Unduh Sertifikat"
               desc="Anda Sudah bisa mengunduh Sertifikat"
-              total={totalSubvit}
+              total={dataDashboard.subvit.sertifikat.status}
+              isSubvit={true}
+              col={6}
             />
           )}
         </Row>
         <Row className="mx-1">
-          <Col md={6} className="mb-4 px-2">
-            <Card className="rounded-xl h-100">
-              <Card.Body>
-                <Card.Title>
-                  <p className={style.card_title}>Pelatihan Terkini</p>
-                </Card.Title>
+          {dataDashboard.pelatihan.pelatihan_berjalan.length === 0 && (
+            <Col md={6} className="mb-4 px-2">
+              <Card className="rounded-xl h-100">
+                <Card.Body>
+                  <Card.Title>
+                    <p className={style.card_title}>Pelatihan Terkini</p>
+                  </Card.Title>
+                  <div
+                    className="text-center"
+                    style={{
+                      height: "200",
+                      paddingTop: "75px",
+                      paddingBottom: "75px",
+                    }}
+                  >
+                    <p>
+                      Belum ada pelatihan yang Anda pilih. Silahkan pilih
+                      pelatihan terlebih dahulu.
+                    </p>
+                    <br />
+                    <Link href="/" passHref>
+                      <Button
+                        variant="bg-primary"
+                        className="font-weight-bolder text-white rounded-full"
+                      >
+                        Pilih Pelatihan
+                      </Button>
+                    </Link>
+                  </div>
+                </Card.Body>
+              </Card>
+            </Col>
+          )}
+          {dataDashboard.pelatihan.pelatihan_selesi.length === 0 && (
+            <Col md={6} className="mb-4 px-2">
+              <Card className="rounded-xl h-100">
+                <Card.Body>
+                  <Card.Title>
+                    <p className={style.card_title}>Pelatihan Sebelumnya</p>
+                  </Card.Title>
+                  <div
+                    className="text-center"
+                    style={{
+                      height: "200",
+                      paddingTop: "75px",
+                      paddingBottom: "75px",
+                    }}
+                  >
+                    <p>Anda tidak memiliki histori pelatihan sebelumnya.</p>
+                  </div>
+                </Card.Body>
+              </Card>
+            </Col>
+          )}
 
-                <Card className="shadow rounded-md">
-                  <Image
-                    className={`${style.image_dashboard}`}
-                    src="/assets/media/default-card.png"
-                    width={400}
-                    height={180}
-                    objectFit="cover"
-                  />
-                  <Card.ImgOverlay>
-                    <Badge bg={` rounded-xl py-3 px-4 ${style.badge_card}`}>
-                      Pelatihan {pelatihan.pelatihan_berjalan.metode_pelatihan}
-                    </Badge>
-                  </Card.ImgOverlay>
-                  <Card.Body className="position-relative">
-                    <div className={style.bungkus_mitra_pelatihan}>
-                      <Image
-                        src="/assets/media/logo-filter.svg"
-                        width={62}
-                        height={62}
-                        objectFit="cover"
-                        thumbnail
-                        roundedCircle
-                        className={`${style.image_card_pelatihan} img-fluild`}
-                      />
-                    </div>
-                    <div
-                      className="d-flex justify-content-between position-relative pb-0 mb-0"
-                      style={{ top: "-15px" }}
-                    >
-                      <p className={`pl-20 my-0 ${style.text_mitra}`}>
-                        {pelatihan.pelatihan_berjalan.mitra || "-"}
+          {dataDashboard.pelatihan.pelatihan_berjalan.length > 0 && (
+            <Col md={6} className="mb-4 px-2">
+              <Card className="rounded-xl h-100">
+                <Card.Body>
+                  <Card.Title>
+                    <p className={style.card_title}>Pelatihan Terkini</p>
+                  </Card.Title>
+
+                  <Card className="shadow rounded-md">
+                    <Image
+                      className={`${style.image_dashboard}`}
+                      src="/assets/media/default-card.png"
+                      width={400}
+                      height={180}
+                      objectFit="cover"
+                    />
+                    <Card.ImgOverlay>
+                      <Badge bg={` rounded-xl py-3 px-4 ${style.badge_card}`}>
+                        Pelatihan{" "}
+                        {pelatihan.pelatihan_berjalan.metode_pelatihan}
+                      </Badge>
+                    </Card.ImgOverlay>
+                    <Card.Body className="position-relative">
+                      <div className={style.bungkus_mitra_pelatihan}>
+                        <Image
+                          src="/assets/media/logo-filter.svg"
+                          width={62}
+                          height={62}
+                          objectFit="cover"
+                          thumbnail
+                          roundedCircle
+                          className={`${style.image_card_pelatihan} img-fluild`}
+                        />
+                      </div>
+                      <div
+                        className="d-flex justify-content-between position-relative pb-0 mb-0"
+                        style={{ top: "-15px" }}
+                      >
+                        <p className={`pl-20 my-0 ${style.text_mitra}`}>
+                          {pelatihan.pelatihan_berjalan.mitra || "-"}
+                        </p>
+                      </div>
+
+                      <p className={`my-0 ${style.title_card}`}>
+                        {pelatihan.pelatihan_berjalan.name}
                       </p>
-                    </div>
+                      <p style={{ fontSize: "14px", color: "#6C6C6C" }}>
+                        {pelatihan.pelatihan_berjalan.akademi}
+                      </p>
+                      <hr />
+                      <div className="d-flex flex-column">
+                        <div className="date d-flex align-items-center align-middle mr-7">
+                          <i className="ri-time-line"></i>
+                          <span className={`${style.text_date_register} pl-2`}>
+                            Registrasi :{" "}
+                            {moment(
+                              pelatihan.pelatihan_berjalan.pendaftaran_mulai
+                            ).format("DD MMM YYYY")}{" "}
+                            -{" "}
+                            {moment(
+                              pelatihan.pelatihan_berjalan.pendaftaran_selesai
+                            ).format("DD MMM YYYY")}{" "}
+                          </span>
+                        </div>
+                        <div className="date d-flex align-items-center align-middle">
+                          <i className="ri-group-line"></i>
+                          <span className={`${style.text_date_register} pl-2`}>
+                            Kuota : {pelatihan.pelatihan_berjalan.kuota_peserta}{" "}
+                            Peserta
+                          </span>
+                        </div>
+                        <div className="date d-flex align-items-center align-middle">
+                          <i className="ri-history-fill"></i>
+                          <span className={`${style.text_date_register} pl-2`}>
+                            Status : Test Substansi
+                          </span>
+                        </div>
+                      </div>
+                    </Card.Body>
+                  </Card>
+                </Card.Body>
+              </Card>
+            </Col>
+          )}
 
-                    <p className={`my-0 ${style.title_card}`}>
-                      {pelatihan.pelatihan_berjalan.name}
-                    </p>
-                    <p style={{ fontSize: "14px", color: "#6C6C6C" }}>
-                      {pelatihan.pelatihan_berjalan.akademi}
-                    </p>
-                    <hr />
-                    <div className="d-flex flex-column">
-                      <div className="date d-flex align-items-center align-middle mr-7">
-                        <i className="ri-time-line"></i>
-                        <span className={`${style.text_date_register} pl-2`}>
-                          Registrasi :{" "}
-                          {moment(
-                            pelatihan.pelatihan_berjalan.pendaftaran_mulai
-                          ).format("DD MMM YYYY")}{" "}
-                          -{" "}
-                          {moment(
-                            pelatihan.pelatihan_berjalan.pendaftaran_selesai
-                          ).format("DD MMM YYYY")}{" "}
-                        </span>
+          {dataDashboard.pelatihan.pelatihan_selesi.length > 0 && (
+            <Col md={6} className="mb-4 px-2">
+              <Card className="rounded-xl h-100">
+                <Card.Body>
+                  <Card.Title>
+                    <p className={style.card_title}>Pelatihan Selesai</p>
+                  </Card.Title>
+
+                  <Card className="shadow rounded-md">
+                    <Image
+                      className={`${style.image_dashboard}`}
+                      src="/assets/media/default-card.png"
+                      width={400}
+                      height={180}
+                      objectFit="cover"
+                    />
+                    <Card.ImgOverlay>
+                      <Badge bg={` rounded-xl py-3 px-4 ${style.badge_card}`}>
+                        Pelatihan {pelatihan.pelatihan_selesi.metode_pelatihan}
+                      </Badge>
+                    </Card.ImgOverlay>
+                    <Card.Body className="position-relative">
+                      <div className={style.bungkus_mitra_pelatihan}>
+                        <Image
+                          src="/assets/media/logo-filter.svg"
+                          width={62}
+                          height={62}
+                          objectFit="cover"
+                          thumbnail
+                          roundedCircle
+                          className={`${style.image_card_pelatihan} img-fluild`}
+                        />
                       </div>
-                      <div className="date d-flex align-items-center align-middle">
-                        <i className="ri-group-line"></i>
-                        <span className={`${style.text_date_register} pl-2`}>
-                          Kuota : {pelatihan.pelatihan_berjalan.kuota_peserta}{" "}
-                          Peserta
-                        </span>
+                      <div
+                        className="d-flex justify-content-between position-relative pb-0 mb-0"
+                        style={{ top: "-15px" }}
+                      >
+                        <p className={`pl-20 my-0 ${style.text_mitra}`}>
+                          {pelatihan.pelatihan_selesi.mitra || "-"}
+                        </p>
                       </div>
-                      <div className="date d-flex align-items-center align-middle">
-                        <i className="ri-history-fill"></i>
-                        <span className={`${style.text_date_register} pl-2`}>
-                          Status : Test Substansi
-                        </span>
+
+                      <p className={`my-0 ${style.title_card}`}>
+                        {pelatihan.pelatihan_selesi.name}
+                      </p>
+                      <p style={{ fontSize: "14px", color: "#6C6C6C" }}>
+                        {pelatihan.pelatihan_selesi.akademi}
+                      </p>
+                      <hr />
+                      <div className="d-flex flex-column">
+                        <div className="date d-flex align-items-center align-middle mr-7">
+                          <i className="ri-time-line"></i>
+                          <span className={`${style.text_date_register} pl-2`}>
+                            Registrasi :{" "}
+                            {moment(
+                              pelatihan.pelatihan_selesi.pendaftaran_mulai
+                            ).format("DD MMM YYYY")}{" "}
+                            -{" "}
+                            {moment(
+                              pelatihan.pelatihan_selesi.pendaftaran_selesai
+                            ).format("DD MMM YYYY")}{" "}
+                          </span>
+                        </div>
+                        <div className="date d-flex align-items-center align-middle">
+                          <i className="ri-group-line"></i>
+                          <span className={`${style.text_date_register} pl-2`}>
+                            Kuota : {pelatihan.pelatihan_selesi.kuota_peserta}{" "}
+                            Peserta
+                          </span>
+                        </div>
+                        <div className="date d-flex align-items-center align-middle">
+                          <i className="ri-history-fill"></i>
+                          <span className={`${style.text_date_register} pl-2`}>
+                            Status : Test Substansi
+                          </span>
+                        </div>
                       </div>
-                    </div>
-                    {/* {row.hover != true ? (
+                      {/* {row.hover != true ? (
                       ) : (
                         <Button
                           className={`btn-block rounded-xl ${style.btn_quick_view}`}
@@ -218,100 +400,12 @@ const Dashboard = ({ session }) => {
                           Quick View
                         </Button>
                       )} */}
-                  </Card.Body>
-                </Card>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col md={6} className="mb-4 px-2">
-            <Card className="rounded-xl h-100">
-              <Card.Body>
-                <Card.Title>
-                  <p className={style.card_title}>Pelatihan Selesai</p>
-                </Card.Title>
-
-                <Card className="shadow rounded-md">
-                  <Image
-                    className={`${style.image_dashboard}`}
-                    src="/assets/media/default-card.png"
-                    width={400}
-                    height={180}
-                    objectFit="cover"
-                  />
-                  <Card.ImgOverlay>
-                    <Badge bg={` rounded-xl py-3 px-4 ${style.badge_card}`}>
-                      Pelatihan {pelatihan.pelatihan_selesi.metode_pelatihan}
-                    </Badge>
-                  </Card.ImgOverlay>
-                  <Card.Body className="position-relative">
-                    <div className={style.bungkus_mitra_pelatihan}>
-                      <Image
-                        src="/assets/media/logo-filter.svg"
-                        width={62}
-                        height={62}
-                        objectFit="cover"
-                        thumbnail
-                        roundedCircle
-                        className={`${style.image_card_pelatihan} img-fluild`}
-                      />
-                    </div>
-                    <div
-                      className="d-flex justify-content-between position-relative pb-0 mb-0"
-                      style={{ top: "-15px" }}
-                    >
-                      <p className={`pl-20 my-0 ${style.text_mitra}`}>
-                        {pelatihan.pelatihan_selesi.mitra || "-"}
-                      </p>
-                    </div>
-
-                    <p className={`my-0 ${style.title_card}`}>
-                      {pelatihan.pelatihan_selesi.name}
-                    </p>
-                    <p style={{ fontSize: "14px", color: "#6C6C6C" }}>
-                      {pelatihan.pelatihan_selesi.akademi}
-                    </p>
-                    <hr />
-                    <div className="d-flex flex-column">
-                      <div className="date d-flex align-items-center align-middle mr-7">
-                        <i className="ri-time-line"></i>
-                        <span className={`${style.text_date_register} pl-2`}>
-                          Registrasi :{" "}
-                          {moment(
-                            pelatihan.pelatihan_selesi.pendaftaran_mulai
-                          ).format("DD MMM YYYY")}{" "}
-                          -{" "}
-                          {moment(
-                            pelatihan.pelatihan_selesi.pendaftaran_selesai
-                          ).format("DD MMM YYYY")}{" "}
-                        </span>
-                      </div>
-                      <div className="date d-flex align-items-center align-middle">
-                        <i className="ri-group-line"></i>
-                        <span className={`${style.text_date_register} pl-2`}>
-                          Kuota : {pelatihan.pelatihan_selesi.kuota_peserta}{" "}
-                          Peserta
-                        </span>
-                      </div>
-                      <div className="date d-flex align-items-center align-middle">
-                        <i className="ri-history-fill"></i>
-                        <span className={`${style.text_date_register} pl-2`}>
-                          Status : Test Substansi
-                        </span>
-                      </div>
-                    </div>
-                    {/* {row.hover != true ? (
-                      ) : (
-                        <Button
-                          className={`btn-block rounded-xl ${style.btn_quick_view}`}
-                        >
-                          Quick View
-                        </Button>
-                      )} */}
-                  </Card.Body>
-                </Card>
-              </Card.Body>
-            </Card>
-          </Col>
+                    </Card.Body>
+                  </Card>
+                </Card.Body>
+              </Card>
+            </Col>
+          )}
         </Row>
         <Row className="mx-1">
           <Col md={6} className="mb-4 px-2">
@@ -335,6 +429,7 @@ const Dashboard = ({ session }) => {
                 </Card.Title>
                 {[1, 2, 3, 4].map((row, i, arr) => (
                   <div
+                  key={i}
                     className={`pekerjaan ${
                       arr.length - 1 !== i ? "mb-8" : ""
                     } `}
@@ -397,6 +492,7 @@ const Dashboard = ({ session }) => {
                 </Card.Title>
                 {[1, 2, 3, 4].map((row, i, arr) => (
                   <div
+                  key={i}
                     className={`pekerjaan ${
                       arr.length - 1 !== i ? "mb-8" : ""
                     } `}

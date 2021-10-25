@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, Button, Col, Row, Modal } from "react-bootstrap";
 import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
 import IconFilter from "../../../../components/assets/icon/Filter";
@@ -8,10 +8,21 @@ import Select from "react-select";
 import CardPeserta from "./card";
 import Administrasi from "./administrasi";
 import style from "./style.module.css";
-import Image from "next/image";
-export default function RiwayatPelatihan() {
+import { useSelector } from "react-redux";
+import {
+  getAllRiwayatPelatihanPeserta,
+  setValuePeserta,
+} from "../../../../redux/actions/pelatihan/riwayat-pelatihan.actions";
+import { useDispatch } from "react-redux";
+
+export default function RiwayatPelatihan({ session }) {
+  const dispatch = useDispatch();
+
   let refSelect = null;
   const [showModal, setShowModal] = useState(false);
+  const dataRiwayatPelatihan = useSelector(
+    (state) => state.getAllRiwayatPelatihanPeserta
+  );
 
   const handleClose = () => setShowModal(false);
   const handleShow = () => setShowModal(true);
@@ -27,12 +38,23 @@ export default function RiwayatPelatihan() {
 
   const [selected, setSelected] = useState(0);
   const [filter, setFilter] = useState([
-    "semua",
-    "test substansi",
-    "administrasi",
-    "pelatihan",
-    "survey & lpj",
-    "selesai",
+    { name: "semua", value: "all" },
+    { name: "test substansi", value: "test substansi" },
+    { name: "administrasi", value: "all" },
+    { name: "pelatihan", value: "pelatihan" },
+    { name: "survey & lpj", value: "test" },
+    { name: "selesai", value: "1" },
+  ]);
+
+  useEffect(() => {
+    dispatch(getAllRiwayatPelatihanPeserta(session.token));
+  }, [
+    dispatch,
+    session.token,
+    dataRiwayatPelatihan.keyword,
+    dataRiwayatPelatihan.page,
+    dataRiwayatPelatihan.peserta,
+    dataRiwayatPelatihan.limit,
   ]);
 
   return (
@@ -65,9 +87,9 @@ export default function RiwayatPelatihan() {
                     </button>
                   </div>
                 </Col>
-                <Col lg={4}>
+                <Col lg={4} className="w-100">
                   <button
-                    className=" btn border d-flex align-items-center justify-content-between border-2 border-primary w-100"
+                    className="btn border d-flex align-items-center justify-content-between border-2 border-primary w-100"
                     data-toggle="modal"
                     style={{
                       color: "#464646",
@@ -82,20 +104,27 @@ export default function RiwayatPelatihan() {
                     <IconArrow fill="#ADB5BD" width="10" height="6" />
                   </button>
                 </Col>
-                <Col className="pt-4 d-flex justify-content-evenly" lg={12}>
+                <Row className="pt-4 d-flex justify-content-between w-100">
                   {filter.map((item, i) => {
                     return (
-                      <Button
-                        variant={selected == i ? "primary" : "outline-primary"}
-                        onClick={() => {
-                          setSelected(i);
-                        }}
-                        className={`rounded-full mx-5 w-100 text-capitalize`}
-                      >
-                        {item}
-                      </Button>
+                      <Col key={i}>
+                        <Button
+                          variant={
+                            selected == i ? "primary" : "outline-primary"
+                          }
+                          onClick={(e) => {
+                            setSelected(i);
+                            // console.log(filter[i].value);
+                            dispatch(setValuePeserta(filter[i].value));
+                          }}
+                          className={`rounded-full mx-5 w-100 text-capitalize`}
+                        >
+                          {item.name}
+                        </Button>
+                      </Col>
                     );
                   })}
+
                   {/* <Button className={`rounded-full mx-5 w-100`}>
                     Test Substansi
                   </Button>
@@ -109,24 +138,59 @@ export default function RiwayatPelatihan() {
                     Survey & LPJ
                   </Button>
                   <Button className={`rounded-full mx-5 w-100`}>Selesai</Button> */}
-                </Col>
+                </Row>
               </Row>
             </Card.Body>
           </Card>
         </Col>
         {/* <Administrasi /> */}
-        <CardPeserta totalButton={2} status={"menunggu jadwal"} />
+        {dataRiwayatPelatihan.listPelatihan.list.map((el) => {
+          return (
+            <CardPeserta status={"test"} data={el} />
+            // img_figure={"/assets/media/mitra-icon/bukalapak-1.svg"}
+            // img_mitra={"/assets/media/mitra-icon/bukalapak-1.svg"}
+            // mitra_name={"bukalapak"}
+            // pelatihan_name={"Intermediate Multimedia Designer"}
+            // label={"warning"}
+            // location={
+            //   "Pasaraya Blok M Gedung B Lt. 6, Jakarta Barat, Indonesia"
+            // }
+          );
+        })}
+        {dataRiwayatPelatihan.listPelatihan.list.map((el) => {
+          if (el.survei) {
+            // <CardPeserta totalButton={2} data={el} status={"isi survey"} />
+          }
+          if (el.lpj) {
+            // return <CardPeserta status={"isi lpj"} data={el} />;
+          }
+          if (el.lpj && el.survei) {
+            // return <CardPeserta status={"isi lpj"} data={el} />;
+          }
+          if (el.midtest) {
+            // return <CardPeserta status={"kerjakan mid test"} data={el} />;
+          }
+        })}
+        {/* <CardPeserta totalButton={2} status={"kerjakan mid test"} /> */}
+        {/* <CardPeserta totalButton={2} data={el} status={"isi survey"} /> */}
+
+        {/* <CardPeserta totalButton={2} status={"lolos administrasi"} />
         <CardPeserta totalButton={2} status={"tes substansi"} />
+        <CardPeserta totalButton={2} status={"menunggu jadwal"} /> */}
+        {/* 
+        <CardPeserta
+              totalButton={2}
+              data={el}
+              status={"seleksi administrasi"}
+            />
+        <CardPeserta totalButton={2} status={"seleksi administrasi"} />
         <CardPeserta totalButton={2} status={"lolos substansi"} />
         <CardPeserta totalButton={2} status={"tidak lulus"} />
-        <CardPeserta totalButton={2} status={"isi survey"} />
-        <CardPeserta totalButton={2} status={"seleksi administrasi"} />
-        <CardPeserta totalButton={2} status={"lolos administrasi"} />
         <CardPeserta totalButton={2} status={"ikuti pelatihan"} />
         <CardPeserta totalButton={2} status={"kerjakan mid test"} />
         <CardPeserta totalButton={2} status={"kerjakan trivia"} />
         <CardPeserta totalButton={2} status={"lulus pelatihan"} />
-        <CardPeserta totalButton={2} status={"isi lpj"} />
+         */}
       </PesertaWrapper>
       <Modal show={showModal} onHide={handleClose} centered>
         <Modal.Header>

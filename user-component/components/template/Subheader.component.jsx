@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const SubHeaderComponent = () => {
     return (
-        <div className="row my-5 mx-1 p-3 bg-white rounded-pill d-flex align-items-center border">
+        <div className="row my-5 mx-1 py-3 px-8 bg-white rounded-pill d-flex align-items-center border">
             <span>
                 <Link href="#">
                     Beranda 
@@ -13,7 +13,8 @@ const SubHeaderComponent = () => {
                 <i className="ri-arrow-right-s-line"></i> 
             </span>
             <span>
-                Insert BreadCrumb Here
+                {/* Insert BreadCrumb Here */}
+                Vocational School Graduate Academy
             </span>
             
         </div>

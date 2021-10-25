@@ -217,6 +217,7 @@ export const dropdownTema = (token) => async (dispatch) => {
 };
 
 export const dropdownTemabyAkademi = (id, token) => async (dispatch) => {
+  console.log("action",id)
   try {
     const config = {
       headers: {
@@ -228,8 +229,8 @@ export const dropdownTemabyAkademi = (id, token) => async (dispatch) => {
         `api/v1/tema/dropdown-tema-by-akademi?akademi_id=${id}`,
       config
     );
+    console.log("action", data.data)
 
-    console.log(data);
     dispatch({
       type: GET_DROPDOWN_TEMA_BY_AKADEMI,
       payload: data,

@@ -251,6 +251,7 @@ const Berita = ({ token }) => {
 
             } else if (startDate !== null && endDate !== null && limit === null && search !== null) {
                 router.push(`${router.pathname}?publish=${val}`)
+                setSearch("")
                 // router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&keyword=${search}`)
 
             } else if (startDate === null && endDate === null && limit !== null && search === null) {
@@ -258,6 +259,7 @@ const Berita = ({ token }) => {
 
             } else if (startDate === null && endDate === null && limit === null && search !== null) {
                 router.push(`${router.pathname}?publish=${val}`);
+                setSearch("")
 
             } else if (startDate === null && endDate === null && limit !== null && search !== null) {
                 router.push(`${router.pathname}?publish=${val}&limit=${limit}&keyword=${search}`);
@@ -397,6 +399,7 @@ const Berita = ({ token }) => {
                                             type="text"
                                             className="form-control pl-10"
                                             placeholder="Ketik disini untuk Pencarian..."
+                                            value={search}
                                             onChange={(e) => setSearch(e.target.value)}
                                         />
                                         <button

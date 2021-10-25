@@ -3,43 +3,43 @@ import Image from "next/image";
 
 const TrainingReminder = () => {
    return (
-       <div className="my-5 rounded" style={{backgroundColor:"#E6F2FF"}}>
-           <div className="p-5">
-                <div className="row d-flex align-items-center">
-                    <div className="ml-3">
+       <div className="p-6 rounded mt-6 mb-10" style={{backgroundColor:"#E6F2FF"}}>
+        
+                <div className="d-flex align-items-center">
+                    <div>
                         <Image 
                             src={`/assets/media/logo-bell.svg`}
-                            width={40}
-                            height={40}
+                            width={32}
+                            height={32}
                         />
                     </div>
                     
-                    <div className="ml-3">
-                        <h4 className="font-weight-bolder text-dark">
+                
+                        <h4 className="fw-600 fz-20 ml-4">
                             Buat Pengingat Pelatihan
                         </h4>
-                    </div>
+             
                 </div>
-                <p className="text-muted">
-                        Buat Pengingat Pelatihan Sekarang juga.
-                        Jangan Sampai Ketinggalan Informasi Terbaru.
+
+
+
+                <p className="fz-14" style={{color:"#6C6C6C"}}>
+                        Jangan sampai ketinggalan informasi, buat pengingat pelatihan sekarang juga.
                 </p>
-                <div className="row">
+
+                <div className="d-flex w-100">
                     <input 
                         type="text" 
                         placeholder="Cari Tema"
-                        className="form-control col-md-8 col-12 mb-3 rounded-pill"
+                        className="form-control mr-2 rounded-pill"
                     />
-                    <div className="col-md-3 col-12">
                         <button className="btn btn-primary rounded-pill">
                             Buat
                         </button>
-                    </div>
                     
                 </div>
                 
-                    
-           </div>
+                   
         </div>
    ) 
 }

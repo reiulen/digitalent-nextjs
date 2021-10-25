@@ -254,6 +254,7 @@ const Vidio = ({ token }) => {
 
             } else if (startDate !== null && endDate !== null && limit === null && search !== null) {
                 router.push(`${router.pathname}?publish=${val}`)
+                setSearch("")
                 // router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&keyword=${search}`)
 
             } else if (startDate === null && endDate === null && limit !== null && search === null) {
@@ -261,6 +262,7 @@ const Vidio = ({ token }) => {
 
             } else if (startDate === null && endDate === null && limit === null && search !== null) {
                 router.push(`${router.pathname}?publish=${val}`);
+                setSearch("")
                 //   router.push(`${router.pathname}?publish=${val}&keyword=${search}`);
 
             } else if (startDate === null && endDate === null && limit !== null && search !== null) {
@@ -421,6 +423,7 @@ const Vidio = ({ token }) => {
                                             type="text"
                                             className="form-control pl-10"
                                             placeholder="Ketik disini untuk Pencarian..."
+                                            value={search}
                                             onChange={(e) => setSearch(e.target.value)}
                                         />
                                         <button
@@ -604,7 +607,7 @@ const Vidio = ({ token }) => {
                                                 !video || video && video.video.length === 0 ?
                                                     <td className='align-middle text-center' colSpan={12}>Data Tidak Ditemukan</td> :
                                                     video && video.video.map((row, i) => {
-                                                        
+
                                                         return <tr key={row.id}>
                                                             <td className='align-middle text-center'>
                                                                 {
@@ -630,7 +633,7 @@ const Vidio = ({ token }) => {
                                                                 />
                                                             </td>
                                                             <td className='align-middle'>{row.kategori}</td>
-                                                            <td className='align-middle' style={{overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',maxWidth:'11rem'}}>{row.judul_video}</td>
+                                                            <td className='align-middle' style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '11rem' }}>{row.judul_video}</td>
                                                             <td className='align-middle'>
                                                                 {
                                                                     row.publish === 1 ? (
@@ -775,23 +778,28 @@ const Vidio = ({ token }) => {
                             <div className="row align-items-center" style={{ marginLeft: '0' }}>
                                 <div className="col-3">
                                     <span className="text-muted" style={{ fontSize: '11px' }}>
-                                        {tanggal_publish} | 120 Ditonton
+                                        {
+                                            tanggal_publish !== null ? `${tanggal_publish}  | 120 Ditonton`
+                                        : ""
+                                        }
+                                        {/* {tanggal_publish} | 120 Ditonton */}
                                     </span>
                                 </div>
                                 <div className="col-6">
                                     <div className={styles['listTag']}>
                                         {
-                                            tag.map((el, i) => {
-                                                return (
-                                                    <div style={{ background: "#fff", border: '1px solid #d7e1ea' }}
-                                                        className="mr-2 px-3 py-1 rounded"
-                                                        key={i}>
-                                                        <div className="text-center" style={{ fontSize: '10px' }}>
-                                                            #{el.toUpperCase()}
+                                            (tag === null) ? null :
+                                                tag.map((el, i) => {
+                                                    return (
+                                                        <div style={{ background: "#fff", border: '1px solid #d7e1ea' }}
+                                                            className="mr-2 px-3 py-1 rounded"
+                                                            key={i}>
+                                                            <div className="text-center" style={{ fontSize: '10px' }}>
+                                                                #{el.toUpperCase()}
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                )
-                                            })
+                                                    )
+                                                })
                                         }
                                     </div>
                                 </div>

@@ -17,6 +17,11 @@
   color: #007cff;
   margin-right: 10px;
 }
+
+#basic-nav-dropdown {
+  color: #007cff !important;
+}
+
 .btn-register-peserta {
   background-color: #007cff;
   display: flex;

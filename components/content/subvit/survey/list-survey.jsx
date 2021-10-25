@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 
 import Pagination from "react-js-pagination";
 import styles from "../../../../styles/subvit.module.css";
+import stylesPag from "../../../../styles/pagination.module.css";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingTable from "../../../LoadingTable";
@@ -409,7 +410,7 @@ const ListSurvey = ({ token }) => {
 
               <div className="row">
                 {survey && survey.perPage < survey.total && (
-                  <div className="table-pagination">
+                  <div className={`${stylesPag.pagination} table-pagination`}>
                     <Pagination
                       activePage={page}
                       itemsCountPerPage={survey && survey.perPage}
@@ -426,7 +427,7 @@ const ListSurvey = ({ token }) => {
                   </div>
                 )}
                 {survey && survey.total > 5 ? (
-                  <div className="table-total ml-auto">
+                  <div className={`${stylesPag.rightPag} table-total ml-auto`}>
                     <div className="row">
                       <div className="col-4 mr-0">
                         <select

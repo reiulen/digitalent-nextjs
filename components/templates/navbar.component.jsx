@@ -179,22 +179,22 @@ const Navigationbar = () => {
               </div>
             </Form>
             <Nav>
-              <Link href="/login">
-                <a>
-                  <button className="btn btn-sm btn-login-peserta">
-                    <IconLogin className="mr-2" />
-                    Masuk
-                  </button>
-                </a>
-              </Link>
-              <Link href="/register">
-                <a>
-                  <button className="btn btn-register-peserta btn-sm">
-                     <IconRegister className="mr-2" />
-                    Daftar
-                  </button>
-                </a>
-              </Link>
+            <Link href="/login">
+              <a>
+                <button className="btn btn-sm btn-login-peserta">
+                  <IconLogin className="mr-10" />
+                  Masuk
+                </button>
+              </a>
+            </Link>
+            <Link href="/register">
+              <a>
+                <button className="btn btn-sm btn-register-peserta">
+                  <IconRegister className="mr-10" />
+                  Daftar
+                </button>
+              </a>
+            </Link>
             </Nav>
           </Navbar.Collapse>
         

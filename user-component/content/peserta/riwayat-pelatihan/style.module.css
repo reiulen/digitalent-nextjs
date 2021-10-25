@@ -38,16 +38,52 @@
 }
 
 .background_outline_primary {
-  background-color: white;
-  color: #007cff;
+  background-color: white !important;
+  color: #007cff !important;
+  font-family: poppins;
+  font-size: 14px;
+}
+
+.background_outline_primary i {
+  /* background-color: white !important; */
+  color: #007cff !important;
+  font-family: poppins;
+  font-size: 14px;
 }
 
 .background_outline_primary:hover {
-  background-color: #007cff;
-  color: white;
+  background-color: #007cff !important;
+  color: white !important;
+}
+
+.background_outline_primary:hover i {
+  background-color: #007cff !important;
+  color: white !important;
 }
 /* 
 border-radius: 50%,
 width: 64px,
 height: 64px,
 backgroundColor: red, */
+
+.responsive_position_button {
+  bottom: 0px !important;
+}
+
+@media (min-width: 768px) {
+  .responsive_position_button {
+    top: 250px !important;
+  }
+}
+
+@media (min-width: 992px) {
+  .responsive_position_button {
+    top: 180px !important;
+  }
+}
+
+@media (min-width: 1200px) {
+  .responsive_position_button {
+    top: 170px !important;
+  }
+}
