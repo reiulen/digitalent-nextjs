@@ -342,6 +342,7 @@ import {
   updatePendidikanReducer,
   updateKeterampilanReducer,
   updatePekerjaanReducer,
+  getAsalSekolahReducer
 } from "./pelatihan/peserta/profile.reducers";
 
 import { dashboardPesertaReducer } from "./pelatihan/peserta/dashboard-reducers";
@@ -706,6 +707,7 @@ const reducer = combineReducers({
   updatePendidikan: updatePendidikanReducer,
   updateKeterampilan: updateKeterampilanReducer,
   updatePekerjaan: updatePekerjaanReducer,
+  getAsalSekolah: getAsalSekolahReducer,
   //END PELATIHAN
 
   //BERANDA
