@@ -50,7 +50,8 @@ export default function RiwayatPelatihanPage(props) {
   return (
     <>
       <Layout title="Administrasi" session={session}>
-        {id ? <SeleksiAdministrasi /> : <BelumTersedia />}
+        {/* {id ? <SeleksiAdministrasi /> : <BelumTersedia />} */}
+        <SeleksiAdministrasi />
       </Layout>
     </>
   );

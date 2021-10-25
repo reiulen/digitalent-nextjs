@@ -37,12 +37,12 @@ export default function RiwayatPelatihan({ session }) {
   ];
 
   const [selected, setSelected] = useState(0);
+
   const [filter, setFilter] = useState([
     { name: "semua", value: "all" },
-    { name: "test substansi", value: "test substansi" },
+    { name: "test substansi", value: "tes_substansi" },
     { name: "administrasi", value: "all" },
     { name: "pelatihan", value: "pelatihan" },
-    { name: "survey & lpj", value: "test" },
     { name: "selesai", value: "1" },
   ]);
 
