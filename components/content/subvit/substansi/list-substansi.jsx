@@ -11,6 +11,7 @@ import PageWrapper from "../../../wrapper/page.wrapper";
 import ButtonAction from "../../../ButtonAction";
 import LoadingTable from "../../../LoadingTable";
 import styles from "./listSubstansi.module.css";
+import stylesPag from "../../../../styles/pagination.module.css";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -431,7 +432,8 @@ const ListSubstansi = ({ token }) => {
 
               <div className={`${styles.rowPagination} row`}>
                 {subtance && subtance.perPage < subtance.total && (
-                  <div className="table-pagination table-pagination pagination-custom col-12 col-md-6">
+                  // <div className="table-pagination table-pagination pagination-custom col-12 col-md-6">
+                  <div className={`${stylesPag.pagination} table-pagination pagination-custom col-12 col-md-6`}>
                     <Pagination
                       activePage={page}
                       itemsCountPerPage={subtance.perPage}
@@ -448,7 +450,7 @@ const ListSubstansi = ({ token }) => {
                   </div>
                 )}
                 {subtance && subtance.total > 5 ? (
-                  <div className="table-total ml-auto">
+                  <div className={`${stylesPag.rightPag} table-total ml-auto`}>
                     <div className="row">
                       <div className="col-4 mr-0">
                         <select
