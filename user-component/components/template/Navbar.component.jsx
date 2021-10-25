@@ -237,7 +237,11 @@ const Navigationbar = ({ session }) => {
                   {/* <div className="dot-accouts"></div> */}
                   <Image
                     className="rounded-circle"
-                    src={`${dataPribadi.file_path + dataPribadi.foto}`}
+                    src={`${
+                      dataPribadi && dataPribadi.foto
+                        ? dataPribadi.file_path + dataPribadi.foto
+                        : "/assets/media/logos/default.png"
+                    }`}
                     width={32}
                     height={32}
                     alt="brand-navbar"
