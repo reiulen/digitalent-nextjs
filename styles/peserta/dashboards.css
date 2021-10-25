@@ -424,7 +424,7 @@
   min-width: 44px;
   height: 44px;
   min-height: 44px;
-  border: 1px solid #D7E1EA;
+  border: 1px solid #D7E1EA !important;
   border-radius: 40px;
   display: flex;
   align-items: center;
