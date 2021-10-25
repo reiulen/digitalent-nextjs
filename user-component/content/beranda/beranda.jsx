@@ -244,8 +244,6 @@ const Beranda = ({ session }) => {
     if (session.Token){
       const data = await dispatch(checkRegisterPelatihan(id, session.Token))
 
-      // console.log (data)
-
       if (data.status === true){
         router.push(`${router.pathname}/peserta/form-pendaftaran?id=${id}`)
 
@@ -263,8 +261,6 @@ const Beranda = ({ session }) => {
   return (
     <div style={{ backgroundColor: "white" }}>
       {/* <Navigationbar /> */}
-
-      {console.log (tema)}
 
       {/* Carousel 1 */}
       {publikasi && publikasi.imagetron.length !== 0 ? (
