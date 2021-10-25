@@ -22,7 +22,7 @@ export default function comeJoin() {
               </h1>
               <Link href="/register">
                 <a>
-                  <button className="btn btn-register-peserta btn-sm mt-10 mt-sm-20 mb-10 sm-mb-0">
+                  <button className="btn btn-primary btn-register-peserta btn-sm mt-10 mt-sm-20 mb-10 sm-mb-0" >
                     {/* <IconRegister className="mr-2" /> */}
                     Daftar Sekarang!
                   </button>
@@ -33,7 +33,7 @@ export default function comeJoin() {
           <div className="col-12 col-sm-8">
             <div className="row">
               <div className="col-12 col-sm-6 col-md-3">
-                <div className="p-10 mt-5" style={{border: "1px solid #D7E1EA",borderRadius: "12px"}}>
+                <div className="p-10 mt-5 bg-white" style={{border: "1px solid #D7E1EA",borderRadius: "12px"}}>
                   <p className="fz-32 fw-700 mb-1" style={{color:"#0063CC"}}>
                   260K+
                   </p>
@@ -43,7 +43,7 @@ export default function comeJoin() {
 
               </div>
               <div className="col-12 col-sm-6 col-md-3">
-                <div className="p-10 mt-5" style={{border: "1px solid #D7E1EA",borderRadius: "12px"}}>
+                <div className="p-10 mt-5 bg-white" style={{border: "1px solid #D7E1EA",borderRadius: "12px"}}>
                   <p className="fz-32 fw-700 mb-1" style={{color:"#0063CC"}}>
                   260K+
                   </p>
@@ -53,7 +53,7 @@ export default function comeJoin() {
 
               </div>
               <div className="col-12 col-sm-6 col-md-3">
-                <div className="p-10 mt-5" style={{border: "1px solid #D7E1EA",borderRadius: "12px"}}>
+                <div className="p-10 mt-5 bg-white" style={{border: "1px solid #D7E1EA",borderRadius: "12px"}}>
                   <p className="fz-32 fw-700 mb-1" style={{color:"#0063CC"}}>
                   260K+
                   </p>
@@ -63,7 +63,7 @@ export default function comeJoin() {
 
               </div>
               <div className="col-12 col-sm-6 col-md-3">
-                <div className="p-10 mt-5" style={{border: "1px solid #D7E1EA",borderRadius: "12px"}}>
+                <div className="p-10 mt-5 bg-white" style={{border: "1px solid #D7E1EA",borderRadius: "12px"}}>
                   <p className="fz-32 fw-700 mb-1" style={{color:"#0063CC"}}>
                   260K+
                   </p>

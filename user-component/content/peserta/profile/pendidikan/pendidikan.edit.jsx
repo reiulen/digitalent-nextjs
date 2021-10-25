@@ -49,6 +49,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
   const [ijazahName, setIjazahName] = useState("Belum ada file");
   const [ijazah, setIjazah] = useState("");
   const [ijazahPreview, setIjazahPreview] = useState("");
+  const [optionsAsalSekolah, setOptionsAsalSekolah] = useState([]);
 
   const optionsJenjangPendidikan = [];
   if (dataPendidikan) {
@@ -61,23 +62,32 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
     }
   }
 
-  let optionsAsalSekolah = [];
 
   useEffect(() => {
     if (jengjangPendidikan.value <= 19) {
-      return;
+      return setOptionsAsalSekolah([]);
     } else if (
       jengjangPendidikan.value === 20 ||
       jengjangPendidikan.value === 21 ||
       jengjangPendidikan.value === 22 ||
       jengjangPendidikan.value === 23
     ) {
-      return optionsAsalSekolah.push(
+      setOptionsAsalSekolah([
         { value: "0", label: "TK" },
         { value: "1", label: "SD" },
         { value: "2", label: "SMP" },
-        { value: "3", label: "SMA" }
-      );
+        { value: "3", label: "SMA" },
+      ]);
+    } else if (
+      jengjangPendidikan.value >= 24 &&
+      jengjangPendidikan.value <= 27
+    ) {
+      setOptionsAsalSekolah([
+        { value: "4", label: "D3" },
+        { value: "5", label: "S1" },
+        { value: "6", label: "S2" },
+        { value: "7", label: "S3" },
+      ]);
     }
 
     if (errorUpdateData) {
@@ -91,12 +101,11 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
       dispatch({ type: UPDATE_PENDIDIKAN_RESET });
     }
   }, [
-    errorUpdateData,
     success,
+    errorUpdateData,
     dispatch,
     jengjangPendidikan.value,
     funcViewEdit,
-    optionsAsalSekolah,
   ]);
 
   const onChangeIjazah = (e) => {
@@ -130,16 +139,45 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    let data = {};
     if (simpleValidator.current.allValid()) {
-      const data = {
-        jenjang: jengjangPendidikan.label,
-        asal_pendidikan: asalSekolah.label,
-        lainya,
-        program_studi: programStudi,
-        ipk,
-        tahun_masuk: parseInt(tahunMasuk),
-        ijasah: ijazah,
-      };
+      if (jengjangPendidikan.value === 19) {
+        data = {
+          jenjang: jengjangPendidikan.label,
+          asal_pendidikan: "-",
+          lainya: "-",
+          program_studi: "-",
+          ipk: "1",
+          tahun_masuk: parseInt("1"),
+          ijasah: "-",
+        };
+      } else if (
+        jengjangPendidikan.value >= 20 &&
+        jengjangPendidikan.value <= 23
+      ) {
+        data = {
+          jenjang: jengjangPendidikan.label,
+          asal_pendidikan: asalSekolah.label,
+          lainya,
+          program_studi: "0",
+          ipk,
+          tahun_masuk: parseInt(tahunMasuk),
+          ijasah: ijazah,
+        };
+      } else if (
+        jengjangPendidikan.value >= 24 &&
+        jengjangPendidikan.value <= 27
+      ) {
+        data = {
+          jenjang: jengjangPendidikan.label,
+          asal_pendidikan: asalSekolah.label,
+          lainya: "-",
+          program_studi: programStudi,
+          ipk,
+          tahun_masuk: parseInt(tahunMasuk),
+          ijasah: ijazah,
+        };
+      }
       dispatch(updateProfilePendidikan(data, token));
     } else {
       simpleValidator.current.showMessages();
@@ -327,7 +365,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
               {simpleValidator.current.message(
                 "asal sekolah",
                 asalSekolah,
-                jengjangPendidikan.value >= 20 && jengjangPendidikan.value <= 23
+                jengjangPendidikan.value >= 24 && jengjangPendidikan.value <= 27
                   ? "required"
                   : "",
                 {

@@ -13,7 +13,7 @@ import {
 
 const FilterSide = () => {
     return (
-        <div className="bg-white rounded">
+        <div className="bg-white rounded border">
             <div className="row d-flex align-items-center">
                 <div className="p-3 ml-3">
                     <Image 

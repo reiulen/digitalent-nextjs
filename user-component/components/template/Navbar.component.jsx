@@ -24,11 +24,11 @@ import IconRegister from "../../../components/assets/icon-dashboard-peserta/Regi
 
 const Navigationbar = ({ session }) => {
   const [isShowDropdown, setIsShowDropdown] = useState(false);
-  console.log("isShowDropdown", isShowDropdown);
+  // console.log("isShowDropdown", isShowDropdown);
   const { error: errorDataPribadi, dataPribadi } = useSelector(
     (state) => state.getDataPribadi
   );
-
+  console.log(dataPribadi, " ini data pribadi");
   const handlerLogout = () => {
     signOut();
   };
@@ -57,10 +57,7 @@ const Navigationbar = ({ session }) => {
               id="basic-nav-dropdown"
               className="navdropdown-child"
             >
-              <NavDropdown.Item
-                href="/"
-                className="navdropdown-child"
-              >
+              <NavDropdown.Item href="/" className="navdropdown-child">
                 Beranda
               </NavDropdown.Item>
               <div className="btn-group dropright">
@@ -79,27 +76,32 @@ const Navigationbar = ({ session }) => {
                   </div>
                 </button>
                 <div className="dropdown-menu ml-3">
-                  <a className="dropdown-item navdropdown-child" href="#">
-                    VSGA
-                  </a>
-                  <a className="dropdown-item navdropdown-child" href="#">
-                    FGA
-                  </a>
-                  <a className="dropdown-item navdropdown-child" href="#">
-                    PRO
-                  </a>
-                  <a className="dropdown-item navdropdown-child" href="#">
-                    TA
-                  </a>
-                  <a className="dropdown-item navdropdown-child" href="#">
+                  <Link href={`/detail/akademi/14`}>
+                    <a className="dropdown-item navdropdown-child">VSGA</a>
+                  </Link>
+
+                  <Link href={`/detail/akademi/13`}>
+                    <a className="dropdown-item navdropdown-child">FGA</a>
+                  </Link>
+
+                  <Link href={`/detail/akademi/16`}>
+                    <a className="dropdown-item navdropdown-child">PRO</a>
+                  </Link>
+
+                  <Link href={`/detail/akademi/6`}>
+                    <a className="dropdown-item navdropdown-child">TA</a>
+                  </Link>
+
+                  {/* <a className="dropdown-item navdropdown-child" href="#">
                     GTA
                   </a>
                   <a className="dropdown-item navdropdown-child" href="#">
                     DEA
-                  </a>
-                  <a className="dropdown-item navdropdown-child" href="#">
-                    TSA
-                  </a>
+                  </a> */}
+
+                  <Link href={`/detail/akademi/18`}>
+                    <a className="dropdown-item navdropdown-child">TSA</a>
+                  </Link>
                 </div>
               </div>
               <div className="btn-group dropright">
@@ -205,11 +207,20 @@ const Navigationbar = ({ session }) => {
               <div className="position-relative">
                 <div
                   className="wrap-accouts"
+                  style={!isShowDropdown ? { borderRadius: "20px" } : {}}
                   onClick={() =>
                     setIsShowDropdown(isShowDropdown ? false : true)
                   }
                 >
-                  <div className="dot-accouts"></div>
+                  {/* <div className="dot-accouts"></div> */}
+                  <Image
+                    className="rounded-circle"
+                    src={`${dataPribadi.file_path + dataPribadi.foto}`}
+                    width={32}
+                    height={32}
+                    alt="brand-navbar"
+                  />
+                  {console.log(dataPribadi)}
                   <span className="titles-accounts">
                     {dataPribadi.name || "-"}
                   </span>
@@ -237,18 +248,15 @@ const Navigationbar = ({ session }) => {
                       <li className="items-lists">
                         <i className="ri-book-read-line mr-2"></i>PELATIHAN
                       </li>
-                    </Link>
-                      {" "}
-                      <li className="items-lists">
-                        <i className="ri-bar-chart-horizontal-line mr-2"></i>
-                        ARTIKEL
-                      </li>
-                      {" "}
-                      <li className="items-lists">
-                        <i className="ri-settings-4-line mr-2"></i>
-                        PENGATURAN
-                      </li>
-
+                    </Link>{" "}
+                    <li className="items-lists">
+                      <i className="ri-bar-chart-horizontal-line mr-2"></i>
+                      ARTIKEL
+                    </li>{" "}
+                    <li className="items-lists">
+                      <i className="ri-settings-4-line mr-2"></i>
+                      PENGATURAN
+                    </li>
                     <li className="items-lists">
                       <button
                         className="btn btn-sm btn-login-peserta w-100 d-flex align-items-center justify-content-center"
