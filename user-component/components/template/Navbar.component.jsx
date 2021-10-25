@@ -76,27 +76,43 @@ const Navigationbar = ({ session }) => {
                   </div>
                 </button>
                 <div className="dropdown-menu ml-3">
-                  <a className="dropdown-item navdropdown-child" href="#">
-                    VSGA
-                  </a>
-                  <a className="dropdown-item navdropdown-child" href="#">
-                    FGA
-                  </a>
-                  <a className="dropdown-item navdropdown-child" href="#">
-                    PRO
-                  </a>
-                  <a className="dropdown-item navdropdown-child" href="#">
-                    TA
-                  </a>
-                  <a className="dropdown-item navdropdown-child" href="#">
+                  <Link href={`/detail/akademi/14`}>
+                    <a className="dropdown-item navdropdown-child">
+                      VSGA
+                    </a>
+                  </Link>
+                  
+                  <Link href={`/detail/akademi/13`}>
+                    <a className="dropdown-item navdropdown-child">
+                      FGA
+                    </a>
+                  </Link>
+                 
+                  <Link href={`/detail/akademi/16`}>
+                    <a className="dropdown-item navdropdown-child">
+                      PRO
+                    </a>
+                  </Link>
+
+                  <Link href={`/detail/akademi/6`}>
+                    <a className="dropdown-item navdropdown-child">
+                      TA
+                    </a>
+                  </Link>
+                  
+                  {/* <a className="dropdown-item navdropdown-child" href="#">
                     GTA
                   </a>
                   <a className="dropdown-item navdropdown-child" href="#">
                     DEA
-                  </a>
-                  <a className="dropdown-item navdropdown-child" href="#">
-                    TSA
-                  </a>
+                  </a> */}
+
+                  <Link href={`/detail/akademi/18`}>
+                    <a className="dropdown-item navdropdown-child">
+                      TSA
+                    </a>
+                  </Link>
+                  
                 </div>
               </div>
               <div className="btn-group dropright">
