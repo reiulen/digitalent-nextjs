@@ -16,7 +16,7 @@ const Pendidikan = ({ token }) => {
       toast.error(errorPendidikan);
     }
     dispatch(getProfilePendidikan(token));
-  }, [errorPendidikan, dispatch]);
+  }, [errorPendidikan, dispatch, token]);
 
   return (
     <>
