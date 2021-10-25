@@ -37,32 +37,21 @@ const Dashboard = ({ session }) => {
   ]);
 
   const [totalSubvit, setTotalSubvit] = useState(4)
-  const [col, setCol] = useState([])
+  const [col, setCol] = useState(0)
 
   useEffect(() => {
-    if (totalSubvit === 4) {
-        setCol([6,6,6,6])
-      }else if(totalSubvit === 3){
-        setCol([6,6,12])
-      } else if(totalSubvit === 2){
-        setCol([6,6])
-      }else if(totalSubvit === 1){
-        setCol([12])        
-      }else {
-
-      }
-    // if (dataDashboard.subvit.subvit.status) {
-    //   totalSubvit = totalSubvit + 1;
-    // }
-    // if (dataDashboard.subvit.survei.status) {
-    //   totalSubvit = totalSubvit + 1;
-    // }
-    // if (dataDashboard.subvit.trivia.status) {
-    //   totalSubvit = totalSubvit + 1;
-    // }
-    // if (dataDashboard.subvit.sertifikat.status) {
-    //   totalSubvit = totalSubvit + 1;
-    // }
+    if (dataDashboard.subvit.subvit.status) {
+      setCol(col + 1)
+    }
+    if (dataDashboard.subvit.survei.status) {
+      setCol(col + 1)
+    }
+    if (dataDashboard.subvit.trivia.status) {
+      setCol(col + 1)
+    }
+    if (dataDashboard.subvit.sertifikat.status) {
+      setCol(col + 1)
+    }
 
     if (errorDashboard) {
       toast.error(errorDashboard);
@@ -106,7 +95,7 @@ const Dashboard = ({ session }) => {
           />
         </Row>
         <Row className="mx-1">
-          {dataDashboard.pelatihan.pelatihan_berjalan.length === 0 && ( 
+          {col === 0 && ( 
             <CardPage
               backgroundImage="new-game-4.svg"
               background="primary"
@@ -130,7 +119,7 @@ const Dashboard = ({ session }) => {
               desc="Anda Belum Melakukan Test Substansi"
               total={dataDashboard.subvit.subvit.status}
               isSubvit={true}
-              col={6 }
+              col={col === 1 ? 12 : 6}
             />
           )}
 
@@ -144,7 +133,7 @@ const Dashboard = ({ session }) => {
               desc="Anda Belum Melakukan Test Survey"
               total={dataDashboard.subvit.survei.status}
               isSubvit={true}
-              col={6}
+              col={col === 1 ? 12 : 6}
             />
           )}
           {dataDashboard.subvit.trivia.status && (
@@ -157,7 +146,7 @@ const Dashboard = ({ session }) => {
               desc="Anda Belum Melakukan TRIVIA"
               total={dataDashboard.subvit.trivia.status}
               isSubvit={true}
-              col={6}
+              col={col === 1 ? 12 : 6}
             />
           )}
           {dataDashboard.subvit.sertifikat.status && (
@@ -170,7 +159,7 @@ const Dashboard = ({ session }) => {
               desc="Anda Sudah bisa mengunduh Sertifikat"
               total={dataDashboard.subvit.sertifikat.status}
               isSubvit={true}
-              col={6}
+              col={col === 1 ? 12 : 6}
             />
           )}
         </Row>

@@ -712,6 +712,7 @@ const Beranda = ({ session }) => {
                                         src={
                                           process.env
                                             .END_POINT_API_IMAGE_PARTNERSHIP +
+                                          "/" +
                                           element.gambar_mitra
                                         }
                                         layout="fill"
