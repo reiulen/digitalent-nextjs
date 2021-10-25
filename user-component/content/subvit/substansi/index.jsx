@@ -236,7 +236,11 @@ const SubtansiUser = ({ token }) => {
                 {data &&
                 data.list_questions &&
                 data.list_questions[parseInt(router.query.id) - 1]
-                  .question_image !== null ? (
+                  .question_image !== null &&
+                data &&
+                data.list_questions &&
+                data.list_questions[parseInt(router.query.id) - 1]
+                  .question_image !== "" ? (
                   <div className="d-flex flex-row">
                     <div className="p-2">
                       <Image
@@ -271,7 +275,7 @@ const SubtansiUser = ({ token }) => {
                 ).map((item, index) => {
                   return (
                     <>
-                      {item.image !== null ? (
+                      {item.image !== null && item.image !== "" ? (
                         <div className="d-flex flex-row">
                           <div className="p-2">
                             <Image
