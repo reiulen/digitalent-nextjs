@@ -43,8 +43,6 @@ export default function NamaPelatihan({ token }) {
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(null);
 
-  let { page = 1 } = router.query;
-
   let selectRefAkademi = null;
   let temaRef = null;
 

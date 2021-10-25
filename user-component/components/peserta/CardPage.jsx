@@ -12,27 +12,9 @@ const CardPage = ({ backgroundImage, background, color, link, text, desc, total,
     return newDate;
   }
 
-  let md = []
-
-  if(col.length === 4){
-    md.push(6,6,6,6)
-  }else if(col.length === 3){
-    md.push(6,6,12)
-  }
-
-  function myFunction(col) {
-    if(col.length === 4){
-      return col[0]
-    }else if(col.length === 3){
-      return col[Math.floor(Math.random() * col.length)]
-    }
-  }
-
-  
-
   return (
     <>
-      <Col md={6} className="mb-4 px-2">
+      <Col md={col} className="mb-4 px-2">
         <Card
           className="rounded-xl h-100"
           style={{

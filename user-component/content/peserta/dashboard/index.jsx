@@ -106,7 +106,7 @@ const Dashboard = ({ session }) => {
           />
         </Row>
         <Row className="mx-1">
-          {/* {dataDashboard.pelatihan.pelatihan_berjalan.length === 0 && (
+          {dataDashboard.pelatihan.pelatihan_berjalan.length === 0 && ( 
             <CardPage
               backgroundImage="new-game-4.svg"
               background="primary"
@@ -116,10 +116,11 @@ const Dashboard = ({ session }) => {
               desc="Anda Belum Memilih pelatihan, silahkan pilih pelatihan yang Anda inginkan"
               total={true}
               isSubvit={false}
+              col={12}
             />
-          )} */}
+          )}
 
-          {/* {dataDashboard.subvit.subvit.status && ( */}
+          {dataDashboard.subvit.subvit.status && (
             <CardPage
               backgroundImage="new-game-4.svg"
               background="primary"
@@ -129,11 +130,11 @@ const Dashboard = ({ session }) => {
               desc="Anda Belum Melakukan Test Substansi"
               total={dataDashboard.subvit.subvit.status}
               isSubvit={true}
-              col={totalSubvit % 2 === 0 && totalSubvit === 4 ? 6 : 12 }
+              col={6 }
             />
-          {/* )} */}
+          )}
 
-          {/* {dataDashboard.subvit.survei.status && ( */}
+          {dataDashboard.subvit.survei.status && (
             <CardPage
               backgroundImage="new-game-3.svg"
               background="success"
@@ -143,10 +144,10 @@ const Dashboard = ({ session }) => {
               desc="Anda Belum Melakukan Test Survey"
               total={dataDashboard.subvit.survei.status}
               isSubvit={true}
-              col={totalSubvit % 2 === 0 && (totalSubvit === 4 || totalSubvit === 2) ? 6 : 12}
+              col={6}
             />
-          {/* )} */}
-          {/* {dataDashboard.subvit.trivia.status && ( */}
+          )}
+          {dataDashboard.subvit.trivia.status && (
             <CardPage
               backgroundImage="new-game-1.svg"
               background="danger"
@@ -156,10 +157,10 @@ const Dashboard = ({ session }) => {
               desc="Anda Belum Melakukan TRIVIA"
               total={dataDashboard.subvit.trivia.status}
               isSubvit={true}
-              col={totalSubvit % 2 === 0 ? 12 : 6}
+              col={6}
             />
-          {/* )} */}
-          {/* {dataDashboard.subvit.sertifikat.status && ( */}
+          )}
+          {dataDashboard.subvit.sertifikat.status && (
             <CardPage
               backgroundImage="new-game-2.svg"
               background="warning"
@@ -169,65 +170,66 @@ const Dashboard = ({ session }) => {
               desc="Anda Sudah bisa mengunduh Sertifikat"
               total={dataDashboard.subvit.sertifikat.status}
               isSubvit={true}
-              col={totalSubvit % 2 === 0 ? 12 : 6}
+              col={6}
             />
-          {/* )} */}
+          )}
         </Row>
         <Row className="mx-1">
-          {dataDashboard.pelatihan.pelatihan_berjalan.length === 0 && <Col md={6} className="mb-4 px-2">
-            <Card className="rounded-xl h-100">
-              <Card.Body>
-                <Card.Title>
-                  <p className={style.card_title}>Pelatihan Terkini</p>
-                </Card.Title>
-                <div
-                  className="text-center"
-                  style={{
-                    height: "200",
-                    paddingTop: "75px",
-                    paddingBottom: "75px",
-                  }}
-                >
-                  <p>
-                    Belum ada pelatihan yang Anda pilih. Silahkan pilih
-                    pelatihan terlebih dahulu.
-                  </p>
-                  <br />
-                  <Link href="/" passHref>
-                  <Button variant="bg-primary" className="font-weight-bolder text-white rounded-full">
-                    Pilih Pelatihan
-                  </Button>
-                </Link>
-                </div>
-                
-              </Card.Body>
-            </Card>
-          </Col>}
-          {dataDashboard.pelatihan.pelatihan_selesi.length === 0 &&  <Col md={6} className="mb-4 px-2">
-            <Card className="rounded-xl h-100">
-              <Card.Body>
-                <Card.Title>
-                  <p className={style.card_title}>Pelatihan Sebelumnya</p>
-                </Card.Title>
-                <div
-                  className="text-center"
-                  style={{
-                    height: "200",
-                    paddingTop: "75px",
-                    paddingBottom: "75px",
-                  }}
-                >
-                  <p>
-                    Anda tidak memiliki histori pelatihan sebelumnya.
-                  </p>
-                 
-                </div>
-                
-              </Card.Body>
-            </Card>
-          </Col>}
-          
-         
+          {dataDashboard.pelatihan.pelatihan_berjalan.length === 0 && (
+            <Col md={6} className="mb-4 px-2">
+              <Card className="rounded-xl h-100">
+                <Card.Body>
+                  <Card.Title>
+                    <p className={style.card_title}>Pelatihan Terkini</p>
+                  </Card.Title>
+                  <div
+                    className="text-center"
+                    style={{
+                      height: "200",
+                      paddingTop: "75px",
+                      paddingBottom: "75px",
+                    }}
+                  >
+                    <p>
+                      Belum ada pelatihan yang Anda pilih. Silahkan pilih
+                      pelatihan terlebih dahulu.
+                    </p>
+                    <br />
+                    <Link href="/" passHref>
+                      <Button
+                        variant="bg-primary"
+                        className="font-weight-bolder text-white rounded-full"
+                      >
+                        Pilih Pelatihan
+                      </Button>
+                    </Link>
+                  </div>
+                </Card.Body>
+              </Card>
+            </Col>
+          )}
+          {dataDashboard.pelatihan.pelatihan_selesi.length === 0 && (
+            <Col md={6} className="mb-4 px-2">
+              <Card className="rounded-xl h-100">
+                <Card.Body>
+                  <Card.Title>
+                    <p className={style.card_title}>Pelatihan Sebelumnya</p>
+                  </Card.Title>
+                  <div
+                    className="text-center"
+                    style={{
+                      height: "200",
+                      paddingTop: "75px",
+                      paddingBottom: "75px",
+                    }}
+                  >
+                    <p>Anda tidak memiliki histori pelatihan sebelumnya.</p>
+                  </div>
+                </Card.Body>
+              </Card>
+            </Col>
+          )}
+
           {dataDashboard.pelatihan.pelatihan_berjalan.length > 0 && (
             <Col md={6} className="mb-4 px-2">
               <Card className="rounded-xl h-100">
