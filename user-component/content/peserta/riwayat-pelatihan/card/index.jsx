@@ -45,6 +45,8 @@ export default function CardTemplateOriginal({ data }) {
         return setLabel("warning");
       case "pelatihan":
         return setLabel("primary");
+      case "tes substansi":
+        return setLabel("primary");
       default:
         return setLabel("danger");
     }
@@ -109,100 +111,109 @@ export default function CardTemplateOriginal({ data }) {
   return (
     <Fragment>
       <Card className="position-relative">
-        <Card.Body
-          onClick={() => {
-            if (data.status == "menunggu tes substansi") {
-              Cookies.set("id_pelatihan", data.id);
-              router.push(`/peserta/test-substansi`);
-            } else if (data.status == "menunggu administrasi") {
-              Cookies.set("id_pelatihan", data.id);
-              router.push(`/peserta/administrasi`);
-            }
-          }}
+        <Button
+          variant="white"
+          disabled={data.status == "ditolak" ? true : false}
         >
-          <Row>
-            <Col md={3}>
-              <img
-                className="rounded-xl img-fluid d-block w-100 "
-                // src="/assets/media/bg-admin-1.png"
-                src={`${process.env.END_POINT_API_IMAGE_BEASISWA}${data.gambar}`}
-                alt="test1"
-                style={{ height: "200px", objectFit: "cover" }}
-              />
-            </Col>
-            <Col md={9}>
-              <Row className="h-100">
-                <Col
-                  lg={2}
-                  className="d-flex justify-content-center align-items-center my-10 my-lg-0 order-2 order-md-1"
-                >
-                  <img
-                    // src="/assets/media/mitra-icon/bukalapak-1.svg"
-                    // src="/assets/media/default-card.png"
-                    src={
-                      data.gambar_mitra
-                        ? `${process.env.END_POINT_API_IMAGE_LOGO_MITRA}${data.gambar_mitra}`
-                        : "/assets/media/default-card.png"
-                    }
-                    width={58}
-                    height={58}
-                    alt="test2"
-                    style={{ borderRadius: "50%", objectFit: "cover" }}
-                  />
-                </Col>
-                <Col
-                  md={7}
-                  className="my-auto order-3 order-md-2 row"
-                  // style={{ marginLeft: "-10px" }}
-                >
-                  <h4 className="font-weight-bolder my-0 p-0 col-12 order-2 order-lg-1">
-                    {data.name}
-                  </h4>
-                  <div
-                    className="d-flex align-items-center justify-content-lg-start justify-content-center order-1 order-lg-2"
-                    style={{ color: "#203E80" }}
+          <Card.Body
+            onClick={() => {
+              if (data.status == "menunggu tes substansi") {
+                Cookies.set("id_pelatihan", data.id);
+                router.push(`/peserta/test-substansi`);
+              } else if (data.status == "menunggu administrasi") {
+                Cookies.set("id_pelatihan", data.id);
+                router.push(`/peserta/administrasi`);
+              } else if (data.status == "tes substansi") {
+                Cookies.set("id_pelatihan", data.id);
+                router.push(`/peserta/administrasi`);
+              }
+            }}
+          >
+            <Row>
+              <Col md={3}>
+                <img
+                  className="rounded-xl img-fluid d-block w-100 "
+                  // src="/assets/media/bg-admin-1.png"
+                  src={`${process.env.END_POINT_API_IMAGE_BEASISWA}${data.gambar}`}
+                  alt="test1"
+                  style={{ height: "200px", objectFit: "cover" }}
+                />
+              </Col>
+              <Col md={9}>
+                <Row className="h-100">
+                  <Col
+                    lg={2}
+                    className="d-flex justify-content-center align-items-center my-10 my-lg-0 order-2 order-md-1"
                   >
-                    <div className="font-weight-bolder">Bukalapak</div>
-                    <div className="text-muted pl-2 justify-content-center">
-                      &bull; {data.akademi}
+                    <img
+                      // src="/assets/media/mitra-icon/bukalapak-1.svg"
+                      // src="/assets/media/default-card.png"
+                      src={
+                        data.gambar_mitra
+                          ? `${process.env.END_POINT_API_IMAGE_LOGO_MITRA}${data.gambar_mitra}`
+                          : "/assets/media/default-card.png"
+                      }
+                      width={58}
+                      height={58}
+                      alt="test2"
+                      style={{ borderRadius: "50%", objectFit: "cover" }}
+                    />
+                  </Col>
+                  <Col
+                    md={7}
+                    className="my-auto order-3 order-md-2 row"
+                    // style={{ marginLeft: "-10px" }}
+                  >
+                    <h4 className="font-weight-bolder my-0 p-0 col-12 order-2 order-lg-1">
+                      {data.name}
+                    </h4>
+                    <div
+                      className="d-flex align-items-center justify-content-lg-start justify-content-center order-1 order-lg-2"
+                      style={{ color: "#203E80" }}
+                    >
+                      <div className="font-weight-bolder">Bukalapak</div>
+                      <div className="text-muted pl-2 justify-content-center">
+                        &bull; {data.akademi}
+                      </div>
                     </div>
-                  </div>
-                </Col>
-                <Col
-                  md={3}
-                  // className="d-flex justify-content-end order-1 order-md-3"
-                  className="order-1 order-md-3 d-flex justify-content-end"
-                >
-                  <p
-                    style={{ borderRadius: "50px" }}
-                    className={`label label-inline label-light-${label} font-weight-bolder p-0 px-4 text-capitalize`}
+                  </Col>
+                  <Col
+                    md={3}
+                    // className="d-flex justify-content-end order-1 order-md-3"
+                    className="order-1 order-md-3 d-flex justify-content-end"
                   >
-                    {data.status == "pelatihan"
-                      ? "ikuti pelatihan"
-                      : data.status}
-                  </p>
-                </Col>
-                <Col md={12} className="my-auto order-4">
-                  <div className="d-flex align-items-center align-middle ">
-                    <i className="ri-time-line"></i>
-                    <span className={` pl-2`}>
-                      Pelatihan : {dateFrom} - {dateTo}
-                    </span>
-                  </div>{" "}
-                </Col>
-                <Col
-                  md={12}
-                  className="my-auto order-5 pb-40 pb-md-30 pb-lg-20"
-                >
-                  <div className="d-flex align-items-center align-middle ">
-                    <i className="ri-map-pin-line"></i>
-                    <span className={` pl-2`}>Lokasi : {data.alamat}</span>
-                  </div>{" "}
-                </Col>
-              </Row>
-            </Col>
-          </Row>
-        </Card.Body>
+                    <p
+                      style={{ borderRadius: "50px" }}
+                      className={`label label-inline label-light-${label} font-weight-bolder p-0 px-4 text-capitalize`}
+                    >
+                      {data.status == "pelatihan"
+                        ? "ikuti pelatihan"
+                        : data.status}
+                    </p>
+                  </Col>
+                  <Col md={12} className="my-auto order-4">
+                    <div className="d-flex align-items-center align-middle ">
+                      <i className="ri-time-line"></i>
+                      <span className={` pl-2`}>
+                        Pelatihan : {dateFrom} - {dateTo}
+                      </span>
+                    </div>{" "}
+                  </Col>
+                  <Col
+                    md={12}
+                    className="my-auto order-5 pb-40 pb-md-30 pb-lg-20"
+                  >
+                    <div className="d-flex align-items-center align-middle ">
+                      <i className="ri-map-pin-line"></i>
+                      <span className={` pl-2`}>Lokasi : {data.alamat}</span>
+                    </div>{" "}
+                  </Col>
+                </Row>
+              </Col>
+            </Row>
+          </Card.Body>
+        </Button>
+
         <div
           className="position-absolute w-100 d-lg-flex pb-10 pb-md-0 pb-lg-10"
           style={{ bottom: 0 }}
@@ -263,6 +274,34 @@ export default function CardTemplateOriginal({ data }) {
               </Button>
             </Col>
           ) : data.status == "menunggu tes substansi" ? (
+            <Fragment>
+              <Col className="d-flex justify-content-center ">
+                <Button
+                  className={`btn-rounded-full font-weight-bold btn-block justify-content-center mt-5 `}
+                  style={{ height: "40px", fontSize: "14px" }}
+                  onClick={() => {
+                    console.log("ini click button 2 ");
+                  }}
+                >
+                  <i className="ri-download-2-fill mr-2"></i>
+                  Bukti Pendaftaran
+                </Button>
+              </Col>
+              <Col className="d-flex justify-content-center">
+                <Button
+                  className="btn-rounded-full font-weight-bold btn-block justify-content-center mt-5"
+                  style={{ height: "40px", fontSize: "14px" }}
+                  onClick={() => {
+                    router.push(
+                      `/peserta/subvit/substansi/1?theme_id=${data.tema_id}&training_id=${data.id}&category=Test Substansi`
+                    );
+                  }}
+                >
+                  Test Substansi <i className="ri-arrow-right-s-line mr-2"></i>
+                </Button>
+              </Col>
+            </Fragment>
+          ) : data.status == "tes substansi" ? (
             <Fragment>
               <Col className="d-flex justify-content-center ">
                 <Button
