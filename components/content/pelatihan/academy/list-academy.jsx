@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/alt-text */
 import React, { useEffect, useState } from "react";
 
 import Image from "next/image";
@@ -75,16 +74,12 @@ const ListAcademy = ({ token }) => {
   };
 
   const handleSearch = () => {
-    // let link = `${router.pathname}?page=1&keyword=${search}`;
-    // if (limit) link = link.concat(`&limit=${limit}`);
-    // router.push(link);
     setPage(1);
     dispatch(getAllAcademy(1, search, limit, token));
   };
 
   const handleLimit = (val) => {
     setLimit(val);
-    // router.push(`${router.pathname}?page=1&limit=${val}`);
     setPage(1);
     dispatch(getAllAcademy(1, search, val, token));
   };

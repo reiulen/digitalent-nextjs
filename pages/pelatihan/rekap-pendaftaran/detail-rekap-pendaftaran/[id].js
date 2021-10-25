@@ -7,6 +7,12 @@ import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMid
 import { wrapper } from "../../../../redux/store";
 import { getSession } from "next-auth/client";
 
+import {
+  getStatusPendaftar,
+  getAkademiByPelatihan,
+  getPendaftaranPeserta,
+} from "../../../../redux/actions/pelatihan/summary.actions";
+
 const DetailSummary = dynamic(
   () =>
     import("../../../../components/content/pelatihan/summary/detail-summary"),
@@ -43,6 +49,16 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+
+      await store.dispatch(
+        getStatusPendaftar(session.user.user.data.token, params.id)
+      );
+      await store.dispatch(
+        getAkademiByPelatihan(session.user.user.data.token, params.id)
+      );
+      await store.dispatch(
+        getPendaftaranPeserta(session.user.user.data.token, params.id)
+      );
 
       return {
         props: { session, title: "Detail Rekap Pendaftaran - Pelatihan" },
