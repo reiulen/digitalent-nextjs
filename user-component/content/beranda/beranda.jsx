@@ -45,7 +45,9 @@ const Beranda = ({ session }) => {
   const { akademi } = useSelector((state) => state.allAkademi);
   const { tema } = useSelector((state) => state.temaByAkademi);
   const { publikasi } = useSelector((state) => state.allPublikasiBeranda);
-  const {cekPelatihan} = useSelector((state) => state.checkRegisteredPelatihan);
+  const { cekPelatihan } = useSelector(
+    (state) => state.checkRegisteredPelatihan
+  );
   // const options = {
   //   weekday: "long",
   //   year: "numeric",
@@ -92,7 +94,7 @@ const Beranda = ({ session }) => {
   const handleAkademiStart = () => {
     if (akademi && akademi.length !== 0) {
       dispatch(getTemaByAkademi(akademi[0].id));
-      setAkademiId(akademi[0].id)
+      setAkademiId(akademi[0].id);
     }
   };
 
@@ -240,24 +242,22 @@ const Beranda = ({ session }) => {
   };
 
   const handleCheckPelatihanReg = async (id, session) => {
-    if (session.Token){
-      const data = await dispatch(checkRegisterPelatihan(id, session.Token))
+    if (session.Token) {
+      const data = await dispatch(checkRegisterPelatihan(id, session.Token));
 
-      if (data.status === true){
-        router.push(`${router.pathname}/peserta/form-pendaftaran?id=${id}`)
-
+      if (data.status === true) {
+        router.push(`${router.pathname}/peserta/form-pendaftaran?id=${id}`);
       } else {
         Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: 'Anda telah terdaftar pada pelatihan ini.',
-        })
+          icon: "error",
+          title: "Error",
+          text: "Anda telah terdaftar pada pelatihan ini.",
+        });
       }
-    
     } else {
-      router.push(`${router.pathname}/login`)
+      router.push(`${router.pathname}/login`);
     }
-  }
+  };
 
   return (
     <div style={{ backgroundColor: "white" }}>
@@ -744,7 +744,7 @@ const Beranda = ({ session }) => {
 
                                     {show[i].pelatihan[index].hover !== true ? (
                                       <div className="mt-2">
-                                        <div className="d-flex align-items-center fz-14">
+                                        <div className="d-flex align-items-center fz-13">
                                           <IconTime className="mr-2" />
                                           Registrasi:{" "}
                                           {moment(
@@ -756,7 +756,7 @@ const Beranda = ({ session }) => {
                                           ).format("DD MMMM YYYY")}
                                           {/* Registrasi: {(element.pendafataran_mulai).toLocaleDateString("en-GB", options)} - {(element.pendafataran_selesai).toLocaleDateString("en-GB", options)} */}
                                         </div>
-                                        <div className="d-flex align-items-center mt-2 fz-14">
+                                        <div className="d-flex align-items-center mt-2 fz-13">
                                           <IconPeserta className="mr-2" />
                                           Kuota: {element.kuota_peserta} Peserta
                                         </div>
@@ -809,11 +809,14 @@ const Beranda = ({ session }) => {
                           <div className="container-fluid">
                             <div className="row border py-3">
                               <div className="col-12 col-md-4">
-                                <div style={{minHeight:"300px"}}>
-                                  <Image 
-                                    src={process.env.END_POINT_API_IMAGE_BEASISWA + cardImage}
+                                <div style={{ minHeight: "300px" }}>
+                                  <Image
+                                    src={
+                                      process.env.END_POINT_API_IMAGE_BEASISWA +
+                                      cardImage
+                                    }
                                     alt="image card detail"
-                                    layout="fill" 
+                                    layout="fill"
                                     objectFit="cover"
                                     className="rounded"
                                   />
@@ -841,7 +844,9 @@ const Beranda = ({ session }) => {
                                         <p className="fz-30 fw-600">
                                           {cardName}
                                         </p>
-                                        <p className="fw-600 fz-14">{cardMitra}</p>
+                                        <p className="fw-600 fz-14">
+                                          {cardMitra}
+                                        </p>
                                       </div>
                                     </div>
 
@@ -853,23 +858,35 @@ const Beranda = ({ session }) => {
                                         <IconShare className="cursor-pointer" />
                                       </button>
 
-                                      <div onClick={() => handleCloseQuickView(i)}>
-                                        <IconClose className="cursor-pointer"/>
+                                      <div
+                                        onClick={() => handleCloseQuickView(i)}
+                                      >
+                                        <IconClose className="cursor-pointer" />
                                       </div>
-                                      
                                     </div>
                                   </div>
 
                                   <p className="fz-16 fw-400 my-6">
                                     {/* {cardDeskripsi} */}
-                                    <div dangerouslySetInnerHTML={{ __html: cardDeskripsi}}></div>  
+                                    <div
+                                      dangerouslySetInnerHTML={{
+                                        __html: cardDeskripsi,
+                                      }}
+                                    ></div>
                                   </p>
 
                                   <div className="d-flex align-items-center justify-content-between">
                                     <div className="d-flex align-items-center">
                                       <span style={{ color: "#6C6C6C" }}>
                                         <IconTime className="mr-2" />
-                                        Registrasi: {moment(cardPendaftaranMulai).format("DD MMMM YYYY")} - {moment(cardPendaftaranSelesai).format("DD MMMM YYYY")}
+                                        Registrasi:{" "}
+                                        {moment(cardPendaftaranMulai).format(
+                                          "DD MMMM YYYY"
+                                        )}{" "}
+                                        -{" "}
+                                        {moment(cardPendaftaranSelesai).format(
+                                          "DD MMMM YYYY"
+                                        )}
                                       </span>
                                       <span
                                         className="mx-6"
@@ -889,27 +906,33 @@ const Beranda = ({ session }) => {
 
                                   <div className="row pt-6">
                                     <div className="col-6">
-                                      <Link href={`/detail/pelatihan/${cardId}`} passHref>
-                                          <a>
-                                            <button className="btn btn-outline-primary-new rounded-pill py-3 px-12 mr-4 w-100">
-                                              Lihat Selengkapnya
-                                            </button>
-                                          </a>
+                                      <Link
+                                        href={`/detail/pelatihan/${cardId}`}
+                                        passHref
+                                      >
+                                        <a>
+                                          <button className="btn btn-outline-primary-new rounded-pill py-3 px-12 mr-4 w-100">
+                                            Lihat Selengkapnya
+                                          </button>
+                                        </a>
                                       </Link>
-                                      
                                     </div>
 
-                                    {
-                                      cardStatus !== "Closed" ?
-                                        <div className="col-6">
-                                          <button onClick={() => handleCheckPelatihanReg (cardId, session)} className="d-flex justify-content-center btn-primary btn-register-peserta btn-sm py-3 px-12 rounded-pill btn-primary w-100">
-                                            Daftar Pelatihan
-                                          </button>
-                                        </div>
-                                      :
-                                        null
-                                    }
-                                    
+                                    {cardStatus !== "Closed" ? (
+                                      <div className="col-6">
+                                        <button
+                                          onClick={() =>
+                                            handleCheckPelatihanReg(
+                                              cardId,
+                                              session
+                                            )
+                                          }
+                                          className="d-flex justify-content-center btn-primary btn-register-peserta btn-sm py-3 px-12 rounded-pill btn-primary w-100"
+                                        >
+                                          Daftar Pelatihan
+                                        </button>
+                                      </div>
+                                    ) : null}
                                   </div>
                                 </div>
                               </div>
