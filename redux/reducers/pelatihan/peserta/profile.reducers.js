@@ -32,6 +32,7 @@ import {
   UPDATE_PEKERJAAN_RESET,
   UPDATE_PEKERJAAN_FAIL,
   CLEAR_ERRORS,
+  GET_ASAL_SEKOLAH,
 } from "../../../types/pelatihan/profile.type";
 
 export const dataAlamatReducer = (state = { alamat: {} }, action) => {
@@ -202,6 +203,21 @@ export const updateAlamatReducer = (state = { success: false }, action) => {
   }
 };
 
+export const getAsalSekolahReducer = (state = [], action) => {
+  switch (action.type) {
+    case GET_ASAL_SEKOLAH:
+      return action.payload.data.map(item => {
+        return {
+          value: item.label,
+          label: item.label,
+        }
+      })
+
+    default:
+      return state;
+  }
+};
+
 export const updatePendidikanReducer = (state = { success: false }, action) => {
   switch (action.type) {
     case UPDATE_PENDIDIKAN_REQUEST:
@@ -274,6 +290,8 @@ export const updateKeterampilanReducer = (
       return state;
   }
 };
+
+
 
 export const updatePekerjaanReducer = (state = { success: false }, action) => {
   switch (action.type) {
