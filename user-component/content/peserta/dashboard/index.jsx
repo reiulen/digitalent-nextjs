@@ -36,26 +36,38 @@ const Dashboard = ({ session }) => {
     },
   ]);
 
-  let totalSubvit = 0;
+  const [totalSubvit, setTotalSubvit] = useState(4)
+  const [col, setCol] = useState([])
 
   useEffect(() => {
-    if (dataDashboard.subvit.subvit.status) {
-      totalSubvit = totalSubvit + 1;
-    }
-    if (dataDashboard.subvit.survei.status) {
-      totalSubvit = totalSubvit + 1;
-    }
-    if (dataDashboard.subvit.trivia.status) {
-      totalSubvit = totalSubvit + 1;
-    }
-    if (dataDashboard.subvit.sertifikat.status) {
-      totalSubvit = totalSubvit + 1;
-    }
+    if (totalSubvit === 4) {
+        setCol([6,6,6,6])
+      }else if(totalSubvit === 3){
+        setCol([6,6,12])
+      } else if(totalSubvit === 2){
+        setCol([6,6])
+      }else if(totalSubvit === 1){
+        setCol([12])        
+      }else {
+
+      }
+    // if (dataDashboard.subvit.subvit.status) {
+    //   totalSubvit = totalSubvit + 1;
+    // }
+    // if (dataDashboard.subvit.survei.status) {
+    //   totalSubvit = totalSubvit + 1;
+    // }
+    // if (dataDashboard.subvit.trivia.status) {
+    //   totalSubvit = totalSubvit + 1;
+    // }
+    // if (dataDashboard.subvit.sertifikat.status) {
+    //   totalSubvit = totalSubvit + 1;
+    // }
 
     if (errorDashboard) {
       toast.error(errorDashboard);
     }
-  }, [errorDashboard]);
+  }, [errorDashboard, totalSubvit]);
 
   const handleHoverCard = (index, status) => {
     let list = [...cardPelatihan];
@@ -94,7 +106,7 @@ const Dashboard = ({ session }) => {
           />
         </Row>
         <Row className="mx-1">
-          {totalSubvit === 0 && (
+          {/* {dataDashboard.pelatihan.pelatihan_berjalan.length === 0 && (
             <CardPage
               backgroundImage="new-game-4.svg"
               background="primary"
@@ -105,9 +117,9 @@ const Dashboard = ({ session }) => {
               total={true}
               isSubvit={false}
             />
-          )}
+          )} */}
 
-          {dataDashboard.subvit.subvit.status && (
+          {/* {dataDashboard.subvit.subvit.status && ( */}
             <CardPage
               backgroundImage="new-game-4.svg"
               background="primary"
@@ -117,10 +129,11 @@ const Dashboard = ({ session }) => {
               desc="Anda Belum Melakukan Test Substansi"
               total={dataDashboard.subvit.subvit.status}
               isSubvit={true}
+              col={totalSubvit % 2 === 0 && totalSubvit === 4 ? 6 : 12 }
             />
-          )}
+          {/* )} */}
 
-          {dataDashboard.subvit.survei.status && (
+          {/* {dataDashboard.subvit.survei.status && ( */}
             <CardPage
               backgroundImage="new-game-3.svg"
               background="success"
@@ -130,9 +143,10 @@ const Dashboard = ({ session }) => {
               desc="Anda Belum Melakukan Test Survey"
               total={dataDashboard.subvit.survei.status}
               isSubvit={true}
+              col={totalSubvit % 2 === 0 && (totalSubvit === 4 || totalSubvit === 2) ? 6 : 12}
             />
-          )}
-          {dataDashboard.subvit.trivia.status && (
+          {/* )} */}
+          {/* {dataDashboard.subvit.trivia.status && ( */}
             <CardPage
               backgroundImage="new-game-1.svg"
               background="danger"
@@ -142,9 +156,10 @@ const Dashboard = ({ session }) => {
               desc="Anda Belum Melakukan TRIVIA"
               total={dataDashboard.subvit.trivia.status}
               isSubvit={true}
+              col={totalSubvit % 2 === 0 ? 12 : 6}
             />
-          )}
-          {dataDashboard.subvit.sertifikat.status && (
+          {/* )} */}
+          {/* {dataDashboard.subvit.sertifikat.status && ( */}
             <CardPage
               backgroundImage="new-game-2.svg"
               background="warning"
@@ -154,11 +169,12 @@ const Dashboard = ({ session }) => {
               desc="Anda Sudah bisa mengunduh Sertifikat"
               total={dataDashboard.subvit.sertifikat.status}
               isSubvit={true}
+              col={totalSubvit % 2 === 0 ? 12 : 6}
             />
-          )}
+          {/* )} */}
         </Row>
         <Row className="mx-1">
-          {totalSubvit === 0 && <Col md={6} className="mb-4 px-2">
+          {dataDashboard.pelatihan.pelatihan_berjalan.length === 0 && <Col md={6} className="mb-4 px-2">
             <Card className="rounded-xl h-100">
               <Card.Body>
                 <Card.Title>
@@ -187,7 +203,7 @@ const Dashboard = ({ session }) => {
               </Card.Body>
             </Card>
           </Col>}
-          {totalSubvit === 0 &&  <Col md={6} className="mb-4 px-2">
+          {dataDashboard.pelatihan.pelatihan_selesi.length === 0 &&  <Col md={6} className="mb-4 px-2">
             <Card className="rounded-xl h-100">
               <Card.Body>
                 <Card.Title>
@@ -212,7 +228,7 @@ const Dashboard = ({ session }) => {
           </Col>}
           
          
-          {totalSubvit > 0 && (
+          {dataDashboard.pelatihan.pelatihan_berjalan.length > 0 && (
             <Col md={6} className="mb-4 px-2">
               <Card className="rounded-xl h-100">
                 <Card.Body>
@@ -297,7 +313,7 @@ const Dashboard = ({ session }) => {
             </Col>
           )}
 
-          {totalSubvit > 0 && (
+          {dataDashboard.pelatihan.pelatihan_selesi.length > 0 && (
             <Col md={6} className="mb-4 px-2">
               <Card className="rounded-xl h-100">
                 <Card.Body>
@@ -411,6 +427,7 @@ const Dashboard = ({ session }) => {
                 </Card.Title>
                 {[1, 2, 3, 4].map((row, i, arr) => (
                   <div
+                  key={i}
                     className={`pekerjaan ${
                       arr.length - 1 !== i ? "mb-8" : ""
                     } `}
@@ -473,6 +490,7 @@ const Dashboard = ({ session }) => {
                 </Card.Title>
                 {[1, 2, 3, 4].map((row, i, arr) => (
                   <div
+                  key={i}
                     className={`pekerjaan ${
                       arr.length - 1 !== i ? "mb-8" : ""
                     } `}
