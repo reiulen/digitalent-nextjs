@@ -24,11 +24,11 @@ import IconRegister from "../../../components/assets/icon-dashboard-peserta/Regi
 
 const Navigationbar = ({ session }) => {
   const [isShowDropdown, setIsShowDropdown] = useState(false);
-  console.log("isShowDropdown", isShowDropdown);
+  // console.log("isShowDropdown", isShowDropdown);
   const { error: errorDataPribadi, dataPribadi } = useSelector(
     (state) => state.getDataPribadi
   );
-
+  console.log(dataPribadi, " ini data pribadi");
   const handlerLogout = () => {
     signOut();
   };
@@ -77,29 +77,21 @@ const Navigationbar = ({ session }) => {
                 </button>
                 <div className="dropdown-menu ml-3">
                   <Link href={`/detail/akademi/14`}>
-                    <a className="dropdown-item navdropdown-child">
-                      VSGA
-                    </a>
+                    <a className="dropdown-item navdropdown-child">VSGA</a>
                   </Link>
-                  
+
                   <Link href={`/detail/akademi/13`}>
-                    <a className="dropdown-item navdropdown-child">
-                      FGA
-                    </a>
+                    <a className="dropdown-item navdropdown-child">FGA</a>
                   </Link>
-                 
+
                   <Link href={`/detail/akademi/16`}>
-                    <a className="dropdown-item navdropdown-child">
-                      PRO
-                    </a>
+                    <a className="dropdown-item navdropdown-child">PRO</a>
                   </Link>
 
                   <Link href={`/detail/akademi/6`}>
-                    <a className="dropdown-item navdropdown-child">
-                      TA
-                    </a>
+                    <a className="dropdown-item navdropdown-child">TA</a>
                   </Link>
-                  
+
                   {/* <a className="dropdown-item navdropdown-child" href="#">
                     GTA
                   </a>
@@ -108,11 +100,8 @@ const Navigationbar = ({ session }) => {
                   </a> */}
 
                   <Link href={`/detail/akademi/18`}>
-                    <a className="dropdown-item navdropdown-child">
-                      TSA
-                    </a>
+                    <a className="dropdown-item navdropdown-child">TSA</a>
                   </Link>
-                  
                 </div>
               </div>
               <div className="btn-group dropright">
@@ -218,20 +207,20 @@ const Navigationbar = ({ session }) => {
               <div className="position-relative">
                 <div
                   className="wrap-accouts"
-                  style={!isShowDropdown ? {borderRadius: "20px"} : {}}
+                  style={!isShowDropdown ? { borderRadius: "20px" } : {}}
                   onClick={() =>
                     setIsShowDropdown(isShowDropdown ? false : true)
                   }
                 >
                   {/* <div className="dot-accouts"></div> */}
                   <Image
-                  className="rounded-circle"
+                    className="rounded-circle"
                     src={`${dataPribadi.file_path + dataPribadi.foto}`}
                     width={32}
                     height={32}
                     alt="brand-navbar"
-                    />
-                    {console.log(dataPribadi)}
+                  />
+                  {console.log(dataPribadi)}
                   <span className="titles-accounts">
                     {dataPribadi.name || "-"}
                   </span>
