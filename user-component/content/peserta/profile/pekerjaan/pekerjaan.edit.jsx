@@ -75,7 +75,6 @@ const PekerjaanEdit = ({ funcViewEdit, token }) => {
     if (simpleValidator.current.allValid()) {
       let data = {};
       if (statusPekerjaan === 17 || statusPekerjaan.value === 17) {
-        console.log("masuk 17");
         data = {
           status_pekerjaan: statusPekerjaan.label,
           pekerjaan: "-",
@@ -85,7 +84,6 @@ const PekerjaanEdit = ({ funcViewEdit, token }) => {
           tahun_masuk: parseInt(0),
         };
       } else if (statusPekerjaan === 16 || statusPekerjaan.value === 16) {
-        console.log("masuk 16");
         data = {
           status_pekerjaan: statusPekerjaan.label,
           pekerjaan: pekerjaanNama,
@@ -95,7 +93,6 @@ const PekerjaanEdit = ({ funcViewEdit, token }) => {
           tahun_masuk: parseInt(0),
         };
       } else if (statusPekerjaan === 18 || statusPekerjaan.value === 18) {
-                console.log("masuk 18");
         data = {
           status_pekerjaan: statusPekerjaan.label,
           pekerjaan: "-",
@@ -116,7 +113,6 @@ const PekerjaanEdit = ({ funcViewEdit, token }) => {
         text: "Isi data dengan benar !",
       });
     }
-    console.log(statusPekerjaan);
   };
 
   return (

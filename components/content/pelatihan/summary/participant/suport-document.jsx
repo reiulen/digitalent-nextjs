@@ -3,7 +3,6 @@ import React from "react";
 const SuportDocument = ({ commitment, lpj, saran }) => {
   return (
     <>
-      {console.log(lpj)}
       <div className="card card-custom card-stretch gutter-b">
         <div className="card-header pb-0">
           <h1

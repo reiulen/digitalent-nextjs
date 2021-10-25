@@ -17,7 +17,6 @@ import { useDispatch } from "react-redux";
 
 export default function RiwayatPelatihan({ session }) {
   const dispatch = useDispatch();
-  console.log(session);
   let refSelect = null;
   const [showModal, setShowModal] = useState(false);
   const dataRiwayatPelatihan = useSelector(
@@ -114,7 +113,6 @@ export default function RiwayatPelatihan({ session }) {
                           }
                           onClick={(e) => {
                             setSelected(i);
-                            // console.log(filter[i].value);
                             dispatch(setValuePeserta(filter[i].value));
                           }}
                           className={`rounded-full mx-5 w-100 text-capitalize`}

@@ -159,7 +159,7 @@ export const getDetailZonasi = (id, token) => {
           },
         }
       );
-      console.log("data asdasd", data);
+
       dispatch({
         type: DETAIL_ZONASI_SUCCESS,
         payload: data,

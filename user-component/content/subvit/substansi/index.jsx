@@ -156,7 +156,6 @@ const SubtansiUser = ({ token }) => {
       list.push(key);
       setListAnswer(key);
     }
-    console.log(listAnswer);
   };
 
   let number = [];

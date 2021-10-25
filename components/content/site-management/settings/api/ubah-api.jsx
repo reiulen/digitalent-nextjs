@@ -23,8 +23,7 @@ const UbahApi = ({ token }) => {
   let selectRefListField = null;
 
   const detailApi = useSelector((state) => state.detailApi);
-  console.log("detailApi",detailApi)
-   const [optionListField, setOptionListField] = useState([]);
+  const [optionListField, setOptionListField] = useState([]);
   const listApi = useSelector(state => state.listApi)
   const [optionListApi, setOptionListApi] = useState(listApi.listApi.map((items)=>{
     return {label:items.api_url,value:items.api_url,id:items.id}
@@ -76,7 +75,6 @@ const [valueField, setValueField] = useState([])
               },
             }
           );
-          console.log("response get list field", data);
           let optionListFieldResult = data.data.map((items) => {
             return {
               ...items,
@@ -85,11 +83,8 @@ const [valueField, setValueField] = useState([])
             };
           });
 
-          console.log("optionListFieldResult",optionListFieldResult)
-
           setOptionListField(optionListFieldResult);
 
-          // change list add label and value sisa implementasi ke render html list field and set state needed
         } catch (error) {
           return;
         }
@@ -113,9 +108,6 @@ const [valueField, setValueField] = useState([])
     else if((valueField.length === 0) && (field.length === 0)){
       Swal.fire("Gagal simpan", "Field tidak boleh kosong", "error");
     }
-    // else if (valueProvinsi === "") {
-    //   Swal.fire("Gagal simpan", "Form provinsi tidak boleh kosong", "error");
-    // }
     else {
       Swal.fire({
         title: "Apakah anda yakin simpan ?",
