@@ -13,6 +13,7 @@ import {
   storeTrainingStep1,
   getTrainingStep1,
   dropdownKabupaten,
+  dropdownTemabyAkademi
 } from "../../../../../redux/actions/pelatihan/function.actions";
 import LoadingPage from "../../../../LoadingPage";
 
@@ -20,6 +21,8 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
+
+  const drowpdownTemabyAkademi = useSelector(state => state.drowpdownTemabyAkademi)
 
   const { trainingData } = useSelector((state) => state.trainingStep1);
   const { error: dropdownErrorLevelPelatihan, data: dataLevelPelatihan } =
@@ -121,8 +124,8 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
   const [tuna_daksa, setTunaDaksa] = useState(trainingData.tuna_daksa);
   // const [disabilitas, setDisabilitas] = useState(trainingData.disabilitas);
 
+  const [optionsTema, setOptionsTema] = useState([])
   const optionsAkademi = dataAkademi.data;
-  const optionsTema = dataTema.data;
 
   let optionBatch = [];
   for (let index = 0; index < 20; index++) {
@@ -187,9 +190,13 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
     }
   }
 
+  console.log("data Tema", dataTema.data)
+  console.log("data Akademi", dataAkademi.data)
+
   useEffect(() => {
     dispatch(getTrainingStep1());
-
+    dispatch(dropdownTemabyAkademi(academy.value, token))
+    setOptionsTema(dataTema.data)
     editorRef.current = {
       CKEditor: require("@ckeditor/ckeditor5-react").CKEditor, //Added .CKEditor
       ClassicEditor: require("@ckeditor/ckeditor5-build-classic"),
@@ -197,7 +204,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
     };
 
     setEditorLoaded(true);
-  }, [dispatch]);
+  }, [dispatch, token, academy.value, dataTema.data]);
 
   const handleResetError = () => {
     if (error) {
@@ -538,11 +545,12 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
             <div className="position-relative" style={{ zIndex: "4" }}>
               <Select
                 placeholder="Silahkan Pilih Tema"
-                options={optionsTema}
+                options={drowpdownTemabyAkademi.data.data}
                 defaultValue={theme}
                 onChange={(e) => setTheme({ value: e?.value, label: e?.label })}
                 onBlur={() => simpleValidator.current.showMessageFor("tema")}
               />
+              {console.log("tema", optionsTema)}
             </div>
             {simpleValidator.current.message("tema", theme.value, "required", {
               className: "text-danger",
