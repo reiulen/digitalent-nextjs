@@ -32,16 +32,23 @@ const SubtansiUser = ({ token }) => {
 
   const router = useRouter();
 
-  localStorage.setItem("data", JSON.stringify(random_subtance_question_detail));
+  if (!random_subtance_question_detail) {
+    localStorage.setItem(
+      "data",
+      JSON.stringify(random_subtance_question_detail)
+    );
+  }
 
-  const [data] = useState(JSON.parse(localStorage.getItem("data")));
+  const [data] = useState(random_subtance_question_detail);
   const [answer, setAnswer] = useState("");
   const [listAnswer, setListAnswer] = useState([]);
   const [numberPage, setNumberPage] = useState("");
   const [numberAnswer, setNumberAnswer] = useState(false);
   const [modalSoal, setModalSoal] = useState(false);
 
-  const [count, setCount] = useState(random_subtance_question_detail.time_left);
+  const [count, setCount] = useState(
+    random_subtance_question_detail && random_subtance_question_detail.time_left
+  );
   const [modalDone, setModalDone] = useState(false);
 
   const [hour, setHour] = useState(0);
@@ -154,7 +161,12 @@ const SubtansiUser = ({ token }) => {
 
   let number = [];
 
-  for (let i = 0; i < random_subtance_question_detail.total_questions; i++) {
+  for (
+    let i = 0;
+    i < random_subtance_question_detail &&
+    random_subtance_question_detail.total_questions;
+    i++
+  ) {
     number.push(i);
   }
 
@@ -230,7 +242,8 @@ const SubtansiUser = ({ token }) => {
                 {data && data.total_questions}
               </p>
               <h1 className={styles.soal}>
-                {data.list_questions &&
+                {data &&
+                data.list_questions &&
                 data.list_questions[parseInt(router.query.id) - 1]
                   .question_image !== null ? (
                   <div className="d-flex flex-row">
@@ -248,19 +261,20 @@ const SubtansiUser = ({ token }) => {
                       />
                     </div>
                     <div className="p-5">
-                      {
+                      {data &&
                         data.list_questions[parseInt(router.query.id) - 1]
-                          .question
-                      }
+                          .question}
                     </div>
                   </div>
                 ) : (
+                  data &&
                   data.list_questions &&
                   data.list_questions[parseInt(router.query.id) - 1].question
                 )}
               </h1>
               <hr />
-              {data.list_questions &&
+              {data &&
+                data.list_questions &&
                 JSON.parse(
                   data.list_questions[parseInt(router.query.id) - 1].answer
                 ).map((item, index) => {
@@ -361,12 +375,13 @@ const SubtansiUser = ({ token }) => {
                     className={styles.btnSkip}
                     onClick={handleNext}
                     disabled={
-                      parseInt(router.query.id) === data.total_questions
+                      parseInt(router.query.id) === data && data.total_questions
                     }
                   >
                     Lewati
                   </Button>
-                  {parseInt(router.query.id) === data.total_questions ? (
+                  {parseInt(router.query.id) === data &&
+                  data.total_questions ? (
                     <Button
                       className={styles.btnNext}
                       onClick={handleDone}
@@ -379,7 +394,8 @@ const SubtansiUser = ({ token }) => {
                       className={styles.btnNext}
                       onClick={handleNext}
                       disabled={
-                        parseInt(router.query.id) === data.total_questions
+                        parseInt(router.query.id) === data &&
+                        data.total_questions
                       }
                     >
                       <div className="d-flex flex-row">

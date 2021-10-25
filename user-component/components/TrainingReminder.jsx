@@ -28,7 +28,7 @@ const TrainingReminder = () => {
                     <input 
                         type="text" 
                         placeholder="Cari Tema"
-                        className="form-control col-md-8 col-12 mb-3 rounded-pill"
+                        className="form-control col-md-8 col-12 mb-3 mr-2 rounded-pill"
                     />
                     <div className="col-md-3 col-12">
                         <button className="btn btn-primary rounded-pill">

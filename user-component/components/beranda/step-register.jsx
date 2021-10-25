@@ -2,14 +2,14 @@
 import ImageStep from "../../../public/assets/media/banner-tahapan01.svg";
 import ImageShapes from "../../../public/assets/media/banner-tahapan01.svg";
 import Image from "next/image";
-
+import ImageShapes1 from "../../../components/assets/icon-dashboard-peserta/bg-stepes.png";
 export default function stepRegister() {
   return (
     <div className="position-relative step-registers max-container">
-      {/* <div className="images-shapes">
-        <Image src={ImageShapes}  layout="fill" objectFit="fill"/>
-      </div> */}
-    <div className="pt-20 mt-16 position-relative" style={{background: "#FAFAFB"}}>
+      <div className="images-shapes">
+        <Image src={ImageShapes1}  layout="fill" objectFit="fill"/>
+      </div>
+    <div className="mt-16 position-relative" style={{background: "#FAFAFB"}}>
       
       <div className="container-fluid">
         <div>
