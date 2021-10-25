@@ -107,26 +107,20 @@ const StepOne = ({ token }) => {
     dispatch(updatewSubtanceQuestionBanks(id, data, token));
   };
 
-  const handleChangeTema = (e) => {
-    setAcademyId(e.target.value);
-
-    e.target.value && dispatch(dropdownTemabyAkademi(e.target.value, token));
-
-    dispatch(dropdownPelatihanbyTema(theme_id, token));
-  };
-
-  const handleChangePelatihan = (e) => {
-    console.log(e.target.value);
-    setThemeId(e.target.value);
-  };
-
   const { data } = useSelector((state) => state.drowpdownTemabyAkademi);
 
   const { data: dataPelatihan2 } = useSelector(
     (state) => state.drowpdownPelatihanbyTema.data
   );
 
-  console.log(dataPelatihan2, "<<<<<<<< pelatihan");
+  const handleChangeTema = (e) => {
+    setAcademyId(e.target.value);
+    e.target.value && dispatch(dropdownTemabyAkademi(e.target.value, token));
+  };
+
+  const handleChangePelatihan = (e) => {
+    setThemeId(e.target.value);
+  };
 
   return (
     <PageWrapper>
@@ -220,7 +214,12 @@ const StepOne = ({ token }) => {
                         </option>;
                         return (
                           <>
-                            <option value={item.value} key={index}>
+                            <option
+                              value={item.value}
+                              key={index}
+                              selected
+                              defaultValue={item.value}
+                            >
                               {item.label}
                             </option>
                           </>
