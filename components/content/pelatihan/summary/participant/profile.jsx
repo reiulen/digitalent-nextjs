@@ -158,6 +158,7 @@ const ProfileUser = ({ profile }) => {
                     <p className="text-neutral-body my-0">Scan KTP</p>
                     <Image
                       objectFit="cover"
+                      alt="file-ktp"
                       width={320}
                       height={200}
                       src={

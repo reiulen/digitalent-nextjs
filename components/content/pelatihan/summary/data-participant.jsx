@@ -159,6 +159,7 @@ const DataParticipant = ({ token }) => {
   }, [
     dispatch,
     peserta,
+    token,
     errorUpdateStatus,
     errorReminderUp,
     successStatus,

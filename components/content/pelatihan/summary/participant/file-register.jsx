@@ -8,7 +8,7 @@ const FileRegister = ({ file }) => {
           <div className="row">
             {file &&
               file.map((row, i) => (
-                <div className="col-md-6">
+                <div className="col-md-6" key={i}>
                   <p className="text-neutral-body my-0">{row.name}</p>
                   <p className="text-dark">{row.value}</p>
                 </div>
