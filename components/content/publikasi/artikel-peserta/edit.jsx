@@ -36,7 +36,6 @@ const EditArtikel = ({token}) => {
     ssr: false,
   });
 
-  // const { artikel, error, success } = useSelector(state => state.detailArtikel)
   const simpleValidator = useRef(new SimpleReactValidator({ locale: 'id' }))
   const [, forceUpdate] = useState();
   const { artikel_peserta } = useSelector((state) => state.detailArtikelPeserta);
@@ -47,23 +46,13 @@ const EditArtikel = ({token}) => {
 
   useEffect(() => {
 
-    // dispatch(getAllKategori())
-
     editorRef.current = {
       CKEditor: require("@ckeditor/ckeditor5-react").CKEditor, //Added .CKEditor
       ClassicEditor: require("@ckeditor/ckeditor5-build-classic"),
-      // Base64UploadAdapter: require('@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter')
     };
 
     setEditorLoaded(true);
     if (success) {
-      // setJudulArtikel('')
-      // setIsiArtikel('')
-      // setGambar('')
-      // setGambarPreview('/assets/media/default.jpg')
-      // setKategoriId('')
-      // setTag('')
-
       router.push({
         pathname: `/publikasi/artikel-peserta`,
         query: { success: true },
@@ -76,10 +65,7 @@ const EditArtikel = ({token}) => {
   const [isi_artikel, setIsiArtikel] = useState(artikel_peserta.isi_artikel);
   const [gambar, setGambar] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + artikel_peserta.gambar);
   const [gambarDB, setGambardb] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + artikel_peserta.gambar);
-  // const [gambar, setGambar] = useState(artikel.gambar);
-  // const [gambarPreview, setGambarPreview] = useState(
-  //   "/assets/media/default.jpg"
-  // ); //belum
+
   const [iconPlus, setIconPlus] = useState(
     "/assets/icon/Add.svg"
   );
@@ -108,11 +94,6 @@ const EditArtikel = ({token}) => {
       setGambarName(e.target.files[0].name)
     } 
     else {
-      // setGambar("")
-      // setGambarPreview("/assets/media/default.jpg")
-      // setGambarName(null)
-      // simpleValidator.current.showMessages();
-      // forceUpdate(1);
       e.target.value = null
       Swal.fire(
         'Oops !',
@@ -349,32 +330,6 @@ const EditArtikel = ({token}) => {
         ) : (
           ""
         )}
-        {/* {success ? (
-          <div
-            className="alert alert-custom alert-light-success fade show mb-5"
-            role="alert"
-          >
-            <div className="alert-icon">
-              <i className="flaticon2-checkmark"></i>
-            </div>
-            <div className="alert-text">{success}</div>
-            <div className="alert-close">
-              <button
-                type="button"
-                className="close"
-                data-dismiss="alert"
-                aria-label="Close"
-                onClick={onNewReset}
-              >
-                <span aria-hidden="true">
-                  <i className="ki ki-close"></i>
-                </span>
-              </button>
-            </div>
-          </div>
-        ) : (
-          ""
-        )} */}
 
         <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
           {loading ? <LoadingPage loading={loading} /> : ""}
@@ -426,10 +381,6 @@ const EditArtikel = ({token}) => {
                         <CKEditor
                           editor={ClassicEditor}
                           data={isi_artikel}
-                          onReady={(editor) => {
-                            // You can store the "editor" and use when it is needed.
-                            // console.log("Editor is ready to use!", editor);
-                          }}
                           onChange={(event, editor) => {
                             const data = editor.getData();
                             setIsiArtikel(data);
@@ -439,17 +390,6 @@ const EditArtikel = ({token}) => {
                               "isi_artikel"
                             )
                           }
-                          // config={
-                          //   {
-                          //     //   ckfinder: {
-                          //     //   // Upload the images to the server using the CKFinder QuickUpload command.
-                          //     //   // uploadUrl: 'https://example.com/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images&responseType=json',
-                          //     //   uploadUrl: process.env.END_POINT_API_PUBLIKASI + `api/artikel/${id}`
-                          //     // }
-                          //     allowedContent: true
-                              
-                          //   }
-                          // }
                         />
                       ) : (
                         <p>Tunggu Sebentar</p>
@@ -530,55 +470,8 @@ const EditArtikel = ({token}) => {
                     <p>
                       Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar
                     </p>
-                      
-                  </div>
-                  
+                  </div>                  
                 </div>
-
-                {/* <div className="form-group">
-                  <label
-                    htmlFor="staticEmail"
-                    className="col-sm-2 col-form-label"
-                  >
-                    Upload Thumbnail
-                  </label>
-                  <div className="col-sm-1">
-                    <figure
-                      className="avatar item-rtl"
-                      data-toggle="modal"
-                      data-target="#exampleModalCenter"
-                    >
-                      <Image
-                        loader={() => gambarPreview}
-                        src={gambarPreview}
-                        alt="image"
-                        width={60}
-                        height={60}
-                      />
-                    </figure>
-                  </div>
-                  <div className="col-sm-9">
-                    <div className="input-group">
-                      <div className="custom-file">
-                        <input
-                          type="file"
-                          name="gambar"
-                          className="custom-file-input"
-                          id="inputGroupFile04"
-                          accept="image/*"
-                          onChange={onChangeGambar}
-                        />
-                        <label
-                          className="custom-file-label"
-                          htmlFor="inputGroupFile04"
-                        >
-                          Pilih gambar
-                        </label>
-                      </div>
-                    </div>
-                    <small>{gambarName}</small>
-                  </div>
-                </div> */}
 
                 <div className="form-group">
                   <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Kategori</label>
@@ -596,7 +489,6 @@ const EditArtikel = ({token}) => {
                                       </option>
                                     :
                                       null
-                                      // <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>{row.nama_kategori}</option>
                                   )
                               })
                           )}
@@ -641,7 +533,6 @@ const EditArtikel = ({token}) => {
                           className="checkbox"
                           checked={publish}
                           type="checkbox"
-                          // onChange={(checked) => setPublish(checked)}
                           onChange={(e) => handleChangePublish(e)}
                         />
                         <span
@@ -653,19 +544,6 @@ const EditArtikel = ({token}) => {
                       </label>
                     </div>
                   </div>
-                  {/* <div className="col-sm-1">
-                    <SwitchButton
-                      checked={publish}
-                      onlabel=" "
-                      onstyle="primary"
-                      offlabel=" "
-                      offstyle="danger"
-                      size="sm"
-                      width={30}
-                      // onChange={(checked) => onSetPublish(checked)}
-                      onChange={(checked) => setPublish(checked)}
-                    />
-                  </div> */}
                 </div>
 
                 {
@@ -678,15 +556,11 @@ const EditArtikel = ({token}) => {
                             className="form-search-date form-control-sm form-control"
                             selected={publishDate}
                             onChange={(date) => handlePublishDate(date)}
-                            // onChange={(date) => setPublishDate(date)}
                             selectsStart
                             startDate={publishDate}
-                            // endDate={endDate}
                             dateFormat="dd/MM/yyyy"
                             placeholderText="Silahkan Isi Tanggal Publish"
                             wrapperClassName="col-12 col-lg-12 col-xl-12"
-                            // minDate={moment().toDate()}
-                          // minDate={addDays(new Date(), 20)}
                             disabled = {disablePublishDate === true || disablePublishDate === null}
                           />
                         </div>

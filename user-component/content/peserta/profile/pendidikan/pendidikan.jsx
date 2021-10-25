@@ -18,8 +18,6 @@ const Pendidikan = ({ token }) => {
     dispatch(getProfilePendidikan(token));
   }, [dispatch, token]);
 
-  console.log(pendidikan, "<<<<< data");
-
   return (
     <>
       <div className="mt-5 pendidikan">

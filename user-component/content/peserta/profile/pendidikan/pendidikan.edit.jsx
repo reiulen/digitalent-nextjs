@@ -92,7 +92,6 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
   ]);
 
   const searchAsal = (word) => {
-    console.log("keyup", word);
     let array = [];
     const searchData = getAsalSekolah;
     searchData.filter((data, index) => {
@@ -162,7 +161,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
       } else if (jengjangPendidikan.value === 23) {
         data = {
           jenjang: jengjangPendidikan.label,
-          asal_pendidikan: asalSekolah,
+          asal_pendidikan: asalSekolah.label,
           lainya: "-",
           program_studi: "0",
           ipk: "0",
@@ -175,7 +174,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
       ) {
         data = {
           jenjang: jengjangPendidikan.label,
-          asal_pendidikan: asalSekolah,
+          asal_pendidikan: asalSekolah.label,
           lainya: "-",
           program_studi: programStudi,
           ipk,
@@ -241,7 +240,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
                   }
                   options={getAsalSekolah}
                   defaultValue={asalSekolah}
-                  onChange={(e) => setAsalSekolah(e.target.value)}
+                  onChange={(e) => setAsalSekolah({ label: e.label, value: e.value })}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor(
                       "asal ( sekolah/ pt )"

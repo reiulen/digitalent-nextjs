@@ -19,7 +19,7 @@ const Table = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
   const [array, setArray] = useState([]);
-  console.log("array",array)
+  
   const firstPush = () => {
     let _temp = [...array];
     _temp.push({

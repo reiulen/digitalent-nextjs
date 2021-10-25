@@ -46,7 +46,7 @@ export default function SeleksiAdministrasi() {
                 fontSize: "14px",
               }}
             >
-              Kerjakan Mid Test
+              Kerjakan Tes Substansi
               <i
                 className="ri-arrow-right-s-line mr-2"
                 style={{ color: "white" }}

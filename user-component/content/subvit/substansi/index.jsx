@@ -34,14 +34,9 @@ const SubtansiUser = ({ token }) => {
 
   const router = useRouter();
 
-    localStorage.setItem(
-      "data",
-      JSON.stringify(random_subtance_question_detail)
-    );
-  
+  localStorage.setItem("data", JSON.stringify(random_subtance_question_detail));
 
-  const [data] = useState(JSON.parse(localStorage.getItem(
-      "data" )));
+  const [data] = useState(JSON.parse(localStorage.getItem("data")));
   const [answer, setAnswer] = useState("");
   const [listAnswer, setListAnswer] = useState([]);
   const [numberPage, setNumberPage] = useState("");
@@ -49,7 +44,7 @@ const SubtansiUser = ({ token }) => {
   const [modalSoal, setModalSoal] = useState(false);
 
   const [count, setCount] = useState(
-  random_subtance_question_detail &&  random_subtance_question_detail.time_left
+    random_subtance_question_detail && random_subtance_question_detail.time_left
   );
   const [modalDone, setModalDone] = useState(false);
 
@@ -158,16 +153,11 @@ const SubtansiUser = ({ token }) => {
       list.push(key);
       setListAnswer(key);
     }
-    
   };
 
   let number = [];
 
-  for (
-    let i = 0;
-    i < data.total_questions;
-    i++
-  ) {
+  for (let i = 0; i < data.total_questions; i++) {
     number.push(i);
   }
 
@@ -376,13 +366,12 @@ const SubtansiUser = ({ token }) => {
                     className={styles.btnSkip}
                     onClick={handleNext}
                     disabled={
-                      parseInt(router.query.id) ===  data.total_questions
+                      parseInt(router.query.id) === data.total_questions
                     }
                   >
                     Lewati
                   </Button>
-                  {parseInt(router.query.id) === 
-                  data.total_questions ? (
+                  {parseInt(router.query.id) === data.total_questions ? (
                     <Button
                       className={styles.btnNext}
                       onClick={handleDone}
