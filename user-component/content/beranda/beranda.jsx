@@ -80,12 +80,14 @@ const Beranda = ({ session }) => {
     if (tema) {
       // window.location.reload();
       handleHoverCard();
+      // handleTemaId()
     }
   }, [tema]);
 
   const handleAkademiStart = () => {
     if (akademi && akademi.length !== 0) {
       dispatch(getTemaByAkademi(akademi[0].id));
+      setAkademiId(akademi[0].id)
     }
   };
 
@@ -235,6 +237,13 @@ const Beranda = ({ session }) => {
   return (
     <div style={{ backgroundColor: "white" }}>
       {/* <Navigationbar /> */}
+      {
+        console.log (tema)
+      }
+
+      {
+        console.log (show)
+      }
 
       {/* Carousel 1 */}
       {publikasi && publikasi.imagetron.length !== 0 ? (
@@ -564,7 +573,7 @@ const Beranda = ({ session }) => {
                     <div>
                       {el.pelatihan !== null ? (
                         <Link
-                          href={`/detail/akademi/akademi_id=${akademiId}&tema_id=${akademiId}`}
+                          href={`/detail/akademi/id=${akademiId}&tema_id=${el.id}`}
                         >
                           <a className="d-flex align-items-center">
                             <>
@@ -762,13 +771,13 @@ const Beranda = ({ session }) => {
                             <div className="row border py-3">
                               <div className="col-12 col-md-4">
                                 <div style={{minHeight:"300px"}}>
-                                <Image 
-                                        src={process.env.END_POINT_API_IMAGE_BEASISWA + cardImage}
-                                        layout="fill" 
-                                        objectFit="cover"
-                                        className="rounded"
-                                      />
-                                      </div>
+                                  <Image 
+                                    src={process.env.END_POINT_API_IMAGE_BEASISWA + cardImage}
+                                    layout="fill" 
+                                    objectFit="cover"
+                                    className="rounded"
+                                  />
+                                </div>
 
                                 <div className="position-absolute mt-5">
                                   <span className="badgess-lg">
@@ -804,7 +813,10 @@ const Beranda = ({ session }) => {
                                         <IconShare className="cursor-pointer" />
                                       </div>
 
-                                      <IconClose />
+                                      <div onClick={() => handleCloseQuickView(i)}>
+                                        <IconClose/>
+                                      </div>
+                                      
                                     </div>
                                   </div>
 
