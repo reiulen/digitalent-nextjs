@@ -162,7 +162,7 @@ const Tambah = ({ token }) => {
               });
             } else {
               router.push({
-                pathname: "/partnership/user/profile-lembaga/input-profile",
+                pathname: "/partnership/user/profile-lembaga",
                 query: { successInputProfile: true },
               });
             }

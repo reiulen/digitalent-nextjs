@@ -103,9 +103,13 @@ const DetailPelatihan = () => {
                                 <div className="row ml-3 my-5 mr-5" style={{height:"2px", backgroundColor:"#ADB5BD"}}></div>
 
                                 <div className="my-5 mx-3 text-justify">
-                                    {
+                                    {/* {
                                         pelatihan.deskripsi
-                                    } 
+                                    }  */}
+
+                                    <div dangerouslySetInnerHTML={{ __html: pelatihan.deskripsi }}>
+                                        
+                                    </div>
                                     
                                 </div>
                                 
@@ -226,10 +230,10 @@ const DetailPelatihan = () => {
                                     </div>
                                     <div className="col-5">
                                         <div className="font-weight-bolder">
-                                            Mitra Nama { pelatihan.mitra_nama }
+                                            { pelatihan.mitra_nama }
                                         </div>
                                         <div className="text-muted">
-                                            Mitra { pelatihan.mitra }
+                                            { pelatihan.mitra }
                                         </div>
                                     </div>
                                     
