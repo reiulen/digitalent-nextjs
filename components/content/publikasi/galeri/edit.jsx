@@ -279,7 +279,21 @@ const EditGaleri = ({ token }) => {
                 _method,
                 image_delete: deleteImg
             }
-            dispatch(onCall(data, token))
+            Swal.fire({
+                title: "Apakah anda yakin ?",
+                text: "Data ini akan diedit !",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Ya !",
+                cancelButtonText: "Batal",
+            })
+                .then((result) => {
+                    if (result.isConfirmed) {
+                        dispatch(onCall(data, token))
+                    }
+                });
         } else {
             const data = {
                 judul,
@@ -294,53 +308,76 @@ const EditGaleri = ({ token }) => {
                 _method,
                 image_delete: deleteImg
             }
-            dispatch(onCall(data, token))
+            Swal.fire({
+                title: "Apakah anda yakin ?",
+                text: "Data ini akan diedit !",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Ya !",
+                cancelButtonText: "Batal",
+            })
+                .then((result) => {
+                    if (result.isConfirmed) {
+                        dispatch(onCall(data, token))
+                    }
+                });
         }
     }
 
     const onSubmit = (e) => {
         e.preventDefault()
+        if (simpleValidator.current.allValid()) {
+            if (image[0].imageName === "") {
+                Swal.fire(
+                    "Oops !",
+                    "Harus memasukkan minimal 1 Gambar !",
+                    "error"
+                );
+            } else {
+                if (error) {
+                    dispatch(clearErrors())
+                }
 
-        if (image[0].imageName === "") {
-            Swal.fire(
-                "Oops !",
-                "Harus memasukkan minimal 1 Gambar !",
-                "error"
-            );
+                if (success) {
+                    dispatch({
+                        type: UPDATE_GALERI_RESET,
+                    });
+                }
+
+                if (publish === true) {
+                    setPublish(1)
+
+                } else if (publish === false) {
+                    setPublish(0)
+                }
+
+                let temps = []
+
+                let flag = 0
+
+                for (let i = 0; i < image.length; i++) {
+                    flag += 1
+
+                    if (image[i].imageBase64 !== undefined) {
+                        // temps.push(image[i])
+                        temps.push(image[i].imageBase64)
+                    }
+
+                    if (flag === image.length) {
+                        handleData(temps, updateGaleri)
+                    }
+                }
+            }
         } else {
-            if (error) {
-                dispatch(clearErrors())
-            }
-
-            if (success) {
-                dispatch({
-                    type: UPDATE_GALERI_RESET,
-                });
-            }
-
-            if (publish === true) {
-                setPublish(1)
-
-            } else if (publish === false) {
-                setPublish(0)
-            }
-
-            let temps = []
-
-            let flag = 0
-
-            for (let i = 0; i < image.length; i++) {
-                flag += 1
-
-                if (image[i].imageBase64 !== undefined) {
-                    // temps.push(image[i])
-                    temps.push(image[i].imageBase64)
-                }
-
-                if (flag === image.length) {
-                    handleData(temps, updateGaleri)
-                }
-            }
+            simpleValidator.current.showMessages();
+            forceUpdate(1);
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Isi data dengan benar !",
+            });
         }
     }
 
