@@ -272,7 +272,6 @@ const Tambah = ({ token }) => {
             },
           }
         );
-        console.log("data",data)
 
         if (data) {
           // setAgency_logo_api(
