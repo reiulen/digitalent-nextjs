@@ -7,6 +7,8 @@ import StepViewPelatihan from "../../../../StepViewPelatihan";
 const ViewTrainingStep4 = () => {
   const router = useRouter();
 
+  const { id } = router.query;
+
   const [substansi] = useState({
     value: "Tersedia",
     date: "1 Oktober 2021 - 5 Oktober 2021",
@@ -32,10 +34,10 @@ const ViewTrainingStep4 = () => {
         title2="Form Pendaftaran"
         title3="Form Komitmen"
         title4="Parameter"
-        link1={`/pelatihan/pelatihan/view-pelatihan/${1}`}
-        link2={`/pelatihan/pelatihan/view-pelatihan/view-form-pendaftaran/${1}`}
-        link3={`/pelatihan/pelatihan/view-pelatihan/view-komitmen/${1}`}
-        link4={`/pelatihan/pelatihan/view-pelatihan/view-parameter/${1}`}
+        link1={`/pelatihan/pelatihan/view-pelatihan/${id}`}
+        link2={`/pelatihan/pelatihan/view-pelatihan/view-form-pendaftaran/${id}`}
+        link3={`/pelatihan/pelatihan/view-pelatihan/view-komitmen/${id}`}
+        link4={`/pelatihan/pelatihan/view-pelatihan/view-parameter/${id}`}
       />
 
       <div className="col-lg-12 order-1 px-0">

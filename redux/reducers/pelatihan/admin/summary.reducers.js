@@ -21,6 +21,13 @@ import {
   GET_FORM_KOMITMEN_FAIL,
   GET_FORM_LPJ_SUCCESS,
   GET_FORM_LPJ_FAIL,
+  UPDATE_STATUS_REQUEST,
+  UPDATE_STATUS_SUCCESS,
+  UPDATE_STATUS_RESET,
+  UPDATE_STATUS_FAIL,
+  UPDATE_REMINDER_SUCCESS,
+  UPDATE_REMINDER_RESET,
+  UPDATE_REMINDER_FAIL,
   CLEAR_ERRORS,
 } from "../../../types/pelatihan/summary.type";
 
@@ -257,7 +264,7 @@ export const getFormKomitmenReducer = (
   }
 };
 
-export const getFormLpjReducer = (state = { formLpj: [] }, action) => {
+export const getFormLpjReducer = (state = { formLpj: {} }, action) => {
   switch (action.type) {
     case GET_FORM_LPJ_SUCCESS:
       return {
@@ -267,6 +274,71 @@ export const getFormLpjReducer = (state = { formLpj: [] }, action) => {
     case GET_FORM_LPJ_FAIL:
       return {
         error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const updateStatusPesertaReducer = (state = { status: {} }, action) => {
+  switch (action.type) {
+    case UPDATE_STATUS_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case UPDATE_STATUS_SUCCESS:
+      return {
+        loading: false,
+        success: action.payload.message,
+        status: action.payload.data,
+      };
+
+    case UPDATE_STATUS_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    case UPDATE_STATUS_RESET:
+      return {
+        success: false,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const updateReminderReducer = (state = { reminder: {} }, action) => {
+  switch (action.type) {
+    case UPDATE_REMINDER_SUCCESS:
+      return {
+        success: action.payload.message,
+        reminder: action.payload.data,
+      };
+
+    case UPDATE_REMINDER_FAIL:
+      return {
+        error: action.payload,
+      };
+
+    case UPDATE_REMINDER_RESET:
+      return {
+        success: false,
       };
 
     case CLEAR_ERRORS:

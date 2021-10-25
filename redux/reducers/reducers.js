@@ -320,6 +320,8 @@ import {
 // ================ pendaftaran pelatihan ===============
 import {
   allSummaryReducer,
+  updateStatusPesertaReducer,
+  updateReminderReducer,
   getAkademiByPelatihanReducer,
   getPendaftaranPesertaReducer,
   getStatusPendaftarReducer,
@@ -342,6 +344,7 @@ import {
   updatePendidikanReducer,
   updateKeterampilanReducer,
   updatePekerjaanReducer,
+  getAsalSekolahReducer
 } from "./pelatihan/peserta/profile.reducers";
 
 import { dashboardPesertaReducer } from "./pelatihan/peserta/dashboard-reducers";
@@ -655,6 +658,8 @@ const reducer = combineReducers({
 
   // ========== rekap pelatihan ========
   allSummary: allSummaryReducer,
+  updateStatusPeserta: updateStatusPesertaReducer,
+  updateReminder: updateReminderReducer,
   getAkademiByPelatihan: getAkademiByPelatihanReducer,
   getPendaftaranPeserta: getPendaftaranPesertaReducer,
   getStatusPendaftar: getStatusPendaftarReducer,
@@ -706,6 +711,7 @@ const reducer = combineReducers({
   updatePendidikan: updatePendidikanReducer,
   updateKeterampilan: updateKeterampilanReducer,
   updatePekerjaan: updatePekerjaanReducer,
+  getAsalSekolah: getAsalSekolahReducer,
   //END PELATIHAN
 
   //BERANDA

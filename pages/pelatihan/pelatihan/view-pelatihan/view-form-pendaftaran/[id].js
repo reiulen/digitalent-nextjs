@@ -7,6 +7,8 @@ import { middlewareAuthAdminSession } from "../../../../../utils/middleware/auth
 import { wrapper } from "../../../../../redux/store";
 import { getSession } from "next-auth/client";
 
+import { getReviewStep2Revisi } from "../../../../../redux/actions/pelatihan/review.actions";
+
 const ViewTraining = dynamic(
   () =>
     import(
@@ -43,6 +45,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+
+      await store.dispatch(
+        getReviewStep2Revisi(session.user.user.data.token, params.id)
+      );
 
       return {
         props: { session, title: "View Form Pendaftaran - Pelatihan" },

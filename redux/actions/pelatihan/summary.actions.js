@@ -21,6 +21,11 @@ import {
   GET_FORM_KOMITMEN_FAIL,
   GET_FORM_LPJ_SUCCESS,
   GET_FORM_LPJ_FAIL,
+  UPDATE_STATUS_REQUEST,
+  UPDATE_STATUS_SUCCESS,
+  UPDATE_STATUS_FAIL,
+  UPDATE_REMINDER_SUCCESS,
+  UPDATE_REMINDER_FAIL,
   CLEAR_ERRORS,
 } from "../../types/pelatihan/summary.type";
 
@@ -114,7 +119,7 @@ export const getPendaftaranPeserta =
     token,
     pelatihanId,
     keyword = "",
-    limit = 5,
+    limit = null,
     page = null,
     administrasi = null,
     pelatihan = null
@@ -312,7 +317,7 @@ export const getFormLpj = (token, index) => async (dispatch) => {
   try {
     let link =
       process.env.END_POINT_API_PELATIHAN +
-      `/api/v1/formPendaftaran/data-form-lpj?id=${index}`;
+      `/api/v1/formPendaftaran/list-form-lpj?id=${index}`;
 
     const config = {
       headers: {
@@ -329,6 +334,64 @@ export const getFormLpj = (token, index) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: GET_FORM_LPJ_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const updateStatusPeserta = (statusData, token) => async (dispatch) => {
+  try {
+    dispatch({
+      type: UPDATE_STATUS_REQUEST,
+    });
+
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    const { data } = await axios.post(
+      process.env.END_POINT_API_PELATIHAN +
+        "api/v1/formPendaftaran/update-status",
+      statusData,
+      config
+    );
+
+    dispatch({
+      type: UPDATE_STATUS_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: UPDATE_STATUS_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const updateReminder = (reminderData, token) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    const { data } = await axios.post(
+      process.env.END_POINT_API_PELATIHAN +
+        "api/v1/formPendaftaran/update-reminder",
+      reminderData,
+      config
+    );
+
+    dispatch({
+      type: UPDATE_REMINDER_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: UPDATE_REMINDER_FAIL,
       payload: error.response.data.message,
     });
   }

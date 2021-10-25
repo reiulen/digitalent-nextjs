@@ -24,7 +24,7 @@ const Footer = dynamic(() => import("../../../user-component/components/beranda/
     },
     ssr: false,
 });
-const Layout = ({ children, title }) => {
+const Layout = ({ children, title, session }) => {
 
     return (
         <>
@@ -32,7 +32,7 @@ const Layout = ({ children, title }) => {
                 <title>{title}</title>
             </Head>
 
-            <NavigationBar />
+            <NavigationBar session={session}/>
 
             <div className="d-flex flex-column-fluid bg-white">
                 <div className="container">

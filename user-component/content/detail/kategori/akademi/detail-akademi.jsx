@@ -2,27 +2,33 @@ import React, { useEffect, useState } from "react"
 import Link from "next/link";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router";
+import Swal from "sweetalert2";
 import moment from "moment";
+import DatePicker from "react-datepicker";
+import { TagsInput } from "react-tag-input-component";
 
 import { 
     Card,
     Badge,
-    Button
+    Button,
+    Dropdown
 } from "react-bootstrap";
 import Cardss from "../../../../components/beranda/card";
 
 import Pagination from "react-js-pagination";
 
-import Layout from "../../../wrapper/layout.wrapper";
+// import Layout from "../../../wrapper/layout.wrapper";
 import FilterBar from "../../../../components/FilterBar";
 import SubHeaderComponent from "../../../../components/template/Subheader.component";
 import FilterSide from "../../../../components/FilterSide";
 import TrainingReminder from "../../../../components/TrainingReminder";
 import style from "../../../../../styles/peserta/dashboard.module.css"
+import { checkRegisterPelatihan } from "../../../../../redux/actions/beranda/detail-pelatihan.actions";
 
 // import "../../../../../styles/beranda.module.css"
 
-const DetailAkademi = () => {
+const DetailAkademi = ({ session }) => {
     const {
         akademi,
     } = useSelector((state) => state.detailAkademi);
@@ -32,6 +38,8 @@ const DetailAkademi = () => {
     } = useSelector((state) => state.allPelatihan);
 
     const textToTrim = 325
+    const dispatch = useDispatch();
+    const router = useRouter();
     // const [ akademiId, setAkademiId ] = useState (akademi.id)
     // const [ akademiLogo, setAkademiLogo ] = useState (akademi.logo)
     // const [ akademiName, setAkademiName ] = useState (akademi.name)
@@ -45,6 +53,8 @@ const DetailAkademi = () => {
     const [ akademiName, setAkademiName ] = useState (null)
     const [ akademiDesc, setAkademiDesc ] = useState(null)
     const [ seeMoreStatus, setSeeMoreStatus ] = useState(false)
+
+    const [ filterPenyelenggara, setFilterPenyelenggara ] = useState (null)
 
     useEffect(() => {
         handleHoverCard()
@@ -131,12 +141,36 @@ const DetailAkademi = () => {
         setShowDetail (arr)
     }
 
+    const handleCheckPelatihanReg = async (id, session) => {
+        if (session.Token){
+          const data = await dispatch(checkRegisterPelatihan(id, session.Token))
+    
+          if (data.status === true){
+            router.push(`${router.pathname}/peserta/form-pendaftaran?id=${id}`)
+    
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'Anda telah terdaftar pada pelatihan ini.',
+            })
+          }
+        
+        } else {
+          router.push(`${router.pathname}/login`)
+        }
+      }
+
     const handlePagination = (pageNumber) => {
 
     }
 
+    const handleFilter = () => {
+        console.log (filterPenyelenggara)
+    }
+
     return (
-        <Layout title="Detail Akademi">
+        <>
             
             <SubHeaderComponent />
             {
@@ -189,7 +223,126 @@ const DetailAkademi = () => {
             <div className="row my-5">
                 <div className="col-12 col-md-3">
                     <TrainingReminder />
-                    <FilterSide />
+
+
+                    {/* <FilterSide /> */}
+                    <div className="bg-white rounded border">
+                        <div className="row d-flex align-items-center">
+                            <div className="p-3 ml-3">
+                                <Image 
+                                    src={`/assets/media/logo-filter.svg`}
+                                    width={40}
+                                    height={40}
+                                />
+                            </div>
+                            
+                            <div className="font-weight-bolder">
+                                Filter
+                            </div>
+                        </div>
+
+                        <div className="my-5 p-3">
+                            <div className="font-weight-bolder">
+                                Penyelenggara
+                            </div>
+                            <Dropdown>
+                                <Dropdown.Toggle variant="white" id="dropdown-basic" className="border rounded">
+                                    {filterPenyelenggara ? filterPenyelenggara : "Semua Penyelenggara"}
+                                </Dropdown.Toggle>
+                                <Dropdown.Menu>
+                                    <Dropdown.Item value="Gojek" onClick={(e) => setFilterPenyelenggara (e.target.value)}>Gojek</Dropdown.Item>
+                                    <Dropdown.Item value="Bukalapak">Bukalapak</Dropdown.Item>
+                                    <Dropdown.Item value="Tokopedia">Tokopedia</Dropdown.Item>
+                                    <Dropdown.Item value="Google">Google</Dropdown.Item>
+                                    <Dropdown.Item value="Facebook">Facebook</Dropdown.Item>
+                                    <Dropdown.Item value="Apple">Apple</Dropdown.Item>
+                                </Dropdown.Menu>
+                            </Dropdown>
+                        </div>
+
+                        <div className="my-5 p-3">
+                            <div className="font-weight-bolder">
+                                Kategori Peserta
+                            </div>
+                            <Dropdown>
+                                <Dropdown.Toggle variant="white" id="dropdown-basic" className="border rounded">
+                                    Peserta Umum
+                                </Dropdown.Toggle>
+                                <Dropdown.Menu>
+                                    <Dropdown.Item href="#/action-1">Peserta Umum</Dropdown.Item>
+                                    <Dropdown.Item href="#/action-2">Peserta Khusus</Dropdown.Item>
+                                </Dropdown.Menu>
+                            </Dropdown>
+                        </div>
+
+                        <div className="my-5 p-3">
+                            <div className="font-weight-bolder">
+                                Kata Kunci
+                            </div>
+                            <TagsInput 
+                                placeHolder="Contoh Java"
+                                seprators={["Enter", "Tab"]}
+                            />
+                        </div>
+
+                        <div className="my-5 p-3">
+                            <div className="font-weight-bolder">
+                                Tanggal Mulai Pelaksanaan
+                            </div>
+                            <div>
+                                <DatePicker
+                                    className="form-search-date form-control-sm form-control"
+                                    // selected={startDate}
+                                    // onChange={(date) => handleStartDate(date)}
+                                    selectsStart
+                                    // startDate={startDate}
+                                    // endDate={endDate}
+                                    dateFormat="dd/MM/yyyy"
+                                    placeholderText="dd-mm-yy"
+                                    wrapperClassName="col-12 col-lg-12 col-xl-12"
+                                    // minDate={moment().toDate()}
+                                    // minDate={addDays(new Date(), 20)}
+                                />
+                            </div>
+                            
+                        </div>
+
+                        <div className="my-5 p-3">
+                            <div className="font-weight-bolder">
+                                Tanggal Akhir Pelaksanaan
+                            </div>
+                            <div>
+                                <DatePicker
+                                    className="form-search-date form-control-sm form-control"
+                                    // selected={startDate}
+                                    // onChange={(date) => handleStartDate(date)}
+                                    selectsStart
+                                    // startDate={startDate}
+                                    // endDate={endDate}
+                                    dateFormat="dd/MM/yyyy"
+                                    placeholderText="dd-mm-yy"
+                                    wrapperClassName="col-12 col-lg-12 col-xl-12"
+                                    // minDate={moment().toDate()}
+                                    // minDate={addDays(new Date(), 20)}
+                                />
+                            </div>
+                            
+                        </div>
+
+                        <div className="my-5 p-3">
+                            <div className="row d-flex justify-content-around">
+                                <button className="btn btn-white-ghost-rounded-full">
+                                    Reset Filter
+                                </button>
+
+                                <button className="btn btn-primary rounded-pill" onClick={() => handleFilter()}>
+                                    Tampilkan
+                                </button>
+                            </div>
+                        </div>
+
+                        
+                    </div>
                 </div>
 
                 <div className="col-md-9 col-12 d-flex flex-row flex-wrap justify-content-between">
@@ -434,13 +587,16 @@ const DetailAkademi = () => {
                                                       {
                                                         el.status === "Closed" ?
                                                             <div className="col-12 col-md-6 mt-5">
-                                                                <Link href={`/peserta/form-pendaftaran?id=${el.id}`} passHref className="col-12">
+                                                                {/* <Link href={`/peserta/form-pendaftaran?id=${el.id}`} passHref className="col-12">
                                                                     <a>
-                                                                    <button className="btn btn-primary-dashboard rounded-pill btn-block">
+                                                                    <button className="btn btn-primary-dashboard rounded-pill btn-block" onClick={() => handleCheckPelatihanReg()}>
                                                                         Daftar Pelatihan
                                                                     </button>
                                                                     </a>
-                                                                </Link>
+                                                                </Link> */}
+                                                                <button className="btn btn-primary-dashboard rounded-pill btn-block" onClick={() => handleCheckPelatihanReg(el.id, session)}>
+                                                                    Daftar Pelatihan
+                                                                </button>
                                                             </div>
                                                             :
                                                             null
@@ -494,7 +650,7 @@ const DetailAkademi = () => {
                 
             </div>
 
-        </Layout>
+        </>
     )
 }
 
