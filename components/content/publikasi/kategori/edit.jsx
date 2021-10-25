@@ -11,7 +11,7 @@ import { UPDATE_KATEGORI_RESET } from '../../../../redux/types/publikasi/kategor
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingPage from '../../../LoadingPage';
 
-const EditKategori = ({token}) => {
+const EditKategori = ({ token }) => {
 
     const dispatch = useDispatch()
     const router = useRouter();
@@ -32,7 +32,7 @@ const EditKategori = ({token}) => {
             });
         }
 
-    }, [dispatch, isUpdated,router]);
+    }, [dispatch, isUpdated, router]);
 
 
     const [nama, setNamaKategori] = useState(kategori.nama)
@@ -58,8 +58,21 @@ const EditKategori = ({token}) => {
                 nama,
                 jenis_kategori,
             }
-
-            dispatch(updateKategori(data, kategori.id,token))
+            Swal.fire({
+                title: "Apakah anda yakin ?",
+                text: "Data ini akan diedit !",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Ya !",
+                cancelButtonText: "Batal",
+            })
+                .then((result) => {
+                    if (result.isConfirmed) {
+                        dispatch(updateKategori(data, kategori.id, token))
+                    }
+                });
         } else {
             simpleValidator.current.showMessages();
             forceUpdate(1);

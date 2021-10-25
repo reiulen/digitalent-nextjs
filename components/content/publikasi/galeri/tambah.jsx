@@ -231,7 +231,7 @@ const TambahGaleri = ({ token, id }) => {
 
                 reader.readAsDataURL(e.target.files[0]);
                 list[index].imageName = e.target.files[0].name;
-                
+
                 setImage(list);
             }
         } else {
@@ -302,7 +302,21 @@ const TambahGaleri = ({ token, id }) => {
                 publish,
                 tanggal_publish: moment(today).format("YYYY-MM-DD")
             }
-            dispatch(onCall(data, token))
+            Swal.fire({
+                title: "Apakah anda yakin ?",
+                text: "Data ini akan ditambahkan !",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Ya !",
+                cancelButtonText: "Batal",
+            })
+                .then((result) => {
+                    if (result.isConfirmed) {
+                        dispatch(onCall(data, token))
+                    }
+                });
         } else {
             const data = {
                 judul,
@@ -314,53 +328,76 @@ const TambahGaleri = ({ token, id }) => {
                 publish,
                 tanggal_publish: moment(publishDate).format("YYYY-MM-DD")
             }
-            dispatch(onCall(data, token))
+            Swal.fire({
+                title: "Apakah anda yakin ?",
+                text: "Data ini akan ditambahkan !",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Ya !",
+                cancelButtonText: "Batal",
+            })
+                .then((result) => {
+                    if (result.isConfirmed) {
+                        dispatch(onCall(data, token))
+                    }
+                });
         }
     }
 
     const onSubmit = (e) => {
-        
-        e.preventDefault()
-        if(image[0].imagePreview === ""){
-            Swal.fire(
-                "Oops !",
-                "Harus memasukkan minimal 1 Gambar !",
-                "error"
-            );
-        }else{
-            
-            if (error) {
-                dispatch(clearErrors())
-            }
-    
-            if (success) {
-                dispatch({
-                    type: NEW_GALERI_RESET,
-                });
-            }
-    
-            if (publish === true) {
-                setPublish(1)
-    
-            } else if (publish === false) {
-                setPublish(0)
-            }
 
-            let temps = []
-    
-            let flag = 0
-    
-            for (let i = 0; i < image.length; i++) {
-                flag += 1
-    
-                if (image[i].imagePreview !== "") {
-                    temps.push(image[i].imagePreview)
+        e.preventDefault()
+        if (simpleValidator.current.allValid()) {
+            if (image[0].imagePreview === "") {
+                Swal.fire(
+                    "Oops !",
+                    "Harus memasukkan minimal 1 Gambar !",
+                    "error"
+                );
+            } else {
+                if (error) {
+                    dispatch(clearErrors())
                 }
-    
-                if (flag === image.length) {
-                    handleData(temps, newGaleri)
+
+                if (success) {
+                    dispatch({
+                        type: NEW_GALERI_RESET,
+                    });
+                }
+
+                if (publish === true) {
+                    setPublish(1)
+
+                } else if (publish === false) {
+                    setPublish(0)
+                }
+
+                let temps = []
+
+                let flag = 0
+
+                for (let i = 0; i < image.length; i++) {
+                    flag += 1
+
+                    if (image[i].imagePreview !== "") {
+                        temps.push(image[i].imagePreview)
+                    }
+
+                    if (flag === image.length) {
+                        handleData(temps, newGaleri)
+                    }
                 }
             }
+        } else {
+            simpleValidator.current.showMessages();
+            forceUpdate(1);
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Isi data dengan benar !",
+            });
         }
     }
 

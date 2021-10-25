@@ -20,9 +20,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
 
-  const getAsalSekolah = useSelector(state => state.getAsalSekolah)
-
-  console.log("selector", getAsalSekolah)
+  const getAsalSekolah = useSelector((state) => state.getAsalSekolah);
 
   const { error: errorPendidikan, data: dataPendidikan } = useSelector(
     (state) => state.drowpdownPendidikan
@@ -37,7 +35,10 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
   } = useSelector((state) => state.updatePendidikan);
 
   const [jengjangPendidikan, setJenjangPendidikan] = useState(
-    (pendidikan && pendidikan.jenjang) || ""
+    (pendidikan && pendidikan.jenjang) || {
+      value: "",
+      label: "",
+    }
   );
   const [asalSekolah, setAsalSekolah] = useState(
     (pendidikan && pendidikan.asal_sekolah) || ""
@@ -56,6 +57,8 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
   const [ijazahPreview, setIjazahPreview] = useState("");
   const [optionsAsalSekolah, setOptionsAsalSekolah] = useState([]);
 
+  const [dataSearch, setDataSearch] = useState([]);
+
   const optionsJenjangPendidikan = [];
   if (dataPendidikan) {
     for (let index = 0; index < dataPendidikan.data.length; index++) {
@@ -67,10 +70,8 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
     }
   }
 
-
   useEffect(() => {
-    dispatch(getDataAsalSekolah(token))
-
+    dispatch(getDataAsalSekolah(token));
     if (errorUpdateData) {
       toast.error(errorUpdateData);
       dispatch(clearErrors());
@@ -87,12 +88,20 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
     dispatch,
     jengjangPendidikan.value,
     funcViewEdit,
-    token
+    token,
   ]);
 
-  const searchAsal = (e) => {
-
-  }
+  const searchAsal = (word) => {
+    console.log("keyup", word);
+    let array = [];
+    const searchData = getAsalSekolah;
+    searchData.filter((data, index) => {
+      if (data.value.toLowerCase().includes(word.toLowerCase())) {
+        array.push(data);
+      }
+    });
+    setDataSearch(array);
+  };
 
   const onChangeIjazah = (e) => {
     const type = ["image/jpeg", "image/jpg", "application/pdf"];
@@ -150,10 +159,10 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
           tahun_masuk: parseInt(tahunMasuk),
           ijasah: ijazah,
         };
-      }else if(jengjangPendidikan.value === 23){
+      } else if (jengjangPendidikan.value === 23) {
         data = {
           jenjang: jengjangPendidikan.label,
-          asal_pendidikan: asalSekolah.label,
+          asal_pendidikan: asalSekolah,
           lainya: "-",
           program_studi: "0",
           ipk: "0",
@@ -166,7 +175,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
       ) {
         data = {
           jenjang: jengjangPendidikan.label,
-          asal_pendidikan: asalSekolah.label,
+          asal_pendidikan: asalSekolah,
           lainya: "-",
           program_studi: programStudi,
           ipk,
@@ -193,20 +202,22 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
           <h3 className="font-weight-bolder mb-5">Pendidikan Terakhir</h3>
           <Form.Group className="mb-3" controlId="formGridAddress1">
             <Form.Label>Jenjang Pendidikan</Form.Label>
-            <Select
-              placeholder={
-                (pendidikan && pendidikan.jenjang) ||
-                "Silahkan Pilih Asal Jenjang Pendidikan"
-              }
-              options={optionsJenjangPendidikan}
-              defaultValue={jengjangPendidikan}
-              onChange={(e) =>
-                setJenjangPendidikan({ label: e.label, value: e.value })
-              }
-              onBlur={() =>
-                simpleValidator.current.showMessageFor("jenjang pendidikan")
-              }
-            />
+            <div className="position-relative" style={{ zIndex: "5" }}>
+              <Select
+                placeholder={
+                  (pendidikan && pendidikan.jenjang) ||
+                  "Silahkan Pilih Asal Jenjang Pendidikan"
+                }
+                options={optionsJenjangPendidikan}
+                defaultValue={jengjangPendidikan}
+                onChange={(e) =>
+                  setJenjangPendidikan({ label: e.label, value: e.value })
+                }
+                onBlur={() =>
+                  simpleValidator.current.showMessageFor("jenjang pendidikan")
+                }
+              />
+            </div>
             {simpleValidator.current.message(
               "jenjang pendidikan",
               jengjangPendidikan,
@@ -220,23 +231,24 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
           {jengjangPendidikan.value === 19 && <div className=""></div>}
 
           {jengjangPendidikan.value >= 23 && jengjangPendidikan.value <= 27 && (
-            <Form.Group className="mb-3" controlId="formGridAddress1">
+            <Form.Group className="mb-3" controlId="formGridAdress1">
               <Form.Label>Asal Sekolah / Perguruan Tinggi</Form.Label>
-              <Select
-                placeholder={
-                  (pendidikan && pendidikan.asal_pendidikan) ||
-                  "Silahkan Pilih Asal Sekolah"
-                }
-                options={optionsAsalSekolah}
-                defaultValue={asalSekolah}
-                onChange={(e) =>
-                  setAsalSekolah(e.target.value)
-                }
-                onBlur={() =>
-                  simpleValidator.current.showMessageFor("asal sekolah")
-                }
-                
-              />
+              <div className="position-relative" style={{ zIndex: "4" }}>
+                <Select
+                  placeholder={
+                    (pendidikan && pendidikan.asal_pendidikan) ||
+                    "Silahkan Pilih Asal Sekolah"
+                  }
+                  options={getAsalSekolah}
+                  defaultValue={asalSekolah}
+                  onChange={(e) => setAsalSekolah(e.target.value)}
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor(
+                      "asal ( sekolah/ pt )"
+                    )
+                  }
+                />
+              </div>
               {simpleValidator.current.message(
                 "asal sekolah",
                 asalSekolah,
@@ -247,6 +259,26 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
                   className: "text-danger",
                 }
               )}
+
+              {/* <input
+                type="text"
+                className="form-control"
+                value={asalSekolah}
+                onChange={(e) => {
+                  setAsalSekolah(e.target.value);
+                  searchAsal(e.target.value);
+                }}
+                list="data"
+              />
+              <datalist id="data">
+                {dataSearch.map((item, index) => {
+                  return (
+                    <option value={item.label} key={index}>
+                      {item.label}
+                    </option>
+                  );
+                })}
+              </datalist> */}
             </Form.Group>
           )}
 

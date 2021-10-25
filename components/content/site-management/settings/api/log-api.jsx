@@ -14,14 +14,17 @@ import IconClose from "../../../../assets/icon/Close";
 import IconFilter from "../../../../assets/icon/Filter";
 import IconArrow from "../../../../assets/icon/Arrow";
 import {
+  changeDates,
   getDetailLog,
   setPage,
   searchCooporation,
   limitCooporation,
+  exportFileCSV
 } from "../../../../../redux/actions/site-management/settings/api.actions";
 import moment from "moment";
 import DatePicker from "react-datepicker";
 import IconCalender from "../../../../assets/icon/Calender";
+import { RESET_VALUE_SORTIR } from "../../../../../redux/types/site-management/settings/api.type";
 const Table = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
@@ -39,14 +42,27 @@ const Table = ({ token }) => {
     dispatch(searchCooporation(valueSearch));
   };
 
-  const [from, setFrom] = useState("");
-  const [to, setTo] = useState("");
+  const [froms, setFroms] = useState("");
+  const [tos, setTos] = useState("");
 
   const onChangePeriodeDateStart = (date) => {
-    setFrom(moment(date).format("YYYY-MM-DD"));
+    setFroms(moment(date).format("YYYY-MM-DD"));
   };
   const onChangePeriodeDateEnd = (date) => {
-    setTo(moment(date).format("YYYY-MM-DD"));
+    setTos(moment(date).format("YYYY-MM-DD"));
+  };
+
+  const handleSubmitSearchMany = (event) => {
+    event.preventDefault();
+    dispatch(changeDates(froms,tos));
+  };
+
+  const resetValueSort = () => {
+    setFroms("");
+    setTos("")
+    dispatch({
+      type: RESET_VALUE_SORTIR,
+    });
   };
 
   useEffect(() => {
@@ -57,6 +73,8 @@ const Table = ({ token }) => {
     listLog.cari,
     listLog.page,
     listLog.limit,
+    listLog.from,
+    listLog.to,
     token,
   ]);
 
@@ -167,7 +185,7 @@ const Table = ({ token }) => {
                                         onChange={(date) =>
                                           onChangePeriodeDateStart(date)
                                         }
-                                        value={from}
+                                        value={froms}
                                         dateFormat="YYYY-MM-DD"
                                         placeholderText="From"
                                         minDate={moment().toDate()}
@@ -186,7 +204,7 @@ const Table = ({ token }) => {
                                         onChange={(date) =>
                                           onChangePeriodeDateEnd(date)
                                         }
-                                        value={to}
+                                        value={tos}
                                         dateFormat="YYYY-MM-DD"
                                         placeholderText="To"
                                         minDate={moment().toDate()}
@@ -205,12 +223,14 @@ const Table = ({ token }) => {
                                       type="button"
                                       data-dismiss="modal"
                                       aria-label="Close"
+                                      onClick={() => resetValueSort()}
                                     >
                                       Reset
                                     </button>
                                     <button
                                       className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
                                       type="button"
+                                      onClick={(e) => handleSubmitSearchMany(e)}
                                     >
                                       Terapkan
                                     </button>
@@ -226,6 +246,7 @@ const Table = ({ token }) => {
                         <button
                           className="btn btn-rounded-full bg-blue-secondary text-white ml-4 mt-2"
                           type="button"
+                          onClick={() => dispatch(exportFileCSV(token,router.query.id))}
                         >
                           Export .xlsx
                         </button>
@@ -248,7 +269,7 @@ const Table = ({ token }) => {
                         <th className="text-left align-middle">URL</th>
                         <th className="text-left align-middle">Key</th>
                         <th className="text-left align-middle">Pengguna</th>
-                        <th className="text-left align-middle">Masa Berlaku</th>
+                        <th className="text-left align-middle">Waktu Akses</th>
                       </tr>
                     </thead>
                     <tbody>

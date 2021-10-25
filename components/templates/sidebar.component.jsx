@@ -468,8 +468,6 @@ const Sidebar = ({ session }) => {
     const pathRoute = router.route;
     const splitRouteToMakingActive = pathRoute.split("/");
 
-    console.log(condition);
-
     if(condition != null){
 
       if (splitRouteToMakingActive[1]) {
