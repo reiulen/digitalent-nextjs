@@ -28,7 +28,7 @@ const Navigationbar = ({ session }) => {
   const { error: errorDataPribadi, dataPribadi } = useSelector(
     (state) => state.getDataPribadi
   );
-  console.log(dataPribadi, " ini data pribadi");
+  // console.log(dataPribadi, " ini data pribadi");
   const handlerLogout = () => {
     signOut();
   };
