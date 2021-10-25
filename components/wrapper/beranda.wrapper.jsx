@@ -1,7 +1,7 @@
 import React from 'react'
 import dynamic from "next/dynamic";
 import Head from "next/head";
-
+import { ToastContainer } from "react-toastify";
 import LoadingNavbar from "../../user-component/content/peserta/components/loader/LoadingNavbar";
 import LoadingFooter from "../../user-component/content/peserta/components/loader/LoadingFooter";
 // import NavigationBar from "../../user-component/components/template/Navbar.component"
@@ -34,6 +34,7 @@ const BerandaWrapper = ({ session, children, title }) => {
             </Head>
             <div>
                 <NavigationBar session={session} />
+                <ToastContainer position="top-right" />
                 {children}
                 <Footer />
             </div>
