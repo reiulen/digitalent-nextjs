@@ -40,7 +40,7 @@ const Dashboard = ({ session }) => {
   const [col, setCol] = useState(0)
 
   useEffect(() => {
-    if (true) {
+    if (dataDashboard.subvit.subvit.status) {
       setCol(col + 1)
     }
     if (dataDashboard.subvit.survei.status) {
