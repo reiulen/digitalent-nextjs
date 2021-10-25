@@ -8,6 +8,9 @@ import LoadingSkeleton from "../../../components/LoadingSkeleton";
 import { useRouter } from "next/router";
 import { getDataPribadi } from "../../../redux/actions/pelatihan/function.actions";
 import { middlewareAuthPesertaSession } from "../../../utils/middleware/authMiddleware";
+import { getDetailRiwayatPelatihanReducer } from "../../../redux/reducers/pelatihan/peserta/riwayat-pelatihan.reducer";
+import { getDetailRiwayatPelatihan } from "../../../redux/actions/pelatihan/riwayat-pelatihan.actions";
+import Cookies from "js-cookie";
 
 const SeleksiAdministrasi = dynamic(
   () =>
@@ -42,11 +45,12 @@ const Layout = dynamic(() =>
 export default function RiwayatPelatihanPage(props) {
   const session = props.session.user.user.data.user;
   const router = useRouter();
-  
+  const id = Cookies.get("id_pelatihan");
+
   return (
     <>
       <Layout title="Administrasi" session={session}>
-        {router.query.status ? <SeleksiAdministrasi /> : <BelumTersedia />}
+        {id ? <SeleksiAdministrasi /> : <BelumTersedia />}
       </Layout>
     </>
   );
@@ -67,6 +71,14 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+
+      await store.dispatch(
+        getDetailRiwayatPelatihan(
+          query.id || req.cookies.id_pelatihan,
+          session.user.user.data.user.token
+        )
+      );
+
       await store.dispatch(getDataPribadi(session.user.user.data.user.token));
 
       return {

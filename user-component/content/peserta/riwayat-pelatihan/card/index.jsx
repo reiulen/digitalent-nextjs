@@ -112,8 +112,11 @@ export default function CardTemplateOriginal({ data }) {
         <Card.Body
           onClick={() => {
             if (data.status == "menunggu tes substansi") {
-              router.push(`/peserta/test-substansi`);
               Cookies.set("id_pelatihan", data.id);
+              router.push(`/peserta/test-substansi`);
+            } else if (data.status == "menunggu administrasi") {
+              Cookies.set("id_pelatihan", data.id);
+              router.push(`/peserta/administrasi`);
             }
           }}
         >

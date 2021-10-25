@@ -12,7 +12,6 @@ export default function SeleksiAdministrasi() {
   const { state: data } = useSelector(
     (state) => state.getDetailRiwayatPelatihanPeserta
   );
-  console.log(data, "INI ALL DATA");
   const router = useRouter();
   const [description, setDescription] = useState(data.deskripsi);
   const [finalDescription, setFinalDescription] = useState();
@@ -116,7 +115,9 @@ export default function SeleksiAdministrasi() {
               />
               <Card className="my-12">
                 <Card.Body style={{ fontSize: "14px" }} className="p-7">
-                  {finalDescription}
+                  <div
+                    dangerouslySetInnerHTML={{ __html: finalDescription }}
+                  ></div>
                   {truncate ? (
                     <div className="mt-5">
                       <a

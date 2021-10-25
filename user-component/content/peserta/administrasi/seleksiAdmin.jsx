@@ -5,43 +5,34 @@ import Image from "next/image";
 import style from "./style.module.css";
 import { useRouter } from "next/router";
 import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
+import { useSelector } from "react-redux";
+import Cookies from "js-cookie";
 
 export default function SeleksiAdministrasi() {
+  const { state: data } = useSelector(
+    (state) => state.getDetailRiwayatPelatihanPeserta
+  );
   const router = useRouter();
-  const [description, setDescription] =
-    useState(`Intermediate Multimedia Designer merupakan salah satu skema pelatihan dalam Pelatihan Intensif dan Sertifikasi (Daring)
-  yang berbasis Standar Kompetensi Kerja Nasional Indonesia (SKKNI) dengan skema Intermediate Multimedia Designer. Peserta
-  pelatihan Intermediate Multimedia Designer akan mampu membuat rancangan desain visual berbasis multimedia linear maupun
-  interaktif dan membuat prototype interaktif untuk kebutuhan klien. Di akhir pelatihan peserta akan mengikuti uji
-  kompetensi dan sertifikasi Intermediate Multimedia Designer, bagi yang dinyatakan kompeten akan mendapatkan Sertifikat
-  Kompetensi Intermediate Multimedia Designer dari BNSP. Pelatihan akan dilaksanakan secara daring (online) kurang
-  lebih 6 (enam) minggu dengan pengantar live session dalam Bahasa Indonesia. Peserta akan mendapatkan fasilitas secara
-  gratis, diantaranya: Materi pelatihan Penggantian pulsa/biaya komunikasi Sertifikat Keikutsertaan (Completion) dari
-  Kementerian Kominfo bagi peserta yang menyelesaikan pelatihan hingga akhir Kesempatan untuk mengikuti Uji Kompetensi
-  (Sertifikasi) bagi peserta yang menyelesaikan pelatihan hingga akhir dan Sertifikat Kompetensi bagi yang dinyatakan Kompeten
-  Kesempatan untuk mengikuti program pasca pelatihan (pelatihan pengembangan soft skills) Prospect Career pelatihan ini
-  diantaranya: Multimedia Designer in web developer industry Multimedia Designer in Software Developer Industry Multimedia
-  Designer in Apps developer industry Multimedia Designer in game developer Multimedia Designer in private sector
-  Spesifikasi Laptop yang disarankan untuk disiapkan oleh peserta pelatihan: RAM minimal 4 GB (disarankan 8 GB) Storage
-  minimal sebesar 500 GB Laptop dengan processor core i5 32/64-bit Laptop dengan Operating System Windows 7, 8, 10,
-  Linux, atau MAC OSX Laptop dengan konektivitas WiFi dan memiliki Webcam Akses Internet Dedicated 128 kbps per peserta
-  per perangkat Bagi calon peserta penyandang disabilitas dapat mendaftar pelatihan dengan menyediakan sarana dan prasarana
-  pendukung pelatihan secara mandiri.`);
+  const [description, setDescription] = useState(data.deskripsi);
   const [finalDescription, setFinalDescription] = useState();
-
+  const dateFrom = moment(data.pendaftaran_mulai).format("LL");
+  const dateTo = moment(data.pendaftaran_selesai).format("LL");
   useEffect(() => {
     let newText = description.split(" ");
-
     let test = [];
-    for (let i = 0; i < newText.length; i++) {
-      test.push(newText[i]);
-      if (i == 100) {
-        test.push("...");
-        break;
+    if (newText.length > 100) {
+      for (let i = 0; i < newText.length; i++) {
+        test.push(newText[i]);
+        if (i == 100) {
+          test.push("...");
+          break;
+        }
       }
+      const result = test.join(" ");
+      setFinalDescription(result);
+    } else {
+      setFinalDescription(description);
     }
-    const result = test.join(" ");
-    setFinalDescription(result);
   }, []);
 
   const [truncate, setTruncate] = useState(true);
@@ -53,17 +44,15 @@ export default function SeleksiAdministrasi() {
           <Row className="p-10 m-0">
             <Row className="d-flex ">
               <Col lg={8} className="d-flex align-items-start">
-                <h1 className="font-weight-bolder my-0">
-                  Intermediate Multimedia Designer
-                </h1>
+                <h1 className="font-weight-bolder my-0">{data.name}</h1>
                 <div className="text-muted "></div>
               </Col>
               <Col lg={4} className=" d-flex justify-content-end">
                 <span
-                  className="label label-inline label-light-warning font-weight-bold "
+                  className="label label-inline label-light-warning font-weight-bold text-capitalize"
                   style={{ borderRadius: "25px" }}
                 >
-                  Seleksi Administrasi
+                  {data.status}
                 </span>
               </Col>
               <Col lg={12} className=" my-5">
@@ -71,37 +60,40 @@ export default function SeleksiAdministrasi() {
                   className="p-0 font-weight-bolder"
                   style={{ fontSize: "18px", color: "#6C6C6C" }}
                 >
-                  Vocational School Graduate
+                  {data.akademi}
                 </span>
               </Col>
               <Col lg={12}>
                 <p style={{ fontSize: "14px" }}>Lokasi Pelatihan</p>
-                <p style={{ fontSize: "16px" }}>
-                  Pasaraya Blok M Gedung B lt.6, Jakarta Barat, Indonesia
-                </p>
+                <p style={{ fontSize: "16px" }}>{data.alamat}</p>
               </Col>
               <Col lg={6}>
                 <p style={{ fontSize: "14px" }}>Jadwal Pelatihan</p>
-                <p style={{ fontSize: "16px" }}>12 Juli - 22 Oktober 2021</p>
+                <p style={{ fontSize: "16px" }}>
+                  {dateFrom} - {dateTo}
+                </p>
               </Col>
               <Col lg={6}>
                 <p style={{ fontSize: "14px" }}>Kuota</p>
-                <p style={{ fontSize: "16px" }}>1000 Peserta</p>
+                <p style={{ fontSize: "16px" }}>{data.kuota_peserta} Peserta</p>
               </Col>
             </Row>
             <Col md={12} className="py-10 ">
-              <Button
-                variant="outline-primary"
-                className="rounded-full ml-auto btn-block d-flex justify-content-center "
-                size="sm"
-                style={{ borderColor: "#007CFF", color: "#007CFF" }}
-              >
-                <i
-                  className="ri-download-2-fill mr-2"
-                  style={{ color: "#007CFF" }}
-                ></i>
-                Bukti Pendaftaran
-              </Button>
+              <Row>
+                <Col>
+                  <Button
+                    className="btn-rounded-full font-weight-bold btn-block justify-content-center"
+                    style={{ height: "40px", fontSize: "14px" }}
+                    onClick={() => {}}
+                  >
+                    <i
+                      className="ri-download-2-fill mr-2"
+                      style={{ color: "white" }}
+                    ></i>
+                    Bukti Pendaftaran
+                  </Button>
+                </Col>
+              </Row>
 
               <hr className="my-12" />
               <Image
@@ -114,7 +106,9 @@ export default function SeleksiAdministrasi() {
               />
               <Card className="my-12">
                 <Card.Body style={{ fontSize: "14px" }} className="p-7">
-                  {finalDescription}
+                  <div
+                    dangerouslySetInnerHTML={{ __html: finalDescription }}
+                  ></div>
                   {truncate ? (
                     <div className="mt-5">
                       <a
@@ -124,7 +118,8 @@ export default function SeleksiAdministrasi() {
                           setTruncate(false);
                         }}
                       >
-                        Baca Selengkapnya
+                        {description.split(" ").length > 100 &&
+                          "Baca Selengkapnya"}
                       </a>
                     </div>
                   ) : (
@@ -152,7 +147,7 @@ export default function SeleksiAdministrasi() {
                       className={`ri-download-cloud-fill mr-2 `}
                       style={{ color: "#007cff" }}
                     ></i>
-                    Bukti Pendaftaran
+                    Unduh Syllabus
                   </Button>
                 </Col>
                 <Col className="px-10">
@@ -163,13 +158,16 @@ export default function SeleksiAdministrasi() {
                     Mitra Pelatihan
                   </p>
                   <div className="d-flex">
-                    <Image
-                      src="/assets/media/mitra-icon/bukalapak-1.svg"
-                      width={46}
-                      height={46}
-                      className={`${style.card_style_administrasi}`}
-                      objectFit="cover"
-                      alt="logi mitra"
+                    <img
+                      src={
+                        data.gambar_mitra
+                          ? `${process.env.END_POINT_API_IMAGE_LOGO_MITRA}${data.gambar_mitra}`
+                          : "/assets/media/default-card.png"
+                      }
+                      width={58}
+                      height={58}
+                      alt="test2"
+                      style={{ borderRadius: "50%", objectFit: "cover" }}
                     />
                     <div className="flex-column justify-content-around d-flex mx-5">
                       <div
