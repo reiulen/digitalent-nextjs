@@ -700,7 +700,7 @@ const Beranda = ({ session }) => {
                                   >
                                     <div className="rounded mt-0 pt-0">
                                       <Image 
-                                              src={process.env.END_POINT_API_IMAGE_PARTNERSHIP + "/" + element.gambar_mitra}
+                                              src={process.env.END_POINT_API_IMAGE_PARTNERSHIP + element.gambar_mitra}
                                               layout="fill" 
                                               objectFit="cover"
                                             /> 
