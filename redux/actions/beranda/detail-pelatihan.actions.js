@@ -49,12 +49,14 @@ export const checkRegisterPelatihan = (id, token) => async dispatch => {
         let link = process.env.END_POINT_API_PELATIHAN + `api/v1/formPendaftaran/cek-pendaftaran?pelatian_id=${id}`;
 
         const { data } = await axios.get(link, config);
-
         dispatch({
             type: CEK_REGISTER_PELATIHAN_SUCCESS,
             payload: data,
         });
 
+        if(data){
+            return data
+        }
 
         
     } catch (error) {
@@ -62,6 +64,10 @@ export const checkRegisterPelatihan = (id, token) => async dispatch => {
             type: CEK_REGISTER_PELATIHAN_FAIL,
             payload: error.message,
         });
+
+        if(error){
+            return error.response.data
+        }
     }
 }
 

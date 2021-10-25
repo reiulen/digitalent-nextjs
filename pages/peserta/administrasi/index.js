@@ -42,7 +42,7 @@ const Layout = dynamic(() =>
 export default function RiwayatPelatihanPage(props) {
   const session = props.session.user.user.data.user;
   const router = useRouter();
-  console.log(router, "ini router ");
+  
   return (
     <>
       <Layout title="Administrasi" session={session}>
@@ -57,22 +57,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
     async ({ query, req }) => {
       const session = await getSession({ req });
 
-<<<<<<< HEAD
-      if (!session) {
-        return {
-          redirect: {
-            destination: "/login",
-            permanent: false,
-          },
-        };
-      }
-      const data = session.user.user.data;
-      if (data.user.roles[0] !== "user") {
-=======
       const middleware = middlewareAuthPesertaSession(session);
 
       if (!middleware.status) {
->>>>>>> 807b4a7de637fc677572fdc6da5861f3727a8ddd
         return {
           redirect: {
             destination: middleware.redirect,

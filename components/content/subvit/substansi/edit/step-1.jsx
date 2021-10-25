@@ -29,7 +29,6 @@ const StepOne = ({ token }) => {
   );
 
   const { data: dataTema } = useSelector((state) => state.drowpdownTema.data);
-  useSelector((state) => console.log(state.drowpdownTema.data));
 
   const { data: dataPelatihan } = useSelector(
     (state) => state.drowpdownPelatihan.data
@@ -50,6 +49,9 @@ const StepOne = ({ token }) => {
   const [category, setCategory] = useState(subtance.category);
 
   useEffect(() => {
+    // console.log(subtance, "<<<<<substansi");
+    dispatch(dropdownTemabyAkademi(academy_id, token));
+    dispatch(dropdownPelatihanbyTema(theme_id, token));
     if (isUpdated) {
       dispatch({
         type: UPDATE_SUBTANCE_QUESTION_BANKS_RESET,
@@ -66,7 +68,17 @@ const StepOne = ({ token }) => {
         });
       }
     }
-  }, [dispatch, isUpdated, typeSave, router, id]);
+  }, [
+    dispatch,
+    isUpdated,
+    typeSave,
+    router,
+    id,
+    academy_id,
+    token,
+    theme_id,
+    subtance,
+  ]);
 
   const saveDraft = () => {
     setTypeSave("draft");
@@ -95,20 +107,20 @@ const StepOne = ({ token }) => {
     dispatch(updatewSubtanceQuestionBanks(id, data, token));
   };
 
+  const { data } = useSelector((state) => state.drowpdownTemabyAkademi);
+
+  const { data: dataPelatihan2 } = useSelector(
+    (state) => state.drowpdownPelatihanbyTema.data
+  );
+
   const handleChangeTema = (e) => {
     setAcademyId(e.target.value);
-
-    dispatch(dropdownTemabyAkademi(e.target.value, token));
+    e.target.value && dispatch(dropdownTemabyAkademi(e.target.value, token));
   };
 
   const handleChangePelatihan = (e) => {
     setThemeId(e.target.value);
-    e.target.value && dispatch(dropdownPelatihanbyTema(e.target.value, token));
   };
-
-  const { data } = useSelector((state) => state.drowpdownTemabyAkademi);
-
-  const { drowpdownPelatihanbyTema } = useSelector((state) => state);
 
   return (
     <PageWrapper>
@@ -194,19 +206,25 @@ const StepOne = ({ token }) => {
                     className="form-control"
                     defaultValue={theme_id}
                   >
-                    <option selected disabled value="">
-                      {" "}
-                      -Pilih Tema-
-                    </option>
-                    {dataTema.map((item, index) => {
-                      return (
-                        <>
-                          <option value={item.value} key={index}>
-                            {item.label}
-                          </option>
-                        </>
-                      );
-                    })}
+                    {data.data &&
+                      data.data.map((item, index) => {
+                        <option selected disabled value="">
+                          {" "}
+                          -Pilih Tema-
+                        </option>;
+                        return (
+                          <>
+                            <option
+                              value={item.value}
+                              key={index}
+                              selected
+                              defaultValue={item.value}
+                            >
+                              {item.label}
+                            </option>
+                          </>
+                        );
+                      })}
                   </select>
                 </div>
               </div>
@@ -230,16 +248,17 @@ const StepOne = ({ token }) => {
                       {" "}
                       -Pilih Pelatihan-
                     </option>
-                    {dataPelatihan.map((item, index) => {
-                      return (
-                        <>
-                          <option value={item.value} key={index}>
-                            {" "}
-                            {item.label}
-                          </option>
-                        </>
-                      );
-                    })}
+                    {dataPelatihan2 &&
+                      dataPelatihan2.map((item, index) => {
+                        return (
+                          <>
+                            <option value={item.value} key={index}>
+                              {" "}
+                              {item.label}
+                            </option>
+                          </>
+                        );
+                      })}
                   </select>
                 </div>
               </div>

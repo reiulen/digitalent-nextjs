@@ -55,7 +55,7 @@
 }
 
 .responsive-date-from-without-background {
-  top: 93px;
+  top: 96px;
   left: 59%;
 }
 
@@ -65,7 +65,7 @@
 }
 
 .responsive-year-without-background {
-  top: 102px;
+  top: 105px;
   left: 60%;
 }
 
@@ -82,7 +82,10 @@
 }
 
 .responsive-margin-without-background {
-  top: 38px;
+  top: 45px;
+}
+.responsive-margin-peserta-1 {
+  top: 45px !important;
 }
 
 @media (min-width: 768px) {
@@ -103,7 +106,7 @@
   }
 
   .responsive-date-from-without-background {
-    top: 252px;
+    top: 265px;
     left: 59%;
   }
 
@@ -117,7 +120,7 @@
   }
 
   .responsive-year-without-background {
-    top: 278px;
+    top: 290px;
     left: 60%;
   }
 
@@ -130,7 +133,10 @@
   }
 
   .responsive-margin-without-background {
-    top: 120px;
+    top: 140px;
+  }
+  .responsive-margin-peserta-1 {
+    top: 140px !important;
   }
 }
 
@@ -176,7 +182,7 @@
   }
 
   .responsive-date-from-without-background {
-    top: 237px;
+    top: 250px;
     left: 59%;
   }
 
@@ -190,7 +196,7 @@
   }
 
   .responsive-year-without-background {
-    top: 262px;
+    top: 275px;
     left: 60%;
   }
 
@@ -203,13 +209,20 @@
   }
 
   .responsive-margin-without-background {
-    top: 107px;
+    top: 125px;
+  }
+  .responsive-margin-peserta-1 {
+    top: 130px !important;
   }
 }
 
 @media (min-width: 1200px) {
   .responsive-margin-peserta {
     top: 135px !important;
+  }
+
+  .responsive-margin-peserta-1 {
+    top: 160px !important;
   }
 
   .responsive-font-size-peserta {
@@ -225,7 +238,7 @@
   }
 
   .responsive-date-from-without-background {
-    top: 298px;
+    top: 315px;
     left: 59%;
   }
 
@@ -243,7 +256,7 @@
   }
 
   .responsive-year-without-background {
-    top: 328px;
+    top: 345px;
     left: 60%;
   }
 
@@ -252,6 +265,6 @@
   }
 
   .responsive-margin-without-background {
-    top: 138px;
+    top: 160px;
   }
 }

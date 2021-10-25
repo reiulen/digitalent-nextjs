@@ -6,11 +6,13 @@ import { toast } from "react-toastify";
 import SimpleReactValidator from "simple-react-validator";
 import { useDispatch, useSelector } from "react-redux";
 import style from "../style.module.css";
+import _ from "lodash";
 
 import {
   updateProfilePendidikan,
   clearErrors,
   getProfilePendidikan,
+  getDataAsalSekolah,
 } from "../../../../../redux/actions/pelatihan/profile.actions";
 import { UPDATE_PENDIDIKAN_RESET } from "../../../../../redux/types/pelatihan/profile.type";
 
@@ -18,6 +20,8 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
   const dispatch = useDispatch();
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
+
+  const getAsalSekolah = useSelector((state) => state.getAsalSekolah);
 
   const { error: errorPendidikan, data: dataPendidikan } = useSelector(
     (state) => state.drowpdownPendidikan
@@ -32,7 +36,10 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
   } = useSelector((state) => state.updatePendidikan);
 
   const [jengjangPendidikan, setJenjangPendidikan] = useState(
-    (pendidikan && pendidikan.jenjang) || ""
+    (pendidikan && pendidikan.jenjang) || {
+      value: "",
+      label: "",
+    }
   );
   const [asalSekolah, setAsalSekolah] = useState(
     (pendidikan && pendidikan.asal_sekolah) || ""
@@ -51,6 +58,8 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
   const [ijazahPreview, setIjazahPreview] = useState("");
   const [optionsAsalSekolah, setOptionsAsalSekolah] = useState([]);
 
+  const [dataSearch, setDataSearch] = useState([]);
+
   const optionsJenjangPendidikan = [];
   if (dataPendidikan) {
     for (let index = 0; index < dataPendidikan.data.length; index++) {
@@ -62,34 +71,8 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
     }
   }
 
-
   useEffect(() => {
-    if (jengjangPendidikan.value <= 19) {
-      return setOptionsAsalSekolah([]);
-    } else if (
-      jengjangPendidikan.value === 20 ||
-      jengjangPendidikan.value === 21 ||
-      jengjangPendidikan.value === 22 ||
-      jengjangPendidikan.value === 23
-    ) {
-      setOptionsAsalSekolah([
-        { value: "0", label: "TK" },
-        { value: "1", label: "SD" },
-        { value: "2", label: "SMP" },
-        { value: "3", label: "SMA" },
-      ]);
-    } else if (
-      jengjangPendidikan.value >= 24 &&
-      jengjangPendidikan.value <= 27
-    ) {
-      setOptionsAsalSekolah([
-        { value: "4", label: "D3" },
-        { value: "5", label: "S1" },
-        { value: "6", label: "S2" },
-        { value: "7", label: "S3" },
-      ]);
-    }
-
+    dispatch(getDataAsalSekolah(token));
     if (errorUpdateData) {
       toast.error(errorUpdateData);
       dispatch(clearErrors());
@@ -106,7 +89,20 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
     dispatch,
     jengjangPendidikan.value,
     funcViewEdit,
+    token,
   ]);
+
+  const searchAsal = (word) => {
+    console.log("keyup", word);
+    let array = [];
+    const searchData = getAsalSekolah;
+    searchData.filter((data, index) => {
+      if (data.value.toLowerCase().includes(word.toLowerCase())) {
+        array.push(data);
+      }
+    });
+    setDataSearch(array);
+  };
 
   const onChangeIjazah = (e) => {
     const type = ["image/jpeg", "image/jpg", "application/pdf"];
@@ -147,20 +143,30 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
           asal_pendidikan: "-",
           lainya: "-",
           program_studi: "-",
-          ipk: "1",
+          ipk: "0",
           tahun_masuk: parseInt("1"),
-          ijasah: "-",
+          ijasah: "",
         };
       } else if (
         jengjangPendidikan.value >= 20 &&
-        jengjangPendidikan.value <= 23
+        jengjangPendidikan.value <= 22
       ) {
         data = {
           jenjang: jengjangPendidikan.label,
-          asal_pendidikan: asalSekolah.label,
+          asal_pendidikan: "0",
           lainya,
           program_studi: "0",
           ipk,
+          tahun_masuk: parseInt(tahunMasuk),
+          ijasah: ijazah,
+        };
+      } else if (jengjangPendidikan.value === 23) {
+        data = {
+          jenjang: jengjangPendidikan.label,
+          asal_pendidikan: asalSekolah,
+          lainya: "-",
+          program_studi: "0",
+          ipk: "0",
           tahun_masuk: parseInt(tahunMasuk),
           ijasah: ijazah,
         };
@@ -170,7 +176,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
       ) {
         data = {
           jenjang: jengjangPendidikan.label,
-          asal_pendidikan: asalSekolah.label,
+          asal_pendidikan: asalSekolah,
           lainya: "-",
           program_studi: programStudi,
           ipk,
@@ -197,20 +203,22 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
           <h3 className="font-weight-bolder mb-5">Pendidikan Terakhir</h3>
           <Form.Group className="mb-3" controlId="formGridAddress1">
             <Form.Label>Jenjang Pendidikan</Form.Label>
-            <Select
-              placeholder={
-                (pendidikan && pendidikan.jenjang) ||
-                "Silahkan Pilih Asal Jenjang Pendidikan"
-              }
-              options={optionsJenjangPendidikan}
-              defaultValue={jengjangPendidikan}
-              onChange={(e) =>
-                setJenjangPendidikan({ label: e.label, value: e.value })
-              }
-              onBlur={() =>
-                simpleValidator.current.showMessageFor("jenjang pendidikan")
-              }
-            />
+            <div className="position-relative" style={{ zIndex: "5" }}>
+              <Select
+                placeholder={
+                  (pendidikan && pendidikan.jenjang) ||
+                  "Silahkan Pilih Asal Jenjang Pendidikan"
+                }
+                options={optionsJenjangPendidikan}
+                defaultValue={jengjangPendidikan}
+                onChange={(e) =>
+                  setJenjangPendidikan({ label: e.label, value: e.value })
+                }
+                onBlur={() =>
+                  simpleValidator.current.showMessageFor("jenjang pendidikan")
+                }
+              />
+            </div>
             {simpleValidator.current.message(
               "jenjang pendidikan",
               jengjangPendidikan,
@@ -223,23 +231,25 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
 
           {jengjangPendidikan.value === 19 && <div className=""></div>}
 
-          {jengjangPendidikan.value >= 20 && jengjangPendidikan.value <= 23 && (
-            <Form.Group className="mb-3" controlId="formGridAddress1">
+          {jengjangPendidikan.value >= 23 && jengjangPendidikan.value <= 27 && (
+            <Form.Group className="mb-3" controlId="formGridAdress1">
               <Form.Label>Asal Sekolah / Perguruan Tinggi</Form.Label>
-              <Select
-                placeholder={
-                  (pendidikan && pendidikan.asal_pendidikan) ||
-                  "Silahkan Pilih Asal Sekolah"
-                }
-                options={optionsAsalSekolah}
-                defaultValue={asalSekolah}
-                onChange={(e) =>
-                  setAsalSekolah({ label: e.label, value: e.value })
-                }
-                onBlur={() =>
-                  simpleValidator.current.showMessageFor("asal sekolah")
-                }
-              />
+              <div className="position-relative" style={{ zIndex: "4" }}>
+                <Select
+                  placeholder={
+                    (pendidikan && pendidikan.asal_pendidikan) ||
+                    "Silahkan Pilih Asal Sekolah"
+                  }
+                  options={getAsalSekolah}
+                  defaultValue={asalSekolah}
+                  onChange={(e) => setAsalSekolah(e.target.value)}
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor(
+                      "asal ( sekolah/ pt )"
+                    )
+                  }
+                />
+              </div>
               {simpleValidator.current.message(
                 "asal sekolah",
                 asalSekolah,
@@ -250,10 +260,30 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
                   className: "text-danger",
                 }
               )}
+
+              {/* <input
+                type="text"
+                className="form-control"
+                value={asalSekolah}
+                onChange={(e) => {
+                  setAsalSekolah(e.target.value);
+                  searchAsal(e.target.value);
+                }}
+                list="data"
+              />
+              <datalist id="data">
+                {dataSearch.map((item, index) => {
+                  return (
+                    <option value={item.label} key={index}>
+                      {item.label}
+                    </option>
+                  );
+                })}
+              </datalist> */}
             </Form.Group>
           )}
 
-          {jengjangPendidikan.value >= 20 && jengjangPendidikan.value <= 23 && (
+          {jengjangPendidikan.value >= 20 && jengjangPendidikan.value <= 22 && (
             <Form.Group className="mb-3" controlId="formGridAddress1">
               <Form.Label>Lainnya ( Sekolah / PT)</Form.Label>
               <Form.Control
@@ -343,36 +373,6 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
                 *JPG/JPEG/PDF (Maksimal ukuran file 5 MB)
               </small>
             </div>
-          )}
-
-          {jengjangPendidikan.value >= 24 && jengjangPendidikan.value <= 27 && (
-            <Form.Group className="mb-3" controlId="formGridAddress1">
-              <Form.Label>Asal Sekolah / Perguruan Tinggi</Form.Label>
-              <Select
-                placeholder={
-                  (pendidikan && pendidikan.asal_pendidikan) ||
-                  "Silahkan Pilih Asal Sekolah"
-                }
-                options={optionsAsalSekolah}
-                defaultValue={asalSekolah}
-                onChange={(e) =>
-                  setAsalSekolah({ label: e.label, value: e.value })
-                }
-                onBlur={() =>
-                  simpleValidator.current.showMessageFor("asal sekolah")
-                }
-              />
-              {simpleValidator.current.message(
-                "asal sekolah",
-                asalSekolah,
-                jengjangPendidikan.value >= 24 && jengjangPendidikan.value <= 27
-                  ? "required"
-                  : "",
-                {
-                  className: "text-danger",
-                }
-              )}
-            </Form.Group>
           )}
 
           {jengjangPendidikan.value >= 24 && jengjangPendidikan.value <= 27 && (

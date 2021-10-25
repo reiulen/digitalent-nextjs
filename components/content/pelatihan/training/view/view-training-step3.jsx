@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
 
 import PageWrapper from "../../../../wrapper/page.wrapper";
 import StepViewPelatihan from "../../../../StepViewPelatihan";
@@ -8,10 +9,14 @@ import StepViewPelatihan from "../../../../StepViewPelatihan";
 const ViewTrainingStep3 = () => {
   const router = useRouter();
 
-  const [komitmenPeserta] = useState("Ya");
-  const [formKomitmen] = useState(
-    "1. Bersedia mengikuti seluruh tahapan pelatihan sejak awal hingga selesai; 2. Bersedia menjadi calon Penerima Bantuan Pemerintah Digital Talent Scholarship Tahun 2021; 3. Bersedia memenuhi persyaratan administratif serta Syarat dan Ketentuan yang berlaku; 4. Bersedia memenuhi Kewajiban dan Tata Tertib sebagai peserta pelatihan;"
+  const { error: errorReview, review } = useSelector(
+    (state) => state.getReviewStep3
   );
+
+  const { id } = router.query;
+
+  const [komitmenPeserta] = useState(review.komitmen === "1" ? "Ya" : "Tidak");
+  const [formKomitmen] = useState(review.deskripsi || "-");
 
   return (
     <PageWrapper>
@@ -21,10 +26,10 @@ const ViewTrainingStep3 = () => {
         title2="Form Pendaftaran"
         title3="Form Komitmen"
         title4="Parameter"
-        link1={`/pelatihan/pelatihan/view-pelatihan/${1}`}
-        link2={`/pelatihan/pelatihan/view-pelatihan/view-form-pendaftaran/${1}`}
-        link3={`/pelatihan/pelatihan/view-pelatihan/view-komitmen/${1}`}
-        link4={`/pelatihan/pelatihan/view-pelatihan/view-parameter/${1}`}
+        link1={`/pelatihan/pelatihan/view-pelatihan/${id}`}
+        link2={`/pelatihan/pelatihan/view-pelatihan/view-form-pendaftaran/${id}`}
+        link3={`/pelatihan/pelatihan/view-pelatihan/view-komitmen/${id}`}
+        link4={`/pelatihan/pelatihan/view-pelatihan/view-parameter/${id}`}
       />
 
       <div className="col-lg-12 order-1 px-0">

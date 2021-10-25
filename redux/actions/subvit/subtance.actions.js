@@ -42,7 +42,7 @@ import { getSession } from "next-auth/client";
 // get all data
 export const getAllSubtanceQuestionBanks =
   (page = 1, keyword = "", limit = 5, token) =>
-  async dispatch => {
+  async (dispatch) => {
     try {
       dispatch({ type: SUBTANCE_QUESTION_BANKS_REQUEST });
 
@@ -73,7 +73,7 @@ export const getAllSubtanceQuestionBanks =
   };
 
 export const newSubtanceQuestionBanks =
-  (subtanceData, token) => async dispatch => {
+  (subtanceData, token) => async (dispatch) => {
     try {
       dispatch({
         type: NEW_SUBTANCE_QUESTION_BANKS_REQUEST,
@@ -103,35 +103,36 @@ export const newSubtanceQuestionBanks =
     }
   };
 
-export const getDetailSubtanceQuestionBanks = (id, token) => async dispatch => {
-  try {
-    dispatch({ type: DETAIL_SUBTANCE_QUESTION_BANKS_REQUEST });
+export const getDetailSubtanceQuestionBanks =
+  (id, token) => async (dispatch) => {
+    try {
+      dispatch({ type: DETAIL_SUBTANCE_QUESTION_BANKS_REQUEST });
 
-    let link =
-      process.env.END_POINT_API_SUBVIT +
-      `api/subtance-question-banks/detail/${id}`;
+      let link =
+        process.env.END_POINT_API_SUBVIT +
+        `api/subtance-question-banks/detail/${id}`;
 
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      };
 
-    const { data } = await axios.get(link, config);
+      const { data } = await axios.get(link, config);
 
-    dispatch({
-      type: DETAIL_SUBTANCE_QUESTION_BANKS_SUCCESS,
-      payload: data.data,
-    });
-  } catch (error) {
-    dispatch({
-      type: DETAIL_SUBTANCE_QUESTION_BANKS_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({
+        type: DETAIL_SUBTANCE_QUESTION_BANKS_SUCCESS,
+        payload: data.data,
+      });
+    } catch (error) {
+      dispatch({
+        type: DETAIL_SUBTANCE_QUESTION_BANKS_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
-export const getOneSubtanceQuestionBanks = (id, token) => async dispatch => {
+export const getOneSubtanceQuestionBanks = (id, token) => async (dispatch) => {
   try {
     dispatch({ type: DETAIL_ONE_SUBTANCE_QUESTION_BANKS_REQUEST });
 
@@ -159,7 +160,7 @@ export const getOneSubtanceQuestionBanks = (id, token) => async dispatch => {
 };
 
 export const updatewSubtanceQuestionBanks =
-  (id, substanceQuestionData, token) => async dispatch => {
+  (id, substanceQuestionData, token) => async (dispatch) => {
     try {
       dispatch({
         type: UPDATE_SUBTANCE_QUESTION_BANKS_REQUEST,
@@ -189,7 +190,7 @@ export const updatewSubtanceQuestionBanks =
     }
   };
 
-export const deleteSubtanceQuestionBanks = (id, token) => async dispatch => {
+export const deleteSubtanceQuestionBanks = (id, token) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_SUBTANCE_QUESTION_BANKS_REQUEST });
 
@@ -217,7 +218,7 @@ export const deleteSubtanceQuestionBanks = (id, token) => async dispatch => {
 };
 
 export const deleteCloneSubtanceQuestionBanks =
-  (dataId, token) => async dispatch => {
+  (dataId, token) => async (dispatch) => {
     try {
       dispatch({ type: DELETE_CLONE_SUBTANCE_QUESTION_BANKS_REQUEST });
 
@@ -247,7 +248,7 @@ export const deleteCloneSubtanceQuestionBanks =
   };
 
 export const updateSubtanceQuestionBanksPublish =
-  (subtanceData, id, token) => async dispatch => {
+  (subtanceData, id, token) => async (dispatch) => {
     try {
       dispatch({
         type: UPDATE_SUBTANCE_QUESTION_BANKS_PUBLISH_REQUEST,
@@ -290,7 +291,7 @@ export const allReportSubtanceQuestionBanks =
     card = null,
     token
   ) =>
-  async dispatch => {
+  async (dispatch) => {
     try {
       dispatch({ type: REPORT_SUBTANCE_QUESTION_BANKS_REQUEST });
 
@@ -325,7 +326,7 @@ export const allReportSubtanceQuestionBanks =
   };
 
 export const newCloneSubtanceQuestionBanks =
-  (subtanceData, token) => async dispatch => {
+  (subtanceData, token) => async (dispatch) => {
     try {
       dispatch({
         type: NEW_CLONE_SUBTANCE_QUESTION_BANKS_REQUEST,
@@ -356,7 +357,7 @@ export const newCloneSubtanceQuestionBanks =
   };
 
 // Clear Error
-export const clearErrors = () => async dispatch => {
+export const clearErrors = () => async (dispatch) => {
   dispatch({
     type: CLEAR_ERRORS,
   });

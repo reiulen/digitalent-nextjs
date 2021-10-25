@@ -3,7 +3,7 @@ import { Col, Card, Button } from "react-bootstrap";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-const CardPage = ({ backgroundImage, background, color, link, text, desc, total, isSubvit }) => {
+const CardPage = ({ backgroundImage, background, color, link, text, desc, total, isSubvit, col }) => {
   const router = useRouter();
 
   function addHours(date, hours) {
@@ -12,20 +12,9 @@ const CardPage = ({ backgroundImage, background, color, link, text, desc, total,
     return newDate;
   }
 
-  
-
-  // const handlePage = () => {
-  //   router.push("/peserta/subvit/subtansi/1");
-  //   const date = new Date(); // Fri Feb 26 2021 20:08:30
-  //   const target = addHours(date, 1); // Fri Feb 26 2021 21:08:30
-  //   const count = (target - date) / 1000;
-  //   sessionStorage.setItem("targetDate", count);
-  // };
-
-  console.log(total)
   return (
     <>
-      <Col md={total ? 12 : 6} className="mb-4 px-2">
+      <Col md={col} className="mb-4 px-2">
         <Card
           className="rounded-xl h-100"
           style={{
