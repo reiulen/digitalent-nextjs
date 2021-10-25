@@ -45,6 +45,7 @@ const Beranda = ({ session }) => {
   const { akademi } = useSelector((state) => state.allAkademi);
   const { tema } = useSelector((state) => state.temaByAkademi);
   const { publikasi } = useSelector((state) => state.allPublikasiBeranda);
+  const {cekPelatihan} = useSelector((state) => state.checkRegisteredPelatihan);
   // const options = {
   //   weekday: "long",
   //   year: "numeric",
@@ -238,21 +239,21 @@ const Beranda = ({ session }) => {
     }
   };
 
-  const handleCheckPelatihanReg = (id, session) => {
+  const handleCheckPelatihanReg = async (id, session) => {
     if (session.Token){
-      checkRegisterPelatihan(id, session.Token)
-      .then((result) => {
-        if (result.status === true){
-          router.push(`${router.pathname}/peserta/form-pendaftaran?id=${id}`)
-        } else {
-          Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'Anda telah terdaftar pada pelatihan ini.',
-          })
-        }
-      })
+      const data = await dispatch(checkRegisterPelatihan(id, session.Token))
 
+      if (data.status === true){
+        router.push(`${router.pathname}/peserta/form-pendaftaran?id=${id}`)
+
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Anda telah terdaftar pada pelatihan ini.',
+        })
+      }
+    
     } else {
       router.push(`${router.pathname}/login`)
     }
@@ -261,21 +262,6 @@ const Beranda = ({ session }) => {
   return (
     <div style={{ backgroundColor: "white" }}>
       {/* <Navigationbar /> */}
-      {
-        console.log (tema)
-      }
-
-      {
-        console.log (show)
-      }
-
-      {
-        console.log (session.Token)
-      }
-
-      {
-        console.log (publikasi)
-      }
 
       {/* Carousel 1 */}
       {publikasi && publikasi.imagetron.length !== 0 ? (
@@ -875,7 +861,8 @@ const Beranda = ({ session }) => {
                                   </div>
 
                                   <p className="fz-16 fw-400 my-6">
-                                    {cardDeskripsi}
+                                    {/* {cardDeskripsi} */}
+                                    <div dangerouslySetInnerHTML={{ __html: cardDeskripsi}}></div>  
                                   </p>
 
                                   <div className="d-flex align-items-center justify-content-between">
@@ -913,7 +900,7 @@ const Beranda = ({ session }) => {
                                     </div>
 
                                     {
-                                      cardStatus == "Closed" ?
+                                      cardStatus !== "Closed" ?
                                         <div className="col-6">
                                           <button onClick={() => handleCheckPelatihanReg (cardId, session)} className="d-flex justify-content-center btn-primary btn-register-peserta btn-sm py-3 px-12 rounded-pill btn-primary w-100">
                                             Daftar Pelatihan

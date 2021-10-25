@@ -136,25 +136,25 @@ const DetailAkademi = ({ session }) => {
         setShowDetail (arr)
     }
 
-    const handleCheckPelatihanReg = (id, session) => {
+    const handleCheckPelatihanReg = async (id, session) => {
         if (session.Token){
-          checkRegisterPelatihan(id, session.Token)
-          .then((result) => {
-            if (result.status === true){
-              router.push(`${router.pathname}/peserta/form-pendaftaran?id=${id}`)
-            } else {
-              Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'Anda telah terdaftar pada pelatihan ini.',
-              })
-            }
-          })
+          const data = await dispatch(checkRegisterPelatihan(id, session.Token))
     
+          if (data.status === true){
+            router.push(`${router.pathname}/peserta/form-pendaftaran?id=${id}`)
+    
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'Anda telah terdaftar pada pelatihan ini.',
+            })
+          }
+        
         } else {
           router.push(`${router.pathname}/login`)
         }
-    }
+      }
 
     const handlePagination = (pageNumber) => {
 
