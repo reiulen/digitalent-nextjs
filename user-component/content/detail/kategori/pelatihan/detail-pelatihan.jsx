@@ -12,6 +12,10 @@ import SubHeaderComponent from "../../../../components/template/Subheader.compon
 import TrainingReminder from "../../../../components/TrainingReminder";
 import style from "../../../../../styles/peserta/dashboard.module.css"
 import { checkRegisterPelatihan } from "../../../../../redux/actions/beranda/detail-pelatihan.actions";
+
+import IconLove from "../../../../../components/assets/icon/Love";
+import IconShare from "../../../../../components/assets/icon/Share";
+
 // import DownloadButton from "../../../../components/DownloadButton";
 // import FilterBar from "../../../../components/FilterBar";
 
@@ -131,7 +135,7 @@ const DetailPelatihan = ({ session }) => {
                             </div>
                         </div>
 
-                        <div className="col-12 col-xl-4">
+                        <div className="col-12 col-xl-3">
                             <div className="bg-white border rounded p-6">
                                 <h4 className="fz-20 fw-600">Ikuti Pelatihan</h4>
                                 <span className="fz-16">
