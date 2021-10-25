@@ -22,6 +22,8 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
+  const drowpdownTemabyAkademi = useSelector(state => state.drowpdownTemabyAkademi)
+
   const { trainingData } = useSelector((state) => state.trainingStep1);
   const { error: dropdownErrorLevelPelatihan, data: dataLevelPelatihan } =
     useSelector((state) => state.drowpdownLevelPelatihan);
@@ -189,6 +191,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
   }
 
   console.log("data Tema", dataTema.data)
+  console.log("data Akademi", dataAkademi.data)
 
   useEffect(() => {
     dispatch(getTrainingStep1());
@@ -542,7 +545,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
             <div className="position-relative" style={{ zIndex: "4" }}>
               <Select
                 placeholder="Silahkan Pilih Tema"
-                options={dataTema.data}
+                options={drowpdownTemabyAkademi.data.data}
                 defaultValue={theme}
                 onChange={(e) => setTheme({ value: e?.value, label: e?.label })}
                 onBlur={() => simpleValidator.current.showMessageFor("tema")}
