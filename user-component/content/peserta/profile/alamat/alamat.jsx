@@ -12,11 +12,11 @@ const Alamat = ({ token }) => {
   );
 
   useEffect(() => {
-    if (errorAlamat) {
-      toast.error(errorAlamat);
-    }
+    // if (errorAlamat) {
+    //   toast.error(errorAlamat);
+    // }
     dispatch(getProfileAlamat(token));
-  }, [errorAlamat]);
+  }, [dispatch]);
 
   return (
     <>
