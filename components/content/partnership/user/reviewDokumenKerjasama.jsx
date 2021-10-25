@@ -202,11 +202,10 @@ function ReviewDokumenKerjasama({ token }) {
 
   return (
     <PageWrapper>
-      {revisiDone ? (
+      { revisiDone && (
         <AlertBar text="Berhasil merevisi data" className="alert-light-success" onClick={() => onNewReset()}/>
-      ) : (
-        ""
       )}
+      
       <ToastContainer
         position="bottom-right"
         autoClose={5000}
