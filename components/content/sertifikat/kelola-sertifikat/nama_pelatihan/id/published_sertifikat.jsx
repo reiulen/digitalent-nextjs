@@ -131,7 +131,7 @@ export default function KelolasertifikatID({ token }) {
                 <div
                   className={`position-absolute w-100 text-center ${
                     certificate.data.certificate.background
-                      ? "responsive-margin-peserta"
+                      ? "responsive-margin-peserta-1"
                       : "responsive-margin-without-background"
                   }`}
                 >
