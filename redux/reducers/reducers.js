@@ -320,6 +320,8 @@ import {
 // ================ pendaftaran pelatihan ===============
 import {
   allSummaryReducer,
+  updateStatusPesertaReducer,
+  updateReminderReducer,
   getAkademiByPelatihanReducer,
   getPendaftaranPesertaReducer,
   getStatusPendaftarReducer,
@@ -656,6 +658,8 @@ const reducer = combineReducers({
 
   // ========== rekap pelatihan ========
   allSummary: allSummaryReducer,
+  updateStatusPeserta: updateStatusPesertaReducer,
+  updateReminder: updateReminderReducer,
   getAkademiByPelatihan: getAkademiByPelatihanReducer,
   getPendaftaranPeserta: getPendaftaranPesertaReducer,
   getStatusPendaftar: getStatusPendaftarReducer,

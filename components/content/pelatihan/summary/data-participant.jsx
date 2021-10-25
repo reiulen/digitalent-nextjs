@@ -6,6 +6,8 @@ import { useRouter } from "next/router";
 
 import Swal from "sweetalert2";
 import Select from "react-select";
+import { toast } from "react-toastify";
+import moment from "moment";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
 import CardPage from "../../../CardPage";
@@ -16,89 +18,153 @@ import HistoryPage from "./participant/history";
 import FileRegister from "./participant/file-register";
 import SuportDocument from "./participant/suport-document";
 
+import {
+  updateStatusPeserta,
+  updateReminder,
+  getDataPribadi,
+  getReminderBerkas,
+  getRiwayatPelatihan,
+  getBerkasPendaftaran,
+  getFormKomitmen,
+  getFormLpj,
+  clearErrors,
+} from "../../../../redux/actions/pelatihan/summary.actions";
+import {
+  UPDATE_STATUS_RESET,
+  UPDATE_REMINDER_RESET,
+} from "../../../../redux/types/pelatihan/summary.type";
+
 import { useDispatch, useSelector } from "react-redux";
 
-const DataParticipant = () => {
+const DataParticipant = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  let { page = 1, success } = router.query;
-  page = Number(page);
+  let { pelatihan_id, index } = router.query;
+  index = Number(index);
+
+  const { error: errorDataPeserta, peserta } = useSelector(
+    (state) => state.getPendaftaranPeserta
+  );
+  const { error: errorReminder, reminder } = useSelector(
+    (state) => state.getReminderBerkas
+  );
+  const { error: errorRiwayat, riwayat } = useSelector(
+    (state) => state.getRiwayatPelatihan
+  );
+  const { error: errorBerkasPendaftaran, berkas } = useSelector(
+    (state) => state.getBerkasPendaftaran
+  );
+  const { error: errorFormKomitmen, formKomitmen } = useSelector(
+    (state) => state.getFormKomitmen
+  );
+  const { error: errorFormLpj, formLpj } = useSelector(
+    (state) => state.getFormLpj
+  );
+  const { error: errorDataPribadiRow, dataPeserta } = useSelector(
+    (state) => state.getDataPribadiRow
+  );
+  const {
+    error: errorUpdateStatus,
+    loading,
+    status: statusRes,
+    success: successStatus,
+  } = useSelector((state) => state.updateStatusPeserta);
+  const {
+    error: errorReminderUp,
+    reminder: reminderRes,
+    success: successReminder,
+  } = useSelector((state) => state.updateReminder);
 
   const [step, setStep] = useState(1);
 
   const [dataProfile, setDataProfile] = useState({
-    image: "/assets/media/default.jpg",
-    namaLengkap: "Lala Racing",
-    email: "lalaracing@gmail.com",
-    nik: "12344455324566",
-    jenisKelamin: "Perempuan",
-    noHp: "0855765456876",
-    pendidikan: "S1",
-    namaKontakDarurat: "Rany Febrianti",
-    nomorKontakDarurat: "0868687867",
-    tempatLahir: "Depok",
-    tanggalLahir: "1 Januari 2000",
+    image:
+      dataPeserta.file_path + dataPeserta.foto || "/assets/media/default.jpg",
+    namaLengkap: dataPeserta.name,
+    email: dataPeserta.email,
+    nik: dataPeserta.nik,
+    jenisKelamin: dataPeserta.jenis_kelamin,
+    noHp: dataPeserta.nomor_handphone,
+    pendidikan: dataPeserta.asal_pendidikan,
+    namaKontakDarurat: dataPeserta.Nama_kontak_darurat,
+    nomorKontakDarurat: dataPeserta.nomor_handphone_darurat,
+    tempatLahir: dataPeserta.tempat_lahir,
+    tanggalLahir: moment(dataPeserta.tanggal_lahir).format("DD MMMM YYYY"),
   });
 
-  const [dataCommitment, setDataCommitment] = useState({
-    date: "1 Oktober 2021",
-    time: "12:00:11",
-  });
-
-  const [dataFileRegister, setFileRegister] = useState({
-    universitas: "Universitas Indonesia",
-    ipk: "4.2",
-    tahunDaftar: "1992",
-    tahunLulus: "2020",
-  });
-
-  const [dataLpj, setDataLpj] = useState([
-    {
-      uraian:
-        "Self-paced Learning : Peserta pelatihan belajar secara mandiri melalui laptop/komputer, jadwal pelaksanaan Self-paced Learning diatur secara mandiri oleh peserta dalam batas durasi pelatihan",
-      value: true,
-    },
-    {
-      uraian:
-        "Live Session : Sesi tatap muka secara daring/online antara instruktur dan peserta pelatihan, peserta pelatihan mendapatkan kesempatan bertanya dan berinteraksi dengan instruktur pada tema pelatihan tertentu",
-      value: false,
-    },
-    {
-      uraian:
-        "Hands-on Lab : Peserta akan mengerjakan suatu project secara mandiri pada Virtual Lab. Sesi pelatihan tanya-jawab antara instruktur dan peserta pelatihan, peserta pelatihan mendapatkan kesempatan bertanya dan berinteraksi dengan instruktur pada tema pelatihan tertentu di Program Pelatihan melalui Grup Komunikasi Kelas.",
-      value: true,
-    },
-    {
-      uraian:
-        "Certificate of Completion : diberikan kepada peserta yang menyelesaikan seluruh sesi pelatihan, mengisi survey dan mengunggah/upload Laporan Pertanggungjawaban di digitalent.kominfo.go.id",
-      value: true,
-    },
-    {
-      uraian:
-        "Bantuan Biaya Komunikasi : diberikan kepada peserta yang mengikuti pelatihan secara aktif di LMS maupun Live session sesuai ketentuan yang berlaku",
-      value: true,
-    },
-  ]);
-
-  const [dataHistory, setDataHistory] = useState([
-    {
-      pelatihan: "Web Programming",
-      pelaksanaan: "1 Oktober 2021 sd 2 Desember 2021",
-      status: "Lulus",
-    },
-    {
-      pelatihan: "Pemasaran",
-      pelaksanaan: "3 Oktober 2021 sd 5 Desember 2021",
-      status: "Tidak Lulus",
-    },
-  ]);
-
-  const options = [
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
+  const optionsPeserta = [
+    { value: "menunggu", label: "Menunggu" },
+    { value: "tidak lulus administrasi", label: "Tidak Lulus Administrasi" },
+    { value: "tes substansi", label: "Tes Substansi" },
+    { value: "tidak lulus tes substansi", label: "Tidak Lulus Tes Substansi" },
+    { value: "lulus tes substansi", label: "Lulus Tes Substansi" },
+    { value: "ditolak", label: "Ditolak" },
+    { value: "diterima", label: "Diterima" },
+    { value: "pelatihan", label: "Pelatihan" },
+    { value: "lulus pelatihan", label: "Lulus Pelatihan" },
+    { value: "tidak lulus pelatihan", label: "Tidak Lulus Pelatihan" },
   ];
+
+  const optionsAdministrasi = [
+    { value: "unverified", label: "Unverified" },
+    { value: "verified", label: "Verified" },
+    { value: "incomplete", label: "Incomplete" },
+  ];
+
+  const [statusAdministrasi, setStatusAdministrasi] = useState(null);
+  const [statusPeserta, setStatusPeserta] = useState(null);
+
+  useEffect(() => {
+    if (peserta) {
+      dispatch(getDataPribadi(token, peserta.list[0].id));
+      dispatch(getReminderBerkas(token, peserta.list[0].id));
+      dispatch(getRiwayatPelatihan(token, peserta.list[0].id));
+      dispatch(getBerkasPendaftaran(token, peserta.list[0].id));
+      dispatch(getFormKomitmen(token, peserta.list[0].id));
+      dispatch(getFormLpj(token, peserta.list[0].id));
+    }
+
+    if (errorUpdateStatus) {
+      toast.error(errorUpdateStatus);
+      dispatch(clearErrors());
+    }
+
+    if (errorReminderUp) {
+      toast.error(errorReminderUp);
+      dispatch(clearErrors());
+    }
+
+    if (successStatus) {
+      dispatch(getDataPribadi(token, peserta.list[0].id));
+      dispatch(getReminderBerkas(token, peserta.list[0].id));
+      dispatch(getRiwayatPelatihan(token, peserta.list[0].id));
+      dispatch(getBerkasPendaftaran(token, peserta.list[0].id));
+      dispatch(getFormKomitmen(token, peserta.list[0].id));
+      dispatch(getFormLpj(token, peserta.list[0].id));
+      toast.success("Berhasil Mengubah Status");
+      dispatch({ type: UPDATE_STATUS_RESET });
+    }
+
+    if (successReminder) {
+      dispatch(getDataPribadi(token, peserta.list[0].id));
+      dispatch(getReminderBerkas(token, peserta.list[0].id));
+      dispatch(getRiwayatPelatihan(token, peserta.list[0].id));
+      dispatch(getBerkasPendaftaran(token, peserta.list[0].id));
+      dispatch(getFormKomitmen(token, peserta.list[0].id));
+      dispatch(getFormLpj(token, peserta.list[0].id));
+      // toast.success("Berhasil Mengubah Reminder");
+      dispatch({ type: UPDATE_REMINDER_RESET });
+    }
+  }, [
+    dispatch,
+    peserta,
+    token,
+    errorUpdateStatus,
+    errorReminderUp,
+    successStatus,
+    successReminder,
+  ]);
 
   const handleResetError = () => {
     if (error) {
@@ -109,27 +175,43 @@ const DataParticipant = () => {
   const handleViewParticipant = () => {
     switch (step) {
       case 1:
-        return <ProfileUser profile={dataProfile} />;
+        return <ProfileUser profile={dataPeserta} />;
         break;
       case 2:
-        return <HistoryPage history={dataHistory} />;
+        return <HistoryPage history={riwayat} />;
         break;
       case 3:
-        return <FileRegister file={dataFileRegister} />;
+        return <FileRegister file={berkas} />;
         break;
       case 4:
-        return (
-          <SuportDocument
-            commitment={dataCommitment}
-            lpj={dataLpj}
-            saran="Kalau Saran dari saya, Bantuan Biaya Komunikasi masih harus diperhatikan. karena kita dimasa PPKM, segalanya harus serba Online. tolong agar dipercepat respon ketika online saja. Terima Kasih"
-          />
-        );
+        return <SuportDocument commitment={formKomitmen} lpj={formLpj} />;
         break;
       default:
-        return <ProfileUser />;
+        return <ProfileUser profile={dataProfile} />;
         break;
     }
+  };
+
+  const handleStatusPeserta = () => {
+    const administrasi = statusAdministrasi.value;
+    const status = statusPeserta.value;
+
+    const data = {
+      id: peserta.list[0].id,
+      status,
+      administrasi,
+    };
+
+    dispatch(updateStatusPeserta(data, token));
+  };
+
+  const handleUpdateReminder = (type, value) => {
+    const data = {
+      id: peserta.list[0].id,
+      status: value ? "1" : "0",
+      kolom: type,
+    };
+    dispatch(updateReminder(data, token));
   };
 
   return (
@@ -141,15 +223,21 @@ const DataParticipant = () => {
               className="card-title text-dark mt-2"
               style={{ fontSize: "24px" }}
             >
-              Cristiano Messi - 34293482734928347
+              {peserta.list[0].name} - {peserta.list[0].nik}
             </h1>
             <div className="card-toolbar">
-              <Link href="/pelatihan/pelatihan/tambah-pelatihan">
-                <a className="btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-2 mt-2">
-                  Peserta Selanjutnya
-                  <i className="ri-skip-forward-mini-fill ml-2"></i>
-                </a>
-              </Link>
+              {index + 1 <= peserta.total && (
+                <Link
+                  href={`/pelatihan/rekap-pendaftaran/detail-rekap-pendaftaran/data-peserta?pelatihan_id=${pelatihan_id}&index=${
+                    index + 1
+                  }`}
+                >
+                  <a className="btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-2 mt-2">
+                    Peserta Selanjutnya
+                    <i className="ri-skip-forward-mini-fill ml-2"></i>
+                  </a>
+                </Link>
+              )}
             </div>
           </div>
 
@@ -157,7 +245,9 @@ const DataParticipant = () => {
             <div className="row">
               <div className="col-md-12">
                 <p className="text-neutral-body my-0">Test Substansi</p>
-                <p className="text-success">Lulus Substansi</p>
+                <p className="text-success">
+                  {peserta.list[0].subtansi_status || "-"}
+                </p>
               </div>
             </div>
             <div className="form-group row mb-2">
@@ -165,13 +255,25 @@ const DataParticipant = () => {
                 <label className="col-form-label font-weight-bold">
                   Administrasi
                 </label>
-                <Select options={options} />
+                <Select
+                  options={optionsAdministrasi}
+                  placeholder={peserta.list[0].administrasi || "-"}
+                  onChange={(e) =>
+                    setStatusAdministrasi({ label: e.label, value: e.value })
+                  }
+                />
               </div>
               <div className="col-sm-12 col-md-6">
                 <label className="col-form-label font-weight-bold">
                   Status Peserta
                 </label>
-                <Select options={options} />
+                <Select
+                  options={optionsPeserta}
+                  placeholder={peserta.list[0].status || "-"}
+                  onChange={(e) =>
+                    setStatusPeserta({ label: e.label, value: e.value })
+                  }
+                />
               </div>
             </div>
 
@@ -184,7 +286,11 @@ const DataParticipant = () => {
                 >
                   Batal
                 </button>
-                <button className="btn btn-primary-rounded-full" type="button">
+                <button
+                  className="btn btn-primary-rounded-full"
+                  type="button"
+                  onClick={() => handleStatusPeserta()}
+                >
                   Simpan
                 </button>
               </div>
@@ -208,36 +314,60 @@ const DataParticipant = () => {
             <div className="form-check form-check-inline mr-5">
               <input
                 type="checkbox"
-                name="reminder"
+                name="remender"
                 className="form-check-input"
-                value="profile"
+                checked={reminder.reminder_profile}
+                onClick={() =>
+                  handleUpdateReminder(
+                    "reminder_profile",
+                    !reminder.reminder_profile
+                  )
+                }
               />
               <label className="form-check-label">Profile</label>
             </div>
             <div className="form-check form-check-inline mr-5">
               <input
                 type="checkbox"
-                name="reminder"
+                name="remender"
                 className="form-check-input"
-                value="riwayat_pelatihan"
+                checked={reminder.reminder_riwayat}
+                onClick={() =>
+                  handleUpdateReminder(
+                    "reminder_riwayat",
+                    !reminder.reminder_riwayat
+                  )
+                }
               />
               <label className="form-check-label">Riwayat Pelatihan</label>
             </div>
             <div className="form-check form-check-inline mr-5">
               <input
                 type="checkbox"
-                name="reminder"
+                name="remender"
                 className="form-check-input"
-                value="berkas_pendaftaran"
+                checked={reminder.reminder_berkas}
+                onClick={() =>
+                  handleUpdateReminder(
+                    "reminder_berkas",
+                    !reminder.reminder_berkas
+                  )
+                }
               />
               <label className="form-check-label">Berkas Pendaftaran</label>
             </div>
             <div className="form-check form-check-inline">
               <input
                 type="checkbox"
-                name="reminder"
+                name="remender"
                 className="form-check-input"
-                value="dokumen_pendukung"
+                checked={reminder.reminder_dokumen}
+                onClick={() =>
+                  handleUpdateReminder(
+                    "reminder_dokumen",
+                    !reminder.reminder_dokumen
+                  )
+                }
               />
               <label className="form-check-label">Dokumen Pendukung</label>
             </div>
