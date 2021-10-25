@@ -158,60 +158,61 @@ const Dashboard = ({ session }) => {
           )}
         </Row>
         <Row className="mx-1">
-          {totalSubvit === 0 && <Col md={6} className="mb-4 px-2">
-            <Card className="rounded-xl h-100">
-              <Card.Body>
-                <Card.Title>
-                  <p className={style.card_title}>Pelatihan Terkini</p>
-                </Card.Title>
-                <div
-                  className="text-center"
-                  style={{
-                    height: "200",
-                    paddingTop: "75px",
-                    paddingBottom: "75px",
-                  }}
-                >
-                  <p>
-                    Belum ada pelatihan yang Anda pilih. Silahkan pilih
-                    pelatihan terlebih dahulu.
-                  </p>
-                  <br />
-                  <Link href="/" passHref>
-                  <Button variant="bg-primary" className="font-weight-bolder text-white rounded-full">
-                    Pilih Pelatihan
-                  </Button>
-                </Link>
-                </div>
-                
-              </Card.Body>
-            </Card>
-          </Col>}
-          {totalSubvit === 0 &&  <Col md={6} className="mb-4 px-2">
-            <Card className="rounded-xl h-100">
-              <Card.Body>
-                <Card.Title>
-                  <p className={style.card_title}>Pelatihan Sebelumnya</p>
-                </Card.Title>
-                <div
-                  className="text-center"
-                  style={{
-                    height: "200",
-                    paddingTop: "75px",
-                    paddingBottom: "75px",
-                  }}
-                >
-                  <p>
-                    Anda tidak memiliki histori pelatihan sebelumnya.
-                  </p>
-                 
-                </div>
-                
-              </Card.Body>
-            </Card>
-          </Col>}
-          
-         
+          {totalSubvit === 0 && (
+            <Col md={6} className="mb-4 px-2">
+              <Card className="rounded-xl h-100">
+                <Card.Body>
+                  <Card.Title>
+                    <p className={style.card_title}>Pelatihan Terkini</p>
+                  </Card.Title>
+                  <div
+                    className="text-center"
+                    style={{
+                      height: "200",
+                      paddingTop: "75px",
+                      paddingBottom: "75px",
+                    }}
+                  >
+                    <p>
+                      Belum ada pelatihan yang Anda pilih. Silahkan pilih
+                      pelatihan terlebih dahulu.
+                    </p>
+                    <br />
+                    <Link href="/" passHref>
+                      <Button
+                        variant="bg-primary"
+                        className="font-weight-bolder text-white rounded-full"
+                      >
+                        Pilih Pelatihan
+                      </Button>
+                    </Link>
+                  </div>
+                </Card.Body>
+              </Card>
+            </Col>
+          )}
+          {totalSubvit === 0 && (
+            <Col md={6} className="mb-4 px-2">
+              <Card className="rounded-xl h-100">
+                <Card.Body>
+                  <Card.Title>
+                    <p className={style.card_title}>Pelatihan Sebelumnya</p>
+                  </Card.Title>
+                  <div
+                    className="text-center"
+                    style={{
+                      height: "200",
+                      paddingTop: "75px",
+                      paddingBottom: "75px",
+                    }}
+                  >
+                    <p>Anda tidak memiliki histori pelatihan sebelumnya.</p>
+                  </div>
+                </Card.Body>
+              </Card>
+            </Col>
+          )}
+
           {totalSubvit > 0 && (
             <Col md={6} className="mb-4 px-2">
               <Card className="rounded-xl h-100">
