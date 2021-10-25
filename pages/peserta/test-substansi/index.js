@@ -6,9 +6,22 @@ import { getSession } from "next-auth/client";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
 import { getDataPribadi } from "../../../redux/actions/pelatihan/function.actions";
 import { middlewareAuthPesertaSession } from "../../../utils/middleware/authMiddleware";
+import { getDetailRiwayatPelatihan } from "../../../redux/actions/pelatihan/riwayat-pelatihan.actions";
 
 const TestSubstansi = dynamic(
   () => import("../../../user-component/content/peserta/test-substansi"),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
+const TesSubstansiDetail = dynamic(
+  () =>
+    import(
+      "../../../user-component/content/peserta/test-substansi/test-substansi-detail"
+    ),
   {
     loading: function loadingNow() {
       return <LoadingSkeleton />;
@@ -26,14 +39,14 @@ export default function TestSubstansiPage(props) {
   return (
     <>
       <Layout title="Dashboard Peserta - Pelatihan" session={session}>
-        <TestSubstansi session={session} />
+        <TesSubstansiDetail session={session} />
       </Layout>
     </>
   );
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  store =>
+  (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
       const middleware = middlewareAuthPesertaSession(session);
@@ -47,8 +60,12 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
-      // console.log(session.user.user.data.user.token);
-
+      await store.dispatch(
+        getDetailRiwayatPelatihan(
+          query.id || req.cookies.id_pelatihan,
+          session.user.user.data.user.token
+        )
+      );
       await store.dispatch(getDataPribadi(session.user.user.data.user.token));
 
       return {

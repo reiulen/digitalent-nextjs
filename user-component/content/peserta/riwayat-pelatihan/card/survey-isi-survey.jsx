@@ -7,9 +7,9 @@ import style from "../style.module.css";
 export default function IsiSurvey({ props }) {
   const data = props.data;
   // console.log(data);
-  const dateFrom = moment(data.pendaftaran_mulai).format("LL");
-  const dateTo = moment(data.pendaftaran_selesai).format("LL");
-  const gambarMitra = data.gambarMitra;
+  const dateFrom = moment(data?.pendaftaran_mulai).format("LL");
+  const dateTo = moment(data?.pendaftaran_selesai).format("LL");
+  const gambarMitra = data?.gambarMitra;
   const [label, setLabel] = useState();
   return (
     <Card className="position-relative">

@@ -1,34 +1,33 @@
 import dynamic from "next/dynamic";
 
 // import Layout from "../../../components/templates/layout.component";
-
-import { wrapper } from "../../redux/store";
+import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
-import { getDataPribadi } from "../../redux/actions/pelatihan/function.actions";
-import { getDashboardPeserta } from "../../redux/actions/pelatihan/dashboard-peserta.actions";
-import LoadingContent from "../../user-component/content/peserta/components/loader/LoadingContent";
-import { middlewareAuthPesertaSession } from "../../utils/middleware/authMiddleware";
+import LoadingSkeleton from "../../../components/LoadingSkeleton";
+import { getDataPribadi } from "../../../redux/actions/pelatihan/function.actions";
+import { middlewareAuthPesertaSession } from "../../../utils/middleware/authMiddleware";
+import { getDetailRiwayatPelatihan } from "../../../redux/actions/pelatihan/riwayat-pelatihan.actions";
 
-const Dashboard = dynamic(
-  () => import("../../user-component/content/peserta/dashboard"),
+const TestSubstansi = dynamic(
+  () => import("../../../user-component/content/peserta/test-substansi"),
   {
     loading: function loadingNow() {
-      return <LoadingContent />;
+      return <LoadingSkeleton />;
     },
     ssr: false,
   }
 );
 
 const Layout = dynamic(() =>
-  import("../../user-component/components/template/Layout.component")
+  import("../../../user-component/components/template/Layout.component")
 );
 
-export default function DashboardPage(props) {
+export default function TestSubstansiPage(props) {
   const session = props.session.user.user.data.user;
   return (
     <>
       <Layout title="Dashboard Peserta - Pelatihan" session={session}>
-        <Dashboard session={session} />
+        <TestSubstansi session={session} />
       </Layout>
     </>
   );
@@ -38,7 +37,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
-
       const middleware = middlewareAuthPesertaSession(session);
 
       if (!middleware.status) {
@@ -49,12 +47,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
-      if (session) {
-        await store.dispatch(getDataPribadi(session.user.user.data.user.token));
-      }
-      await store.dispatch(
-        getDashboardPeserta(session.user.user.data.user.token)
-      );
+
+      await store.dispatch(getDataPribadi(session.user.user.data.user.token));
+
       return {
         props: { data: "auth", session, title: "Dashboard - Peserta" },
       };
