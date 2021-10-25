@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import moment from "moment";
+import { toast } from "react-toastify";
 
 import { Badge } from "react-bootstrap";
 
@@ -12,6 +13,10 @@ import SubHeaderComponent from "../../../../components/template/Subheader.compon
 import TrainingReminder from "../../../../components/TrainingReminder";
 import style from "../../../../../styles/peserta/dashboard.module.css"
 import { checkRegisterPelatihan } from "../../../../../redux/actions/beranda/detail-pelatihan.actions";
+
+import IconLove from "../../../../../components/assets/icon/Love";
+import IconShare from "../../../../../components/assets/icon/Share";
+
 // import DownloadButton from "../../../../components/DownloadButton";
 // import FilterBar from "../../../../components/FilterBar";
 
@@ -25,15 +30,15 @@ const DetailPelatihan = ({ session }) => {
         if (session.Token){
           const data = await dispatch(checkRegisterPelatihan(id, session.Token))
     
+          // console.log (data)
+    
           if (data.status === true){
             router.push(`${router.pathname}/peserta/form-pendaftaran?id=${id}`)
     
-          } else {
-            Swal.fire({
-              icon: 'error',
-              title: 'Error',
-              text: 'Anda telah terdaftar pada pelatihan ini.',
-            })
+          } else if (data.status === false) {
+            // let errMessage = data.message[0].toUpperCase()  + string.substring(1)
+            let errMessage = data.message
+            toast.error (errMessage)
           }
         
         } else {
@@ -131,7 +136,7 @@ const DetailPelatihan = ({ session }) => {
                             </div>
                         </div>
 
-                        <div className="col-12 col-xl-4">
+                        <div className="col-12 col-xl-3">
                             <div className="bg-white border rounded p-6">
                                 <h4 className="fz-20 fw-600">Ikuti Pelatihan</h4>
                                 <span className="fz-16">
