@@ -826,6 +826,7 @@ const Beranda = ({ session }) => {
                                 <div style={{minHeight:"300px"}}>
                                   <Image 
                                     src={process.env.END_POINT_API_IMAGE_BEASISWA + cardImage}
+                                    alt="image card detail"
                                     layout="fill" 
                                     objectFit="cover"
                                     className="rounded"

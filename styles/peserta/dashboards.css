@@ -13,6 +13,24 @@
   margin: auto;
 }
 
+.btn-masuk-peserta {
+  display: flex;
+  font-weight: 600;
+  font-size: 13px;
+  border: 1px solid #007cff;
+  border-radius: 19px;
+  color: #007cff;
+  background-color: white;
+}
+
+#basic-nav-dropdown {
+  color: #007cff !important;
+}
+
+.border-search {
+  border: 1px solid rgb(242, 247, 252);
+}
+
 .btn-login-peserta {
   display: flex;
   align-items: center;
@@ -424,7 +442,7 @@
   min-width: 44px;
   height: 44px;
   min-height: 44px;
-  border: 1px solid #D7E1EA;
+  border: 1px solid #D7E1EA !important;
   border-radius: 40px;
   display: flex;
   align-items: center;

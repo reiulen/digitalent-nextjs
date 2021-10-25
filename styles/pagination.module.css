@@ -57,9 +57,13 @@
 }
 
 @media only screen and (max-width: 576px) {
-  .rightPag {
-    display: none;
-  }
+    .rightPag {
+        display: none;
+    }
+
+    .pagination {
+        margin-left: 28px;
+      }
 
     /* Dashboard Publikasi */
 

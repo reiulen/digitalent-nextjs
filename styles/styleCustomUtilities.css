@@ -388,6 +388,9 @@ input.checkbox-small:checked + .sliders-small:before {
 .fz-32 {
   font-size: 32px;
 }
+.fz-36 {
+  font-size: 36px;
+}
 .fz-12 {
   font-size: 12px;
 }

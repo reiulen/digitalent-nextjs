@@ -13,11 +13,11 @@ export default function galeryUpdate({gambar}) {
       </div>
     <div style={{ backgroundColor: "#FAFAFB" }} className="py-0 py-xl-15">
       <div className="container-fluid">
-            <div className="row">
-              <div className="col-12 col-xl-6">
+            <div className="row mb-10">
+              <div className="col-12 col-xl-4">
                 <div>
                   <h1
-                    className="fw-600 mt-26 position-relative"
+                    className="fw-600 mt-20 position-relative"
                     style={{ color: "#1F1F1F" }}
                   >
                     Galeri Terupdate dan Terkini
@@ -54,11 +54,11 @@ export default function galeryUpdate({gambar}) {
                   </Link>
                 </div>
               </div>
-              <div className="col-12 col-xl-6">
-                <div className="row">
-                  <div className="col-12 col-md-12 col-xl-6">
+              <div className="col-12 col-xl-8 mt-20 mb-10">
+                <div className="row justify-content-center">
+                  <div className="col-12 col-sm-6 col-md-6 col-xl-4">
                     {/* image 1 */}
-                    <div className="w-100 position-relative mt-10 sm-mt-0">
+                    <div className="w-100 position-relative sm-mt-0 text-center">
                       <Image
                         src={ImageGalery1}
                         alt="Picture of the author"
@@ -67,9 +67,9 @@ export default function galeryUpdate({gambar}) {
                       />
                     </div>
                   </div>
-                  <div className="col-12 col-md-12 col-xl-6">
+                  <div className="col-12 col-sm-6 col-md-6 col-xl-4">
                     {/* image 2 */}
-                    <div className="w-100 position-relative mt-10 sm-mt-0">
+                    <div className="w-100 position-relative sm-mt-0 text-center">
                       <Image
                         src={ImageGalery2}
                         alt="Picture of the author"

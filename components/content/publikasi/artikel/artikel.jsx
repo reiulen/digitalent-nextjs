@@ -262,6 +262,7 @@ const Artikel = ({ token }) => {
 
       } else if (startDate === null && endDate === null && limit === null && search !== null) {
         router.push(`${router.pathname}?publish=${val}`);
+        setSearch("")
         // router.push(`${router.pathname}?publish=${val}&keyword=${search}`);
 
       } else if (startDate === null && endDate === null && limit !== null && search !== null) {
@@ -414,6 +415,7 @@ const Artikel = ({ token }) => {
                       type="text"
                       className="form-control pl-10"
                       placeholder="Ketik disini untuk Pencarian..."
+                      value={search}
                       onChange={(e) => setSearch(e.target.value)}
                     />
                     <button
