@@ -111,11 +111,13 @@ const StepOne = ({ token }) => {
     setAcademyId(e.target.value);
 
     e.target.value && dispatch(dropdownTemabyAkademi(e.target.value, token));
+
+    dispatch(dropdownPelatihanbyTema(theme_id, token));
   };
 
   const handleChangePelatihan = (e) => {
+    console.log(e.target.value);
     setThemeId(e.target.value);
-    e.target.value && dispatch(dropdownPelatihanbyTema(e.target.value, token));
   };
 
   const { data } = useSelector((state) => state.drowpdownTemabyAkademi);
