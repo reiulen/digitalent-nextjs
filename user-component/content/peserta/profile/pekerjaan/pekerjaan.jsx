@@ -12,11 +12,11 @@ const Pekerjaan = ({ token }) => {
   );
 
   useEffect(() => {
-    if (errorPekerjaan) {
-      toast.error(errorPekerjaan);
-    }
+    // if (errorPekerjaan) {
+    //   toast.error(errorPekerjaan);
+    // }
     dispatch(getProfilePekerjaan(token));
-  }, [errorPekerjaan, dispatch]);
+  }, [dispatch]);
 
   return (
     <>
@@ -44,7 +44,11 @@ const Pekerjaan = ({ token }) => {
         <Row>
           <Col md={12}>
             <p className="text-neutral-body my-1">Penghasilan</p>
-            <p>{(pekerjaan && pekerjaan.penghasilan === "1" ? "-" : pekerjaan.penghasilan) || "-"}</p>
+            <p>
+              {(pekerjaan && pekerjaan.penghasilan === "1"
+                ? "-"
+                : (pekerjaan && pekerjaan.penghasilan) || "-") || "-"}
+            </p>
           </Col>
         </Row>
       </div>

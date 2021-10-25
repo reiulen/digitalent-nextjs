@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 import moment from "moment";
 import DatePicker from "react-datepicker";
 import { TagsInput } from "react-tag-input-component";
+import { toast } from "react-toastify";
 
 import { 
     Card,
@@ -145,21 +146,21 @@ const DetailAkademi = ({ session }) => {
         if (session.Token){
           const data = await dispatch(checkRegisterPelatihan(id, session.Token))
     
+          // console.log (data)
+    
           if (data.status === true){
             router.push(`${router.pathname}/peserta/form-pendaftaran?id=${id}`)
     
-          } else {
-            Swal.fire({
-              icon: 'error',
-              title: 'Error',
-              text: 'Anda telah terdaftar pada pelatihan ini.',
-            })
+          } else if (data.status === false) {
+            // let errMessage = data.message[0].toUpperCase()  + string.substring(1)
+            let errMessage = data.message
+            toast.error (errMessage)
           }
         
         } else {
           router.push(`${router.pathname}/login`)
         }
-      }
+    }
 
     const handlePagination = (pageNumber) => {
 
@@ -245,7 +246,10 @@ const DetailAkademi = ({ session }) => {
                             <div className="font-weight-bolder">
                                 Penyelenggara
                             </div>
-                            <Dropdown>
+                            <select name="" id="">
+                                <option value="Gojek">Gojek</option>
+                            </select>
+                            {/* <Dropdown>
                                 <Dropdown.Toggle variant="white" id="dropdown-basic" className="border rounded">
                                     {filterPenyelenggara ? filterPenyelenggara : "Semua Penyelenggara"}
                                 </Dropdown.Toggle>
@@ -257,7 +261,7 @@ const DetailAkademi = ({ session }) => {
                                     <Dropdown.Item value="Facebook">Facebook</Dropdown.Item>
                                     <Dropdown.Item value="Apple">Apple</Dropdown.Item>
                                 </Dropdown.Menu>
-                            </Dropdown>
+                            </Dropdown> */}
                         </div>
 
                         <div className="my-5 p-3">
