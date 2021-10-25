@@ -147,20 +147,30 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
           asal_pendidikan: "-",
           lainya: "-",
           program_studi: "-",
-          ipk: "1",
+          ipk: "0",
           tahun_masuk: parseInt("1"),
-          ijasah: "-",
+          ijasah: "",
         };
       } else if (
         jengjangPendidikan.value >= 20 &&
-        jengjangPendidikan.value <= 23
+        jengjangPendidikan.value <= 22
       ) {
         data = {
           jenjang: jengjangPendidikan.label,
-          asal_pendidikan: asalSekolah.label,
+          asal_pendidikan: "0",
           lainya,
           program_studi: "0",
           ipk,
+          tahun_masuk: parseInt(tahunMasuk),
+          ijasah: ijazah,
+        };
+      }else if(jengjangPendidikan.value === 23){
+        data = {
+          jenjang: jengjangPendidikan.label,
+          asal_pendidikan: asalSekolah.label,
+          lainya: "-",
+          program_studi: "0",
+          ipk: "0",
           tahun_masuk: parseInt(tahunMasuk),
           ijasah: ijazah,
         };
@@ -223,7 +233,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
 
           {jengjangPendidikan.value === 19 && <div className=""></div>}
 
-          {jengjangPendidikan.value >= 20 && jengjangPendidikan.value <= 23 && (
+          {jengjangPendidikan.value >= 23 && jengjangPendidikan.value <= 27 && (
             <Form.Group className="mb-3" controlId="formGridAddress1">
               <Form.Label>Asal Sekolah / Perguruan Tinggi</Form.Label>
               <Select
@@ -253,7 +263,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
             </Form.Group>
           )}
 
-          {jengjangPendidikan.value >= 20 && jengjangPendidikan.value <= 23 && (
+          {jengjangPendidikan.value >= 20 && jengjangPendidikan.value <= 22 && (
             <Form.Group className="mb-3" controlId="formGridAddress1">
               <Form.Label>Lainnya ( Sekolah / PT)</Form.Label>
               <Form.Control
@@ -345,7 +355,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
             </div>
           )}
 
-          {jengjangPendidikan.value >= 24 && jengjangPendidikan.value <= 27 && (
+          {/* {jengjangPendidikan.value >= 24 && jengjangPendidikan.value <= 27 && (
             <Form.Group className="mb-3" controlId="formGridAddress1">
               <Form.Label>Asal Sekolah / Perguruan Tinggi</Form.Label>
               <Select
@@ -373,7 +383,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
                 }
               )}
             </Form.Group>
-          )}
+          )} */}
 
           {jengjangPendidikan.value >= 24 && jengjangPendidikan.value <= 27 && (
             <Form.Group className="mb-3" controlId="formGridAddress1">

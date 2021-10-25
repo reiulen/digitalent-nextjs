@@ -33,21 +33,21 @@ const Pendidikan = ({ token }) => {
             <p className="text-neutral-body my-1">
               Asal Sekolah / Perguruan Tinggi
             </p>
-            <p>{(pendidikan && pendidikan.asal_pendidikan) || "-"}</p>
+            <p>{(pendidikan && pendidikan.asal_pendidikan === "0" ? "-" : pendidikan.asal_pendidikan) || "-"}</p>
           </Col>
           <Col md={6}>
             <p className="text-neutral-body my-1">Program Studi</p>
-            <p>{(pendidikan && pendidikan.program_studi === 0) || "-"}</p>
+            <p>{(pendidikan && pendidikan.program_studi === "0" ? "-" : pendidikan.program_studi) || "-"}</p>
           </Col>
         </Row>
         <Row>
           <Col md={6}>
             <p className="text-neutral-body my-1">IPK</p>
-            <p>{(pendidikan && pendidikan.ipk === 0) || "-"}</p>
+            <p>{(pendidikan && pendidikan.ipk === "0" ? "-" : pendidikan.ipk) || "-"}</p>
           </Col>
           <Col md={6}>
             <p className="text-neutral-body my-1">Tahun Masuk</p>
-            <p>{(pendidikan && pendidikan.tahun_masuk === 0) || "-"}</p>
+            <p>{(pendidikan && pendidikan.tahun_masuk === 0 || pendidikan.tahun_masuk === 1 ? "-" : pendidikan.tahun_masuk) || "-"}</p>
           </Col>
         </Row>
         <Row>
