@@ -17,7 +17,7 @@ import LoadingPage from '../../../LoadingPage';
 
 import "../../../../styles/publikasi.module.css"
 
-const EditFaq = ({token}) => {
+const EditFaq = ({ token }) => {
     const dispatch = useDispatch()
     const router = useRouter()
 
@@ -51,8 +51,8 @@ const EditFaq = ({token}) => {
     const [kategori_id, setKategoriId] = useState(faq.kategori_id)
     const [users_id, setUsersId] = useState(faq.users_id)
     const [pinned, setPinnedFaq] = useState(faq.pinned)
-    const [publish, setPublish] = useState(faq.publish )
-    const [publishDate, setPublishDate] = useState(faq.tanggal_publish ? new Date (faq.tanggal_publish) : null);
+    const [publish, setPublish] = useState(faq.publish)
+    const [publishDate, setPublishDate] = useState(faq.tanggal_publish ? new Date(faq.tanggal_publish) : null);
     const [disablePublishDate, setDisablePublishDate] = useState(faq.publish === 0 ? true : false)
     const [, forceUpdate] = useState();
 
@@ -64,11 +64,11 @@ const EditFaq = ({token}) => {
     const handleChangePublish = (e) => {
         setDisablePublishDate(!disablePublishDate)
 
-        if (e.target.checked === false){
-            setPublishDate (null)
-            setPublish (0)
+        if (e.target.checked === false) {
+            setPublishDate(null)
+            setPublish(0)
         } else {
-            setPublish (1)
+            setPublish(1)
         }
     };
 
@@ -88,21 +88,21 @@ const EditFaq = ({token}) => {
 
             if (publish === true) {
                 setPublish(1)
-              
+
             } else if (publish === false) {
-            setPublish(0)
-    
+                setPublish(0)
+
             }
 
             if (pinned === true) {
                 setPinnedFaq(1)
-              
+
             } else if (pinned === false) {
-            setPinnedFaq(0)
-    
+                setPinnedFaq(0)
+
             }
 
-            if (publishDate === null){
+            if (publishDate === null) {
                 let today = new Date
 
                 const data = {
@@ -113,10 +113,23 @@ const EditFaq = ({token}) => {
                     publish,
                     pinned,
                     _method: 'put',
-                    tanggal_publish : moment(today).format("YYYY-MM-DD")
+                    tanggal_publish: moment(today).format("YYYY-MM-DD")
                 }
-
-                dispatch(updateFaq(data, faq.id, token))
+                Swal.fire({
+                    title: "Apakah anda yakin ?",
+                    text: "Data ini akan diedit !",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Ya !",
+                    cancelButtonText: "Batal",
+                })
+                    .then((result) => {
+                        if (result.isConfirmed) {
+                            dispatch(updateFaq(data, faq.id, token))
+                        }
+                    });
 
             } else {
                 const data = {
@@ -127,10 +140,23 @@ const EditFaq = ({token}) => {
                     publish,
                     pinned,
                     _method: 'put',
-                    tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
+                    tanggal_publish: moment(publishDate).format("YYYY-MM-DD")
                 }
-
-                dispatch(updateFaq(data, faq.id, token))
+                Swal.fire({
+                    title: "Apakah anda yakin ?",
+                    text: "Data ini akan diedit !",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Ya !",
+                    cancelButtonText: "Batal",
+                })
+                    .then((result) => {
+                        if (result.isConfirmed) {
+                            dispatch(updateFaq(data, faq.id, token))
+                        }
+                    });
             }
 
         } else {
@@ -163,7 +189,7 @@ const EditFaq = ({token}) => {
             <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
                 {loading ? <LoadingPage loading={loading} /> : ""}
                 {
-                    faq ? 
+                    faq ?
                         <div className="card card-custom card-stretch gutter-b">
                             <div className="card-header">
                                 <h3 className="card-title font-weight-bolder text-dark">Ubah FAQ</h3>
@@ -222,7 +248,7 @@ const EditFaq = ({token}) => {
                                                                 <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>
                                                                     {row.nama_kategori}
                                                                 </option>
-                                                            :
+                                                                :
                                                                 null
                                                         );
                                                     })
@@ -231,7 +257,7 @@ const EditFaq = ({token}) => {
                                             {simpleValidator.current.message("kategori", kategori_id, "required", { className: "text-danger" })}
                                         </div>
                                     </div>
-                                    
+
                                     <div className="form-group row">
                                         <label
                                             htmlFor="staticEmail"
@@ -243,17 +269,16 @@ const EditFaq = ({token}) => {
                                             <div className="">
                                                 <label className="switches">
                                                     <input
-                                                    // required
-                                                    className="checkbox"
-                                                    checked={publish}
-                                                    type="checkbox"
-                                                    // onChange={(checked) => setPublish(checked)}
-                                                    onChange={(e) => handleChangePublish(e)}
+                                                        // required
+                                                        className="checkbox"
+                                                        checked={publish}
+                                                        type="checkbox"
+                                                        // onChange={(checked) => setPublish(checked)}
+                                                        onChange={(e) => handleChangePublish(e)}
                                                     />
                                                     <span
-                                                    className={`sliders round ${
-                                                        pinned ? "text-white" : "pl-2"
-                                                    }`}
+                                                        className={`sliders round ${pinned ? "text-white" : "pl-2"
+                                                            }`}
                                                     >
                                                     </span>
                                                 </label>
@@ -267,25 +292,25 @@ const EditFaq = ({token}) => {
                                                 <label className='col-sm-5 col-form-label font-weight-bolder'>Set Tanggal Publish</label>
                                                 <div className="col-sm-12">
                                                     <div className="input-group">
-                                                    <DatePicker
-                                                        className="form-search-date form-control-sm form-control"
-                                                        selected={publishDate}
-                                                        onChange={(date) => handlePublishDate(date)}
-                                                        // onChange={(date) => setPublishDate(date)}
-                                                        selectsStart
-                                                        startDate={publishDate}
-                                                        // endDate={endDate}
-                                                        dateFormat="dd/MM/yyyy"
-                                                        placeholderText="Silahkan Isi Tanggal Publish"
-                                                        wrapperClassName="col-12 col-lg-12 col-xl-12"
-                                                        // minDate={moment().toDate()}
-                                                        disabled = {disablePublishDate === true || disablePublishDate === null}
-                                                    // minDate={addDays(new Date(), 20)}
-                                                    />
+                                                        <DatePicker
+                                                            className="form-search-date form-control-sm form-control"
+                                                            selected={publishDate}
+                                                            onChange={(date) => handlePublishDate(date)}
+                                                            // onChange={(date) => setPublishDate(date)}
+                                                            selectsStart
+                                                            startDate={publishDate}
+                                                            // endDate={endDate}
+                                                            dateFormat="dd/MM/yyyy"
+                                                            placeholderText="Silahkan Isi Tanggal Publish"
+                                                            wrapperClassName="col-12 col-lg-12 col-xl-12"
+                                                            // minDate={moment().toDate()}
+                                                            disabled={disablePublishDate === true || disablePublishDate === null}
+                                                        // minDate={addDays(new Date(), 20)}
+                                                        />
                                                     </div>
                                                 </div>
                                             </div>
-                                        :
+                                            :
                                             null
                                     }
 
@@ -300,17 +325,16 @@ const EditFaq = ({token}) => {
                                             <div className="">
                                                 <label className="switches">
                                                     <input
-                                                    // required
-                                                    className="checkbox"
-                                                    checked={pinned}
-                                                    type="checkbox"
-                                                    // onChange={(checked) => setPublish(checked)}
-                                                    onChange={(e) => handleChangePinned(e)}
+                                                        // required
+                                                        className="checkbox"
+                                                        checked={pinned}
+                                                        type="checkbox"
+                                                        // onChange={(checked) => setPublish(checked)}
+                                                        onChange={(e) => handleChangePinned(e)}
                                                     />
                                                     <span
-                                                    className={`sliders round ${
-                                                        publish ? "text-white" : "pl-2"
-                                                    }`}
+                                                        className={`sliders round ${publish ? "text-white" : "pl-2"
+                                                            }`}
                                                     >
                                                     </span>
                                                 </label>
@@ -330,10 +354,10 @@ const EditFaq = ({token}) => {
                                 </form>
                             </div>
                         </div>
-                    :
-                        null    
+                        :
+                        null
                 }
-                
+
             </div>
         </PageWrapper>
     )

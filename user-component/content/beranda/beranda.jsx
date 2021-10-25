@@ -244,8 +244,6 @@ const Beranda = ({ session }) => {
     if (session.Token){
       const data = await dispatch(checkRegisterPelatihan(id, session.Token))
 
-      // console.log (data)
-
       if (data.status === true){
         router.push(`${router.pathname}/peserta/form-pendaftaran?id=${id}`)
 
@@ -675,35 +673,37 @@ const Beranda = ({ session }) => {
                                     }
                                     thumbnail={
                                       show[i].pelatihan[index].hover === true
-                                        ? // <div style={{filter:"brightness(50%)"}}>
-                                          //   <Image
-                                          //     src={process.env.END_POINT_API_IMAGE_BEASISWA + element.gambar}
-                                          //     // src={`https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/${element.gambar}`}
-                                          //     layout="fill"
-                                          //     objectFit="cover"
-                                          //   />
-                                          // </div>
-                                          ""
-                                        : // <Image
+                                        ? 
+                                          <div style={{filter:"brightness(50%)"}}>
+                                            <Image
+                                              src={process.env.END_POINT_API_IMAGE_BEASISWA + element.gambar}
+                                              // src={`https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/${element.gambar}`}
+                                              layout="fill"
+                                              objectFit="cover"
+                                            />
+                                          </div>
+                                          
+                                        : 
+                                          // <Image
                                           //   src={process.env.END_POINT_API_IMAGE_BEASISWA + element.gambar}
                                           //   layout="fill"
                                           //   objectFit="cover"
                                           //   style={{filter:"brightness(50%)"}}
                                           // />
-                                          // <Image
-                                          //   src={process.env.END_POINT_API_IMAGE_BEASISWA + element.gambar}
-                                          //   layout="fill"
-                                          //   objectFit="cover"
-                                          // />
-                                          ""
+                                          <Image
+                                            src={process.env.END_POINT_API_IMAGE_BEASISWA + element.gambar}
+                                            layout="fill"
+                                            objectFit="cover"
+                                          />
+                                          
                                     }
                                   >
                                     <div className="rounded mt-0 pt-0">
-                                      {/* <Image 
+                                      <Image 
                                               src={process.env.END_POINT_API_IMAGE_PARTNERSHIP + "/" + element.gambar_mitra}
                                               layout="fill" 
                                               objectFit="cover"
-                                            />  */}
+                                            /> 
                                     </div>
 
                                     <div className="d-flex align-items-center justify-content-between pl-24">
@@ -810,6 +810,13 @@ const Beranda = ({ session }) => {
                           <div className="container-fluid">
                             <div className="row border py-3">
                               <div className="col-12 col-md-4">
+                                
+
+                                <div className="position-absolute mt-5" style={{zIndex:"100"}}>
+                                  <span className="badgess-lg">
+                                    Pelatihan {cardMetode}
+                                  </span>
+                                </div>
                                 <div style={{minHeight:"300px"}}>
                                   <Image 
                                     src={process.env.END_POINT_API_IMAGE_BEASISWA + cardImage}
@@ -819,19 +826,19 @@ const Beranda = ({ session }) => {
                                     className="rounded"
                                   />
                                 </div>
-
-                                <div className="position-absolute mt-5">
-                                  <span className="badgess-lg">
-                                    Pelatihan {cardMetode}
-                                  </span>
-                                </div>
                               </div>
 
                               <div className="col-12 col-md-8">
                                 <div className="py-8">
                                   <div className="position-relative d-flex align-items-start justify-content-between">
                                     <div className="d-flex d-flex align-items-start">
-                                      <div className="dot-bullet"></div>
+                                      <div className="dot-bullet">
+                                        <Image 
+                                          src={process.env.END_POINT_API_IMAGE_PARTNERSHIP + cardImageMitra}
+                                          layout="fill" 
+                                          objectFit="cover"
+                                        /> 
+                                      </div>
                                       <div className="ml-6">
                                         <p
                                           className="fz-14"
