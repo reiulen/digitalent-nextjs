@@ -57,8 +57,21 @@ const TambahKategori = ({ token }) => {
                 nama,
                 jenis_kategori
             }
-
-            dispatch(newKategori(data, token))
+            Swal.fire({
+                title: "Apakah anda yakin ?",
+                text: "Data ini akan ditambahkan !",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Ya !",
+                cancelButtonText: "Batal",
+              })
+                .then((result) => {
+                  if (result.isConfirmed) {
+                    dispatch(newKategori(data, token))
+                  }
+                });
 
         } else {
             simpleValidator.current.showMessages();

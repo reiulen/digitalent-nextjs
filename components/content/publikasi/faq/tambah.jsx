@@ -57,10 +57,10 @@ const TambahFaq = ({ token, id }) => {
 
     const handleChangePublish = (e) => {
         setDisablePublishDate(!disablePublishDate)
-    
-        if (e.target.checked === false){
-            setPublishDate (null)
-            setPublish (0)
+
+        if (e.target.checked === false) {
+            setPublishDate(null)
+            setPublish(0)
         } else {
             setPublish(1)
         }
@@ -73,7 +73,7 @@ const TambahFaq = ({ token, id }) => {
     }
 
     const handleChangePinned = (e) => {
-        if (e.target.checked === false){
+        if (e.target.checked === false) {
             setPinnedFaq(0)
 
         } else if (e.target.checked === true) {
@@ -117,8 +117,21 @@ const TambahFaq = ({ token, id }) => {
                     pinned,
                     tanggal_publish: moment(today).format("YYYY-MM-DD")
                 }
-
-                dispatch(newFaq(data, token))
+                Swal.fire({
+                    title: "Apakah anda yakin ?",
+                    text: "Data ini akan ditambahkan !",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Ya !",
+                    cancelButtonText: "Batal",
+                })
+                    .then((result) => {
+                        if (result.isConfirmed) {
+                            dispatch(newFaq(data, token))
+                        }
+                    });
 
             } else {
                 const data = {
@@ -130,8 +143,21 @@ const TambahFaq = ({ token, id }) => {
                     pinned,
                     tanggal_publish: moment(publishDate).format("YYYY-MM-DD")
                 }
-
-                dispatch(newFaq(data, token))
+                Swal.fire({
+                    title: "Apakah anda yakin ?",
+                    text: "Data ini akan ditambahkan !",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Ya !",
+                    cancelButtonText: "Batal",
+                })
+                    .then((result) => {
+                        if (result.isConfirmed) {
+                            dispatch(newFaq(data, token))
+                        }
+                    });
             }
 
 

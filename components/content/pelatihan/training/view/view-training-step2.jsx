@@ -16,6 +16,8 @@ const ViewTrainingStep2 = () => {
   const [titleForm] = useState(review.judul_form);
   const [formBuilder] = useState(review.FormBuilder);
 
+  const { id } = router.query;
+
   // const [formBuilder] = useState([
   //   {
   //     key: 1,
@@ -215,10 +217,10 @@ const ViewTrainingStep2 = () => {
         title2="Form Pendaftaran"
         title3="Form Komitmen"
         title4="Parameter"
-        link1={`/pelatihan/pelatihan/view-pelatihan/${1}`}
-        link2={`/pelatihan/pelatihan/view-pelatihan/view-form-pendaftaran/${1}`}
-        link3={`/pelatihan/pelatihan/view-pelatihan/view-komitmen/${1}`}
-        link4={`/pelatihan/pelatihan/view-pelatihan/view-parameter/${1}`}
+        link1={`/pelatihan/pelatihan/view-pelatihan/${id}`}
+        link2={`/pelatihan/pelatihan/view-pelatihan/view-form-pendaftaran/${id}`}
+        link3={`/pelatihan/pelatihan/view-pelatihan/view-komitmen/${id}`}
+        link4={`/pelatihan/pelatihan/view-pelatihan/view-parameter/${id}`}
       />
 
       <div className="col-lg-12 order-1 px-0">

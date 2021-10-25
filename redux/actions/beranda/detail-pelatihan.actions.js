@@ -53,6 +53,7 @@ export const checkRegisterPelatihan = (id, token) => async dispatch => {
             type: CEK_REGISTER_PELATIHAN_SUCCESS,
             payload: data,
         });
+
         if(data){
             return data
         }
@@ -63,6 +64,10 @@ export const checkRegisterPelatihan = (id, token) => async dispatch => {
             type: CEK_REGISTER_PELATIHAN_FAIL,
             payload: error.message,
         });
+
+        if(error){
+            return error.response.data
+        }
     }
 }
 

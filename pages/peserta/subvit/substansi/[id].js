@@ -56,8 +56,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
         )
       );
 
-      // console.log(session.user.user.data.user.token);
-
       const data = session.user.user.data;
 
       if (data.user.roles[0] !== "user") {
