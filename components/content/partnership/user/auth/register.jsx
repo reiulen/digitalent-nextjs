@@ -107,7 +107,7 @@ const RegisterMitra = () => {
       notify(allAuthentication.errorRegister);
     } else if (allAuthentication.status === "success"){
       // jika sukses
-      Swal.fire("Berhasil Daftar", "Silahkan login", "success").then(() => {
+      Swal.fire("Berhasil Daftar", "Silakan tunggu aktivasi dari admin dan mohon cek email anda secara berkala", "success").then(() => {
         // router.push("/partnership/user/auth/login")
         router.push("/login/mitra")
       });

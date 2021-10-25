@@ -42,7 +42,7 @@ const Layout = dynamic(() =>
 export default function RiwayatPelatihanPage(props) {
   const session = props.session.user.user.data.user;
   const router = useRouter();
-  console.log(router, "ini router ");
+  
   return (
     <>
       <Layout title="Administrasi" session={session}>

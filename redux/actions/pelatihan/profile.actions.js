@@ -33,6 +33,7 @@ import {
   UPDATE_PEKERJAAN_RESET,
   UPDATE_PEKERJAAN_FAIL,
   CLEAR_ERRORS,
+  GET_ASAL_SEKOLAH,
 } from "../../types/pelatihan/profile.type";
 import axios from "axios";
 
@@ -175,6 +176,32 @@ export const updateProfilePendidikan =
       });
     }
   };
+
+  export const getDataAsalSekolah =
+  (token) => async (dispatch) => {
+    try {
+
+      let link =
+      process.env.END_POINT_API_SITE_MANAGEMENT +
+        `api/option/origin-of-school`;
+
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      };
+
+      const { data } = await axios.get(link, config);
+      dispatch({
+        type: GET_ASAL_SEKOLAH,
+        payload: data,
+      });
+    } catch (error) {
+      throw(error)
+    }
+  };
+
+
 //END PENDIDIKAN
 
 //KETERAMPILAN
@@ -288,6 +315,7 @@ export const updateProfilePekerjaan =
       });
     }
   };
+
 //END PEKERJAAN
 
 export const clearErrors = () => async (dispatch) => {
