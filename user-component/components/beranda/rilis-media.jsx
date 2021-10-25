@@ -4,7 +4,7 @@ import IconArrow from "../../../components/assets/icon/Arrow2";
 import { Badge } from "react-bootstrap";
 export default function rilisMedia({ berita }) {
   return (
-    <div className="py-0 py-xl-20 rillirs-media max-container">
+    <div className="py-0 py-xl-20 rillirs-media max-container mb-5">
       <h1
         className="fw-600 text-center mt-26 position-relative"
         style={{ color: "#1F1F1F" }}
