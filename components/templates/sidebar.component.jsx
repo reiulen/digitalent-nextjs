@@ -468,26 +468,9 @@ const Sidebar = ({ session }) => {
     const pathRoute = router.route;
     const splitRouteToMakingActive = pathRoute.split("/");
 
-    console.log(splitRouteToMakingActive);
-
     if (splitRouteToMakingActive[1]) {
       initializeMenu[i].selected = !condition;
     }
-    // if(initializeMenu[i].length > 0 && splitRouteToMakingActive[2]){
-    //   initializeMenu[i].child.map((rowChild, indexChild) => {
-    //     if(splitRouteToMakingActive[2] == rowChild[indexChild].name.toLowerCase()){
-    //       rowChild[indexChild].selected = true;
-    //     }
-    //   });
-    // }
-    // console.log("hap");
-
-    console.log(e);
-    console.log(i);
-    console.log(condition);
-
-    // const pathRoute = router.route;
-    // const splitRouteToMakingActive = pathRoute.split("/");
 
     if (i) {
       if (splitRouteToMakingActive[1]) {
