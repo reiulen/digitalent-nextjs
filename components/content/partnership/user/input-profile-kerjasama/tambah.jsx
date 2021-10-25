@@ -56,7 +56,7 @@ const Tambah = ({ token }) => {
         institution_name: "Harus isi nama lembaga",
       });
     } else if (wesite === "") {
-      setError({ ...error, wesite: "Harus isi nama website" });
+      setError({ ...error, wesite: "Harus isi alamat website" });
     } else if (email === "") {
       setError({ ...error, email: "Harus isi email" });
     }
@@ -279,7 +279,7 @@ const Tambah = ({ token }) => {
           //   data.data.agency_logo === "-" ? "" : data.data.agency_logo
           // );
           setImageview(
-            data.data.agency_logo === "-" ? "" : data.data.agency_logo
+            data.data.agency_logo
           );
           setAddress(data.data.address === "-" ? "" : data.data.address);
           setPostal_code(
@@ -346,7 +346,7 @@ const Tambah = ({ token }) => {
   const onNewReset = () => {
     // setSuccessDelete(false);
     router.replace(
-      "/partnership/user/profile-lembaga/input-profile",
+      "/partnership/user/input-profile",
       undefined,
       { shallow: true }
     );
@@ -562,7 +562,23 @@ const Tambah = ({ token }) => {
                       style={{ height: "400px" }}
                     >
                       {!agency_logo ? (
-                        ""
+
+                        <Image
+                      src={process.env.END_POINT_API_IMAGE_PARTNERSHIP + imageview}
+                      alt="Picture of the author"
+                      layout="fill"
+                      objectFit="fill"
+                    />
+                        
+
+                        // <Image
+                        //   src={imageview}
+                        //   alt="Picture of the author"
+                        //   layout="fill"
+                        //   objectFit="fill"
+                        // />
+
+
                       ) : (
                         <Image
                           src={agency_logo}
