@@ -270,6 +270,67 @@ export default function CardTemplateOriginal({ data }) {
           ) : (
             ""
           )}
+          {data.midtest ? (
+            <Col className="d-flex justify-content-center">
+              <Button
+                className="btn-rounded-full font-weight-bold btn-block justify-content-center mt-5"
+                style={{ height: "40px", fontSize: "14px" }}
+                onClick={() => {
+                  console.log("ini click button 1");
+                }}
+              >
+                Kerjakan Mid Test <i className="ri-arrow-right-s-line mr-2"></i>
+              </Button>
+            </Col>
+          ) : (
+            ""
+          )}
+          {data.trivia ? (
+            <Col className="d-flex justify-content-center">
+              <Button
+                className="btn-rounded-full font-weight-bold btn-block justify-content-center mt-5"
+                style={{ height: "40px", fontSize: "14px" }}
+                onClick={() => {
+                  console.log("ini click button 1");
+                }}
+              >
+                Kerjakan Trivia <i className="ri-arrow-right-s-line mr-2"></i>
+              </Button>
+            </Col>
+          ) : (
+            ""
+          )}
+          {data.survei ? (
+            <Col className="d-flex justify-content-center">
+              <Button
+                className="btn-rounded-full font-weight-bold btn-block justify-content-center mt-5"
+                style={{ height: "40px", fontSize: "14px" }}
+                onClick={() => {
+                  console.log("ini click button 1");
+                }}
+              >
+                Kerjakan Survey <i className="ri-arrow-right-s-line mr-2"></i>
+              </Button>
+            </Col>
+          ) : (
+            ""
+          )}
+          {data.lpj ? (
+            <Col className="d-flex justify-content-center">
+              <Button
+                className="btn-rounded-full font-weight-bold btn-block justify-content-center mt-5"
+                style={{ height: "40px", fontSize: "14px" }}
+                onClick={() => {
+                  console.log("ini click button 1");
+                }}
+              >
+                <i className="ri-file-text-line mr-2"></i>
+                Kerjakan LPJ
+              </Button>
+            </Col>
+          ) : (
+            ""
+          )}
         </div>
       </Card>
 
@@ -364,37 +425,25 @@ export default function CardTemplateOriginal({ data }) {
           </button>
         </Modal.Footer>
       </Modal>
-
-      {data.survei && data.lpj ? (
-        <IsiLpj data={data} />
-      ) : data.survei && data.lpj == false ? (
-        <IsiSurvey data={data} />
-      ) : (
-        <IsiLpj data={data} />
-      )}
-
-      {data.midtest && <MidTest data={data} />}
-      {data.tes_substansi && <TestSubstansi data={data} />}
-      {data.trivia && <Trivia data={data} />}
     </Fragment>
   );
 }
 
-const status = [
-  "menunggu jadwal",
-  "tes substansi",
-  "lolos substansi",
-  "seleksi administrasi",
-  "lolos administrasi",
-  "ikuti pelatihan",
-  "kerjakan mid test",
-  "kerjakan trivia",
-  "lulus pelatihan",
-  "isi survey",
-  "isi lpj",
-  "lulus pelatihan",
-  "tidak lulus",
-];
+// const status = [
+//   "menunggu jadwal",
+//   "tes substansi",
+//   "lolos substansi",
+//   "seleksi administrasi",
+//   "lolos administrasi",
+//   "ikuti pelatihan",
+//   "kerjakan mid test",
+//   "kerjakan trivia",
+//   "lulus pelatihan",
+//   "isi survey",
+//   "isi lpj",
+//   "lulus pelatihan",
+//   "tidak lulus",
+// ];
 // const CardTemplate = (props) => {
 // switch (props.status) {
 //   case "menunggu jadwal":
@@ -479,3 +528,15 @@ const status = [
 // };
 
 // export default CardTemplateOriginal;
+
+// {data.survei && data.lpj ? (
+//   <IsiLpj data={data} />
+// ) : data.survei && data.lpj == false ? (
+//   <IsiSurvey data={data} />
+// ) : (
+//   <IsiLpj data={data} />
+// )}
+
+// {data.midtest && <MidTest data={data} />}
+// {data.tes_substansi && <TestSubstansi data={data} />}
+// {data.trivia && <Trivia data={data} />}
