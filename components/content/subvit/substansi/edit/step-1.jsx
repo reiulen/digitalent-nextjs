@@ -19,6 +19,7 @@ import {
   dropdownPelatihanbyTema,
   dropdownTemabyAkademi,
 } from "../../../../../redux/actions/pelatihan/function.actions";
+import axios from "axios";
 
 const StepOne = ({ token }) => {
   const dispatch = useDispatch();
@@ -49,7 +50,7 @@ const StepOne = ({ token }) => {
   const [category, setCategory] = useState(subtance.category);
 
   useEffect(() => {
-    // console.log(subtance, "<<<<<substansi");
+    optionPelatihan;
     dispatch(dropdownTemabyAkademi(academy_id, token));
     dispatch(dropdownPelatihanbyTema(theme_id, token));
     if (isUpdated) {
@@ -78,6 +79,7 @@ const StepOne = ({ token }) => {
     token,
     theme_id,
     subtance,
+    optionPelatihan,
   ]);
 
   const saveDraft = () => {
@@ -113,9 +115,32 @@ const StepOne = ({ token }) => {
     (state) => state.drowpdownPelatihanbyTema.data
   );
 
+  const [optionPelatihan, setOptionPelatihan] = useState([]);
+
   const handleChangeTema = (e) => {
     setAcademyId(e.target.value);
-    e.target.value && dispatch(dropdownTemabyAkademi(e.target.value, token));
+    // e.target.value && dispatch(dropdownTemabyAkademi(e.target.value, token));
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    axios
+      .get(
+        `http://api-dts-dev.majapahit.id/pelatihan/api/v1/tema/dropdown-tema-by-akademi?akademi_id=${e.target.value}`,
+        config
+      )
+      .then((res) => {
+        const id = res.data.data.map((item) => {
+          return item.value;
+        });
+        axios
+          .get(
+            `http://api-dts-dev.majapahit.id/pelatihan/api/v1/pelatihan/dropdown-pelatihan-tema?id=${id}`,
+            config
+          )
+          .then((res) => setOptionPelatihan(res.data.data));
+      });
   };
 
   const handleChangePelatihan = (e) => {
@@ -248,17 +273,16 @@ const StepOne = ({ token }) => {
                       {" "}
                       -Pilih Pelatihan-
                     </option>
-                    {dataPelatihan2 &&
-                      dataPelatihan2.map((item, index) => {
-                        return (
-                          <>
-                            <option value={item.value} key={index}>
-                              {" "}
-                              {item.label}
-                            </option>
-                          </>
-                        );
-                      })}
+                    {optionPelatihan.map((item, index) => {
+                      return (
+                        <>
+                          <option value={item.value} key={index}>
+                            {" "}
+                            {item.label}
+                          </option>
+                        </>
+                      );
+                    })}
                   </select>
                 </div>
               </div>
