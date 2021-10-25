@@ -25,11 +25,17 @@ const Table = ({ token }) => {
   const router = useRouter();
 
   const allApi = useSelector((state) => state.allApi);
+
   const {
     loading: deleteLoading,
     error: deleteError,
     isDeleted,
   } = useSelector((state) => state.deleteApi);
+
+  const deleteApi = useSelector(state => state.deleteApi)
+
+
+  console.log("deleteApi",deleteApi)
 
   const [valueSearch, setValueSearch] = useState("");
   const handleChangeValueSearch = (value) => {
@@ -40,6 +46,7 @@ const Table = ({ token }) => {
     event.preventDefault();
     dispatch(searchCooporation(valueSearch));
   };
+
 
   const handleDelete = (id, token) => {
     Swal.fire({
@@ -72,10 +79,13 @@ const Table = ({ token }) => {
         }
       );
     }
+    if(deleteError){
+      Swal.fire("Gagal", "Data gagal dihapus.", "error")
+    }
     dispatch({
       type: DELETE_API_RESET,
     });
-  }, [isDeleted, dispatch, token]);
+  }, [isDeleted, dispatch, token,deleteError]);
 
   return (
     <PageWrapper>

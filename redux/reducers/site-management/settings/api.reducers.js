@@ -31,6 +31,8 @@ import {
   DETAIL_LOG_API_REQUEST,
   DETAIL_LOG_API_SUCCESS,
   DETAIL_LOG_API_FAIL,
+  RESET_VALUE_SORTIR,
+  CHANGE_DATES,
 } from "../../../types/site-management/settings/api.type";
 
 const statuslist = {
@@ -44,6 +46,8 @@ const initialState = {
   page: 1,
   limit: 5,
   cari: "",
+  from: "",
+  to: "",
   status: statuslist.idle,
 };
 
@@ -304,6 +308,23 @@ export const listLogReducer = (state = initialState, action) => {
         ...state,
         status: statuslist.error,
         error: null,
+      };
+
+    case RESET_VALUE_SORTIR:
+      return {
+        ...state,
+        page: 1,
+        limit: 5,
+        cari: "",
+        from: "",
+        to: "",
+      };
+
+    case CHANGE_DATES:
+      return {
+        ...state,
+        from: action.from,
+        to: action.to,
       };
 
     case SEARCH_COORPORATION:
