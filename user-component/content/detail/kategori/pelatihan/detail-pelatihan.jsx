@@ -10,8 +10,8 @@ import Layout from "../../../wrapper/layout.wrapper";
 import SubHeaderComponent from "../../../../components/template/Subheader.component";
 import TrainingReminder from "../../../../components/TrainingReminder";
 import style from "../../../../../styles/peserta/dashboard.module.css";
-import IconLove from '../../../../../components/assets/icon/Love'
-import IconShare from '../../../../../components/assets/icon/Share'
+import IconLove from "../../../../../components/assets/icon/Love";
+import IconShare from "../../../../../components/assets/icon/Share";
 // import DownloadButton from "../../../../components/DownloadButton";
 // import FilterBar from "../../../../components/FilterBar";
 
@@ -24,11 +24,11 @@ const DetailPelatihan = () => {
       <SubHeaderComponent />
 
       {pelatihan ? (
-        <div className="row mt-3">
-          <div className="col-12 col-md-9">
+        <div className="row mt-13">
+          <div className="col-12 col-md-8">
             <div className="bg-white">
               <div className="ml-2 mb-3">
-                <h1 className="fw-700 fz-36 mt-10">{pelatihan.name}</h1>
+                <h1 className="fw-700 fz-36">{pelatihan.name}</h1>
                 <div className="d-flex align-items-center">
                   <p className="mr-6 fz-18 fw-600">{pelatihan.akademi}</p>
                   <p className="badgess-green">{pelatihan.Status}</p>
@@ -37,7 +37,9 @@ const DetailPelatihan = () => {
                 <div className="row mt-8">
                   <div className="col-3">
                     <div>
-                      <p className="mb-2" style={{color: "#6C6C6C"}}>Registrasi</p>
+                      <p className="mb-2" style={{ color: "#6C6C6C" }}>
+                        Registrasi
+                      </p>
                       <p className="fz-16">
                         {moment(pelatihan.pendaftaran_mulai).format(
                           "DD MMMM YYYY"
@@ -51,13 +53,17 @@ const DetailPelatihan = () => {
                   </div>
                   <div className="col-3">
                     <div>
-                      <p className="mb-2" style={{color: "#6C6C6C"}}>Pelaksanaan</p>
+                      <p className="mb-2" style={{ color: "#6C6C6C" }}>
+                        Pelaksanaan
+                      </p>
                       <p className="fz-16">{pelatihan.metode_pelatihan}</p>
                     </div>
                   </div>
                   <div className="col-3">
                     <div>
-                      <p className="mb-2" style={{color: "#6C6C6C"}}>Pendaftar</p>
+                      <p className="mb-2" style={{ color: "#6C6C6C" }}>
+                        Pendaftar
+                      </p>
                       <p className="fz-16">{pelatihan.kuota_peserta} Peserta</p>
                     </div>
                   </div>
@@ -93,65 +99,119 @@ const DetailPelatihan = () => {
               <div className="p-4 border rounded mt-10">
                 {pelatihan.deskripsi}
               </div>
-
-
-
             </div>
           </div>
 
-          <div className="col-12 col-md-3">
-            <div className="bg-white border rounded">
-              <div className="row mt-5 p-3">
-                <h4 className="font-weight-bolder ml-3">Ikuti Pelatihan</h4>
-                <div className="ml-3 mb-5">
+          <div className="col-12 col-md-4">
+            <div className="bg-white border rounded p-6">
+   
+                <h4 className="fz-20 fw-600">Ikuti Pelatihan</h4>
+                <span className="fz-16">
                   {moment(pelatihan.pelatihan_mulai).format("DD MMMM YYYY")} -{" "}
                   {moment(pelatihan.pelatihan_selesai).format("DD MMMM YYYY")}
-                </div>
+                </span>
+
                 {pelatihan.status === "Closed" ? (
-                  <div className="col-12 my-3">
+      
                     <Link
                       href={`/peserta/form-pendaftaran?id=${pelatihan.id}`}
                       passHref
                     >
                       <a>
-                        <button className="btn btn-primary-dashboard rounded-pill btn-block ">
+                        <button className="btn btn-primary rounded-pill btn-block mt-10  py-4">
                           Daftar Pelatihan
                         </button>
                       </a>
                     </Link>
-                  </div>
+          
                 ) : null}
 
-                <button className="btn btn-outline-primary-new  rounded-pill btn-block col-11 mx-3">
+                <button className="btn btn-outline-primary-new mt-4 rounded-pill mb-8 btn-block py-4">
                   <i className="ri-download-cloud-fill"></i>
                   <span>Unduh Silabus</span>
                 </button>
-              </div>
+        
 
               {/* Border */}
-              <div
+              {/* <div
                 className="row ml-3 my-5 mr-5"
                 style={{
                   height: "2px",
                   backgroundColor: "#ADB5BD",
                   opacity: "0.4",
                 }}
-              ></div>
-              <div className="row mt-5 p-3">
-                <div className="col-2">
+              ></div> */}
+              <hr />
+              <div className="d-flex flex-wrap align-items-start mt-10">
+                
                   <Image
                     src={`/assets/icon/alamat-1.svg`}
+                    width={30}
+                    height={30}
+                  />
+                <div className="ml-4">
+                  <p className="fw-600 fz-18 mb-2">Alamat</p>
+                  <p className="fz-16">{pelatihan.alamat}</p>
+                </div>
+              </div>
+
+              <div className="d-flex flex-wrap align-items-start mt-4">
+                
+                  <Image
+                    src={`/assets/icon/jam-1.svg`}
+                    width={30}
+                    height={30}
+                  />
+                <div className="ml-4">
+                  <p className="fw-600 fz-18 mb-2">Jadwal Pelatihan</p>
+                  <p className="fz-16">{moment(pelatihan.pelatihan_mulai).format("DD MMMM YYYY")} -{" "}
+                    {moment(pelatihan.pelatihan_selesai).format("DD MMMM YYYY")}</p>
+                </div>
+              </div>
+
+              <div className="d-flex flex-wrap align-items-start mt-4">
+                
+                  <Image
+                    src={`/assets/icon/jam-1.svg`}
+                    width={30}
+                    height={30}
+                  />
+                <div className="ml-4">
+                  <p className="fw-600 fz-18 mb-2">Jadwal Pelatihan</p>
+                  <p className="fz-16">{moment(pelatihan.pelatihan_mulai).format("DD MMMM YYYY")} -{" "}
+                    {moment(pelatihan.pelatihan_selesai).format("DD MMMM YYYY")}</p>
+                </div>
+              </div>
+
+
+              <div className="d-flex flex-wrap align-items-start mt-4">
+                
+                  <Image
+                    src={`/assets/icon/kuota-1.svg`}
+                    width={30}
+                    height={30}
+                  />
+                <div className="ml-4">
+                  <p className="fw-600 fz-18 mb-2">Kuota</p>
+                  <p className="fz-16">{pelatihan.kuota_pendaftar} peserta</p>
+                </div>
+              </div>
+
+               {/* <div className="row mt-5 p-3">
+                <div className="col-2">
+                  <Image
+                    src={`/assets/icon/kuota-1.svg`}
                     width={50}
                     height={50}
                   />
                 </div>
                 <div className="col-10">
-                  <div className="font-weight-bolder">Alamat</div>
-                  <div>{pelatihan.alamat}</div>
+                  <div className="font-weight-bolder">Kuota</div>
+                  <div>{pelatihan.kuota_pendaftar} orang</div>
                 </div>
-              </div>
+              </div> */}
 
-              <div className="row mt-5 p-3">
+              {/* <div className="row mt-5 p-3">
                 <div className="col-2">
                   <Image
                     src={`/assets/icon/jam-1.svg`}
@@ -166,21 +226,12 @@ const DetailPelatihan = () => {
                     {moment(pelatihan.pelatihan_selesai).format("DD MMMM YYYY")}
                   </div>
                 </div>
-              </div>
+              </div> */}
 
-              <div className="row mt-5 p-3">
-                <div className="col-2">
-                  <Image
-                    src={`/assets/icon/kuota-1.svg`}
-                    width={50}
-                    height={50}
-                  />
-                </div>
-                <div className="col-10">
-                  <div className="font-weight-bolder">Kuota</div>
-                  <div>{pelatihan.kuota_pendaftar} orang</div>
-                </div>
-              </div>
+             
+
+
+
             </div>
 
             <div className="bg-white border rounded mt-5">
