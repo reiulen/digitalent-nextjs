@@ -270,67 +270,6 @@ export default function CardTemplateOriginal({ data }) {
           ) : (
             ""
           )}
-          {data.midtest ? (
-            <Col className="d-flex justify-content-center">
-              <Button
-                className="btn-rounded-full font-weight-bold btn-block justify-content-center mt-5"
-                style={{ height: "40px", fontSize: "14px" }}
-                onClick={() => {
-                  console.log("ini click button 1");
-                }}
-              >
-                Kerjakan Mid Test <i className="ri-arrow-right-s-line mr-2"></i>
-              </Button>
-            </Col>
-          ) : (
-            ""
-          )}
-          {data.trivia ? (
-            <Col className="d-flex justify-content-center">
-              <Button
-                className="btn-rounded-full font-weight-bold btn-block justify-content-center mt-5"
-                style={{ height: "40px", fontSize: "14px" }}
-                onClick={() => {
-                  console.log("ini click button 1");
-                }}
-              >
-                Kerjakan Trivia <i className="ri-arrow-right-s-line mr-2"></i>
-              </Button>
-            </Col>
-          ) : (
-            ""
-          )}
-          {data.survei ? (
-            <Col className="d-flex justify-content-center">
-              <Button
-                className="btn-rounded-full font-weight-bold btn-block justify-content-center mt-5"
-                style={{ height: "40px", fontSize: "14px" }}
-                onClick={() => {
-                  console.log("ini click button 1");
-                }}
-              >
-                Kerjakan Survey <i className="ri-arrow-right-s-line mr-2"></i>
-              </Button>
-            </Col>
-          ) : (
-            ""
-          )}
-          {data.lpj ? (
-            <Col className="d-flex justify-content-center">
-              <Button
-                className="btn-rounded-full font-weight-bold btn-block justify-content-center mt-5"
-                style={{ height: "40px", fontSize: "14px" }}
-                onClick={() => {
-                  console.log("ini click button 1");
-                }}
-              >
-                <i className="ri-file-text-line mr-2"></i>
-                Kerjakan LPJ
-              </Button>
-            </Col>
-          ) : (
-            ""
-          )}
         </div>
       </Card>
 
