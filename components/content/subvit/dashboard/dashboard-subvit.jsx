@@ -43,15 +43,6 @@ const DashbardSubvit = ({ token }) => {
     );
   });
 
-  // console.log(dashboard_subvit && dashboard_subvit.chart);
-
-  // console.log(
-  //   dashboard_subvit &&
-  //     dashboard_subvit.chart.map((item) => {
-  //       console.log(item);
-  //     })
-  // );
-
   useEffect(() => {
     dispatch(
       getDashboardSubvit(
@@ -280,7 +271,7 @@ const DashbardSubvit = ({ token }) => {
                   <PieChart width={500} height={300}>
                     <Tooltip />
                     <Pie
-                      data={dataItem}
+                      data={dataItem.slice(0, 3)}
                       cx={250}
                       cy={150}
                       innerRadius={60}
@@ -455,15 +446,6 @@ const DashbardSubvit = ({ token }) => {
                     <button
                       className={`${styles.btnNext} btn btn-primary`}
                       onClick={() => handleNextPagination()}
-                      disabled={
-                        parseInt(router.query.page_substansi)
-                          ? 1
-                          : parseInt(router.query.page_substansi) ===
-                              dashboard_subvit &&
-                            dashboard_subvit.substansi.total /
-                              dashboard_subvit &&
-                            dashboard_subvit.substansi.totalFiltered
-                      }
                     >
                       <i
                         className="ri-arrow-right-s-line"
