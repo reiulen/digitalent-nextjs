@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
 
 import PageWrapper from "../../../../wrapper/page.wrapper";
 import StepViewPelatihan from "../../../../StepViewPelatihan";
@@ -8,10 +9,12 @@ import StepViewPelatihan from "../../../../StepViewPelatihan";
 const ViewTrainingStep3 = () => {
   const router = useRouter();
 
-  const [komitmenPeserta] = useState("Ya");
-  const [formKomitmen] = useState(
-    "1. Bersedia mengikuti seluruh tahapan pelatihan sejak awal hingga selesai; 2. Bersedia menjadi calon Penerima Bantuan Pemerintah Digital Talent Scholarship Tahun 2021; 3. Bersedia memenuhi persyaratan administratif serta Syarat dan Ketentuan yang berlaku; 4. Bersedia memenuhi Kewajiban dan Tata Tertib sebagai peserta pelatihan;"
+  const { error: errorReview, review } = useSelector(
+    (state) => state.getReviewStep3
   );
+
+  const [komitmenPeserta] = useState(review.komitmen === "1" ? "Ya" : "Tidak");
+  const [formKomitmen] = useState(review.deskripsi || "-");
 
   return (
     <PageWrapper>

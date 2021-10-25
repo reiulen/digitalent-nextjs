@@ -1,4 +1,5 @@
 import React from "react";
+import moment from "moment";
 
 const HistoryPage = ({ history }) => {
   return (
@@ -19,10 +20,12 @@ const HistoryPage = ({ history }) => {
                 {history.map((row, i) => (
                   <tr key={i}>
                     <td>{i + 1}</td>
-                    <td>{row.pelatihan}</td>
+                    <td>{row.Name}</td>
                     <td>
                       <p className="font-weight-bolder my-0">
-                        {row.pelaksanaan}
+                        {moment(row.pelatihan_mulai).format("DD MMMM YYYY")} sd{" "}
+                        <br />
+                        {moment(row.pelatihan_selesai).format("DD MMMM YYYY")}
                       </p>
                     </td>
                     <td>
