@@ -194,16 +194,13 @@
   background-color: #eaf4ff;
 }
 
-
-
-
 .dot-bullet {
   width: 90px;
   height: 90px;
   -webkit-filter: drop-shadow(0px 4px 8px rgba(31, 31, 31, 0.1));
   filter: drop-shadow(0px 4px 8px rgba(31, 31, 31, 0.1));
   border-radius: 50% !important;
-  background-color: blue;
+  /* background-color: blue; */
   overflow: hidden;
 }
 
