@@ -63,7 +63,6 @@ const Table = ({ token }) => {
   let selectRefStatus = null;
 
   const allCooperationUser = useSelector((state) => state.allCooperationUser);
-  console.log("allCooperationUser",allCooperationUser)
 
   const [valueSearch, setValueSearch] = useState("");
   const [valueStatus, setValueStatus] = useState("");
