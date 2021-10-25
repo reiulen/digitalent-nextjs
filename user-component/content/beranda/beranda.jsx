@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import Swal from "sweetalert2";
 import moment from "moment";
+import { toast } from "react-toastify";
 import IconTime from "../../../components/assets/icon-dashboard-peserta/Time";
 import IconPeserta from "../../../components/assets/icon-dashboard-peserta/Peserta";
 import IconClose from "../../../components/assets/icon/Close";
@@ -245,14 +246,14 @@ const Beranda = ({ session }) => {
     if (session.Token) {
       const data = await dispatch(checkRegisterPelatihan(id, session.Token));
 
+      // console.log (data)
+
       if (data.status === true) {
         router.push(`${router.pathname}/peserta/form-pendaftaran?id=${id}`);
-      } else {
-        Swal.fire({
-          icon: "error",
-          title: "Error",
-          text: "Anda telah terdaftar pada pelatihan ini.",
-        });
+      } else if (data.status === false) {
+        // let errMessage = data.message[0].toUpperCase()  + string.substring(1)
+        let errMessage = data.message;
+        toast.error(errMessage);
       }
     } else {
       router.push(`${router.pathname}/login`);
@@ -281,10 +282,10 @@ const Beranda = ({ session }) => {
                 focus: "center",
                 breakpoints: {
                   1669: {
-                    height: "500px",
+                    height: "360px",
                   },
                   1262: {
-                    height: "400px",
+                    height: "300px",
                   },
                   1062: {
                     height: "300px",
@@ -330,10 +331,10 @@ const Beranda = ({ session }) => {
             >
               {publikasi.imagetron.map((el, i) => {
                 return (
-                  <SplideSlide key={i} className="rounded">
+                  <SplideSlide key={i}>
                     <Image
                       layout="fill"
-                      objectFit="fill"
+                      objectFit="cover"
                       // src={imageError === true ? defaultImage : process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + el.gambar}
                       src={
                         imageError === true
@@ -343,7 +344,7 @@ const Beranda = ({ session }) => {
                             el.gambar
                       }
                       alt="Imagetron Slide"
-                      className="mx-5 rounded"
+                      className="mx-5"
                       onError={() =>
                         handleErrorImage(
                           process.env.END_POINT_API_IMAGE_PUBLIKASI +
@@ -987,19 +988,29 @@ const Beranda = ({ session }) => {
 
       {/* Rilis Media & Informasi Terbaru */}
       <RilisMedia
-        berita={publikasi.berita.length !== 0 ? publikasi.berita.length : null}
+        berita={
+          publikasi && publikasi.berita && publikasi.berita.length !== 0
+            ? publikasi.berita.length
+            : null
+        }
       />
 
       {/* Galeri Terupdate dan Terkini */}
       <GaleryUpdate
         gambar={
-          publikasi.gallery.length !== 0 ? publikasi.gallery.length : null
+          publikasi && publikasi.gallery && publikasi.gallery.length !== 0
+            ? publikasi.gallery.length
+            : null
         }
       />
 
       {/* Informasi Dalam Video Terkini */}
       <InfoVideo
-        video={publikasi.video.length !== 0 ? publikasi.video.length : null}
+        video={
+          publikasi && publikasi.video && publikasi.video.length !== 0
+            ? publikasi.video.length
+            : null
+        }
       />
 
       {/* Ayo Bergabung, Jadi Jagoan Digital! */}

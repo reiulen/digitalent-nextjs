@@ -468,20 +468,26 @@ const Sidebar = ({ session }) => {
     const pathRoute = router.route;
     const splitRouteToMakingActive = pathRoute.split("/");
 
-    if (splitRouteToMakingActive[1]) {
-      initializeMenu[i].selected = !condition;
-    }
+    console.log(condition);
 
-    if (i) {
+    if(condition != null){
+
       if (splitRouteToMakingActive[1]) {
         initializeMenu[i].selected = !condition;
-        if (
-          initializeMenu[i].name.toLowerCase() === splitRouteToMakingActive[1]
-        ) {
-          const idSubmenuActive = localStorage.getItem("submenuActive");
-          initializeMenu[i].child[idSubmenuActive].selected = true;
+      }
+  
+      if (i) {
+        if (splitRouteToMakingActive[1]) {
+          initializeMenu[i].selected = !condition;
+          if (
+            initializeMenu[i].name.toLowerCase() === splitRouteToMakingActive[1]
+          ) {
+            const idSubmenuActive = localStorage.getItem("submenuActive");
+            initializeMenu[i].child[idSubmenuActive].selected = true;
+          }
         }
       }
+
     }
 
     let _temp = [...initializeMenu];
