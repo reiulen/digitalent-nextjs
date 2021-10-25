@@ -294,44 +294,52 @@ const EditGaleri = ({ token }) => {
                 _method,
                 image_delete: deleteImg
             }
-
             dispatch(onCall(data, token))
         }
     }
 
     const onSubmit = (e) => {
         e.preventDefault()
-        if (error) {
-            dispatch(clearErrors())
-        }
 
-        if (success) {
-            dispatch({
-                type: UPDATE_GALERI_RESET,
-            });
-        }
-
-        if (publish === true) {
-            setPublish(1)
-
-        } else if (publish === false) {
-            setPublish(0)
-        }
-
-        let temps = []
-
-        let flag = 0
-
-        for (let i = 0; i < image.length; i++) {
-            flag += 1
-
-            if (image[i].imageBase64 !== undefined) {
-                // temps.push(image[i])
-                temps.push(image[i].imageBase64)
+        if (image[0].imageName === "") {
+            Swal.fire(
+                "Oops !",
+                "Harus memasukkan minimal 1 Gambar !",
+                "error"
+            );
+        } else {
+            if (error) {
+                dispatch(clearErrors())
             }
 
-            if (flag === image.length) {
-                handleData(temps, updateGaleri)
+            if (success) {
+                dispatch({
+                    type: UPDATE_GALERI_RESET,
+                });
+            }
+
+            if (publish === true) {
+                setPublish(1)
+
+            } else if (publish === false) {
+                setPublish(0)
+            }
+
+            let temps = []
+
+            let flag = 0
+
+            for (let i = 0; i < image.length; i++) {
+                flag += 1
+
+                if (image[i].imageBase64 !== undefined) {
+                    // temps.push(image[i])
+                    temps.push(image[i].imageBase64)
+                }
+
+                if (flag === image.length) {
+                    handleData(temps, updateGaleri)
+                }
             }
         }
     }

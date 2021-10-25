@@ -8,7 +8,6 @@ import Select from "react-select";
 import CardPeserta from "./card";
 import Administrasi from "./administrasi";
 import style from "./style.module.css";
-import Image from "next/image";
 import { useSelector } from "react-redux";
 import {
   getAllRiwayatPelatihanPeserta,
@@ -160,18 +159,19 @@ export default function RiwayatPelatihan({ session }) {
         })}
         {dataRiwayatPelatihan.listPelatihan.list.map((el) => {
           if (el.survei) {
-            return (
-              <CardPeserta totalButton={2} data={el} status={"isi survey"} />
-            );
+            // <CardPeserta totalButton={2} data={el} status={"isi survey"} />
           }
           if (el.lpj) {
-            return <CardPeserta status={"test"} data={el} />;
+            // return <CardPeserta status={"isi lpj"} data={el} />;
           }
           if (el.lpj && el.survei) {
-            return <CardPeserta status={"test"} data={el} />;
+            // return <CardPeserta status={"isi lpj"} data={el} />;
+          }
+          if (el.midtest) {
+            // return <CardPeserta status={"kerjakan mid test"} data={el} />;
           }
         })}
-        <CardPeserta totalButton={2} status={"isi lpj"} />
+        {/* <CardPeserta totalButton={2} status={"kerjakan mid test"} /> */}
         {/* <CardPeserta totalButton={2} data={el} status={"isi survey"} /> */}
 
         {/* <CardPeserta totalButton={2} status={"lolos administrasi"} />

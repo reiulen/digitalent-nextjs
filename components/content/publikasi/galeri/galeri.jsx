@@ -267,7 +267,7 @@ const Galeri = ({ token }) => {
 
         } else if (limit !== null && startDate !== null && endDate !== null) {
             router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`
-);
+            );
         } else {
             router.push(`${router.pathname}?page=1&keyword=${search}`);
         }
@@ -355,7 +355,7 @@ const Galeri = ({ token }) => {
 
         } else if (search !== "" && publishValue === null) {
             router.push(`${router.pathname}?page=1&keyword=${search}&limit=${val}`);
-            
+
         } else if (search === "" && publishValue === "1") {
             router.push(
                 `${router.pathname}?page=1&publish=${publishValue}&limit=${val}`
@@ -419,6 +419,7 @@ const Galeri = ({ token }) => {
                 search !== null
             ) {
                 router.push(`${router.pathname}?publish=${val}`)
+                setSearch("")
                 // router.push(
                 //     `${router.pathname}?publish=${val}&startdate=${moment(
                 //         startDate
@@ -440,6 +441,7 @@ const Galeri = ({ token }) => {
                 search !== null
             ) {
                 router.push(`${router.pathname}?publish=${val}`);
+                setSearch("")
             } else if (
                 startDate === null &&
                 endDate === null &&
@@ -693,6 +695,7 @@ const Galeri = ({ token }) => {
                                             type="text"
                                             className="form-control pl-10"
                                             placeholder="Ketik disini untuk Pencarian..."
+                                            value={search}
                                             onChange={e => setSearch(e.target.value)}
                                         />
                                         <button
@@ -915,7 +918,7 @@ const Galeri = ({ token }) => {
                                                             <td className="align-middle">
                                                                 {row.nama_kategori}
                                                             </td>
-                                                            <td className="align-middle" style={{overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',maxWidth:'11rem'}}>{row.judul}</td>
+                                                            <td className="align-middle" style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '11rem' }}>{row.judul}</td>
                                                             <td className="align-middle">
                                                                 {row.publish === 1 ? (
                                                                     row.tanggal_publish
@@ -1190,7 +1193,7 @@ const Galeri = ({ token }) => {
                                                         </div>
                                                     </div>
 
-                                                    <div className="col-sm-5 col-4" style={{  }}>
+                                                    <div className="col-sm-5 col-4" style={{}}>
                                                         <span className="label label-inline label-light-success font-weight-bold p-2">
                                                             {(galeri.gallery[index_galleri].nama_kategori).toUpperCase()}
                                                         </span>
@@ -1214,21 +1217,34 @@ const Galeri = ({ token }) => {
                                                         }}
                                                     ></p>
                                                     <div className="row justify-content-between align-items-center" style={{ width: '100%' }}>
-                                                        <div className="col-sm-8 col-md-9 col-9">
+                                                        <div className="col-sm-12 col-md-12 col-12" style={{ display:'flex', flexWrap:'wrap',overflowWrap:'break-word'}}>
                                                             {galeri.gallery[index_galleri].tag !== null
                                                                 ? galeri.gallery[index_galleri].tag.map((row, i) => {
                                                                     return (
                                                                         <span
-                                                                            className="mr-3 label label-inline label-light-success font-weight-bold"
+                                                                            style={{ background: "#fff", border: '1px solid #d7e1ea' }}
+                                                                            className="mr-3 px-3 py-1 rounded"
                                                                             key={i}
                                                                         >
                                                                             <div className={styles["tagModal"]}>
-                                                                                {row}
+                                                                                #{row.toUpperCase()}
                                                                             </div>
                                                                         </span>
                                                                     );
                                                                 })
                                                                 : null}
+                                                            {/* (tags === null) ? null :
+                                                                tags.map((el, i) => {
+                                                                    return (
+                                                                        <div style={{ background: "#fff", border: '1px solid #d7e1ea' }}
+                                                                            className="mr-5 px-3 py-1 rounded"
+                                                                            key={i}>
+                                                                            <div className="text-center">
+                                                                                #{(el).toUpperCase()}
+                                                                            </div>
+                                                                        </div>
+                                                                    )
+                                                                }) */}
                                                         </div>
                                                         {/* <div className="col-sm-4 col-md-3 col-3 d-flex align-items-center justify-content-end">
                                                             <div className={styles['iconBorderGaleri']}>
