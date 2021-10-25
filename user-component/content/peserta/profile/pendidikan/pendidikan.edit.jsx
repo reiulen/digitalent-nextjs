@@ -6,7 +6,6 @@ import { toast } from "react-toastify";
 import SimpleReactValidator from "simple-react-validator";
 import { useDispatch, useSelector } from "react-redux";
 import style from "../style.module.css";
-import _ from "lodash";
 
 import {
   updateProfilePendidikan,
