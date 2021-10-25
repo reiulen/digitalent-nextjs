@@ -50,7 +50,6 @@ const StepOne = ({ token }) => {
   const [category, setCategory] = useState(subtance.category);
 
   useEffect(() => {
-    // console.log(subtance, "<<<<<substansi");
     optionPelatihan;
     dispatch(dropdownTemabyAkademi(academy_id, token));
     dispatch(dropdownPelatihanbyTema(theme_id, token));
@@ -267,7 +266,6 @@ const StepOne = ({ token }) => {
                     name="training_id"
                     id=""
                     onChange={(e) => setTrainingId(e.target.value)}
-                    // onChange={handleGetPelatihan}
                     className="form-control"
                     defaultValue={training_id}
                   >
