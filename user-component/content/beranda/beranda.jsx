@@ -612,7 +612,7 @@ const Beranda = ({ session }) => {
                         //   </a>
                         // </Link>
                         <Link
-                          href={`/detail/akademi/${akademiId}`}
+                          href={`/detail/akademi/${akademiId}?id=${akademiId}&tema_id=${el.id}`}
                         >
                           <a className="d-flex align-items-center">
                             <>
