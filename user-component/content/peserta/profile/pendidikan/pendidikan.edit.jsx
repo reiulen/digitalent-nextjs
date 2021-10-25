@@ -126,64 +126,64 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     let data = {};
-    // if (simpleValidator.current.allValid()) {
-    //   if (jengjangPendidikan.value === 19) {
-    //     data = {
-    //       jenjang: jengjangPendidikan.label,
-    //       asal_pendidikan: "-",
-    //       lainya: "-",
-    //       program_studi: "-",
-    //       ipk: "0",
-    //       tahun_masuk: parseInt("1"),
-    //       ijasah: "",
-    //     };
-    //   } else if (
-    //     jengjangPendidikan.value >= 20 &&
-    //     jengjangPendidikan.value <= 22
-    //   ) {
-    //     data = {
-    //       jenjang: jengjangPendidikan.label,
-    //       asal_pendidikan: "0",
-    //       lainya,
-    //       program_studi: "0",
-    //       ipk,
-    //       tahun_masuk: parseInt(tahunMasuk),
-    //       ijasah: ijazah,
-    //     };
-    //   }else if(jengjangPendidikan.value === 23){
-    //     data = {
-    //       jenjang: jengjangPendidikan.label,
-    //       asal_pendidikan: asalSekolah.label,
-    //       lainya: "-",
-    //       program_studi: "0",
-    //       ipk: "0",
-    //       tahun_masuk: parseInt(tahunMasuk),
-    //       ijasah: ijazah,
-    //     };
-    //   } else if (
-    //     jengjangPendidikan.value >= 24 &&
-    //     jengjangPendidikan.value <= 27
-    //   ) {
-    //     data = {
-    //       jenjang: jengjangPendidikan.label,
-    //       asal_pendidikan: asalSekolah.label,
-    //       lainya: "-",
-    //       program_studi: programStudi,
-    //       ipk,
-    //       tahun_masuk: parseInt(tahunMasuk),
-    //       ijasah: ijazah,
-    //     };
-    //   }
-    //   dispatch(updateProfilePendidikan(data, token));
-    // } else {
-    //   simpleValidator.current.showMessages();
-    //   forceUpdate(1);
-    //   Swal.fire({
-    //     icon: "error",
-    //     title: "Oops...",
-    //     text: "Isi data dengan benar !",
-    //   });
-    // }
+    if (simpleValidator.current.allValid()) {
+      if (jengjangPendidikan.value === 19) {
+        data = {
+          jenjang: jengjangPendidikan.label,
+          asal_pendidikan: "-",
+          lainya: "-",
+          program_studi: "-",
+          ipk: "0",
+          tahun_masuk: parseInt("1"),
+          ijasah: "",
+        };
+      } else if (
+        jengjangPendidikan.value >= 20 &&
+        jengjangPendidikan.value <= 22
+      ) {
+        data = {
+          jenjang: jengjangPendidikan.label,
+          asal_pendidikan: "0",
+          lainya,
+          program_studi: "0",
+          ipk,
+          tahun_masuk: parseInt(tahunMasuk),
+          ijasah: ijazah,
+        };
+      }else if(jengjangPendidikan.value === 23){
+        data = {
+          jenjang: jengjangPendidikan.label,
+          asal_pendidikan: asalSekolah.label,
+          lainya: "-",
+          program_studi: "0",
+          ipk: "0",
+          tahun_masuk: parseInt(tahunMasuk),
+          ijasah: ijazah,
+        };
+      } else if (
+        jengjangPendidikan.value >= 24 &&
+        jengjangPendidikan.value <= 27
+      ) {
+        data = {
+          jenjang: jengjangPendidikan.label,
+          asal_pendidikan: asalSekolah.label,
+          lainya: "-",
+          program_studi: programStudi,
+          ipk,
+          tahun_masuk: parseInt(tahunMasuk),
+          ijasah: ijazah,
+        };
+      }
+      dispatch(updateProfilePendidikan(data, token));
+    } else {
+      simpleValidator.current.showMessages();
+      forceUpdate(1);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Isi data dengan benar !",
+      });
+    }
   };
 
   return (
