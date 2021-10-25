@@ -17,18 +17,6 @@ const TestSubstansi = dynamic(
     ssr: false,
   }
 );
-const TesSubstansiDetail = dynamic(
-  () =>
-    import(
-      "../../../user-component/content/peserta/test-substansi/test-substansi-detail"
-    ),
-  {
-    loading: function loadingNow() {
-      return <LoadingSkeleton />;
-    },
-    ssr: false,
-  }
-);
 
 const Layout = dynamic(() =>
   import("../../../user-component/components/template/Layout.component")
@@ -39,7 +27,7 @@ export default function TestSubstansiPage(props) {
   return (
     <>
       <Layout title="Dashboard Peserta - Pelatihan" session={session}>
-        <TesSubstansiDetail session={session} />
+        <TestSubstansi session={session} />
       </Layout>
     </>
   );
@@ -60,12 +48,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
-      await store.dispatch(
-        getDetailRiwayatPelatihan(
-          query.id || req.cookies.id_pelatihan,
-          session.user.user.data.user.token
-        )
-      );
       await store.dispatch(getDataPribadi(session.user.user.data.user.token));
 
       return {

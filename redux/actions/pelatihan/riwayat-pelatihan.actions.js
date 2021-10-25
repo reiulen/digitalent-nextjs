@@ -7,6 +7,9 @@ import {
   SET_LIMIT_VALUE,
   SET_PAGE_VALUE,
   CLEAR_ERRORS,
+  RIWAYAT_PELATIHAN_DETAIL_FAIL,
+  RIWAYAT_PELATIHAN_DETAIL_REQUEST,
+  RIWAYAT_PELATIHAN_DETAIL_SUCCESS,
 } from "../../types/pelatihan/riwayat-pelatihan.type";
 import axios from "axios";
 
@@ -75,3 +78,28 @@ export const setValueLimit = (text) => {
     text,
   };
 };
+
+export const getDetailRiwayatPelatihan =
+  (id, token) => async (dispatch, getState) => {
+    try {
+      dispatch({ type: RIWAYAT_PELATIHAN_DETAIL_REQUEST });
+      let link =
+        process.env.END_POINT_API_PELATIHAN +
+        `api/v1/formPendaftaran/detail-pendaftaran-user?id=${id}`;
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const { data } = await axios.get(link, config);
+      if (data) {
+        dispatch({ type: RIWAYAT_PELATIHAN_DETAIL_SUCCESS, payload: data });
+      }
+    } catch (error) {
+      dispatch({
+        type: RIWAYAT_PELATIHAN_DETAIL_FAIL,
+        payload: error,
+      });
+    }
+  };

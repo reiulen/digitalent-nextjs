@@ -23,8 +23,10 @@ import Link from "next/link";
 // import style from "../style.module.css";
 import moment from "moment";
 import axios from "axios";
-
+import { useRouter } from "next/router";
+import Cookies from "js-cookie";
 export default function CardTemplateOriginal({ data }) {
+  const router = useRouter();
   const dateFrom = moment(data.pendaftaran_mulai).format("LL");
   const dateTo = moment(data.pendaftaran_selesai).format("LL");
   const [showModalSertifikasi, setShowModalSertifikasi] = useState(false);
@@ -109,7 +111,10 @@ export default function CardTemplateOriginal({ data }) {
       <Card className="position-relative">
         <Card.Body
           onClick={() => {
-            console.log("card body");
+            if (data.status == "menunggu tes substansi") {
+              router.push(`/peserta/test-substansi`);
+              Cookies.set("id_pelatihan", data.id);
+            }
           }}
         >
           <Row>
@@ -255,18 +260,33 @@ export default function CardTemplateOriginal({ data }) {
               </Button>
             </Col>
           ) : data.status == "menunggu tes substansi" ? (
-            <Col className="d-flex justify-content-center ">
-              <Button
-                className={`btn-rounded-full font-weight-bold btn-block justify-content-center mt-5 `}
-                style={{ height: "40px", fontSize: "14px" }}
-                onClick={() => {
-                  console.log("ini click button 2 ");
-                }}
-              >
-                <i className="ri-download-2-fill mr-2"></i>
-                Bukti Pendaftaran
-              </Button>
-            </Col>
+            <Fragment>
+              <Col className="d-flex justify-content-center ">
+                <Button
+                  className={`btn-rounded-full font-weight-bold btn-block justify-content-center mt-5 `}
+                  style={{ height: "40px", fontSize: "14px" }}
+                  onClick={() => {
+                    console.log("ini click button 2 ");
+                  }}
+                >
+                  <i className="ri-download-2-fill mr-2"></i>
+                  Bukti Pendaftaran
+                </Button>
+              </Col>
+              <Col className="d-flex justify-content-center">
+                <Button
+                  className="btn-rounded-full font-weight-bold btn-block justify-content-center mt-5"
+                  style={{ height: "40px", fontSize: "14px" }}
+                  onClick={() => {
+                    router.push(
+                      `/peserta/subvit/substansi/1?theme_id=${data.tema_id}&training_id=${data.id}&category=Test Substansi`
+                    );
+                  }}
+                >
+                  Test Substansi <i className="ri-arrow-right-s-line mr-2"></i>
+                </Button>
+              </Col>
+            </Fragment>
           ) : (
             ""
           )}
