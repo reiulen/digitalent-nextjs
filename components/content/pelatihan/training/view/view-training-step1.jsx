@@ -8,9 +8,13 @@ import PageWrapper from "../../../../wrapper/page.wrapper";
 import StepViewPelatihan from "../../../../StepViewPelatihan";
 
 const ViewTrainingStep1 = () => {
+  const router = useRouter();
+
   const { error: errorReview, review } = useSelector(
     (state) => state.getReviewStep1
   );
+
+  const { id } = router.query;
 
   const [dataPelatihan, setDataPelatihan] = useState({
     peserta: review.program_dts === "1" ? "Ya" : "Tidak",
@@ -61,8 +65,6 @@ const ViewTrainingStep1 = () => {
     disabilitas: "Umum",
   });
 
-  const router = useRouter();
-
   return (
     <PageWrapper>
       <StepViewPelatihan
@@ -71,10 +73,10 @@ const ViewTrainingStep1 = () => {
         title2="Form Pendaftaran"
         title3="Form Komitmen"
         title4="Parameter"
-        link1={`/pelatihan/pelatihan/view-pelatihan/${1}`}
-        link2={`/pelatihan/pelatihan/view-pelatihan/view-form-pendaftaran/${1}`}
-        link3={`/pelatihan/pelatihan/view-pelatihan/view-komitmen/${1}`}
-        link4={`/pelatihan/pelatihan/view-pelatihan/view-parameter/${1}`}
+        link1={`/pelatihan/pelatihan/view-pelatihan/${id}`}
+        link2={`/pelatihan/pelatihan/view-pelatihan/view-form-pendaftaran/${id}`}
+        link3={`/pelatihan/pelatihan/view-pelatihan/view-komitmen/${id}`}
+        link4={`/pelatihan/pelatihan/view-pelatihan/view-parameter/${id}`}
       />
 
       <div className="col-lg-12 order-1 px-0">
