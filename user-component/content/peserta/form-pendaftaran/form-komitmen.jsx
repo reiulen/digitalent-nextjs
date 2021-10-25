@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import style from "./style.module.css";
+import LoadingTable from "../../../../components/LoadingTable";
 
 import { newPendaftaranPelatihan } from "../../../../redux/actions/pelatihan/register-training.actions";
 import { storeFormRegister } from "../../../../redux/actions/pelatihan/register-training.actions";
@@ -18,6 +19,7 @@ const FormKomitmen = ({
   const router = useRouter();
 
   const { dataForm } = useSelector((state) => state.formRegister);
+  const { loading } = useSelector((state) => state.newPendaftaranPelatihan);
 
   const { id } = router.query;
 
@@ -165,21 +167,29 @@ const FormKomitmen = ({
             </div>
           )}
 
-          <div className="button-aksi mt-7 float-right">
-            <Button
-              className={`${style.button_profile_batal} rounded-xl mr-3`}
-              type="button"
-              onClick={() => funcView(1)}
-            >
-              Kembali
-            </Button>
-            <Button
-              className={`${style.button_profile_simpan} rounded-xl`}
-              type="submit"
-            >
-              Daftar
-            </Button>
-          </div>
+          {loading ? (
+            <div className="mt-5">
+              <LoadingTable loading={loading} />
+            </div>
+          ) : (
+            <>
+              <div className="button-aksi mt-7 float-right">
+                <Button
+                  className={`${style.button_profile_batal} rounded-xl mr-3`}
+                  type="button"
+                  onClick={() => funcView(1)}
+                >
+                  Kembali
+                </Button>
+                <Button
+                  className={`${style.button_profile_simpan} rounded-xl`}
+                  type="submit"
+                >
+                  Daftar
+                </Button>
+              </div>
+            </>
+          )}
         </Form>
       </Card.Body>
     </>
