@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import moment from "moment";
+import { toast } from "react-toastify";
 
 import { Badge } from "react-bootstrap";
 
@@ -29,15 +30,15 @@ const DetailPelatihan = ({ session }) => {
         if (session.Token){
           const data = await dispatch(checkRegisterPelatihan(id, session.Token))
     
+          // console.log (data)
+    
           if (data.status === true){
             router.push(`${router.pathname}/peserta/form-pendaftaran?id=${id}`)
     
-          } else {
-            Swal.fire({
-              icon: 'error',
-              title: 'Error',
-              text: 'Anda telah terdaftar pada pelatihan ini.',
-            })
+          } else if (data.status === false) {
+            // let errMessage = data.message[0].toUpperCase()  + string.substring(1)
+            let errMessage = data.message
+            toast.error (errMessage)
           }
         
         } else {
