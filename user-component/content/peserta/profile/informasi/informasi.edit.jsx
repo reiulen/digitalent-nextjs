@@ -256,6 +256,7 @@ const InformasiEdit = ({ funcViewEdit, token }) => {
             <Form.Group as={Col} md={6} controlId="formGridNik">
               <Form.Label>NIK</Form.Label>
               <Form.Control
+                disabled
                 type="text"
                 placeholder="Masukan NIK"
                 value={nik}

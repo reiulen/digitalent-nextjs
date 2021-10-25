@@ -6,6 +6,7 @@ import { wrapper } from "../../redux/store";
 
 import { signOut, getSession } from "next-auth/client";
 import { fetchReducerFunc } from "../../redux/actions/utils/functionals.actions";
+import { ToastContainer } from "react-toastify";
 import {
   IS_SHOW_PROFILE,
   IS_OVERLAY_PROFILE,
@@ -78,6 +79,7 @@ const Layout = ({ children, title = "Dashboard" }) => {
         >
           <Header />
           <ContentWrapper>
+            <ToastContainer position="top-right" />
             <SubHeader />
             {children}
           </ContentWrapper>

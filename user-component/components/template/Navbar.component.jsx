@@ -28,7 +28,7 @@ const Navigationbar = ({ session }) => {
   const { error: errorDataPribadi, dataPribadi } = useSelector(
     (state) => state.getDataPribadi
   );
-  console.log(dataPribadi, " ini data pribadi");
+  // console.log(dataPribadi, " ini data pribadi");
   const handlerLogout = () => {
     signOut();
   };
@@ -73,7 +73,9 @@ const Navigationbar = ({ session }) => {
                     <div className="row">
                       <div className="col-9 text-left">Pelatihan</div>
                       <div className="col-1 text-right">
-                        <i className="ri-arrow-right-s-line text-dark ml-1"> </i>
+                        <i className="ri-arrow-right-s-line text-dark ml-1">
+                          {" "}
+                        </i>
                       </div>
                     </div>
                   </button>
@@ -181,35 +183,43 @@ const Navigationbar = ({ session }) => {
                 </NavDropdown.Item>
               </NavDropdown>
             </div>
-            
           </Nav>
 
           {/* Search Bar */}
-            <Form className="w-100 my-2 mx-1 row">
-              <div className="position-relative w-100">
-                  <FormControl
-                    type="search"
-                    placeholder="Search"
-                    className="pl-10 rounded-full border-search py-6"
-                    aria-label="Search"
-                    style={{ backgroundColor: "#F2F7FC", border: "0px !important" }}
-                  />
-                  <IconSearch
-                    className="left-center-absolute"
-                    style={{ left: "10px" }}
-                  />
-              </div>
-            </Form>
+          <Form className="w-100 my-2 mx-1 row">
+            <div className="position-relative w-100">
+              <FormControl
+                type="search"
+                placeholder="Search"
+                className="pl-10 rounded-full border-search py-6"
+                aria-label="Search"
+                style={{ backgroundColor: "#F2F7FC", border: "0px !important" }}
+              />
+              <IconSearch
+                className="left-center-absolute"
+                style={{ left: "10px" }}
+              />
+            </div>
+          </Form>
 
           {/* Icon */}
           <div className="row m-3">
-            <a href="#" className="col-4 col-sm-4 col-md-4 col-xl-4 text-center">
+            <a
+              href="#"
+              className="col-4 col-sm-4 col-md-4 col-xl-4 text-center"
+            >
               <i className="ri-headphone-line ri-2x mx-3 text-gray"></i>
             </a>
-            <a href="#" className="col-4 col-sm-4 col-md-4 col-xl-4 text-center">
+            <a
+              href="#"
+              className="col-4 col-sm-4 col-md-4 col-xl-4 text-center"
+            >
               <i className="ri-heart-line ri-2x mx-3 text-gray"></i>
             </a>
-            <a href="#" className="col-4 col-sm-4 col-md-4 col-xl-4 text-center">
+            <a
+              href="#"
+              className="col-4 col-sm-4 col-md-4 col-xl-4 text-center"
+            >
               <i className="ri-notification-4-line ri-2x mx-3 text-gray"></i>
             </a>
           </div>
@@ -227,12 +237,15 @@ const Navigationbar = ({ session }) => {
                   {/* <div className="dot-accouts"></div> */}
                   <Image
                     className="rounded-circle"
-                    src={`${dataPribadi.file_path + dataPribadi.foto}`}
+                    src={`${
+                      dataPribadi && dataPribadi.foto
+                        ? dataPribadi.file_path + dataPribadi.foto
+                        : "/assets/media/logos/default.png"
+                    }`}
                     width={32}
                     height={32}
                     alt="brand-navbar"
                   />
-                  {console.log(dataPribadi)}
                   <span className="titles-accounts">
                     {dataPribadi.name || "-"}
                   </span>
@@ -285,19 +298,19 @@ const Navigationbar = ({ session }) => {
               </div>
             ) : (
               <>
-              {/* Button Masuk dan Daftar */}
+                {/* Button Masuk dan Daftar */}
                 <Link href="/login">
                   <a className="mx-2">
-                    <button className="btn btn-sm btn-block btn-login-peserta m-2 justify-content-center py-3">
-                      <IconLogin className="mr-2" />
+                    <button className="btn btn-sm btn-block btn-login-peserta btn-outline-primary-new m-2 justify-content-center py-3">
+                      <IconLogin className="mr-2 icon-login" />
                       Masuk
                     </button>
                   </a>
                 </Link>
                 <Link href="/register">
                   <a className="mx-2">
-                    <button className="btn btn-sm btn-block btn-register-peserta m-2 justify-content-center py-3">
-                      <IconRegister className="mr-2" />
+                    <button className="btn btn-sm btn-block btn-register-peserta btn-primary m-2 justify-content-center py-3">
+                      <IconRegister className="mr-2 icon-register" />
                       Daftar
                     </button>
                   </a>

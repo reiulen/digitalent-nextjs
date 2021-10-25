@@ -2,17 +2,20 @@ import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import Image from "next/image";
+import Swal from "sweetalert2";
 import moment from "moment";
+import { toast } from "react-toastify";
 import IconTime from "../../../components/assets/icon-dashboard-peserta/Time";
 import IconPeserta from "../../../components/assets/icon-dashboard-peserta/Peserta";
 import IconClose from "../../../components/assets/icon/Close";
 import IconLove from "../../../components/assets/icon/Love";
 import IconShare from "../../../components/assets/icon/Share";
 
-// import { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { Card, Carousel, Badge, Button } from "react-bootstrap";
 import { getTemaByAkademi } from "../../../redux/actions/beranda/beranda.actions";
+import { checkRegisterPelatihan } from "../../../redux/actions/beranda/detail-pelatihan.actions";
 
 import BerandaWrapper from "../../../components/wrapper/beranda.wrapper";
 import "../../../styles/beranda.module.css";
@@ -26,6 +29,8 @@ import RilisMedia from "../../components/beranda/rilis-media";
 import GaleryUpdate from "../../components/beranda/galery-update";
 import InfoVideo from "../../components/beranda/info-videos";
 import ComeJoin from "../../components/beranda/come-join";
+import { result } from "lodash";
+import { reactStrictMode } from "../../../next.config";
 
 // const Navigationbar = dynamic(
 //   () => import("../../components/template/Navbar.component"),
@@ -36,17 +41,18 @@ import ComeJoin from "../../components/beranda/come-join";
 
 const Beranda = ({ session }) => {
   const dispatch = useDispatch();
-  // const router = useRouter();
+  const router = useRouter();
 
   const { akademi } = useSelector((state) => state.allAkademi);
   const { tema } = useSelector((state) => state.temaByAkademi);
   const { publikasi } = useSelector((state) => state.allPublikasiBeranda);
-  const options = {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  };
+  const {cekPelatihan} = useSelector((state) => state.checkRegisteredPelatihan);
+  // const options = {
+  //   weekday: "long",
+  //   year: "numeric",
+  //   month: "long",
+  //   day: "numeric",
+  // };
   // const { pelatihan } = useSelector(state => state.pelatihanByTema);
 
   const [activeTab, setActiveTab] = useState(0);
@@ -91,11 +97,11 @@ const Beranda = ({ session }) => {
     }
   };
 
-  const handleTemaId = () => {
-    if (tema) {
-      setTemaId(tema.id)
-    }
-  }
+  // const handleTemaId = () => {
+  //   if (tema) {
+  //     setTemaId(tema.id)
+  //   }
+  // }
 
   const handleHoverCard = () => {
     let arr = [];
@@ -234,16 +240,29 @@ const Beranda = ({ session }) => {
     }
   };
 
+  const handleCheckPelatihanReg = async (id, session) => {
+    if (session.Token){
+      const data = await dispatch(checkRegisterPelatihan(id, session.Token))
+
+      // console.log (data)
+
+      if (data.status === true){
+        router.push(`${router.pathname}/peserta/form-pendaftaran?id=${id}`)
+
+      } else if (data.status === false) {
+        // let errMessage = data.message[0].toUpperCase()  + string.substring(1)
+        let errMessage = data.message
+        toast.error (errMessage)
+      }
+    
+    } else {
+      router.push(`${router.pathname}/login`)
+    }
+  }
+
   return (
     <div style={{ backgroundColor: "white" }}>
       {/* <Navigationbar /> */}
-      {
-        console.log (tema)
-      }
-
-      {
-        console.log (show)
-      }
 
       {/* Carousel 1 */}
       {publikasi && publikasi.imagetron.length !== 0 ? (
@@ -259,7 +278,7 @@ const Beranda = ({ session }) => {
                 gap: "1rem",
                 autoplay: true,
                 padding: "5rem",
-                height: "600px",
+                height: "450px",
                 focus: "center",
                 breakpoints: {
                   1669: {
@@ -572,8 +591,29 @@ const Beranda = ({ session }) => {
                     <h1 className="mb-0 fw-600 fz-20">{el.Name}</h1>
                     <div>
                       {el.pelatihan !== null ? (
+                        // <Link
+                        //   href={`/detail/akademi/id=${akademiId}&tema_id=${el.id}`}
+                        // >
+                        //   <a className="d-flex align-items-center">
+                        //     <>
+                        //       <p
+                        //         className="mb-0 fz-14 fw-600"
+                        //         style={{ color: "#0063CC", cursor: "pointer" }}
+                        //       >
+                        //         Lihat Semua
+                        //       </p>
+                        //       <IconArrow
+                        //         width="8"
+                        //         height="10"
+                        //         fill="#0063CC"
+                        //         className="ml-2"
+                        //         style={{ transform: "rotate(0)" }}
+                        //       />
+                        //     </>
+                        //   </a>
+                        // </Link>
                         <Link
-                          href={`/detail/akademi/id=${akademiId}&tema_id=${el.id}`}
+                          href={`/detail/akademi/${akademiId}?id=${akademiId}&tema_id=${el.id}`}
                         >
                           <a className="d-flex align-items-center">
                             <>
@@ -797,56 +837,51 @@ const Beranda = ({ session }) => {
                                           className="fz-14"
                                           style={{ color: "#6C6C6C" }}
                                         >
-                                          Vocational School Graduate Academy
+                                          {cardAkademi}
                                         </p>
                                         <p className="fz-30 fw-600">
-                                          Intermediate Multimedia Designer
+                                          {cardName}
                                         </p>
-                                        <p className="fw-600 fz-14">Gojek</p>
+                                        <p className="fw-600 fz-14">{cardMitra}</p>
                                       </div>
                                     </div>
 
                                     <div className="d-flex align-items-start">
-                                      <div className="roundedss-border">
+                                      <button className="roundedss-border btn btn-white">
                                         <IconLove className="cursor-pointer" />
-                                      </div>
-                                      <div className="roundedss-border mx-6">
+                                      </button>
+                                      <button className="roundedss-border btn btn-white mx-6">
                                         <IconShare className="cursor-pointer" />
-                                      </div>
+                                      </button>
 
                                       <div onClick={() => handleCloseQuickView(i)}>
-                                        <IconClose/>
+                                        <IconClose className="cursor-pointer"/>
                                       </div>
                                       
                                     </div>
                                   </div>
 
                                   <p className="fz-16 fw-400 my-6">
-                                    Intermediate Multimedia Designer merupakan
-                                    salah satu skema pelatihan dalam Pelatihan
-                                    Intensif dan Sertifikasi (Daring) yang
-                                    berbasis Standar Kompetensi Kerja Nasional
-                                    Indonesia (SKKNI) dengan skema Intermediate
-                                    Multimedia Designer. Peserta pelati...
+                                    {/* {cardDeskripsi} */}
+                                    <div dangerouslySetInnerHTML={{ __html: cardDeskripsi}}></div>  
                                   </p>
 
                                   <div className="d-flex align-items-center justify-content-between">
                                     <div className="d-flex align-items-center">
                                       <span style={{ color: "#6C6C6C" }}>
-                                        <IconPeserta className="mr-2" />
-                                        Registrasi: 05 Juli 2021 - 21 Juli 2021
+                                        <IconTime className="mr-2" />
+                                        Registrasi: {moment(cardPendaftaranMulai).format("DD MMMM YYYY")} - {moment(cardPendaftaranSelesai).format("DD MMMM YYYY")}
                                       </span>
                                       <span
                                         className="mx-6"
                                         style={{ color: "#6C6C6C" }}
                                       >
-                                        <IconTime className="mr-2" />
-                                        Registrasi: 05 Juli 2021 - 21 Juli 2021
+                                        <IconPeserta className="mr-2" />
+                                        Kuota: {cardKuota}
                                       </span>
                                       <span style={{ color: "#6C6C6C" }}>
-                                        <IconTime className="mr-2" />
-                                        Lokasi: Pasaraya Blok M Gedung B Lt.
-                                        6...
+                                        <i className="ri-map-pin-line mr-2"></i>
+                                        Lokasi: {cardAlamat}
                                       </span>
                                     </div>
                                   </div>
@@ -855,15 +890,27 @@ const Beranda = ({ session }) => {
 
                                   <div className="row pt-6">
                                     <div className="col-6">
-                                      <button className="btn btn-outline-primary-new rounded-pill py-3 px-12 mr-4 w-100">
-                                        Lihat Selengkapnya
-                                      </button>
+                                      <Link href={`/detail/pelatihan/${cardId}`} passHref>
+                                          <a>
+                                            <button className="btn btn-outline-primary-new rounded-pill py-3 px-12 mr-4 w-100">
+                                              Lihat Selengkapnya
+                                            </button>
+                                          </a>
+                                      </Link>
+                                      
                                     </div>
-                                    <div className="col-6">
-                                      <button className="d-flex justify-content-center btn-primary btn-register-peserta btn-sm py-3 px-12 rounded-pill btn-primary w-100">
-                                        Daftar Pelatihan
-                                      </button>
-                                    </div>
+
+                                    {
+                                      cardStatus !== "Closed" ?
+                                        <div className="col-6">
+                                          <button onClick={() => handleCheckPelatihanReg (cardId, session)} className="d-flex justify-content-center btn-primary btn-register-peserta btn-sm py-3 px-12 rounded-pill btn-primary w-100">
+                                            Daftar Pelatihan
+                                          </button>
+                                        </div>
+                                      :
+                                        null
+                                    }
+                                    
                                   </div>
                                 </div>
                               </div>
@@ -918,19 +965,19 @@ const Beranda = ({ session }) => {
 
       {/* Rilis Media & Informasi Terbaru */}
       <RilisMedia
-        berita={publikasi.berita.length !== 0 ? publikasi.berita.length : null}
+        berita={ publikasi &&  publikasi.berita && publikasi.berita.length !== 0 ? publikasi.berita.length : null}
       />
 
       {/* Galeri Terupdate dan Terkini */}
       <GaleryUpdate
         gambar={
-          publikasi.gallery.length !== 0 ? publikasi.gallery.length : null
+          publikasi && publikasi.gallery && publikasi.gallery.length !== 0 ? publikasi.gallery.length : null
         }
       />
 
       {/* Informasi Dalam Video Terkini */}
       <InfoVideo
-        video={publikasi.video.length !== 0 ? publikasi.video.length : null}
+        video={ publikasi &&  publikasi.video && publikasi.video.length !== 0 ? publikasi.video.length : null}
       />
 
       {/* Ayo Bergabung, Jadi Jagoan Digital! */}
