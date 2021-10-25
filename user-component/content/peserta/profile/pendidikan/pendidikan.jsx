@@ -18,6 +18,8 @@ const Pendidikan = ({ token }) => {
     dispatch(getProfilePendidikan(token));
   }, [dispatch, token]);
 
+  console.log(pendidikan, "<<<<< data");
+
   return (
     <>
       <div className="mt-5 pendidikan">
@@ -34,17 +36,20 @@ const Pendidikan = ({ token }) => {
               Asal Sekolah / Perguruan Tinggi
             </p>
             <p>
-              {(pendidikan && pendidikan.asal_pendidikan === "0"
+              {(pendidikan !== undefined && pendidikan.asal_pendidikan === "0"
                 ? "-"
-                : pendidikan.asal_pendidikan) || "-"}
+                : pendidikan !== undefined && pendidikan.asal_pendidikan) ||
+                "-"}
             </p>
           </Col>
           <Col md={6}>
             <p className="text-neutral-body my-1">Program Studi</p>
             <p>
-              {(pendidikan && pendidikan.program_studi === "0"
+              {(pendidikan &&
+              pendidikan !== undefined &&
+              pendidikan.program_studi === "0"
                 ? "-"
-                : pendidikan.program_studi) || "-"}
+                : pendidikan !== undefined && pendidikan.program_studi) || "-"}
             </p>
           </Col>
         </Row>
@@ -52,24 +57,36 @@ const Pendidikan = ({ token }) => {
           <Col md={6}>
             <p className="text-neutral-body my-1">IPK</p>
             <p>
-              {(pendidikan && pendidikan.ipk === "0" ? "-" : pendidikan.ipk) ||
-                "-"}
+              {(pendidikan &&
+              pendidikan !== undefined &&
+              pendidikan !== undefined &&
+              pendidikan.ipk === "0"
+                ? "-"
+                : pendidikan !== undefined && pendidikan.ipk) || "-"}
             </p>
           </Col>
           <Col md={6}>
             <p className="text-neutral-body my-1">Tahun Masuk</p>
             <p>
-              {((pendidikan && pendidikan.tahun_masuk === 0) ||
-              pendidikan.tahun_masuk === 1
+              {((pendidikan &&
+                pendidikan !== undefined &&
+                pendidikan.tahun_masuk === 0) ||
+              (pendidikan !== undefined && pendidikan.tahun_masuk === 1)
                 ? "-"
-                : pendidikan.tahun_masuk) || "-"}
+                : pendidikan !== undefined && pendidikan.tahun_masuk) || "-"}
             </p>
           </Col>
         </Row>
         <Row>
           <Col md={12}>
             <p className="text-neutral-body my-1">Unggah Ijazah</p>
-            <p>{(pendidikan && pendidikan.ijasah) || "-"}</p>
+            <p>
+              {(pendidikan !== undefined &&
+                pendidikan &&
+                pendidikan !== undefined &&
+                pendidikan.ijasah) ||
+                "-"}
+            </p>
           </Col>
         </Row>
       </div>

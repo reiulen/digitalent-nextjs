@@ -219,6 +219,7 @@ const InformasiEdit = ({ funcViewEdit, token }) => {
             <Form.Group as={Col} md={6}>
               <Form.Label>Email</Form.Label>
               <Form.Control
+                disabled
                 type="email"
                 placeholder="Masukan Email"
                 value={email}
@@ -271,6 +272,7 @@ const InformasiEdit = ({ funcViewEdit, token }) => {
             <Form.Group as={Col} md={6} controlId="formGridPassword">
               <Form.Label>Nomor Handphone</Form.Label>
               <Form.Control
+              disabled
                 type="text"
                 placeholder="Masukan Nomor Handphone"
                 value={nomorHandphone}
