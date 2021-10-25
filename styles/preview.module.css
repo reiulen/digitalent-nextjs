@@ -7,7 +7,7 @@
   justify-content: center;
   flex-direction: column;
   height: 450px;
-  margin-top: 20px;
+  margin-top: 30px;
 }
 
 .playVideo {
@@ -17,6 +17,14 @@
   width: 700px;
   height: 270px;
   margin-bottom: 20px;
+}
+
+.descriptionVideo{
+  /* border: 1px solid black;
+  height: 300px; */
+  flex-wrap: wrap;
+  overflow-y: auto;
+  overflow-wrap: break-word;
 }
 
 .isiVideoPrev {

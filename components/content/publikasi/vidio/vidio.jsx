@@ -754,7 +754,7 @@ const Vidio = ({ token }) => {
             {/* Modal */}
             <div className="modal fade" id="videoPlayerModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" >
                 <div className="modal-dialog modal-dialog-centered" role="document">
-                    <div className="modal-content" style={{ width: '700px', height: '470px' }}>
+                    <div className="modal-content" style={{ width: '700px', height: '490px' }}>
                         {/* <div className="modal-header">
                             <h5 className="modal-title" id="exampleModalLongTitle">Pratinjau Video</h5>
                             <button type="button" className="close" data-dismiss="modal" aria-label="Close">
@@ -831,7 +831,7 @@ const Vidio = ({ token }) => {
                                     </span>
                                 </div> */}
                             </div>
-                            <div className="text-break m-4">
+                            <div className={`${styles.descriptionVideo} text-break m-4`}>
                                 <span>
                                     {isiVideo}
                                 </span>

@@ -153,7 +153,21 @@ const TambahVidio = ({ token, id }) => {
                     publish,
                     tanggal_publish: moment(today).format("YYYY-MM-DD")
                 }
-                dispatch(newVideo(data, token))
+                Swal.fire({
+                    title: "Apakah anda yakin ?",
+                    text: "Data ini akan ditambahkan !",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Ya !",
+                    cancelButtonText: "Batal",
+                })
+                    .then((result) => {
+                        if (result.isConfirmed) {
+                            dispatch(newVideo(data, token))
+                        }
+                    });
             } else {
 
                 const data = {
@@ -167,7 +181,21 @@ const TambahVidio = ({ token, id }) => {
                     publish,
                     tanggal_publish: moment(publishDate).format("YYYY-MM-DD")
                 }
-                dispatch(newVideo(data, token))
+                Swal.fire({
+                    title: "Apakah anda yakin ?",
+                    text: "Data ini akan ditambahkan !",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Ya !",
+                    cancelButtonText: "Batal",
+                })
+                    .then((result) => {
+                        if (result.isConfirmed) {
+                            dispatch(newVideo(data, token))
+                        }
+                    });
             }
 
         } else {
