@@ -31,7 +31,8 @@
 }
 
 .img-prevModal {
-  height: 460px;
+  height: 425px;
+  /* height: 79vh; */
 }
 
 .subMenuPreview {
@@ -65,6 +66,10 @@
 
 .listTagGaleri {
   display: flex;
+}
+
+.tagModal {
+  font-size: 10px;
 }
 
 @media only screen and (max-width: 1200px) {

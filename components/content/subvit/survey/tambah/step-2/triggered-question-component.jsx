@@ -59,6 +59,7 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
     if (index == null && parent == null && children != null) {
       const listOption = list[children];
       if (name === "image") {
+        listOption["imageName"] = e.target.files[0].name;
         const reader = new FileReader();
         reader.onload = () => {
           if (reader.readyState === 2) {
@@ -75,7 +76,9 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
 
     if (index == null && parent != null && children != null) {
       const listAnswer = list[parent].sub[children];
+      // console.log("Cek Data :",listAnswer.imageName)
       if (name === "image") {
+        listAnswer.imageName = e.target.files[0].name;
         const reader = new FileReader();
         reader.onload = () => {
           if (reader.readyState === 2) {
@@ -108,6 +111,7 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
     }
     setSoalList(list);
     props_answer(list);
+    console.log("Data List :",list)
   };
 
   const handleRemoveClick = (index, parent, children) => {
