@@ -114,7 +114,7 @@ const Dashboard = ({ session }) => {
               backgroundImage="new-game-4.svg"
               background="primary"
               color="#6C6C6C"
-              link="/peserta/subvit/substansi/1"
+              link={`/peserta/subvit/substansi/1?theme_id="${dataDashboard.subvit.subvit.tema_id}"&training_id="${dataDashboard.subvit.subvit.pelatihan_id}"&category="Test Substansi"`}
               text="Lakukan Test Substansi"
               desc="Anda Belum Melakukan Test Substansi"
               total={dataDashboard.subvit.subvit.status}
@@ -219,7 +219,7 @@ const Dashboard = ({ session }) => {
             </Col>
           )}
 
-          {dataDashboard.pelatihan.pelatihan_berjalan.length > 0 && (
+          { Object.keys(dataDashboard.pelatihan.pelatihan_berjalan).length > 0  &&  (
             <Col md={6} className="mb-4 px-2">
               <Card className="rounded-xl h-100">
                 <Card.Body>
@@ -304,12 +304,12 @@ const Dashboard = ({ session }) => {
             </Col>
           )}
 
-          {dataDashboard.pelatihan.pelatihan_selesi.length > 0 && (
+          {Object.keys(dataDashboard.pelatihan.pelatihan_selesi).length > 0 && (
             <Col md={6} className="mb-4 px-2">
               <Card className="rounded-xl h-100">
                 <Card.Body>
                   <Card.Title>
-                    <p className={style.card_title}>Pelatihan Selesai</p>
+                    <p className={style.card_title}>Pelatihan Sebelumnya</p>
                   </Card.Title>
 
                   <Card className="shadow rounded-md">
