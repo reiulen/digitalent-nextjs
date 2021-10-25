@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router";
 import moment from "moment";
 
 import { 
@@ -12,17 +13,38 @@ import Layout from "../../../wrapper/layout.wrapper";
 import SubHeaderComponent from "../../../../components/template/Subheader.component";
 import TrainingReminder from "../../../../components/TrainingReminder";
 import style from "../../../../../styles/peserta/dashboard.module.css"
+import { checkRegisterPelatihan } from "../../../../../redux/actions/beranda/detail-pelatihan.actions";
 // import DownloadButton from "../../../../components/DownloadButton";
 // import FilterBar from "../../../../components/FilterBar";
 
-const DetailPelatihan = () => {
+const DetailPelatihan = ({ session }) => {
 
     const {
         pelatihan,
     } = useSelector((state) => state.detailPelatihan);
 
+    const handleCheckPelatihanReg = (id, session) => {
+        if (session.Token){
+          checkRegisterPelatihan(id, session.Token)
+          .then((result) => {
+            if (result.status === true){
+              router.push(`${router.pathname}/peserta/form-pendaftaran?id=${id}`)
+            } else {
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Anda telah terdaftar pada pelatihan ini.',
+              })
+            }
+          })
+    
+        } else {
+          router.push(`${router.pathname}/login`)
+        }
+    }
+
     return (
-        <Layout title="Detail Pelatihan">
+        <>
 
             {/* <FilterBar /> */}
             <SubHeaderComponent />
@@ -131,13 +153,16 @@ const DetailPelatihan = () => {
                                     {
                                         pelatihan.status === "Closed" ?
                                             <div className="col-12 my-3">
-                                                <Link href={`/peserta/form-pendaftaran?id=${pelatihan.id}`} passHref>
+                                                {/* <Link href={`/peserta/form-pendaftaran?id=${pelatihan.id}`} passHref>
                                                     <a>
                                                         <button className="btn btn-primary-dashboard rounded-pill btn-block ">
                                                         Daftar Pelatihan
                                                         </button>
                                                     </a>
-                                                </Link>
+                                                </Link> */}
+                                                <button className="btn btn-primary-dashboard rounded-pill btn-block" onClick={() => handleCheckPelatihanReg(pelatihan.id, session)}>
+                                                    Daftar Pelatihan
+                                                </button>
                                             </div>
                                         :
                                             null
@@ -247,7 +272,7 @@ const DetailPelatihan = () => {
                     null
             }
             
-        </Layout>
+        </>
         
     )
 }
