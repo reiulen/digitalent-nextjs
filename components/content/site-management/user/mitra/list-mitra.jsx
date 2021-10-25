@@ -25,15 +25,6 @@ const Table = ({ token }) => {
   const router = useRouter();
 
   const allMitraSite = useSelector(state => state.allMitraSite)
-  // const newMitraSite = useSelector(state => state.newMitraSite)
-  // const detailMitraSite = useSelector(state => state.detailMitraSite)
-  // const updateMitraSite = useSelector(state => state.updateMitraSite)
-
-  console.log("allMitraSite",allMitraSite)
-  // console.log("newMitraSite",newMitraSite)
-  // console.log("detailMitraSite",detailMitraSite)
-  // console.log("updateMitraSite",updateMitraSite)
-
   const [valueSearch, setValueSearch] = useState("");
   const handleChangeValueSearch = (value) => {
     setValueSearch(value);
@@ -162,19 +153,6 @@ const Table = ({ token }) => {
                           {items.cooperations_count}
                         </td>
                       <td className="align-middle text-left">
-                          {/* <button
-                            className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                            onClick={() =>
-                              router.push({
-                                pathname:"/site-management/user/mitra/edit-mitra",
-                                query:{id:items.id}
-                              })
-                            }
-                          >
-                            <IconPencil width="16" height="16" />
-                            <div className="text-hover-show-hapus">Ubah</div>
-                          </button> */}
-
                           <Link href={
                             `/site-management/user/mitra/edit-mitra/${items.id}`
                           }>

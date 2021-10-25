@@ -31,39 +31,17 @@ const TambahBerita = ({ token, id }) => {
     })
     const simpleValidator = useRef(new SimpleReactValidator({ locale: 'id' }))
     const [, forceUpdate] = useState();
-    // const forceUpdate = React.useReducer(() => ({}))[1]
     const { loading, error, success } = useSelector(state => state.newBerita)
     const { loading: allLoading, error: allError, kategori } = useSelector((state) => state.allKategori);
     const { setting } = useSelector(state => state.allSettingPublikasi)
 
     useEffect(() => {
 
-        // dispatch(getAllKategori())
-
         editorRef.current = {
             CKEditor: require('@ckeditor/ckeditor5-react').CKEditor, //Added .CKEditor
             ClassicEditor: require('@ckeditor/ckeditor5-build-classic'),
             // Base64UploadAdapter: require('@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter')
         }
-
-        // setEditorLoaded(true)
-
-        // if (error) {
-        //     dispatch(clearErrors())
-        // }
-
-        // if (success) {
-        //     setKategoriId('')
-        //     setJudulBerita('')
-        //     setIsiBerita('')
-        //     setGambar('')
-        //     setPublish(false)
-        //     setTag('')
-        //     setGambarPreview('/assets/media/default.jpg')
-        //     // dispatch({
-        //     //     type: NEW_ARTIKEL_RESET
-        //     // })
-        // }
 
         setEditorLoaded(true)
         if (success) {
@@ -229,48 +207,9 @@ const TambahBerita = ({ token, id }) => {
                         }
                     });
             }
-
-            // const data = {
-            //     kategori_id,
-            //     users_id,
-            //     judul_berita,
-            //     isi_berita,
-            //     gambar,
-            //     publish,
-            //     tag,
-            //     tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
-            // }
-
-            // Swal.fire({
-            //     title: "Apakah anda yakin ?",
-            //     text: "Data ini akan ditambahkan !",
-            //     icon: "warning",
-            //     showCancelButton: true,
-            //     confirmButtonColor: "#3085d6",
-            //     cancelButtonColor: "#d33",
-            //     confirmButtonText: "Ya !",
-            //     cancelButtonText: "Batal",
-            //   })
-            //     .then((result) => {
-            //       if (result.isConfirmed) {
-            //         // if (success) {
-            //         //   dispatch({
-            //         //     type: NEW_ARTIKEL_RESET,
-            //         //   });
-            //         // }
-
-            //         dispatch(newBerita(data))
-
-            //         // console.log(data);
-            //       }
-            //   });
-
-            // dispatch(newBerita(data))
-            // console.log(data)
         } else {
             simpleValidator.current.showMessages();
             forceUpdate(1);
-            // forceUpdate;
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
@@ -298,18 +237,6 @@ const TambahBerita = ({ token, id }) => {
                 </div>
                 : ''
             }
-            {/* {success ?
-                <div className="alert alert-custom alert-light-success fade show mb-5" role="alert">
-                    <div className="alert-icon"><i className="flaticon2-checkmark"></i></div>
-                    <div className="alert-text">{success}</div>
-                    <div className="alert-close">
-                        <button type="button" className="close" data-dismiss="alert" aria-label="Close" onClick={onNewReset} >
-                            <span aria-hidden="true"><i className="ki ki-close"></i></span>
-                        </button>
-                    </div>
-                </div>
-                : ''
-            } */}
             <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
                 {
                     loading ?
@@ -434,38 +361,9 @@ const TambahBerita = ({ token, id }) => {
                                     <p>
                                         Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar
                                     </p>
-
                                 </div>
-
                             </div>
 
-                            {/* <div className="form-group">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Upload Thumbnail</label>
-                                <div className="col-sm-1">
-                                    <figure className='avatar item-rtl' data-toggle="modal" data-target="#exampleModalCenter">
-                                        <Image
-                                            src={gambarPreview}
-                                            alt='image'
-                                            width={60}
-                                            height={60}
-                                        />
-                                    </figure>
-                                </div>
-                                <div className="col-sm-9">
-                                    <div className="input-group">
-                                        <div className="custom-file">
-                                            <input type="file" name='gambar' className="custom-file-input" id="inputGroupFile04" onChange={onChangeGambar} accept="image/*"/>
-                                            <label className="custom-file-label" htmlFor="inputGroupFile04">Pilih file</label>
-                                        </div>
-                                    </div>
-                                    {
-                                        gambarName !== null ?
-                                            <small>{gambarName}</small>
-                                        :
-                                            null
-                                    }
-                                </div>
-                            </div> */}
 
                             <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Kategori</label>
@@ -554,24 +452,14 @@ const TambahBerita = ({ token, id }) => {
                                                     className="form-search-date form-control-sm form-control"
                                                     selected={publishDate}
                                                     onChange={(date) => handlePublishDate(date)}
-                                                    // onChange={(date) => setPublishDate(date)}
                                                     selectsStart
                                                     startDate={publishDate}
-                                                    // endDate={endDate}
                                                     dateFormat="dd/MM/yyyy"
                                                     placeholderText="Silahkan Isi Tanggal Publish"
                                                     wrapperClassName="col-12 col-lg-12 col-xl-12"
-                                                    // minDate={moment().toDate()}
                                                     disabled={disablePublishDate === true || disablePublishDate === null}
-                                                // minDate={addDays(new Date(), 20)}
                                                 />
                                             </div>
-                                            {/* {
-                                                disablePublishDate === true ?
-                                                    <small className="text-muted">Harap ubah status publikasi menjadi aktif untuk mengisi Tanggal Publish</small>
-                                                :
-                                                    null
-                                            } */}
                                         </div>
                                     </div>
                                     :

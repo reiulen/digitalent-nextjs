@@ -190,9 +190,6 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
     }
   }
 
-  console.log("data Tema", dataTema.data)
-  console.log("data Akademi", dataAkademi.data)
-
   useEffect(() => {
     dispatch(getTrainingStep1());
     dispatch(dropdownTemabyAkademi(academy.value, token))
@@ -200,7 +197,6 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
     editorRef.current = {
       CKEditor: require("@ckeditor/ckeditor5-react").CKEditor, //Added .CKEditor
       ClassicEditor: require("@ckeditor/ckeditor5-build-classic"),
-      // Base64UploadAdapter: require('@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter')
     };
 
     setEditorLoaded(true);
@@ -318,17 +314,8 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
     }
   };
 
-  // const disabilitasHandler = (value) => {
-  //   if (disabilitas.some((res) => res === value)) {
-  //     setDisabilitas(disabilitas.filter((res) => res !== value));
-  //     return;
-  //   }
-  //   setDisabilitas([...disabilitas, value]);
-  // };
-
   const submitHandler = (e) => {
     e.preventDefault();
-    // router.push("/pelatihan/pelatihan/tambah-pelatihan/tambah-registrasi");
     if (simpleValidator.current.allValid()) {
       const data = {
         program_dts: program,
@@ -385,14 +372,6 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
   };
 
   return (
-    // <PageWrapper>
-    //   <StepInputPelatihan
-    //     step={1}
-    //     title1="Tambah Pelatihan"
-    //     title2="Tambah Form Pendaftaran"
-    //     title3="Tambah Form Komitmen"
-    //   />
-    //   <div className="col-lg-12 order-1 px-0">
     <div className="card card-custom card-stretch gutter-b">
       <div className="card-body py-4">
         <form onSubmit={submitHandler}>
@@ -550,7 +529,6 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                 onChange={(e) => setTheme({ value: e?.value, label: e?.label })}
                 onBlur={() => simpleValidator.current.showMessageFor("tema")}
               />
-              {console.log("tema", optionsTema)}
             </div>
             {simpleValidator.current.message("tema", theme.value, "required", {
               className: "text-danger",
@@ -873,9 +851,6 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                 <CKEditor
                   editor={ClassicEditor}
                   data={description}
-                  onReady={(editor) => {
-                    // You can store the "editor" and use when it is needed.
-                  }}
                   onChange={(event, editor) => {
                     const data = editor.getData();
                     setDescription(data);

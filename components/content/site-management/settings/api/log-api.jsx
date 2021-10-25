@@ -30,8 +30,6 @@ const Table = ({ token }) => {
   const router = useRouter();
 
   const listLog = useSelector((state) => state.listLog);
-  console.log("listLog", listLog);
-
   const [valueSearch, setValueSearch] = useState("");
   const handleChangeValueSearch = (value) => {
     setValueSearch(value);
