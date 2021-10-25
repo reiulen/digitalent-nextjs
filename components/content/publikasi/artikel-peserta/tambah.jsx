@@ -88,11 +88,6 @@ const TambahArtikel = () => {
       setGambarName(e.target.files[0].name)
     } 
     else {
-      // setGambar("")
-      // setGambarPreview("/assets/media/default.jpg")
-      // setGambarName(null)
-      // simpleValidator.current.showMessages();
-      // forceUpdate(1);
       e.target.value = null
       Swal.fire(
         'Oops !',
@@ -111,15 +106,6 @@ const TambahArtikel = () => {
       if (hasWhiteSpace(data[i])) {
         data.splice([i], 1);
       }
-      // if(data[i] === " "){
-      //     data.splice(i, 1);
-      // }
-      // for (let j = 0; j < data[i].length; j++) {
-      //     if (data[i][j] === " ") {
-      //         data.splice(index, 1);
-      //         // setDisableTag(true)
-      //     }
-      // }
     }
     setTag(data);
   }
@@ -266,10 +252,6 @@ const TambahArtikel = () => {
                         <CKEditor
                           editor={ClassicEditor}
                           data={isi_artikel}
-                          onReady={(editor) => {
-                            // You can store the "editor" and use when it is needed.
-                            // console.log("Editor is ready to use!", editor);
-                          }}
                           onChange={(event, editor) => {
                             const data = editor.getData();
                             setIsiArtikel(data);
@@ -415,9 +397,7 @@ const TambahArtikel = () => {
                       onChange={setTag}
                       name="fruits"
                       placeHolder="Isi Tag disini dan enter."
-                      // onBlur={() => simpleValidator.current.showMessageFor('tag')}
                     />
-                    {/* {simpleValidator.current.message('tag', tag, 'required', { className: 'text-danger' })} */}
                   </div>
                 </div>
 
@@ -447,19 +427,6 @@ const TambahArtikel = () => {
                       </label>
                     </div>
                   </div>
-                  {/* <div className="col-sm-1">
-                    <SwitchButton
-                      checked={publish}
-                      onlabel=" "
-                      onstyle="primary"
-                      offlabel=" "
-                      offstyle="danger"
-                      size="sm"
-                      width={30}
-                      // onChange={(checked) => onSetPublish(checked)}
-                      onChange={(checked) => setPublish(checked)}
-                    />
-                  </div> */}
                 </div>
 
                 <div className="form-group row">

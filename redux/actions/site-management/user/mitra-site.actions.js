@@ -136,7 +136,6 @@ export const getDetailMitraSite = (id, token) => async (dispatch) => {
       payload: data,
     });
   } catch (error) {
-    console.log("error", error);
     dispatch({
       type: DETAIL_MITRA_SITE_FAIL,
       payload: error.response.data.message,

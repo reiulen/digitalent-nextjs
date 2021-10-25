@@ -7,11 +7,7 @@ import style from "../style.module.css";
 export default function LolosAdministrasi() {
   return (
     <Card className="position-relative">
-      <Card.Body
-        onClick={() => {
-          console.log("card body");
-        }}
-      >
+      <Card.Body>
         <Row>
           <Col md={3}>
             <img

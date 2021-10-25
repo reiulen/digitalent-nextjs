@@ -233,7 +233,6 @@ export const postViaTemplate = (token,title, file, participantSelectionStatusUpd
         Swal.fire("Berhasil", "Data berhasil tersimpan", "success").then(() => {
           router.push("/partnership/user/auth/login");
         });
-        console.log(response)
       })
       .catch((error) => {
         Swal.fire("Gagal", "Gagal tidak berhasil tersimpan, mohon isi data dengan lengkap", "error");
