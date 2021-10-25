@@ -129,7 +129,7 @@ export default function ListPesertaID({ token }) {
                 ref={divReference}
               >
                 <div className="position-relative">
-                  <div className="position-absolute p-6 font-weight-boldest responsive-font-size-peserta zindex-1">
+                  <div className="position-absolute p-6 font-weight-boldest p-10 responsive-font-size-peserta zindex-1">
                     {currentUser[0]?.registration_number}
                   </div>
                   <div
@@ -162,7 +162,7 @@ export default function ListPesertaID({ token }) {
                   <div
                     className={`position-absolute w-100 text-center ${
                       certificate.data.certificate.background
-                        ? "responsive-margin-peserta"
+                        ? "responsive-margin-peserta-1"
                         : "responsive-margin-without-background"
                     }`}
                   >
