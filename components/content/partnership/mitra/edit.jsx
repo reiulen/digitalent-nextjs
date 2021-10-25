@@ -270,7 +270,8 @@ const EditMitra = ({ token }) => {
       setPic_contact_number(data.data.pic_contact_number);
       setPic_email(data.data.pic_email);
     } catch (error) {
-      notify(error.response.data.message)
+      // notify(error.response.data.message)
+      return;
     }
 
     } 
@@ -295,7 +296,8 @@ const EditMitra = ({ token }) => {
           dataNewCitites.splice(0, 0, { label: "Pilih Kab/Kota", value: "" });
           setCitiesAll(dataNewCitites);
         } catch (error) {
-          notify(error.response.data.message)
+          // notify(error.response.data.message)
+          return;
         }
       }
       fetchAPI();
