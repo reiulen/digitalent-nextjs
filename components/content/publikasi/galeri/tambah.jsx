@@ -231,7 +231,7 @@ const TambahGaleri = ({ token, id }) => {
 
                 reader.readAsDataURL(e.target.files[0]);
                 list[index].imageName = e.target.files[0].name;
-
+                
                 setImage(list);
             }
         } else {
@@ -319,38 +319,47 @@ const TambahGaleri = ({ token, id }) => {
     }
 
     const onSubmit = (e) => {
+        
         e.preventDefault()
-        if (error) {
-            dispatch(clearErrors())
-        }
-
-        if (success) {
-            dispatch({
-                type: NEW_GALERI_RESET,
-            });
-        }
-
-        if (publish === true) {
-            setPublish(1)
-
-        } else if (publish === false) {
-            setPublish(0)
-        }
-
-        let temps = []
-
-        let flag = 0
-
-        for (let i = 0; i < image.length; i++) {
-            flag += 1
-
-            if (image[i].imagePreview !== "") {
-                temps.push(image[i].imagePreview)
+        if(image[0].imagePreview === ""){
+            Swal.fire(
+                "Oops !",
+                "Harus memasukkan minimal 1 Gambar !",
+                "error"
+            );
+        }else{
+            
+            if (error) {
+                dispatch(clearErrors())
+            }
+    
+            if (success) {
+                dispatch({
+                    type: NEW_GALERI_RESET,
+                });
+            }
+    
+            if (publish === true) {
+                setPublish(1)
+    
+            } else if (publish === false) {
+                setPublish(0)
             }
 
-
-            if (flag === image.length) {
-                handleData(temps, newGaleri)
+            let temps = []
+    
+            let flag = 0
+    
+            for (let i = 0; i < image.length; i++) {
+                flag += 1
+    
+                if (image[i].imagePreview !== "") {
+                    temps.push(image[i].imagePreview)
+                }
+    
+                if (flag === image.length) {
+                    handleData(temps, newGaleri)
+                }
             }
         }
     }
@@ -399,7 +408,7 @@ const TambahGaleri = ({ token, id }) => {
                                     {simpleValidator.current.message(
                                         "judul",
                                         judul,
-                                        "required|min:5|max:5000",
+                                        "required|min:5|max:12000",
                                         { className: "text-danger" }
                                     )}
                                 </div>
