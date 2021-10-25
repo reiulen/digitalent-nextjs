@@ -4,39 +4,47 @@ import { useRouter } from "next/router";
 
 import PageWrapper from "../../../../wrapper/page.wrapper";
 import StepViewPelatihan from "../../../../StepViewPelatihan";
+import { useDispatch, useSelector } from "react-redux";
 
 const ViewTrainingStep2 = () => {
   const router = useRouter();
 
-  const [formBuilder] = useState([
-    {
-      key: 1,
-      name: "Nama Depan",
-      element: "text",
-      size: "col-md-6",
-      option: "",
-      dataOption: "",
-      required: true,
-    },
-    {
-      key: 2,
-      name: "Nama Belakang",
-      element: "text",
-      size: "col-md-6",
-      option: "",
-      dataOption: "",
-      required: true,
-    },
-    {
-      key: 3,
-      name: "Jenis Kelamin",
-      element: "radio",
-      size: "col-md-12",
-      option: "manual",
-      dataOption: "laki laki;perempuan",
-      required: false,
-    },
-  ]);
+  const { error: errorReview, review } = useSelector(
+    (state) => state.getReviewStep2
+  );
+
+  const [titleForm] = useState(review.judul_form);
+  const [formBuilder] = useState(review.FormBuilder);
+
+  // const [formBuilder] = useState([
+  //   {
+  //     key: 1,
+  //     name: "Nama Depan",
+  //     element: "text",
+  //     size: "col-md-6",
+  //     option: "",
+  //     dataOption: "",
+  //     required: true,
+  //   },
+  //   {
+  //     key: 2,
+  //     name: "Nama Belakang",
+  //     element: "text",
+  //     size: "col-md-6",
+  //     option: "",
+  //     dataOption: "",
+  //     required: true,
+  //   },
+  //   {
+  //     key: 3,
+  //     name: "Jenis Kelamin",
+  //     element: "radio",
+  //     size: "col-md-12",
+  //     option: "manual",
+  //     dataOption: "laki laki;perempuan",
+  //     required: false,
+  //   },
+  // ]);
 
   const readerElementHandler = (row, i) => {
     switch (row.element) {
@@ -216,7 +224,7 @@ const ViewTrainingStep2 = () => {
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-body py-4">
-            <h3 className="font-weight-bolder pb-5 pt-4">Form Pendaftaran</h3>
+            <h3 className="font-weight-bolder pb-5 pt-4">{titleForm}</h3>
 
             <div className="row">
               {formBuilder.map((row, i) => (

@@ -1,45 +1,63 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
+import moment from "moment";
 
 import PageWrapper from "../../../../wrapper/page.wrapper";
 import StepViewPelatihan from "../../../../StepViewPelatihan";
 
 const ViewTrainingStep1 = () => {
+  const { error: errorReview, review } = useSelector(
+    (state) => state.getReviewStep1
+  );
+
   const [dataPelatihan, setDataPelatihan] = useState({
-    peserta: "Tidak",
+    peserta: review.program_dts === "1" ? "Ya" : "Tidak",
     ketentuanPeserta:
-      "Peserta dapat mengikuti pelatihan ini ditahun yang sama pada Akademi ini",
-    namaPelatihan: "UI UX Design",
-    levelPelatihan: "Hard",
-    akademi: "Konoha",
-    tema: "Anime",
-    logoReference: "/assets/media/default.jpg",
-    thumbnail: "/assets/media/default.jpg",
-    silabus: "file.pdf",
-    metodePelatihan: "Jalan Ninja",
-    penyelenggara: "Naruto",
-    mitra: "Sasuke",
-    tanggalPendaftaran: "15 Maret 2021 sd 21 Juni 2021",
-    tanggalPelatihan: "16 Maret 2021 sd 22 Juni 2021",
-    deskripsi: "Lorep Ipsum dicampur dengan bumbu",
+      review.ketentuan_peserta === "1"
+        ? "Peserta dapat mengikuti pelatihan ini ditahun yang sama pada Akademi ini"
+        : "",
+    namaPelatihan: review.name,
+    levelPelatihan: review.level_pelatihan,
+    akademi: review.akademi,
+    tema: review.tema,
+    logoReference: review.logo
+      ? process.env.END_POINT_API_IMAGE_BEASISWA + review.logo
+      : "/assets/media/default.jpg",
+    thumbnail: review.thumbnail
+      ? process.env.END_POINT_API_IMAGE_BEASISWA + review.thumbnail
+      : "/assets/media/default.jpg",
+    silabus: review.silabus,
+    metodePelatihan: review.metode_pelatihan,
+    penyelenggara: review.penyelenggara,
+    mitra: review.mitra,
+    tanggalPendaftaran:
+      moment(review.pendaftaran_mulai).format("DD MMMM YYYY") +
+      " sd " +
+      moment(review.pendaftaran_selesai).format("DD MMMM YYYY"),
+    tanggalPelatihan:
+      moment(review.pelatihan_mulai).format("DD MMMM YYYY") +
+      " sd " +
+      moment(review.pelatihan_selesai).format("DD MMMM YYYY"),
+    deskripsi: review.deskripsi,
   });
   const [kuotaPelatihan, setKuotaPelatihan] = useState({
-    kuotaTargetPendaftar: "1000",
-    kuotaTargetPeserta: "500",
-    komitmenPeserta: "Iya",
-    lpjPeserta: "Iya",
-    infoSertifikasi: "Ada",
-    metodePelatihan: "Offnine",
-    statusKuota: "Full",
-    alurPendaftaran: "Administrasi - Test Substansi",
-    zonasi: "1",
+    kuotaTargetPendaftar: review.kuota_pendaftar,
+    kuotaTargetPeserta: review.kuota_peserta,
+    komitmenPeserta: review.komitmen === "1" ? "Iya" : "Tidak",
+    lpjPeserta: review.lpj_peserta === "1" ? "Iya" : "Tidak",
+    infoSertifikasi: review.sertifikasi === "1" ? "Iya" : "Tidak",
+    metodePelatihan: review.metode_pelatihan,
+    statusKuota: review.status_kuota,
+    alurPendaftaran: review.alur_pendaftaran,
+    zonasi: review.zonasi,
     batch: "2",
   });
   const [alamatPelatihan, setAlamatPelatihan] = useState({
-    alamat: "Jalan Konoha no 2 deket rumah jiraya",
-    provinsi: "Jawabarat",
-    kota: "Ciamis",
+    alamat: review.alamat,
+    provinsi: review.provinsi,
+    kota: review.kabupaten,
     disabilitas: "Umum",
   });
 
@@ -173,7 +191,11 @@ const ViewTrainingStep1 = () => {
             <div className="row mt-2">
               <div className="col-md-12">
                 <p className="text-neutral-body">Deskripsi</p>
-                <p className="text-dark">{dataPelatihan.deskripsi}</p>
+
+                <div
+                  dangerouslySetInnerHTML={{ __html: dataPelatihan.deskripsi }}
+                  style={{ overflowWrap: "break-word" }}
+                ></div>
               </div>
             </div>
 
