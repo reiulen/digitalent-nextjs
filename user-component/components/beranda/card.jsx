@@ -18,6 +18,7 @@ export default function card({children,label, button, thumbnail}) {
             {button}
           </div>
         </div>
+        <div className="overlayss"></div>
         
       </div>
 

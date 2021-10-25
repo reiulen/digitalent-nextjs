@@ -135,7 +135,7 @@ const DetailDokumenKerjasama = ({ token }) => {
     const val = e.target.value;
     if (val.match(regex)) {
       setError({ ...error, period: "Masukan angka" });
-      notify("Masukan angka");
+      // notify("Masukan angka");
       setPeriod("");
     } else {
       setPeriod(e.target.value);

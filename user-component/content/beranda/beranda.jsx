@@ -277,7 +277,7 @@ const Beranda = ({ session }) => {
                 gap: "1rem",
                 autoplay: true,
                 padding: "5rem",
-                height: "600px",
+                height: "450px",
                 focus: "center",
                 breakpoints: {
                   1669: {
@@ -846,15 +846,15 @@ const Beranda = ({ session }) => {
                                     </div>
 
                                     <div className="d-flex align-items-start">
-                                      <div className="roundedss-border">
+                                      <button className="roundedss-border btn btn-white">
                                         <IconLove className="cursor-pointer" />
-                                      </div>
-                                      <div className="roundedss-border mx-6">
+                                      </button>
+                                      <button className="roundedss-border btn btn-white mx-6">
                                         <IconShare className="cursor-pointer" />
-                                      </div>
+                                      </button>
 
                                       <div onClick={() => handleCloseQuickView(i)}>
-                                        <IconClose/>
+                                        <IconClose className="cursor-pointer"/>
                                       </div>
                                       
                                     </div>
