@@ -6,7 +6,10 @@ import { getSession } from "next-auth/client";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
 import { getDataPribadi } from "../../../redux/actions/pelatihan/function.actions";
 import { middlewareAuthPesertaSession } from "../../../utils/middleware/authMiddleware";
-import { getDetailRiwayatPelatihan } from "../../../redux/actions/pelatihan/riwayat-pelatihan.actions";
+import {
+  getAllRiwayatPelatihanPeserta,
+  getDetailRiwayatPelatihan,
+} from "../../../redux/actions/pelatihan/riwayat-pelatihan.actions";
 
 const TestSubstansi = dynamic(
   () => import("../../../user-component/content/peserta/test-substansi"),
@@ -30,6 +33,19 @@ const TesSubstansiDetail = dynamic(
   }
 );
 
+const BelumTersedia = dynamic(
+  () =>
+    import(
+      "../../../user-component/content/peserta/test-substansi/belum-tersedia.jsx"
+    ),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
+
 const Layout = dynamic(() =>
   import("../../../user-component/components/template/Layout.component")
 );
@@ -39,7 +55,11 @@ export default function TestSubstansiPage(props) {
   return (
     <>
       <Layout title="Dashboard Peserta - Pelatihan" session={session}>
-        <TesSubstansiDetail session={session} />
+        {props.success ? (
+          <TesSubstansiDetail session={session} />
+        ) : (
+          <BelumTersedia />
+        )}
       </Layout>
     </>
   );
@@ -60,16 +80,41 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
-      await store.dispatch(
-        getDetailRiwayatPelatihan(
-          query.id || req.cookies.id_pelatihan,
-          session.user.user.data.user.token
-        )
-      );
+      let success = false;
+      if (query.id || req.cookies.id_pelatihan) {
+        await store.dispatch(
+          getDetailRiwayatPelatihan(
+            query.id || req.cookies.id_pelatihan,
+            session.user.user.data.user.token
+          )
+        );
+        success = true;
+      } else {
+        const { data } = await store.dispatch(
+          getAllRiwayatPelatihanPeserta(session.user.user.data.user.token)
+        );
+        if (data) {
+          const test_substansi = data.list.filter(
+            (item) => item.status == "tes substansi"
+          );
+          if (test_substansi) {
+            await store.dispatch(
+              getDetailRiwayatPelatihan(
+                test_substansi.id,
+                session.user.user.data.user.token
+              )
+            );
+            success = true;
+          } else {
+            success = false;
+          }
+        }
+      }
+
       await store.dispatch(getDataPribadi(session.user.user.data.user.token));
 
       return {
-        props: { data: "auth", session, title: "Dashboard - Peserta" },
+        props: { data: "auth", session, title: "Dashboard - Peserta", success },
       };
     }
 );
