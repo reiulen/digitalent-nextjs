@@ -114,7 +114,7 @@ const Dashboard = ({ session }) => {
               backgroundImage="new-game-4.svg"
               background="primary"
               color="#6C6C6C"
-              link={`/peserta/subvit/substansi/1?theme_id="${dataDashboard.subvit.subvit.tema_id}"&training_id="${dataDashboard.subvit.subvit.pelatihan_id}"&category="Test Substansi"`}
+              link={`/peserta/subvit/substansi/1?theme_id=${dataDashboard.subvit.subvit.tema_id}&training_id=${dataDashboard.subvit.subvit.pelatihan_id}&category=Test Substansi`}
               text="Lakukan Test Substansi"
               desc="Anda Belum Melakukan Test Substansi"
               total={dataDashboard.subvit.subvit.status}

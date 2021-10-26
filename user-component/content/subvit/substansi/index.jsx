@@ -247,8 +247,7 @@ const SubtansiUser = ({ token }) => {
                         src={
                           process.env.END_POINT_API_IMAGE_SUBVIT +
                             "subtance/images/" +
-                            data.list_questions[parseInt(router.query.id) - 1]
-                              .question_image || defaultImage
+                            data.list_questions[parseInt(router.query.id) - 1]?.question_image || defaultImage
                         }
                         alt=""
                         width={150}
@@ -257,8 +256,7 @@ const SubtansiUser = ({ token }) => {
                     </div>
                     <div className="p-5">
                       {data &&
-                        data.list_questions[parseInt(router.query.id) - 1]
-                          .question}
+                        data.list_questions[parseInt(router.query.id) - 1]?.question}
                     </div>
                   </div>
                 ) : (
@@ -271,7 +269,7 @@ const SubtansiUser = ({ token }) => {
               {data &&
                 data.list_questions &&
                 JSON.parse(
-                  data.list_questions[parseInt(router.query.id) - 1].answer
+                  data.list_questions[parseInt(router.query.id) - 1]?.answer
                 ).map((item, index) => {
                   return (
                     <>
