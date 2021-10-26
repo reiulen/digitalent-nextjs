@@ -8,17 +8,12 @@ import moment from "moment";
 
 export default function SeleksiAdministrasi({ props }) {
   const router = useRouter();
-  console.log(props.data, "ini data");
   const data = props.data;
   const dateFrom = moment(data.pendaftaran_mulai).format("LL");
   const dateTo = moment(data.pendaftaran_selesai).format("LL");
   return (
     <Card className="position-relative">
-      <Card.Body
-        onClick={() => {
-          console.log("card body");
-        }}
-      >
+      <Card.Body>
         <Row>
           <Col md={3}>
             <img

@@ -11,35 +11,6 @@ import { TagsInput } from "react-tag-input-component";
 import DatePicker from 'react-datepicker'
 import Select from 'react-select'
 
-// import Editor from 'ckeditor5-custom-build/build/ckeditor';
-// import { CKEditor } from '@ckeditor/ckeditor5-react'
-
-// import Essentials from '@ckeditor/ckeditor5-essentials/src/essentials'
-// import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph'
-// import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold'
-// import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic'
-// import Underline from '@ckeditor/ckeditor5-basic-styles/src/underline'
-// import Strikethrough from '@ckeditor/ckeditor5-basic-styles/src/strikethrough'
-// // import BlockQuote from '@ckeditor/ckeditor5-block-quote/src/blockquote'
-// import Links from '@ckeditor/ckeditor5-link/src/link'
-// import MediaEmbed from '@ckeditor/ckeditor5-media-embed/src/mediaembed'
-// import PasteFromOffice from '@ckeditor/ckeditor5-paste-from-office/src/pastefromoffice'
-// import Heading from '@ckeditor/ckeditor5-heading/src/heading'
-// import Font from '@ckeditor/ckeditor5-font/src/font'
-// import Images from '@ckeditor/ckeditor5-image/src/image'
-// import ImageStyle from '@ckeditor/ckeditor5-image/src/imagestyle'
-// import ImageToolbar from '@ckeditor/ckeditor5-image/src/imagetoolbar'
-// import ImageUpload from '@ckeditor/ckeditor5-image/src/imageupload'
-// import ImageResize from '@ckeditor/ckeditor5-image/src/imageresize'
-// import List from '@ckeditor/ckeditor5-list/src/list'
-// import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment'
-// import Table from '@ckeditor/ckeditor5-table/src/table'
-// import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar'
-// import TextTransformation from '@ckeditor/ckeditor5-typing/src/texttransformation'
-// import Indent from '@ckeditor/ckeditor5-indent/src/indent'
-// import IndentBlock from '@ckeditor/ckeditor5-indent/src/indentblock'
-// import Base64UploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter'
-
 import {
   newArtikel,
   clearErrors,
@@ -63,7 +34,6 @@ const TambahArtikel = ({ token, id }) => {
   });
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
-  // const forceUpdate = React.useReducer(() => ({}))[1]
 
   const { loading, error, success } = useSelector((state) => state.newArtikel);
   const { setting } = useSelector(state => state.allSettingPublikasi)
@@ -73,101 +43,12 @@ const TambahArtikel = ({ token, id }) => {
     kategori,
   } = useSelector((state) => state.allKategori);
 
-  // const Editor = dynamic(() => import ("../../../Editor"), {
-  //   ssr: false
-  // })
-
-  // const editorConfiguration = {
-  //   placeholder: "Tulis Deskripsi",
-  //   plugins: [
-  //     Essentials,
-  //     Paragraph,
-  //     Bold,
-  //     Italic,
-  //     Heading,
-  //     Indent,
-  //     IndentBlock,
-  //     Underline,
-  //     Strikethrough,
-  //     // BlockQuote,
-  //     Font,
-  //     Alignment,
-  //     List,
-  //     Links,
-  //     MediaEmbed,
-  //     PasteFromOffice,
-  //     Images,
-  //     ImageStyle,
-  //     ImageToolbar,
-  //     ImageUpload,
-  //     ImageResize,
-  //     Base64UploadAdapter,
-  //     Table,
-  //     TableToolbar,
-  //     TextTransformation,
-  //   ],
-  //   toolbar: [
-  //     'heading',
-  //     '|',
-  //     'bold',
-  //     'italic',
-  //     'underline',
-  //     'strikethrough',
-  //     '|',
-  //     'fontSize',
-  //     'fontColor',
-  //     'fontBackgroundColor',
-  //     '|',
-  //     'alignment',
-  //     'outdent',
-  //     'indent',
-  //     'bulletedList',
-  //     'numberedList',
-  //     'blockQuote',
-  //     '|',
-  //     'link',
-  //     'insertTable',
-  //     'imageUpload',
-  //     'mediaEmbed',
-  //     '|',
-  //     'undo',
-  //     'redo',
-  //   ],
-  // };
 
   useEffect(() => {
-    // dispatch(getAllKategori());
 
     editorRef.current = {
       CKEditor: require("@ckeditor/ckeditor5-react").CKEditor, //Added .CKEditor
       ClassicEditor: require("@ckeditor/ckeditor5-build-classic"),
-      // Base64UploadAdapter: require('@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter'),
-      // Essentials: require('@ckeditor/ckeditor5-essentials/src/essentials'),
-      // Paragraph: require('@ckeditor/ckeditor5-paragraph/src/paragraph'),
-      // Bold: require('@ckeditor/ckeditor5-basic-styles/src/bold'),
-      // Italic: require ('@ckeditor/ckeditor5-basic-styles/src/italic'),
-      // Underline: require ('@ckeditor/ckeditor5-basic-styles/src/underline'),
-      // Strikethrough: require ('@ckeditor/ckeditor5-basic-styles/src/strikethrough'),
-      // BlockQuote: require ('@ckeditor/ckeditor5-block-quote/src/blockquote'),
-      // Link: require ('@ckeditor/ckeditor5-link/src/link'),
-      // LinkImage: require ('@ckeditor/ckeditor5-link/src/linkimage'),
-      // MediaEmbed: require ('@ckeditor/ckeditor5-media-embed/src/mediaembed'),
-      // PasteFromOffice: require ('@ckeditor/ckeditor5-paste-from-office/src/pastefromoffice'),
-      // Heading: require ('@ckeditor/ckeditor5-heading/src/heading'),
-      // Font: require ('@ckeditor/ckeditor5-font/src/font'),
-      // Image: require ('@ckeditor/ckeditor5-image/src/image'),
-      // ImageStyle: require ('@ckeditor/ckeditor5-image/src/imagestyle'),
-      // ImageToolbar: require ('@ckeditor/ckeditor5-image/src/imagetoolbar'),
-      // ImageUpload: require ('@ckeditor/ckeditor5-image/src/imageupload'),
-      // ImageResize: require ('@ckeditor/ckeditor5-image/src/imageresize'),
-      // List: require ('@ckeditor/ckeditor5-list/src/list'),
-      // Alignment: require ('@ckeditor/ckeditor5-alignment/src/alignment'),
-      // Table: require ('@ckeditor/ckeditor5-table/src/table'),
-      // TableToolbar: require ('@ckeditor/ckeditor5-table/src/tabletoolbar'),
-      // TextTransformation: require ('@ckeditor/ckeditor5-typing/src/texttransformation'),
-      // Indent: require ('@ckeditor/ckeditor5-indent/src/indent'),
-      // IndentBlock: require ('@ckeditor/ckeditor5-indent/src/indentblock'),
-      // Base64UploadAdapter: require ('@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter'),
     };
 
     setEditorLoaded(true);
@@ -429,9 +310,6 @@ const TambahArtikel = ({ token, id }) => {
                         <CKEditor
                           editor={ClassicEditor}
                           data={isi_artikel}
-                          onReady={(editor) => {
-                            // You can store the "editor" and use when it is needed.
-                          }}
                           onChange={(event, editor) => {
                             const data = editor.getData();
                             setIsiArtikel(data);
@@ -443,162 +321,7 @@ const TambahArtikel = ({ token, id }) => {
                           }
                           config={{
                             placeholder: "Tulis Deskripsi",
-                            // plugins: [
-                            //   Image, ImageToolbar, ImageCaption, ImageStyle, ImageResize, LinkImage
-                            // ],
-                            // image: {
-                            //   toolbar: [
-                            //     'imageStyle:block',
-                            //     'imageStyle:side',
-                            //     '|',
-                            //     'toggleImageCaption',
-                            //     'imageTextAlternative',
-                            //   ]
-                            // }
                           }}
-                        // config={{
-                        //   plugins: [
-                        //     Essentials,
-                        //     Paragraph,
-                        //     Bold,
-                        //     Italic,
-                        //     Heading,
-                        //     Indent,
-                        //     IndentBlock,
-                        //     Underline,
-                        //     Strikethrough,
-                        //     BlockQuote,
-                        //     Font,
-                        //     Alignment,
-                        //     List,
-                        //     Link,
-                        //     MediaEmbed,
-                        //     PasteFromOffice,
-                        //     Image,
-                        //     ImageStyle,
-                        //     ImageToolbar,
-                        //     ImageUpload,
-                        //     ImageResize,
-                        //     Base64UploadAdapter,
-                        //     Table,
-                        //     TableToolbar,
-                        //     TextTransformation,
-                        //   ],
-                        //   toolbar: [
-                        //     'heading',
-                        //     '|',
-                        //     'bold',
-                        //     'italic',
-                        //     'underline',
-                        //     'strikethrough',
-                        //     '|',
-                        //     'fontSize',
-                        //     'fontColor',
-                        //     'fontBackgroundColor',
-                        //     '|',
-                        //     'alignment',
-                        //     'outdent',
-                        //     'indent',
-                        //     'bulletedList',
-                        //     'numberedList',
-                        //     'blockQuote',
-                        //     '|',
-                        //     'link',
-                        //     'insertTable',
-                        //     'imageUpload',
-                        //     'mediaEmbed',
-                        //     '|',
-                        //     'undo',
-                        //     'redo',
-                        //   ],
-                        //   heading: {
-                        //     options: [
-                        //       {
-                        //         model: 'paragraph',
-                        //         view: 'p',
-                        //         title: 'Paragraph',
-                        //         class: 'ck-heading_paragraph'
-                        //       },
-                        //       {
-                        //         model: 'heading1',
-                        //         view: 'h1',
-                        //         title: 'Heading 1',
-                        //         class: 'ck-heading_heading1'
-                        //       },
-                        //       {
-                        //         model: 'heading2',
-                        //         view: 'h2',
-                        //         title: 'Heading 2',
-                        //         class: 'ck-heading_heading2'
-                        //       },
-                        //       {
-                        //         model: 'heading3',
-                        //         view: 'h3',
-                        //         title: 'Heading 3',
-                        //         class: 'ck-heading_heading3'
-                        //       }
-                        //     ]
-                        //   },
-                        //   fontSize: {
-                        //     options: [
-                        //       9,
-                        //       10,
-                        //       11,
-                        //       12,
-                        //       13,
-                        //       14,
-                        //       15,
-                        //       16,
-                        //       17,
-                        //       18,
-                        //       19,
-                        //       20,
-                        //       21,
-                        //       23,
-                        //       25,
-                        //       27,
-                        //       29,
-                        //       31,
-                        //       33,
-                        //       35
-                        //     ]
-                        //   },
-                        //   alignment: {
-                        //     options: ['justify', 'left', 'center', 'right']
-                        //   },
-                        //   table: {
-                        //     contentToolbar: [
-                        //       'tableColumn',
-                        //       'tableRow',
-                        //       'mergeTableCells'
-                        //     ]
-                        //   },
-                        //   image: {
-                        //     resizeUnit: 'px',
-                        //     toolbar: [
-                        //       'imageStyle:alignLeft',
-                        //       'imageStyle:full',
-                        //       'imageStyle:alignRight',
-                        //       '|',
-                        //       'imageTextAlternative'
-                        //     ],
-                        //     styles: ['full', 'alignLeft', 'alignRight']
-                        //   },
-                        //   typing: {
-                        //     transformations: {
-                        //       remove: [
-                        //         'enDash',
-                        //         'emDash',
-                        //         'oneHalf',
-                        //         'oneThird',
-                        //         'twoThirds',
-                        //         'oneForth',
-                        //         'threeQuarters'
-                        //       ]
-                        //     }
-                        //   },
-                        //   placeholder: 'Tulis Deskripsi'
-                        // }}
                         />
 
                       ) : (
@@ -611,15 +334,6 @@ const TambahArtikel = ({ token, id }) => {
                         { className: "text-danger" }
                       )}
                     </div>
-                    {/* <Editor value="" onChange={(data) => setIsiArtikel(data)}/> */}
-                    {/* <CKEditor 
-                      editor={ Editor }
-                      config={ editorConfiguration }
-                      onChange={ ( event, editor ) => {
-                        const data = editor.getData();
-                        console.log( { event, editor, data } );
-                      }}
-                    /> */}
                   </div>
                 </div>
 
@@ -661,33 +375,6 @@ const TambahArtikel = ({ token, id }) => {
                         style={{ display: "none" }}
                       />
                     </div>
-                    {/* <div>
-                      <label htmlFor="inputGroupFile04" className="icon-plus">
-                        <Image
-                          src={iconPlus}
-                          alt="plus"
-                          width={60}
-                          height={60} 
-                        />
-                      </label>
-                      <div className="circle-top" onClick={onChangeGambar}>
-                        <i className="ri-add-line text-dark"></i>
-                      </div>
-                      
-                      <input
-                        type="file"
-                        name="gambar"
-                        className="custom-file-input"
-                        id="inputGroupFile04"
-                        onChange={onChangeGambar}
-                        accept="image/*"
-                        onBlur={() =>
-                          simpleValidator.current.showMessageFor("gambar")
-                        }
-                        style={{display: "none"}}
-                      />
-                    </div> */}
-
                   </div>
 
                   <div className="ml-3">
@@ -709,69 +396,8 @@ const TambahArtikel = ({ token, id }) => {
                     <p>
                       Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar.
                     </p>
-
                   </div>
-
                 </div>
-
-                {/* <div className="form-group row">
-                  <label
-                    htmlFor="staticEmail"
-                    className="col-sm-2 col-form-label"
-                  >
-                    Upload Thumbnail
-                  </label>
-                  <div className="col-sm-1">
-                    <figure
-                      className="avatar item-rtl"
-                      data-toggle="modal"
-                      data-target="#exampleModalCenter"
-                    >
-                      <Image
-                        src={gambarPreview}
-                        alt="image"
-                        width={60}
-                        height={60}
-                      />
-                    </figure>
-                  </div>
-                  <div className="col-sm-9">
-                    <div className="input-group">
-                      <div className="custom-file">
-                        <input
-                          type="file"
-                          name="gambar"
-                          className="custom-file-input"
-                          id="inputGroupFile04"
-                          onChange={onChangeGambar}
-                          accept="image/*"
-                          onBlur={() =>
-                            simpleValidator.current.showMessageFor("gambar")
-                          }
-                        />
-                        <label
-                          className="custom-file-label"
-                          htmlFor="inputGroupFile04"
-                        >
-                          Pilih file
-                        </label>
-                      </div>
-                    </div>
-                    {simpleValidator.current.message(
-                      "gambar",
-                      gambar,
-                      "required",
-                      { className: "text-danger" }
-                    )}
-                    {
-                      gambarName !== null ?
-                        <small className="text-danger">{gambarName}</small>
-                      :
-                        null
-                    }
-                  </div>
-                  
-                </div> */}
                 <div className="form-group">
                   <label
                     htmlFor="staticEmail"
@@ -863,7 +489,6 @@ const TambahArtikel = ({ token, id }) => {
                           className="checkbox"
                           checked={publish}
                           type="checkbox"
-                          // onChange={(checked) => setPublish(checked)}
                           onChange={(e) => handleChangePublish(e)}
                         />
                         <span
@@ -886,15 +511,11 @@ const TambahArtikel = ({ token, id }) => {
                             className="form-search-date form-control-sm form-control"
                             selected={publishDate}
                             onChange={(date) => handlePublishDate(date)}
-                            // onChange={(date) => setPublishDate(date)}
                             selectsStart
                             startDate={publishDate}
-                            // endDate={endDate}
                             dateFormat="dd/MM/yyyy"
                             placeholderText="Silahkan Isi Tanggal Publish"
                             wrapperClassName="col-12 col-lg-12 col-xl-12"
-                            // minDate={moment().toDate()}
-                            // minDate={addDays(new Date(), 20)}
                             disabled={disablePublishDate === true || disablePublishDate === null}
                           />
                         </div>

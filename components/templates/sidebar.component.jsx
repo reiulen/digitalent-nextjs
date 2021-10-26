@@ -468,8 +468,6 @@ const Sidebar = ({ session }) => {
     const pathRoute = router.route;
     const splitRouteToMakingActive = pathRoute.split("/");
 
-    console.log(condition);
-
     if(condition != null){
 
       if (splitRouteToMakingActive[1]) {
@@ -516,12 +514,7 @@ const Sidebar = ({ session }) => {
         _temp[iMenu] = { ...items, selected: true };
         items.child.map((itemsp, indxx) => {
           if (indxx === iSubMenu) {
-            // console.log("open");
-
             localStorage.setItem("submenuActive", indxx);
-
-            // console.log(localStorage.getItem("submenuActive"));
-
             _temp[iMenu].child[indxx] = {
               ...itemsp,
               selected: itemsp.selected ? false : true,

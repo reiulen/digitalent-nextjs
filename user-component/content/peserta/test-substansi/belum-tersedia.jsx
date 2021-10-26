@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Card, Col, Row, Badge, Button } from "react-bootstrap";
 import Link from "next/link";
 import Image from "next/image";
-import style from "./style.module.css";
 import { useRouter } from "next/router";
 import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
 
@@ -35,18 +34,22 @@ export default function SeleksiAdministrasi() {
             className="d-flex justify-content-center "
             style={{ fontSize: "16px" }}
           >
-            Silahkan lakukan Test Substansi terlebih dahulu...
+            Status pendaftaran Anda masih dalam tahap seleksi Administrasi,
+            silahkan cek berkala.
           </p>
           <div className="d-flex justify-content-center">
             <Button
-              className="btn-rounded-full font-weight-bold btn-block d-flex justify-content-center mt-5 w-50"
+              className="btn-rounded-full font-weight-bold btn-block d-flex justify-content-center mt-5 w-25"
               style={{
                 height: "40px",
                 fontFamily: "poppins",
                 fontSize: "14px",
               }}
+              onClick={() => {
+                router.push("/peserta/riwayat-pelatihan");
+              }}
             >
-              Kerjakan Tes Substansi
+              Cek Status
               <i
                 className="ri-arrow-right-s-line mr-2"
                 style={{ color: "white" }}

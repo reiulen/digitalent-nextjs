@@ -344,7 +344,7 @@ import {
   updatePendidikanReducer,
   updateKeterampilanReducer,
   updatePekerjaanReducer,
-  getAsalSekolahReducer
+  getAsalSekolahReducer,
 } from "./pelatihan/peserta/profile.reducers";
 
 import { dashboardPesertaReducer } from "./pelatihan/peserta/dashboard-reducers";
@@ -396,7 +396,10 @@ import {
   checkRegisteredPelatihanReducer,
 } from "../reducers/beranda/detail-pelatihan.reducers";
 //END BERANDA
-import { geAllRiwayatPelatihanPesertaReducer } from "../reducers/pelatihan/peserta/riwayat-pelatihan.reducer";
+import {
+  getAllRiwayatPelatihanPesertaReducer,
+  getDetailRiwayatPelatihanReducer,
+} from "../reducers/pelatihan/peserta/riwayat-pelatihan.reducer";
 
 const reducer = combineReducers({
   // PUBLIKASI
@@ -731,7 +734,8 @@ const reducer = combineReducers({
 
   //END BERANDA
   // ========== Riwayat Pelatihan ========
-  getAllRiwayatPelatihanPeserta: geAllRiwayatPelatihanPesertaReducer,
+  getAllRiwayatPelatihanPeserta: getAllRiwayatPelatihanPesertaReducer,
+  getDetailRiwayatPelatihanPeserta: getDetailRiwayatPelatihanReducer,
 });
 
 export default reducer;

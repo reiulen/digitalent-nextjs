@@ -6,5 +6,6 @@ deploy_staging:
   type: deploy 
   script:
     - ssh -i /home/gitlab-runner/devops.pem ubuntu@13.213.248.9 -T "/home/ubuntu/docker/dts-fe/dts-fe.sh dev"
+    #- echo "Auto Deploy is disabled, please deploy mannual using dts-fe.dev sh"  
   only:
     - development 

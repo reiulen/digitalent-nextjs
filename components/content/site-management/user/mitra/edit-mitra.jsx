@@ -21,10 +21,7 @@ const TambahApi = ({ token,id }) => {
   let dispatch = useDispatch();
   const router = useRouter();
 
-  console.log("id",id)
-
- const {mitaSite} = useSelector((state) => state.detailMitraSite);
-  console.log("mitaSite",mitaSite)
+  const {mitaSite} = useSelector((state) => state.detailMitraSite);
 
   const [nameCooperation, setNameCooperation] = useState(mitaSite.institution_name);
   const [email, setEmail] = useState(mitaSite.email);

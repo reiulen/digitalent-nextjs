@@ -31,6 +31,8 @@ import {
   DETAIL_LOG_API_REQUEST,
   DETAIL_LOG_API_SUCCESS,
   DETAIL_LOG_API_FAIL,
+  RESET_VALUE_SORTIR,
+  CHANGE_DATES,
 } from "../../../types/site-management/settings/api.type";
 
 import axios from "axios";
@@ -93,7 +95,6 @@ export const deleteApi = (id, token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: DELETE_API_FAIL,
-      payload: error.response.data.message,
     });
   }
 };
@@ -219,7 +220,6 @@ export const getDetailApi = (id, token) => async (dispatch) => {
       `api/setting-api/detail/${id}`;
 
     const { data } = await axios.get(link, config);
-    console.log("data sdafdsaf", data);
 
     dispatch({
       type: DETAIL_API_SUCCESS,
@@ -233,44 +233,21 @@ export const getDetailApi = (id, token) => async (dispatch) => {
 };
 
 export const getDetailLog = (id, token) => async (dispatch, getState) => {
-  // try {
-  //   dispatch({
-  //     type: DETAIL_LOG_API_REQUEST,
-  //   });
-  //   const config = {
-  //     headers: {
-  //       Authorization: "Bearer " + token,
-  //     },
-  //   };
-
-  //   let link =
-  //     process.env.END_POINT_API_SITE_MANAGEMENT +
-  //     `api/setting-api/detail/log/${id}`;
-
-  //   const { data } = await axios.get(link, config);
-  //   console.log("data sdafdsaf", data);
-
-  //   dispatch({
-  //     type: DETAIL_LOG_API_SUCCESS,
-  //     payload: data,
-  //   });
-  // } catch (error) {
-  //   dispatch({
-  //     type: DETAIL_LOG_API_FAIL,
-  //   });
-  // }
-
   try {
     dispatch({ type: DETAIL_LOG_API_REQUEST });
 
     let pageState = getState().listLog.page || 1;
     let cariState = getState().listLog.cari || "";
     let limitState = getState().listLog.limit || 5;
+    let fromState = getState().listLog.from;
+    let toState = getState().listLog.to;
 
     const params = {
       page: pageState,
       cari: cariState,
       limit: limitState,
+      from: fromState,
+      to: toState,
     };
 
     const { data } = await axios.get(
@@ -292,4 +269,44 @@ export const getDetailLog = (id, token) => async (dispatch, getState) => {
       type: DETAIL_LOG_API_FAIL,
     });
   }
+};
+
+export const changeDates = (from, to) => {
+  return {
+    type: CHANGE_DATES,
+    from,
+    to,
+  };
+};
+
+export const exportFileCSV = (token, id) => {
+  return async () => {
+    try {
+      let urlExport = await axios.get(
+        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-api/export/${id}`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      var url = urlExport.config.url;
+
+      fetch(url, {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => response.blob())
+        .then((blob) => {
+          var _url = window.URL.createObjectURL(blob);
+          window.open(_url, "_blank").focus();
+        })
+        .catch((error) => {
+          console.log(error.response.data.message);
+        });
+    } catch (error) {
+      console.log(error.response.data.message);
+    }
+  };
 };

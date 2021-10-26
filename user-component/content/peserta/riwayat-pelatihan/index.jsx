@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { Card, Button, Col, Row, Modal } from "react-bootstrap";
 import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
 import IconFilter from "../../../../components/assets/icon/Filter";
@@ -17,7 +17,6 @@ import { useDispatch } from "react-redux";
 
 export default function RiwayatPelatihan({ session }) {
   const dispatch = useDispatch();
-
   let refSelect = null;
   const [showModal, setShowModal] = useState(false);
   const dataRiwayatPelatihan = useSelector(
@@ -37,12 +36,12 @@ export default function RiwayatPelatihan({ session }) {
   ];
 
   const [selected, setSelected] = useState(0);
+
   const [filter, setFilter] = useState([
     { name: "semua", value: "all" },
-    { name: "test substansi", value: "test substansi" },
+    { name: "test substansi", value: "tes_substansi" },
     { name: "administrasi", value: "all" },
     { name: "pelatihan", value: "pelatihan" },
-    { name: "survey & lpj", value: "test" },
     { name: "selesai", value: "1" },
   ]);
 
@@ -114,7 +113,6 @@ export default function RiwayatPelatihan({ session }) {
                           }
                           onClick={(e) => {
                             setSelected(i);
-                            // console.log(filter[i].value);
                             dispatch(setValuePeserta(filter[i].value));
                           }}
                           className={`rounded-full mx-5 w-100 text-capitalize`}
@@ -146,36 +144,38 @@ export default function RiwayatPelatihan({ session }) {
         {/* <Administrasi /> */}
         {dataRiwayatPelatihan.listPelatihan.list.map((el) => {
           return (
-            <CardPeserta status={"test"} data={el} />
-            // img_figure={"/assets/media/mitra-icon/bukalapak-1.svg"}
-            // img_mitra={"/assets/media/mitra-icon/bukalapak-1.svg"}
-            // mitra_name={"bukalapak"}
-            // pelatihan_name={"Intermediate Multimedia Designer"}
-            // label={"warning"}
-            // location={
-            //   "Pasaraya Blok M Gedung B Lt. 6, Jakarta Barat, Indonesia"
-            // }
+            <Fragment>
+              <CardPeserta status={"test"} data={el} session={session} />
+            </Fragment>
           );
+          // img_figure={"/assets/media/mitra-icon/bukalapak-1.svg"}
+          // img_mitra={"/assets/media/mitra-icon/bukalapak-1.svg"}
+          // mitra_name={"bukalapak"}
+          // pelatihan_name={"Intermediate Multimedia Designer"}
+          // label={"warning"}
+          // location={
+          //   "Pasaraya Blok M Gedung B Lt. 6, Jakarta Barat, Indonesia"
+          // }
         })}
-        {dataRiwayatPelatihan.listPelatihan.list.map((el) => {
-          if (el.survei) {
-            // <CardPeserta totalButton={2} data={el} status={"isi survey"} />
+        {/* <CardPeserta status={"isi lpj"} data={el} session={session} /> */}
+        {/* <CardPeserta totalButton={2} status={"tes substansi"} /> */}
+        {/* {dataRiwayatPelatihan.listPelatihan.list.map((el) => {
+          if (el.survei == true && el.lpj == true) {
+            return <CardPeserta status={"isi lpj"} data={el} />;
+          } else if (el.survei == true && el.lpj == false) {
+            return <CardPeserta data={el} status={"isi survey"} />;
+          } else if (el.lpj == true) {
+            return <CardPeserta status={"isi lpj"} data={el} />;
           }
-          if (el.lpj) {
-            // return <CardPeserta status={"isi lpj"} data={el} />;
-          }
-          if (el.lpj && el.survei) {
-            // return <CardPeserta status={"isi lpj"} data={el} />;
-          }
+
           if (el.midtest) {
-            // return <CardPeserta status={"kerjakan mid test"} data={el} />;
+            return <CardPeserta status={"kerjakan mid test"} data={el} />;
           }
-        })}
+        })} */}
         {/* <CardPeserta totalButton={2} status={"kerjakan mid test"} /> */}
         {/* <CardPeserta totalButton={2} data={el} status={"isi survey"} /> */}
 
         {/* <CardPeserta totalButton={2} status={"lolos administrasi"} />
-        <CardPeserta totalButton={2} status={"tes substansi"} />
         <CardPeserta totalButton={2} status={"menunggu jadwal"} /> */}
         {/* 
         <CardPeserta

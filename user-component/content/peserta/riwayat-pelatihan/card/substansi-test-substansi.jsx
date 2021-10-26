@@ -5,21 +5,10 @@ import Image from "next/image";
 import style from "../style.module.css";
 import { useRouter } from "next/router";
 export default function SubstansiMenungguJadwal() {
-  async function clickHandle(param) {
-    if (param == 1) {
-      console.log("atas");
-    } else {
-      console.log("bawah");
-    }
-  }
 
   return (
     <Card className="position-relative">
-      <Card.Body
-        onClick={() => {
-          console.log("card body");
-        }}
-      >
+      <Card.Body>
         <Row>
           <Col md={3}>
             <img

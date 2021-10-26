@@ -36,33 +36,22 @@ const Dashboard = ({ session }) => {
     },
   ]);
 
-  const [totalSubvit, setTotalSubvit] = useState(4)
-  const [col, setCol] = useState([])
+  const [totalSubvit, setTotalSubvit] = useState(4);
+  const [col, setCol] = useState(0);
 
   useEffect(() => {
-    if (totalSubvit === 4) {
-        setCol([6,6,6,6])
-      }else if(totalSubvit === 3){
-        setCol([6,6,12])
-      } else if(totalSubvit === 2){
-        setCol([6,6])
-      }else if(totalSubvit === 1){
-        setCol([12])        
-      }else {
-
-      }
-    // if (dataDashboard.subvit.subvit.status) {
-    //   totalSubvit = totalSubvit + 1;
-    // }
-    // if (dataDashboard.subvit.survei.status) {
-    //   totalSubvit = totalSubvit + 1;
-    // }
-    // if (dataDashboard.subvit.trivia.status) {
-    //   totalSubvit = totalSubvit + 1;
-    // }
-    // if (dataDashboard.subvit.sertifikat.status) {
-    //   totalSubvit = totalSubvit + 1;
-    // }
+    if (dataDashboard.subvit.subvit.status) {
+      setCol(col + 1);
+    }
+    if (dataDashboard.subvit.survei.status) {
+      setCol(col + 1);
+    }
+    if (dataDashboard.subvit.trivia.status) {
+      setCol(col + 1);
+    }
+    if (dataDashboard.subvit.sertifikat.status) {
+      setCol(col + 1);
+    }
 
     if (errorDashboard) {
       toast.error(errorDashboard);
@@ -106,7 +95,7 @@ const Dashboard = ({ session }) => {
           />
         </Row>
         <Row className="mx-1">
-          {dataDashboard.pelatihan.pelatihan_berjalan.length === 0 && ( 
+          {col === 0 && (
             <CardPage
               backgroundImage="new-game-4.svg"
               background="primary"
@@ -125,12 +114,12 @@ const Dashboard = ({ session }) => {
               backgroundImage="new-game-4.svg"
               background="primary"
               color="#6C6C6C"
-              link="/peserta/subvit/substansi/1"
+              link={`/peserta/subvit/substansi/1?theme_id=${dataDashboard.subvit.subvit.tema_id}&training_id=${dataDashboard.subvit.subvit.pelatihan_id}&category=Test Substansi`}
               text="Lakukan Test Substansi"
               desc="Anda Belum Melakukan Test Substansi"
               total={dataDashboard.subvit.subvit.status}
               isSubvit={true}
-              col={6 }
+              col={col === 1 ? 12 : 6}
             />
           )}
 
@@ -144,7 +133,7 @@ const Dashboard = ({ session }) => {
               desc="Anda Belum Melakukan Test Survey"
               total={dataDashboard.subvit.survei.status}
               isSubvit={true}
-              col={6}
+              col={col === 1 ? 12 : 6}
             />
           )}
           {dataDashboard.subvit.trivia.status && (
@@ -157,7 +146,7 @@ const Dashboard = ({ session }) => {
               desc="Anda Belum Melakukan TRIVIA"
               total={dataDashboard.subvit.trivia.status}
               isSubvit={true}
-              col={6}
+              col={col === 1 ? 12 : 6}
             />
           )}
           {dataDashboard.subvit.sertifikat.status && (
@@ -170,7 +159,7 @@ const Dashboard = ({ session }) => {
               desc="Anda Sudah bisa mengunduh Sertifikat"
               total={dataDashboard.subvit.sertifikat.status}
               isSubvit={true}
-              col={6}
+              col={col === 1 ? 12 : 6}
             />
           )}
         </Row>
@@ -208,29 +197,9 @@ const Dashboard = ({ session }) => {
               </Card>
             </Col>
           )}
-          {dataDashboard.pelatihan.pelatihan_selesi.length === 0 && (
-            <Col md={6} className="mb-4 px-2">
-              <Card className="rounded-xl h-100">
-                <Card.Body>
-                  <Card.Title>
-                    <p className={style.card_title}>Pelatihan Sebelumnya</p>
-                  </Card.Title>
-                  <div
-                    className="text-center"
-                    style={{
-                      height: "200",
-                      paddingTop: "75px",
-                      paddingBottom: "75px",
-                    }}
-                  >
-                    <p>Anda tidak memiliki histori pelatihan sebelumnya.</p>
-                  </div>
-                </Card.Body>
-              </Card>
-            </Col>
-          )}
 
-          {dataDashboard.pelatihan.pelatihan_berjalan.length > 0 && (
+          {Object.keys(dataDashboard.pelatihan.pelatihan_berjalan).length >
+            0 && (
             <Col md={6} className="mb-4 px-2">
               <Card className="rounded-xl h-100">
                 <Card.Body>
@@ -241,7 +210,12 @@ const Dashboard = ({ session }) => {
                   <Card className="shadow rounded-md">
                     <Image
                       className={`${style.image_dashboard}`}
-                      src="/assets/media/default-card.png"
+                      src={
+                        (pelatihan.pelatihan_berjalan.gambar &&
+                          process.env.END_POINT_API_IMAGE_BEASISWA +
+                            pelatihan.pelatihan_berjalan.gambar) ||
+                        `/assets/media/default-card.png`
+                      }
                       width={400}
                       height={180}
                       objectFit="cover"
@@ -255,7 +229,12 @@ const Dashboard = ({ session }) => {
                     <Card.Body className="position-relative">
                       <div className={style.bungkus_mitra_pelatihan}>
                         <Image
-                          src="/assets/media/logo-filter.svg"
+                          src={
+                            (pelatihan.pelatihan_berjalan.gambar_mitra &&
+                              process.env.END_POINT_API_IMAGE_BEASISWA +
+                                pelatihan.pelatihan_berjalan.gambar_mitra) ||
+                            `/assets/media/default-card.png`
+                          }
                           width={62}
                           height={62}
                           objectFit="cover"
@@ -315,12 +294,34 @@ const Dashboard = ({ session }) => {
             </Col>
           )}
 
-          {dataDashboard.pelatihan.pelatihan_selesi.length > 0 && (
+          {dataDashboard.pelatihan.pelatihan_selesi.length === 0 && (
             <Col md={6} className="mb-4 px-2">
               <Card className="rounded-xl h-100">
                 <Card.Body>
                   <Card.Title>
-                    <p className={style.card_title}>Pelatihan Selesai</p>
+                    <p className={style.card_title}>Pelatihan Sebelumnya</p>
+                  </Card.Title>
+                  <div
+                    className="text-center"
+                    style={{
+                      height: "200",
+                      paddingTop: "75px",
+                      paddingBottom: "75px",
+                    }}
+                  >
+                    <p>Anda tidak memiliki histori pelatihan sebelumnya.</p>
+                  </div>
+                </Card.Body>
+              </Card>
+            </Col>
+          )}
+
+          {Object.keys(dataDashboard.pelatihan.pelatihan_selesi).length > 0 && (
+            <Col md={6} className="mb-4 px-2">
+              <Card className="rounded-xl h-100">
+                <Card.Body>
+                  <Card.Title>
+                    <p className={style.card_title}>Pelatihan Sebelumnya</p>
                   </Card.Title>
 
                   <Card className="shadow rounded-md">
@@ -429,7 +430,7 @@ const Dashboard = ({ session }) => {
                 </Card.Title>
                 {[1, 2, 3, 4].map((row, i, arr) => (
                   <div
-                  key={i}
+                    key={i}
                     className={`pekerjaan ${
                       arr.length - 1 !== i ? "mb-8" : ""
                     } `}
@@ -492,7 +493,7 @@ const Dashboard = ({ session }) => {
                 </Card.Title>
                 {[1, 2, 3, 4].map((row, i, arr) => (
                   <div
-                  key={i}
+                    key={i}
                     className={`pekerjaan ${
                       arr.length - 1 !== i ? "mb-8" : ""
                     } `}
