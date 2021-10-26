@@ -42,6 +42,7 @@ export const getAllRiwayatPelatihanPeserta =
       const { data } = await axios.get(link, config);
       if (data) {
         dispatch({ type: RIWAYAT_PELATIHAN_SUCCESS, payload: data });
+        return data;
       }
     } catch (error) {
       dispatch({
