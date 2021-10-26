@@ -419,7 +419,7 @@ export default function CardTemplateOriginal({ data }) {
             className="btn btn-primary-rounded-full"
             type="button"
             onClick={() => {
-              uploadSertifikasi(imageSertifikasi, data.id);
+              uploadSertifikasi(imageSertifikasi, data.id_pendaftaran);
             }}
           >
             Upload
