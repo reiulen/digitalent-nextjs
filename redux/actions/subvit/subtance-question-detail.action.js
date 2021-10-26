@@ -97,7 +97,6 @@ export const getRandomSubtanceQuestionDetail =
           Authorization: "Bearer " + token,
         },
       };
-
       const { data } = await axios.get(link, config);
 
       dispatch({
