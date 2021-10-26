@@ -243,16 +243,14 @@ const SubtansiUser = ({ token }) => {
               <h1 className={styles.soal}>
                 {data &&
                 data.list_questions &&
-                data.list_questions[parseInt(router.query.id) - 1]
-                  .question_image !== null ? (
+                data.list_questions[parseInt(router.query.id) - 1]?.question_image !== null ? (
                   <div className="d-flex flex-row">
                     <div className="p-2">
                       <Image
                         src={
                           process.env.END_POINT_API_IMAGE_SUBVIT +
                             "subtance/images/" +
-                            data.list_questions[parseInt(router.query.id) - 1]
-                              .question_image || defaultImage
+                            data.list_questions[parseInt(router.query.id) - 1]?.question_image || defaultImage
                         }
                         alt=""
                         width={150}
@@ -261,8 +259,7 @@ const SubtansiUser = ({ token }) => {
                     </div>
                     <div className="p-5">
                       {data &&
-                        data.list_questions[parseInt(router.query.id) - 1]
-                          .question}
+                        data.list_questions[parseInt(router.query.id) - 1]?.question}
                     </div>
                   </div>
                 ) : (
@@ -275,7 +272,7 @@ const SubtansiUser = ({ token }) => {
               {data &&
                 data.list_questions &&
                 JSON.parse(
-                  data.list_questions[parseInt(router.query.id) - 1].answer
+                  data.list_questions[parseInt(router.query.id) - 1]?.answer
                 ).map((item, index) => {
                   return (
                     <>
