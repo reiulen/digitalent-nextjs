@@ -33,7 +33,6 @@ export default function SeleksiAdministrasi() {
 
   const [truncate, setTruncate] = useState(true);
 
-  console.log(data);
   return (
     <PesertaWrapper>
       <Col lg={12} className="px-0">
