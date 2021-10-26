@@ -71,9 +71,6 @@ export default function CardTemplateOriginal({ data }) {
     };
     try {
       const data = await axios.post(link, body, config);
-      if (data) {
-        console.log(data, "ini datanya");
-      }
     } catch (error) {
       console.log(error, "masuk sini errornya");
     }
