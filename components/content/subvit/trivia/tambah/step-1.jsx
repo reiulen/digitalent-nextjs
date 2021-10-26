@@ -35,9 +35,6 @@ const TambahTriviaStepOne = ({ token }) => {
     console.log(training_id);
   }, [training_id]);
   useEffect(() => {
-    // if (error) {
-    //     dispatch(clearErrors())
-    // }
 
     if (success) {
       const id = trivia.id;

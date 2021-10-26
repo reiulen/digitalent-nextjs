@@ -92,7 +92,6 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
   ]);
 
   const searchAsal = (word) => {
-    console.log("keyup", word);
     let array = [];
     const searchData = getAsalSekolah;
     searchData.filter((data, index) => {

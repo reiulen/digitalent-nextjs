@@ -48,60 +48,33 @@ const CardBeranda = ({tema, pelatihan, activeAcademy}) => {
 
 const handleMouseEnter = (indexTema, indexPelatihan) =>{
   let obj = show
-  // console.log (obj)
-  // console.log (indexTema)
-  // console.log (indexPelatihan)
 
   for (let i = 0; i < obj.length; i++){
       for (let j = 0; j < obj[i].pelatihan.length; j++){
           if ( i === indexTema && j === indexPelatihan){
               obj[i].pelatihan[j].hover = true
-              console.log ('check 1')
-              console.log (obj[i].pelatihan[j].hover)
           }
       }
       setShow(obj)
-      // console.log (obj)
   }
-  // setShow(obj)
-  console.log ("mouseOver")
 }
 
 const handleMouseLeave = (indexTema, indexPelatihan) =>{
   let obj = show
-  // console.log (obj)
-  // console.log (indexTema)
-  // console.log (indexPelatihan)
 
   for (let i = 0; i < obj.length; i++){
       for (let j = 0; j < obj[i].pelatihan.length; j++){
           if ( i === indexTema && j === indexPelatihan){
               obj[i].pelatihan[j].hover = false
-              console.log ('check 2')
-              console.log (obj[i].pelatihan[j].hover)
           }
       }
       setShow(obj)
-      // console.log (obj)
   }
-  // setShow(obj)
-  console.log ("mouseOut")
 }
 
   return (
     <div>
-      {
-        console.log (tema)
-      }
-
-      {
-        console.log (pelatihan)
-      }
-
-      {
-        console.log (show)
-      }
-
+     
       {/* Tema */}
       {
           tema  && pelatihan && show ?
@@ -130,8 +103,6 @@ const handleMouseLeave = (indexTema, indexPelatihan) =>{
                               {
                                   
                                   pelatihan.map ((row, ind) => {
-                                      console.log ("test1")
-                                      // console.log ("render ulang")
                                       return (
                                           show[i].pelatihan[ind].showDetail === false ?
                                               <Card style={{ width: '30rem' }} className="shadow" key={ind} onMouseEnter={() => handleMouseEnter(i, ind)} onMouseLeave={() => handleMouseLeave(i, ind)}>
@@ -157,10 +128,6 @@ const handleMouseLeave = (indexTema, indexPelatihan) =>{
                                                               <div>
                                                                   <h1 className="text-white">Fail</h1>
                                                               </div>
-                                                      }
-
-                                                      {
-                                                          console.log (show[i].pelatihan[ind].hover)
                                                       }
                                                       
                                                   </div>
@@ -236,49 +203,6 @@ const handleMouseLeave = (indexTema, indexPelatihan) =>{
               null
       }
     </div>
-
-
-    // <div className="cards-items">
-    //   <div className="top">
-    //     <label>PELATIHAN ONLINE</label>
-    //   </div>
-    //   <div className="rounded"></div>
-
-    //   <div className="bottom">
-    //     <div className="rounded"></div>
-    //     <div className="d-flex align-items-center justify-content-between pl-24">
-    //       <p className="fw-600" style={{ color: "#6C6C6C" }}>
-    //         Gojek
-    //       </p>
-    //       <button className="btn btn-green-rounded">OPEN</button>
-    //     </div>
-    //     <h1
-    //       className="fz-18 fw-600 mt-4"
-    //       style={{ color: "#1F1F1F" }}
-    //     >
-    //       Intermediate Multimedia Designer
-    //     </h1>
-    //     <h3
-    //       className="mb-0 fz-18 fw-400 mt-4"
-    //       style={{ color: "#6C6C6C" }}
-    //     >
-    //       Vocational School Graduate Academy
-    //     </h3>
-    //     <hr />
-
-    //     {/* regis and kuota */}
-    //     <div className="mt-2">
-    //       <div className="d-flex align-items-center">
-    //         <IconTime className="mr-2" />
-    //         Registrasi: 05 Juli 2021 - 21 Juli 2021
-    //       </div>
-    //       <div className="d-flex align-items-center mt-2">
-    //         <IconPeserta className="mr-2" />
-    //         Kuota: 1000 Peserta
-    //       </div>
-    //     </div>
-    //   </div>
-    // </div>
   )
 }
 

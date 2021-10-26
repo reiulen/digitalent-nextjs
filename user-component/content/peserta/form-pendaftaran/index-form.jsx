@@ -75,7 +75,8 @@ const IndexForm = ({ token }) => {
                       className="img-fluid rounded-xl w-100 h-80 mb-3"
                       src={`${
                         dataPelatihan
-                          ? dataPelatihan.file_path + dataPelatihan.thumbnail
+                          ? process.env.END_POINT_API_IMAGE_BEASISWA +
+                            dataPelatihan.thumbnail
                           : "/assets/media/default-card.png"
                       }`}
                     />
@@ -85,7 +86,8 @@ const IndexForm = ({ token }) => {
                       <img
                         src={`${
                           dataPelatihan
-                            ? dataPelatihan.file_path + dataPelatihan.logo
+                            ? process.env.END_POINT_API_IMAGE_BEASISWA +
+                              dataPelatihan.logo
                             : "/assets/media/default-card.png"
                         }`}
                         width={58}

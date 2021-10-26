@@ -5,7 +5,6 @@ import Image from "next/image";
 import style from "../style.module.css";
 
 export default function IsiLpj({ data }) {
-  // console.log(props, "ini dataaa cuy");
   const name = data?.name || "Apaa aja";
   const dateFrom =
     moment(data?.pendaftaran_mulai).format("LL") || "10 oktober blabla";
@@ -15,11 +14,7 @@ export default function IsiLpj({ data }) {
   const alamat = data?.alamat || "alamat ini pokoknya";
   return (
     <Card className="position-relative">
-      <Card.Body
-        onClick={() => {
-          console.log("card body");
-        }}
-      >
+      <Card.Body>
         <Row>
           <Col md={3}>
             <img
