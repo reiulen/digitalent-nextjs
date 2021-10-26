@@ -108,6 +108,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
           } else {
             success = false;
           }
+        } else {
+          success = false;
         }
       }
 
