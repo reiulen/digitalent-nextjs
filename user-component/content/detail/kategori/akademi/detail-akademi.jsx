@@ -169,7 +169,6 @@ const DetailAkademi = ({ session }) => {
 
     return (
         <>
-            
             <SubHeaderComponent />
             {
                 akademi ?
