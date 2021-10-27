@@ -494,21 +494,6 @@ export default function CardTemplateOriginal({ data }) {
                 </Button>
               </Col>
             </Fragment>
-          ) : data.status == "lulus tes substansi" ? (
-            <Fragment>
-              <Col className="d-flex justify-content-center ">
-                <Button
-                  className={`btn-rounded-full font-weight-bold btn-block justify-content-center mt-5 `}
-                  style={{ height: "40px", fontSize: "14px" }}
-                  onClick={() => {
-                    console.log("ini click button 2 ");
-                  }}
-                >
-                  <i className="ri-download-2-fill mr-2"></i>
-                  Bukti Pendaftaran
-                </Button>
-              </Col>
-            </Fragment>
           ) : data.status == "diterima" ? (
             <Fragment>
               <Col className="d-flex justify-content-center ">
