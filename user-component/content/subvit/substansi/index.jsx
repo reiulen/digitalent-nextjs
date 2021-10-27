@@ -372,16 +372,16 @@ const SubtansiUser = ({ token }) => {
                     className={styles.btnSkip}
                     onClick={handleNext}
                     disabled={
-                      parseInt(router.query.id) === data.total_questions
+                      parseInt(router.query.id) === data?.total_questions
                     }
                   >
                     Lewati
                   </Button>
-                  {parseInt(router.query.id) === data.total_questions ? (
+                  {parseInt(router.query.id) === data?.total_questions ? (
                     <Button
                       className={styles.btnNext}
                       onClick={handleDone}
-                      disabled={!listAnswer.includes(data.total_questions)}
+                      disabled={!listAnswer.includes(data?.total_questions)}
                     >
                       Selesai
                     </Button>
