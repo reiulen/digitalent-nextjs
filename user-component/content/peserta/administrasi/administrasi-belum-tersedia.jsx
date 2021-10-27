@@ -45,6 +45,9 @@ export default function SeleksiAdministrasi() {
                 fontFamily: "poppins",
                 fontSize: "14px",
               }}
+              onClick={() => {
+                router.push(`/peserta/test-substansi`);
+              }}
             >
               Kerjakan Tes Substansi
               <i

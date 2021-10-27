@@ -93,7 +93,7 @@ const PollingComponent = ({ props_answer }) => {
                   htmlFor="staticEmail"
                   className=" col-form-label font-weight-bold pb-0"
                 >
-                  Gambar Pertanyaan (Optional)
+                  Input Gambar (Optional)
                 </label>
                 <div className="custom-file">
                   <input
@@ -126,7 +126,7 @@ const PollingComponent = ({ props_answer }) => {
       </div>
 
       <div className="form-group row">
-        <div className="col-sm-7 col-md-4">
+        <div className="col-sm-7 col-md-4 col-lg-6">
           {answer.length < 6 ? (
             <button
               type="button"
