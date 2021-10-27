@@ -18,7 +18,7 @@ import Cookies from "js-cookie";
 const SeleksiAdministrasi = dynamic(
   () =>
     import(
-      "../../../user-component/content/peserta/administrasi/seleksiAdmin.jsx"
+      "../../../../user-component/content/peserta/administrasi/seleksiAdmin.jsx"
     ),
   {
     loading: function loadingNow() {
