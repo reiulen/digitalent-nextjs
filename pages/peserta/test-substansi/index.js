@@ -11,15 +11,6 @@ import {
   getDetailRiwayatPelatihan,
 } from "../../../redux/actions/pelatihan/riwayat-pelatihan.actions";
 
-const TestSubstansi = dynamic(
-  () => import("../../../user-component/content/peserta/test-substansi"),
-  {
-    loading: function loadingNow() {
-      return <LoadingSkeleton />;
-    },
-    ssr: false,
-  }
-);
 const TesSubstansiDetail = dynamic(
   () =>
     import(
