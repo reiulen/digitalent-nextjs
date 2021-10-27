@@ -96,6 +96,7 @@ export default function SeleksiAdministrasi() {
                     onClick={() => {
                       router.push(`/peserta/test-substansi/panduan-substansi`);
                       Cookies.set("id_tema", data.tema_id);
+                      Cookies.set("id_pelatihan", data.id);
                     }}
                   >
                     Test Substansi{" "}

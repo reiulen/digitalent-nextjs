@@ -100,7 +100,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
           if (test_substansi) {
             await store.dispatch(
               getDetailRiwayatPelatihan(
-                test_substansi.id,
+                test_substansi[0].id,
                 session.user.user.data.user.token
               )
             );

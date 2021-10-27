@@ -71,9 +71,6 @@ export default function CardTemplateOriginal({ data }) {
     };
     try {
       const data = await axios.post(link, body, config);
-      if (data) {
-        console.log(data, "ini datanya");
-      }
     } catch (error) {
       console.log(error, "masuk sini errornya");
     }
@@ -419,7 +416,7 @@ export default function CardTemplateOriginal({ data }) {
             className="btn btn-primary-rounded-full"
             type="button"
             onClick={() => {
-              uploadSertifikasi(imageSertifikasi, data.id);
+              uploadSertifikasi(imageSertifikasi, data.id_pendaftaran);
             }}
           >
             Upload
