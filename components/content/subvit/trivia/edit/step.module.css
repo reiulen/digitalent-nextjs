@@ -8,6 +8,7 @@
 .btnNext {
   background-color: white !important;
   border: white;
+  /* border: 1px solid black; */
 }
 .btnNext:hover {
   background-color: #d7e1ea !important;

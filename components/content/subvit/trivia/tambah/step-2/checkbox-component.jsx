@@ -144,7 +144,7 @@ const CheckboxComponent = ({
                   htmlFor="staticEmail"
                   className=" col-form-label font-weight-bold pb-0"
                 >
-                  Gambar Pertanyaan (Optional)
+                  Input Gambar (Optional)
                 </label>
                 <div className="custom-file">
                   <input

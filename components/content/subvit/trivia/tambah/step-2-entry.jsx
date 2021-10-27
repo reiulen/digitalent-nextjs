@@ -469,7 +469,7 @@ const StepTwo = ({ token }) => {
                     htmlFor="staticEmail"
                     className=" col-form-label font-weight-bold "
                   >
-                    Gambar Pertanyaan (Optional)
+                    Input Gambar (Optional)
                   </label>
                   <div className="custom-file">
                     <input
@@ -540,7 +540,7 @@ const StepTwo = ({ token }) => {
                   <hr />
                   <div className="buttoon float-right">
                     <button
-                      className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
+                      className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2 mb-3`}
                       type="submit"
                     >
                       Simpan & Lanjut

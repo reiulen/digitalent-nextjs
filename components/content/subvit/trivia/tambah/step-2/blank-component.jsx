@@ -125,8 +125,8 @@ const BlankComponent = ({ props_answer, props_duration }) => {
                 />
               </div>
 
-              <div className="col-sm-12 col-md-4 d-flex align-items-end">
-                <div className="form-group col-md-3 mb-0">
+              <div className="col-sm-12 col-md-4 row align-items-end">
+                <div className="form-group col-10 col-md-3 mb-0">
                   <label
                     htmlFor="staticEmail"
                     className=" col-form-label font-weight-bold pb-0"
@@ -142,17 +142,19 @@ const BlankComponent = ({ props_answer, props_duration }) => {
                     autoComplete="off"
                   />
                 </div>
-                {answer.length !== 1 && x.key !== "A" ? (
-                  <button
-                    className="btn btn-link-action bg-danger text-white ml-2 mt-2"
-                    type="button"
-                    onClick={() => handleRemoveClick(i)}
-                  >
-                    <i className="ri-delete-bin-fill p-0 text-white"></i>
-                  </button>
-                ) : (
-                  ""
-                )}
+                <div className="col-2">
+                  {answer.length !== 1 && x.key !== "A" ? (
+                    <button
+                      className="btn btn-link-action bg-danger text-white ml-2 mt-2"
+                      type="button"
+                      onClick={() => handleRemoveClick(i)}
+                    >
+                      <i className="ri-delete-bin-fill p-0 text-white"></i>
+                    </button>
+                  ) : (
+                    ""
+                  )}
+                </div>
               </div>
             </>
           );
@@ -160,12 +162,13 @@ const BlankComponent = ({ props_answer, props_duration }) => {
       </div>
 
       <div className="form-group row">
-        <div className="col-sm-7 col-md-4">
+        <div className="col-sm-7 col-md-4 col-lg-5 text-center">
           {answer.length < 6 ? (
             <button
               type="button"
-              className="btn btn-rounded-full bg-blue-secondary text-white"
+              className="col-12 col-md-12 col-lg-10 col-xl-7 btn btn-rounded-full bg-blue-secondary text-white"
               onClick={() => handleAddClick()}
+              // style={{borderRadius:'30%'}}
             >
               <i className="ri-add-fill text-white"></i> Tambah Jawaban
             </button>
