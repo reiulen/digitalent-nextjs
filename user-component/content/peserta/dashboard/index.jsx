@@ -381,7 +381,6 @@ const Dashboard = ({ session }) => {
                           roundedCircle
                           className={`${style.image_card_pelatihan} img-fluild`}
                         />
-                        dikan
                       </div>
                       <div
                         className="d-flex justify-content-between position-relative pb-0 mb-0"
