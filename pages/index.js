@@ -20,13 +20,13 @@ const Wrapper = dynamic(() => import("../components/wrapper/beranda.wrapper"));
 export default function HomePage(props) {
   let session = null;
   if (props.session) {
-    session = props.session.user.user.data;
+    session = props.session.user.user.data.user;
   }
 
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <Wrapper title="Digitalent" session={session.user}>
+        <Wrapper title="Digitalent" session={session}>
           <Beranda session={session} />
         </Wrapper>
       </div>
@@ -48,7 +48,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
       //   };
       // }
       if (session) {
-        await store.dispatch(getDataPribadi(session?.user.user.data.user.token));
+        await store.dispatch(
+          getDataPribadi(session?.user.user.data.user.token)
+        );
       }
 
       await store.dispatch(getAllAkademi());

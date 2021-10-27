@@ -17,11 +17,11 @@ export default function DetailKategori(props) {
   let session = null;
 
   if (props.session) {
-    session = props.session.user.user.data;
+    session = props.session.user.user.data.user;
   }
   return (
     <div>
-      <Layout title="Detail Pelatihan" session={session.user}>
+      <Layout title="Detail Pelatihan" session={session}>
         <DetailPelatihan session={session} />
       </Layout>
     </div>
@@ -31,6 +31,8 @@ export default function DetailKategori(props) {
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ params, req }) => {
+      const session = await getSession({ req });
+
       let sessionToken = session?.user.user.data.user.token;
 
       await store.dispatch(getDataPribadi(sessionToken));

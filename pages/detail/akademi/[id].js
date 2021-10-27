@@ -19,12 +19,12 @@ export default function DetailAkademiPelatihan(props) {
   let session = null;
 
   if (props.session) {
-    session = props.session.user.user.data;
+    session = props.session.user.user.data.user;
   }
 
   return (
     <div>
-      <Layout title="Detail Akademi" session={session.user}>
+      <Layout title="Detail Akademi" session={session}>
         <DetailAkademi session={session} />
       </Layout>
     </div>
