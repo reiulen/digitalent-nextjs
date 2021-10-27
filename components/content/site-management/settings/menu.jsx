@@ -46,6 +46,23 @@ const Table = ({ token }) => {
     setArray(_temp);
   };
 
+  const handleCreateWithoutLink = (index) =>{
+    let _temp = [...array];
+
+    _temp.forEach((item, i) => {
+      if (i === index) {
+        item.child.push({
+          name: "",
+          child: [],
+        });
+      }
+    });
+
+    setArray(_temp);
+        
+    }
+
+
   const handleCreate2 = (index, j) => {
     let _temp = [...array];
     _temp[index].child[j].child.push({
@@ -159,6 +176,8 @@ const Table = ({ token }) => {
       progress: undefined,
     });
 
+    
+
   useEffect(() => {
     async function getDataMenu(token) {
       try {
@@ -257,7 +276,7 @@ const Table = ({ token }) => {
                               type="button"
                               className="btn mr-4 mb-5 minimal-image"
                               style={{ backgroundColor: "#4299E1" }}
-                              onClick={() => handleCreate(i)}
+                              onClick={() => handleCreateWithoutLink(i)}
                             >
                               <Image
                                 src="/assets/icon/link.svg"
@@ -279,10 +298,13 @@ const Table = ({ token }) => {
                       </div>
                     </div>
 
-                    {parrent.child.map((child, j) => {
+                    {parrent.child.map((child1, j) => {
                       return (
                         <div key={j}>
+
+                          {(child1.link === "") || (child1.link) ? 
                           <div className="row pl-10">
+
                             <div className="col-md-12 col-xl-5">
                               <div className="form-group">
                                 <label>Sub Menu{j + 1}</label>
@@ -290,7 +312,7 @@ const Table = ({ token }) => {
                                   onChange={(e) => handleChangeInput1(e, i, j)}
                                   name="inputName"
                                   type="text"
-                                  value={child.name}
+                                  value={child1.name}
                                   className="form-control"
                                   placeholder="Masukan sub menu"
                                 />
@@ -300,7 +322,7 @@ const Table = ({ token }) => {
                               <div className="form-group">
                                 <label>Sub Link {j + 1}</label>
                                 <input
-                                  value={child.link}
+                                  value={child1.link}
                                   onChange={(e) => handleChangeInput1(e, i, j)}
                                   name="inputLink"
                                   type="text"
@@ -329,15 +351,72 @@ const Table = ({ token }) => {
                                 </button>
                               </div>
                             </div>
-                          </div>
 
-                          {child.child.map((child, k) => {
+
+
+                          </div>
+                          :
+                            <div className="row pl-10">
+
+                            <div className="col-md-12 col-xl-10">
+                              <div className="form-group">
+                                <label>Sub Menu{j + 1}</label>
+                                <input
+                                  onChange={(e) => handleChangeInput1(e, i, j)}
+                                  name="inputName"
+                                  type="text"
+                                  value={child1.name}
+                                  className="form-control"
+                                  placeholder="Masukan sub menu"
+                                />
+                              </div>
+                            </div>
+                            {/* <div className="col-md-12 col-xl-5">
+                              <div className="form-group">
+                                <label>Sub Link {j + 1}</label>
+                                <input
+                                  value={child1.link}
+                                  onChange={(e) => handleChangeInput1(e, i, j)}
+                                  name="inputLink"
+                                  type="text"
+                                  className="form-control"
+                                  placeholder="Masukan sub link"
+                                />
+                              </div>
+                            </div> */}
+                            <div className="col-md-12 col-xl-2">
+                              <div className="d-flex align-items-center h-100">
+                                <button
+                                  type="button"
+                                  className="btn mr-4 mb-5"
+                                  style={{ backgroundColor: "#4299E1" }}
+                                  onClick={() => handleCreate2(i, j)}
+                                >
+                                  <IconAdd />
+                                </button>
+                                <button
+                                  type="button"
+                                  className="btn mb-5"
+                                  style={{ backgroundColor: "#EE2D41" }}
+                                  onClick={() => handleDeleteChild(i, j)}
+                                >
+                                  <IconDelete />
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                          
+                          }
+                          
+
+                          {child1.child.map((child3, k) => {
                             return (
                               <div className="row pl-20" key={k}>
                                 <div className="col-md-12 col-xl-5">
                                   <div className="form-group">
                                     <label>Sub Sub Menu {k + 1}</label>
                                     <input
+                                    value={child3?.name}
                                       onChange={(e) =>
                                         handleChangeInput2(e, i, j, k)
                                       }
@@ -352,6 +431,7 @@ const Table = ({ token }) => {
                                   <div className="form-group">
                                     <label>Sub Sub Link {k + 1}</label>
                                     <input
+                                    value={child3?.link}
                                       onChange={(e) =>
                                         handleChangeInput2(e, i, j, k)
                                       }
@@ -388,7 +468,7 @@ const Table = ({ token }) => {
                 <div className="col-sm-12 d-flex justify-content-end">
                   <Link href="/site-management/setting">
                     <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
-                      Kembali
+                      Batal
                     </a>
                   </Link>
                   <button

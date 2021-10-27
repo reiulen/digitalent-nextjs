@@ -1,15 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import Pagination from "react-js-pagination";
 import PageWrapper from "../../../../wrapper/page.wrapper";
 import { useDispatch, useSelector } from "react-redux";
-import LoadingTable from "../../../../LoadingTable";
-import IconEye from "../../../../assets/icon/Eye";
-import IconPencil from "../../../../assets/icon/Pencil";
-import IconDelete from "../../../../assets/icon/Delete";
-import IconAdd from "../../../../assets/icon/Add";
-import IconSearch from "../../../../assets/icon/Search";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Swal from "sweetalert2";
@@ -31,15 +24,10 @@ const UbahPage = ({ token }) => {
     loading: allLoading,
     error,
     pages,
-    success,
   } = useSelector((state) => state.detailPage);
 
 
   const {
-    // loadingUpdate: allLoading,
-
-    errorUpdate,
-    pagesUpdate,
     isUpdateSuccess,
   } = useSelector((state) => state.updatePage);
 
@@ -52,12 +40,6 @@ const UbahPage = ({ token }) => {
     pageName: "",
     pageStatus: "",
   });
-
-  const onNewReset = () => {
-    router.replace("/site-management/api", undefined, {
-      shallow: true,
-    });
-  };
 
   const notify = (value) =>
     toast.info(`${value}`, {
@@ -147,8 +129,7 @@ const UbahPage = ({ token }) => {
           <div className="card card-custom card-stretch gutter-b">
             <div className="card-header border-0">
               <h3
-                className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 mb-5 mt-5"
-                style={{ fontSize: "24px" }}
+                className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 mb-5 mt-5 titles-1"
               >
                 Ubah Page
               </h3>
@@ -156,7 +137,7 @@ const UbahPage = ({ token }) => {
             <div className="card-body pt-0">
               <div>
                 <h3
-                  className="card-title font-weight-bolder text-dark border-0 w-100 pb-5 mb-5 mt-5"
+                  className="card-title font-weight-bolder text-dark border-0 w-100 pb-5  my-0 my-sm-5"
                   style={{ fontSize: "16px" }}
                 >
                   Konten Page
@@ -369,8 +350,7 @@ const UbahPage = ({ token }) => {
           <div className="card card-custom card-stretch gutter-b">
             <div className="card-header border-0">
               <h3
-                className="card-title font-weight-bolder text-dark border-0 w-100 pb-5 mb-5 mt-5"
-                style={{ fontSize: "24px" }}
+                className="card-title font-weight-bolder text-dark border-0 w-100 pt-5 pb-5 my-0 my-sm-5 titles-1"
               >
                 Page Attributes
               </h3>
@@ -384,9 +364,6 @@ const UbahPage = ({ token }) => {
                     className="form-control"
                     placeholder="Placeholder"
                   />
-                  {/* <span className="form-text text-muted">
-                    Please enter your full name
-                  </span> */}
                 </div>
                 <div className="form-group">
                   <label style={{ fontSize: "16px" }}>Page url</label>
