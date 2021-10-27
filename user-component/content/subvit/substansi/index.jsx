@@ -34,9 +34,7 @@ const SubtansiUser = ({ token }) => {
 
   const router = useRouter();
 
-  localStorage.setItem("data", JSON.stringify(random_subtance_question_detail));
-
-  const [data] = useState(JSON.parse(localStorage.getItem("data")));
+  const [data, setData] = useState([]);
   const [answer, setAnswer] = useState("");
   const [listAnswer, setListAnswer] = useState([]);
   const [numberPage, setNumberPage] = useState("");
@@ -128,6 +126,10 @@ const SubtansiUser = ({ token }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [count]);
 
+  useEffect(() => {
+    setData(random_subtance_question_detail);
+  }, [data, random_subtance_question_detail]);
+
   const secondsToTime = (secs) => {
     var hours = Math.floor(secs / (60 * 60));
     var divisor_for_minutes = secs % (60 * 60);
@@ -157,7 +159,7 @@ const SubtansiUser = ({ token }) => {
 
   let number = [];
 
-  for (let i = 0; i < data.total_questions; i++) {
+  for (let i = 0; i < data?.total_questions; i++) {
     number.push(i);
   }
 
@@ -247,7 +249,8 @@ const SubtansiUser = ({ token }) => {
                         src={
                           process.env.END_POINT_API_IMAGE_SUBVIT +
                             "subtance/images/" +
-                            data.list_questions[parseInt(router.query.id) - 1]?.question_image || defaultImage
+                            data.list_questions[parseInt(router.query.id) - 1]
+                              ?.question_image || defaultImage
                         }
                         alt=""
                         width={150}
@@ -256,7 +259,8 @@ const SubtansiUser = ({ token }) => {
                     </div>
                     <div className="p-5">
                       {data &&
-                        data.list_questions[parseInt(router.query.id) - 1]?.question}
+                        data.list_questions[parseInt(router.query.id) - 1]
+                          ?.question}
                     </div>
                   </div>
                 ) : (
@@ -368,16 +372,16 @@ const SubtansiUser = ({ token }) => {
                     className={styles.btnSkip}
                     onClick={handleNext}
                     disabled={
-                      parseInt(router.query.id) === data.total_questions
+                      parseInt(router.query.id) === data?.total_questions
                     }
                   >
                     Lewati
                   </Button>
-                  {parseInt(router.query.id) === data.total_questions ? (
+                  {parseInt(router.query.id) === data?.total_questions ? (
                     <Button
                       className={styles.btnNext}
                       onClick={handleDone}
-                      disabled={!listAnswer.includes(data.total_questions)}
+                      disabled={!listAnswer.includes(data?.total_questions)}
                     >
                       Selesai
                     </Button>

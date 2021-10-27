@@ -18,7 +18,7 @@ import Cookies from "js-cookie";
 const SeleksiAdministrasi = dynamic(
   () =>
     import(
-      "../../../user-component/content/peserta/administrasi/seleksiAdmin.jsx"
+      "../../../../user-component/content/peserta/administrasi/seleksiAdmin.jsx"
     ),
   {
     loading: function loadingNow() {
@@ -97,7 +97,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         const administrasi = data.list.filter((item) =>
           item.status.includes("administrasi")
         );
-        if (administrasi) {
+        if (administrasi.length > 0) {
           await store.dispatch(
             getDetailRiwayatPelatihan(
               administrasi[0].id,
