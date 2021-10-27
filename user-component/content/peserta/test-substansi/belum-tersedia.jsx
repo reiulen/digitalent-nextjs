@@ -31,7 +31,7 @@ export default function SeleksiAdministrasi() {
             Halaman Belum Tersedia...
           </p>
           <p
-            className="d-flex justify-content-center "
+            className="d-flex justify-content-center"
             style={{ fontSize: "16px" }}
           >
             Status pendaftaran Anda masih dalam tahap seleksi Administrasi,
