@@ -76,11 +76,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
       await store.dispatch(
         getDetailRiwayatPelatihan(
           query.id || req.cookies.id_pelatihan,
-          session.user.user.data.user.token
+          session?.user.user.data.user.token
         )
       );
 
-      await store.dispatch(getDataPribadi(session.user.user.data.user.token));
+      await store.dispatch(getDataPribadi(session?.user.user.data.user.token));
 
       return {
         props: { data: "auth", session, title: "Riwayat Pelatihan - Peserta" },
