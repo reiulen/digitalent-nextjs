@@ -164,7 +164,7 @@ const DetailAkademi = ({ session }) => {
     }
 
     const handleFilter = () => {
-        console.log (filterPenyelenggara)
+        // console.log (filterPenyelenggara)
     }
 
     return (
@@ -181,6 +181,7 @@ const DetailAkademi = ({ session }) => {
                                     src={`https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/${akademi.logo}`}
                                     width={150}
                                     height={150}
+                                    alt=" Image Logo"
                                 />
                             </div>
 
@@ -231,6 +232,7 @@ const DetailAkademi = ({ session }) => {
                                     src={`/assets/media/logo-filter.svg`}
                                     width={40}
                                     height={40}
+                                    alt="Image Logo"
                                 />
                             </div>
                             
@@ -366,6 +368,7 @@ const DetailAkademi = ({ session }) => {
                                                     width={400}
                                                     height={180}
                                                     objectFit="cover"
+                                                    alt="Image Thumbnail"
                                                 />
                                                 <Card.ImgOverlay>
                                                 
@@ -411,6 +414,7 @@ const DetailAkademi = ({ session }) => {
                                                                     thumbnail
                                                                     roundedCircle
                                                                     className={`${style.image_card_pelatihan} img-fluild`}
+                                                                    alt="Image Mitra"
                                                                 />
                                                             :
                                                                 <Image
@@ -421,6 +425,7 @@ const DetailAkademi = ({ session }) => {
                                                                     thumbnail
                                                                     roundedCircle
                                                                     className={`${style.image_card_pelatihan} img-fluild`}
+                                                                    alt="Image Logo"
                                                                 />
                                                         }
                                                         
@@ -514,6 +519,7 @@ const DetailAkademi = ({ session }) => {
                                                       width={400}
                                                       height={450}
                                                       objectFit="cover"
+                                                      alt="Image Thumbnail"
                                                   />
                                               </div>
                                               <div className="col-8 mb-0">
@@ -526,6 +532,7 @@ const DetailAkademi = ({ session }) => {
                                                                   width="50vh"
                                                                   height="50vh"
                                                                   className="rounded-circle"
+                                                                  alt =" Image Mitra"
                                                               />
                                                           </div>
                                                           <div className="col-9">
