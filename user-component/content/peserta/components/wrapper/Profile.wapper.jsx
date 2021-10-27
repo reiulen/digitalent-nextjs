@@ -292,14 +292,25 @@ const ProfileWrapper = ({
         <Modal.Body>
           <p>Foto</p>
           <div>
-            <Button
-              className={`${style.button_profile_wrapper} rounded-xl `}
-              onClick={() => {
-                document.getElementById("update-foto").click();
-              }}
-            >
-              <i class="ri-pencil-fill text-primary"></i> Ubah Foto
-            </Button>
+            {!completedCrop?.width || !completedCrop?.height ? (
+              <Button
+                className={`${style.button_profile_edit} rounded-xl `}
+                onClick={() => {
+                  document.getElementById("update-foto").click();
+                }}
+              >
+                <i class="ri-upload-2-fill text-white"></i> Pilih Foto
+              </Button>
+            ) : (
+              <Button
+                className={`${style.button_profile_wrapper} rounded-xl `}
+                onClick={() => {
+                  document.getElementById("update-foto").click();
+                }}
+              >
+                <i class="ri-pencil-fill text-primary"></i> Ubah Foto
+              </Button>
+            )}
             <input
               type="file"
               name="gambar"

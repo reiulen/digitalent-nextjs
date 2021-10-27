@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Card, Button, Row, Col, Form } from "react-bootstrap";
 import Swal from "sweetalert2";
+import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import style from "./style.module.css";
@@ -94,7 +95,11 @@ const FormKomitmen = ({
               </Col>
               <Col md={6}>
                 <p className="text-neutral-body my-1">Tanggal Lahir</p>
-                <p>{(dataPeserta && dataPeserta.tanggal_lahir) || "-"}</p>
+                <p>
+                  {(dataPeserta &&
+                    moment(dataPeserta.tanggal_lahir).format("DD MMMM YYYY")) ||
+                    "-"}
+                </p>
               </Col>
             </Row>
             <Row>

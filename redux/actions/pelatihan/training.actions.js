@@ -477,7 +477,7 @@ export const deleteTraining = (id, token) => async (dispatch) => {
 
     const { data } = await axios.delete(
       process.env.END_POINT_API_PELATIHAN +
-        `api/pelatihan/pelatihan-delete?pelatihan_id=${id}`,
+        `api/v1/pelatihan/pelatihan-delete?pelatian_id=${id}`,
       config
     );
 

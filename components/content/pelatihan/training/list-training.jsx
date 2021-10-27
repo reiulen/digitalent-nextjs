@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
+import DatePicker from "react-datepicker";
 import Pagination from "react-js-pagination";
 import Swal from "sweetalert2";
 import { Modal } from "react-bootstrap";
@@ -96,8 +97,12 @@ const ListTraining = ({ token }) => {
   const [theme, setTheme] = useState(null);
   const [statusSubstansi, setStatusSubstansi] = useState(null);
   const [statusPelatihan, setStatusPelatihan] = useState(null);
-  const [dateRegister, setDateRegister] = useState(null);
-  const [dateStart, setDateStart] = useState(null);
+
+  const [dateRegister, setDateRegister] = useState([null, null]);
+  const [dateRegisterStart, dateRegisterEnd] = dateRegister;
+
+  const [datePelaksanaan, setDatePelaksanaan] = useState([null, null]);
+  const [datePelaksanaanStart, datePelaksanaanEnd] = datePelaksanaan;
 
   const [showModal, setShowModal] = useState(false);
   const [showModalRevisi, setShowModalRevisi] = useState(false);
@@ -194,8 +199,8 @@ const ListTraining = ({ token }) => {
         pageNumber,
         search,
         limit,
-        dateRegister,
-        dateStart,
+        null,
+        null,
         statusSubstansi != null ? statusSubstansi.value : null,
         statusPelatihan != null ? statusPelatihan.value : null,
         penyelenggara != null ? penyelenggara.value : null,
@@ -233,8 +238,8 @@ const ListTraining = ({ token }) => {
         1,
         search,
         limit,
-        dateRegister,
-        dateStart,
+        null,
+        null,
         statusSubstansi != null ? statusSubstansi.value : null,
         statusPelatihan != null ? statusPelatihan.value : null,
         penyelenggara != null ? penyelenggara.value : null,
@@ -251,8 +256,8 @@ const ListTraining = ({ token }) => {
     setTheme(null);
     setStatusSubstansi(null);
     setStatusPelatihan(null);
-    setDateRegister(null);
-    setDateStart(null);
+    setDateRegister([null, null]);
+    setDatePelaksanaan([null, null]);
     setShowModal(false);
     setPage(1);
     dispatch(
@@ -478,24 +483,24 @@ const ListTraining = ({ token }) => {
             background="bg-secondary"
             icon="new/done-circle.svg"
             color="#FFFFFF"
-            value={cardTraining[1].count}
+            value={cardTraining[2].count}
             titleValue=""
             title="Disetujui"
-            publishedVal={cardTraining[1].status}
+            publishedVal={cardTraining[2].status}
             routePublish={() =>
-              handlePublish(cardTraining[1].status, cardTraining[1].condisi)
+              handlePublish(cardTraining[2].status, cardTraining[2].condisi)
             }
           />
           <CardPage
             background="bg-success"
             icon="new/open-book.svg"
             color="#FFFFFF"
-            value={cardTraining[2].count}
+            value={cardTraining[1].count}
             titleValue=""
             title="Revisi"
-            publishedVal={cardTraining[2].status}
+            publishedVal={cardTraining[1].status}
             routePublish={() =>
-              handlePublish(cardTraining[2].status, cardTraining[2].condisi)
+              handlePublish(cardTraining[1].status, cardTraining[1].condisi)
             }
           />
           <CardPage
@@ -957,24 +962,32 @@ const ListTraining = ({ token }) => {
           <div className="row">
             <div className="form-group mb-5 col-md-6">
               <label className="p-0">Tanggal Pendaftaran</label>
-              <input
-                type="date"
-                name=""
-                id=""
+
+              <DatePicker
+                wrapperClassName="datepicker"
                 className="form-control"
-                value={dateRegister}
-                onChange={(e) => setDateRegister(e.target.value)}
+                name="start_date"
+                selectsRange={true}
+                onChange={(date) => setDateRegister(date)}
+                startDate={dateRegisterStart}
+                endDate={dateRegisterEnd}
+                dateFormat="dd/MM/yyyy"
+                autoComplete="off"
               />
             </div>
             <div className="form-group mb-5 col-md-6">
               <label className="p-0">Tanggal Pelaksanaan</label>
-              <input
-                type="date"
-                name=""
-                id=""
+
+              <DatePicker
+                wrapperClassName="datepicker"
                 className="form-control"
-                value={dateStart}
-                onChange={(e) => setDateStart(e.target.value)}
+                name="start_date"
+                selectsRange={true}
+                onChange={(date) => setDatePelaksanaan(date)}
+                startDate={datePelaksanaanStart}
+                endDate={datePelaksanaanEnd}
+                dateFormat="dd/MM/yyyy"
+                autoComplete="off"
               />
             </div>
           </div>

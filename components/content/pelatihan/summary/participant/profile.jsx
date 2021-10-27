@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import moment from "moment";
+import { Modal, Button } from "react-bootstrap";
 
 const ProfileUser = ({ profile }) => {
+  const [show, setShow] = useState(false);
   return (
     <>
       <div className="card card-custom card-stretch gutter-b">
@@ -165,6 +167,7 @@ const ProfileUser = ({ profile }) => {
                         profile.file_path + profile.File_ktp ||
                         "/assets/media/default.jpg"
                       }
+                      onClick={() => setShow(true)}
                     />
                   </div>
                 </div>
@@ -173,6 +176,38 @@ const ProfileUser = ({ profile }) => {
           </div>
         </div>
       </div>
+
+      <Modal
+        show={show}
+        onHide={() => setShow(false)}
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header>
+          <Modal.Title id="contained-modal-title-vcenter">
+            {profile?.File_ktp}
+            <button
+              type="button"
+              className="close"
+              onClick={() => setShow(false)}
+            >
+              <i className="ri-close-fill" style={{ fontSize: "25px" }}></i>
+            </button>
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Image
+            src={
+              profile.file_path + profile.File_ktp ||
+              "/assets/media/default.jpg"
+            }
+            layout="fill"
+          />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={() => setShow(false)}>Kembali</Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 };

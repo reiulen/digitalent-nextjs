@@ -201,29 +201,31 @@ const Navigationbar = ({ session }) => {
           </Form>
 
           {/* Icon */}
-          <div className="row m-3">
-            <a
-              href="#"
-              className="col-4 col-sm-4 col-md-4 col-xl-4 text-center"
-            >
-              <i className="ri-headphone-line ri-2x mx-3 text-gray"></i>
-            </a>
-            <a
-              href="#"
-              className="col-4 col-sm-4 col-md-4 col-xl-4 text-center"
-            >
-              <i className="ri-heart-line ri-2x mx-3 text-gray"></i>
-            </a>
-            <a
-              href="#"
-              className="col-4 col-sm-4 col-md-4 col-xl-4 text-center"
-            >
-              <i className="ri-notification-4-line ri-2x mx-3 text-gray"></i>
-            </a>
-          </div>
+          {session && session.roles[0] === "user" && (
+            <div className="row m-3">
+              <a
+                href="#"
+                className="col-4 col-sm-4 col-md-4 col-xl-4 text-center"
+              >
+                <i className="ri-headphone-line ri-2x mx-3 text-gray"></i>
+              </a>
+              <a
+                href="#"
+                className="col-4 col-sm-4 col-md-4 col-xl-4 text-center"
+              >
+                <i className="ri-heart-line ri-2x mx-3 text-gray"></i>
+              </a>
+              <a
+                href="#"
+                className="col-4 col-sm-4 col-md-4 col-xl-4 text-center"
+              >
+                <i className="ri-notification-4-line ri-2x mx-3 text-gray"></i>
+              </a>
+            </div>
+          )}
 
           <Nav>
-            {session ? (
+            {session && session.roles[0] === "user" ? (
               <div className="position-relative">
                 <div
                   className="wrap-accouts"

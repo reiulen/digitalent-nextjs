@@ -110,6 +110,7 @@ export default function CardTemplateOriginal({ data }) {
   const variant = ["download", "upload", "rightarrow", "pencil", "paper"];
   return (
     <Fragment>
+      {console.log(data)}
       <Card className="position-relative">
         <Button
           variant="white"
@@ -325,7 +326,8 @@ export default function CardTemplateOriginal({ data }) {
                     );
                   }}
                 >
-                  Test Substansi <i className="ri-arrow-right-s-line mr-2"></i>
+                  Test Substansi{" "}
+                  <i className="ri-arrow-right-s-line mr-2"></i>
                 </Button>
               </Col>
             </Fragment>
