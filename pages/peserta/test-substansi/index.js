@@ -81,37 +81,37 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       let success = false;
-      if (query.id || req.cookies.id_pelatihan) {
-        await store.dispatch(
-          getDetailRiwayatPelatihan(
-            query.id || req.cookies.id_pelatihan,
-            session.user.user.data.user.token
-          )
+      // if (query.id || req.cookies.id_pelatihan) {
+      //   await store.dispatch(
+      //     getDetailRiwayatPelatihan(
+      //       query.id || req.cookies.id_pelatihan,
+      //       session.user.user.data.user.token
+      //     )
+      //   );
+      //   success = true;
+      // } else {
+      const { data } = await store.dispatch(
+        getAllRiwayatPelatihanPeserta(session.user.user.data.user.token)
+      );
+      if (data) {
+        const test_substansi = data.list.filter(
+          (item) => item.status == "tes substansi"
         );
-        success = true;
-      } else {
-        const { data } = await store.dispatch(
-          getAllRiwayatPelatihanPeserta(session.user.user.data.user.token)
-        );
-        if (data) {
-          const test_substansi = data.list.filter(
-            (item) => item.status == "tes substansi"
+        if (test_substansi) {
+          await store.dispatch(
+            getDetailRiwayatPelatihan(
+              test_substansi[0].id,
+              session.user.user.data.user.token
+            )
           );
-          if (test_substansi) {
-            await store.dispatch(
-              getDetailRiwayatPelatihan(
-                test_substansi[0].id,
-                session.user.user.data.user.token
-              )
-            );
-            success = true;
-          } else {
-            success = false;
-          }
+          success = true;
         } else {
           success = false;
         }
+      } else {
+        success = false;
       }
+      // }
 
       await store.dispatch(getDataPribadi(session.user.user.data.user.token));
 
