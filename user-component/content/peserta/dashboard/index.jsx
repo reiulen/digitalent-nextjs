@@ -310,6 +310,11 @@ const Dashboard = ({ session }) => {
                   </Card.Title>
                   <div
                     className="text-center"
+                    style={{
+                      height: "200",
+                      paddingTop: "75px",
+                      paddingBottom: "75px",
+                    }}
                   >
                     <Image src={"/assets/icon/logo-dts-if-empty.png"} alt="Logo DTS" width={214} height={213} />
                     <p>Anda tidak memiliki histori pelatihan sebelumnya.</p>
@@ -317,7 +322,7 @@ const Dashboard = ({ session }) => {
                     <Link href="/" passHref>
                       <Button
                         variant="bg-primary"
-                        className="font-weight-bolder text-white rounded-full"
+                        className="font-weight-bolder text-white rounded-full mt-6"
                       >
                         Pilih Pelatihan
                       </Button>
