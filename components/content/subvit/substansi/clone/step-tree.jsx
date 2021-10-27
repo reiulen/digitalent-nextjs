@@ -46,8 +46,12 @@ const StepTwo = ({ token }) => {
     }
   }, [dispatch, error, success, router]);
 
-  const [startDate, setStartDate] = useState(new Date(subtance.start_at));
-  const [endDate, setEndDate] = useState(new Date(subtance.end_at));
+  const [startDate, setStartDate] = useState(
+    subtance.start_at ? new Date(subtance.start_at) : new Date(Date.now())
+  );
+  const [endDate, setEndDate] = useState(
+    subtance.end_at ? new Date(subtance.end_at) : new Date(Date.now())
+  );
   const [duration, setDuration] = useState(subtance.duration);
   const [jumlah_soal, setJumlahSoal] = useState(subtance.questions_to_share);
   const [passing_grade, setPassingGrade] = useState(subtance.passing_grade);
@@ -82,7 +86,6 @@ const StepTwo = ({ token }) => {
   };
 
   const onSubmit = (e) => {
-    
     e.preventDefault();
 
     if (simpleValidator.current.allValid()) {
@@ -209,6 +212,7 @@ const StepTwo = ({ token }) => {
                     dateFormat="dd/MM/yyyy"
                     autoComplete="off"
                     value={endDate}
+                    disabled={!startDate}
                   />
 
                   {simpleValidator.current.message(

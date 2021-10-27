@@ -274,6 +274,27 @@ const EditSoalSubstansi = ({ token }) => {
                   ""
                 )}
                 <div className="col-md-9 pt-2">
+                  <span className="font-weight-bold ">Tipe Soal</span>
+                  <select
+                    name="training_id"
+                    className="form-control mb-2 mt-2"
+                    onChange={(e) => setQuestionType(e.target.value)}
+                    onBlur={(e) => setQuestionType(e.target.value)}
+                    value={question_type}
+                  >
+                    <option selected disabled value="">
+                      -- Tipe Soal --
+                    </option>
+                    {subtance_question_type.list_types
+                      .filter((row) => row.status === 1)
+                      .map((row) => {
+                        return (
+                          <option key={row.id} value={row.id}>
+                            {row.name}
+                          </option>
+                        );
+                      })}
+                  </select>
                   <input
                     type="text"
                     className="form-control"
@@ -408,29 +429,7 @@ const EditSoalSubstansi = ({ token }) => {
               )}
 
               <div className="form-group">
-                <div className="col-sm-12 col-md-12">
-                  <span className="font-weight-bold">Tipe Soal</span>
-                  <select
-                    name="training_id"
-                    className="form-control"
-                    onChange={(e) => setQuestionType(e.target.value)}
-                    onBlur={(e) => setQuestionType(e.target.value)}
-                    value={question_type}
-                  >
-                    <option selected disabled value="">
-                      -- Tipe Soal --
-                    </option>
-                    {subtance_question_type.list_types
-                      .filter((row) => row.status === 1)
-                      .map((row) => {
-                        return (
-                          <option key={row.id} value={row.id}>
-                            {row.name}
-                          </option>
-                        );
-                      })}
-                  </select>
-                </div>
+                <div className="col-sm-12 col-md-12"></div>
                 <div className="col-sm-12 col-md-12 mt-3">
                   <span className="font-weight-bold">Status</span>
                   <select
