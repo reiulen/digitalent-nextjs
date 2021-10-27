@@ -468,7 +468,7 @@ const Table = ({ token }) => {
                 <div className="col-sm-12 d-flex justify-content-end">
                   <Link href="/site-management/setting">
                     <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
-                      Kembali
+                      Batal
                     </a>
                   </Link>
                   <button
