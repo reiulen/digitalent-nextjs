@@ -150,7 +150,9 @@ const Sidebar = () => {
         <Link href="/peserta/test-substansi" passHref>
           <div
             className={`${
-              router.pathname === "/peserta/test-substansi"
+              router.pathname === "/peserta/test-substansi" ||
+              router.pathname === "/peserta/test-substansi/panduan-substansi" ||
+              router.pathname === "/peserta/done-substansi"
                 ? styles.activeMenuItem
                 : styles.menuItem
             } d-flex flex-row`}
@@ -158,7 +160,10 @@ const Sidebar = () => {
             <div className="p-2">
               <i
                 className={`${
-                  router.pathname === "/peserta/test-substansi"
+                  router.pathname === "/peserta/test-substansi" ||
+                  router.pathname ===
+                    "/peserta/test-substansi/panduan-substansi" ||
+                  router.pathname === "/peserta/done-substansi"
                     ? styles.activeIconMenu
                     : styles.iconMenu
                 } ri-article-line`}
@@ -196,14 +201,28 @@ const Sidebar = () => {
         </Link>
       </div>
       <div>
-        <div className={`${styles.menuItem} d-flex flex-row`}>
-          <div className="p-2">
-            <i className={`${styles.iconMenu} ri-lightbulb-line`}></i>
+        <Link href="/peserta/trivia" passHref>
+          <div
+            className={`${
+              router.pathname === "/peserta/trivia"
+                ? styles.activeMenuItem
+                : styles.menuItem
+            } d-flex flex-row`}
+          >
+            <div className="p-2">
+              <i
+                className={`${
+                  router.pathname === "/peserta/trivia"
+                    ? styles.activeIconMenu
+                    : styles.iconMenu
+                } ri-lightbulb-line`}
+              ></i>
+            </div>
+            <div className="p-2">
+              <td>TRIVIA</td>
+            </div>
           </div>
-          <div className="p-2">
-            <td>TRIVIA</td>
-          </div>
-        </div>
+        </Link>
       </div>
       <div>
         <div className={`${styles.menuItem} d-flex flex-row`}>
@@ -289,9 +308,12 @@ const Sidebar = () => {
           </div>
         </div>
       </div>
-      <div className={styles.akunMenu} onClick={() => {
-        signOut()
-      }}>
+      <div
+        className={styles.akunMenu}
+        onClick={() => {
+          signOut();
+        }}
+      >
         <div className="d-flex flex-row">
           <div className="p-2">
             <i className="ri-logout-circle-line"></i>
