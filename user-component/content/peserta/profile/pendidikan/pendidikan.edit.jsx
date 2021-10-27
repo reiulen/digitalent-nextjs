@@ -424,12 +424,12 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
               <Form.Group as={Col} md={6} controlId="formGridIpk">
                 <Form.Label>IPK</Form.Label>
                 <Form.Control
-                  type="number"
+                  type="text"
                   placeholder="Silahkan Masukan IPK"
                   value={ipk}
                   onChange={(e) => {
                     var numbers = /^[0-9]+$/;
-                    setIpk(e.target.value.match(numbers));
+                    setIpk(e.target.value);
                   }}
                   onBlur={() => simpleValidator.current.showMessageFor("ipk")}
                 />
