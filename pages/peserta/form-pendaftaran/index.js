@@ -75,6 +75,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       const middleware = middlewareAuthPesertaSession(session);
 
       if (!middleware.status) {
+        //check
         return {
           redirect: {
             destination: middleware.redirect,
