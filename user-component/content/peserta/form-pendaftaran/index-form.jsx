@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import Link from "next/link";
 import style from "./style.module.css";
 import moment from "moment";
 
@@ -74,7 +75,7 @@ const IndexForm = ({ token }) => {
                     <img
                       className="img-fluid rounded-xl w-100 h-80 mb-3"
                       src={`${
-                        dataPelatihan
+                        dataPelatihan && dataPelatihan.thumbnail
                           ? process.env.END_POINT_API_IMAGE_BEASISWA +
                             dataPelatihan.thumbnail
                           : "/assets/media/default-card.png"
@@ -82,10 +83,10 @@ const IndexForm = ({ token }) => {
                     />
                   </Col>
                   <Col md={10}>
-                    <div className="d-flex flex-row">
+                    <div className="d-flex flex-row flex-wrap">
                       <img
                         src={`${
-                          dataPelatihan
+                          dataPelatihan && dataPelatihan.logo
                             ? process.env.END_POINT_API_IMAGE_BEASISWA +
                               dataPelatihan.logo
                             : "/assets/media/default-card.png"
@@ -109,6 +110,11 @@ const IndexForm = ({ token }) => {
                             {dataPelatihan ? dataPelatihan.akademi || "-" : "-"}
                           </p>
                         </div>
+                      </div>
+                      <div className="ml-md-auto ml-5">
+                        <Link href="/" passHref>
+                          <a className={style.text_blue}>Ubah Pelatihan</a>
+                        </Link>
                       </div>
                     </div>
                     <div className="d-flex flex-row flex-wrap align-content-end mt-3">

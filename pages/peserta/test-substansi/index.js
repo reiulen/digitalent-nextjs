@@ -11,15 +11,6 @@ import {
   getDetailRiwayatPelatihan,
 } from "../../../redux/actions/pelatihan/riwayat-pelatihan.actions";
 
-const TestSubstansi = dynamic(
-  () => import("../../../user-component/content/peserta/test-substansi"),
-  {
-    loading: function loadingNow() {
-      return <LoadingSkeleton />;
-    },
-    ssr: false,
-  }
-);
 const TesSubstansiDetail = dynamic(
   () =>
     import(
@@ -81,10 +72,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       let success = false;
-      if (query.id || req.cookies.id_pelatihan) {
+      if (req.cookies.id_pelatihan) {
         await store.dispatch(
           getDetailRiwayatPelatihan(
-            query.id || req.cookies.id_pelatihan,
+            req.cookies.id_pelatihan,
             session.user.user.data.user.token
           )
         );
@@ -97,10 +88,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
           const test_substansi = data.list.filter(
             (item) => item.status == "tes substansi"
           );
-          if (test_substansi) {
+          if (test_substansi.length > 0) {
             await store.dispatch(
               getDetailRiwayatPelatihan(
-                test_substansi.id,
+                test_substansi[0].id,
                 session.user.user.data.user.token
               )
             );

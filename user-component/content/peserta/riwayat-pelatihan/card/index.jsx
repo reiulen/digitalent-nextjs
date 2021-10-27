@@ -30,7 +30,6 @@ export default function CardTemplateOriginal({ data }) {
   const dateFrom = moment(data.pendaftaran_mulai).format("LL");
   const dateTo = moment(data.pendaftaran_selesai).format("LL");
   const [showModalSertifikasi, setShowModalSertifikasi] = useState(false);
-  // const gambarMitra = data.gambarMitra
   const [label, setLabel] = useState();
 
   useEffect(() => {
@@ -47,6 +46,10 @@ export default function CardTemplateOriginal({ data }) {
         return setLabel("primary");
       case "tes substansi":
         return setLabel("primary");
+      case "lulus tes substansi":
+        return setLabel("success");
+      case "diterima":
+        return setLabel("success");
       default:
         return setLabel("danger");
     }
@@ -71,9 +74,6 @@ export default function CardTemplateOriginal({ data }) {
     };
     try {
       const data = await axios.post(link, body, config);
-      if (data) {
-        console.log(data, "ini datanya");
-      }
     } catch (error) {
       console.log(error, "masuk sini errornya");
     }
@@ -87,12 +87,10 @@ export default function CardTemplateOriginal({ data }) {
       Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
     } else {
       const type = ["image/jpg", "image/png", "image/jpeg"];
-
       if (type.includes(e.target.files[0].type)) {
         const reader = new FileReader();
         reader.onload = () => {
           if (reader.readyState === 2) {
-            // uploadSertifikasi(reader.result);
             setImageSertifikasi(reader.result);
           }
         };
@@ -107,25 +105,69 @@ export default function CardTemplateOriginal({ data }) {
       }
     }
   };
-  const variant = ["download", "upload", "rightarrow", "pencil", "paper"];
   return (
     <Fragment>
+      {console.log(data)}
       <Card className="position-relative">
         <Button
           variant="white"
-          disabled={data.status == "ditolak" ? true : false}
+          disabled={
+            data.status == "ditolak"
+              ? true
+              : data.status.includes("tidak")
+              ? true
+              : false
+          }
         >
           <Card.Body
             onClick={() => {
-              if (data.status == "menunggu tes substansi") {
-                Cookies.set("id_pelatihan", data.id);
-                router.push(`/peserta/test-substansi`);
-              } else if (data.status == "menunggu administrasi") {
-                Cookies.set("id_pelatihan", data.id);
-                router.push(`/peserta/administrasi`);
-              } else if (data.status == "tes substansi") {
-                Cookies.set("id_pelatihan", data.id);
-                router.push(`/peserta/administrasi`);
+              console.log(data.status, "ini status dari mana tau");
+              switch (data.status) {
+                case "menunggu":
+                  Cookies.set("id_pelatihan", data.id);
+                  Cookies.set("id_tema", data.tema_id);
+                  return router.push(`/peserta/administrasi`);
+                case "lulus pelatihan":
+                  Cookies.set("id_pelatihan", data.id);
+                  Cookies.set("id_tema", data.tema_id);
+                  return router.push(`/peserta/test-substansi`);
+                case "menunggu administrasi":
+                  Cookies.set("id_pelatihan", data.id);
+                  Cookies.set("id_tema", data.tema_id);
+                  return router.push(`/peserta/administrasi`);
+                case "menunggu tes substansi":
+                  Cookies.set("id_pelatihan", data.id);
+                  Cookies.set("id_tema", data.tema_id);
+                  return router.push(`/peserta/test-substansi`);
+                case "pelatihan":
+                  Cookies.set("id_pelatihan", data.id);
+                  Cookies.set("id_tema", data.tema_id);
+                  return router.push(
+                    `/peserta/riwayat-pelatihan/${data.name
+                      .split(" ")
+                      .join("-")}`
+                  );
+                case "tes substansi":
+                  Cookies.set("id_pelatihan", data.id);
+                  Cookies.set("id_tema", data.tema_id);
+                  return router.push(`/peserta/test-substansi`);
+                case "lulus tes substansi":
+                  Cookies.set("id_pelatihan", data.id);
+                  Cookies.set("id_tema", data.tema_id);
+                  return router.push(`/peserta/test-substansi`);
+                case "diterima":
+                  Cookies.set("id_pelatihan", data.id);
+                  Cookies.set("id_tema", data.tema_id);
+                  return router.push(
+                    `/peserta/riwayat-pelatihan/${data.name
+                      .split(" ")
+                      .join("-")
+                      .toLowerCase()}`
+                  );
+                default:
+                  Cookies.set("id_pelatihan", data.id);
+                  Cookies.set("id_tema", data.tema_id);
+                  return router.push(`/peserta/belum-tersedia`);
               }
             }}
           >
@@ -133,7 +175,6 @@ export default function CardTemplateOriginal({ data }) {
               <Col md={3}>
                 <img
                   className="rounded-xl img-fluid d-block w-100 "
-                  // src="/assets/media/bg-admin-1.png"
                   src={`${process.env.END_POINT_API_IMAGE_BEASISWA}${data.gambar}`}
                   alt="test1"
                   style={{ height: "200px", objectFit: "cover" }}
@@ -146,8 +187,6 @@ export default function CardTemplateOriginal({ data }) {
                     className="d-flex justify-content-center align-items-center my-10 my-lg-0 order-2 order-md-1"
                   >
                     <img
-                      // src="/assets/media/mitra-icon/bukalapak-1.svg"
-                      // src="/assets/media/default-card.png"
                       src={
                         data.gambar_mitra
                           ? `${process.env.END_POINT_API_IMAGE_LOGO_MITRA}${data.gambar_mitra}`
@@ -159,16 +198,12 @@ export default function CardTemplateOriginal({ data }) {
                       style={{ borderRadius: "50%", objectFit: "cover" }}
                     />
                   </Col>
-                  <Col
-                    md={7}
-                    className="my-auto order-3 order-md-2 row"
-                    // style={{ marginLeft: "-10px" }}
-                  >
-                    <h4 className="font-weight-bolder my-0 p-0 col-12 order-2 order-lg-1">
+                  <Col md={7} className="my-auto order-3 order-md-2 row">
+                    <h4 className="font-weight-bolder d-flex justify-content-center justify-content-md-start my-0 p-0 col-12 order-1 order-md-1">
                       {data.name}
                     </h4>
                     <div
-                      className="d-flex align-items-center justify-content-lg-start justify-content-center order-1 order-lg-2"
+                      className="d-flex align-items-center justify-content-md-start justify-content-center order-1 order-md-2"
                       style={{ color: "#203E80" }}
                     >
                       <div className="font-weight-bolder">Bukalapak</div>
@@ -177,17 +212,35 @@ export default function CardTemplateOriginal({ data }) {
                       </div>
                     </div>
                   </Col>
-                  <Col
-                    md={3}
-                    // className="d-flex justify-content-end order-1 order-md-3"
-                    className="order-1 order-md-3 d-flex justify-content-end"
-                  >
+                  <Col className="order-1 order-md-3 d-flex  justify-content-center justify-content-md-end">
+                    {data.midtest ? (
+                      <p
+                        style={{ borderRadius: "50px" }}
+                        className={`label label-inline label-light-${
+                          data.midtest ? "primary" : label
+                        } font-weight-bolder p-0 px-4 text-capitalize mr-5`}
+                      >
+                        Kerjakan Mid Test
+                      </p>
+                    ) : (
+                      ""
+                    )}
                     <p
                       style={{ borderRadius: "50px" }}
-                      className={`label label-inline label-light-${label} font-weight-bolder p-0 px-4 text-capitalize`}
+                      className={`label label-inline label-light-${
+                        data.survei ? "primary" : label
+                      } font-weight-bolder p-0 px-4 text-capitalize`}
                     >
-                      {data.status == "pelatihan"
+                      {data.lpj
+                        ? "Kerjakan LPJ"
+                        : data.survei
+                        ? "Kerjakan Survei"
+                        : data.status == "pelatihan" && data.trivia
+                        ? "kerjakan trivia"
+                        : data.status == "pelatihan"
                         ? "ikuti pelatihan"
+                        : data.status == "diterima"
+                        ? "lulus pelatihan"
                         : data.status}
                     </p>
                   </Col>
@@ -219,7 +272,102 @@ export default function CardTemplateOriginal({ data }) {
           style={{ bottom: 0 }}
         >
           <Col lg={3} />
-          {data.status == "menunggu" ? (
+          {data.lpj ? (
+            <Fragment>
+              <Col className="d-flex justify-content-center ">
+                <Button
+                  className="btn-rounded-full font-weight-bold btn-block justify-content-center mt-5"
+                  style={{ height: "40px", fontSize: "14px" }}
+                  onClick={() => {
+                    router.push(
+                      `/peserta/subvit/substansi/panduan-test-substansi`
+                    );
+                  }}
+                >
+                  <i className="ri-file-text-line mr-2"></i>
+                  Isi Laporan Pertangungjawaban
+                </Button>
+              </Col>
+            </Fragment>
+          ) : data.survei ? (
+            <Fragment>
+              <Col className="d-flex justify-content-center ">
+                <Button
+                  className="btn-rounded-full font-weight-bold btn-block justify-content-center mt-5"
+                  style={{ height: "40px", fontSize: "14px" }}
+                  onClick={() => {
+                    router.push(
+                      `/peserta/subvit/substansi/panduan-test-substansi`
+                    );
+                  }}
+                >
+                  <i className="ri-pencil-fill mr-2"></i>
+                  Isi Survei
+                </Button>
+              </Col>
+            </Fragment>
+          ) : data.status == "pelatihan" && data.trivia && data.midtest ? (
+            <Fragment>
+              <Col className="d-flex justify-content-center ">
+                <Button
+                  className="btn-rounded-full font-weight-bold btn-block justify-content-center mt-5"
+                  style={{ height: "40px", fontSize: "14px" }}
+                  onClick={() => {
+                    router.push(
+                      `/peserta/subvit/substansi/panduan-test-substansi`
+                    );
+                  }}
+                >
+                  Kerjakan Mid Test
+                  <i className="ri-arrow-right-s-line mr-2"></i>
+                </Button>
+              </Col>
+              <Col className="d-flex justify-content-center ">
+                <Button
+                  className="btn-rounded-full font-weight-bold btn-block justify-content-center mt-5"
+                  style={{ height: "40px", fontSize: "14px" }}
+                  onClick={() => {
+                    router.push(
+                      `/peserta/subvit/substansi/panduan-test-substansi`
+                    );
+                  }}
+                >
+                  Kerjakan Trivia <i className="ri-arrow-right-s-line mr-2"></i>
+                </Button>
+              </Col>
+            </Fragment>
+          ) : data.status == "pelatihan" && data.trivia ? (
+            <Col className="d-flex justify-content-center ">
+              <Button
+                className="btn-rounded-full font-weight-bold btn-block justify-content-center mt-5"
+                style={{ height: "40px", fontSize: "14px" }}
+                onClick={() => {
+                  router.push(
+                    `/peserta/subvit/substansi/panduan-test-substansi`
+                  );
+                }}
+              >
+                Kerjakan Trivia <i className="ri-arrow-right-s-line mr-2"></i>
+              </Button>
+            </Col>
+          ) : data.status == "pelatihan" ? (
+            <Fragment>
+              <Col className="d-flex justify-content-center ">
+                <Button
+                  className={`btn-rounded-full font-weight-bold btn-block justify-content-center mt-5 ${style.background_outline_primary}`}
+                  style={{ height: "40px", fontSize: "14px" }}
+                  onClick={() => {
+                    router.push(
+                      `/peserta/subvit/substansi/panduan-test-substansi`
+                    );
+                  }}
+                >
+                  <i className="ri-download-2-fill mr-2"></i>
+                  Bukti Pendaftaran
+                </Button>
+              </Col>
+            </Fragment>
+          ) : data.status == "menunggu" ? (
             <Col className="d-flex justify-content-center ">
               <Button
                 className={`btn-rounded-full font-weight-bold btn-block justify-content-center mt-5 `}
@@ -293,7 +441,7 @@ export default function CardTemplateOriginal({ data }) {
                   style={{ height: "40px", fontSize: "14px" }}
                   onClick={() => {
                     router.push(
-                      `/peserta/subvit/substansi/1?theme_id=${data.tema_id}&training_id=${data.id}&category=Test Substansi`
+                      `/peserta/subvit/substansi/panduan-test-substansi`
                     );
                   }}
                 >
@@ -321,11 +469,72 @@ export default function CardTemplateOriginal({ data }) {
                   style={{ height: "40px", fontSize: "14px" }}
                   onClick={() => {
                     router.push(
-                      `/peserta/subvit/substansi/1?theme_id=${data.tema_id}&training_id=${data.id}&category=Test Substansi`
+                      // `/peserta/subvit/substansi/1?theme_id=${data.tema_id}&training_id=${data.id}&category=Test Substansi`
+                      `/peserta/subvit/substansi/panduan-test-substansi`
                     );
                   }}
+                  disabled={data.tes_substansi ? false : true}
                 >
-                  Test Substansi <i className="ri-arrow-right-s-line mr-2"></i>
+                  Test Substansi{" "}
+                  <i className="ri-arrow-right-s-line mr-2"></i>
+                </Button>
+              </Col>
+            </Fragment>
+          ) : data.status == "lulus tes substansi" ? (
+            <Fragment>
+              <Col className="d-flex justify-content-center ">
+                <Button
+                  className={`btn-rounded-full font-weight-bold btn-block justify-content-center mt-5 `}
+                  style={{ height: "40px", fontSize: "14px" }}
+                  onClick={() => {
+                    console.log("ini click button 2 ");
+                  }}
+                >
+                  <i className="ri-download-2-fill mr-2"></i>
+                  Bukti Pendaftaran
+                </Button>
+              </Col>
+            </Fragment>
+          ) : data.status == "lulus tes substansi" ? (
+            <Fragment>
+              <Col className="d-flex justify-content-center ">
+                <Button
+                  className={`btn-rounded-full font-weight-bold btn-block justify-content-center mt-5 `}
+                  style={{ height: "40px", fontSize: "14px" }}
+                  onClick={() => {
+                    console.log("ini click button 2 ");
+                  }}
+                >
+                  <i className="ri-download-2-fill mr-2"></i>
+                  Bukti Pendaftaran
+                </Button>
+              </Col>
+            </Fragment>
+          ) : data.status == "diterima" ? (
+            <Fragment>
+              <Col className="d-flex justify-content-center ">
+                <Button
+                  className={`btn-rounded-full font-weight-bold btn-block justify-content-center mt-5 ${style.background_outline_primary}`}
+                  style={{ height: "40px", fontSize: "14px" }}
+                  onClick={() => {
+                    setShowModalSertifikasi(true);
+                  }}
+                  type=""
+                >
+                  <i className="ri-upload-2-fill mr-2"></i>
+                  Upload Sertifikasi
+                </Button>
+              </Col>
+              <Col className="d-flex justify-content-center ">
+                <Button
+                  className={`btn-rounded-full font-weight-bold btn-block justify-content-center mt-5 `}
+                  style={{ height: "40px", fontSize: "14px" }}
+                  onClick={() => {
+                    console.log("ini click button 2 ");
+                  }}
+                >
+                  <i className="ri-download-2-fill mr-2"></i>
+                  Bukti Pendaftaran
                 </Button>
               </Col>
             </Fragment>
@@ -419,7 +628,7 @@ export default function CardTemplateOriginal({ data }) {
             className="btn btn-primary-rounded-full"
             type="button"
             onClick={() => {
-              uploadSertifikasi(imageSertifikasi, data.id);
+              uploadSertifikasi(imageSertifikasi, data.id_pendaftaran);
             }}
           >
             Upload

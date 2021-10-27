@@ -354,6 +354,42 @@ const StepTwo = ({ token }) => {
           </div>
           <div className="card-body pt-0">
             <form onSubmit={onSubmit}>
+              <div className="form-group row">
+                <div className="col-sm-12 col-md-12">
+                  <label
+                    htmlFor="staticEmail"
+                    className=" col-form-label font-weight-bold"
+                  >
+                    Tipe Soal
+                  </label>
+                  <select
+                    name="training_id"
+                    id=""
+                    onChange={(e) => setQuestionTypeId(e.target.value)}
+                    onBlur={(e) => setQuestionTypeId(e.target.value)}
+                    value={question_type_id}
+                    className="form-control"
+                  >
+                    <option selected disabled value="">
+                      -- Tipe Soal --
+                    </option>
+                    {subtance_question_type.list_types.length != 0 ? (
+                      subtance_question_type.list_types
+                        .filter((row) => row.status === 1)
+                        .map((row) => {
+                          return (
+                            <option key={row.id} value={row.id}>
+                              {row.name}
+                            </option>
+                          );
+                        })
+                    ) : (
+                      <option disabled>Tipe soal masih kosong</option>
+                    )}
+                  </select>
+                </div>
+              </div>
+
               <div className="form-group mb-2 row">
                 <div className=" col-md-12">
                   <label
@@ -499,42 +535,6 @@ const StepTwo = ({ token }) => {
                   ) : (
                     ""
                   )}
-                </div>
-              </div>
-
-              <div className="form-group row">
-                <div className="col-sm-12 col-md-8">
-                  <label
-                    htmlFor="staticEmail"
-                    className=" col-form-label font-weight-bold"
-                  >
-                    Tipe Soal
-                  </label>
-                  <select
-                    name="training_id"
-                    id=""
-                    onChange={(e) => setQuestionTypeId(e.target.value)}
-                    onBlur={(e) => setQuestionTypeId(e.target.value)}
-                    value={question_type_id}
-                    className="form-control"
-                  >
-                    <option selected disabled value="">
-                      -- Tipe Soal --
-                    </option>
-                    {subtance_question_type.list_types.length != 0 ? (
-                      subtance_question_type.list_types
-                        .filter((row) => row.status === 1)
-                        .map((row) => {
-                          return (
-                            <option key={row.id} value={row.id}>
-                              {row.name}
-                            </option>
-                          );
-                        })
-                    ) : (
-                      <option disabled>Tipe soal masih kosong</option>
-                    )}
-                  </select>
                 </div>
               </div>
 

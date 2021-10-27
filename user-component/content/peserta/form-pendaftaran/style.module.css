@@ -2,6 +2,10 @@
   color: #6c6c6c;
 }
 
+.text_blue {
+  color: #007cff;
+}
+
 .image_mitra {
   border-radius: 50%;
   object-fit: cover;

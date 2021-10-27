@@ -22,8 +22,7 @@ const DetailRefrence = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3
-              className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 mb-5 mt-5"
-              style={{ fontSize: "24px" }}
+              className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 mb-0 mt-5 titles-1"
             >
               Detail Data Reference
             </h3>
@@ -39,7 +38,7 @@ const DetailRefrence = ({ token }) => {
                   className="fw-400 fz-16"
                   style={{ color: "#1F1F1F" }}
                 >
-                  {detailDataReference.dataReference.data_reference.name}
+                  {detailDataReference?.dataReference?.name}
                 </p>
               </div>
               <div className="form-group d-flex flex-column mt-4">
@@ -48,10 +47,10 @@ const DetailRefrence = ({ token }) => {
                 </p>
                 <p
                   htmlFor="exampleSelect1"
-                  className="fw-400 fz-16"
+                  className="fw-400 fz-16"  
                   style={{ color: "#1F1F1F" }}
                 >
-                  {detailDataReference.dataReference.status == 1 ? "Aktif" : "Tidak Aktif"}
+                  {detailDataReference?.dataReference?.status == 1 ? "Aktif" : "Tidak Aktif"}
                 </p>
               </div>
               <div className="form-group d-flex flex-column mt-4">
@@ -59,7 +58,7 @@ const DetailRefrence = ({ token }) => {
                   Value
                 </p>
                 <ul>
-                  {detailDataReference.dataReference.valueReference.map((items,index)=>{
+                  {detailDataReference.dataReference.value_reference.map((items,index)=>{
                     return(
 
                   <li key={index}>

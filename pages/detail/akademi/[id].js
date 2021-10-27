@@ -7,52 +7,61 @@ import { getAllPelatihanByAkademi } from "../../../redux/actions/beranda/detail-
 import { getDataPribadi } from "../../../redux/actions/pelatihan/function.actions";
 
 const DetailAkademi = dynamic(() =>
-  import("../../../user-component/content/detail/kategori/akademi/detail-akademi")
+  import(
+    "../../../user-component/content/detail/kategori/akademi/detail-akademi"
+  )
 );
-const Layout = dynamic(() => import("../../../user-component/content/wrapper/layout.wrapper"))
+const Layout = dynamic(() =>
+  import("../../../user-component/content/wrapper/layout.wrapper")
+);
 
-export default function DetailAkademiPelatihan (props) {
+export default function DetailAkademiPelatihan(props) {
   let session = null;
-  
+
   if (props.session) {
-    session = props.session.user.user.data;
+    session = props.session.user.user.data.user;
   }
 
-    return (
-        <div>
-          <Layout title="Detail Akademi" session={session}>
-            <DetailAkademi session={session}/>
-          </Layout>
-        </div>
-    )
+  return (
+    <div>
+      <Layout title="Detail Akademi" session={session}>
+        <DetailAkademi session={session} />
+      </Layout>
+    </div>
+  );
 }
 
-export const getServerSideProps = wrapper.getServerSideProps((store) => async({ params, req }) => {
-  const session = await getSession({ req });
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) =>
+    async ({ params, req }) => {
+      const session = await getSession({ req });
 
-  await store.dispatch(getDataPribadi(session.user.user.data.user.token));
+      let sessionToken = session?.user.user.data.user.token;
 
-  await store.dispatch(
-    getDetailAkademi(params.id)
-  );
+      await store.dispatch(getDataPribadi(sessionToken));
 
-  await store.dispatch (
-    getAllPelatihanByAkademi(
-      params.id,
-      params.tema_id,
-      params.provinsi,
-      params.tipe_pelatihan,
-      params.penyelenggara,
-      params.kategori_peserta,
-      params.kata_kunci,
-      params.tanggal_mulai,
-      params.tanggal_akhir,
-    )
-  )
+      await store.dispatch(getDetailAkademi(params.id));
 
-  return {
-    props: {
-      title:"Detail Akademi", data: "auth", session,
-    },
-  };
-})
+      await store.dispatch(
+        getAllPelatihanByAkademi(
+          params.id,
+          params.tema_id,
+          params.provinsi,
+          params.tipe_pelatihan,
+          params.penyelenggara,
+          params.kategori_peserta,
+          params.kata_kunci,
+          params.tanggal_mulai,
+          params.tanggal_akhir
+        )
+      );
+
+      return {
+        props: {
+          title: "Detail Akademi",
+          data: "auth",
+          session,
+        },
+      };
+    }
+);

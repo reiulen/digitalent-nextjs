@@ -254,8 +254,8 @@ const Beranda = ({ session }) => {
   };
 
   const handleCheckPelatihanReg = async (id, session) => {
-    if (session.Token) {
-      const data = await dispatch(checkRegisterPelatihan(id, session.Token));
+    if (session && session.token) {
+      const data = await dispatch(checkRegisterPelatihan(id, session.token));
 
       if (data.status === true) {
         router.push(`${router.pathname}/peserta/form-pendaftaran?id=${id}`);
@@ -721,10 +721,11 @@ const Beranda = ({ session }) => {
                                     <div className="rounded mt-0 pt-0">
                                       <Image
                                         src={
+                                          "/assets/media/default-card.png" ||
                                           process.env
                                             .END_POINT_API_IMAGE_PARTNERSHIP +
-                                          "/" +
-                                          element.gambar_mitra
+                                            "/" +
+                                            element.gambar_mitra
                                         }
                                         layout="fill"
                                         objectFit="cover"

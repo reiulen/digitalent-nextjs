@@ -1,21 +1,21 @@
 import dynamic from "next/dynamic";
-
-// import Layout from "../../../components/templates/layout.component";
-
-import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
-import LoadingSkeleton from "../../../components/LoadingSkeleton";
-import { getDataPribadi } from "../../../redux/actions/pelatihan/function.actions";
-import { middlewareAuthPesertaSession } from "../../../utils/middleware/authMiddleware";
+
+import { useRouter } from "next/router";
+import Cookies from "js-cookie";
+import { wrapper } from "../../../../redux/store";
+import LoadingSkeleton from "../../../../components/LoadingSkeleton";
+import { getDataPribadi } from "../../../../redux/actions/pelatihan/function.actions";
+import { middlewareAuthPesertaSession } from "../../../../utils/middleware/authMiddleware";
 import {
   getAllRiwayatPelatihanPeserta,
   getDetailRiwayatPelatihan,
-} from "../../../redux/actions/pelatihan/riwayat-pelatihan.actions";
+} from "../../../../redux/actions/pelatihan/riwayat-pelatihan.actions";
 
-const SeleksiAdministrasi = dynamic(
+const RiwayatPelatihanDetail = dynamic(
   () =>
     import(
-      "../../../user-component/content/peserta/administrasi/seleksiAdmin.jsx"
+      "../../../../user-component/content/peserta/riwayat-pelatihan/[id]/lulus-pelatihan"
     ),
   {
     loading: function loadingNow() {
@@ -28,7 +28,7 @@ const SeleksiAdministrasi = dynamic(
 const BelumTersedia = dynamic(
   () =>
     import(
-      "../../../user-component/content/peserta/administrasi/administrasi-belum-tersedia.jsx"
+      "../../../../user-component/content/peserta/riwayat-pelatihan/[id]/belum-tersedia"
     ),
   {
     loading: function loadingNow() {
@@ -39,7 +39,7 @@ const BelumTersedia = dynamic(
 );
 
 const Layout = dynamic(() =>
-  import("../../../user-component/components/template/Layout.component")
+  import("../../../../user-component/components/template/Layout.component")
 );
 
 export default function RiwayatPelatihanPage(props) {
@@ -48,11 +48,8 @@ export default function RiwayatPelatihanPage(props) {
   return (
     <>
       <Layout title="Administrasi" session={session}>
-        {props.success ? (
-          <SeleksiAdministrasi session={session} />
-        ) : (
-          <BelumTersedia />
-        )}
+        {/* {id ? <SeleksiAdministrasi /> : <BelumTersedia />} */}
+        <RiwayatPelatihanDetail session={session} />
       </Layout>
     </>
   );
@@ -75,7 +72,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       let success = false;
-
       if (req.cookies.id_pelatihan) {
         await store.dispatch(
           getDetailRiwayatPelatihan(
@@ -89,13 +85,13 @@ export const getServerSideProps = wrapper.getServerSideProps(
           getAllRiwayatPelatihanPeserta(session.user.user.data.user.token)
         );
         if (data) {
-          const administrasi = data.list.filter((item) =>
-            item.status.includes("administrasi")
+          const test_substansi = data.list.filter(
+            (item) => item.status == "tes substansi"
           );
-          if (administrasi) {
+          if (test_substansi.length > 0) {
             await store.dispatch(
               getDetailRiwayatPelatihan(
-                administrasi[0].id,
+                test_substansi[0].id,
                 session.user.user.data.user.token
               )
             );
@@ -108,14 +104,13 @@ export const getServerSideProps = wrapper.getServerSideProps(
         }
       }
 
-      await store.dispatch(getDataPribadi(session?.user.user.data.user.token));
+      await store.dispatch(getDataPribadi(session.user.user.data.user.token));
 
       return {
         props: {
           data: "auth",
           session,
           title: "Administrasi Pelatihan - Peserta",
-          success,
         },
       };
     }

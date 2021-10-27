@@ -295,7 +295,7 @@ export default function SUBM(props) {
                 </div>
               </div>
               <div className="col">
-                <div className="title-unduh mb-5">
+                <div className="title-unduh">
                   <h3 className="judul">Upload Data Peserta</h3>
                 </div>
                 <div className="justify-content-start">

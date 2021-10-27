@@ -20,7 +20,9 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
 
-  const getAsalSekolah = useSelector((state) => state.getAsalSekolah);
+  const { data: dataAsalSekolah } = useSelector(
+    (state) => state.getAsalSekolah
+  );
 
   const { error: errorPendidikan, data: dataPendidikan } = useSelector(
     (state) => state.drowpdownPendidikan
@@ -55,10 +57,11 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
   const [ijazahName, setIjazahName] = useState("Belum ada file");
   const [ijazah, setIjazah] = useState("");
   const [ijazahPreview, setIjazahPreview] = useState("");
-  const [optionsAsalSekolah, setOptionsAsalSekolah] = useState([]);
+  const [optionsAsalSekolah, setOptionsAsalSekolah] = useState(
+    dataAsalSekolah ? dataAsalSekolah : []
+  );
 
   const [dataSearch, setDataSearch] = useState([]);
-
   const optionsJenjangPendidikan = [];
   if (dataPendidikan) {
     for (let index = 0; index < dataPendidikan.data.length; index++) {
@@ -71,7 +74,8 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
   }
 
   useEffect(() => {
-    dispatch(getDataAsalSekolah(token));
+    dispatch(getDataAsalSekolah(token, 1, 100, asalSekolah));
+
     if (errorUpdateData) {
       toast.error(errorUpdateData);
       dispatch(clearErrors());
@@ -89,6 +93,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
     jengjangPendidikan.value,
     funcViewEdit,
     token,
+    asalSekolah,
   ]);
 
   const searchAsal = (word) => {
@@ -161,7 +166,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
       } else if (jengjangPendidikan.value === 23) {
         data = {
           jenjang: jengjangPendidikan.label,
-          asal_pendidikan: asalSekolah.label,
+          asal_pendidikan: asalSekolah,
           lainya: "-",
           program_studi: "0",
           ipk: "0",
@@ -174,7 +179,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
       ) {
         data = {
           jenjang: jengjangPendidikan.label,
-          asal_pendidikan: asalSekolah.label,
+          asal_pendidikan: asalSekolah,
           lainya: "-",
           program_studi: programStudi,
           ipk,
@@ -233,7 +238,24 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
             <Form.Group className="mb-3" controlId="formGridAdress1">
               <Form.Label>Asal Sekolah / Perguruan Tinggi</Form.Label>
               <div className="position-relative" style={{ zIndex: "4" }}>
-                <Select
+                <input
+                  list="data"
+                  type="text"
+                  className="form-control"
+                  onChange={(e) => {
+                    setAsalSekolah(e.target.value);
+                  }}
+                />
+                <datalist id="data">
+                  {dataAsalSekolah === undefined
+                    ? "kosong"
+                    : dataAsalSekolah.map((item, index) => {
+                        return (
+                          <option value={item.label} key={index} />
+                        )
+                      })}
+                </datalist>
+                {/* <Select
                   placeholder={
                     (pendidikan && pendidikan.asal_pendidikan) ||
                     "Silahkan Pilih Asal Sekolah"
@@ -246,7 +268,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
                       "asal ( sekolah/ pt )"
                     )
                   }
-                />
+                /> */}
               </div>
               {simpleValidator.current.message(
                 "asal sekolah",
@@ -402,10 +424,13 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
               <Form.Group as={Col} md={6} controlId="formGridIpk">
                 <Form.Label>IPK</Form.Label>
                 <Form.Control
-                  type="text"
+                  type="number"
                   placeholder="Silahkan Masukan IPK"
                   value={ipk}
-                  onChange={(e) => setIpk(e.target.value)}
+                  onChange={(e) => {
+                    var numbers = /^[0-9]+$/;
+                    setIpk(e.target.value.match(numbers));
+                  }}
                   onBlur={() => simpleValidator.current.showMessageFor("ipk")}
                 />
                 {simpleValidator.current.message(
@@ -494,7 +519,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
             className={`${style.button_profile_simpan} rounded-xl`}
             type="submit"
           >
-            Submit
+            Simpan
           </Button>
         </div>
       </Form>

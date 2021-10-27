@@ -79,7 +79,7 @@ export default function Prompt(props) {
             <span className="isAktif">{email === 1 || email === true ? "Aktif" : "Tidak Aktif"}</span>
           </span>
         </div>
-        <div className="button-submit-notif ">
+        <div className="button-submit-notif mb-5">
           <div className="d-flex justify-content-end">
             <button
               type="submit"
