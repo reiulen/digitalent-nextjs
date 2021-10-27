@@ -34,12 +34,7 @@ const SubtansiUser = ({ token }) => {
 
   const router = useRouter();
 
-  localStorage.setItem("data", JSON.stringify(random_subtance_question_detail));
-
-  const [data] = useState(
-    random_subtance_question_detail.length > 0 &&
-      JSON.parse(localStorage.getItem("data"))
-  );
+  const [data, setData] = useState([]);
   const [answer, setAnswer] = useState("");
   const [listAnswer, setListAnswer] = useState([]);
   const [numberPage, setNumberPage] = useState("");
@@ -130,6 +125,10 @@ const SubtansiUser = ({ token }) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [count]);
+
+  useEffect(() => {
+    setData(random_subtance_question_detail);
+  }, [data, random_subtance_question_detail]);
 
   const secondsToTime = (secs) => {
     var hours = Math.floor(secs / (60 * 60));
