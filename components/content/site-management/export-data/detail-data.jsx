@@ -18,7 +18,7 @@ import {
   setPage,
   limitCooporation,
   searchCooporation,
-  exportFileCSV
+  exportFileCSV,
 } from "../../../../redux/actions/site-management/export-data.actions";
 import moment from "moment";
 
@@ -123,7 +123,7 @@ const Table = ({ token }) => {
                       ) : (
                         detailExportData.data.export.map((items, index) => {
                           return (
-                            <tr>
+                            <tr key={index}>
                               <td className="align-middle text-left">
                                 {detailExportData.page === 1
                                   ? index + 1
@@ -162,7 +162,9 @@ const Table = ({ token }) => {
                   <button
                     type="button"
                     className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
-                    onClick={() => dispatch(exportFileCSV(router.query.id,token))}
+                    onClick={() =>
+                      dispatch(exportFileCSV(router.query.id, token))
+                    }
                   >
                     Export Data
                   </button>
