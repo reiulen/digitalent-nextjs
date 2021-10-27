@@ -86,14 +86,13 @@ const Tambah = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3
-              className="card-title font-weight-bolder text-dark"
-              style={{ fontSize: "24px" }}
+              className="card-title font-weight-bolder text-dark titles-1 mb-0"
             >
               Tambah Reference Tanpa Relasi
             </h3>
           </div>
           <form>
-            <div className="card-body">
+            <div className="card-body pt-0">
               <div className="form-group">
                 <label htmlFor="staticEmail" className="col-form-label">
                   Nama Data Reference

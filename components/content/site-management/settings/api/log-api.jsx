@@ -82,8 +82,7 @@ const Table = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3
-              className="card-title font-weight-bolder text-dark"
-              style={{ fontSize: "24px" }}
+              className="card-title font-weight-bolder text-dark titles-1"
             >
               Log API
             </h3>
@@ -93,7 +92,7 @@ const Table = ({ token }) => {
               <div className="row align-items-center">
                 <div className="col-lg-12 col-xl-12">
                   <div className="row">
-                    <div className="col-12 col-sm-6">
+                    <div className="col-12 col-sm-4">
                       <form onSubmit={handleSubmit}>
                         <div className="position-relative overflow-hidden w-100 mt-5">
                           <IconSearch
@@ -123,7 +122,7 @@ const Table = ({ token }) => {
                       </form>
                     </div>
 
-                    <div className="col-12 col-sm-6">
+                    <div className="col-12 col-sm-8">
                       <div className="d-flex flex-wrap align-items-center justify-content-end mt-2">
                         {/* sorotir by modal */}
                         <button

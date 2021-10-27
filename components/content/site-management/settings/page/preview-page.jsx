@@ -64,13 +64,12 @@ const TentangKami = ({ token }) => {
                 />
               </div>
               <h3
-                className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 mb-5 mt-5"
-                style={{ fontSize: "24px" }}
+                className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 my-0 my-sm-5 titles-1"
               >
                 Tentang Kami
               </h3>
             </div>
-            <div className="card-body pt-0">
+            <div className="card-body pt-0 px-0 px-sm-8">
               <div className="card gutter-b" style={styleCardContent}>
                 {/* <div className="card-header">
                   <div className="card-title">
