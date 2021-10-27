@@ -95,9 +95,9 @@ export default function SeleksiAdministrasi() {
                     className="btn-rounded-full font-weight-bold btn-block justify-content-center"
                     style={{ height: "40px", fontSize: "14px" }}
                     onClick={() => {
-                      router.push(`/peserta/test-substansi/panduan-substansi`);
                       Cookies.set("id_tema", data.tema_id);
                       Cookies.set("id_pelatihan", data.id);
+                      router.push(`/peserta/test-substansi/panduan-substansi`);
                     }}
                   >
                     Test Substansi{" "}
