@@ -1,9 +1,3 @@
-@media (max-width: 412px) {
-  .btnResponsive {
-    width: 100%;
-    margin-top: 10px !important;
-  }
-}
 
 .btnNext {
   background-color: white !important;
@@ -12,4 +6,20 @@
 }
 .btnNext:hover {
   background-color: #d7e1ea !important;
+}
+
+@media only screen and (max-width: 576px) {
+  .btnResponsive {
+    width: 100%;
+    margin-top: 10px !important;
+  }
+  .iconTambah{
+      margin-left: 53px;
+  }
+  .btnSave{
+    margin-left: 0px;
+  }
+  .btnNext{
+    margin-bottom: 8px;
+  }
 }

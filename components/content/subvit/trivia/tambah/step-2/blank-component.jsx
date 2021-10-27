@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import styles from "../step-2/step2-trivia.module.css";
 
 import Image from "next/image";
 
@@ -70,7 +71,7 @@ const BlankComponent = ({ props_answer, props_duration }) => {
 
   return (
     <>
-      <div className="form-group row mt-5">
+      <div className="form-group mt-5">
         {answer.map((x, i) => {
           return (
             <>
@@ -85,75 +86,79 @@ const BlankComponent = ({ props_answer, props_duration }) => {
                 />
                 <span className="text-muted">Isi Nilai</span>
               </div> */}
-              <div className="col-sm-12 col-md-4">
-                <label
-                  htmlFor="staticEmail"
-                  className=" col-form-label font-weight-bold pb-0"
-                >
-                  Pilih Tipe
-                </label>
-                <select
-                  name="type"
-                  className="form-control"
-                  value={x.type}
-                  placeholder={x.key}
-                  onChange={(e) => handleInputChange(e, i)}
-                >
-                  <option value="" disabled selected>
-                    -- PILIHAN TIPE --
-                  </option>
-                  <option value="Percis">Percis</option>
-                  <option value="Mengandung">Mengandung</option>
-                  <option value="Sama Dengan">Sama Dengan</option>
-                </select>
-              </div>
-              <div className="col-sm-12 col-md-4">
-                <label
-                  htmlFor="staticEmail"
-                  className=" col-form-label font-weight-bold pb-0"
-                >
-                  Jawaban {x.key}
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="option"
-                  value={x.option}
-                  placeholder={x.key}
-                  onChange={(e) => handleInputChange(e, i)}
-                  autoComplete="off"
-                />
-              </div>
-
-              <div className="col-sm-12 col-md-4 row align-items-end">
-                <div className="form-group col-10 col-md-3 mb-0">
+              <div className="row">
+                <div className="col-sm-12 col-md-5">
                   <label
                     htmlFor="staticEmail"
                     className=" col-form-label font-weight-bold pb-0"
                   >
-                    Nilai
+                    Pilih Tipe
+                  </label>
+                  <select
+                    name="type"
+                    className="form-control"
+                    value={x.type}
+                    placeholder={x.key}
+                    onChange={(e) => handleInputChange(e, i)}
+                  >
+                    <option value="" disabled selected>
+                      -- PILIHAN TIPE --
+                    </option>
+                    <option value="Percis">Percis</option>
+                    <option value="Mengandung">Mengandung</option>
+                    <option value="Sama Dengan">Sama Dengan</option>
+                  </select>
+                </div>
+                <div className="col-sm-12 col-md-5">
+                  <label
+                    htmlFor="staticEmail"
+                    className=" col-form-label font-weight-bold pb-0"
+                  >
+                    Jawaban {x.key}
                   </label>
                   <input
-                    type="number"
-                    className="form-control pb-0 my-0"
-                    name="value"
-                    value={x.value}
+                    type="text"
+                    className="form-control"
+                    name="option"
+                    value={x.option}
+                    placeholder={x.key}
                     onChange={(e) => handleInputChange(e, i)}
                     autoComplete="off"
                   />
                 </div>
-                <div className="col-2">
-                  {answer.length !== 1 && x.key !== "A" ? (
-                    <button
-                      className="btn btn-link-action bg-danger text-white ml-2 mt-2"
-                      type="button"
-                      onClick={() => handleRemoveClick(i)}
-                    >
-                      <i className="ri-delete-bin-fill p-0 text-white"></i>
-                    </button>
-                  ) : (
-                    ""
-                  )}
+
+                <div className="col-sm-12 col-md-2">
+                  <label
+                    htmlFor="staticEmail"
+                    className="col-form-label font-weight-bold pb-0"
+                  >
+                    Nilai
+                  </label>
+                  <div className="row justify-content-center align-items-center">
+                    <div className="form-group col-12 col-md-3 mb-3">
+                      <input
+                        type="number"
+                        className={`${styles.inputNilai} form-control`}
+                        name="value"
+                        value={x.value}
+                        onChange={(e) => handleInputChange(e, i)}
+                        autoComplete="off"
+                      />
+                    </div>
+                    <div className="col-12 col-sm-2">
+                      {answer.length !== 1 && x.key !== "A" ? (
+                        <button
+                          className="btn btn-link-action bg-danger text-white mb-2"
+                          type="button"
+                          onClick={() => handleRemoveClick(i)}
+                        >
+                          <i className="ri-delete-bin-fill p-0 text-white"></i>
+                        </button>
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                  </div>
                 </div>
               </div>
             </>
@@ -166,11 +171,10 @@ const BlankComponent = ({ props_answer, props_duration }) => {
           {answer.length < 6 ? (
             <button
               type="button"
-              className="col-12 col-md-12 col-lg-10 col-xl-7 btn btn-rounded-full bg-blue-secondary text-white"
+              className={`${styles.btnTambah} col-12 col-md-12 col-lg-10 col-xl-7 btn btn-rounded-full bg-blue-secondary text-white`}
               onClick={() => handleAddClick()}
-              // style={{borderRadius:'30%'}}
             >
-              <i className="ri-add-fill text-white"></i> Tambah Jawaban
+              <i className={`${styles.iconTambah} ri-add-fill text-white`}></i> Tambah Jawaban
             </button>
           ) : (
             ""
@@ -178,7 +182,7 @@ const BlankComponent = ({ props_answer, props_duration }) => {
         </div>
       </div>
 
-      <div className="form-group">
+      <div className="form-group row flex-column">
         <div className="col-sm-12 col-md-12">
           <label
             htmlFor="staticEmail"

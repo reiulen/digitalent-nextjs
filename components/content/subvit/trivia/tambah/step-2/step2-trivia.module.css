@@ -1,0 +1,37 @@
+.inputNilai{
+    margin-left: -48px;
+    width: 60px;
+}
+
+.inputNilaiCheckbox{
+    width: 60px;
+    /* margin-left: -10px; */
+}
+
+.btnDeleteCheckbox{
+    margin-left: 35px;
+}
+
+.iconTambah{
+    margin-left: 12px;
+}
+
+@media only screen and (max-width: 1024px) {
+    .iconTambah{
+        margin-left: 4px;
+    }
+    .inputNilai{
+        margin-left: -32px;
+        width: 45px;
+    }
+}
+
+@media only screen and (max-width: 576px) {
+    .iconTambah{
+        margin-left: 53px;
+    }
+    .inputNilai{
+        margin-left: 0px;
+        width: 100%;
+    }
+}

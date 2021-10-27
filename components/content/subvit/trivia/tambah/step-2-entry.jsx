@@ -535,26 +535,29 @@ const StepTwo = ({ token }) => {
 
               {handleMethodeInput()}
 
-              <div className="form-group row">
+              <div className="form-group row flex-column">
                 <div className="col-sm-12">
                   <hr />
-                  <div className="buttoon float-right">
-                    <button
-                      className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2 mb-3`}
-                      type="submit"
-                    >
-                      Simpan & Lanjut
-                    </button>
-                    <button
-                      className="btn btn-primary-rounded-full"
-                      onClick={saveDraft}
-                      type="button"
-                    >
-                      Simpan Draft
-                    </button>
+                  {/* <div className="col-md-6 col-lg-6 col-xl-7"></div> */}
+                  {/* <div className="col-sm-12 col-md-6 col-lg-6 col-xl-5 buttoon float-right row justify-content-between" style={{border:'1px solid black'}}> */}
+                  <div className="">
+                    <div className={`${styles.btnSave} col-sm-12 col-md-6 col-lg-6 col-xl-5 buttoon float-right row justify-content-between`}>
+                      <button
+                        className={`${styles.btnNext} col-sm-12 col-md-6 col-lg-6 col-xl-6 btn btn-light-ghost-rounded-full`}
+                        type="submit"
+                      >
+                        Simpan & Lanjut
+                      </button>
+                      <button
+                        className="col-sm-12 col-md-5 col-lg-5 col-xl-5 btn btn-primary-rounded-full"
+                        onClick={saveDraft}
+                        type="button"
+                      >
+                        Simpan Draft
+                      </button>
+                    </div>
                   </div>
                 </div>
-                {/* <div className="col-sm-2"></div> */}
                 {/* <div className="col-sm-2"></div> */}
               </div>
             </form>

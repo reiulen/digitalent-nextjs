@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import styles from "../step-2/step2-trivia.module.css";
 
 import dynamic from "next/dynamic";
 import Image from "next/image";
@@ -118,11 +119,12 @@ const CheckboxComponent = ({
 
   return (
     <>
-      <div className="form-group row">
+      <div className="form-group">
         {answer.map((x, i) => {
           return (
             <>
-              <div className="col-sm-12 col-md-4 ">
+            <div className="row">
+              <div className="col-sm-12 col-md-4">
                 <label
                   htmlFor="staticEmail"
                   className=" col-form-label font-weight-bold pb-0"
@@ -139,7 +141,7 @@ const CheckboxComponent = ({
                   autoComplete="off"
                 />
               </div>
-              <div className="col-sm-12 col-md-4 ">
+              <div className="col-sm-12 col-md-5">
                 <label
                   htmlFor="staticEmail"
                   className=" col-form-label font-weight-bold pb-0"
@@ -158,7 +160,7 @@ const CheckboxComponent = ({
                   </label>
                 </div>
               </div>
-              <div className="col-sm-12 col-md-4 d-flex align-items-end my-0 py-0">
+              <div className="col-sm-12 col-md-3 d-flex align-items-end my-0 py-0">
                 <div className="form-group col-md-3 mb-0">
                   <label
                     htmlFor="staticEmail"
@@ -168,7 +170,7 @@ const CheckboxComponent = ({
                   </label>
                   <input
                     type="number"
-                    className="form-control pb-0 my-0"
+                    className={`${styles.inputNilaiCheckbox} form-control`}
                     name="value"
                     value={x.value}
                     onChange={(e) => handleInputChange(e, i)}
@@ -178,7 +180,7 @@ const CheckboxComponent = ({
 
                 {answer.length !== 1 && x.key !== "A" ? (
                   <button
-                    className="btn btn-link-action bg-danger text-white"
+                    className={`${styles.btnDeleteCheckbox} btn btn-link-action bg-danger text-white`}
                     type="button"
                     onClick={() => handleRemoveClick(i)}
                   >
@@ -192,7 +194,7 @@ const CheckboxComponent = ({
                     <i className="ri-delete-bin-fill p-0 text-white"></i>
                   </button>
                 )}
-                <div className="ml-2">
+                <div className="ml-5">
                   <SwitchButton
                     checked={x.is_right}
                     onlabel=" "
@@ -205,6 +207,7 @@ const CheckboxComponent = ({
                     onChange={(checked) => handleAnswer(checked, i)}
                   />
                 </div>
+              </div>
               </div>
             </>
           );
@@ -227,7 +230,7 @@ const CheckboxComponent = ({
         </div>
       </div>
 
-      <div className="form-group">
+      <div className="form-group row flex-column">
         <div className="col-sm-12 col-md-12">
           <label
             htmlFor="staticEmail"
