@@ -17,6 +17,7 @@ export default function SeleksiAdministrasi() {
   const [finalDescription, setFinalDescription] = useState();
   const dateFrom = moment(data.pendaftaran_mulai).format("LL");
   const dateTo = moment(data.pendaftaran_selesai).format("LL");
+
   useEffect(() => {
     let newText = description.split(" ");
     let test = [];
