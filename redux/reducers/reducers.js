@@ -190,6 +190,13 @@ import {
   detailPageReducer,
   updatePageReducer,
 } from "./site-management/settings/page.reducers";
+// ============== data export ===============
+import {
+  allExportDataReducer,
+  detailExportDataReducer,
+  updateExportDataReducer,
+  deleteExportDataReducer,
+} from "./site-management/export-data.reducers";
 // ============== provinces site ===============
 import { allProvincesSiteReducer } from "./site-management/option/option-provinces.reducers";
 // ============== option reference site ===============
@@ -212,7 +219,7 @@ import {
   updateMitraSiteReducer,
   detailMitraSiteReducer,
 } from "./site-management/user/mitra-site.reducers";
-// ============== mitra site ===============
+// ============== admin site ===============
 import {
   allAdminSiteReducer,
   newAdminSiteReducer,
@@ -627,6 +634,11 @@ const reducer = combineReducers({
   // ============ Dashboatd =======
   allDataZonasi: allDataZonasiReducer,
   allDataPeserta: allDataPesertaReducer,
+  // ============ Export Data =======
+  allExportData: allExportDataReducer,
+  detailExportData: detailExportDataReducer,
+  updateExportData: updateExportDataReducer,
+  deleteExportData: deleteExportDataReducer,
 
   // END SITE MANAGEMENT
 

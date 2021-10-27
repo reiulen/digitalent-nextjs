@@ -12,16 +12,40 @@ import IconAdd from "../../../assets/icon/Add";
 import IconSearch from "../../../assets/icon/Search";
 import AlertBar from "../../partnership/components/BarAlert";
 import Image from 'next/image'
+import moment from 'moment'
+
+import {
+  getAllExportData,
+  setPage,
+  limitCooporation,
+  searchCooporation,
+  exportFileCSV,
+  deleteExportDataAction
+} from "../../../../redux/actions/site-management/export-data.actions";
 
 const Table = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
 
-  const onNewReset = () => {
-    router.replace("/site-management/role", undefined, {
-      shallow: true,
-    });
+  const allExportData = useSelector(state => state.allExportData)
+  const deleteExportData = useSelector(state => state.deleteExportData)
+  console.log("allExportData",allExportData)
+  console.log("deleteExportData",deleteExportData)
+
+  const [valueSearch, setValueSearch] = useState("");
+  const handleChangeValueSearch = (value) => {
+    setValueSearch(value);
   };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(searchCooporation(valueSearch));
+  };
+
+  useEffect(() => {
+    dispatch(getAllExportData(token));
+  }, [dispatch, allExportData.cari, allExportData.page, allExportData.limit, token]);
+
   return (
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">
@@ -38,8 +62,7 @@ const Table = ({ token }) => {
             <div className="table-filter">
               <div className="row">
                 <div className="col-12 col-sm-6">
-                  <form
-                    // onSubmit={handleSubmit}
+                  <div
                     className="d-flex align-items-center w-100"
                   >
                     <div className="position-relative overflow-hidden w-100">
@@ -48,16 +71,16 @@ const Table = ({ token }) => {
                         className="left-center-absolute"
                       />
                       <input
-                        id="kt_datatable_search_query"
                         type="text"
                         className="form-control pl-10"
                         placeholder="Ketik disini untuk Pencarian..."
-                        // onChange={(e) =>
-                        //   handleChangeValueSearch(e.target.value)
-                        // }
+                        onChange={(e) =>
+                          handleChangeValueSearch(e.target.value)
+                        }
                       />
                       <button
-                        type="submit"
+                        type="button"
+                        onClick={(e)=>handleSubmit(e)}
                         className="btn bg-blue-primary text-white right-center-absolute"
                         style={{
                           borderTopLeftRadius: "0",
@@ -67,7 +90,7 @@ const Table = ({ token }) => {
                         Cari
                       </button>
                     </div>
-                  </form>
+                  </div>
                 </div>
                 <div className="col-12 col-sm-6">
                   <div className="d-flex justify-content-end">
@@ -83,6 +106,9 @@ const Table = ({ token }) => {
             </div>
             <div className="table-page mt-5">
               <div className="table-responsive">
+                {allExportData.status === "process" ? (
+                  <LoadingTable />
+                ) : (
                 <table className="table table-separate table-head-custom table-checkable">
                   <thead style={{ background: "#F3F6F9" }}>
                     <tr>
@@ -97,24 +123,46 @@ const Table = ({ token }) => {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td className="align-middle text-left">1</td>
-                      <td className="align-middle text-left">email</td>
-                      <td className="align-middle text-left">08973383733</td>
+                    {allExportData.data.exports.length === 0 ? (
+                      <tr>
+                        <td colSpan="8" className="text-center">
+                          <h4>Data tidak ditemukan</h4>
+                        </td>
+                      </tr>
+                    ) : (
+                      allExportData.data.exports.map((items, index) => {
+                        return (
+
+                    <tr key={index}>
+                      <td className="align-middle text-left">
+                        {allExportData.page === 1
+                                ? index + 1
+                                : (allExportData.page - 1) * allExportData.limit +
+                                  (index + 1)}
+                      </td>
+                      <td className="align-middle text-left">{items.user.name}</td>
+                      <td className="align-middle text-left">
+                        {moment(items.filtered_at).format("DD MMMM YYYY")}
+                        </td>
                       <td className="align-middle text-left">
                         <div className="d-flex align-items-center">
+
+
                           <button
                             className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                            onClick={() =>
-                              router.push(
-                                `/site-management/export-data`
-                              )
+                            onClick={() => dispatch(exportFileCSV(items.id,token))
                             }
                           >
                             <Image src="/assets/icon/download.svg" width={16} height={16} alt="download" />
                             <div className="text-hover-show-hapus">Unduh</div>
                           </button>
-                          <button
+
+
+                          
+
+
+
+                          {/* <button
                             className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete"
                             onClick={() =>
                               router.push(
@@ -124,12 +172,34 @@ const Table = ({ token }) => {
                           >
                             <IconEye width="16" height="16" />
                             <div className="text-hover-show-hapus">Detail</div>
-                          </button>
+                          </button> */}
+
+
+                          <Link
+                                        href={`/site-management/export-data/detail-data/${items.id}`}
+                                      >
+                                        <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete mx-3">
+                                          <IconEye width="16" height="16" />
+                                          <div className="text-hover-show-hapus">
+                                            Detail
+                                          </div>
+                                        </a>
+                                      </Link>
+
+
+
+
+
+
+
+
+
+
                           <button
                             className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                            // onClick={() =>
-                            //   roleDelete(items.id)
-                            // }
+                            onClick={() =>
+                              dispatch(deleteExportDataAction(items.id,token))
+                            }
                           >
                             <IconDelete width="16" height="16" />
                             <div className="text-hover-show-hapus">Hapus</div>
@@ -137,30 +207,31 @@ const Table = ({ token }) => {
                         </div>
                       </td>
                     </tr>
+                     );
+                      })
+                    )}
                   </tbody>
                 </table>
+                )}
               </div>
 
               <div className="row">
                 <div className="table-pagination paginate-cs">
-                  pagination
-                  {/* <Pagination
-                    activePage={allMKCooporation.page}
-                    itemsCountPerPage={
-                      allMKCooporation?.mk_cooporation?.data?.perPage
-                    }
-                    totalItemsCount={
-                      allMKCooporation?.mk_cooporation?.data?.total
-                    }
-                    pageRangeDisplayed={3}
-                    onChange={(page) => dispatch(setPage(page))}
-                    nextPageText={">"}
-                    prevPageText={"<"}
-                    firstPageText={"<<"}
-                    lastPageText={">>"}
-                    itemclassName="page-item"
-                    linkclassName="page-link"
-                  /> */}
+                  <div className="table-pagination">
+                      <Pagination
+                        activePage={allExportData.page}
+                        itemsCountPerPage={allExportData.data.perPage}
+                        totalItemsCount={allExportData.data.total}
+                        pageRangeDisplayed={3}
+                        onChange={(page) => dispatch(setPage(page))}
+                        nextPageText={">"}
+                        prevPageText={"<"}
+                        firstPageText={"<<"}
+                        lastPageText={">>"}
+                        itemClass="page-item"
+                        linkClass="page-link"
+                      />
+                    </div>
                 </div>
 
                 <div className="table-total ml-auto">
@@ -176,6 +247,9 @@ const Table = ({ token }) => {
                           borderColor: "#F3F6F9",
                           color: "#9E9E9E",
                         }}
+                        onChange={(e) =>
+                          dispatch(limitCooporation(e.target.value, token))
+                        }
                       >
                         <option value="5">5</option>
                         <option value="10">10</option>
@@ -189,7 +263,8 @@ const Table = ({ token }) => {
                         className="align-middle mt-3"
                         style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}
                       >
-                        Total Data 9 List Data
+                        Total Data {allExportData.data &&
+                          allExportData.data.total} List Data
                       </p>
                     </div>
                   </div>
