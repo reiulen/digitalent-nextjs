@@ -30,7 +30,9 @@ export default function DetailAkademiPelatihan (props) {
 export const getServerSideProps = wrapper.getServerSideProps((store) => async({ params, req }) => {
   const session = await getSession({ req });
 
-  await store.dispatch(getDataPribadi(session?.user.user.data.user.token));
+  let sessionToken = session?.user.user.data.user.token
+  
+  await store.dispatch(getDataPribadi(sessionToken));
 
   await store.dispatch(
     getDetailAkademi(params.id)
