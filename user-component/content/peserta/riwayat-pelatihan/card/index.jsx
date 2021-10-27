@@ -468,7 +468,8 @@ export default function CardTemplateOriginal({ data }) {
                   style={{ height: "40px", fontSize: "14px" }}
                   onClick={() => {
                     router.push(
-                      `/peserta/subvit/substansi/1?theme_id=${data.tema_id}&training_id=${data.id}&category=Test Substansi`
+                      // `/peserta/subvit/substansi/1?theme_id=${data.tema_id}&training_id=${data.id}&category=Test Substansi`
+                      `/peserta/subvit/substansi/panduan-test-substansi`
                     );
                   }}
                   disabled={data.tes_substansi ? false : true}
