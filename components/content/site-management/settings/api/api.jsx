@@ -89,8 +89,7 @@ const Table = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3
-              className="card-title font-weight-bolder text-dark"
-              style={{ fontSize: "24px" }}
+              className="card-title font-weight-bolder text-dark titles-1" 
             >
               List API
             </h3>
@@ -108,7 +107,7 @@ const Table = ({ token }) => {
               <div className="row align-items-center">
                 <div className="col-lg-12 col-xl-12">
                     <div className="row w-100">
-                      <div className="col-12 col-sm-6">
+                      <div className="col-12 col-sm-4">
                         <div className="position-relative overflow-hidden w-100">
                           <IconSearch
                             style={{ left: "10" }}
