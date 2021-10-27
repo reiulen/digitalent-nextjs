@@ -88,7 +88,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         const test_substansi = data.list.filter(
           (item) => item.status == "tes substansi"
         );
-        if (test_substansi) {
+        if (test_substansi.length > 0) {
           await store.dispatch(
             getDetailRiwayatPelatihan(
               test_substansi[0].id,
