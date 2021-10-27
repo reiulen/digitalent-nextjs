@@ -25,9 +25,9 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
           imageName: "Choose File",
           is_next: false,
           answer: [
-            { key: "A", option: "", image: "", type: "choose" },
-            { key: "B", option: "", image: "", type: "choose" },
-            { key: "C", option: "", image: "", type: "choose" },
+            { key: "A", option: "", image: "",imageName: "Choose File", type: "choose" },
+            { key: "B", option: "", image: "",imageName: "Choose File", type: "choose" },
+            { key: "C", option: "", image: "",imageName: "Choose File", type: "choose" },
           ],
         },
       ],
@@ -76,8 +76,8 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
 
     if (index == null && parent != null && children != null) {
       const listAnswer = list[parent].sub[children];
+      
       if (name === "image") {
-        listAnswer.imageName = e.target.files[0].name;
         const reader = new FileReader();
         reader.onload = () => {
           if (reader.readyState === 2) {
@@ -86,6 +86,7 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
         };
         if (e.target.files[0]) {
           reader.readAsDataURL(e.target.files[0]);
+          listAnswer.imageName = e.target.files[0].name;
         }
       } else {
         listAnswer.question = value;
@@ -103,6 +104,7 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
         };
         if (e.target.files[0]) {
           reader.readAsDataURL(e.target.files[0]);
+          listOption.imageName = e.target.files[0].name;
         }
       } else {
         listOption.option = value;
@@ -388,7 +390,7 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
                               className="custom-file-label"
                               htmlFor="customFile"
                             >
-                              Choose file
+                              {sub_question.imageName}
                             </label>
                           </div>
                         </div>
@@ -489,7 +491,7 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
                                               className="custom-file-label"
                                               htmlFor="customFile"
                                             >
-                                              Choose file
+                                              {sub_answer.imageName}
                                             </label>
                                           </div>
                                         </div>

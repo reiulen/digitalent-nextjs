@@ -230,7 +230,7 @@ const ListSubstansi = ({ token }) => {
 
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
-          <div className={`${styles.top} card-header  border-0 mt-3`}>
+          <div className={`${styles.top} card-header border-0 mt-3`}>
             <h1
               className="card-title text-dark mt-2"
               style={{ fontSize: "24px" }}
