@@ -473,10 +473,9 @@ export default function CardTemplateOriginal({ data }) {
                       `/peserta/subvit/substansi/panduan-test-substansi`
                     );
                   }}
-                  disabled={data.tes_substansi ? false : true}
+                  disabled={data.tes_substansi === true ? true : false}
                 >
-                  Test Substansi{" "}
-                  <i className="ri-arrow-right-s-line mr-2"></i>
+                  Test Substansi <i className="ri-arrow-right-s-line mr-2"></i>
                 </Button>
               </Col>
             </Fragment>
