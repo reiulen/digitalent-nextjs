@@ -9,6 +9,7 @@ import CardPill from "../../../components/peserta/CardPill";
 import CardPage from "../../../components/peserta/CardPage";
 import { useRouter } from "next/router";
 import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
+import Cookies from "js-cookie";
 
 const Dashboard = ({ session }) => {
   const router = useRouter();
@@ -65,6 +66,11 @@ const Dashboard = ({ session }) => {
     setCardPelatihan(list);
   };
 
+  useEffect(() => {
+    Cookies.set("id_tema", dataDashboard.pelatihan.pelatihan_berjalan.tema_id);
+    Cookies.set("id_pelatihan", dataDashboard.pelatihan.pelatihan_berjalan.id);
+  }, []);
+
   return (
     <>
       <PesertaWrapper>
@@ -114,7 +120,7 @@ const Dashboard = ({ session }) => {
               backgroundImage="new-game-4.svg"
               background="primary"
               color="#6C6C6C"
-              link={`/peserta/subvit/substansi/1?theme_id="${dataDashboard.subvit.subvit.tema_id}"&training_id="${dataDashboard.subvit.subvit.pelatihan_id}"&category="Test Substansi"`}
+              link={`/peserta/subvit/substansi/1?theme_id=${dataDashboard.subvit.subvit.tema_id}&training_id=${dataDashboard.subvit.subvit.pelatihan_id}&category=Test Substansi`}
               text="Lakukan Test Substansi"
               desc="Anda Belum Melakukan Test Substansi"
               total={dataDashboard.subvit.subvit.status}

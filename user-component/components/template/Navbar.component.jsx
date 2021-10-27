@@ -247,7 +247,7 @@ const Navigationbar = ({ session }) => {
                     alt="brand-navbar"
                   />
                   <span className="titles-accounts">
-                    {dataPribadi.name || "-"}
+                    {dataPribadi?.name || "-"}
                   </span>
                   <IconArrow
                     fill="#6c6c6c"

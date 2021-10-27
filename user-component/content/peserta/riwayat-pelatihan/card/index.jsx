@@ -30,7 +30,6 @@ export default function CardTemplateOriginal({ data }) {
   const dateFrom = moment(data.pendaftaran_mulai).format("LL");
   const dateTo = moment(data.pendaftaran_selesai).format("LL");
   const [showModalSertifikasi, setShowModalSertifikasi] = useState(false);
-  // const gambarMitra = data.gambarMitra
   const [label, setLabel] = useState();
 
   useEffect(() => {
@@ -71,9 +70,6 @@ export default function CardTemplateOriginal({ data }) {
     };
     try {
       const data = await axios.post(link, body, config);
-      if (data) {
-        console.log(data, "ini datanya");
-      }
     } catch (error) {
       console.log(error, "masuk sini errornya");
     }
@@ -126,7 +122,7 @@ export default function CardTemplateOriginal({ data }) {
                 router.push(`/peserta/administrasi`);
               } else if (data.status == "tes substansi") {
                 Cookies.set("id_pelatihan", data.id);
-                router.push(`/peserta/administrasi`);
+                router.push(`/peserta/test-substansi`);
               }
             }}
           >
@@ -134,7 +130,6 @@ export default function CardTemplateOriginal({ data }) {
               <Col md={3}>
                 <img
                   className="rounded-xl img-fluid d-block w-100 "
-                  // src="/assets/media/bg-admin-1.png"
                   src={`${process.env.END_POINT_API_IMAGE_BEASISWA}${data.gambar}`}
                   alt="test1"
                   style={{ height: "200px", objectFit: "cover" }}
@@ -147,8 +142,6 @@ export default function CardTemplateOriginal({ data }) {
                     className="d-flex justify-content-center align-items-center my-10 my-lg-0 order-2 order-md-1"
                   >
                     <img
-                      // src="/assets/media/mitra-icon/bukalapak-1.svg"
-                      // src="/assets/media/default-card.png"
                       src={
                         data.gambar_mitra
                           ? `${process.env.END_POINT_API_IMAGE_LOGO_MITRA}${data.gambar_mitra}`
@@ -294,7 +287,7 @@ export default function CardTemplateOriginal({ data }) {
                   style={{ height: "40px", fontSize: "14px" }}
                   onClick={() => {
                     router.push(
-                      `/peserta/subvit/substansi/1?theme_id=${data.tema_id}&training_id=${data.id}&category=Test Substansi`
+                      `/peserta/subvit/substansi/panduan-test-substansi`
                     );
                   }}
                 >
@@ -421,7 +414,7 @@ export default function CardTemplateOriginal({ data }) {
             className="btn btn-primary-rounded-full"
             type="button"
             onClick={() => {
-              uploadSertifikasi(imageSertifikasi, data.id);
+              uploadSertifikasi(imageSertifikasi, data.id_pendaftaran);
             }}
           >
             Upload
