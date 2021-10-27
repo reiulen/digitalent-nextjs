@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import moment from "moment";
+import { Modal, Button } from "react-bootstrap";
 
 const ProfileUser = ({ profile }) => {
+  const [show, setShow] = useState(false);
   return (
     <>
       <div className="card card-custom card-stretch gutter-b">
@@ -17,8 +19,9 @@ const ProfileUser = ({ profile }) => {
                 >
                   <Image
                     src={
-                      profile.file_path + profile.foto ||
-                      "/assets/media/default.jpg"
+                      "/assets/media/default.jpg" ||
+                      (profile.foto &&
+                        process.env.END_POINT_API_IMAGE_BEASISWA + profile.foto)
                     }
                     alt="image"
                     width={256}
@@ -162,9 +165,10 @@ const ProfileUser = ({ profile }) => {
                       width={320}
                       height={200}
                       src={
-                        profile.file_path + profile.File_ktp ||
-                        "/assets/media/default.jpg"
+                        process.env.END_POINT_API_IMAGE_BEASISWA +
+                          profile.File_ktp || "/assets/media/default.jpg"
                       }
+                      onClick={() => setShow(true)}
                     />
                   </div>
                 </div>
@@ -173,6 +177,39 @@ const ProfileUser = ({ profile }) => {
           </div>
         </div>
       </div>
+
+      <Modal
+        show={show}
+        onHide={() => setShow(false)}
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header>
+          <Modal.Title id="contained-modal-title-vcenter">
+            {profile?.File_ktp}
+            <button
+              type="button"
+              className="close"
+              onClick={() => setShow(false)}
+            >
+              <i className="ri-close-fill" style={{ fontSize: "25px" }}></i>
+            </button>
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Image
+            src={
+              process.env.END_POINT_API_IMAGE_BEASISWA + profile.File_ktp ||
+              "/assets/media/default.jpg"
+            }
+            height={200}
+            width={400}
+          />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={() => setShow(false)}>Kembali</Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 };

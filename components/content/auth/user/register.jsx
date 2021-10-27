@@ -7,6 +7,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 import { toast } from "react-toastify";
 import SimpleReactValidator from "simple-react-validator";
 import axios from "axios";
+import PhoneInput from "react-phone-input-2";
 
 import AuthWrapper from "../../../wrapper/auth.wrapper";
 import LoadingTable from "../../../LoadingTable";
@@ -180,20 +181,22 @@ const RegisterUser = () => {
                 </div>
                 <div className="form-group mb-2">
                   <label className="form-auth-label">No. Handphone</label>
-                  <input
-                    type="text"
-                    className="form-control form-control-auth"
+                  <PhoneInput
+                    country={"id"}
                     value={noHp}
-                    onChange={(e) => setNoHp(e.target.value)}
-                    placeholder="Masukkan Nomor Handphone"
-                    onBlur={() =>
-                      simpleValidator.current.showMessageFor("nomor handphone")
-                    }
+                    onChange={(phone) => setNoHp(phone)}
+                    countryCodeEditable={false}
+                    inputStyle={{
+                      width: "100%",
+                      borderRadius: "10px",
+                      height: "46px",
+                    }}
+                    buttonStyle={{ borderRadius: "10px 0 0 10px" }}
                   />
                   {simpleValidator.current.message(
                     "nomor handphone",
                     noHp,
-                    "required|integer",
+                    "required",
                     {
                       className: "text-danger",
                     }
