@@ -337,14 +337,35 @@ const StepTwo = ({ token }) => {
                   </span>
                 </div>
                 <div className="col-md-2 col-sm-2 d-flex align-items-center">
-                  <button
-                    type="button"
-                    className="btn btn-rounded-full btn-light-success btn-sm py-3"
-                    onClick={handleImportFile}
-                    disabled={successFile ? true : false}
-                  >
-                    Import File
-                  </button>
+                  {successFile ? (
+                    <button
+                      type="button"
+                      className="btn btn-rounded-full btn-light-success btn-sm py-3"
+                      onClick={handleImportFile}
+                      disabled={true || !question_file}
+                      style={{ cursor: "not-allowed" }}
+                    >
+                      Import File
+                    </button>
+                  ) : question_file ? (
+                    <button
+                      type="button"
+                      className="btn btn-rounded-full btn-light-success btn-sm py-3"
+                      onClick={handleImportFile}
+                    >
+                      Import File
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      className="btn btn-rounded-full btn-light-success btn-sm py-3"
+                      onClick={handleImportFile}
+                      disabled={!question_file}
+                      style={{ cursor: "not-allowed" }}
+                    >
+                      Import File
+                    </button>
+                  )}
                 </div>
               </div>
 
@@ -368,14 +389,35 @@ const StepTwo = ({ token }) => {
                   </span>
                 </div>
                 <div className="col-md-2 col-sm-2 d-flex align-items-center">
-                  <button
-                    type="button"
-                    className="btn btn-rounded-full btn-light-success btn-sm py-3"
-                    onClick={handleImportImage}
-                    disabled={successImages ? true : false}
-                  >
-                    Import File
-                  </button>
+                  {successImages ? (
+                    <button
+                      type="button"
+                      className="btn btn-rounded-full btn-light-success btn-sm py-3"
+                      onClick={handleImportImage}
+                      disabled={true || !image_file}
+                      style={{ cursor: "not-allowed" }}
+                    >
+                      Import File
+                    </button>
+                  ) : image_file ? (
+                    <button
+                      type="button"
+                      className="btn btn-rounded-full btn-light-success btn-sm py-3"
+                      onClick={handleImportImage}
+                    >
+                      Import File
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      className="btn btn-rounded-full btn-light-success btn-sm py-3"
+                      onClick={handleImportFile}
+                      disabled={!image_file}
+                      style={{ cursor: "not-allowed" }}
+                    >
+                      Import File
+                    </button>
+                  )}
                 </div>
               </div>
 

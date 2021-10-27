@@ -45,7 +45,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
-      await store.dispatch(getDataPribadi(session.user.user.data.user.token));
+      await store.dispatch(getDataPribadi(session?.user.user.data.user.token));
 
       return {
         props: { data: "auth", session, title: "Selesai Test Substansi" },

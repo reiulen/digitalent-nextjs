@@ -303,10 +303,10 @@ export const exportFileCSV = (token, id) => {
           window.open(_url, "_blank").focus();
         })
         .catch((error) => {
-          console.log(error.response.data.message);
+          return;
         });
     } catch (error) {
-      console.log(error.response.data.message);
+      return;
     }
   };
 };

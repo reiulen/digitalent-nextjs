@@ -48,11 +48,6 @@ const TambahPage = ({ token }) => {
       progress: undefined,
     });
 
-  const onNewReset = () => {
-    router.replace("/site-management/api", undefined, {
-      shallow: true,
-    });
-  };
 
   const submit = (e) => {
     e.preventDefault();
@@ -97,15 +92,6 @@ const TambahPage = ({ token }) => {
   };
 
   useEffect(() => {
-    // if (allPage.status === "error") {
-    //   Swal.fire("Gagal menyimpan data", "", "error")
-    // } else if (allPage.status === "success"){
-    //   Swal.fire("Berhasil Menyimpan data", "", "success").then(() => {
-    //     router.push("/site-management/setting/page")
-    //   });
-    // }else{
-    //   ""
-    // }
     editorRef.current = {
       CKEditor: require("@ckeditor/ckeditor5-react").CKEditor,
       ClassicEditor: require("@ckeditor/ckeditor5-build-classic"),
@@ -142,8 +128,7 @@ const TambahPage = ({ token }) => {
             <div className="card card-custom card-stretch gutter-b">
               <div className="card-header border-0">
                 <h3
-                  className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 mb-5 mt-5"
-                  style={{ fontSize: "24px" }}
+                  className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 my-0 my-sm-5 titles-1"
                 >
                   Tambah Page
                 </h3>
@@ -151,7 +136,7 @@ const TambahPage = ({ token }) => {
               <div className="card-body pt-0">
                 <div>
                   <h3
-                    className="card-title font-weight-bolder text-dark border-0 w-100 pb-5 mb-5 mt-5"
+                    className="card-title font-weight-bolder text-dark border-0 w-100 pb-5"
                     style={{ fontSize: "16px" }}
                   >
                     Konten Page
@@ -208,8 +193,7 @@ const TambahPage = ({ token }) => {
             <div className="card card-custom card-stretch gutter-b">
               <div className="card-header border-0">
                 <h3
-                  className="card-title font-weight-bolder text-dark border-0 w-100 pb-5 mb-5 mt-5"
-                  style={{ fontSize: "24px" }}
+                  className="card-title font-weight-bolder text-dark border-0 w-100 pb-5 my-0 pt-5 my-sm-5 titles-1"
                 >
                   Page Attributes
                 </h3>

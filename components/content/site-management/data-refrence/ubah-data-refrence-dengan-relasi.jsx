@@ -189,12 +189,6 @@ const Tambah = ({ token }) => {
     } else if (idReference === "") {
       Swal.fire("Gagal", `Harus pilih data reference`, "error");
     } else {
-      // let sendData = {
-      //   name: nameReference,
-      //   status: status,
-      //   data_references_relasi_id: idReference,
-      //   data: formReferenceAndText,
-      // };
 
       formReferenceAndTextValue.map((items, index) => {
         items.value.map((itemz, idx) => {
@@ -211,21 +205,6 @@ const Tambah = ({ token }) => {
         data_references_relasi_id: idReference,
         data: formReferenceAndTextValue,
       };
-
-      // let formData = new FormData();
-
-      // formData.append("id", router.query.id);
-      // formData.append("name", nameReference);
-      // formData.append("status", status);
-      // formData.append("data_references_relasi_id", idReference);
-
-      // formInput.forEach((element,i) => {
-      //   formData.append(`value_old[${i}]`, element.value_old);
-      // });
-
-      // formInput.forEach((element,i) => {
-      //   formData.append(`value[${i}]`, element.value);
-      // });
 
       try {
         let { data } = await axios.post(
@@ -285,14 +264,13 @@ const Tambah = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3
-              className="card-title font-weight-bolder text-dark"
-              style={{ fontSize: "24px" }}
+              className="card-title font-weight-bolder text-dark titles-1 mb-0"
             >
               Ubah Reference Dengan Relasi
             </h3>
           </div>
           <form>
-            <div className="card-body">
+            <div className="card-body pt-0">
               <div className="form-group">
                 <label htmlFor="staticEmail" className="col-form-label">
                   Nama Data Reference
@@ -407,7 +385,8 @@ const Tambah = ({ token }) => {
                                     style={{ backgroundColor: "#EE2D41" }}
                                     onClick={() => handleDelete(idx, index)}
                                   >
-                                    <IconDelete />
+                                    {/* <IconDelete width="11" height="11" /> */}
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path fill="none" d="M0 0h24v24H0z"/><path d="M17 4h5v2h-2v15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6H2V4h5V2h10v2zM9 9v8h2V9H9zm4 0v8h2V9h-2z" fill="rgba(255,255,255,1)"/></svg>
                                   </button>
                                 )}
                               </div>

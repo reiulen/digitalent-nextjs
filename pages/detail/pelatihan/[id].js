@@ -1,4 +1,3 @@
-// import DetailPelatihan from "../../../user-component/content/detail/kategori/pelatihan/detail-pelatihan"
 import { getSession } from "next-auth/client";
 import dynamic from "next/dynamic";
 import { wrapper } from "../../../redux/store";
@@ -32,8 +31,6 @@ export default function DetailKategori(props) {
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ params, req }) => {
-      const session = await getSession({ req });
-
       let sessionToken = session?.user.user.data.user.token;
 
       await store.dispatch(getDataPribadi(sessionToken));

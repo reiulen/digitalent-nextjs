@@ -29,7 +29,7 @@ const CardPage = ({ backgroundImage, background, color, link, text, desc, total,
               style={{
                 fontSize: "16px",
                 fontWeight: "600",
-                width: isSubvit ? "140px" : "max-content",
+                width: isSubvit ? "max-content" : "300px",
                 color: color,
               }}
             >

@@ -206,12 +206,10 @@ export const updateAlamatReducer = (state = { success: false }, action) => {
 export const getAsalSekolahReducer = (state = [], action) => {
   switch (action.type) {
     case GET_ASAL_SEKOLAH:
-      return action.payload.data.map(item => {
-        return {
-          value: item.label,
-          label: item.label,
-        }
-      })
+      return {
+        ...state,
+        data: action.payload
+      }
 
     default:
       return state;

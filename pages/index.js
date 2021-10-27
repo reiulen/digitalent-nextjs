@@ -48,8 +48,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       //   };
       // }
       if (session) {
-        let sessionToken = session.user.user.data.user.token
-        await store.dispatch(getDataPribadi(sessionToken));
+        await store.dispatch(getDataPribadi(session?.user.user.data.user.token));
       }
 
       await store.dispatch(getAllAkademi());

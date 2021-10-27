@@ -14,6 +14,10 @@ import { NEW_CLONE_SUBTANCE_QUESTION_BANKS_RESET } from "../../../../../redux/ty
 import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInput from "/components/StepInputClone";
 import LoadingPage from "../../../../LoadingPage";
+import {
+  dropdownPelatihanbyTema,
+  dropdownTemabyAkademi,
+} from "../../../../../redux/actions/pelatihan/function.actions";
 
 const StepOne = ({ token }) => {
   const dispatch = useDispatch();
@@ -26,6 +30,20 @@ const StepOne = ({ token }) => {
   const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(
     (state) => state.drowpdownAkademi
   );
+
+  const handleChangeTema = (e) => {
+    setAcademyId(e.target.value);
+    e.target.value && dispatch(dropdownTemabyAkademi(e.target.value, token));
+  };
+
+  const handleChangePelatihan = (e) => {
+    setThemeId(e.target.value);
+    e.target.value && dispatch(dropdownPelatihanbyTema(e.target.value, token));
+  };
+
+  const { data } = useSelector((state) => state.drowpdownTemabyAkademi);
+
+  const { drowpdownPelatihanbyTema } = useSelector((state) => state);
 
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
@@ -175,9 +193,9 @@ const StepOne = ({ token }) => {
                     name="academy_id"
                     id=""
                     value={academy_id}
-                    onChange={(e) => setAcademyId(e.target.value)}
-                    onBlur={(e) => {
-                      setAcademyId(e.target.value);
+                    onChange={(event) => handleChangeTema(event)}
+                    onBlur={(event) => {
+                      handleChangeTema(event);
                       simpleValidator.current.showMessageFor("academy_id");
                     }}
                     className="form-control"
@@ -186,16 +204,11 @@ const StepOne = ({ token }) => {
                       {" "}
                       -Pilih Akademi -
                     </option>
-                    {dataAkademi.map((item, index) => {
+                    {dataAkademi.data.map((item, index) => {
                       return (
                         <>
-                          <option
-                            selected
-                            disabled
-                            value={item.value}
-                            key={index}
-                          >
-                            -Pilih Akademi -
+                          <option value={item.value} key={index}>
+                            {item.label}
                           </option>
                         </>
                       );
@@ -221,9 +234,9 @@ const StepOne = ({ token }) => {
                   <select
                     name="the_id"
                     id=""
-                    onChange={(e) => setThemeId(e.target.value)}
-                    onBlur={(e) => {
-                      setThemeId(e.target.value);
+                    onChange={(event) => handleChangePelatihan(event)}
+                    onBlur={(event) => {
+                      handleChangePelatihan(event);
                       simpleValidator.current.showMessageFor("theme_id");
                     }}
                     className="form-control"
@@ -232,8 +245,16 @@ const StepOne = ({ token }) => {
                       {" "}
                       -Pilih Tema-
                     </option>
-                    <option value="1"> Cloud Computing </option>
-                    <option value="2"> UI/UX Designer </option>
+                    {data.data &&
+                      data.data.map((item, index) => {
+                        return (
+                          <>
+                            <option value={item.value} key={index}>
+                              {item.label}
+                            </option>
+                          </>
+                        );
+                      })}
                   </select>
                   {simpleValidator.current.message(
                     "theme_id",
@@ -259,12 +280,21 @@ const StepOne = ({ token }) => {
                     onBlur={(e) => setTrainingId(e.target.value)}
                     className="form-control"
                   >
-                    <option selected disabled>
+                    <option selected disabled value="">
                       {" "}
                       -Pilih Pelatihan-
                     </option>
-                    <option value="1"> Google Cloud Computing </option>
-                    <option value="1"> Adobe UI/UX Designer </option>
+                    {drowpdownPelatihanbyTema.data.data &&
+                      drowpdownPelatihanbyTema.data.data.map((item, index) => {
+                        return (
+                          <>
+                            <option value={item.value} key={index}>
+                              {" "}
+                              {item.label}
+                            </option>
+                          </>
+                        );
+                      })}
                   </select>
                 </div>
               </div>

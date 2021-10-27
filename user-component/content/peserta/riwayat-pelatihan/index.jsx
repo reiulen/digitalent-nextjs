@@ -42,7 +42,7 @@ export default function RiwayatPelatihan({ session }) {
     { name: "test substansi", value: "tes_substansi" },
     { name: "administrasi", value: "all" },
     { name: "pelatihan", value: "pelatihan" },
-    { name: "selesai", value: "1" },
+    { name: "selesai", value: "akhir" },
   ]);
 
   useEffect(() => {
