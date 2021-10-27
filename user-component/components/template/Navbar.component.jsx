@@ -24,11 +24,9 @@ import IconRegister from "../../../components/assets/icon-dashboard-peserta/Regi
 
 const Navigationbar = ({ session }) => {
   const [isShowDropdown, setIsShowDropdown] = useState(false);
-  // console.log("isShowDropdown", isShowDropdown);
   const { error: errorDataPribadi, dataPribadi } = useSelector(
     (state) => state.getDataPribadi
   );
-  // console.log(dataPribadi, " ini data pribadi");
   const handlerLogout = () => {
     signOut();
   };
@@ -247,7 +245,7 @@ const Navigationbar = ({ session }) => {
                     alt="brand-navbar"
                   />
                   <span className="titles-accounts">
-                    {dataPribadi.name || "-"}
+                    {dataPribadi?.name || "-"}
                   </span>
                   <IconArrow
                     fill="#6c6c6c"

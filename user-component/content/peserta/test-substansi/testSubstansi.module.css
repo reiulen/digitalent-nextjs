@@ -80,3 +80,27 @@
   color: #1f1f1f;
   padding: 30px;
 }
+
+.background_outline_primary {
+  background-color: white !important;
+  color: #007cff !important;
+  font-family: poppins;
+  font-size: 14px;
+}
+
+.background_outline_primary i {
+  /* background-color: white !important; */
+  color: #007cff !important;
+  font-family: poppins;
+  font-size: 14px;
+}
+
+.background_outline_primary:hover {
+  background-color: #007cff !important;
+  color: white !important;
+}
+
+.background_outline_primary:hover i {
+  background-color: #007cff !important;
+  color: white !important;
+}

@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import style from "../style.module.css";
 
-export default function IsiLpj({ props }) {
+export default function IsiLpj({ data }) {
   const name = data?.name || "Apaa aja";
   const dateFrom =
     moment(data?.pendaftaran_mulai).format("LL") || "10 oktober blabla";
@@ -14,18 +14,14 @@ export default function IsiLpj({ props }) {
   const alamat = data?.alamat || "alamat ini pokoknya";
   return (
     <Card className="position-relative">
-      <Card.Body
-        onClick={() => {
-          console.log("card body");
-        }}
-      >
+      <Card.Body>
         <Row>
           <Col md={3}>
             <img
               className="rounded-xl img-fluid d-block w-100 "
               src="/assets/media/bg-admin-1.png"
               alt="test1"
-              style={{ height: "200px" }}
+              style={{ height: "200px", objectFit: "cover" }}
             />
           </Col>
           <Col md={9}>
@@ -39,7 +35,7 @@ export default function IsiLpj({ props }) {
                   width={58}
                   height={58}
                   alt="test2"
-                  style={{ borderRadius: "50%" }}
+                  style={{ borderRadius: "50%", objectFit: "cover" }}
                 />
               </Col>
               <Col
@@ -69,7 +65,7 @@ export default function IsiLpj({ props }) {
                   style={{ borderRadius: "50px" }}
                   className="label label-inline label-light-primary font-weight-bolder p-0 px-4"
                 >
-                  Isi Survey
+                  Isi LPJ
                 </p>
               </Col>
               <Col md={12} className="my-auto order-4">

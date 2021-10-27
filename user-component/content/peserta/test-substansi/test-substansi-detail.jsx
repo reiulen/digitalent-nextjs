@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Card, Col, Row, Badge, Button } from "react-bootstrap";
 import Link from "next/link";
 import Image from "next/image";
-import style from "./style.module.css";
+import style from "./testSubstansi.module.css";
 import { useRouter } from "next/router";
 import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
 import { useSelector } from "react-redux";
@@ -17,22 +17,19 @@ export default function SeleksiAdministrasi() {
   const [finalDescription, setFinalDescription] = useState();
   const dateFrom = moment(data.pendaftaran_mulai).format("LL");
   const dateTo = moment(data.pendaftaran_selesai).format("LL");
+
   useEffect(() => {
     let newText = description.split(" ");
     let test = [];
-    if (newText.length > 100) {
-      for (let i = 0; i < newText.length; i++) {
-        test.push(newText[i]);
-        if (i == 100) {
-          test.push("...");
-          break;
-        }
+    for (let i = 0; i < newText.length; i++) {
+      test.push(newText[i]);
+      if (i == 100) {
+        test.push("...");
+        break;
       }
-      const result = test.join(" ");
-      setFinalDescription(result);
-    } else {
-      setFinalDescription(description);
     }
+    const result = test.join(" ");
+    setFinalDescription(result);
   }, []);
 
   const [truncate, setTruncate] = useState(true);
@@ -91,6 +88,20 @@ export default function SeleksiAdministrasi() {
                       style={{ color: "white" }}
                     ></i>
                     Bukti Pendaftaran
+                  </Button>
+                </Col>
+                <Col>
+                  <Button
+                    className="btn-rounded-full font-weight-bold btn-block justify-content-center"
+                    style={{ height: "40px", fontSize: "14px" }}
+                    onClick={() => {
+                      router.push(`/peserta/test-substansi/panduan-substansi`);
+                      Cookies.set("id_tema", data.tema_id);
+                      Cookies.set("id_pelatihan", data.id);
+                    }}
+                  >
+                    Test Substansi{" "}
+                    <i className="ri-arrow-right-s-line mr-2"></i>
                   </Button>
                 </Col>
               </Row>

@@ -220,7 +220,6 @@ export const getDetailApi = (id, token) => async (dispatch) => {
       `api/setting-api/detail/${id}`;
 
     const { data } = await axios.get(link, config);
-    console.log("data sdafdsaf", data);
 
     dispatch({
       type: DETAIL_API_SUCCESS,

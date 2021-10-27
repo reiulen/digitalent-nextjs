@@ -33,7 +33,6 @@ const Table = ({ token }) => {
   } = useSelector((state) => state.deleteApi);
 
   const deleteApi = useSelector(state => state.deleteApi)
-
   const [valueSearch, setValueSearch] = useState("");
   const handleChangeValueSearch = (value) => {
     setValueSearch(value);

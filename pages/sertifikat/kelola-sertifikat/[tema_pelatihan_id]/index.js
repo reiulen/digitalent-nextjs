@@ -46,9 +46,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
-      // const id = Cookies.get("tema_pelatihan_id");
-      // console.log(req.cookies.tema_pelatihan_id, " ini id");
-      // sessionStorage.getItem()
+
       await store.dispatch(
         getDetailSertifikat(
           query.id ? query.id : req.cookies.tema_pelatihan_id,

@@ -6,6 +6,9 @@ import {
   SET_PAGE_VALUE,
   SET_LIMIT_VALUE,
   SET_KEYWORD_VALUE,
+  RIWAYAT_PELATIHAN_DETAIL_SUCCESS,
+  RIWAYAT_PELATIHAN_DETAIL_REQUEST,
+  RIWAYAT_PELATIHAN_DETAIL_FAIL,
 } from "../../../types/pelatihan/riwayat-pelatihan.type";
 
 const initialStates = {
@@ -16,7 +19,7 @@ const initialStates = {
   limit: 5,
 };
 
-export const geAllRiwayatPelatihanPesertaReducer = (
+export const getAllRiwayatPelatihanPesertaReducer = (
   state = initialStates,
   action
 ) => {
@@ -66,6 +69,29 @@ export const geAllRiwayatPelatihanPesertaReducer = (
       };
     }
 
+    default:
+      return state;
+  }
+};
+
+export const getDetailRiwayatPelatihanReducer = (state = {}, action) => {
+  switch (action.type) {
+    case RIWAYAT_PELATIHAN_DETAIL_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case RIWAYAT_PELATIHAN_DETAIL_SUCCESS:
+      return {
+        ...state,
+        state: action.payload.data,
+        loading: false,
+      };
+    case RIWAYAT_PELATIHAN_DETAIL_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
     default:
       return state;
   }

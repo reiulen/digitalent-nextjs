@@ -16,10 +16,6 @@ const DetailApi = ({ token }) => {
   const router = useRouter();
   const detailApi = useSelector(state => state.detailApi)
 
-  console.log("detailApi",detailApi)
-
-
- 
   return (
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">

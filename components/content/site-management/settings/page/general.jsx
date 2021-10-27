@@ -24,9 +24,7 @@ const GeneralPage = ({ token }) => {
   const [description, setDescription] = useState("");
   const [address, setAddress] = useState("");
   const [imageLogoApi, setImageLogoApi] = useState("");
-  console.log("imageLogoApi",imageLogoApi)
   const [imageLogoApi2, setImageLogoApi2] = useState("");
-  console.log("imageLogoApi2",imageLogoApi2)
   const [imageLogoApiOld, setImageLogoApiOld] = useState("");
   const [imageLogoApiOld2, setImageLogoApiOld2] = useState("");
   const [isUpdate, setIsUpdate] = useState(false);
@@ -72,13 +70,6 @@ const GeneralPage = ({ token }) => {
 
   const submit = (e) => {
     e.preventDefault();
-
-    // if (imageLogo === "") {
-    //   Swal.fire("Gagal simpan", "Form image logo tidak boleh kosong", "error");
-    // }
-    // else if (caption === "") {
-    //   Swal.fire("Gagal simpan", "Form caption tidak boleh kosong", "error");
-    // }
     if (description === "") {
       Swal.fire("Gagal simpan", "Form caption tidak boleh kosong", "error");
     } else {
@@ -106,8 +97,6 @@ const GeneralPage = ({ token }) => {
             color: color,
           };
 
-          console.log("sendData", sendData);
-
           try {
             const { data } = await axios.post(
               `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting/general/store`,
@@ -118,7 +107,6 @@ const GeneralPage = ({ token }) => {
                 },
               }
             );
-            console.log("response berhasil simpan",data)
             Swal.fire("Berhasil", "Berhasil simpan data", "success")
           } catch (error) {
             Swal.fire(
@@ -174,9 +162,6 @@ const GeneralPage = ({ token }) => {
       progress: undefined,
     });
 
-  // const [NamePDF, setNamePDF] = useState(null);
-  // const fileType = ["image/png"];
-  // const fileTypeJpeg = ["image/jpeg"];
   const fileMax = 2097152;
   const onChangeImage = (e) => {
     if (imageLogoApi) {
@@ -346,8 +331,6 @@ const GeneralPage = ({ token }) => {
           }
         );
 
-        console.log("data",data)
-
         if (data) {
           setIsUpdate(true)
           setAddress(data.data.alamat)
@@ -357,11 +340,6 @@ const GeneralPage = ({ token }) => {
           setImageLogoApi2(data.data.footer_logo)
           setDescription(data.data.logo_description)
           setFormSocialMedia(data.data.social_media)
-
-
-
-
-
         }
       } catch (error) {
         notify(error.response.data.message);
@@ -644,9 +622,6 @@ const GeneralPage = ({ token }) => {
                                   className="form-control"
                                   placeholder="Lalaracing@gmail.com"
                                 />
-                                {/* <span className="form-text text-muted">
-                                  Please enter your full name
-                                </span> */}
                               </div>
                             </div>
                             <div className="col-12 col-md-6">
@@ -665,9 +640,6 @@ const GeneralPage = ({ token }) => {
                                       className="form-control"
                                       placeholder="Lalaracing@gmail.com"
                                     />
-                                    {/* <span className="form-text text-muted">
-                                      Please enter your full name
-                                    </span> */}
                                   </div>
                                 </div>
 
@@ -741,9 +713,6 @@ const GeneralPage = ({ token }) => {
                                   className="form-control"
                                   placeholder="Lalaracing@gmail.com"
                                 />
-                                {/* <span className="form-text text-muted">
-                                  Please enter your full name
-                                </span> */}
                               </div>
                             </div>
                             <div className="col-12 col-md-6">
@@ -836,9 +805,6 @@ const GeneralPage = ({ token }) => {
                         cols="30"
                         rows="10"
                       ></textarea>
-                      {/* <span className="form-text text-muted">
-                        Please enter your full name
-                      </span> */}
                     </div>
                   </div>
                   {/* end Alamat */}
@@ -868,9 +834,6 @@ const GeneralPage = ({ token }) => {
                               }}
                             ></div>
                           </div>
-                          {/* <span className="form-text text-muted">
-                            Please enter your full name
-                          </span> */}
                         </div>
                       );
                     })}

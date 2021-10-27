@@ -11,9 +11,7 @@ export default function rilisMedia({ berita }) {
       >
         Rilis Media & Informasi Terbaru
       </h1>
-      {
-        // console.log (berita)
-      }
+
       <div className="container-fluid mt-20">
         <div className="row">
           <div className="col-12 col-sm-6 col-md-6 col-xl-4">

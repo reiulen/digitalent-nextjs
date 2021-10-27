@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Card, Col, Row, Badge, Button } from "react-bootstrap";
-import Link from "next/link";
+// import Link from "next/link";
 import Image from "next/image";
-import style from "./style.module.css";
+// import style from "./style.module.css";
 import { useRouter } from "next/router";
-import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
+import PesertaWrapper from "../../../../components/wrapper/Peserta.wrapper";
 
 export default function SeleksiAdministrasi() {
   const router = useRouter();
