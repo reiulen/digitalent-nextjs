@@ -57,12 +57,14 @@ const ListSummary = ({ token }) => {
   const optionsAkademi = dataAkademi.data;
   const optionsTema = dataTema.data;
   const optionsPenyelenggara = [];
-  for (let index = 0; index < dataPenyelenggara.data.length; index++) {
-    let val = {
-      value: dataPenyelenggara.data[index].id,
-      label: dataPenyelenggara.data[index].label,
-    };
-    optionsPenyelenggara.push(val);
+  if (dataPenyelenggara && dataPenyelenggara.data.length > 0) {
+    for (let index = 0; index < dataPenyelenggara.data.length; index++) {
+      let val = {
+        value: dataPenyelenggara.data[index].id,
+        label: dataPenyelenggara.data[index].label,
+      };
+      optionsPenyelenggara.push(val);
+    }
   }
 
   const optionsStatusPelatihan = [
