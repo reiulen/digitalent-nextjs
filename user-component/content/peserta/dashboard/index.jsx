@@ -67,8 +67,21 @@ const Dashboard = ({ session }) => {
   };
 
   useEffect(() => {
-    Cookies.set("id_tema", dataDashboard.pelatihan.pelatihan_berjalan.tema_id);
-    Cookies.set("id_pelatihan", dataDashboard.pelatihan.pelatihan_berjalan.id);
+    if (
+      !dataDashboard.pelatihan.pelatihan_berjalan.tema_id &&
+      !dataDashboard.pelatihan.pelatihan_berjalan.id
+    ) {
+      return false;
+    } else {
+      Cookies.set(
+        "id_tema",
+        dataDashboard.pelatihan.pelatihan_berjalan.tema_id
+      );
+      Cookies.set(
+        "id_pelatihan",
+        dataDashboard.pelatihan.pelatihan_berjalan.id
+      );
+    }
   }, []);
 
   return (
@@ -185,7 +198,12 @@ const Dashboard = ({ session }) => {
                       paddingBottom: "75px",
                     }}
                   >
-                     <Image src={"/assets/icon/logo-dts-if-empty.png"} alt="Logo DTS" width={214} height={213} />
+                    <Image
+                      src={"/assets/icon/logo-dts-if-empty.png"}
+                      alt="Logo DTS"
+                      width={214}
+                      height={213}
+                    />
                     <p>
                       Belum ada pelatihan yang Anda pilih. Silahkan pilih
                       pelatihan terlebih dahulu.
@@ -364,8 +382,8 @@ const Dashboard = ({ session }) => {
                           thumbnail
                           roundedCircle
                           className={`${style.image_card_pelatihan} img-fluild`}
-                        />dikan
-
+                        />
+                        dikan
                       </div>
                       <div
                         className="d-flex justify-content-between position-relative pb-0 mb-0"

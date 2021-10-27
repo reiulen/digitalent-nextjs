@@ -74,9 +74,64 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
+      // if (!req.cookies.id_pelatihan) {
+      //   const { data } = await store.dispatch(
+      //     getAllRiwayatPelatihanPeserta(session.user.user.data.user.token)
+      //   );
+      //   if (data.list.length > 0) {
+      //     const administrasi = data.list.filter((item) =>
+      //       item.status.includes("administrasi")
+      //     );
+      //     if (administrasi) {
+      //       await store.dispatch(
+      //         getDetailRiwayatPelatihan(
+      //           administrasi[0]?.id,
+      //           session.user.user.data.user.token
+      //         )
+      //       );
+      //       success = true;
+      //     } else {
+      //       success = false;
+      //     }
+      //   } else {
+      //     success = false;
+      //   }
+      // } else {
+      //   await store.dispatch(
+      //     getDetailRiwayatPelatihan(
+      //       req.cookies.id_pelatihan,
+      //       session.user.user.data.user.token
+      //     )
+      //   );
+      //   success = true;
+      // }
       let success = false;
 
-      if (req.cookies.id_pelatihan) {
+      if (!req.cookies.id_pelatihan) {
+        const { data } = await store.dispatch(
+          getAllRiwayatPelatihanPeserta(session.user.user.data.user.token)
+        );
+        if (!data) {
+          return (success = false);
+        } else {
+          if (data.list.length > 0) {
+            const administrasi = data.list.filter((item) =>
+              item.status.includes("administrasi")
+            );
+            if (!administrasi) {
+              return (success = false);
+            } else {
+              await store.dispatch(
+                getDetailRiwayatPelatihan(
+                  administrasi[0]?.id,
+                  session.user.user.data.user.token
+                )
+              );
+              success = true;
+            }
+          }
+        }
+      } else {
         await store.dispatch(
           getDetailRiwayatPelatihan(
             req.cookies.id_pelatihan,
@@ -84,28 +139,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
           )
         );
         success = true;
-      } else {
-        const { data } = await store.dispatch(
-          getAllRiwayatPelatihanPeserta(session.user.user.data.user.token)
-        );
-        if (data) {
-          const administrasi = data.list.filter((item) =>
-            item.status.includes("administrasi")
-          );
-          if (administrasi) {
-            await store.dispatch(
-              getDetailRiwayatPelatihan(
-                administrasi[0].id,
-                session.user.user.data.user.token
-              )
-            );
-            success = true;
-          } else {
-            success = false;
-          }
-        } else {
-          success = false;
-        }
       }
 
       await store.dispatch(getDataPribadi(session?.user.user.data.user.token));

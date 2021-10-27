@@ -1,0 +1,23 @@
+@media only screen and (max-width: 1024px) {
+    /* Step Input */
+
+    .topHeader{
+        height: 76px;
+    }
+}
+
+@media only screen and (max-width: 992px) {
+    /* Step Input */
+
+    .topHeader{
+        height: 55px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    /* Step Input */
+
+    .topHeader{
+        height: 55px;
+    }
+}
