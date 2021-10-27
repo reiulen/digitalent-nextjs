@@ -68,9 +68,11 @@ const Dashboard = ({ session }) => {
 
   useEffect(() => {
     if (
-      dataDashboard.pelatihan.pelatihan_berjalan.tema_id &&
-      dataDashboard.pelatihan.pelatihan_berjalan.id
+      !dataDashboard.pelatihan.pelatihan_berjalan.tema_id &&
+      !dataDashboard.pelatihan.pelatihan_berjalan.id
     ) {
+      return false;
+    } else {
       Cookies.set(
         "id_tema",
         dataDashboard.pelatihan.pelatihan_berjalan.tema_id
