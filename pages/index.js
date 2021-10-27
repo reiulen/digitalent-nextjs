@@ -26,7 +26,7 @@ export default function HomePage(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <Wrapper title="Digitalent" session={session}>
+        <Wrapper title="Digitalent" session={session.user}>
           <Beranda session={session} />
         </Wrapper>
       </div>

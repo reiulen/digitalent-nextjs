@@ -92,7 +92,7 @@ const AddCommitmentStep3 = ({ propsStep, token }) => {
       data.kabupaten = data.kabupaten.label && data.kabupaten.label;
       data.level_pelatihan =
         data.level_pelatihan.label && data.level_pelatihan.label;
-      data.mitra = data.mitra.id && toString(data.mitra.id);
+      data.mitra = data.mitra.value && data.mitra.value + "";
       data.penyelenggara = data.penyelenggara.label && data.penyelenggara.label;
       data.provinsi = data.provinsi.label && data.provinsi.label;
       data.zonasi_id = data.zonasi_id.label && data.zonasi_id.label;

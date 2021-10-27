@@ -17,7 +17,7 @@ const FormPendaftaran = ({ propsTitle, funcView }) => {
   const [title, setTitle] = useState(propsTitle);
   const { dataForm } = useSelector((state) => state.formRegister);
   const [dataPendaftaran, setDataPendaftaran] = useState(
-    dataForm.form_pendaftaran
+    dataForm?.form_pendaftaran
   );
 
   const readerElementHandler = (row, i) => {
@@ -330,9 +330,10 @@ const FormPendaftaran = ({ propsTitle, funcView }) => {
           <h3 className="font-weight-bolder pb-5 pt-4">{title}</h3>
 
           <div className="row">
-            {dataPendaftaran.map((row, i) => (
-              <>{readerElementHandler(row, i)}</>
-            ))}
+            {dataPendaftaran &&
+              dataPendaftaran.map((row, i) => (
+                <>{readerElementHandler(row, i)}</>
+              ))}
           </div>
 
           <div className="button-aksi mt-7 float-right">

@@ -20,7 +20,7 @@ const HistoryPage = ({ history }) => {
                 {history.map((row, i) => (
                   <tr key={i}>
                     <td>{i + 1}</td>
-                    <td>{row.Name}</td>
+                    <td>{row.name}</td>
                     <td>
                       <p className="font-weight-bolder my-0">
                         {moment(row.pelatihan_mulai).format("DD MMMM YYYY")} sd{" "}
