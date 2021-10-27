@@ -75,7 +75,7 @@ const IndexForm = ({ token }) => {
                     <img
                       className="img-fluid rounded-xl w-100 h-80 mb-3"
                       src={`${
-                        dataPelatihan
+                        dataPelatihan && dataPelatihan.thumbnail
                           ? process.env.END_POINT_API_IMAGE_BEASISWA +
                             dataPelatihan.thumbnail
                           : "/assets/media/default-card.png"
@@ -86,7 +86,7 @@ const IndexForm = ({ token }) => {
                     <div className="d-flex flex-row flex-wrap">
                       <img
                         src={`${
-                          dataPelatihan
+                          dataPelatihan && dataPelatihan.logo
                             ? process.env.END_POINT_API_IMAGE_BEASISWA +
                               dataPelatihan.logo
                             : "/assets/media/default-card.png"
