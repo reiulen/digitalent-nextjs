@@ -655,5 +655,4 @@ const DetailAkademi = ({ session }) => {
     )
 }
 
-
 export default DetailAkademi
