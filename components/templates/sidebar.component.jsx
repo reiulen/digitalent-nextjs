@@ -450,18 +450,19 @@ const Sidebar = ({ session }) => {
   useEffect(() => {
     const pathRoute = router.route;
     const splitRouteToMakingActive = pathRoute.split("/");
-    
 
-    console.log(splitRouteToMakingActive);
 
     initializeMenu.map((row, index) => {
       if (splitRouteToMakingActive[1] == row.name.toLowerCase()) {
         initializeMenu[index].selected = true;
 
-        // if(splitRouteToMakingActive[1] !== "dashboard"){
-        //   const idSubmenuActive = localStorage.getItem("submenuActive");
-        //   initializeMenu[index].child[idSubmenuActive].selected = true;
-        // }
+        if(session && session?.user?.user?.data?.user?.roles[0] !== "mitra"){
+           if(splitRouteToMakingActive[1] !== "dashboard"){
+            const idSubmenuActive = localStorage.getItem("submenuActive");
+            initializeMenu[index].child[idSubmenuActive].selected = true;
+          }
+        }
+       
         
       }
     });
