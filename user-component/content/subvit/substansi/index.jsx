@@ -36,7 +36,10 @@ const SubtansiUser = ({ token }) => {
 
   localStorage.setItem("data", JSON.stringify(random_subtance_question_detail));
 
-  const [data] = useState(JSON.parse(localStorage.getItem("data")));
+  const [data] = useState(
+    random_subtance_question_detail.length > 0 &&
+      JSON.parse(localStorage.getItem("data"))
+  );
   const [answer, setAnswer] = useState("");
   const [listAnswer, setListAnswer] = useState([]);
   const [numberPage, setNumberPage] = useState("");
@@ -157,7 +160,7 @@ const SubtansiUser = ({ token }) => {
 
   let number = [];
 
-  for (let i = 0; i < data.total_questions; i++) {
+  for (let i = 0; i < data?.total_questions; i++) {
     number.push(i);
   }
 
@@ -247,7 +250,8 @@ const SubtansiUser = ({ token }) => {
                         src={
                           process.env.END_POINT_API_IMAGE_SUBVIT +
                             "subtance/images/" +
-                            data.list_questions[parseInt(router.query.id) - 1]?.question_image || defaultImage
+                            data.list_questions[parseInt(router.query.id) - 1]
+                              ?.question_image || defaultImage
                         }
                         alt=""
                         width={150}
@@ -256,7 +260,8 @@ const SubtansiUser = ({ token }) => {
                     </div>
                     <div className="p-5">
                       {data &&
-                        data.list_questions[parseInt(router.query.id) - 1]?.question}
+                        data.list_questions[parseInt(router.query.id) - 1]
+                          ?.question}
                     </div>
                   </div>
                 ) : (
