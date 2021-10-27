@@ -2,6 +2,7 @@ import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import Header from "../subvit/header/index";
 import styles from "./done.module.css";
 import { useRouter } from "next/router";
+import { useSelector, useDispatch } from "react-redux";
 
 import doneImage from "../../../public/assets/media/logos/Ilustrasi.png";
 import trainingImage from "../../../public/assets/media/logos/gojek.png";
@@ -13,6 +14,10 @@ import "moment/locale/id";
 
 const Done = () => {
   const router = useRouter();
+
+  const { error: errorPelatihan, pelatihan: dataTraining } = useSelector(
+    (state) => state.getPelatihan
+  );
 
   // const handleDone = () => {
   //   router.push(`${router.pathname.slice(0, 8)}`);
@@ -39,18 +44,23 @@ const Done = () => {
               <div className="p-2">
                 {" "}
                 <Image
-                  src={trainingImage}
+                  src="/assets/media/default-card.png"
+                  height={50}
+                  width={50}
+                  objectFit="cover"
                   alt=""
                   className={styles.imageTraining}
                 />
               </div>
               <div className={`${styles.textTraining} p-3`}>
-                Intermediate Multimedia Designer
+                {dataTraining.name || "-"}
                 <br />
-                <span className={styles.trainingTitle}>Gojek</span>
+                <span className={styles.trainingTitle}>
+                  {dataTraining.mitra || "-"}
+                </span>
                 <span className={styles.trainingTheme}>
                   {" "}
-                  Vocational School Graduate Academy
+                  {dataTraining.akademi || "-"}
                 </span>
               </div>
             </div>
