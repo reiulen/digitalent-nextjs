@@ -308,7 +308,7 @@ const Dashboard = ({ session }) => {
                         <div className="date d-flex align-items-center align-middle">
                           <i className="ri-history-fill"></i>
                           <span className={`${style.text_date_register} pl-2`}>
-                            Status : Test Substansi
+                            Status : {pelatihan.pelatihan_berjalan.status}
                           </span>
                         </div>
                       </div>
@@ -423,7 +423,7 @@ const Dashboard = ({ session }) => {
                         <div className="date d-flex align-items-center align-middle">
                           <i className="ri-history-fill"></i>
                           <span className={`${style.text_date_register} pl-2`}>
-                            Status : Test Substansi
+                            Status : {pelatihan.pelatihan_selesi.status}
                           </span>
                         </div>
                       </div>
