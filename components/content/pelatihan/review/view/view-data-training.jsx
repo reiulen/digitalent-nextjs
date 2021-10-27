@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
+import moment from "moment";
 
 import PageWrapper from "../../../../wrapper/page.wrapper";
 import StepViewPelatihan from "../../../../StepReviewPelatihan";
@@ -82,9 +83,13 @@ const ViewReviewTraining = ({ token }) => {
     penyelenggara: review.penyelenggara,
     mitra: review.mitra,
     tanggalPendaftaran:
-      review.pendaftaran_mulai + " sd " + review.pendaftaran_selesai,
+      moment(review.pendaftaran_mulai).format("DD MMMM YYYY") +
+      " sd " +
+      moment(review.pendaftaran_selesai).format("DD MMMM YYYY"),
     tanggalPelatihan:
-      review.pelatihan_mulai + " sd " + review.pelatihan_selesai,
+      moment(review.pelatihan_mulai).format("DD MMMM YYYY") +
+      " sd " +
+      moment(review.pelatihan_selesai).format("DD MMMM YYYY"),
     deskripsi: review.deskripsi,
   });
   const [kuotaPelatihan, setKuotaPelatihan] = useState({
