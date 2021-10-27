@@ -710,10 +710,11 @@ const Beranda = ({ session }) => {
                                     <div className="rounded mt-0 pt-0">
                                       <Image
                                         src={
+                                          "/assets/media/default-card.png" ||
                                           process.env
                                             .END_POINT_API_IMAGE_PARTNERSHIP +
-                                          "/" +
-                                          element.gambar_mitra
+                                            "/" +
+                                            element.gambar_mitra
                                         }
                                         layout="fill"
                                         objectFit="cover"
