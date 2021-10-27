@@ -19,8 +19,9 @@ const ProfileUser = ({ profile }) => {
                 >
                   <Image
                     src={
-                      profile.file_path + profile.foto ||
-                      "/assets/media/default.jpg"
+                      "/assets/media/default.jpg" ||
+                      (profile.foto &&
+                        process.env.END_POINT_API_IMAGE_BEASISWA + profile.foto)
                     }
                     alt="image"
                     width={256}
@@ -164,8 +165,8 @@ const ProfileUser = ({ profile }) => {
                       width={320}
                       height={200}
                       src={
-                        profile.file_path + profile.File_ktp ||
-                        "/assets/media/default.jpg"
+                        process.env.END_POINT_API_IMAGE_BEASISWA +
+                          profile.File_ktp || "/assets/media/default.jpg"
                       }
                       onClick={() => setShow(true)}
                     />
@@ -198,10 +199,11 @@ const ProfileUser = ({ profile }) => {
         <Modal.Body>
           <Image
             src={
-              profile.file_path + profile.File_ktp ||
+              process.env.END_POINT_API_IMAGE_BEASISWA + profile.File_ktp ||
               "/assets/media/default.jpg"
             }
-            layout="fill"
+            height={200}
+            width={400}
           />
         </Modal.Body>
         <Modal.Footer>
