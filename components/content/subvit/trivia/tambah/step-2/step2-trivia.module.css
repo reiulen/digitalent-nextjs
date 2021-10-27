@@ -5,24 +5,48 @@
 
 .inputNilaiCheckbox{
     width: 60px;
-    /* margin-left: -10px; */
 }
 
 .btnDeleteCheckbox{
-    margin-left: 35px;
+    /* margin-left: 13px; */
 }
 
 .iconTambah{
     margin-left: 12px;
 }
 
+.btnTambah{
+    margin-left: 30px;
+}
+
+
 @media only screen and (max-width: 1024px) {
+    /* .btnSwitch{
+        width: 10px;
+        height: 10px;
+    } */
     .iconTambah{
         margin-left: 4px;
     }
     .inputNilai{
         margin-left: -32px;
         width: 45px;
+    }
+    .inputNilaiCheckbox{
+        /* margin-left: -10px; */
+        width: 45px;
+    }
+    .iconTambah{
+        margin-left: -9px;
+    }
+    .btnDeleteCheckbox{
+        margin-left: 5px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .iconTambah{
+        margin-left: 11px;
     }
 }
 
@@ -33,5 +57,12 @@
     .inputNilai{
         margin-left: 0px;
         width: 100%;
+    }
+    .inputNilaiCheckbox{
+        width: 160px;
+        /* margin-left: -15px; */
+    }
+    .btnDeleteCheckbox{
+        margin: 5px 0 0 0;
     }
 }

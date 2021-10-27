@@ -543,7 +543,7 @@ const StepTwo = ({ token }) => {
                   <div className="">
                     <div className={`${styles.btnSave} col-sm-12 col-md-6 col-lg-6 col-xl-5 buttoon float-right row justify-content-between`}>
                       <button
-                        className={`${styles.btnNext} col-sm-12 col-md-6 col-lg-6 col-xl-6 btn btn-light-ghost-rounded-full`}
+                        className={`${styles.btnNext} col-sm-12 col-md-6 col-lg-6 col-xl-5 btn btn-light-ghost-rounded-full`}
                         type="submit"
                       >
                         Simpan & Lanjut

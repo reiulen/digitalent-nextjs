@@ -3,6 +3,7 @@
   background-color: white !important;
   border: white;
   /* border: 1px solid black; */
+  margin-left: 55px;
 }
 .btnNext:hover {
   background-color: #d7e1ea !important;

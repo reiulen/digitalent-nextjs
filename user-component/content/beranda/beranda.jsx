@@ -31,6 +31,7 @@ import InfoVideo from "../../components/beranda/info-videos";
 import ComeJoin from "../../components/beranda/come-join";
 import { result } from "lodash";
 import { reactStrictMode } from "../../../next.config";
+import { height } from "dom-helpers";
 
 // const Navigationbar = dynamic(
 //   () => import("../../components/template/Navbar.component"),
@@ -78,6 +79,8 @@ const Beranda = ({ session }) => {
   const [cardPendaftaranMulai, setCardPendaftaranMulai] = useState(null);
   const [cardPendaftaranSelesai, setCardPendaftaranSelesai] = useState(null);
   const [cardMetode, setCardMetode] = useState(null);
+  const textToTrim = 325
+  const [akademiDesc, setAkademiDesc] = useState(null)
 
   useEffect(() => {
     handleAkademiStart();
@@ -91,6 +94,14 @@ const Beranda = ({ session }) => {
       // handleTemaId()
     }
   }, [tema]);
+
+  const PrintTextTrim = (word) => {
+    let str = null
+    if (word.length > textToTrim) {
+      str = word.slice(0, textToTrim) + "..."
+    }
+    return str
+  }
 
   const handleAkademiStart = () => {
     if (akademi && akademi.length !== 0) {
@@ -325,7 +336,7 @@ const Beranda = ({ session }) => {
                 },
               }}
               hasSliderWrapper
-              // style={{overflow: "none"}}
+            // style={{overflow: "none"}}
             >
               {publikasi.imagetron.map((el, i) => {
                 return (
@@ -338,19 +349,19 @@ const Beranda = ({ session }) => {
                         imageError === true
                           ? defaultImage
                           : process.env.END_POINT_API_IMAGE_PUBLIKASI +
-                            "publikasi/images/" +
-                            el.gambar
+                          "publikasi/images/" +
+                          el.gambar
                       }
                       alt="Imagetron Slide"
                       className="mx-5"
                       onError={() =>
                         handleErrorImage(
                           process.env.END_POINT_API_IMAGE_PUBLIKASI +
-                            "publikasi/images/" +
-                            el.gambar
+                          "publikasi/images/" +
+                          el.gambar
                         )
                       }
-                      // onChange={() => setImageError(false)}
+                    // onChange={() => setImageError(false)}
                     />
                   </SplideSlide>
                 );
@@ -535,8 +546,8 @@ const Beranda = ({ session }) => {
                 },
               }}
               hasSliderWrapper
-              // hasAutoplayControls
-              // hasAutoplayProgress
+            // hasAutoplayControls
+            // hasAutoplayProgress
             >
               {akademi.map((el, i) => {
                 return (
@@ -660,7 +671,7 @@ const Beranda = ({ session }) => {
                                     }
                                     button={
                                       show[i].pelatihan[index].hover ===
-                                      true ? (
+                                        true ? (
                                         <div className="row">
                                           <Button className="btn btn-white py-1 pl-2 pr-1 rounded-circle mr-2">
                                             <i className="ri-share-line" />
@@ -673,7 +684,7 @@ const Beranda = ({ session }) => {
                                     }
                                     thumbnail={
                                       show[i].pelatihan[index].hover ===
-                                      true ? (
+                                        true ? (
                                         <div
                                           style={{ filter: "brightness(50%)" }}
                                         >
@@ -894,10 +905,9 @@ const Beranda = ({ session }) => {
                                   </div>
 
                                   <p className="fz-16 fw-400 my-6">
-                                    {/* {cardDeskripsi} */}
                                     <div
                                       dangerouslySetInnerHTML={{
-                                        __html: cardDeskripsi,
+                                        __html: PrintTextTrim(cardDeskripsi),
                                       }}
                                     ></div>
                                   </p>

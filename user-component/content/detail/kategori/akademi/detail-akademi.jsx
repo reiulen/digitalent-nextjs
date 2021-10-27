@@ -164,7 +164,7 @@ const DetailAkademi = ({ session }) => {
     }
 
     const handleFilter = () => {
-        console.log (filterPenyelenggara)
+        // console.log (filterPenyelenggara)
     }
 
     return (
