@@ -60,3 +60,121 @@ export const getAllExportData = (token) => async (dispatch, getState) => {
     });
   }
 };
+
+export const deleteExportDataAction = (id, token) => async (dispatch) => {
+  try {
+    dispatch({ type: DELETE_EXPORT_DATA_REQUEST });
+
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    const { data } = await axios.delete(
+      process.env.END_POINT_API_SITE_MANAGEMENT + `api/export/delete/${id}`,
+      config
+    );
+
+    dispatch({
+      type: DELETE_EXPORT_DATA_SUCCESS,
+      payload: data.status,
+    });
+  } catch (error) {
+    dispatch({
+      type: DELETE_EXPORT_DATA_FAIL,
+    });
+  }
+};
+
+export const getDetailExportData =
+  (id, token) => async (dispatch, getState) => {
+    let pageState = getState().detailExportData.page || 1;
+    let cariState = getState().detailExportData.cari || "";
+    let limitState = getState().detailExportData.limit || 5;
+
+    const params = {
+      page: pageState,
+      cari: cariState,
+      limit: limitState,
+    };
+
+    try {
+      dispatch({
+        type: DETAIL_EXPORT_DATA_REQUEST,
+      });
+      const config = {
+        params,
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      };
+
+      let link =
+        process.env.END_POINT_API_SITE_MANAGEMENT + `api/export/detail/${id}`;
+
+      const { data } = await axios.get(link, config);
+
+      dispatch({
+        type: DETAIL_EXPORT_DATA_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: DETAIL_EXPORT_DATA_FAIL,
+      });
+    }
+  };
+
+export const setPage = (page) => {
+  return {
+    type: SET_PAGE,
+    page,
+  };
+};
+
+export const searchCooporation = (text) => {
+  return {
+    type: SEARCH_COORPORATION,
+    text,
+  };
+};
+
+export const limitCooporation = (value) => {
+  return {
+    type: LIMIT_CONFIGURATION,
+    limitValue: value,
+  };
+};
+
+export const exportFileCSV = (id, token) => {
+  return async () => {
+    try {
+      let urlExport = await axios.get(
+        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/export/download/${id}`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      var url = urlExport.config.url;
+
+      fetch(url, {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => response.blob())
+        .then((blob) => {
+          var _url = window.URL.createObjectURL(blob);
+          window.open(_url, "_blank").focus();
+        })
+        .catch((error) => {
+          alert(error.response.data.message);
+        });
+    } catch (error) {
+      alert(error.response.data.message);
+    }
+  };
+};

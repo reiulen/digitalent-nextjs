@@ -34,9 +34,6 @@ const Table = ({ token }) => {
 
   const deleteApi = useSelector(state => state.deleteApi)
 
-
-  console.log("deleteApi",deleteApi)
-
   const [valueSearch, setValueSearch] = useState("");
   const handleChangeValueSearch = (value) => {
     setValueSearch(value);
@@ -111,7 +108,6 @@ const Table = ({ token }) => {
             <div className="table-filter">
               <div className="row align-items-center">
                 <div className="col-lg-12 col-xl-12">
-                  <form onSubmit={handleSubmit}>
                     <div className="row w-100">
                       <div className="col-12 col-sm-6">
                         <div className="position-relative overflow-hidden w-100">
@@ -129,7 +125,8 @@ const Table = ({ token }) => {
                             }
                           />
                           <button
-                            type="submit"
+                            type="button"
+                            onClick={(e)=>handleSubmit(e)}
                             className="btn bg-blue-primary text-white right-center-absolute"
                             style={{
                               borderTopLeftRadius: "0",
@@ -141,7 +138,6 @@ const Table = ({ token }) => {
                         </div>
                       </div>
                     </div>
-                  </form>
                 </div>
               </div>
             </div>

@@ -302,7 +302,7 @@ const Table = ({ token }) => {
                       return (
                         <div key={j}>
 
-                          {child1.link === "" ? 
+                          {(child1.link === "") || (child1.link) ? 
                           <div className="row pl-10">
 
                             <div className="col-md-12 col-xl-5">
@@ -404,21 +404,19 @@ const Table = ({ token }) => {
                                 </button>
                               </div>
                             </div>
-
-
-
                           </div>
                           
                           }
                           
 
-                          {child1.child.map((child, k) => {
+                          {child1.child.map((child3, k) => {
                             return (
                               <div className="row pl-20" key={k}>
                                 <div className="col-md-12 col-xl-5">
                                   <div className="form-group">
                                     <label>Sub Sub Menu {k + 1}</label>
                                     <input
+                                    value={child3?.name}
                                       onChange={(e) =>
                                         handleChangeInput2(e, i, j, k)
                                       }
@@ -433,6 +431,7 @@ const Table = ({ token }) => {
                                   <div className="form-group">
                                     <label>Sub Sub Link {k + 1}</label>
                                     <input
+                                    value={child3?.link}
                                       onChange={(e) =>
                                         handleChangeInput2(e, i, j, k)
                                       }
