@@ -38,6 +38,8 @@ export default function SeleksiAdministrasi() {
   useEffect(() => {
     if (data.status.includes("menunggu")) {
       setLabel("warning");
+    } else if (data.status == "tes substansi") {
+      setLabel("primary");
     } else {
       setLabel("success");
     }
