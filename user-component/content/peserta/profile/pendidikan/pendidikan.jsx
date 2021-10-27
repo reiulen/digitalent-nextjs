@@ -11,8 +11,6 @@ const Pendidikan = ({ token }) => {
     (state) => state.dataPendidikan
   );
 
-  console.log(pendidikan)
-
   useEffect(() => {
     // if (errorPendidikan) {
     //   toast.error(errorPendidikan);
