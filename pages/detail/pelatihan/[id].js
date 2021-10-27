@@ -1,4 +1,3 @@
-// import DetailPelatihan from "../../../user-component/content/detail/kategori/pelatihan/detail-pelatihan"
 import { getSession } from "next-auth/client";
 import dynamic from "next/dynamic";
 import { wrapper } from "../../../redux/store";
@@ -18,7 +17,7 @@ export default function DetailKategori(props) {
   let session = null;
 
   if (props.session) {
-    session = props.session.user.user.data;
+    session = props.session.user.user.data.user;
   }
   return (
     <div>

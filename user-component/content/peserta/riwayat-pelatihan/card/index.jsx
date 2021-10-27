@@ -107,6 +107,7 @@ export default function CardTemplateOriginal({ data }) {
   };
   return (
     <Fragment>
+      {console.log(data)}
       <Card className="position-relative">
         <Button
           variant="white"
@@ -474,7 +475,8 @@ export default function CardTemplateOriginal({ data }) {
                   }}
                   disabled={data.tes_substansi ? false : true}
                 >
-                  Test Substansi <i className="ri-arrow-right-s-line mr-2"></i>
+                  Test Substansi{" "}
+                  <i className="ri-arrow-right-s-line mr-2"></i>
                 </Button>
               </Col>
             </Fragment>

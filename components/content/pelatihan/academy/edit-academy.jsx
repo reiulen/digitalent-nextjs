@@ -47,6 +47,7 @@ const EditAcademy = ({ token }) => {
   const [logoFile, setLogoFile] = useState("");
   const [logoName, setLogoName] = useState(academy.logo);
 
+  const [slug, setSlug] = useState(academy.slug);
   const [name, setName] = useState(academy.name);
   const [description, setDescription] = useState(academy.deskripsi);
 
@@ -165,9 +166,9 @@ const EditAcademy = ({ token }) => {
   const submitHandler = (e) => {
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
-      // const statusString = (status.value += "");
       const idInt = parseInt(id);
       const data = {
+        slug,
         name,
         deskripsi: description,
         logo: logoFile,
@@ -227,6 +228,27 @@ const EditAcademy = ({ token }) => {
 
           <div className="card-body py-4">
             <form onSubmit={submitHandler}>
+              <div className="form-group mb-4 col-md-4">
+                <label className="col-form-label font-weight-bold">
+                  Kode Akademi
+                </label>
+                <input
+                  type="text"
+                  placeholder="Silahkan Masukan Kode Akademi"
+                  className="form-control"
+                  value={slug}
+                  onChange={(e) => setSlug(e.target.value)}
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("kode akademi")
+                  }
+                />
+                {simpleValidator.current.message(
+                  "kode akademi",
+                  slug,
+                  "required",
+                  { className: "text-danger" }
+                )}
+              </div>
               <div className="form-group mb-4">
                 <label
                   htmlFor="staticEmail"

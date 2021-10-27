@@ -54,7 +54,7 @@ const AddRegistrationStep2 = ({ propsStep }) => {
     },
     {
       value: "file_doc",
-      name: "File Documet",
+      name: "File Document",
     },
     {
       value: "date",
