@@ -28,9 +28,13 @@ export default function DetailKategori (props) {
 export const getServerSideProps = wrapper.getServerSideProps((store) => async({ params, req }) => {
   const session = await getSession({ req });
 
+<<<<<<< HEAD
+  await store.dispatch(getDataPribadi(session?.user.user.data.user.token));
+=======
   let sessionToken = session?.user.user.data.user.token
   
   await store.dispatch(getDataPribadi(sessionToken));
+>>>>>>> 91e9d6b413b2dd35fecd3b8938a80e3a638fc2a3
 
   await store.dispatch(
     getDetailPelatihan(params.id)

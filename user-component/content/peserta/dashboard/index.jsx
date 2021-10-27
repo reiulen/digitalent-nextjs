@@ -185,6 +185,7 @@ const Dashboard = ({ session }) => {
                       paddingBottom: "75px",
                     }}
                   >
+                     <Image src={"/assets/icon/logo-dts-if-empty.png"} alt="Logo DTS" width={214} height={213} />
                     <p>
                       Belum ada pelatihan yang Anda pilih. Silahkan pilih
                       pelatihan terlebih dahulu.
@@ -309,13 +310,18 @@ const Dashboard = ({ session }) => {
                   </Card.Title>
                   <div
                     className="text-center"
-                    style={{
-                      height: "200",
-                      paddingTop: "75px",
-                      paddingBottom: "75px",
-                    }}
                   >
+                    <Image src={"/assets/icon/logo-dts-if-empty.png"} alt="Logo DTS" width={214} height={213} />
                     <p>Anda tidak memiliki histori pelatihan sebelumnya.</p>
+                    <br />
+                    <Link href="/" passHref>
+                      <Button
+                        variant="bg-primary"
+                        className="font-weight-bolder text-white rounded-full"
+                      >
+                        Pilih Pelatihan
+                      </Button>
+                    </Link>
                   </div>
                 </Card.Body>
               </Card>
@@ -353,7 +359,8 @@ const Dashboard = ({ session }) => {
                           thumbnail
                           roundedCircle
                           className={`${style.image_card_pelatihan} img-fluild`}
-                        />
+                        />dikan
+
                       </div>
                       <div
                         className="d-flex justify-content-between position-relative pb-0 mb-0"

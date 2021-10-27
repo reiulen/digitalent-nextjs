@@ -88,9 +88,9 @@ const PekerjaanEdit = ({ funcViewEdit, token }) => {
           status_pekerjaan: statusPekerjaan.label,
           pekerjaan: pekerjaanNama,
           perusahaan,
-          penghasilan,
-          sekolah,
-          tahun_masuk: parseInt(0),
+          penghasilan: penghasilan.split(".").join(""),
+          sekolah: "-",
+          tahun_masuk: 0,
         };
       } else if (statusPekerjaan === 18 || statusPekerjaan.value === 18) {
         data = {
@@ -114,6 +114,25 @@ const PekerjaanEdit = ({ funcViewEdit, token }) => {
       });
     }
   };
+
+let separator = ""
+   
+  function formatRupiah(angka, prefix)
+    {
+        var number_string = angka.replace(/[^,\d]/g, '').toString(),
+            split    = number_string.split(','),
+            sisa     = split[0].length % 3,
+            rupiah     = split[0].substr(0, sisa),
+            ribuan     = split[0].substr(sisa).match(/\d{3}/gi);
+            
+        if (ribuan) {
+            separator = sisa ? '.' : '';
+            rupiah += separator + ribuan.join('.');
+        }
+        
+        rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+        return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+    }
 
   return (
     <>
@@ -199,8 +218,10 @@ const PekerjaanEdit = ({ funcViewEdit, token }) => {
               <Form.Label>Penghasilan</Form.Label>
               <Form.Control
                 placeholder="Silahkan Masukan Penghasilan"
-                value={penghasilan}
-                onChange={(e) => setPenghasilan(e.target.value)}
+                value={formatRupiah(penghasilan)}
+                onChange={(e) => {
+                  setPenghasilan(formatRupiah(e.target.value));
+                }}
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("penghasilan")
                 }
@@ -208,7 +229,7 @@ const PekerjaanEdit = ({ funcViewEdit, token }) => {
               {simpleValidator.current.message(
                 "penghasilan",
                 penghasilan,
-                statusPekerjaan.value === 16 ? "required|integer" : "",
+                statusPekerjaan.value === 16 ? "required" : "",
                 {
                   className: "text-danger",
                 }
@@ -279,7 +300,7 @@ const PekerjaanEdit = ({ funcViewEdit, token }) => {
             className={`${style.button_profile_simpan} rounded-xl`}
             type="submit"
           >
-            Submit
+            Simpan
           </Button>
         </div>
       </Form>

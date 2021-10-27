@@ -206,7 +206,7 @@ const GeneralPage = ({ token }) => {
           let reader = new FileReader();
           reader.readAsDataURL(selectedFile);
           reader.onloadend = (e) => {
-            setImageLogo(e.target.result);
+            setImageLogo2(e.target.result);
           };
         } else {
           notify("gambar harus PNG atau JPG dan max size 2mb");
@@ -367,8 +367,7 @@ const GeneralPage = ({ token }) => {
           <div className="card card-custom card-stretch gutter-b">
             <div className="card-header border-0">
               <h3
-                className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 mb-5 mt-5"
-                style={{ fontSize: "24px" }}
+                className="card-title font-weight-bolder text-dark w-100 pb-5 mb-5 mt-5 titles-1"
               >
                 General
               </h3>
@@ -376,7 +375,7 @@ const GeneralPage = ({ token }) => {
             <div className="card-body pt-0">
               <div>
                 <form>
-                  <div className="d-flex">
+                  <div className="d-flex flex-wrap">
                     <div className="form-group">
                       <label className="mb-8" style={{ fontSize: "16px" }}>
                         Logo Header
@@ -410,7 +409,8 @@ const GeneralPage = ({ token }) => {
                             title=""
                             data-original-title="Change avatar"
                           >
-                            <i className="fa fa-pen icon-sm text-muted"></i>
+                            {/* <i className="fa fa-pen icon-sm text-muted"></i> */}
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="12" height="12"><path fill="none" d="M0 0h24v24H0z"/><path d="M12.9 6.858l4.242 4.243L7.242 21H3v-4.243l9.9-9.9zm1.414-1.414l2.121-2.122a1 1 0 0 1 1.414 0l2.829 2.829a1 1 0 0 1 0 1.414l-2.122 2.121-4.242-4.242z" fill="rgba(108,108,108,1)"/></svg>
                             <input
                               type="file"
                               name="profile_avatar"
@@ -434,10 +434,13 @@ const GeneralPage = ({ token }) => {
                             data-action="remove"
                             data-toggle="tooltip"
                           >
-                            <i
+                            {/* <i
                               className="ki ki-bold-close icon-xs text-muted"
                               onClick={() => removeImageLogo()}
-                            ></i>
+                            ></i> */}
+
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="12" height="12" onClick={() => removeImageLogo()}><path fill="none" d="M0 0h24v24H0z"/><path d="M17 4h5v2h-2v15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6H2V4h5V2h10v2zM9 9v8h2V9H9zm4 0v8h2V9h-2z" fill="rgba(108,108,108,1)"/></svg>
+                            
                           </span>
                         </div>
                         <span className="form-text text-muted mt-6">
@@ -446,7 +449,7 @@ const GeneralPage = ({ token }) => {
                       </div>
                     </div>
 
-                    <div className="form-group ml-24">
+                    <div className="form-group ml-0 ml-sm-24">
                       <label className="mb-8" style={{ fontSize: "16px" }}>
                         Logo Footer
                       </label>
@@ -479,7 +482,8 @@ const GeneralPage = ({ token }) => {
                             title=""
                             data-original-title="Change avatar"
                           >
-                            <i className="fa fa-pen icon-sm text-muted"></i>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="12" height="12"><path fill="none" d="M0 0h24v24H0z"/><path d="M12.9 6.858l4.242 4.243L7.242 21H3v-4.243l9.9-9.9zm1.414-1.414l2.121-2.122a1 1 0 0 1 1.414 0l2.829 2.829a1 1 0 0 1 0 1.414l-2.122 2.121-4.242-4.242z" fill="rgba(108,108,108,1)"/></svg>
+                            {/* <i className="fa fa-pen icon-sm text-muted"></i> */}
                             <input
                               type="file"
                               name="profile_avatar"
@@ -503,10 +507,13 @@ const GeneralPage = ({ token }) => {
                             data-action="remove"
                             data-toggle="tooltip"
                           >
-                            <i
+                            {/* <i
                               className="ki ki-bold-close icon-xs text-muted"
                               onClick={() => removeImageLogo2()}
-                            ></i>
+                            ></i> */}
+
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="12" height="12" onClick={() => removeImageLogo2()}><path fill="none" d="M0 0h24v24H0z"/><path d="M17 4h5v2h-2v15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6H2V4h5V2h10v2zM9 9v8h2V9H9zm4 0v8h2V9h-2z" fill="rgba(108,108,108,1)"/></svg>
+
                           </span>
                         </div>
                         <span className="form-text text-muted mt-6">
@@ -522,17 +529,14 @@ const GeneralPage = ({ token }) => {
                       onChange={(e) => setDescription(e.target.value)}
                       type="text"
                       className="form-control"
-                      placeholder="Lalaracing@gmail.com"
+                      placeholder="Digital talent Scholarship"
                     />
-                    {/* <span className="form-text text-muted">
-                      Please enter your full name
-                    </span> */}
                   </div>
 
                   {/* start social media */}
                   <div className="mt-10">
                     <h4 className="fw-600 fz-20">Social Media</h4>
-                    <label className="mb-8" style={{ fontSize: "16px" }}>
+                    <label className="mb-6 mt-4" style={{ fontSize: "16px" }}>
                       Logo Social Media
                     </label>
                     {formSocialMedia?.map((items, index) => {
@@ -571,7 +575,10 @@ const GeneralPage = ({ token }) => {
                                   title=""
                                   data-original-title="Change avatar"
                                 >
-                                  <i className="fa fa-pen icon-sm text-muted"></i>
+                                  {/* <i className="fa fa-pen icon-sm text-muted"></i> */}
+
+                                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="12" height="12"><path fill="none" d="M0 0h24v24H0z"/><path d="M12.9 6.858l4.242 4.243L7.242 21H3v-4.243l9.9-9.9zm1.414-1.414l2.121-2.122a1 1 0 0 1 1.414 0l2.829 2.829a1 1 0 0 1 0 1.414l-2.122 2.121-4.242-4.242z" fill="rgba(108,108,108,1)"/></svg>
+
                                   <input
                                     type="file"
                                     name="profile_avatar"
@@ -601,7 +608,10 @@ const GeneralPage = ({ token }) => {
                                   data-toggle="tooltip"
                                   onClick={() => handleRemoveImageSocial(index)}
                                 >
-                                  <i className="ki ki-bold-close icon-xs text-muted"></i>
+                                  {/* <i className="ki ki-bold-close icon-xs text-muted"></i> */}
+
+                                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="12" height="12" onClick={() => handleRemoveImageSocial()}><path fill="none" d="M0 0h24v24H0z"/><path d="M17 4h5v2h-2v15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6H2V4h5V2h10v2zM9 9v8h2V9H9zm4 0v8h2V9h-2z" fill="rgba(108,108,108,1)"/></svg>
+
                                 </span>
                               </div>
                               <span className="form-text text-muted mt-6">
@@ -626,7 +636,7 @@ const GeneralPage = ({ token }) => {
                             </div>
                             <div className="col-12 col-md-6">
                               <div className="row">
-                                <div className="col-12 col-md-9">
+                                <div className="col-12 col-md-11">
                                   <div className="form-group">
                                     <label htmlFor="exampleSelect1">
                                       Link Social Media
@@ -646,28 +656,15 @@ const GeneralPage = ({ token }) => {
                                 {index === 0 ? (
                                   ""
                                 ) : (
-                                  <div className="col-12 col-md-3">
-                                    <div className="d-flex align-items-center h-100">
+                                  <div className="col-12 col-md-1">
+                                    <div className="d-flex align-items-center h-100 justify-content-end">
                                       <button
                                         type="button"
                                         onClick={() => removeSocialMedia(index)}
-                                        className="btn mb-4"
+                                        className="btn"
                                         style={{ backgroundColor: "#EE2D41" }}
                                       >
-                                        <svg
-                                          className="position-relative"
-                                          style={{ bottom: "2px" }}
-                                          xmlns="http://www.w3.org/2000/svg"
-                                          viewBox="0 0 24 24"
-                                          width="24"
-                                          height="24"
-                                        >
-                                          <path fill="none" d="M0 0h24v24H0z" />
-                                          <path
-                                            d="M17 6h5v2h-2v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8H2V6h5V3a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v3zm1 2H6v12h12V8zm-9 3h2v6H9v-6zm4 0h2v6h-2v-6zM9 4v2h6V4H9z"
-                                            fill="#ffffff"
-                                          />
-                                        </svg>
+                                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path fill="none" d="M0 0h24v24H0z"/><path d="M17 4h5v2h-2v15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6H2V4h5V2h10v2zM9 9v8h2V9H9zm4 0v8h2V9h-2z" fill="rgba(255,255,255,1)"/></svg>
                                       </button>
                                     </div>
                                   </div>
@@ -678,7 +675,7 @@ const GeneralPage = ({ token }) => {
                         </div>
                       );
                     })}
-                    <div className="form-group row">
+                    <div className="form-group row mt-2">
                       <div className="col-sm-12 d-flex justify-content-end">
                         <button
                           type="button"
@@ -699,7 +696,7 @@ const GeneralPage = ({ token }) => {
 
                     {formExternalLink.map((items, index) => {
                       return (
-                        <div key={index}>
+                        <div className="mt-8" key={index}>
                           <div className="row">
                             <div className="col-12 col-md-6">
                               <div className="form-group">
@@ -717,7 +714,7 @@ const GeneralPage = ({ token }) => {
                             </div>
                             <div className="col-12 col-md-6">
                               <div className="row">
-                                <div className="col-12 col-md-9">
+                                <div className="col-12 col-md-11">
                                   <div className="form-group">
                                     <label htmlFor="exampleSelect1">
                                       Link External Links
@@ -740,30 +737,17 @@ const GeneralPage = ({ token }) => {
                                 {index === 0 ? (
                                   ""
                                 ) : (
-                                  <div className="col-12 col-md-3">
-                                    <div className="d-flex align-items-center h-100">
+                                  <div className="col-12 col-md-1">
+                                    <div className="d-flex align-items-center h-100 justify-content-end">
                                       <button
                                         type="button"
                                         onClick={() =>
                                           removeExternalLink(index)
                                         }
-                                        className="btn mb-4"
+                                        className="btn"
                                         style={{ backgroundColor: "#EE2D41" }}
                                       >
-                                        <svg
-                                          className="position-relative"
-                                          style={{ bottom: "2px" }}
-                                          xmlns="http://www.w3.org/2000/svg"
-                                          viewBox="0 0 24 24"
-                                          width="24"
-                                          height="24"
-                                        >
-                                          <path fill="none" d="M0 0h24v24H0z" />
-                                          <path
-                                            d="M17 6h5v2h-2v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8H2V6h5V3a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v3zm1 2H6v12h12V8zm-9 3h2v6H9v-6zm4 0h2v6h-2v-6zM9 4v2h6V4H9z"
-                                            fill="#ffffff"
-                                          />
-                                        </svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path fill="none" d="M0 0h24v24H0z"/><path d="M17 4h5v2h-2v15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6H2V4h5V2h10v2zM9 9v8h2V9H9zm4 0v8h2V9h-2z" fill="rgba(255,255,255,1)"/></svg>
                                       </button>
                                     </div>
                                   </div>
@@ -793,7 +777,7 @@ const GeneralPage = ({ token }) => {
                   {/* start Alamat */}
                   <div className="mt-10">
                     <h4 className="fw-600 fz-20">Alamat</h4>
-                    <div className="form-group">
+                    <div className="form-group mt-6">
                       <label>Alamat Lengkap</label>
                       <textarea
                         value={address}
@@ -814,7 +798,7 @@ const GeneralPage = ({ token }) => {
                     <h4 className="fw-600 fz-20">Color Schemes</h4>
                     {color.map((items, index) => {
                       return (
-                        <div className="form-group" key={index}>
+                        <div className="form-group mt-8" key={index}>
                           <label>{items.name}</label>
                           <div className="position-relative">
                             <input

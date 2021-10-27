@@ -33,12 +33,26 @@ const Pendidikan = ({ token }) => {
             <p className="text-neutral-body my-1">
               Asal Sekolah / Perguruan Tinggi
             </p>
+            {pendidikan.jenjang === "Tidak Sekolah" && (
+            <p>
+              -
+            </p>
+            )}
+            {pendidikan.jenjang === "TK" || pendidikan.jenjang === "SD/Sederajat" || pendidikan.jenjang === "SMP/Sederajat" && (
+            <p>
+              {(pendidikan !== undefined && pendidikan.lainnya === "0")
+                ? "-"
+                : pendidikan.lainya}
+            </p>
+            )}
+            {pendidikan.jenjang === "SMA/Sederajat" || pendidikan.jenjang === "D3" || pendidikan.jenjang === "S1" || pendidikan.jenjang === "S2" || pendidikan.jenjang === "S3" && (
             <p>
               {(pendidikan !== undefined && pendidikan.asal_pendidikan === "0"
                 ? "-"
                 : pendidikan !== undefined && pendidikan.asal_pendidikan) ||
                 "-"}
             </p>
+            )}
           </Col>
           <Col md={6}>
             <p className="text-neutral-body my-1">Program Studi</p>

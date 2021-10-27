@@ -48,13 +48,12 @@ const Table = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3
-              className="card-title font-weight-bolder text-dark"
-              style={{ fontSize: "24px" }}
+              className="card-title font-weight-bolder text-dark titles-1 mb-0"
             >
               List Data Reference
             </h3>
-            <div className="d-flex align-items-center">
-              <div className="card-toolbar mr-4">
+            <div className="d-flex flex-wrap align-items-center">
+              <div className="card-toolbar mr-4 mt-2">
                 <Link href="/site-management/reference/tambah-reference-tanpa-relasi">
                   <a
                     className="btn btn-rounded-full bg-white"
@@ -70,7 +69,7 @@ const Table = ({ token }) => {
                   </a>
                 </Link>
               </div>
-              <div className="card-toolbar">
+              <div className="card-toolbar mt-2">
                 <Link href="/site-management/reference/tambah-reference-dengan-relasi">
                   <a className="btn btn-rounded-full bg-blue-primary text-white">
                     <IconAdd className="mr-3" width="14" height="14" />
