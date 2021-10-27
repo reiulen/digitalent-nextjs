@@ -112,7 +112,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         success = false;
       }
 
-      await store.dispatch(getDataPribadi(session.user.user.data.user.token));
+      await store.dispatch(getDataPribadi(session?.user.user.data.user.token));
 
       return {
         props: {

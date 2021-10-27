@@ -563,7 +563,7 @@ const AlamatEdit = ({ funcViewEdit, token }) => {
             className={`${style.button_profile_simpan} rounded-xl`}
             type="submit"
           >
-            Submit
+            Simpan
           </Button>
         </div>
       </Form>
