@@ -407,12 +407,12 @@ const DashbardSubvit = ({ token }) => {
                             <div
                               className={`${styles.total} col-sm-6 col-xs-3`}
                             >
-                              {item.all_participant
-                                ? item.all_participant
-                                : "0"}{" "}
-                              /{" "}
                               {item.participant_finished
                                 ? item.participant_finished
+                                : "0"}{" "}
+                              /{" "}
+                              {item.all_participant
+                                ? item.all_participant
                                 : "0"}
                               <br />
                               <span className={styles.note}>
@@ -496,12 +496,12 @@ const DashbardSubvit = ({ token }) => {
                               </span>
                             </div>
                             <div className={`${styles.total} col-sm-6`}>
-                              {item.all_participant
-                                ? item.all_participant
-                                : "0"}{" "}
-                              /{" "}
                               {item.participant_finished
                                 ? item.participant_finished
+                                : "0"}{" "}
+                              /{" "}
+                              {item.all_participant
+                                ? item.all_participant
                                 : "0"}
                               <br />
                               <span className={styles.note}>
@@ -591,12 +591,12 @@ const DashbardSubvit = ({ token }) => {
                               </span>
                             </div>
                             <div className={`${styles.total} col-sm-6`}>
-                              {item.all_participant
-                                ? item.all_participant
-                                : "0"}{" "}
-                              /{" "}
                               {item.participant_finished
                                 ? item.participant_finished
+                                : "0"}{" "}
+                              /{" "}
+                              {item.all_participant
+                                ? item.all_participant
                                 : "0"}
                               <br />
                               <span className={styles.note}>

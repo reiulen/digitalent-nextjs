@@ -9,6 +9,7 @@ import CardPill from "../../../components/peserta/CardPill";
 import CardPage from "../../../components/peserta/CardPage";
 import { useRouter } from "next/router";
 import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
+import Cookies from "js-cookie";
 
 const Dashboard = ({ session }) => {
   const router = useRouter();
@@ -64,6 +65,11 @@ const Dashboard = ({ session }) => {
 
     setCardPelatihan(list);
   };
+
+  useEffect(() => {
+    Cookies.set("id_tema", dataDashboard.pelatihan.pelatihan_berjalan.tema_id);
+    Cookies.set("id_pelatihan", dataDashboard.pelatihan.pelatihan_berjalan.id);
+  }, []);
 
   return (
     <>
