@@ -5,15 +5,12 @@ import dynamic from "next/dynamic";
 import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
-import { useRouter } from "next/router";
 import { getDataPribadi } from "../../../redux/actions/pelatihan/function.actions";
 import { middlewareAuthPesertaSession } from "../../../utils/middleware/authMiddleware";
-import { getDetailRiwayatPelatihanReducer } from "../../../redux/reducers/pelatihan/peserta/riwayat-pelatihan.reducer";
 import {
   getAllRiwayatPelatihanPeserta,
   getDetailRiwayatPelatihan,
 } from "../../../redux/actions/pelatihan/riwayat-pelatihan.actions";
-import Cookies from "js-cookie";
 
 const SeleksiAdministrasi = dynamic(
   () =>
@@ -31,7 +28,7 @@ const SeleksiAdministrasi = dynamic(
 const BelumTersedia = dynamic(
   () =>
     import(
-      "../../../user-component/content/peserta/administrasi/belum-tersedia.jsx"
+      "../../../user-component/content/peserta/administrasi/administrasi-belum-tersedia.jsx"
     ),
   {
     loading: function loadingNow() {
@@ -47,13 +44,15 @@ const Layout = dynamic(() =>
 
 export default function RiwayatPelatihanPage(props) {
   const session = props.session.user.user.data.user;
-  const router = useRouter();
-  const id = Cookies.get("id_pelatihan");
+
   return (
     <>
       <Layout title="Administrasi" session={session}>
-        {/* {id ? <SeleksiAdministrasi /> : <BelumTersedia />} */}
-        <SeleksiAdministrasi />
+        {props.success ? (
+          <SeleksiAdministrasi session={session} />
+        ) : (
+          <BelumTersedia />
+        )}
       </Layout>
     </>
   );
@@ -76,40 +75,37 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       let success = false;
-      // const { data } = await store.dispatch(
-      //   getAllRiwayatPelatihanPeserta(session.user.user.data.user.token)
-      // );
 
-      // console.log(data);
-      // if (req.cookies.id_pelatihan) {
-      //   await store.dispatch(
-      //     getDetailRiwayatPelatihan(
-      //       req.cookies.id_pelatihan,
-      //       session.user.user.data.user.token
-      //     )
-      //   );
-      //   success = true;
-      // } else {
-      const { data } = await store.dispatch(
-        getAllRiwayatPelatihanPeserta(session.user.user.data.user.token)
-      );
-      if (data) {
-        const administrasi = data.list.filter((item) =>
-          item.status.includes("administrasi")
+      if (req.cookies.id_pelatihan) {
+        await store.dispatch(
+          getDetailRiwayatPelatihan(
+            req.cookies.id_pelatihan,
+            session.user.user.data.user.token
+          )
         );
-        if (administrasi) {
-          await store.dispatch(
-            getDetailRiwayatPelatihan(
-              administrasi[0].id,
-              session.user.user.data.user.token
-            )
+        success = true;
+      } else {
+        const { data } = await store.dispatch(
+          getAllRiwayatPelatihanPeserta(session.user.user.data.user.token)
+        );
+        if (data) {
+          const administrasi = data.list.filter((item) =>
+            item.status.includes("administrasi")
           );
-          success = true;
+          if (administrasi) {
+            await store.dispatch(
+              getDetailRiwayatPelatihan(
+                administrasi[0].id,
+                session.user.user.data.user.token
+              )
+            );
+            success = true;
+          } else {
+            success = false;
+          }
         } else {
           success = false;
         }
-      } else {
-        success = false;
       }
 
       await store.dispatch(getDataPribadi(session?.user.user.data.user.token));
@@ -119,6 +115,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
           data: "auth",
           session,
           title: "Administrasi Pelatihan - Peserta",
+          success,
         },
       };
     }
