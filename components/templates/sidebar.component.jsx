@@ -458,10 +458,10 @@ const Sidebar = ({ session }) => {
       if (splitRouteToMakingActive[1] == row.name.toLowerCase()) {
         initializeMenu[index].selected = true;
 
-        if(splitRouteToMakingActive[1] !== "dashboard"){
-          const idSubmenuActive = localStorage.getItem("submenuActive");
-          initializeMenu[index].child[idSubmenuActive].selected = true;
-        }
+        // if(splitRouteToMakingActive[1] !== "dashboard"){
+        //   const idSubmenuActive = localStorage.getItem("submenuActive");
+        //   initializeMenu[index].child[idSubmenuActive].selected = true;
+        // }
         
       }
     });
