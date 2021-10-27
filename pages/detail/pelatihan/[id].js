@@ -6,43 +6,46 @@ import { getDetailPelatihan } from "../../../redux/actions/beranda/detail-pelati
 import { getDataPribadi } from "../../../redux/actions/pelatihan/function.actions";
 
 const DetailPelatihan = dynamic(() =>
-  import("../../../user-component/content/detail/kategori/pelatihan/detail-pelatihan")
+  import(
+    "../../../user-component/content/detail/kategori/pelatihan/detail-pelatihan"
+  )
 );
-const Layout = dynamic(() => import("../../../user-component/content/wrapper/layout.wrapper"))
+const Layout = dynamic(() =>
+  import("../../../user-component/content/wrapper/layout.wrapper")
+);
 
-export default function DetailKategori (props) {
+export default function DetailKategori(props) {
   let session = null;
-  
+
   if (props.session) {
     session = props.session.user.user.data;
   }
-    return (
-        <div>
-          <Layout title="Detail Pelatihan" session={session}>
-            <DetailPelatihan session={session}/>
-          </Layout>
-        </div>
-    )
+  return (
+    <div>
+      <Layout title="Detail Pelatihan" session={session}>
+        <DetailPelatihan session={session} />
+      </Layout>
+    </div>
+  );
 }
 
-export const getServerSideProps = wrapper.getServerSideProps((store) => async({ params, req }) => {
-  const session = await getSession({ req });
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) =>
+    async ({ params, req }) => {
+      const session = await getSession({ req });
 
-<<<<<<< HEAD
-  await store.dispatch(getDataPribadi(session?.user.user.data.user.token));
-=======
-  let sessionToken = session?.user.user.data.user.token
-  
-  await store.dispatch(getDataPribadi(sessionToken));
->>>>>>> 91e9d6b413b2dd35fecd3b8938a80e3a638fc2a3
+      let sessionToken = session?.user.user.data.user.token;
 
-  await store.dispatch(
-    getDetailPelatihan(params.id)
-  );
+      await store.dispatch(getDataPribadi(sessionToken));
 
-  return {
-    props: {
-      title:"Detail Pelatihan", data: "auth", session,
-    },
-  };
-})
+      await store.dispatch(getDetailPelatihan(params.id));
+
+      return {
+        props: {
+          title: "Detail Pelatihan",
+          data: "auth",
+          session,
+        },
+      };
+    }
+);
