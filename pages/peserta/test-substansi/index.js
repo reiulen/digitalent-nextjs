@@ -71,22 +71,50 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
+      // if (!req.cookies.id_pelatihan) {
+      //   const { data } = await store.dispatch(
+      //     getAllRiwayatPelatihanPeserta(session.user.user.data.user.token)
+      //   );
+      //   if (data.list.length > 0) {
+      //     console.log(data);
+      //     const test_substansi = data.list.filter(
+      //       (item) => item.status == "tes substansi"
+      //     );
+      //     if (test_substansi.length > 0) {
+      //       await store.dispatch(
+      //         getDetailRiwayatPelatihan(
+      //           test_substansi[0].id,
+      //           session.user.user.data.user.token
+      //         )
+      //       );
+      //       success = true;
+      //     } else {
+      //       success = false;
+      //     }
+      //   } else {
+      //     success = false;
+      //   }
+      // } else {
+      //   await store.dispatch(
+      //     getDetailRiwayatPelatihan(
+      //       req.cookies.id_pelatihan,
+      //       session.user.user.data.user.token
+      //     )
+      //   );
+      //   success = true;
+      // }
+
       let success = false;
-      if (req.cookies.id_pelatihan) {
-        await store.dispatch(
-          getDetailRiwayatPelatihan(
-            req.cookies.id_pelatihan,
-            session.user.user.data.user.token
-          )
-        );
-        success = true;
-      } else {
+
+      if (!req.cookies.id_pelatihan) {
         const { data } = await store.dispatch(
           getAllRiwayatPelatihanPeserta(session.user.user.data.user.token)
         );
-        if (data) {
+        if (!data) {
+          return (success = false);
+        } else {
           const test_substansi = data.list.filter(
-            (item) => item.status == "tes substansi"
+            (item) => item.status === "tes substansi"
           );
           if (test_substansi.length > 0) {
             await store.dispatch(
@@ -99,9 +127,15 @@ export const getServerSideProps = wrapper.getServerSideProps(
           } else {
             success = false;
           }
-        } else {
-          success = false;
         }
+      } else {
+        await store.dispatch(
+          getDetailRiwayatPelatihan(
+            req.cookies.id_pelatihan,
+            session.user.user.data.user.token
+          )
+        );
+        success = true;
       }
 
       await store.dispatch(getDataPribadi(session.user.user.data.user.token));
