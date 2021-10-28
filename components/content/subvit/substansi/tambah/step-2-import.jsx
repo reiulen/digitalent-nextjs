@@ -224,7 +224,7 @@ const StepTwo = ({ token }) => {
         "http://dts-subvit-dev.majapahit.id/api/subtance-question-bank-details/template"
       )
       .then((res) => {
-        window.location.href = res.data.data;
+        window.location.href = res.data.data[0];
       });
   };
 
