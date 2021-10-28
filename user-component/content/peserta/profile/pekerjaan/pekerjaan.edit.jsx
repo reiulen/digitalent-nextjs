@@ -46,6 +46,7 @@ const PekerjaanEdit = ({ funcViewEdit, token }) => {
     (pekerjaan && pekerjaan.tahun_masuk) || ""
   );
 
+
   const optionsStatusPekerjaan = [];
   if (dataStatusPekerjaan) {
     for (let index = 0; index < dataStatusPekerjaan.data.length; index++) {
@@ -142,12 +143,8 @@ let separator = ""
           <Form.Group className="mb-3" controlId="formGridAddress1">
             <Form.Label>Status Pekerjaan</Form.Label>
             <Select
-              placeholder={
-                (pekerjaan && pekerjaan.status_pekerjaan) ||
-                "Silahkan Pilih Status Pekerjaan"
-              }
               options={optionsStatusPekerjaan}
-              defaultValue={statusPekerjaan}
+              defaultValue={{label: pekerjaan.status_pekerjaan, value: pekerjaan.status_pekerjaan}}
               onChange={(e) =>
                 setStatusPekerjaan({ label: e.label, value: e.value })
               }
@@ -166,7 +163,6 @@ let separator = ""
           </Form.Group>
         </div>
         {statusPekerjaan.value === 17 && <div className=""></div>}
-
         {statusPekerjaan.value === 16 && (
           <div className="kontak-darurat mt-6">
             <Row>

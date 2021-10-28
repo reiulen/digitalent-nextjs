@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 import Cookies from "js-cookie";
 
 export default function SeleksiAdministrasi() {
-  const { state: data } = useSelector(
+  const { state: data, error } = useSelector(
     (state) => state.getDetailRiwayatPelatihanPeserta
   );
   const router = useRouter();
@@ -36,10 +36,18 @@ export default function SeleksiAdministrasi() {
   const [label, setLabel] = useState();
 
   useEffect(() => {
-    if (data.status.includes("menunggu")) {
-      setLabel("warning");
+    if (!error) {
+      if (data.status.includes("menunggu")) {
+        setLabel("warning");
+      } else if (data.status == "tes substansi") {
+        setLabel("primary");
+      } else if (data.status.includes("tidak")) {
+        setLabel("danger");
+      } else {
+        setLabel("success");
+      }
     } else {
-      setLabel("success");
+      toast.error(error);
     }
   }, []);
 
@@ -48,76 +56,80 @@ export default function SeleksiAdministrasi() {
       <Col lg={12} className="px-0">
         <Card className="card-custom card-stretch gutter-b p-0">
           <Row className="p-10 m-0">
-            <Row className="d-flex ">
-              <Col className="d-flex align-items-start">
-                <h1
-                  className="font-weight-bolder my-0"
-                  style={{ fontSize: "36px" }}
-                >
-                  {data.name}
-                </h1>
-              </Col>
-              <Col className=" d-flex justify-content-end">
-                <span
-                  className={`label label-inline label-light-${label} font-weight-bold text-capitalize`}
-                  style={{ borderRadius: "25px" }}
-                >
-                  {data.status}
-                </span>
-              </Col>
-              <Col lg={12} className="my-5">
-                <span
-                  className="p-0 font-weight-bolder"
-                  style={{ fontSize: "18px", color: "#6C6C6C" }}
-                >
-                  {data.akademi}
-                </span>
-              </Col>
-              <Col lg={12} className="mt-12">
-                <p style={{ fontSize: "14px" }}>Lokasi Pelatihan</p>
-                <p style={{ fontSize: "16px" }}>{data.alamat}</p>
-              </Col>
-              <Col lg={6}>
-                <p style={{ fontSize: "14px" }}>Jadwal Pelatihan</p>
-                <p style={{ fontSize: "16px" }}>
-                  {dateFrom} - {dateTo}
-                </p>
-              </Col>
-              <Col lg={6}>
-                <p style={{ fontSize: "14px" }}>Kuota</p>
-                <p style={{ fontSize: "16px" }}>{data.kuota_peserta} Peserta</p>
-              </Col>
-            </Row>
+            <Col className="d-flex align-items-start">
+              <h1
+                className="font-weight-bolder my-0"
+                style={{ fontSize: "36px" }}
+              >
+                {data.name}
+              </h1>
+            </Col>
+            <Col className=" d-flex justify-content-end">
+              <span
+                className={`label label-inline label-light-${label} font-weight-bold text-capitalize`}
+                style={{ borderRadius: "25px" }}
+              >
+                {data.status}
+              </span>
+            </Col>
+            <Col lg={12} className="my-5">
+              <span
+                className="p-0 font-weight-bolder"
+                style={{ fontSize: "18px", color: "#6C6C6C" }}
+              >
+                {data.akademi}
+              </span>
+            </Col>
+            <Col lg={12} className="mt-12">
+              <p style={{ fontSize: "14px" }}>Lokasi Pelatihan</p>
+              <p style={{ fontSize: "16px" }}>{data.alamat}</p>
+            </Col>
+            <Col lg={6}>
+              <p style={{ fontSize: "14px" }}>Jadwal Pelatihan</p>
+              <p style={{ fontSize: "16px" }}>
+                {dateFrom} - {dateTo}
+              </p>
+            </Col>
+            <Col lg={6}>
+              <p style={{ fontSize: "14px" }}>Kuota</p>
+              <p style={{ fontSize: "16px" }}>{data.kuota_peserta} Peserta</p>
+            </Col>
             <Col md={12} className="py-10 ">
-              <Row>
-                <Col>
-                  <Button
-                    className="btn-rounded-full font-weight-bold btn-block justify-content-center"
-                    style={{ height: "40px", fontSize: "14px" }}
-                    onClick={() => {}}
-                  >
-                    <i
-                      className="ri-download-2-fill mr-2"
-                      style={{ color: "white" }}
-                    ></i>
-                    Bukti Pendaftaran
-                  </Button>
-                </Col>
-                <Col>
-                  <Button
-                    className="btn-rounded-full font-weight-bold btn-block justify-content-center"
-                    style={{ height: "40px", fontSize: "14px" }}
-                    onClick={() => {
-                      Cookies.set("id_tema", data.tema_id);
-                      Cookies.set("id_pelatihan", data.id);
-                      router.push(`/peserta/test-substansi/panduan-substansi`);
-                    }}
-                  >
-                    Test Substansi{" "}
-                    <i className="ri-arrow-right-s-line mr-2"></i>
-                  </Button>
-                </Col>
-              </Row>
+              {data.status.includes("tidak") ? (
+                ""
+              ) : (
+                <Row>
+                  <Col>
+                    <Button
+                      className="btn-rounded-full font-weight-bold btn-block justify-content-center"
+                      style={{ height: "40px", fontSize: "14px" }}
+                      onClick={() => {}}
+                    >
+                      <i
+                        className="ri-download-2-fill mr-2"
+                        style={{ color: "white" }}
+                      ></i>
+                      Bukti Pendaftaran
+                    </Button>
+                  </Col>
+                  <Col>
+                    <Button
+                      className="btn-rounded-full font-weight-bold btn-block justify-content-center"
+                      style={{ height: "40px", fontSize: "14px" }}
+                      onClick={() => {
+                        Cookies.set("id_tema", data.tema_id);
+                        Cookies.set("id_pelatihan", data.id);
+                        router.push(
+                          `/peserta/test-substansi/panduan-substansi`
+                        );
+                      }}
+                    >
+                      Test Substansi{" "}
+                      <i className="ri-arrow-right-s-line mr-2"></i>
+                    </Button>
+                  </Col>
+                </Row>
+              )}
 
               <hr className="my-12" />
               <img
