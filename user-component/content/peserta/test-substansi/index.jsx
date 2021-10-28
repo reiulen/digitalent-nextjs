@@ -26,8 +26,6 @@ const TestSubstansi = () => {
     setShow(false);
   };
 
-  useEffect(() => {}, []);
-
   return (
     <>
       <PesertaWrapper>

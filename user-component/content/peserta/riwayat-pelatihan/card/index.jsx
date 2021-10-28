@@ -488,6 +488,8 @@ export default function CardTemplateOriginal({ data }) {
                   className="btn-rounded-full font-weight-bold btn-block justify-content-center mt-5"
                   style={{ height: "40px", fontSize: "14px" }}
                   onClick={() => {
+                    Cookies.set("id_pelatihan", data.id);
+                    Cookies.set("id_tema", data.tema_id);
                     router.push(
                       // `/peserta/subvit/substansi/1?theme_id=${data.tema_id}&training_id=${data.id}&category=Test Substansi`
                       `/peserta/subvit/substansi/panduan-test-substansi`
