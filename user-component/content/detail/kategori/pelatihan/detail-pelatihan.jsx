@@ -194,10 +194,12 @@ const DetailPelatihan = ({ session }) => {
 
               <div className="d-flex flex-wrap align-items-start mt-4">
                 <Image
-                  src={`/assets/icon/kuota-1.svg`}
-                  width={30}
-                  height={30}
-                />
+                    src={`/assets/icon/kuota-1.svg`}
+                    width={30}
+                    height={30}
+                    
+                  />
+                
                 <div className="ml-4">
                   <p className="fw-600 fz-18 mb-2">Kuota</p>
                   <p className="fz-16">{pelatihan.kuota_pendaftar} peserta</p>
@@ -207,12 +209,30 @@ const DetailPelatihan = ({ session }) => {
 
             <div className="bg-white border rounded mt-5 p-6">
               <h4 className="fz-20 fw-600">Mitra Pelatihan</h4>
-
-              <div className="ml-6">
-                <p className="fw-600 fz-16 mb-2">
-                  Mitra Nama {pelatihan.mitra_nama}
-                </p>
-                <p style={{ color: "#6C6C6C" }}>Mitra {pelatihan.mitra}</p>
+              <div className="row">
+                <div className="col-12 col-md-3">
+                  <div  className="dot-bullet-detail">
+                    <Image
+                      // src={`/assets/icon/kuota-1.svg`}
+                      src={
+                        "/assets/media/image_28.svg" ||
+                        process.env.END_POINT_API_IMAGE_BEASISWA + pelatihan.logo
+                      }
+                      layout="fill"
+                      objectFit="cover"
+                      // width={50}
+                      // height={50}
+                    />
+                  </div>
+                </div>
+                <div className="col-12 col-md-9">
+                  <div>
+                    <p className="fw-600 fz-16 mb-2">
+                      {pelatihan.mitra_nama}
+                    </p>
+                    <p style={{ color: "#6C6C6C" }}>{pelatihan.mitra}</p>
+                  </div>
+                </div>
               </div>
             </div>
 
