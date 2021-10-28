@@ -34,13 +34,13 @@ const InformasiEdit = ({ funcViewEdit, token }) => {
   const [name, setName] = useState((dataPribadi && dataPribadi.name) || "");
   const [email, setEmail] = useState((dataPribadi && dataPribadi.email) || "");
   const [kelamin, setKelamin] = useState(
-    (dataPribadi && dataPribadi.jenis_kelamin) || ""
+    (dataPribadi && dataPribadi.jenis_kelamin) || null
   );
   const [nik, setNik] = useState((dataPribadi && dataPribadi.nik) || "");
   const [nomorHandphone, setNomorHandphone] = useState(
     (dataPribadi && dataPribadi.nomor_handphone) || ""
   );
-  const [agama, setAgama] = useState((dataPribadi && dataPribadi.agama) || "");
+  const [agama, setAgama] = useState((dataPribadi && dataPribadi.agama) || null);
   const [tempatLahir, setTempatLahir] = useState(
     (dataPribadi && dataPribadi.tempat_lahir) || ""
   );
@@ -66,6 +66,8 @@ const InformasiEdit = ({ funcViewEdit, token }) => {
   const [ktpPreview, setKtpPreview] = useState(
     (dataPribadi && dataPribadi.file_path + dataPribadi.File_ktp) || ""
   );
+
+  console.log(dataPribadi)
 
   // const [cvName, setCvName] = useState(
   //   (dataPribadi && dataPribadi.cv) || "Belum ada file"
@@ -170,8 +172,8 @@ const InformasiEdit = ({ funcViewEdit, token }) => {
       const data = {
         nik,
         name,
-        jenis_kelamin: kelamin.label,
-        agama: agama.label,
+        jenis_kelamin: kelamin,
+        agama: agama,
         tempat_lahir: tempatLahir,
         tanggal_lahir: tanggalLahir,
         hubungan: hubunganUrgent,
@@ -237,7 +239,7 @@ const InformasiEdit = ({ funcViewEdit, token }) => {
                   kelamin === "" ? "Silahkan Pilih Jenis Kelamin" : kelamin
                 }`}
                 options={optionsKelamin}
-                defaultValue={kelamin}
+                defaultValue={{value: kelamin, label: kelamin}}
                 onChange={(e) => setKelamin({ label: e.label, value: e.value })}
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("jenis kelamin")
@@ -246,7 +248,7 @@ const InformasiEdit = ({ funcViewEdit, token }) => {
               {simpleValidator.current.message(
                 "jenis kelamin",
                 kelamin,
-                "required",
+                kelamin === null ? "required" : "",
                 {
                   className: "text-danger",
                 }
@@ -298,14 +300,14 @@ const InformasiEdit = ({ funcViewEdit, token }) => {
                 agama === "" ? "Silahkan Pilih Agama" : dataPribadi.agama
               }`}
               options={optionsAgama}
-              defaultValue={agama}
+              defaultValue={{value: agama, label: agama}}
               onChange={(e) => setAgama({ label: e.label, value: e.value })}
               onBlur={() =>
                 simpleValidator.current.showMessageFor("jenis kelamin")
               }
             />
 
-            {simpleValidator.current.message("agama", agama.value, "required", {
+            {simpleValidator.current.message("agama", agama.value, dataPribadi === null ? "" : "required", {
               className: "text-danger",
             })}
           </Form.Group>
