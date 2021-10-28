@@ -153,7 +153,6 @@ const PekerjaanEdit = ({ funcViewEdit, token }) => {
             <Form.Label>Status Pekerjaan</Form.Label>
             <Select
               options={optionsStatusPekerjaan}
-              // defaultValue={{label: pekerjaan.status_pekerjaan, value: pekerjaan.status_pekerjaan}}
               onChange={(e) =>
                 setStatusPekerjaan({ label: e.label, value: e.value })
               }

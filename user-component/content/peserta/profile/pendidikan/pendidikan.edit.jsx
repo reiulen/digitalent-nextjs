@@ -426,8 +426,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
                   placeholder="Silahkan Masukan IPK"
                   value={ipk}
                   onChange={(e) => {
-                    var numbers = /^[0-9]+$/;
-                    setIpk(e.target.value.match(numbers));
+                    setIpk(e.target.value);
                   }}
                   onBlur={() => simpleValidator.current.showMessageFor("ipk")}
                 />
