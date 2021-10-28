@@ -235,7 +235,9 @@ const InformasiEdit = ({ funcViewEdit, token }) => {
               <Form.Label>Jenis Kelamin</Form.Label>
               <Select
                 placeholder={`${
-                  kelamin === "" ? "Silahkan Pilih Jenis Kelamin" : kelamin
+                  kelamin === null
+                    ? "Silahkan Pilih Jenis Kelamin"
+                    : dataPribadi.jenis_kelamin
                 }`}
                 options={optionsKelamin}
                 defaultValue={kelamin}
@@ -296,7 +298,7 @@ const InformasiEdit = ({ funcViewEdit, token }) => {
             <Form.Label>Agama</Form.Label>
             <Select
               placeholder={`${
-                agama === "" ? "Silahkan Pilih Agama" : dataPribadi.agama
+                agama === null ? "Silahkan Pilih Agama" : dataPribadi.agama
               }`}
               options={optionsAgama}
               defaultValue={agama}

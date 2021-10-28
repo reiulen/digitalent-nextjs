@@ -87,7 +87,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
     success,
     errorUpdateData,
     dispatch,
-    jengjangPendidikan.value,
+    jengjangPendidikan,
     funcViewEdit,
     token,
     asalSekolah,
