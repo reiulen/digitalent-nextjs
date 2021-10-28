@@ -99,7 +99,11 @@ const Beranda = ({ session }) => {
     let str = null
     if (word.length > textToTrim) {
       str = word.slice(0, textToTrim) + "..."
+    
+    } else {
+      str = word
     }
+
     return str
   }
 
@@ -1003,7 +1007,7 @@ const Beranda = ({ session }) => {
           )}
           {tema ? (
             <div className="d-flex justify-content-center mt-30">
-              <a href={`/detail/akademi/4`}>
+              <a href={`/detail/akademi/${akademiId}`}>
                 <button className="btn btn-outline-primary-new rounded-pill py-3 px-12">
                   Lebih Banyak Tema
                   <IconArrow

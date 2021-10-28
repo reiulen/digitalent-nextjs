@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
-import Swal from "sweetalert2";
+// import Swal from "sweetalert2";
 import moment from "moment";
 import DatePicker from "react-datepicker";
 import { TagsInput } from "react-tag-input-component";
@@ -15,17 +15,18 @@ import {
     Button,
     Dropdown
 } from "react-bootstrap";
-import Cardss from "../../../../components/beranda/card";
+// import Cardss from "../../../../components/beranda/card";
 
 import Pagination from "react-js-pagination";
 
 // import Layout from "../../../wrapper/layout.wrapper";
 import FilterBar from "../../../../components/FilterBar";
 import SubHeaderComponent from "../../../../components/template/Subheader.component";
-import FilterSide from "../../../../components/FilterSide";
+// import FilterSide from "../../../../components/FilterSide";
 import TrainingReminder from "../../../../components/TrainingReminder";
 import style from "../../../../../styles/peserta/dashboard.module.css"
 import { checkRegisterPelatihan } from "../../../../../redux/actions/beranda/detail-pelatihan.actions";
+import { getAllPelatihanByAkademi } from "../../../../../redux/actions/beranda/detail-akademi.actions";
 
 // import "../../../../../styles/beranda.module.css"
 
@@ -38,7 +39,7 @@ const DetailAkademi = ({ session }) => {
         pelatihan,
     } = useSelector((state) => state.allPelatihan);
 
-    const textToTrim = 325
+    const textToTrim = 200
     const dispatch = useDispatch();
     const router = useRouter();
     // const [ akademiId, setAkademiId ] = useState (akademi.id)
@@ -51,11 +52,18 @@ const DetailAkademi = ({ session }) => {
     const [ showDetail, setShowDetail ] = useState([])
     const [ activePage, setActivePage ] = useState(1)
     const [ oldAkademiDesc, setOldAkademiDesc ] = useState(null)
+    const [ akademiId, setAkademiId ] = useState (null)
     const [ akademiName, setAkademiName ] = useState (null)
     const [ akademiDesc, setAkademiDesc ] = useState(null)
+    const [ temaId, setTemaId ] = useState(null)
     const [ seeMoreStatus, setSeeMoreStatus ] = useState(false)
 
     const [ filterPenyelenggara, setFilterPenyelenggara ] = useState (null)
+    const [ filterKategori, setFilterKategori ] = useState (null)
+    const [ filterKataKunci, setFilterKataKunci ] = useState (null)
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
+
 
     useEffect(() => {
         handleHoverCard()
@@ -159,12 +167,35 @@ const DetailAkademi = ({ session }) => {
         }
     }
 
+    const printTextTrim = (str) => {
+        let result = null
+
+        if (str.length > textToTrim) {
+            result = str.slice(0, textToTrim) + "..."
+
+        } else {
+            result = str
+        }
+
+        return result
+    }
+
     const handlePagination = (pageNumber) => {
 
     }
 
     const handleFilter = () => {
-        // console.log (filterPenyelenggara)
+        let dataToSend = {
+            akademi_id: akademiId,
+            tema_id: temaId,
+            penyelenggara: filterPenyelenggara,
+            kategori_peserta: filterKategori,
+            kata_kunci: filterKataKunci,
+            tanggal_mulai: startDate,
+            tanggal_akhir: endDate
+        }
+
+        // dispatch(getAllPelatihanByAkademi(dataToSend))
     }
 
     return (
@@ -177,7 +208,7 @@ const DetailAkademi = ({ session }) => {
                             <div className="col-2 py-3 ml-4">
                                 <Image 
                                     // src={`/assets/media/logo-vsga-1.svg`}
-                                    src={`https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/${akademi.logo}`}
+                                    src={process.env.END_POINT_API_IMAGE_BEASISWA + akademi.logo}
                                     width={150}
                                     height={150}
                                     alt=" Image Logo"
@@ -244,37 +275,29 @@ const DetailAkademi = ({ session }) => {
                             <div className="font-weight-bolder">
                                 Penyelenggara
                             </div>
-                            <select name="" id="">
+                            <select
+                                className="form-control"
+                            >
+                                <option value="Semua Penyelenggara" selected>Semua Penyelenggara</option>
                                 <option value="Gojek">Gojek</option>
+                                <option value="Bukalapak">Bukalapak</option>
+                                <option value="Tokopedia">Tokopedia</option>
+                                <option value="Google">Google</option>
+                                <option value="Facebook">Facebook</option>
+                                <option value="Apple">Apple</option>
                             </select>
-                            {/* <Dropdown>
-                                <Dropdown.Toggle variant="white" id="dropdown-basic" className="border rounded">
-                                    {filterPenyelenggara ? filterPenyelenggara : "Semua Penyelenggara"}
-                                </Dropdown.Toggle>
-                                <Dropdown.Menu>
-                                    <Dropdown.Item value="Gojek" onClick={(e) => setFilterPenyelenggara (e.target.value)}>Gojek</Dropdown.Item>
-                                    <Dropdown.Item value="Bukalapak">Bukalapak</Dropdown.Item>
-                                    <Dropdown.Item value="Tokopedia">Tokopedia</Dropdown.Item>
-                                    <Dropdown.Item value="Google">Google</Dropdown.Item>
-                                    <Dropdown.Item value="Facebook">Facebook</Dropdown.Item>
-                                    <Dropdown.Item value="Apple">Apple</Dropdown.Item>
-                                </Dropdown.Menu>
-                            </Dropdown> */}
                         </div>
 
                         <div className="my-5 p-3">
                             <div className="font-weight-bolder">
                                 Kategori Peserta
                             </div>
-                            <Dropdown>
-                                <Dropdown.Toggle variant="white" id="dropdown-basic" className="border rounded">
-                                    Peserta Umum
-                                </Dropdown.Toggle>
-                                <Dropdown.Menu>
-                                    <Dropdown.Item href="#/action-1">Peserta Umum</Dropdown.Item>
-                                    <Dropdown.Item href="#/action-2">Peserta Khusus</Dropdown.Item>
-                                </Dropdown.Menu>
-                            </Dropdown>
+                            <select
+                                className="form-control"
+                            >
+                                <option value="Peserta Umum" selected>Peserta Umum</option>
+                                <option value="Peserta Khusus">Peserta Khusus</option>
+                            </select>
                         </div>
 
                         <div className="my-5 p-3">
@@ -334,7 +357,7 @@ const DetailAkademi = ({ session }) => {
                         <div className="my-5 p-3">
                             <div className="row d-flex justify-content-around">
                                 <button className="btn btn-white-ghost-rounded-full">
-                                    Reset Filter
+                                    Reset
                                 </button>
 
                                 <button className="btn btn-primary rounded-pill" onClick={() => handleFilter()}>
@@ -554,9 +577,8 @@ const DetailAkademi = ({ session }) => {
                                                           </div>
                                                       </div>
                                                       <div className="row mt-3 ml-3">
-                                                          <div dangerouslySetInnerHTML={{ __html: el.deskripsi }}>
-                                                              {/* {el.deskripsi} */}
-                                                          </div>
+                                                          {/* {el.deskripsi} */}
+                                                          <div dangerouslySetInnerHTML={{ __html: printTextTrim(el.deskripsi) }}></div>
                                                       </div>
                                                       <div className="row d-flex justify-content-between mt-3">
                                                           <div className="d-flex align-content-center">
