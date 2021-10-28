@@ -19,9 +19,10 @@ const ProfileUser = ({ profile }) => {
                 >
                   <Image
                     src={
-                      "/assets/media/default.jpg" ||
                       (profile.foto &&
-                        process.env.END_POINT_API_IMAGE_BEASISWA + profile.foto)
+                        process.env.END_POINT_API_IMAGE_BEASISWA +
+                          profile.foto) ||
+                      "/assets/media/default.jpg"
                     }
                     alt="image"
                     width={256}
@@ -199,9 +200,10 @@ const ProfileUser = ({ profile }) => {
         <Modal.Body>
           <Image
             src={
-              process.env.END_POINT_API_IMAGE_BEASISWA + profile.File_ktp ||
-              "/assets/media/default.jpg"
+              "/assets/media/default.jpg" ||
+              process.env.END_POINT_API_IMAGE_BEASISWA + profile.File_ktp
             }
+            objectFit="cover"
             height={200}
             width={400}
           />

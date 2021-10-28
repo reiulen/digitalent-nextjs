@@ -355,7 +355,9 @@ const DetailSummary = ({ token }) => {
                               >
                                 {row.subtansi_status || "-"}
                               </p>
-                              <p className="my-0">{row.nilai || "-"}</p>
+                              <p className="my-0">
+                                {Math.round(row.nilai) || "-"}
+                              </p>
                               <p className="my-0">
                                 {handleSecondsToTime(row.waktu) || "-"}
                               </p>

@@ -308,7 +308,7 @@ const Dashboard = ({ session }) => {
                         <div className="date d-flex align-items-center align-middle">
                           <i className="ri-history-fill"></i>
                           <span className={`${style.text_date_register} pl-2`}>
-                            Status : Test Substansi
+                            Status : {pelatihan.pelatihan_berjalan.status}
                           </span>
                         </div>
                       </div>
@@ -383,7 +383,6 @@ const Dashboard = ({ session }) => {
                           roundedCircle
                           className={`${style.image_card_pelatihan} img-fluild`}
                         />
-                        dikan
                       </div>
                       <div
                         className="d-flex justify-content-between position-relative pb-0 mb-0"
@@ -425,7 +424,7 @@ const Dashboard = ({ session }) => {
                         <div className="date d-flex align-items-center align-middle">
                           <i className="ri-history-fill"></i>
                           <span className={`${style.text_date_register} pl-2`}>
-                            Status : Test Substansi
+                            Status : {pelatihan.pelatihan_selesi.status}
                           </span>
                         </div>
                       </div>

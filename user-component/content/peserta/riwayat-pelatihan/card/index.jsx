@@ -473,25 +473,9 @@ export default function CardTemplateOriginal({ data }) {
                       `/peserta/subvit/substansi/panduan-test-substansi`
                     );
                   }}
-                  disabled={data.tes_substansi ? false : true}
+                  disabled={data.tes_substansi === true ? true : false}
                 >
-                  Test Substansi{" "}
-                  <i className="ri-arrow-right-s-line mr-2"></i>
-                </Button>
-              </Col>
-            </Fragment>
-          ) : data.status == "lulus tes substansi" ? (
-            <Fragment>
-              <Col className="d-flex justify-content-center ">
-                <Button
-                  className={`btn-rounded-full font-weight-bold btn-block justify-content-center mt-5 `}
-                  style={{ height: "40px", fontSize: "14px" }}
-                  onClick={() => {
-                    console.log("ini click button 2 ");
-                  }}
-                >
-                  <i className="ri-download-2-fill mr-2"></i>
-                  Bukti Pendaftaran
+                  Test Substansi <i className="ri-arrow-right-s-line mr-2"></i>
                 </Button>
               </Col>
             </Fragment>

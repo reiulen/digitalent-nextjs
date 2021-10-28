@@ -250,9 +250,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
                   {dataAsalSekolah === undefined
                     ? "kosong"
                     : dataAsalSekolah.map((item, index) => {
-                        return (
-                          <option value={item.label} key={index} />
-                        )
+                        return <option value={item.label} key={index} />;
                       })}
                 </datalist>
                 {/* <Select
