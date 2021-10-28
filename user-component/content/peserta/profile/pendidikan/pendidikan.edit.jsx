@@ -159,7 +159,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
           asal_pendidikan: "0",
           lainya,
           program_studi: "0",
-          ipk: "0",
+          ipk,
           tahun_masuk: parseInt(tahunMasuk),
           ijasah: ijazah,
         };
@@ -422,7 +422,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
               <Form.Group as={Col} md={6} controlId="formGridIpk">
                 <Form.Label>IPK</Form.Label>
                 <Form.Control
-                  type="text"
+                  type="number"
                   placeholder="Silahkan Masukan IPK"
                   value={ipk}
                   onChange={(e) => {

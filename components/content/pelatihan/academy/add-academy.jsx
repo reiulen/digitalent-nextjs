@@ -226,7 +226,7 @@ const AddAcademy = ({ token }) => {
                 {simpleValidator.current.message(
                   "kode akademi",
                   slug,
-                  "required",
+                  "required|max:10",
                   { className: "text-danger" }
                 )}
               </div>
@@ -308,7 +308,7 @@ const AddAcademy = ({ token }) => {
                 {simpleValidator.current.message(
                   "nama akademi",
                   name,
-                  "required",
+                  "required|max:100",
                   { className: "text-danger" }
                 )}
               </div>

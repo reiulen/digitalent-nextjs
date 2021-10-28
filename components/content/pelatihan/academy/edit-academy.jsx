@@ -245,7 +245,7 @@ const EditAcademy = ({ token }) => {
                 {simpleValidator.current.message(
                   "kode akademi",
                   slug,
-                  "required",
+                  "required|max:10",
                   { className: "text-danger" }
                 )}
               </div>
@@ -310,7 +310,16 @@ const EditAcademy = ({ token }) => {
                   className="form-control"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("nama akademi")
+                  }
                 />
+                {simpleValidator.current.message(
+                  "nama akademi",
+                  name,
+                  "required|max:100",
+                  { className: "text-danger" }
+                )}
               </div>
 
               <div className="form-group mb-4">

@@ -107,8 +107,8 @@ const ListTraining = ({ token }) => {
   const [showModal, setShowModal] = useState(false);
   const [showModalRevisi, setShowModalRevisi] = useState(false);
 
-  const optionsAkademi = dataAkademi.data;
-  const optionsTema = dataTema.data;
+  const optionsAkademi = [] || dataAkademi.data;
+  const optionsTema = [] || dataTema.data;
   const optionsPenyelenggara = [];
   if (dataPenyelenggara) {
     for (let index = 0; index < dataPenyelenggara.data.length; index++) {
@@ -483,48 +483,48 @@ const ListTraining = ({ token }) => {
             background="bg-secondary"
             icon="new/done-circle.svg"
             color="#FFFFFF"
-            value={cardTraining[2].count}
+            value={cardTraining[4].count}
             titleValue=""
             title="Disetujui"
-            publishedVal={cardTraining[2].status}
+            publishedVal={cardTraining[4].status}
             routePublish={() =>
-              handlePublish(cardTraining[2].status, cardTraining[2].condisi)
+              handlePublish(cardTraining[4].status, cardTraining[4].condisi)
             }
           />
           <CardPage
             background="bg-success"
             icon="new/open-book.svg"
             color="#FFFFFF"
-            value={cardTraining[1].count}
-            titleValue=""
-            title="Revisi"
-            publishedVal={cardTraining[1].status}
-            routePublish={() =>
-              handlePublish(cardTraining[1].status, cardTraining[1].condisi)
-            }
-          />
-          <CardPage
-            background="bg-warning"
-            icon="new/mail-white.svg"
-            color="#FFFFFF"
             value={cardTraining[3].count}
             titleValue=""
-            title="Menunggu Review"
+            title="Revisi"
             publishedVal={cardTraining[3].status}
             routePublish={() =>
               handlePublish(cardTraining[3].status, cardTraining[3].condisi)
             }
           />
           <CardPage
+            background="bg-warning"
+            icon="new/mail-white.svg"
+            color="#FFFFFF"
+            value={cardTraining[1].count}
+            titleValue=""
+            title="Menunggu Review"
+            publishedVal={cardTraining[1].status}
+            routePublish={() =>
+              handlePublish(cardTraining[1].status, cardTraining[1].condisi)
+            }
+          />
+          <CardPage
             background="bg-extras"
             icon="new/block-white.svg"
             color="#FFFFFF"
-            value={cardTraining[4].count}
+            value={cardTraining[2].count}
             titleValue=""
             title="Berjalan"
-            publishedVal={cardTraining[4].status}
+            publishedVal={cardTraining[2].status}
             routePublish={() =>
-              handlePublish(cardTraining[4].status, cardTraining[4].condisi)
+              handlePublish(cardTraining[2].status, cardTraining[2].condisi)
             }
           />
         </div>
@@ -639,7 +639,10 @@ const ListTraining = ({ token }) => {
                                 ? i + 1 * (page * 5) - (5 - 1)
                                 : i + 1 * (page * limit) - (limit - 1)}
                             </td>
-                            <td className="align-middle">CC00{row.id}</td>
+                            <td className="align-middle">
+                              {row.slug}
+                              {row.id}
+                            </td>
                             <td className="align-middle">
                               <p className="font-weight-bolder my-0">
                                 {row.name}
