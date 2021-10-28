@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 import Cookies from "js-cookie";
 
 export default function SeleksiAdministrasi() {
-  const { state: data } = useSelector(
+  const { state: data, error } = useSelector(
     (state) => state.getDetailRiwayatPelatihanPeserta
   );
   const router = useRouter();
@@ -36,12 +36,16 @@ export default function SeleksiAdministrasi() {
   const [label, setLabel] = useState();
 
   useEffect(() => {
-    if (data.status.includes("menunggu")) {
-      setLabel("warning");
-    } else if (data.status == "tes substansi") {
-      setLabel("primary");
+    if (!error) {
+      if (data.status.includes("menunggu")) {
+        setLabel("warning");
+      } else if (data.status == "tes substansi") {
+        setLabel("primary");
+      } else {
+        setLabel("success");
+      }
     } else {
-      setLabel("success");
+      toast.error(error);
     }
   }, []);
 
