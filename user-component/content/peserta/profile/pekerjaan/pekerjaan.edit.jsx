@@ -115,6 +115,8 @@ const PekerjaanEdit = ({ funcViewEdit, token }) => {
       }
 
       dispatch(updateProfilePekerjaan(data, token));
+
+      // check deploy
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
