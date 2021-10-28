@@ -11,6 +11,7 @@ import {
   clearErrors,
 } from "../../../../../redux/actions/pelatihan/profile.actions";
 import { UPDATE_PEKERJAAN_RESET } from "../../../../../redux/types/pelatihan/profile.type";
+// import { getProfilePekerjaan } from "../../../../../redux/actions/pelatihan/profile.actions"
 
 const PekerjaanEdit = ({ funcViewEdit, token }) => {
   const dispatch = useDispatch();
@@ -45,6 +46,8 @@ const PekerjaanEdit = ({ funcViewEdit, token }) => {
   const [tahunMasuk, setTahunMasuk] = useState(
     (pekerjaan && pekerjaan.tahun_masuk) || ""
   );
+  const listData = pekerjaan.value || pekerjaan;
+  // console.log("List Data :", listData)
 
   const optionsStatusPekerjaan = [];
   if (dataStatusPekerjaan) {
@@ -102,7 +105,7 @@ const PekerjaanEdit = ({ funcViewEdit, token }) => {
           tahun_masuk: parseInt(tahunMasuk),
         };
       }
-
+      // console.log("DATA :", data)
       dispatch(updateProfilePekerjaan(data, token));
     } else {
       simpleValidator.current.showMessages();
@@ -115,24 +118,23 @@ const PekerjaanEdit = ({ funcViewEdit, token }) => {
     }
   };
 
-let separator = ""
-   
-  function formatRupiah(angka, prefix)
-    {
-        var number_string = angka.replace(/[^,\d]/g, '').toString(),
-            split    = number_string.split(','),
-            sisa     = split[0].length % 3,
-            rupiah     = split[0].substr(0, sisa),
-            ribuan     = split[0].substr(sisa).match(/\d{3}/gi);
-            
-        if (ribuan) {
-            separator = sisa ? '.' : '';
-            rupiah += separator + ribuan.join('.');
-        }
-        
-        rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
-        return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+  let separator = ""
+
+  function formatRupiah(angka, prefix) {
+    var number_string = angka.replace(/[^,\d]/g, '').toString(),
+      split = number_string.split(','),
+      sisa = split[0].length % 3,
+      rupiah = split[0].substr(0, sisa),
+      ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+    if (ribuan) {
+      separator = sisa ? '.' : '';
+      rupiah += separator + ribuan.join('.');
     }
+
+    rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+    return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+  }
 
   return (
     <>
