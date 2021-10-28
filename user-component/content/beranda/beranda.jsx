@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import dynamic from "next/dynamic";
 import Link from "next/link";
 import Image from "next/image";
 import Swal from "sweetalert2";
@@ -29,9 +28,7 @@ import RilisMedia from "../../components/beranda/rilis-media";
 import GaleryUpdate from "../../components/beranda/galery-update";
 import InfoVideo from "../../components/beranda/info-videos";
 import ComeJoin from "../../components/beranda/come-join";
-import { result } from "lodash";
-import { reactStrictMode } from "../../../next.config";
-import { height } from "dom-helpers";
+import style from "../../../styles/peserta/dashboard.module.css"
 
 // const Navigationbar = dynamic(
 //   () => import("../../components/template/Navbar.component"),
@@ -50,13 +47,6 @@ const Beranda = ({ session }) => {
   const { cekPelatihan } = useSelector(
     (state) => state.checkRegisteredPelatihan
   );
-  // const options = {
-  //   weekday: "long",
-  //   year: "numeric",
-  //   month: "long",
-  //   day: "numeric",
-  // };
-  // const { pelatihan } = useSelector(state => state.pelatihanByTema);
 
   const [activeTab, setActiveTab] = useState(0);
   const [akademiId, setAkademiId] = useState(null);
@@ -113,12 +103,6 @@ const Beranda = ({ session }) => {
       setAkademiId(akademi[0].id);
     }
   };
-
-  // const handleTemaId = () => {
-  //   if (tema) {
-  //     setTemaId(tema.id)
-  //   }
-  // }
 
   const handleHoverCard = () => {
     let arr = [];
@@ -604,27 +588,7 @@ const Beranda = ({ session }) => {
                     <h1 className="mb-0 fw-600 fz-20">{el.Name}</h1>
                     <div>
                       {el.pelatihan !== null ? (
-                        // <Link
-                        //   href={`/detail/akademi/id=${akademiId}&tema_id=${el.id}`}
-                        // >
-                        //   <a className="d-flex align-items-center">
-                        //     <>
-                        //       <p
-                        //         className="mb-0 fz-14 fw-600"
-                        //         style={{ color: "#0063CC", cursor: "pointer" }}
-                        //       >
-                        //         Lihat Semua
-                        //       </p>
-                        //       <IconArrow
-                        //         width="8"
-                        //         height="10"
-                        //         fill="#0063CC"
-                        //         className="ml-2"
-                        //         style={{ transform: "rotate(0)" }}
-                        //       />
-                        //     </>
-                        //   </a>
-                        // </Link>
+
                         <Link
                           href={`/detail/akademi/${akademiId}?id=${akademiId}&tema_id=${el.id}`}
                         >
@@ -667,7 +631,75 @@ const Beranda = ({ session }) => {
                                     handleMouseLeave(i, index)
                                   }
                                 >
-                                  <Cardss
+                                  <Card
+                                    className="shadow rounded-md"
+                                  >
+                                    {
+                                      show[i].pelatihan[index].hover !== true ?
+                                        <Image 
+                                          className={`${style.image_dashboard}`}
+                                          src={
+                                            process.env
+                                              .END_POINT_API_IMAGE_BEASISWA +
+                                            element.gambar
+                                          }
+                                          width={400}
+                                          height={180}
+                                          objectFit="cover"
+                                          alt="Image Thumbnail"
+                                        />
+                                      :
+                                        <div style={{filter:"brightness(0.3)"}}>
+                                          <Image 
+                                            className={`${style.image_dashboard}`}
+                                            src={
+                                              process.env
+                                                .END_POINT_API_IMAGE_BEASISWA +
+                                              element.gambar
+                                            }
+                                            width={500}
+                                            height={200}
+                                            objectFit="cover"
+                                            alt="Image Thumbnail"
+                                          />
+                                        </div>
+                                    }
+
+                                    <Card.ImgOverlay>
+                                                
+                                      <Badge bg={` rounded-xl py-3 px-4 ${style.badge_card}`}>
+                                          Pelatihan {el.metode_pelatihan}
+                                      </Badge>
+                                      {
+                                          show[i].pelatihan[index].hover === true ?
+                                              <>
+                                                  <Button
+                                                    variant="light"
+                                                    className={`float-right d-flex justify-content-center align-items-center ${style.wishlist_card}`}
+                                                  >
+                                                    <i
+                                                      className="ri-heart-line p-0"
+                                                      style={{ color: "#6C6C6C" }}
+                                                    ></i>
+                                                  </Button>
+                                                  <Button
+                                                    variant="light"
+                                                    className={`float-right d-flex justify-content-center align-items-center mr-2 ${style.wishlist_card}`}
+                                                  >
+                                                    <i
+                                                      className="ri-share-line p-0"
+                                                      style={{ color: "#6C6C6C" }}
+                                                    ></i>
+                                                  </Button>
+                                              </>
+                                          :
+                                              null
+                                      }
+                                        
+                                    </Card.ImgOverlay>
+
+                                  </Card>
+                                  {/* <Cardss
                                     label={
                                       <label>
                                         Pelatihan {element.metode_pelatihan}
@@ -690,7 +722,7 @@ const Beranda = ({ session }) => {
                                       show[i].pelatihan[index].hover ===
                                         true ? (
                                         <div
-                                          style={{ filter: "brightness(50%)" }}
+                                          style={{ filter: "brightness(0.3)"}}
                                         >
                                           <Image
                                             src={
@@ -698,18 +730,13 @@ const Beranda = ({ session }) => {
                                                 .END_POINT_API_IMAGE_BEASISWA +
                                               element.gambar
                                             }
-                                            // src={`https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/${element.gambar}`}
                                             layout="fill"
+                                            // width={500}
+                                            // height={200}
                                             objectFit="cover"
                                           />
                                         </div>
                                       ) : (
-                                        // <Image
-                                        //   src={process.env.END_POINT_API_IMAGE_BEASISWA + element.gambar}
-                                        //   layout="fill"
-                                        //   objectFit="cover"
-                                        //   style={{filter:"brightness(50%)"}}
-                                        // />
                                         <Image
                                           src={
                                             process.env
@@ -717,8 +744,12 @@ const Beranda = ({ session }) => {
                                             element.gambar
                                           }
                                           layout="fill"
+                                          // width={500}
+                                          // height={200}
                                           objectFit="cover"
                                         />
+
+                                        
                                       )
                                     }
                                   >
@@ -745,18 +776,14 @@ const Beranda = ({ session }) => {
                                       </p>
                                       {
                                         element.status !== "Closed" ? (
-                                          // <Badge pill bg="light" className=" text-success mb-5">
                                           <span className="badgess-green">
                                             {element.status}
                                           </span>
                                         ) : (
-                                          // </Badge>
-                                          // <Badge pill bg="light" className="text-danger mb-5">
                                           <span className="badgess-red">
                                             {element.status}
                                           </span>
                                         )
-                                        // </Badge>
                                       }
                                     </div>
                                     <h1
@@ -785,7 +812,6 @@ const Beranda = ({ session }) => {
                                           {moment(
                                             element.pendaftaran_selesai
                                           ).format("DD MMMM YYYY")}
-                                          {/* Registrasi: {(element.pendafataran_mulai).toLocaleDateString("en-GB", options)} - {(element.pendafataran_selesai).toLocaleDateString("en-GB", options)} */}
                                         </div>
                                         <div className="d-flex align-items-center mt-2 fz-13">
                                           <IconPeserta className="mr-2" />
@@ -817,12 +843,9 @@ const Beranda = ({ session }) => {
                                         >
                                           Quick View
                                         </button>
-                                        {/* <Button className="btn rounded-pill col-12" onClick={() => handleQuickView(i, element.gambar, element.status, element.gambar_mitra, element.akademi, element.deskripsi, element.name, element.kuota_peserta, element.mitra, element.alamat, element.pendaftaran_mulai, element.pendaftaran_selesai, element.id)}>
-                                                    Quick View
-                                                </Button> */}
                                       </div>
                                     )}
-                                  </Cardss>
+                                  </Cardss> */}
                                 </div>
                               );
                             })
