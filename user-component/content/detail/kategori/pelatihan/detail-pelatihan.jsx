@@ -180,19 +180,10 @@ const DetailPelatihan = ({ session }) => {
               </div>
 
               <div className="d-flex flex-wrap align-items-start mt-4">
-                <Image src={`/assets/icon/jam-1.svg`} width={30} height={30} />
-                <div className="ml-4">
-                  <p className="fw-600 fz-18 mb-2">Jadwal Pelatihan</p>
-                  <p className="fz-16">
-                    {moment(pelatihan.pelatihan_mulai).format("DD MMMM YYYY")} -{" "}
-                    {moment(pelatihan.pelatihan_selesai).format("DD MMMM YYYY")}
-                  </p>
+                <div className="mt-2">
+                  <Image src={`/assets/icon/jam-1.svg`} width={30} height={30}/>
                 </div>
-              </div>
-
-              <div className="d-flex flex-wrap align-items-start mt-4">
-                <Image src={`/assets/icon/jam-1.svg`} width={30} height={30} />
-                <div className="ml-4">
+                <div className="ml-1 col-8">
                   <p className="fw-600 fz-18 mb-2">Jadwal Pelatihan</p>
                   <p className="fz-16">
                     {moment(pelatihan.pelatihan_mulai).format("DD MMMM YYYY")} -{" "}
