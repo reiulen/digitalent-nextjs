@@ -41,6 +41,8 @@ export default function SeleksiAdministrasi() {
         setLabel("warning");
       } else if (data.status == "tes substansi") {
         setLabel("primary");
+      } else if (data.status == "tes substansi") {
+        setLabel("primary");
       } else if (data.status.includes("tidak")) {
         setLabel("danger");
       } else {
