@@ -40,7 +40,9 @@ const InformasiEdit = ({ funcViewEdit, token }) => {
   const [nomorHandphone, setNomorHandphone] = useState(
     (dataPribadi && dataPribadi.nomor_handphone) || ""
   );
-  const [agama, setAgama] = useState((dataPribadi && dataPribadi.agama) || null);
+  const [agama, setAgama] = useState(
+    (dataPribadi && dataPribadi.agama) || null
+  );
   const [tempatLahir, setTempatLahir] = useState(
     (dataPribadi && dataPribadi.tempat_lahir) || ""
   );
@@ -106,7 +108,7 @@ const InformasiEdit = ({ funcViewEdit, token }) => {
       dispatch({ type: UPDATE_DATA_PRIBADI_RESET });
       funcViewEdit(false);
     }
-  }, [errorUpdateData, success, dispatch]);
+  }, [errorUpdateData, success, dispatch, funcViewEdit]);
 
   const onChangeKtp = (e) => {
     const type = ["image/jpg", "image/png", "image/jpeg", "application/pdf"];
@@ -172,8 +174,8 @@ const InformasiEdit = ({ funcViewEdit, token }) => {
       const data = {
         nik,
         name,
-        jenis_kelamin: kelamin,
-        agama: agama,
+        jenis_kelamin: kelamin.label || kelamin,
+        agama: agama.label || agama,
         tempat_lahir: tempatLahir,
         tanggal_lahir: tanggalLahir,
         hubungan: hubunganUrgent,
@@ -183,8 +185,7 @@ const InformasiEdit = ({ funcViewEdit, token }) => {
         nomorHandphone,
         email,
       };
-      // file_cv: cv,
-      // portofolio: link,
+
       dispatch(updateProfileDataPribadi(data, token));
     } else {
       simpleValidator.current.showMessages();
@@ -236,7 +237,9 @@ const InformasiEdit = ({ funcViewEdit, token }) => {
               <Form.Label>Jenis Kelamin</Form.Label>
               <Select
                 placeholder={`${
-                  kelamin === "" ? "Silahkan Pilih Jenis Kelamin" : kelamin
+                  kelamin === null
+                    ? "Silahkan Pilih Jenis Kelamin"
+                    : dataPribadi.jenis_kelamin
                 }`}
                 options={optionsKelamin}
                 defaultValue={{value: kelamin, label: kelamin}}
@@ -274,7 +277,7 @@ const InformasiEdit = ({ funcViewEdit, token }) => {
             <Form.Group as={Col} md={6} controlId="formGridPassword">
               <Form.Label>Nomor Handphone</Form.Label>
               <Form.Control
-              disabled
+                disabled
                 type="text"
                 placeholder="Masukan Nomor Handphone"
                 value={nomorHandphone}
@@ -297,7 +300,7 @@ const InformasiEdit = ({ funcViewEdit, token }) => {
             <Form.Label>Agama</Form.Label>
             <Select
               placeholder={`${
-                agama === "" ? "Silahkan Pilih Agama" : dataPribadi.agama
+                agama === null ? "Silahkan Pilih Agama" : dataPribadi.agama
               }`}
               options={optionsAgama}
               defaultValue={{value: agama, label: agama}}
@@ -307,7 +310,7 @@ const InformasiEdit = ({ funcViewEdit, token }) => {
               }
             />
 
-            {simpleValidator.current.message("agama", agama.value, dataPribadi === null ? "" : "required", {
+            {simpleValidator.current.message("agama", agama, "required", {
               className: "text-danger",
             })}
           </Form.Group>
