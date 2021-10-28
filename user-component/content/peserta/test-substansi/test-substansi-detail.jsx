@@ -41,6 +41,8 @@ export default function SeleksiAdministrasi() {
         setLabel("warning");
       } else if (data.status == "tes substansi") {
         setLabel("primary");
+      } else if (data.status == "tes substansi") {
+        setLabel("primary");
       } else if (data.status.includes("tidak")) {
         setLabel("danger");
       } else {
@@ -101,7 +103,7 @@ export default function SeleksiAdministrasi() {
                 <Row>
                   <Col>
                     <Button
-                      className="btn-rounded-full font-weight-bold btn-block justify-content-center"
+                      className={`btn-rounded-full font-weight-bold btn-block justify-content-center ${style.background_outline_primary}`}
                       style={{ height: "40px", fontSize: "14px" }}
                       onClick={() => {}}
                     >
