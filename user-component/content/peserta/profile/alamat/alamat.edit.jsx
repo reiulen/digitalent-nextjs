@@ -291,10 +291,11 @@ const AlamatEdit = ({ funcViewEdit, token }) => {
               <Select
                 key={2}
                 placeholder={
-                  (alamat && alamat.provinsi) || "Silahkan Pilih Provinsi"
+                  alamat && alamat.provinsi
+                    ? alamat.provinsi
+                    : "Silahkan Pilih Provinsi"
                 }
                 options={optionsProvinsi}
-                defaultValue={provinsiDomisili}
                 onChange={(e) => {
                   selectRefKabupatenDomisili.select.clearValue();
                   setProvinsiDomisili({ label: e?.label, value: e?.value });
@@ -306,9 +307,7 @@ const AlamatEdit = ({ funcViewEdit, token }) => {
               />
               {simpleValidator.current.message(
                 "provinsi domisili",
-                provinsiDomisili !== null
-                  ? provinsiDomisili.value
-                  : provinsiDomisili,
+                provinsiDomisili,
                 "required",
                 {
                   className: "text-danger",
@@ -320,9 +319,10 @@ const AlamatEdit = ({ funcViewEdit, token }) => {
               <Select
                 key={2}
                 ref={(ref) => (selectRefKabupatenDomisili = ref)}
-                placeholder={(alamat && alamat.kota) || "Silahkan Pilih Kota"}
+                placeholder={
+                  alamat && alamat.kota ? alamat.kota : "Silahkan Pilih Kota"
+                }
                 options={optionsKabupatenDomisili}
-                defaultValue={kotaDomisili}
                 onChange={(e) =>
                   setKotaDomisili({ label: e?.label, value: e?.value })
                 }
@@ -332,7 +332,7 @@ const AlamatEdit = ({ funcViewEdit, token }) => {
               />
               {simpleValidator.current.message(
                 "kota domisili",
-                kotaDomisili !== null ? kotaDomisili.value : kotaDomisili,
+                kotaDomisili,
                 "required",
                 {
                   className: "text-danger",
@@ -389,20 +389,23 @@ const AlamatEdit = ({ funcViewEdit, token }) => {
   };
 
   const handleSubmit = (e) => {
+    console.log(kotaKtp);
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
       const data = {
         address_ktp: alamatKtp,
-        provinsi_ktp: provinsiKtp.label,
+        provinsi_ktp: provinsiKtp.label || provinsiKtp,
         kode_pos_ktp: kodePosKtp,
         kecamatan_ktp: kecamatanKtp,
-        kota_ktp: kotaKtp.label,
+        kota_ktp: kotaKtp.label || kotaKtp,
         address: alamatDomisili,
-        provinsi: provinsiDomisili.label,
-        kota: kotaDomisili.label,
+        provinsi: provinsiDomisili.label || provinsiDomisili,
+        kota: kotaDomisili.label || kotaDomisili,
         kecamatan: kecamatanDomisili,
         kode_pos: kodePosDomisili,
       };
+
+      console.log(data);
       dispatch(updateProfileAlamat(data, token));
     } else {
       simpleValidator.current.showMessages();
@@ -444,10 +447,11 @@ const AlamatEdit = ({ funcViewEdit, token }) => {
               <Form.Label>Provinsi</Form.Label>
               <Select
                 placeholder={
-                  (alamat && alamat.provinsi_ktp) || "Silahkan Pilih Provinsi"
+                  alamat && alamat.provinsi_ktp
+                    ? alamat.provinsi_ktp
+                    : "Silahkan Pilih Provinsi"
                 }
                 options={optionsProvinsi}
-                defaultValue={provinsiKtp}
                 onChange={(e) => {
                   selectRefKabupaten.select.clearValue();
                   setProvinsiKtp({ label: e?.label, value: e?.value });
@@ -459,7 +463,7 @@ const AlamatEdit = ({ funcViewEdit, token }) => {
               />
               {simpleValidator.current.message(
                 "provinsi ktp",
-                provinsiKtp !== null ? provinsiKtp.value : provinsiKtp,
+                provinsiKtp,
                 "required",
                 {
                   className: "text-danger",
@@ -471,10 +475,11 @@ const AlamatEdit = ({ funcViewEdit, token }) => {
               <Select
                 ref={(ref) => (selectRefKabupaten = ref)}
                 placeholder={
-                  (alamat && alamat.kota_ktp) || "Silahkan Pilih Kota"
+                  (alamat && alamat.kota_ktp) === ""
+                    ? "Silahkan Pilih Kota"
+                    : alamat.kota_ktp
                 }
                 options={optionsKabupaten}
-                defaultValue={kotaKtp}
                 onChange={(e) =>
                   setKotaKtp({ label: e?.label, value: e?.value })
                 }
@@ -484,7 +489,7 @@ const AlamatEdit = ({ funcViewEdit, token }) => {
               />
               {simpleValidator.current.message(
                 "kota ktp",
-                kotaKtp !== null ? kotaKtp.value : kotaKtp,
+                kotaKtp,
                 "required",
                 {
                   className: "text-danger",
