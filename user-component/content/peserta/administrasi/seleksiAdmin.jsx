@@ -35,6 +35,21 @@ export default function SeleksiAdministrasi() {
     }
   }, []);
 
+  const [label, setLabel] = useState();
+  useEffect(() => {
+    if (data.status.includes("tidak")) {
+      return setLabel("danger");
+    }
+    if (data.status.includes("lulus")) {
+      return setLabel("success");
+    }
+    if (data.status.includes("nunggu" || "seleksi")) {
+      return setLabel("warning");
+    } else {
+      setLabel("primary");
+    }
+  }, []);
+
   const [truncate, setTruncate] = useState(true);
 
   return (
@@ -53,7 +68,7 @@ export default function SeleksiAdministrasi() {
             </Col>
             <Col className="d-flex justify-content-end">
               <span
-                className="label label-inline label-light-warning font-weight-bold text-capitalize"
+                className={`label label-inline label-light-${label} font-weight-bold text-capitalize`}
                 style={{ borderRadius: "25px" }}
               >
                 {data.status}
