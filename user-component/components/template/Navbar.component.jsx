@@ -21,6 +21,7 @@ import {
 import IconSearch from "../../../components/assets/icon/Search";
 import IconLogin from "../../../components/assets/icon-dashboard-peserta/Login";
 import IconRegister from "../../../components/assets/icon-dashboard-peserta/Register";
+import Cookies from "js-cookie";
 
 const Navigationbar = ({ session }) => {
   const [isShowDropdown, setIsShowDropdown] = useState(false);
@@ -28,6 +29,8 @@ const Navigationbar = ({ session }) => {
     (state) => state.getDataPribadi
   );
   const handlerLogout = () => {
+    Cookies.remove("id_tema");
+    Cookies.remove("id_pelatihan");
     signOut();
   };
 
