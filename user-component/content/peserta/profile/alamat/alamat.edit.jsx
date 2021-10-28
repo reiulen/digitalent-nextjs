@@ -477,7 +477,7 @@ const AlamatEdit = ({ funcViewEdit, token }) => {
                 placeholder={
                   (alamat && alamat.kota_ktp) === ""
                     ? "Silahkan Pilih Kota"
-                    : alamat.kota_ktp
+                    : alamat && alamat.kota_ktp
                 }
                 options={optionsKabupaten}
                 onChange={(e) =>
