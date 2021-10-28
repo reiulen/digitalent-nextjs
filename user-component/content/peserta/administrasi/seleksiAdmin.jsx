@@ -43,7 +43,7 @@ export default function SeleksiAdministrasi() {
     if (data.status.includes("lulus")) {
       return setLabel("success");
     }
-    if (data.status.includes("nunggu")) {
+    if (data.status.includes("nunggu" || "seleksi")) {
       return setLabel("warning");
     } else {
       setLabel("primary");
