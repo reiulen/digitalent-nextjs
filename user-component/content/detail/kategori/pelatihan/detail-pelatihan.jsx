@@ -140,7 +140,7 @@ const DetailPelatihan = ({ session }) => {
                 {moment(pelatihan.pelatihan_mulai).format("DD MMMM YYYY")} -{" "}
                 {moment(pelatihan.pelatihan_selesai).format("DD MMMM YYYY")}
               </span>
-              {pelatihan.status === "Closed" ? (
+              {pelatihan.status !== "Closed" ? (
                 <div className="col-12 my-3">
                   {/* <Link href={`/peserta/form-pendaftaran?id=${pelatihan.id}`} passHref>
                                                 <a>
