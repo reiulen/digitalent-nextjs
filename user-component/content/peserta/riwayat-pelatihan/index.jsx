@@ -8,7 +8,9 @@ import Select from "react-select";
 import CardPeserta from "./card";
 import Administrasi from "./administrasi";
 import style from "./style.module.css";
+
 import { useSelector } from "react-redux";
+
 import {
   getAllRiwayatPelatihanPeserta,
   setValuePeserta,
