@@ -105,7 +105,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
       // }
 
       let success = false;
-
       if (!req.cookies.id_pelatihan) {
         const { data } = await store.dispatch(
           getAllRiwayatPelatihanPeserta(session.user.user.data.user.token)
