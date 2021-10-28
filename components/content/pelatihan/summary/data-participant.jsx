@@ -112,8 +112,12 @@ const DataParticipant = ({ token }) => {
     { value: "incomplete", label: "Incomplete" },
   ];
 
-  const [statusAdministrasi, setStatusAdministrasi] = useState(null);
-  const [statusPeserta, setStatusPeserta] = useState(null);
+  const [statusAdministrasi, setStatusAdministrasi] = useState(
+    peserta.list[0].administrasi || null
+  );
+  const [statusPeserta, setStatusPeserta] = useState(
+    peserta.list[0].status || null
+  );
 
   useEffect(() => {
     if (peserta) {
@@ -193,8 +197,8 @@ const DataParticipant = ({ token }) => {
   };
 
   const handleStatusPeserta = () => {
-    const administrasi = statusAdministrasi.value;
-    const status = statusPeserta.value;
+    const administrasi = statusAdministrasi.value || statusAdministrasi;
+    const status = statusPeserta.value || statusPeserta;
 
     const data = {
       id: peserta.list[0].id,
