@@ -33,26 +33,37 @@ export default function CardTemplateOriginal({ data }) {
   const [label, setLabel] = useState();
 
   useEffect(() => {
-    switch (data.status) {
-      case "menunggu":
-        return setLabel("warning");
-      case "lulus pelatihan":
-        return setLabel("success");
-      case "menunggu administrasi":
-        return setLabel("warning");
-      case "menunggu tes substansi":
-        return setLabel("warning");
-      case "pelatihan":
-        return setLabel("primary");
-      case "tes substansi":
-        return setLabel("primary");
-      case "lulus tes substansi":
-        return setLabel("success");
-      case "diterima":
-        return setLabel("success");
-      default:
-        return setLabel("danger");
+    if (data.status.includes("menunggu")) {
+      return setLabel("warning");
     }
+    if (data.status.includes("tidak") || data.status.includes("tolak")) {
+      return setLabel("danger");
+    }
+    if (data.status.includes("lulus") || data.status.includes("diterima")) {
+      return setLabel("success");
+    }
+    if (data.status.includes("tes")) return setLabel("primary");
+    if (data.status.includes("pelatihan")) return setLabel("primary");
+    // switch (data.status) {
+    //   case "menunggu":
+    //     return setLabel("warning");
+    //   case "lulus pelatihan":
+    //     return setLabel("success");
+    //   case "menunggu administrasi":
+    //     return setLabel("warning");
+    //   case "menunggu tes substansi":
+    //     return setLabel("warning");
+    //   case "pelatihan":
+    //     return setLabel("primary");
+    //   case "tes substansi":
+    //     return setLabel("primary");
+    //   case "lulus tes substansi":
+    //     return setLabel("success");
+    //   case "diterima":
+    //     return setLabel("success");
+    //   default:
+    //     return setLabel("danger");
+    // }
   }, []);
 
   const [imageSertifikasi, setImageSertifikasi] = useState();
@@ -130,7 +141,12 @@ export default function CardTemplateOriginal({ data }) {
                 case "lulus pelatihan":
                   Cookies.set("id_pelatihan", data.id);
                   Cookies.set("id_tema", data.tema_id);
-                  return router.push(`/peserta/test-substansi`);
+                  return router.push(
+                    `/peserta/riwayat-pelatihan/${data.name
+                      .split(" ")
+                      .join("-")
+                      .toLowerCase()}`
+                  );
                 case "menunggu administrasi":
                   Cookies.set("id_pelatihan", data.id);
                   Cookies.set("id_tema", data.tema_id);
@@ -241,6 +257,10 @@ export default function CardTemplateOriginal({ data }) {
                         ? "ikuti pelatihan"
                         : data.status == "diterima"
                         ? "lulus pelatihan"
+                        : data.status == "lulus tes substansi"
+                        ? "lolos substansi"
+                        : data.status == "ditolak"
+                        ? "tidak lulus"
                         : data.status}
                     </p>
                   </Col>
@@ -453,7 +473,7 @@ export default function CardTemplateOriginal({ data }) {
             <Fragment>
               <Col className="d-flex justify-content-center ">
                 <Button
-                  className={`btn-rounded-full font-weight-bold btn-block justify-content-center mt-5 `}
+                  className={`btn-rounded-full font-weight-bold btn-block justify-content-center mt-5 ${style.background_outline_primary}`}
                   style={{ height: "40px", fontSize: "14px" }}
                   onClick={() => {
                     console.log("ini click button 2 ");
