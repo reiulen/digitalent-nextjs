@@ -13,7 +13,7 @@ import {
   storeTrainingStep1,
   getTrainingStep1,
   dropdownKabupaten,
-  dropdownTemabyAkademi
+  dropdownTemabyAkademi,
 } from "../../../../../redux/actions/pelatihan/function.actions";
 import LoadingPage from "../../../../LoadingPage";
 
@@ -22,7 +22,9 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const drowpdownTemabyAkademi = useSelector(state => state.drowpdownTemabyAkademi)
+  const drowpdownTemabyAkademi = useSelector(
+    (state) => state.drowpdownTemabyAkademi
+  );
 
   const { trainingData } = useSelector((state) => state.trainingStep1);
   const { error: dropdownErrorLevelPelatihan, data: dataLevelPelatihan } =
@@ -124,7 +126,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
   const [tuna_daksa, setTunaDaksa] = useState(trainingData.tuna_daksa);
   // const [disabilitas, setDisabilitas] = useState(trainingData.disabilitas);
 
-  const [optionsTema, setOptionsTema] = useState([])
+  const [optionsTema, setOptionsTema] = useState([]);
   const optionsAkademi = dataAkademi.data;
 
   let optionBatch = [];
@@ -192,8 +194,8 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
 
   useEffect(() => {
     dispatch(getTrainingStep1());
-    dispatch(dropdownTemabyAkademi(academy.value, token))
-    setOptionsTema(dataTema.data)
+    dispatch(dropdownTemabyAkademi(academy.value, token));
+    setOptionsTema(dataTema.data);
     editorRef.current = {
       CKEditor: require("@ckeditor/ckeditor5-react").CKEditor, //Added .CKEditor
       ClassicEditor: require("@ckeditor/ckeditor5-build-classic"),
@@ -468,7 +470,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
             {simpleValidator.current.message(
               "nama pelatihan",
               name,
-              "required",
+              "required|max:100",
               { className: "text-danger" }
             )}
           </div>

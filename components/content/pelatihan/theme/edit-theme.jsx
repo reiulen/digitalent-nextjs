@@ -192,7 +192,7 @@ const EditTheme = ({ token }) => {
                 {simpleValidator.current.message(
                   "nama tema",
                   name,
-                  "required",
+                  "required|max:100",
                   { className: "text-danger" }
                 )}
               </div>
