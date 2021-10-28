@@ -171,7 +171,7 @@ export default function SeleksiAdministrasi() {
                       className={`ri-download-cloud-fill mr-2 `}
                       style={{ color: "#007cff" }}
                     ></i>
-                    Unduh Syllabus
+                    Unduh Silabus
                   </Button>
                 </Col>
                 <Col className="px-10">

@@ -101,50 +101,16 @@ const Sidebar = () => {
         </Link>
       </div>
       <div>
-        <Link href="/peserta/riwayat-pelatihan" passHref>
-          <div
-            className={`${
-              router.pathname === "/peserta/riwayat-pelatihan"
-                ? styles.activeMenuItem
-                : styles.menuItem
-            } d-flex flex-row`}
-          >
+        <Link href="/peserta/administrasi" passHref>
+          <div className={`${styles.menuItem} d-flex flex-row`}>
             <div className="p-2">
-              <i
-                className={`${
-                  router.pathname === "/peserta/riwayat-pelatihan"
-                    ? styles.activeIconMenu
-                    : styles.iconMenu
-                } ri-history-line`}
-              ></i>
+              <i className={`${styles.iconMenu} ri-survey-line`}></i>
             </div>
             <div className="p-2">
-              <td>Riwayat Pelatihan</td>
+              <td>Administrasi</td>
             </div>
           </div>
         </Link>
-      </div>
-      <div>
-        <div
-          className={`${
-            router.pathname === "/peserta/bookmark"
-              ? styles.activeMenuItem
-              : styles.menuItem
-          } d-flex flex-row`}
-        >
-          <div className="p-2">
-            <i
-              className={`${
-                router.pathname === "/peserta/bookmark"
-                  ? styles.activeIconMenu
-                  : styles.iconMenu
-              } ri-heart-3-line`}
-            ></i>
-          </div>
-          <div className="p-2">
-            <td>Bookmark</td>
-          </div>
-        </div>
       </div>
       <div>
         <Link href="/peserta/test-substansi" passHref>
@@ -175,7 +141,6 @@ const Sidebar = () => {
           </div>
         </Link>
       </div>
-
       <div>
         <Link href="/peserta/survey" passHref>
           <div
@@ -225,26 +190,61 @@ const Sidebar = () => {
         </Link>
       </div>
       <div>
+        <Link href="/peserta/riwayat-pelatihan" passHref>
+          <div
+            className={`${
+              router.pathname === "/peserta/riwayat-pelatihan"
+                ? styles.activeMenuItem
+                : styles.menuItem
+            } d-flex flex-row`}
+          >
+            <div className="p-2">
+              <i
+                className={`${
+                  router.pathname === "/peserta/riwayat-pelatihan"
+                    ? styles.activeIconMenu
+                    : styles.iconMenu
+                } ri-history-line`}
+              ></i>
+            </div>
+            <div className="p-2">
+              <td>Riwayat Pelatihan</td>
+            </div>
+          </div>
+        </Link>
+      </div>
+      <div>
+        <div
+          className={`${
+            router.pathname === "/peserta/bookmark"
+              ? styles.activeMenuItem
+              : styles.menuItem
+          } d-flex flex-row`}
+        >
+          <div className="p-2">
+            <i
+              className={`${
+                router.pathname === "/peserta/bookmark"
+                  ? styles.activeIconMenu
+                  : styles.iconMenu
+              } ri-heart-3-line`}
+            ></i>
+          </div>
+          <div className="p-2">
+            <td>Bookmark</td>
+          </div>
+        </div>
+      </div>
+
+      <div>
         <div className={`${styles.menuItem} d-flex flex-row`}>
           <div className="p-2">
-            <i className={`${styles.iconMenu} ri-pie-chart-line`}></i>
+            <i className={`${styles.iconMenu} ri-menu-2-line`}></i>
           </div>
           <div className="p-2">
             <td>Artikel</td>
           </div>
         </div>
-      </div>
-      <div>
-        <Link href="/peserta/administrasi" passHref>
-          <div className={`${styles.menuItem} d-flex flex-row`}>
-            <div className="p-2">
-              <i className={`${styles.iconMenu} ri-survey-line`}></i>
-            </div>
-            <div className="p-2">
-              <td>Administrasi</td>
-            </div>
-          </div>
-        </Link>
       </div>
 
       <div
