@@ -697,155 +697,102 @@ const Beranda = ({ session }) => {
                                       }
                                         
                                     </Card.ImgOverlay>
-
-                                  </Card>
-                                  {/* <Cardss
-                                    label={
-                                      <label>
-                                        Pelatihan {element.metode_pelatihan}
-                                      </label>
-                                    }
-                                    button={
-                                      show[i].pelatihan[index].hover ===
-                                        true ? (
-                                        <div className="row">
-                                          <Button className="btn btn-white py-1 pl-2 pr-1 rounded-circle mr-2">
-                                            <i className="ri-share-line" />
-                                          </Button>
-                                          <Button className="btn btn-white py-1 pl-2 pr-1 mr-2 rounded-circle">
-                                            <i className="ri-heart-line" />
-                                          </Button>
-                                        </div>
-                                      ) : null
-                                    }
-                                    thumbnail={
-                                      show[i].pelatihan[index].hover ===
-                                        true ? (
-                                        <div
-                                          style={{ filter: "brightness(0.3)"}}
-                                        >
+                                      <Card.Body className="position-relative">
+                                        <div className={style.bungkus_mitra_pelatihan}>
                                           <Image
                                             src={
+                                              "/assets/media/default-card.png" ||
                                               process.env
-                                                .END_POINT_API_IMAGE_BEASISWA +
-                                              element.gambar
+                                                .END_POINT_API_IMAGE_PARTNERSHIP +
+                                                "/" +
+                                                element.gambar_mitra
                                             }
-                                            layout="fill"
-                                            // width={500}
-                                            // height={200}
+                                            width={62}
+                                            height={62}
                                             objectFit="cover"
+                                            thumbnail
+                                            roundedCircle
+                                            className={`${style.image_card_pelatihan} img-fluild`}
+                                            alt="Image Mitra"
                                           />
                                         </div>
-                                      ) : (
-                                        <Image
-                                          src={
-                                            process.env
-                                              .END_POINT_API_IMAGE_BEASISWA +
-                                            element.gambar
-                                          }
-                                          layout="fill"
-                                          // width={500}
-                                          // height={200}
-                                          objectFit="cover"
-                                        />
+                                        <div
+                                          className="d-flex justify-content-between position-relative pb-0 mb-0"
+                                          style={{ top: "-15px" }}
+                                        >
+                                          <p className={`pl-20 my-0 ${style.text_mitra}`}>
+                                              {element.mitra}
+                                          </p>
 
-                                        
-                                      )
-                                    }
-                                  >
-                                    <div className="rounded mt-0 pt-0">
-                                      <Image
-                                        src={
-                                          "/assets/media/default-card.png" ||
-                                          process.env
-                                            .END_POINT_API_IMAGE_PARTNERSHIP +
-                                            "/" +
-                                            element.gambar_mitra
-                                        }
-                                        layout="fill"
-                                        objectFit="cover"
-                                      />
-                                    </div>
-
-                                    <div className="d-flex align-items-center justify-content-between pl-24">
-                                      <p
-                                        className="fw-600 fz-14"
-                                        style={{ color: "#6C6C6C" }}
-                                      >
-                                        {element.mitra}
-                                      </p>
-                                      {
-                                        element.status !== "Closed" ? (
-                                          <span className="badgess-green">
-                                            {element.status}
-                                          </span>
-                                        ) : (
-                                          <span className="badgess-red">
-                                            {element.status}
-                                          </span>
-                                        )
-                                      }
-                                    </div>
-                                    <h1
-                                      className="fz-18 fw-600 mt-4"
-                                      style={{ color: "#1F1F1F" }}
-                                    >
-                                      {element.name}
-                                    </h1>
-                                    <h3
-                                      className="mb-0 fz-14 fw-400 mt-4"
-                                      style={{ color: "#6C6C6C" }}
-                                    >
-                                      {element.akademi}
-                                    </h3>
-                                    <hr />
-
-                                    {show[i].pelatihan[index].hover !== true ? (
-                                      <div className="mt-2">
-                                        <div className="d-flex align-items-center fz-13">
-                                          <IconTime className="mr-2" />
-                                          Registrasi:{" "}
-                                          {moment(
-                                            element.pendaftaran_mulai
-                                          ).format("DD MMMM YYYY")}{" "}
-                                          -{" "}
-                                          {moment(
-                                            element.pendaftaran_selesai
-                                          ).format("DD MMMM YYYY")}
-                                        </div>
-                                        <div className="d-flex align-items-center mt-2 fz-13">
-                                          <IconPeserta className="mr-2" />
-                                          Kuota: {element.kuota_peserta} Peserta
-                                        </div>
-                                      </div>
-                                    ) : (
-                                      <div className="mt-2 text-center btn-hover-quik">
-                                        <button
-                                          className="btn btn-outline-primary-new rounded-pill py-3 col-12"
-                                          onClick={() =>
-                                            handleQuickView(
-                                              i,
-                                              element.gambar,
-                                              element.status,
-                                              element.gambar_mitra,
-                                              element.akademi,
-                                              element.deskripsi,
-                                              element.name,
-                                              element.kuota_peserta,
-                                              element.mitra,
-                                              element.alamat,
-                                              element.pendaftaran_mulai,
-                                              element.pendaftaran_selesai,
-                                              element.id,
-                                              element.metode_pelatihan
+                                          {
+                                            element.status === "Open" ? (
+                                              <p
+                                                className={`${style.status_mitra_open} text-uppercase font-weight-bolder my-0`}
+                                              >
+                                                Open
+                                              </p>
+                                            ) : (
+                                              <p
+                                                className={`${style.status_mitra_close} text-uppercase font-weight-bolder my-0`}
+                                              >
+                                                Close
+                                              </p>
                                             )
                                           }
-                                        >
-                                          Quick View
-                                        </button>
-                                      </div>
-                                    )}
-                                  </Cardss> */}
+                                        </div>
+                                        <p className={`my-0 ${style.title_card}`}>
+                                          {element.name}
+                                        </p>
+                                        <p style={{ fontSize: "14px", color: "#6C6C6C" }}>
+                                          {element.akademi}
+                                        </p>
+                                        <hr />
+
+                                        {
+                                          show[i].pelatihan[index].hover !== true ?
+                                              <div className="d-flex flex-column">
+                                                  <div className="date d-flex align-items-center align-middle mr-7">
+                                                      <i className="ri-time-line"></i>
+                                                      <span
+                                                          className={`${style.text_date_register} pl-2`}
+                                                      >
+                                                          Registrasi: {moment(element.pendaftaran_mulai).format("DD MMMM YYYY")} - {moment(element.pendaftaran_selesai).format("DD MMMM YYYY")}
+                                                      </span>
+                                                  </div>
+                                                  <div className="date d-flex align-items-center align-middle">
+                                                      <i className="ri-group-line"></i>
+                                                      <span
+                                                          className={`${style.text_date_register} pl-2`}
+                                                      >
+                                                          Kuota: {element.kuota_peserta} Peserta
+                                                      </span>
+                                                  </div>
+                                              </div>
+                                          :
+                                              <Button
+                                                  className={`btn-block rounded-xl ${style.btn_quick_view}`}
+                                                  onClick={() => handleQuickView(i,
+                                                    element.gambar,
+                                                    element.status,
+                                                    element.gambar_mitra,
+                                                    element.akademi,
+                                                    element.deskripsi,
+                                                    element.name,
+                                                    element.kuota_peserta,
+                                                    element.mitra,
+                                                    element.alamat,
+                                                    element.pendaftaran_mulai,
+                                                    element.pendaftaran_selesai,
+                                                    element.id,
+                                                    element.metode_pelatihan
+                                                  )}
+                                              >
+                                                  Quick View
+                                              </Button>
+                                        }
+
+                                      </Card.Body>
+                                  </Card>
                                 </div>
                               );
                             })
@@ -886,7 +833,7 @@ const Beranda = ({ session }) => {
                               </div>
 
                               <div className="col-12 col-md-8">
-                                <div className="py-8">
+                                <div className="py-8 ml-3">
                                   <div className="position-relative d-flex align-items-start justify-content-between">
                                     <div className="d-flex d-flex align-items-start">
                                       <div className="dot-bullet">
@@ -960,8 +907,8 @@ const Beranda = ({ session }) => {
                                         <IconPeserta className="mr-2" />
                                         Kuota: {cardKuota}
                                       </span>
-                                      <span style={{ color: "#6C6C6C" }}>
-                                        <i className="ri-map-pin-line mr-2"></i>
+                                      <span style={{ color: "#6C6C6C" }} className="d-flex align-items-center">
+                                        <i className="ri-map-pin-line mr-2" style={{ color: "#6C6C6C" }}></i>
                                         Lokasi: {cardAlamat}
                                       </span>
                                     </div>

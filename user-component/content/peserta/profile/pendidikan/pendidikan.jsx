@@ -18,8 +18,7 @@ const Pendidikan = ({ token }) => {
     dispatch(getProfilePendidikan(token));
   }, [dispatch, token]);
 
-  if(pendidikan !== undefined){
-
+  if (pendidikan !== undefined) {
     return (
       <>
         <div className="mt-5 pendidikan">
@@ -35,25 +34,50 @@ const Pendidikan = ({ token }) => {
               <p className="text-neutral-body my-1">
                 Asal Sekolah / Perguruan Tinggi
               </p>
-              {pendidikan.jenjang === "Tidak Sekolah" && (
-              <p>
-                -
-              </p>
+              {pendidikan.jenjang === "Tidak Sekolah" && <p>-</p>}
+              {pendidikan.jenjang === "TK" ||
+                pendidikan.jenjang === "SD/Sederajat" ||
+                (pendidikan.jenjang === "SMP/Sederajat" && (
+                  <p>
+                    {pendidikan !== undefined && pendidikan.lainnya === "0"
+                      ? "-"
+                      : pendidikan.lainya}
+                  </p>
+                ))}
+              {pendidikan && pendidikan.jenjang === "D3" && (
+                <p>
+                  {pendidikan.asal_pendidikan === "0"
+                    ? "-"
+                    : pendidikan.asal_pendidikan}
+                </p>
               )}
-              {pendidikan.jenjang === "TK" || pendidikan.jenjang === "SD/Sederajat" || pendidikan.jenjang === "SMP/Sederajat" && (
-              <p>
-                {(pendidikan !== undefined && pendidikan.lainnya === "0")
-                  ? "-"
-                  : pendidikan.lainya}
-              </p>
+              {pendidikan && pendidikan.jenjang === "SMA/Sederajat" && (
+                <p>
+                  {pendidikan.asal_pendidikan === "0"
+                    ? "-"
+                    : pendidikan.asal_pendidikan}
+                </p>
               )}
-              {pendidikan.jenjang === "SMA/Sederajat" || pendidikan.jenjang === "D3" || pendidikan.jenjang === "S1" || pendidikan.jenjang === "S2" || pendidikan.jenjang === "S3" && (
-              <p>
-                {(pendidikan !== undefined && pendidikan.asal_pendidikan === "0"
-                  ? "-"
-                  : pendidikan !== undefined && pendidikan.asal_pendidikan) ||
-                  "-"}
-              </p>
+              {pendidikan && pendidikan.jenjang === "S1" && (
+                <p>
+                  {pendidikan.asal_pendidikan === "0"
+                    ? "-"
+                    : pendidikan.asal_pendidikan}
+                </p>
+              )}
+              {pendidikan && pendidikan.jenjang === "S3" && (
+                <p>
+                  {pendidikan.asal_pendidikan === "0"
+                    ? "-"
+                    : pendidikan.asal_pendidikan}
+                </p>
+              )}
+              {pendidikan && pendidikan.jenjang === "S2" && (
+                <p>
+                  {pendidikan.asal_pendidikan === "0"
+                    ? "-"
+                    : pendidikan.asal_pendidikan}
+                </p>
               )}
             </Col>
             <Col md={6}>
@@ -63,7 +87,8 @@ const Pendidikan = ({ token }) => {
                 pendidikan !== undefined &&
                 pendidikan.program_studi === "0"
                   ? "-"
-                  : pendidikan !== undefined && pendidikan.program_studi) || "-"}
+                  : pendidikan !== undefined && pendidikan.program_studi) ||
+                  "-"}
               </p>
             </Col>
           </Row>
@@ -106,9 +131,9 @@ const Pendidikan = ({ token }) => {
         </div>
       </>
     );
-  }else {
-      return(
-        <>
+  } else {
+    return (
+      <>
         <div className="mt-5 pendidikan">
           <h3 className="font-weight-bolder mb-5">Pendidikan Terakhir</h3>
           <Row>
@@ -122,43 +147,32 @@ const Pendidikan = ({ token }) => {
               <p className="text-neutral-body my-1">
                 Asal Sekolah / Perguruan Tinggi
               </p>
-              <p>
-                -
-              </p>
-             
+              <p>-</p>
             </Col>
             <Col md={6}>
               <p className="text-neutral-body my-1">Program Studi</p>
-              <p>
-               -
-              </p>
+              <p>-</p>
             </Col>
           </Row>
           <Row>
             <Col md={6}>
               <p className="text-neutral-body my-1">IPK</p>
-              <p>
-               -
-              </p>
+              <p>-</p>
             </Col>
             <Col md={6}>
               <p className="text-neutral-body my-1">Tahun Masuk</p>
-              <p>
-               -
-              </p>
+              <p>-</p>
             </Col>
           </Row>
           <Row>
             <Col md={12}>
               <p className="text-neutral-body my-1">Unggah Ijazah</p>
-              <p>
-               -
-              </p>
+              <p>-</p>
             </Col>
           </Row>
         </div>
       </>
-      )
+    );
   }
 };
 
