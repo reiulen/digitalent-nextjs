@@ -159,7 +159,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
           asal_pendidikan: "0",
           lainya,
           program_studi: "0",
-          ipk,
+          ipk: "0",
           tahun_masuk: parseInt(tahunMasuk),
           ijasah: ijazah,
         };
