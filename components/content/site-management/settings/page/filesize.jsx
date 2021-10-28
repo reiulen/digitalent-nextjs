@@ -59,7 +59,8 @@ export default function FileSize(props) {
               type="number"
               value={document}
               className="form-control"
-              placeholder="Size Document"
+              placeholder="Size Document" step="1" 
+              pattern="\d+"
               onChange={e => {
                 setDocument(e.target.value)
               }}

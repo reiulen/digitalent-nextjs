@@ -308,7 +308,7 @@ const Dashboard = ({ session }) => {
                         <div className="date d-flex align-items-center align-middle">
                           <i className="ri-history-fill"></i>
                           <span className={`${style.text_date_register} pl-2`}>
-                            Status : Test Substansi
+                            Status : {pelatihan.pelatihan_berjalan.status}
                           </span>
                         </div>
                       </div>
@@ -326,19 +326,21 @@ const Dashboard = ({ session }) => {
                   <Card.Title>
                     <p className={style.card_title}>Pelatihan Sebelumnya</p>
                   </Card.Title>
-                  <div className="text-center">
-                    <Image
-                      src={"/assets/icon/logo-dts-if-empty.png"}
-                      alt="Logo DTS"
-                      width={214}
-                      height={213}
-                    />
+                  <div
+                    className="text-center"
+                    style={{
+                      height: "200",
+                      paddingTop: "75px",
+                      paddingBottom: "75px",
+                    }}
+                  >
+                    <Image src={"/assets/icon/logo-dts-if-empty.png"} alt="Logo DTS" width={214} height={213} />
                     <p>Anda tidak memiliki histori pelatihan sebelumnya.</p>
                     <br />
                     <Link href="/" passHref>
                       <Button
                         variant="bg-primary"
-                        className="font-weight-bolder text-white rounded-full"
+                        className="font-weight-bolder text-white rounded-full mt-6"
                       >
                         Pilih Pelatihan
                       </Button>
@@ -381,7 +383,6 @@ const Dashboard = ({ session }) => {
                           roundedCircle
                           className={`${style.image_card_pelatihan} img-fluild`}
                         />
-                        dikan
                       </div>
                       <div
                         className="d-flex justify-content-between position-relative pb-0 mb-0"
@@ -423,7 +424,7 @@ const Dashboard = ({ session }) => {
                         <div className="date d-flex align-items-center align-middle">
                           <i className="ri-history-fill"></i>
                           <span className={`${style.text_date_register} pl-2`}>
-                            Status : Test Substansi
+                            Status : {pelatihan.pelatihan_selesi.status}
                           </span>
                         </div>
                       </div>

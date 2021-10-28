@@ -41,7 +41,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
       await store.dispatch(getAllPage(session.user.user.data.token));
       return {
-        props: { session, title: "Page - Site Management" },
+        props: { session, title: "Pelatihan - Site Management" },
       };
     }
 );

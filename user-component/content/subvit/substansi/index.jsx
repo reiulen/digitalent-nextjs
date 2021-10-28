@@ -381,7 +381,7 @@ const SubtansiUser = ({ token }) => {
                     <Button
                       className={styles.btnNext}
                       onClick={handleDone}
-                      disabled={!listAnswer.includes(data?.total_questions)}
+                      // disabled={!listAnswer.includes(data?.total_questions)}
                     >
                       Selesai
                     </Button>
