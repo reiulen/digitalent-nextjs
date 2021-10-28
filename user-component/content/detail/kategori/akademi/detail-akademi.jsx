@@ -93,7 +93,7 @@ const DetailAkademi = ({ session }) => {
     const handleHoverCard = () => {
         let arr = [...show]
 
-        if (pelatihan !== undefined && pelatihan.list.length !== 0){
+        if (pelatihan !== undefined && pelatihan.list && pelatihan.list.length !== 0){
             for (let i = 0; i < pelatihan.list.length; i++){
                 arr.push (false)
             }
@@ -383,15 +383,29 @@ const DetailAkademi = ({ session }) => {
                                                 className="shadow rounded-md"
                                                 onMouseEnter={() => handleMouseEnter(i)}
                                                 onMouseLeave={() => handleMouseLeave(i)}
-                                            >
-                                                <Image 
-                                                    className={`${style.image_dashboard}`}
-                                                    src={process.env.END_POINT_API_IMAGE_BEASISWA + el.gambar}
-                                                    width={400}
-                                                    height={180}
-                                                    objectFit="cover"
-                                                    alt="Image Thumbnail"
-                                                />
+                                            >   
+                                                {
+                                                    show[i] !== true ?
+                                                        <Image 
+                                                            className={`${style.image_dashboard}`}
+                                                            src={process.env.END_POINT_API_IMAGE_BEASISWA + el.gambar}
+                                                            width={400}
+                                                            height={180}
+                                                            objectFit="cover"
+                                                            alt="Image Thumbnail"
+                                                        />
+                                                    :
+                                                        <div style={{filter:"brightness(0.3)"}}>
+                                                            <Image 
+                                                                className={`${style.image_dashboard}`}
+                                                                src={process.env.END_POINT_API_IMAGE_BEASISWA + el.gambar}
+                                                                width={500}
+                                                                height={200}
+                                                                objectFit="cover"
+                                                                alt="Image Thumbnail"
+                                                            />
+                                                        </div>
+                                                }
                                                 <Card.ImgOverlay>
                                                 
                                                     <Badge bg={` rounded-xl py-3 px-4 ${style.badge_card}`}>
@@ -645,8 +659,8 @@ const DetailAkademi = ({ session }) => {
                             })
                             
                         :   
-                            <div className="row d-flex justify-content-center">
-                                <h3 className="text-center col-12">
+                            <div className="row">
+                                <h3 className="text-center mt-5 mx-5">
                                     Pelatihan Tidak Ditemukan
                                 </h3>
                             </div>
