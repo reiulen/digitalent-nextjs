@@ -103,7 +103,7 @@ export default function SeleksiAdministrasi() {
                 <Row>
                   <Col>
                     <Button
-                      className="btn-rounded-full font-weight-bold btn-block justify-content-center"
+                      className={`btn-rounded-full font-weight-bold btn-block justify-content-center ${style.background_outline_primary}`}
                       style={{ height: "40px", fontSize: "14px" }}
                       onClick={() => {}}
                     >
