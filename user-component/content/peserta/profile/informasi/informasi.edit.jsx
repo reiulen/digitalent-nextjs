@@ -69,6 +69,8 @@ const InformasiEdit = ({ funcViewEdit, token }) => {
     (dataPribadi && dataPribadi.file_path + dataPribadi.File_ktp) || ""
   );
 
+  console.log(dataPribadi)
+
   // const [cvName, setCvName] = useState(
   //   (dataPribadi && dataPribadi.cv) || "Belum ada file"
   // );
@@ -106,7 +108,7 @@ const InformasiEdit = ({ funcViewEdit, token }) => {
       dispatch({ type: UPDATE_DATA_PRIBADI_RESET });
       funcViewEdit(false);
     }
-  }, [errorUpdateData, success, dispatch]);
+  }, [errorUpdateData, success, dispatch, funcViewEdit]);
 
   const onChangeKtp = (e) => {
     const type = ["image/jpg", "image/png", "image/jpeg", "application/pdf"];
@@ -238,7 +240,7 @@ const InformasiEdit = ({ funcViewEdit, token }) => {
                   kelamin === "" ? "Silahkan Pilih Jenis Kelamin" : kelamin
                 }`}
                 options={optionsKelamin}
-                defaultValue={kelamin}
+                defaultValue={{value: kelamin, label: kelamin}}
                 onChange={(e) => setKelamin({ label: e.label, value: e.value })}
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("jenis kelamin")
@@ -247,7 +249,7 @@ const InformasiEdit = ({ funcViewEdit, token }) => {
               {simpleValidator.current.message(
                 "jenis kelamin",
                 kelamin,
-                "required",
+                kelamin === null ? "required" : "",
                 {
                   className: "text-danger",
                 }
@@ -299,7 +301,7 @@ const InformasiEdit = ({ funcViewEdit, token }) => {
                 agama === "" ? "Silahkan Pilih Agama" : dataPribadi.agama
               }`}
               options={optionsAgama}
-              defaultValue={agama}
+              defaultValue={{value: agama, label: agama}}
               onChange={(e) => setAgama({ label: e.label, value: e.value })}
               onBlur={() =>
                 simpleValidator.current.showMessageFor("jenis kelamin")

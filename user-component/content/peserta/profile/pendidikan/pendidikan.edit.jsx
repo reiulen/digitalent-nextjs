@@ -37,10 +37,13 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
   } = useSelector((state) => state.updatePendidikan);
 
   const [jengjangPendidikan, setJenjangPendidikan] = useState(
-    (pendidikan && pendidikan.jenjang) || null
+    (pendidikan && pendidikan.jenjang) || {
+      value: "",
+      label: "",
+    }
   );
   const [asalSekolah, setAsalSekolah] = useState(
-    (pendidikan && pendidikan.asal_pendidikan) || null
+    (pendidikan && pendidikan.asal_sekolah) || ""
   );
   const [lainya, setLainya] = useState((pendidikan && pendidikan.lainya) || "");
   const [programStudi, setProgramStudi] = useState(
@@ -87,7 +90,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
     success,
     errorUpdateData,
     dispatch,
-    jengjangPendidikan,
+    jengjangPendidikan.value,
     funcViewEdit,
     token,
     asalSekolah,
@@ -139,7 +142,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
     if (simpleValidator.current.allValid()) {
       if (jengjangPendidikan.value === 19) {
         data = {
-          jenjang: jengjangPendidikan.label || jengjangPendidikan,
+          jenjang: jengjangPendidikan.label,
           asal_pendidikan: "-",
           lainya: "-",
           program_studi: "-",
@@ -152,17 +155,17 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
         jengjangPendidikan.value <= 22
       ) {
         data = {
-          jenjang: jengjangPendidikan.label || jengjangPendidikan,
+          jenjang: jengjangPendidikan.label,
           asal_pendidikan: "0",
           lainya,
           program_studi: "0",
-          ipk: "0",
+          ipk,
           tahun_masuk: parseInt(tahunMasuk),
           ijasah: ijazah,
         };
       } else if (jengjangPendidikan.value === 23) {
         data = {
-          jenjang: jengjangPendidikan.label || jengjangPendidikan,
+          jenjang: jengjangPendidikan.label,
           asal_pendidikan: asalSekolah,
           lainya: "-",
           program_studi: "0",
@@ -175,7 +178,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
         jengjangPendidikan.value <= 27
       ) {
         data = {
-          jenjang: jengjangPendidikan.label || jengjangPendidikan,
+          jenjang: jengjangPendidikan.label,
           asal_pendidikan: asalSekolah,
           lainya: "-",
           program_studi: programStudi,
@@ -184,7 +187,6 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
           ijasah: ijazah,
         };
       }
-      // console.log(data);
       dispatch(updateProfilePendidikan(data, token));
     } else {
       simpleValidator.current.showMessages();
@@ -243,7 +245,6 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
                   onChange={(e) => {
                     setAsalSekolah(e.target.value);
                   }}
-                  placeholder={pendidikan.asal_pendidikan || "-"}
                 />
                 <datalist id="data">
                   {dataAsalSekolah === undefined
@@ -421,11 +422,10 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
               <Form.Group as={Col} md={6} controlId="formGridIpk">
                 <Form.Label>IPK</Form.Label>
                 <Form.Control
-                  type="text"
+                  type="number"
                   placeholder="Silahkan Masukan IPK"
                   value={ipk}
                   onChange={(e) => {
-                    var numbers = /^[0-9]+$/;
                     setIpk(e.target.value);
                   }}
                   onBlur={() => simpleValidator.current.showMessageFor("ipk")}
