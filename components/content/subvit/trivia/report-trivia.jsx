@@ -67,7 +67,6 @@ const ReportTrivia = ({ token }) => {
 
   return (
     <PageWrapper>
-      {/* {console.log(trivia)} */}
       {error ? (
         <div
           className="alert alert-custom alert-light-danger fade show mb-5"
@@ -208,7 +207,6 @@ const ReportTrivia = ({ token }) => {
                         <th className="text-center">No</th>
                         <th>Peserta Test</th>
                         <th>Pelatihan</th>
-                        <th>Nilai</th>
                         <th>Total Pengerjaan</th>
                         <th className="align-middle text-center">Status</th>
                       </tr>
@@ -223,7 +221,6 @@ const ReportTrivia = ({ token }) => {
                       ) : (
                         trivia &&
                         trivia.data.reports.map((row, i) => {
-                          // console.log("DATA :", row)
                           return (
                             <tr key={row.id}>
                               <td className="align-middle text-center">

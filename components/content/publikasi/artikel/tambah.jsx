@@ -37,6 +37,7 @@ const TambahArtikel = ({ token, id }) => {
 
   const { loading, error, success } = useSelector((state) => state.newArtikel);
   const { setting } = useSelector(state => state.allSettingPublikasi)
+  const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(state => state.drowpdownAkademi);
   const {
     loading: allLoading,
     error: allError,
@@ -134,7 +135,7 @@ const TambahArtikel = ({ token, id }) => {
         data.splice([i], 1);
       }
     }
-    setTag(data);    
+    setTag(data);
   }
 
   const onSubmit = (e) => {
@@ -234,6 +235,7 @@ const TambahArtikel = ({ token, id }) => {
   return (
     <>
       <PageWrapper>
+        {console.log("Data Akademi :", dataAkademi)}
         {error ? (
           <div
             className="alert alert-custom alert-light-danger fade show mb-5"
