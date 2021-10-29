@@ -61,7 +61,6 @@ export const getDataPribadi = (token) => async (dispatch) => {
       payload: data,
     });
     return data;
-
   } catch (error) {
     dispatch({
       type: GET_DATA_PRIBADI_FAIL,
@@ -136,7 +135,7 @@ export const getRegistrationStep2 = () => async (dispatch) => {
         size: "",
         option: "",
         dataOption: "",
-        required: false,
+        required: "0",
       },
     ],
   };

@@ -115,6 +115,8 @@ const PekerjaanEdit = ({ funcViewEdit, token }) => {
       }
 
       dispatch(updateProfilePekerjaan(data, token));
+
+      // check deploy today
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -153,10 +155,6 @@ const PekerjaanEdit = ({ funcViewEdit, token }) => {
             <Form.Label>Status Pekerjaan</Form.Label>
             <Select
               options={optionsStatusPekerjaan}
-<<<<<<< HEAD
-              // defaultValue={{label: pekerjaan.status_pekerjaan, value: pekerjaan.status_pekerjaan}}
-=======
->>>>>>> c231b14338b4b1d94afd0c9b6de2601298cf1274
               onChange={(e) =>
                 setStatusPekerjaan({ label: e.label, value: e.value })
               }
