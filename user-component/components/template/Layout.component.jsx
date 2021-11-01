@@ -54,6 +54,8 @@ const Layout = ({ title = "Peserta - Pelatihan", session, children }) => {
     routerPath = "/peserta/survey/substansi/[id]";
   if (router.pathname === "/peserta/trivia/substansi/[id]")
     routerPath = "/peserta/trivia/substansi/[id]";
+  if (router.pathname === "/peserta/subvit/mid-test/[id]")
+    routerPath = "/peserta/subvit/mid-test/[id]";
 
   return (
     <>
