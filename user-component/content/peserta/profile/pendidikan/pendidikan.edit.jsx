@@ -15,7 +15,7 @@ import {
 } from "../../../../../redux/actions/pelatihan/profile.actions";
 import { UPDATE_PENDIDIKAN_RESET } from "../../../../../redux/types/pelatihan/profile.type";
 
-const PendidikanEdit = ({ funcViewEdit, token }) => {
+const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
   const dispatch = useDispatch();
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
@@ -87,8 +87,12 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
 
     if (success) {
       toast.success("Berhasil Update Data");
-      funcViewEdit(false);
       dispatch({ type: UPDATE_PENDIDIKAN_RESET });
+      if (wizzard) {
+        funcViewEdit(4);
+      } else {
+        funcViewEdit(false);
+      }
     }
   }, [
     success,
@@ -156,7 +160,8 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
         };
       } else if (
         jengjangPendidikan.label === "TK" ||
-        jengjangPendidikan.label === "SD/Sederajat" || jengjangPendidikan.label === "SMP/Sederajat"
+        jengjangPendidikan.label === "SD/Sederajat" ||
+        jengjangPendidikan.label === "SMP/Sederajat"
       ) {
         data = {
           jenjang: jengjangPendidikan.label,
@@ -179,7 +184,9 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
         };
       } else if (
         jengjangPendidikan.label === "D3" ||
-        jengjangPendidikan.label === "S1" ||jengjangPendidikan.label === "S2" ||jengjangPendidikan.label === "S3" 
+        jengjangPendidikan.label === "S1" ||
+        jengjangPendidikan.label === "S2" ||
+        jengjangPendidikan.label === "S3"
       ) {
         data = {
           jenjang: jengjangPendidikan.label,
@@ -276,9 +283,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
               {simpleValidator.current.message(
                 "asal sekolah",
                 asalSekolah,
-                asalSekolah === null
-                  ? "required"
-                  : "",
+                asalSekolah === null ? "required" : "",
                 {
                   className: "text-danger",
                 }
@@ -306,7 +311,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
             </Form.Group>
           )}
 
-{jengjangPendidikan.label === "D3" && (
+          {jengjangPendidikan.label === "D3" && (
             <Form.Group className="mb-3" controlId="formGridAdress1">
               <Form.Label>Asal Sekolah / Perguruan Tinggi</Form.Label>
               <div className="position-relative" style={{ zIndex: "4" }}>
@@ -344,9 +349,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
               {simpleValidator.current.message(
                 "asal sekolah",
                 asalSekolah,
-               asalSekolah === null
-                  ? "required"
-                  : "",
+                asalSekolah === null ? "required" : "",
                 {
                   className: "text-danger",
                 }
@@ -374,7 +377,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
             </Form.Group>
           )}
 
-{jengjangPendidikan.label === "S1" && (
+          {jengjangPendidikan.label === "S1" && (
             <Form.Group className="mb-3" controlId="formGridAdress1">
               <Form.Label>Asal Sekolah / Perguruan Tinggi</Form.Label>
               <div className="position-relative" style={{ zIndex: "4" }}>
@@ -412,9 +415,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
               {simpleValidator.current.message(
                 "asal sekolah",
                 asalSekolah,
-                asalSekolah === null
-                  ? "required"
-                  : "",
+                asalSekolah === null ? "required" : "",
                 {
                   className: "text-danger",
                 }
@@ -479,9 +480,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
               {simpleValidator.current.message(
                 "asal sekolah",
                 asalSekolah,
-                asalSekolah === null
-                  ? "required"
-                  : "",
+                asalSekolah === null ? "required" : "",
                 {
                   className: "text-danger",
                 }
@@ -546,9 +545,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
               {simpleValidator.current.message(
                 "asal sekolah",
                 asalSekolah,
-                asalSekolah === null
-                  ? "required"
-                  : "",
+                asalSekolah === null ? "required" : "",
                 {
                   className: "text-danger",
                 }
@@ -592,9 +589,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
               {simpleValidator.current.message(
                 "lainya ( sekolah/ pt )",
                 lainya,
-                lainya === null
-                  ? "required"
-                  : "",
+                lainya === null ? "required" : "",
                 {
                   className: "text-danger",
                 }
@@ -617,9 +612,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
               {simpleValidator.current.message(
                 "lainya ( sekolah/ pt )",
                 lainya,
-                lainya === null
-                  ? "required"
-                  : "",
+                lainya === null ? "required" : "",
                 {
                   className: "text-danger",
                 }
@@ -642,9 +635,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
               {simpleValidator.current.message(
                 "lainya ( sekolah/ pt )",
                 lainya,
-                lainya === null
-                  ? "required"
-                  : "",
+                lainya === null ? "required" : "",
                 {
                   className: "text-danger",
                 }
@@ -668,9 +659,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
                 {simpleValidator.current.message(
                   "tahun masuk",
                   tahunMasuk,
-                  tahunMasuk === null
-                    ? ""
-                    : "required|integer",
+                  tahunMasuk === null ? "" : "required|integer",
                   {
                     className: "text-danger",
                   }
@@ -694,9 +683,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
                 {simpleValidator.current.message(
                   "tahun masuk",
                   tahunMasuk,
-                  tahunMasuk === null
-                    ? ""
-                    : "required|integer",
+                  tahunMasuk === null ? "" : "required|integer",
                   {
                     className: "text-danger",
                   }
@@ -720,9 +707,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
                 {simpleValidator.current.message(
                   "tahun masuk",
                   tahunMasuk,
-                  tahunMasuk === null
-                    ? ""
-                    : "required|integer",
+                  tahunMasuk === null ? "" : "required|integer",
                   {
                     className: "text-danger",
                   }
@@ -746,9 +731,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
                 {simpleValidator.current.message(
                   "tahun masuk",
                   tahunMasuk,
-                  tahunMasuk === null
-                    ? ""
-                    : "required|integer",
+                  tahunMasuk === null ? "" : "required|integer",
                   {
                     className: "text-danger",
                   }
@@ -779,9 +762,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
                     {simpleValidator.current.message(
                       "ijazah",
                       ijazah,
-                      ijazah === null
-                        ? "required"
-                        : "",
+                      ijazah === null ? "required" : "",
                       {
                         className: "text-danger",
                       }
@@ -795,7 +776,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
             </div>
           )}
 
-{jengjangPendidikan.label === "SMP/Sederajat" && (
+          {jengjangPendidikan.label === "SMP/Sederajat" && (
             <div className="form-group">
               <label className="col-form-label">Unggah Ijazah</label>
               <div className="d-flex">
@@ -817,9 +798,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
                     {simpleValidator.current.message(
                       "ijazah",
                       ijazah,
-                      ijazah === null
-                        ? "required"
-                        : "",
+                      ijazah === null ? "required" : "",
                       {
                         className: "text-danger",
                       }
@@ -833,7 +812,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
             </div>
           )}
 
-{jengjangPendidikan.label === "SMA/Sederajat" && (
+          {jengjangPendidikan.label === "SMA/Sederajat" && (
             <div className="form-group">
               <label className="col-form-label">Unggah Ijazah</label>
               <div className="d-flex">
@@ -855,9 +834,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
                     {simpleValidator.current.message(
                       "ijazah",
                       ijazah,
-                      ijazah === null
-                        ? "required"
-                        : "",
+                      ijazah === null ? "required" : "",
                       {
                         className: "text-danger",
                       }
@@ -885,9 +862,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
               {simpleValidator.current.message(
                 "program studi",
                 programStudi,
-                programStudi === null
-                  ? "required"
-                  : "",
+                programStudi === null ? "required" : "",
                 {
                   className: "text-danger",
                 }
@@ -908,9 +883,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
               {simpleValidator.current.message(
                 "program studi",
                 programStudi,
-                programStudi === null
-                  ? "required"
-                  : "",
+                programStudi === null ? "required" : "",
                 {
                   className: "text-danger",
                 }
@@ -931,9 +904,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
               {simpleValidator.current.message(
                 "program studi",
                 programStudi,
-                programStudi === null
-                  ? "required"
-                  : "",
+                programStudi === null ? "required" : "",
                 {
                   className: "text-danger",
                 }
@@ -954,9 +925,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
               {simpleValidator.current.message(
                 "program studi",
                 programStudi,
-                programStudi === null
-                  ? "required"
-                  : "",
+                programStudi === null ? "required" : "",
                 {
                   className: "text-danger",
                 }
@@ -980,9 +949,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
                 {simpleValidator.current.message(
                   "ipk",
                   ipk,
-                  ipk === null
-                    ? "required|integer"
-                    : "",
+                  ipk === null ? "required|integer" : "",
                   {
                     className: "text-danger",
                   }
@@ -1002,9 +969,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
                 {simpleValidator.current.message(
                   "tahun masuk",
                   tahunMasuk,
-                  tahunMasuk === null
-                    ? "required|integer"
-                    : "",
+                  tahunMasuk === null ? "required|integer" : "",
                   {
                     className: "text-danger",
                   }
@@ -1012,7 +977,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
               </Form.Group>
             </Row>
           )}
-           {jengjangPendidikan.label === "S1" && (
+          {jengjangPendidikan.label === "S1" && (
             <Row className="mb-3">
               <Form.Group as={Col} md={6} controlId="formGridIpk">
                 <Form.Label>IPK</Form.Label>
@@ -1028,9 +993,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
                 {simpleValidator.current.message(
                   "ipk",
                   ipk,
-                  ipk === null
-                    ? "required|integer"
-                    : "",
+                  ipk === null ? "required|integer" : "",
                   {
                     className: "text-danger",
                   }
@@ -1050,9 +1013,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
                 {simpleValidator.current.message(
                   "tahun masuk",
                   tahunMasuk,
-                  tahunMasuk === null
-                    ? "required|integer"
-                    : "",
+                  tahunMasuk === null ? "required|integer" : "",
                   {
                     className: "text-danger",
                   }
@@ -1060,7 +1021,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
               </Form.Group>
             </Row>
           )}
-           {jengjangPendidikan.label === "S2" && (
+          {jengjangPendidikan.label === "S2" && (
             <Row className="mb-3">
               <Form.Group as={Col} md={6} controlId="formGridIpk">
                 <Form.Label>IPK</Form.Label>
@@ -1076,9 +1037,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
                 {simpleValidator.current.message(
                   "ipk",
                   ipk,
-                  ipk === null
-                    ? "required|integer"
-                    : "",
+                  ipk === null ? "required|integer" : "",
                   {
                     className: "text-danger",
                   }
@@ -1098,9 +1057,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
                 {simpleValidator.current.message(
                   "tahun masuk",
                   tahunMasuk,
-                  tahunMasuk === null
-                    ? "required|integer"
-                    : "",
+                  tahunMasuk === null ? "required|integer" : "",
                   {
                     className: "text-danger",
                   }
@@ -1108,7 +1065,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
               </Form.Group>
             </Row>
           )}
-           {jengjangPendidikan.label === "S3" && (
+          {jengjangPendidikan.label === "S3" && (
             <Row className="mb-3">
               <Form.Group as={Col} md={6} controlId="formGridIpk">
                 <Form.Label>IPK</Form.Label>
@@ -1124,9 +1081,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
                 {simpleValidator.current.message(
                   "ipk",
                   ipk,
-                  ipk === null
-                    ? "required|integer"
-                    : "",
+                  ipk === null ? "required|integer" : "",
                   {
                     className: "text-danger",
                   }
@@ -1146,9 +1101,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
                 {simpleValidator.current.message(
                   "tahun masuk",
                   tahunMasuk,
-                  tahunMasuk === null
-                    ? "required|integer"
-                    : "",
+                  tahunMasuk === null ? "required|integer" : "",
                   {
                     className: "text-danger",
                   }
@@ -1156,7 +1109,6 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
               </Form.Group>
             </Row>
           )}
-
 
           {jengjangPendidikan.label === "D3" && (
             <div className="form-group">
@@ -1180,9 +1132,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
                     {simpleValidator.current.message(
                       "ijazah",
                       ijazah,
-                      ijazah === null
-                        ? "required"
-                        : "",
+                      ijazah === null ? "required" : "",
                       {
                         className: "text-danger",
                       }
@@ -1195,7 +1145,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
               </small>
             </div>
           )}
-           {jengjangPendidikan.label === "S1" && (
+          {jengjangPendidikan.label === "S1" && (
             <div className="form-group">
               <label className="col-form-label">Unggah Ijazah</label>
               <div className="d-flex">
@@ -1217,9 +1167,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
                     {simpleValidator.current.message(
                       "ijazah",
                       ijazah,
-                      ijazah === null
-                        ? "required"
-                        : "",
+                      ijazah === null ? "required" : "",
                       {
                         className: "text-danger",
                       }
@@ -1232,7 +1180,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
               </small>
             </div>
           )}
-           {jengjangPendidikan.label === "S2" && (
+          {jengjangPendidikan.label === "S2" && (
             <div className="form-group">
               <label className="col-form-label">Unggah Ijazah</label>
               <div className="d-flex">
@@ -1254,9 +1202,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
                     {simpleValidator.current.message(
                       "ijazah",
                       ijazah,
-                      ijazah === null
-                        ? "required"
-                        : "",
+                      ijazah === null ? "required" : "",
                       {
                         className: "text-danger",
                       }
@@ -1269,7 +1215,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
               </small>
             </div>
           )}
-           {jengjangPendidikan.label === "S3" && (
+          {jengjangPendidikan.label === "S3" && (
             <div className="form-group">
               <label className="col-form-label">Unggah Ijazah</label>
               <div className="d-flex">
@@ -1291,9 +1237,7 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
                     {simpleValidator.current.message(
                       "ijazah",
                       ijazah,
-                      ijazah === null
-                        ? "required"
-                        : "",
+                      ijazah === null ? "required" : "",
                       {
                         className: "text-danger",
                       }
@@ -1307,22 +1251,43 @@ const PendidikanEdit = ({ funcViewEdit, token }) => {
             </div>
           )}
         </div>
-
-        <div className="button-aksi mt-5 float-right">
-          <Button
-            className={`${style.button_profile_batal} rounded-xl mr-2`}
-            type="button"
-            onClick={() => funcViewEdit(false)}
-          >
-            Batal
-          </Button>
-          <Button
-            className={`${style.button_profile_simpan} rounded-xl`}
-            type="submit"
-          >
-            Simpan
-          </Button>
-        </div>
+        {!wizzard ? (
+          <div className="button-aksi mt-5 float-right">
+            <Button
+              className={`${style.button_profile_batal} rounded-xl mr-2`}
+              type="button"
+              onClick={() => funcViewEdit(false)}
+            >
+              Batal
+            </Button>
+            <Button
+              className={`${style.button_profile_simpan} rounded-xl`}
+              type="submit"
+            >
+              Simpan
+            </Button>
+          </div>
+        ) : (
+          <div className="button-aksi mt-5 float-right">
+            <Button
+              className={`${style.button_profile_batal} rounded-xl mr-2`}
+              type="button"
+              onClick={() => {
+                if (wizzard) {
+                  return funcViewEdit(2);
+                }
+              }}
+            >
+              Kembali
+            </Button>
+            <Button
+              className={`${style.button_profile_simpan} rounded-xl`}
+              type="submit"
+            >
+              Lanjut
+            </Button>
+          </div>
+        )}
       </Form>
     </>
   );

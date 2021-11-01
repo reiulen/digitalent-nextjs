@@ -13,7 +13,7 @@ import {
 } from "../../../../../redux/actions/pelatihan/profile.actions";
 import { UPDATE_DATA_PRIBADI_RESET } from "../../../../../redux/types/pelatihan/profile.type";
 
-const InformasiEdit = ({ funcViewEdit, token }) => {
+const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
   const dispatch = useDispatch();
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
@@ -69,7 +69,7 @@ const InformasiEdit = ({ funcViewEdit, token }) => {
     (dataPribadi && dataPribadi.file_path + dataPribadi.File_ktp) || ""
   );
 
-  console.log(dataPribadi)
+  console.log(dataPribadi);
 
   // const [cvName, setCvName] = useState(
   //   (dataPribadi && dataPribadi.cv) || "Belum ada file"
@@ -106,7 +106,11 @@ const InformasiEdit = ({ funcViewEdit, token }) => {
     if (success) {
       toast.success("Berhasil Update Data");
       dispatch({ type: UPDATE_DATA_PRIBADI_RESET });
-      funcViewEdit(false);
+      if (wizzard) {
+        funcViewEdit(2);
+      } else {
+        funcViewEdit(false);
+      }
     }
   }, [errorUpdateData, success, dispatch, funcViewEdit]);
 
@@ -185,7 +189,6 @@ const InformasiEdit = ({ funcViewEdit, token }) => {
         nomorHandphone,
         email,
       };
-
       dispatch(updateProfileDataPribadi(data, token));
     } else {
       simpleValidator.current.showMessages();
@@ -240,7 +243,7 @@ const InformasiEdit = ({ funcViewEdit, token }) => {
                   kelamin === "" ? "Silahkan Pilih Jenis Kelamin" : kelamin
                 }`}
                 options={optionsKelamin}
-                defaultValue={{value: kelamin, label: kelamin}}
+                defaultValue={{ value: kelamin, label: kelamin }}
                 onChange={(e) => setKelamin({ label: e.label, value: e.value })}
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("jenis kelamin")
@@ -301,7 +304,7 @@ const InformasiEdit = ({ funcViewEdit, token }) => {
                 agama === "" ? "Silahkan Pilih Agama" : dataPribadi.agama
               }`}
               options={optionsAgama}
-              defaultValue={{value: agama, label: agama}}
+              defaultValue={{ value: agama, label: agama }}
               onChange={(e) => setAgama({ label: e.label, value: e.value })}
               onBlur={() =>
                 simpleValidator.current.showMessageFor("jenis kelamin")
@@ -500,22 +503,32 @@ const InformasiEdit = ({ funcViewEdit, token }) => {
               }
             )}
           </Form.Group> */}
-
-          <div className="button-aksi mt-5 float-right">
-            <Button
-              className={`${style.button_profile_batal} rounded-xl mr-2`}
-              type="button"
-              onClick={() => funcViewEdit(false)}
-            >
-              Batal
-            </Button>
-            <Button
-              className={`${style.button_profile_simpan} rounded-xl`}
-              type="submit"
-            >
-              Simpan
-            </Button>
-          </div>
+          {!wizzard ? (
+            <div className="button-aksi mt-5 float-right">
+              <Button
+                className={`${style.button_profile_batal} rounded-xl mr-2`}
+                type="button"
+                onClick={() => funcViewEdit(false)}
+              >
+                Batal
+              </Button>
+              <Button
+                className={`${style.button_profile_simpan} rounded-xl`}
+                type="submit"
+              >
+                Simpan
+              </Button>
+            </div>
+          ) : (
+            <div className="button-aksi mt-5 float-right">
+              <Button
+                className={`${style.button_profile_simpan} rounded-xl`}
+                type="submit"
+              >
+                Lanjut
+              </Button>
+            </div>
+          )}
         </div>
       </Form>
     </>
