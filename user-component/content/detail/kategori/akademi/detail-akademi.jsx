@@ -81,6 +81,7 @@ const DetailAkademi = ({ session }) => {
 
             // setAkademiName(akademi.name)
             setAkademiDesc(str)
+            setAkademiId(akademi.id)
             setOldAkademiDesc(akademi.deskripsi)
         }
     }
@@ -181,7 +182,18 @@ const DetailAkademi = ({ session }) => {
     }
 
     const handlePagination = (pageNumber) => {
+        let id = akademiId
+        let tema_id = null
+        let provinsi = null
+        let tipe_pelatihan = null
+        let penyelenggara = null
+        let kategori_peserta = null
+        let kata_kunci = null
+        let tanggal_mulai = null
+        let tanggal_akhir = null
+        let page = pageNumber
 
+        dispatch(getAllPelatihanByAkademi(id, tema_id, provinsi, tipe_pelatihan, penyelenggara, kategori_peserta, kata_kunci, tanggal_mulai, tanggal_akhir, page))
     }
 
     const handleFilter = () => {
@@ -373,7 +385,7 @@ const DetailAkademi = ({ session }) => {
                 <div className="col-md-9 col-12 d-flex flex-row flex-wrap justify-content-between">
                 {/* <div className="col-12 col-md-9 mt-2 d-flex flex-row flex-wrap justify-content-between"> */}
                     {
-                        pelatihan && pelatihan.list !== 0 && show.length !== 0  ?
+                        pelatihan && pelatihan.list &&  pelatihan.list !== 0 && show.length !== 0  ?
                             
                             pelatihan.list.map ((el, i) => {
                                 return (
@@ -679,6 +691,7 @@ const DetailAkademi = ({ session }) => {
                                 itemsCountPerPage={pelatihan.perPage}
                                 totalItemsCount={pelatihan.total}
                                 pageRangeDisplayed={3}
+                                onChange={handlePagination}
                                 nextPageText={">"}
                                 prevPageText={"<"}
                                 firstPageText={"<<"}
