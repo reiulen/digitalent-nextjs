@@ -22,6 +22,8 @@ const Header = () => {
     routerPath = "/peserta/subvit/survey/[id]";
   if (router.pathname === "/peserta/subvit/trivia/[id]")
     routerPath = "/peserta/subvit/trivia/[id]";
+  if (router.pathname === "/peserta/subvit/mid-test/[id]")
+    routerPath = "/peserta/subvit/mid-test/[id]";
 
   var date = new Date();
 
@@ -138,6 +140,10 @@ const Header = () => {
                           ? "Riwayat Pelatihan"
                           : router.pathname.includes("administrasi")
                           ? "Administrasi"
+                          : router.pathname.includes("mid-test")
+                          ? "Mid Test"
+                          : router.pathname.includes("done-mid-tes")
+                          ? "Mid Test"
                           : "Dashboard"}
                       </div>
                     </div>
@@ -172,12 +178,12 @@ const Header = () => {
               {router.pathname.includes(routerPath) && (
                 <>
                   <Row>
-                    <Col>
+                    <Col xs={12}>
                       <h1 className={styles.mainText}>
                         Digital Talent Scholarship
                       </h1>
                     </Col>
-                    <Col className={styles.textCardRight}>
+                    <Col xs={12} className={styles.textCardRight}>
                       <Card className={styles.cardBodyTest}>
                         <div
                           className="d-flex flex-row "
@@ -231,6 +237,15 @@ const Header = () => {
                           marginRight: "15px",
                         }}
                       ></i>
+                    ) : router.pathname.includes("mid-test") ? (
+                      <i
+                        className="ri-article-line"
+                        style={{
+                          color: "#fff",
+                          fontSize: "20px",
+                          marginRight: "15px",
+                        }}
+                      ></i>
                     ) : (
                       <i
                         className="ri-article-line"
@@ -251,6 +266,10 @@ const Header = () => {
                       ? "Trivia"
                       : router.pathname.includes("test-subtansi")
                       ? "Test Substansi"
+                      : router.pathname.includes("mid-test")
+                      ? "Mid Test"
+                      : router.pathname.includes("done-mid-tes")
+                      ? "Mid Test"
                       : "Dashboard"}
                   </div>
                 </div>
