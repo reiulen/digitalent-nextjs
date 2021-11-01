@@ -130,18 +130,18 @@ const SubtansiUser = ({ token }) => {
       return () => clearInterval(secondsLeft);
     } else {
       localStorage.clear();
-      // router.push(`/peserta/done-mid-tes`);
+      router.push(`/peserta/done-mid-tes`);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [count]);
 
   useEffect(() => {
-    axios
-      .get(
-        "https://fa782c8d-066b-4efd-bc48-71bd832cce08.mock.pstmn.io/api/subtance-question-bank-details/random?training_id=41&theme_id=4&category=Mid%20Test"
-      )
-      .then((res) => setData(res.data.data));
-    // setData(random_subtance_question_detail);
+    // axios
+    //   .get(
+    //     "https://fa782c8d-066b-4efd-bc48-71bd832cce08.mock.pstmn.io/api/subtance-question-bank-details/random?training_id=41&theme_id=4&category=Mid%20Test"
+    //   )
+    //   .then((res) => setData(res.data.data));
+    setData(random_subtance_question_detail);
   }, [data, random_subtance_question_detail]);
 
   const secondsToTime = (secs) => {
