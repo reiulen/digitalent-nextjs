@@ -57,6 +57,11 @@ const RegisterMitra = () => {
               `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/authentication/forgot-password`,
               formData
             );
+            Swal.fire(
+        "Berhasil",
+        "Link reset password telah dikirm, silahkan cek email anda",
+        "success"
+      )
           } catch (error) {
             notify(error.response.data.message);
           }

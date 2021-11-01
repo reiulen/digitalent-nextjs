@@ -65,7 +65,7 @@ const LoginAdmin = () => {
           className="col-lg-7 d-flex flex-wrap align-content-center"
           style={{ background: "#1A4367" }}
         >
-          <div className="container ">
+          <div className="container px-0 px-sm-4">
             <div className="title-login text-center mt-6">
               <Image
                 src="/assets/logo/logo-6.svg"
@@ -157,22 +157,24 @@ const LoginAdmin = () => {
                   )}
                 </div>
 
+                <div className="w-max-cs">
                 <div className="capcha">
                   <ReCAPTCHA
                     sitekey={process.env.CAPTCHA_SITE_KEY}
                     onChange={setCaptcha}
                     onBlur={() =>
-                      simpleValidator.current.showMessageFor("Capcha")
+                      simpleValidator.current.showMessageFor("Captcha")
                     }
                   />
                   {simpleValidator.current.message(
-                    "Capcha",
+                    "Captcha",
                     captcha,
                     "required",
                     {
                       className: "text-danger",
                     }
                   )}
+                </div>
                 </div>
 
                 <button

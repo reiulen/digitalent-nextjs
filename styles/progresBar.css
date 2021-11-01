@@ -231,3 +231,18 @@
   /* color: none; */
 
 }
+
+
+.w-max-cs .capcha div div div{
+  width: 100% !important;
+  display: flex !important;
+  justify-content: start !important;
+}
+
+@media (max-width: 360px) {
+  .w-max-cs .capcha div div div div iframe{
+    width: 100% !important;
+    display: flex;
+    justify-content: start;
+  }
+}
