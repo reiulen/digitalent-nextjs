@@ -114,22 +114,6 @@ const DetailArtikel = () => {
                             <p>
                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque ac sem eget odio pellentesque bibendum. Nam mattis ullamcorper velit vitae rhoncus. Donec convallis nulla eget augue semper, sed vulputate diam eleifend. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean laoreet, arcu sit amet condimentum tincidunt, diam quam convallis felis, eu commodo mi nisl a purus. Nulla facilisi. Nulla sodales lectus sit amet leo euismod, eu consectetur quam sagittis. Nullam non mauris fermentum, suscipit lacus laoreet, gravida sapien. Aliquam a mattis elit. Morbi viverra faucibus posuere. Duis bibendum mauris sit amet dui blandit pulvinar. Morbi id sapien eu ante maximus consequat in at sem.
                             </p>
-
-                            <p>
-                                Cras lacinia odio et ipsum laoreet feugiat. Donec ullamcorper augue augue, eget varius nisl iaculis ut. Maecenas sit amet imperdiet nibh, at congue quam. Suspendisse volutpat elementum tortor quis consequat. Aenean nec massa ac ex vestibulum commodo eu sit amet purus. Duis malesuada, eros ut tristique gravida, dui risus aliquet est, sit amet gravida augue risus in arcu. Ut viverra dui urna, sit amet ullamcorper massa condimentum vitae. Donec ac nisl nulla. Ut iaculis faucibus libero, at euismod arcu scelerisque nec. Sed id sagittis dui, id fringilla erat. Proin aliquet facilisis dui, ut bibendum eros dictum id. Nullam vehicula mauris urna, sit amet hendrerit elit finibus eu.
-                            </p>
-
-                            <p>
-                                Donec ut est finibus, aliquam massa faucibus, suscipit lectus. Aliquam semper, ex eu maximus egestas, ligula magna efficitur libero, quis porttitor lacus leo eu lacus. Phasellus maximus ligula sed libero lobortis, nec tincidunt leo condimentum. Etiam posuere lorem sed vestibulum blandit. Quisque iaculis faucibus quam, et lacinia nibh. Cras eros odio, consectetur id tempor quis, consectetur sed neque. Suspendisse potenti. Vivamus volutpat lacus metus, id blandit nisi pharetra ornare. Donec tincidunt, lorem vulputate rhoncus congue, dui erat posuere ex, sit amet venenatis enim nunc id leo. In libero velit, semper id metus a, ultrices interdum dui. Sed vel ultricies magna. Maecenas maximus tristique ante, at consequat risus pulvinar id. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent fringilla, enim in semper lobortis, ligula ipsum varius lectus, in aliquet dolor ex lobortis nisl. Praesent pretium nibh sed odio fermentum, non luctus diam interdum. Praesent placerat vehicula finibus.
-                            </p>
-
-                            <p>
-                                Curabitur varius nibh vitae facilisis suscipit. Nam vitae faucibus orci. Duis commodo leo ac tortor luctus, non vestibulum mi interdum. Morbi posuere malesuada urna, eget lacinia dui mattis porta. Maecenas eros leo, imperdiet at justo cursus, laoreet accumsan nisi. Nullam tincidunt, nibh quis commodo tincidunt, felis mauris condimentum justo, ut bibendum nisi enim quis metus. Morbi efficitur rutrum diam, ac faucibus metus ullamcorper vel. Phasellus efficitur, magna sed vestibulum mollis, ipsum mi luctus felis, id tempus massa nulla in lectus.
-                            </p>
-
-                            <p>
-                                Donec at feugiat leo, vel volutpat sem. Curabitur eget efficitur quam. Vivamus ipsum tortor, aliquam et maximus in, ornare nec nibh. Pellentesque sit amet hendrerit dui. Donec erat erat, pulvinar non justo nec, dictum consectetur felis. Aliquam erat volutpat. Phasellus ut ligula dictum, commodo enim ac, congue nibh. Morbi vitae sem tristique, eleifend libero fermentum, molestie sem. Fusce suscipit justo libero, nec laoreet mauris finibus at. Vestibulum laoreet metus id massa faucibus, efficitur malesuada odio volutpat. Nam nulla tellus, finibus id ante eu, imperdiet convallis ex. Sed feugiat vel augue et gravida. Phasellus viverra efficitur lacus non fringilla. Quisque eget porta felis, ac lobortis ante. Suspendisse in vehicula lacus. Pellentesque a nisl nibh.
-                            </p>
                         </div>
 
                         <div className="row m-3 d-flex justify-content-between">
