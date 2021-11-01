@@ -32,7 +32,7 @@ export default function infoVideos({ video }) {
                 Temukan konten terupdate dan terkini mengenai Digital<br /> Talent
                 Scholarship
               </p>
-              <Link href="/detail/video">
+              <Link href="/video">
                 <a>
                   <button className="btn btn-outline-primary-new rounded-pill py-3 px-12">
                     Lihat Selengkapnya
