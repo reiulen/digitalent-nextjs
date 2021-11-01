@@ -78,6 +78,7 @@ const TambahArtikel = ({ token, id }) => {
   const [publishDate, setPublishDate] = useState(null);
   const [disablePublishDate, setDisablePublishDate] = useState(true)
   const [disableTag, setDisableTag] = useState(false)
+  const [akademi_value, setAkademiValue]=useState("");
 
   const onChangeGambar = (e) => {
     const type = ["image/jpg", "image/png", "image/jpeg"]
@@ -167,6 +168,7 @@ const TambahArtikel = ({ token, id }) => {
           judul_artikel,
           isi_artikel,
           gambar,
+          akademi_value,
           kategori_id,
           users_id,
           tag,
@@ -400,6 +402,54 @@ const TambahArtikel = ({ token, id }) => {
                     </p>
                   </div>
                 </div>
+                <div className="form-group">
+                  <label
+                    htmlFor="staticEmail"
+                    className="col-sm-2 col-form-label font-weight-bolder"
+                  >
+                    Akademi
+                  </label>
+                  <div className="col-sm-12">
+                    <select
+                      name=""
+                      id=""
+                      className="form-control dropdownArt"
+                      value={akademi_value}
+                      onChange={(e) => setAkademiValue(e.target.value)}
+                      onBlur={(e) => {
+                        setAkademiValue(e.target.value);
+                        simpleValidator.current.showMessageFor("akademi");
+                      }}
+                    >
+                      <option selected disabled value="">
+                        -- Akademi --
+                      </option>
+                      {!dataAkademi || (dataAkademi && dataAkademi.length === 0) ? (
+                        <option value="">Data Tidak Ditemukan</option>
+                      ) : (
+                        dataAkademi &&
+                        dataAkademi.data &&
+                        dataAkademi.data.map((row) => {
+                          return (
+                            // row.jenis_kategori == "Artikel" ?
+                              <option key={row.value} value={row.value}>
+                                {row.label}
+                              </option>
+                              // :
+                              // null
+                          );
+                        })
+                      )}
+                    </select>
+                    {simpleValidator.current.message(
+                      "akademi",
+                      akademi_value,
+                      "required",
+                      { className: "text-danger" }
+                    )}
+                  </div>
+                </div>
+
                 <div className="form-group">
                   <label
                     htmlFor="staticEmail"

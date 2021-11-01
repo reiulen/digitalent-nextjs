@@ -35,6 +35,7 @@ const EditBerita = ({ token, idUser }) => {
     const { loading, error, success } = useSelector(state => state.updatedBerita)
     const { loading: allLoading, error: allError, kategori } = useSelector((state) => state.allKategori);
     const { setting } = useSelector(state => state.allSettingPublikasi)
+    const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(state => state.drowpdownAkademi);
 
     useEffect(() => {
 
@@ -77,6 +78,7 @@ const EditBerita = ({ token, idUser }) => {
     const [gambarName, setGambarName] = useState(berita.gambar)
     const [kategori_id, setKategoriId] = useState(berita.kategori_id)
     const [users_id, setUserId] = useState(berita.users_id)
+    const [akademi_value, setAkademiValue] = useState(berita.akademi_value);
     const [tag, setTag] = useState(berita.tag)
     const [publish, setPublish] = useState(berita.publish)
     // const [publish, setPublish] = useState(berita.publish === 1 ? true : false)
@@ -124,6 +126,7 @@ const EditBerita = ({ token, idUser }) => {
     const handleChangePublish = (e) => {
         setPublish(e.target.checked);
         setDisablePublishDate(!disablePublishDate)
+        setPublishDate(null)
         if (e.target.checked === false) {
             setPublishDate(null)
         }
@@ -178,6 +181,7 @@ const EditBerita = ({ token, idUser }) => {
                         judul_berita,
                         isi_berita,
                         gambar,
+                        akademi_value,
                         kategori_id,
                         users_id,
                         tag,
@@ -209,6 +213,7 @@ const EditBerita = ({ token, idUser }) => {
                         judul_berita,
                         isi_berita,
                         gambar,
+                        akademi_value,
                         kategori_id,
                         users_id,
                         tag,
@@ -245,6 +250,7 @@ const EditBerita = ({ token, idUser }) => {
                         judul_berita,
                         isi_berita,
                         gambar: "",
+                        akademi_value,
                         kategori_id,
                         users_id,
                         tag,
@@ -275,6 +281,7 @@ const EditBerita = ({ token, idUser }) => {
                         judul_berita,
                         isi_berita,
                         gambar: "",
+                        akademi_value,
                         kategori_id,
                         users_id,
                         tag,
@@ -500,6 +507,32 @@ const EditBerita = ({ token, idUser }) => {
                                     </div>
                                 </div> */}
 
+
+                                <div className="form-group">
+                                    <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Akademi</label>
+                                    <div className="col-sm-12">
+                                        <select name="" id="" className='form-control' value={akademi_value} onChange={e => setAkademiValue(e.target.value)} onBlur={e => { setAkademiValue(e.target.value); simpleValidator.current.showMessageFor('akademi') }} >
+                                            <option selected disabled value=''>-- Akademi --</option>
+                                            {!dataAkademi || (dataAkademi && dataAkademi.length === 0) ? (
+                                                <option value="">Data Tidak Ditemukan</option>
+                                            ) : (
+                                                dataAkademi && dataAkademi.data && dataAkademi.data.map((row) => {
+                                                    return (
+                                                        // row.jenis_kategori == "Berita" ?
+                                                            <option key={row.value} value={row.value} selected={akademi_value === row.value ? true : false}>
+                                                                {row.label}
+                                                            </option>
+                                                            // :
+                                                            // null
+                                                        // <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>{row.jenis_kategori}</option>
+                                                    )
+                                                })
+                                            )}
+
+                                        </select>
+                                        {simpleValidator.current.message('akademi', akademi_value, 'required', { className: 'text-danger' })}
+                                    </div>
+                                </div>
 
                                 <div className="form-group">
                                     <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Kategori</label>
