@@ -12,11 +12,9 @@ import {
   setPage,
 } from "../../../../redux/actions/partnership/mk_cooporation.actions";
 import LoadingTable from "../../../LoadingTable";
-import IconEye from "../../../assets/icon/Eye";
 import IconPencil from "../../../assets/icon/Pencil";
 import IconDelete from "../../../assets/icon/Delete";
 import IconAdd from "../../../assets/icon/Add";
-import BtnIcon from "../components/BtnIcon";
 import AlertBar from "../components/BarAlert";
 
 import IconSearch from "../../../assets/icon/Search";
@@ -69,6 +67,7 @@ const Table = ({ token }) => {
     token
   ]);
 
+
   const onNewReset = () => {
     setSuccessDelete(false);
     router.replace("/partnership/master-kategori-kerjasama", undefined, {
@@ -84,19 +83,19 @@ const Table = ({ token }) => {
         ""
       )}
       {successDelete ? (
-        <AlertBar text="Berhasil menghapus data" className="alert-light-danger" onClick={() => onNewReset()}/>
+        <AlertBar text="Berhasil menghapus data" className="alert-light-success" onClick={() => onNewReset()}/>
       ) : (
         ""
       )}
       {update ? (
-        <AlertBar text="Berhasil mengubah data" className="alert-light-warning" onClick={() => onNewReset()}/>
+        <AlertBar text="Berhasil mengubah data" className="alert-light-success" onClick={() => onNewReset()}/>
       ) : (
         ""
       )}
 
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
-          <div className="card-header border-0">
+          <div className="card-header border-0 px-4 px-sm-6">
             <h3
               className="card-title font-weight-bolder text-dark titles-1"
             >
@@ -112,12 +111,11 @@ const Table = ({ token }) => {
             </div>
           </div>
 
-          <div className="card-body pt-0">
+          <div className="card-body pt-0 px-4 px-sm-6">
             <div className="table-filter">
               <div className="row align-items-center">
                 <div className="col-lg-12 col-xl-12">
                   <div
-                    // onSubmit={handleSubmit}
                     className="d-flex align-items-center w-100"
                   >
                     <div className="row w-100">
@@ -154,7 +152,7 @@ const Table = ({ token }) => {
                 </div>
               </div>
             </div>
-            <div className="table-page mt-5">
+            <div className="table-page mt-14 mt-sm-5">
               <div className="table-responsive">
                 {allMKCooporation.status === "process" ? (
                   <LoadingTable />
@@ -191,7 +189,6 @@ const Table = ({ token }) => {
                                     : (allMKCooporation.page - 1) *
                                         allMKCooporation.limit +
                                       (index + 1)}
-                                  {/* {index + 1} */}
                                 </td>
                                 <td className="align-middle text-left text-overflow-ens">
                                   {cooperation_categorie.cooperation_categories}
@@ -207,7 +204,7 @@ const Table = ({ token }) => {
                                       className="cursor-pointer"
                                     >
                                       <p
-                                        className={`${
+                                        className={`my-auto ${
                                           allMKCooporation.mk_cooporation.data
                                             .list_cooperation_categories[index]
                                             .status === 0
@@ -288,9 +285,9 @@ const Table = ({ token }) => {
                 </div>
                 <div className="table-total ml-auto">
                   <div className="row">
-                    <div className="col-4 mr-0 p-0">
+                    <div className="col-4 mr-0">
                       <select
-                        className="form-control mr-5 cursor-pointer"
+                        className="form-control mr-5 cursor-pointer pl-2"
                         id="exampleFormControlSelect2"
                         defaultValue=""
                         style={{

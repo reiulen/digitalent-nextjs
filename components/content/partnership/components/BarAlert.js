@@ -14,7 +14,7 @@ export default function AlertBar({ className, text, onClick }) {
       role="alert"
     >
       <div className="alert-icon">
-        <i className="flaticon-warning"></i>
+        <i className="flaticon2-check-mark"></i>
       </div>
       <div className="alert-text">{text}</div>
       <div className="alert-close">
