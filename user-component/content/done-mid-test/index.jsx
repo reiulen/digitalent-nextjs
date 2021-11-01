@@ -27,7 +27,7 @@ const Done = () => {
       <PesertaWrapper>
         <Card className={styles.cardBase}>
           <h1 className={styles.title}>
-            Terima Kasih Anda telah mengikuti Test Substansi
+            Terima Kasih Anda telah mengikuti Mid Test
           </h1>
           <center>
             <Image src={doneImage} alt="" className={styles.imageDone} />
@@ -73,7 +73,7 @@ const Done = () => {
                 ></i>
               </div>
               <div className="p-3">
-                Selesai Test Substansi :
+                Selesai Mid Test :
                 <span className={styles.moment}> {moment().format("LL")}</span>
               </div>
             </div>
