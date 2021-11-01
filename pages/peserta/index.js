@@ -8,6 +8,7 @@ import { getDataPribadi } from "../../redux/actions/pelatihan/function.actions";
 import { getDashboardPeserta } from "../../redux/actions/pelatihan/dashboard-peserta.actions";
 import LoadingContent from "../../user-component/content/peserta/components/loader/LoadingContent";
 import { middlewareAuthPesertaSession } from "../../utils/middleware/authMiddleware";
+import { useRouter } from "next/router";
 
 const Dashboard = dynamic(
   () => import("../../user-component/content/peserta/dashboard"),
@@ -28,7 +29,7 @@ export default function DashboardPage(props) {
   return (
     <>
       <Layout title="Dashboard Peserta - Pelatihan" session={session}>
-        <Dashboard session={session} />
+        <Dashboard session={session} success={props.success} />
       </Layout>
     </>
   );
@@ -49,14 +50,22 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+      let success = false;
       if (session) {
-        await store.dispatch(getDataPribadi(session?.user.user.data.user.token));
+        const dataPribadi = await store.dispatch(
+          getDataPribadi(session?.user.user.data.user.token)
+        );
+        if (!dataPribadi.data.status) {
+          success = false;
+        } else {
+          success = true;
+        }
       }
       await store.dispatch(
         getDashboardPeserta(session?.user.user.data.user.token)
       );
       return {
-        props: { data: "auth", session, title: "Dashboard - Peserta" },
+        props: { data: "auth", session, title: "Dashboard - Peserta", success },
       };
     }
 );

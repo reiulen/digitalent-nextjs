@@ -1,0 +1,64 @@
+.wizzard li {
+  width: 2em;
+  height: 2em;
+  text-align: center;
+  line-height: 2em;
+  border-radius: 1em;
+  background: dodgerblue;
+  margin: 0 1em;
+  display: inline-block;
+  color: white;
+  position: relative;
+}
+
+.wizzard li::before {
+  content: "";
+  position: absolute;
+  top: 0.9em;
+  left: -4em;
+  width: 4em;
+  height: 0.2em;
+  background: dodgerblue;
+  z-index: -1;
+}
+
+.wizzard li:first-child::before {
+  display: none;
+}
+
+.wizzard .active {
+  background: dodgerblue;
+}
+
+.wizzard .active ~ li {
+  background: lightblue;
+}
+
+.wizzard .active ~ li::before {
+  background: lightblue;
+}
+
+.background-primary {
+  background-color: #007cff !important;
+  color: white !important;
+}
+
+.background_outline_primary {
+  background-color: white !important;
+  color: #007cff !important;
+}
+
+.background_outline_primary i {
+  background-color: white !important;
+  color: #007cff !important;
+}
+
+.background_outline_primary:hover {
+  background-color: #007cff !important;
+  color: white !important;
+}
+
+.background_outline_primary:hover i {
+  background-color: #007cff !important;
+  color: white !important;
+}

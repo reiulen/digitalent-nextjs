@@ -16,7 +16,7 @@ import {
 } from "../../../../../redux/actions/pelatihan/profile.actions";
 import { UPDATE_ALAMAT_RESET } from "../../../../../redux/types/pelatihan/profile.type";
 
-const AlamatEdit = ({ funcViewEdit, token }) => {
+const AlamatEdit = ({ funcViewEdit, token, wizzard }) => {
   const dispatch = useDispatch();
 
   const { error: errorAlamat, alamat } = useSelector(
@@ -114,8 +114,12 @@ const AlamatEdit = ({ funcViewEdit, token }) => {
 
     if (success) {
       toast.success("Berhasil Update Data");
-      funcViewEdit(false);
       dispatch({ type: UPDATE_ALAMAT_RESET });
+      if (wizzard) {
+        funcViewEdit(3);
+      } else {
+        funcViewEdit(false);
+      }
     }
   }, [errorUpdateData, success, dispatch]);
 
@@ -389,7 +393,6 @@ const AlamatEdit = ({ funcViewEdit, token }) => {
   };
 
   const handleSubmit = (e) => {
-    console.log(kotaKtp);
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
       const data = {
@@ -404,8 +407,6 @@ const AlamatEdit = ({ funcViewEdit, token }) => {
         kecamatan: kecamatanDomisili,
         kode_pos: kodePosDomisili,
       };
-
-      console.log(data);
       dispatch(updateProfileAlamat(data, token));
     } else {
       simpleValidator.current.showMessages();
@@ -555,22 +556,43 @@ const AlamatEdit = ({ funcViewEdit, token }) => {
           </Form.Group>
           {handleViewDomisili()}
         </div>
-
-        <div className="button-aksi mt-5 float-right">
-          <Button
-            className={`${style.button_profile_batal} rounded-xl mr-2`}
-            type="button"
-            onClick={() => funcViewEdit(false)}
-          >
-            Batal
-          </Button>
-          <Button
-            className={`${style.button_profile_simpan} rounded-xl`}
-            type="submit"
-          >
-            Simpan
-          </Button>
-        </div>
+        {!wizzard ? (
+          <div className="button-aksi mt-5 float-right">
+            <Button
+              className={`${style.button_profile_batal} rounded-xl mr-2`}
+              type="button"
+              onClick={() => funcViewEdit(false)}
+            >
+              Batal
+            </Button>
+            <Button
+              className={`${style.button_profile_simpan} rounded-xl`}
+              type="submit"
+            >
+              Simpan
+            </Button>
+          </div>
+        ) : (
+          <div className="button-aksi mt-5 float-right">
+            <Button
+              className={`${style.button_profile_batal} rounded-xl mr-2`}
+              type="button"
+              onClick={() => {
+                if (wizzard) {
+                  return funcViewEdit(1);
+                }
+              }}
+            >
+              Kembali
+            </Button>
+            <Button
+              className={`${style.button_profile_simpan} rounded-xl`}
+              type="submit"
+            >
+              Lanjut
+            </Button>
+          </div>
+        )}
       </Form>
     </>
   );
