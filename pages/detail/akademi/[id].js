@@ -52,7 +52,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
           params.kategori_peserta,
           params.kata_kunci,
           params.tanggal_mulai,
-          params.tanggal_akhir
+          params.tanggal_akhir,
+          params.page
         )
       );
 
