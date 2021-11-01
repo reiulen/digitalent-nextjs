@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   updateProfilePekerjaan,
   clearErrors,
+  getDataAsalSekolah,
 } from "../../../../../redux/actions/pelatihan/profile.actions";
 import { UPDATE_PEKERJAAN_RESET } from "../../../../../redux/types/pelatihan/profile.type";
 
@@ -18,6 +19,11 @@ const PekerjaanEdit = ({ funcViewEdit, token }) => {
   const { error: errorPekerjaan, pekerjaan } = useSelector(
     (state) => state.dataPekerjaan
   );
+
+  const { data: dataAsalSekolah } = useSelector(
+    (state) => state.getAsalSekolah
+  );
+
   const { error: errorStatusPekerjaan, data: dataStatusPekerjaan } =
     useSelector((state) => state.drowpdownStatusPekerjaan);
   const {
@@ -30,8 +36,15 @@ const PekerjaanEdit = ({ funcViewEdit, token }) => {
   const [, forceUpdate] = useState();
 
   const [statusPekerjaan, setStatusPekerjaan] = useState(
-    (pekerjaan && pekerjaan.status_pekerjaan) || "-"
+    (pekerjaan && {
+      value: pekerjaan.status_pekerjaan,
+      label: pekerjaan.status_pekerjaan,
+    }) || {
+      value: "",
+      label: "",
+    }
   );
+
   const [pekerjaanNama, setPekerjaan] = useState(
     (pekerjaan && pekerjaan.pekerjaan) || ""
   );
@@ -60,6 +73,8 @@ const PekerjaanEdit = ({ funcViewEdit, token }) => {
   }
 
   useEffect(() => {
+    dispatch(getDataAsalSekolah(token, 1, 100, sekolah));
+
     if (errorUpdateData) {
       toast.error(errorUpdateData);
       dispatch(clearErrors());
@@ -70,7 +85,7 @@ const PekerjaanEdit = ({ funcViewEdit, token }) => {
       funcViewEdit(false);
       dispatch({ type: UPDATE_PEKERJAAN_RESET });
     }
-  }, [errorUpdateData, success, dispatch]);
+  }, [errorUpdateData, success, dispatch, sekolah, funcViewEdit, token]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -115,6 +130,8 @@ const PekerjaanEdit = ({ funcViewEdit, token }) => {
       }
 
       dispatch(updateProfilePekerjaan(data, token));
+
+      // check deploy today
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -153,7 +170,6 @@ const PekerjaanEdit = ({ funcViewEdit, token }) => {
             <Form.Label>Status Pekerjaan</Form.Label>
             <Select
               options={optionsStatusPekerjaan}
-              // defaultValue={{label: pekerjaan.status_pekerjaan, value: pekerjaan.status_pekerjaan}}
               onChange={(e) =>
                 setStatusPekerjaan({ label: e.label, value: e.value })
               }
@@ -266,14 +282,22 @@ const PekerjaanEdit = ({ funcViewEdit, token }) => {
                 <Col md={6}>
                   <Form.Group className="mb-3" controlId="formGridAddress1">
                     <Form.Label>Sekolah / Perguruan Tinggi</Form.Label>
-                    <Form.Control
-                      placeholder="Silahkan Masukan Sekolah"
+                    <input
+                      list="data"
+                      type="text" /*  */
+                      className="form-control"
                       value={sekolah}
-                      onChange={(e) => setSekolah(e.target.value)}
-                      onBlur={() =>
-                        simpleValidator.current.showMessageFor("sekolah")
-                      }
+                      onChange={(e) => {
+                        setSekolah(e.target.value);
+                      }}
                     />
+                    <datalist id="data">
+                      {dataAsalSekolah === undefined
+                        ? "kosong"
+                        : dataAsalSekolah.map((item, index) => {
+                            return <option value={item.label} key={index} />;
+                          })}
+                    </datalist>
                     {simpleValidator.current.message(
                       "sekolah",
                       sekolah,

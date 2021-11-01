@@ -125,7 +125,6 @@ const EditTrainingStep1 = () => {
         const reader = new FileReader();
         reader.onload = () => {
           if (reader.readyState === 2) {
-
             setThumbnailBase(reader.result);
           }
         };
@@ -349,7 +348,7 @@ const EditTrainingStep1 = () => {
                 {simpleValidator.current.message(
                   "nama pelatihan",
                   name,
-                  "required",
+                  "required|max:100",
                   { className: "text-danger" }
                 )}
               </div>

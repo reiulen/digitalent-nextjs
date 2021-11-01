@@ -129,7 +129,7 @@ const FormKomitmen = ({
               </Col>
               <Col md={6}>
                 <p className="text-neutral-body my-1">Mitra</p>
-                <p>{(dataPelatihan && dataPelatihan.mitra) || "-"}</p>
+                <p>{(dataPelatihan && dataPelatihan.mitra_nama) || "-"}</p>
               </Col>
             </Row>
           </div>
