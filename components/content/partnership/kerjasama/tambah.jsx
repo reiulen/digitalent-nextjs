@@ -56,26 +56,31 @@ const Tambah = ({ token }) => {
 
     if (institution_name === "") {
       setError({ ...error, institution_name: "Harus pilih nama lembaga" });
-    } else if (date === "") {
-      setError({ ...error, date: "Filed tanggal tidak boleh kosong" });
+    } 
+    else if (period === "") {
+      setError({ ...error, period: "Field periode tidak boleh kosong" });
+    } 
+    
+    else if (date === "") {
+      setError({ ...error, date: "Field tanggal tidak boleh kosong" });
     } else if (title === "") {
-      setError({ ...error, title: "Filed judul kerjasama tidak boleh kosong" });
+      setError({ ...error, title: "Field judul kerjasama tidak boleh kosong" });
     } else if (cooperationC_id === "") {
       setError({
         ...error,
-        cooperationC_id: "Filed kategori kerjasama tidak boleh kosong",
+        cooperationC_id: "Field kategori kerjasama tidak boleh kosong",
       });
-    } else if (period === "") {
-      setError({ ...error, period: "Filed periode tidak boleh kosong" });
-    } else if (periodUnit === "") {
+    } 
+    
+    else if (periodUnit === "") {
       setError({
         ...error,
-        periodUnit: "Filed period unit tidak boleh kosong",
+        periodUnit: "Field period unit tidak boleh kosong",
       });;
     } else if (AllCooperation === "") {
       setError({
         ...error,
-        AllCooperation: "Filed kerjasama form tidak boleh kosong",
+        AllCooperation: "Field kerjasama form tidak boleh kosong",
       });
     } else {
       Swal.fire({
