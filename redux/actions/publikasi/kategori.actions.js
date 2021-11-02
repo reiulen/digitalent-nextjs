@@ -68,8 +68,9 @@ export const getAllKategori = (token) => async dispatch => {
                 Authorization: "Bearer " + token,
             },
         };
-
+        
         const { data } = await axios.get(link, config);
+        // console.log("Action Kategori :", data)
 
         dispatch({
             type: KATEGORI_SUCCESS,
