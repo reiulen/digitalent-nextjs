@@ -169,9 +169,15 @@ const EditDokumentKerjasamaById = ({ token }) => {
           );
 
           router.push({
-            pathname: `/partnership/mitra/detail/${idDetail}`,
-            query: { update: true },
+            pathname: `/partnership/mitra/detail-data-kerjasama-mitra`,
+            query: { id:idDetail,update: true },
           });
+
+          // pathname:
+          //               "/partnership/mitra/detail-data-kerjasama-mitra",
+          //             query: { id: idDetail },
+
+
         } catch (error) {
           notify(error.response.data.message);
         }
@@ -743,7 +749,7 @@ const EditDokumentKerjasamaById = ({ token }) => {
                   <Link href={{
                       pathname:
                         "/partnership/mitra/detail-data-kerjasama-mitra",
-                      query: { id: router.query.id },
+                      query: { id: idDetail },
                     }}>
                     <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary">
                       Kembali
