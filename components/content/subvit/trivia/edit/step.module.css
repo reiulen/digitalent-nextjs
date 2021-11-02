@@ -2,13 +2,17 @@
 .btnNext {
   background-color: white !important;
   border: white;
-  /* border: 1px solid black; */
   margin-left: 55px;
 }
 .btnNext:hover {
   background-color: #d7e1ea !important;
 }
 
+@media only screen and (max-width: 1024px) {
+  .iconTambah{
+      margin-left: 53px;
+  }
+}
 @media only screen and (max-width: 576px) {
   .btnResponsive {
     width: 100%;
@@ -22,5 +26,6 @@
   }
   .btnNext{
     margin-bottom: 8px;
+    margin: 0 0 8px 0;
   }
 }

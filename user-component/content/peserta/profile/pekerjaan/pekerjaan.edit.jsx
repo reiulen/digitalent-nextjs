@@ -12,8 +12,9 @@ import {
   getDataAsalSekolah,
 } from "../../../../../redux/actions/pelatihan/profile.actions";
 import { UPDATE_PEKERJAAN_RESET } from "../../../../../redux/types/pelatihan/profile.type";
+import router from "next/router";
 
-const PekerjaanEdit = ({ funcViewEdit, token }) => {
+const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
   const dispatch = useDispatch();
 
   const { error: errorPekerjaan, pekerjaan } = useSelector(
@@ -82,8 +83,12 @@ const PekerjaanEdit = ({ funcViewEdit, token }) => {
 
     if (success) {
       toast.success("Berhasil Update Data");
-      funcViewEdit(false);
       dispatch({ type: UPDATE_PEKERJAAN_RESET });
+      if (wizzard) {
+        router.push("/peserta");
+      } else {
+        funcViewEdit(false);
+      }
     }
   }, [errorUpdateData, success, dispatch, sekolah, funcViewEdit, token]);
 
@@ -169,6 +174,10 @@ const PekerjaanEdit = ({ funcViewEdit, token }) => {
           <Form.Group className="mb-3" controlId="formGridAddress1">
             <Form.Label>Status Pekerjaan</Form.Label>
             <Select
+              placeholder={
+                (pekerjaan && pekerjaan.status_pekerjaan) ||
+                "Silahkan Pilih Status Pekerjaan"
+              }
               options={optionsStatusPekerjaan}
               onChange={(e) =>
                 setStatusPekerjaan({ label: e.label, value: e.value })
@@ -338,22 +347,39 @@ const PekerjaanEdit = ({ funcViewEdit, token }) => {
               </Row>
             </div>
           )}
-
-        <div className="button-aksi mt-5 float-right">
-          <Button
-            className={`${style.button_profile_batal} rounded-xl mr-2`}
-            type="button"
-            onClick={() => funcViewEdit(false)}
-          >
-            Batal
-          </Button>
-          <Button
-            className={`${style.button_profile_simpan} rounded-xl`}
-            type="submit"
-          >
-            Simpan
-          </Button>
-        </div>
+        {!wizzard ? (
+          <div className="button-aksi mt-5 float-right">
+            <Button
+              className={`${style.button_profile_batal} rounded-xl mr-2`}
+              type="button"
+              onClick={() => funcViewEdit(false)}
+            >
+              Batal
+            </Button>
+            <Button
+              className={`${style.button_profile_simpan} rounded-xl`}
+              type="submit"
+            >
+              Simpan
+            </Button>
+          </div>
+        ) : (
+          <div className="button-aksi mt-5 float-right">
+            <Button
+              className={`${style.button_profile_batal} rounded-xl mr-2`}
+              type="button"
+              onClick={() => funcViewEdit(3)}
+            >
+              Kembali
+            </Button>
+            <Button
+              className={`${style.button_profile_simpan} rounded-xl`}
+              type="submit"
+            >
+              Simpan
+            </Button>
+          </div>
+        )}
       </Form>
     </>
   );

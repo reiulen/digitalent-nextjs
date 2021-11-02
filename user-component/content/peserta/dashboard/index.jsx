@@ -11,14 +11,20 @@ import { useRouter } from "next/router";
 import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
 import Cookies from "js-cookie";
 
-const Dashboard = ({ session }) => {
+const Dashboard = ({ session, success }) => {
   const router = useRouter();
 
   const { error: errorDashboard, dataDashboard } = useSelector(
     (state) => state.dashboardPeserta
   );
-
   const { count, pelatihan, subvit } = dataDashboard;
+
+  useEffect(() => {
+    if (!success) {
+      router.push("/peserta/wizzard");
+    }
+  }, [success]);
+  // console.log(success, "ini success");
 
   const [cardPelatihan, setCardPelatihan] = useState([
     {
@@ -334,7 +340,12 @@ const Dashboard = ({ session }) => {
                       paddingBottom: "75px",
                     }}
                   >
-                    <Image src={"/assets/icon/logo-dts-if-empty.png"} alt="Logo DTS" width={214} height={213} />
+                    <Image
+                      src={"/assets/icon/logo-dts-if-empty.png"}
+                      alt="Logo DTS"
+                      width={214}
+                      height={213}
+                    />
                     <p>Anda tidak memiliki histori pelatihan sebelumnya.</p>
                     <br />
                     <Link href="/" passHref>

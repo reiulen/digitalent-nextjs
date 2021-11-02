@@ -53,14 +53,14 @@ const Done = () => {
                 />
               </div>
               <div className={`${styles.textTraining} p-3`}>
-                {dataTraining.name || "-"}
+                {dataTraining ? dataTraining.name : "-"}
                 <br />
                 <span className={styles.trainingTitle}>
-                  {dataTraining.mitra || "-"}
+                  {dataTraining ? dataTraining.mitra : "-"}
                 </span>
                 <span className={styles.trainingTheme}>
                   {" "}
-                  {dataTraining.akademi || "-"}
+                  {dataTraining ? dataTraining.akademi : "-"}
                 </span>
               </div>
             </div>
