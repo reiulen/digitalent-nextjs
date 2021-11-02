@@ -167,18 +167,20 @@ const BlankComponent = ({ props_answer, props_duration }) => {
       </div>
 
       <div className="form-group row">
-        <div className="col-sm-7 col-md-4 col-lg-5 text-center">
-          {answer.length < 6 ? (
-            <button
-              type="button"
-              className={`${styles.btnTambah} col-12 col-md-12 col-lg-10 col-xl-7 btn btn-rounded-full bg-blue-secondary text-white`}
-              onClick={() => handleAddClick()}
-            >
-              <i className={`${styles.iconTambah} ri-add-fill text-white`}></i> Tambah Jawaban
-            </button>
-          ) : (
-            ""
-          )}
+        {/* <div className="row"> */}
+          <div className="col-sm-7 col-md-4 col-lg-5 text-center">
+            {answer.length < 6 ? (
+              <button
+                type="button"
+                className="col-12 col-md-12 col-lg-10 col-xl-7 btn btn-rounded-full bg-blue-secondary text-white"
+                onClick={() => handleAddClick()}
+              >
+                <i className={`${styles.iconTambah} ri-add-fill text-white`}></i> Tambah Jawaban
+              </button>
+            ) : (
+              ""
+            )}
+          {/* </div> */}
         </div>
       </div>
 

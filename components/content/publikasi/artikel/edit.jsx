@@ -46,6 +46,7 @@ const EditArtikel = ({ token, idUser }) => {
     kategori,
   } = useSelector(state => state.allKategori);
   const { setting } = useSelector(state => state.allSettingPublikasi)
+  const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(state => state.drowpdownAkademi);
 
   useEffect(() => {
 
@@ -96,6 +97,7 @@ const EditArtikel = ({ token, idUser }) => {
   );
   const [gambarName, setGambarName] = useState(artikel.gambar);
   const [kategori_id, setKategoriId] = useState(artikel.kategori_id); //belum
+  const [akademi_value, setAkademiValue] = useState(artikel.akademi_value);
   const [users_id, setUserId] = useState(artikel.users_id);
   const [tag, setTag] = useState(artikel.tag);
   // const [publish, setPublish] = useState(artikel.publish === 1 ? true : false);
@@ -144,6 +146,7 @@ const EditArtikel = ({ token, idUser }) => {
 
   const handleChangePublish = e => {
     setDisablePublishDate(!disablePublishDate);
+    setPublishDate(null);
 
     if (e.target.checked === false) {
       setPublishDate(null);
@@ -333,7 +336,6 @@ const EditArtikel = ({ token, idUser }) => {
   return (
     <>
       <PageWrapper>
-
         {error ? (
           <div
             className="alert alert-custom alert-light-danger fade show mb-5"
@@ -359,32 +361,6 @@ const EditArtikel = ({ token, idUser }) => {
         ) : (
           ""
         )}
-        {/* {success ? (
-          <div
-            className="alert alert-custom alert-light-success fade show mb-5"
-            role="alert"
-          >
-            <div className="alert-icon">
-              <i className="flaticon2-checkmark"></i>
-            </div>
-            <div className="alert-text">{success}</div>
-            <div className="alert-close">
-              <button
-                type="button"
-                className="close"
-                data-dismiss="alert"
-                aria-label="Close"
-                onClick={onNewReset}
-              >
-                <span aria-hidden="true">
-                  <i className="ki ki-close"></i>
-                </span>
-              </button>
-            </div>
-          </div>
-        ) : (
-          ""
-        )} */}
 
         <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
           {loading ? <LoadingPage loading={loading} /> : ""}
@@ -531,6 +507,57 @@ const EditArtikel = ({ token, idUser }) => {
                       Resolusi yang direkomendasikan adalah 1024 * 512. Fokus
                       visual pada bagian tengah gambar
                     </p>
+                  </div>
+                </div>
+
+                <div className="form-group">
+                  <label
+                    htmlFor="staticEmail"
+                    className="col-sm-2 col-form-label font-weight-bolder"
+                  >
+                    Akademi
+                  </label>
+                  <div className="col-sm-12">
+                    <select
+                      name=""
+                      id=""
+                      className="form-control"
+                      value={akademi_value}
+                      onChange={e => setAkademiValue(e.target.value)}
+                      onBlur={e => {
+                        setAkademiValue(e.target.value);
+                        simpleValidator.current.showMessageFor("akademi");
+                      }}
+                    >
+                      <option selected disabled value="">
+                        -- Akademi --
+                      </option>
+                      {!dataAkademi || (dataAkademi && dataAkademi.length === 0) ? (
+                        <option value="">Data Tidak Ditemukan</option>
+                      ) : (
+                        dataAkademi &&
+                        dataAkademi.data &&
+                        dataAkademi.data.map(row => {
+                          return (
+                            <option
+                              key={row.value}
+                              value={row.value}
+                              selected={akademi_value === row.value ? true : false}
+                            >
+                              {row.label}
+                            </option>
+                          )
+                          // : null;
+                          // <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>{row.nama_kategori}</option>
+                        })
+                      )}
+                    </select>
+                    {simpleValidator.current.message(
+                      "akademi",
+                      akademi_value,
+                      "required",
+                      { className: "text-danger" }
+                    )}
                   </div>
                 </div>
 
