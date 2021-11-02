@@ -37,6 +37,7 @@
 .background_outline_primary {
   background-color: white !important;
   color: #007cff !important;
+  border-color: #007cff;
 }
 
 .background_outline_primary i {
@@ -53,6 +54,10 @@
   background-color: #007cff !important;
   color: white !important;
 }
+/* .RFS-Connector {
+  display: flex;
+  align-items: center;
+} */
 /* 
   border-radius: 50%,
   width: 64px,
