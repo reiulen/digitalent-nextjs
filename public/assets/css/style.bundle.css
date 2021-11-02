@@ -9400,6 +9400,11 @@ a.close.disabled {
   /* background-color: #3699FF !important; */
 }
 
+.bg-primary-dashboard {
+  background-color: var(--primary-dashboard) !important;
+  /* background-color: #3699FF !important; */
+}
+
 .bg-gray-shade {
   background-color: var(--gray-shade) !important;
 }
