@@ -305,6 +305,9 @@ import {
   allTrainingReducer,
   deleteTrainingReducer,
   updateStatusReducer,
+  getEditTrainingReducer,
+  getEditTraining2Reducer,
+  getEditTraining3Reducer
 } from "./pelatihan/admin/training.reducers";
 // =================== review pelatihan ==================
 import {
@@ -660,6 +663,9 @@ const reducer = combineReducers({
   cardTraining: cardTrainingReducer,
   newTraining: newTrainingReducer,
   deleteTraining: deleteTrainingReducer,
+  getEditTraining: getEditTrainingReducer,
+  getEditTraining2: getEditTraining2Reducer,
+  getEditTraining3: getEditTraining3Reducer,
 
   // ========== review pelatihan ========
   allListReview: allListReviewReducer,
