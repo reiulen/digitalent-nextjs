@@ -10,7 +10,6 @@ export default function rilisMedia({ berita }) {
   return (
     <div className="container-fluid max-container">
       <div className="rillirs-media container-fluid mb-5">
-        {console.log(berita)}
         <h1
           className="fw-600 text-center mt-26 position-relative"
           style={{ color: "#1F1F1F" }}
