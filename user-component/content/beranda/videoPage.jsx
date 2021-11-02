@@ -17,6 +17,16 @@ const VideoPage = ({ token }) => {
     let loading = false
     let { page = 1, keyword, success } = router.query
 
+    // if (allLoading) {
+    //     loading = allLoading
+    //     // } else if (deleteLoading) {
+    //     //     loading = deleteLoading
+    //     // } else if (playLoading) {
+    //     //     loading = playLoading
+    // }
+
+    // page = Number(page)
+
     const handlePagination = (pageNumber) => {
         if (limit !== null && search === "" && startDate === null && endDate === null && publishValue === null) {
             router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}`)
@@ -64,6 +74,8 @@ const VideoPage = ({ token }) => {
 
     return (
         <>
+            {/* {console.log("Data Video : ", video)} */}
+            {/* {console.log("Data Kategori : ", kategori)} */}
             <SubHeaderComponent />
             <div>
                 <h1>Video Terupdate dan Terkini</h1>
@@ -73,6 +85,7 @@ const VideoPage = ({ token }) => {
                 {
                     kategori.kategori && kategori.kategori.length === 0 ? null :
                         kategori.kategori.map((row, i) => {
+                            // console.log("data row : ", row.jenis_kategori !== "Video" ? null : row.nama_kategori)
                             return (
                                 row.jenis_kategori === "Video" ?
                                     <div className="btn btn-primary mr-3" style={{}}>
@@ -113,6 +126,7 @@ const VideoPage = ({ token }) => {
                     <div className="row">
                         <div className="row justify-content-center my-5">
                             {
+                                // video.video || video.video.length === 0 ? null :
                                 video.video.map((row, i) => {
                                     return (
                                         <div className="card mb-4 mx-3" key={i} style={{ width: '45%', flexWrap: 'wrap', border: 'none' }}>
@@ -141,7 +155,9 @@ const VideoPage = ({ token }) => {
 
                     {/* PAGINATION */}
                     <div>
+                        {/* {console.log("Cek Pagination : ", video)} */}
                         {
+                            // video && video.perPage < video.total &&
                             <div className="table-pagination" style={{ marginLeft: '35%' }}>
                                 <Pagination
                                     activePage={page}
@@ -164,6 +180,7 @@ const VideoPage = ({ token }) => {
 
                 <div className="col-lg-4 my-5">
                     <div className="card mb-4">
+                        {/* <img className="rounded" src="https://digitalent.kominfo.go.id/assets/images/blog.png" alt="Image Video" /> */}
                         <h3 className="d-flex align-items-center font-weight-bolder ml-5 mt-5">
                             <IconFilter className="mr-3 label label-inline font-weight-bold" style={{ borderRadius: '50%', height: '23px', backgroundColor: '#007cff' }} />
                             Filter

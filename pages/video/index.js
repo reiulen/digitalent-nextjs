@@ -17,7 +17,7 @@ export default function VideoDetail(props) {
     const session = props.session.user.user.data
     return (
         <div>
-            <Layout title="Detail Video" token={session.Token}>
+            <Layout title="Video" token={session.Token}>
                 <VideoPage token={session.Token} />
             </Layout>
         </div>
@@ -46,7 +46,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
                 props: {
                     session,
                     data: "auth",
-                    title: "Detail Video"
+                    title: "Video"
                 }
             }
         }
