@@ -206,7 +206,7 @@ export default function DashboardPage({ token }) {
             <h5 className="fw-500 fz-14 text-gray-secondary">
               {allDashboard.data_dashboard.data?.cooperation_will_expired +
                 allDashboard.data_dashboard.data?.cooperation_rejected}{" "}
-              Akan Berakhir & Ditolak
+              Total Akan Berakhir & Ditolak
             </h5>
             <div className="wrapper-chart-pie">
               <span className="center-absolute fw-700 fz-24">

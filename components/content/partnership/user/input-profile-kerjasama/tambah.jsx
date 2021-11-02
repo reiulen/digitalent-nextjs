@@ -1,8 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import PageWrapper from "../../../../wrapper/page.wrapper";
-import DatePicker from "react-datepicker";
-import { addDays } from "date-fns";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
 import { ToastContainer, toast } from "react-toastify";
@@ -11,14 +9,11 @@ import Select from "react-select";
 import axios from "axios";
 import IconClose from "../../../../assets/icon/Close";
 import Image from "next/image";
-import BtnIcon from "../../components/BtnIcon";
 import AlertBar from "../../components/BarAlert";
 
 const Tambah = ({ token }) => {
   const router = useRouter();
   const { successInputProfile } = router.query;
-  // const [startDate, setStartDate] = useState(null);
-  // const [endDate, setEndDate] = useState(null);
 
   // diambil dari data user ketika pertama kali register (name)
   const [institution_name, setInstitution_name] = useState("");
@@ -60,20 +55,6 @@ const Tambah = ({ token }) => {
     } else if (email === "") {
       setError({ ...error, email: "Harus isi email" });
     }
-
-    // jika pertama kali data profile kosong
-    // else if ((agency_logo === "") && agency_logo_api) {
-
-//     else if (imageview && agency_logo) {
-// setError({
-//         ...error,
-//         agency_logo: "Harus isi gambar logo dengan format png",
-//       });
-//       notify("Harus isi gambar logo dengan format png");
-
-      
-//     }
-
      else if (address === "") {
       setError({ ...error, address: "Harus isi alamat" });
     } else if (indonesia_provinces_id === "") {
@@ -190,7 +171,6 @@ const Tambah = ({ token }) => {
         reader.readAsDataURL(selectedFile);
         reader.onloadend = (e) => {
           setAgency_logo(e.target.result);
-          setShowImage(true);
           setNamePDF(selectedFile.name);
         };
       } else {
@@ -201,10 +181,7 @@ const Tambah = ({ token }) => {
     }
   };
 
-  const [showImage, setShowImage] = useState(false);
-  const hideImage = () => {
-    setShowImage(showImage ? false : true);
-  };
+
 
   const notify = (value) =>
     toast.info(`${value}`, {
@@ -226,20 +203,6 @@ const Tambah = ({ token }) => {
 
   // ketika load cities state ini save data
   const [citiesAll, setCitiesAll] = useState([]);
-
-  // const getDataProvinces = async () => {
-
-  // };
-
-  // const getProfiles = async () => {
-
-  // };
-
-  const [isChangeLogo, setIsChangeLogo] = useState(false);
-  const changeStatusLgo = () => {
-    setIsChangeLogo(isChangeLogo ? false : true);
-  };
-
   useEffect(() => {
     async function getDataProvinces(token) {
       try {
@@ -257,7 +220,6 @@ const Tambah = ({ token }) => {
         // dataNewProvinces.splice(0, 0, { label: "Pilih Provinsi", value: "" });
         setAllProvinces(dataNewProvinces);
       } catch (error) {
-        // notify(error.response.data.message);
         return;
       }
     }
@@ -274,9 +236,6 @@ const Tambah = ({ token }) => {
         );
 
         if (data) {
-          // setAgency_logo_api(
-          //   data.data.agency_logo === "-" ? "" : data.data.agency_logo
-          // );
           setImageview(
             data.data.agency_logo
           );
@@ -291,7 +250,7 @@ const Tambah = ({ token }) => {
               : data.data.pic_contact_number
           );
           setPic_email(data.data.pic_email === "-" ? "" : data.data.pic_email);
-          setWesite(data.data.website === "-" ? "" : data.data.website);
+          setWesite(data.data.website === null ? "" : data.data.website);
           setEmail(data.data.email === "-" ? "" : data.data.email);
           setInstitution_name(
             data.data.institution_name === "-" ? "" : data.data.institution_name
@@ -333,7 +292,6 @@ const Tambah = ({ token }) => {
           });
           setCitiesAll(dataNewCitites);
         } catch (error) {
-          // notify(error.response.data.message);
           return;
         }
       }
@@ -343,7 +301,6 @@ const Tambah = ({ token }) => {
   }, [indonesia_provinces_id]);
 
   const onNewReset = () => {
-    // setSuccessDelete(false);
     router.replace(
       "/partnership/user/input-profile",
       undefined,
@@ -371,15 +328,15 @@ const Tambah = ({ token }) => {
           pauseOnHover
         />
         <div className="card card-custom card-stretch gutter-b">
-          <div className="card-header border-0">
+          <div className="card-header border-0 px-4">
             <h3 className="card-title text-dark fw-600 titles-1">
               Profile Lembaga
             </h3>
           </div>
-          <div className="card-body pt-0">
+          <div className="card-body pt-0 px-4 px-sm-6">
             <form
             >
-              <div className="form-group mb-6">
+              <div className="form-group mb-0 mb-sm-4">
                 <label htmlFor="staticE mail" className="col-form-label">
                   Nama Lembaga
                 </label>
@@ -400,7 +357,7 @@ const Tambah = ({ token }) => {
 
               <div className="row">
                 <div className="col-12 col-sm-6">
-                  <div className="form-group">
+                  <div className="form-group mb-0 mb-sm-4">
                     <label htmlFor="staticEmail" className="col-form-label">
                       Website
                     </label>
@@ -421,7 +378,7 @@ const Tambah = ({ token }) => {
                   </div>
                 </div>
                 <div className="col-12 col-sm-6">
-                  <div className="form-group">
+                  <div className="form-group mb-0 mb-sm-4">
                     <label htmlFor="staticEmail" className="col-form-label">
                       Email
                     </label>
@@ -443,7 +400,7 @@ const Tambah = ({ token }) => {
                 </div>
               </div>
 
-              <div className="form-group">
+              <div className="form-group mb-0 mb-sm-4">
                 <label htmlFor="staticEmail" className="col-form-label">
                   Gambar Logo
                 </label>
@@ -568,16 +525,6 @@ const Tambah = ({ token }) => {
                       layout="fill"
                       objectFit="fill"
                     />
-                        
-
-                        // <Image
-                        //   src={imageview}
-                        //   alt="Picture of the author"
-                        //   layout="fill"
-                        //   objectFit="fill"
-                        // />
-
-
                       ) : (
                         <Image
                           src={agency_logo}
@@ -591,7 +538,7 @@ const Tambah = ({ token }) => {
                 </div>
               </div>
 
-              <div className="form-group">
+              <div className="form-group mb-0 mb-sm-4">
                 <label htmlFor="staticEmail" className="col-form-label">
                   Masukan Alamat Lengkap
                 </label>
@@ -612,7 +559,7 @@ const Tambah = ({ token }) => {
 
               <div className="row">
                 <div className="col-12 col-sm-6">
-                  <div className="form-group">
+                  <div className="form-group mb-0 mb-sm-4">
                     <label htmlFor="staticEmail" className="col-form-label">
                       Provinsi
                     </label>
@@ -627,11 +574,6 @@ const Tambah = ({ token }) => {
                           ? indonesia_provinces_id.name
                           : "Pilih provinsi"
                       } `}
-                      // defaultValue={
-                      //   indonesia_provinces_id !== ""
-                      //     ? indonesia_provinces_id
-                      //     : allProvinces[0]
-                      // }
                       isDisabled={false}
                       isLoading={false}
                       isClearable={false}
@@ -651,7 +593,7 @@ const Tambah = ({ token }) => {
                   </div>
                 </div>
                 <div className="col-12 col-sm-6">
-                  <div className="form-group">
+                  <div className="form-group mb-0 mb-sm-4">
                     <label htmlFor="staticEmail" className=" col-form-label">
                       Kota / Kabupaten
                     </label>
@@ -666,7 +608,6 @@ const Tambah = ({ token }) => {
                           ? indonesia_cities_id.name
                           : "Pilih data Kab/Kota"
                       }`}
-                      // defaultValue={citiesAll[0]}
                       isDisabled={false}
                       isLoading={false}
                       isClearable={false}
@@ -685,7 +626,7 @@ const Tambah = ({ token }) => {
                 </div>
               </div>
 
-              <div className="form-group position-relative">
+              <div className="form-group position-relative mb-0 mb-sm-4">
                 <label htmlFor="staticEmail" className="col-form-label">
                   Kode Pos
                 </label>
@@ -710,7 +651,7 @@ const Tambah = ({ token }) => {
 
               <div className="row">
                 <div className="col-12 col-sm-6">
-                  <div className="form-group">
+                  <div className="form-group mb-0 mb-sm-4">
                     <label htmlFor="staticEmail" className="col-form-label">
                       Nama Person In Charge (PIC)
                     </label>
@@ -730,7 +671,7 @@ const Tambah = ({ token }) => {
                   </div>
                 </div>
                 <div className="col-12 col-sm-6">
-                  <div className="form-group">
+                  <div className="form-group mb-0 mb-sm-4">
                     <label htmlFor="staticEmail" className="col-form-label">
                       Nomor Handphone Person In Charge (PIC)
                     </label>

@@ -1,0 +1,168 @@
+@media (max-width: 412px) {
+  .colThanks {
+    margin-top: 20px;
+    padding: 0px !important;
+  }
+}
+.colThanks {
+  padding: 60px 180px 60px 0px;
+}
+
+.thanks {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 30px;
+  line-height: 120%;
+  color: #6c6c6c;
+}
+.bodyDone {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 112%;
+  color: #6c6c6c;
+}
+.btnDone {
+  background: #215480 !important;
+  border-radius: 30px;
+  border: #215480 !important;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 160%;
+  padding: 5px 20px;
+  text-align: center;
+  color: #ffffff !important;
+  float: right;
+}
+.btnDone:hover {
+  background: #214580 !important;
+  border-radius: 30px;
+  border: #214580 !important;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 160%;
+  padding: 5px 20px;
+  text-align: center;
+  color: #ffffff !important;
+  float: right;
+}
+.imageDone {
+  margin: 20px;
+  padding: 20px;
+}
+
+/* ===========================================================================================
+                                            REVISI
+=========================================================================================== */
+
+.cardBase {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 28px 28px;
+}
+.title {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 160%;
+  /* or 38px */
+
+  letter-spacing: 0.015em;
+
+  /* Neutral/Heading */
+
+  color: #1f1f1f;
+}
+.cardChild {
+  /* Neutral/White */
+
+  background: #ffffff;
+  /* Neutral/Border */
+  padding: 18px;
+  border: 1px solid #d7e1ea;
+  box-sizing: border-box;
+  border-radius: 12px;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 200%;
+  /* or 32px */
+
+  letter-spacing: 0.015em;
+
+  /* Neutral/Heading */
+
+  color: #1f1f1f;
+}
+.cardTraining {
+  background: #e6f2ff;
+  border-radius: 12px;
+  padding: 18px;
+}
+.moment {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 160%;
+  /* or 22px */
+
+  letter-spacing: 0.015em;
+
+  /* Neutral/Heading */
+
+  color: #1f1f1f;
+}
+.imageTraining {
+  border-radius: 50%;
+}
+.textTraining {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 160%;
+  /* identical to box height, or 29px */
+
+  letter-spacing: 0.015em;
+
+  /* Neutral/Heading */
+
+  color: #1f1f1f;
+}
+.trainingTitle {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 160%;
+  /* or 22px */
+
+  letter-spacing: 0.015em;
+
+  /* Brand/Secondary/Secondary */
+
+  color: #203e80;
+}
+.trainingTheme {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 160%;
+  /* or 22px */
+
+  letter-spacing: 0.015em;
+
+  /* Neutral/Body */
+
+  color: #6c6c6c;
+}

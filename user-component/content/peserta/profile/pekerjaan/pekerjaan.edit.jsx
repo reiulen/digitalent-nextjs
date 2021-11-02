@@ -9,15 +9,22 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   updateProfilePekerjaan,
   clearErrors,
+  getDataAsalSekolah,
 } from "../../../../../redux/actions/pelatihan/profile.actions";
 import { UPDATE_PEKERJAAN_RESET } from "../../../../../redux/types/pelatihan/profile.type";
+import router from "next/router";
 
-const PekerjaanEdit = ({ funcViewEdit, token }) => {
+const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
   const dispatch = useDispatch();
 
   const { error: errorPekerjaan, pekerjaan } = useSelector(
     (state) => state.dataPekerjaan
   );
+
+  const { data: dataAsalSekolah } = useSelector(
+    (state) => state.getAsalSekolah
+  );
+
   const { error: errorStatusPekerjaan, data: dataStatusPekerjaan } =
     useSelector((state) => state.drowpdownStatusPekerjaan);
   const {
@@ -30,8 +37,15 @@ const PekerjaanEdit = ({ funcViewEdit, token }) => {
   const [, forceUpdate] = useState();
 
   const [statusPekerjaan, setStatusPekerjaan] = useState(
-    (pekerjaan && pekerjaan.status_pekerjaan) || "-"
+    (pekerjaan && {
+      value: pekerjaan.status_pekerjaan,
+      label: pekerjaan.status_pekerjaan,
+    }) || {
+      value: "",
+      label: "",
+    }
   );
+
   const [pekerjaanNama, setPekerjaan] = useState(
     (pekerjaan && pekerjaan.pekerjaan) || ""
   );
@@ -60,6 +74,8 @@ const PekerjaanEdit = ({ funcViewEdit, token }) => {
   }
 
   useEffect(() => {
+    dispatch(getDataAsalSekolah(token, 1, 100, sekolah));
+
     if (errorUpdateData) {
       toast.error(errorUpdateData);
       dispatch(clearErrors());
@@ -67,10 +83,14 @@ const PekerjaanEdit = ({ funcViewEdit, token }) => {
 
     if (success) {
       toast.success("Berhasil Update Data");
-      funcViewEdit(false);
       dispatch({ type: UPDATE_PEKERJAAN_RESET });
+      if (wizzard) {
+        router.push("/peserta");
+      } else {
+        funcViewEdit(false);
+      }
     }
-  }, [errorUpdateData, success, dispatch]);
+  }, [errorUpdateData, success, dispatch, sekolah, funcViewEdit, token]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -115,6 +135,8 @@ const PekerjaanEdit = ({ funcViewEdit, token }) => {
       }
 
       dispatch(updateProfilePekerjaan(data, token));
+
+      // check deploy today
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -152,6 +174,10 @@ const PekerjaanEdit = ({ funcViewEdit, token }) => {
           <Form.Group className="mb-3" controlId="formGridAddress1">
             <Form.Label>Status Pekerjaan</Form.Label>
             <Select
+              placeholder={
+                (pekerjaan && pekerjaan.status_pekerjaan) ||
+                "Silahkan Pilih Status Pekerjaan"
+              }
               options={optionsStatusPekerjaan}
               onChange={(e) =>
                 setStatusPekerjaan({ label: e.label, value: e.value })
@@ -265,14 +291,22 @@ const PekerjaanEdit = ({ funcViewEdit, token }) => {
                 <Col md={6}>
                   <Form.Group className="mb-3" controlId="formGridAddress1">
                     <Form.Label>Sekolah / Perguruan Tinggi</Form.Label>
-                    <Form.Control
-                      placeholder="Silahkan Masukan Sekolah"
+                    <input
+                      list="data"
+                      type="text" /*  */
+                      className="form-control"
                       value={sekolah}
-                      onChange={(e) => setSekolah(e.target.value)}
-                      onBlur={() =>
-                        simpleValidator.current.showMessageFor("sekolah")
-                      }
+                      onChange={(e) => {
+                        setSekolah(e.target.value);
+                      }}
                     />
+                    <datalist id="data">
+                      {dataAsalSekolah === undefined
+                        ? "kosong"
+                        : dataAsalSekolah.map((item, index) => {
+                            return <option value={item.label} key={index} />;
+                          })}
+                    </datalist>
                     {simpleValidator.current.message(
                       "sekolah",
                       sekolah,
@@ -313,22 +347,39 @@ const PekerjaanEdit = ({ funcViewEdit, token }) => {
               </Row>
             </div>
           )}
-
-        <div className="button-aksi mt-5 float-right">
-          <Button
-            className={`${style.button_profile_batal} rounded-xl mr-2`}
-            type="button"
-            onClick={() => funcViewEdit(false)}
-          >
-            Batal
-          </Button>
-          <Button
-            className={`${style.button_profile_simpan} rounded-xl`}
-            type="submit"
-          >
-            Simpan
-          </Button>
-        </div>
+        {!wizzard ? (
+          <div className="button-aksi mt-5 float-right">
+            <Button
+              className={`${style.button_profile_batal} rounded-xl mr-2`}
+              type="button"
+              onClick={() => funcViewEdit(false)}
+            >
+              Batal
+            </Button>
+            <Button
+              className={`${style.button_profile_simpan} rounded-xl`}
+              type="submit"
+            >
+              Simpan
+            </Button>
+          </div>
+        ) : (
+          <div className="button-aksi mt-5 float-right">
+            <Button
+              className={`${style.button_profile_batal} rounded-xl mr-2`}
+              type="button"
+              onClick={() => funcViewEdit(3)}
+            >
+              Kembali
+            </Button>
+            <Button
+              className={`${style.button_profile_simpan} rounded-xl`}
+              type="submit"
+            >
+              Simpan
+            </Button>
+          </div>
+        )}
       </Form>
     </>
   );

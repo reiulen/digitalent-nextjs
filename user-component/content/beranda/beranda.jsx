@@ -41,7 +41,6 @@ import Carousel from "../../components/beranda/carousel";
 const Beranda = ({ session }) => {
   const dispatch = useDispatch();
   const router = useRouter();
-
   const { akademi } = useSelector((state) => state.allAkademi);
   const { tema, loading: loadingTema } = useSelector(
     (state) => state.temaByAkademi
