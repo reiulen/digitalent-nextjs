@@ -228,4 +228,5 @@ const DetailArtikel = () => {
     )
 }
 
+
 export default DetailArtikel
