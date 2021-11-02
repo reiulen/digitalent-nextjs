@@ -162,9 +162,11 @@ const Navigationbar = ({ session }) => {
                     <a className="dropdown-item navdropdown-child" href="#">
                       Artikel
                     </a>
-                    <a className="dropdown-item navdropdown-child" href="#">
-                      Galeri
-                    </a>
+                    <Link href="/galeri">
+                      <a className="dropdown-item navdropdown-child">
+                        Galeri
+                      </a>
+                    </Link>
                     <a className="dropdown-item navdropdown-child" href="#">
                       Video
                     </a>
