@@ -156,12 +156,17 @@ const Navigationbar = ({ session }) => {
                     </div>
                   </button>
                   <div className="dropdown-menu ml-3">
-                    <a className="dropdown-item navdropdown-child" href="#">
-                      Berita
-                    </a>
-                    <a className="dropdown-item navdropdown-child" href="#">
-                      Artikel
-                    </a>
+                    <Link href={`/berita`}>
+                      <a className="dropdown-item navdropdown-child">
+                        Berita
+                      </a>
+                    </Link>
+                    <Link href={`/artikel`}>
+                      <a className="dropdown-item navdropdown-child">
+                        Artikel
+                      </a>
+                    </Link>
+                    
                     <a className="dropdown-item navdropdown-child" href="#">
                       Galeri
                     </a>
@@ -171,7 +176,7 @@ const Navigationbar = ({ session }) => {
                   </div>
                 </div>
                 <NavDropdown.Item
-                  href="#action/3.4"
+                  href="/faq"
                   className="navdropdown-child"
                 >
                   FAQ

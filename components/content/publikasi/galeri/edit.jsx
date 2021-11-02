@@ -199,6 +199,7 @@ const EditGaleri = ({ token }) => {
 
     const handleChangePublish = (e) => {
         setDisablePublishDate(!disablePublishDate)
+        setPublishDate(null)
 
         if (e.target.checked === false) {
             setPublishDate(null)
