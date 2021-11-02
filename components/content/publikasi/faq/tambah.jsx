@@ -222,7 +222,7 @@ const TambahFaq = ({ token, id }) => {
                                         value={jawaban}
                                         onBlur={() => simpleValidator.current.showMessageFor("jawaban")}
                                     />
-                                    {simpleValidator.current.message("jawaban", jawaban, "required|max:350", { className: "text-danger" })}
+                                    {simpleValidator.current.message("jawaban", jawaban, "required|max:7000", { className: "text-danger" })}
                                 </div>
                             </div>
 

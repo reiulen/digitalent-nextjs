@@ -299,12 +299,12 @@ const TambahImagetron = ({ token, id }) => {
                     <input type="text" className="form-control" value={url_link} onChange={e => setUrlRedirect(e.target.value)} placeholder="https://www.example.com" onBlur={() => simpleValidator.current.showMessageFor("url_link")} />
 
                   </div>
-                  {simpleValidator.current.message(
+                  {/* {simpleValidator.current.message(
                     "url_link",
                     url_link,
                     "required|url",
                     { className: "text-danger" }
-                  )}
+                  )} */}
                 </div>
               </div>
 
