@@ -7,8 +7,8 @@ import LoadingSkeleton from "../../../components/LoadingSkeleton";
 import { middlewareAuthPesertaSession } from "../../../utils/middleware/authMiddleware";
 import { getDataPribadi } from "../../../redux/actions/pelatihan/function.actions";
 
-const SurveyPage = dynamic(
-  () => import("../../../user-component/content/peserta/survey"),
+const TriviaPage = dynamic(
+  () => import("../../../user-component/content/peserta/trivia"),
   {
     loading: function loadingNow() {
       return <LoadingSkeleton />;
@@ -25,8 +25,8 @@ export default function TestSubstansiPage(props) {
   const session = props.session.user.user.data.user;
   return (
     <>
-      <Layout title="Survey - Subvit" session={session}>
-        <SurveyPage session={session} />
+      <Layout title="TRIVIA - Subvit" session={session}>
+        <TriviaPage session={session} />
       </Layout>
     </>
   );
@@ -53,7 +53,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       return {
-        props: { data: "auth", session, title: "Dashboard - Peserta" },
+        props: { data: "auth", session, title: "TRIVIA - Subvit" },
       };
     }
 );

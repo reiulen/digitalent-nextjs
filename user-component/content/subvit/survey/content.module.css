@@ -1,0 +1,582 @@
+@media (min-width: 375px) and (max-width: 767px) {
+  .mainCard {
+    padding: 20px !important;
+    border-radius: 0px !important;
+    height: 100% !important;
+  }
+  .base {
+    padding: 0px !important;
+  }
+  .academy {
+    padding: 0px !important;
+  }
+  .training {
+    padding: 0px !important;
+  }
+  .rowNumber {
+    display: none;
+  }
+
+  .daftarSoal {
+    display: none;
+  }
+  .totalSoalResponsive {
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 140%;
+    color: #80808f;
+    display: inline !important;
+    margin-bottom: 10px;
+  }
+  .daftarSoalResponsive {
+    display: inline !important;
+    text-align: right;
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 160%;
+    color: #4299e1;
+    cursor: pointer;
+  }
+  .rowNumberResponsive {
+    margin-top: 20px;
+  }
+  .btnHelp {
+    float: left;
+  }
+  .cardNumber {
+    display: none;
+  }
+  .cardSoal {
+    margin-bottom: 20px;
+  }
+  .baseAll {
+    top: 280px !important;
+  }
+  .btnBottom {
+    display: none !important;
+  }
+  .btnBackResponsive {
+    display: none !important;
+  }
+  .btnBottomResponsive {
+    display: inline-block !important;
+  }
+  .totalSoal {
+    display: none;
+  }
+  .soalResponsive {
+    display: inline-block !important;
+  }
+  .total {
+    text-align: left;
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 140%;
+    color: #80808f;
+  }
+  .clickSoal {
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 160%;
+    /* or 22px */
+
+    text-align: right;
+    float: right;
+    letter-spacing: 0.015em;
+
+    /* Brand/Primary/Primary */
+
+    color: #007cff;
+  }
+}
+
+.soalResponsive {
+  display: none;
+}
+.btnBottomResponsive {
+  display: none;
+}
+
+.totalSoalResponsive {
+  display: none;
+}
+.daftarSoalResponsive {
+  display: none;
+}
+
+.base {
+  padding: 20px 30px;
+}
+
+.mainCard {
+  background: #ffffff;
+
+  padding: 20px 30px;
+  box-shadow: 0px 0px 12px rgba(31, 31, 31, 0.1);
+  border-radius: 0px 0px 12px 12px;
+}
+
+.back {
+  background: #ffffff;
+  cursor: pointer;
+  padding: 3px 5px;
+  width: 40px;
+  border: 1px solid #e5eaee;
+  box-sizing: border-box;
+  border-radius: 5px;
+}
+
+.textCardNumber {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 140%;
+  color: #04aa77;
+}
+.textCard {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 140%;
+  color: #1b283f;
+}
+.textCardAnswer {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 140%;
+  color: #fff;
+}
+.cardAnswer {
+  background: #ffffff;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 2px solid #d6d6e0;
+  box-sizing: border-box;
+  border-radius: 5px;
+  font-family: poppins;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 140%;
+  font-style: normal;
+  cursor: pointer;
+}
+.cardAnswer:hover,
+.cardAnswered {
+  background-color: #e6f7f1;
+  border: 2px solid #e6f7f1;
+  padding: 10px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  font-family: poppins;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 140%;
+  font-style: normal;
+  cursor: pointer;
+}
+.textArea {
+  padding: 20px;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 140%;
+  color: #b5b5c3;
+  background: #ffffff;
+  border: 2px solid #d6d6e0;
+  box-sizing: border-box;
+  border-radius: 5px;
+  margin-bottom: 50px;
+}
+.textArea::placeholder {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 140%;
+  color: #b5b5c3;
+}
+.textArea:focus {
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 255),
+    0 0 8px rgba(255, 255, 255, 255);
+  border: 2px solid #d6d6e0;
+}
+.multiple {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 10px;
+  line-height: 140%;
+  color: #ee9d01;
+}
+.academy {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 140%;
+  padding: 10px 0px;
+  color: #1b283f;
+}
+
+.nameTest {
+  font-family: poppins;
+  font-weight: 600;
+  font-style: normal;
+  line-height: 140%;
+  font-size: 12px;
+  color: #1b283f;
+}
+.totalSoal {
+  text-align: right;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 140%;
+  color: #80808f;
+}
+
+.baseAll {
+  position: absolute;
+  top: 255px;
+  left: 0;
+  right: 0;
+}
+
+.cardTop {
+  background: #ffffff;
+  border-radius: 12px 12px 0px 0px;
+  padding: 18px;
+}
+.btnHelp:hover {
+  text-decoration: none;
+}
+.btnHelp:active {
+  text-decoration: none;
+}
+.bantuan {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 160%;
+
+  text-align: center;
+
+  color: #ffa800;
+}
+.academy {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 160%;
+
+  color: #1f1f1f;
+}
+.training {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 160%;
+
+  color: #6c6c6c;
+}
+.time {
+  background-color: #ffe2e5;
+  color: #ee2d41;
+  border-color: #ffe2e5;
+  height: 50px;
+  width: 150px;
+  float: right;
+  padding: 12px;
+  text-align: center;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 155%;
+
+  text-align: center;
+  letter-spacing: 0.1em;
+
+  color: #ee2d41;
+}
+.cardSoal {
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+.cardNumber {
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 10px;
+}
+.cardChoose {
+  background: #fafafb;
+  border-radius: 5px;
+  border: #f3f6f9;
+  padding: 8px;
+  text-align: center;
+  margin-bottom: 12px;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  font-size: 12px;
+}
+.daftarSoal {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 140%;
+  margin-bottom: 20px;
+}
+.totalSoal {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 160%;
+
+  text-align: left;
+  letter-spacing: 0.015em;
+
+  color: #6c6c6c;
+}
+.soal {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 140%;
+
+  letter-spacing: 0.015em;
+
+  color: #1f1f1f;
+}
+.boxAnswer {
+  background: #ffffff;
+
+  border: 1px solid #d7e1ea;
+  box-sizing: border-box;
+  border-radius: 8px;
+  padding: 14px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 160%;
+
+  color: #1f1f1f;
+}
+.boxAnswer:hover {
+  background: #e6f2ff;
+
+  border: 1px solid #007cff;
+  box-sizing: border-box;
+  border-radius: 8px;
+}
+.answer {
+  border-radius: 8px;
+  padding: 14px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 160%;
+  background: #e6f2ff;
+
+  /* border: 2px solid #007cff; */
+  box-sizing: border-box;
+}
+
+.btnBack {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 160%;
+
+  text-align: center;
+
+  color: #007cff;
+  text-decoration: none !important;
+}
+.btnBack:hover {
+  text-decoration: none !important;
+}
+.btnSkip {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 160%;
+
+  text-align: center;
+
+  color: #ee2d41;
+  text-decoration: none;
+}
+.btnSkip:hover {
+  text-decoration: none;
+}
+.btnNext {
+  background: #007cff;
+  border-radius: 30px;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 160%;
+
+  text-align: center;
+  letter-spacing: 0.015em;
+
+  color: #ffffff;
+  margin-left: 30px;
+  padding: 5px 15px;
+}
+.cardPanduan {
+  background: #ffffff;
+
+  border: 1px solid #d7e1ea;
+  box-sizing: border-box;
+  border-radius: 12px;
+  padding: 10px 20px;
+  margin-top: 20px;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 200%;
+
+  letter-spacing: 0.015em;
+
+  color: #1f1f1f;
+}
+.headerModal {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 160%;
+
+  letter-spacing: 0.015em;
+
+  color: #1f1f1f;
+}
+.cardChoosed {
+  background: #e6f2ff;
+  border-radius: 5px;
+  border: #e6f2ff;
+  padding: 10px;
+  text-align: center;
+  margin-bottom: 12px;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 140%;
+
+  text-align: center;
+
+  color: #0063cc;
+}
+.numberAnswer {
+  background: #0063cc;
+  border-radius: 5px;
+  border: #0063cc;
+  padding: 10px;
+  text-align: center;
+  margin-bottom: 12px;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 140%;
+  /* identical to box height, or 20px */
+
+  text-align: center;
+
+  /* Neutral/White */
+
+  color: #ffffff;
+}
+.btnBatal {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 160%;
+  text-align: center;
+  letter-spacing: 0.015em;
+  margin-right: 20px;
+  color: #007cff;
+}
+.btnBatal:hover {
+  text-decoration: none;
+}
+.btnMulai {
+  background: #007cff;
+  border-radius: 30px;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 160%;
+  text-align: center;
+  letter-spacing: 0.015em;
+  color: #ffffff;
+  padding: 8px 20px;
+}
+.headerKonfirmasi {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 155%;
+  /* identical to box height, or 31px */
+
+  /* Neutral/Heading */
+
+  color: #1f1f1f;
+}
+.bodyKonfirmasi {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 200%;
+  /* or 32px */
+
+  /* Neutral/Heading */
+
+  color: #1f1f1f;
+}
