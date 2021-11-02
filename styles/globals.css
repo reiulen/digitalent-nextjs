@@ -281,6 +281,31 @@ a {
   z-index: 9999;
 }
 
+.img-carousel {
+  border-radius: 12px;
+}
+
+.slick-list {
+  margin: 0 -10px;
+}
+
+.slick-slide {
+  padding: 0 5px;
+}
+
+.slick-list button .slick-arrow .slick-next {
+  display: none !important;
+}
+
+@media screen and (min-width: 600px) {
+  .img-carousel {
+    border-radius: 16px;
+  }
+  .slick-slide {
+    padding: 0 10px;
+  }
+}
+
 @media screen and (max-width: 575px) {
   .g-recaptcha {
     transform: scale(0.77);
