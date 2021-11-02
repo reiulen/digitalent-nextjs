@@ -171,7 +171,7 @@ const Navigationbar = ({ session }) => {
                   </div>
                 </div>
                 <NavDropdown.Item
-                  href="#action/3.4"
+                  href="/faq"
                   className="navdropdown-child"
                 >
                   FAQ

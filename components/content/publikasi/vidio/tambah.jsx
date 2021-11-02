@@ -257,7 +257,7 @@ const TambahVidio = ({ token, id }) => {
                                 <label htmlFor="staticEmail" className="col-sm-4 col-form-label font-weight-bolder">Deskripsi Video</label>
                                 <div className="col-sm-12">
                                     <textarea className='form-control' placeholder='Tulis Deskripsi' name="deskripsi" id="" rows="10" onChange={e => setIsiVideo(e.target.value)} value={isi_video} onBlur={() => simpleValidator.current.showMessageFor("isi_video")}></textarea>
-                                    {simpleValidator.current.message("isi_video", isi_video, "required|min:5|max:5000", { className: "text-danger" })}
+                                    {simpleValidator.current.message("isi_video", isi_video, "required|min:5|max:7000", { className: "text-danger" })}
                                 </div>
                             </div>
 

@@ -240,9 +240,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
               <Form.Label>Jenis Kelamin</Form.Label>
               <Select
                 placeholder={`${
-                  kelamin === null
-                    ? "Silahkan Pilih Jenis Kelamin"
-                    : dataPribadi.jenis_kelamin
+                  kelamin === "" ? "Silahkan Pilih Jenis Kelamin" : kelamin
                 }`}
                 options={optionsKelamin}
                 defaultValue={{ value: kelamin, label: kelamin }}
@@ -303,7 +301,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
             <Form.Label>Agama</Form.Label>
             <Select
               placeholder={`${
-                agama === null ? "Silahkan Pilih Agama" : dataPribadi.agama
+                agama === "" ? "Silahkan Pilih Agama" : dataPribadi.agama
               }`}
               options={optionsAgama}
               defaultValue={{ value: agama, label: agama }}

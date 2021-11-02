@@ -1,22 +1,15 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import Pagination from "react-js-pagination";
 import PageWrapper from "../../../wrapper/page.wrapper";
-import { useDispatch, useSelector } from "react-redux";
-import LoadingTable from "../../../LoadingTable";
-import IconEye from "../../../assets/icon/Eye";
-import IconPencil from "../../../assets/icon/Pencil";
 import IconDelete from "../../../assets/icon/Delete";
 import IconAdd from "../../../assets/icon/Add";
-import IconSearch from "../../../assets/icon/Search";
 import Image from "next/image";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Table = ({ token }) => {
-  let dispatch = useDispatch();
   const router = useRouter();
   const [array, setArray] = useState([]);
   
@@ -61,8 +54,6 @@ const Table = ({ token }) => {
     setArray(_temp);
         
     }
-
-
   const handleCreate2 = (index, j) => {
     let _temp = [...array];
     _temp[index].child[j].child.push({
@@ -175,9 +166,6 @@ const Table = ({ token }) => {
       draggable: true,
       progress: undefined,
     });
-
-    
-
   useEffect(() => {
     async function getDataMenu(token) {
       try {
