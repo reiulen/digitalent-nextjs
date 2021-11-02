@@ -3,7 +3,17 @@ import { Col, Card, Button } from "react-bootstrap";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-const CardPage = ({ backgroundImage, background, color, link, text, desc, total, isSubvit, col }) => {
+const CardPage = ({
+  backgroundImage,
+  background,
+  color,
+  link,
+  text,
+  desc,
+  total,
+  isSubvit,
+  col,
+}) => {
   const router = useRouter();
 
   function addHours(date, hours) {
@@ -29,7 +39,7 @@ const CardPage = ({ backgroundImage, background, color, link, text, desc, total,
               style={{
                 fontSize: "16px",
                 fontWeight: "600",
-                width: isSubvit ? "max-content" : "300px",
+                width: isSubvit ? "max-content" : "200px",
                 color: color,
               }}
             >
@@ -37,7 +47,10 @@ const CardPage = ({ backgroundImage, background, color, link, text, desc, total,
             </p>
 
             <Link href={`${link}`} passHref>
-              <Button variant={background} className="font-weight-bolder rounded-full">
+              <Button
+                variant={background}
+                className="font-weight-bolder rounded-full"
+              >
                 {text}
               </Button>
             </Link>
