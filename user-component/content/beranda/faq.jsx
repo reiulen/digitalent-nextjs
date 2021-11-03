@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 
@@ -6,17 +6,18 @@ import SubHeaderComponent from "../../components/template/Subheader.component";
 import styles from "../../components/template/Sidebar.module.css";
 
 const FaqPage = () => {
-    const router = useRouter();
 
     const { loading, error, faq } = useSelector(state => state.allFaq)
-
+    const [deskripsi, setDeskripsi] = useState(faq.faq[0].kategori_id)
+    const [title, setTitle] = useState(faq.faq[0].kategori)
+    const [disableBtn, setDisableBtn] = useState(false)
+    
     return (
         <>
-            {/* {console.log("Cek FAQ :", faq)} */}
             <SubHeaderComponent />
             <div>
-                <h1 style={{ fontWeight: '800' }}>Frequently Asked Questions</h1>
-                <span>Ada yang bisa Kami Bantu ?</span>
+                <h1 style={{ fontWeight: '800', marginTop: '40px' }}>Frequently Asked Questions</h1>
+                <p className="my-5">Ada yang bisa Kami Bantu ?</p>
             </div>
             <div className="row">
                 <div className="col-lg-4">
@@ -44,28 +45,22 @@ const FaqPage = () => {
                         </button>
                     </div>
 
-                    <h4 style={{ fontWeight: '600' }}>Kategori Pertanyaan</h4>
+                    <h4 style={{ fontWeight: '600', marginTop: '50px' }}>Kategori Pertanyaan</h4>
                     {
-                        // faq.faq || faq.faq.length === 0 ? null :
                         faq.faq.map((row, i) => {
-                            // console.log("row :", row)
                             return (
                                 <div style={{ marginLeft: '-35px' }}>
                                     <div
-                                        className={`${router.pathname === "/peserta/survey"
+                                        className={`${disableBtn === true
                                             ? styles.activeMenuItem
                                             : styles.menuItem
                                             } d-flex flex-row`}
                                     >
-                                        <div className="">
-                                            <i
-                                                className={`${router.pathname === "/peserta/survey"
-                                                    ? styles.activeIconMenu
-                                                    : styles.iconMenu
-                                                    } `}
-                                            ></i>
-                                        </div>
-                                        <div className="d-flex align-items-center my-5">
+                                        <div className="d-flex align-items-center my-5"
+                                            onClick={() => {
+                                                setDeskripsi(row.kategori_id)
+                                                setTitle(row.kategori)
+                                            }}>
                                             <i className="fas fa-arrow-right mr-3"></i>
                                             <td>{row.kategori}</td>
                                         </div>
@@ -77,30 +72,34 @@ const FaqPage = () => {
                 </div>
 
                 <div className="col-lg-8">
-                    <h2 style={{ fontWeight: '800', marginTop: '20px', color: '#203e80' }}>{faq.faq[0].kategori}</h2>
-                    {
-                        faq.faq.map((row, i) => {
-                            return (
-                                <div className="accordion" id="selector">
-                                    <div className="accordion-item" style={{ border: '1px solid gray', marginTop: '30px', borderRadius: '10px' }}>
-                                        <p className="accordion-header d-flex justify-content-between align-items-center" style={{ marginLeft: '30px' }}>
-                                            {row.judul}
-                                            <button className="accordion-button btn" type="button" data-toggle="collapse" data-target={i === 0 ? "#collapseExample" : `#collapseExample${i}`} key={i} data-parent="#selector" aria-expanded="false" aria-controls="collapseExample"
-                                            // style={{width:'3px', height:'3px',lineHeight:'3px'}}
-                                            >
-                                                <i className="fas fa-plus-circle"></i>
-                                            </button>
-                                        </p>
-                                        <div className="collapse" id={i === 0 ? "collapseExample" : `collapseExample${i}`} key={i}>
-                                            <div className="accordion-body card card-body">
-                                                {row.jawaban}
+                    <div className="ml-3">
+                        <h2 style={{ fontWeight: '800', marginTop: '20px', color: '#203e80' }}>{title}</h2>
+                        <div style={{ marginTop: '60px' }}>
+                            {
+                                faq.faq.map((row, i) => {
+                                    if (row.kategori_id === deskripsi) {
+                                        return (
+                                            <div className="accordion" id="selector">
+                                                <div className="accordion-item border border-dark" style={{  marginTop: '30px', borderRadius: '10px' }}>
+                                                    <div className="accordion-header d-flex justify-content-between align-items-center pt-1" style={{ marginLeft: '30px' }}>
+                                                        <h6 style={{fontWeight:'700'}}>{row.judul}</h6>
+                                                        <button className="accordion-button btn" type="button" data-toggle="collapse" data-target={i === 0 ? "#collapseExample" : `#collapseExample${i}`} key={i} data-parent="#selector" aria-expanded="false" aria-controls="collapseExample">
+                                                            <i className={disableBtn === true ? "fas fa-plus-circle" : "fas fa-minus-circle"} style={{ color: '#3699ff' }}></i>
+                                                        </button>
+                                                    </div>
+                                                    <div className="collapse" id={i === 0 ? "collapseExample" : `collapseExample${i}`} key={i}>
+                                                        <div className="accordion-body card card-body">
+                                                            {row.jawaban}
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            )
-                        })
-                    }
+                                        )
+                                    }
+                                })
+                            }
+                        </div>
+                    </div>
                 </div>
             </div>
         </>

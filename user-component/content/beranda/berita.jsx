@@ -156,7 +156,7 @@ const Berita = () => {
 
                             <div className="row my-5">
                                 {/* Insert Title Here */}
-                                <Link href={`/artikel/detail/1`}>
+                                <Link href={`/berita/detail/1`}>
                                     <a>
                                         <h1 className="text-dark">
                                             Pengumuman Kelulusan Peserta Pelatihan Daring Gelombang 1 Program VSGA DTS 2...
@@ -193,7 +193,7 @@ const Berita = () => {
 
                         <div className="col col-md-5 col-12 position-relative">
                             {/* Insert Card Image Here */}
-                            <Link href={`/artikel/detail/1`}>
+                            <Link href={`/berita/detail/1`}>
                                 <a>
                                     <img
                                         src="/assets/media/default-card-artikel.png" 
@@ -250,7 +250,7 @@ const Berita = () => {
 
                             <div className="row my-5">
                                 {/* Insert Title Here */}
-                                <Link href={`/artikel/detail/1`}>
+                                <Link href={`/berita/detail/1`}>
                                     <a>
                                         <h1 className="text-dark">
                                             Pengumuman Kelulusan Peserta Pelatihan Daring Gelombang 1 Program VSGA DTS 2...
@@ -287,7 +287,7 @@ const Berita = () => {
 
                         <div className="col col-md-5 col-12 position-relative">
                             {/* Insert Card Image Here */}
-                            <Link href={`/artikel/detail/1`}>
+                            <Link href={`/berita/detail/1`}>
                                 <a>
                                     <img
                                         src="/assets/media/default-card-artikel.png" 
@@ -344,7 +344,7 @@ const Berita = () => {
 
                             <div className="row my-5">
                                 {/* Insert Title Here */}
-                                <Link href={`/artikel/detail/1`}>
+                                <Link href={`/berita/detail/1`}>
                                     <a>
                                         <h1 className="text-dark">
                                             Pengumuman Kelulusan Peserta Pelatihan Daring Gelombang 1 Program VSGA DTS 2...
@@ -381,7 +381,7 @@ const Berita = () => {
 
                         <div className="col col-md-5 col-12 position-relative">
                             {/* Insert Card Image Here */}
-                            <Link href={`/artikel/detail/1`}>
+                            <Link href={`/berita/detail/1`}>
                                 <a>
                                     <img
                                         src="/assets/media/default-card-artikel.png" 
@@ -438,7 +438,7 @@ const Berita = () => {
 
                             <div className="row my-5">
                                 {/* Insert Title Here */}
-                                <Link href={`/artikel/detail/1`}>
+                                <Link href={`/berita/detail/1`}>
                                     <a>
                                         <h1 className="text-dark">
                                             Pengumuman Kelulusan Peserta Pelatihan Daring Gelombang 1 Program VSGA DTS 2...
@@ -475,7 +475,7 @@ const Berita = () => {
 
                         <div className="col col-md-5 col-12 position-relative">
                             {/* Insert Card Image Here */}
-                            <Link href={`/artikel/detail/1`}>
+                            <Link href={`/berita/detail/1`}>
                                 <a>
                                     <img
                                         src="/assets/media/default-card-artikel.png" 
@@ -532,7 +532,7 @@ const Berita = () => {
 
                             <div className="row my-5">
                                 {/* Insert Title Here */}
-                                <Link href={`/artikel/detail/1`}>
+                                <Link href={`/berita/detail/1`}>
                                     <a>
                                         <h1 className="text-dark">
                                             Pengumuman Kelulusan Peserta Pelatihan Daring Gelombang 1 Program VSGA DTS 2...
@@ -569,7 +569,7 @@ const Berita = () => {
 
                         <div className="col col-md-5 col-12 position-relative">
                             {/* Insert Card Image Here */}
-                            <Link href={`/artikel/detail/1`}>
+                            <Link href={`/berita/detail/1`}>
                                 <a>
                                     <img
                                         src="/assets/media/default-card-artikel.png" 

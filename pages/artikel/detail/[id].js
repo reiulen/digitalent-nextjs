@@ -43,7 +43,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
             return {
                 props: {
-                  title: "Artikel",
+                  title: "Detail Artikel",
                   data: "auth",
                   session,
                 },
