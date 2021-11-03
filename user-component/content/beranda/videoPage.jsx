@@ -109,8 +109,8 @@ const VideoPage = ({ token }) => {
 
     return (
         <>
-            {/* {console.log("Data Video : ", video)} */}
-            {/* {console.log("Data Kategori : ", kategori)} */}
+            {console.log("Data Video : ", video)}
+            {console.log("Data Kategori : ", kategori)}
             <SubHeaderComponent />
             <div>
                 <h1>Video Terupdate dan Terkini</h1>
