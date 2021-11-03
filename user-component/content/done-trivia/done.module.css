@@ -167,7 +167,8 @@
   color: #6c6c6c;
 }
 .btnBack,
-.btnBack:hover {
+.btnBack:hover,
+.btnBack:focus {
   text-decoration: none;
   font-family: Poppins;
   font-style: normal;

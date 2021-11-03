@@ -265,7 +265,7 @@
 .btnHelp:hover {
   text-decoration: none;
 }
-.btnHelp:active {
+.btnHelp:focus {
   text-decoration: none;
 }
 .bantuan {

@@ -15,6 +15,10 @@ import "moment/locale/id";
 const Done = () => {
   const router = useRouter();
 
+  const handlePageBack = () => {
+    router.push("/peserta/mid-test");
+  };
+
   const { error: errorPelatihan, pelatihan: dataTraining } = useSelector(
     (state) => state.getPelatihan
   );
@@ -79,6 +83,23 @@ const Done = () => {
             </div>
             <h1></h1>
           </Card>
+          <div style={{ textAlign: "right" }}>
+            <Button
+              variant="link"
+              className={styles.btnBack}
+              onClick={handlePageBack}
+            >
+              <div className="d-flex flex-row">
+                <div className="p-2">
+                  <i
+                    className="ri-arrow-left-s-line"
+                    style={{ fontSize: "12px", color: "#007CFF" }}
+                  ></i>
+                </div>
+                <div className="p-2">Kembali</div>
+              </div>
+            </Button>
+          </div>
         </Card>
       </PesertaWrapper>
     </>

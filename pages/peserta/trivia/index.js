@@ -25,7 +25,7 @@ export default function TestSubstansiPage(props) {
   const session = props.session.user.user.data.user;
   return (
     <>
-      <Layout title="TRIVIA - Subvit" session={session}>
+      <Layout title="TRIVIA" session={session}>
         <TriviaPage session={session} />
       </Layout>
     </>

@@ -147,7 +147,7 @@ const SubtansiUser = ({ token }) => {
   };
 
   useEffect(() => {
-    // console.log();
+    console.log(data[parseInt(router.query.id) - 1].open);
 
     if (count >= 0) {
       const secondsLeft = setInterval(() => {
@@ -163,7 +163,7 @@ const SubtansiUser = ({ token }) => {
       // router.push(`/peserta/done-mid-tes`);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [count]);
+  }, [count, data]);
 
   // useEffect(() => {
   //   axios
@@ -239,7 +239,7 @@ const SubtansiUser = ({ token }) => {
       }
       localStorage.setItem(`${router.query.id}`, e.key);
     }
-    console.log(ac);
+    // console.log(ac);
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i);
       list.push(key);
@@ -434,7 +434,7 @@ const SubtansiUser = ({ token }) => {
                   }
                 )}
 
-              {data[parseInt(router.query.id) - 1].open !== true && (
+              {data[parseInt(router.query.id) - 1].open === true && (
                 <>
                   <hr />
                   {/* <p>{d}</p> */}
