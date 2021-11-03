@@ -112,10 +112,8 @@ const EditTandaTangan = ({token}) => {
               pathname: `/partnership/tanda-tangan`,
               query: { update: true },
             });
-            console.log("asjnaskjnsajk asjknsajknsajk")
           } catch (error) {
             notify(error.response.data.message);
-            console.log("errorrrrrrrr wswdwwdwd")
           }
         }
       });
@@ -158,16 +156,13 @@ const EditTandaTangan = ({token}) => {
                 pathname: `/partnership/user/tanda-tangan-digital`,
                 query: { update: true },
               });
-              console.log("asjnaskjnsajk asjknsajknsajk mnnmnmnm")
             } catch (error) {
               
               notify(error.response.data.message);
-              console.log("errorrrrrrrr")
             }
           }
         });
       } else {
-        console.log("asjnaskjnsajk bbbbbbbbbb")
         Swal.fire({
           icon: "error",
           title:
