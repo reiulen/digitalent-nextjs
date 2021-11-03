@@ -1,75 +1,72 @@
 import React from "react";
-import { 
-    Dropdown,
-    Col,
-    Form,
-    InputGroup,
-    FormControl
-} from "react-bootstrap";
+import { Dropdown, Col, Form, InputGroup, FormControl } from "react-bootstrap";
 
 import { TagsInput } from "react-tag-input-component";
 
 const FilterBar = () => {
-    return(
-        <div className="row mt-3 ml-1 p-3 bg-white rounded d-flex align-items-center">
-            <Dropdown className="border rounded">
-                <Dropdown.Toggle variant="white" id="dropdown-basic">
-                    VSGA
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                    <Dropdown.Item href="#/action-1">VSGA</Dropdown.Item>
-                    <Dropdown.Item href="#/action-2">FGA</Dropdown.Item>
-                    <Dropdown.Item href="#/action-3">PRO</Dropdown.Item>
-                    <Dropdown.Item href="#/action-3">TA</Dropdown.Item>
-                    <Dropdown.Item href="#/action-3">GTA</Dropdown.Item>
-                    <Dropdown.Item href="#/action-3">DEA</Dropdown.Item>
-                    <Dropdown.Item href="#/action-3">TSA</Dropdown.Item>
-                </Dropdown.Menu>
-            </Dropdown>
+  return (
+    <div className="d-flex align-content-stretch align-items-center flex-lg-nowrap flex-wrap mt-13">
+      <div className="mb-5 w-100 rounded-xl mr-4">
+        <Form.Select
+          aria-label="Default select example"
+          className="form-control pr-5"
+          style={{ borderRadius: "30px" }}
+          placeholder="Pilih Akademi"
+        >
+          <option disabled selected>
+            Pilih Akademi
+          </option>
+          <option value="1">VSGA</option>
+          <option value="2">FGA</option>
+          <option value="3">GTA</option>
+        </Form.Select>
+      </div>
 
-            <div className="col-5 bg-white mr-1">
-                <TagsInput 
-                    className="bg-white"
-                />
-            </div>
-            
-            <div className="col-2">
-                <div>
-                    <div className="input-group mb-2 pt-2">
-                        <div className="input-group-prepend">
-                            <div className="input-group-text bg-white">
-                                <i className="ri-map-pin-line mr-2"></i>
-                            </div>
-                        </div>
-                        <input type="text" className="form-control" id="inlineFormInputGroup" placeholder="Jakarta Barat" />
-                    </div>
-                </div>
-            </div>
+      <div className="mb-5 w-100 mr-4 position-relative">
+        <TagsInput
+          className="bg-white mb-5 pl-10 w-100 rounded-xl"
+          placeHolder="Isi Tag & Enter"
+        />
+        <i
+          className="ri-search-line left-center-absolute"
+          style={{ left: "10px" }}
+        ></i>
+      </div>
 
-            <div className="col-3">
-                <div>   
-                    <div className="input-group mb-2 pt-2">
-                        <div className="input-group-prepend">
-                            <div className="input-group-text bg-white">
-                                <i className="ri-briefcase-4-line mr-2"></i>
-                            </div>
-                        </div>
-                        <input type="text" className="form-control col-6" id="inlineFormInputGroup" placeholder="Tipe Pelatihan" />
-                    </div>
-                </div>
-                
-            </div>
+      <div className="mb-5 position-relative w-100 mr-4">
+        <input
+          type="text"
+          className="form-control w-100 rounded-xl pl-10"
+          id="inlineFormInputGroup"
+          placeholder="Cari Lokasi"
+        />
+        <i
+          className="ri-map-pin-line left-center-absolute"
+          style={{ left: "10px" }}
+        ></i>
+      </div>
 
-            <div>
-                <button className="btn btn-primary rounded-pill">
-                    <i className="ri-search-line mr-2"></i>
-                    Search
-                </button>
-            </div>
-            
-            
-        </div>
-    )
-}
+      <div className="mb-5 position-relative w-100 mr-4">
+        <input
+          type="text"
+          className="form-control pl-10 w-100 rounded-xl"
+          id="inlineFormInputGroup"
+          placeholder="Tipe Pelatihan"
+        />
+        <i
+          className="ri-book-mark-line left-center-absolute"
+          style={{ left: "10px" }}
+        ></i>
+      </div>
 
-export default FilterBar
+      <div className="mb-5 w-100">
+        <button className="btn btn-primary rounded-pill btn-block fw-500">
+          <i className="ri-search-line mr-2"></i>
+          Search
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default FilterBar;

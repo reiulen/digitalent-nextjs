@@ -379,7 +379,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
         <form onSubmit={submitHandler}>
           <h3 className="font-weight-bolder pb-5 pt-4">Data Pelatihan</h3>
 
-          <div className="form-group row mb-4">
+          <div className="form-group row mb-2">
             <label className="col-form-label font-weight-bold col-sm-2">
               Program DTS
             </label>
@@ -415,38 +415,6 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
               {simpleValidator.current.message(
                 "program dts",
                 program,
-                "required",
-                { className: "text-danger" }
-              )}
-            </div>
-          </div>
-
-          <div className="form-group row mb-4">
-            <label className="col-form-label font-weight-bold col-sm-2">
-              Ketentuan Peserta
-            </label>
-            <div className="col-sm-10 ">
-              <div className="d-flex flex-row  align-items-start pt-2">
-                <div className="form-check form-check-inline pt-1">
-                  <input
-                    type="checkbox"
-                    className="form-check-input"
-                    checked={ketentuan}
-                    value={ketentuan}
-                    onClick={() => setKetentuan(!ketentuan)}
-                    onBlur={() =>
-                      simpleValidator.current.showMessageFor("ketentuan")
-                    }
-                  />
-                </div>
-                <label className="form-check-label">
-                  Peserta dapat mengikuti pelatihan <br /> ini ditahun yang sama
-                  pada Akademi ini
-                </label>
-              </div>
-              {simpleValidator.current.message(
-                "ketentuan",
-                ketentuan,
                 "required",
                 { className: "text-danger" }
               )}

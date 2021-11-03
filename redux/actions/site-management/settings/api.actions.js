@@ -282,6 +282,7 @@ export const changeDates = (from, to) => {
 export const exportFileCSV = (token, id) => {
   return async () => {
     try {
+      // type=csv
       let urlExport = await axios.get(
         `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-api/export/${id}`,
         {
