@@ -150,7 +150,7 @@ const TambahApi = ({ token,id }) => {
                     id="input-password"
                     type="password"
                     className="form-control"
-                    placeholder="Placeholder"
+                    placeholder="Masukan password"
                   />
                   {hidePassword === true ? (
                     <i
@@ -175,7 +175,7 @@ const TambahApi = ({ token,id }) => {
                     id="input-password-confirm"
                     type="password"
                     className="form-control"
-                    placeholder="Placeholder"
+                    placeholder="Masukan password konfirmasi"
                   />
                   {hidePasswordConfirm === true ? (
                     <i
