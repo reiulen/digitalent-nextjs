@@ -152,7 +152,8 @@
 
 .btn_disabled_tema {
   background-color: #ffffff;
-  opacity: 0.5;
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
 }
 
 .btn_disabled_tema:hover {
