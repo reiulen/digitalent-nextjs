@@ -2,12 +2,21 @@ import React, { useEffect, useState } from "react"
 import Link from "next/link";
 import Image from "next/image";
 import Pagination from "react-js-pagination";
+import moment from "moment";
 import { Carousel } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 
+import { getDetailBerandaGaleri } from "../../../redux/actions/beranda/galeri.actions"
 import style from "../../../styles/peserta/galeri.module.css"
 const Galeri = () => {
+    const dispatch = useDispatch();
+    const router = useRouter();
+
+    const { galeri } = useSelector((state) => state.allBerandaGaleri)
+    const { detail } = useSelector((state) => state.detailBerandaGaleri)
+    const { kategori } = useSelector((state) => state.kategoriBerandaGaleri)
+
     const dummyCard = [
         {image: "/assets/media/default-card-artikel.png"},
         {image: "/assets/media/image-20.png"},
@@ -19,8 +28,9 @@ const Galeri = () => {
         {image: "/assets/media/image-20.png"},
         {image: "/assets/media/image-21.png"},
     ]
-
+    
     const [show, setShow] = useState(null);
+    const [ kategoriGaleri, setKategoriGaleri ] = useState("test")  // ---------- Wed, 03 - 11 - 21  || Setting active kategori
 
     useEffect(() => {
         handleCardIndex()
@@ -29,8 +39,10 @@ const Galeri = () => {
     const handleCardIndex = () => {
         let arr = []
 
-        for (let i = 0; i < dummyCard.length; i++){
-            arr.push(false)
+        if (galeri && galeri.gallery.length ){
+            for (let i = 0; i < galeri.gallery.length; i++){
+                arr.push(false)
+            }
         }
 
         setShow(arr)
@@ -60,8 +72,8 @@ const Galeri = () => {
         setShow(arr)
     }
 
-    const handleDataModal = () => {
-
+    const handleDataModal = (id) => {
+        dispatch (getDetailBerandaGaleri(id))
     }
 
     return (
@@ -96,14 +108,27 @@ const Galeri = () => {
             <div className="row my-5">
                 <div className="col-12 d-flex justify-content-between flex-row flex-wrap">
                     {/* Selected */}
-                    <div 
-                        className="d-flex align-items-center rounded-pill bg-primary-dashboard py-1 px-3 m-2" 
-                        style={{ cursor: "pointer" }}
-                    >
-                        <div className="my-1 mx-3 py-1 px-3 text-white">
-                            Semua
-                        </div>
-                    </div>
+                    {
+                        kategoriGaleri === null ?
+                            <div 
+                                className="d-flex align-items-center rounded-pill bg-primary-dashboard py-1 px-3 m-2" 
+                                style={{ cursor: "pointer" }}
+                            >
+                                <div className="my-1 mx-3 py-1 px-3 text-white">
+                                    Semua
+                                </div>
+                            </div>
+                        :
+                            <div 
+                                className="d-flex align-items-center rounded-pill bg-white py-1 px-3 border border-muted m-2" 
+                                style={{ cursor: "pointer" }}
+                            >
+                                <div className="my-1 mx-3 py-1 px-3 text-muted">
+                                    Semua
+                                </div>
+                            </div>
+                    }   
+                    
 
                     {/* UnSelected */}
                     <div 
@@ -149,181 +174,240 @@ const Galeri = () => {
 
             {/* Content */}
             <div className="col-12 d-flex flex-wrap justify-content-between">
-                {
-                    dummyCard.map ((el, i) => {
-                        return (
-                            <div 
-                                key={i} 
-                                className="position-relative m-3"
-                                onMouseEnter={() => handleMouseEnter(i)}
-                                onMouseLeave={() => handleMouseLeave(i)}
-                            >
-                                {
-                                    show && show[i] === false ?
-                                        <div>
-                                            <Image 
-                                                src={el.image}
-                                                width={400}
-                                                height={400}
-                                                objectFit="cover"
-                                                className="rounded"
-                                            />
-                                        </div>
-                                    :
-                                        <div>   
-                                            <div 
-                                                // className={`position-relative ${style.card_thumbnail}`}
-                                                style={{
-                                                    filter: "brightness(0.5)", 
-                                                    cursor: "pointer" 
-                                                    // backgroundImage: "linear-gradient(white, black)",
-                                                }}
-                                                onClick={() => handleDataModal()}
-                                                data-target="#modalGaleri"
-                                                data-toggle="modal"
-                                            >
-                                                <Image 
-                                                    src={el.image}
-                                                    width={400}
-                                                    height={400}
-                                                    objectFit="cover"
+                {   
+                    galeri && galeri.gallery.length ?
+
+                        galeri.gallery.map ((el, i) => {
+                            return (
+                                <div 
+                                    key={i} 
+                                    className="position-relative m-3"
+                                    onMouseEnter={() => handleMouseEnter(i)}
+                                    onMouseLeave={() => handleMouseLeave(i)}
+                                >
+                                    {
+                                        show && show[i] === false ?
+                                            <div>
+                                                <img 
+                                                   src={
+                                                        process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                                        "publikasi/images/" + el.gambar
+                                                    }
+                                                    alt="Card Gallery" 
+                                                    width= "400px"
+                                                    height= "400px"
                                                     className="rounded"
                                                 />
                                             </div>
-                                            
+                                        :
+                                            <div>   
+                                                <div 
+                                                    // className={`position-relative ${style.card_thumbnail}`}
+                                                    style={{
+                                                        filter: "brightness(0.5)", 
+                                                        cursor: "pointer" 
+                                                        // backgroundImage: "linear-gradient(white, black)",
+                                                    }}
+                                                    onClick={() => handleDataModal(el.id_gallery)}
+                                                    data-target="#modalGaleri"
+                                                    data-toggle="modal"
+                                                >
+                                                    <img 
+                                                        src={
+                                                            process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                                            "publikasi/images/" + el.gambar
+                                                        }
+                                                        alt="Card Gallery" 
+                                                        width= "400px"
+                                                        height= "400px"
+                                                        className="rounded"
+                                                    />
+                                                </div>
+                                                
 
-                                            <div className="position-absolute mx-2" style={{marginTop:"-10vh"}}>
-                                                <h5 className="font-weight-bolder text-white">
-                                                    Strategi Bisnis Online Bersama Google
-                                                </h5>
-                                                <div className="badge badge-light mr-2">
-                                                    <div className="text-primary">
-                                                        {/* Insert Kategori Here */}
-                                                        Pengumuman
+                                                <div className="position-absolute row " style={{marginTop:"-10vh"}}>
+                                                    <div className="col-6">
+                                                        <h5 className="font-weight-bolder text-white ml-2">
+                                                            Strategi Bisnis Online Bersama Google
+                                                        </h5>
                                                     </div>
+                                                    
+                                                    <div className="col-6 text-right">
+                                                        <div className="badge badge-light mr-2">
+                                                            <div className="text-primary">
+                                                                {/* Insert Kategori Here */}
+                                                                Pengumuman
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
                                                 </div>
                                             </div>
-                                        </div>
-                                }
-                                
-                            </div>
-                        )
-                    })
+                                    }
+                                    
+                                </div>
+                            )
+                        })
+                    :
+                        <div className="row">
+                            <h1 className="font-weight-bolder">
+                                Galeri Tidak Tersedia
+                            </h1>
+                        </div>
                 }
             </div>
             {/* End of Content */}
 
             {/* Modal */}
-            <div className="modal fade" id="modalGaleri">
-                <div className="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
-                    <div className="modal-content">
-                        <div className="">
-                            <div className="row">
-                                {/* Slide */}
-                                <div className="col-12 col-md-6 m-0 p-0">
-                                    <Carousel
-                                      nextIcon = {null}
-                                      nextLabel = {null}
-                                      prevIcon = {null}
-                                      prevLabel = {null}
-                                      indicators = {false}
-                                    >
-                                        <Carousel.Item>
-                                            <img 
-                                                src="/assets/media/image-20.png" 
-                                                alt="Slider" 
-                                                width= "100%"
-                                                height= "auto"
-                                            />
-                                        </Carousel.Item>
-
-                                        <Carousel.Item>
-                                            <img 
-                                                src="/assets/media/image-21.png" 
-                                                alt="Slider" 
-                                                width= "100%"
-                                                height= "auto"
-                                            />
-                                        </Carousel.Item>
-
-                                        <Carousel.Item>
-                                            <img 
-                                                src="/assets/media/image-22.png" 
-                                                alt="Slider" 
-                                                width= "100%"
-                                                height= "auto"
-                                            />
-                                        </Carousel.Item>
-                                    </Carousel>
-                                </div>
-
-                                {/* Content */}
-                                <div className="col-12 col-md-6">
+            {
+                detail ? 
+                    <div className="modal fade" id="modalGaleri">
+                        <div className="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+                            <div className="modal-content">
+                                <div className="">
                                     <div className="row">
-                                        <h5 className="text-dark font-weight-bolder ml-3 mt-3">
-                                            Strategi Bisnis Online bersama Google
-                                        </h5>
-                                    </div>
-                                    
-                                    <div className="row d-flex justify-content-between text-muted">
-                                        <div className="d-flex align-items-center">
-                                            <i className="ri-calendar-2-line mr-2 ml-3"></i>
-                                            <span>
-                                                {/* Insert Publish Date Here */}
-                                                Publish : 22 Agustus 2021
-                                            </span>
+                                        {/* Slide */}
+                                        <div className="col-12 col-xl-6 m-0 p-0">
+                                            <Carousel
+                                            nextIcon = {null}
+                                            nextLabel = {null}
+                                            prevIcon = {null}
+                                            prevLabel = {null}
+                                            indicators = {false}
+                                            >
+                                                <Carousel.Item>
+                                                    <img 
+                                                        src="/assets/media/image-20.png" 
+                                                        alt="Slider" 
+                                                        width= "100%"
+                                                        height= "auto"
+                                                    />
+                                                </Carousel.Item>
+
+                                                <Carousel.Item>
+                                                    <img 
+                                                        src="/assets/media/image-21.png" 
+                                                        alt="Slider" 
+                                                        width= "100%"
+                                                        height= "auto"
+                                                    />
+                                                </Carousel.Item>
+
+                                                <Carousel.Item>
+                                                    <img 
+                                                        src="/assets/media/image-22.png" 
+                                                        alt="Slider" 
+                                                        width= "100%"
+                                                        height= "auto"
+                                                    />
+                                                </Carousel.Item>
+                                            </Carousel>
                                         </div>
 
-                                        <div className="badge badge-light mr-5">
-                                            <div className="text-primary">
-                                                {/* Insert Kategori Here */}
-                                                Pengumuman
+                                        {/* Content */}
+                                        <div className="col-12 col-xl-6">
+                                            <div className="row">
+                                                <h5 className="text-dark font-weight-bolder ml-3 mt-3">
+                                                    { detail.judul }
+                                                </h5>
                                             </div>
-                                        </div>
-                                    </div>
-
-                                    <hr/>
-
-                                    <div className="row p-3">
-                                        {/* Insert Desc Here */}
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc nunc mauris, varius eu porttitor sit amet, ultrices et arcu. Curabitur risus velit, pretium eget ullamcorper sit amet, vehicula et arcu. Donec laoreet id ipsum non tempus. Vestibulum consectetur nec mauris quis congue. Sed scelerisque eget ex vitae blandit. Nunc quam sem, efficitur ut elit quis, laoreet viverra metus. In varius sit amet ligula eu malesuada. Phasellus vitae dapibus risus. Aenean tellus turpis, bibendum quis blandit vitae, ullamcorper sed ex. Duis urna libero, porta in lectus et, scelerisque cursus leo. Vestibulum non maximus ipsum, non feugiat ex. Duis id viverra tortor. Curabitur pharetra sollicitudin odio ac posuere. Nullam vulputate fringilla bibendum. Duis sed vulputate ex. Nunc et porta erat, at finibus tortor.
-
-                                            Praesent faucibus porta sapien congue rutrum. Donec egestas dolor tempor lacus sagittis ultrices. Nunc pulvinar turpis ac ligula mollis, id pretium risus viverra. Sed bibendum nunc pellentesque, consectetur turpis vitae, vestibulum nulla. Phasellus non elit non eros scelerisque consectetur et nec magna. Aenean ac rhoncus mi. Quisque ut maximus nulla, sed cursus nulla. In hac habitasse platea dictumst. Aliquam pretium odio ipsum, nec pulvinar lorem congue sit amet.
-                                        </p>
-                                        
-                                    </div>
-
-                                    <hr/>
-
-                                    <div className="row d-flex justify-content-between mb-5">
-                                        <div className="row d-flex justify-content-between ml-3">
-                                            <div className="border p-3 rounded mr-3">
-                                                #SVGA
-                                            </div>
-                                            <div className=" border p-3 rounded">
-                                                #Pelatihan
-                                            </div>
-                                        </div>
-
-                                        <div className="row mr-3">
-                                            <button className="btn btn-outline-light rounded-circle mr-3">
-                                                <i className="ri-share-line p-0"></i>
-                                            </button>
                                             
-                                            <button className="btn btn-outline-light rounded-circle mr-3">
-                                                <i className="ri-heart-line p-0"></i>
-                                            </button>
+                                            <div className="row d-flex justify-content-between text-muted">
+                                                <div className="d-flex align-items-center">
+                                                    <i className="ri-calendar-2-line mr-2 ml-3"></i>
+                                                    <span>
+                                                        {/* Insert Publish Date Here */}
+                                                        {moment(detail.tanggal_publish).format("DD MMMM YYYY")}
+                                                    </span>
+                                                </div>
+
+                                                {
+                                                    kategori.map ((element, index) => {
+                                                        return (
+                                                            detail.kategori_id == element.id ?
+                                                                <div className="badge badge-light mr-5" key ={index}>
+                                                                    <div className="text-primary">
+                                                                        {/* Insert Kategori Here */}
+                                                                        {element.nama_kategori}
+                                                                    </div>
+                                                                </div>
+                                                            :
+                                                                null
+                                                        )
+                                                    })
+                                                }
+                                                
+                                            </div>
+
+                                            <hr/>
+
+                                            <div className="row p-3">
+                                                {/* Insert Desc Here */}
+                                                <p>
+                                                    {detail.isi_galeri}
+                                                </p>
+                                                
+                                            </div>
+
+                                            <hr/>
+
+                                            <div className="row d-flex justify-content-between mb-5">
+                                                <div className="row d-flex justify-content-between ml-3">
+                                                    {
+                                                        detail.tag ?
+                                                            detail.tag.map ((el, i) => {
+                                                                return (
+                                                                    <div className="border p-3 rounded mx-1" key={i}>
+                                                                        {el}
+                                                                    </div>
+                                                    
+                                                                )
+                                                            })
+                                                        :
+                                                            null
+                                                    }
+                                                    
+                                                </div>
+
+                                                <div className="row mr-3">
+                                                    <button className="btn btn-outline-light rounded-circle mr-3">
+                                                        <i className="ri-share-line p-0"></i>
+                                                    </button>
+                                                    
+                                                    <button className="btn btn-outline-light rounded-circle mr-3">
+                                                        <i className="ri-heart-line p-0"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
 
+                    </div>
+                :
+                    <div className="modal fade" id="modalGaleri">
+                        <div className="modal-dialog">
+                            <div className="modal-content">
+                                <div className="modal-header">
+                                    <h5 className="modal-title">Error</h5>
+                                    <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div className="modal-body">
+                                    <p>Data Tidak Tersedia</p>
+                                </div>
+                                <div className="modal-footer">
+                                    <button type="button" className="btn btn-secondary" data-dismiss="modal">Tutup</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-
-            </div>
+            }
+            
 
             {/* Pagination */}
             <div className="row my-5 d-flex justify-content-center">
