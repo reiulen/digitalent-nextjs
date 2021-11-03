@@ -7,6 +7,8 @@ import Pagination from "react-js-pagination";
 import moment from "moment";
 import DatePicker from "react-datepicker";
 import { TagsInput } from "react-tag-input-component";
+import Select from "react-select";
+
 import {
   Container,
   Card,
@@ -60,6 +62,20 @@ const DetailAkademi = ({ session }) => {
   const [filterKataKunci, setFilterKataKunci] = useState(null);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+
+  const options = [
+    { value: "1", label: "VSGA" },
+    { value: "2", label: "FGA" },
+    { value: "3", label: "AKM" },
+  ];
+
+  const customStyles = {
+    control: (styles) => ({
+      ...styles,
+      borderRadius: "30px",
+      paddingLeft: "10px",
+    }),
+  };
 
   useEffect(() => {
     handleHoverCard();
@@ -229,7 +245,6 @@ const DetailAkademi = ({ session }) => {
   return (
     <>
       <Container fluid className="px-10 py-5">
-        {console.log(router.asPath)}
         <SubHeaderComponent
           data={[{ link: router.asPath, name: akademi.name }]}
         />
@@ -315,39 +330,25 @@ const DetailAkademi = ({ session }) => {
                 </div>
                 <div className="filter-body mt-7">
                   <Form.Group className="mb-5 w-100 rounded-xl mr-4">
-                    <Form.Label className="fz-16">Penyelenggara</Form.Label>
-                    <Form.Select
-                      aria-label="Default select example"
-                      className="form-control pr-5"
-                      style={{ borderRadius: "30px" }}
-                      placeholder="Pilih Akademi"
-                    >
-                      <option disabled selected>
-                        Semua Penyelanggara
-                      </option>
-                      <option value="1">VSGA</option>
-                      <option value="2">FGA</option>
-                      <option value="3">GTA</option>
-                    </Form.Select>
+                    <Form.Label className="fz-14">Penyelenggara</Form.Label>
+                    <Select
+                      options={options}
+                      styles={customStyles}
+                      placeholder="Pilih Penyelenggara"
+                      isClearable
+                    />
                   </Form.Group>
                   <Form.Group className="mb-5 w-100 rounded-xl mr-4">
-                    <Form.Label className="fz-16">Kategori Peserta</Form.Label>
-                    <Form.Select
-                      aria-label="Default select example"
-                      className="form-control pr-5"
-                      style={{ borderRadius: "30px" }}
-                      placeholder="Pilih Akademi"
-                    >
-                      <option disabled selected>
-                        Peserta Umum
-                      </option>
-                      <option value="1">VSGA</option>
-                      <option value="2">FGA</option>
-                      <option value="3">GTA</option>
-                    </Form.Select>
+                    <Form.Label className="fz-14">Kategori Peserta</Form.Label>
+                    <Select
+                      options={options}
+                      styles={customStyles}
+                      placeholder="Pilih Kategori Peserta"
+                      isClearable
+                    />
                   </Form.Group>
                   <Form.Group className="mb-5 w-100 rounded-xl mr-4">
-                    <Form.Label className="fz-16">
+                    <Form.Label className="fz-14">
                       Tanggal Mulai Pelaksanaan
                     </Form.Label>
                     <Form.Control
@@ -357,7 +358,7 @@ const DetailAkademi = ({ session }) => {
                     />
                   </Form.Group>
                   <Form.Group className="mb-5 w-100 rounded-xl mr-4">
-                    <Form.Label className="fz-16">
+                    <Form.Label className="fz-14">
                       Tanggal Akhir Pelaksanaan
                     </Form.Label>
                     <Form.Control
@@ -762,9 +763,11 @@ const DetailAkademi = ({ session }) => {
                                     </div>
                                     <Image
                                       src={
-                                        process.env
-                                          .END_POINT_API_IMAGE_BEASISWA +
-                                        el.gambar
+                                        (el.gambar &&
+                                          process.env
+                                            .END_POINT_API_IMAGE_BEASISWA +
+                                            el.gambar) ||
+                                        "/assets/media/default-card.png"
                                       }
                                       alt="image card detail"
                                       layout="fill"
