@@ -78,7 +78,7 @@ const EditBerita = ({ token, idUser }) => {
     const [gambarName, setGambarName] = useState(berita.gambar)
     const [kategori_id, setKategoriId] = useState(berita.kategori_id)
     const [users_id, setUserId] = useState(berita.users_id)
-    const [akademi_value, setAkademiValue] = useState(berita.akademi_value);
+    const [kategori_akademi, setKategoriAkademi] = useState(berita.kategori_akademi);
     const [tag, setTag] = useState(berita.tag)
     const [publish, setPublish] = useState(berita.publish)
     // const [publish, setPublish] = useState(berita.publish === 1 ? true : false)
@@ -184,8 +184,8 @@ const EditBerita = ({ token, idUser }) => {
                         judul_berita,
                         isi_berita,
                         gambar,
-                        akademi_value,
                         kategori_id,
+                        kategori_akademi,
                         users_id,
                         tag,
                         publish,
@@ -216,8 +216,8 @@ const EditBerita = ({ token, idUser }) => {
                         judul_berita,
                         isi_berita,
                         gambar,
-                        akademi_value,
                         kategori_id,
+                        kategori_akademi,
                         users_id,
                         tag,
                         publish,
@@ -253,8 +253,8 @@ const EditBerita = ({ token, idUser }) => {
                         judul_berita,
                         isi_berita,
                         gambar: "",
-                        akademi_value,
                         kategori_id,
+                        kategori_akademi,
                         users_id,
                         tag,
                         publish,
@@ -284,8 +284,8 @@ const EditBerita = ({ token, idUser }) => {
                         judul_berita,
                         isi_berita,
                         gambar: "",
-                        akademi_value,
                         kategori_id,
+                        kategori_akademi,
                         users_id,
                         tag,
                         publish,
@@ -478,14 +478,14 @@ const EditBerita = ({ token, idUser }) => {
                                 <div className="form-group">
                                     <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Akademi</label>
                                     <div className="col-sm-12">
-                                        <select name="" id="" className='form-control' value={akademi_value} onChange={e => setAkademiValue(e.target.value)} onBlur={e => { setAkademiValue(e.target.value); simpleValidator.current.showMessageFor('akademi') }} >
+                                        <select name="" id="" className='form-control' value={kategori_akademi} onChange={e => setKategoriAkademi(e.target.value)} onBlur={e => { setKategoriAkademi(e.target.value); simpleValidator.current.showMessageFor('akademi') }} >
                                             <option selected disabled value=''>-- Akademi --</option>
                                             {!dataAkademi || (dataAkademi && dataAkademi.length === 0) ? (
                                                 <option value="">Data Tidak Ditemukan</option>
                                             ) : (
                                                 dataAkademi && dataAkademi.data && dataAkademi.data.map((row) => {
                                                     return (
-                                                            <option key={row.value} value={row.value} selected={akademi_value === row.value ? true : false}>
+                                                            <option key={row.value} value={row.label} selected={kategori_akademi === row.label ? true : false}>
                                                                 {row.label}
                                                             </option>
                                                     )
@@ -493,7 +493,7 @@ const EditBerita = ({ token, idUser }) => {
                                             )}
 
                                         </select>
-                                        {simpleValidator.current.message('akademi', akademi_value, 'required', { className: 'text-danger' })}
+                                        {simpleValidator.current.message('akademi', kategori_akademi, 'required', { className: 'text-danger' })}
                                     </div>
                                 </div>
 
