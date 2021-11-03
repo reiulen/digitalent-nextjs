@@ -305,6 +305,9 @@ import {
   allTrainingReducer,
   deleteTrainingReducer,
   updateStatusReducer,
+  getEditTrainingReducer,
+  getEditTraining2Reducer,
+  getEditTraining3Reducer
 } from "./pelatihan/admin/training.reducers";
 // =================== review pelatihan ==================
 import {
@@ -317,6 +320,9 @@ import {
   revisiReviewReducer,
   tolakReviewReducer,
 } from "./pelatihan/admin/review.reducers";
+// =================== report pelatihan ==================
+
+import {getDataReportTrainingReducer} from './pelatihan/admin/report-training.reducers'
 // =================== rekap pelatihan ==================
 import {
   getFormBuilderReducer,
@@ -660,6 +666,9 @@ const reducer = combineReducers({
   cardTraining: cardTrainingReducer,
   newTraining: newTrainingReducer,
   deleteTraining: deleteTrainingReducer,
+  getEditTraining: getEditTrainingReducer,
+  getEditTraining2: getEditTraining2Reducer,
+  getEditTraining3: getEditTraining3Reducer,
 
   // ========== review pelatihan ========
   allListReview: allListReviewReducer,
@@ -684,6 +693,9 @@ const reducer = combineReducers({
   getBerkasPendaftaran: getBerkasPendaftaranReducer,
   getFormKomitmen: getFormKomitmenReducer,
   getFormLpj: getFormLpjReducer,
+
+  // =============== rpoert oelatihan ========
+  getDataReportTraining: getDataReportTrainingReducer,
 
   // ========== pendaftaran pelatihan ========
   getFormBuilder: getFormBuilderReducer,

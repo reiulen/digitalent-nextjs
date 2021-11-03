@@ -1,22 +1,22 @@
 import dynamic from "next/dynamic";
 import { getSession } from "next-auth/client";
 
-import { wrapper } from "../../../redux/store";
-import { getDataPribadi } from "../../../redux/actions/pelatihan/function.actions"
+import { wrapper } from "../../redux/store";
+import { getDataPribadi } from "../../redux/actions/pelatihan/function.actions"
 
-const DetailArtikel = dynamic (() => 
+const Berita  =  dynamic (() => 
     import (
-        "../../../user-component/content/beranda/detail-artikel"
+        "../../user-component/content/beranda/berita"
     )
 )
 
-const Layout = dynamic (() =>
+const Layout = dynamic (() => 
     import (
-        "../../../user-component/content/wrapper/layout.wrapper"
+        "../../user-component/content/wrapper/layout.wrapper"
     )
 )
 
-export default function BerandaDetailArtikel(props) {
+export default function BerandaBerita(props) {
     let session = null;
 
     if (props.session) {
@@ -25,8 +25,8 @@ export default function BerandaDetailArtikel(props) {
 
     return (
         <>
-            <Layout title="Detail Artikel" session={session}>
-              <DetailArtikel session={session} />  
+            <Layout title="Berita" session={session}>
+                <Berita session={session} ></Berita>
             </Layout>
         </>
     )
@@ -43,7 +43,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
             return {
                 props: {
-                  title: "Detail Artikel",
+                  title: "Berita",
                   data: "auth",
                   session,
                 },

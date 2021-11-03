@@ -144,6 +144,8 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
     optionsLevelPelatihan.push(val);
   }
 
+  console.log("penyelenggara", dataPenyelenggara)
+
   const optionsPenyelenggara = [];
   for (let index = 0; index < dataPenyelenggara.data.length; index++) {
     let val = {

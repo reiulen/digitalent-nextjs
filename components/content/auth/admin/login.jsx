@@ -122,7 +122,6 @@ const LoginAdmin = () => {
                 </div>
                 <div className="form-group">
                   <label className="form-auth-label">Password</label>
-                  <a className="float-right text-primary">Lupa Password ?</a>
                   <div className="position-relative">
                     <input
                       id="input-password"

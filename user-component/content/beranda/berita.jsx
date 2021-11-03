@@ -5,7 +5,7 @@ import Pagination from "react-js-pagination";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 
-const Artikel = () => {
+const Berita = () => {
     return (
         <div>
             {/* BreadCrumb */}
@@ -20,7 +20,7 @@ const Artikel = () => {
                 </span>
                 <span>
                     {/* Insert BreadCrumb Here */}
-                    Artikel
+                    Berita
                 </span>
             </div>
 
@@ -30,7 +30,7 @@ const Artikel = () => {
                     Ada Apa di Digitalent
                 </h1>
                 <div className="mt-3">
-                    Cerita mitra, berita seru, dan Artikel terbaru. Baca semua artikel soal Digitalent di sini.
+                    Cerita mitra, berita seru, dan Berita terbaru. Baca semua berita soal Digitalent di sini.
                 </div>
             </div>
 
@@ -39,7 +39,7 @@ const Artikel = () => {
                 <div className="col-md-8 col-12 d-flex justify-content-between flex-row flex-wrap">
                     {/* Selected */}
                     <div 
-                        className="d-flex align-items-center rounded-pill bg-primary-dashboard py-1 px-3" 
+                        className="d-flex align-items-center rounded-pill bg-primary-dashboard py-1 px-3 my-2" 
                         style={{ cursor: "pointer" }}
                     >
                         <div className="my-1 mx-3 py-1 px-3 text-white">
@@ -49,7 +49,7 @@ const Artikel = () => {
 
                     {/* UnSelected */}
                     <div 
-                        className="d-flex align-items-center rounded-pill bg-white py-1 px-3 border border-muted" 
+                        className="d-flex align-items-center rounded-pill bg-white py-1 px-3 border border-muted my-2" 
                         style={{ cursor: "pointer" }}
                     >
                         <div className="my-1 mx-3 py-1 px-3 text-muted">
@@ -58,7 +58,7 @@ const Artikel = () => {
                     </div>
 
                     <div 
-                        className="d-flex align-items-center rounded-pill bg-white py-1 px-3 border border-muted" 
+                        className="d-flex align-items-center rounded-pill bg-white py-1 px-3 border border-muted my-2" 
                         style={{ cursor: "pointer" }}
                     >
                         <div className="my-1 mx-3 py-1 px-3 text-muted">
@@ -67,7 +67,7 @@ const Artikel = () => {
                     </div>
 
                     <div 
-                        className="d-flex align-items-center rounded-pill bg-white py-1 px-3 border border-muted" 
+                        className="d-flex align-items-center rounded-pill bg-white py-1 px-3 border border-muted my-2" 
                         style={{ cursor: "pointer" }}
                     >
                         <div className="my-1 mx-3 py-1 px-3 text-muted">
@@ -76,7 +76,7 @@ const Artikel = () => {
                     </div>
 
                     <div 
-                        className="d-flex align-items-center rounded-pill bg-white py-1 px-3 border border-muted" 
+                        className="d-flex align-items-center rounded-pill bg-white py-1 px-3 border border-muted my-2" 
                         style={{ cursor: "pointer" }}
                     >
                         <div className="my-1 mx-3 py-1 px-3 text-muted">
@@ -103,7 +103,7 @@ const Artikel = () => {
                             <input 
                                 type="text" 
                                 className="form-control" 
-                                placeholder="    Cari Artikel"
+                                placeholder="    Cari Berita"
                                 style={{borderTopLeftRadius:"150px", borderBottomLeftRadius:"150px"}}
                             />
             
@@ -156,7 +156,7 @@ const Artikel = () => {
 
                             <div className="row my-5">
                                 {/* Insert Title Here */}
-                                <Link href={`/artikel/detail/1`}>
+                                <Link href={`/berita/detail/1`}>
                                     <a>
                                         <h1 className="text-dark">
                                             Pengumuman Kelulusan Peserta Pelatihan Daring Gelombang 1 Program VSGA DTS 2...
@@ -193,7 +193,7 @@ const Artikel = () => {
 
                         <div className="col col-md-5 col-12 position-relative">
                             {/* Insert Card Image Here */}
-                            <Link href={`/artikel/detail/1`}>
+                            <Link href={`/berita/detail/1`}>
                                 <a>
                                     <img
                                         src="/assets/media/default-card-artikel.png" 
@@ -250,7 +250,7 @@ const Artikel = () => {
 
                             <div className="row my-5">
                                 {/* Insert Title Here */}
-                                <Link href={`/artikel/detail/1`}>
+                                <Link href={`/berita/detail/1`}>
                                     <a>
                                         <h1 className="text-dark">
                                             Pengumuman Kelulusan Peserta Pelatihan Daring Gelombang 1 Program VSGA DTS 2...
@@ -287,7 +287,7 @@ const Artikel = () => {
 
                         <div className="col col-md-5 col-12 position-relative">
                             {/* Insert Card Image Here */}
-                            <Link href={`/artikel/detail/1`}>
+                            <Link href={`/berita/detail/1`}>
                                 <a>
                                     <img
                                         src="/assets/media/default-card-artikel.png" 
@@ -344,7 +344,7 @@ const Artikel = () => {
 
                             <div className="row my-5">
                                 {/* Insert Title Here */}
-                                <Link href={`/artikel/detail/1`}>
+                                <Link href={`/berita/detail/1`}>
                                     <a>
                                         <h1 className="text-dark">
                                             Pengumuman Kelulusan Peserta Pelatihan Daring Gelombang 1 Program VSGA DTS 2...
@@ -381,7 +381,7 @@ const Artikel = () => {
 
                         <div className="col col-md-5 col-12 position-relative">
                             {/* Insert Card Image Here */}
-                            <Link href={`/artikel/detail/1`}>
+                            <Link href={`/berita/detail/1`}>
                                 <a>
                                     <img
                                         src="/assets/media/default-card-artikel.png" 
@@ -438,7 +438,7 @@ const Artikel = () => {
 
                             <div className="row my-5">
                                 {/* Insert Title Here */}
-                                <Link href={`/artikel/detail/1`}>
+                                <Link href={`/berita/detail/1`}>
                                     <a>
                                         <h1 className="text-dark">
                                             Pengumuman Kelulusan Peserta Pelatihan Daring Gelombang 1 Program VSGA DTS 2...
@@ -475,7 +475,7 @@ const Artikel = () => {
 
                         <div className="col col-md-5 col-12 position-relative">
                             {/* Insert Card Image Here */}
-                            <Link href={`/artikel/detail/1`}>
+                            <Link href={`/berita/detail/1`}>
                                 <a>
                                     <img
                                         src="/assets/media/default-card-artikel.png" 
@@ -532,7 +532,7 @@ const Artikel = () => {
 
                             <div className="row my-5">
                                 {/* Insert Title Here */}
-                                <Link href={`/artikel/detail/1`}>
+                                <Link href={`/berita/detail/1`}>
                                     <a>
                                         <h1 className="text-dark">
                                             Pengumuman Kelulusan Peserta Pelatihan Daring Gelombang 1 Program VSGA DTS 2...
@@ -569,7 +569,7 @@ const Artikel = () => {
 
                         <div className="col col-md-5 col-12 position-relative">
                             {/* Insert Card Image Here */}
-                            <Link href={`/artikel/detail/1`}>
+                            <Link href={`/berita/detail/1`}>
                                 <a>
                                     <img
                                         src="/assets/media/default-card-artikel.png" 
@@ -588,7 +588,7 @@ const Artikel = () => {
                         </div>
                     </div>
                     {/* End of Card */}
-
+                    
                 </div>
                 {/* End of Left Side */}
 
@@ -619,13 +619,13 @@ const Artikel = () => {
                         </div>
 
                         <div className="row mx-3 mb-3 d-flex justify-content-between">
-                            <div className="col-md-5 col-12">
+                            <div className="col-md-5 col-12 my-2">
                                 <button className="btn btn-outline-light rounded-pill btn-block">
                                     Terbaru
                                 </button>
                             </div>
 
-                            <div className="col-md-5 col-12">
+                            <div className="col-md-5 col-12 my-2">
                                 <button className="btn btn-outline-light rounded-pill btn-block">
                                     Terlama
                                 </button>
@@ -633,13 +633,13 @@ const Artikel = () => {
                         </div>
 
                         <div className="row mx-3 mb-3 d-flex justify-content-between">
-                            <div className="col-md-5 col-12">
+                            <div className="col-md-5 col-12 my-2">
                                 <button className="btn btn-outline-light rounded-pill btn-block">
                                     A-Z
                                 </button>
                             </div>
 
-                            <div className="col-md-5 col-12">
+                            <div className="col-md-5 col-12 my-2">
                                 <button className="btn btn-outline-light rounded-pill btn-block">
                                     Z-A
                                 </button>
@@ -733,6 +733,6 @@ const Artikel = () => {
             
         </div>
     )
-} 
+}
 
-export default Artikel
+export default Berita
