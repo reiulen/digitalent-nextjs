@@ -151,7 +151,8 @@ const Sidebar = () => {
         <Link href="/peserta/survey" passHref>
           <div
             className={`${
-              router.pathname === "/peserta/survey"
+              router.pathname === "/peserta/survey" ||
+              router.pathname === "/peserta/done-survey"
                 ? styles.activeMenuItem
                 : styles.menuItem
             } d-flex flex-row`}
@@ -159,7 +160,8 @@ const Sidebar = () => {
             <div className="p-2">
               <i
                 className={`${
-                  router.pathname === "/peserta/survey"
+                  router.pathname === "/peserta/survey" ||
+                  router.pathname === "/peserta/done-survey"
                     ? styles.activeIconMenu
                     : styles.iconMenu
                 } ri-chat-smile-line`}
@@ -175,7 +177,8 @@ const Sidebar = () => {
         <Link href="/peserta/trivia" passHref>
           <div
             className={`${
-              router.pathname === "/peserta/trivia"
+              router.pathname === "/peserta/trivia" ||
+              router.pathname === "/peserta/done-trivia"
                 ? styles.activeMenuItem
                 : styles.menuItem
             } d-flex flex-row`}
@@ -183,7 +186,8 @@ const Sidebar = () => {
             <div className="p-2">
               <i
                 className={`${
-                  router.pathname === "/peserta/trivia"
+                  router.pathname === "/peserta/trivia" ||
+                  router.pathname === "/peserta/done-trivia"
                     ? styles.activeIconMenu
                     : styles.iconMenu
                 } ri-lightbulb-line`}
