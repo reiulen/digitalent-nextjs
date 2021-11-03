@@ -276,7 +276,7 @@ const Beranda = ({ session }) => {
       {akademi ? (
         <div
           className="container-fluid max-container position-relative"
-          style={{ marginTop: "-15px" }}
+          style={{ marginTop: "-15px", zIndex: "1" }}
         >
           <div className="carousel-secondarys">
             <Splide
@@ -329,8 +329,6 @@ const Beranda = ({ session }) => {
                 },
               }}
               hasSliderWrapper
-              // hasAutoplayControls
-              // hasAutoplayProgress
             >
               {akademi.map((el, i) => {
                 return (
@@ -341,7 +339,7 @@ const Beranda = ({ session }) => {
                         onClick={() => handleActive(i, el.id)}
                         style={{ cursor: "pointer" }}
                       >
-                        <div className="card-1">
+                        <div className="card-1 bg-white">
                           <h1 className="mb-0 mr-2 fw-700">{el.slug}</h1>
                           <div>
                             <p className="mb-0">{el.name}</p>
@@ -372,7 +370,10 @@ const Beranda = ({ session }) => {
         </div>
       ) : null}
 
-      <div className="container-fluid max-container">
+      <div
+        className="container-fluid max-container position-relative"
+        style={{ zIndex: "1" }}
+      >
         {loadingTema ? (
           <>
             <div className="container-fluid">
@@ -837,9 +838,11 @@ const Beranda = ({ session }) => {
                                   <div style={{ minHeight: "300px" }}>
                                     <Image
                                       src={
-                                        process.env
-                                          .END_POINT_API_IMAGE_BEASISWA +
-                                        cardImage
+                                        (cardImage &&
+                                          process.env
+                                            .END_POINT_API_IMAGE_BEASISWA +
+                                            cardImage) ||
+                                        "/assets/media/default-card.png"
                                       }
                                       alt="image card detail"
                                       layout="fill"

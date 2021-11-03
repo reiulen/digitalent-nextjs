@@ -19,17 +19,17 @@ const DetailPelatihan = ({ session }) => {
   const { pelatihan } = useSelector((state) => state.detailPelatihan);
 
   const handleCheckPelatihanReg = async (id, session) => {
-    if (session.Token) {
+    if (session) {
       const data = await dispatch(checkRegisterPelatihan(id, session.Token));
 
       if (data.status === true) {
-        router.push(`${router.pathname}/peserta/form-pendaftaran?id=${id}`);
+        router.push(`/peserta/form-pendaftaran?id=${id}`);
       } else if (data.status === false) {
         let errMessage = data.message;
         toast.error(errMessage);
       }
     } else {
-      router.push(`${router.pathname}/login`);
+      router.push(`/login`);
     }
   };
 
