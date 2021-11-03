@@ -4,9 +4,9 @@ import { getSession } from "next-auth/client";
 import { wrapper } from "../../../redux/store";
 import { getDataPribadi } from "../../../redux/actions/pelatihan/function.actions"
 
-const DetailArtikel = dynamic (() => 
+const DetailBerita = dynamic (() => 
     import (
-        "../../../user-component/content/beranda/detail-artikel"
+        "../../../user-component/content/beranda/detail-berita"
     )
 )
 
@@ -25,8 +25,8 @@ export default function BerandaDetailArtikel(props) {
 
     return (
         <>
-            <Layout title="Detail Artikel" session={session}>
-              <DetailArtikel session={session} />  
+            <Layout title="Detail Berita" session={session}>
+              <DetailBerita session={session} />  
             </Layout>
         </>
     )
@@ -43,7 +43,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
             return {
                 props: {
-                  title: "Detail Artikel",
+                  title: "Detail Berita",
                   data: "auth",
                   session,
                 },
