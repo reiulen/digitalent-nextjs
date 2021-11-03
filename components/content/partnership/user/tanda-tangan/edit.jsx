@@ -14,6 +14,16 @@ import Image from 'next/image'
 
 const EditTandaTangan = ({token}) => {
   const signCanvas = useRef({});
+
+  const [nama, setNama] = useState("");
+  const [jabatan, setJabatan] = useState("");
+  const [tandaTangan, setTandaTangan] = useState("");
+
+  const [error, setError] = useState({
+    nama: "",
+    jabatan: "",
+    tandaTangan: "",
+  });
   const clear = () => {
     Swal.fire({
       title: "Apakah anda yakin ingin reset tanda tangan ?",
@@ -55,11 +65,21 @@ const EditTandaTangan = ({token}) => {
     }
   };
 
-  const [isUpdate, setIsUpdate] = useState(false);
   const submit =  (e) => {
     e.preventDefault();
-    if (signCanvas.current.isEmpty()) {
-      Swal.fire({
+
+    if (nama === "") {
+      setError({ ...error, nama: "Harus isi nama" });
+   
+    } else if (jabatan === "") {
+      setError({ ...error, jabatan: "Harus isi jabatan" });
+  
+    } 
+   
+    
+    else if (signCanvas.current.isEmpty()){
+
+       Swal.fire({
         title: "Apakah anda yakin ingin simpan ?",
         // text: "Data ini tidak bisa dikembalikan !",
         icon: "warning",
@@ -78,7 +98,7 @@ const EditTandaTangan = ({token}) => {
               position: jabatan,
               signature_image: signature !== "" ? signature : "",
             };
-            let { data } = await axios.put(
+            let { data } = await axios.post(
               `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/signatures/${router.query.id}`,
               sendData,
               {
@@ -92,12 +112,18 @@ const EditTandaTangan = ({token}) => {
               pathname: `/partnership/tanda-tangan`,
               query: { update: true },
             });
+            console.log("asjnaskjnsajk asjknsajknsajk")
           } catch (error) {
             notify(error.response.data.message);
+            console.log("errorrrrrrrr wswdwwdwd")
           }
         }
       });
-    } else {
+
+
+    }
+
+     else {
       if (signature !== "") {
         Swal.fire({
           title: "Apakah anda yakin ingin simpan ?",
@@ -118,7 +144,7 @@ const EditTandaTangan = ({token}) => {
                 position: jabatan,
                 signature_image: signature !== "" ? signature : "",
               };
-              let { data } = await axios.put(
+              let { data } = await axios.post(
                 `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/signatures/${router.query.id}`,
                 sendData,
                 {
@@ -132,12 +158,16 @@ const EditTandaTangan = ({token}) => {
                 pathname: `/partnership/user/tanda-tangan-digital`,
                 query: { update: true },
               });
+              console.log("asjnaskjnsajk asjknsajknsajk mnnmnmnm")
             } catch (error) {
+              
               notify(error.response.data.message);
+              console.log("errorrrrrrrr")
             }
           }
         });
       } else {
+        console.log("asjnaskjnsajk bbbbbbbbbb")
         Swal.fire({
           icon: "error",
           title:
@@ -145,13 +175,16 @@ const EditTandaTangan = ({token}) => {
         });
       }
     }
+
+
+
+
+
   };
 
  
 
-  const [nama, setNama] = useState("");
-  const [jabatan, setJabatan] = useState("");
-  const [tandaTangan, setTandaTangan] = useState("");
+  
 
   useEffect(() => {
     async function setDataSingle(id) {
@@ -206,12 +239,14 @@ const EditTandaTangan = ({token}) => {
                 </label>
                 <input
                   required
+                  onFocus={() => setError({ ...error, nama: "" })}
                   type="text"
                   className="form-control"
                   placeholder="Masukkan Nama"
                   value={nama}
                   onChange={(e) => setNama(e.target.value)}
                 />
+                {error.nama ? <p className="error-text">{error.nama}</p> : ""}
               </div>
               <div className="form-group">
                 <label
@@ -222,12 +257,19 @@ const EditTandaTangan = ({token}) => {
                 </label>
                 <input
                   required
+                  onFocus={() => setError({ ...error, jabatan: "" })}
                   type="text"
                   className="form-control"
                   placeholder="Masukkan Jabatan"
                   value={jabatan}
+                  
                   onChange={(e) => setJabatan(e.target.value)}
                 />
+                 {error.jabatan ? (
+                  <p className="error-text">{error.jabatan}</p>
+                ) : (
+                  ""
+                )}
               </div>
               <div className="form-group">
                 <label htmlFor="staticEmail" className="col-form-label">

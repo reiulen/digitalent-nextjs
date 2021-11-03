@@ -4,7 +4,7 @@ import styles from "./done.module.css";
 import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
 
-import doneImage from "../../../public/assets/media/logos/survei.png";
+import doneImage from "../../../public/assets/media/logos/Survei.png";
 import trainingImage from "../../../public/assets/media/logos/gojek.png";
 import Image from "next/dist/client/image";
 import PesertaWrapper from "../../components/wrapper/Peserta.wrapper";

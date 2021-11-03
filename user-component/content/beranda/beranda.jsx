@@ -447,18 +447,11 @@ const Beranda = ({ session }) => {
                                           >
                                             <div
                                               className=""
-                                              style={
-                                                show[i].pelatihan[index]
-                                                  .hover !== true &&
-                                                element.status === "Open"
-                                                  ? {
-                                                      filter: "brightness(1)",
-                                                    }
-                                                  : {
-                                                      filter: "brightness(0.8)",
-                                                      transition: "0.5s ease",
-                                                    }
-                                              }
+                                              style={{
+                                                width: "100%",
+                                                height: "180px",
+                                                position: "relative",
+                                              }}
                                             >
                                               <Image
                                                 className={`${style.image_dashboard}`}
@@ -469,8 +462,7 @@ const Beranda = ({ session }) => {
                                                       element.gambar) ||
                                                   "/assets/media/default-card.png"
                                                 }
-                                                width={400}
-                                                height={180}
+                                                layout="fill"
                                                 objectFit="cover"
                                                 alt="Image Thumbnail"
                                               />
@@ -622,9 +614,15 @@ const Beranda = ({ session }) => {
                                                 element.status === "Open"
                                                   ? {
                                                       filter: "brightness(1)",
+                                                      width: "100%",
+                                                      height: "180px",
+                                                      position: "relative",
                                                     }
                                                   : {
                                                       filter: "brightness(0.8)",
+                                                      width: "100%",
+                                                      height: "180px",
+                                                      position: "relative",
                                                     }
                                               }
                                             >
@@ -637,8 +635,7 @@ const Beranda = ({ session }) => {
                                                       element.gambar) ||
                                                   "/assets/media/default-card.png"
                                                 }
-                                                width={400}
-                                                height={180}
+                                                layout="fill"
                                                 objectFit="cover"
                                                 alt="Image Thumbnail"
                                               />
