@@ -229,29 +229,29 @@ const Galeri = () => {
                                       indicators = {false}
                                     >
                                         <Carousel.Item>
-                                            <Image 
-                                                src="/assets/media/image-20.png"
-                                                width={650}
-                                                height={650}
-                                                objectFit="cover"
+                                            <img 
+                                                src="/assets/media/image-20.png" 
+                                                alt="Slider" 
+                                                width= "100%"
+                                                height= "auto"
                                             />
                                         </Carousel.Item>
 
                                         <Carousel.Item>
-                                            <Image 
-                                                src="/assets/media/image-21.png"
-                                                width={650}
-                                                height={650}
-                                                objectFit="cover"
+                                            <img 
+                                                src="/assets/media/image-21.png" 
+                                                alt="Slider" 
+                                                width= "100%"
+                                                height= "auto"
                                             />
                                         </Carousel.Item>
 
                                         <Carousel.Item>
-                                            <Image 
-                                                src="/assets/media/image-22.png"
-                                                width={650}
-                                                height={650}
-                                                objectFit="cover"
+                                            <img 
+                                                src="/assets/media/image-22.png" 
+                                                alt="Slider" 
+                                                width= "100%"
+                                                height= "auto"
                                             />
                                         </Carousel.Item>
                                     </Carousel>
@@ -260,7 +260,7 @@ const Galeri = () => {
                                 {/* Content */}
                                 <div className="col-12 col-md-6">
                                     <div className="row">
-                                        <h5 className="text-dark font-weight-bolder ml-3">
+                                        <h5 className="text-dark font-weight-bolder ml-3 mt-3">
                                             Strategi Bisnis Online bersama Google
                                         </h5>
                                     </div>
@@ -274,7 +274,7 @@ const Galeri = () => {
                                             </span>
                                         </div>
 
-                                        <div className="badge badge-light mr-2">
+                                        <div className="badge badge-light mr-5">
                                             <div className="text-primary">
                                                 {/* Insert Kategori Here */}
                                                 Pengumuman
@@ -296,7 +296,7 @@ const Galeri = () => {
 
                                     <hr/>
 
-                                    <div className="row d-flex justify-content-between">
+                                    <div className="row d-flex justify-content-between mb-5">
                                         <div className="row d-flex justify-content-between ml-3">
                                             <div className="border p-3 rounded mr-3">
                                                 #SVGA
