@@ -123,7 +123,7 @@ const Table = ({ token }) => {
       {update ? (
         <AlertBar
           text="Berhasil mengubah data"
-          className="alert-light-warning"
+          className="alert-light-success"
           onClick={() => onNewReset()}
         />
       ) : (
@@ -132,7 +132,7 @@ const Table = ({ token }) => {
       {successDelete ? (
         <AlertBar
           text="Berhasil menghapus data"
-          className="alert-light-danger"
+          className="alert-light-success"
           onClick={() => onNewReset()}
         />
       ) : (

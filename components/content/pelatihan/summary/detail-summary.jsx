@@ -35,7 +35,7 @@ const DetailSummary = ({ token }) => {
 
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
-  const [limit, setLimit] = useState(null);
+  const [limit, setLimit] = useState(5);
   const [statusTesSubstansi, setStatusTesSubstansi] = useState(null);
   const [statusBerkas, setStatusBerkas] = useState(null);
   const [statusPeserta, setStatusPeserta] = useState(null);
@@ -387,7 +387,7 @@ const DetailSummary = ({ token }) => {
                               <div className="d-flex">
                                 <Link
                                   href={`/pelatihan/rekap-pendaftaran/detail-rekap-pendaftaran/data-peserta?pelatihan_id=${id}&index=${
-                                    i + 1
+                                    i + limit * (page - 1) + 1
                                   }`}
                                 >
                                   <a

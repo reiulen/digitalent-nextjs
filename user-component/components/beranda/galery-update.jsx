@@ -25,19 +25,7 @@ export default function galeryUpdate({ gambar }) {
                   Temukan konten terupdate dan terkini mengenai Digital Talent
                   Scholarship
                 </p>
-                <Link href="/login">
-                  {/* <a>
-                      <button className="btn btn-sm btn-login-peserta px-12 py-3 mt-20">
-                        Lihat Selengkapnya
-                        <IconArrow
-                          width="8"
-                          height="10"
-                          fill="#0063CC"
-                          className="ml-2"
-                          style={{ transform: "rotate(0)" }}
-                        />
-                      </button>
-                    </a> */}
+                <Link href="/galeri">
                   <a>
                     <button className="btn btn-outline-primary-new rounded-pill font-weight-bolder py-3 px-12 mt-20">
                       Lihat Selengkapnya
