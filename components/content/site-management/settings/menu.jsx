@@ -202,8 +202,7 @@ const Table = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-b">
             <h3
-              className="card-title font-weight-bolder text-dark"
-              style={{ fontSize: "24px" }}
+              className="card-title font-weight-bolder text-dark titles-1"
             >
               Menu
             </h3>
@@ -217,7 +216,7 @@ const Table = ({ token }) => {
               </button>
             </div>
           </div>
-          <div className="card-body pt-0 mt-10">
+          <div className="card-body pt-0 mt-10 px-4 px-sm-8">
             <form onSubmit={submit}>
               {array.map((parrent, i) => {
                 return (
@@ -375,29 +374,9 @@ const Table = ({ token }) => {
                                 />
                               </div>
                             </div>
-                            {/* <div className="col-md-12 col-xl-5">
-                              <div className="form-group">
-                                <label>Sub Link {j + 1}</label>
-                                <input
-                                  value={child1.link}
-                                  onChange={(e) => handleChangeInput1(e, i, j)}
-                                  name="inputLink"
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="Masukan sub link"
-                                />
-                              </div>
-                            </div> */}
                             <div className="col-md-12 col-xl-2">
                               <div className="d-flex align-items-center h-100">
-                                {/* <button
-                                  type="button"
-                                  className="btn mr-4 mb-5"
-                                  style={{ backgroundColor: "#4299E1" }}
-                                  onClick={() => handleCreate2(i, j)}
-                                >
-                                  <IconAdd />
-                                </button> */}
+                            
                                 <button
                               type="button"
                               className="btn mr-4 mb-5 minimal-image"
@@ -481,7 +460,7 @@ const Table = ({ token }) => {
                 );
               })}
 
-              <div className="form-group row">
+              <div className="form-group row mt-10 mt-sm-5">
                 <div className="col-sm-12 d-flex justify-content-end">
                   <Link href="/site-management/setting">
                     <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">

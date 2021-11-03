@@ -1,15 +1,7 @@
 import React, { useEffect, useState } from "react";
-import Link from "next/link";
 import { useRouter } from "next/router";
-import Pagination from "react-js-pagination";
 import PageWrapper from "../../../../wrapper/page.wrapper";
-import { useDispatch, useSelector } from "react-redux";
-import LoadingTable from "../../../../LoadingTable";
-import IconEye from "../../../../assets/icon/Eye";
-import IconPencil from "../../../../assets/icon/Pencil";
-import IconDelete from "../../../../assets/icon/Delete";
 import IconAdd from "../../../../assets/icon/Add";
-import IconSearch from "../../../../assets/icon/Search";
 import Image from "next/image";
 import Swal from "sweetalert2";
 import axios from "axios";
@@ -17,8 +9,6 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const GeneralPage = ({ token }) => {
-  let dispatch = useDispatch();
-  const router = useRouter();
   const [imageLogo, setImageLogo] = useState("");
   const [imageLogo2, setImageLogo2] = useState("");
   const [description, setDescription] = useState("");
@@ -372,7 +362,7 @@ const GeneralPage = ({ token }) => {
                 General
               </h3>
             </div>
-            <div className="card-body pt-0">
+            <div className="card-body pt-0 px-4 px-sm-8">
               <div>
                 <form>
                   <div className="d-flex flex-wrap">
