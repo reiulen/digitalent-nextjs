@@ -409,7 +409,7 @@ const DetailAkademi = ({ session }) => {
                               }`}
                               key={i}
                             >
-                              <Card className="h-100 shadow">
+                              <Card className="h-100 shadow-sm">
                                 {el.status !== "Open" ? (
                                   <Button
                                     variant="transparent"
