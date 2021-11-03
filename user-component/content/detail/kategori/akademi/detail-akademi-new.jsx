@@ -417,17 +417,11 @@ const DetailAkademi = ({ session }) => {
                                     className={`p-0 mb-0 ${style.btn_disabled_tema}`}
                                   >
                                     <div
-                                      className=""
-                                      style={
-                                        show[i] !== true && el.status === "Open"
-                                          ? {
-                                              filter: "brightness(1)",
-                                            }
-                                          : {
-                                              filter: "brightness(0.8)",
-                                              transition: "0.5s ease",
-                                            }
-                                      }
+                                      style={{
+                                        width: "100%",
+                                        height: "180px",
+                                        position: "relative",
+                                      }}
                                     >
                                       <Image
                                         className={`${style.image_dashboard}`}
@@ -585,9 +579,15 @@ const DetailAkademi = ({ session }) => {
                                         show[i] !== true && el.status === "Open"
                                           ? {
                                               filter: "brightness(1)",
+                                              width: "100%",
+                                              height: "180px",
+                                              position: "relative",
                                             }
                                           : {
                                               filter: "brightness(0.8)",
+                                              width: "100%",
+                                              height: "180px",
+                                              position: "relative",
                                             }
                                       }
                                     >
@@ -600,8 +600,7 @@ const DetailAkademi = ({ session }) => {
                                               el.gambar) ||
                                           "/assets/media/default-card.png"
                                         }
-                                        width={410}
-                                        height={180}
+                                        layout="fill"
                                         objectFit="cover"
                                         alt="Image Thumbnail"
                                       />
