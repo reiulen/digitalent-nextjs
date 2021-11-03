@@ -41,7 +41,7 @@ export default function SubvitDone(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <Layout title="Selesai Test Substansi - Subvit" session={session}>
+        <Layout title="Selesai Test Substansi" session={session}>
           <Done />
         </Layout>
       </div>

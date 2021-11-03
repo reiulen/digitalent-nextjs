@@ -5,6 +5,7 @@ import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
 import { middlewareAuthPesertaSession } from "../../../utils/middleware/authMiddleware";
+import { getDataPribadi } from "../../../redux/actions/pelatihan/function.actions";
 
 const SurveyPage = dynamic(
   () => import("../../../user-component/content/peserta/survey"),
@@ -24,7 +25,7 @@ export default function TestSubstansiPage(props) {
   const session = props.session.user.user.data.user;
   return (
     <>
-      <Layout title="Survey - Subvit" session={session}>
+      <Layout title="Survey " session={session}>
         <SurveyPage session={session} />
       </Layout>
     </>
@@ -44,6 +45,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
             permanent: false,
           },
         };
+      }
+      if (session) {
+        await store.dispatch(
+          getDataPribadi(session?.user.user.data.user.token)
+        );
       }
 
       return {

@@ -45,7 +45,7 @@ export default function TestSubstansiPage(props) {
   const session = props.session.user.user.data.user;
   return (
     <>
-      <Layout title="Dashboard Peserta - Pelatihan" session={session}>
+      <Layout title="Test Substansi" session={session}>
         {props.success ? (
           <TesSubstansiDetail session={session} />
         ) : (

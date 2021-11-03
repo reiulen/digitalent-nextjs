@@ -36,6 +36,11 @@ import {
   changeStatusListCooperation,
 } from "../../../../redux/actions/partnership/mitra.actions";
 
+import {
+  // reloadTable,
+  rejectCooperation,
+} from "../../../../redux/actions/partnership/managementCooporation.actions";
+
 import IconArrow from "../../../assets/icon/Arrow";
 import IconCalender from "../../../assets/icon/Calender";
 import LoadingTable from "../../../LoadingTable";
@@ -49,6 +54,7 @@ const DetailDataKerjasama = ({ token }) => {
   const router = useRouter();
   let { update } = router.query;
   const mitraDetailAll = useSelector((state) => state.allMitra);
+  const allMK = useSelector((state) => state.allMK);
 
   let selectRefKerjasama = null;
   let selectRefStatus = null;
@@ -111,6 +117,28 @@ const DetailDataKerjasama = ({ token }) => {
     });
   };
 
+  const [isStatusBar, setIsStatusBar] = useState(false);
+
+  const cooperationRejection = (id) => {
+    Swal.fire({
+      title: "Apakah anda yakin ingin batalkan kerjasama ?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Batal",
+      confirmButtonText: "Ya !",
+      dismissOnDestroy: false,
+    }).then(async (result) => {
+      if (result.value) {
+        dispatch(rejectCooperation(token, id));
+        setIsStatusBar(true);
+      } else {
+        dispatch(reloadTable());
+      }
+    });
+  };
+
   const [barStatus, setBarStatus] = useState(false);
   const changeListStatus = (value, id) => {
     Swal.fire({
@@ -153,6 +181,9 @@ const DetailDataKerjasama = ({ token }) => {
     mitraDetailAll.categories_cooporation,
     mitraDetailAll.status_reload,
     token,
+    allMK.status,
+    allMK.status_delete,
+    allMK.status_list,
   ]);
 
   return (
@@ -834,7 +865,11 @@ const DetailDataKerjasama = ({ token }) => {
                                 "pengajuan-pembahasan" ? (
                                 <div className="d-flex align-items-center">
                                   <Link
-                                    href="/partnership/tanda-tangan"
+                                    href={{
+                                      pathname:"/partnership/tanda-tangan/penandatanganan-virtual",
+                                      query: { id: items.id },
+                                    }}
+                                    
                                     passHref
                                   >
                                     <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete mr-3">
@@ -849,7 +884,11 @@ const DetailDataKerjasama = ({ token }) => {
                                       </div>
                                     </a>
                                   </Link>
-                                  <button className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
+                                  <button className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                  type="button"
+                                  onClick={() =>
+                                          cooperationRejection(items.id)
+                                        }>
                                     <Image
                                       src={`/assets/icon/Ditolak.svg`}
                                       width={19}
@@ -863,7 +902,11 @@ const DetailDataKerjasama = ({ token }) => {
                                 </div>
                               ) : items.status.name === "pengajuan-selesai" ? (
                                 <div className="d-flex align-items-center">
-                                  <button className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
+                                  <button className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                  type="button"
+                                  onClick={() =>
+                                          cooperationRejection(items.id)
+                                        }>
                                     <Image
                                       src={`/assets/icon/Ditolak.svg`}
                                       width={19}
@@ -895,6 +938,9 @@ const DetailDataKerjasama = ({ token }) => {
                                   <button
                                     type="button"
                                     className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                    onClick={() =>
+                                          cooperationRejection(items.id)
+                                        }
                                   >
                                     <Image
                                       src={`/assets/icon/Ditolak.svg`}

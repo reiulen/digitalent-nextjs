@@ -9,7 +9,11 @@ const TestSubstansi = () => {
   const router = useRouter();
 
   const handlePage = () => {
-    router.push("/peserta/subvit/survey/1");
+    router.push(
+      `/peserta/subvit/survey/1?theme_id=${
+        router.query.theme_id || 1
+      }&training_id=${router.query.training_id || 1}`
+    );
   };
 
   const [show, setShow] = useState(false);

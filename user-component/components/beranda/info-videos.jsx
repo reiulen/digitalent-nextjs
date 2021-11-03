@@ -1,40 +1,42 @@
 import Link from "next/link";
-import ReactPlayer from 'react-player'
+import ReactPlayer from "react-player";
 
 import IconArrow from "../../../components/assets/icon/Arrow2";
 
-
-
 export default function infoVideos({ video }) {
   return (
-    <div style={{ backgroundColor: "white" }} className="py-0 py-xl-30 info-video max-container">
+    <div
+      style={{ backgroundColor: "white" }}
+      className="py-0 py-xl-30 info-video max-container container"
+    >
       <div className="container-fluid">
         <div className="row">
           <div className="col-12 col-sm-6 m-auto">
-            <div className="player-wrapper">
+            <div className="player-wrapper mb-5">
               <ReactPlayer
                 url="https://www.youtube.com/watch?v=BXWNfxOIaJE&ab_channel=DigitalentMedia"
                 className="react-player"
-                width='100%'
-                height='100%'
+                width="100%"
+                height="100%"
+                style={{ borderRadius: "15px", overflow: "hidden" }}
               />
             </div>
           </div>
-          <div className="col-12 col-sm-6">
-            <div className="ml-20">
+          <div className="col-12 col-sm-6 my-auto">
+            <div className="px-md-20">
               <h1
-                className="fw-600 mt-26 position-relative"
+                className="fw-600 position-relative"
                 style={{ color: "#1F1F1F" }}
               >
                 Informasi Dalam Video Terkini
               </h1>
-              <p className="fz-16 mt-10 mb-20" style={{ color: "#6C6C6C" }}>
-                Temukan konten terupdate dan terkini mengenai Digital<br /> Talent
-                Scholarship
+              <p className="fz-16 my-10" style={{ color: "#6C6C6C" }}>
+                Temukan konten terupdate dan terkini mengenai Digital
+                <br /> Talent Scholarship
               </p>
-              <Link href="/video">
+              <Link href="/login">
                 <a>
-                  <button className="btn btn-outline-primary-new rounded-pill py-3 px-12">
+                  <button className="btn btn-outline-primary-new font-weight-bolder rounded-pill py-3 px-12 mb-5">
                     Lihat Selengkapnya
                     <IconArrow
                       width="8"
@@ -51,5 +53,5 @@ export default function infoVideos({ video }) {
         </div>
       </div>
     </div>
-  )
+  );
 }
