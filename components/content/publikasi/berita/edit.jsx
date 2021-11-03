@@ -123,14 +123,17 @@ const EditBerita = ({ token, idUser }) => {
         }
     };
 
-    const handleChangePublish = (e) => {
-        setPublish(e.target.checked);
-        setDisablePublishDate(!disablePublishDate)
-        setPublishDate(null)
+    const handleChangePublish = e => {
+        setDisablePublishDate(!disablePublishDate);
+        setPublishDate(null);
+    
         if (e.target.checked === false) {
-            setPublishDate(null)
+          setPublishDate(null);
+          setPublish(0);
+        } else {
+          setPublish(1);
         }
-    };
+      };
 
     const handlePublishDate = (date) => {
         if (disablePublishDate === false) {
