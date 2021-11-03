@@ -48,6 +48,8 @@ const Navigationbar = ({ session }) => {
     Cookies.remove("id_pelatihan");
     signOut();
   };
+
+  const [close, setClose] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
 
   return (
@@ -72,7 +74,7 @@ const Navigationbar = ({ session }) => {
             />
           </Navbar.Brand>
           <div className="d-flex d-lg-none justify-content-end align-items-center">
-            {session && session.roles[0] === "user" && (
+            {!close && session && session.roles[0] === "user" && (
               <div className="row m-3">
                 <a
                   className="col-3 col-xl-4 text-center"
@@ -91,7 +93,19 @@ const Navigationbar = ({ session }) => {
                 </a>
               </div>
             )}
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Toggle
+              aria-controls="basic-navbar-nav"
+              onClick={(e) => {
+                setClose(!close);
+              }}
+              className="p-3"
+            >
+              {close ? (
+                <i class="ri-close-line"></i>
+              ) : (
+                <i class="ri-menu-line"></i>
+              )}
+            </Navbar.Toggle>
           </div>
         </Col>
         {showSearch && (
@@ -165,10 +179,10 @@ const Navigationbar = ({ session }) => {
                     </Link>
                   </div>
                 </div>
-                <div className="btn-group dropright">
+                <div className="btn-group dropright ">
                   <button
                     type="button"
-                    className="btn btn-white-navbar dropdown-toggle"
+                    className="btn btn-white-navbar dropdown-toggle w-100"
                     data-toggle="dropdown"
                     aria-haspopup="true"
                     aria-expanded="false"
@@ -242,7 +256,7 @@ const Navigationbar = ({ session }) => {
             </div>
           </Nav>
           {/* Search Bar */}
-          <Form className="w-100 my-2 mx-1 row ">
+          <Form className="w-100 my-2 mx-1 row d-lg-none d-block">
             <div className="position-relative w-100 d-none d-lg-block">
               <FormControl
                 type="search"
