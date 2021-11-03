@@ -366,7 +366,7 @@
   font-weight: 600;
   font-size: 20px;
   line-height: 140%;
-
+  position: relative;
   letter-spacing: 0.015em;
 
   color: #1f1f1f;
@@ -579,4 +579,19 @@
   /* Neutral/Heading */
 
   color: #1f1f1f;
+}
+.multipleChoice {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 160%;
+  /* or 22px */
+
+  letter-spacing: 0.015em;
+
+  /* Status/Warning/Normal */
+  position: absolute;
+  bottom: 0;
+  color: #ffa800;
 }

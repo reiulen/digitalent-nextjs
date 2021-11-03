@@ -147,7 +147,7 @@ const SubtansiUser = ({ token }) => {
   };
 
   useEffect(() => {
-    console.log(data[parseInt(router.query.id) - 1].open);
+    console.log(JSON.parse(data[parseInt(router.query.id) - 1].answer).length);
 
     if (count >= 0) {
       const secondsLeft = setInterval(() => {
@@ -230,16 +230,23 @@ const SubtansiUser = ({ token }) => {
     let ac = [];
     let multiple = [localStorage.getItem(parseInt(router.query.id))];
     if (data[parseInt(router.query.id) - 1].type === "multiple_choice") {
-      for (let i = 0; i < multiple.length; i++) {
-        ac.push(e.key);
+      if (localStorage.getItem(parseInt(router.query.id)) !== e.key) {
+        console.log("A");
       }
-      for (let i = 0; i < ac.length; i++) {
-        const element = ac[i];
-        ac.concat(element);
-      }
-      localStorage.setItem(`${router.query.id}`, e.key);
+      // for (let i = 0; i < multiple.length; i++) {
+      //   ac.push(e.key);
+      // }
+      // for (let i = 0; i < ac.length; i++) {
+      //   const element = ac[i];
+      //   ac.concat(element);
+      // }
+      // localStorage.setItem(`${router.query.id}`, e.key);
+      // if (localStorage.getItem(parseInt(router.query.id)) !== e.key) {
+      //   ac.push(e.key);
+      // }
+      multiple.push(e);
     }
-    // console.log(ac);
+    // console.log(multiple);
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i);
       list.push(key);
@@ -357,9 +364,33 @@ const SubtansiUser = ({ token }) => {
                         height={150}
                       />
                     </div>
-                    <div className="p-5">
-                      {data && data[parseInt(router.query.id) - 1]?.question}
-                    </div>
+                    {data[parseInt(router.query.id) - 1].type ===
+                    "multiple_choice" ? (
+                      <div className="p-5">
+                        {data && data[parseInt(router.query.id) - 1]?.question}
+                        <br />
+                        <br />
+                        <span className={styles.multipleChoice}>
+                          Anda dapat memilih lebih dari 1 jawaban
+                        </span>
+                      </div>
+                    ) : (
+                      <div className="p-5">
+                        {data && data[parseInt(router.query.id) - 1]?.question}
+                      </div>
+                    )}
+                  </div>
+                ) : data[parseInt(router.query.id) - 1].type ===
+                  "multiple_choice" ? (
+                  <div>
+                    {data &&
+                      data &&
+                      data[parseInt(router.query.id) - 1].question}
+                    <br />
+                    <br />
+                    <span className={styles.multipleChoice}>
+                      Anda dapat memilih lebih dari 1 jawaban
+                    </span>
                   </div>
                 ) : (
                   data && data && data[parseInt(router.query.id) - 1].question
@@ -370,7 +401,6 @@ const SubtansiUser = ({ token }) => {
                 data[parseInt(router.query.id) - 1]?.answer !== null &&
                 JSON.parse(data[parseInt(router.query.id) - 1]?.answer).map(
                   (item, index) => {
-                    // console.log(index);
                     return (
                       <>
                         {item.image !== null && item.image !== "" ? (
@@ -453,7 +483,7 @@ const SubtansiUser = ({ token }) => {
                 <Form>
                   <Form.Control
                     as="textarea"
-                    rows={8}
+                    rows={5}
                     placeholder="Jelaskan jawaban Anda di sini..."
                     className={styles.textArea}
                     onChange={() => handleAnswerText(event)}
