@@ -202,7 +202,6 @@ const SubtansiUser = ({ token }) => {
   };
 
   useEffect(() => {
-    console.log(data[parseInt(router.query.id) - 1]);
     if (count >= 0) {
       const secondsLeft = setInterval(() => {
         setCount((c) => c - 1);
