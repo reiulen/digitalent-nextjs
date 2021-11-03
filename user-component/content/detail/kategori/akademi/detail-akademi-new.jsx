@@ -432,8 +432,7 @@ const DetailAkademi = ({ session }) => {
                                               el.gambar) ||
                                           "/assets/media/default-card.png"
                                         }
-                                        width={410}
-                                        height={180}
+                                        layout="fill"
                                         objectFit="cover"
                                         alt="Image Thumbnail"
                                       />
