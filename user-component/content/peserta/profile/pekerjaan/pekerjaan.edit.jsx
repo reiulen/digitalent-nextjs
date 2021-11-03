@@ -174,6 +174,10 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
           <Form.Group className="mb-3" controlId="formGridAddress1">
             <Form.Label>Status Pekerjaan</Form.Label>
             <Select
+              placeholder={
+                (pekerjaan && pekerjaan.status_pekerjaan) ||
+                "Silahkan Pilih Status Pekerjaan"
+              }
               options={optionsStatusPekerjaan}
               onChange={(e) =>
                 setStatusPekerjaan({ label: e.label, value: e.value })
