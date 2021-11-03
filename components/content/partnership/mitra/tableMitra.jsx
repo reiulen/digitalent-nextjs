@@ -123,7 +123,7 @@ const Table = ({ token }) => {
       {update ? (
         <AlertBar
           text="Berhasil mengubah data"
-          className="alert-light-warning"
+          className="alert-light-success"
           onClick={() => onNewReset()}
         />
       ) : (
@@ -132,7 +132,7 @@ const Table = ({ token }) => {
       {successDelete ? (
         <AlertBar
           text="Berhasil menghapus data"
-          className="alert-light-danger"
+          className="alert-light-success"
           onClick={() => onNewReset()}
         />
       ) : (
@@ -243,7 +243,7 @@ const Table = ({ token }) => {
                     allMitra.mitraAll.data &&
                     allMitra.mitraAll.data.list_mitras.map((item, index) => {
                       return (
-                        <tr key={index}>
+                        <tr key={index} style={{backgroundColor:item.visit == 0 ?"#f8f8ff":"inherit"}}>
                           <td className="text-left align-middle">
                             {allMitra.page === 1
                               ? index + 1

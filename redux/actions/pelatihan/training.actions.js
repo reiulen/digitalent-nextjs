@@ -81,6 +81,9 @@ import {
   UPDATE_STATUS_PELATIHAN,
   CLEAR_STATUS_PELATIHAN,
   FAIL_STATUS_PELATIHAN,
+  GET_EDIT_DATA_TRAINING,
+  GET_EDIT_DATA_TRAINING2,
+  GET_EDIT_DATA_TRAINING3,
 } from "../../types/pelatihan/training.type";
 
 import axios from "axios";
@@ -712,4 +715,130 @@ export const clearErrors = () => async (dispatch) => {
   dispatch({
     type: CLEAR_ERRORS,
   });
+};
+
+export const getEditTrainingStep1 = (id, token) => async (dispatch) => {
+  try {
+
+    let link = process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/get-step-satu`;
+
+    const config = {
+      params: {
+        pelatian_id: id
+      },
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    const { data } = await axios.get(link, config);
+    dispatch({
+      type: GET_EDIT_DATA_TRAINING,
+      payload: data
+    })
+
+  } catch (error) {
+    throw(error)
+  }
+};
+
+export const getEditTrainingStep2 = (id, token) => async (dispatch) => {
+  try {
+
+    let link = process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/get-step-dua`;
+
+    const config = {
+      params: {
+        pelatian_id: id
+      },
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    const { data } = await axios.get(link, config);
+    dispatch({
+      type: GET_EDIT_DATA_TRAINING2,
+      payload: data
+    })
+
+  } catch (error) {
+    throw(error)
+  }
+};
+
+export const getEditTrainingStep3 = (id, token) => async (dispatch) => {
+  try {
+
+    let link = process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/get-step-tiga`;
+
+    const config = {
+      params: {
+        pelatian_id: id
+      },
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    const { data } = await axios.get(link, config);
+    dispatch({
+      type: GET_EDIT_DATA_TRAINING3,
+      payload: data
+    })
+
+  } catch (error) {
+    throw(error)
+  }
+};
+
+export const putTrainingStep1 = (token, datas) => async (dispatch) => {
+  try {
+    let link = process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/step-satu`;   
+
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    await axios.post(link,datas, config);
+
+  } catch (error) {
+    throw(error)
+  }
+};
+
+export const putTrainingStep2 = (token, datas) => async (dispatch) => {
+  try {
+    let link = process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/step-dua`;   
+
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    await axios.post(link,datas, config);
+
+  } catch (error) {
+    throw(error)
+  }
+};
+
+export const putTrainingStep3 = (token, datas) => async (dispatch) => {
+  try {
+    let link = process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/step-tiga`;   
+
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    await axios.post(link,datas, config);
+
+  } catch (error) {
+    throw(error)
+  }
 };

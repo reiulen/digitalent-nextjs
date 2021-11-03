@@ -26,7 +26,7 @@ const EditMitra = ({ token }) => {
   const [email, setEmail] = useState("");
   // tambah url logo
   const [agency_logo, setAgency_logo] = useState("");
-  const [website, setWesite] = useState("");
+  const [website, setWebsite] = useState("");
   const [address, setAddress] = useState("");
   const [indonesia_provinces_id, setIndonesia_provinces_id] = useState("");
   const [indonesia_cities_id, setIndonesia_cities_id] = useState("");
@@ -49,7 +49,7 @@ const EditMitra = ({ token }) => {
     institution_name: "",
     email: "",
     agency_logo: "",
-    wesite: "",
+    website: "",
     address: "",
     indonesia_provinces_id: "",
     indonesia_cities_id: "",
@@ -82,11 +82,7 @@ const EditMitra = ({ token }) => {
     dispatch(getProvinces(token));
   };
 
-  const [showImage, setShowImage] = useState(false);
 
-  const hideImage = () => {
-    setShowImage(showImage ? false : true);
-  };
 
   const [NamePDF, setNamePDF] = useState(null);
   const fileType = ["image/png"];
@@ -104,7 +100,6 @@ const EditMitra = ({ token }) => {
         reader.readAsDataURL(selectedFile);
         reader.onloadend = (e) => {
           setAgency_logo(e.target.result);
-          setShowImage(true);
           setNamePDF(selectedFile.name);
         };
       } else {
@@ -117,19 +112,17 @@ const EditMitra = ({ token }) => {
 
   const handleSubmit = async () => {
     // e.preventDefault();
-    if (institution_name === "") {
+    if (!institution_name) {
       setError({ ...error, institution_name: "Harus isi nama lembaga" });
       notify("Harus isi nama lembaga");
-    } else if (email === "") {
+    } else if (!email) {
       setError({ ...error, email: "Harus isi email" });
       notify("Harus isi email");
-    } else if (website === "") {
+    } else if (!website) {
       setError({ ...error, website: "Harus isi nama website" });
-      notify("Harus isi nama website");
-    } else if (address === "") {
+    } else if (!address) {
       setError({ ...error, address: "Harus isi alamat" });
-      notify("Harus isi alamat");
-    } else if (indonesia_provinces_id === "") {
+    } else if (!indonesia_provinces_id) {
       setError({
         ...error,
         indonesia_provinces_id: "Harus isi pilih provinsi",
@@ -254,7 +247,7 @@ const EditMitra = ({ token }) => {
       setEmail(data.data.email);
       // tambah url logo
       setImageview(data.data.agency_logo);
-      setWesite(data.data.website);
+      setWebsite(data.data.website);
       setAddress(data.data.alamat);
 
       setIndonesia_provinces_id(data.data.province.id);
@@ -363,7 +356,7 @@ const EditMitra = ({ token }) => {
                       className="form-control"
                       placeholder="Masukkan Website"
                       value={website}
-                      onChange={(e) => setWesite(e.target.value)}
+                      onChange={(e) => setWebsite(e.target.value)}
                     />
                     {error.website ? (
                       <p className="error-text">{error.website}</p>
@@ -571,6 +564,11 @@ const EditMitra = ({ token }) => {
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
                 />
+                {error.address ? (
+                  <p className="error-text">{error.address}</p>
+                ) : (
+                  ""
+                )}
               </div>
 
               {allMitra.provinces.length === 0 ? (

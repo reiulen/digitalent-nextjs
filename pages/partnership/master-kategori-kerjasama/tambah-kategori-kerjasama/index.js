@@ -25,15 +25,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
   () =>
     async ({ req }) => {
       const session = await getSession({ req });
-      // if (!session) {
-      //   return {
-      //     redirect: {
-      //       destination: "http://dts-dev.majapahit.id/login/admin",
-      //       permanent: false,
-      //     },
-      //   };
-      // }
-
       const middleware = middlewareAuthAdminSession(session);
       if (!middleware.status) {
         return {
@@ -43,7 +34,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
-
       return {
         props: { session, title: "Tambah master kategori - Partnership" },
       };

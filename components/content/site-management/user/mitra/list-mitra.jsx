@@ -5,13 +5,9 @@ import Pagination from "react-js-pagination";
 import PageWrapper from "../../../../wrapper/page.wrapper";
 import { useDispatch, useSelector } from "react-redux";
 import LoadingTable from "../../../../LoadingTable";
-import IconEye from "../../../../assets/icon/Eye";
 import IconPencil from "../../../../assets/icon/Pencil";
-import IconDelete from "../../../../assets/icon/Delete";
 import IconAdd from "../../../../assets/icon/Add";
 import IconSearch from "../../../../assets/icon/Search";
-import AlertBar from '../../../partnership/components/BarAlert'
-import IconArrow from "../../../../assets/icon/Arrow";
 import Image from "next/image";
 import {
   getAllMitraSite,
@@ -24,7 +20,7 @@ const Table = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
 
-  const allMitraSite = useSelector(state => state.allMitraSite)
+  const allMitraSite = useSelector((state) => state.allMitraSite);
   const [valueSearch, setValueSearch] = useState("");
   const handleChangeValueSearch = (value) => {
     setValueSearch(value);
@@ -37,16 +33,19 @@ const Table = ({ token }) => {
 
   useEffect(() => {
     dispatch(getAllMitraSite(token));
-  }, [dispatch, allMitraSite.keyword, allMitraSite.page, allMitraSite.limit, token]);
+  }, [
+    dispatch,
+    allMitraSite.keyword,
+    allMitraSite.page,
+    allMitraSite.limit,
+    token,
+  ]);
   return (
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3
-              className="card-title font-weight-bolder text-dark"
-              style={{ fontSize: "24px" }}
-            >
+            <h3 className="card-title font-weight-bolder text-dark titles-1">
               List User Mitra
             </h3>
             <div className="card-toolbar">
@@ -62,10 +61,7 @@ const Table = ({ token }) => {
             <div className="table-filter">
               <div className="row align-items-center">
                 <div className="col-lg-12 col-xl-12">
-                  <form
-                    onSubmit={handleSubmit}
-                    className="d-flex align-items-center w-100"
-                  >
+                  <div className="d-flex align-items-center w-100">
                     <div className="row w-100">
                       <div className="col-12 col-sm-6">
                         <div className="position-relative overflow-hidden w-100">
@@ -83,7 +79,8 @@ const Table = ({ token }) => {
                             }
                           />
                           <button
-                            type="submit"
+                            type="button"
+                            onClick={(e) => handleSubmit(e)}
                             className="btn bg-blue-primary text-white right-center-absolute"
                             style={{
                               borderTopLeftRadius: "0",
@@ -95,7 +92,7 @@ const Table = ({ token }) => {
                         </div>
                       </div>
                     </div>
-                  </form>
+                  </div>
                 </div>
               </div>
             </div>
@@ -104,92 +101,101 @@ const Table = ({ token }) => {
                 {allMitraSite.status === "process" ? (
                   <LoadingTable />
                 ) : (
-                <table className="table table-separate table-head-custom table-checkable">
-                  <thead style={{ background: "#F3F6F9" }}>
-                    <tr>
-                      <th className="text-left">No</th>
-                      <th className="text-left align-middle">Logo</th>
-                      <th className="text-left align-middle">Mitra</th>
-                      <th className="text-left align-middle">Website</th>
-                      <th className="text-left align-middle">Kerjasama</th>
-                      <th className="text-left align-middle">Aksi</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {allMitraSite.data.list_mitras.length === 0 ? (
+                  <table className="table table-separate table-head-custom table-checkable">
+                    <thead style={{ background: "#F3F6F9" }}>
                       <tr>
-                        <td colSpan="6" className="text-center">
-                          <h4>Data tidak ditemukan</h4>
-                        </td>
+                        <th className="text-left">No</th>
+                        <th className="text-left align-middle">Logo</th>
+                        <th className="text-left align-middle">Mitra</th>
+                        <th className="text-left align-middle">Website</th>
+                        <th className="text-left align-middle">Kerjasama</th>
+                        <th className="text-left align-middle">Aksi</th>
                       </tr>
-                    ) : (
-                      allMitraSite.data.list_mitras.map((items, index) => {
-                        return (
-                    <tr key={index}>
-                      <td className="align-middle text-left">
-                         {allMitraSite.page === 1
-                                ? index + 1
-                                : (allMitraSite.page - 1) * allMitraSite.limit +
-                                  (index + 1)}
-                      </td>
-                      <td className="align-middle text-left">
-                        {!items.agency_logo ? "-" : <Image
-                              unoptimized={
-                                process.env.ENVIRONMENT !== "PRODUCTION"
-                              }
-                              src={
-                                process.env.END_POINT_API_IMAGE_PARTNERSHIP + items.agency_logo
-                              }
-                              width={40}
-                              height={40}
-                              alt="logo"
-                            />}
-                            </td>
-                      <td className="align-middle text-left">{items.user.name}</td>
-                      <td className="align-middle text-left">
-                            {!items.website ? "-" : items.website}
-                      </td>
-                      <td className="align-middle text-left">
-                          {items.cooperations_count}
-                        </td>
-                      <td className="align-middle text-left">
-                          <Link href={
-                            `/site-management/user/mitra/edit-mitra/${items.id}`
-                          }>
-                            <a
-                            className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                          >
-                            <IconPencil width="16" height="16" />
-                            <div className="text-hover-show-hapus">Ubah</div>
-                          </a>
-                          </Link>
-                      </td>
-                    </tr>
-                     );
-                      })
-                    )}
-                  </tbody>
-                </table>
-                 )}
+                    </thead>
+                    <tbody>
+                      {allMitraSite.data.list_mitras.length === 0 ? (
+                        <tr>
+                          <td colSpan="6" className="text-center">
+                            <h4>Data tidak ditemukan</h4>
+                          </td>
+                        </tr>
+                      ) : (
+                        allMitraSite.data.list_mitras.map((items, index) => {
+                          return (
+                            <tr key={index}>
+                              <td className="align-middle text-left">
+                                {allMitraSite.page === 1
+                                  ? index + 1
+                                  : (allMitraSite.page - 1) *
+                                      allMitraSite.limit +
+                                    (index + 1)}
+                              </td>
+                              <td className="align-middle text-left">
+                                {!items.agency_logo ? (
+                                  "-"
+                                ) : (
+                                  <Image
+                                    unoptimized={
+                                      process.env.ENVIRONMENT !== "PRODUCTION"
+                                    }
+                                    src={
+                                      process.env
+                                        .END_POINT_API_IMAGE_PARTNERSHIP +
+                                      items.agency_logo
+                                    }
+                                    width={40}
+                                    height={40}
+                                    alt="logo"
+                                  />
+                                )}
+                              </td>
+                              <td className="align-middle text-left">
+                                {items.user.name}
+                              </td>
+                              <td className="align-middle text-left">
+                                {!items.website ? "-" : items.website}
+                              </td>
+                              <td className="align-middle text-left">
+                                {items.cooperations_count}
+                              </td>
+                              <td className="align-middle text-left">
+                                <Link
+                                  href={`/site-management/user/mitra/edit-mitra/${items.id}`}
+                                >
+                                  <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
+                                    <IconPencil width="16" height="16" />
+                                    <div className="text-hover-show-hapus">
+                                      Ubah
+                                    </div>
+                                  </a>
+                                </Link>
+                              </td>
+                            </tr>
+                          );
+                        })
+                      )}
+                    </tbody>
+                  </table>
+                )}
               </div>
 
               <div className="row">
                 <div className="table-pagination paginate-cs">
-                    <div className="table-pagination">
-                      <Pagination
-                        activePage={allMitraSite.page}
-                        itemsCountPerPage={allMitraSite.data.perPage}
-                        totalItemsCount={allMitraSite.data.total}
-                        pageRangeDisplayed={3}
-                        onChange={(page) => dispatch(setPage(page))}
-                        nextPageText={">"}
-                        prevPageText={"<"}
-                        firstPageText={"<<"}
-                        lastPageText={">>"}
-                        itemClass="page-item"
-                        linkClass="page-link"
-                      />
-                    </div>
+                  <div className="table-pagination">
+                    <Pagination
+                      activePage={allMitraSite.page}
+                      itemsCountPerPage={allMitraSite.data.perPage}
+                      totalItemsCount={allMitraSite.data.total}
+                      pageRangeDisplayed={3}
+                      onChange={(page) => dispatch(setPage(page))}
+                      nextPageText={">"}
+                      prevPageText={"<"}
+                      firstPageText={"<<"}
+                      lastPageText={">>"}
+                      itemClass="page-item"
+                      linkClass="page-link"
+                    />
+                  </div>
                 </div>
 
                 <div className="table-total ml-auto">
@@ -221,8 +227,8 @@ const Table = ({ token }) => {
                         className="align-middle mt-3"
                         style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}
                       >
-                        Total Data {allMitraSite.data &&
-                          allMitraSite.data.total} List Data
+                        Total Data{" "}
+                        {allMitraSite.data && allMitraSite.data.total} List Data
                       </p>
                     </div>
                   </div>

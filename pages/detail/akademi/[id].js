@@ -8,11 +8,11 @@ import { getDataPribadi } from "../../../redux/actions/pelatihan/function.action
 
 const DetailAkademi = dynamic(() =>
   import(
-    "../../../user-component/content/detail/kategori/akademi/detail-akademi"
+    "../../../user-component/content/detail/kategori/akademi/detail-akademi-new"
   )
 );
 const Layout = dynamic(() =>
-  import("../../../user-component/content/wrapper/layout.wrapper")
+  import("../../../components/wrapper/beranda.wrapper")
 );
 
 export default function DetailAkademiPelatihan(props) {
@@ -23,7 +23,7 @@ export default function DetailAkademiPelatihan(props) {
   }
 
   return (
-    <div>
+    <div style={{ backgroundColor: "white" }}>
       <Layout title="Detail Akademi" session={session}>
         <DetailAkademi session={session} />
       </Layout>
@@ -52,7 +52,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
           params.kategori_peserta,
           params.kata_kunci,
           params.tanggal_mulai,
-          params.tanggal_akhir
+          params.tanggal_akhir,
+          params.page
         )
       );
 

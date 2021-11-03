@@ -35,6 +35,7 @@ const EditBerita = ({ token, idUser }) => {
     const { loading, error, success } = useSelector(state => state.updatedBerita)
     const { loading: allLoading, error: allError, kategori } = useSelector((state) => state.allKategori);
     const { setting } = useSelector(state => state.allSettingPublikasi)
+    const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(state => state.drowpdownAkademi);
 
     useEffect(() => {
 
@@ -77,6 +78,7 @@ const EditBerita = ({ token, idUser }) => {
     const [gambarName, setGambarName] = useState(berita.gambar)
     const [kategori_id, setKategoriId] = useState(berita.kategori_id)
     const [users_id, setUserId] = useState(berita.users_id)
+    const [akademi_value, setAkademiValue] = useState(berita.akademi_value);
     const [tag, setTag] = useState(berita.tag)
     const [publish, setPublish] = useState(berita.publish)
     // const [publish, setPublish] = useState(berita.publish === 1 ? true : false)
@@ -124,6 +126,7 @@ const EditBerita = ({ token, idUser }) => {
     const handleChangePublish = (e) => {
         setPublish(e.target.checked);
         setDisablePublishDate(!disablePublishDate)
+        setPublishDate(null)
         if (e.target.checked === false) {
             setPublishDate(null)
         }
@@ -178,6 +181,7 @@ const EditBerita = ({ token, idUser }) => {
                         judul_berita,
                         isi_berita,
                         gambar,
+                        akademi_value,
                         kategori_id,
                         users_id,
                         tag,
@@ -209,6 +213,7 @@ const EditBerita = ({ token, idUser }) => {
                         judul_berita,
                         isi_berita,
                         gambar,
+                        akademi_value,
                         kategori_id,
                         users_id,
                         tag,
@@ -245,6 +250,7 @@ const EditBerita = ({ token, idUser }) => {
                         judul_berita,
                         isi_berita,
                         gambar: "",
+                        akademi_value,
                         kategori_id,
                         users_id,
                         tag,
@@ -275,6 +281,7 @@ const EditBerita = ({ token, idUser }) => {
                         judul_berita,
                         isi_berita,
                         gambar: "",
+                        akademi_value,
                         kategori_id,
                         users_id,
                         tag,
@@ -335,18 +342,6 @@ const EditBerita = ({ token, idUser }) => {
                     </div>
                     : ""
                 }
-                {/* {success ?
-                    <div className="alert alert-custom alert-light-success fade show mb-5" role="alert">
-                        <div className="alert-icon"><i className="flaticon2-checkmark"></i></div>
-                        <div className="alert-text">{success}</div>
-                        <div className="alert-close">
-                            <button type="button" className="close" data-dismiss="alert" aria-label="Close" onClick={onNewReset} >
-                                <span aria-hidden="true"><i className="ki ki-close"></i></span>
-                            </button>
-                        </div>
-                    </div>
-                    : ''
-                } */}
 
                 <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
                     {
@@ -476,30 +471,28 @@ const EditBerita = ({ token, idUser }) => {
 
                                 </div>
 
-                                {/* <div className="form-group row">
-                                    <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Upload Thumbnail</label>
-                                    <div className="col-sm-1">
-                                        <figure className='avatar item-rtl' data-toggle="modal" data-target="#exampleModalCenter">
-                                            <Image
-                                                loader={() => gambarPreview}
-                                                src={gambarPreview}
-                                                alt='image'
-                                                width={60}
-                                                height={60}
-                                            />
-                                        </figure>
-                                    </div>
-                                    <div className="col-sm-9">
-                                        <div className="input-group">
-                                            <div className="custom-file">
-                                                <input type="file" name='gambar' className="custom-file-input" id="inputGroupFile04" onChange={onChangeGambar} accept="image/*"/>
-                                                <label className="custom-file-label" htmlFor="inputGroupFile04">Pilih file</label>
-                                            </div>
-                                        </div>
-                                        <small>{gambarName}</small>
-                                    </div>
-                                </div> */}
 
+                                <div className="form-group">
+                                    <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Akademi</label>
+                                    <div className="col-sm-12">
+                                        <select name="" id="" className='form-control' value={akademi_value} onChange={e => setAkademiValue(e.target.value)} onBlur={e => { setAkademiValue(e.target.value); simpleValidator.current.showMessageFor('akademi') }} >
+                                            <option selected disabled value=''>-- Akademi --</option>
+                                            {!dataAkademi || (dataAkademi && dataAkademi.length === 0) ? (
+                                                <option value="">Data Tidak Ditemukan</option>
+                                            ) : (
+                                                dataAkademi && dataAkademi.data && dataAkademi.data.map((row) => {
+                                                    return (
+                                                            <option key={row.value} value={row.value} selected={akademi_value === row.value ? true : false}>
+                                                                {row.label}
+                                                            </option>
+                                                    )
+                                                })
+                                            )}
+
+                                        </select>
+                                        {simpleValidator.current.message('akademi', akademi_value, 'required', { className: 'text-danger' })}
+                                    </div>
+                                </div>
 
                                 <div className="form-group">
                                     <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Kategori</label>
@@ -517,7 +510,6 @@ const EditBerita = ({ token, idUser }) => {
                                                             </option>
                                                             :
                                                             null
-                                                        // <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>{row.jenis_kategori}</option>
                                                     )
                                                 })
                                             )}

@@ -105,6 +105,7 @@ const EditArtikel = ({token}) => {
 
   const handleChangePublish = (e) => {
     setDisablePublishDate(!disablePublishDate)    
+    setPublishDate (null)
     if (e.target.checked === false){
         setPublishDate (null)
         setPublish (0)
