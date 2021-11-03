@@ -18,11 +18,12 @@ const UploadEvidence = dynamic(
   }
 );
 
-export default function UploadEvidencePage() {
+export default function UploadEvidencePage(props) {
+  const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <UploadEvidence />
+        <UploadEvidence token={session.token} />
       </div>
     </>
   );

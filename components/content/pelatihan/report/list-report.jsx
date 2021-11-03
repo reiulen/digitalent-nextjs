@@ -223,7 +223,7 @@ const ListReport = ({token}) => {
                   <button
                     className="btn border d-flex align-items-center justify-content-between mt-1"
                     style={{
-                      minWidth: "280px",
+                      minWidth: "236px",
                       color: "#bdbdbd",
                       float: "right",
                     }}

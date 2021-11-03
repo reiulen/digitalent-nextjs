@@ -9,8 +9,9 @@ import { useDispatch, useSelector } from "react-redux";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingPage from "../../../LoadingPage";
+import { postEvidence } from '../../../../redux/actions/pelatihan/training.actions'
 
-const UploadEvidence = () => {
+const UploadEvidence = ({token}) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -26,13 +27,13 @@ const UploadEvidence = () => {
   const [dateReport, setDateReport] = useState("");
   const [responsible, setResponsible] = useState("");
   const [description, setDescription] = useState("");
+  const [jabatan , setJabatan] = useState("");
   const [image, setImage] = useState([
     { key: 1, imagePreview: "", imageFile: "", imageName: "" },
   ]);
   const [linkVideo, setLinkVideo] = useState("");
   const [teacher, setTeacher] = useState([
     { key: 1, name: "", agency: "" },
-    { key: 2, name: "", agency: "" },
   ]);
 
   const [name, setName] = useState("");
@@ -67,17 +68,15 @@ const UploadEvidence = () => {
         e.target.value = null;
         Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
       } else {
-        list[index].imageFile = e.target.files[0];
-        list[index].imagePreview = URL.createObjectURL(e.target.files[0]);
-        list[index].imageName = e.target.files[0].name;
-        setImage(list);
+        const reader = new FileReader();
+        reader.readAsDataURL(e.target.files[0]);
+        reader.onload = function () {
+          list[index].imageFile = e.target.files[0];
+          list[index].imagePreview = reader.result;
+          list[index].imageName = e.target.files[0].name;
+          setImage(list);
+        };
       }
-      // const reader = new FileReader();
-      // reader.onload = () => {
-      //   if (reader.readyState === 2) {
-      //   }
-      // };
-      // reader.readAsDataURL(e.target.files[0]);
     } else {
       e.target.value = null;
       Swal.fire(
@@ -127,23 +126,39 @@ const UploadEvidence = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
+
+    let images = image.map(item => {
+      return{
+        gambar: item.imagePreview
+      }
+    })
+    let teachers = teacher.map(item => {
+      return{
+        nama_pengajar: item.name,
+        instansi_pengajar: item.agency
+      }
+    })
+    
     if (simpleValidator.current.allValid()) {
       const data = {
-        numberDocument,
-        dateReport,
-        responsible,
-        description,
-        image,
-        linkVideo,
-        teacher,
+        name_dokumen: numberDocument,
+        tanggal_laporan: dateReport,
+        nama_penanggung_jawab: responsible,
+        "Jabatan_penanggung_jawab": jabatan,
+        deskripsi: description,
+        link_video: linkVideo,
+        gambar: images,
+        pengajar: teachers,
+        pelatian_id: parseInt(router.query.id)
       };
+      dispatch(postEvidence(token, data))
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Isi data yang bener dong lu !",
+        text: "Isi data dengan benar !",
       });
     }
   };
@@ -168,7 +183,7 @@ const UploadEvidence = () => {
                   Nomor Dokumen
                 </label>
                 <input
-                  type="number"
+                  type="text"
                   placeholder="Masukan Nomor Dokumen"
                   className="form-control"
                   value={numberDocument}
@@ -180,7 +195,7 @@ const UploadEvidence = () => {
                 {simpleValidator.current.message(
                   "nomor dokumen",
                   numberDocument,
-                  "required|integer",
+                  "required|string",
                   { className: "text-danger" }
                 )}
               </div>
@@ -226,6 +241,29 @@ const UploadEvidence = () => {
                 {simpleValidator.current.message(
                   "nama penanggung jawab",
                   responsible,
+                  "required",
+                  { className: "text-danger" }
+                )}
+              </div>
+              <div className="form-group mb-4">
+                <label className="col-form-label font-weight-bold">
+                  Jabatan Penanggung Jawab
+                </label>
+                <input
+                  type="text"
+                  placeholder="Masukan Jabatan Penanggung Jawab"
+                  className="form-control"
+                  value={jabatan}
+                  onChange={(e) => setJabatan(e.target.value)}
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor(
+                      "jabatan penanggung jawab"
+                    )
+                  }
+                />
+                {simpleValidator.current.message(
+                  "jabatan penanggung jawab",
+                  jabatan,
                   "required",
                   { className: "text-danger" }
                 )}

@@ -799,7 +799,7 @@ const ListTraining = ({ token }) => {
                                 )}
                                 {row.status_pelatihan === "selesai" && (
                                   <Link
-                                    href={`/pelatihan/pelatihan/upload-evidence`}
+                                    href={`/pelatihan/pelatihan/upload-evidence/${row.id}`}
                                   >
                                     <a
                                       className="btn btn-link-action bg-blue-secondary text-white mr-2"

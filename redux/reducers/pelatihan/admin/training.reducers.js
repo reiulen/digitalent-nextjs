@@ -92,7 +92,8 @@ import {
   CLEAR_ERRORS,
   GET_EDIT_DATA_TRAINING,
   GET_EDIT_DATA_TRAINING2,
-  GET_EDIT_DATA_TRAINING3
+  GET_EDIT_DATA_TRAINING3,
+  GET_FORM_LPJ
 } from "../../../types/pelatihan/training.type";
 
 export const allTrainingReducer = (state = { training: [] }, action) => {
@@ -558,6 +559,18 @@ export const getEditTraining3Reducer = (state = {data: {}}, action) => {
 
     
 
+    default:
+      return state;
+  }
+};
+
+export const getFormLPJReducer = (state = {data: {}}, action) => {
+  switch (action.type) {
+    case GET_FORM_LPJ:
+      return {
+        ...state,
+        data: action.payload.data
+      }
     default:
       return state;
   }
