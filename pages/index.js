@@ -10,12 +10,21 @@ import { getAllAkademi } from "../redux/actions/beranda/beranda.actions";
 import { getTemaByAkademi } from "../redux/actions/beranda/beranda.actions";
 import { getAllPublikasi } from "../redux/actions/beranda/beranda.actions";
 import { getDataPribadi } from "../redux/actions/pelatihan/function.actions";
-// import { getPelatihanByTema } from "../redux/actions/beranda/beranda.actions";
 
-const Beranda = dynamic(() =>
-  import("../user-component/content/beranda/beranda")
+import LoadingLanding from "../user-component/components/loader/LandingLoader";
+
+const Beranda = dynamic(
+  () => import("../user-component/content/beranda/beranda"),
+  {
+    loading: function loadingNow() {
+      return <LoadingLanding />;
+    },
+    ssr: false,
+  }
 );
-const Wrapper = dynamic(() => import("../components/wrapper/beranda.wrapper"));
+const Layout = dynamic(() => import("../components/wrapper/beranda.wrapper"), {
+  ssr: false,
+});
 
 export default function HomePage(props) {
   let session = null;
@@ -26,9 +35,9 @@ export default function HomePage(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <Wrapper title="Digitalent" session={session}>
+        <Layout title="Digitalent" session={session}>
           <Beranda session={session} />
-        </Wrapper>
+        </Layout>
       </div>
     </>
   );

@@ -6,13 +6,23 @@ import { getDetailAkademi } from "../../../redux/actions/beranda/detail-akademi.
 import { getAllPelatihanByAkademi } from "../../../redux/actions/beranda/detail-akademi.actions";
 import { getDataPribadi } from "../../../redux/actions/pelatihan/function.actions";
 
-const DetailAkademi = dynamic(() =>
-  import(
-    "../../../user-component/content/detail/kategori/akademi/detail-akademi-new"
-  )
+import LoadingDetailAkademi from "../../../user-component/components/loader/DetailAkademiLoader";
+
+const DetailAkademi = dynamic(
+  () =>
+    import(
+      "../../../user-component/content/detail/kategori/akademi/detail-akademi-new"
+    ),
+  {
+    loading: function loadingNow() {
+      return <LoadingDetailAkademi />;
+    },
+    ssr: false,
+  }
 );
-const Layout = dynamic(() =>
-  import("../../../components/wrapper/beranda.wrapper")
+const Layout = dynamic(
+  () => import("../../../components/wrapper/beranda.wrapper"),
+  { ssr: false }
 );
 
 export default function DetailAkademiPelatihan(props) {

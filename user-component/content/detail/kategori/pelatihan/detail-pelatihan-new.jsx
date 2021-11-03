@@ -1,10 +1,10 @@
 import React from "react";
 import Image from "next/image";
 import { Container, Row, Col } from "react-bootstrap";
-import { useSelector } from "react-redux";
 import moment from "moment";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
 
 import style from "../../../../../styles/peserta/dashboard.module.css";
 
@@ -16,11 +16,12 @@ import { checkRegisterPelatihan } from "../../../../../redux/actions/beranda/det
 
 const DetailPelatihan = ({ session }) => {
   const router = useRouter();
+  const dispatch = useDispatch();
   const { pelatihan } = useSelector((state) => state.detailPelatihan);
 
   const handleCheckPelatihanReg = async (id, session) => {
     if (session) {
-      const data = await dispatch(checkRegisterPelatihan(id, session.Token));
+      const data = await dispatch(checkRegisterPelatihan(id, session.token));
 
       if (data.status === true) {
         router.push(`/peserta/form-pendaftaran?id=${id}`);
