@@ -310,16 +310,19 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse }) => {
           </Link>
         </div>
 
-        <div className={styles.akunMenu}>
-          <div className="d-flex flex-row">
-            <div className="p-2">
-              <i className="ri-settings-4-line"></i>
-            </div>
-            <div className="p-2">
-              <td>Pengaturan</td>
+        <Link href="/peserta/pengaturan" passHref>
+          <div className={styles.akunMenu}>
+            <div className="d-flex flex-row">
+              <div className="p-2">
+                <i className="ri-settings-4-line"></i>
+              </div>
+              <div className="p-2">
+                <td>Pengaturan</td>
+              </div>
             </div>
           </div>
-        </div>
+        </Link>
+
         <div
           className={styles.akunMenu}
           onClick={() => {

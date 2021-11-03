@@ -49,10 +49,6 @@ const Navigationbar = ({ session }) => {
     (state) => state.allAkademi
   );
 
-  useEffect(() => {
-    console.log(akademi, "tes akademi");
-  }, [akademi]);
-
   const handlerLogout = () => {
     Cookies.remove("id_tema");
     Cookies.remove("id_pelatihan");
