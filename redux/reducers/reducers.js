@@ -307,7 +307,7 @@ import {
   updateStatusReducer,
   getEditTrainingReducer,
   getEditTraining2Reducer,
-  getEditTraining3Reducer
+  getEditTraining3Reducer,
 } from "./pelatihan/admin/training.reducers";
 // =================== review pelatihan ==================
 import {
@@ -322,7 +322,7 @@ import {
 } from "./pelatihan/admin/review.reducers";
 // =================== report pelatihan ==================
 
-import {getDataReportTrainingReducer} from './pelatihan/admin/report-training.reducers'
+import { getDataReportTrainingReducer } from "./pelatihan/admin/report-training.reducers";
 // =================== rekap pelatihan ==================
 import {
   getFormBuilderReducer,
@@ -413,6 +413,10 @@ import {
   getAllRiwayatPelatihanPesertaReducer,
   getDetailRiwayatPelatihanReducer,
 } from "../reducers/pelatihan/peserta/riwayat-pelatihan.reducer";
+import {
+  allBeasiswaReducer,
+  allSimonasReducer,
+} from "./beranda/simonasAndBeasiswa";
 
 const reducer = combineReducers({
   // PUBLIKASI
@@ -760,6 +764,8 @@ const reducer = combineReducers({
   // ========== Riwayat Pelatihan ========
   getAllRiwayatPelatihanPeserta: getAllRiwayatPelatihanPesertaReducer,
   getDetailRiwayatPelatihanPeserta: getDetailRiwayatPelatihanReducer,
+  allBeasiswa: allBeasiswaReducer,
+  allSimonas: allSimonasReducer,
 });
 
 export default reducer;

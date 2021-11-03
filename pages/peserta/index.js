@@ -9,7 +9,10 @@ import { getDashboardPeserta } from "../../redux/actions/pelatihan/dashboard-pes
 import LoadingContent from "../../user-component/content/peserta/components/loader/LoadingContent";
 import { middlewareAuthPesertaSession } from "../../utils/middleware/authMiddleware";
 import { useRouter } from "next/router";
-import { getAllAkademi } from "../../redux/actions/beranda/beranda.actions";
+import {
+  getAllAkademi,
+  getBeasiswa,
+} from "../../redux/actions/beranda/beranda.actions";
 
 const Dashboard = dynamic(
   () => import("../../user-component/content/peserta/dashboard"),
@@ -62,6 +65,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
           success = true;
         }
       }
+      const data = await store.dispatch(getBeasiswa());
       await store.dispatch(
         getDashboardPeserta(session?.user.user.data.user.token)
       );

@@ -15,6 +15,10 @@ import {
 } from "../../types/beranda/beranda.type";
 
 import axios from "axios";
+import {
+  GET_BEASISWA_FAIL,
+  GET_BEASISWA_SUCCESS,
+} from "../../types/pelatihan/dashboard-peserta.type";
 
 // GET AKADEMI
 export const getAllAkademi = () => async (dispatch) => {
@@ -113,4 +117,23 @@ export const clearErrors = () => async (dispatch) => {
   dispatch({
     type: CLEAR_ERRORS,
   });
+};
+
+export const getBeasiswa = () => async (dispatch) => {
+  try {
+    let link = "https://beasiswa-dev.majapahit.id/api/get-scholarship-data";
+    const { data } = await axios.get(link);
+
+    dispatch({
+      type: GET_BEASISWA_SUCCESS,
+      payload: data,
+    });
+
+    return data;
+  } catch (error) {
+    dispatch({
+      type: GET_BEASISWA_FAIL,
+      payload: error.message,
+    });
+  }
 };
