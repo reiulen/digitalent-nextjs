@@ -16,21 +16,10 @@ const Galeri = () => {
     const { galeri } = useSelector((state) => state.allBerandaGaleri)
     const { detail } = useSelector((state) => state.detailBerandaGaleri)
     const { kategori } = useSelector((state) => state.kategoriBerandaGaleri)
-
-    const dummyCard = [
-        {image: "/assets/media/default-card-artikel.png"},
-        {image: "/assets/media/image-20.png"},
-        {image: "/assets/media/image-21.png"},
-        {image: "/assets/media/image-22.png"},
-        {image: "/assets/media/image-23.png"},
-        {image: "/assets/media/image-25.png"},
-        {image: "/assets/media/default-card-artikel.png"},
-        {image: "/assets/media/image-20.png"},
-        {image: "/assets/media/image-21.png"},
-    ]
     
-    const [show, setShow] = useState(null);
-    const [ kategoriGaleri, setKategoriGaleri ] = useState("test")  // ---------- Wed, 03 - 11 - 21  || Setting active kategori
+    const [ show, setShow ] = useState(null);
+    const [ kategoriGaleri, setKategoriGaleri ] = useState("") 
+    const [ activePage, setActivePage ] = useState(1)
 
     useEffect(() => {
         handleCardIndex()
@@ -76,12 +65,32 @@ const Galeri = () => {
         dispatch (getDetailBerandaGaleri(id))
     }
 
+    const handleFilterKategori = (str) => {
+        setKategoriGaleri(str)
+
+        if(kategoriGaleri !== ""){
+            router.push ( `${router.pathname}?page=1&keyword=${str}`)
+        } else {
+            router.push ( `${router.pathname}?page=1`)
+        }
+    }
+
+    const handlePagination = (pageNumber) => {
+        setActivePage(pageNumber)
+
+        if ( kategoriGaleri !== "" ){
+            router.push ( `${router.pathname}?page=${pageNumber}&keyword=${kategoriGaleri}`)
+        } else {
+            router.push ( `${router.pathname}?page=${pageNumber}`)
+        }
+    }
+
     return (
         <div>
            {/* BreadCrumb */}
            <div className="row my-5 mx-1 py-3 px-8 bg-white rounded-pill d-flex align-items-center border">
                 <span className="text-primary">
-                    <Link href="#">
+                    <Link href="/">
                         Beranda 
                     </Link>
                 </span>
@@ -106,66 +115,63 @@ const Galeri = () => {
 
             {/* Filter Button */}
             <div className="row my-5">
-                <div className="col-12 d-flex justify-content-between flex-row flex-wrap">
-                    {/* Selected */}
+                <div className="col-12 d-flex justify-content-around flex-row flex-wrap">
+
+                    {/* Selected & Unselected */}
                     {
-                        kategoriGaleri === null ?
+                        kategoriGaleri === "" ?
                             <div 
-                                className="d-flex align-items-center rounded-pill bg-primary-dashboard py-1 px-3 m-2" 
+                                className="d-flex align-items-center rounded-pill bg-primary-dashboard py-1 px-9 m-2" 
                                 style={{ cursor: "pointer" }}
+                                onClick={() => handleFilterKategori("")}
                             >
-                                <div className="my-1 mx-3 py-1 px-3 text-white">
+                                <div className="my-1 mx-5 py-1 px-9 text-white">
                                     Semua
                                 </div>
                             </div>
                         :
                             <div 
-                                className="d-flex align-items-center rounded-pill bg-white py-1 px-3 border border-muted m-2" 
+                                className="d-flex align-items-center rounded-pill bg-white py-1 px-9 border border-muted m-2" 
                                 style={{ cursor: "pointer" }}
+                                onClick={() => handleFilterKategori("")}
                             >
-                                <div className="my-1 mx-3 py-1 px-3 text-muted">
+                                <div className="my-1 mx-5 py-1 px-9 text-muted">
                                     Semua
                                 </div>
                             </div>
                     }   
                     
-
-                    {/* UnSelected */}
-                    <div 
-                        className="d-flex align-items-center rounded-pill bg-white py-1 px-3 border border-muted m-2" 
-                        style={{ cursor: "pointer" }}
-                    >
-                        <div className="my-1 mx-3 py-1 px-3 text-muted">
-                            Pengumuman
-                        </div>
-                    </div>
-
-                    <div 
-                        className="d-flex align-items-center rounded-pill bg-white py-1 px-3 border border-muted m-2" 
-                        style={{ cursor: "pointer" }}
-                    >
-                        <div className="my-1 mx-3 py-1 px-3 text-muted">
-                            Informasi
-                        </div>
-                    </div>
-
-                    <div 
-                        className="d-flex align-items-center rounded-pill bg-white py-1 px-3 border border-muted m-2" 
-                        style={{ cursor: "pointer" }}
-                    >
-                        <div className="my-1 mx-3 py-1 px-3 text-muted">
-                            Press Release
-                        </div>
-                    </div>
-
-                    <div 
-                        className="d-flex align-items-center rounded-pill bg-white py-1 px-3 border border-muted m-2" 
-                        style={{ cursor: "pointer" }}
-                    >
-                        <div className="my-1 mx-3 py-1 px-3 text-muted">
-                           Tips And Trick
-                        </div>
-                    </div>
+                    {
+                        kategori ?
+                            kategori.map ((el, i) => {
+                                return (
+                                    kategoriGaleri === el.nama_kategori ?
+                                        <div 
+                                            className="d-flex align-items-center rounded-pill bg-primary-dashboard py-1 px-9 border border-muted m-2" 
+                                            style={{ cursor: "pointer" }}
+                                            onClick={() => handleFilterKategori(el.nama_kategori)}
+                                            key={i}
+                                        >
+                                            <div className="my-1 mx-5 py-1 px-9 text-white">
+                                                {el.nama_kategori}
+                                            </div>
+                                        </div>
+                                    :
+                                        <div 
+                                            className="d-flex align-items-center rounded-pill bg-white py-1 px-9 border border-muted m-2" 
+                                            style={{ cursor: "pointer" }}
+                                            onClick={() => handleFilterKategori(el.nama_kategori)}
+                                            key={i}
+                                        >
+                                            <div className="my-1 mx-5 py-1 px-9 text-muted">
+                                                {el.nama_kategori}
+                                            </div>
+                                        </div>
+                                )
+                            })
+                        :
+                            null
+                    }
 
                 </div>
                
@@ -225,18 +231,21 @@ const Galeri = () => {
                                                 </div>
                                                 
 
-                                                <div className="position-absolute row " style={{marginTop:"-10vh"}}>
-                                                    <div className="col-6">
-                                                        <h5 className="font-weight-bolder text-white ml-2">
-                                                            Strategi Bisnis Online Bersama Google
+                                                <div className="position-absolute col-12 " style={{marginTop:"-10vh"}}>
+                                                    <div>
+                                                        <h5 className="font-weight-bolder text-white">
+                                                            {el.judul}
                                                         </h5>
                                                     </div>
                                                     
-                                                    <div className="col-6 text-right">
+                                                    {
+
+                                                    }
+                                                    <div>
                                                         <div className="badge badge-light mr-2">
                                                             <div className="text-primary">
                                                                 {/* Insert Kategori Here */}
-                                                                Pengumuman
+                                                                {el.nama_kategori}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -267,54 +276,73 @@ const Galeri = () => {
                                 <div className="">
                                     <div className="row">
                                         {/* Slide */}
-                                        <div className="col-12 col-xl-6 m-0 p-0">
-                                            <Carousel
-                                            nextIcon = {null}
-                                            nextLabel = {null}
-                                            prevIcon = {null}
-                                            prevLabel = {null}
-                                            indicators = {false}
-                                            >
-                                                <Carousel.Item>
-                                                    <img 
-                                                        src="/assets/media/image-20.png" 
-                                                        alt="Slider" 
-                                                        width= "100%"
-                                                        height= "auto"
-                                                    />
-                                                </Carousel.Item>
-
-                                                <Carousel.Item>
-                                                    <img 
-                                                        src="/assets/media/image-21.png" 
-                                                        alt="Slider" 
-                                                        width= "100%"
-                                                        height= "auto"
-                                                    />
-                                                </Carousel.Item>
-
-                                                <Carousel.Item>
-                                                    <img 
-                                                        src="/assets/media/image-22.png" 
-                                                        alt="Slider" 
-                                                        width= "100%"
-                                                        height= "auto"
-                                                    />
-                                                </Carousel.Item>
-                                            </Carousel>
-                                        </div>
+                                        {
+                                            detail.gambar !== undefined && detail.gambar.length !== 0 ?
+                                                <div className="col-12 col-xl-6 m-0 p-0">
+                                                    <Carousel
+                                                        nextIcon = {
+                                                            detail.gambar.length > 1 ?  
+                                                                    <span aria-hidden="false" className="carousel-control-next-icon" />
+                                                                : 
+                                                                    null
+                                                            }
+                                                        prevIcon = {
+                                                            detail.gambar.length > 1 ?  
+                                                                    <span aria-hidden="false" className="carousel-control-prev-icon" />
+                                                                : 
+                                                                    null
+                                                            }
+                                                        nextLabel = {null}
+                                                        prevLabel = {null}
+                                                        indicators = {false}
+                                                    >
+                                                        {
+                                                            
+                                                                detail.gambar.map((el, i) => {
+                                                                    return (
+                                                                        <Carousel.Item key = {i}>
+                                                                            <div 
+                                                                                className="position-relative"
+                                                                                style={{
+                                                                                    height:"650px",
+                                                                                    width: "650px"
+                                                                                }}
+                                                                            >
+                                                                                <Image
+                                                                                    src={
+                                                                                        process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                                                                        "publikasi/images/" + el.gambar
+                                                                                    }  
+                                                                                    alt="Slider" 
+                                                                                    objectFit="cover"
+                                                                                    layout="fill"
+                                                                                />
+                                                                            </div>
+                                                                            
+                                                                        </Carousel.Item>
+                                                                    )
+                                                                })
+                                                        }
+                                                        
+                                                    
+                                                    </Carousel>
+                                                </div>
+                                            :
+                                                null
+                                        }
+                                        
 
                                         {/* Content */}
                                         <div className="col-12 col-xl-6">
                                             <div className="row">
-                                                <h5 className="text-dark font-weight-bolder ml-3 mt-3">
+                                                <h5 className="text-dark font-weight-bolder ml-5 mt-3">
                                                     { detail.judul }
                                                 </h5>
                                             </div>
                                             
                                             <div className="row d-flex justify-content-between text-muted">
                                                 <div className="d-flex align-items-center">
-                                                    <i className="ri-calendar-2-line mr-2 ml-3"></i>
+                                                    <i className="ri-calendar-2-line mr-2 ml-5"></i>
                                                     <span>
                                                         {/* Insert Publish Date Here */}
                                                         {moment(detail.tanggal_publish).format("DD MMMM YYYY")}
@@ -413,20 +441,17 @@ const Galeri = () => {
             <div className="row my-5 d-flex justify-content-center">
                 <div className="table-pagination">
                     <Pagination 
-                        // activePage = {activePage}
-                        activePage = {1}
-                        // itemsCountPerPage={pelatihan.perPage}
-                        itemsCountPerPage={9}
-                        // totalItemsCount={pelatihan.total}
-                        totalItemsCount={9}
+                        activePage = {activePage}
+                        itemsCountPerPage={galeri.perPage}
+                        totalItemsCount={galeri.total}
                         pageRangeDisplayed={3}
-                        // onChange={handlePagination}
+                        onChange={handlePagination}
                         nextPageText={">"}
                         prevPageText={"<"}
                         firstPageText={"<<"}
                         lastPageText={">>"}
-                        itemClass="page-item"
-                        linkClass="page-link"
+                        itemClass="page-item-dashboard"
+                        linkClass="page-link-dashboard"
                     />
                 </div>
             </div>

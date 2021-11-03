@@ -11,7 +11,7 @@ const Berita = () => {
             {/* BreadCrumb */}
             <div className="row my-5 mx-1 py-3 px-8 bg-white rounded-pill d-flex align-items-center border">
                 <span className="text-primary">
-                    <Link href="#">
+                    <Link href="/">
                         Beranda 
                     </Link>
                 </span>
@@ -120,7 +120,7 @@ const Berita = () => {
                     {/* End Search Tab */}
 
                     {/* Card */}
-                    <div className="row my-5 ml-1 flex-column-reverse flex-md-row">
+                    <div className="row my-15 ml-1 flex-column-reverse flex-md-row">
                         <div className="col col-md-7 col-12">
                             <div className="row d-flex justify-content-between align-items-center">
                                 <div className="d-flex align-self-center">
@@ -214,7 +214,7 @@ const Berita = () => {
                     {/* End of Card */}
 
                     {/* Card */}
-                    <div className="row my-5 ml-1 flex-column-reverse flex-md-row">
+                    <div className="row my-15 ml-1 flex-column-reverse flex-md-row">
                         <div className="col col-md-7 col-12">
                             <div className="row d-flex justify-content-between align-items-center">
                                 <div className="d-flex align-self-center">
@@ -308,7 +308,7 @@ const Berita = () => {
                     {/* End of Card */}
 
                     {/* Card */}
-                    <div className="row my-5 ml-1 flex-column-reverse flex-md-row">
+                    <div className="row my-15 ml-1 flex-column-reverse flex-md-row">
                         <div className="col col-md-7 col-12">
                             <div className="row d-flex justify-content-between align-items-center">
                                 <div className="d-flex align-self-center">
@@ -402,7 +402,7 @@ const Berita = () => {
                     {/* End of Card */}
 
                     {/* Card */}
-                    <div className="row my-5 ml-1 flex-column-reverse flex-md-row">
+                    <div className="row my-15 ml-1 flex-column-reverse flex-md-row">
                         <div className="col col-md-7 col-12">
                             <div className="row d-flex justify-content-between align-items-center">
                                 <div className="d-flex align-self-center">
@@ -496,7 +496,7 @@ const Berita = () => {
                     {/* End of Card */}
 
                     {/* Card */}
-                    <div className="row my-5 ml-1 flex-column-reverse flex-md-row">
+                    <div className="row my-15 ml-1 flex-column-reverse flex-md-row">
                         <div className="col col-md-7 col-12">
                             <div className="row d-flex justify-content-between align-items-center">
                                 <div className="d-flex align-self-center">
@@ -723,8 +723,8 @@ const Berita = () => {
                         prevPageText={"<"}
                         firstPageText={"<<"}
                         lastPageText={">>"}
-                        itemClass="page-item"
-                        linkClass="page-link"
+                        itemClass="page-item-dashboard"
+                        linkClass="page-link-dashboard"
                     />
                 </div>
                 
