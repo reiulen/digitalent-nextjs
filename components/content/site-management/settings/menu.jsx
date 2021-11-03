@@ -256,7 +256,9 @@ const Table = ({ token }) => {
                               type="button"
                               className="btn mr-4 mb-5"
                               style={{ backgroundColor: "#4299E1" }}
-                              onClick={() => handleCreate(i)}
+                              // onClick={() => handleCreate(i)}
+
+                              onClick={() => handleCreateWithoutLink(i)}
                             >
                               <IconAdd />
                             </button>
@@ -264,7 +266,8 @@ const Table = ({ token }) => {
                               type="button"
                               className="btn mr-4 mb-5 minimal-image"
                               style={{ backgroundColor: "#4299E1" }}
-                              onClick={() => handleCreateWithoutLink(i)}
+                              // onClick={() => handleCreateWithoutLink(i)}
+                              onClick={() => handleCreate(i)}
                             >
                               <Image
                                 src="/assets/icon/link.svg"
@@ -329,7 +332,6 @@ const Table = ({ token }) => {
                                 >
                                   <IconAdd />
                                 </button> */}
-
                                 <button
                               type="button"
                               className="btn mr-4 mb-5 minimal-image"
@@ -343,10 +345,6 @@ const Table = ({ token }) => {
                                 height={16}
                               />
                             </button>
-
-
-
-
                                 <button
                                   type="button"
                                   className="btn mb-5"
@@ -392,14 +390,27 @@ const Table = ({ token }) => {
                             </div> */}
                             <div className="col-md-12 col-xl-2">
                               <div className="d-flex align-items-center h-100">
-                                <button
+                                {/* <button
                                   type="button"
                                   className="btn mr-4 mb-5"
                                   style={{ backgroundColor: "#4299E1" }}
                                   onClick={() => handleCreate2(i, j)}
                                 >
                                   <IconAdd />
-                                </button>
+                                </button> */}
+                                <button
+                              type="button"
+                              className="btn mr-4 mb-5 minimal-image"
+                              style={{ backgroundColor: "#4299E1" }}
+                              onClick={() => handleCreate2(i, j)}
+                            >
+                              <Image
+                                src="/assets/icon/link.svg"
+                                alt="link"
+                                width={16}
+                                height={16}
+                              />
+                            </button>
                                 <button
                                   type="button"
                                   className="btn mb-5"
@@ -452,7 +463,7 @@ const Table = ({ token }) => {
                                   <div className="d-flex align-items-center h-100">
                                     <button
                                       type="button"
-                                      className="btn mb-5"
+                                      className="btn"
                                       style={{ backgroundColor: "#EE2D41" }}
                                       onClick={() => handleDeletechild(i, j, k)}
                                     >
