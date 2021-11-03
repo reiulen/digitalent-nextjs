@@ -40,7 +40,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
-
+      console.log(query)
       return {
         props: { session, title: "Detail Report - Pelatihan" },
       };
