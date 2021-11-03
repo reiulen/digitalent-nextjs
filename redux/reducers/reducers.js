@@ -320,6 +320,9 @@ import {
   revisiReviewReducer,
   tolakReviewReducer,
 } from "./pelatihan/admin/review.reducers";
+// =================== report pelatihan ==================
+
+import {getDataReportTrainingReducer} from './pelatihan/admin/report-training.reducers'
 // =================== rekap pelatihan ==================
 import {
   getFormBuilderReducer,
@@ -690,6 +693,9 @@ const reducer = combineReducers({
   getBerkasPendaftaran: getBerkasPendaftaranReducer,
   getFormKomitmen: getFormKomitmenReducer,
   getFormLpj: getFormLpjReducer,
+
+  // =============== rpoert oelatihan ========
+  getDataReportTraining: getDataReportTrainingReducer,
 
   // ========== pendaftaran pelatihan ========
   getFormBuilder: getFormBuilderReducer,

@@ -8,6 +8,14 @@ import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddle
 import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
 
+import { listsReportTraining } from "../../../redux/actions/pelatihan/report-training.actions";
+import {
+  dropdownAkademi,
+  dropdownTema,
+  dropdownPenyelenggara,
+} from "../../../redux/actions/pelatihan/function.actions";
+
+
 const ListReport = dynamic(
   () => import("../../../components/content/pelatihan/report/list-report"),
   {
@@ -18,11 +26,13 @@ const ListReport = dynamic(
   }
 );
 
-export default function ListReportPage() {
+export default function ListReportPage(props) {
+  const session = props.session.user.user.data;
+
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <ListReport />
+        <ListReport token={session.token} />
       </div>
     </>
   );
@@ -41,7 +51,12 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
-
+      // console.log(session.user.user.data.token)
+        await store.dispatch(listsReportTraining(session.user.user.data.token))
+        await store.dispatch(dropdownAkademi(session.user.user.data.token));
+        await store.dispatch(dropdownTema(session.user.user.data.token));
+        await store.dispatch(dropdownPenyelenggara(session.user.user.data.token));
+        
       return {
         props: { session, title: "List Report - Pelatihan" },
       };
