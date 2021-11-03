@@ -9,19 +9,19 @@ import { useDispatch, useSelector } from "react-redux";
 // import AddRegistrationStep2 from "./add-registration-step2";
 // import AddCommitmentStep3 from "./add-commitment-step3";
 
-const AddTrainingStep1 = dynamic(() => import("./add-training-step1"), {
+const EditTrainingStep1 = dynamic(() => import("./edit-training-step1"), {
   loading: function loadingNow() {
     return <LoadingSkeleton />;
   },
   ssr: false,
 });
-const AddRegistrationStep2 = dynamic(() => import("./add-registration-step2"), {
+const EditRegistrationStep2 = dynamic(() => import("./edit-registration-step2"), {
   loading: function loadingNow() {
     return <LoadingSkeleton />;
   },
   ssr: false,
 });
-const AddCommitmentStep3 = dynamic(() => import("./add-commitment-step3"), {
+const EditCommitmentStep3 = dynamic(() => import("./edit-commitment-step3"), {
   loading: function loadingNow() {
     return <LoadingSkeleton />;
   },
@@ -30,7 +30,7 @@ const AddCommitmentStep3 = dynamic(() => import("./add-commitment-step3"), {
 
 import { clearErrors } from "../../../../../redux/actions/pelatihan/training.actions";
 
-const IndexInsert = ({ token }) => {
+const IndexEdit = ({ token }) => {
   const dispatch = useDispatch();
 
   const [view, setView] = useState(1);
@@ -43,18 +43,18 @@ const IndexInsert = ({ token }) => {
     switch (view) {
       case 1:
         return (
-          <AddTrainingStep1
+          <EditTrainingStep1
             propsStep={(value) => setView(value)}
             token={token}
           />
         );
         break;
       case 2:
-        return <AddRegistrationStep2 propsStep={(value) => setView(value)} />;
+        return <EditRegistrationStep2 token={token} propsStep={(value) => setView(value)} />;
         break;
       case 3:
         return (
-          <AddCommitmentStep3
+          <EditCommitmentStep3
             propsStep={(value) => setView(value)}
             token={token}
           />
@@ -62,7 +62,7 @@ const IndexInsert = ({ token }) => {
         break;
       default:
         return (
-          <AddTrainingStep1
+          <EditTrainingStep1
             propsStep={(value) => setView(value)}
             token={token}
           />
@@ -105,13 +105,13 @@ const IndexInsert = ({ token }) => {
       )}
       <StepInputPelatihan
         step={view}
-        title1="Tambah Pelatihan"
-        title2="Tambah Form Pendaftaran"
-        title3="Tambah Form Komitmen"
+        title1="Edit Pelatihan"
+        title2="Edit Form Pendaftaran"
+        title3="Edit Form Komitmen"
       />
       <div className="col-lg-12 order-1 px-0">{stepView()}</div>
     </PageWrapper>
   );
 };
 
-export default IndexInsert;
+export default IndexEdit;
