@@ -159,12 +159,12 @@ const DetailDataKerjasama = ({ token }) => {
     <PageWrapper>
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
         {deleteBar ? (
-        <AlertBar text="Berhasil menghapus data" className="alert-light-danger" onClick={() => onNewReset()}/>
+        <AlertBar text="Berhasil menghapus data" className="alert-light-success" onClick={() => onNewReset()}/>
       ) : (
         ""
       )}
         {update ? (
-        <AlertBar text="Berhasil mengubah data" className="alert-light-warning" onClick={() => onNewReset()}/>
+        <AlertBar text="Berhasil mengubah data" className="alert-light-success" onClick={() => onNewReset()}/>
       ) : (
         ""
       )}
