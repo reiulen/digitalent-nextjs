@@ -38,15 +38,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
-      // const middleware = middlewareAuthAdminSession(session);
-      // if (!middleware.status) {
-      //   return {
-      //     redirect: {
-      //       destination: middleware.redirect,
-      //       permanent: false,
-      //     },
-      //   };
-      // }
+
       if (session) {
         await store.dispatch(
           getDataPribadi(session?.user.user.data.user.token)
@@ -58,10 +50,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
       await store.dispatch(getTemaByAkademi());
 
       await store.dispatch(getAllPublikasi());
-
-      // await store.dispatch (
-      //   getPelatihanByTema()
-      // )
 
       return {
         props: {

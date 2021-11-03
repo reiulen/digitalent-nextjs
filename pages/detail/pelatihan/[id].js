@@ -6,11 +6,11 @@ import { getDataPribadi } from "../../../redux/actions/pelatihan/function.action
 
 const DetailPelatihan = dynamic(() =>
   import(
-    "../../../user-component/content/detail/kategori/pelatihan/detail-pelatihan"
+    "../../../user-component/content/detail/kategori/pelatihan/detail-pelatihan-new"
   )
 );
 const Layout = dynamic(() =>
-  import("../../../user-component/content/wrapper/layout.wrapper")
+  import("../../../components/wrapper/beranda.wrapper")
 );
 
 export default function DetailKategori(props) {
@@ -20,7 +20,7 @@ export default function DetailKategori(props) {
     session = props.session.user.user.data.user;
   }
   return (
-    <div>
+    <div style={{ backgroundColor: "white" }}>
       <Layout title="Detail Pelatihan" session={session}>
         <DetailPelatihan session={session} />
       </Layout>
