@@ -19,7 +19,7 @@ const Tambah = ({ token }) => {
   const [nameReference, setNameReference] = useState(
     detailDataReference.dataReference.name
   );
-  const [number, setNumber] = useState(1);
+  // const [number, setNumber] = useState(1);
   const [status, setStatus] = useState(
     detailDataReference.dataReference.status
   );
@@ -38,14 +38,14 @@ const Tambah = ({ token }) => {
     let _temp = [...values];
     let _tempValue = [...formInput];
     _temp.push({
-      name: `Value ${number + 1}`,
+      // name: `Value ${number + 1}`,
       value: "",
     });
     _tempValue.push({
       value_old: "",
       value: "",
     });
-    setNumber(number + 1);
+    // setNumber(number + 1);
     setValues(_temp);
     setFormInput(_tempValue);
   };
@@ -150,7 +150,7 @@ const Tambah = ({ token }) => {
               </div>
               <div className="form-group">
                 <label>Status</label>
-                {status == 1 ? (
+                {detailDataReference.dataReference.status == 1 ? (
                   <select
                     onChange={(e) => setStatus(e.target.value)}
                     className="form-control"
@@ -173,7 +173,8 @@ const Tambah = ({ token }) => {
                 return (
                   <div className="form-group" key={index}>
                     <label htmlFor="staticEmail" className="col-form-label">
-                      {items.name}
+                      Value {index+1} 
+                      {/* {items.name} */}
                     </label>
                     <div className="position-relative d-flex align-items-center">
                       <input

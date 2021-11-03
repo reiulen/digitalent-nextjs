@@ -7,7 +7,7 @@
   );
 }
 
-@media (min-width: 425px) {
+@media (min-width: 375px) {
   .textCardRight {
     display: none;
   }

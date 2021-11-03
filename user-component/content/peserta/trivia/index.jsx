@@ -30,7 +30,7 @@ const TestSubstansi = () => {
     <>
       <PesertaWrapper>
         <Card className={styles.cardBase}>
-          <h1 className={styles.title}>Panduan Survey</h1>
+          <h1 className={styles.title}>Panduan TRIVIA</h1>
           <Card className={styles.cardPanduan}>
             {" "}
             <table>
@@ -77,7 +77,7 @@ const TestSubstansi = () => {
           >
             <Button className={styles.btnStart} onClick={handleModal}>
               <div className="d-flex flex-row">
-                <div className="p-2">Isi Survey</div>
+                <div className="p-2">Kerjakan TRIVIA</div>
                 <div className="p-2">
                   <i className="ri-arrow-right-s-line"></i>
                 </div>
@@ -90,19 +90,19 @@ const TestSubstansi = () => {
       {/* MODAL KONFIRMASI */}
       <Modal show={show} onHide={closeModal} size="lg">
         <ModalHeader className={styles.headerKonfirmasi}>
-          Konfirmasi Survey
+          Konfirmasi TRIVIA
           <button type="button" className="close" onClick={closeModal}>
             <i className="ri-close-fill" style={{ fontSize: "25px" }}></i>
           </button>
         </ModalHeader>
         <ModalBody className={styles.bodyKonfirmasi}>
-          Peserta wajib membaca panduan Survey dengan seksama.
+          Peserta wajib membaca panduan TRIVIA dengan seksama.
           <br /> Dengan ini saya menyatakan sudah membaca semua ketentuan yang
-          berlaku, siap <br /> mengikuti Survey, dan tidak melakukan kecurangan
+          berlaku, siap <br /> mengikuti TRIVIA, dan tidak melakukan kecurangan
           dalam bentuk apapun.
           <br />
-          <br /> Jika sudah siap, silahkan klik tombol “Mulai Survey” untuk
-          memulai Survey.
+          <br /> Jika sudah siap, silahkan klik tombol “Mulai TRIVIA” untuk
+          memulai TRIVIA.
           <br />
           <br />
           <div style={{ textAlign: "right" }}>
@@ -114,7 +114,7 @@ const TestSubstansi = () => {
               Batal
             </Button>
             <Button onClick={handlePage} className={styles.btnMulai}>
-              Mulai Survey
+              Mulai TRIVIA
             </Button>
           </div>
         </ModalBody>

@@ -10,14 +10,16 @@ import { getDataPribadi } from "../../../redux/actions/pelatihan/function.action
 import { getDashboardPeserta } from "../../../redux/actions/pelatihan/dashboard-peserta.actions";
 import { getPelatihan } from "../../../redux/actions/pelatihan/register-training.actions";
 import { middlewareAuthPesertaSession } from "../../../utils/middleware/authMiddleware";
-import { getAllAkademi } from "../../../redux/actions/beranda/beranda.actions";
 
-const Done = dynamic(() => import("../../../user-component/content/done"), {
-  loading: function loadingNow() {
-    return <LoadingSkeleton />;
-  },
-  ssr: false,
-});
+const DoneSurvey = dynamic(
+  () => import("../../../user-component/content/done-survey/index"),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
 
 const Layout = dynamic(() =>
   import("../../../user-component/components/template/Layout.component")
@@ -42,8 +44,8 @@ export default function SubvitDone(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <Layout title="Selesai Test Substansi" session={session}>
-          <Done />
+        <Layout title="Selesai Survey - Subvit" session={session}>
+          <DoneSurvey />
         </Layout>
       </div>
     </>
@@ -69,10 +71,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
       await store.dispatch(
         getDashboardPeserta(session?.user.user.data.user.token)
       );
-      await store.dispatch(getAllAkademi());
 
       return {
-        props: { data: "auth", session, title: "Selesai Test Substansi" },
+        props: { data: "auth", session, title: "Selesai Survey" },
       };
     }
 );
