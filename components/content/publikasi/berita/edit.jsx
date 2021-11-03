@@ -342,18 +342,6 @@ const EditBerita = ({ token, idUser }) => {
                     </div>
                     : ""
                 }
-                {/* {success ?
-                    <div className="alert alert-custom alert-light-success fade show mb-5" role="alert">
-                        <div className="alert-icon"><i className="flaticon2-checkmark"></i></div>
-                        <div className="alert-text">{success}</div>
-                        <div className="alert-close">
-                            <button type="button" className="close" data-dismiss="alert" aria-label="Close" onClick={onNewReset} >
-                                <span aria-hidden="true"><i className="ki ki-close"></i></span>
-                            </button>
-                        </div>
-                    </div>
-                    : ''
-                } */}
 
                 <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
                     {
@@ -483,30 +471,6 @@ const EditBerita = ({ token, idUser }) => {
 
                                 </div>
 
-                                {/* <div className="form-group row">
-                                    <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Upload Thumbnail</label>
-                                    <div className="col-sm-1">
-                                        <figure className='avatar item-rtl' data-toggle="modal" data-target="#exampleModalCenter">
-                                            <Image
-                                                loader={() => gambarPreview}
-                                                src={gambarPreview}
-                                                alt='image'
-                                                width={60}
-                                                height={60}
-                                            />
-                                        </figure>
-                                    </div>
-                                    <div className="col-sm-9">
-                                        <div className="input-group">
-                                            <div className="custom-file">
-                                                <input type="file" name='gambar' className="custom-file-input" id="inputGroupFile04" onChange={onChangeGambar} accept="image/*"/>
-                                                <label className="custom-file-label" htmlFor="inputGroupFile04">Pilih file</label>
-                                            </div>
-                                        </div>
-                                        <small>{gambarName}</small>
-                                    </div>
-                                </div> */}
-
 
                                 <div className="form-group">
                                     <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Akademi</label>
@@ -518,13 +482,9 @@ const EditBerita = ({ token, idUser }) => {
                                             ) : (
                                                 dataAkademi && dataAkademi.data && dataAkademi.data.map((row) => {
                                                     return (
-                                                        // row.jenis_kategori == "Berita" ?
                                                             <option key={row.value} value={row.value} selected={akademi_value === row.value ? true : false}>
                                                                 {row.label}
                                                             </option>
-                                                            // :
-                                                            // null
-                                                        // <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>{row.jenis_kategori}</option>
                                                     )
                                                 })
                                             )}
@@ -550,7 +510,6 @@ const EditBerita = ({ token, idUser }) => {
                                                             </option>
                                                             :
                                                             null
-                                                        // <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>{row.jenis_kategori}</option>
                                                     )
                                                 })
                                             )}
