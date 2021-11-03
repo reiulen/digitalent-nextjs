@@ -27,6 +27,7 @@ import Cookies from "js-cookie";
 import Logo from "/public/assets/logo/mainlogo.png";
 import Simonas from "/public/assets/logo/image 10.png";
 import Beasiswa from "/public/assets/logo/Logo besiswa fix  3.png";
+import { getAllAkademi } from "../../../redux/actions/beranda/beranda.actions";
 const Sidebar = dynamic(
   () => import("../../../user-component/components/template/Sidebar.component"),
   {
@@ -38,10 +39,19 @@ const Sidebar = dynamic(
 );
 
 const Navigationbar = ({ session }) => {
+  const dispatch = useDispatch();
   const [isShowDropdown, setIsShowDropdown] = useState(false);
+  // const [akademi, setAkademi] = useState([]);
   const { error: errorDataPribadi, dataPribadi } = useSelector(
     (state) => state.getDataPribadi
   );
+  const { error: errorAkademi, akademi } = useSelector(
+    (state) => state.allAkademi
+  );
+
+  useEffect(() => {
+    console.log(akademi, "tes akademi");
+  }, [akademi]);
 
   const handlerLogout = () => {
     Cookies.remove("id_tema");
