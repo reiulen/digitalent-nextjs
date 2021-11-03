@@ -131,7 +131,7 @@ const Header = () => {
                         {router.pathname.includes("substansi")
                           ? "Test Substansi"
                           : router.pathname.includes("survey")
-                          ? "Survey"
+                          ? "Survey & LPJ"
                           : router.pathname.includes("trivia")
                           ? "Trivia"
                           : router.pathname.includes("test-subtansi")
@@ -261,7 +261,7 @@ const Header = () => {
                     {router.pathname.includes("substansi")
                       ? "Test Substansi"
                       : router.pathname.includes("survey")
-                      ? "Survey"
+                      ? "Survey & LPJ"
                       : router.pathname.includes("trivia")
                       ? "Trivia"
                       : router.pathname.includes("test-subtansi")

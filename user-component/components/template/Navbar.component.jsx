@@ -166,10 +166,11 @@ const Navigationbar = ({ session }) => {
                         Artikel
                       </a>
                     </Link>
-                    
-                    <a className="dropdown-item navdropdown-child" href="#">
-                      Galeri
-                    </a>
+                    <Link href={`/galeri`}>
+                      <a className="dropdown-item navdropdown-child">
+                        Galeri
+                      </a>
+                    </Link>
                     <a className="dropdown-item navdropdown-child" href="#">
                       Video
                     </a>
