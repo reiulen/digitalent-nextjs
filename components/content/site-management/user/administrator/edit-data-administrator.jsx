@@ -48,8 +48,8 @@ const TambahApi = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3
-              className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 mb-5 mt-5"
-              style={{ fontSize: "24px" }}
+              className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 mb-5 mt-5 titles-1"
+      
             >
               Edit Data Administrator
             </h3>
@@ -63,9 +63,7 @@ const TambahApi = ({ token }) => {
                   className="form-control"
                   placeholder="Placeholder"
                 />
-                <span className="form-text text-muted">
-                  Please enter your full name
-                </span>
+                
               </div>
               <div className="form-group">
                 <label>Email</label>
@@ -74,18 +72,14 @@ const TambahApi = ({ token }) => {
                   className="form-control"
                   placeholder="Placeholder"
                 />
-                <span className="form-text text-muted">
-                  Please enter your full name
-                </span>
+                
               </div>
               <div className="form-group">
                 <label htmlFor="exampleSelect1">Status</label>
                 <select className="form-control" id="exampleSelect1">
                   <option>Placeholder</option>
                 </select>
-                <span className="form-text text-muted">
-                  Please enter your full name
-                </span>
+                
               </div>
               <div className="form-group">
                 <label>Password</label>
@@ -94,9 +88,7 @@ const TambahApi = ({ token }) => {
                   className="form-control"
                   placeholder="Placeholder"
                 />
-                <span className="form-text text-muted">
-                  Please enter your full name
-                </span>
+                
               </div>
               <div className="form-group">
                 <label>Konfirmasi Password</label>
@@ -105,32 +97,25 @@ const TambahApi = ({ token }) => {
                   className="form-control"
                   placeholder="Placeholder"
                 />
-                <span className="form-text text-muted">
-                  Please enter your full name
-                </span>
+                
               </div>
               <div className="form-group">
                 <label htmlFor="exampleSelect1">Role</label>
                 <select className="form-control" id="exampleSelect1">
                   <option>Placeholder</option>
                 </select>
-                <span className="form-text text-muted">
-                  Please enter your full name
-                </span>
+                
               </div>
               <div className="form-group">
                 <label htmlFor="exampleSelect1">Satuan Kerja</label>
                 <select className="form-control" id="exampleSelect1">
                   <option>Placeholder</option>
                 </select>
-                <span className="form-text text-muted">
-                  Please enter your full name
-                </span>
+                
               </div>{" "}
               {/* hak akses disini */}
               <h3
-                className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 mb-5 mt-5"
-                style={{ fontSize: "24px" }}
+                className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 mb-5 mt-5 titles-1"
               >
                 Hak Akses Pelatihan
               </h3>
@@ -174,9 +159,7 @@ const TambahApi = ({ token }) => {
                     <select className="form-control" id="exampleSelect1">
                       <option>Placeholder</option>
                     </select>
-                    <span className="form-text text-muted">
-                      Please enter your full name
-                    </span>
+                    
                   </div>
                 </div>
                 <div
@@ -331,7 +314,7 @@ const TambahApi = ({ token }) => {
                 </div>
               </div>
             </form>
-            <div className="form-group row">
+            <div className="form-group row mt-8">
               <div className="col-sm-12 d-flex justify-content-end">
                 <Link href="/site-management/user/administrator" passHref>
                   <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
