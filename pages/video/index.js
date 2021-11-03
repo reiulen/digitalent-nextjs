@@ -2,8 +2,8 @@ import { getSession } from "next-auth/client"
 import dynamic from "next/dynamic";
 import { wrapper } from "../../redux/store";
 
-import { getAllVideo } from "../../redux/actions/publikasi/video.actions"
-import { getAllKategori } from "../../redux/actions/publikasi/kategori.actions"
+import { getAllVideo } from "../../redux/actions/beranda/video-content.actions"
+import { getAllKategori } from "../../redux/actions/beranda/kategori-content.actions"
 import { getDataPribadi } from "../../redux/actions/pelatihan/function.actions"
 
 const VideoPage = dynamic(
@@ -14,11 +14,16 @@ const Layout = dynamic(
 )
 
 export default function VideoDetail(props) {
-    const session = props.session.user.user.data
+    let session = null;
+    if (props.session) {
+        // session = props.session.user.user.data.user;
+        session = props.session.user.user.data.Token
+    }
+    // console.log("session :", session.Token)
     return (
         <div>
-            <Layout title="Video" token={session.Token}>
-                <VideoPage token={session.Token} />
+            <Layout title="Video" token={session}>
+                <VideoPage token={session} />
             </Layout>
         </div>
     )
@@ -29,7 +34,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         async ({ query, req }) => {
             const session = await getSession({ req })
 
-            await store.dispatch(getDataPribadi(session?.user.user.data.user.token));
+            await store.dispatch(getDataPribadi());
             await store.dispatch(
                 getAllVideo(
                     query.page,
@@ -38,10 +43,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
                     query.publish,
                     query.startdate,
                     query.enddate,
-                    session?.user.user.data.user.token
+                    // session?.user.user.data.user.token
                 )
             )
-            await store.dispatch(getAllKategori(session?.user.user.data.user.token));
+            await store.dispatch(getAllKategori());
             return {
                 props: {
                     session,

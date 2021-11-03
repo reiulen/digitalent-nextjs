@@ -23,6 +23,7 @@ const UbahApi = ({ token }) => {
   let selectRefListField = null;
 
   const detailApi = useSelector((state) => state.detailApi);
+  console.log("detailApi",detailApi)
   const [optionListField, setOptionListField] = useState([]);
   const listApi = useSelector(state => state.listApi)
   const [optionListApi, setOptionListApi] = useState(listApi.listApi.map((items)=>{
@@ -39,9 +40,12 @@ const [defaultValueListField, setDefaultValueListField] = useState(detailApi.api
 }))
 
 const [valueField, setValueField] = useState([])
+console.log("valueField",valueField)
   const [from, setFrom] = useState(detailApi.apies.data.from_date);
   const [to, setTo] = useState(detailApi.apies.data.to_date);
   const [field, setField] = useState(detailApi.apies.data.fields);
+
+  console.log("field",field)
 
   const onChangePeriodeDateStart = (date) => {
     setFrom(moment(date).format("YYYY-MM-DD"));
@@ -128,7 +132,7 @@ const [valueField, setValueField] = useState([])
             from_date: from,
             to_date: to,
             status: status,
-            fields: !valueField ? field : valueField  ,
+            fields: valueField.length === 0 ? field : valueField  ,
           };
 
           try {
@@ -167,8 +171,7 @@ const [valueField, setValueField] = useState([])
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3
-              className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 mb-5 mt-5"
-              style={{ fontSize: "24px" }}
+              className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 mb-5 mt-5 titles-1"
             >
               Ubah API
             </h3>
@@ -196,20 +199,20 @@ const [valueField, setValueField] = useState([])
                 />
               </div>
 
-              {status === "Aktif" ? (
+              {status == "1" ? (
                 <div className="form-group">
                   <label>Status</label>
                   <select onChange={(e)=>setStatus(e.target.value)} className="form-control">
-                    <option value="Aktif">Aktif</option>
-                    <option value="Nonaktif">Nonaktif</option>
+                    <option value="1">Aktif</option>
+                    <option value="0">Nonaktif</option>
                   </select>
                 </div>
               ) : (
                 <div className="form-group">
                   <label>Status</label>
                   <select onChange={(e)=>setStatus(e.target.value)} className="form-control">
-                    <option value="Nonaktif">Nonaktif</option>
-                    <option value="Aktif">Aktif</option>
+                    <option value="0">Nonaktif</option>
+                    <option value="1">Aktif</option>
                   </select>
                 </div>
               )}

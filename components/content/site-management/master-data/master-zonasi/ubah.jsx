@@ -185,14 +185,13 @@ const Tambah = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3
-              className="card-title font-weight-bolder text-dark"
-              style={{ fontSize: "24px" }}
+              className="card-title font-weight-bolder text-dark titles-1"
             >
               Ubah Zonasi
             </h3>
           </div>
           <form>
-            <div className="card-body">
+            <div className="card-body pt-0">
               <div className="form-group">
                 <label>Nama Zonasi</label>
                 <input
@@ -212,16 +211,16 @@ const Tambah = ({ token }) => {
                     className="form-control"
                     onChange={(e) => setStatus(e.target.value)}
                   >
-                    <option value="1">Aktif</option>
                     <option value="0">Tidak aktif</option>
+                    <option value="1">Aktif</option>
                   </select>
                 ) : (
                   <select
                     className="form-control"
                     onChange={(e) => setStatus(e.target.value)}
                   >
-                    <option value="0">Tidak aktif</option>
                     <option value="1">Aktif</option>
+                    <option value="0">Tidak aktif</option>
                   </select>
                 )}
               </div>

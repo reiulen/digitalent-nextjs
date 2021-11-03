@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import Pagination from "react-js-pagination";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import { useDispatch, useSelector } from "react-redux";
 import LoadingTable from "../../../LoadingTable";
 import IconEye from "../../../assets/icon/Eye";
 import IconPencil from "../../../assets/icon/Pencil";
-import IconDelete from "../../../assets/icon/Delete";
 import IconAdd from "../../../assets/icon/Add";
 import IconSearch from "../../../assets/icon/Search";
-import AlertBar from "../../partnership/components/BarAlert";
 
 import {
   getAllDataReference,
@@ -21,7 +18,6 @@ import {
 
 const Table = ({ token }) => {
   let dispatch = useDispatch();
-  const router = useRouter();
   const allDataReference = useSelector((state) => state.allDataReference);
   const [valueSearch, setValueSearch] = useState("");
   const handleChangeValueSearch = (value) => {
@@ -83,8 +79,7 @@ const Table = ({ token }) => {
             <div className="table-filter">
               <div className="row align-items-center">
                 <div className="col-lg-12 col-xl-12">
-                  <form
-                    onSubmit={handleSubmit}
+                  <div
                     className="d-flex align-items-center w-100"
                   >
                     <div className="row w-100">
@@ -104,7 +99,8 @@ const Table = ({ token }) => {
                             }
                           />
                           <button
-                            type="submit"
+                            type="button"
+                            onClick={(e)=>handleSubmit(e)}
                             className="btn bg-blue-primary text-white right-center-absolute"
                             style={{
                               borderTopLeftRadius: "0",
@@ -116,7 +112,7 @@ const Table = ({ token }) => {
                         </div>
                       </div>
                     </div>
-                  </form>
+                  </div>
                 </div>
               </div>
             </div>
@@ -212,21 +208,6 @@ const Table = ({ token }) => {
                                         </div>
                                       </a>
                                     </Link>
-
-                                    {/* 
-                                  <button
-                                    className="btn btn-link-action bg-blue-secondary ml-3 position-relative btn-delete"
-                                    onClick={() =>
-                                      router.push(
-                                        `/site-management/reference/detail-refrence`
-                                      )
-                                    }
-                                  >
-                                    <IconEye width="16" height="16" />
-                                    <div className="text-hover-show-hapus">
-                                      Detail
-                                    </div>
-                                  </button> */}
                                   </div>
                                 </td>
                               </tr>

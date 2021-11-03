@@ -178,8 +178,25 @@
   /* or 22px */
 
   text-align: center;
-  margin-top: 30px;
+
   /* Brand/Primary/Primary */
 
   color: #007cff;
+}
+.btnNext {
+  background: #007cff;
+  border-radius: 30px;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 160%;
+  /* or 22px */
+  margin-left: 30px;
+  text-align: center;
+  letter-spacing: 0.015em;
+
+  /* Neutral/White */
+
+  color: #ffffff;
 }
