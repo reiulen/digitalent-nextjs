@@ -229,7 +229,10 @@ const DetailAkademi = ({ session }) => {
   return (
     <>
       <Container fluid className="px-10 py-5">
-        <SubHeaderComponent />
+        {console.log(router.asPath)}
+        <SubHeaderComponent
+          data={[{ link: router.asPath, name: akademi.name }]}
+        />
         <section className={`card-akademi`}>
           <Card className="rounded-xl">
             <Card.Body>
@@ -298,7 +301,6 @@ const DetailAkademi = ({ session }) => {
           <Row>
             <Col md={4} className="mb-5">
               <TrainingReminder />
-
               <div className="filter-content border p-10">
                 <div className="d-flex align-items-center mb-3 filter-title">
                   <div>
@@ -344,13 +346,6 @@ const DetailAkademi = ({ session }) => {
                       <option value="3">GTA</option>
                     </Form.Select>
                   </Form.Group>
-                  <Form.Group className="mb-5 w-100">
-                    <Form.Label className="fz-16">Kata Kunci</Form.Label>
-                    <TagsInput
-                      className="bg-white mb-5 w-100 rounded-xl"
-                      placeHolder="Isi Tag & Enter"
-                    />
-                  </Form.Group>
                   <Form.Group className="mb-5 w-100 rounded-xl mr-4">
                     <Form.Label className="fz-16">
                       Tanggal Mulai Pelaksanaan
@@ -389,7 +384,6 @@ const DetailAkademi = ({ session }) => {
               </div>
             </Col>
             <Col md={8} className="mb-5">
-              {console.log(showDetail.filter((e) => e === true).length)}
               <Row>
                 {loadingPelatihan ? (
                   <>
@@ -415,7 +409,7 @@ const DetailAkademi = ({ session }) => {
                               }`}
                               key={i}
                             >
-                              <Card className="h-100 shadow">
+                              <Card className="h-100 shadow-sm">
                                 {el.status !== "Open" ? (
                                   <Button
                                     variant="transparent"
@@ -423,17 +417,11 @@ const DetailAkademi = ({ session }) => {
                                     className={`p-0 mb-0 ${style.btn_disabled_tema}`}
                                   >
                                     <div
-                                      className=""
-                                      style={
-                                        show[i] !== true && el.status === "Open"
-                                          ? {
-                                              filter: "brightness(1)",
-                                            }
-                                          : {
-                                              filter: "brightness(0.8)",
-                                              transition: "0.5s ease",
-                                            }
-                                      }
+                                      style={{
+                                        width: "100%",
+                                        height: "180px",
+                                        position: "relative",
+                                      }}
                                     >
                                       <Image
                                         className={`${style.image_dashboard}`}
@@ -536,7 +524,7 @@ const DetailAkademi = ({ session }) => {
                                           )}
                                         </div>
                                       </div>
-                                      <div className="d-flex align-items-start flex-wrap flex-column">
+                                      <div className="d-flex flex-wrap flex-column">
                                         <p
                                           className={`my-0 ${style.title_card}`}
                                         >
@@ -547,6 +535,7 @@ const DetailAkademi = ({ session }) => {
                                             fontSize: "14px",
                                             color: "#6C6C6C",
                                           }}
+                                          className=" text-left"
                                         >
                                           {el.akademi}
                                         </p>
@@ -590,9 +579,15 @@ const DetailAkademi = ({ session }) => {
                                         show[i] !== true && el.status === "Open"
                                           ? {
                                               filter: "brightness(1)",
+                                              width: "100%",
+                                              height: "180px",
+                                              position: "relative",
                                             }
                                           : {
                                               filter: "brightness(0.8)",
+                                              width: "100%",
+                                              height: "180px",
+                                              position: "relative",
                                             }
                                       }
                                     >
@@ -605,8 +600,7 @@ const DetailAkademi = ({ session }) => {
                                               el.gambar) ||
                                           "/assets/media/default-card.png"
                                         }
-                                        width={410}
-                                        height={180}
+                                        layout="fill"
                                         objectFit="cover"
                                         alt="Image Thumbnail"
                                       />
