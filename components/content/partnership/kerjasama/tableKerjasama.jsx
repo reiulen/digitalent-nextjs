@@ -539,7 +539,7 @@ const Table = ({ token }) => {
                         allMK.m_cooporation.data.list_cooperations.map(
                           (items, index) => {
                             return (
-                              <tr key={index}>
+                              <tr key={index} style={{backgroundColor:items.visit == 0 ?"#f8f8ff":"inherit"}}>
                                 <td className="text-left align-middle">
                                   {allMK.page === 1
                                     ? index + 1
