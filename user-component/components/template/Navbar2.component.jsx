@@ -1,5 +1,5 @@
 import React, { useEffect, useState, Fragment } from "react";
-import { useRouter } from "next/router";
+import router, { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
 import { signOut } from "next-auth/client";
@@ -49,7 +49,7 @@ const Navigationbar = ({ session }) => {
     signOut();
   };
 
-  const [close, setClose] = useState(false);
+  const [isNavOpen, setIsNavOpen] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
 
   return (
@@ -74,7 +74,7 @@ const Navigationbar = ({ session }) => {
             />
           </Navbar.Brand>
           <div className="d-flex d-lg-none justify-content-end align-items-center">
-            {!close && session && session.roles[0] === "user" && (
+            {!isNavOpen && session && session.roles[0] === "user" && (
               <div className="row m-3">
                 <a
                   className="col-3 col-xl-4 text-center"
@@ -96,11 +96,11 @@ const Navigationbar = ({ session }) => {
             <Navbar.Toggle
               aria-controls="basic-navbar-nav"
               onClick={(e) => {
-                setClose(!close);
+                setIsNavOpen(!isNavOpen);
               }}
               className="p-3"
             >
-              {close ? (
+              {isNavOpen ? (
                 <i class="ri-close-line"></i>
               ) : (
                 <i class="ri-menu-line"></i>
@@ -179,10 +179,10 @@ const Navigationbar = ({ session }) => {
                     </Link>
                   </div>
                 </div>
-                <div className="btn-group dropright ">
+                <div className="btn-group dropright">
                   <button
                     type="button"
-                    className="btn btn-white-navbar dropdown-toggle w-100"
+                    className="btn btn-white-navbar dropdown-toggle"
                     data-toggle="dropdown"
                     aria-haspopup="true"
                     aria-expanded="false"
@@ -256,7 +256,7 @@ const Navigationbar = ({ session }) => {
             </div>
           </Nav>
           {/* Search Bar */}
-          <Form className="w-100 my-2 mx-1 row d-lg-none d-block">
+          <Form className="w-100 my-2 mx-1 row ">
             <div className="position-relative w-100 d-none d-lg-block">
               <FormControl
                 type="search"
@@ -304,11 +304,15 @@ const Navigationbar = ({ session }) => {
                 <div
                   className="wrap-accouts w-100 h-lg-40px"
                   style={{ borderRadius: "20px" }}
-                  onClick={() =>
-                    setIsShowDropdown(isShowDropdown ? false : true)
-                  }
+                  onClick={() => {
+                    setIsShowDropdown(isShowDropdown ? false : true);
+                    if (!isNavOpen) {
+                      return;
+                    } else {
+                      router.push("/peserta/profile");
+                    }
+                  }}
                 >
-                  {/* <div className="dot-accouts"></div> */}
                   <Image
                     className="rounded-circle "
                     src={`${
@@ -323,13 +327,7 @@ const Navigationbar = ({ session }) => {
                   <div className="titles-accounts w-100 d-flex justify-content-between align-items-center">
                     {dataPribadi?.name || "-"}
                     <div className="position-absolute right-0 ">
-                      {/* <IconArrow
-                          fill="#6c6c6c"
-                          width="14"
-                          height="11"
-                          style={{ transform: "rotate(90deg)" }}
-                        /> */}
-                      <i className="ri-arrow-down-s-line mr-lg-2 mr-5"></i>
+                      <i className="ri-arrow-down-s-line mr-lg-2 mr-5 d-lg-block d-none"></i>
                     </div>
                   </div>
                 </div>
