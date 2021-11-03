@@ -1,0 +1,11 @@
+.card-thumbnail {
+    filter: brightness(100%);
+    /* background-image: linear-gradient(white, black); */
+}
+
+.card_thumbnail :hover {
+    filter: brightness(70%);
+    background-image: none;
+    background-color: linear-gradient(white, black);
+}
+
