@@ -61,7 +61,7 @@ const GeneralPage = ({ token }) => {
   const submit = (e) => {
     e.preventDefault();
     if (description === "") {
-      Swal.fire("Gagal simpan", "Form caption tidak boleh kosong", "error");
+      Swal.fire("Gagal simpan", "Form description tidak boleh kosong", "error");
     } else {
       Swal.fire({
         title: "Apakah anda yakin simpan ?",
