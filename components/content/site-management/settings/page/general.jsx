@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
 import PageWrapper from "../../../../wrapper/page.wrapper";
 import IconAdd from "../../../../assets/icon/Add";
 import Image from "next/image";
