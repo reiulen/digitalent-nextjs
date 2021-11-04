@@ -2,16 +2,90 @@ import React, { useEffect, useState } from "react"
 import Link from "next/link";
 import Image from "next/image";
 import Pagination from "react-js-pagination";
+import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
+import { getAllBerandaArtikel } from "../../../redux/actions/beranda/artikel.actions"
+import PulseLoaderRender from "../../components/loader/PulseLoader";
 
-const Artikel = () => {
+const Artikel = ({query}) => {
+    const dispatch = useDispatch();
+    const router = useRouter();
+
+    const { artikel, loading: loadingArtikel } = useSelector((state) => state.allBerandaArtikel)
+    const { kategori } = useSelector((state) => state.kategoriBerandaArtikel)
+
+    const titleToTrim = 20
+    const descToTrim = 100
+
+    const [ activeTitle, setActiveTitle ] = useState("Ada Apa di Digitalent")
+    const [ kategoriArtikel, setKategoriArtikel ] = useState ("")
+    const [ keyword, setKeyword ] = useState ("")
+    const [ activePage, setActivePage ] = useState(1)
+    const [ limit, setLimit ] = useState("")
+    const [ filterPublish, setFilterPublish ] = useState("")
+    const [ sort, setSort ] = useState("")
+    const [ category_id, setCategoryId ] = useState("")
+    const [ category_name, setCategoryName ] = useState("")
+    const [ category_academy, setCategoryAcademy ] = useState("")
+    const [ tag, setTag ] = useState("")
+
+    const handleFilterKategori = (str) => {
+        // setKategoriArtikel(str)
+
+        // if(str !== ""){
+        //     router.push ( `${router.pathname}?page=1&category_name=${str}`)
+        // } else {
+        //     router.push ( `${router.pathname}?page=1`)
+        // }
+    }
+
+    const handleFilterKeyword = () => {
+        dispatch (getAllBerandaArtikel(query.page = activePage, query.keyword = keyword))
+
+        // router.push ( `${router.pathname}?page=1&keyword=${keyword}`)
+
+        // if (keyword !== "" || keyword !== " " || keyword !== null){
+        //     // router.push ( `${router.pathname}?page=1&keyword=${keyword}`)
+        //     dispatch (getAllBerandaArtikel(activePage, keyword))
+        // } else {
+        //     // router.push ( `${router.pathname}?page=1`)
+        // }
+    }
+
+    const handleTitleToTrim = (str) => {
+        let result = null
+        
+        if (str.length > titleToTrim){
+            result = str.slice(0, titleToTrim) + "..."
+
+        } else {
+            result = str
+        }
+
+        return result
+    }
+
+    const handleDescToTrim = (str) => {
+        let result = null
+        
+        if (str.length > descToTrim){
+            result = str.slice(0, descToTrim) + "..."
+
+        } else {
+            result = str
+        }
+        // console.log (result)
+        return result
+    }
+
+
     return (
         <div>
             {/* BreadCrumb */}
             <div className="row my-5 mx-1 py-3 px-8 bg-white rounded-pill d-flex align-items-center border">
                 <span className="text-primary">
-                    <Link href="#">
+                    <Link href="/">
                         Beranda 
                     </Link>
                 </span>
@@ -27,63 +101,82 @@ const Artikel = () => {
             {/* Header */}
             <div className="col-12 mt-5">
                 <h1 className="fw-700">
-                    Ada Apa di Digitalent
+                    {activeTitle}
                 </h1>
-                <div className="mt-3">
-                    Cerita mitra, berita seru, dan Artikel terbaru. Baca semua artikel soal Digitalent di sini.
-                </div>
+
+                {
+                    activeTitle == "Ada Apa di Digitalent" ?
+                        <div className="mt-3">
+                            Cerita mitra, berita seru, dan Artikel terbaru. Baca semua artikel soal Digitalent di sini.
+                        </div>
+                    :
+                        <div className="mt-3">
+                            Artikel terkait {activeTitle} di  Digital Talent Scholarship
+                        </div>
+                }
+                
             </div>
 
             {/* Filter Button */}
             <div className="row my-5">
-                <div className="col-md-8 col-12 d-flex justify-content-between flex-row flex-wrap">
-                    {/* Selected */}
-                    <div 
-                        className="d-flex align-items-center rounded-pill bg-primary-dashboard py-1 px-3" 
-                        style={{ cursor: "pointer" }}
-                    >
-                        <div className="my-1 mx-3 py-1 px-3 text-white">
-                            Semua
-                        </div>
-                    </div>
+                <div className="col-12 col-md-8 d-flex flex-row flex-wrap">
+                   {/* Selected & Unselected */}
 
-                    {/* UnSelected */}
-                    <div 
-                        className="d-flex align-items-center rounded-pill bg-white py-1 px-3 border border-muted" 
-                        style={{ cursor: "pointer" }}
-                    >
-                        <div className="my-1 mx-3 py-1 px-3 text-muted">
-                            Pengumuman
-                        </div>
-                    </div>
+                   {
+                       kategoriArtikel === "" ?
+                            <div 
+                                className="d-flex align-items-center rounded-pill bg-primary-dashboard py-1 px-3 mr-3 my-5" 
+                                style={{ cursor: "pointer" }}
+                                onClick={() => handleFilterKategori("")}
+                            >
+                                <div className="my-1 mx-3 py-1 px-3 text-white">
+                                    Semua
+                                </div>
+                            </div>
+                        :
+                            <div 
+                                className="d-flex align-items-center border rounded-pill bg-whitepy-1 px-3 mr-3 my-5" 
+                                style={{ cursor: "pointer" }}
+                                onClick={() => handleFilterKategori("")}
+                            >
+                                <div className="my-1 mx-3 py-1 px-3 text-muted">
+                                    Semua
+                                </div>
+                            </div>
+                   }
+                    
 
-                    <div 
-                        className="d-flex align-items-center rounded-pill bg-white py-1 px-3 border border-muted" 
-                        style={{ cursor: "pointer" }}
-                    >
-                        <div className="my-1 mx-3 py-1 px-3 text-muted">
-                            Informasi
-                        </div>
-                    </div>
-
-                    <div 
-                        className="d-flex align-items-center rounded-pill bg-white py-1 px-3 border border-muted" 
-                        style={{ cursor: "pointer" }}
-                    >
-                        <div className="my-1 mx-3 py-1 px-3 text-muted">
-                            Press Release
-                        </div>
-                    </div>
-
-                    <div 
-                        className="d-flex align-items-center rounded-pill bg-white py-1 px-3 border border-muted" 
-                        style={{ cursor: "pointer" }}
-                    >
-                        <div className="my-1 mx-3 py-1 px-3 text-muted">
-                           Tips And Trick
-                        </div>
-                    </div>
-
+                    {
+                        kategori ?
+                            kategori.map((el, i) => {
+                                return (
+                                    kategoriArtikel == el.nama_kategori ?
+                                        <div 
+                                            className="d-flex align-items-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-3 my-5" 
+                                            style={{ cursor: "pointer" }}
+                                            onClick={() => handleFilterKategori(el.nama_kategori)}
+                                            key={i}
+                                        >
+                                            <div className="my-1 mx-3 py-1 px-3 text-white">
+                                                {el.nama_kategori}
+                                            </div>
+                                        </div> 
+                                    :
+                                        <div 
+                                            className="d-flex align-items-center border rounded-pill bg-white py-1 px-3 mr-3 my-5" 
+                                            style={{ cursor: "pointer" }}
+                                            onClick={() => handleFilterKategori(el.nama_kategori)}
+                                            key={i}
+                                        >
+                                            <div className="my-1 mx-3 py-1 px-3 text-muted">
+                                                {el.nama_kategori}
+                                            </div>
+                                        </div> 
+                                )
+                            })
+                        :
+                            null
+                    }
                 </div>
                
             </div>
@@ -98,19 +191,28 @@ const Artikel = () => {
                     {/* Search Tab */}
                     <form className="mb-3">
                         <div className="input-group">
-                            <i className="ri-search-line position-absolute my-5 ml-3" style={{zIndex:"10"}} ></i>
+                            <div className="input-group-prepend">
+                                <div 
+                                    className="input-group-text bg-white"
+                                    style={{borderTopLeftRadius:"150px", borderBottomLeftRadius:"150px"}}
+                                >
+                                    <i className="ri-search-line"></i>
+                                </div>
+                            </div>
 
                             <input 
                                 type="text" 
                                 className="form-control" 
-                                placeholder="    Cari Artikel"
-                                style={{borderTopLeftRadius:"150px", borderBottomLeftRadius:"150px"}}
+                                placeholder="Cari Artikel"
+                                onChange={(e) => setKeyword(e.target.value)}
                             />
             
                             <div>
                                 <button 
                                     className="btn btn-primary-dashboard" 
+                                    onClick={handleFilterKeyword}
                                     style={{borderTopRightRadius:"150px", borderBottomRightRadius:"150px"}}
+                                    type="submit"
                                 >
                                     Cari
                                 </button>
@@ -120,473 +222,133 @@ const Artikel = () => {
                     {/* End Search Tab */}
 
                     {/* Card */}
-                    <div className="row my-5 ml-1 flex-column-reverse flex-md-row">
-                        <div className="col col-md-7 col-12">
-                            <div className="row d-flex justify-content-between align-items-center">
-                                <div className="d-flex align-self-center">
-                                    <div className="border rounded-circle py-1 px-2">
-                                        {/* Insert Logo Image Here */}
-                                        <Image
-                                            src="/assets/media/logo-default.png" 
-                                            width={30}
-                                            height={30}
-                                            alt="Logo Image"
-                                        />
-                                    </div>
-                                    
-                                    <span className="font-weight-bolder ml-2 my-auto">
-                                        {/* Insert Admin Here */}
-                                        Admin Pokja
-                                    </span>
-                                </div>
 
-                                <div className="mr-2">
-                                    <div className="badge badge-light mr-2">
-                                        <div className="text-primary">
-                                            {/* Insert Kategori Here */}
-                                            Pengumuman
+                    {
+                        loadingArtikel ?
+                            <div className="container-fluid">
+                                <div className="row">
+                                <PulseLoaderRender />
+                                </div>
+                            </div>
+                        :
+                            artikel && artikel.artikel && artikel.artikel.length !== 0 ?
+                                artikel.artikel.map ((el, i) => {
+                                    return (
+                                        <div className="row my-10 ml-1 flex-column-reverse flex-xl-row" key={i}>
+                                            <div className="col col-xl-7 col-12">
+                                                <div className="row d-flex justify-content-between align-items-center">
+                                                    <div className="d-flex align-self-center">
+                                                        <div className="border rounded-circle py-1 px-2">
+                                                            {/* Insert Logo Image Here */}
+                                                            <Image
+                                                                // src="/assets/media/logo-default.png" 
+                                                                src={
+                                                                    process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                                                    "publikasi/images/" + el.foto
+                                                                }
+                                                                width={30}
+                                                                height={30}
+                                                                alt="Logo Image"
+                                                                className="rounded-circle"
+                                                            />
+                                                        </div>
+                                                        
+                                                        <span className="font-weight-bolder ml-2 my-auto">
+                                                            {/* Insert Admin Here */}
+                                                            {el.dibuat}
+                                                        </span>
+                                                    </div>
+
+                                                    <div className="mr-2">
+                                                        <div className="badge badge-light mr-2">
+                                                            <div className="text-primary">
+                                                                {/* Insert Kategori Here */}
+                                                                {el.nama_kategori}
+                                                            </div>
+                                                        </div>
+                                                        <span className="font-weight-bolder">
+                                                            {/* Insert Akademi Here */}
+                                                            | {el.kategori_akademi}
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+                                                <div className="row my-5">
+                                                    {/* Insert Title Here */}
+                                                    <Link href={`/artikel/detail/1`}>
+                                                        <a>
+                                                            <h1 className="text-dark">
+                                                                {handleTitleToTrim(el.judul)}
+                                                            </h1>
+                                                        </a>
+                                                    </Link>
+                                                    
+                                                </div>
+
+                                                <div className="row my-5">
+                                                    {/* Insert Desc Here */}
+                                                    <div dangerouslySetInnerHTML={{__html: handleDescToTrim(el.isi_artikel)}} />
+                                                
+                                                </div>
+
+                                                <div className="row mb-3">
+                                                    {/* Insert Date and View Here */}
+                                                    <span>
+                                                        {moment(el.tanggal_publish).format("DD MMMM")} | {el.dibaca} dibaca
+                                                    </span>
+
+                                                    {/* Insert Tag(s) here */}
+                                                    {
+                                                        el.tag && el.tag.length !== 0 ?
+                                                            el.tag.map ((element, index) => {
+                                                                return (
+                                                                    <span className="row ml-5" key={index}>
+                                                                        <div className="ml-3 border px-2 py-1">
+                                                                            {element}
+                                                                        </div>
+                                                                    </span>
+                                                                )
+                                                            })
+                                                            
+                                                        :
+                                                            null
+                                                    }
+                                                    
+                                                </div>
+                                            </div>
+
+                                            <div 
+                                                className="col col-xl-5 col-12 position-relative"
+                                            >
+                                                {/* Insert Card Image Here */}
+                                                <Link href={`/artikel/detail/1`}>
+                                                    <a>
+                                                        <img 
+                                                            src={
+                                                                process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                                                "publikasi/images/" + el.gambar
+                                                            }
+                                                            width="100%"
+                                                            height="100%"
+                                                            alt="Card Image"
+                                                            className="rounded"
+                                                        />
+                                                    </a>
+                                                </Link>
+                                                
+                                            </div>
                                         </div>
-                                    </div>
-                                    <span className="font-weight-bolder">
-                                        {/* Insert Akademi Here */}
-                                        | SVGA
-                                    </span>
-                                </div>
-                            </div>
-
-                            <div className="row my-5">
-                                {/* Insert Title Here */}
-                                <Link href={`/artikel/detail/1`}>
-                                    <a>
-                                        <h1 className="text-dark">
-                                            Pengumuman Kelulusan Peserta Pelatihan Daring Gelombang 1 Program VSGA DTS 2...
-                                        </h1>
-                                    </a>
-                                </Link>
+                                    )
+                                })
                                 
-                            </div>
-
-                            <div className="row my-5">
-                                {/* Insert Desc Here */}
-                                <p>
-                                    Now I know what you are thinking, “Jase, a million dollars! Come on!”. Hear me out, if you follow these..
-                                </p>
-                            </div>
-
-                            <div className="row mb-3">
-                                {/* Insert Date and View Here */}
-                                <span>
-                                    Sep 22 | 120 dibaca
-                                </span>
-
-                                {/* Insert Tag(s) here */}
-                                <span className="row ml-5">
-                                    <div className="border px-2 py-1">
-                                        #SVGA
-                                    </div>
-                                    <div className="ml-3 border px-2 py-1">
-                                        #Pelatihan
-                                    </div>
-                                </span>
-                            </div>
-                        </div>
-
-                        <div className="col col-md-5 col-12 position-relative">
-                            {/* Insert Card Image Here */}
-                            <Link href={`/artikel/detail/1`}>
-                                <a>
-                                    <img
-                                        src="/assets/media/default-card-artikel.png" 
-                                        // layout="fill"
-                                        // width={800}
-                                        // height={200}
-                                        // objectFit="fill"
-                                        width="100%"
-                                        height="100%"
-                                        alt="Card Image"
-                                        className="rounded"
-                                    />
-                                </a>
-                            </Link>
-                            
-                        </div>
-                    </div>
-                    {/* End of Card */}
-
-                    {/* Card */}
-                    <div className="row my-5 ml-1 flex-column-reverse flex-md-row">
-                        <div className="col col-md-7 col-12">
-                            <div className="row d-flex justify-content-between align-items-center">
-                                <div className="d-flex align-self-center">
-                                    <div className="border rounded-circle py-1 px-2">
-                                        {/* Insert Logo Image Here */}
-                                        <Image
-                                            src="/assets/media/logo-default.png" 
-                                            width={30}
-                                            height={30}
-                                            alt="Logo Image"
-                                        />
-                                    </div>
-                                    
-                                    <span className="font-weight-bolder ml-2 my-auto">
-                                        {/* Insert Admin Here */}
-                                        Admin Pokja
-                                    </span>
+                            :
+                                <div className="row">
+                                    <h1 className="font-weight-bolder">
+                                        Artikel Tidak Tersedia
+                                    </h1>
                                 </div>
-
-                                <div className="mr-2">
-                                    <div className="badge badge-light mr-2">
-                                        <div className="text-primary">
-                                            {/* Insert Kategori Here */}
-                                            Pengumuman
-                                        </div>
-                                    </div>
-                                    <span className="font-weight-bolder">
-                                        {/* Insert Akademi Here */}
-                                        | SVGA
-                                    </span>
-                                </div>
-                            </div>
-
-                            <div className="row my-5">
-                                {/* Insert Title Here */}
-                                <Link href={`/artikel/detail/1`}>
-                                    <a>
-                                        <h1 className="text-dark">
-                                            Pengumuman Kelulusan Peserta Pelatihan Daring Gelombang 1 Program VSGA DTS 2...
-                                        </h1>
-                                    </a>
-                                </Link>
-                                
-                            </div>
-
-                            <div className="row my-5">
-                                {/* Insert Desc Here */}
-                                <p>
-                                    Now I know what you are thinking, “Jase, a million dollars! Come on!”. Hear me out, if you follow these..
-                                </p>
-                            </div>
-
-                            <div className="row mb-3">
-                                {/* Insert Date and View Here */}
-                                <span>
-                                    Sep 22 | 120 dibaca
-                                </span>
-
-                                {/* Insert Tag(s) here */}
-                                <span className="row ml-5">
-                                    <div className="border px-2 py-1">
-                                        #SVGA
-                                    </div>
-                                    <div className="ml-3 border px-2 py-1">
-                                        #Pelatihan
-                                    </div>
-                                </span>
-                            </div>
-                        </div>
-
-                        <div className="col col-md-5 col-12 position-relative">
-                            {/* Insert Card Image Here */}
-                            <Link href={`/artikel/detail/1`}>
-                                <a>
-                                    <img
-                                        src="/assets/media/default-card-artikel.png" 
-                                        // layout="fill"
-                                        // width={800}
-                                        // height={200}
-                                        // objectFit="fill"
-                                        width="100%"
-                                        height="100%"
-                                        alt="Card Image"
-                                        className="rounded"
-                                    />
-                                </a>
-                            </Link>
-                            
-                        </div>
-                    </div>
-                    {/* End of Card */}
-
-                    {/* Card */}
-                    <div className="row my-5 ml-1 flex-column-reverse flex-md-row">
-                        <div className="col col-md-7 col-12">
-                            <div className="row d-flex justify-content-between align-items-center">
-                                <div className="d-flex align-self-center">
-                                    <div className="border rounded-circle py-1 px-2">
-                                        {/* Insert Logo Image Here */}
-                                        <Image
-                                            src="/assets/media/logo-default.png" 
-                                            width={30}
-                                            height={30}
-                                            alt="Logo Image"
-                                        />
-                                    </div>
-                                    
-                                    <span className="font-weight-bolder ml-2 my-auto">
-                                        {/* Insert Admin Here */}
-                                        Admin Pokja
-                                    </span>
-                                </div>
-
-                                <div className="mr-2">
-                                    <div className="badge badge-light mr-2">
-                                        <div className="text-primary">
-                                            {/* Insert Kategori Here */}
-                                            Pengumuman
-                                        </div>
-                                    </div>
-                                    <span className="font-weight-bolder">
-                                        {/* Insert Akademi Here */}
-                                        | SVGA
-                                    </span>
-                                </div>
-                            </div>
-
-                            <div className="row my-5">
-                                {/* Insert Title Here */}
-                                <Link href={`/artikel/detail/1`}>
-                                    <a>
-                                        <h1 className="text-dark">
-                                            Pengumuman Kelulusan Peserta Pelatihan Daring Gelombang 1 Program VSGA DTS 2...
-                                        </h1>
-                                    </a>
-                                </Link>
-                                
-                            </div>
-
-                            <div className="row my-5">
-                                {/* Insert Desc Here */}
-                                <p>
-                                    Now I know what you are thinking, “Jase, a million dollars! Come on!”. Hear me out, if you follow these..
-                                </p>
-                            </div>
-
-                            <div className="row mb-3">
-                                {/* Insert Date and View Here */}
-                                <span>
-                                    Sep 22 | 120 dibaca
-                                </span>
-
-                                {/* Insert Tag(s) here */}
-                                <span className="row ml-5">
-                                    <div className="border px-2 py-1">
-                                        #SVGA
-                                    </div>
-                                    <div className="ml-3 border px-2 py-1">
-                                        #Pelatihan
-                                    </div>
-                                </span>
-                            </div>
-                        </div>
-
-                        <div className="col col-md-5 col-12 position-relative">
-                            {/* Insert Card Image Here */}
-                            <Link href={`/artikel/detail/1`}>
-                                <a>
-                                    <img
-                                        src="/assets/media/default-card-artikel.png" 
-                                        // layout="fill"
-                                        // width={800}
-                                        // height={200}
-                                        // objectFit="fill"
-                                        width="100%"
-                                        height="100%"
-                                        alt="Card Image"
-                                        className="rounded"
-                                    />
-                                </a>
-                            </Link>
-                            
-                        </div>
-                    </div>
-                    {/* End of Card */}
-
-                    {/* Card */}
-                    <div className="row my-5 ml-1 flex-column-reverse flex-md-row">
-                        <div className="col col-md-7 col-12">
-                            <div className="row d-flex justify-content-between align-items-center">
-                                <div className="d-flex align-self-center">
-                                    <div className="border rounded-circle py-1 px-2">
-                                        {/* Insert Logo Image Here */}
-                                        <Image
-                                            src="/assets/media/logo-default.png" 
-                                            width={30}
-                                            height={30}
-                                            alt="Logo Image"
-                                        />
-                                    </div>
-                                    
-                                    <span className="font-weight-bolder ml-2 my-auto">
-                                        {/* Insert Admin Here */}
-                                        Admin Pokja
-                                    </span>
-                                </div>
-
-                                <div className="mr-2">
-                                    <div className="badge badge-light mr-2">
-                                        <div className="text-primary">
-                                            {/* Insert Kategori Here */}
-                                            Pengumuman
-                                        </div>
-                                    </div>
-                                    <span className="font-weight-bolder">
-                                        {/* Insert Akademi Here */}
-                                        | SVGA
-                                    </span>
-                                </div>
-                            </div>
-
-                            <div className="row my-5">
-                                {/* Insert Title Here */}
-                                <Link href={`/artikel/detail/1`}>
-                                    <a>
-                                        <h1 className="text-dark">
-                                            Pengumuman Kelulusan Peserta Pelatihan Daring Gelombang 1 Program VSGA DTS 2...
-                                        </h1>
-                                    </a>
-                                </Link>
-                                
-                            </div>
-
-                            <div className="row my-5">
-                                {/* Insert Desc Here */}
-                                <p>
-                                    Now I know what you are thinking, “Jase, a million dollars! Come on!”. Hear me out, if you follow these..
-                                </p>
-                            </div>
-
-                            <div className="row mb-3">
-                                {/* Insert Date and View Here */}
-                                <span>
-                                    Sep 22 | 120 dibaca
-                                </span>
-
-                                {/* Insert Tag(s) here */}
-                                <span className="row ml-5">
-                                    <div className="border px-2 py-1">
-                                        #SVGA
-                                    </div>
-                                    <div className="ml-3 border px-2 py-1">
-                                        #Pelatihan
-                                    </div>
-                                </span>
-                            </div>
-                        </div>
-
-                        <div className="col col-md-5 col-12 position-relative">
-                            {/* Insert Card Image Here */}
-                            <Link href={`/artikel/detail/1`}>
-                                <a>
-                                    <img
-                                        src="/assets/media/default-card-artikel.png" 
-                                        // layout="fill"
-                                        // width={800}
-                                        // height={200}
-                                        // objectFit="fill"
-                                        width="100%"
-                                        height="100%"
-                                        alt="Card Image"
-                                        className="rounded"
-                                    />
-                                </a>
-                            </Link>
-                            
-                        </div>
-                    </div>
-                    {/* End of Card */}
-
-                    {/* Card */}
-                    <div className="row my-5 ml-1 flex-column-reverse flex-md-row">
-                        <div className="col col-md-7 col-12">
-                            <div className="row d-flex justify-content-between align-items-center">
-                                <div className="d-flex align-self-center">
-                                    <div className="border rounded-circle py-1 px-2">
-                                        {/* Insert Logo Image Here */}
-                                        <Image
-                                            src="/assets/media/logo-default.png" 
-                                            width={30}
-                                            height={30}
-                                            alt="Logo Image"
-                                        />
-                                    </div>
-                                    
-                                    <span className="font-weight-bolder ml-2 my-auto">
-                                        {/* Insert Admin Here */}
-                                        Admin Pokja
-                                    </span>
-                                </div>
-
-                                <div className="mr-2">
-                                    <div className="badge badge-light mr-2">
-                                        <div className="text-primary">
-                                            {/* Insert Kategori Here */}
-                                            Pengumuman
-                                        </div>
-                                    </div>
-                                    <span className="font-weight-bolder">
-                                        {/* Insert Akademi Here */}
-                                        | SVGA
-                                    </span>
-                                </div>
-                            </div>
-
-                            <div className="row my-5">
-                                {/* Insert Title Here */}
-                                <Link href={`/artikel/detail/1`}>
-                                    <a>
-                                        <h1 className="text-dark">
-                                            Pengumuman Kelulusan Peserta Pelatihan Daring Gelombang 1 Program VSGA DTS 2...
-                                        </h1>
-                                    </a>
-                                </Link>
-                                
-                            </div>
-
-                            <div className="row my-5">
-                                {/* Insert Desc Here */}
-                                <p>
-                                    Now I know what you are thinking, “Jase, a million dollars! Come on!”. Hear me out, if you follow these..
-                                </p>
-                            </div>
-
-                            <div className="row mb-3">
-                                {/* Insert Date and View Here */}
-                                <span>
-                                    Sep 22 | 120 dibaca
-                                </span>
-
-                                {/* Insert Tag(s) here */}
-                                <span className="row ml-5">
-                                    <div className="border px-2 py-1">
-                                        #SVGA
-                                    </div>
-                                    <div className="ml-3 border px-2 py-1">
-                                        #Pelatihan
-                                    </div>
-                                </span>
-                            </div>
-                        </div>
-
-                        <div className="col col-md-5 col-12 position-relative">
-                            {/* Insert Card Image Here */}
-                            <Link href={`/artikel/detail/1`}>
-                                <a>
-                                    <img
-                                        src="/assets/media/default-card-artikel.png" 
-                                        // layout="fill"
-                                        // width={800}
-                                        // height={200}
-                                        // objectFit="fill"
-                                        width="100%"
-                                        height="100%"
-                                        alt="Card Image"
-                                        className="rounded"
-                                    />
-                                </a>
-                            </Link>
-                            
-                        </div>
-                    </div>
+                    }
+                    
                     {/* End of Card */}
 
                 </div>
@@ -595,7 +357,7 @@ const Artikel = () => {
                 {/* Right Side */}
                 <div className="col-md-4 col-12">
                     {/* Filter */}
-                    <div className="border rounded">
+                    <div className="border rounded p-5">
                         <div className="row mt-5 "> 
                             <div className="col-2 my-auto ml-3">
                                 <Image 
@@ -619,13 +381,13 @@ const Artikel = () => {
                         </div>
 
                         <div className="row mx-3 mb-3 d-flex justify-content-between">
-                            <div className="col-md-5 col-12">
+                            <div className="col-md-6 col-12">
                                 <button className="btn btn-outline-light rounded-pill btn-block">
                                     Terbaru
                                 </button>
                             </div>
 
-                            <div className="col-md-5 col-12">
+                            <div className="col-md-6 col-12">
                                 <button className="btn btn-outline-light rounded-pill btn-block">
                                     Terlama
                                 </button>
@@ -633,13 +395,13 @@ const Artikel = () => {
                         </div>
 
                         <div className="row mx-3 mb-3 d-flex justify-content-between">
-                            <div className="col-md-5 col-12">
+                            <div className="col-md-6 col-12">
                                 <button className="btn btn-outline-light rounded-pill btn-block">
                                     A-Z
                                 </button>
                             </div>
 
-                            <div className="col-md-5 col-12">
+                            <div className="col-md-6 col-12">
                                 <button className="btn btn-outline-light rounded-pill btn-block">
                                     Z-A
                                 </button>
