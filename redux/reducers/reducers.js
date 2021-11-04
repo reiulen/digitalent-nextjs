@@ -307,7 +307,7 @@ import {
   updateStatusReducer,
   getEditTrainingReducer,
   getEditTraining2Reducer,
-  getEditTraining3Reducer
+  getEditTraining3Reducer,
 } from "./pelatihan/admin/training.reducers";
 // =================== review pelatihan ==================
 import {
@@ -322,7 +322,7 @@ import {
 } from "./pelatihan/admin/review.reducers";
 // =================== report pelatihan ==================
 
-import {getDataReportTrainingReducer} from './pelatihan/admin/report-training.reducers'
+import { getDataReportTrainingReducer } from "./pelatihan/admin/report-training.reducers";
 // =================== rekap pelatihan ==================
 import {
   getFormBuilderReducer,
@@ -392,9 +392,12 @@ import { reducerFunctionals } from "./utils/functionals.reducer";
 // ========== beranda ========
 import {
   allAkademiReducer,
+  allKotaPesertaReducer,
+  allPenyelenggaraPesertaReducer,
   temaByAkademiReducer,
   pelatihanByTemaReducer,
   allPublikasiBerandaReducer,
+  addNotifTemaReducer,
 } from "../reducers/beranda/beranda.reducers";
 
 // ========== detail akademi ========
@@ -743,7 +746,10 @@ const reducer = combineReducers({
 
   //BERANDA
   // ========== beranda ========
+  addNotifTema: addNotifTemaReducer,
   allAkademi: allAkademiReducer,
+  allPenyelenggaraPeserta: allPenyelenggaraPesertaReducer,
+  allKotaPeserta: allKotaPesertaReducer,
   temaByAkademi: temaByAkademiReducer,
   pelatihanByTema: pelatihanByTemaReducer,
   allPublikasiBeranda: allPublikasiBerandaReducer,
