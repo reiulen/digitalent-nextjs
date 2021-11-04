@@ -113,11 +113,10 @@ function Pembahasan({token}) {
                     Pengajuan Anda Telah Diterima
                   </h1>
                   <p className="mt-5 fz-16">
-                    Selamat! Pengajuan anda telah diterima.
+                    Selamat pengajuan kerjasama Anda telah diterima!
                   </p>
                   <p className="fz-16">
-                    Selanjutnya proses pembahasan detail kerjasama akan di
-                    infokan ke kontak PIC anda
+                    Proses pembahasan mengenai detail kerjasama akan Kami infokan kepada PIC Anda
                   </p>
                 </div>
 

@@ -19,7 +19,7 @@ const Table = ({ token }) => {
               Detail Satuan Kerja Penyelenggara
             </h3>{" "}
           </div>
-          <div className="card-body pt-0">
+          <div className="card-body pt-0 px-4 px-sm-8">
             {" "}
             <div className="table-page mt-5">
               <div className="table-responsive">

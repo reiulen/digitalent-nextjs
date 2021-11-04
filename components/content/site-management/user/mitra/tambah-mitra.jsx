@@ -122,7 +122,7 @@ const TambahApi = ({ token }) => {
               Tambah Mitra
             </h3>
           </div>
-          <div className="card-body pt-0">
+          <div className="card-body pt-0 px-4 px-sm-8">
             <form>
               <div className="form-group">
                 <label>Nama Lengkap</label>
@@ -205,7 +205,7 @@ const TambahApi = ({ token }) => {
                 </select>
               </div>
             </form>
-            <div className="form-group row">
+            <div className="form-group row mt-8">
               <div className="col-sm-12 d-flex justify-content-end">
                 <Link href="/site-management/user/mitra" passHref>
                   <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
