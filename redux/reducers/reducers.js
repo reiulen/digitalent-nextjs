@@ -68,6 +68,12 @@ import {
   updateSettingPublikasiReducer,
 } from "./publikasi/setting.reducers";
 
+import {
+  allVideoContentReducer,
+  allTagReducer,
+  playVideoContentReducer
+} from "./beranda/video-content.reducer"
+
 import { allDashboardPublikasiReducer } from "./publikasi/dashboard-publikasi.reducers";
 
 // Subvit
@@ -490,6 +496,10 @@ const reducer = combineReducers({
   updateSettingPublikasi: updateSettingPublikasiReducer,
 
   allDashboardPublikasi: allDashboardPublikasiReducer,
+
+  // allVideoContent: allVideoContentReducer,
+  allTagContent: allTagReducer,
+  playVideo: playVideoContentReducer,
 
   // Subvit
   // =============== substansi ==================

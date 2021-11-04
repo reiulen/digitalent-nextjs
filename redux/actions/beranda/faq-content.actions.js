@@ -1,10 +1,10 @@
+import axios from 'axios'
 import {
     FAQ_REQUEST,
     FAQ_SUCCESS,
     FAQ_FAIL
 } from "../../types/publikasi/faq.type"
 
-import axios from 'axios'
 
 export const getAllFaq = (token) => async (dispatch) => {
     try {
