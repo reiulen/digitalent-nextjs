@@ -1,7 +1,22 @@
 import React from "react";
 import Image from "next/image";
+import Select from "react-select";
 
 const TrainingReminder = () => {
+  const options = [
+    { value: "1", label: "VSGA" },
+    { value: "2", label: "FGA" },
+    { value: "3", label: "AKM" },
+  ];
+
+  const customStyles = {
+    control: (styles) => ({
+      ...styles,
+      borderRadius: "30px",
+      paddingLeft: "10px",
+    }),
+  };
+
   return (
     <div className="p-10 rounded mb-10" style={{ backgroundColor: "#E6F2FF" }}>
       <div className="d-flex align-items-center mb-3">
@@ -17,12 +32,15 @@ const TrainingReminder = () => {
         juga.
       </p>
 
-      <div className="d-flex w-100">
-        <input
-          type="text"
-          placeholder="Cari Tema"
-          className="form-control mr-2 rounded-pill"
-        />
+      <div className="d-flex">
+        <div className="w-100">
+          <Select
+            options={options}
+            styles={customStyles}
+            placeholder="Cari Tema"
+            isMulti
+          />
+        </div>
         <button className="btn btn-primary rounded-pill text-white fw-600 px-5 ml-4">
           Buat
         </button>

@@ -5,14 +5,25 @@ import { wrapper } from "../../../redux/store";
 import { getDetailAkademi } from "../../../redux/actions/beranda/detail-akademi.actions";
 import { getAllPelatihanByAkademi } from "../../../redux/actions/beranda/detail-akademi.actions";
 import { getDataPribadi } from "../../../redux/actions/pelatihan/function.actions";
+import { getAllAkademi } from "../../../redux/actions/beranda/beranda.actions";
 
-const DetailAkademi = dynamic(() =>
-  import(
-    "../../../user-component/content/detail/kategori/akademi/detail-akademi-new"
-  )
+import LoadingDetailAkademi from "../../../user-component/components/loader/DetailAkademiLoader";
+
+const DetailAkademi = dynamic(
+  () =>
+    import(
+      "../../../user-component/content/detail/kategori/akademi/detail-akademi-new"
+    ),
+  {
+    loading: function loadingNow() {
+      return <LoadingDetailAkademi />;
+    },
+    ssr: false,
+  }
 );
-const Layout = dynamic(() =>
-  import("../../../components/wrapper/beranda.wrapper")
+const Layout = dynamic(
+  () => import("../../../components/wrapper/beranda.wrapper"),
+  { ssr: false }
 );
 
 export default function DetailAkademiPelatihan(props) {
@@ -33,7 +44,7 @@ export default function DetailAkademiPelatihan(props) {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
-    async ({ params, req }) => {
+    async ({ params, query, req }) => {
       const session = await getSession({ req });
 
       let sessionToken = session?.user.user.data.user.token;
@@ -41,19 +52,20 @@ export const getServerSideProps = wrapper.getServerSideProps(
       await store.dispatch(getDataPribadi(sessionToken));
 
       await store.dispatch(getDetailAkademi(params.id));
+      await store.dispatch(getAllAkademi());
 
       await store.dispatch(
         getAllPelatihanByAkademi(
           params.id,
-          params.tema_id,
-          params.provinsi,
-          params.tipe_pelatihan,
-          params.penyelenggara,
-          params.kategori_peserta,
-          params.kata_kunci,
-          params.tanggal_mulai,
-          params.tanggal_akhir,
-          params.page
+          query.tema_id,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1
         )
       );
 
