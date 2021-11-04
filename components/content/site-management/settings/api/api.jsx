@@ -159,11 +159,7 @@ const Table = ({ token }) => {
                   </thead>
                   <tbody>
                     {allApi.data.setting_api.length === 0 ? (
-                      <tr>
-                        <td colSpan="8" className="text-center">
-                          <h4>Data tidak ditemukan</h4>
-                        </td>
-                      </tr>
+                      <td class="align-middle text-center" colspan="8">Data Masih Kosong</td>
                     ) : (
                       allApi.data.setting_api.map((items, index) => {
                         return (
