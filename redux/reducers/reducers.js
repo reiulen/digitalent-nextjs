@@ -308,11 +308,8 @@ import {
   getEditTrainingReducer,
   getEditTraining2Reducer,
   getEditTraining3Reducer,
-<<<<<<< HEAD
-=======
   getFormLPJReducer,
-  getFormEvidenceReducer
->>>>>>> e128bb4169752dcef16f0190467e27f553e87411
+  getFormEvidenceReducer,
 } from "./pelatihan/admin/training.reducers";
 // =================== review pelatihan ==================
 import {
@@ -327,11 +324,10 @@ import {
 } from "./pelatihan/admin/review.reducers";
 // =================== report pelatihan ==================
 
-<<<<<<< HEAD
-import { getDataReportTrainingReducer } from "./pelatihan/admin/report-training.reducers";
-=======
-import {detailReportTrainingReducer, getDataReportTrainingReducer} from './pelatihan/admin/report-training.reducers'
->>>>>>> e128bb4169752dcef16f0190467e27f553e87411
+import {
+  detailReportTrainingReducer,
+  getDataReportTrainingReducer,
+} from "./pelatihan/admin/report-training.reducers";
 // =================== rekap pelatihan ==================
 import {
   getFormBuilderReducer,
@@ -423,7 +419,7 @@ import {
   allBerandaGaleriReducer,
   detailBerandaGaleriReducer,
   kategoriBerandaGaleriReducer,
-} from "../reducers/beranda/galeri.reducer"
+} from "../reducers/beranda/galeri.reducer";
 //END BERANDA
 
 import {
@@ -718,7 +714,7 @@ const reducer = combineReducers({
 
   // =============== rpoert oelatihan ========
   getDataReportTraining: getDataReportTrainingReducer,
-  detailReportTraining:detailReportTrainingReducer,
+  detailReportTraining: detailReportTrainingReducer,
 
   // ========== pendaftaran pelatihan ========
   getFormBuilder: getFormBuilderReducer,
