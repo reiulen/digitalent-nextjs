@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Card, Col, Row, Badge, Button, Modal, Form } from "react-bootstrap";
+import { Card, Col, Button, Modal, Form } from "react-bootstrap";
 
 import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
 import style from "./style.module.css";
@@ -10,15 +10,53 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import { getDataPribadi } from "../../../../redux/actions/pelatihan/function.actions";
-export default function SeleksiAdministrasi({ session }) {
+
+export default function Pengaturan({ session }) {
   const { error: errorDataPribadi, dataPribadi } = useSelector(
     (state) => state.getDataPribadi
   );
-
   const dispatch = useDispatch();
+  const config = {
+    headers: {
+      Authorization: `Bearer ${session.token}`,
+      "content-type": "application/json",
+    },
+  };
+
+  //   START PASSWORD
+  const [passwordLama, setPasswordLama] = useState();
+  const [passwordBaru, setPasswordBaru] = useState();
+  const [passwordBaru2, setPasswordBaru2] = useState();
+  const [showUbahPasswordModal, setShowUbahPasswordModal] = useState(false);
+  const handleClosePasswordModal = () => setShowUbahPasswordModal(false);
+  const handleShowUbahPasswordModal = () => setShowUbahPasswordModal(true);
+
+  const [hidePasswordLama, setHidePasswordLama] = useState(true);
+  const [hidePasswordBaru, setHidePasswordBaru] = useState(true);
+  const [hidePasswordBaru2, setHidePasswordBaru2] = useState(true);
+
+  const [postStatus, setPostStatus] = useState("");
+
+  // START HANDPHONE
+  const [handphone, setHandphone] = useState("");
+  const [showUbahHandphoneModal, setShowUbahHandphoneModal] = useState(false);
+  const handleCloseHandphoneModal = () => setShowUbahHandphoneModal(false);
+  const handleShowUbahHandphone = () => setShowUbahHandphoneModal(true);
+
   const [handphoneVerify, setHandphoneVerify] = useState(
     dataPribadi.handphone_verifikasi
   );
+
+  //   START EMAIL
+  const [email, setEmail] = useState("");
+  const [showUbahEmailModal, setShowUbahEmailModal] = useState(false);
+  const handleCloseEmailModal = () => setShowUbahEmailModal(false);
+  const handleShowUbahEmail = () => setShowUbahEmailModal(true);
+  const [otpEmail, setOtpEmail] = useState();
+  const [showUbahEmailModalOtp, setShowUbahEmailModalOtp] = useState(false);
+  const handleCloseEmailOtp = () => setShowUbahEmailModalOtp(false);
+  const handleShowUbahEmailOtp = () => setShowUbahEmailModalOtp(true);
+
   const notify = (value) =>
     toast.error(`${value}`, {
       position: "top-right",
@@ -30,11 +68,7 @@ export default function SeleksiAdministrasi({ session }) {
       progress: undefined,
     });
 
-  const [handphone, setHandphone] = useState("");
-  const [showUbahHandphoneModal, setShowUbahHandphoneModal] = useState(false);
-  const handleCloseHandphoneModal = () => setShowUbahHandphoneModal(false);
-  const handleShowUbahHandphone = () => setShowUbahHandphoneModal(true);
-  // HANDLE LANJUT UBAH HANDPHONE
+  // POST LANJUT UBAH HANDPHONE
   const handleLanjutUbahHandphone = async (nomor_hp) => {
     const body = {
       old_nomor_hp: dataPribadi.nomor_handphone,
@@ -65,7 +99,7 @@ export default function SeleksiAdministrasi({ session }) {
       forceUpdate(1);
     }
   };
-  // Handle Post OTP UBAH HANDPHONE
+  // POST OTP UBAH HANDPHONE
   const handlePostOtpUbahHandphone = async (token) => {
     const body = {
       old_nomor_hp: dataPribadi.nomor_handphone,
@@ -92,27 +126,7 @@ export default function SeleksiAdministrasi({ session }) {
       notify(error.response.data.message);
     }
   };
-
-  //   START PASSWORD
-  const [passwordLama, setPasswordLama] = useState();
-  const [passwordBaru, setPasswordBaru] = useState();
-  const [passwordBaru2, setPasswordBaru2] = useState();
-  const [showUbahPasswordModal, setShowUbahPasswordModal] = useState(false);
-  const handleClosePasswordModal = () => setShowUbahPasswordModal(false);
-  const handleShowUbahPasswordModal = () => setShowUbahPasswordModal(true);
-
-  const [hidePasswordLama, setHidePasswordLama] = useState(true);
-  const [hidePasswordBaru, setHidePasswordBaru] = useState(true);
-  const [hidePasswordBaru2, setHidePasswordBaru2] = useState(true);
-
-  const [postStatus, setPostStatus] = useState("");
-  const config = {
-    headers: {
-      Authorization: `Bearer ${session.token}`,
-      "content-type": "application/json",
-    },
-  };
-
+  // POST UBAH PASSWORD
   const handleLanjutPassword = async (
     old_password,
     password,
@@ -147,17 +161,7 @@ export default function SeleksiAdministrasi({ session }) {
       forceUpdate(1);
     }
   };
-  // END PASSWORD
 
-  //   START EMAIL
-  const [email, setEmail] = useState("");
-  const [showUbahEmailModal, setShowUbahEmailModal] = useState(false);
-  const handleCloseEmailModal = () => setShowUbahEmailModal(false);
-  const handleShowUbahEmail = () => setShowUbahEmailModal(true);
-  const [otpEmail, setOtpEmail] = useState();
-  const [showUbahEmailModalOtp, setShowUbahEmailModalOtp] = useState(false);
-  const handleCloseEmailOtp = () => setShowUbahEmailModalOtp(false);
-  const handleShowUbahEmailOtp = () => setShowUbahEmailModalOtp(true);
   // END EMAIL
   const simpleValidator = useRef(
     new SimpleReactValidator({
@@ -167,16 +171,17 @@ export default function SeleksiAdministrasi({ session }) {
       },
     })
   );
+
   //POST EMAIL LANJUT
   const handleLanjutUbahEmail = async (email) => {
     const body = {
       old_email: dataPribadi.email,
       email,
     };
-
     simpleValidator.current.fields["passwordLama"] = true;
     simpleValidator.current.fields["passwordBaru"] = true;
     simpleValidator.current.fields["password konfirmasi"] = true;
+    simpleValidator.current.fields["nomor handphone"] = true;
 
     if (simpleValidator.current.allValid()) {
       try {
@@ -199,7 +204,7 @@ export default function SeleksiAdministrasi({ session }) {
     }
   };
 
-  // Post OTP Email
+  // Post OTP UBAH Email
   const handlePostOtpEmail = async (token, email) => {
     const body = {
       old_email: dataPribadi.email,
@@ -227,19 +232,6 @@ export default function SeleksiAdministrasi({ session }) {
       notify(error.response.data.message);
     }
   };
-
-  const [count, setCount] = useState(30);
-  useEffect(() => {
-    if (showUbahEmailModalOtp) {
-      if (count > 0) {
-        const secondsLeft = setInterval(() => {
-          setCount((c) => c - 1);
-        }, 1000);
-        return () => clearInterval(secondsLeft);
-      }
-    }
-  }, [count, showUbahEmailModalOtp]);
-  const [, forceUpdate] = useState(0);
 
   const verifikasiHp = async () => {
     const body = {
@@ -280,7 +272,7 @@ export default function SeleksiAdministrasi({ session }) {
       notify(error.response.data.message);
     }
   };
-
+  // POST OTP VERIFIKASI EMAIL
   const handlePostOtpEmailVerifikasi = async (token) => {
     const body = {
       email: dataPribadi.email,
@@ -307,7 +299,7 @@ export default function SeleksiAdministrasi({ session }) {
       notify(error.response.data.message);
     }
   };
-
+  // POST OTP VERIFIKASI HP
   const handlePostOtpHpVerifikasi = async (token) => {
     const body = {
       email: dataPribadi.email,
@@ -334,6 +326,19 @@ export default function SeleksiAdministrasi({ session }) {
       notify(error.response.data.message);
     }
   };
+
+  const [count, setCount] = useState(30);
+  useEffect(() => {
+    if (showUbahEmailModalOtp) {
+      if (count > 0) {
+        const secondsLeft = setInterval(() => {
+          setCount((c) => c - 1);
+        }, 1000);
+        return () => clearInterval(secondsLeft);
+      }
+    }
+  }, [count, showUbahEmailModalOtp]);
+  const [, forceUpdate] = useState(0);
 
   return (
     <PesertaWrapper>
