@@ -7,6 +7,7 @@ import LoadingSkeleton from "../../../components/LoadingSkeleton";
 import { getDataPribadi } from "../../../redux/actions/pelatihan/function.actions";
 import { middlewareAuthPesertaSession } from "../../../utils/middleware/authMiddleware";
 import { getDetailRiwayatPelatihan } from "../../../redux/actions/pelatihan/riwayat-pelatihan.actions";
+import { getAllAkademi } from "../../../redux/actions/beranda/beranda.actions";
 
 const MidTest = dynamic(
   () => import("../../../user-component/content/peserta/mid-test"),
@@ -49,6 +50,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       await store.dispatch(getDataPribadi(session.user.user.data.user.token));
+      await store.dispatch(getAllAkademi());
 
       return {
         props: { data: "auth", session, title: "Dashboard - Peserta" },

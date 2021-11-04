@@ -10,6 +10,7 @@ import { getDataPribadi } from "../../../redux/actions/pelatihan/function.action
 import { getDashboardPeserta } from "../../../redux/actions/pelatihan/dashboard-peserta.actions";
 import { getPelatihan } from "../../../redux/actions/pelatihan/register-training.actions";
 import { middlewareAuthPesertaSession } from "../../../utils/middleware/authMiddleware";
+import { getAllAkademi } from "../../../redux/actions/beranda/beranda.actions";
 
 const DoneMid = dynamic(
   () => import("../../../user-component/content/done-mid-test/index"),
@@ -67,6 +68,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+
+      await store.dispatch(getAllAkademi());
+
       await store.dispatch(getDataPribadi(session?.user.user.data.user.token));
       await store.dispatch(
         getDashboardPeserta(session?.user.user.data.user.token)

@@ -6,6 +6,7 @@ import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
 import { middlewareAuthPesertaSession } from "../../../utils/middleware/authMiddleware";
+import { getAllAkademi } from "../../../redux/actions/beranda/beranda.actions";
 
 const ListPelatihan = dynamic(
   () => import("../../../user-component/content/peserta/pelatihan"),
@@ -47,6 +48,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+      await store.dispatch(getAllAkademi());
 
       return {
         props: { data: "auth", session, title: "Pelatihan - Peserta" },

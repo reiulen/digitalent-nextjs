@@ -4,7 +4,7 @@ import { Col } from "react-bootstrap";
 const PesertaWrapper = ({ children }) => {
   return (
     <>
-      <Col md={9} style={{ marginTop: "-5%" }}>
+      <Col md={12} lg={9} style={{ marginTop: "-5%" }}>
         {children}
       </Col>
     </>
