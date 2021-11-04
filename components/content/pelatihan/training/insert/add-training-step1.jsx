@@ -144,8 +144,6 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
     optionsLevelPelatihan.push(val);
   }
 
-  console.log("penyelenggara", dataPenyelenggara)
-
   const optionsPenyelenggara = [];
   for (let index = 0; index < dataPenyelenggara.data.length; index++) {
     let val = {
@@ -362,8 +360,8 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
         tuna_rungu,
         tuna_daksa,
       };
-      dispatch(storeTrainingStep1(data));
-      propsStep(2);
+      // dispatch(storeTrainingStep1(data));
+      // propsStep(2);
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -695,19 +693,11 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
               </label>
               <div className="position-relative">
                 <DatePicker
-                  wrapperClassName="datepicker"
-                  className="form-control w-100 d-block"
-                  name="start_date"
                   selected={startDateRegistration}
                   onChange={(date) => setStartDateRegistration(date)}
-                  onBlur={() =>
-                    simpleValidator.current.showMessageFor("tanggal mulai")
-                  }
-                  selectsStart
-                  startDate={startDateRegistration}
-                  endDate={endDateRegistration}
-                  dateFormat="dd/MM/yyyy"
-                  autoComplete="off"
+                  showTimeSelect
+                  className="form-control w-100 d-block"
+                  dateFormat="d MMMM yyyy - h : mm"
                   placeholderText="Silahkan Pilih Tanggal Dari"
                 />
                 <i className="ri-calendar-line right-center-absolute pr-3"></i>
@@ -724,20 +714,12 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                 Tanggal Sampai
               </label>
               <div className="position-relative">
-                <DatePicker
-                  wrapperClassName="datepicker"
-                  className="form-control w-100"
+               <DatePicker
                   selected={endDateRegistration}
                   onChange={(date) => setEndDateRegistration(date)}
-                  onBlur={() =>
-                    simpleValidator.current.showMessageFor("tanggal sampai")
-                  }
-                  selectsEnd
-                  startDate={startDateRegistration}
-                  endDate={endDateRegistration}
-                  minDate={startDateRegistration}
-                  dateFormat="dd/MM/yyyy"
-                  autoComplete="off"
+                  showTimeSelect
+                  className="form-control w-100 d-block"
+                  dateFormat="d MMMM yyyy - h : mm"
                   placeholderText="Silahkan Pilih Tanggal Sampai"
                 />
                 <i className="ri-calendar-line right-center-absolute pr-3"></i>
@@ -759,20 +741,12 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                 Tanggal Mulai
               </label>
               <div className="position-relative">
-                <DatePicker
-                  wrapperClassName="datepicker"
-                  className="form-control w-100 d-block"
-                  name="start_date"
+              <DatePicker
                   selected={startDateTraining}
                   onChange={(date) => setStartDateTraining(date)}
-                  onBlur={() =>
-                    simpleValidator.current.showMessageFor("tanggal mulai")
-                  }
-                  selectsStart
-                  startDate={startDateTraining}
-                  endDate={endDateTraining}
-                  dateFormat="dd/MM/yyyy"
-                  autoComplete="off"
+                  showTimeSelect
+                  className="form-control w-100 d-block"
+                  dateFormat="d MMMM yyyy - h : mm"
                   placeholderText="Silahkan Pilih Tanggal Dari"
                 />
                 <i className="ri-calendar-line right-center-absolute pr-3"></i>
@@ -789,20 +763,12 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                 Tanggal Sampai
               </label>
               <div className="position-relative">
-                <DatePicker
-                  wrapperClassName="datepicker"
-                  className="form-control w-100"
+              <DatePicker
                   selected={endDateTraining}
                   onChange={(date) => setEndDateTraining(date)}
-                  onBlur={() =>
-                    simpleValidator.current.showMessageFor("tanggal sampai")
-                  }
-                  selectsEnd
-                  startDate={startDateTraining}
-                  endDate={endDateTraining}
-                  minDate={startDateTraining}
-                  dateFormat="dd/MM/yyyy"
-                  autoComplete="off"
+                  showTimeSelect
+                  className="form-control w-100 d-block"
+                  dateFormat="d MMMM yyyy - h : mm"
                   placeholderText="Silahkan Pilih Tanggal Sampai"
                 />
                 <i className="ri-calendar-line right-center-absolute pr-3"></i>

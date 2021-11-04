@@ -1,28 +1,13 @@
 import dynamic from "next/dynamic";
-
-// import Layout from "../../../components/templates/layout.component";
-
 import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
 import LoadingContent from "../../../user-component/content/peserta/components/loader/LoadingContent";
-
-import {
-  getDataPribadi,
-  dropdownProvinsi,
-  dropdownAgama,
-  dropdownPendidikan,
-  dropdownStatusPekerjaan,
-} from "../../../redux/actions/pelatihan/function.actions";
-import {
-  getProfileAlamat,
-  getProfilePendidikan,
-  getProfilePekerjaan,
-} from "../../../redux/actions/pelatihan/profile.actions";
+import { getDataPribadi } from "../../../redux/actions/pelatihan/function.actions";
 import { middlewareAuthPesertaSession } from "../../../utils/middleware/authMiddleware";
 import { getAllAkademi } from "../../../redux/actions/beranda/beranda.actions";
 
-const Profile = dynamic(
-  () => import("../../../user-component/content/peserta/profile/index"),
+const Pengaturan = dynamic(
+  () => import("../../../user-component/content/peserta/pengaturan/index"),
   {
     loading: function loadingNow() {
       return <LoadingContent />;
@@ -39,8 +24,8 @@ export default function ProfilePage(props) {
   const session = props.session.user.user.data.user;
   return (
     <>
-      <Layout title="Informasi Pribadi Peserta - Pelatihan" session={session}>
-        <Profile session={session} />
+      <Layout title="Pengaturan - Pelatihan" session={session}>
+        <Pengaturan session={session} />
       </Layout>
     </>
   );
@@ -64,18 +49,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
       const data = session.user.user.data.user;
 
       await store.dispatch(getDataPribadi(data.token));
-      await store.dispatch(getProfileAlamat(data.token));
-      await store.dispatch(getProfilePendidikan(data.token));
-
-      await store.dispatch(dropdownProvinsi(data.token));
-      await store.dispatch(dropdownAgama(data.token));
-      await store.dispatch(dropdownStatusPekerjaan(data.token));
-      await store.dispatch(dropdownPendidikan(data.token));
-      await store.dispatch(getProfilePekerjaan(data.token));
       await store.dispatch(getAllAkademi());
 
       return {
-        props: { data: "auth", session, title: "Profile - Peserta" },
+        props: { data: "auth", session, title: "Pengaturan - Peserta" },
       };
     }
 );
