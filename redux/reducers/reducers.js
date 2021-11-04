@@ -68,6 +68,12 @@ import {
   updateSettingPublikasiReducer,
 } from "./publikasi/setting.reducers";
 
+import {
+  allVideoContentReducer,
+  allTagReducer,
+  playVideoContentReducer
+} from "./beranda/video-content.reducer"
+
 import { allDashboardPublikasiReducer } from "./publikasi/dashboard-publikasi.reducers";
 
 // Subvit
@@ -322,7 +328,7 @@ import {
 } from "./pelatihan/admin/review.reducers";
 // =================== report pelatihan ==================
 
-import {getDataReportTrainingReducer} from './pelatihan/admin/report-training.reducers'
+import { getDataReportTrainingReducer } from './pelatihan/admin/report-training.reducers'
 // =================== rekap pelatihan ==================
 import {
   getFormBuilderReducer,
@@ -473,6 +479,10 @@ const reducer = combineReducers({
   updateSettingPublikasi: updateSettingPublikasiReducer,
 
   allDashboardPublikasi: allDashboardPublikasiReducer,
+
+  // allVideoContent: allVideoContentReducer,
+  allTagContent: allTagReducer,
+  playVideo: playVideoContentReducer,
 
   // Subvit
   // =============== substansi ==================
