@@ -1,13 +1,14 @@
 import { getSession } from "next-auth/client";
 import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../../components/LoadingSkeleton";
+import { getDataPribadi } from "../../../../redux/actions/pelatihan/function.actions";
 import { getRandomSubtanceQuestionDetail } from "../../../../redux/actions/subvit/subtance-question-detail.action";
 import { wrapper } from "../../../../redux/store";
 import Layout from "../../../../user-component/components/template/Layout.component";
 import { middlewareAuthPesertaSession } from "../../../../utils/middleware/authMiddleware";
 
 const SubtansiUser = dynamic(
-  () => import("../../../../user-component/content/subvit/substansi"),
+  () => import("../../../../user-component/content/subvit/trivia"),
   {
     loading: function loadingNow() {
       return <LoadingSkeleton />;
@@ -52,6 +53,12 @@ export const getServerSideProps = wrapper.getServerSideProps(
           session.user.user.data.token
         )
       );
+
+      if (session) {
+        await store.dispatch(
+          getDataPribadi(session?.user.user.data.user.token)
+        );
+      }
 
       return {
         props: {
