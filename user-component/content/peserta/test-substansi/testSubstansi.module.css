@@ -1,3 +1,9 @@
+@media (max-width: 426px) {
+  .tableResponsive {
+    font-size: 10px;
+  }
+}
+
 .cardBase {
   padding: 30px;
   background: #ffffff;
@@ -22,6 +28,7 @@
   letter-spacing: 0.015em;
   padding: 18px;
   color: #1f1f1f;
+  box-sizing: border-box;
 }
 .btnStart {
   float: right;
