@@ -414,6 +414,7 @@ import {
   allBerandaArtikelReducer,
   detailBerandaArtikelReducer,
   kategoriBerandaArtikelReducer,
+  allTagBerandaArtikelReducer,
 } from "../reducers/beranda/artikel.reducers"
 
 //END BERANDA
@@ -768,6 +769,7 @@ const reducer = combineReducers({
   allBerandaArtikel: allBerandaArtikelReducer,
   detailBerandaArtikel: detailBerandaArtikelReducer,
   kategoriBerandaArtikel: kategoriBerandaArtikelReducer,
+  allTagBerandaArtikel: allTagBerandaArtikelReducer,
 
   //END BERANDA
 

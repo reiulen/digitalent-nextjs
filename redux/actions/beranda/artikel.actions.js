@@ -11,6 +11,10 @@ import {
     KATEGORI_BERANDA_ARTIKEL_SUCCESS,
     KATEGORI_BERANDA_ARTIKEL_FAIL,
 
+    TAG_BERANDA_ARTIKEL_REQUEST,
+    TAG_BERANDA_ARTIKEL_SUCCESS,
+    TAG_BERANDA_ARTIKEL_FAIL,
+
     CLEAR_ERRORS
 } from "../../types/beranda/artikel.type"
 
@@ -94,6 +98,28 @@ export const getKategoriBerandaArtikel = () => async dispatch => {
     } catch (error) {
         dispatch({
             type: KATEGORI_BERANDA_ARTIKEL_FAIL,
+            payload: error.response.data.message,
+        });
+    }
+}
+
+export const getTagBerandaArtikel = () => async dispatch => {
+    try {
+
+        dispatch({ type: TAG_BERANDA_ARTIKEL_REQUEST})
+
+        let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/home/tag/artikel`
+
+        const { data } = await axios.get(link)
+
+        dispatch({
+            type: TAG_BERANDA_ARTIKEL_SUCCESS,
+            payload: data,
+        })
+        
+    } catch (error) {
+        dispatch({
+            type: TAG_BERANDA_ARTIKEL_FAIL,
             payload: error.response.data.message,
         });
     }

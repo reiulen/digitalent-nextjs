@@ -11,6 +11,10 @@ import {
     KATEGORI_BERANDA_ARTIKEL_SUCCESS,
     KATEGORI_BERANDA_ARTIKEL_FAIL,
 
+    TAG_BERANDA_ARTIKEL_REQUEST,
+    TAG_BERANDA_ARTIKEL_SUCCESS,
+    TAG_BERANDA_ARTIKEL_FAIL,
+
     CLEAR_ERRORS
 } from "../../types/beranda/artikel.type"
 
@@ -99,5 +103,34 @@ export const kategoriBerandaArtikelReducer = (state = {kategori: [] }, action) =
         
         default:
             return state;
+    }
+}
+
+export const allTagBerandaArtikelReducer = (state = { tags: [] }, action) => {
+    switch (action.type) {
+        case TAG_BERANDA_ARTIKEL_REQUEST:
+            return {
+                loading: true
+            }
+
+        case TAG_BERANDA_ARTIKEL_SUCCESS:
+            return {
+                loading: false,
+                tags: action.payload.data
+            }
+
+        case TAG_BERANDA_ARTIKEL_FAIL:
+            return {
+                loading: false,
+                error: action.payload
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                error: null
+            }
+
+        default:
+            return state
     }
 }

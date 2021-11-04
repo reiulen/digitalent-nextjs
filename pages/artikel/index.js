@@ -3,7 +3,8 @@ import { getSession } from "next-auth/client";
 
 import { wrapper } from "../../redux/store";
 import { getDataPribadi } from "../../redux/actions/pelatihan/function.actions"
-import { getAllBerandaArtikel, getKategoriBerandaArtikel } from "../../redux/actions/beranda/artikel.actions"
+import { getAllBerandaArtikel, getKategoriBerandaArtikel,  getTagBerandaArtikel} from "../../redux/actions/beranda/artikel.actions"
+import { getAllAkademi } from "../../redux/actions/beranda/beranda.actions";
 
 const Artikel  =  dynamic (() => 
     import (
@@ -58,6 +59,14 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
             await store.dispatch (
                 getKategoriBerandaArtikel()
+            )
+
+            await store.dispatch(
+                getAllAkademi()
+            );
+
+            await store.dispatch(
+                getTagBerandaArtikel()
             )
 
             return {
