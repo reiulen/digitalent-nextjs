@@ -11,7 +11,7 @@ import ReactPlayer from 'react-player';
 import styles from "../../../styles/preview.module.css"
 import SubHeaderComponent from '../../components/template/Subheader.component';
 import { playVideo } from "../../../redux/actions/publikasi/video.actions"
-import { playVideoContent } from "../../../redux/actions/beranda/video-content.actions"
+import { playVideoContent, getAllVideo } from "../../../redux/actions/beranda/video-content.actions"
 
 const VideoPage = ({ token }) => {
     const dispatch = useDispatch()
@@ -22,81 +22,108 @@ const VideoPage = ({ token }) => {
     const { dataTag } = useSelector((state) => state.allTagContent);
     const { kategori } = useSelector((state) => state.allKategoriContent);
 
+    const titleToTrim = 30
+    const descToTrim = 100
+
     const [url_video, setUrlVideo] = useState("")
     const [video_playing, setVideoPlaying] = useState(false)
-    const [publishValue, setPublishValue] = useState(null)
     const [idVideo, setIdVideo] = useState(null)
     const [judul_video, setJudulVideo] = useState(null)
     const [tanggal_publish, setTanggalPublish] = useState(null)
     const [dataKategori, setDataKategori] = useState(null)
     const [kategoriVideo, setKategoriVideo] = useState("")
     const [isiVideo, setIsiVideo] = useState(null)
-    const [tag, setTag] = useState([])
-    const [filterPublish, setFilterPublish] = useState("asc")
-    const [filterPublishTerlama, setFilterPublishTerlama] = useState("desc")
-    const [sortAbjad, setSortAbjad] = useState()
-
-    let loading = false
-    let { page = 1, keyword, success } = router.query
+    const [tag, setTag] = useState("")
+    const [filterPublish, setFilterPublish] = useState("")
+    const [activePage, setActivePage] = useState(1)
+    const [keyword, setKeyword] = useState("")
+    const [sort, setSort] = useState("")
+    const [category_id, setCategoryId] = useState("")
+    const [category_academy, setCategoryAcademy] = useState("")
+    const [limit, setLimit] = useState("")
 
     const handlePagination = (pageNumber) => {
-        if (limit !== null && search === "" && startDate === null && endDate === null && publishValue === null) {
-            router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}`)
+        setActivePage(pageNumber)
+        dispatch(getAllVideo(
+            pageNumber,
+            activePage,
+            keyword,
+            limit,
+            filterPublish,
+            sort,
+            category_id,
+            kategoriVideo,
+            category_academy,
+            tag
+        ))
+    }
 
-        } else if (limit !== null && search !== "" && startDate === null && endDate === null && publishValue === null) {
-            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}`)
+    const handleTitleToTrim = (str) => {
+        let result = null
 
-        } else if (limit === null && search !== "" && startDate === null && endDate === null && publishValue === null) {
-            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}`)
-
-        } else if (limit !== null && search === "" && startDate !== null && endDate !== null && publishValue === null) {
-            router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
-
-        } else if (limit !== null && search !== "" && startDate !== null && endDate !== null && publishValue === null) {
-            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
-
-        } else if (limit === null && search !== "" && startDate !== null && endDate !== null && publishValue === null) {
-            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
-
-        } else if (limit !== null && search === "" && startDate === null && endDate === null && publishValue !== null) {
-            router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&publish=${publishValue}`)
-
-        } else if (limit !== null && search !== "" && startDate === null && endDate === null && publishValue !== null) {
-            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&publish=${publishValue}`)
-
-        } else if (limit === null && search !== "" && startDate === null && endDate === null && publishValue !== null) {
-            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&publish=${publishValue}`)
-
-        } else if (limit === null && search === "" && startDate === null && endDate === null && publishValue !== null) {
-            router.push(`${router.pathname}?page=${pageNumber}&publish=${publishValue}`)
-
-        } else if (limit !== null && search === "" && startDate !== null && endDate !== null && publishValue !== null) {
-            router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
-
-        } else if (limit !== null && search !== "" && startDate !== null && endDate !== null && publishValue !== null) {
-            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
-
-        } else if (limit === null && search !== "" && startDate !== null && endDate !== null && publishValue !== null) {
-            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+        if (str.length > titleToTrim) {
+            result = str.slice(0, titleToTrim) + "..."
 
         } else {
-            router.push(`${router.pathname}?page=${pageNumber}`)
+            result = str
         }
+
+        return result
     }
 
-    const handleBtnTerbaru = () => {
-        router.push(`${router.pathname}?filterPublish=${filterPublish}`)
+    const handleFilterTag = (str) => {
+        // setActiveTitle(str)
+        // setTag(str)
+        dispatch(getAllVideo(
+            activePage,
+            str,
+            keyword,
+            limit,
+            filterPublish,
+            sort,
+            category_id,
+            kategoriVideo,
+            category_academy,
+            tag
+        ))
+
     }
 
-    const handleBtnTerlama = () => {
-        router.push(`${router.pathname}?filterPublish=${filterPublishTerlama}`)
+    const submitFilter = () => {
+        dispatch(getAllVideo(
+            activePage,
+            keyword,
+            limit,
+            filterPublish,
+            sort,
+            category_id,
+            kategoriVideo,
+            category_academy,
+            tag
+        ))
     }
 
-    const handleSortAbjad = () => {
-        router.push(`${router.pathname}?sort=asc`)
+    const handleFilterKeyword = (e) => {
+        e.preventDefault();
+        dispatch(getAllVideo(
+            activePage,
+            keyword,
+            limit,
+            filterPublish,
+            sort,
+            category_id,
+            kategoriVideo,
+            category_academy,
+            tag
+        ))
     }
-    const handleSortLastAbjad = () => {
-        router.push(`${router.pathname}?sort=desc`)
+
+    const handleFilterPublish = (publish) => {
+        setFilterPublish(publish)
+    }
+
+    const handleSort = (sort) => {
+        setSort(sort)
     }
 
     const handleFilterKategori = (str) => {
@@ -211,7 +238,7 @@ const VideoPage = ({ token }) => {
                             className="form-control pl-10"
                             placeholder="Cari Video..."
                             // value={search}
-                            // onChange={(e) => setSearch(e.target.value)}
+                            onChange={(e) => setKeyword(e.target.value)}
                             style={{ borderRadius: '30px' }}
                         />
                         <button
@@ -222,7 +249,7 @@ const VideoPage = ({ token }) => {
                                 borderTopRightRadius: '18px',
                                 borderBottomRightRadius: '18px'
                             }}
-                        // onClick={handleSearch}
+                            onClick={handleFilterKeyword}
                         >
                             Cari
                         </button>
@@ -251,7 +278,7 @@ const VideoPage = ({ token }) => {
                                                     />
                                                     <div className="card-body">
                                                         <div style={{ width: '126%', marginLeft: '-30px' }}>
-                                                            <h5 className="card-title" style={{ width: '96%' }}>{row.judul}</h5>
+                                                            <h5 className="card-title" style={{ width: '96%' }}>{handleTitleToTrim(row.judul)}</h5>
                                                             <div className="d-flex justify-content-between align-items-center">
                                                                 <div className="row align-items-center ml-2">
                                                                     <div className="border rounded-circle py-1 px-2">
@@ -280,22 +307,23 @@ const VideoPage = ({ token }) => {
                     {/* PAGINATION */}
                     <div>
                         {
-                            // video && video.perPage < video.total &&
-                            <div className="table-pagination" style={{ marginLeft: '35%' }}>
-                                <Pagination
-                                    activePage={page}
-                                    itemsCountPerPage={video.perPage}
-                                    totalItemsCount={video.total}
-                                    pageRangeDisplayed={3}
-                                    onChange={handlePagination}
-                                    nextPageText={'>'}
-                                    prevPageText={'<'}
-                                    firstPageText={'<<'}
-                                    lastPageText={'>>'}
-                                    itemClass='page-item'
-                                    linkClass='page-link'
-                                />
-                            </div>
+                            video ?
+                                <div className="table-pagination" style={{ marginLeft: '35%' }}>
+                                    <Pagination
+                                        activePage={activePage}
+                                        itemsCountPerPage={video.perPage}
+                                        totalItemsCount={video.total}
+                                        pageRangeDisplayed={3}
+                                        onChange={handlePagination}
+                                        nextPageText={'>'}
+                                        prevPageText={'<'}
+                                        firstPageText={'<<'}
+                                        lastPageText={'>>'}
+                                        itemClass="page-item-dashboard"
+                                        linkClass="page-link-dashboard"
+                                    />
+                                </div>
+                                : null
                         }
                     </div>
                 </div>
@@ -317,30 +345,90 @@ const VideoPage = ({ token }) => {
                         <div className="card-body">
                             <h5 style={{ marginLeft: '-10px' }}>Urutkan Berdasarkan</h5>
                             <div className="row justify-content-between">
-                                <button type="button" onClick={() => handleBtnTerbaru()} className="btn btn-primary" style={{ width: '48%', border: '1px solid gray' }}>Terbaru</button>
-                                <button type="button" onClick={() => handleBtnTerlama()} className="btn text-muted" style={{ width: '48%', border: '1px solid gray' }}>Terlama</button>
+                                <div className="col-md-6 col-12">
+                                    {
+                                        filterPublish === "desc" ?
+                                            <button className="btn btn-primary rounded-pill btn-block" onClick={() => handleFilterPublish("")}>
+                                                Terbaru
+                                            </button>
+                                            :
+                                            <button className="btn btn-outline-light rounded-pill btn-block" onClick={() => handleFilterPublish("desc")}>
+                                                Terbaru
+                                            </button>
+                                    }
+                                </div>
+
+                                <div className="col-md-6 col-12">
+                                    {
+                                        filterPublish === "asc" ?
+                                            <button className="btn btn-primary rounded-pill btn-block" onClick={() => handleFilterPublish("")}>
+                                                Terlama
+                                            </button>
+                                            :
+                                            <button className="btn btn-outline-light rounded-pill btn-block" onClick={() => handleFilterPublish("asc")}>
+                                                Terlama
+                                            </button>
+                                    }
+                                </div>
+                                {/* <button type="button" onClick={() => handleBtnTerbaru()} className="btn btn-primary" style={{ width: '48%', border: '1px solid gray' }}>Terbaru</button>
+                                <button type="button" onClick={() => handleBtnTerlama()} className="btn text-muted" style={{ width: '48%', border: '1px solid gray' }}>Terlama</button> */}
                             </div>
                             <div className="row justify-content-between mt-3">
-                                <button type="button" onClick={() => handleSortAbjad()} className="btn text-muted" style={{ width: '48%', border: '1px solid gray' }}>A - Z</button>
-                                <button type="button" onClick={() => handleSortLastAbjad()} className="btn text-muted" style={{ width: '48%', border: '1px solid gray' }}>Z - A</button>
+                                <div className="col-md-6 col-12">
+                                    {
+                                        sort === "desc" ?
+                                            <button className="btn btn-primary rounded-pill btn-block" onClick={() => handleSort("")}>
+                                                A-Z
+                                            </button>
+                                            :
+                                            <button className="btn btn-outline-light rounded-pill btn-block" onClick={() => handleSort("desc")}>
+                                                A-Z
+                                            </button>
+                                    }
+                                </div>
+
+                                <div className="col-md-6 col-12">
+                                    {
+                                        sort === "asc" ?
+                                            <button className="btn btn-primary rounded-pill btn-block" onClick={() => handleSort("")}>
+                                                Z-A
+                                            </button>
+                                            :
+                                            <button className="btn btn-outline-light rounded-pill btn-block" onClick={() => handleSort("asc")}>
+                                                Z-A
+                                            </button>
+                                    }
+
+                                </div>
+                                {/* <button type="button" onClick={() => handleSortAbjad()} className="btn text-muted" style={{ width: '48%', border: '1px solid gray' }}>A - Z</button>
+                                <button type="button" onClick={() => handleSortLastAbjad()} className="btn text-muted" style={{ width: '48%', border: '1px solid gray' }}>Z - A</button> */}
                             </div>
                         </div>
-                        <button type="button" className="btn btn-primary mb-5" style={{ width: '90%', margin: 'auto', borderRadius: '30px' }}>Tampilkan</button>
+                        <button type="button" className="btn btn-primary mb-5" style={{ width: '90%', margin: 'auto', borderRadius: '30px' }} onClick={() => submitFilter()}>Tampilkan</button>
                     </div>
 
                     {/* Tag */}
                     <div className="row mt-5 d-flex flex-column mx-3 ml-5">
                         <h3 className="font-weight-bolder">
-                            Temukan Lebih Banyak Berita Yang Sesuai:
+                            Temukan Lebih Banyak Video Yang Sesuai:
                         </h3>
                         <div className=" d-flex flex-wrap flex-row">
                             <div className="row ml-0">
                                 {
-                                    dataTag.tag.map((row, i) => {
-                                        return (
-                                            <div className="border px-2 py-1 rounded my-3 mr-3">#{(row).toUpperCase()}</div>
-                                        )
-                                    })
+                                    dataTag && dataTag.tag && dataTag.tag.length !== 0 ?
+                                        dataTag.tag.map((row, i) => {
+                                            return (
+                                                <div className="border px-2 py-1 rounded my-3 mr-3" onClick={() => handleFilterTag(row)} style={{ cursor: 'pointer' }}>#{(row).toUpperCase()}</div>
+                                            )
+                                        })
+                                        :
+                                        <div className="row text-center">
+                                            <h3 className="text-muted">
+                                                <em>
+                                                    Tag Belum Tersedia
+                                                </em>
+                                            </h3>
+                                        </div>
                                 }
                             </div>
                         </div>
@@ -375,7 +463,7 @@ const VideoPage = ({ token }) => {
                                 </div>
                                 <div className="col-6">
                                     <div className={styles['listTag']}>
-                                        {
+                                        {/* {
                                             (tag === null) ? null :
                                                 tag.map((el, i) => {
                                                     return (
@@ -388,13 +476,16 @@ const VideoPage = ({ token }) => {
                                                         </div>
                                                     )
                                                 })
-                                        }
+                                        } */}
                                     </div>
                                 </div>
                                 <div className="col-3" style={{ textAlign: 'center' }}>
-                                    <span className="p-2 label label-inline label-light-success font-weight-bold">
-                                        {dataKategori}
-                                    </span>
+                                    {
+                                        dataKategori === null ? null :
+                                            <span className="p-2 label label-inline label-light-success font-weight-bold">
+                                                {dataKategori}
+                                            </span>
+                                    }
                                 </div>
                             </div>
                             <div className={`${styles.descriptionVideo} text-break m-4`}>

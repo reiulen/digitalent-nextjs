@@ -17,7 +17,7 @@ export const getAllFaq = (token) => async (dispatch) => {
             },
         };
 
-        let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/faq`;
+        let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/home/faq`;
 
         const { data } = await axios.get(link, config)
 

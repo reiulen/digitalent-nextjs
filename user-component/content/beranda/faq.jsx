@@ -8,15 +8,26 @@ import styles from "../../components/template/Sidebar.module.css";
 const FaqPage = () => {
 
     const { loading, error, faq } = useSelector(state => state.allFaq)
-    const [deskripsi, setDeskripsi] = useState(faq.faq[0].kategori_id)
-    const [title, setTitle] = useState(faq.faq[0].kategori)
+    const [deskripsi, setDeskripsi] = useState(faq.faq[0].id)
+    const [title, setTitle] = useState(faq.faq[0].nama_kategori)
     const [disableBtn, setDisableBtn] = useState(false)
     const [disableBtnPlus, setDisableBtnPlus] = useState(false)
 
     return (
         <>
-            <div className="mt-5">
-                <SubHeaderComponent />
+        <div className="row my-5 mx-1 py-3 px-8 bg-white rounded-pill d-flex align-items-center border">
+                <span className="text-primary">
+                    <Link href="/">
+                        Beranda 
+                    </Link>
+                </span>
+                <span>
+                    <i className="ri-arrow-right-s-line text-primary"></i> 
+                </span>
+                <span>
+                    {/* Insert BreadCrumb Here */}
+                    FAQ
+                </span>
             </div>
             <div>
                 <h1 style={{ fontWeight: '800', marginTop: '40px' }}>Frequently Asked Questions</h1>
@@ -61,8 +72,8 @@ const FaqPage = () => {
                                     >
                                         <div className="d-flex align-items-center my-5"
                                             onClick={() => {
-                                                setDeskripsi(row.kategori_id)
-                                                setTitle(row.kategori)
+                                                setDeskripsi(row.id)
+                                                setTitle(row.nama_kategori)
                                             }}>
                                             <i className="fas fa-arrow-right mr-3"></i>
                                             <td>{row.kategori}</td>
@@ -83,7 +94,7 @@ const FaqPage = () => {
                                     if (row.kategori_id === deskripsi) {
                                         return (
                                             <div className="accordion" id="selector">
-                                                <div className="accordion-item border border-dark" style={{ marginTop: '30px', borderRadius: '10px' }}>
+                                                <div className="accordion-item" style={{ marginTop: '30px', borderRadius: '7.5px', border:'1px solid black' }}>
                                                     <div className="accordion-header d-flex justify-content-between align-items-center pt-1" style={{ marginLeft: '30px' }}>
                                                         <h6 style={{ fontWeight: '700' }}>{row.judul}</h6>
                                                         <button className="accordion-button btn" onClick={() => setDisableBtnPlus(!disableBtnPlus)} type="button" data-toggle="collapse" data-target={i === 0 ? "#collapseExample" : `#collapseExample${i}`} key={i} data-parent="#selector" aria-expanded="false" aria-controls="collapseExample">
