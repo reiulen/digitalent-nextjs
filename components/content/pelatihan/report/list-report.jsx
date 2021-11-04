@@ -408,7 +408,13 @@ const ListReport = ({token}) => {
           </button>
           <button className="btn btn-primary-rounded-full" type="button" onClick={() => {
              setShowModal(false);
-            dispatch(listsReportTraining(token, page, limit, search, penyelenggara.label, academy.label, theme.label))
+             let register = dateRegister.map(item => {
+               return moment(item).format("YYYY/MM/DD")
+             })
+             let pelaksanaan = datePelaksanaan.map(item => {
+              return moment(item).format("YYYY/MM/DD")
+            })
+            dispatch(listsReportTraining(token, page, limit, search, penyelenggara.label, academy.label, theme.label, register.join(","), pelaksanaan.join(",")))
           }}>
             Terapkan
           </button>

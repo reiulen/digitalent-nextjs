@@ -577,7 +577,7 @@ const ListTraining = ({ token }) => {
                   </div>
                 </div>
 
-                <div className="col-lg-4 col-xl-4 justify-content-end d-flex">
+                <div className="col-lg-4 col-xl-4 justify-content-end d-flex mt-3">
                   <button
                     className="btn border d-flex align-items-center justify-content-between mb-2 w-100"
                     style={{

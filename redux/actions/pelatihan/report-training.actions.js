@@ -2,7 +2,7 @@ import axios from "axios";
 import { GET_DATA_REPORT_TRAINING, GET_DETAIL_REPORT_TRAINING } from "../../types/pelatihan/report-training.type";
 import Swal from "sweetalert2";
 
-export const listsReportTraining = (token, page = 1, limit = 5, cari = "", penyelenggara = "", akademi = "", tema = "") => async (dispatch) => {
+export const listsReportTraining = (token, page = 1, limit = 5, cari = "", penyelenggara = "", akademi = "", tema = "", pendaftaran_mulai = "", pelatihan_mulai = "") => async (dispatch) => {
   try {
     let link =
       process.env.END_POINT_API_PELATIHAN +
@@ -13,8 +13,8 @@ export const listsReportTraining = (token, page = 1, limit = 5, cari = "", penye
         cari,
         limit,
         page,
-        pendaftaran_mulai: "",
-        pelatihan_mulai: "",
+        pendaftaran_mulai,
+        pelatihan_mulai,
         penyelenggara,
         akademi,
         tema,
