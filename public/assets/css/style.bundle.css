@@ -7484,6 +7484,90 @@ input[type="button"].btn-block {
   border-bottom-right-radius: 0.28rem;
 }
 
+.page-link-dashboard {
+  position: relative;
+  display: block;
+  padding: 0.5rem 0.75rem;
+  margin-left: -1px;
+  line-height: 1.25;
+  color: #3699ff;
+  background-color: #ffffff;
+  border: 1px solid #e4e6ef;
+}
+
+.page-link-dashboard:hover {
+  z-index: 2;
+  color: #0073e9;
+  text-decoration: none;
+  background-color: #ebedf3;
+  border-color: #e4e6ef;
+}
+
+.page-link-dashboard:focus {
+  z-index: 3;
+  outline: 0;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.page-item-dashboard:first-child .page-link-dashboard {
+  margin-left: 0;
+  border-top-left-radius: 0.42rem;
+  border-bottom-left-radius: 0.42rem;
+}
+
+.page-item-dashboard:last-child .page-link-dashboard {
+  border-top-right-radius: 0.42rem;
+  border-bottom-right-radius: 0.42rem;
+}
+
+.page-item-dashboard.active .page-link-dashboard {
+  z-index: 3;
+  color: #ffffff;
+  background-color: #3699ff;
+  border-color: #3699ff;
+}
+
+.page-item-dashboard.disabled .page-link-dashboard {
+  color: #7e8299;
+  pointer-events: none;
+  cursor: auto;
+  background-color: #ffffff;
+  border-color: #ebedf3;
+}
+
+.pagination-lg .page-link-dashboard {
+  padding: 0.75rem 1.5rem;
+  font-size: 1.08rem;
+  line-height: 1.5;
+}
+
+.pagination-lg .page-item-dashboard:first-child .page-link-dashboard {
+  border-top-left-radius: 0.85rem;
+  border-bottom-left-radius: 0.85rem;
+}
+
+.pagination-lg .page-item-dashboard:last-child .page-link-dashboard {
+  border-top-right-radius: 0.85rem;
+  border-bottom-right-radius: 0.85rem;
+}
+
+.pagination-sm .page-link-dashboard {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.925rem;
+  line-height: 1.35;
+}
+
+.pagination-sm .page-item-dashboard:first-child .page-link-dashboard {
+  border-top-left-radius: 0.28rem;
+  border-bottom-left-radius: 0.28rem;
+}
+
+.pagination-sm .page-item-dashboard:last-child .page-link-dashboard {
+  border-top-right-radius: 0.28rem;
+  border-bottom-right-radius: 0.28rem;
+}
+
 .badge {
   display: inline-block;
   padding: 0.5em 0.75em;
