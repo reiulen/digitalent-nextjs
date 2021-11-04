@@ -13,8 +13,11 @@ export default function FileSize(props) {
 
   const handleSubmit = e => {
     e.preventDefault();
-    
-    dispatch(postFileSize(props.token, image, document))
+    if(image < 0 && document < 0){
+      Swal.fire("Gagal", "Gagal simpan, angka tidak boleh minus", "error");
+    }else{
+      dispatch(postFileSize(props.token, image, document))
+    }
   }
 
   useEffect(() => {
@@ -42,6 +45,7 @@ export default function FileSize(props) {
               className="form-control"
               placeholder="Size Image"
               value={image}
+              min="0"
               onChange={e => {
                 setImage(e.target.value)
               }}
@@ -59,8 +63,8 @@ export default function FileSize(props) {
               type="number"
               value={document}
               className="form-control"
-              placeholder="Size Document" step="1" 
-              pattern="\d+"
+              placeholder="Size Document"
+              min="0"
               onChange={e => {
                 setDocument(e.target.value)
               }}

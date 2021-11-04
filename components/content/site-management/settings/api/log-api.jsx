@@ -1,14 +1,9 @@
 import React, { useEffect, useState } from "react";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import Pagination from "react-js-pagination";
 import PageWrapper from "../../../../wrapper/page.wrapper";
 import { useDispatch, useSelector } from "react-redux";
 import LoadingTable from "../../../../LoadingTable";
-import IconEye from "../../../../assets/icon/Eye";
-import IconPencil from "../../../../assets/icon/Pencil";
-import IconDelete from "../../../../assets/icon/Delete";
-import IconAdd from "../../../../assets/icon/Add";
 import IconSearch from "../../../../assets/icon/Search";
 import IconClose from "../../../../assets/icon/Close";
 import IconFilter from "../../../../assets/icon/Filter";
@@ -87,7 +82,7 @@ const Table = ({ token }) => {
               Log API
             </h3>
           </div>
-          <div className="card-body pt-0">
+          <div className="card-body pt-0 px-4 px-sm-8">
             <div className="table-filter">
               <div className="row align-items-center">
                 <div className="col-lg-12 col-xl-12">
@@ -202,9 +197,10 @@ const Table = ({ token }) => {
                                           onChangePeriodeDateEnd(date)
                                         }
                                         value={tos}
+                                        disabled={!froms}
                                         dateFormat="YYYY-MM-DD"
                                         placeholderText="To"
-                                        minDate={moment().toDate()}
+                                        minDate={moment(froms).toDate()}
                                       />
                                       <IconCalender
                                         className="right-center-absolute"
@@ -317,8 +313,8 @@ const Table = ({ token }) => {
                 )}
               </div>
 
-              <div className="row">
-                <div className="table-pagination paginate-cs">
+              <div className="row px-4">
+               
                   <div className="table-pagination">
                     <Pagination
                       activePage={listLog?.page}
@@ -334,13 +330,13 @@ const Table = ({ token }) => {
                       linkClass="page-link"
                     />
                   </div>
-                </div>
+           
 
-                <div className="table-total ml-auto">
-                  <div className="row">
+                <div className="table-total ml-auto mr-4">
+                  <div className="row mt-4">
                     <div className="col-4 mr-0 p-0">
                       <select
-                        className="form-control mr-5 cursor-pointer"
+                        className="form-control cursor-pointer pr-2"
                         id="exampleFormControlSelect2"
                         defaultValue=""
                         style={{

@@ -66,6 +66,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         }
       }
       const data = await store.dispatch(getBeasiswa());
+      // console.log(data, "ini data beasiswa");
       await store.dispatch(
         getDashboardPeserta(session?.user.user.data.user.token)
       );

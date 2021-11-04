@@ -198,6 +198,7 @@ const TambahArtikel = ({ token, id }) => {
           judul_artikel,
           isi_artikel,
           gambar,
+          kategori_akademi,
           kategori_id,
           users_id,
           tag,

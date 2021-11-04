@@ -6,12 +6,6 @@ import {
 import axios from "axios";
 import Swal from "sweetalert2";
 
-const drawDataPrompt = (data) => ({
-  type: GET_DATA_PROMPT,
-  notification: data.notification.status,
-  email: data.email.status,
-});
-
 export const loadDataPrompt = (token) => {
   return async (dispatch) => {
     try {

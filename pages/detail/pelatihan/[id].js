@@ -3,14 +3,23 @@ import dynamic from "next/dynamic";
 import { wrapper } from "../../../redux/store";
 import { getDetailPelatihan } from "../../../redux/actions/beranda/detail-pelatihan.actions";
 import { getDataPribadi } from "../../../redux/actions/pelatihan/function.actions";
+import LoadingDetailPelatihan from "../../../user-component/components/loader/DetailPelatihanLoader";
 
-const DetailPelatihan = dynamic(() =>
-  import(
-    "../../../user-component/content/detail/kategori/pelatihan/detail-pelatihan"
-  )
+const DetailPelatihan = dynamic(
+  () =>
+    import(
+      "../../../user-component/content/detail/kategori/pelatihan/detail-pelatihan-new"
+    ),
+  {
+    loading: function loadingNow() {
+      return <LoadingDetailPelatihan />;
+    },
+    ssr: false,
+  }
 );
-const Layout = dynamic(() =>
-  import("../../../user-component/content/wrapper/layout.wrapper")
+const Layout = dynamic(
+  () => import("../../../components/wrapper/beranda.wrapper"),
+  { ssr: false }
 );
 
 export default function DetailKategori(props) {
@@ -20,7 +29,7 @@ export default function DetailKategori(props) {
     session = props.session.user.user.data.user;
   }
   return (
-    <div>
+    <div style={{ backgroundColor: "white" }}>
       <Layout title="Detail Pelatihan" session={session}>
         <DetailPelatihan session={session} />
       </Layout>

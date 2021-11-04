@@ -9,12 +9,16 @@ export default function infoVideos({ video }) {
       style={{ backgroundColor: "white" }}
       className="py-0 py-xl-30 info-video max-container container"
     >
+      {console.log(video)}
       <div className="container-fluid">
         <div className="row">
           <div className="col-12 col-sm-6 m-auto">
             <div className="player-wrapper mb-5">
               <ReactPlayer
-                url="https://www.youtube.com/watch?v=BXWNfxOIaJE&ab_channel=DigitalentMedia"
+                url={
+                  (video && video.url_video) ||
+                  `https://www.youtube.com/watch?v=BXWNfxOIaJE&ab_channel=DigitalentMedia`
+                }
                 className="react-player"
                 width="100%"
                 height="100%"

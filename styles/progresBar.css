@@ -193,6 +193,7 @@
   z-index: 9;
   padding-left: 1px;
   padding-right: 10px;
+  border-radius: 0px 0px 35px 35px;
 }
 .list-wrap-accounts .items-lists {
   padding-left: 10px;
