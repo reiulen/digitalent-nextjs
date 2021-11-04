@@ -22,9 +22,11 @@ const Dashboard = ({ session, success }) => {
 
   useEffect(() => {
     if (!success) {
-      router.push("/peserta/wizzard");
+      return;
+      // router.push("/peserta/wizzard");
     }
   }, [success]);
+  // console.log(success, "ini success");
 
   const [cardPelatihan, setCardPelatihan] = useState([
     {
