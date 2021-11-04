@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Card, Col, Row, Badge, Button, Modal, Form } from "react-bootstrap";
-import Link from "next/link";
-import Image from "next/image";
-import { useRouter } from "next/router";
+
 import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
 import style from "./style.module.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -230,7 +228,6 @@ export default function SeleksiAdministrasi({ session }) {
     }
   };
 
-  const [showResendButton, setShowResendButton] = useState(false);
   const [count, setCount] = useState(30);
   useEffect(() => {
     if (showUbahEmailModalOtp) {
@@ -239,8 +236,6 @@ export default function SeleksiAdministrasi({ session }) {
           setCount((c) => c - 1);
         }, 1000);
         return () => clearInterval(secondsLeft);
-      } else {
-        setShowResendButton(true);
       }
     }
   }, [count, showUbahEmailModalOtp]);
