@@ -380,11 +380,11 @@ const TambahBerita = ({ token, id }) => {
                                             dataAkademi && dataAkademi.data && dataAkademi.data.map((row) => {
                                                 return (
                                                     // row.jenis_kategori == "Berita" ?
-                                                        <option key={row.value} value={row.label}>
-                                                            {row.label}
-                                                        </option>
-                                                        // :
-                                                        // null
+                                                    <option key={row.value} value={row.label}>
+                                                        {row.label}
+                                                    </option>
+                                                    // :
+                                                    // null
                                                 )
                                             })
                                         )}
