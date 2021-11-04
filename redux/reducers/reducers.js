@@ -308,6 +308,11 @@ import {
   getEditTrainingReducer,
   getEditTraining2Reducer,
   getEditTraining3Reducer,
+<<<<<<< HEAD
+=======
+  getFormLPJReducer,
+  getFormEvidenceReducer
+>>>>>>> e128bb4169752dcef16f0190467e27f553e87411
 } from "./pelatihan/admin/training.reducers";
 // =================== review pelatihan ==================
 import {
@@ -322,7 +327,11 @@ import {
 } from "./pelatihan/admin/review.reducers";
 // =================== report pelatihan ==================
 
+<<<<<<< HEAD
 import { getDataReportTrainingReducer } from "./pelatihan/admin/report-training.reducers";
+=======
+import {detailReportTrainingReducer, getDataReportTrainingReducer} from './pelatihan/admin/report-training.reducers'
+>>>>>>> e128bb4169752dcef16f0190467e27f553e87411
 // =================== rekap pelatihan ==================
 import {
   getFormBuilderReducer,
@@ -408,7 +417,15 @@ import {
   detailPelatihanReducer,
   checkRegisteredPelatihanReducer,
 } from "../reducers/beranda/detail-pelatihan.reducers";
+
+// ========== galeri ========
+import {
+  allBerandaGaleriReducer,
+  detailBerandaGaleriReducer,
+  kategoriBerandaGaleriReducer,
+} from "../reducers/beranda/galeri.reducer"
 //END BERANDA
+
 import {
   getAllRiwayatPelatihanPesertaReducer,
   getDetailRiwayatPelatihanReducer,
@@ -673,7 +690,8 @@ const reducer = combineReducers({
   getEditTraining: getEditTrainingReducer,
   getEditTraining2: getEditTraining2Reducer,
   getEditTraining3: getEditTraining3Reducer,
-
+  getFormLPJ: getFormLPJReducer,
+  getFormEvidence: getFormEvidenceReducer,
   // ========== review pelatihan ========
   allListReview: allListReviewReducer,
   cardReview: cardReviewReducer,
@@ -700,6 +718,7 @@ const reducer = combineReducers({
 
   // =============== rpoert oelatihan ========
   getDataReportTraining: getDataReportTrainingReducer,
+  detailReportTraining:detailReportTrainingReducer,
 
   // ========== pendaftaran pelatihan ========
   getFormBuilder: getFormBuilderReducer,
@@ -760,7 +779,12 @@ const reducer = combineReducers({
   detailPelatihan: detailPelatihanReducer,
   checkRegisteredPelatihan: checkRegisteredPelatihanReducer,
 
+  // ========== galeri ========
+  allBerandaGaleri: allBerandaGaleriReducer,
+  detailBerandaGaleri: detailBerandaGaleriReducer,
+  kategoriBerandaGaleri: kategoriBerandaGaleriReducer,
   //END BERANDA
+
   // ========== Riwayat Pelatihan ========
   getAllRiwayatPelatihanPeserta: getAllRiwayatPelatihanPesertaReducer,
   getDetailRiwayatPelatihanPeserta: getDetailRiwayatPelatihanReducer,

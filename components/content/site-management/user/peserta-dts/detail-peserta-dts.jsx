@@ -39,7 +39,7 @@ const Table = ({ token }) => {
       <div className="row">
         <div className="col-12 col-xl-3 order-1">
           <div className="card card-custom card-stretch gutter-b px-10 py-12">
-            <div className="form-group">
+            <div className="form-group" style={{maxWidth:"19rem"}}>
               <div>
                 <div
                   className="image-input image-input-outline w-100"
@@ -83,9 +83,6 @@ const Table = ({ token }) => {
                     <i className="ki ki-bold-close icon-xs text-muted"></i>
                   </span>
                 </div>
-                <span className="form-text text-muted">
-                  Please enter your full name
-                </span>
                 <div className="mt-4 w-100">
                   <button
                     type="button"
@@ -123,10 +120,10 @@ const Table = ({ token }) => {
           </div>
         </div>
         <div className="col-12 col-xl-9 order-1">
-          <div className="card card-custom card-stretch gutter-b px-8 py-4">
+          <div className="card card-custom card-stretch gutter-b px-4 px-sm-8 py-4">
             {/* Data Probadi */}
             <div>
-              <h3 className="card-title font-weight-bolder text-dark w-100 pb-5 mb-5 mt-5 fz-24">
+              <h3 className="card-title font-weight-bolder text-dark w-100 pb-5 mb-5 mt-5 titles-1">
                 Data Pribadi
               </h3>
               <div className="row">
@@ -183,7 +180,7 @@ const Table = ({ token }) => {
 
             {/* Alamat */}
             <div>
-              <h3 className="card-title font-weight-bolder text-dark border-top w-100 pt-5 mb-5 mt-5 fz-24">
+              <h3 className="card-title font-weight-bolder text-dark border-top w-100 pt-5 mb-5 mt-5 titles-1">
                 Alamat
               </h3>
               <p className="mb-2" style={colorText}>
@@ -255,7 +252,7 @@ const Table = ({ token }) => {
             </div>
             {/* Berkas Pribadi */}
             <div>
-              <h3 className="card-title font-weight-bolder text-dark border-top w-100 pt-5 mb-5 mt-5 fz-24">
+              <h3 className="card-title font-weight-bolder text-dark border-top w-100 pt-5 mb-5 mt-5 titles-1">
                 Berkas Pribadi
               </h3>
               <div className="row">
