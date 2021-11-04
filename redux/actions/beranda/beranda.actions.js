@@ -176,7 +176,6 @@ export const getAllPublikasi = () => async (dispatch) => {
     let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/home`;
 
     const { data } = await axios.get(link);
-<<<<<<< HEAD
 
     dispatch({
       type: BERANDA_PUBLIKASI_SUCCESS,
@@ -195,43 +194,4 @@ export const clearErrors = () => async (dispatch) => {
   dispatch({
     type: CLEAR_ERRORS,
   });
-=======
-
-    dispatch({
-      type: BERANDA_PUBLIKASI_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: BERANDA_PUBLIKASI_FAIL,
-      payload: error.message,
-    });
-  }
-};
-
-// Clear Error
-export const clearErrors = () => async (dispatch) => {
-  dispatch({
-    type: CLEAR_ERRORS,
-  });
-};
-
-export const getBeasiswa = () => async (dispatch) => {
-  try {
-    let link = "https://beasiswa-dev.majapahit.id/api/get-scholarship-data";
-    const { data } = await axios.get(link);
-
-    dispatch({
-      type: GET_BEASISWA_SUCCESS,
-      payload: data,
-    });
-
-    return data;
-  } catch (error) {
-    dispatch({
-      type: GET_BEASISWA_FAIL,
-      payload: error.message,
-    });
-  }
->>>>>>> 04fb780fe4c1092882c74fea824b1dbeeda83ff5
 };
