@@ -10,10 +10,16 @@ import SimpleReactValidator from "simple-react-validator";
 import OtpInput from "react-otp-input";
 import axios from "axios";
 import { toast } from "react-toastify";
-
+import Swal from "sweetalert2";
+import { getDataPribadi } from "../../../../redux/actions/pelatihan/function.actions";
 export default function SeleksiAdministrasi({ session }) {
   const { error: errorDataPribadi, dataPribadi } = useSelector(
     (state) => state.getDataPribadi
+  );
+
+  const dispatch = useDispatch();
+  const [handphoneVerify, setHandphoneVerify] = useState(
+    dataPribadi.handphone_verifikasi
   );
   const notify = (value) =>
     toast.error(`${value}`, {
@@ -25,6 +31,70 @@ export default function SeleksiAdministrasi({ session }) {
       draggable: true,
       progress: undefined,
     });
+
+  const [handphone, setHandphone] = useState("");
+  const [showUbahHandphoneModal, setShowUbahHandphoneModal] = useState(false);
+  const handleCloseHandphoneModal = () => setShowUbahHandphoneModal(false);
+  const handleShowUbahHandphone = () => setShowUbahHandphoneModal(true);
+  // HANDLE LANJUT UBAH HANDPHONE
+  const handleLanjutUbahHandphone = async (nomor_hp) => {
+    const body = {
+      old_nomor_hp: dataPribadi.nomor_handphone,
+      nomor_hp,
+    };
+    simpleValidator.current.fields.Email = true;
+    simpleValidator.current.fields["password konfirmasi"] = true;
+    simpleValidator.current.fields.passwordBaru = true;
+    simpleValidator.current.fields.passwordLama = true;
+
+    if (simpleValidator.current.allValid()) {
+      try {
+        const data = await axios.post(
+          `${process.env.END_POINT_API_PELATIHAN}api/v1/auth/request-update-handphone`,
+          body,
+          config
+        );
+        if (data) {
+          setPostStatus("ubahHandphone");
+          handleShowUbahEmailOtp();
+          handleCloseHandphoneModal();
+        }
+      } catch (error) {
+        notify(error.response.data.message);
+      }
+    } else {
+      simpleValidator.current.showMessages();
+      forceUpdate(1);
+    }
+  };
+  // Handle Post OTP UBAH HANDPHONE
+  const handlePostOtpUbahHandphone = async (token) => {
+    const body = {
+      old_nomor_hp: dataPribadi.nomor_handphone,
+      nomor_hp: handphone,
+      token,
+    };
+    try {
+      const data = await axios.post(
+        `${process.env.END_POINT_API_PELATIHAN}api/v1/auth/submit-update-handphone`,
+        body,
+        config
+      );
+      if (data) {
+        Swal.fire(
+          "Berhasil!",
+          "Anda telah berhasil melakukan perubahan nomor handphone",
+          "success"
+        );
+        setOtpEmail("");
+        dispatch(getDataPribadi(session.token));
+        handleCloseEmailOtp();
+      }
+    } catch (error) {
+      notify(error.response.data.message);
+    }
+  };
+
   //   START PASSWORD
   const [passwordLama, setPasswordLama] = useState();
   const [passwordBaru, setPasswordBaru] = useState();
@@ -37,29 +107,43 @@ export default function SeleksiAdministrasi({ session }) {
   const [hidePasswordBaru, setHidePasswordBaru] = useState(true);
   const [hidePasswordBaru2, setHidePasswordBaru2] = useState(true);
 
+  const [postStatus, setPostStatus] = useState("");
+  const config = {
+    headers: {
+      Authorization: `Bearer ${session.token}`,
+      "content-type": "application/json",
+    },
+  };
+
   const handleLanjutPassword = async (
     old_password,
     password,
     password_konfirmasi
   ) => {
+    simpleValidator.current.fields.Email = true;
     const body = {
       old_password,
       password,
       password_konfirmasi,
     };
-    simpleValidator.current.fields.Password = true;
-    const config = {
-      headers: {
-        Authorization: `Bearer ${session.token}`,
-        "content-type": "application/json",
-      },
-    };
-    try {
-    } catch (error) {
-      notify();
-    }
-    console.log(simpleValidator.current.fields);
     if (simpleValidator.current.allValid()) {
+      try {
+        const data = await axios.post(
+          `${process.env.END_POINT_API_PELATIHAN}api/v1/auth/submit-update-password`,
+          body,
+          config
+        );
+        if (data) {
+          Swal.fire(
+            "Berhasil!",
+            "Anda telah berhasil melakukan perubahan password",
+            "success"
+          );
+          handleClosePasswordModal();
+        }
+      } catch (error) {
+        notify(error.response.data.message);
+      }
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -86,7 +170,7 @@ export default function SeleksiAdministrasi({ session }) {
     })
   );
   //POST EMAIL LANJUT
-  const handlePostUbahEmail = async (email) => {
+  const handleLanjutUbahEmail = async (email) => {
     const body = {
       old_email: dataPribadi.email,
       email,
@@ -96,12 +180,6 @@ export default function SeleksiAdministrasi({ session }) {
     simpleValidator.current.fields["passwordBaru"] = true;
     simpleValidator.current.fields["password konfirmasi"] = true;
 
-    const config = {
-      headers: {
-        Authorization: `Bearer ${session.token}`,
-        "content-type": "application/json",
-      },
-    };
     if (simpleValidator.current.allValid()) {
       try {
         const data = await axios.post(
@@ -110,7 +188,7 @@ export default function SeleksiAdministrasi({ session }) {
           config
         );
         if (data) {
-          console.log(data);
+          setPostStatus("email");
           handleShowUbahEmailOtp();
           handleCloseEmailModal();
         }
@@ -122,19 +200,15 @@ export default function SeleksiAdministrasi({ session }) {
       forceUpdate(1);
     }
   };
-  // Post OTP
+
+  // Post OTP Email
   const handlePostOtpEmail = async (token, email) => {
     const body = {
       old_email: dataPribadi.email,
       email,
       token,
     };
-    const config = {
-      headers: {
-        Authorization: `Bearer ${session.token}`,
-        "content-type": "application/json",
-      },
-    };
+
     try {
       const data = await axios.post(
         `${process.env.END_POINT_API_PELATIHAN}api/v1/auth/submit-update-email`,
@@ -142,7 +216,14 @@ export default function SeleksiAdministrasi({ session }) {
         config
       );
       if (data) {
-        console.log(data);
+        Swal.fire(
+          "Berhasil!",
+          "Anda telah berhasil melakukan perubahan email",
+          "success"
+        );
+        setOtpEmail("");
+        dispatch(getDataPribadi(session.token));
+        handleCloseEmailOtp();
       }
     } catch (error) {
       notify(error.response.data.message);
@@ -164,6 +245,100 @@ export default function SeleksiAdministrasi({ session }) {
     }
   }, [count, showUbahEmailModalOtp]);
   const [, forceUpdate] = useState(0);
+
+  const verifikasiHp = async () => {
+    const body = {
+      email: dataPribadi.email,
+      services: "sms",
+    };
+    try {
+      const data = await axios.post(
+        `${process.env.END_POINT_API_PELATIHAN}api/v1/auth/request-token-verifikasi`,
+        body,
+        config
+      );
+      if (data) {
+        setPostStatus("verifyHp");
+        handleShowUbahEmailOtp();
+      }
+    } catch (error) {
+      notify(error.response.data.message);
+    }
+  };
+
+  const verifikasiEmail = async () => {
+    const body = {
+      email: dataPribadi.email,
+      services: "email",
+    };
+    try {
+      const data = await axios.post(
+        `${process.env.END_POINT_API_PELATIHAN}api/v1/auth/request-token-verifikasi`,
+        body,
+        config
+      );
+      if (data) {
+        setPostStatus("verifyEmail");
+        handleShowUbahEmailOtp();
+      }
+    } catch (error) {
+      notify(error.response.data.message);
+    }
+  };
+
+  const handlePostOtpEmailVerifikasi = async (token) => {
+    const body = {
+      email: dataPribadi.email,
+      token,
+    };
+    handleCloseEmailOtp();
+    try {
+      const data = await axios.post(
+        `${process.env.END_POINT_API_PELATIHAN}api/v1/auth/submit-token-verifikasi`,
+        body,
+        config
+      );
+      if (data) {
+        Swal.fire(
+          "Berhasil!",
+          "Anda telah berhasil melakukan verifikasi nomer handphone",
+          "success"
+        );
+        setOtpEmail("");
+        dispatch(getDataPribadi(session.token));
+        handleCloseEmailOtp();
+      }
+    } catch (error) {
+      notify(error.response.data.message);
+    }
+  };
+
+  const handlePostOtpHpVerifikasi = async (token) => {
+    const body = {
+      email: dataPribadi.email,
+      token,
+    };
+    handleCloseEmailOtp();
+    try {
+      const data = await axios.post(
+        `${process.env.END_POINT_API_PELATIHAN}api/v1/auth/submit-token-verifikasi`,
+        body,
+        config
+      );
+      if (data) {
+        Swal.fire(
+          "Berhasil!",
+          "Anda telah berhasil melakukan verifikasi nomer handphone",
+          "success"
+        );
+        setOtpEmail("");
+        dispatch(getDataPribadi(session.token));
+        handleCloseEmailOtp();
+      }
+    } catch (error) {
+      notify(error.response.data.message);
+    }
+  };
 
   return (
     <PesertaWrapper>
@@ -209,6 +384,9 @@ export default function SeleksiAdministrasi({ session }) {
                 <Button
                   variant="danger"
                   className="rounded-full mt-5 py-3 px-10"
+                  onClick={() => {
+                    verifikasiEmail();
+                  }}
                 >
                   Verifikasi
                 </Button>
@@ -221,7 +399,7 @@ export default function SeleksiAdministrasi({ session }) {
                 style={{ height: "24px" }}
               >
                 Nomor Handphone
-                {dataPribadi.handphone_verifikasi ? (
+                {handphoneVerify ? (
                   <div
                     className={`rounded-circle d-flex align-items-center justify-content-center mx-5 ${style.iconBackgroundSuccess}`}
                   >
@@ -237,21 +415,24 @@ export default function SeleksiAdministrasi({ session }) {
               </div>
               <div className="mt-5">
                 {dataPribadi.nomor_handphone || "-"}
-                {dataPribadi.handphone_verifikasi == true && (
+                {handphoneVerify == true && (
                   <span className="ml-5">
                     <button
                       className={`text-primary ${style.btn_ubah}`}
-                      onClick={handleShowUbahEmail}
+                      onClick={handleShowUbahHandphone}
                     >
                       Ubah
                     </button>
                   </span>
                 )}
               </div>
-              {dataPribadi.handphone_verifikasi == false && (
+              {handphoneVerify == false && (
                 <Button
                   variant="danger"
                   className="rounded-full mt-5 py-3 px-10"
+                  onClick={() => {
+                    verifikasiHp();
+                  }}
                 >
                   Verifikasi
                 </Button>
@@ -350,7 +531,7 @@ export default function SeleksiAdministrasi({ session }) {
               className="rounded-full py-4 px-8"
               style={{ fontSize: "14px" }}
               onClick={() => {
-                handlePostUbahEmail(email);
+                handleLanjutUbahEmail(email);
               }}
             >
               Lanjut
@@ -416,7 +597,15 @@ export default function SeleksiAdministrasi({ session }) {
                 <button
                   className={` font-weight-bolder text-primary ${style.btn_ubah}`}
                   onClick={() => {
-                    handlePostUbahEmail(email);
+                    if (postStatus == "email") {
+                      handleLanjutUbahEmail(email);
+                    } else if (postStatus == "verifyHp") {
+                      verifikasiHp();
+                    } else if (postStatus == "ubahHandphone") {
+                      handleLanjutUbahHandphone(handphone);
+                    } else if (postStatus == "verifyEmail") {
+                      verifikasiEmail();
+                    }
                     setCount(30);
                   }}
                 >
@@ -429,7 +618,15 @@ export default function SeleksiAdministrasi({ session }) {
               className="rounded-full py-4 px-8"
               style={{ fontSize: "14px" }}
               onClick={() => {
-                handlePostOtpEmail(otpEmail, email);
+                if (postStatus == "email") {
+                  handlePostOtpEmail(otpEmail, email);
+                } else if (postStatus == "verifyHp") {
+                  handlePostOtpHpVerifikasi(otpEmail);
+                } else if (postStatus == "ubahHandphone") {
+                  handlePostOtpUbahHandphone(otpEmail);
+                } else if (postStatus == "verifyEmail") {
+                  handlePostOtpEmailVerifikasi(otpEmail);
+                }
               }}
             >
               Verifikasi
@@ -619,6 +816,83 @@ export default function SeleksiAdministrasi({ session }) {
         </Modal.Body>
       </Modal>
       {/* END MODAL PASSWORD OTP */}
+      {/* START MODAL HANDPHONE */}
+      <Modal
+        show={showUbahHandphoneModal}
+        onHide={handleCloseHandphoneModal}
+        backdrop="static"
+        keyboard={false}
+        centered
+      >
+        <Modal.Header>
+          <Modal.Title>Ubah Handphone</Modal.Title>
+          <Modal.Title
+            className="d-flex align-items-center"
+            onClick={handleCloseHandphoneModal}
+          >
+            <button className={`${style.btn_ubah}`}>
+              <i class="ri-close-fill"></i>
+            </button>
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label
+                className="mb-3"
+                style={{ fontSize: "16px", color: "#1F1F1F" }}
+              >
+                Nomor HP Lama
+              </Form.Label>
+              <Form.Control
+                disabled
+                type="email"
+                placeholder="Enter email"
+                value={dataPribadi.nomor_handphone}
+                style={{ fontSize: "14px" }}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label
+                className="mb-3"
+                style={{ fontSize: "16px", color: "#1F1F1F" }}
+              >
+                Nomor HP Baru
+              </Form.Label>
+              <Form.Control
+                style={{ fontSize: "14px" }}
+                type="email"
+                placeholder="Masukkan No HP Baru"
+                onChange={(e) => {
+                  setHandphone(e.target.value);
+                }}
+              />
+              {simpleValidator.current.message(
+                "nomor handphone",
+                handphone,
+                "required",
+                {
+                  className: "text-danger",
+                }
+              )}
+            </Form.Group>
+            Kode verifikasi akan dikirimkan melalui SMS
+          </Form>
+          <div className="d-flex justify-content-end mt-14">
+            <Button
+              variant="primary"
+              className="rounded-full py-4 px-8"
+              style={{ fontSize: "14px" }}
+              onClick={() => {
+                handleLanjutUbahHandphone(handphone);
+              }}
+            >
+              Lanjut
+            </Button>
+          </div>
+        </Modal.Body>
+      </Modal>
+      {/* END MODAL HANDPHONE */}
     </PesertaWrapper>
   );
 }
