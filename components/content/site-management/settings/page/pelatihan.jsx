@@ -25,7 +25,7 @@ export default function Pelatihan({ token }) {
   }, [token, dispatch]);
 
   const initialState = {
-    page: "Prompt",
+    page: "SUBM",
   };
 
   const [{ page }, setState] =

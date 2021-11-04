@@ -13,8 +13,11 @@ export default function FileSize(props) {
 
   const handleSubmit = e => {
     e.preventDefault();
-    
-    dispatch(postFileSize(props.token, image, document))
+    if(image < 0 && document < 0){
+      Swal.fire("Gagal", "Gagal simpan, angka tidak boleh minus", "error");
+    }else{
+      dispatch(postFileSize(props.token, image, document))
+    }
   }
 
   useEffect(() => {

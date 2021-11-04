@@ -308,7 +308,8 @@ import {
   getEditTrainingReducer,
   getEditTraining2Reducer,
   getEditTraining3Reducer,
-  getFormLPJReducer
+  getFormLPJReducer,
+  getFormEvidenceReducer
 } from "./pelatihan/admin/training.reducers";
 // =================== review pelatihan ==================
 import {
@@ -671,6 +672,7 @@ const reducer = combineReducers({
   getEditTraining2: getEditTraining2Reducer,
   getEditTraining3: getEditTraining3Reducer,
   getFormLPJ: getFormLPJReducer,
+  getFormEvidence: getFormEvidenceReducer,
   // ========== review pelatihan ========
   allListReview: allListReviewReducer,
   cardReview: cardReviewReducer,

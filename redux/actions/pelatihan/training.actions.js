@@ -84,7 +84,8 @@ import {
   GET_EDIT_DATA_TRAINING,
   GET_EDIT_DATA_TRAINING2,
   GET_EDIT_DATA_TRAINING3,
-  GET_FORM_LPJ
+  GET_FORM_LPJ,
+  GET_FORM_EVIDENCE
 } from "../../types/pelatihan/training.type";
 
 import axios from "axios";
@@ -860,6 +861,30 @@ export const postEvidence = (token, datas) => async (dispatch) => {
     Swal.fire("Berhasil", "Evidence berhasil di Upload", "success").then(() => {
       window.location = "/pelatihan/pelatihan"
     });
+
+  } catch (error) {
+    throw(error)
+  }
+};
+
+export const getFormEvidence = (token, pelatian_id) => async (dispatch) => {
+  try {
+    let link = process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/get-evidence`;   
+
+    const config = {
+      params:{
+        pelatian_id
+      },
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+   const {data} = await axios.get(link, config);
+   dispatch({
+    type: GET_FORM_EVIDENCE,
+    payload: data
+  })
 
   } catch (error) {
     throw(error)

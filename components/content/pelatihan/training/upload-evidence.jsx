@@ -1,17 +1,18 @@
 import React, { useEffect, useState, useRef } from "react";
-
 import Image from "next/image";
 import { useRouter } from "next/router";
 
 import Swal from "sweetalert2";
+import moment from "moment";
 import SimpleReactValidator from "simple-react-validator";
 import { useDispatch, useSelector } from "react-redux";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingPage from "../../../LoadingPage";
-import { postEvidence } from '../../../../redux/actions/pelatihan/training.actions'
+import { postEvidence } from "../../../../redux/actions/pelatihan/training.actions";
+import { generatePath } from "react-router";
 
-const UploadEvidence = ({token}) => {
+const UploadEvidence = ({ token }) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -23,20 +24,66 @@ const UploadEvidence = ({token}) => {
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
 
-  const [numberDocument, setNumberDocument] = useState("");
-  const [dateReport, setDateReport] = useState("");
-  const [responsible, setResponsible] = useState("");
-  const [description, setDescription] = useState("");
-  const [jabatan , setJabatan] = useState("");
-  const [image, setImage] = useState([
-    { key: 1, imagePreview: "", imageFile: "", imageName: "" },
-  ]);
-  const [linkVideo, setLinkVideo] = useState("");
-  const [teacher, setTeacher] = useState([
-    { key: 1, name: "", agency: "" },
-  ]);
+  const { data: getFormEvidence } = useSelector(
+    (state) => state.getFormEvidence
+  );
+
+  console.log("hehe", getFormEvidence);
+
+  const [numberDocument, setNumberDocument] = useState(
+    getFormEvidence.name_dokumen
+  );
+  const [dateReport, setDateReport] = useState(
+    moment(getFormEvidence.tanggal_laporan).format("YYYY-MM-DD")
+  );
+  const [responsible, setResponsible] = useState(
+    getFormEvidence.nama_penanggung_jawab
+  );
+  const [description, setDescription] = useState(getFormEvidence.deskripsi);
+  const [jabatan, setJabatan] = useState(
+    getFormEvidence.Jabatan_penanggung_jawab
+  );
+  const [image, setImage] = useState(
+    getFormEvidence.gambar.length > 0
+      ? getFormEvidence.gambar.map((item, index) => {
+
+          return {
+            key: 1,
+            imagePreview:
+              process.env.END_POINT_API_IMAGE_BEASISWA + item.gambar,
+            imageFile: "",
+            imageName: "",
+          };
+        })
+      : [{ key: 1, imagePreview: "", imageFile: "", imageName: "" }]
+  );
+  const [linkVideo, setLinkVideo] = useState(getFormEvidence.link_video);
+  const [teacher, setTeacher] = useState(
+    getFormEvidence.pengajar.length > 0
+      ? getFormEvidence.pengajar.map((item, index) => {
+          return {
+            key: index + 1,
+            name: item.nama_pengajar,
+            agency: item.instansi_pengajar,
+          };
+        })
+      : [{ key: 1, name: "", agency: "" }]
+  );
 
   const [name, setName] = useState("");
+
+  async function getBase64ImageFromUrl(imageUrl) {
+    const reader = new FileReader();
+    reader.readAsDataURL(imageUrl);
+    reader.onload = function () {
+      console.log(reader.result)
+    };
+    
+  }
+
+  getBase64ImageFromUrl("https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/logo/evidace/cc5520f0-9234-4122-acc6-64122bbb3b22-November.png").then(result => console.log("base", result))
+  .catch(err => console.error("err nich", err));
+
 
   useEffect(() => {
     editorRef.current = {
@@ -127,31 +174,31 @@ const UploadEvidence = ({token}) => {
   const submitHandler = (e) => {
     e.preventDefault();
 
-    let images = image.map(item => {
-      return{
-        gambar: item.imagePreview
-      }
-    })
-    let teachers = teacher.map(item => {
-      return{
+    let images = image.map((item) => {
+      return {
+        gambar: item.imagePreview,
+      };
+    });
+    let teachers = teacher.map((item) => {
+      return {
         nama_pengajar: item.name,
-        instansi_pengajar: item.agency
-      }
-    })
-    
+        instansi_pengajar: item.agency,
+      };
+    });
+
     if (simpleValidator.current.allValid()) {
       const data = {
         name_dokumen: numberDocument,
         tanggal_laporan: dateReport,
         nama_penanggung_jawab: responsible,
-        "Jabatan_penanggung_jawab": jabatan,
+        Jabatan_penanggung_jawab: jabatan,
         deskripsi: description,
         link_video: linkVideo,
         gambar: images,
         pengajar: teachers,
-        pelatian_id: parseInt(router.query.id)
+        pelatian_id: parseInt(router.query.id),
       };
-      dispatch(postEvidence(token, data))
+      dispatch(postEvidence(token, data));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -283,7 +330,7 @@ const UploadEvidence = ({token}) => {
                       }}
                       onChange={(event, editor) => {
                         const data = editor.getData();
-                        setDescription(data); 
+                        setDescription(data);
                       }}
                       onBlur={() =>
                         simpleValidator.current.showMessageFor("deskripsi")
