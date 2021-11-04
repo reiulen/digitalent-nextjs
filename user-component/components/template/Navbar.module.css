@@ -1,0 +1,12 @@
+.adadeh {
+  color: black !important;
+  background-color: black;
+}
+
+@media (max-width: 800px) {
+  .collapsed {
+    max-height: 300px;
+    overflow-y: scroll;
+    z-index: 1;
+  }
+}
