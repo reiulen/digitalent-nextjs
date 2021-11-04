@@ -24,8 +24,10 @@ const TambahApi = ({ token }) => {
  
   let sortirOptionTempProv = detailUnitWork?.unitWork?.provinsi
   let optionTempProv = sortirOptionTempProv.map((items)=>{
-    return {...items,label:items.provinsi}
+    return {...items,label:items.provinsi,region:items.provinsi}
   })
+
+  console.log("optionTempProv",optionTempProv)
 
   
 
@@ -68,9 +70,11 @@ let sortirOptionTempProvList = allProvincesSite?.data
       );
     } else if (status === "") {
       Swal.fire("Gagal simpan", "Form status tidak boleh kosong", "error");
-    } else if (valueProvinsi.length === 0) {
-      Swal.fire("Gagal simpan", "Form provinsi tidak boleh kosong", "error");
-    } else {
+    } 
+    // else if (valueProvinsi.length === 0) {
+    //   Swal.fire("Gagal simpan", "Form provinsi tidak boleh kosong", "error");
+    // } 
+    else {
       Swal.fire({
         title: "Apakah anda yakin simpan ?",
         // text: "Data ini tidak bisa dikembalikan !",
@@ -87,7 +91,7 @@ let sortirOptionTempProvList = allProvincesSite?.data
             id:router.query.id,
             name: nameUnitWork,
             status: status,
-            data: valueProvinsi,
+            data: valueProvinsi.length === 0 ? optionTempProv : valueProvinsi,
           };
 
           try {
@@ -138,13 +142,12 @@ let sortirOptionTempProvList = allProvincesSite?.data
           <div className="card card-custom card-stretch gutter-b">
             <div className="card-header border-0">
               <h3
-                className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 mb-5 mt-5"
-                style={{ fontSize: "24px" }}
+                className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 mb-5 mt-5 titles-1"
               >
                 Ubah Satuan Kerja Penyelenggara
               </h3>
             </div>
-            <div className="card-body pt-0">
+            <div className="card-body pt-0 px-4 px-sm-8">
               <div className="form-group">
                 <label>Nama Satuan Kerja</label>
                 <input
@@ -162,16 +165,16 @@ let sortirOptionTempProvList = allProvincesSite?.data
                     className="form-control"
                     onChange={(e) => setStatus(e.target.value)}
                   >
-                    <option value="0">Tidak Aktif</option>
                     <option value="1">Aktif</option>
+                    <option value="0">Tidak Aktif</option>
                   </select>
                 ) : (
                   <select
                     className="form-control"
                     onChange={(e) => setStatus(e.target.value)}
                   >
-                    <option value="1">Aktif</option>
                     <option value="0">Tidak Aktif</option>
+                    <option value="1">Aktif</option>
                   </select>
                 )}
               </div>

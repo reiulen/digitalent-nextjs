@@ -1,24 +1,26 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 
-const SubHeaderComponent = () => {
-    return (
-        <div className="row my-5 mx-1 py-3 px-8 bg-white rounded-pill d-flex align-items-center border">
-            <span>
-                <Link href="#">
-                    Beranda 
-                </Link>
+const SubHeaderComponent = ({ data = [] }) => {
+  return (
+    <div className="rounded-pill d-flex align-items-center border px-4 py-2 my-md-7 mb-5">
+      <span className="text-primary">
+        <Link href="/">Beranda</Link>
+      </span>
+      {data &&
+        data.length > 0 &&
+        data.map((row, i) => (
+          <div className="link-bredcumd d-flex align-items-center" key={i}>
+            <span className="mx-2">
+              <i className="ri-arrow-right-s-line"></i>
             </span>
-            <span>
-                <i className="ri-arrow-right-s-line"></i> 
-            </span>
-            <span>
-                {/* Insert BreadCrumb Here */}
-                Vocational School Graduate Academy
-            </span>
-            
-        </div>
-    )
-}
+            <Link href={row.link} passHref>
+              <span>{row.name}</span>
+            </Link>
+          </div>
+        ))}
+    </div>
+  );
+};
 
-export default SubHeaderComponent
+export default SubHeaderComponent;

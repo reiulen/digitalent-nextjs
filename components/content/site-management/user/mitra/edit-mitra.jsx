@@ -1,24 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import Pagination from "react-js-pagination";
 import PageWrapper from "../../../../wrapper/page.wrapper";
-import { useDispatch, useSelector } from "react-redux";
-import LoadingTable from "../../../../LoadingTable";
-import IconEye from "../../../../assets/icon/Eye";
-import IconPencil from "../../../../assets/icon/Pencil";
-import IconDelete from "../../../../assets/icon/Delete";
-import IconAdd from "../../../../assets/icon/Add";
-import IconSearch from "../../../../assets/icon/Search";
-import Image from "next/image";
-import IconPlus from "../../../../../public/assets/icon/Plus.svg";
-import IconMinus from "../../../../../public/assets/icon/Minus.svg";
+import { useSelector } from "react-redux";
 import axios from "axios";
-import { getDetailMitraSite } from "../../../../../redux/actions/site-management/user/mitra-site.actions";
 import Swal from "sweetalert2";
 
 const TambahApi = ({ token,id }) => {
-  let dispatch = useDispatch();
   const router = useRouter();
 
   const {mitaSite} = useSelector((state) => state.detailMitraSite);
@@ -62,15 +50,18 @@ const TambahApi = ({ token,id }) => {
       );
     } else if (email === "") {
       Swal.fire("Gagal simpan", "Form Email tidak boleh kosong", "error");
-    } else if (password === "") {
-      Swal.fire("Gagal simpan", "Form Password tidak boleh kosong", "error");
-    } else if (confirmPassword === "") {
-      Swal.fire(
-        "Gagal simpan",
-        "Form Konfirmasi Password tidak boleh kosong",
-        "error"
-      );
-    } else if (status === "") {
+    } 
+    // else if (password === "") {
+    //   Swal.fire("Gagal simpan", "Form Password tidak boleh kosong", "error");
+    // } 
+    // else if (confirmPassword === "") {
+    //   Swal.fire(
+    //     "Gagal simpan",
+    //     "Form Konfirmasi Password tidak boleh kosong",
+    //     "error"
+    //   );
+    // } 
+    else if (status === "") {
       Swal.fire("Gagal simpan", "Form Status tidak boleh kosong", "error");
     } else {
       let formData = new FormData();
@@ -124,13 +115,12 @@ const TambahApi = ({ token,id }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3
-              className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 mb-5 mt-5"
-              style={{ fontSize: "24px" }}
+              className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 mb-5 mt-5 titles-1"
             >
               Edit Mitra
             </h3>
           </div>
-          <div className="card-body pt-0">
+          <div className="card-body pt-0 px-4 px-sm-8">
             <form>
               <div className="form-group">
                 <label>Nama Lengkap</label>
@@ -160,7 +150,7 @@ const TambahApi = ({ token,id }) => {
                     id="input-password"
                     type="password"
                     className="form-control"
-                    placeholder="Placeholder"
+                    placeholder="Masukan password"
                   />
                   {hidePassword === true ? (
                     <i
@@ -185,7 +175,7 @@ const TambahApi = ({ token,id }) => {
                     id="input-password-confirm"
                     type="password"
                     className="form-control"
-                    placeholder="Placeholder"
+                    placeholder="Masukan password konfirmasi"
                   />
                   {hidePasswordConfirm === true ? (
                     <i
@@ -204,21 +194,21 @@ const TambahApi = ({ token,id }) => {
               </div>
               <div className="form-group">
                 <label>Status</label>
-                {status == 1 ? (
+                {mitaSite.status == 1 ? (
                   <select
                     className="form-control"
                     onChange={(e) => setStatus(e.target.value)}
                   >
-                    <option value="0">Tidak Aktif</option>
                     <option value="1">Aktif</option>
+                    <option value="0">Tidak Aktif</option>
                   </select>
                 ) : (
                   <select
                     className="form-control"
                     onChange={(e) => setStatus(e.target.value)}
                   >
-                    <option value="1">Aktif</option>
                     <option value="0">Tidak Aktif</option>
+                    <option value="1">Aktif</option>
                   </select>
                 )}
               </div>

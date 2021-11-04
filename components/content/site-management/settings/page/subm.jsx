@@ -225,7 +225,7 @@ export default function SUBM(props) {
             name="judul"
             className="form-control"
             id="formGroupExampleInput"
-            placeholder="Example input"
+            placeholder="Masukkan Judul"
             required
             onChange={(e) => {
               setTitle(e.target.value);

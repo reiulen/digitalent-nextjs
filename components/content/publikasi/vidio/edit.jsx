@@ -121,6 +121,7 @@ const EditVideo = ({ token }) => {
 
     const handleChangePublish = (e) => {
         setDisablePublishDate(!disablePublishDate)
+        setPublishDate(null)
 
         if (e.target.checked === false) {
             setPublishDate(null)
@@ -353,7 +354,7 @@ const EditVideo = ({ token }) => {
                                     <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Deskripsi</label>
                                     <div className="col-sm-12">
                                         <textarea className="form-control" rows="10" placeholder="Deskripsi video" value={isi_video} onChange={e => setIsiVideo(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("isi_video")} />
-                                        {simpleValidator.current.message("isi_video", isi_video, "required|min:5|max:5000", { className: "text-danger" })}
+                                        {simpleValidator.current.message("isi_video", isi_video, "required|min:5|max:7000", { className: "text-danger" })}
                                     </div>
                                 </div>
 

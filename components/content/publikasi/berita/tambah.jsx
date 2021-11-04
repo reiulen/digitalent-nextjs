@@ -34,6 +34,7 @@ const TambahBerita = ({ token, id }) => {
     const { loading, error, success } = useSelector(state => state.newBerita)
     const { loading: allLoading, error: allError, kategori } = useSelector((state) => state.allKategori);
     const { setting } = useSelector(state => state.allSettingPublikasi)
+    const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(state => state.drowpdownAkademi);
 
     useEffect(() => {
 
@@ -56,6 +57,7 @@ const TambahBerita = ({ token, id }) => {
 
     const [kategori_id, setKategoriId] = useState('')
     const [users_id, setUserId] = useState(id)
+    const [kategori_akademi, setKategoriAkademi] = useState("")
     const [judul_berita, setJudulBerita] = useState('')
     const [isi_berita, setIsiBerita] = useState('');
     const [gambar, setGambar] = useState('')
@@ -154,6 +156,7 @@ const TambahBerita = ({ token, id }) => {
                 let today = new Date
 
                 const data = {
+                    kategori_akademi,
                     kategori_id,
                     users_id,
                     judul_berita,
@@ -181,6 +184,7 @@ const TambahBerita = ({ token, id }) => {
                     });
             } else {
                 const data = {
+                    kategori_akademi,
                     kategori_id,
                     users_id,
                     judul_berita,
@@ -364,6 +368,31 @@ const TambahBerita = ({ token, id }) => {
                                 </div>
                             </div>
 
+
+                            <div className="form-group">
+                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Akademi</label>
+                                <div className="col-sm-12">
+                                    <select name="" id="" className='form-control' value={kategori_akademi} onChange={e => setKategoriAkademi(e.target.value)} onBlur={e => { setKategoriAkademi(e.target.value); simpleValidator.current.showMessageFor('akademi') }} >
+                                        <option selected disabled value=''>-- Akademi --</option>
+                                        {!dataAkademi || (dataAkademi && dataAkademi.length === 0) ? (
+                                            <option value="">Data Tidak Ditemukan</option>
+                                        ) : (
+                                            dataAkademi && dataAkademi.data && dataAkademi.data.map((row) => {
+                                                return (
+                                                    // row.jenis_kategori == "Berita" ?
+                                                    <option key={row.value} value={row.label}>
+                                                        {row.label}
+                                                    </option>
+                                                    // :
+                                                    // null
+                                                )
+                                            })
+                                        )}
+
+                                    </select>
+                                    {simpleValidator.current.message('akademi', kategori_akademi, 'required', { className: 'text-danger' })}
+                                </div>
+                            </div>
 
                             <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Kategori</label>

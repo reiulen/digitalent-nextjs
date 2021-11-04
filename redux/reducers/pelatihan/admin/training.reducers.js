@@ -90,6 +90,11 @@ import {
   CLONE_TRAINING_RESET,
   CLONE_TRAINING_FAIL,
   CLEAR_ERRORS,
+  GET_EDIT_DATA_TRAINING,
+  GET_EDIT_DATA_TRAINING2,
+  GET_EDIT_DATA_TRAINING3,
+  GET_FORM_LPJ,
+  GET_FORM_EVIDENCE
 } from "../../../types/pelatihan/training.type";
 
 export const allTrainingReducer = (state = { training: [] }, action) => {
@@ -510,6 +515,75 @@ export const updateStatusReducer = (state = { status: {} }, action) => {
         error: null,
       };
 
+    default:
+      return state;
+  }
+};
+
+export const getEditTrainingReducer = (state = {data: {name: ""}}, action) => {
+  switch (action.type) {
+    case GET_EDIT_DATA_TRAINING:
+      return {
+        ...state,
+        data: action.payload.data
+      }
+
+    
+
+    default:
+      return state;
+  }
+};
+
+export const getEditTraining2Reducer = (state = {data: {name: ""}}, action) => {
+  switch (action.type) {
+    case GET_EDIT_DATA_TRAINING2:
+      return {
+        ...state,
+        data: action.payload.data
+      }
+
+    
+
+    default:
+      return state;
+  }
+};
+
+export const getEditTraining3Reducer = (state = {data: {}}, action) => {
+  switch (action.type) {
+    case GET_EDIT_DATA_TRAINING3:
+      return {
+        ...state,
+        data: action.payload.data
+      }
+
+    
+
+    default:
+      return state;
+  }
+};
+
+export const getFormLPJReducer = (state = {data: {}}, action) => {
+  switch (action.type) {
+    case GET_FORM_LPJ:
+      return {
+        ...state,
+        data: action.payload.data
+      }
+    default:
+      return state;
+  }
+};
+
+export const getFormEvidenceReducer = (state = {data: {}}, action) => {
+  switch (action.type) {
+    case GET_FORM_EVIDENCE:
+      return {
+        ...state,
+        data: action.payload.data
+      }
     default:
       return state;
   }

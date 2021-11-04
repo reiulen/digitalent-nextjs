@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import styles from "../step-2/step2-trivia.module.css";
 
 import Image from "next/image";
 
@@ -126,14 +127,14 @@ const PollingComponent = ({ props_answer }) => {
       </div>
 
       <div className="form-group row">
-        <div className="col-sm-7 col-md-4 col-lg-6">
+        <div className="col-sm-7 col-md-4 col-lg-5 text-center">
           {answer.length < 6 ? (
             <button
               type="button"
-              className="btn btn-rounded-full bg-blue-secondary text-white"
+              className="col-12 col-md-12 col-lg-10 col-xl-7 btn btn-rounded-full bg-blue-secondary text-white"
               onClick={() => handleAddClick()}
             >
-              <i className="ri-add-fill text-white"></i> Tambah Jawaban
+              <i className={`${styles.iconTambah} ri-add-fill text-white`}></i> Tambah Jawaban
             </button>
           ) : (
             ""

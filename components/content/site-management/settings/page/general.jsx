@@ -60,7 +60,7 @@ const GeneralPage = ({ token }) => {
   const submit = (e) => {
     e.preventDefault();
     if (description === "") {
-      Swal.fire("Gagal simpan", "Form caption tidak boleh kosong", "error");
+      Swal.fire("Gagal simpan", "Form description tidak boleh kosong", "error");
     } else {
       Swal.fire({
         title: "Apakah anda yakin simpan ?",
@@ -361,7 +361,7 @@ const GeneralPage = ({ token }) => {
                 General
               </h3>
             </div>
-            <div className="card-body pt-0">
+            <div className="card-body pt-0 px-4 px-sm-8">
               <div>
                 <form>
                   <div className="d-flex flex-wrap">

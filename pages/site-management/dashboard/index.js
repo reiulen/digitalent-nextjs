@@ -15,7 +15,7 @@ export default function DashboardSiteManagement(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <SiteManagementDashboard token={session.token} />
+        <SiteManagementDashboard token={session.token} user={session.user} />
       </div>
     </>
   );

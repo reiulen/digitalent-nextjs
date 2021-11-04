@@ -185,14 +185,13 @@ const Tambah = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3
-              className="card-title font-weight-bolder text-dark"
-              style={{ fontSize: "24px" }}
+              className="card-title font-weight-bolder text-dark titles-1"
             >
               Tambah Zonasi
             </h3>
           </div>
           <form>
-            <div className="card-body">
+            <div className="card-body pt-0 px-4 px-sm-8">
               <div className="form-group">
                 <label>
                   Nama Zonasi

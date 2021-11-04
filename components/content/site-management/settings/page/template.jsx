@@ -9,7 +9,7 @@ import axios from "axios";
 import { postTemplate } from "../../../../../redux/actions/site-management/settings/pelatihan.actions";
 
 export default function Template(props) {
-  const [status, setStatus] = useState("menunggu");
+  const [status, setStatus] = useState("");
   const [subject, setSubject] = useState("");
   const [body, setBody] = useState("");
 
@@ -53,7 +53,7 @@ export default function Template(props) {
         <div className="form-group">
           <label>Status</label>
           <select className="form-control" value={status} onChange={onChangeStatus}>
-            <option disabled selected>
+            <option selected>
               Pilih Status
             </option>
             <option value="Menunggu">Menunggu</option>
@@ -78,7 +78,7 @@ export default function Template(props) {
             type="text"
             className="form-control"
             id="formGroupExampleInput"
-            placeholder="Example input"
+            placeholder="Subject Email"
             value={subject}
             onChange={onChangeSubject}
           />

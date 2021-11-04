@@ -1,50 +1,132 @@
 import React, { useEffect, useState } from "react";
+import moment from 'moment'
 
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
+import { useDispatch, useSelector } from "react-redux";
 import Pagination from "react-js-pagination";
+import DatePicker from "react-datepicker";
 import Swal from "sweetalert2";
+import Select from "react-select";
 import { Modal } from "react-bootstrap";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingTable from "../../../LoadingTable";
+import { listsReportTraining } from '../../../../redux/actions/pelatihan/report-training.actions'
 
-import { useDispatch, useSelector } from "react-redux";
+const ListReport = ({token}) => {
+  
+    const dispatch = useDispatch();
+    const router = useRouter();
 
-const ListReport = () => {
-  const dispatch = useDispatch();
-  const router = useRouter();
-
-  let { page = 1, success } = router.query;
-  page = Number(page);
-
+  const { data: getDataReportTraining } = useSelector(
+    (state) => state.getDataReportTraining
+  );
+  const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(
+    (state) => state.drowpdownAkademi
+  );
+  const { error: dropdownErrorTema, data: dataTema } = useSelector(
+    (state) => state.drowpdownTema
+  );
+  const { error: dropdownErrorPenyelenggara, data: dataPenyelenggara } =
+    useSelector((state) => state.drowpdownPenyelenggara);
+  
+  
   const [search, setSearch] = useState("");
-  const [limit, setLimit] = useState(null);
+  const [limit, setLimit] = useState(5);
   const [showModal, setShowModal] = useState(false);
   const [showModalRevisi, setShowModalRevisi] = useState(false);
   const [publishValue, setPublishValue] = useState(null);
+  const [page, setPage] = useState(1)
+  const [dateRegister, setDateRegister] = useState([null, null]);
+  const [dateRegisterStart, dateRegisterEnd] = dateRegister;
 
-  const handlePagination = (pageNumber) => {
-    let link = `${router.pathname}?page=${pageNumber}`;
-    if (limit) link = link.concat(`&limit=${limit}`);
-    if (search) link = link.concat(`&keyword=${search}`);
-    router.push(link);
-  };
+  const [datePelaksanaan, setDatePelaksanaan] = useState([null, null]);
+  const [datePelaksanaanStart, datePelaksanaanEnd] = datePelaksanaan;
+  const [penyelenggara, setPenyelenggara] = useState({label: "", value: ""});
+  const [academy, setAcademy] = useState({label: "", value: ""});
+  const [theme, setTheme] = useState({label: "", value: ""});
 
-  const handleSearch = () => {
-    if (limit != null) {
-      router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`);
-    } else {
-      router.push(`${router.pathname}?page=1&keyword=${search}`);
+  const optionsAkademi =dataAkademi.data || [] ;
+  const optionsTema = dataTema.data || [] ;
+  const optionsPenyelenggara = [];
+  if (dataPenyelenggara) {
+    for (let index = 0; index < dataPenyelenggara.data.length; index++) {
+      let val = {
+        value: dataPenyelenggara.data[index].id,
+        label: dataPenyelenggara.data[index].label,
+      };
+      optionsPenyelenggara.push(val);
     }
-  };
+  }
+  
+  const listReportTraining = getDataReportTraining.list.map((item, index) => {
+    return (
+      <tr key={index}>
+        <td className="text-center">{index + limit * (page - 1) + 1}</td>
+        <td>CC{item.id}</td>
+        <td >
+          <p className="font-weight-bolder my-0" style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '11rem' }}>{item.name}</p>
+          <p className="my-0" style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '11rem' }}>{item.penyelenggara}</p>
+          <p className="my-0" style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '11rem' }}>{item.provinsi}</p>
+        </td>
+        <td>
+          <p className="my-0">{moment(item.pendaftaran_mulai).format("DD MMM YYYY")} - {moment(item.pendaftaran_selesai).format("DD MMM YYYY")} </p>
+          <p className="my-0">{moment(item.pelatihan_mulai).format("DD MMM YYYY")} - {moment(item.pelatihan_selesai).format("DD MMM YYYY")}</p>
+        </td>
+        <td>
+          <p className="my-0">300 Pendaftar </p>
+          <p className="my-0">100 Peserta </p>
+        </td>
+        <td>
+          <span className="label label-inline label-light-success font-weight-bold">
+            {item.status_pelatihan}
+          </span>
+        </td>
+        <td>
+          <div className="d-flex">
+            <Link
+              href={`/pelatihan/report-pelatihan/detail-report-pelatihan/${item.id}`}
+            >
+              <a
+                className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                data-toggle="tooltip"
+                data-placement="bottom"
+                title="Detail"
+              >
+                <i className="ri-eye-fill text-white p-0"></i>
+              </a>
+            </Link>
+            <Link href={`/pelatihan/pelatihan/view-pelatihan/${1}`}>
+              <a
+                className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                data-toggle="tooltip"
+                data-placement="bottom"
+                title="Download As Word"
+              >
+                <i className="ri-file-word-fill text-white p-0"></i>
+              </a>
+            </Link>
+            <Link href={`/pelatihan/pelatihan/view-pelatihan/${1}`}>
+              <a
+                className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                data-toggle="tooltip"
+                data-placement="bottom"
+                title="Download As PDF"
+              >
+                <i className="ri-file-ppt-fill text-white p-0"></i>
+              </a>
+            </Link>
+          </div>
+        </td>
+      </tr>
+    );
+  });
 
-  const handleLimit = (val) => {
-    setLimit(val);
-    router.push(`${router.pathname}?page=1&limit=${val}`);
-  };
+
+
 
   const onNewReset = () => {
     router.replace("/subvit/substansi", undefined, { shallow: true });
@@ -114,7 +196,6 @@ const ListReport = () => {
                 <div className="col-lg-8 col-xl-8">
                   <div
                     className="position-relative overflow-hidden mt-3"
-                    style={{ maxWidth: "330px" }}
                   >
                     <i className="ri-search-line left-center-absolute ml-2"></i>
                     <input
@@ -129,7 +210,9 @@ const ListReport = () => {
                         borderTopLeftRadius: "0",
                         borderBottomLeftRadius: "0",
                       }}
-                      onClick={handleSearch}
+                      onClick={(e) => {
+                        dispatch(listsReportTraining(token, page, limit, search, penyelenggara.label, academy.label, theme.label))
+                      }}
                     >
                       Cari
                     </button>
@@ -140,7 +223,7 @@ const ListReport = () => {
                   <button
                     className="btn border d-flex align-items-center justify-content-between mt-1"
                     style={{
-                      minWidth: "280px",
+                      minWidth: "236px",
                       color: "#bdbdbd",
                       float: "right",
                     }}
@@ -158,8 +241,6 @@ const ListReport = () => {
 
             <div className="table-page mt-5">
               <div className="table-responsive">
-                {/* <LoadingTable loading={loading} /> */}
-
                 <table className="table table-separate table-head-custom table-checkable">
                   <thead style={{ background: "#F3F6F9" }}>
                     <tr>
@@ -173,72 +254,63 @@ const ListReport = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td className="text-center">1</td>
-                      <td>CC001</td>
-                      <td>
-                        <p className="font-weight-bolder my-0">
-                          Android Developer
-                        </p>
-                        <p className="my-0">IBM</p>
-                        <p className="my-0">DKI</p>
-                      </td>
-                      <td>
-                        <p className="my-0">21 Aug 2021 - 29 Sep 2021 </p>
-                        <p className="my-0">21 Aug 2021 - 29 Sep 2021 </p>
-                      </td>
-                      <td>
-                        <p className="my-0">300 Pendaftar </p>
-                        <p className="my-0">100 Peserta </p>
-                      </td>
-                      <td>
-                        <span className="label label-inline label-light-success font-weight-bold">
-                          Disetujui
-                        </span>
-                      </td>
-                      <td>
-                        <div className="d-flex">
-                          <Link
-                            href={`/pelatihan/report-pelatihan/detail-report-pelatihan/${1}`}
-                          >
-                            <a
-                              className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                              data-toggle="tooltip"
-                              data-placement="bottom"
-                              title="Detail"
-                            >
-                              <i className="ri-eye-fill text-white p-0"></i>
-                            </a>
-                          </Link>
-                          <Link
-                            href={`/pelatihan/pelatihan/view-pelatihan/${1}`}
-                          >
-                            <a
-                              className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                              data-toggle="tooltip"
-                              data-placement="bottom"
-                              title="Download As Word"
-                            >
-                              <i className="ri-file-word-fill text-white p-0"></i>
-                            </a>
-                          </Link>
-                          <Link
-                            href={`/pelatihan/pelatihan/view-pelatihan/${1}`}
-                          >
-                            <a
-                              className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                              data-toggle="tooltip"
-                              data-placement="bottom"
-                              title="Download As PDF"
-                            >
-                              <i className="ri-file-ppt-fill text-white p-0"></i>
-                            </a>
-                          </Link>
-                        </div>
-                      </td>
-                    </tr>
+                  {listReportTraining}
                   </tbody>
                 </table>
+              </div>
+              <div className="row">
+                  <div className="table-pagination table-pagination pagination-custom col-12 col-md-6">
+                    <Pagination
+                      activePage={page}
+                      itemsCountPerPage={getDataReportTraining.perPage}
+                      totalItemsCount={getDataReportTraining.total}
+                      pageRangeDisplayed={3}
+                      onChange={(e) => {setPage(e)
+                      dispatch(listsReportTraining(token, e, limit, search, penyelenggara.label, academy.label, theme.label))
+                      }}
+                      nextPageText={">"}
+                      prevPageText={"<"}
+                      firstPageText={"<<"}
+                      lastPageText={">>"}
+                      itemClass="page-item"
+                      linkClass="page-link"
+                    />
+                  </div>
+                  <div className="table-total ml-auto">
+                    <div className="row">
+                      <div className="col-4 mr-0 p-0 mt-3">
+                        <select
+                          className="form-control"
+                          id="exampleFormControlSelect2"
+                          style={{
+                            width: "65px",
+                            background: "#F3F6F9",
+                            borderColor: "#F3F6F9",
+                            color: "#9E9E9E",
+                          }}
+                          value={limit}
+                          onChange={(e) => {
+                            setLimit(e.target.value)
+                            dispatch(listsReportTraining(token, page, e.target.value, search, penyelenggara.label, academy.label, theme.label))
+                          }}
+                        >
+                          <option value="5">5</option>
+                          <option value="10">10</option>
+                          <option value="30">30</option>
+                          <option value="40">40</option>
+                          <option value="50">50</option>
+                        </select>
+                      </div>
+                      <div className="col-8 my-auto pt-3">
+                        <p
+                          className="align-middle mt-3"
+                          style={{ color: "#B5B5C3" }}
+                        >
+                          Total Data {getDataReportTraining.total}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
               </div>
             </div>
           </div>
@@ -264,27 +336,29 @@ const ListReport = () => {
         <Modal.Body>
           <div className="form-group mb-5">
             <label className="p-0">Penyelenggara</label>
-            <select className="form-control">
-              <option>Semua</option>
-            </select>
+            <Select
+              options={optionsPenyelenggara}
+              defaultValue={penyelenggara}
+              onChange={(e) =>
+                setPenyelenggara({ value: e.value, label: e.label })
+              }
+            />
           </div>
           <div className="form-group mb-5">
             <label className="p-0">Akademi</label>
-            <select className="form-control">
-              <option>Semua</option>
-            </select>
+            <Select
+              options={optionsAkademi}
+              defaultValue={academy}
+              onChange={(e) => setAcademy({ value: e.value, label: e.label })}
+            />
           </div>
           <div className="form-group mb-5">
             <label className="p-0">Tema</label>
-            <select className="form-control">
-              <option>Semua</option>
-            </select>
-          </div>
-          <div className="form-group mb-5">
-            <label className="p-0">Status Substansi</label>
-            <select className="form-control">
-              <option>Semua</option>
-            </select>
+            <Select
+              options={optionsTema}
+              defaultValue={theme}
+              onChange={(e) => setTheme({ value: e.value, label: e.label })}
+            />
           </div>
           <div className="form-group mb-5">
             <label className="p-0">Status Pelatihan</label>
@@ -295,11 +369,33 @@ const ListReport = () => {
           <div className="row">
             <div className="form-group mb-5 col-md-6">
               <label className="p-0">Tanggal Pendaftaran</label>
-              <input type="date" name="" id="" className="form-control" />
+              
+              <DatePicker
+                wrapperClassName="datepicker"
+                className="form-control"
+                name="start_date"
+                selectsRange={true}
+                onChange={(date) => {setDateRegister(date)
+                }}
+                startDate={dateRegisterStart}
+                endDate={dateRegisterEnd}
+                dateFormat="dd/MM/yyyy"
+                autoComplete="off"
+              />
             </div>
             <div className="form-group mb-5 col-md-6">
               <label className="p-0">Tanggal Pelaksanaan</label>
-              <input type="date" name="" id="" className="form-control" />
+              <DatePicker
+                wrapperClassName="datepicker"
+                className="form-control"
+                name="start_date"
+                selectsRange={true}
+                onChange={(date) => setDatePelaksanaan(date)}
+                startDate={datePelaksanaanStart}
+                endDate={datePelaksanaanEnd}
+                dateFormat="dd/MM/yyyy"
+                autoComplete="off"
+              />
             </div>
           </div>
         </Modal.Body>
@@ -310,7 +406,16 @@ const ListReport = () => {
           >
             Reset
           </button>
-          <button className="btn btn-primary-rounded-full" type="button">
+          <button className="btn btn-primary-rounded-full" type="button" onClick={() => {
+             setShowModal(false);
+             let register = dateRegister.map(item => {
+               return moment(item).format("YYYY/MM/DD")
+             })
+             let pelaksanaan = datePelaksanaan.map(item => {
+              return moment(item).format("YYYY/MM/DD")
+            })
+            dispatch(listsReportTraining(token, page, limit, search, penyelenggara.label, academy.label, theme.label, register.join(","), pelaksanaan.join(",")))
+          }}>
             Terapkan
           </button>
         </Modal.Footer>

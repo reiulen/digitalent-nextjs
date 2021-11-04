@@ -270,7 +270,7 @@ const Tambah = ({ token }) => {
             </h3>
           </div>
           <form>
-            <div className="card-body pt-0">
+            <div className="card-body pt-0 px-4 px-sm-8">
               <div className="form-group">
                 <label htmlFor="staticEmail" className="col-form-label">
                   Nama Data Reference
@@ -286,7 +286,7 @@ const Tambah = ({ token }) => {
 
               <div className="form-group">
                 <label>Status</label>
-                {status == 1 ? (
+                {detailDataReference.dataReference.status == 1 ? (
                   <select
                     className="form-control"
                     onChange={(e) => setStatus(e.target.value)}

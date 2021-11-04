@@ -11,7 +11,7 @@ const Artikel = () => {
             {/* BreadCrumb */}
             <div className="row my-5 mx-1 py-3 px-8 bg-white rounded-pill d-flex align-items-center border">
                 <span className="text-primary">
-                    <Link href="#">
+                    <Link href="/">
                         Beranda 
                     </Link>
                 </span>
@@ -120,9 +120,8 @@ const Artikel = () => {
                     {/* End Search Tab */}
 
                     {/* Card */}
-                    <div className="row my-5 ml-1">
-                        <div className="col-8">
-
+                    <div className="row my-5 ml-1 flex-column-reverse flex-md-row">
+                        <div className="col col-md-7 col-12">
                             <div className="row d-flex justify-content-between align-items-center">
                                 <div className="d-flex align-self-center">
                                     <div className="border rounded-circle py-1 px-2">
@@ -157,9 +156,14 @@ const Artikel = () => {
 
                             <div className="row my-5">
                                 {/* Insert Title Here */}
-                                <h1>
-                                    Pengumuman Kelulusan Peserta Pelatihan Daring Gelombang 1 Program VSGA DTS 2...
-                                </h1>
+                                <Link href={`/artikel/detail/1`}>
+                                    <a>
+                                        <h1 className="text-dark">
+                                            Pengumuman Kelulusan Peserta Pelatihan Daring Gelombang 1 Program VSGA DTS 2...
+                                        </h1>
+                                    </a>
+                                </Link>
+                                
                             </div>
 
                             <div className="row my-5">
@@ -187,22 +191,31 @@ const Artikel = () => {
                             </div>
                         </div>
 
-                        <div className="col-4">
+                        <div className="col col-md-5 col-12 position-relative">
                             {/* Insert Card Image Here */}
-                            <Image
-                                src="/assets/media/default-card-artikel.png" 
-                                layout="fill"
-                                objectFit="fill"
-                                alt="Card Image"
-                            />
+                            <Link href={`/artikel/detail/1`}>
+                                <a>
+                                    <img
+                                        src="/assets/media/default-card-artikel.png" 
+                                        // layout="fill"
+                                        // width={800}
+                                        // height={200}
+                                        // objectFit="fill"
+                                        width="100%"
+                                        height="100%"
+                                        alt="Card Image"
+                                        className="rounded"
+                                    />
+                                </a>
+                            </Link>
+                            
                         </div>
                     </div>
                     {/* End of Card */}
 
                     {/* Card */}
-                    <div className="row my-5 ml-1">
-                        <div className="col-8">
-
+                    <div className="row my-5 ml-1 flex-column-reverse flex-md-row">
+                        <div className="col col-md-7 col-12">
                             <div className="row d-flex justify-content-between align-items-center">
                                 <div className="d-flex align-self-center">
                                     <div className="border rounded-circle py-1 px-2">
@@ -237,9 +250,14 @@ const Artikel = () => {
 
                             <div className="row my-5">
                                 {/* Insert Title Here */}
-                                <h1>
-                                    Pengumuman Kelulusan Peserta Pelatihan Daring Gelombang 1 Program VSGA DTS 2...
-                                </h1>
+                                <Link href={`/artikel/detail/1`}>
+                                    <a>
+                                        <h1 className="text-dark">
+                                            Pengumuman Kelulusan Peserta Pelatihan Daring Gelombang 1 Program VSGA DTS 2...
+                                        </h1>
+                                    </a>
+                                </Link>
+                                
                             </div>
 
                             <div className="row my-5">
@@ -267,22 +285,31 @@ const Artikel = () => {
                             </div>
                         </div>
 
-                        <div className="col-4">
+                        <div className="col col-md-5 col-12 position-relative">
                             {/* Insert Card Image Here */}
-                            <Image
-                                src="/assets/media/default-card-artikel.png" 
-                                layout="fill"
-                                objectFit="fill"
-                                alt="Card Image"
-                            />
+                            <Link href={`/artikel/detail/1`}>
+                                <a>
+                                    <img
+                                        src="/assets/media/default-card-artikel.png" 
+                                        // layout="fill"
+                                        // width={800}
+                                        // height={200}
+                                        // objectFit="fill"
+                                        width="100%"
+                                        height="100%"
+                                        alt="Card Image"
+                                        className="rounded"
+                                    />
+                                </a>
+                            </Link>
+                            
                         </div>
                     </div>
                     {/* End of Card */}
 
                     {/* Card */}
-                    <div className="row my-5 ml-1">
-                        <div className="col-8">
-
+                    <div className="row my-5 ml-1 flex-column-reverse flex-md-row">
+                        <div className="col col-md-7 col-12">
                             <div className="row d-flex justify-content-between align-items-center">
                                 <div className="d-flex align-self-center">
                                     <div className="border rounded-circle py-1 px-2">
@@ -317,9 +344,14 @@ const Artikel = () => {
 
                             <div className="row my-5">
                                 {/* Insert Title Here */}
-                                <h1>
-                                    Pengumuman Kelulusan Peserta Pelatihan Daring Gelombang 1 Program VSGA DTS 2...
-                                </h1>
+                                <Link href={`/artikel/detail/1`}>
+                                    <a>
+                                        <h1 className="text-dark">
+                                            Pengumuman Kelulusan Peserta Pelatihan Daring Gelombang 1 Program VSGA DTS 2...
+                                        </h1>
+                                    </a>
+                                </Link>
+                                
                             </div>
 
                             <div className="row my-5">
@@ -347,22 +379,31 @@ const Artikel = () => {
                             </div>
                         </div>
 
-                        <div className="col-4">
+                        <div className="col col-md-5 col-12 position-relative">
                             {/* Insert Card Image Here */}
-                            <Image
-                                src="/assets/media/default-card-artikel.png" 
-                                layout="fill"
-                                objectFit="fill"
-                                alt="Card Image"
-                            />
+                            <Link href={`/artikel/detail/1`}>
+                                <a>
+                                    <img
+                                        src="/assets/media/default-card-artikel.png" 
+                                        // layout="fill"
+                                        // width={800}
+                                        // height={200}
+                                        // objectFit="fill"
+                                        width="100%"
+                                        height="100%"
+                                        alt="Card Image"
+                                        className="rounded"
+                                    />
+                                </a>
+                            </Link>
+                            
                         </div>
                     </div>
                     {/* End of Card */}
 
                     {/* Card */}
-                    <div className="row my-5 ml-1">
-                        <div className="col-8">
-
+                    <div className="row my-5 ml-1 flex-column-reverse flex-md-row">
+                        <div className="col col-md-7 col-12">
                             <div className="row d-flex justify-content-between align-items-center">
                                 <div className="d-flex align-self-center">
                                     <div className="border rounded-circle py-1 px-2">
@@ -397,9 +438,14 @@ const Artikel = () => {
 
                             <div className="row my-5">
                                 {/* Insert Title Here */}
-                                <h1>
-                                    Pengumuman Kelulusan Peserta Pelatihan Daring Gelombang 1 Program VSGA DTS 2...
-                                </h1>
+                                <Link href={`/artikel/detail/1`}>
+                                    <a>
+                                        <h1 className="text-dark">
+                                            Pengumuman Kelulusan Peserta Pelatihan Daring Gelombang 1 Program VSGA DTS 2...
+                                        </h1>
+                                    </a>
+                                </Link>
+                                
                             </div>
 
                             <div className="row my-5">
@@ -427,22 +473,31 @@ const Artikel = () => {
                             </div>
                         </div>
 
-                        <div className="col-4">
+                        <div className="col col-md-5 col-12 position-relative">
                             {/* Insert Card Image Here */}
-                            <Image
-                                src="/assets/media/default-card-artikel.png" 
-                                layout="fill"
-                                objectFit="fill"
-                                alt="Card Image"
-                            />
+                            <Link href={`/artikel/detail/1`}>
+                                <a>
+                                    <img
+                                        src="/assets/media/default-card-artikel.png" 
+                                        // layout="fill"
+                                        // width={800}
+                                        // height={200}
+                                        // objectFit="fill"
+                                        width="100%"
+                                        height="100%"
+                                        alt="Card Image"
+                                        className="rounded"
+                                    />
+                                </a>
+                            </Link>
+                            
                         </div>
                     </div>
                     {/* End of Card */}
 
                     {/* Card */}
-                    <div className="row my-5 ml-1">
-                        <div className="col-8">
-
+                    <div className="row my-5 ml-1 flex-column-reverse flex-md-row">
+                        <div className="col col-md-7 col-12">
                             <div className="row d-flex justify-content-between align-items-center">
                                 <div className="d-flex align-self-center">
                                     <div className="border rounded-circle py-1 px-2">
@@ -477,9 +532,14 @@ const Artikel = () => {
 
                             <div className="row my-5">
                                 {/* Insert Title Here */}
-                                <h1>
-                                    Pengumuman Kelulusan Peserta Pelatihan Daring Gelombang 1 Program VSGA DTS 2...
-                                </h1>
+                                <Link href={`/artikel/detail/1`}>
+                                    <a>
+                                        <h1 className="text-dark">
+                                            Pengumuman Kelulusan Peserta Pelatihan Daring Gelombang 1 Program VSGA DTS 2...
+                                        </h1>
+                                    </a>
+                                </Link>
+                                
                             </div>
 
                             <div className="row my-5">
@@ -507,17 +567,28 @@ const Artikel = () => {
                             </div>
                         </div>
 
-                        <div className="col-4">
+                        <div className="col col-md-5 col-12 position-relative">
                             {/* Insert Card Image Here */}
-                            <Image
-                                src="/assets/media/default-card-artikel.png" 
-                                layout="fill"
-                                objectFit="fill"
-                                alt="Card Image"
-                            />
+                            <Link href={`/artikel/detail/1`}>
+                                <a>
+                                    <img
+                                        src="/assets/media/default-card-artikel.png" 
+                                        // layout="fill"
+                                        // width={800}
+                                        // height={200}
+                                        // objectFit="fill"
+                                        width="100%"
+                                        height="100%"
+                                        alt="Card Image"
+                                        className="rounded"
+                                    />
+                                </a>
+                            </Link>
+                            
                         </div>
                     </div>
                     {/* End of Card */}
+
                 </div>
                 {/* End of Left Side */}
 

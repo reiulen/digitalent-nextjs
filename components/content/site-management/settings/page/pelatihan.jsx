@@ -62,7 +62,7 @@ export default function Pelatihan({ token }) {
                           height={24}
                           alt="Prompt Icon"
                         />
-                        <h3>Prompt Update</h3>
+                        <h3 style={{fontSize: "16px"}}>Prompt Update</h3>
                       </div>
                     </a>
                   </Link>
@@ -86,7 +86,7 @@ export default function Pelatihan({ token }) {
                           height={24}
                           alt="Prompt Icon"
                         />
-                        <h3>Template Email</h3>
+                        <h3 style={{fontSize: "16px"}}>Template Email</h3>
                       </div>
                     </a>
                   </Link>
@@ -110,7 +110,7 @@ export default function Pelatihan({ token }) {
                           height={24}
                           alt="Prompt Icon"
                         />
-                        <h3>SUBM</h3>
+                        <h3 style={{fontSize: "16px"}}>SUBM</h3>
                       </div>
                     </a>
                   </Link>
@@ -134,7 +134,7 @@ export default function Pelatihan({ token }) {
                           height={24}
                           alt="Prompt Icon"
                         />
-                        <h3>File Size</h3>
+                        <h3 style={{fontSize: "16px"}}>File Size</h3>
                       </div>
                     </a>
                   </Link>
@@ -158,7 +158,7 @@ export default function Pelatihan({ token }) {
                           height={24}
                           alt="Prompt Icon"
                         />
-                        <h3>Ketentuan Pelatihan</h3>
+                        <h3 style={{fontSize: "16px"}} >Ketentuan Pelatihan</h3>
                       </div>
                     </a>
                   </Link>

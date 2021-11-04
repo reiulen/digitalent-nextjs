@@ -10,6 +10,7 @@ import {
   getAllRiwayatPelatihanPeserta,
   getDetailRiwayatPelatihan,
 } from "../../../redux/actions/pelatihan/riwayat-pelatihan.actions";
+import { getAllAkademi } from "../../../redux/actions/beranda/beranda.actions";
 
 const TesSubstansiDetail = dynamic(
   () =>
@@ -45,7 +46,7 @@ export default function TestSubstansiPage(props) {
   const session = props.session.user.user.data.user;
   return (
     <>
-      <Layout title="Dashboard Peserta - Pelatihan" session={session}>
+      <Layout title="Test Substansi" session={session}>
         {props.success ? (
           <TesSubstansiDetail session={session} />
         ) : (
@@ -138,6 +139,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       await store.dispatch(getDataPribadi(session.user.user.data.user.token));
+      await store.dispatch(getAllAkademi());
 
       return {
         props: { data: "auth", session, title: "Dashboard - Peserta", success },

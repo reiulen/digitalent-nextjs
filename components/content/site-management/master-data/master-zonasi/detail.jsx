@@ -44,12 +44,11 @@ const Table = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3
-              className="card-title font-weight-bolder text-dark"
-              style={{ fontSize: "24px" }}
+              className="card-title font-weight-bolder text-dark titles-1"
             >
               {nameZonation}
             </h3> </div>
-          <div className="card-body pt-0"> <div className="table-page mt-5">
+          <div className="card-body pt-0 px-4 px-sm-8"> <div className="table-page mt-5">
               <div className="table-responsive">
                 <table className="table table-separate table-head-custom table-checkable">
                   <thead style={{ background: "#F3F6F9" }}>
@@ -83,7 +82,7 @@ return(
               <div className="form-group row">
                 <div className="col-sm-12 d-flex justify-content-end">
                   <Link href="/site-management/master-data/master-zonasi">
-                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary">
+                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mt-5 mt-sm-0">
                       Kembali
                     </a>
                   </Link>

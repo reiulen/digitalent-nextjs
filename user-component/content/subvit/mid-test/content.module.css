@@ -421,7 +421,8 @@
   color: #007cff;
   text-decoration: none !important;
 }
-.btnBack:hover {
+.btnBack:hover,
+.btnBack:focus {
   text-decoration: none !important;
 }
 .btnSkip {

@@ -122,13 +122,12 @@ const TambahApi = ({ token }) => {
           <div className="card card-custom card-stretch gutter-b">
             <div className="card-header border-0">
               <h3
-                className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 mb-5 mt-5"
-                style={{ fontSize: "24px" }}
+                className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 mb-5 mt-5 titles-1"
               >
                 Tambah Satuan Kerja Penyelenggara
               </h3>
             </div>
-            <div className="card-body pt-0">
+            <div className="card-body pt-0 px-4 px-sm-8">
               <div className="form-group">
                 <label>Nama Satuan Kerja</label>
                 <input
