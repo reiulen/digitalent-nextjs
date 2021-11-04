@@ -20,7 +20,7 @@ import {
 } from "../../../../redux/actions/site-management/dashboard.actions";
 import { set } from "js-cookie";
 
-const DashboardSiteManagement = ({ token }) => {
+const DashboardSiteManagement = ({ token, user }) => {
   const [participant, setParticipant] = useState("0");
   const [administrator, setAdministrator] = useState("0");
   const [mitra, setMitra] = useState(0);
@@ -148,7 +148,7 @@ const DashboardSiteManagement = ({ token }) => {
                 </div>
 
                 <h5 className="text-blue-secondary fw-600 fz-24">
-                  Hallo {"Admin"} !
+                  Hallo {user.name} !
                 </h5>
                 <p className="text-gray-primary fw-600 fz-16">
                   Selamat Datang di Dashboard <br /> Site Management

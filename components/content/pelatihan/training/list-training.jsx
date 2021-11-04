@@ -577,7 +577,7 @@ const ListTraining = ({ token }) => {
                   </div>
                 </div>
 
-                <div className="col-lg-4 col-xl-4 justify-content-end d-flex">
+                <div className="col-lg-4 col-xl-4 justify-content-end d-flex mt-3">
                   <button
                     className="btn border d-flex align-items-center justify-content-between mb-2 w-100"
                     style={{
@@ -799,7 +799,7 @@ const ListTraining = ({ token }) => {
                                 )}
                                 {row.status_pelatihan === "selesai" && (
                                   <Link
-                                    href={`/pelatihan/pelatihan/upload-evidence`}
+                                    href={`/pelatihan/pelatihan/upload-evidence/${row.id}`}
                                   >
                                     <a
                                       className="btn btn-link-action bg-blue-secondary text-white mr-2"

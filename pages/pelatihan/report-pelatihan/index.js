@@ -51,7 +51,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
-      // console.log(session.user.user.data.token)
         await store.dispatch(listsReportTraining(session.user.user.data.token))
         await store.dispatch(dropdownAkademi(session.user.user.data.token));
         await store.dispatch(dropdownTema(session.user.user.data.token));
