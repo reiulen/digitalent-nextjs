@@ -35,7 +35,7 @@ const Artikel = () => {
     const handleFilterKategori = (str) => {
         // e.preventDefault();
         if (str === ""){
-            setActiveTitle("")
+            setActiveTitle("Ada Apa di Digitalent")
         }
         
         setKategoriArtikel(str)
@@ -121,9 +121,25 @@ const Artikel = () => {
 
     const handleFilterTag = (str) => {
         setActiveTitle(str)
-        setTag(str)
+        // setTag(str)
         dispatch (getAllBerandaArtikel(
             activePage, 
+            str, 
+            limit, 
+            filterPublish, 
+            sort, 
+            category_id, 
+            kategoriArtikel, 
+            category_academy,
+            tag
+        ))
+
+    }
+
+    const handlePagination = (pageNumber) => {
+        setActivePage(pageNumber)
+        dispatch (getAllBerandaArtikel(
+            pageNumber, 
             keyword, 
             limit, 
             filterPublish, 
@@ -131,9 +147,8 @@ const Artikel = () => {
             category_id, 
             kategoriArtikel, 
             category_academy,
-            str
+            tag
         ))
-
     }
 
 
@@ -260,7 +275,7 @@ const Artikel = () => {
                             <input 
                                 type="text" 
                                 className="form-control" 
-                                placeholder="&#xF002 Cari Artikel"
+                                placeholder="Cari Artikel"
                                 // style={{borderTopLeftRadius:"150px", borderBottomLeftRadius:"150px"}}
                                 onChange={(e) => setKeyword(e.target.value)}
                             />
@@ -584,28 +599,32 @@ const Artikel = () => {
             </div>
             {/* End Content */}
 
+            {
+                artikel ?
+                    <div className="row my-5 d-flex justify-content-center">
+                        <div className="table-pagination">
+                            <Pagination 
+                                activePage = {activePage}
+                                itemsCountPerPage={5}
+                                itemsCountPerPage={artikel.perPage}
+                                // totalItemsCount={5}
+                                totalItemsCount={artikel.total}
+                                // pageRangeDisplayed={3}
+                                onChange={handlePagination}
+                                nextPageText={">"}
+                                prevPageText={"<"}
+                                firstPageText={"<<"}
+                                lastPageText={">>"}
+                                itemClass="page-item-dashboard"
+                                linkClass="page-link-dashboard"
+                            />
+                        </div>
+                        
+                    </div>
+                :
+                    null
+            }
             
-            <div className="row my-5 d-flex justify-content-center">
-                <div className="table-pagination">
-                    <Pagination 
-                        // activePage = {activePage}
-                        activePage = {1}
-                        // itemsCountPerPage={pelatihan.perPage}
-                        itemsCountPerPage={6}
-                        // totalItemsCount={pelatihan.total}
-                        totalItemsCount={6}
-                        pageRangeDisplayed={3}
-                        // onChange={handlePagination}
-                        nextPageText={">"}
-                        prevPageText={"<"}
-                        firstPageText={"<<"}
-                        lastPageText={">>"}
-                        itemClass="page-item"
-                        linkClass="page-link"
-                    />
-                </div>
-                
-            </div>
             
             
         </div>
