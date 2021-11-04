@@ -150,6 +150,7 @@ const VideoPage = ({ token }) => {
                             {
                                 // video.video || video.video.length === 0 ? null :
                                 video.video.map((row, i) => {
+                                    // {console.log(video)}
                                     return (
                                         <div className="col-sm-12 col-md-6 col-lg-6">
                                             <div className="card mb-4 border-0" key={i}>
@@ -181,7 +182,7 @@ const VideoPage = ({ token }) => {
                                                                 </div>
                                                                 <span className="ml-2">Admin Pokja</span>
                                                             </div>
-                                                            <span className="label label-inline label-light-primary font-weight-bold" style={{marginRight:'20px'}}>{(row.kategori).toUpperCase()}</span>
+                                                            {/* <span className="label label-inline label-light-primary font-weight-bold" style={{marginRight:'20px'}}>{(row.kategori).toUpperCase()}</span> */}
                                                         </div>
                                                     </div>
                                                 </div>

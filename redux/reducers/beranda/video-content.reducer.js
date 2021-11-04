@@ -1,7 +1,8 @@
 import {
     VIDEO_REQUEST,
     VIDEO_SUCCESS,
-    VIDEO_FAIL
+    VIDEO_FAIL,
+    CLEAR_ERRORS
 } from "../../types/publikasi/video.type"
 
 export const allVideoReducer = (state = { video: [] }, action) => {
