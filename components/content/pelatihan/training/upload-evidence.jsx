@@ -29,8 +29,6 @@ const UploadEvidence = ({ token }) => {
     (state) => state.getFormEvidence
   );
 
-  console.log("hehe", getFormEvidence);
-
   const [numberDocument, setNumberDocument] = useState(
     getFormEvidence.name_dokumen
   );
@@ -51,9 +49,9 @@ const UploadEvidence = ({ token }) => {
           return {
             key: 1,
             imagePreview:
-              process.env.END_POINT_API_IMAGE_BEASISWA + item.gambar,
-            imageFile: "",
-            imageName: "",
+            process.env.END_POINT_API_IMAGE_BEASISWA + item.gambar,
+            imageFile: item.gambar,
+            imageName: item.gambar,
           };
         })
       : [{ key: 1, imagePreview: "", imageFile: "", imageName: "" }]
@@ -73,18 +71,20 @@ const UploadEvidence = ({ token }) => {
 
   const [name, setName] = useState("");
 
-   function getBase64ImageFromUrl(imageUrl) {
-   axios.get(imageUrl,{
-    headers: {
-      
-      authorization: `Bearer ${token}`,
-    },
-  }).then(items => {
-    return items.data
-  })
-  }
-
-  console.log(getBase64ImageFromUrl("https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/logo/evidace/cc5520f0-9234-4122-acc6-64122bbb3b22-November.png"))
+  function toDataURL(url, callback) {
+    var xhr = new XMLHttpRequest();
+    xhr.onload = function() {
+       var reader = new FileReader();
+       reader.onloadend = function() {
+          callback(reader.result);
+       }
+       reader.readAsDataURL(xhr.response);
+    };
+    xhr.open('GET', url);
+    xhr.responseType = 'blob';
+    xhr.send();
+ }
+ 
 
 
   useEffect(() => {

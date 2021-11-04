@@ -183,7 +183,7 @@ const DetailReport = ({ token }) => {
     return hours + ":" + minutes + ":" + seconds;
   };
 
-  const listPeserta = detailReportTraining.list.map((item, index) => {
+  const listPeserta = detailReportTraining.list.length > 0 ? detailReportTraining.list.map((item, index) => {
     return (
       <tr key={index}>
         <td className="text-center">{index + 1}</td>
@@ -265,7 +265,9 @@ const DetailReport = ({ token }) => {
         )}
       </tr>
     );
-  });
+  }): <td className="align-middle text-center" colSpan={8}>
+  Data Kosong
+</td>;
 
   return (
     <PageWrapper>
