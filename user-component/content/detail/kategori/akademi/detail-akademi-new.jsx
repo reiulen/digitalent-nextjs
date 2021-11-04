@@ -6,7 +6,6 @@ import { useRouter } from "next/router";
 import Pagination from "react-js-pagination";
 import moment from "moment";
 import DatePicker from "react-datepicker";
-import { TagsInput } from "react-tag-input-component";
 import Select from "react-select";
 
 import {
@@ -69,7 +68,7 @@ const DetailAkademi = ({ session }) => {
     { value: "3", label: "AKM" },
   ];
 
-  const customStyles = {
+  const customStylesSide = {
     control: (styles) => ({
       ...styles,
       borderRadius: "30px",
@@ -90,7 +89,6 @@ const DetailAkademi = ({ session }) => {
         str = akademi.deskripsi.slice(0, textToTrim) + "...";
       }
 
-      // setAkademiName(akademi.name)
       setAkademiDesc(str);
       setAkademiId(akademi.id);
       setOldAkademiDesc(akademi.deskripsi);
@@ -99,7 +97,6 @@ const DetailAkademi = ({ session }) => {
 
   const handleShowMoreText = (status) => {
     setSeeMoreStatus(status);
-    // setAkademiDesc(text)
   };
 
   const handleHoverCard = () => {
@@ -333,7 +330,7 @@ const DetailAkademi = ({ session }) => {
                     <Form.Label className="fz-14">Penyelenggara</Form.Label>
                     <Select
                       options={options}
-                      styles={customStyles}
+                      styles={customStylesSide}
                       placeholder="Pilih Penyelenggara"
                       isClearable
                     />
@@ -342,7 +339,7 @@ const DetailAkademi = ({ session }) => {
                     <Form.Label className="fz-14">Kategori Peserta</Form.Label>
                     <Select
                       options={options}
-                      styles={customStyles}
+                      styles={customStylesSide}
                       placeholder="Pilih Kategori Peserta"
                       isClearable
                     />
@@ -909,7 +906,11 @@ const DetailAkademi = ({ session }) => {
                         );
                       })
                     ) : (
-                      <h1>Error Pelatihan</h1>
+                      <div className="container-fluid">
+                        <div className="d-flex justify-content-center">
+                          <h1>Pelatihan Tidak Tersedia</h1>
+                        </div>
+                      </div>
                     )}
                   </>
                 )}
