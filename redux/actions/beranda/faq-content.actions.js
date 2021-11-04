@@ -6,12 +6,17 @@ import {
 } from "../../types/publikasi/faq.type"
 
 
-export const getAllFaq = (token) => async (dispatch) => {
+export const getAllFaq = (
+    keyword = "",
+    category_name = "",
+    token
+) => async (dispatch) => {
     try {
 
         dispatch({ type: FAQ_REQUEST })
 
         const config = {
+            params: { keyword, category_name },
             headers: {
                 Authorization: 'Bearer ' + token,
             },

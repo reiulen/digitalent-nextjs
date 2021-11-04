@@ -33,7 +33,9 @@ const VideoPage = ({ token }) => {
     const [dataKategori, setDataKategori] = useState(null)
     const [kategoriVideo, setKategoriVideo] = useState("")
     const [isiVideo, setIsiVideo] = useState(null)
+    const [tonton, setTonton] = useState(null)
     const [tag, setTag] = useState("")
+    const [tags, setTags] = useState([])
     const [filterPublish, setFilterPublish] = useState("")
     const [activePage, setActivePage] = useState(1)
     const [keyword, setKeyword] = useState("")
@@ -136,15 +138,16 @@ const VideoPage = ({ token }) => {
         }
     }
 
-    const handlePreview = (url, id, judul_video, tanggal_publish, dataKategori, isi_video, tag) => {
+    const handlePreview = (url, id, judul, tanggal_publish, dataKategori, isi_video, tag, ditonton) => {
         setIdVideo(id)
         setVideoPlaying(true)
         setUrlVideo(url)
-        setJudulVideo(judul_video)
+        setJudulVideo(judul)
         setTanggalPublish(tanggal_publish)
         setDataKategori(dataKategori)
         setIsiVideo(isi_video)
-        setTag(tag)
+        setTags(tag)
+        setTonton(ditonton)
     }
 
     const handleIsPlayed = () => {
@@ -265,7 +268,7 @@ const VideoPage = ({ token }) => {
                                             <div className="col-sm-12 col-md-6 col-lg-6">
                                                 <div className="card mb-4 border-0" key={i}>
                                                     <Image
-                                                        alt={row.judul_video}
+                                                        alt={row.judul}
                                                         unoptimized={process.env.ENVIRONMENT !== "PRODUCTION"}
                                                         loader={process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + row.gambar}
                                                         src={process.env.END_POINT_API_IMAGE_PUBLIKASI + 'publikasi/images/' + row.gambar}
@@ -274,7 +277,7 @@ const VideoPage = ({ token }) => {
                                                         className="rounded"
                                                         data-target="#videoPlayerModal"
                                                         data-toggle="modal"
-                                                        onClick={() => handlePreview(row.url_video, row.id, row.judul_video, row.tanggal_publish, row.kategori, row.isi_video, row.tag)}
+                                                        onClick={() => handlePreview(row.url_video, row.id, row.judul, row.tanggal_publish, row.nama_kategori, row.isi_video, row.tag, row.ditonton)}
                                                     />
                                                     <div className="card-body">
                                                         <div style={{ width: '126%', marginLeft: '-30px' }}>
@@ -456,16 +459,16 @@ const VideoPage = ({ token }) => {
                                 <div className="col-3">
                                     <span className="text-muted" style={{ fontSize: '11px' }}>
                                         {
-                                            tanggal_publish !== null ? `${tanggal_publish}  | 120 Ditonton`
+                                            tanggal_publish !== null ? `${tanggal_publish}  | ${tonton} Ditonton`
                                                 : ""
                                         }
                                     </span>
                                 </div>
                                 <div className="col-6">
                                     <div className={styles['listTag']}>
-                                        {/* {
-                                            (tag === null) ? null :
-                                                tag.map((el, i) => {
+                                        {
+                                            (tags === null) ? null :
+                                                tags.map((el, i) => {
                                                     return (
                                                         <div style={{ background: "#fff", border: '1px solid #d7e1ea' }}
                                                             className="mr-2 px-3 py-1 rounded"
@@ -476,7 +479,7 @@ const VideoPage = ({ token }) => {
                                                         </div>
                                                     )
                                                 })
-                                        } */}
+                                        }
                                     </div>
                                 </div>
                                 <div className="col-3" style={{ textAlign: 'center' }}>
