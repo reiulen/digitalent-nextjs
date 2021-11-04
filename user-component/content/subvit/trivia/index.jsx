@@ -167,7 +167,7 @@ const SubtansiUser = ({ token }) => {
       return () => clearInterval(secondsLeft);
     } else {
       localStorage.clear();
-      // router.push(`/peserta/done-substansi`);
+      router.push(`/peserta/done-trivia`);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [count]);
