@@ -7,11 +7,14 @@
   .base {
     padding: 0px !important;
   }
+  .titleResponsive {
+    display: inline-block !important;
+  }
   .academy {
-    padding: 0px !important;
+    display: none;
   }
   .training {
-    padding: 0px !important;
+    display: none;
   }
   .rowNumber {
     display: none;
@@ -44,6 +47,24 @@
   .rowNumberResponsive {
     margin-top: 20px;
   }
+  .academy2 {
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 160%;
+
+    color: #1f1f1f;
+  }
+  .training2 {
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 160%;
+
+    color: #6c6c6c;
+  }
   .btnHelp {
     float: left;
   }
@@ -70,6 +91,7 @@
   }
   .soalResponsive {
     display: inline-block !important;
+    margin-bottom: 20px;
   }
   .total {
     text-align: left;
@@ -97,7 +119,9 @@
     color: #007cff;
   }
 }
-
+.titleResponsive {
+  display: none;
+}
 .soalResponsive {
   display: none;
 }

@@ -34,40 +34,43 @@ const SubtansiUser = ({ token }) => {
 
   const initialData = [
     {
-      id: 30,
-      survey_question_bank_id: 14,
-      question: "Tumbuhan apa yang memiliki akar serabut?",
-      question_image: "gambar1.png",
-      type: "polling",
-      open: false,
-      answer: [
-        {
-          key: "A",
-          option: "Ketela",
-          image: "gambar1.png",
-        },
-        {
-          key: "B",
-          option: "Ubi",
-          image: "gambar1.png",
-        },
-        {
-          key: "C",
-          option: "Kresen",
-          image: "gambar1.png",
-        },
-      ],
-      participant_answer: '["A", "C"]',
+      id: 3,
+      trivia_question_bank_id: 2,
+      question: "Tivia Polling Transportasi darat",
+      question_image: null,
+      type: "poliing",
+      answer:
+        '[{"key":"A","option":"Kapal","image":null},{"key":"B","option":"Pesawat","image":null},{"key":"C","option":"Mobil","image":null},{"key":"D","option":"Sampan","image":null},{"key":"E","option":"Rakit","image":null}]',
+      participant_answer: "A",
     },
     {
-      id: 32,
-      survey_question_bank_id: 14,
-      question: "seberaoa sering anda meninggalkan kewajiban anda?",
-      question_image: "gambar1.png",
+      id: 8,
+      trivia_question_bank_id: 2,
+      question: "Trivia Fill In The Blank Makanan bika ambon berasal dari?",
+      question_image: null,
       type: "pertanyaan_terbuka",
-      open: false,
       answer: null,
-      participant_answer: "TErlalu seri",
+      participant_answer: "medan",
+    },
+    {
+      id: 4,
+      trivia_question_bank_id: 2,
+      question: "Tivia Polling Makanan bika ambon berasal dari?",
+      question_image: null,
+      type: "poliing",
+      answer:
+        '[{"key":"A","option":"Ambon","image":null},{"key":"B","option":"Maluku","image":null},{"key":"C","option":"Jakarta","image":null},{"key":"D","option":"Medan","image":null}]',
+      participant_answer: "A",
+    },
+    {
+      id: 6,
+      trivia_question_bank_id: 2,
+      question: "Trivia Checkbox Makanan bika ambon berasal dari?",
+      question_image: null,
+      type: "checkbox",
+      answer:
+        '[{"key":"A","option":"Ambon","image":null,"value":3},{"key":"B","option":"Maluku","image":null,"value":3},{"key":"C","option":"Jakarta","image":null,"value":3},{"key":"D","option":"Medan","image":null,"value":1}]',
+      participant_answer: ["A", "B"],
     },
   ];
 
@@ -93,6 +96,15 @@ const SubtansiUser = ({ token }) => {
 
   const handleModalSoal = () => {
     setModalSoal(true);
+  };
+
+  const handleAnswerText = (e) => {
+    localStorage.setItem(`${parseInt(router.query.id)}`, e.target.value);
+    if (localStorage.getItem(`${parseInt(router.query.id)}`) === "") {
+      setAnswer("");
+    } else {
+      setAnswer(e.target.value);
+    }
   };
 
   const handleModalResponsive = () => {
@@ -144,7 +156,6 @@ const SubtansiUser = ({ token }) => {
   };
 
   useEffect(() => {
-    console.log(data);
     if (count >= 0) {
       const secondsLeft = setInterval(() => {
         setCount((c) => c - 1);
@@ -198,7 +209,6 @@ const SubtansiUser = ({ token }) => {
   for (let i = 0; i < data?.length; i++) {
     number.push(i);
   }
-  console.log(number);
   const handleDone = () => {
     setModalDone(true);
   };
@@ -230,12 +240,24 @@ const SubtansiUser = ({ token }) => {
         <Card className={styles.cardTop}>
           <Row>
             <Col xs={12} sm={6} style={{ marginTop: "8px" }}>
+              <div className={styles.titleResponsive}>
+                <p className={styles.academy2}>
+                  {(data && data.academy) || "FGA"}
+                </p>
+                <p className={styles.training2}>
+                  {(data && data.theme) || "Golang Programmer"}
+                </p>
+              </div>
               <table>
                 <tr>
-                  <td className={styles.academy}>{data && data.academy}</td>
+                  <td className={styles.academy}>
+                    {(data && data.academy) || "FGA"}
+                  </td>
 
                   <td>&nbsp;</td>
-                  <td className={styles.training}>{data && data.theme}</td>
+                  <td className={styles.training}>
+                    {(data && data.theme) || "Golang Programmer"}
+                  </td>
                 </tr>
               </table>
             </Col>
@@ -312,7 +334,7 @@ const SubtansiUser = ({ token }) => {
               <hr />
               {data &&
                 data[parseInt(router.query.id) - 1].answer &&
-                data[parseInt(router.query.id) - 1].answer.map(
+                JSON.parse(data[parseInt(router.query.id) - 1].answer).map(
                   (item, index) => {
                     return (
                       <>
@@ -377,6 +399,20 @@ const SubtansiUser = ({ token }) => {
                   }
                 )}
 
+              {data[parseInt(router.query.id) - 1].type ===
+                "pertanyaan_terbuka" && (
+                <Form>
+                  <Form.Control
+                    as="textarea"
+                    rows={5}
+                    placeholder="Jelaskan jawaban Anda di sini..."
+                    className={styles.textArea}
+                    onChange={() => handleAnswerText(event)}
+                    value={localStorage.getItem(`${router.query.id}`)}
+                  />
+                </Form>
+              )}
+
               <Row style={{ marginTop: "20px" }}>
                 <Col className={styles.btnBackResponsive}>
                   <Button
@@ -410,17 +446,7 @@ const SubtansiUser = ({ token }) => {
                   className={styles.btnBottom}
                   style={{ textAlign: "right", margin: "10px " }}
                 >
-                  <Button
-                    variant="link"
-                    className={styles.btnSkip}
-                    onClick={handleNext}
-                    disabled={
-                      parseInt(router.query.id) === data?.total_questions
-                    }
-                  >
-                    Lewati
-                  </Button>
-                  {parseInt(router.query.id) === data?.total_questions ? (
+                  {parseInt(router.query.id) === data?.length ? (
                     <Button
                       className={styles.btnNext}
                       onClick={handleDone}
@@ -434,8 +460,7 @@ const SubtansiUser = ({ token }) => {
                       className={styles.btnNext}
                       onClick={handleNext}
                       disabled={
-                        parseInt(router.query.id) === data &&
-                        data.total_questions
+                        parseInt(router.query.id) === data && data.length
                       }
                     >
                       <div className="d-flex flex-row">
@@ -449,7 +474,7 @@ const SubtansiUser = ({ token }) => {
                 </Col>
                 <Col xs={12} className={styles.btnBottomResponsive}>
                   <Row>
-                    <Col xs={4} style={{ textAlign: "center" }}>
+                    <Col xs={6} style={{ textAlign: "center" }}>
                       <Button
                         variant="link"
                         className={styles.btnBack}
@@ -459,18 +484,8 @@ const SubtansiUser = ({ token }) => {
                         Kembali
                       </Button>
                     </Col>
-                    <Col xs={4} style={{ textAlign: "center" }}>
-                      {" "}
-                      <Button
-                        variant="link"
-                        className={styles.btnSkip}
-                        onClick={handleNext}
-                        disabled={parseInt(router.query.id) === data?.length}
-                      >
-                        Lewati
-                      </Button>
-                    </Col>
-                    <Col xs={4} style={{ textAlign: "center" }}>
+
+                    <Col xs={6} style={{ textAlign: "center" }}>
                       {parseInt(router.query.id) === data?.length ? (
                         <Button
                           className={styles.btnNext}
@@ -485,8 +500,7 @@ const SubtansiUser = ({ token }) => {
                           className={styles.btnNext}
                           onClick={handleNext}
                           disabled={
-                            parseInt(router.query.id) === data &&
-                            data.total_questions
+                            parseInt(router.query.id) === data && data.length
                           }
                         >
                           Lanjut
@@ -688,7 +702,43 @@ const SubtansiUser = ({ token }) => {
               </table>
             </Card>
           ) : router.pathname.includes("trivia") ? (
-            "TRIVIA"
+            <Card className={styles.cardPanduan}>
+              <table>
+                <tr>
+                  <td style={{ verticalAlign: "top" }}>1.</td>
+                  <td>&nbsp;</td>
+                  <td>
+                    {" "}
+                    Lakukan pengisian TRIVIA hingga seluruh pertanyaan terjawab
+                    dengan tuntas.
+                  </td>
+                </tr>
+                <tr>
+                  <td style={{ verticalAlign: "top" }}>2.</td>
+                  <td>&nbsp;</td>
+                  <td>
+                    {" "}
+                    Peserta wajib menjawab seluruh TRIVIA yang berjumlah 50
+                    pertanyaan.
+                  </td>
+                </tr>
+                <tr>
+                  <td style={{ verticalAlign: "top" }}>3.</td>
+                  <td>&nbsp;</td>
+                  <td>
+                    {" "}
+                    Peserta WAJIB mengisi jawaban dengan jujur sebagai bahan
+                    evaluasi bagi manajemen pelaksana pelatihan Digital Talent
+                    Scholarship 2022.
+                  </td>
+                </tr>
+                <tr>
+                  <td style={{ verticalAlign: "top" }}>4.</td>
+                  <td>&nbsp;</td>
+                  <td> Waktu yang tersedia untuk mengisi TRIVIA ini 1 Jam.</td>
+                </tr>
+              </table>
+            </Card>
           ) : (
             "Test"
           )}
