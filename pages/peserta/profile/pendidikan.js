@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
+import { getAllAkademi } from "../../../redux/actions/beranda/beranda.actions";
 
 const Pendidikan = dynamic(
   () =>
@@ -53,6 +54,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+      await store.dispatch(getAllAkademi());
 
       return {
         props: { data: "auth", session, title: "Profile - Peserta" },
