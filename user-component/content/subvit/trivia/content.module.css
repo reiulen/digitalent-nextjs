@@ -113,7 +113,7 @@
     text-align: right;
     float: right;
     letter-spacing: 0.015em;
-
+    cursor: pointer;
     /* Brand/Primary/Primary */
 
     color: #007cff;
@@ -272,7 +272,23 @@
   line-height: 140%;
   color: #80808f;
 }
+.totalSoal2 {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 155%;
+  /* identical to box height, or 28px */
 
+  letter-spacing: 0.1em;
+
+  /* Status/Warning/Normal */
+
+  color: #ffa800;
+}
+.align {
+  text-align: right;
+}
 .baseAll {
   position: absolute;
   top: 255px;
