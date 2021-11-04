@@ -97,8 +97,8 @@ a {
   background: #ffffff !important;
   --rti-border: #d7e1ea !important;
   --rti-main: "#ffffff";
-  --rti-radius: 1.375rem !important;
-  --rti-s: 0.5rem 0.5rem 0.5rem 2.3rem !important;
+  --rti-radius: 1.375rem;
+  --rti-s: 0.5rem 0.5rem 0.5rem 2.3rem;
   /* spacing */
   --rti-tag: "#d7e1ea";
   --rti-tag-remove: "#e53e3e";

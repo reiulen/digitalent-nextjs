@@ -97,7 +97,7 @@ const EditArtikel = ({ token, idUser }) => {
   );
   const [gambarName, setGambarName] = useState(artikel.gambar);
   const [kategori_id, setKategoriId] = useState(artikel.kategori_id); //belum
-  const [akademi_value, setAkademiValue] = useState(artikel.akademi_value);
+  const [kategori_akademi, setKategoriAkademi] = useState(artikel.kategori_akademi);
   const [users_id, setUserId] = useState(artikel.users_id);
   const [tag, setTag] = useState(artikel.tag);
   // const [publish, setPublish] = useState(artikel.publish === 1 ? true : false);
@@ -203,6 +203,7 @@ const EditArtikel = ({ token, idUser }) => {
             isi_artikel,
             gambar,
             kategori_id,
+            kategori_akademi,
             users_id,
             tag,
             publish,
@@ -231,6 +232,7 @@ const EditArtikel = ({ token, idUser }) => {
             isi_artikel,
             gambar,
             kategori_id,
+            kategori_akademi,
             users_id,
             tag,
             publish,
@@ -264,6 +266,7 @@ const EditArtikel = ({ token, idUser }) => {
             isi_artikel,
             gambar: "",
             kategori_id,
+            kategori_akademi,
             users_id,
             tag,
             publish,
@@ -292,6 +295,7 @@ const EditArtikel = ({ token, idUser }) => {
             isi_artikel,
             gambar: "",
             kategori_id,
+            kategori_akademi,
             users_id,
             tag,
             publish,
@@ -522,10 +526,10 @@ const EditArtikel = ({ token, idUser }) => {
                       name=""
                       id=""
                       className="form-control"
-                      value={akademi_value}
-                      onChange={e => setAkademiValue(e.target.value)}
+                      value={kategori_akademi}
+                      onChange={e => setKategoriAkademi(e.target.value)}
                       onBlur={e => {
-                        setAkademiValue(e.target.value);
+                        setKategoriAkademi(e.target.value);
                         simpleValidator.current.showMessageFor("akademi");
                       }}
                     >
@@ -541,8 +545,8 @@ const EditArtikel = ({ token, idUser }) => {
                           return (
                             <option
                               key={row.value}
-                              value={row.value}
-                              selected={akademi_value === row.value ? true : false}
+                              value={row.label}
+                              selected={kategori_akademi === row.label ? true : false}
                             >
                               {row.label}
                             </option>
@@ -554,7 +558,7 @@ const EditArtikel = ({ token, idUser }) => {
                     </select>
                     {simpleValidator.current.message(
                       "akademi",
-                      akademi_value,
+                      kategori_akademi,
                       "required",
                       { className: "text-danger" }
                     )}
