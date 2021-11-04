@@ -20,7 +20,7 @@ const VideoPage = ({ token }) => {
     const { loading: allLoading, error, video } = useSelector(state => state.allVideo)
     const { loading: playLoading, error: playError, isPlayed } = useSelector((state) => state.playVideo);
     const { dataTag } = useSelector((state) => state.allTagContent);
-    const { kategori } = useSelector((state) => state.allKategori);
+    const { kategori } = useSelector((state) => state.allKategoriContent);
 
     const [url_video, setUrlVideo] = useState("")
     const [video_playing, setVideoPlaying] = useState(false)
@@ -173,42 +173,31 @@ const VideoPage = ({ token }) => {
                         </div>
                 }
                 {
-                    kategori.kategori && kategori.kategori.length === 0 ? null :
-                        kategori.kategori.map((row, i) => {
+                    kategori && kategori.length === 0 ? null :
+                        kategori.map((row, i) => {
                             return (
-                                // row.jenis_kategori === "Video" ?
-                                //     <div className="d-flex align-items-center rounded-pill bg-primary-dashboard py-1 px-9 border border-muted m-2"
-                                //         style={{ cursor: "pointer" }}
-                                //         onClick={() => handleFilterKategori(row.nama_kategori)}
-                                //         key={i}
-                                //     >
-                                //         <div className="my-1 mx-5 py-1 px-9 text-white">
-                                //             {(row.nama_kategori).toUpperCase()}
-                                //         </div>
-                                //     </div>
-                                //     : null
-                                    kategoriVideo === row.nama_kategori ?
-                                        <div 
-                                            className="d-flex align-items-center rounded-pill bg-primary-dashboard py-1 px-9 border border-muted m-2" 
-                                            style={{ cursor: "pointer" }}
-                                            onClick={() => handleFilterKategori(row.nama_kategori)}
-                                            key={i}
-                                        >
-                                            <div className="my-1 mx-5 py-1 px-9 text-white">
-                                                {row.nama_kategori}
-                                            </div>
+                                kategoriVideo === row.nama_kategori ?
+                                    <div
+                                        className="d-flex align-items-center rounded-pill bg-primary-dashboard py-1 px-9 border border-muted m-2"
+                                        style={{ cursor: "pointer" }}
+                                        onClick={() => handleFilterKategori(row.nama_kategori)}
+                                        key={i}
+                                    >
+                                        <div className="my-1 mx-5 py-1 px-9 text-white">
+                                            {row.nama_kategori}
                                         </div>
+                                    </div>
                                     :
-                                        <div 
-                                            className="d-flex align-items-center rounded-pill bg-white py-1 px-9 border border-muted m-2" 
-                                            style={{ cursor: "pointer" }}
-                                            onClick={() => handleFilterKategori(row.nama_kategori)}
-                                            key={i}
-                                        >
-                                            <div className="my-1 mx-5 py-1 px-9 text-muted">
-                                                {row.nama_kategori}
-                                            </div>
+                                    <div
+                                        className="d-flex align-items-center rounded-pill bg-white py-1 px-9 border border-muted m-2"
+                                        style={{ cursor: "pointer" }}
+                                        onClick={() => handleFilterKategori(row.nama_kategori)}
+                                        key={i}
+                                    >
+                                        <div className="my-1 mx-5 py-1 px-9 text-muted">
+                                            {row.nama_kategori}
                                         </div>
+                                    </div>
                             )
                         })
                 }

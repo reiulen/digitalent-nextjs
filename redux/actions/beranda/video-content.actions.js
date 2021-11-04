@@ -8,7 +8,10 @@ import {
     TAG_FAIL,
     PLAY_REQUEST,
     PLAY_SUCCESS,
-    PLAY_FAIL
+    PLAY_FAIL,
+    KATEGORI_VIDEO_CONTENT_REQUEST,
+    KATEGORI_VIDEO_CONTENT_SUCCESS,
+    KATEGORI_VIDEO_CONTENT_FAIL
 } from "../../types/publikasi/video.type"
 
 export const getAllVideo = (
