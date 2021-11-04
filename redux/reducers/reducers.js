@@ -68,6 +68,12 @@ import {
   updateSettingPublikasiReducer,
 } from "./publikasi/setting.reducers";
 
+import {
+  allVideoContentReducer,
+  allTagReducer,
+  playVideoContentReducer
+} from "./beranda/video-content.reducer"
+
 import { allDashboardPublikasiReducer } from "./publikasi/dashboard-publikasi.reducers";
 
 // Subvit
@@ -307,7 +313,9 @@ import {
   updateStatusReducer,
   getEditTrainingReducer,
   getEditTraining2Reducer,
-  getEditTraining3Reducer
+  getEditTraining3Reducer,
+  getFormLPJReducer,
+  getFormEvidenceReducer
 } from "./pelatihan/admin/training.reducers";
 // =================== review pelatihan ==================
 import {
@@ -322,7 +330,7 @@ import {
 } from "./pelatihan/admin/review.reducers";
 // =================== report pelatihan ==================
 
-import {getDataReportTrainingReducer} from './pelatihan/admin/report-training.reducers'
+import {detailReportTrainingReducer, getDataReportTrainingReducer} from './pelatihan/admin/report-training.reducers'
 // =================== rekap pelatihan ==================
 import {
   getFormBuilderReducer,
@@ -489,6 +497,10 @@ const reducer = combineReducers({
   updateSettingPublikasi: updateSettingPublikasiReducer,
 
   allDashboardPublikasi: allDashboardPublikasiReducer,
+
+  // allVideoContent: allVideoContentReducer,
+  allTagContent: allTagReducer,
+  playVideo: playVideoContentReducer,
 
   // Subvit
   // =============== substansi ==================
@@ -685,7 +697,8 @@ const reducer = combineReducers({
   getEditTraining: getEditTrainingReducer,
   getEditTraining2: getEditTraining2Reducer,
   getEditTraining3: getEditTraining3Reducer,
-
+  getFormLPJ: getFormLPJReducer,
+  getFormEvidence: getFormEvidenceReducer,
   // ========== review pelatihan ========
   allListReview: allListReviewReducer,
   cardReview: cardReviewReducer,
@@ -712,6 +725,7 @@ const reducer = combineReducers({
 
   // =============== rpoert oelatihan ========
   getDataReportTraining: getDataReportTrainingReducer,
+  detailReportTraining:detailReportTrainingReducer,
 
   // ========== pendaftaran pelatihan ========
   getFormBuilder: getFormBuilderReducer,

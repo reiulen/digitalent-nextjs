@@ -5,12 +5,12 @@ const initialState = {
   email: 0
 }
 
-export const allPromptReducer = (state = initialState, action) => {
+export const allPromptReducer = (state = {}, action) => {
     switch (action.type) {
       case GET_DATA_PROMPT:
         return {
           ...state,
-          notification: action.payload.data.training_rules.notification.status,
+          notification: action.payload.data,
 
         }
   

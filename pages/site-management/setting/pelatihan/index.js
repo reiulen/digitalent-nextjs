@@ -3,6 +3,7 @@ import { getSession } from "next-auth/client";
 import { getAllPage } from "../../../../redux/actions/site-management/settings/page.actions";
 import { wrapper } from "../../../../redux/store";
 import LoadingSkeleton from "../../../../components/LoadingSkeleton";
+import { loadDataPrompt } from '../../../../redux/actions/site-management/settings/pelatihan.actions'
 
 const Pelatihan = dynamic(
   () =>
@@ -40,6 +41,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       await store.dispatch(getAllPage(session.user.user.data.token));
+      await store.dispatch(loadDataPrompt(session.user.user.data.token));
       return {
         props: { session, title: "Pelatihan - Site Management" },
       };

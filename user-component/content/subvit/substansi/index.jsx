@@ -38,6 +38,7 @@ const SubtansiUser = ({ token }) => {
   const [numberPage, setNumberPage] = useState("");
   const [numberAnswer, setNumberAnswer] = useState(false);
   const [modalSoal, setModalSoal] = useState(false);
+  const [modalResponsive, setModalResponsive] = useState(false);
 
   const [count, setCount] = useState(
     random_subtance_question_detail && random_subtance_question_detail.time_left
@@ -51,12 +52,12 @@ const SubtansiUser = ({ token }) => {
     sessionStorage.getItem("targetDate")
   );
 
-  // useEffect(() => {
-  //   dispatch(getRandomSubtanceQuestionDetail(token));
-  // }, [dispatch, token]);
-
   const handleModalSoal = () => {
     setModalSoal(true);
+  };
+
+  const handleModalResponsive = () => {
+    setModalResponsive(true);
   };
 
   const handleNext = () => {
@@ -72,6 +73,10 @@ const SubtansiUser = ({ token }) => {
 
   const handleCloseModal = () => {
     setModalSoal(false);
+  };
+
+  const handleCloseModalResponsive = () => {
+    setModalResponsive(false);
   };
 
   const handleNumber = (val) => {
@@ -191,7 +196,7 @@ const SubtansiUser = ({ token }) => {
       <Container className={styles.baseAll} fluid>
         <Card className={styles.cardTop}>
           <Row>
-            <Col style={{ marginTop: "8px" }}>
+            <Col xs={12} sm={6} style={{ marginTop: "8px" }}>
               <table>
                 <tr>
                   <td className={styles.academy}>{data && data.academy}</td>
@@ -201,7 +206,7 @@ const SubtansiUser = ({ token }) => {
                 </tr>
               </table>
             </Col>
-            <Col style={{ textAlign: "right" }}>
+            <Col xs={12} sm={6} style={{ textAlign: "right" }}>
               <Button
                 className={styles.btnHelp}
                 variant="link"
@@ -232,6 +237,21 @@ const SubtansiUser = ({ token }) => {
                 Soal {parseInt(router.query.id)} dari{" "}
                 {data && data.total_questions}
               </p>
+              <Row className={styles.soalResponsive}>
+                <Col sm={12} xs={12}>
+                  <p className={styles.total}>
+                    Soal {parseInt(router.query.id)} dari{" "}
+                    {data && data.total_questions}
+                    <span
+                      className={styles.clickSoal}
+                      onClick={handleModalResponsive}
+                    >
+                      Daftar Soal
+                    </span>
+                  </p>
+                </Col>
+              </Row>
+
               <h1 className={styles.soal}>
                 {data &&
                 data.list_questions &&
@@ -335,7 +355,7 @@ const SubtansiUser = ({ token }) => {
                 })}
 
               <Row style={{ marginTop: "20px" }}>
-                <Col>
+                <Col className={styles.btnBackResponsive}>
                   <Button
                     variant="link"
                     className={styles.btnBack}
@@ -362,7 +382,11 @@ const SubtansiUser = ({ token }) => {
                     </div>
                   </Button>
                 </Col>
-                <Col style={{ textAlign: "right", margin: "10px " }}>
+
+                <Col
+                  className={styles.btnBottom}
+                  style={{ textAlign: "right", margin: "10px " }}
+                >
                   <Button
                     variant="link"
                     className={styles.btnSkip}
@@ -378,6 +402,7 @@ const SubtansiUser = ({ token }) => {
                       className={styles.btnNext}
                       onClick={handleDone}
                       // disabled={!listAnswer.includes(data?.total_questions)}
+                      // MASIH DIPAKE
                     >
                       Selesai
                     </Button>
@@ -398,6 +423,56 @@ const SubtansiUser = ({ token }) => {
                       </div>
                     </Button>
                   )}
+                </Col>
+                <Col xs={12} className={styles.btnBottomResponsive}>
+                  <Row>
+                    <Col xs={4} style={{ textAlign: "center" }}>
+                      <Button
+                        variant="link"
+                        className={styles.btnBack}
+                        onClick={handleBack}
+                        disabled={parseInt(router.query.id) === 1}
+                      >
+                        Kembali
+                      </Button>
+                    </Col>
+                    <Col xs={4} style={{ textAlign: "center" }}>
+                      {" "}
+                      <Button
+                        variant="link"
+                        className={styles.btnSkip}
+                        onClick={handleNext}
+                        disabled={
+                          parseInt(router.query.id) === data?.total_questions
+                        }
+                      >
+                        Lewati
+                      </Button>
+                    </Col>
+                    <Col xs={4} style={{ textAlign: "center" }}>
+                      {parseInt(router.query.id) === data?.total_questions ? (
+                        <Button
+                          className={styles.btnNext}
+                          onClick={handleDone}
+                          // disabled={!listAnswer.includes(data?.total_questions)}
+                          // MASIH DIPAKE
+                        >
+                          Selesai
+                        </Button>
+                      ) : (
+                        <Button
+                          className={styles.btnNext}
+                          onClick={handleNext}
+                          disabled={
+                            parseInt(router.query.id) === data &&
+                            data.total_questions
+                          }
+                        >
+                          Lanjut
+                        </Button>
+                      )}
+                    </Col>
+                  </Row>
                 </Col>
               </Row>
             </Card>
@@ -634,6 +709,59 @@ const SubtansiUser = ({ token }) => {
               Selesai
             </Button>
           </div>
+        </ModalBody>
+      </Modal>
+
+      {/* Modal Soal Responsive */}
+      <Modal show={modalResponsive} onHide={handleCloseModalResponsive}>
+        <ModalHeader className={styles.headerModal}>
+          Daftar Soal
+          <button
+            type="button"
+            className="close"
+            onClick={handleCloseModalResponsive}
+          >
+            <i className="ri-close-fill" style={{ fontSize: "25px" }}></i>
+          </button>
+        </ModalHeader>
+        <ModalBody>
+          <Row>
+            {number.map((item, index) => {
+              let list = [];
+              for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                list.push(key);
+              }
+
+              return (
+                <>
+                  {list.includes(JSON.stringify(item + 1)) ? (
+                    <Col key={index} style={{ width: "20%" }}>
+                      <Card
+                        className={styles.numberAnswer}
+                        onClick={(event) => handleNumber(event)}
+                      >
+                        {item + 1}
+                      </Card>
+                    </Col>
+                  ) : (
+                    <Col key={index} style={{ width: "20%" }}>
+                      <Card
+                        className={
+                          item + 1 === parseInt(router.query.id)
+                            ? styles.cardChoosed
+                            : styles.cardChoose
+                        }
+                        onClick={(event) => handleNumber(event)}
+                      >
+                        {item + 1}
+                      </Card>
+                    </Col>
+                  )}
+                </>
+              );
+            })}
+          </Row>
         </ModalBody>
       </Modal>
     </>
