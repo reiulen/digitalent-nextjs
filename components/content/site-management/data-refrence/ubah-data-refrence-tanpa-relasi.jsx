@@ -1,15 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import Swal from "sweetalert2";
 import { useRouter } from "next/router";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import IconAdd from "../../../assets/icon/Add";
-import IconDelete from "../../../assets/icon/Delete";
-import { useDispatch, useSelector } from "react-redux";
-import Select from "react-select";
+import { useSelector } from "react-redux";
 
 const Tambah = ({ token }) => {
   const router = useRouter();
@@ -135,7 +132,7 @@ const Tambah = ({ token }) => {
             </h3>
           </div>
           <form>
-            <div className="card-body pt-0">
+            <div className="card-body pt-0 px-4 px-sm-8">
               <div className="form-group">
                 <label htmlFor="staticEmail" className="col-form-label">
                   Nama Data Reference
