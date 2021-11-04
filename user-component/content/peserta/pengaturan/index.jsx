@@ -540,7 +540,7 @@ export default function Pengaturan({ session }) {
         </Modal.Body>
       </Modal>
       {/* END MODAL EMAIL */}
-      {/* START MODAL EMAIL OTP */}
+      {/* START MODAL OTP */}
       <Modal
         show={showUbahEmailModalOtp}
         onHide={handleCloseEmailOtp}
@@ -564,9 +564,23 @@ export default function Pengaturan({ session }) {
           <p className="font-size-h3 text-center">Masukkan Kode Verifikasi</p>
           <div className="d-flex justify-content-center text-center">
             <p style={{ fontSize: "14px" }}>
-              Kode Verifikasi telah dikirim melalui E-mail ke
+              Kode Verifikasi telah dikirim melalui{" "}
+              {postStatus == "email"
+                ? "E-mail "
+                : postStatus == "verifyHp"
+                ? "SMS "
+                : postStatus == "ubahHandphone"
+                ? "SMS "
+                : "E-mail "}
+              ke
               <span className="font-weight-bolder mx-2">
-                {dataPribadi.email}
+                {postStatus == "email"
+                  ? dataPribadi.email
+                  : postStatus == "verifyHp"
+                  ? dataPribadi.nomor_handphone
+                  : postStatus == "ubahHandphone"
+                  ? dataPribadi.nomor_handphone
+                  : dataPribadi.email}
               </span>
             </p>
           </div>
