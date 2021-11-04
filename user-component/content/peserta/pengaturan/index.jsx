@@ -8,28 +8,62 @@ import style from "./style.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import SimpleReactValidator from "simple-react-validator";
 import OtpInput from "react-otp-input";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 export default function SeleksiAdministrasi({ session }) {
   const { error: errorDataPribadi, dataPribadi } = useSelector(
     (state) => state.getDataPribadi
   );
-
+  const notify = (value) =>
+    toast.error(`${value}`, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
   //   START PASSWORD
-  const [password, setPassword] = useState();
+  const [passwordLama, setPasswordLama] = useState();
+  const [passwordBaru, setPasswordBaru] = useState();
+  const [passwordBaru2, setPasswordBaru2] = useState();
   const [showUbahPasswordModal, setShowUbahPasswordModal] = useState(false);
   const handleClosePasswordModal = () => setShowUbahPasswordModal(false);
   const handleShowUbahPasswordModal = () => setShowUbahPasswordModal(true);
 
-  const [hidePassword, setHidePassword] = useState(true);
+  const [hidePasswordLama, setHidePasswordLama] = useState(true);
+  const [hidePasswordBaru, setHidePasswordBaru] = useState(true);
+  const [hidePasswordBaru2, setHidePasswordBaru2] = useState(true);
 
-  const handlerShowPassword = (value) => {
-    setHidePassword(value);
-    // var input = document.getElementById("input-password");
-    // if (input.type === "password") {
-    //   input.type = "text";
-    // } else {
-    //   input.type = "password";
-    // }
+  const handleLanjutPassword = async (
+    old_password,
+    password,
+    password_konfirmasi
+  ) => {
+    const body = {
+      old_password,
+      password,
+      password_konfirmasi,
+    };
+    simpleValidator.current.fields.Password = true;
+    const config = {
+      headers: {
+        Authorization: `Bearer ${session.token}`,
+        "content-type": "application/json",
+      },
+    };
+    try {
+    } catch (error) {
+      notify();
+    }
+    console.log(simpleValidator.current.fields);
+    if (simpleValidator.current.allValid()) {
+    } else {
+      simpleValidator.current.showMessages();
+      forceUpdate(1);
+    }
   };
   // END PASSWORD
 
@@ -48,20 +82,73 @@ export default function SeleksiAdministrasi({ session }) {
       locale: "id",
       messages: {
         email: "Invalid Email",
-        required: "Email Tidak Boleh Kosong",
       },
     })
   );
+  //POST EMAIL LANJUT
+  const handlePostUbahEmail = async (email) => {
+    const body = {
+      old_email: dataPribadi.email,
+      email,
+    };
 
-  const handlePostUbahEmail = () => {
-    handleShowUbahEmailOtp();
+    simpleValidator.current.fields["passwordLama"] = true;
+    simpleValidator.current.fields["passwordBaru"] = true;
+    simpleValidator.current.fields["password konfirmasi"] = true;
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${session.token}`,
+        "content-type": "application/json",
+      },
+    };
     if (simpleValidator.current.allValid()) {
-      console.log("disini");
+      try {
+        const data = await axios.post(
+          `${process.env.END_POINT_API_PELATIHAN}api/v1/auth/request-update-email`,
+          body,
+          config
+        );
+        if (data) {
+          console.log(data);
+          handleShowUbahEmailOtp();
+          handleCloseEmailModal();
+        }
+      } catch (error) {
+        notify(error.response.data.message);
+      }
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
     }
   };
+  // Post OTP
+  const handlePostOtpEmail = async (token, email) => {
+    const body = {
+      old_email: dataPribadi.email,
+      email,
+      token,
+    };
+    const config = {
+      headers: {
+        Authorization: `Bearer ${session.token}`,
+        "content-type": "application/json",
+      },
+    };
+    try {
+      const data = await axios.post(
+        `${process.env.END_POINT_API_PELATIHAN}api/v1/auth/submit-update-email`,
+        body,
+        config
+      );
+      if (data) {
+        console.log(data);
+      }
+    } catch (error) {
+      notify(error.response.data.message);
+    }
+  };
+
   const [showResendButton, setShowResendButton] = useState(false);
   const [count, setCount] = useState(30);
   useEffect(() => {
@@ -241,7 +328,7 @@ export default function SeleksiAdministrasi({ session }) {
               <Form.Control
                 style={{ fontSize: "14px" }}
                 type="email"
-                placeholder="Masukan Email Baru"
+                placeholder="Masukkan Email Baru"
                 onChange={(e) => {
                   setEmail(e.target.value);
                 }}
@@ -263,8 +350,7 @@ export default function SeleksiAdministrasi({ session }) {
               className="rounded-full py-4 px-8"
               style={{ fontSize: "14px" }}
               onClick={() => {
-                handlePostUbahEmail();
-                handleCloseEmailModal();
+                handlePostUbahEmail(email);
               }}
             >
               Lanjut
@@ -294,7 +380,7 @@ export default function SeleksiAdministrasi({ session }) {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p className="font-size-h3 text-center">Masukan Kode Verifikasi</p>
+          <p className="font-size-h3 text-center">Masukkan Kode Verifikasi</p>
           <div className="d-flex justify-content-center text-center">
             <p style={{ fontSize: "14px" }}>
               Kode Verifikasi telah dikirim melalui E-mail ke
@@ -330,6 +416,7 @@ export default function SeleksiAdministrasi({ session }) {
                 <button
                   className={` font-weight-bolder text-primary ${style.btn_ubah}`}
                   onClick={() => {
+                    handlePostUbahEmail(email);
                     setCount(30);
                   }}
                 >
@@ -342,7 +429,7 @@ export default function SeleksiAdministrasi({ session }) {
               className="rounded-full py-4 px-8"
               style={{ fontSize: "14px" }}
               onClick={() => {
-                handlePostUbahEmail();
+                handlePostOtpEmail(otpEmail, email);
               }}
             >
               Verifikasi
@@ -382,22 +469,21 @@ export default function SeleksiAdministrasi({ session }) {
               <div className="position-relative">
                 <input
                   id="input-password"
-                  //   type="password"
-                  type={hidePassword ? "password" : "text"}
+                  type={hidePasswordLama ? "password" : "text"}
                   className="form-control form-control-auth pr-10"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Masukkan Password"
-                  onBlur={() =>
-                    simpleValidator.current.showMessageFor("Password")
-                  }
+                  value={passwordLama}
+                  onChange={(e) => setPasswordLama(e.target.value)}
+                  placeholder="Masukkan Password Anda"
+                  // onBlur={() =>
+                  //   simpleValidator.current.showMessageFor("Password")
+                  // }
                 />
-                {hidePassword === true ? (
+                {hidePasswordLama === true ? (
                   <i
                     className="ri-eye-fill right-center-absolute cursor-pointer"
                     style={{ right: "10px" }}
                     onClick={() => {
-                      setHidePassword(!hidePassword);
+                      setHidePasswordLama(!hidePasswordLama);
                       //   handlerShowPassword(false);
                     }}
                   />
@@ -406,13 +492,21 @@ export default function SeleksiAdministrasi({ session }) {
                     className="ri-eye-off-fill right-center-absolute cursor-pointer"
                     style={{ right: "10px" }}
                     onClick={() => {
-                      setHidePassword(!hidePassword);
+                      setHidePasswordLama(!hidePasswordLama);
                       //   handlerShowPassword(false);
                     }}
                   />
                 )}
               </div>
             </Form.Group>
+            {simpleValidator.current.message(
+              "passwordLama",
+              passwordLama,
+              "required|min:8|max:18",
+              {
+                className: "text-danger",
+              }
+            )}
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label
                 className="mb-3"
@@ -424,21 +518,18 @@ export default function SeleksiAdministrasi({ session }) {
                 <input
                   id="input-password"
                   //   type="password"
-                  type={hidePassword ? "password" : "text"}
+                  type={hidePasswordBaru ? "password" : "text"}
                   className="form-control form-control-auth pr-10"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Masukkan Password"
-                  onBlur={() =>
-                    simpleValidator.current.showMessageFor("Password")
-                  }
+                  value={passwordBaru}
+                  onChange={(e) => setPasswordBaru(e.target.value)}
+                  placeholder="Masukkan Password Anda"
                 />
-                {hidePassword === true ? (
+                {hidePasswordBaru === true ? (
                   <i
                     className="ri-eye-fill right-center-absolute cursor-pointer"
                     style={{ right: "10px" }}
                     onClick={() => {
-                      setHidePassword(!hidePassword);
+                      setHidePasswordBaru(!hidePasswordBaru);
                       //   handlerShowPassword(false);
                     }}
                   />
@@ -447,48 +538,7 @@ export default function SeleksiAdministrasi({ session }) {
                     className="ri-eye-off-fill right-center-absolute cursor-pointer"
                     style={{ right: "10px" }}
                     onClick={() => {
-                      setHidePassword(!hidePassword);
-                      //   handlerShowPassword(false);
-                    }}
-                  />
-                )}
-              </div>
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label
-                className="mb-3"
-                style={{ fontSize: "16px", color: "#1F1F1F" }}
-              >
-                Password Baru
-              </Form.Label>
-              <div className="position-relative">
-                <input
-                  id="input-password"
-                  //   type="password"
-                  type={hidePassword ? "password" : "text"}
-                  className="form-control form-control-auth pr-10"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Masukkan Password"
-                  onBlur={() =>
-                    simpleValidator.current.showMessageFor("Password")
-                  }
-                />
-                {hidePassword === true ? (
-                  <i
-                    className="ri-eye-fill right-center-absolute cursor-pointer"
-                    style={{ right: "10px" }}
-                    onClick={() => {
-                      setHidePassword(!hidePassword);
-                      //   handlerShowPassword(false);
-                    }}
-                  />
-                ) : (
-                  <i
-                    className="ri-eye-off-fill right-center-absolute cursor-pointer"
-                    style={{ right: "10px" }}
-                    onClick={() => {
-                      setHidePassword(!hidePassword);
+                      setHidePasswordBaru(!hidePasswordBaru);
                       //   handlerShowPassword(false);
                     }}
                   />
@@ -497,9 +547,57 @@ export default function SeleksiAdministrasi({ session }) {
             </Form.Group>
             <div className="form-group">
               {simpleValidator.current.message(
-                "Password",
-                password,
-                "required",
+                "passwordBaru",
+                passwordBaru,
+                "required|min:8|max:18",
+                {
+                  className: "text-danger",
+                }
+              )}
+            </div>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label
+                className="mb-3"
+                style={{ fontSize: "16px", color: "#1F1F1F" }}
+              >
+                Konfirmasi Password Baru
+              </Form.Label>
+              <div className="position-relative">
+                <input
+                  id="input-password"
+                  //   type="password"
+                  type={hidePasswordBaru2 ? "password" : "text"}
+                  className="form-control form-control-auth pr-10"
+                  value={passwordBaru2}
+                  onChange={(e) => setPasswordBaru2(e.target.value)}
+                  placeholder="Masukkan Password Anda"
+                />
+                {hidePasswordBaru2 === true ? (
+                  <i
+                    className="ri-eye-fill right-center-absolute cursor-pointer"
+                    style={{ right: "10px" }}
+                    onClick={() => {
+                      setHidePasswordBaru2(!hidePasswordBaru2);
+                      //   handlerShowPassword(false);
+                    }}
+                  />
+                ) : (
+                  <i
+                    className="ri-eye-off-fill right-center-absolute cursor-pointer"
+                    style={{ right: "10px" }}
+                    onClick={() => {
+                      setHidePasswordBaru2(!hidePasswordBaru2);
+                      //   handlerShowPassword(false);
+                    }}
+                  />
+                )}
+              </div>
+            </Form.Group>
+            <div className="form-group">
+              {simpleValidator.current.message(
+                "password konfirmasi",
+                passwordBaru2,
+                "required|min:8|max:18",
                 {
                   className: "text-danger",
                 }
@@ -512,8 +610,7 @@ export default function SeleksiAdministrasi({ session }) {
               className="rounded-full py-4 px-8"
               style={{ fontSize: "14px" }}
               onClick={() => {
-                handlePostUbahEmail();
-                handleCloseEmailModal();
+                handleLanjutPassword(passwordLama, passwordBaru, passwordBaru2);
               }}
             >
               Lanjut
