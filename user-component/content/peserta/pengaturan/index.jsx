@@ -118,7 +118,7 @@ export default function SeleksiAdministrasi({ session }) {
                   </span>
                 )}
               </div>
-              {!dataPribadi.email_verifikasi && (
+              {dataPribadi.email_verifikasi == false && (
                 <Button
                   variant="danger"
                   className="rounded-full mt-5 py-3 px-10"
