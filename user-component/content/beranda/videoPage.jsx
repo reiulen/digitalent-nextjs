@@ -32,16 +32,6 @@ const VideoPage = ({ token }) => {
     let loading = false
     let { page = 1, keyword, success } = router.query
 
-    // if (allLoading) {
-    //     loading = allLoading
-    //     // } else if (deleteLoading) {
-    //     //     loading = deleteLoading
-    //     // } else if (playLoading) {
-    //     //     loading = playLoading
-    // }
-
-    // page = Number(page)
-
     const handlePagination = (pageNumber) => {
         if (limit !== null && search === "" && startDate === null && endDate === null && publishValue === null) {
             router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}`)
@@ -109,8 +99,6 @@ const VideoPage = ({ token }) => {
 
     return (
         <>
-            {console.log("Data Video : ", video)}
-            {console.log("Data Kategori : ", kategori)}
             <SubHeaderComponent />
             <div>
                 <h1>Video Terupdate dan Terkini</h1>
@@ -120,7 +108,6 @@ const VideoPage = ({ token }) => {
                 {
                     kategori.kategori && kategori.kategori.length === 0 ? null :
                         kategori.kategori.map((row, i) => {
-                            // console.log("data row : ", row.jenis_kategori !== "Video" ? null : row.nama_kategori)
                             return (
                                 row.jenis_kategori === "Video" ?
                                     <div className="btn btn-primary mr-3" style={{}}>
@@ -158,42 +145,44 @@ const VideoPage = ({ token }) => {
                     </div>
 
                     {/* CARD Video */}
-                    <div className="row">
-                        <div className="row justify-content-center my-5">
+                    <div className="my-5">
+                        <div className="row justify-content-between" style={{width: '103.5%',  flexWrap: 'wrap'}}>
                             {
                                 // video.video || video.video.length === 0 ? null :
                                 video.video.map((row, i) => {
                                     return (
-                                        <div className="card mb-4 mx-3" key={i} style={{ width: '45%', flexWrap: 'wrap', border: 'none' }}>
-                                            <Image
-                                                alt={row.judul_video}
-                                                unoptimized={process.env.ENVIRONMENT !== "PRODUCTION"}
-                                                loader={process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + row.gambar}
-                                                src={process.env.END_POINT_API_IMAGE_PUBLIKASI + 'publikasi/images/' + row.gambar}
-                                                width={70}
-                                                height={180}
-                                                className="rounded"
-                                                data-target="#videoPlayerModal"
-                                                data-toggle="modal"
-                                                onClick={() => handlePreview(row.url_video, row.id, row.judul_video, row.tanggal_publish, row.kategori, row.isi_video, row.tag)}
-                                            />
-                                            <div className="card-body">
-                                                <div style={{width:'126%', marginLeft:'-30px'}}>
-                                                    <h5 className="card-title">{row.judul_video}</h5>
-                                                    <div className="d-flex justify-content-between align-items-center ml-4">
-                                                        <div className="row align-items-center">
-                                                            <div className="border rounded-circle py-1 px-2">
-                                                                {/* Insert Logo Image Here */}
-                                                                <Image
-                                                                    src="/assets/media/logo-default.png"
-                                                                    width={30}
-                                                                    height={30}
-                                                                    alt="Logo Image"
-                                                                />
+                                        <div className="col-sm-12 col-md-6 col-lg-6">
+                                            <div className="card mb-4 border-0" key={i}>
+                                                <Image
+                                                    alt={row.judul_video}
+                                                    unoptimized={process.env.ENVIRONMENT !== "PRODUCTION"}
+                                                    loader={process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + row.gambar}
+                                                    src={process.env.END_POINT_API_IMAGE_PUBLIKASI + 'publikasi/images/' + row.gambar}
+                                                    width={70}
+                                                    height={180}
+                                                    className="rounded"
+                                                    data-target="#videoPlayerModal"
+                                                    data-toggle="modal"
+                                                    onClick={() => handlePreview(row.url_video, row.id, row.judul_video, row.tanggal_publish, row.kategori, row.isi_video, row.tag)}
+                                                />
+                                                <div className="card-body">
+                                                    <div style={{ width: '126%', marginLeft: '-30px' }}>
+                                                        <h5 className="card-title" style={{width:'96%'}}>{row.judul_video}</h5>
+                                                        <div className="d-flex justify-content-between align-items-center">
+                                                            <div className="row align-items-center ml-2">
+                                                                <div className="border rounded-circle py-1 px-2">
+                                                                    {/* Insert Logo Image Here */}
+                                                                    <Image
+                                                                        src="/assets/media/logo-default.png"
+                                                                        width={30}
+                                                                        height={30}
+                                                                        alt="Logo Image"
+                                                                    />
+                                                                </div>
+                                                                <span className="ml-2">Admin Pokja</span>
                                                             </div>
-                                                            <span className="ml-2">Admin Pokja</span>
+                                                            <span className="label label-inline label-light-primary font-weight-bold" style={{marginRight:'20px'}}>{(row.kategori).toUpperCase()}</span>
                                                         </div>
-                                                        <span className="label label-inline label-light-primary font-weight-bold">{(row.kategori).toUpperCase()}</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -206,7 +195,6 @@ const VideoPage = ({ token }) => {
 
                     {/* PAGINATION */}
                     <div>
-                        {/* {console.log("Cek Pagination : ", video)} */}
                         {
                             // video && video.perPage < video.total &&
                             <div className="table-pagination" style={{ marginLeft: '35%' }}>
@@ -239,7 +227,6 @@ const VideoPage = ({ token }) => {
                                 alt="Logo filter"
                             />
                             <h3 className="d-flex align-items-center font-weight-bolder ml-3 mt-3">
-                                {/* <IconFilter className="mr-3 label label-inline font-weight-bold" style={{ borderRadius: '50%', height: '23px', backgroundColor: '#007cff' }} /> */}
                                 Filter
                             </h3>
                         </div>
@@ -256,24 +243,45 @@ const VideoPage = ({ token }) => {
                         </div>
                         <button type="button" className="btn btn-primary mb-5" style={{ width: '90%', margin: 'auto', borderRadius: '30px' }}>Tampilkan</button>
                     </div>
+
+                    {/* Tag */}
+                    <div className="row mt-5 d-flex flex-column mx-3">
+                        <h3 className="font-weight-bolder">
+                            Temukan Lebih Banyak Berita Yang Sesuai:
+                        </h3>
+                        <div className=" d-flex flex-wrap justify-content-around flex-row">
+                            <div className="border px-2 py-1 rounded my-3 mr-3">
+                                #SVGA
+                            </div>
+                            <div className="border px-2 py-1 rounded my-3 mr-3">
+                                #PELATIHAN
+                            </div>
+                            <div className="border px-2 py-1 rounded my-3 mr-3">
+                                #UIUXDESIGNER
+                            </div>
+                            <div className="border px-2 py-1 rounded my-3 mr-3">
+                                #JAVA
+                            </div>
+                            <div className="border px-2 py-1 rounded my-3 mr-3">
+                                #C++
+                            </div>
+                            <div className="border px-2 py-1 rounded my-3 mr-3">
+                                #LINUX
+                            </div>
+                            <div className="border px-2 py-1 rounded my-3 mr-3">
+                                #IOS
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 {/* Modal */}
                 <div className="modal fade" id="videoPlayerModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" >
                     <div className="modal-dialog modal-dialog-centered" role="document">
                         <div className="modal-content" style={{ width: '700px', height: '490px' }}>
-                            {/* <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLongTitle">Pratinjau Video</h5>
-                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div> */}
                             <div className={styles['modal-body']}>
-                                {/* <div className={styles['title-preview-video']}> */}
-                                {/* <div className="mb-2" style={{ textAlign: 'right' }}> */}
                                 <div className={styles['playVideo']}>
                                     <button type="button" className="col-1 flaticon2-delete mb-2" data-dismiss="modal" aria-label="Close" style={{ border: 'none', background: 'none' }}></button>
-                                    {/* </div> */}
                                     <ReactPlayer url={url_video} controls width="100%" height="100%" playing={video_playing} onPlay={handleIsPlayed} />
                                 </div>
                                 {/* </div> */}
@@ -314,28 +322,6 @@ const VideoPage = ({ token }) => {
                                             {dataKategori}
                                         </span>
                                     </div>
-                                    {/* <div
-                                    className="mr-5 px-3 py-1 rounded mb-1 ml-4 d-flex align-items-center">
-                                    <i className="flaticon2-calendar-4 "></i>
-                                    {
-                                        tanggal_publish ?
-                                            <span className="ml-2">
-                                                Publish : {moment({ tanggal_publish }).format('LL')}
-                                            </span>
-                                            :
-                                            <span className="ml-2">
-                                                Belum dipublish
-                                            </span>
-                                    }
-                                </div>
-
-                                <div
-                                    className=" rounded px-3 d-flex align-items-center">
-                                    <i className="ri-dashboard-line"></i>
-                                    <span className="ml-2 py-1">
-                                        Kategori: {kategori}
-                                    </span>
-                                </div> */}
                                 </div>
                                 <div className={`${styles.descriptionVideo} text-break m-4`}>
                                     <span>

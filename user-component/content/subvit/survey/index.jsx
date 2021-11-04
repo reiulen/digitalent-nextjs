@@ -31,8 +31,6 @@ const SubtansiUser = ({ token }) => {
     (state) => state.randomSubtanceQuestionDetail
   );
 
-  // console.log(random_subtance_question_detail)
-
   const router = useRouter();
 
   const initialData = [
@@ -90,10 +88,6 @@ const SubtansiUser = ({ token }) => {
     sessionStorage.getItem("targetDate")
   );
 
-  // useEffect(() => {
-  //   dispatch(getRandomSubtanceQuestionDetail(token));
-  // }, [dispatch, token]);
-
   const handleModalSoal = () => {
     setModalSoal(true);
   };
@@ -147,8 +141,6 @@ const SubtansiUser = ({ token }) => {
   };
 
   useEffect(() => {
-    console.log(JSON.parse(data[parseInt(router.query.id) - 1].answer).length);
-
     if (count >= 0) {
       const secondsLeft = setInterval(() => {
         setCount((c) => c - 1);
@@ -160,11 +152,13 @@ const SubtansiUser = ({ token }) => {
       return () => clearInterval(secondsLeft);
     } else {
       localStorage.clear();
+      // MASIH DIPAKE UNTUK TESTING
       // router.push(`/peserta/done-mid-tes`);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [count, data]);
 
+  // MASIH DIPAKE UNTUK TESTING
   // useEffect(() => {
   //   axios
   //     .get("https://run.mocky.io/v3/8f420e68-c974-456f-97ff-9862330d6190")
@@ -208,45 +202,21 @@ const SubtansiUser = ({ token }) => {
       setData(dataTemp);
     }
 
-    // console.log(
-    //   data[0].open === true ? console.log("ggod") : console.log("vad")
-    // );
-    // setMultipleAnswer(e.key);
-
-    //   localStorage.setItem(router.query.id, multiple);
-    // } else {
     setAnswer(e.key);
     const a = JSON.parse(data[parseInt(router.query.id) - 1].answer);
     const b = a.map((item) => {
       return item.key;
     });
-    // console.log(a);
-    // console.log(e.key);
 
     localStorage.setItem(`${router.query.id}`, e.key);
-    // }
 
-    // console.log(data[parseInt(router.query.id) - 1].type === "multiple_choice");
     let ac = [];
     let multiple = [localStorage.getItem(parseInt(router.query.id))];
     if (data[parseInt(router.query.id) - 1].type === "multiple_choice") {
       if (localStorage.getItem(parseInt(router.query.id)) !== e.key) {
-        console.log("A");
       }
-      // for (let i = 0; i < multiple.length; i++) {
-      //   ac.push(e.key);
-      // }
-      // for (let i = 0; i < ac.length; i++) {
-      //   const element = ac[i];
-      //   ac.concat(element);
-      // }
-      // localStorage.setItem(`${router.query.id}`, e.key);
-      // if (localStorage.getItem(parseInt(router.query.id)) !== e.key) {
-      //   ac.push(e.key);
-      // }
       multiple.push(e);
     }
-    // console.log(multiple);
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i);
       list.push(key);
@@ -467,14 +437,6 @@ const SubtansiUser = ({ token }) => {
               {data[parseInt(router.query.id) - 1].open === true && (
                 <>
                   <hr />
-                  {/* <p>{d}</p> */}
-                  {/* {JSON.parse(data[parseInt(router.query.id) - 1].answer).map(
-                    (item, index) => {
-                      return item.sub.map((item, index) => {
-                        setD(item.question);
-                      });
-                    }
-                  )} */}
                 </>
               )}
 
@@ -568,6 +530,7 @@ const SubtansiUser = ({ token }) => {
                           className={styles.btnNext}
                           onClick={handleDone}
                           // disabled={!listAnswer.includes(data?.total_questions)}
+                          // MASIH DIPAKE UNTUK TESTING
                         >
                           Selesai
                         </Button>
