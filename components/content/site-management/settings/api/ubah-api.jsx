@@ -281,9 +281,10 @@ console.log("valueField",valueField)
                       className="form-search-date form-control cursor-pointer"
                       onChange={(date) => onChangePeriodeDateEnd(date)}
                       value={to}
+                      disabled={!from}
                       dateFormat="YYYY-MM-DD"
                       placeholderText="To"
-                      minDate={moment().toDate()}
+                      minDate={moment(from).toDate()}
                     />
                     <IconCalender
                       className="right-center-absolute"

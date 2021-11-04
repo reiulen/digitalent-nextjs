@@ -93,7 +93,7 @@ const Tambah = ({ token }) => {
             </h3>
           </div>
           <form>
-            <div className="card-body pt-0">
+            <div className="card-body pt-0 px-4 px-sm-8">
               <div className="form-group">
                 <label htmlFor="staticEmail" className="col-form-label">
                   Nama Data Reference
@@ -122,7 +122,8 @@ const Tambah = ({ token }) => {
                 return (
                   <div className="form-group" key={index}>
                     <label htmlFor="staticEmail" className="col-form-label">
-                      {items.name}
+                      {/* {items.name} */}
+                      Value {index + 1}
                     </label>
                     <div className="position-relative d-flex align-items-center">
                       <input
