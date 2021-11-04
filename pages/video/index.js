@@ -16,10 +16,8 @@ const Layout = dynamic(
 export default function VideoDetail(props) {
     let session = null;
     if (props.session) {
-        // session = props.session.user.user.data.user;
         session = props.session.user.user.data.Token
     }
-    // console.log("session :", session.Token)
     return (
         <div>
             <Layout title="Video" token={session}>
@@ -42,8 +40,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
                     query.limit,
                     query.publish,
                     query.startdate,
-                    query.enddate,
-                    // session?.user.user.data.user.token
+                    query.enddate
                 )
             )
             await store.dispatch(getAllKategori());
