@@ -50,10 +50,10 @@ const Layout = ({ title = "Peserta - Pelatihan", session, children }) => {
     routerPath = "form-pendaftaran";
   if (router.pathname === "/peserta/subvit/substansi/[id]")
     routerPath = "/peserta/subvit/substansi/[id]";
-  if (router.pathname === "/peserta/survey/substansi/[id]")
-    routerPath = "/peserta/survey/substansi/[id]";
-  if (router.pathname === "/peserta/trivia/substansi/[id]")
-    routerPath = "/peserta/trivia/substansi/[id]";
+  if (router.pathname === "/peserta/subvit/survey/[id]")
+    routerPath = "/peserta/subvit/survey/[id]";
+  if (router.pathname === "/peserta/subvit/trivia/[id]")
+    routerPath = "/peserta/subvit/trivia/[id]";
   if (router.pathname === "/peserta/subvit/mid-test/[id]")
     routerPath = "/peserta/subvit/mid-test/[id]";
   if (router.pathname === "/peserta/subvit/survey/[id]")
