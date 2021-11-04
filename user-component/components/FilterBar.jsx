@@ -2,30 +2,40 @@ import React from "react";
 import { Dropdown, Col, Form, InputGroup, FormControl } from "react-bootstrap";
 
 import { TagsInput } from "react-tag-input-component";
+import Select, { StylesConfig } from "react-select";
 
 const FilterBar = () => {
+  const options = [
+    { value: "1", label: "VSGA" },
+    { value: "2", label: "FGA" },
+    { value: "3", label: "AKM" },
+  ];
+
+  const customStyles = {
+    control: (styles) => ({
+      ...styles,
+      borderRadius: "30px",
+      paddingLeft: "25px",
+    }),
+  };
+
   return (
     <div className="d-flex align-content-stretch align-items-center flex-lg-nowrap flex-wrap mt-13">
       <div className="mb-5 w-100 rounded-xl mr-4">
-        <Form.Select
-          aria-label="Default select example"
-          className="form-control pr-5"
-          style={{ borderRadius: "30px" }}
+        <Select
+          options={options}
+          styles={customStyles}
           placeholder="Pilih Akademi"
-        >
-          <option disabled selected>
-            Pilih Akademi
-          </option>
-          <option value="1">VSGA</option>
-          <option value="2">FGA</option>
-          <option value="3">GTA</option>
-        </Form.Select>
+          isClearable
+        />
       </div>
 
       <div className="mb-5 w-100 mr-4 position-relative">
-        <TagsInput
-          className="bg-white mb-5 pl-10 w-100 rounded-xl"
-          placeHolder="Isi Tag & Enter"
+        <Select
+          options={options}
+          styles={customStyles}
+          placeholder="Pilih Tema"
+          isMulti
         />
         <i
           className="ri-search-line left-center-absolute"
@@ -34,11 +44,11 @@ const FilterBar = () => {
       </div>
 
       <div className="mb-5 position-relative w-100 mr-4">
-        <input
-          type="text"
-          className="form-control w-100 rounded-xl pl-10"
-          id="inlineFormInputGroup"
+        <Select
+          options={options}
+          styles={customStyles}
           placeholder="Cari Lokasi"
+          isClearable
         />
         <i
           className="ri-map-pin-line left-center-absolute"
@@ -47,11 +57,11 @@ const FilterBar = () => {
       </div>
 
       <div className="mb-5 position-relative w-100 mr-4">
-        <input
-          type="text"
-          className="form-control pl-10 w-100 rounded-xl"
-          id="inlineFormInputGroup"
+        <Select
+          options={options}
+          styles={customStyles}
           placeholder="Tipe Pelatihan"
+          isClearable
         />
         <i
           className="ri-book-mark-line left-center-absolute"
@@ -61,7 +71,6 @@ const FilterBar = () => {
 
       <div className="mb-5 w-100">
         <button className="btn btn-primary rounded-pill btn-block fw-500">
-          <i className="ri-search-line mr-2"></i>
           Search
         </button>
       </div>
