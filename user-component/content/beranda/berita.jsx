@@ -120,7 +120,7 @@ const Berita = () => {
                     {/* End Search Tab */}
 
                     {/* Card */}
-                    <div className="row my-5 ml-1 flex-column-reverse flex-md-row">
+                    <div className="row my-20 ml-1 flex-column-reverse flex-md-row">
                         <div className="col col-xl-7 col-12">
                             <div className="row d-flex justify-content-between align-items-center">
                                 <div className="d-flex align-self-center">
@@ -214,7 +214,7 @@ const Berita = () => {
                     {/* End of Card */}
 
                     {/* Card */}
-                    <div className="row my-5 ml-1 flex-column-reverse flex-md-row">
+                    <div className="row my-20 ml-1 flex-column-reverse flex-md-row">
                         <div className="col col-xl-7 col-12">
                             <div className="row d-flex justify-content-between align-items-center">
                                 <div className="d-flex align-self-center">
@@ -308,7 +308,7 @@ const Berita = () => {
                     {/* End of Card */}
 
                     {/* Card */}
-                    <div className="row my-5 ml-1 flex-column-reverse flex-md-row">
+                    <div className="row my-20 ml-1 flex-column-reverse flex-md-row">
                         <div className="col col-xl-7 col-12">
                             <div className="row d-flex justify-content-between align-items-center">
                                 <div className="d-flex align-self-center">
@@ -402,7 +402,7 @@ const Berita = () => {
                     {/* End of Card */}
 
                     {/* Card */}
-                    <div className="row my-5 ml-1 flex-column-reverse flex-md-row">
+                    <div className="row my-20 ml-1 flex-column-reverse flex-md-row">
                         <div className="col col-xl-7 col-12">
                             <div className="row d-flex justify-content-between align-items-center">
                                 <div className="d-flex align-self-center">
@@ -496,7 +496,7 @@ const Berita = () => {
                     {/* End of Card */}
 
                     {/* Card */}
-                    <div className="row my-5 ml-1 flex-column-reverse flex-md-row">
+                    <div className="row my-20 ml-1 flex-column-reverse flex-md-row">
                         <div className="col col-xl-7 col-12">
                             <div className="row d-flex justify-content-between align-items-center">
                                 <div className="d-flex align-self-center">
