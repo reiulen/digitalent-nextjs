@@ -420,6 +420,14 @@ import {
   checkRegisteredPelatihanReducer,
 } from "../reducers/beranda/detail-pelatihan.reducers";
 
+// ========== artikel ========
+import {
+  allBerandaArtikelReducer,
+  detailBerandaArtikelReducer,
+  kategoriBerandaArtikelReducer,
+  allTagBerandaArtikelReducer,
+} from "../reducers/beranda/artikel.reducers"
+
 // ========== galeri ========
 import {
   allBerandaGaleriReducer,
@@ -784,6 +792,12 @@ const reducer = combineReducers({
   // ========== detail pelatihan ========
   detailPelatihan: detailPelatihanReducer,
   checkRegisteredPelatihan: checkRegisteredPelatihanReducer,
+
+  // ========== artikel ========
+  allBerandaArtikel: allBerandaArtikelReducer,
+  detailBerandaArtikel: detailBerandaArtikelReducer,
+  kategoriBerandaArtikel: kategoriBerandaArtikelReducer,
+  allTagBerandaArtikel: allTagBerandaArtikelReducer,
 
   // ========== galeri ========
   allBerandaGaleri: allBerandaGaleriReducer,
