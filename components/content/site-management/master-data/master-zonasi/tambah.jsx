@@ -49,6 +49,16 @@ const Tambah = ({ token }) => {
     let _temp = [...formInput];
     let _tempValue = [...valueSend];
 
+    
+
+    
+        // selectRefKabupaten.select.clearValue();
+
+        
+
+
+
+
     try {
       let { data } = await axios.get(
         `${process.env.END_POINT_API_SITE_MANAGEMENT}api/option/provinsi-choose/${e.id}`,
@@ -198,7 +208,7 @@ const Tambah = ({ token }) => {
                 </label>
                 <input
                   onChange={(e) => setNameZonation(e.target.value)}
-                  placeholder="Masukan nama zonasi"
+                  placeholder="Masukkan nama zonasi"
                   type="text"
                   className="form-control"
                 />
@@ -250,7 +260,7 @@ const Tambah = ({ token }) => {
                               ref={(ref) => (selectRefKabupaten = ref)}
                               className="basic-single"
                               classNamePrefix="select"
-                              placeholder="Pilih kabupaten"
+                              placeholder="Pilih kota/kabupaten"
                               isMulti
                               isDisabled={false}
                               isLoading={false}

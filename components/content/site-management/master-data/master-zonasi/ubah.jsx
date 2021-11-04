@@ -196,7 +196,7 @@ const Tambah = ({ token }) => {
                 <label>Nama Zonasi</label>
                 <input
                   onChange={(e) => setNameZonation(e.target.value)}
-                  placeholder="Masukan nama zonasi"
+                  placeholder="Masukkan nama zonasi"
                   type="text"
                   value={nameZonation}
                   className="form-control"
@@ -259,7 +259,7 @@ const Tambah = ({ token }) => {
                                 ref={(ref) => (selectRefKabupaten = ref)}
                                 className="basic-single"
                                 classNamePrefix="select"
-                                placeholder="Pilih kabupaten"
+                                placeholder="Pilih kota/kabupaten"
                                 isMulti={true}
                                 isDisabled={false}
                                 isLoading={false}
