@@ -493,17 +493,7 @@ const Galeri = ({ token }) => {
                             ? isViewed.gambar.map((row, i) => {
                                 return (
                                     <div className={i === 0 ? "carousel-item active" : "carousel-item"} key={i}>
-                                        <div className={styles["img-prevModal"]}>
-                                            {/* <img
-                                                src={
-                                                    process.env.END_POINT_API_IMAGE_PUBLIKASI +
-                                                    "publikasi/images/" +
-                                                    row.gambar
-                                                }
-                                                alt="Girl in a jacket"
-                                                width="100%"
-                                                height="90%"
-                                            /> */}
+                                        {/* <div className={styles["img-prevModal"]}>
                                             <Image
                                                 unoptimized={process.env.ENVIRONMENT !== "PRODUCTION"}
                                                 loader={() =>
@@ -521,6 +511,24 @@ const Galeri = ({ token }) => {
                                                 objectFit="fill"
                                                 // width={400}
                                                 // height={511}
+                                            />
+                                        </div> */}
+
+                                        <div
+                                            className="position-relative"
+                                            style={{
+                                                height: "447px",
+                                                width: "auto"
+                                            }}
+                                        >
+                                            <Image
+                                                src={
+                                                    process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                                    "publikasi/images/" + row.gambar
+                                                }
+                                                alt="Slider"
+                                                objectFit="fill"
+                                                layout="fill"
                                             />
                                         </div>
                                     </div>
