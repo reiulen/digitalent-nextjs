@@ -11,7 +11,7 @@ const Berita = () => {
             {/* BreadCrumb */}
             <div className="row my-5 mx-1 py-3 px-8 bg-white rounded-pill d-flex align-items-center border">
                 <span className="text-primary">
-                    <Link href="#">
+                    <Link href="/">
                         Beranda 
                     </Link>
                 </span>
@@ -36,50 +36,50 @@ const Berita = () => {
 
             {/* Filter Button */}
             <div className="row my-5">
-                <div className="col-md-8 col-12 d-flex justify-content-between flex-row flex-wrap">
+                <div className="col-md-8 col-12 d-flex flex-row flex-wrap justify-content-between ">
                     {/* Selected */}
                     <div 
-                        className="d-flex align-items-center rounded-pill bg-primary-dashboard py-1 px-3 my-2" 
+                        className="d-flex align-items-center rounded-pill bg-primary-dashboard py-1 px-5 my-2" 
                         style={{ cursor: "pointer" }}
                     >
-                        <div className="my-1 mx-3 py-1 px-3 text-white">
+                        <div className="my-1 mx-3 py-1 px-5 text-white">
                             Semua
                         </div>
                     </div>
 
                     {/* UnSelected */}
                     <div 
-                        className="d-flex align-items-center rounded-pill bg-white py-1 px-3 border border-muted my-2" 
+                        className="d-flex align-items-center rounded-pill bg-white py-1 px-5 border border-muted my-2" 
                         style={{ cursor: "pointer" }}
                     >
-                        <div className="my-1 mx-3 py-1 px-3 text-muted">
+                        <div className="my-1 mx-3 py-1 px-5 text-muted">
                             Pengumuman
                         </div>
                     </div>
 
                     <div 
-                        className="d-flex align-items-center rounded-pill bg-white py-1 px-3 border border-muted my-2" 
+                        className="d-flex align-items-center rounded-pill bg-white py-1 px-5 border border-muted my-2" 
                         style={{ cursor: "pointer" }}
                     >
-                        <div className="my-1 mx-3 py-1 px-3 text-muted">
+                        <div className="my-1 mx-3 py-1 px-5 text-muted">
                             Informasi
                         </div>
                     </div>
 
                     <div 
-                        className="d-flex align-items-center rounded-pill bg-white py-1 px-3 border border-muted my-2" 
+                        className="d-flex align-items-center rounded-pill bg-white py-1 px-5 border border-muted my-2" 
                         style={{ cursor: "pointer" }}
                     >
-                        <div className="my-1 mx-3 py-1 px-3 text-muted">
+                        <div className="my-1 mx-3 py-1 px-5 text-muted">
                             Press Release
                         </div>
                     </div>
 
                     <div 
-                        className="d-flex align-items-center rounded-pill bg-white py-1 px-3 border border-muted my-2" 
+                        className="d-flex align-items-center rounded-pill bg-white py-1 px-5 border border-muted my-2" 
                         style={{ cursor: "pointer" }}
                     >
-                        <div className="my-1 mx-3 py-1 px-3 text-muted">
+                        <div className="my-1 mx-3 py-1 px-5 text-muted">
                            Tips And Trick
                         </div>
                     </div>
@@ -121,7 +121,7 @@ const Berita = () => {
 
                     {/* Card */}
                     <div className="row my-5 ml-1 flex-column-reverse flex-md-row">
-                        <div className="col col-md-7 col-12">
+                        <div className="col col-xl-7 col-12">
                             <div className="row d-flex justify-content-between align-items-center">
                                 <div className="d-flex align-self-center">
                                     <div className="border rounded-circle py-1 px-2">
@@ -191,7 +191,7 @@ const Berita = () => {
                             </div>
                         </div>
 
-                        <div className="col col-md-5 col-12 position-relative">
+                        <div className="col col-xl-5 col-12 position-relative">
                             {/* Insert Card Image Here */}
                             <Link href={`/berita/detail/1`}>
                                 <a>
@@ -215,7 +215,7 @@ const Berita = () => {
 
                     {/* Card */}
                     <div className="row my-5 ml-1 flex-column-reverse flex-md-row">
-                        <div className="col col-md-7 col-12">
+                        <div className="col col-xl-7 col-12">
                             <div className="row d-flex justify-content-between align-items-center">
                                 <div className="d-flex align-self-center">
                                     <div className="border rounded-circle py-1 px-2">
@@ -285,7 +285,7 @@ const Berita = () => {
                             </div>
                         </div>
 
-                        <div className="col col-md-5 col-12 position-relative">
+                        <div className="col col-xl-5 col-12 position-relative">
                             {/* Insert Card Image Here */}
                             <Link href={`/berita/detail/1`}>
                                 <a>
@@ -309,7 +309,7 @@ const Berita = () => {
 
                     {/* Card */}
                     <div className="row my-5 ml-1 flex-column-reverse flex-md-row">
-                        <div className="col col-md-7 col-12">
+                        <div className="col col-xl-7 col-12">
                             <div className="row d-flex justify-content-between align-items-center">
                                 <div className="d-flex align-self-center">
                                     <div className="border rounded-circle py-1 px-2">
@@ -379,7 +379,7 @@ const Berita = () => {
                             </div>
                         </div>
 
-                        <div className="col col-md-5 col-12 position-relative">
+                        <div className="col col-xl-5 col-12 position-relative">
                             {/* Insert Card Image Here */}
                             <Link href={`/berita/detail/1`}>
                                 <a>
@@ -403,7 +403,7 @@ const Berita = () => {
 
                     {/* Card */}
                     <div className="row my-5 ml-1 flex-column-reverse flex-md-row">
-                        <div className="col col-md-7 col-12">
+                        <div className="col col-xl-7 col-12">
                             <div className="row d-flex justify-content-between align-items-center">
                                 <div className="d-flex align-self-center">
                                     <div className="border rounded-circle py-1 px-2">
@@ -473,7 +473,7 @@ const Berita = () => {
                             </div>
                         </div>
 
-                        <div className="col col-md-5 col-12 position-relative">
+                        <div className="col col-xl-5 col-12 position-relative">
                             {/* Insert Card Image Here */}
                             <Link href={`/berita/detail/1`}>
                                 <a>
@@ -497,7 +497,7 @@ const Berita = () => {
 
                     {/* Card */}
                     <div className="row my-5 ml-1 flex-column-reverse flex-md-row">
-                        <div className="col col-md-7 col-12">
+                        <div className="col col-xl-7 col-12">
                             <div className="row d-flex justify-content-between align-items-center">
                                 <div className="d-flex align-self-center">
                                     <div className="border rounded-circle py-1 px-2">
@@ -567,7 +567,7 @@ const Berita = () => {
                             </div>
                         </div>
 
-                        <div className="col col-md-5 col-12 position-relative">
+                        <div className="col col-xl-5 col-12 position-relative">
                             {/* Insert Card Image Here */}
                             <Link href={`/berita/detail/1`}>
                                 <a>
@@ -595,7 +595,7 @@ const Berita = () => {
                 {/* Right Side */}
                 <div className="col-md-4 col-12">
                     {/* Filter */}
-                    <div className="border rounded">
+                    <div className="border rounded p-5">
                         <div className="row mt-5 "> 
                             <div className="col-2 my-auto ml-3">
                                 <Image 
@@ -619,13 +619,13 @@ const Berita = () => {
                         </div>
 
                         <div className="row mx-3 mb-3 d-flex justify-content-between">
-                            <div className="col-md-5 col-12 my-2">
+                            <div className="col-md-6 col-12 my-2">
                                 <button className="btn btn-outline-light rounded-pill btn-block">
                                     Terbaru
                                 </button>
                             </div>
 
-                            <div className="col-md-5 col-12 my-2">
+                            <div className="col-md-6 col-12 my-2">
                                 <button className="btn btn-outline-light rounded-pill btn-block">
                                     Terlama
                                 </button>
@@ -633,13 +633,13 @@ const Berita = () => {
                         </div>
 
                         <div className="row mx-3 mb-3 d-flex justify-content-between">
-                            <div className="col-md-5 col-12 my-2">
+                            <div className="col-md-6 col-12 my-2">
                                 <button className="btn btn-outline-light rounded-pill btn-block">
                                     A-Z
                                 </button>
                             </div>
 
-                            <div className="col-md-5 col-12 my-2">
+                            <div className="col-md-6 col-12 my-2">
                                 <button className="btn btn-outline-light rounded-pill btn-block">
                                     Z-A
                                 </button>
@@ -723,8 +723,8 @@ const Berita = () => {
                         prevPageText={"<"}
                         firstPageText={"<<"}
                         lastPageText={">>"}
-                        itemClass="page-item"
-                        linkClass="page-link"
+                        itemClass="page-item-dashboard"
+                        linkClass="page-link-dashboard"
                     />
                 </div>
                 

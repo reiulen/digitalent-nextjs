@@ -417,7 +417,14 @@ import {
   allTagBerandaArtikelReducer,
 } from "../reducers/beranda/artikel.reducers"
 
+// ========== galeri ========
+import {
+  allBerandaGaleriReducer,
+  detailBerandaGaleriReducer,
+  kategoriBerandaGaleriReducer,
+} from "../reducers/beranda/galeri.reducer"
 //END BERANDA
+
 import {
   getAllRiwayatPelatihanPesertaReducer,
   getDetailRiwayatPelatihanReducer,
@@ -771,6 +778,10 @@ const reducer = combineReducers({
   kategoriBerandaArtikel: kategoriBerandaArtikelReducer,
   allTagBerandaArtikel: allTagBerandaArtikelReducer,
 
+  // ========== galeri ========
+  allBerandaGaleri: allBerandaGaleriReducer,
+  detailBerandaGaleri: detailBerandaGaleriReducer,
+  kategoriBerandaGaleri: kategoriBerandaGaleriReducer,
   //END BERANDA
 
   // ========== Riwayat Pelatihan ========

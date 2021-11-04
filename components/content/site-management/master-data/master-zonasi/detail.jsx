@@ -48,7 +48,7 @@ const Table = ({ token }) => {
             >
               {nameZonation}
             </h3> </div>
-          <div className="card-body pt-0"> <div className="table-page mt-5">
+          <div className="card-body pt-0 px-4 px-sm-8"> <div className="table-page mt-5">
               <div className="table-responsive">
                 <table className="table table-separate table-head-custom table-checkable">
                   <thead style={{ background: "#F3F6F9" }}>
