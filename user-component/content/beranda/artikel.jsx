@@ -364,6 +364,7 @@ const Artikel = () => {
                                                                         <div 
                                                                             className="ml-3 border px-2 py-1"
                                                                             onClick={() => handleFilterTag(element)}
+                                                                            style={{cursor:"pointer"}}
                                                                         >
                                                                             {element}
                                                                         </div>
@@ -559,6 +560,7 @@ const Artikel = () => {
                                                 className="border px-2 py-1 rounded my-3 mr-3" 
                                                 key={i}
                                                 onClick={() => handleFilterTag(el)}
+                                                style={{cursor:"pointer"}}
                                             >
                                                 {el}
                                             </div>
