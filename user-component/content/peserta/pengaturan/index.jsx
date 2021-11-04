@@ -195,7 +195,7 @@ export default function SeleksiAdministrasi({ session }) {
           </Card.Body>
         </Card>
       </Col>
-      {/* STAR MODAL PASSWORD */}
+      {/* STAR MODAL EMAIL */}
       <Modal
         show={showUbahEmailModal}
         onHide={handleCloseEmailModal}
@@ -351,6 +351,7 @@ export default function SeleksiAdministrasi({ session }) {
         </Modal.Body>
       </Modal>
       {/* END MODAL EMAIL OTP */}
+      {/* STAR MODAL EMAIL */}
       <Modal
         show={showUbahPasswordModal}
         onHide={handleClosePasswordModal}
@@ -378,46 +379,6 @@ export default function SeleksiAdministrasi({ session }) {
               >
                 Password Lama
               </Form.Label>
-              <Form.Control
-                type="password"
-                placeholder="Enter email"
-                style={{ fontSize: "14px" }}
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label
-                className="mb-3"
-                style={{ fontSize: "16px", color: "#1F1F1F" }}
-              >
-                Password Baru
-              </Form.Label>
-              <Form.Control
-                style={{ fontSize: "14px" }}
-                type="email"
-                placeholder="Masukan Email Baru"
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                }}
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label
-                className="mb-3"
-                style={{ fontSize: "16px", color: "#1F1F1F" }}
-              >
-                Password Baru
-              </Form.Label>
-              <Form.Control
-                style={{ fontSize: "14px" }}
-                type="email"
-                placeholder="Masukan Email Baru"
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                }}
-              />
-            </Form.Group>
-            <div className="form-group">
-              <label className="form-auth-label">Password</label>
               <div className="position-relative">
                 <input
                   id="input-password"
@@ -451,6 +412,90 @@ export default function SeleksiAdministrasi({ session }) {
                   />
                 )}
               </div>
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label
+                className="mb-3"
+                style={{ fontSize: "16px", color: "#1F1F1F" }}
+              >
+                Password Baru
+              </Form.Label>
+              <div className="position-relative">
+                <input
+                  id="input-password"
+                  //   type="password"
+                  type={hidePassword ? "password" : "text"}
+                  className="form-control form-control-auth pr-10"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Masukkan Password"
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("Password")
+                  }
+                />
+                {hidePassword === true ? (
+                  <i
+                    className="ri-eye-fill right-center-absolute cursor-pointer"
+                    style={{ right: "10px" }}
+                    onClick={() => {
+                      setHidePassword(!hidePassword);
+                      //   handlerShowPassword(false);
+                    }}
+                  />
+                ) : (
+                  <i
+                    className="ri-eye-off-fill right-center-absolute cursor-pointer"
+                    style={{ right: "10px" }}
+                    onClick={() => {
+                      setHidePassword(!hidePassword);
+                      //   handlerShowPassword(false);
+                    }}
+                  />
+                )}
+              </div>
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label
+                className="mb-3"
+                style={{ fontSize: "16px", color: "#1F1F1F" }}
+              >
+                Password Baru
+              </Form.Label>
+              <div className="position-relative">
+                <input
+                  id="input-password"
+                  //   type="password"
+                  type={hidePassword ? "password" : "text"}
+                  className="form-control form-control-auth pr-10"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Masukkan Password"
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("Password")
+                  }
+                />
+                {hidePassword === true ? (
+                  <i
+                    className="ri-eye-fill right-center-absolute cursor-pointer"
+                    style={{ right: "10px" }}
+                    onClick={() => {
+                      setHidePassword(!hidePassword);
+                      //   handlerShowPassword(false);
+                    }}
+                  />
+                ) : (
+                  <i
+                    className="ri-eye-off-fill right-center-absolute cursor-pointer"
+                    style={{ right: "10px" }}
+                    onClick={() => {
+                      setHidePassword(!hidePassword);
+                      //   handlerShowPassword(false);
+                    }}
+                  />
+                )}
+              </div>
+            </Form.Group>
+            <div className="form-group">
               {simpleValidator.current.message(
                 "Password",
                 password,
@@ -476,6 +521,7 @@ export default function SeleksiAdministrasi({ session }) {
           </div>
         </Modal.Body>
       </Modal>
+      {/* END MODAL PASSWORD OTP */}
     </PesertaWrapper>
   );
 }
