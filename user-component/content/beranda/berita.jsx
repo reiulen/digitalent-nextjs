@@ -11,7 +11,7 @@ const Berita = () => {
             {/* BreadCrumb */}
             <div className="row my-5 mx-1 py-3 px-8 bg-white rounded-pill d-flex align-items-center border">
                 <span className="text-primary">
-                    <Link href="#">
+                    <Link href="/">
                         Beranda 
                     </Link>
                 </span>
@@ -723,8 +723,8 @@ const Berita = () => {
                         prevPageText={"<"}
                         firstPageText={"<<"}
                         lastPageText={">>"}
-                        itemClass="page-item"
-                        linkClass="page-link"
+                        itemClass="page-item-dashboard"
+                        linkClass="page-link-dashboard"
                     />
                 </div>
                 

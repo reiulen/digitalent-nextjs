@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
+import { getAllAkademi } from "../../../redux/actions/beranda/beranda.actions";
 
 const Alamat = dynamic(
   () => import("../../../user-component/content/peserta/profile/alamat/alamat"),
