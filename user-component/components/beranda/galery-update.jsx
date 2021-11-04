@@ -13,7 +13,7 @@ export default function galeryUpdate({ gambar }) {
       <div style={{ backgroundColor: "#FAFAFB" }} className="py-0 py-xl-15">
         <div className="container-fluid">
           <div className="row mb-10">
-            <div className="col-12 col-xl-4">
+            <div className="col-12 col-md-4">
               <div>
                 <h1
                   className="fw-600 mt-20 position-relative"
@@ -41,30 +41,27 @@ export default function galeryUpdate({ gambar }) {
                 </Link>
               </div>
             </div>
-            <div className="col-12 col-xl-8 mt-20 mb-10">
+            <div className="col-12 col-md-8 mt-20 mb-10">
               <div className="row justify-content-end">
-                <div className="col-12 col-sm-6 col-md-6 col-xl-4 mb-5 mr-md-5">
-                  {/* image 1 */}
-                  <div className="w-100 position-relative sm-mt-0 text-center">
-                    <Image
-                      src={ImageGalery1}
-                      alt="Picture of the author"
-                      width={330}
-                      height={330}
-                    />
-                  </div>
-                </div>
-                <div className="col-12 col-sm-6 col-md-6 col-xl-4">
-                  {/* image 2 */}
-                  <div className="w-100 position-relative sm-mt-0 text-center">
-                    <Image
-                      src={ImageGalery2}
-                      alt="Picture of the author"
-                      width={330}
-                      height={330}
-                    />
-                  </div>
-                </div>
+                {gambar &&
+                  gambar.map((row, i) => (
+                    <div className="col-md-4 mb-5 mr-md-5">
+                      <div className="w-100 position-relative sm-mt-0 text-center">
+                        <Image
+                          src={
+                            process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                            "publikasi/images/" +
+                            row.gambar
+                          }
+                          alt="Picture of the author"
+                          objectFit="cover"
+                          width={330}
+                          height={330}
+                          className="rounded-xl"
+                        />
+                      </div>
+                    </div>
+                  ))}
               </div>
             </div>
           </div>

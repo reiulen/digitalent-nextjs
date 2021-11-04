@@ -249,7 +249,6 @@ const Beranda = ({ session }) => {
       if (data.status === true) {
         router.push(`${router.pathname}/peserta/form-pendaftaran?id=${id}`);
       } else if (data.status === false) {
-        // let errMessage = data.message[0].toUpperCase()  + string.substring(1)
         let errMessage = data.message;
         toast.error(errMessage);
       }
@@ -260,11 +259,9 @@ const Beranda = ({ session }) => {
 
   return (
     <div style={{ backgroundColor: "white" }}>
-      {/* <Navigationbar /> */}
-
       {/* Carousel 1 */}
       <div
-        className="max-container position-relative py-10"
+        className=" py-10"
         style={{ backgroundColor: "#FAFAFB", zIndex: "99" }}
       >
         {publikasi && publikasi.imagetron.length !== 0 && (
@@ -307,22 +304,27 @@ const Beranda = ({ session }) => {
                     perPage: 1,
                   },
                   590: {
+                    width: "100",
                     height: "120",
                     perPage: 1,
                   },
                   514: {
+                    width: "100",
                     height: "160px",
                     perPage: 1,
                   },
                   450: {
+                    width: "100",
                     height: "150px",
                     perPage: 1,
                   },
                   425: {
+                    width: "100",
                     height: "150px",
                     perPage: 1,
                   },
                   320: {
+                    width: "100",
                     height: "100px",
                     perPage: 1,
                   },
@@ -398,7 +400,7 @@ const Beranda = ({ session }) => {
                       <div>
                         {el.pelatihan !== null && (
                           <Link
-                            href={`/detail/akademi/${akademiId}?id=${akademiId}&tema_id=${el.id}`}
+                            href={`/detail/akademi/${akademiId}?tema_id=${el.id}`}
                           >
                             <a className="d-flex align-items-center">
                               <>
@@ -1038,18 +1040,14 @@ const Beranda = ({ session }) => {
       <GaleryUpdate
         gambar={
           publikasi && publikasi.gallery && publikasi.gallery.length !== 0
-            ? publikasi.gallery.length
+            ? publikasi.gallery
             : null
         }
       />
 
       {/* Informasi Dalam Video Terkini */}
       <InfoVideo
-        video={
-          publikasi && publikasi.video && publikasi.video.length !== 0
-            ? publikasi.video.length
-            : null
-        }
+        video={publikasi && publikasi.video ? publikasi.video : null}
       />
 
       {/* Ayo Bergabung, Jadi Jagoan Digital! */}
