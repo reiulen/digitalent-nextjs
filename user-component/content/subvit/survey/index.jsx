@@ -258,29 +258,16 @@ const SubtansiUser = ({ token }) => {
 
   const handleAnswer = (e, id) => {
     setIndexSoal(id);
-    const multipleAnswerKey = [];
-    const answerMultiple = [];
-    initialData.map((item, index) => {
-      // console.log(item.type === "multiple_choice" && "TEST");
-      // if (item.type === "multiple_choice") {
-      //   multipleAnswerKey.push(e.key);
-      // }
-    });
 
-    initialData[parseInt(router.query.id) - 1].answer.map((item) => {
-      multipleAnswerKey.push(item.key);
-    });
-    localStorage.setItem(`${router.query.id}`, e.key);
-    answerMultiple.push(e.key);
-    setMultipleAnswer(e.key);
-    if (answerMultiple.length > 0) {
-      localStorage.setItem(`${router.query.id}a`, multipleAnswer);
-    }
-    console.log(localStorage.getItem(`${router.query.id}a`));
-    console.log(localStorage.getItem(`${router.query.id}`));
     initialData.map((item, index) => {
       if (e.sub && e.sub.length > 0 && item.type === "triggered_question") {
         item.open = true;
+      }
+    });
+
+    initialData.map((item, index) => {
+      if (item.type === "multiple_choice") {
+        localStorage.setItem(`${router.query.id}`, e.key);
       }
     });
     let dataTemp = [...initialData];
@@ -323,7 +310,7 @@ const SubtansiUser = ({ token }) => {
     };
     dispatch(postResult(setData, token));
     localStorage.clear();
-    router.push(`/peserta/done-mid-tes`);
+    router.push(`/peserta/done-survey`);
   };
 
   const handleCloseModalDone = () => {
@@ -470,15 +457,13 @@ const SubtansiUser = ({ token }) => {
                               >
                                 <Card
                                   className={
-                                    localStorage.getItem(router.query.id) &&
-                                    localStorage.getItem(
-                                      `${router.query.id}a`
-                                    ) === item.key
+                                    localStorage.getItem(router.query.id) ===
+                                    item.key
                                       ? styles.answer
                                       : styles.boxAnswer
                                   }
                                   key={index}
-                                  // onClick={() => handleAnswer(item, index)}
+                                  onClick={() => handleAnswer(item, index)}
                                 >
                                   <table>
                                     <tr>
@@ -495,9 +480,8 @@ const SubtansiUser = ({ token }) => {
                           ) : (
                             <Card
                               className={
-                                localStorage.getItem(router.query.id) &&
-                                localStorage.getItem(`${router.query.id}a`) ===
-                                  item.key
+                                localStorage.getItem(router.query.id) ===
+                                item.key
                                   ? styles.answer
                                   : styles.boxAnswer
                               }
@@ -516,7 +500,8 @@ const SubtansiUser = ({ token }) => {
                         </>
                       );
                     })
-                : data[parseInt(router.query.id) - 1]?.answer.map(
+                : data[parseInt(router.query.id) - 1]?.answer &&
+                  data[parseInt(router.query.id) - 1]?.answer.map(
                     (item, index) => {
                       return (
                         <>
@@ -539,10 +524,8 @@ const SubtansiUser = ({ token }) => {
                               >
                                 <Card
                                   className={
-                                    localStorage.getItem(router.query.id) ||
-                                    localStorage.getItem(
-                                      `${router.query.id}a`
-                                    ) === item.key
+                                    localStorage.getItem(router.query.id) ===
+                                    item.key
                                       ? styles.answer
                                       : styles.boxAnswer
                                   }
@@ -564,9 +547,8 @@ const SubtansiUser = ({ token }) => {
                           ) : (
                             <Card
                               className={
-                                localStorage.getItem(router.query.id) ||
-                                localStorage.getItem(`${router.query.id}a`) ===
-                                  item.key
+                                localStorage.getItem(router.query.id) ===
+                                item.key
                                   ? styles.answer
                                   : styles.boxAnswer
                               }
