@@ -30,8 +30,6 @@ const SubtansiUser = ({ token }) => {
     (state) => state.randomSubtanceQuestionDetail
   );
 
-  // console.log(random_subtance_question_detail)
-
   const router = useRouter();
 
   const [data, setData] = useState([]);
