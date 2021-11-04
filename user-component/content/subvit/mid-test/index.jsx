@@ -31,8 +31,6 @@ const SubtansiUser = ({ token }) => {
     (state) => state.randomSubtanceQuestionDetail
   );
 
-  // console.log(random_subtance_question_detail)
-
   const router = useRouter();
 
   const [data, setData] = useState([]);
@@ -118,7 +116,6 @@ const SubtansiUser = ({ token }) => {
   };
 
   useEffect(() => {
-    console.log(count);
     if (count >= 0) {
       const secondsLeft = setInterval(() => {
         setCount((c) => c - 1);

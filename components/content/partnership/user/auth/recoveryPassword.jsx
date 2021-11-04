@@ -10,7 +10,7 @@ import { useSelector, useDispatch } from "react-redux";
 import axios from 'axios'
 import { vericationEmail } from "../../../../../redux/actions/partnership/user/authentication.actions";
 import { RESET_STATUS } from "../../../../../redux/types/partnership/user/authentication.type";
-const RegisterMitra = () => {
+const RecoveryMitra = () => {
   const router = useRouter();
   let dispatch = useDispatch();
   const allAuthentication = useSelector((state) => state.allAuthentication);
@@ -97,7 +97,7 @@ const RegisterMitra = () => {
 
   return (
     <>
-      <AuthWrapper image="multiethnic-businesswoman.svg" title="Register">
+      <AuthWrapper image="multiethnic-businesswoman.svg" title="Pemulihan Password">
         <ToastContainer
           position="bottom-right"
           autoClose={5000}
@@ -182,4 +182,4 @@ const RegisterMitra = () => {
   );
 };
 
-export default RegisterMitra;
+export default RecoveryMitra;
