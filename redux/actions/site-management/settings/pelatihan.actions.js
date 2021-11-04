@@ -166,6 +166,7 @@ export const postViaFilter = (
         `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-trainings/subm`,
         subm,
         {
+          withCredentials: false,
           headers: {
             authorization: `Bearer ${token}`,
           },
