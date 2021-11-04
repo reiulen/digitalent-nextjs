@@ -52,10 +52,6 @@ const SubtansiUser = ({ token }) => {
     sessionStorage.getItem("targetDate")
   );
 
-  // useEffect(() => {
-  //   dispatch(getRandomSubtanceQuestionDetail(token));
-  // }, [dispatch, token]);
-
   const handleModalSoal = () => {
     setModalSoal(true);
   };
@@ -200,7 +196,7 @@ const SubtansiUser = ({ token }) => {
       <Container className={styles.baseAll} fluid>
         <Card className={styles.cardTop}>
           <Row>
-            <Col style={{ marginTop: "8px" }}>
+            <Col xs={12} sm={6} style={{ marginTop: "8px" }}>
               <table>
                 <tr>
                   <td className={styles.academy}>{data && data.academy}</td>
@@ -210,7 +206,7 @@ const SubtansiUser = ({ token }) => {
                 </tr>
               </table>
             </Col>
-            <Col style={{ textAlign: "right" }}>
+            <Col xs={12} sm={6} style={{ textAlign: "right" }}>
               <Button
                 className={styles.btnHelp}
                 variant="link"
@@ -386,33 +382,7 @@ const SubtansiUser = ({ token }) => {
                     </div>
                   </Button>
                 </Col>
-                <Col>
-                  <Button
-                    variant="link"
-                    className={styles.btnBack}
-                    onClick={handleBack}
-                    disabled={parseInt(router.query.id) === 1}
-                  >
-                    <div className="d-flex flex-row">
-                      <div
-                        className="p-2"
-                        aria-disabled={parseInt(router.query.id) === 1}
-                      >
-                        <i
-                          className="ri-arrow-left-s-line"
-                          style={
-                            parseInt(router.query.id) === 1
-                              ? {
-                                  color: "#d3d3d3",
-                                }
-                              : { color: "#007CFF", cursor: "pointer" }
-                          }
-                        ></i>
-                      </div>
-                      <div className={` p-2`}>Kembali</div>
-                    </div>
-                  </Button>
-                </Col>
+
                 <Col
                   className={styles.btnBottom}
                   style={{ textAlign: "right", margin: "10px " }}
@@ -432,6 +402,7 @@ const SubtansiUser = ({ token }) => {
                       className={styles.btnNext}
                       onClick={handleDone}
                       // disabled={!listAnswer.includes(data?.total_questions)}
+                      // MASIH DIPAKE
                     >
                       Selesai
                     </Button>
@@ -484,6 +455,7 @@ const SubtansiUser = ({ token }) => {
                           className={styles.btnNext}
                           onClick={handleDone}
                           // disabled={!listAnswer.includes(data?.total_questions)}
+                          // MASIH DIPAKE
                         >
                           Selesai
                         </Button>
