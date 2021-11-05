@@ -38,13 +38,18 @@ import { getAllPelatihanByAkademi } from "../../../../../redux/actions/beranda/d
 
 const DetailAkademi = ({ session }) => {
   const { akademi } = useSelector((state) => state.detailAkademi);
+
   const { pelatihan, loading: loadingPelatihan } = useSelector(
     (state) => state.allPelatihan
   );
+  const { loading: loadingPenyeleggara, penyelenggara: allPenyelenggara } =
+    useSelector((state) => state.allPenyelenggaraPeserta);
 
   const textToTrim = 200;
   const dispatch = useDispatch();
   const router = useRouter();
+
+  const { id, tema_id } = router.query;
 
   const [show, setShow] = useState([]);
   const [showDetail, setShowDetail] = useState([]);
@@ -58,15 +63,26 @@ const DetailAkademi = ({ session }) => {
 
   const [filterPenyelenggara, setFilterPenyelenggara] = useState(null);
   const [filterKategori, setFilterKategori] = useState(null);
-  const [filterKataKunci, setFilterKataKunci] = useState(null);
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
 
-  const options = [
-    { value: "1", label: "VSGA" },
-    { value: "2", label: "FGA" },
-    { value: "3", label: "AKM" },
+  let selectRefKategoriPeserta = null;
+  const optionsKategoriPeserta = [
+    { value: "umum", label: "Umum" },
+    { value: "disabilitas", label: "Disabilitas" },
   ];
+
+  let selectRefPenyelenggara = null;
+  const optionsPenyelenggara = [];
+  if (allPenyelenggara.data) {
+    for (let index = 0; index < allPenyelenggara.data.length; index++) {
+      let val = {
+        value: allPenyelenggara.data[index].id,
+        label: allPenyelenggara.data[index].label,
+      };
+      optionsPenyelenggara.push(val);
+    }
+  }
 
   const customStylesSide = {
     control: (styles) => ({
@@ -199,8 +215,6 @@ const DetailAkademi = ({ session }) => {
 
   const handlePagination = (pageNumber) => {
     setActivePage(pageNumber);
-    let id = akademiId;
-    let tema_id = null;
     let provinsi = null;
     let tipe_pelatihan = null;
     let penyelenggara = null;
@@ -227,17 +241,42 @@ const DetailAkademi = ({ session }) => {
   };
 
   const handleFilter = () => {
-    let dataToSend = {
-      akademi_id: akademiId,
-      tema_id: temaId,
-      penyelenggara: filterPenyelenggara,
-      kategori_peserta: filterKategori,
-      kata_kunci: filterKataKunci,
+    let data = {
+      akademi_id: id,
+      tema_id: tema_id || null,
+      kota: null,
+      penyelenggara:
+        filterPenyelenggara !== null ? filterPenyelenggara.label : null,
+      kategori_peserta: filterKategori !== null ? filterKategori.value : null,
       tanggal_mulai: startDate,
       tanggal_akhir: endDate,
     };
 
-    // dispatch(getAllPelatihanByAkademi(dataToSend))
+    dispatch(
+      getAllPelatihanByAkademi(
+        data.akademi_id,
+        data.tema_id,
+        data.kota,
+        null,
+        data.penyelenggara,
+        data.kategori_peserta,
+        data.tanggal_mulai,
+        data.tanggal_akhir,
+        1
+      )
+    );
+  };
+
+  const handleReset = () => {
+    setFilterPenyelenggara(null);
+    selectRefPenyelenggara.select.clearValue();
+    setFilterKategori(null);
+    selectRefKategoriPeserta.select.clearValue();
+    setStartDate("");
+    setEndDate("");
+    dispatch(
+      getAllPelatihanByAkademi(id, null, null, null, null, null, null, null, 1)
+    );
   };
   return (
     <>
@@ -312,7 +351,7 @@ const DetailAkademi = ({ session }) => {
         <section className={`content-detail mt-4`}>
           <Row>
             <Col md={4} className="mb-5">
-              <TrainingReminder />
+              <TrainingReminder session={session} />
               <div className="filter-content border p-10">
                 <div className="d-flex align-items-center mb-3 filter-title">
                   <div>
@@ -329,19 +368,23 @@ const DetailAkademi = ({ session }) => {
                   <Form.Group className="mb-5 w-100 rounded-xl mr-4">
                     <Form.Label className="fz-14">Penyelenggara</Form.Label>
                     <Select
-                      options={options}
+                      ref={(ref) => (selectRefPenyelenggara = ref)}
+                      options={optionsPenyelenggara}
                       styles={customStylesSide}
                       placeholder="Pilih Penyelenggara"
                       isClearable
+                      onChange={(e) => setFilterPenyelenggara(e)}
                     />
                   </Form.Group>
                   <Form.Group className="mb-5 w-100 rounded-xl mr-4">
                     <Form.Label className="fz-14">Kategori Peserta</Form.Label>
                     <Select
-                      options={options}
+                      ref={(ref) => (selectRefKategoriPeserta = ref)}
+                      options={optionsKategoriPeserta}
                       styles={customStylesSide}
                       placeholder="Pilih Kategori Peserta"
                       isClearable
+                      onChange={(e) => setFilterKategori(e)}
                     />
                   </Form.Group>
                   <Form.Group className="mb-5 w-100 rounded-xl mr-4">
@@ -352,6 +395,8 @@ const DetailAkademi = ({ session }) => {
                       className="form-control pr-5"
                       style={{ borderRadius: "30px" }}
                       type="date"
+                      value={startDate}
+                      onChange={(e) => setStartDate(e.target.value)}
                     />
                   </Form.Group>
                   <Form.Group className="mb-5 w-100 rounded-xl mr-4">
@@ -362,18 +407,23 @@ const DetailAkademi = ({ session }) => {
                       className="form-control pr-5"
                       style={{ borderRadius: "30px" }}
                       type="date"
+                      value={endDate}
+                      onChange={(e) => setEndDate(e.target.value)}
                     />
                   </Form.Group>
                 </div>
                 <div className="mt-7">
                   <div className="row d-flex justify-content-around">
-                    <button className="btn btn-white-ghost-rounded-full text-primary">
+                    <button
+                      className="btn btn-white-ghost-rounded-full text-primary"
+                      onClick={() => handleReset()}
+                    >
                       Reset
                     </button>
 
                     <button
                       className="btn btn-primary rounded-pill px-5 fw-600"
-                      //   onClick={() => handleFilter()}
+                      onClick={() => handleFilter()}
                     >
                       Tampilkan
                     </button>

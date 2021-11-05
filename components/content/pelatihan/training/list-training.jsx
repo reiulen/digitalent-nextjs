@@ -629,7 +629,7 @@ const ListTraining = ({ token }) => {
                       (training && training.list === null) ||
                       training.list.length === 0 ? (
                         <td className="align-middle text-center" colSpan={8}>
-                          Data Masih Kosong
+                          Data Kosong
                         </td>
                       ) : (
                         training.list.map((row, i) => (
