@@ -138,10 +138,10 @@ const VideoPage = ({ token }) => {
         }
     }
 
-    const handlePreview = (url, id, judul, tanggal_publish, dataKategori, isi_video, tag, ditonton) => {
+    const handlePreview = (url_video, id, judul, tanggal_publish, dataKategori, isi_video, tag, ditonton) => {
         setIdVideo(id)
         setVideoPlaying(true)
-        setUrlVideo(url)
+        setUrlVideo(url_video)
         setJudulVideo(judul)
         setTanggalPublish(tanggal_publish)
         setDataKategori(dataKategori)
@@ -156,7 +156,7 @@ const VideoPage = ({ token }) => {
             _method: "PUT",
             isplay: "1"
         }
-        dispatch(playVideoContent(data, token))
+        dispatch(playVideoContent(data))
     }
 
     return (

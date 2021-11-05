@@ -124,7 +124,7 @@ export const playVideoContent = (videoData, token) => async (dispatch) => {
                 Authorization: 'Bearer ' + token,
             },
         };
-        let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/home/video/${videoData.id}`
+        let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/video/play/${videoData.id}`
        
         const { data } = await axios.get(link, videoData, config)
 
