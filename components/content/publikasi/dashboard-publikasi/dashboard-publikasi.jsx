@@ -101,7 +101,6 @@ const DashbardPublikasi = ({ token }) => {
     return (
         <>
             <PageWrapper>
-                {/* {console.log(dashboard_publikasi)} */}
                 <div className="row">
                     {/* <div className="col-lg-12 col-xxl-12 my-5"> */}
                     <div className={`${styles.haloAdmin} col-lg-12 col-xxl-12`}>

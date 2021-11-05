@@ -2,8 +2,8 @@ import { getSession } from "next-auth/client"
 import dynamic from "next/dynamic";
 import { wrapper } from "../../redux/store";
 
-import { getAllVideo, getTagVideo } from "../../redux/actions/beranda/video-content.actions"
-import { getAllKategori } from "../../redux/actions/beranda/kategori-content.actions"
+import { getAllVideo, getTagVideo,getKategoriVideoContent } from "../../redux/actions/beranda/video-content.actions"
+// import { getAllKategori } from "../../redux/actions/beranda/kategori-content.actions"
 import { getDataPribadi } from "../../redux/actions/pelatihan/function.actions"
 
 const VideoPage = dynamic(
@@ -44,7 +44,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
                 query.tag,
             ));
             await store.dispatch(getTagVideo());
-            await store.dispatch(getAllKategori());
+            await store.dispatch(getKategoriVideoContent());
             return {
                 props: {
                     session,
