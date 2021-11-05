@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 
 import { getAllPelatihanByAkademi } from "../../redux/actions/beranda/detail-akademi.actions";
+import { getDetailAkademi } from "../../redux/actions/beranda/detail-akademi.actions";
 
 const FilterBar = () => {
   const dispatch = useDispatch();
@@ -15,6 +16,9 @@ const FilterBar = () => {
 
   const { akademi: allAkademi, loading: loadingAllAkademi } = useSelector(
     (state) => state.allAkademi
+  );
+  const { loading: loadingKota, kota: allKota } = useSelector(
+    (state) => state.allKotaPeserta
   );
 
   const [akademiId, setAkademiId] = useState(null);
@@ -30,24 +34,38 @@ const FilterBar = () => {
         value: allAkademi[index].id,
         label: allAkademi[index].slug,
       };
-      if (allAkademi[index].id === tema_id) {
-        setActiveTheme(index);
-        console.log(tema_id);
-      }
       optionsAkademi.push(val);
     }
   }
+  const optionsCity = [];
+  if (allKota) {
+    for (let index = 0; index < allKota.length; index++) {
+      let val = {
+        value: allKota[index].id,
+        label: allKota[index].label,
+      };
+      optionsCity.push(val);
+    }
+  }
+  // if (allTema) {
+  //   for (let index = 0; index < allTema.length; index++) {
+  //     let val = {
+  //       value: allTema[index].id,
+  //       label: allTema[index].slug,
+  //     };
+  //     if (allTema[index].id === tema_id) {
+  //       setActiveTheme(index);
+  //     }
+  //     optionsAkademi.push(val);
+  //   }
+  // }
 
   const optionsTheme = [
     { value: "1", label: "Multimedia" },
     { value: "2", label: "UI UX" },
     { value: "3", label: "Frontend" },
   ];
-  const optionsCity = [
-    { value: "1", label: "Jakarta" },
-    { value: "2", label: "Bandung" },
-    { value: "3", label: "Surabaya" },
-  ];
+
   const optionsTipePelatihan = [
     { value: "online", label: "Online" },
     { value: "offline", label: "Offline" },
@@ -75,10 +93,17 @@ const FilterBar = () => {
       tipe_pelatihan: tipePelatihan !== null ? tipePelatihan.value : null,
     };
 
-    // router.push({
-    //   pathname: `/detail/akademi/${data.akademi_id}`,
-    //   query: { tema_id: data.tema_id },
-    // });
+    if (data && data.akademi_id !== null) {
+      router.replace(
+        {
+          pathname: `/detail/akademi/${data.akademi_id}`,
+          query: { tema_id: data.tema_id },
+        },
+        undefined,
+        { shallow: true }
+      );
+    }
+    dispatch(getDetailAkademi(data.akademi_id));
     dispatch(
       getAllPelatihanByAkademi(
         data.akademi_id,
