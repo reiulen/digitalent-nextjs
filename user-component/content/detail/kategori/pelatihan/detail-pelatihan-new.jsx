@@ -218,7 +218,7 @@ const DetailPelatihan = ({ session }) => {
                 </div>
               </div>
             </div>
-            <TrainingReminder />
+            <TrainingReminder session={session} />
           </Col>
         </Row>
       </Container>

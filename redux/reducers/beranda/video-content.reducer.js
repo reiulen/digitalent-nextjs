@@ -8,6 +8,9 @@ import {
     PLAY_REQUEST,
     PLAY_SUCCESS,
     PLAY_FAIL,
+    KATEGORI_VIDEO_CONTENT_REQUEST,
+    KATEGORI_VIDEO_CONTENT_SUCCESS,
+    KATEGORI_VIDEO_CONTENT_FAIL,
     CLEAR_ERRORS
 } from "../../types/publikasi/video.type"
 
@@ -52,11 +55,15 @@ export const kategoriVideoContentReducer = (state = { kategori: [] }, action) =>
             let result = []
 
             for (let i = 0; i < action.payload.data.kategori.length; i++){
-                if (action.payload.data.kategori[i].jenis_kategori == "Galeri"){
+                if (action.payload.data.kategori[i].jenis_kategori == "Video"){
                     result.push (action.payload.data.kategori[i])
                 }
             }
-            
+
+            return {
+                loading: false,
+                kategori: result
+            }
             // return {
             //     // ...state,
             //     loading: false,
