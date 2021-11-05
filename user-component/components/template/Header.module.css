@@ -63,7 +63,6 @@
   /* Neutral/White */
 
   color: #ffffff;
-  float: right;
 }
 .mainText {
   font-family: Poppins;
@@ -123,4 +122,22 @@
 }
 .imageProfile {
   border-radius: 50%;
+}
+
+.responsive_truncation {
+  display: inline-block;
+  white-space: nowrap;
+  width: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 320px) {
+  .responsive_truncation {
+    display: inline-block;
+    white-space: nowrap;
+    width: 50px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }

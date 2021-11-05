@@ -1,18 +1,20 @@
 import { Card, Col, Container, Row } from "react-bootstrap";
 import styles from "./Header.module.css";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { Fragment, useEffect, useState } from "react";
 import Image from "next/dist/client/image";
 import Default from "../../../public/assets/media/logos/default.png";
 import { useDispatch, useSelector } from "react-redux";
-
+import Link from "next/link";
 const Header = () => {
   const router = useRouter();
 
   const { error: errorDataPribadi, dataPribadi } = useSelector(
     (state) => state.getDataPribadi
   );
-
+  const { error: errorPelatihan, pelatihan } = useSelector(
+    (state) => state.getPelatihan
+  );
   let routerPath;
   if (router.pathname.includes("form-pendaftaran"))
     routerPath = "form-pendaftaran";
@@ -36,7 +38,7 @@ const Header = () => {
     time();
     time2();
   });
-
+  const [jam, setJam] = useState();
   const time = () => {
     var e = document.getElementById("jam"),
       d = new Date(),
@@ -46,6 +48,7 @@ const Header = () => {
     h = d.getHours();
     m = set(d.getMinutes());
     s = set(d.getSeconds());
+    setJam(`${h}:${m}:${s}`);
     if (e) {
       e.innerHTML = h + ":" + m + ":" + s;
     } else {
@@ -87,6 +90,8 @@ const Header = () => {
     e = e < 10 ? "0" + e : e;
     return e;
   };
+  const [breadCrumbsName, setBreadCrumbsName] = useState([]);
+  useEffect(() => {}, []);
 
   return (
     <>
@@ -125,7 +130,9 @@ const Header = () => {
                 hidden={router.pathname.includes(routerPath)}
               >
                 <Row>
-                  <Col sm={6} xs={4} className={styles.textCardLeft}>
+                  <Col
+                    className={`${styles.textCardLeft} d-flex justify-content-between`}
+                  >
                     <div className="d-flex flex-row " style={{ float: "left" }}>
                       <div className="p-1">
                         {router.pathname.includes("substansi")
@@ -147,12 +154,7 @@ const Header = () => {
                           : "Dashboard"}
                       </div>
                     </div>
-                  </Col>
-                  <Col sm={6} xs={7} className={styles.textCardRight}>
-                    <div
-                      className="d-flex flex-row "
-                      style={{ float: "right" }}
-                    >
+                    <div className="d-flex">
                       <div className="p-1">
                         <i
                           className={`${styles.icon} ri-time-fill`}
@@ -163,7 +165,7 @@ const Header = () => {
                         ></i>
                       </div>
                       <div className="p-1">
-                        {thisDay} , <span id="jam"></span>
+                        {thisDay} , <span id="jam">{jam}</span>
                       </div>
                     </div>
                   </Col>
@@ -176,19 +178,74 @@ const Header = () => {
                 Digital Talent Scholarship
               </h1>
               {router.pathname.includes(routerPath) && (
-                <>
-                  <Row>
-                    <Col xs={12}>
-                      <h1 className={styles.mainText}>
-                        Digital Talent Scholarship
-                      </h1>
-                    </Col>
-                    <Col xs={12} className={styles.textCardRight}>
-                      <Card className={styles.cardBodyTest}>
+                <Fragment>
+                  <Card className={styles.cardBody}>
+                    <Row>
+                      <Col
+                        className={`${styles.textCardLeft} d-flex justify-content-between`}
+                      >
                         <div
                           className="d-flex flex-row "
-                          style={{ float: "right" }}
+                          style={{ float: "left" }}
                         >
+                          <div className="p-1">
+                            {router.pathname.includes("substansi") ? (
+                              "Test Substansi"
+                            ) : router.pathname.includes("survey") ? (
+                              "Survey & LPJ"
+                            ) : router.pathname.includes("trivia") ? (
+                              "Trivia"
+                            ) : router.pathname.includes("test-subtansi") ? (
+                              "Test Substansi"
+                            ) : router.pathname.includes(
+                                "riwayat-pelatihan"
+                              ) ? (
+                              "Riwayat Pelatihan"
+                            ) : router.pathname.includes("administrasi") ? (
+                              "Administrasi"
+                            ) : router.pathname.includes("mid-test") ? (
+                              "Mid Test"
+                            ) : router.pathname.includes("done-mid-tes") ? (
+                              "Mid Test"
+                            ) : router.pathname.includes("form-pendaftaran") ? (
+                              <Fragment>
+                                <div style={{ fontSize: "14px" }}>
+                                  <Link href="/">
+                                    <a>
+                                      <u className="d-none d-lg-inline-block">
+                                        Beranda
+                                      </u>
+                                      <u className="d-lg-none d-inline-block">
+                                        ...
+                                      </u>
+                                    </a>
+                                  </Link>
+                                  <span className="mx-3">&gt;</span>
+                                  <u className="d-none d-lg-inline-block">
+                                    {pelatihan.akademi}
+                                  </u>
+                                  <u className="d-lg-none d-inline-block">
+                                    ...
+                                  </u>
+                                  <span className="mx-3">&gt;</span>
+                                  <u className="d-none d-lg-inline-block">
+                                    {pelatihan.name}
+                                  </u>
+                                  <u className="d-lg-none d-inline-block">
+                                    ...
+                                  </u>
+                                  <span className="mx-3">&gt;</span>
+                                  <span className="font-weight-bold">
+                                    Pendaftaran Pelatihan
+                                  </span>
+                                </div>
+                              </Fragment>
+                            ) : (
+                              "Dashboard"
+                            )}
+                          </div>
+                        </div>
+                        <div className="d-md-flex d-none">
                           <div className="p-1">
                             <i
                               className={`${styles.icon} ri-time-fill`}
@@ -199,13 +256,18 @@ const Header = () => {
                             ></i>
                           </div>
                           <div className="p-1">
-                            {thisDay} , <span id="waktu"></span>
+                            {thisDay} , <span id="jam">{jam}</span>
                           </div>
                         </div>
-                      </Card>
-                    </Col>
-                  </Row>
-                </>
+                      </Col>
+                    </Row>
+                  </Card>
+                  <Col xs={12}>
+                    <h1 className={styles.mainText}>
+                      Digital Talent Scholarship
+                    </h1>
+                  </Col>
+                </Fragment>
               )}
               <p className={styles.subText}>
                 <div className="d-flex flex-row" style={{ float: "left" }}>
@@ -246,6 +308,15 @@ const Header = () => {
                           marginRight: "15px",
                         }}
                       ></i>
+                    ) : router.pathname.includes("form-pendaftaran") ? (
+                      <i
+                        className="ri-folder-user-line"
+                        style={{
+                          color: "#fff",
+                          fontSize: "20px",
+                          marginRight: "15px",
+                        }}
+                      ></i>
                     ) : (
                       <i
                         className="ri-article-line"
@@ -270,6 +341,8 @@ const Header = () => {
                       ? "Mid Test"
                       : router.pathname.includes("done-mid-tes")
                       ? "Mid Test"
+                      : router.pathname.includes("form-pendaftaran")
+                      ? "Pendaftaran Pelatihan"
                       : "Dashboard"}
                   </div>
                 </div>
