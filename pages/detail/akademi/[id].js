@@ -5,7 +5,11 @@ import { wrapper } from "../../../redux/store";
 import { getDetailAkademi } from "../../../redux/actions/beranda/detail-akademi.actions";
 import { getAllPelatihanByAkademi } from "../../../redux/actions/beranda/detail-akademi.actions";
 import { getDataPribadi } from "../../../redux/actions/pelatihan/function.actions";
-import { getAllAkademi } from "../../../redux/actions/beranda/beranda.actions";
+import {
+  getAllAkademi,
+  getAllKotaPeserta,
+  getAllPenyeleggaraPeserta,
+} from "../../../redux/actions/beranda/beranda.actions";
 
 import LoadingDetailAkademi from "../../../user-component/components/loader/DetailAkademiLoader";
 
@@ -53,6 +57,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
       await store.dispatch(getDetailAkademi(params.id));
       await store.dispatch(getAllAkademi());
+      await store.dispatch(getAllKotaPeserta());
+      await store.dispatch(getAllPenyeleggaraPeserta());
 
       await store.dispatch(
         getAllPelatihanByAkademi(
