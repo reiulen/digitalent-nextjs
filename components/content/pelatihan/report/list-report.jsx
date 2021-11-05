@@ -62,7 +62,7 @@ const ListReport = ({token}) => {
     }
   }
   
-  const listReportTraining = getDataReportTraining.list.map((item, index) => {
+  const listReportTraining = getDataReportTraining.list.length > 0 ? getDataReportTraining.list.map((item, index) => {
     return (
       <tr key={index}>
         <td className="text-center">{index + limit * (page - 1) + 1}</td>
@@ -123,7 +123,9 @@ const ListReport = ({token}) => {
         </td>
       </tr>
     );
-  });
+  }) : <td className="align-middle text-center" colSpan={8}>
+  Data Kosong
+</td>;
 
 
 
@@ -266,7 +268,8 @@ const ListReport = ({token}) => {
                       totalItemsCount={getDataReportTraining.total}
                       pageRangeDisplayed={3}
                       onChange={(e) => {setPage(e)
-                      dispatch(listsReportTraining(token, e, limit, search, penyelenggara.label, academy.label, theme.label))
+                      dispatch(listsReportTraining(token, e, limit, search, penyelenggara.label, academy.label, theme.label));
+                      router.push("/report-pelatihan")
                       }}
                       nextPageText={">"}
                       prevPageText={"<"}

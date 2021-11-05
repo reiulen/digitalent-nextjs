@@ -347,7 +347,7 @@ const ListSummary = ({ token }) => {
                       (summary && summary.list === null) ||
                       summary.list.length === 0 ? (
                         <td className="align-middle text-center" colSpan={8}>
-                          Data Masih Kosong
+                          Data Kosong
                         </td>
                       ) : (
                         summary.list.map((row, i) => (

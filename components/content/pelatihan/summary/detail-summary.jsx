@@ -328,7 +328,7 @@ const DetailSummary = ({ token }) => {
                       (peserta && peserta.list === null) ||
                       peserta.list.length === 0 ? (
                         <td className="align-middle text-center" colSpan={8}>
-                          Data Masih Kosong
+                          Data Kosong
                         </td>
                       ) : (
                         peserta.list.map((row, i) => (
