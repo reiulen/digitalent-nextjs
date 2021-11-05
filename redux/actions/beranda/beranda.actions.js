@@ -1,10 +1,19 @@
 import {
+  BERANDA_PENYELENGGARA_REQUEST,
+  BERANDA_PENYELENGGARA_SUCCESS,
+  BERANDA_PENYELENGGARA_FAIL,
+  BERANDA_NOTIF_TEMA_REQUEST,
+  BERANDA_NOTIF_TEMA_SUCCESS,
+  BERANDA_NOTIF_TEMA_FAIL,
   BERANDA_AKADEMI_REQUEST,
   BERANDA_AKADEMI_SUCCESS,
   BERANDA_AKADEMI_FAIL,
   BERANDA_TEMA_REQUEST,
   BERANDA_TEMA_SUCCESS,
   BERANDA_TEMA_FAIL,
+  BERANDA_KOTA_REQUEST,
+  BERANDA_KOTA_SUCCESS,
+  BERANDA_KOTA_FAIL,
   BERANDA_PELATIHAN_REQUEST,
   BERANDA_PELATIHAN_SUCCESS,
   BERANDA_PELATIHAN_FAIL,
@@ -15,10 +24,36 @@ import {
 } from "../../types/beranda/beranda.type";
 
 import axios from "axios";
-import {
-  GET_BEASISWA_FAIL,
-  GET_BEASISWA_SUCCESS,
-} from "../../types/pelatihan/dashboard-peserta.type";
+
+export const addNotifTema = (dataNotif, token) => async (dispatch) => {
+  try {
+    dispatch({
+      type: BERANDA_NOTIF_TEMA_REQUEST,
+    });
+
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    const { data } = await axios.post(
+      process.env.END_POINT_API_PELATIHAN + "api/v1/pengingat/create",
+      dataNotif,
+      config
+    );
+
+    dispatch({
+      type: BERANDA_NOTIF_TEMA_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: BERANDA_NOTIF_TEMA_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
 
 // GET AKADEMI
 export const getAllAkademi = () => async (dispatch) => {
@@ -34,10 +69,52 @@ export const getAllAkademi = () => async (dispatch) => {
       type: BERANDA_AKADEMI_SUCCESS,
       payload: data,
     });
-    return data;
   } catch (error) {
     dispatch({
       type: BERANDA_AKADEMI_FAIL,
+      payload: error.message,
+    });
+  }
+};
+
+// GET KOTA
+export const getAllKotaPeserta = () => async (dispatch) => {
+  try {
+    dispatch({ type: BERANDA_KOTA_REQUEST });
+
+    let link = process.env.END_POINT_API_SITE_MANAGEMENT + `api/option/city`;
+
+    const { data } = await axios.get(link);
+
+    dispatch({
+      type: BERANDA_KOTA_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: BERANDA_KOTA_FAIL,
+      payload: error.message,
+    });
+  }
+};
+
+// GET PENYELENGGARA
+export const getAllPenyeleggaraPeserta = () => async (dispatch) => {
+  try {
+    dispatch({ type: BERANDA_PENYELENGGARA_REQUEST });
+
+    let link =
+      process.env.END_POINT_API_SITE_MANAGEMENT + `api/option/organizer`;
+
+    const { data } = await axios.get(link);
+
+    dispatch({
+      type: BERANDA_PENYELENGGARA_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: BERANDA_PENYELENGGARA_FAIL,
       payload: error.message,
     });
   }
@@ -117,23 +194,4 @@ export const clearErrors = () => async (dispatch) => {
   dispatch({
     type: CLEAR_ERRORS,
   });
-};
-
-export const getBeasiswa = () => async (dispatch) => {
-  try {
-    let link = "https://beasiswa-dev.majapahit.id/api/get-scholarship-data";
-    const { data } = await axios.get(link);
-
-    dispatch({
-      type: GET_BEASISWA_SUCCESS,
-      payload: data,
-    });
-
-    return data;
-  } catch (error) {
-    dispatch({
-      type: GET_BEASISWA_FAIL,
-      payload: error.message,
-    });
-  }
 };

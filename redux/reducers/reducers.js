@@ -71,8 +71,8 @@ import {
 import {
   allVideoContentReducer,
   allTagReducer,
-  playVideoContentReducer
-} from "./beranda/video-content.reducer"
+  playVideoContentReducer,
+} from "./beranda/video-content.reducer";
 
 import { allDashboardPublikasiReducer } from "./publikasi/dashboard-publikasi.reducers";
 
@@ -403,9 +403,12 @@ import { reducerFunctionals } from "./utils/functionals.reducer";
 // ========== beranda ========
 import {
   allAkademiReducer,
+  allKotaPesertaReducer,
+  allPenyelenggaraPesertaReducer,
   temaByAkademiReducer,
   pelatihanByTemaReducer,
   allPublikasiBerandaReducer,
+  addNotifTemaReducer,
 } from "../reducers/beranda/beranda.reducers";
 
 // ========== detail akademi ========
@@ -426,7 +429,7 @@ import {
   detailBerandaArtikelReducer,
   kategoriBerandaArtikelReducer,
   allTagBerandaArtikelReducer,
-} from "../reducers/beranda/artikel.reducers"
+} from "../reducers/beranda/artikel.reducers";
 
 // ========== galeri ========
 import {
@@ -780,7 +783,10 @@ const reducer = combineReducers({
 
   //BERANDA
   // ========== beranda ========
+  addNotifTema: addNotifTemaReducer,
   allAkademi: allAkademiReducer,
+  allPenyelenggaraPeserta: allPenyelenggaraPesertaReducer,
+  allKotaPeserta: allKotaPesertaReducer,
   temaByAkademi: temaByAkademiReducer,
   pelatihanByTema: pelatihanByTemaReducer,
   allPublikasiBeranda: allPublikasiBerandaReducer,

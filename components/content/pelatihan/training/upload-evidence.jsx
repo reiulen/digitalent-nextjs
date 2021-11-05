@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import axios from 'axios'
 
 import Swal from "sweetalert2";
 import moment from "moment";
@@ -28,8 +29,6 @@ const UploadEvidence = ({ token }) => {
     (state) => state.getFormEvidence
   );
 
-  console.log("hehe", getFormEvidence);
-
   const [numberDocument, setNumberDocument] = useState(
     getFormEvidence.name_dokumen
   );
@@ -50,9 +49,9 @@ const UploadEvidence = ({ token }) => {
           return {
             key: 1,
             imagePreview:
-              process.env.END_POINT_API_IMAGE_BEASISWA + item.gambar,
-            imageFile: "",
-            imageName: "",
+            process.env.END_POINT_API_IMAGE_BEASISWA + item.gambar,
+            imageFile: item.gambar,
+            imageName: item.gambar,
           };
         })
       : [{ key: 1, imagePreview: "", imageFile: "", imageName: "" }]
@@ -72,17 +71,20 @@ const UploadEvidence = ({ token }) => {
 
   const [name, setName] = useState("");
 
-  async function getBase64ImageFromUrl(imageUrl) {
-    const reader = new FileReader();
-    reader.readAsDataURL(imageUrl);
-    reader.onload = function () {
-      console.log(reader.result)
+  function toDataURL(url, callback) {
+    var xhr = new XMLHttpRequest();
+    xhr.onload = function() {
+       var reader = new FileReader();
+       reader.onloadend = function() {
+          callback(reader.result);
+       }
+       reader.readAsDataURL(xhr.response);
     };
-    
-  }
-
-  getBase64ImageFromUrl("https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/logo/evidace/cc5520f0-9234-4122-acc6-64122bbb3b22-November.png").then(result => console.log("base", result))
-  .catch(err => console.error("err nich", err));
+    xhr.open('GET', url);
+    xhr.responseType = 'blob';
+    xhr.send();
+ }
+ 
 
 
   useEffect(() => {
