@@ -121,10 +121,10 @@ const Table = ({ token }) => {
                         </div>
                       </form>
                     </div>
-
+                            
                     <div className="col-12 col-sm-8">
                       <div className="d-flex flex-wrap align-items-center justify-content-end mt-2">
-                        {/* sorotir by modal */}
+                        {/* sorotir by modal check */}
                         <button
                           type="button"
                           className="avatar item-rtl btn border d-flex align-items-center justify-content-between mt-2"
