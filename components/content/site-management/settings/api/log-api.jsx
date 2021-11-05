@@ -267,7 +267,7 @@ const Table = ({ token }) => {
                     </thead>
                     <tbody>
                       {listLog?.data?.length === 0 ? (
-                        <td class="align-middle text-center" colspan="8">Data Masih Kosong</td>
+                        <td className="align-middle text-center" colSpan="8">Data Masih Kosong</td>
                       ) : (
                         listLog?.data?.map((items, index) => {
                           return (
