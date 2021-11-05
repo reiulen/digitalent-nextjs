@@ -25,7 +25,6 @@ const Dashboard = ({ session, success }) => {
       router.push("/peserta/wizzard");
     }
   }, [success]);
-  // console.log(success, "ini success");
 
   const [cardPelatihan, setCardPelatihan] = useState([
     {

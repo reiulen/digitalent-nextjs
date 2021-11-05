@@ -18,7 +18,6 @@ import {
   Dropdown,
   Col,
   Row,
-  DropdownButton,
 } from "react-bootstrap";
 import IconSearch from "../../../components/assets/icon/Search";
 import IconLogin from "../../../components/assets/icon-dashboard-peserta/Login";
@@ -29,6 +28,7 @@ import Simonas from "/public/assets/logo/image 10.png";
 import Beasiswa from "/public/assets/logo/Logo besiswa fix  3.png";
 import { getAllAkademi } from "../../../redux/actions/beranda/beranda.actions";
 import axios from "axios";
+
 const Sidebar = dynamic(
   () => import("../../../user-component/components/template/Sidebar.component"),
   {
@@ -42,7 +42,6 @@ const Sidebar = dynamic(
 const Navigationbar = ({ session }) => {
   const dispatch = useDispatch();
   const [isShowDropdown, setIsShowDropdown] = useState(false);
-  // const [akademi, setAkademi] = useState([]);
   const { error: errorDataPribadi, dataPribadi } = useSelector(
     (state) => state.getDataPribadi
   );
@@ -59,7 +58,44 @@ const Navigationbar = ({ session }) => {
   };
   useEffect(() => {
     getAkademi();
+    getSimonas();
+    getBeasiswa();
   }, []);
+
+  useEffect(() => {
+    // console.log(simonas, "ini useeffect simonas");
+    // console.log(beasiswa, "ini useeffect beasiswa");
+  }, [simonas, beasiswa]);
+
+  const getSimonas = async () => {
+    const link = "http://simonas-dev.majapahit.id/api/job";
+    try {
+      const data = await axios.get("http://simonas-dev.majapahit.id/api/job");
+      if (data) {
+        setSimonas(data);
+        console.log(data, "ini data simonas");
+      }
+    } catch (error) {
+      notify(error);
+    }
+  };
+  const [beasiswa, setBeasiswa] = useState([]);
+  const [simonas, setSimonas] = useState([]);
+
+  const getBeasiswa = async () => {
+    const link = "https://beasiswa-dev.majapahit.id/api/get-scholarship-data";
+    try {
+      const data = await axios.get(
+        "https://beasiswa-dev.majapahit.id/api/get-scholarship-data"
+      );
+      if (data) {
+        setBeasiswa(data);
+        console.log(data, "ini data Beasiswa");
+      }
+    } catch (error) {
+      notify(error);
+    }
+  };
 
   const handlerLogout = () => {
     Cookies.remove("id_tema");
@@ -176,10 +212,9 @@ const Navigationbar = ({ session }) => {
                     </div>
                   </button>
                   <div className="dropdown-menu ml-3">
-                    {console.log(akademi, "iniii dia")}
                     {akademi.map((item, i) => {
                       return (
-                        <Link href={`/detail/akademi/${item.id}`}>
+                        <Link key={item.id} href={`/detail/akademi/${item.id}`}>
                           <a className="dropdown-item navdropdown-child">
                             {item.slug}
                           </a>
@@ -438,7 +473,10 @@ const Navigationbar = ({ session }) => {
                     {akademi &&
                       akademi.map((item, i) => {
                         return (
-                          <Dropdown.Item href={`/detail/akademi/${item.id}`}>
+                          <Dropdown.Item
+                            href={`/detail/akademi/${item.id}`}
+                            key={item.id}
+                          >
                             {item.slug}
                           </Dropdown.Item>
                         );
