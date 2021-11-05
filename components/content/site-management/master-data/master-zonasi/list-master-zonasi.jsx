@@ -117,7 +117,7 @@ const Table = ({ token }) => {
                     </thead>
                     <tbody>
                       {allZonasi?.data?.zonasi?.length === 0 ? (
-                        <td class="align-middle text-center" colspan="4">Data Masih Kosong</td>
+                        <td className="align-middle text-center" colSpan="4">Data Masih Kosong</td>
                       ) : (
                         allZonasi?.data?.zonasi?.map((items, index) => {
                           return (
