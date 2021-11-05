@@ -20,11 +20,11 @@ const Dashboard = ({ session, success }) => {
   );
   const { count, pelatihan, subvit } = dataDashboard;
 
-  useEffect(() => {
-    if (!success) {
-      router.push("/peserta/wizzard");
-    }
-  }, [success]);
+  // useEffect(() => {
+  //   if (!success) {
+  //     router.push("/peserta/wizzard");
+  //   }
+  // }, [success]);
 
   const [cardPelatihan, setCardPelatihan] = useState([
     {
