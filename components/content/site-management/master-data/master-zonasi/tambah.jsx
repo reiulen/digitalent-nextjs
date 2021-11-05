@@ -17,6 +17,7 @@ const Tambah = ({ token }) => {
   let selectRefProvinsi = null;
   let selectRefKabupaten = null;
 
+
   const [nameZonation, setNameZonation] = useState("");
   const [status, setStatus] = useState("");
   // state provinsi for set in option provinsi
@@ -30,6 +31,7 @@ const Tambah = ({ token }) => {
     {
       provinsi: [],
       kabupaten: [],
+      value:[]
     },
   ]);
   // value to send api
@@ -48,6 +50,9 @@ const Tambah = ({ token }) => {
   const changeListProvinces = async (e, index) => {
     let _temp = [...formInput];
     let _tempValue = [...valueSend];
+
+    _temp[index].value = []
+
 
     
 
@@ -81,6 +86,10 @@ const Tambah = ({ token }) => {
   // onchange set value to form input loop
   const changeListKabupaten = (e, index) => {
     let _tempValue = [...valueSend];
+    let _temp = [...formInput]
+    _temp[index]['value'] = e
+    setFormInput(_temp)
+
     _tempValue[index].kota_kabupaten = e.map((items) => {
       return { label: items.label };
     });
@@ -95,6 +104,7 @@ const Tambah = ({ token }) => {
     _temp.push({
       provinsi: [],
       kabupaten: [],
+      value:[]
     });
     _tempValue.push({
       provinsi: "",
@@ -257,7 +267,8 @@ const Tambah = ({ token }) => {
                               Kota / Kabupaten
                             </label>
                             <Select
-                              ref={(ref) => (selectRefKabupaten = ref)}
+                              // ref={(ref) => (selectRefKabupaten = ref)}
+                              value={items.value}
                               className="basic-single"
                               classNamePrefix="select"
                               placeholder="Pilih kota/kabupaten"
