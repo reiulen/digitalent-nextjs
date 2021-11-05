@@ -57,13 +57,13 @@ const Table = ({ token }) => {
               </Link>
             </div>
           </div>
-          <div className="card-body pt-0">
+          <div className="card-body pt-0 px-4 px-sm-8">
             <div className="table-filter">
               <div className="row align-items-center">
                 <div className="col-lg-12 col-xl-12">
                   <div className="d-flex align-items-center w-100">
                     <div className="row w-100">
-                      <div className="col-12 col-sm-6">
+                      <div className="col-12 col-xl-4">
                         <div className="position-relative overflow-hidden w-100">
                           <IconSearch
                             style={{ left: "10" }}
@@ -179,9 +179,8 @@ const Table = ({ token }) => {
                 )}
               </div>
 
-              <div className="row">
-                <div className="table-pagination paginate-cs">
-                  <div className="table-pagination">
+              <div className="row px-4">
+                <div className="table-pagination">
                     <Pagination
                       activePage={allMitraSite.page}
                       itemsCountPerPage={allMitraSite.data.perPage}
@@ -195,14 +194,13 @@ const Table = ({ token }) => {
                       itemClass="page-item"
                       linkClass="page-link"
                     />
-                  </div>
                 </div>
 
-                <div className="table-total ml-auto">
-                  <div className="row">
+                <div className="table-total ml-auto mr-4">
+                  <div className="row mt-4">
                     <div className="col-4 mr-0 p-0">
                       <select
-                        className="form-control mr-5 cursor-pointer"
+                        className="form-control pr-2 cursor-pointer"
                         id="exampleFormControlSelect2"
                         defaultValue=""
                         style={{

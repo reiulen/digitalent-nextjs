@@ -31,7 +31,9 @@
 }
 
 .img-prevModal {
-  height: 470px;
+  position: relative;
+  height: 423px;
+  width: 100%;
 }
 
 .subMenuPreview {

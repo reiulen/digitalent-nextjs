@@ -7,30 +7,79 @@ import { useRouter } from "next/router";
 import Pagination from "react-js-pagination";
 import Swal from "sweetalert2";
 import { Modal } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import Select from "react-select";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingTable from "../../../LoadingTable";
+import { getDetailReportTraining, uploadSertifikat } from "../../../../redux/actions/pelatihan/report-training.actions";
 
-import { useDispatch, useSelector } from "react-redux";
-
-const DetailReport = () => {
+const DetailReport = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
+  const pelatian_id = parseInt(router.query.id);
 
-  let { page = 1, success } = router.query;
-  page = Number(page);
+  const { data: detailReportTraining } = useSelector(
+    (state) => state.detailReportTraining
+  );
 
+  const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
-  const [limit, setLimit] = useState(null);
+  const [limit, setLimit] = useState(5);
   const [showModal, setShowModal] = useState(false);
   const [showModalSertifikasi, setShowModalSertifikasi] = useState(false);
   const [publishValue, setPublishValue] = useState(null);
+  const [sertifikasi, setSertifikasi] = useState({
+    label: "",
+    value: "",
+  });
+  const [statusSubstansi, setStatusSubstansi] = useState({
+    label: "",
+    value: "",
+  });
+  const [statusAdmin, setStatusAdmin] = useState({
+    label: "",
+    value: "",
+  });
+  const [statusPeserta, setStatusPeserta] = useState({
+    label: "",
+    value: "",
+  });
+  const [id, setId] = useState(null);
+  const [isLulus, setIsLulus] = useState(null);
 
   const handlePagination = (pageNumber) => {
     let link = `${router.pathname}?page=${pageNumber}`;
     if (limit) link = link.concat(`&limit=${limit}`);
     if (search) link = link.concat(`&keyword=${search}`);
     router.push(link);
+  };
+  const [sertifkatBase, setSertifikatBase] = useState("");
+  const [sertifikatName, setSertifikatName] = useState("");
+
+  const fileSertifikatHandler = (e) => {
+    const type = ["application/pdf", "image/jpeg"];
+    if (type.includes(e.target.files[0].type)) {
+      if (e.target.files[0].size > 5000000) {
+        e.target.value = null;
+        Swal.fire("Oops !", "Data yang bisa dimasukkan hanya 5 MB.", "error");
+      } else {
+        const reader = new FileReader();
+        reader.readAsDataURL(e.target.files[0]);
+        reader.onload = function (e) {
+          setSertifikatBase(reader.result);
+        };
+
+        setSertifikatName(e.target.files[0].name);
+      }
+    } else {
+      e.target.value = null;
+      Swal.fire(
+        "Oops !",
+        "Data yang bisa dimasukkan hanya berupa file pdf/jpg.",
+        "error"
+      );
+    }
   };
 
   const handleSearch = () => {
@@ -85,6 +134,36 @@ const DetailReport = () => {
     });
   };
 
+  const optionStatusAdministrasi = [
+    { label: "Verified", value: "Verified" },
+    { label: "Unverified", value: "Unverified" },
+    { label: "Incomplete", value: "Incomplete" },
+  ];
+
+  const optionStatusPeserta = [
+    { label: "Menunggu", value: "Menunggu" },
+    { label: "Tidak Lulus Administrasi", value: "Tidak Lulus Administrasi" },
+    { label: "Tes Substansi", value: "Tes Substansi" },
+    { label: "Tidak Lulus Tes Substansi", value: "Tidak Lulus Tes Substansi" },
+    { label: "Lulus Tes Substansi", value: "Lulus Tes Substansi" },
+    { label: "Diterima", value: "Diterima" },
+    { label: "Ditolak", value: "Ditolak" },
+    { label: "Pelatihan", value: "Pelatihan" },
+    { label: "Lulus Pelatihan", value: "Lulus Pelatihan" },
+    { label: "Tidak Lulus Pelatihan", value: "Tidak Lulus Pelatihan" },
+  ];
+
+  const optionSertifikasi = [
+    { label: "Ada", value: "1" },
+    { label: "Tidak Ada", value: "" },
+  ];
+
+  const optionStatusSubstansi = [
+    { label: "Lulus", value: "Lulus" },
+    { label: "Tidak Lulus", value: "Tidak Lulus" },
+    { label: "Belum Mengerjakan", value: "Belum Mengerjakan" },
+  ];
+
   const handleResetError = () => {
     if (error) {
       dispatch(clearErrors());
@@ -94,6 +173,101 @@ const DetailReport = () => {
   const handleModalRevisi = (id) => {
     setShowModalSertifikasi(true);
   };
+
+  const handleSecondsToTime = (secs) => {
+    let hours = Math.floor(secs / (60 * 60));
+    let divisor_for_minutes = secs % (60 * 60);
+    let minutes = Math.floor(divisor_for_minutes / 60);
+    let divisor_for_seconds = divisor_for_minutes % 60;
+    let seconds = Math.ceil(divisor_for_seconds);
+    return hours + ":" + minutes + ":" + seconds;
+  };
+
+  const listPeserta = detailReportTraining.list.length > 0 ? detailReportTraining.list.map((item, index) => {
+    return (
+      <tr key={index}>
+        <td className="text-center">{index + 1}</td>
+        <td className="align-middle">
+          <p className="font-weight-bolder my-0">{item.name}</p>
+          <p className="my-0">{item.nomor_registrasi}</p>
+          <p className="my-0">{item.nik}</p>
+        </td>
+        <td
+          className="align-middle"
+          style={{
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+            maxWidth: "4rem",
+          }}
+        >
+          {item.alamat}
+        </td>
+        <td className="align-middle">
+          <p
+            className={`my-0 text-${
+              item.subtansi_status.toLowerCase() !== "lulus tes"
+                ? "danger"
+                : "success"
+            }`}
+          >
+            {item.subtansi_status}
+          </p>
+          <p className="my-0">{Math.round(item.nilai)}</p>
+          <p className="my-0">{handleSecondsToTime(item.waktu)}</p>
+        </td>
+        <td className="align-middle">
+          <span
+            className={`label label-inline label-light-${
+              item.administrasi.toLowerCase() !== "verified"
+                ? "danger"
+                : "success"
+            } font-weight-bold`}
+          >
+            {item.administrasi}
+          </span>
+        </td>
+        <td className="align-middle">
+          <span
+            className={`label label-inline label-light-${
+              item.status.toLowerCase() === "lulus tes substansi" ||
+              item.status.toLowerCase() === "diterima" ||
+              item.status.toLowerCase() === "pelatihan" ||
+              item.status.toLowerCase() === "lulus pelatihan"
+                ? "success"
+                : "danger"
+            } font-weight-bold`}
+          >
+            {item.status}
+          </span>
+        </td>
+        <td className="align-middle">
+          <div className="d-flex align-items-center">
+            {item.sertifikat === "" ? "Tidak Ada" : "Ada"}
+          </div>
+        </td>
+        {item.sertifikat === "" && (
+          <td className="align-middle">
+            <button
+              className="btn btn-link-action bg-blue-primary text-white"
+              data-toggle="tooltip"
+              data-placement="bottom"
+              title="Tambah Sertifikasi"
+              onClick={() => {
+                setShowModalSertifikasi(true);
+                setId(item.id);
+              }}
+              type="button"
+            >
+              <i className="ri-add-fill text-white p-0"></i>
+            </button>
+          </td>
+        )}
+      </tr>
+    );
+  }): <td className="align-middle text-center" colSpan={8}>
+  Data Kosong
+</td>;
 
   return (
     <PageWrapper>
@@ -129,7 +303,21 @@ const DetailReport = () => {
                         borderTopLeftRadius: "0",
                         borderBottomLeftRadius: "0",
                       }}
-                      onClick={handleSearch}
+                      onClick={() => {
+                        dispatch(
+                          getDetailReportTraining(
+                            token,
+                            pelatian_id,
+                            page,
+                            limit,
+                            search,
+                            statusAdmin.label,
+                            statusSubstansi.label,
+                            sertifikasi.value,
+                            statusPeserta.label,
+                          )
+                        );
+                      }}
                     >
                       Cari
                     </button>
@@ -140,7 +328,7 @@ const DetailReport = () => {
                   <button
                     className="btn border d-flex align-items-center justify-content-between mt-1"
                     style={{
-                      minWidth: "280px",
+                      minWidth: "236px",
                       color: "#bdbdbd",
                       float: "right",
                     }}
@@ -155,14 +343,19 @@ const DetailReport = () => {
                 </div>
 
                 <div className="col-md-2">
-                  <button
-                    className="btn w-100 btn-rounded-full bg-blue-secondary text-white mt-2"
-                    type="button"
-                    onClick={handleExportReport}
+                  <Link
+                    href="dts-pelatihan:8080/storage/excel/a08a0e15-8c2e-4eb8-a3d0-4cae45d24b1c-November.xlsx"
+                    passHref
                   >
-                    Export
-                    <i className="ri-arrow-down-s-line ml-3 mt-1 text-white"></i>
-                  </button>
+                    <a
+                      target="_blank"
+                      className="btn w-100 btn-rounded-full bg-blue-secondary text-white mt-2"
+                    >
+                      {" "}
+                      Export
+                      <i className="ri-arrow-down-s-line ml-3 mt-1 text-white"></i>
+                    </a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -181,52 +374,91 @@ const DetailReport = () => {
                       <th>Administrasi</th>
                       <th>Status Peserta</th>
                       <th>Sertifikasi</th>
+                      <th>Aksi</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr>
-                      <td className="text-center">1</td>
-                      <td className="align-middle">
-                        <p className="font-weight-bolder my-0">
-                          Cristiano Messi
-                        </p>
-                        <p className="my-0">00363178267823</p>
-                        <p className="my-0">345272826837383</p>
-                      </td>
-                      <td className="align-middle">Bandung</td>
-                      <td className="align-middle">
-                        <p className="my-0 text-success">Lulus </p>
-                        <p className="my-0">90</p>
-                        <p className="my-0">00:59:00</p>
-                      </td>
-                      <td className="align-middle">
-                        <span className="label label-inline label-light-danger font-weight-bold">
-                          Incomplete
-                        </span>
-                      </td>
-                      <td className="align-middle">
-                        <span className="label label-inline label-light-danger font-weight-bold">
-                          Ditolak
-                        </span>
-                      </td>
-                      <td className="align-middle">
-                        <div className="d-flex align-items-center">
-                          Tidak Ada
-                          <button
-                            className="btn btn-link-action bg-blue-primary text-white ml-3"
-                            data-toggle="tooltip"
-                            data-placement="bottom"
-                            title="Tambah Sertifikasi"
-                            onClick={() => setShowModalSertifikasi(true)}
-                            type="button"
-                          >
-                            <i className="ri-add-fill text-white p-0"></i>
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
+                  <tbody>{listPeserta}</tbody>
                 </table>
+              </div>
+              <div className="row">
+                <div className="table-pagination table-pagination pagination-custom col-12 col-md-6">
+                  <Pagination
+                    activePage={page}
+                    itemsCountPerPage={detailReportTraining.perPage}
+                    totalItemsCount={detailReportTraining.total}
+                    pageRangeDisplayed={3}
+                    onChange={(e) => {
+                      setPage(e);
+                      dispatch(
+                        getDetailReportTraining(
+                          token,
+                          pelatian_id,
+                          e,
+                          limit,
+                          search,
+                          statusAdmin.label,
+                          statusSubstansi.label,
+                          sertifikasi.value,
+                          statusPeserta.label,
+                          
+                        )
+                      );
+                    }}
+                    nextPageText={">"}
+                    prevPageText={"<"}
+                    firstPageText={"<<"}
+                    lastPageText={">>"}
+                    itemClass="page-item"
+                    linkClass="page-link"
+                  />
+                </div>
+                <div className="table-total ml-auto">
+                  <div className="row">
+                    <div className="col-4 mr-0 p-0 mt-3">
+                      <select
+                        className="form-control"
+                        id="exampleFormControlSelect2"
+                        style={{
+                          width: "65px",
+                          background: "#F3F6F9",
+                          borderColor: "#F3F6F9",
+                          color: "#9E9E9E",
+                        }}
+                        value={limit}
+                        onChange={(e) => {
+                          setLimit(e.target.value);
+                          dispatch(
+                            getDetailReportTraining(
+                              token,
+                              pelatian_id,
+                              page,
+                              e.target.value,
+                              search,
+                              statusAdmin.label,
+                              statusSubstansi.label,
+                              sertifikasi.value,
+                              statusPeserta.label
+                            )
+                          );
+                        }}
+                      >
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="30">30</option>
+                        <option value="40">40</option>
+                        <option value="50">50</option>
+                      </select>
+                    </div>
+                    <div className="col-8 my-auto pt-3">
+                      <p
+                        className="align-middle mt-3"
+                        style={{ color: "#B5B5C3" }}
+                      >
+                        Total Data {detailReportTraining.total}
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -252,27 +484,39 @@ const DetailReport = () => {
         <Modal.Body>
           <div className="form-group mb-5">
             <label className="p-0">Status Administrasi</label>
-            <select className="form-control">
-              <option>Semua</option>
-            </select>
+            <Select
+              options={optionStatusAdministrasi}
+              onChange={(e) =>
+                setStatusAdmin({ value: e.value, label: e.label })
+              }
+            />
           </div>
           <div className="form-group mb-5">
             <label className="p-0">Status Test Substansi</label>
-            <select className="form-control">
-              <option>Semua</option>
-            </select>
+            <Select
+              options={optionStatusSubstansi}
+              onChange={(e) =>
+                setStatusSubstansi({ value: e.value, label: e.label })
+              }
+            />
           </div>
           <div className="form-group mb-5">
             <label className="p-0">Status Peserta</label>
-            <select className="form-control">
-              <option>Semua</option>
-            </select>
+            <Select
+              options={optionStatusPeserta}
+              onChange={(e) =>
+                setStatusPeserta({ value: e.value, label: e.label })
+              }
+            />
           </div>
           <div className="form-group mb-5">
             <label className="p-0">Sertifikasi</label>
-            <select className="form-control">
-              <option>Semua</option>
-            </select>
+            <Select
+              options={optionSertifikasi}
+              onChange={(e) =>
+                setSertifikasi({ value: e.value, label: e.label })
+              }
+            />
           </div>
         </Modal.Body>
         <Modal.Footer>
@@ -282,7 +526,26 @@ const DetailReport = () => {
           >
             Reset
           </button>
-          <button className="btn btn-primary-rounded-full" type="button">
+          <button
+            className="btn btn-primary-rounded-full"
+            type="button"
+            onClick={() => {
+              dispatch(
+                getDetailReportTraining(
+                  token,
+                  pelatian_id,
+                  page,
+                  limit,
+                  search,
+                  statusAdmin.label,
+                  statusSubstansi.label,
+                  sertifikasi.value,
+                  statusPeserta.label
+                )
+              );
+              setShowModal(false);
+            }}
+          >
             Terapkan
           </button>
         </Modal.Footer>
@@ -316,7 +579,11 @@ const DetailReport = () => {
                   type="radio"
                   name="status"
                   className="form-check-input"
-                  value="Ya"
+                  value="1"
+                  onClick={(e) => {
+                    setIsLulus("1");
+                  }}
+                  required
                 />
                 <label className="form-check-label">
                   Lulus / Certifed / Kompeten
@@ -326,8 +593,12 @@ const DetailReport = () => {
                 <input
                   type="radio"
                   name="status"
-                  value="Tidak"
+                  value="0"
                   className="form-check-input"
+                  onClick={(e) => {
+                    setIsLulus("0");
+                  }}
+                  required
                 />
                 <label className="form-check-label">
                   Tidak Lulus / Not Certifed / Belum Kompeten
@@ -345,10 +616,11 @@ const DetailReport = () => {
                 <input
                   type="file"
                   className="custom-file-input"
-                  accept="image/png, image/jpeg , image/jpg"
+                  accept="application/pdf, image/jpeg , image/jpg"
+                  onChange={fileSertifikatHandler}
                 />
                 <label className="custom-file-label" htmlFor="customFile">
-                  Pilih File
+                  {sertifikatName}
                 </label>
               </div>
             </div>
@@ -358,7 +630,20 @@ const DetailReport = () => {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <button className="btn btn-primary-rounded-full" type="button">
+          <button
+            className="btn btn-primary-rounded-full"
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              const data = {
+                "id": id,
+                "Sertifikasi": isLulus,
+                "file_sertifikat": sertifkatBase,
+              };
+              dispatch(uploadSertifikat(token, data, router.query.id))
+              setShowModalSertifikasi(false);
+            }}
+          >
             Upload
           </button>
         </Modal.Footer>

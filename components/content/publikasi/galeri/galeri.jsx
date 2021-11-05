@@ -487,13 +487,13 @@ const Galeri = ({ token }) => {
                 >
                     <div
                         className="carousel-inner"
-                        style={{ position: "absolute", left: "-13px" }}
+                        style={{ position: "absolute", left: "-12px" }}
                     >
                         {isViewed && isViewed.length !== 0
                             ? isViewed.gambar.map((row, i) => {
                                 return (
                                     <div className={i === 0 ? "carousel-item active" : "carousel-item"} key={i}>
-                                        <div className={styles["img-prevModal"]}>
+                                        {/* <div className={styles["img-prevModal"]}>
                                             <Image
                                                 unoptimized={process.env.ENVIRONMENT !== "PRODUCTION"}
                                                 loader={() =>
@@ -509,6 +509,26 @@ const Galeri = ({ token }) => {
                                                 alt="image"
                                                 layout="fill"
                                                 objectFit="fill"
+                                                // width={400}
+                                                // height={511}
+                                            />
+                                        </div> */}
+
+                                        <div
+                                            className="position-relative"
+                                            style={{
+                                                height: "447px",
+                                                width: "auto"
+                                            }}
+                                        >
+                                            <Image
+                                                src={
+                                                    process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                                    "publikasi/images/" + row.gambar
+                                                }
+                                                alt="Slider"
+                                                objectFit="fill"
+                                                layout="fill"
                                             />
                                         </div>
                                     </div>
@@ -1217,7 +1237,7 @@ const Galeri = ({ token }) => {
                                                         }}
                                                     ></p>
                                                     <div className="row justify-content-between align-items-center" style={{ width: '100%' }}>
-                                                        <div className="col-sm-12 col-md-12 col-12" style={{ display:'flex', flexWrap:'wrap',overflowWrap:'break-word'}}>
+                                                        <div className="col-sm-12 col-md-12 col-12" style={{ display: 'flex', flexWrap: 'wrap', overflowWrap: 'break-word' }}>
                                                             {galeri.gallery[index_galleri].tag !== null
                                                                 ? galeri.gallery[index_galleri].tag.map((row, i) => {
                                                                     return (

@@ -31,11 +31,8 @@ const TambahTriviaStepOne = ({ token }) => {
   const [theme_id, setThemeId] = useState("");
   const [training_id, setTrainingId] = useState("");
   const [metode, setMetode] = useState("entry");
+  useEffect(() => {}, [training_id]);
   useEffect(() => {
-    console.log(training_id);
-  }, [training_id]);
-  useEffect(() => {
-
     if (success) {
       const id = trivia.id;
       if (typeSave === "lanjut") {

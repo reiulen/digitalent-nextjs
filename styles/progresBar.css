@@ -97,18 +97,15 @@
   font-size: 40px !important;
 }
 
-
-
 .text-overflow-ens {
   max-width: 11rem;
   text-overflow: ellipsis;
   overflow: hidden;
 }
 
-
 .cardContainer {
-  background: #FFFFFF;
-  border: 1px solid #D7E1EA;
+  background: #ffffff;
+  border: 1px solid #d7e1ea;
   border-radius: 5px;
   padding: 16px 32px;
   border-radius: 12px;
@@ -130,7 +127,7 @@
   }
 }
 
-.wrap-accouts{
+.wrap-accouts {
   position: relative;
   display: flex;
   align-items: center;
@@ -168,7 +165,7 @@
                                   supported by Chrome, Edge, Opera and Firefox */
 }
 
-.dot-accouts{
+.dot-accouts {
   min-width: 30px;
   width: 30px;
   min-height: 30px;
@@ -179,23 +176,24 @@
   padding-left: 10px;
 }
 
-.list-wrap-accounts{
+.list-wrap-accounts {
   margin-left: 0;
-    position: absolute;
-    width: 190px;
-    left: 43%;
-    -webkit-transform: translateX(-50%);
-    transform: translateX(-50%);
-    border-top: NONE;
-    border-left: 1px solid #dddddd;
-    border-right: 1px solid #dddddd;
-    top: 85%;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    background-color: white;
-    z-index: 9;
-    padding-left: 1px;
-    padding-right: 10px;
+  position: absolute;
+  width: 190px;
+  left: 43%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  border-top: NONE;
+  border-left: 1px solid #dddddd;
+  border-right: 1px solid #dddddd;
+  top: 85%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  z-index: 9;
+  padding-left: 1px;
+  padding-right: 10px;
+  border-radius: 0px 0px 35px 35px;
 }
 .list-wrap-accounts .items-lists {
   padding-left: 10px;
@@ -219,28 +217,23 @@
   user-select: none;
   /* Non-prefixed version, currently
                                   supported by Chrome, Edge, Opera and Firefox */
-
 }
 .list-wrap-accounts .items-lists:hover {
-  background-color: #007CFF;
+  background-color: #007cff;
   color: white;
-
 }
 .list-wrap-accounts .items-lists:last-child:hover {
   background-color: white !important;
   /* color: none; */
-
 }
-
-
-.w-max-cs .capcha div div div{
+.w-max-cs .capcha div div div {
   width: 100% !important;
   display: flex !important;
   justify-content: flex-start !important;
 }
 
 @media (max-width: 360px) {
-  .w-max-cs .capcha div div div div iframe{
+  .w-max-cs .capcha div div div div iframe {
     width: 100% !important;
     display: flex;
     justify-content: flex-start;

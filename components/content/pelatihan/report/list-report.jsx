@@ -62,7 +62,7 @@ const ListReport = ({token}) => {
     }
   }
   
-  const listReportTraining = getDataReportTraining.list.map((item, index) => {
+  const listReportTraining = getDataReportTraining.list.length > 0 ? getDataReportTraining.list.map((item, index) => {
     return (
       <tr key={index}>
         <td className="text-center">{index + limit * (page - 1) + 1}</td>
@@ -123,7 +123,9 @@ const ListReport = ({token}) => {
         </td>
       </tr>
     );
-  });
+  }) : <td className="align-middle text-center" colSpan={8}>
+  Data Kosong
+</td>;
 
 
 
@@ -223,7 +225,7 @@ const ListReport = ({token}) => {
                   <button
                     className="btn border d-flex align-items-center justify-content-between mt-1"
                     style={{
-                      minWidth: "280px",
+                      minWidth: "236px",
                       color: "#bdbdbd",
                       float: "right",
                     }}
@@ -266,7 +268,8 @@ const ListReport = ({token}) => {
                       totalItemsCount={getDataReportTraining.total}
                       pageRangeDisplayed={3}
                       onChange={(e) => {setPage(e)
-                      dispatch(listsReportTraining(token, e, limit, search, penyelenggara.label, academy.label, theme.label))
+                      dispatch(listsReportTraining(token, e, limit, search, penyelenggara.label, academy.label, theme.label));
+                      router.push("/report-pelatihan")
                       }}
                       nextPageText={">"}
                       prevPageText={"<"}
@@ -408,7 +411,13 @@ const ListReport = ({token}) => {
           </button>
           <button className="btn btn-primary-rounded-full" type="button" onClick={() => {
              setShowModal(false);
-            dispatch(listsReportTraining(token, page, limit, search, penyelenggara.label, academy.label, theme.label))
+             let register = dateRegister.map(item => {
+               return moment(item).format("YYYY/MM/DD")
+             })
+             let pelaksanaan = datePelaksanaan.map(item => {
+              return moment(item).format("YYYY/MM/DD")
+            })
+            dispatch(listsReportTraining(token, page, limit, search, penyelenggara.label, academy.label, theme.label, register.join(","), pelaksanaan.join(",")))
           }}>
             Terapkan
           </button>

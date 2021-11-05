@@ -32,7 +32,7 @@ const TestSubstansi = () => {
         <Card className={styles.cardBase}>
           <h1 className={styles.title}>Panduan Test Substansi</h1>
           <Card className={styles.cardPanduan}>
-            <table>
+            <table className={styles.tableResponsive}>
               <tr>
                 <td style={{ position: "absolute" }}>1.</td>
                 <td>&nbsp;</td>

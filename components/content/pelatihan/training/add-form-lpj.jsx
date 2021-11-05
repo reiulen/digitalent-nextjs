@@ -8,15 +8,23 @@ import { useDispatch, useSelector } from "react-redux";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingPage from "../../../LoadingPage";
+import { postLpj } from '../../../../redux/actions/pelatihan/training.actions'
 
-const AddFormLpj = () => {
+const AddFormLpj = ({token}) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
+  const { data: getFormLPJ } = useSelector(
+    (state) => state.getFormLPJ
+  );
 
-  const [formLpj, setFormLpj] = useState([{ key: 1, name: "" }]);
+  const [formLpj, setFormLpj] = useState(getFormLPJ.data.length > 0 ? getFormLPJ.data.map((item, index) => {
+    return {
+       key: index + 1, name: item.name 
+    }
+  }) : [{ key: 1, name: "" }]);
 
   const handleResetError = () => {
     if (error) {
@@ -47,7 +55,18 @@ const AddFormLpj = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
+    let form = formLpj.map(item => {
+      return {
+        name: item.name
+      }
+    })
+    const data = {
+      pelatian_id: parseInt(router.query.id),
+      data: form
+    }
+
     if (simpleValidator.current.allValid()) {
+      dispatch(postLpj(token, data))
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);

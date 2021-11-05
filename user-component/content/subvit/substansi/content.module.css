@@ -1,4 +1,4 @@
-@media (max-width: 412px) {
+@media (max-width: 426px) {
   .mainCard {
     padding: 20px !important;
     border-radius: 0px !important;
@@ -8,14 +8,15 @@
     padding: 0px !important;
   }
   .academy {
-    display: none;
+    padding: 0px !important;
+  }
+  .training {
+    padding: 0px !important;
   }
   .rowNumber {
     display: none;
   }
-  .totalSoal {
-    display: none;
-  }
+
   .daftarSoal {
     display: none;
   }
@@ -43,7 +44,67 @@
   .rowNumberResponsive {
     margin-top: 20px;
   }
+  .btnHelp {
+    float: left;
+  }
+  .cardNumber {
+    display: none;
+  }
+  .cardSoal {
+    margin-bottom: 20px;
+  }
+  .baseAll {
+    top: 280px !important;
+  }
+  .btnBottom {
+    display: none !important;
+  }
+  .btnBackResponsive {
+    display: none !important;
+  }
+  .btnBottomResponsive {
+    display: inline-block !important;
+  }
+  .totalSoal {
+    display: none;
+  }
+  .soalResponsive {
+    display: inline-block !important;
+  }
+  .total {
+    text-align: left;
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 140%;
+    color: #80808f;
+  }
+  .clickSoal {
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 160%;
+    /* or 22px */
+
+    text-align: right;
+    float: right;
+    letter-spacing: 0.015em;
+
+    /* Brand/Primary/Primary */
+
+    color: #007cff;
+  }
 }
+
+.soalResponsive {
+  display: none;
+}
+.btnBottomResponsive {
+  display: none;
+}
+
 .totalSoalResponsive {
   display: none;
 }
@@ -360,7 +421,8 @@
   color: #007cff;
   text-decoration: none !important;
 }
-.btnBack:hover {
+.btnBack:hover,
+.btnBack:focus {
   text-decoration: none !important;
 }
 .btnSkip {

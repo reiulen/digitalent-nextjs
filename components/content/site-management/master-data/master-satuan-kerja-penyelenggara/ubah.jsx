@@ -147,7 +147,7 @@ let sortirOptionTempProvList = allProvincesSite?.data
                 Ubah Satuan Kerja Penyelenggara
               </h3>
             </div>
-            <div className="card-body pt-0">
+            <div className="card-body pt-0 px-4 px-sm-8">
               <div className="form-group">
                 <label>Nama Satuan Kerja</label>
                 <input

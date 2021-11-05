@@ -30,6 +30,7 @@ const TambahApi = ({ token }) => {
 
   let selectRefField = null;
 
+
   const listApi = useSelector((state) => state.listApi);
 
   const [nameApi, setNameApi] = useState("");
@@ -256,9 +257,10 @@ const TambahApi = ({ token }) => {
                       className="form-search-date form-control cursor-pointer"
                       onChange={(date) => onChangePeriodeDateEnd(date)}
                       value={to}
+                      disabled={!from}
                       dateFormat="YYYY-MM-DD"
                       placeholderText="To"
-                      minDate={moment().toDate()}
+                      minDate={moment(from).toDate()}
                     />
                     <IconCalender
                       className="right-center-absolute"

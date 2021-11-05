@@ -10,6 +10,7 @@ import CardPage from "../../../components/peserta/CardPage";
 import { useRouter } from "next/router";
 import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
 import Cookies from "js-cookie";
+import axios from "axios";
 
 const Dashboard = ({ session, success }) => {
   const router = useRouter();
@@ -19,12 +20,11 @@ const Dashboard = ({ session, success }) => {
   );
   const { count, pelatihan, subvit } = dataDashboard;
 
-  useEffect(() => {
-    if (!success) {
-      router.push("/peserta/wizzard");
-    }
-  }, [success]);
-  // console.log(success, "ini success");
+  // useEffect(() => {
+  //   if (!success) {
+  //     router.push("/peserta/wizzard");
+  //   }
+  // }, [success]);
 
   const [cardPelatihan, setCardPelatihan] = useState([
     {
@@ -64,6 +64,34 @@ const Dashboard = ({ session, success }) => {
       toast.error(errorDashboard);
     }
   }, [errorDashboard, totalSubvit]);
+
+  const [simonasData, setSimonasData] = useState([]);
+  useEffect(() => {
+    const getSimonasData = async () => {
+      try {
+        const data = axios.get(
+          "https://beasiswa-dev.majapahit.id/api/get-scholarship-data"
+        );
+        // const data = axios.get("http://simonas-dev.majapahit.id/api/job", {
+        //   headers: {
+        //     "Content-Type": "application/json",
+        //   },
+        // });
+        if (data) {
+          return setSimonasData(data);
+        } else {
+          return;
+        }
+      } catch (e) {
+        console.log(e, "ini errornya");
+      }
+    };
+    getSimonasData();
+  }, []);
+
+  useEffect(() => {
+    console.log(simonasData, "ini data simonas");
+  }, [simonasData]);
 
   const handleHoverCard = (index, status) => {
     let list = [...cardPelatihan];
@@ -461,7 +489,7 @@ const Dashboard = ({ session, success }) => {
                 <Card.Title className="d-flex">
                   <p className={style.card_title}>SIMONAS</p>
                   <div className="ml-auto">
-                    <Link href="/peserta" passHref>
+                    <Link href="http://simonas-dev.majapahit.id/jobs" passHref>
                       <p
                         className={`d-flex align-items-center ${style.kunjungi_link}`}
                       >

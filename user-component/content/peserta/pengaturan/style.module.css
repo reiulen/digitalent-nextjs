@@ -1,0 +1,38 @@
+.text14 {
+  font-size: 14px;
+  color: #6c6c6c;
+  height: 24px;
+}
+
+.iconBackgroundSuccess {
+  background-color: #e5fff7;
+  width: 24px;
+  height: 24px;
+}
+
+.iconBackgroundFail {
+  font-size: 12px;
+  background-color: #ffe5e8;
+  font-weight: 600;
+  color: #ee2d41;
+}
+
+.btn_ubah {
+  background-color: white;
+  border: none;
+}
+.otpEmail {
+  padding-left: 15px;
+  letter-spacing: 42px;
+  border: 0;
+  background-image: linear-gradient(
+    to left,
+    black 70%,
+    rgba(255, 255, 255, 0) 0%
+  );
+  background-position: bottom;
+  background-size: 50px 2px;
+  /* background-repeat: repeat-x; */
+  background-position-x: 35px;
+  width: 220px;
+}

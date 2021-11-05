@@ -48,13 +48,12 @@ const DetailRole = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3
-              className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 mb-5 mt-5"
-              style={{ fontSize: "24px" }}
+              className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 mb-5 mt-5 titles-1"
             >
               Data Administrator
             </h3>
           </div>
-          <div className="card-body pt-0">
+          <div className="card-body pt-0 px-4 px-sm-8">
             <div className="form-group d-flex flex-column mt-4">
               <p htmlFor="exampleSelect1" style={{ color: "#6C6C6C" }}>
                 Nama Lengkap
@@ -132,8 +131,7 @@ const DetailRole = ({ token }) => {
 
             <div>
               <h3
-                className="card-title font-weight-bolder text-dark w-100 pb-5 mb-5 mt-5"
-                style={{ fontSize: "24px" }}
+                className="card-title font-weight-bolder text-dark w-100 pb-5 mb-5 mt-5 titles-1"
               >
                 Access Role
               </h3>
@@ -260,7 +258,7 @@ const DetailRole = ({ token }) => {
             </div>
 
             {/* start footer btn */}
-            <div className="form-group row">
+            <div className="form-group row mt-8">
               <div className="col-sm-12 d-flex justify-content-end">
                 <Link href="/site-management/user/administrator" passHref>
                   <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">

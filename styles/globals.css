@@ -26,7 +26,6 @@ a {
 }
 
 /* Pagination */
-
 .page-item {
   width: 33px;
   height: 30px;
@@ -58,6 +57,37 @@ a {
   color: #9e9e9e;
 }
 
+.page-item-dashboard {
+  width: 33px;
+  height: 30px;
+  margin-right: 10px;
+  text-align: center;
+}
+
+.page-item-dashboard:last-child,
+.page-item-dashboard:first-child {
+  width: 40px;
+}
+
+.page-link-dashboard {
+  border-radius: 6px;
+  background: #f3f6f9;
+  border-color: #f3f6f9;
+}
+
+.page-item-dashboard.active .page-link-dashboard {
+  background-color: #0063CC;
+  border-color: #0063CC;
+}
+
+.page-link-dashboard {
+  color: #9e9e9e;
+}
+
+.page-link-dashboard:hover {
+  color: #9e9e9e;
+}
+
 /* .form-control { */
 /* background: #f3f6f9 !important;
   border: #f3f6f9 !important; */
@@ -67,8 +97,8 @@ a {
   background: #ffffff !important;
   --rti-border: #d7e1ea !important;
   --rti-main: "#ffffff";
-  --rti-radius: 1.375rem !important;
-  --rti-s: 0.5rem 0.5rem 0.5rem 2.3rem !important;
+  --rti-radius: 1.375rem;
+  --rti-s: 0.5rem 0.5rem 0.5rem 2.3rem;
   /* spacing */
   --rti-tag: "#d7e1ea";
   --rti-tag-remove: "#e53e3e";

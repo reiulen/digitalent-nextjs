@@ -135,7 +135,7 @@ const Profile = ({ session }) => {
                     marginTop: "10px",
                     fontSize: "20px",
                   }}
-                  className="d-flex align-item-center"
+                  className="d-flex align-item-center overflow-auto"
                 >
                   {step.map((el, i) => {
                     return (

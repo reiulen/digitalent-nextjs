@@ -69,7 +69,6 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
     (dataPribadi && dataPribadi.file_path + dataPribadi.File_ktp) || ""
   );
 
-  console.log(dataPribadi);
 
   // const [cvName, setCvName] = useState(
   //   (dataPribadi && dataPribadi.cv) || "Belum ada file"
