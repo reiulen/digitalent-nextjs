@@ -67,12 +67,19 @@ const TambahApi = ({ token,id }) => {
       let formData = new FormData();
       formData.append("name", nameCooperation);
       formData.append("email", email);
+
+
+      if(password && confirmPassword) {
       formData.append("password", password);
       formData.append("password_confirmation", confirmPassword);
+      }
+
+
       formData.append("status", status);
+      formData.append("_method", "put");
       try {
         let { data } = await axios.post(
-          `${process.env.END_POINT_API_SITE_MANAGEMENT}api/user-mitra/store`,
+          `${process.env.END_POINT_API_SITE_MANAGEMENT}api/user-mitra/update/${router.query.id}`,
           formData,
           {
             headers: {
@@ -128,7 +135,7 @@ const TambahApi = ({ token,id }) => {
                   value={nameCooperation}
                   type="text"
                   className="form-control"
-                  placeholder="Placeholder"
+                  placeholder="Masukan nama lengkap"
                   onChange={(e) => setNameCooperation(e.target.value)}
                 />
               </div>
@@ -139,7 +146,7 @@ const TambahApi = ({ token,id }) => {
                   value={email && email}
                   type="email"
                   className="form-control"
-                  placeholder="Placeholder"
+                  placeholder="Masukan email"
                 />
               </div>
               <div className="form-group">

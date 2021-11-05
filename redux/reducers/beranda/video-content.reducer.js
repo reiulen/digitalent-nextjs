@@ -41,6 +41,44 @@ export const allVideoReducer = (state = { video: [] }, action) => {
     }
 }
 
+export const kategoriVideoContentReducer = (state = { kategori: [] }, action) => {
+    switch (action.type) {
+        case KATEGORI_VIDEO_CONTENT_REQUEST:
+            return {
+                loading: true
+            }
+
+        case KATEGORI_VIDEO_CONTENT_SUCCESS:
+            let result = []
+
+            for (let i = 0; i < action.payload.data.kategori.length; i++){
+                if (action.payload.data.kategori[i].jenis_kategori == "Galeri"){
+                    result.push (action.payload.data.kategori[i])
+                }
+            }
+            
+            // return {
+            //     // ...state,
+            //     loading: false,
+            //     dataTag: action.payload.data
+            // }
+
+        case KATEGORI_VIDEO_CONTENT_FAIL:
+            return {
+                loading: false,
+                error: action.payload
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                error: null
+            }
+
+        default:
+            return state
+    }
+}
+
 export const allTagReducer = (state = { dataTag: [] }, action) => {
     switch (action.type) {
         case TAG_REQUEST:

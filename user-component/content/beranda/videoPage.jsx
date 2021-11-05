@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Link from "next/link";
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -28,6 +29,7 @@ const VideoPage = ({ token }) => {
     const [judul_video, setJudulVideo] = useState(null)
     const [tanggal_publish, setTanggalPublish] = useState(null)
     const [dataKategori, setDataKategori] = useState(null)
+    const [kategoriVideo, setKategoriVideo] = useState("")
     const [isiVideo, setIsiVideo] = useState(null)
     const [tag, setTag] = useState([])
     const [filterPublish, setFilterPublish] = useState("asc")
@@ -97,6 +99,16 @@ const VideoPage = ({ token }) => {
         router.push(`${router.pathname}?sort=desc`)
     }
 
+    const handleFilterKategori = (str) => {
+        setKategoriVideo(str)
+
+        if (kategoriVideo !== "") {
+            router.push(`${router.pathname}?page=1&keyword=${str}`)
+        } else {
+            router.push(`${router.pathname}?page=1`)
+        }
+    }
+
     const handlePreview = (url, id, judul_video, tanggal_publish, dataKategori, isi_video, tag) => {
         setIdVideo(id)
         setVideoPlaying(true)
@@ -119,23 +131,84 @@ const VideoPage = ({ token }) => {
 
     return (
         <>
-            {/* {console.log("TAG :", dataTag)} */}
-            {console.log("Video :", video)}
-            <SubHeaderComponent />
+            <div className="row my-5 mx-1 py-3 px-8 bg-white rounded-pill d-flex align-items-center border">
+                <span className="text-primary">
+                    <Link href="/">
+                        Beranda
+                    </Link>
+                </span>
+                <span>
+                    <i className="ri-arrow-right-s-line text-primary"></i>
+                </span>
+                <span>
+                    Video
+                </span>
+            </div>
+
             <div>
-                <h1>Video Terupdate dan Terkini</h1>
+                <h1 style={{ fontWeight: '600' }}>Video Terupdate dan Terkini</h1>
                 <span>Temukan konten terupdate dan terkini mengenai Digital Talent Scholarship</span>
             </div>
             <div className="col-lg-10 row my-5">
                 {
+                    kategoriVideo === "" ?
+                        <div
+                            className="d-flex align-items-center rounded-pill bg-primary-dashboard py-1 px-9 m-2"
+                            style={{ cursor: "pointer" }}
+                            onClick={() => handleFilterKategori("")}
+                        >
+                            <div className="my-1 mx-5 py-1 px-9 text-white">
+                                SEMUA
+                            </div>
+                        </div>
+                        :
+                        <div
+                            className="d-flex align-items-center rounded-pill bg-white py-1 px-9 border border-muted m-2"
+                            style={{ cursor: "pointer" }}
+                            onClick={() => handleFilterKategori("")}
+                        >
+                            <div className="my-1 mx-5 py-1 px-9 text-muted">
+                                SEMUA
+                            </div>
+                        </div>
+                }
+                {
                     kategori.kategori && kategori.kategori.length === 0 ? null :
                         kategori.kategori.map((row, i) => {
                             return (
-                                row.jenis_kategori === "Video" ?
-                                    <div className="btn btn-primary mr-3" style={{}}>
-                                        {(row.nama_kategori).toUpperCase()}
-                                    </div>
-                                    : null
+                                // row.jenis_kategori === "Video" ?
+                                //     <div className="d-flex align-items-center rounded-pill bg-primary-dashboard py-1 px-9 border border-muted m-2"
+                                //         style={{ cursor: "pointer" }}
+                                //         onClick={() => handleFilterKategori(row.nama_kategori)}
+                                //         key={i}
+                                //     >
+                                //         <div className="my-1 mx-5 py-1 px-9 text-white">
+                                //             {(row.nama_kategori).toUpperCase()}
+                                //         </div>
+                                //     </div>
+                                //     : null
+                                    kategoriVideo === row.nama_kategori ?
+                                        <div 
+                                            className="d-flex align-items-center rounded-pill bg-primary-dashboard py-1 px-9 border border-muted m-2" 
+                                            style={{ cursor: "pointer" }}
+                                            onClick={() => handleFilterKategori(row.nama_kategori)}
+                                            key={i}
+                                        >
+                                            <div className="my-1 mx-5 py-1 px-9 text-white">
+                                                {row.nama_kategori}
+                                            </div>
+                                        </div>
+                                    :
+                                        <div 
+                                            className="d-flex align-items-center rounded-pill bg-white py-1 px-9 border border-muted m-2" 
+                                            style={{ cursor: "pointer" }}
+                                            onClick={() => handleFilterKategori(row.nama_kategori)}
+                                            key={i}
+                                        >
+                                            <div className="my-1 mx-5 py-1 px-9 text-muted">
+                                                {row.nama_kategori}
+                                            </div>
+                                        </div>
                             )
                         })
                 }
