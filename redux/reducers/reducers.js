@@ -72,7 +72,8 @@ import {
   allVideoContentReducer,
   allTagReducer,
   playVideoContentReducer,
-} from "./beranda/video-content.reducer";
+  kategoriVideoContentReducer
+} from "./beranda/video-content.reducer"
 
 import { allDashboardPublikasiReducer } from "./publikasi/dashboard-publikasi.reducers";
 
@@ -508,7 +509,7 @@ const reducer = combineReducers({
 
   allDashboardPublikasi: allDashboardPublikasiReducer,
 
-  // allVideoContent: allVideoContentReducer,
+  allKategoriContent: kategoriVideoContentReducer,
   allTagContent: allTagReducer,
   playVideo: playVideoContentReducer,
 
