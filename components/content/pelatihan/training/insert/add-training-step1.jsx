@@ -16,12 +16,15 @@ import {
   dropdownTemabyAkademi,
 } from "../../../../../redux/actions/pelatihan/function.actions";
 import LoadingPage from "../../../../LoadingPage";
+import { disablePlusMinusPeriod } from "../../../../../utils/middleware/helper";
+import { CustomNumberInput } from "../../../../formCustomComponent/input";
+import moment from "moment";
 
 const AddTrainingStep1 = ({ propsStep, token }) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
-
+  const today = new Date();
   const drowpdownTemabyAkademi = useSelector(
     (state) => state.drowpdownTemabyAkademi
   );
@@ -99,7 +102,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
   const [description, setDescription] = useState(trainingData.deskripsi);
   //kuota
   const [targetKuotaRegister, setTargetKuotaRegister] = useState(
-    trainingData.kuota_pendaftar
+    trainingData.kuota_pendaftar || 1
   );
   const [targetKuotaUser, setTargetKuotaUser] = useState(
     trainingData.kuota_peserta
@@ -372,6 +375,48 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
       });
     }
   };
+
+  useEffect(() => {
+    const number = document.getElementById("number1");
+    number.onkeydown = (e) => {
+      if (e.code == "Minus") {
+        return false;
+      }
+      if (e.code == "Period") {
+        return false;
+      }
+      if (e.code == "NumpadAdd") {
+        return false;
+      }
+      if (e.code == "NumpadSubtract") {
+        return false;
+      }
+      if (e.code == "Equal") {
+        return false;
+      }
+    };
+  }, [targetKuotaRegister]);
+
+  useEffect(() => {
+    const number = document.getElementById("number2");
+    number.onkeydown = (e) => {
+      if (e.code == "Minus") {
+        return false;
+      }
+      if (e.code == "Period") {
+        return false;
+      }
+      if (e.code == "NumpadAdd") {
+        return false;
+      }
+      if (e.code == "NumpadSubtract") {
+        return false;
+      }
+      if (e.code == "Equal") {
+        return false;
+      }
+    };
+  }, [targetKuotaUser]);
 
   return (
     <div className="card card-custom card-stretch gutter-b">
@@ -696,6 +741,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                   selected={startDateRegistration}
                   onChange={(date) => setStartDateRegistration(date)}
                   showTimeSelect
+                  minDate={today}
                   className="form-control w-100 d-block"
                   dateFormat="d MMMM yyyy - h : mm"
                   placeholderText="Silahkan Pilih Tanggal Dari"
@@ -714,9 +760,19 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                 Tanggal Sampai
               </label>
               <div className="position-relative">
-               <DatePicker
-                  selected={endDateRegistration}
+                <DatePicker
+                  selected={
+                    startDateRegistration > endDateRegistration
+                      ? ""
+                      : endDateRegistration
+                  }
+                  value={
+                    startDateRegistration > endDateRegistration
+                      ? ""
+                      : endDateRegistration
+                  }
                   onChange={(date) => setEndDateRegistration(date)}
+                  minDate={startDateRegistration}
                   showTimeSelect
                   className="form-control w-100 d-block"
                   dateFormat="d MMMM yyyy - h : mm"
@@ -741,9 +797,10 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                 Tanggal Mulai
               </label>
               <div className="position-relative">
-              <DatePicker
+                <DatePicker
                   selected={startDateTraining}
                   onChange={(date) => setStartDateTraining(date)}
+                  minDate={today}
                   showTimeSelect
                   className="form-control w-100 d-block"
                   dateFormat="d MMMM yyyy - h : mm"
@@ -763,9 +820,15 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                 Tanggal Sampai
               </label>
               <div className="position-relative">
-              <DatePicker
-                  selected={endDateTraining}
+                <DatePicker
                   onChange={(date) => setEndDateTraining(date)}
+                  minDate={startDateTraining}
+                  selected={
+                    startDateTraining > endDateTraining ? "" : endDateTraining
+                  }
+                  value={
+                    startDateTraining > endDateTraining ? "" : endDateTraining
+                  }
                   showTimeSelect
                   className="form-control w-100 d-block"
                   dateFormat="d MMMM yyyy - h : mm"
@@ -819,17 +882,26 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
               <label className="col-form-label font-weight-bold">
                 Kuota Target Pendaftar
               </label>
+              {/* <CustomNumberInput
+                state={targetKuotaUser}
+                placeholder="Silahkan Masukan Kuota Target Pendaftar"
+                onChange={handleOnChange}
+              /> */}
               <input
                 placeholder="Silahkan Masukan Kuota Target Pendaftar"
                 type="number"
                 value={targetKuotaRegister}
-                onChange={(e) => setTargetKuotaRegister(e.target.value)}
+                onChange={(e) => {
+                  setTargetKuotaRegister(e.target.value);
+                }}
                 className="form-control"
+                min="0"
                 onBlur={() =>
                   simpleValidator.current.showMessageFor(
                     "kuota target pendaftar"
                   )
                 }
+                id="number1"
               />
               {simpleValidator.current.message(
                 "kuota target pendaftar",
@@ -845,12 +917,14 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
               <input
                 placeholder="Silahkan Masukan Kuota Target Peserta"
                 type="number"
+                min="0"
                 value={targetKuotaUser}
                 onChange={(e) => setTargetKuotaUser(e.target.value)}
                 className="form-control"
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("kuota target peserta")
                 }
+                id="number2"
               />
               {simpleValidator.current.message(
                 "kuota target peserta",
@@ -1213,6 +1287,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("kota/kabupaten")
                 }
+                isDisabled={province ? false : true}
               />
               {simpleValidator.current.message(
                 "kota/kabupaten",
