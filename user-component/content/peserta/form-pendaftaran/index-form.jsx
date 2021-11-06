@@ -72,8 +72,6 @@ const IndexForm = ({ token, session }) => {
   }, [error, success]);
   const [breadcrumb, setBreadcrumb] = useState("Form Pendaftaran");
   useEffect(() => {
-    console.log(view, "ini view");
-
     switch (view) {
       case 1:
         return setBreadcrumb("Pendaftaran Pelatihan");

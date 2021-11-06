@@ -81,7 +81,6 @@ const Navigationbar = ({ session }) => {
       const data = await axios.get("http://simonas-dev.majapahit.id/api/job");
       if (data) {
         setSimonas(data);
-        console.log(data, "ini data simonas");
       }
     } catch (error) {
       notify(error);
@@ -98,7 +97,6 @@ const Navigationbar = ({ session }) => {
       );
       if (data) {
         setBeasiswa(data);
-        console.log(data, "ini data Beasiswa");
       }
     } catch (error) {
       notify(error);
