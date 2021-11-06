@@ -418,6 +418,13 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
     };
   }, [targetKuotaUser]);
 
+  useEffect(() => {
+    console.log(typeof targetKuotaRegister, typeof targetKuotaUser);
+    if (targetKuotaUser > targetKuotaRegister) {
+      setTargetKuotaUser(targetKuotaRegister);
+    }
+  }, [targetKuotaRegister, targetKuotaUser]);
+
   return (
     <div className="card card-custom card-stretch gutter-b">
       <div className="card-body py-4">
@@ -892,7 +899,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                 type="number"
                 value={targetKuotaRegister}
                 onChange={(e) => {
-                  setTargetKuotaRegister(e.target.value);
+                  setTargetKuotaRegister(+e.target.value);
                 }}
                 className="form-control"
                 min="0"
@@ -918,8 +925,9 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                 placeholder="Silahkan Masukan Kuota Target Peserta"
                 type="number"
                 min="0"
+                max={targetKuotaRegister}
                 value={targetKuotaUser}
-                onChange={(e) => setTargetKuotaUser(e.target.value)}
+                onChange={(e) => setTargetKuotaUser(+e.target.value)}
                 className="form-control"
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("kuota target peserta")
