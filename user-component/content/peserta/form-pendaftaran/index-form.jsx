@@ -15,8 +15,16 @@ import FormBerhasil from "./form-berhasil";
 
 import { clearErrors } from "../../../../redux/actions/pelatihan/register-training.actions";
 import { PENDAFTARAN_PELATIHAN_RESET } from "../../../../redux/types/pelatihan/register-training.type";
+import Layout from "../../../../user-component/components/template/LayoutCustom.component";
+// const Layout = dynamic(
+//   () =>
+//     import(
+//       "../../../../user-component/components/template/LayoutCustom.component"
+//     )
+//   // import("../../../user-component/components/template/LayoutCustom.component")
+// );
 
-const IndexForm = ({ token }) => {
+const IndexForm = ({ token, session }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -62,7 +70,21 @@ const IndexForm = ({ token }) => {
       dispatch({ type: PENDAFTARAN_PELATIHAN_RESET });
     }
   }, [error, success]);
+  const [breadcrumb, setBreadcrumb] = useState("Form Pendaftaran");
+  useEffect(() => {
+    console.log(view, "ini view");
 
+    switch (view) {
+      case 1:
+        return setBreadcrumb("Pendaftaran Pelatihan");
+      case 2:
+        return setBreadcrumb("Form Komitmen");
+      case 3:
+        return setBreadcrumb("Pendaftaran Berhasil");
+      default:
+        return breadcrumb;
+    }
+  }, [view]);
   const showViewForm = () => {
     switch (view) {
       case 1:
@@ -263,7 +285,13 @@ const IndexForm = ({ token }) => {
 
   return (
     <>
-      <Container fluid>{showViewForm()}</Container>
+      <Layout
+        title="Form Pendaftaran Peserta - Pelatihan"
+        session={session}
+        breadcrumb={breadcrumb}
+      >
+        <Container fluid>{showViewForm()}</Container>
+      </Layout>
     </>
   );
 };

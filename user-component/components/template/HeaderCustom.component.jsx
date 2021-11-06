@@ -7,7 +7,7 @@ import Default from "../../../public/assets/media/logos/default.png";
 import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
 
-const Header = () => {
+const Header = ({ breadcrumb }) => {
   const router = useRouter();
 
   const { error: errorDataPribadi, dataPribadi } = useSelector(
@@ -237,7 +237,7 @@ const Header = () => {
                                   </u>
                                   <span className="mx-3">&gt;</span>
                                   <span className="font-weight-bold">
-                                    Pendaftaran Pelatihan
+                                    {breadcrumb}
                                   </span>
                                 </div>
                               </Fragment>
