@@ -102,7 +102,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
   const [description, setDescription] = useState(trainingData.deskripsi);
   //kuota
   const [targetKuotaRegister, setTargetKuotaRegister] = useState(
-    trainingData.kuota_pendaftar || 1
+    trainingData.kuota_pendaftar
   );
   const [targetKuotaUser, setTargetKuotaUser] = useState(
     trainingData.kuota_peserta
@@ -398,28 +398,6 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
   }, [targetKuotaRegister]);
 
   useEffect(() => {
-    const number = document.getElementById("number2");
-    number.onkeydown = (e) => {
-      if (e.code == "Minus") {
-        return false;
-      }
-      if (e.code == "Period") {
-        return false;
-      }
-      if (e.code == "NumpadAdd") {
-        return false;
-      }
-      if (e.code == "NumpadSubtract") {
-        return false;
-      }
-      if (e.code == "Equal") {
-        return false;
-      }
-    };
-  }, [targetKuotaUser]);
-
-  useEffect(() => {
-    console.log(typeof targetKuotaRegister, typeof targetKuotaUser);
     if (targetKuotaUser > targetKuotaRegister) {
       setTargetKuotaUser(targetKuotaRegister);
     }
@@ -899,10 +877,10 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                 type="number"
                 value={targetKuotaRegister}
                 onChange={(e) => {
-                  setTargetKuotaRegister(+e.target.value);
+                  setTargetKuotaRegister(e.target.value);
                 }}
                 className="form-control"
-                min="0"
+                min="1"
                 onBlur={() =>
                   simpleValidator.current.showMessageFor(
                     "kuota target pendaftar"
@@ -924,7 +902,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
               <input
                 placeholder="Silahkan Masukan Kuota Target Peserta"
                 type="number"
-                min="0"
+                min="2"
                 max={targetKuotaRegister}
                 value={targetKuotaUser}
                 onChange={(e) => setTargetKuotaUser(+e.target.value)}
