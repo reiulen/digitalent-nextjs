@@ -239,3 +239,83 @@
     justify-content: flex-start;
   }
 }
+
+.nav-tabs-customes .nav-item {
+  width: 50%;
+}
+
+
+/* .nav-link.active{
+  border-bottom: 1px solid blue;
+  border-right: 0;
+  border-left: 0;
+  border-top: 0;
+} */
+
+.nav-tabs-customes .nav-link {
+  display: flex;
+  justify-content: center;
+}
+.nav.nav-tabs.nav-tabs-customes .nav-item {
+margin-right: 0px !important;
+}
+
+.nav.nav-tabs-customes .nav-link.active {
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  color: inherit;
+  border-bottom: 4px solid #007CFF;
+}
+.nav.nav-tabs-customes .nav-link {
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+}
+.nav.nav-tabs-customes .nav-link:hover {
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  border-bottom: 4px solid #007CFF;
+  color: inherit;
+}
+.list-pusat-informasi li{
+  line-height: 30px;
+}
+.list-pusat-informasi{
+font-size: 16px;
+font-weight: 500;
+color: #212121;
+}
+
+.pusat-informasi .title-1{
+  font-size: 40px;
+}
+.pusat-informasi .title-2{
+  font-size: 18px;
+}
+.pusat-informasi .title-3{
+  font-size: 20px;
+}
+
+@media(max-width:681px){
+  .pusat-informasi .title-1 {
+    font-size: 30px;
+  }
+
+  .pusat-informasi .title-2 {
+    font-size: 13px;
+  }
+
+  .pusat-informasi .title-3 {
+    font-size: 15px;
+  }
+  .list-pusat-informasi {
+    font-size: 12px;
+  }
+}
+
+
+
+
+

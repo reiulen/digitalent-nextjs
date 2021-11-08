@@ -9,7 +9,6 @@ export default function infoVideos({ video }) {
       style={{ backgroundColor: "white" }}
       className="py-0 py-xl-30 info-video max-container container"
     >
-      {console.log(video)}
       <div className="container-fluid">
         <div className="row">
           <div className="col-12 col-sm-6 m-auto">
