@@ -8,8 +8,6 @@ import { useRouter } from "next/router";
 import { Carousel } from "react-bootstrap";
 import { getAllBerandaBerita } from "../../../redux/actions/beranda/berita.actions"
 import PulseLoaderRender from "../../components/loader/PulseLoader";
-import { Splide, SplideSlide } from "@splidejs/react-splide";
-import "@splidejs/splide/dist/css/splide.min.css";
 
 const Berita = () => {
     const dispatch = useDispatch();
@@ -50,9 +48,7 @@ const Berita = () => {
     
     const [windowDimensions, setWindowDimensions] = useState(
         // getWindowDimensions()
-        {
-            
-        }
+        {}
     );
 
     useEffect(() => {
@@ -191,9 +187,6 @@ const Berita = () => {
     return (
         <div>
             {/* BreadCrumb */}
-            {
-                console.log (windowDimensions)
-            }
             <div className="row mb-5 mt-15 mx-1 py-3 px-8 bg-white rounded-pill d-flex align-items-center border">
                 <span className="text-primary">
                     <Link href="/">
@@ -427,7 +420,7 @@ const Berita = () => {
                                                             className="form-control rounded-pill"
                                                             onChange={(e) => handleCategoryAcademy(e.target.value)}
                                                         >
-                                                            {/* <option defaultValue="" >Semua Akademi</option> */}
+                                                            <option defaultValue="" >Semua Akademi</option>
                                                             {
                                                                 akademi.map ((el, i) => {
                                                                     return (
@@ -464,7 +457,7 @@ const Berita = () => {
                         <div className="input-group">
                             <div className="input-group-prepend">
                                 <div 
-                                    className="input-group-text bg-white border-right-0 pr-1"
+                                    className="input-group-text bg-light border-right-0 pr-1"
                                     style={{borderTopLeftRadius:"150px", borderBottomLeftRadius:"150px"}}
                                 >
                                     <i className="ri-search-line"></i>
@@ -473,7 +466,7 @@ const Berita = () => {
 
                             <input 
                                 type="text" 
-                                className="form-control border-left-0 border p-0" 
+                                className="form-control border-left-0 border p-0 bg-light" 
                                 placeholder="Cari Berita"
                                 onChange={(e) => setKeyword(e.target.value)}
                             />
@@ -561,32 +554,36 @@ const Berita = () => {
                                                 
                                                 </div>
 
-                                                <div className="row mb-3">
+                                                <div className="row mb-3 d-flex align-items-center">
                                                     {/* Insert Date and View Here */}
-                                                    <span>
+                                                    <div className="text-muted col-5">
                                                         {moment(el.tanggal_publish).format("DD MMMM")} | {el.dibaca} dibaca
-                                                    </span>
+                                                    </div>
 
                                                     {/* Insert Tag(s) here */}
-                                                    {
-                                                        el.tag && el.tag.length !== 0 ?
-                                                            el.tag.map ((element, index) => {
-                                                                return (
-                                                                    <span className="row ml-5" key={index}>
+                                                    <div className="col-7 d-flex flex-row flex-wrap">
+                                                        {
+                                                            el.tag && el.tag.length !== 0 ?
+                                                                el.tag.map ((element, index) => {
+                                                                    return (
+                                                                        
                                                                         <div 
-                                                                            className="ml-3 border px-2 py-1"
+                                                                            className="ml-3 border px-2 py-1 my-1"
                                                                             onClick={() => handleFilterTag(element)}
                                                                             style={{cursor:"pointer"}}
+                                                                            key={index}
                                                                         >
                                                                             {element}
                                                                         </div>
-                                                                    </span>
-                                                                )
-                                                            })
-                                                            
-                                                        :
-                                                            null
-                                                    }
+                                                                      
+                                                                    )
+                                                                })
+                                                                
+                                                            :
+                                                                null
+                                                        }
+                                                    </div>
+                                                    
                                                     
                                                 </div>
                                             </div>
@@ -719,7 +716,7 @@ const Berita = () => {
                                     </p>
                                 </div>
 
-                                <div className="row mx-3 mb-3">
+                                <div className="row mx-3 mb-7">
                                     {
                                         akademi && akademi.length !== 0 ?
                                             <select 
@@ -764,7 +761,7 @@ const Berita = () => {
                     {/* End of Filter */}
 
                     {/* Tag */}
-                    <div className="row mt-5 d-flex flex-column mx-10 d-flex justify-content-center order-3">
+                    <div className="row mt-10 d-flex flex-column mx-10 d-flex justify-content-center order-3">
                         <h3 className="font-weight-bolder"> 
                             Temukan lebih banyak berita yang sesuai:
                         </h3>
@@ -810,7 +807,7 @@ const Berita = () => {
                                 itemsCountPerPage={5}
                                 // itemsCountPerPage={berita.perPage}
                                 totalItemsCount={berita.total}
-                                pageRangeDisplayed={3}
+                                pageRangeDisplayed={windowDimensions.width > 300 ? 3 : 1}
                                 onChange={handlePagination}
                                 nextPageText={">"}
                                 prevPageText={"<"}
