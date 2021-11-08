@@ -242,11 +242,30 @@ const StepOne = ({ token }) => {
                     className="form-control"
                     defaultValue={theme_id}
                   >
-                    <option selected disabled value="">
-                      {" "}
-                      -Pilih Tema-
-                    </option>
-
+                    {/* {data.data &&
+                      data.data.length <= 1 &&
+                      ((
+                        <option selected disabled value="">
+                          {" "}
+                          -Pilih Tema-
+                        </option>
+                      ),
+                      data.data.map((item, index) => {
+                        return (
+                          <>
+                            <option value={item.value} key={index}>
+                              {item.label}
+                            </option>
+                          </>
+                        );
+                      }))} */}
+                    {data.data && data.data.length <= 1 && (
+                      <option selected value="">
+                        {" "}
+                        -Pilih Tema-
+                      </option>
+                    )}
+                    )
                     {data.data &&
                       data.data.map((item, index) => {
                         return (
@@ -300,7 +319,7 @@ const StepOne = ({ token }) => {
                       dataPelatihan2.map((item, index) => {
                         return (
                           <>
-                            <option value={item.value} key={index}>
+                            <option value={item.value} key={index} selected>
                               {item.label}
                             </option>
                           </>
