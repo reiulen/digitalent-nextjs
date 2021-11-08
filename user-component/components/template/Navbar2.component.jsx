@@ -65,6 +65,7 @@ const Navigationbar = ({ session }) => {
     setAkademi(data.data);
     return data.data;
   };
+
   useEffect(() => {
     getAkademi();
     getSimonas();

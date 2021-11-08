@@ -38,7 +38,7 @@ export default function CardTemplateOriginal({ data }) {
     if (data.status.includes("menunggu")) {
       return setLabel("warning");
     }
-    if (data.status.includes("tidak") || data.status.includes("tolak")) {
+    if (data.status.includes("tidak" || "ditolak")) {
       return setLabel("danger");
     }
     if (data.status.includes("lulus") || data.status.includes("diterima")) {
