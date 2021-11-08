@@ -26,7 +26,7 @@ const FaqPage = () => {
 
     return (
         <>
-            <div className="row my-5 mx-1 py-3 px-8 bg-white rounded-pill d-flex align-items-center border">
+            <div className="row mx-1 py-3 px-8 bg-white rounded-pill d-flex align-items-center border" style={{marginTop:'50px', marginBottom:'55px'}}>
                 <span className="text-primary">
                     <Link href="/">
                         Beranda
@@ -36,25 +36,24 @@ const FaqPage = () => {
                     <i className="ri-arrow-right-s-line text-primary"></i>
                 </span>
                 <span>
-                    {/* Insert BreadCrumb Here */}
-                    FAQ
+                    Frequently Asked Questions
                 </span>
             </div>
             <div>
                 <h1 style={{ fontWeight: '800', marginTop: '40px' }}>Frequently Asked Questions</h1>
-                <p className="my-5">Ada yang bisa Kami Bantu ?</p>
+                <p className="my-5 text-muted">Ada yang bisa Kami Bantu ?</p>
             </div>
             <div className="row">
                 <div className="col-lg-4">
                     <div className="position-relative overflow-hidden my-5">
-                        <i className="ri-search-line left-center-absolute ml-2"></i>
+                        <i className="ri-search-line left-center-absolute ml-3"></i>
                         <input
                             type="text"
                             className="form-control pl-10"
                             placeholder="Cari Penyelenggara..."
                             // value={search}
                             // onChange={(e) => setSearch(e.target.value)}
-                            style={{ borderRadius: '30px' }}
+                            style={{ borderRadius: '30px',backgroundColor:'#fafafb' }}
                             onChange={(e) => setKeyword(e.target.value)}
                         />
                         <button
@@ -76,6 +75,7 @@ const FaqPage = () => {
                     {
                         faq ?
                             faq?.faq.map((row, i) => {
+                                // console.log("Kategori : ", row)
                                 return (
                                     <div style={{ marginLeft: '-35px' }}>
                                         <div
@@ -108,14 +108,14 @@ const FaqPage = () => {
                 <div className="col-lg-8">
                     <div className="ml-3">
                         <h2 style={{ fontWeight: '800', marginTop: '20px', color: '#203e80' }}>{title}</h2>
-                        <div style={{ marginTop: '60px' }}>
+                        <div style={{ marginTop: '60px', marginBottom:'40px' }}>
                             {
                                 faq ?
                                 faq?.faq.map((row, i) => {
                                     if (row.id === deskripsi) {
                                         return (
                                             <div className="accordion" id="selector">
-                                                <div className="accordion-item" style={{ marginTop: '30px', borderRadius: '7.5px', border: '1px solid black' }}>
+                                                <div className="accordion-item" style={{ marginTop: '30px', borderRadius: '6px', border: '1px solid black' }}>
                                                     <div className="accordion-header d-flex justify-content-between align-items-center pt-1" style={{ marginLeft: '30px' }}>
                                                         <h6 style={{ fontWeight: '700' }}>{row.judul}</h6>
                                                         <button className="accordion-button btn" onClick={() => setDisableBtnPlus(!disableBtnPlus)} type="button" data-toggle="collapse" data-target={i === 0 ? "#collapseExample" : `#collapseExample${i}`} key={i} data-parent="#selector" aria-expanded="false" aria-controls="collapseExample">
