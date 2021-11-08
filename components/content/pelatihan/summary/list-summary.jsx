@@ -8,6 +8,8 @@ import Swal from "sweetalert2";
 import { Modal } from "react-bootstrap";
 import Select from "react-select";
 import moment from "moment";
+import DatePicker from "react-datepicker";
+import axios from 'axios'
 
 import {
   clearErrors,
@@ -49,8 +51,11 @@ const ListSummary = ({ token }) => {
   const [theme, setTheme] = useState(null);
   const [statusSubstansi, setStatusSubstansi] = useState(null);
   const [statusPelatihan, setStatusPelatihan] = useState(null);
-  const [dateRegister, setDateRegister] = useState(null);
-  const [dateStart, setDateStart] = useState(null);
+  const [dateRegister, setDateRegister] = useState([null, null]);
+  const [dateRegisterStart, dateRegisterEnd] = dateRegister;
+
+  const [datePelaksanaan, setDatePelaksanaan] = useState([null, null]);
+  const [datePelaksanaanStart, datePelaksanaanEnd] = datePelaksanaan;
 
   const [showModal, setShowModal] = useState(false);
 
@@ -86,13 +91,19 @@ const ListSummary = ({ token }) => {
 
   const handlePagination = (pageNumber) => {
     setPage(pageNumber);
+    let register = dateRegister.map((item) => {
+      return moment(item).format("YYYY-MM-DD");
+    });
+    let pelaksanaan = datePelaksanaan.map((item) => {
+      return moment(item).format("YYYY-MM-DD");
+    });
     dispatch(
       getAllSummary(
         pageNumber,
         search,
         limit,
-        dateRegister,
-        dateStart,
+        register[0] === "Invalid date" ? "" : register.join(","),
+        pelaksanaan[0] === "Invalid date" ? "" : pelaksanaan.join(","),
         statusSubstansi != null ? statusSubstansi.value : null,
         statusPelatihan != null ? statusPelatihan.value : null,
         penyelenggara != null ? penyelenggara.value : null,
@@ -125,18 +136,24 @@ const ListSummary = ({ token }) => {
   const handleFilter = () => {
     setShowModal(false);
     setPage(1);
+    let register = dateRegister.map((item) => {
+      return moment(item).format("YYYY-MM-DD");
+    });
+    let pelaksanaan = datePelaksanaan.map((item) => {
+      return moment(item).format("YYYY-MM-DD");
+    });
     dispatch(
       getAllSummary(
         1,
         search,
         limit,
-        dateRegister,
-        dateStart,
-        statusSubstansi != null ? statusSubstansi.value : null,
-        statusPelatihan != null ? statusPelatihan.value : null,
-        penyelenggara != null ? penyelenggara.value : null,
-        academy,
-        theme,
+        register[0] === "Invalid date" ? "" : register.join(","),
+        pelaksanaan[0] === "Invalid date" ? "" : pelaksanaan.join(","),
+        statusSubstansi != null ? statusSubstansi.label : null,
+        statusPelatihan != null ? statusPelatihan.label : null,
+        penyelenggara != null ? penyelenggara.label : null,
+        academy !== null ?  academy.label : null,
+        theme !== null ? theme.label : null,
         token
       )
     );
@@ -148,8 +165,8 @@ const ListSummary = ({ token }) => {
     setTheme(null);
     setStatusSubstansi(null);
     setStatusPelatihan(null);
-    setDateRegister(null);
-    setDateStart(null);
+    setDateRegister([null, null]);
+    setDatePelaksanaan([null, null]);
     setShowModal(false);
     setPage(1);
     dispatch(
@@ -193,15 +210,33 @@ const ListSummary = ({ token }) => {
     router.replace("/subvit/substansi", undefined, { shallow: true });
   };
 
-  const handleExportReport = async () => {
-    let link = `http://dts-subvit-dev.majapahit.id/api/subtance-question-banks/report/export/${id}`;
-    if (search) link = link.concat(`&keyword=${search}`);
-    if (status) link = link.concat(`&status=${status}`);
-    if (nilai) link = link.concat(`&nilai=${nilai}`);
-    if (pelatihan) link = link.concat(`&pelatihan=${pelatihan}`);
+  const handleExportReport = (e) => {
+    e.preventDefault()
+    let register = dateRegister.map((item) => {
+      return moment(item).format("YYYY-MM-DD");
+    });
+    let pelaksanaan = datePelaksanaan.map((item) => {
+      return moment(item).format("YYYY-MM-DD");
+    });
+    let link = process.env.END_POINT_API_PELATIHAN + "/api/v1/pelatihan/export-rekap-pendaftaran";
 
-    await axios.get(link).then((res) => {
-      window.location.href = res.data.data;
+    let config = {
+      params: {
+        cari:search,
+        pendaftaran_mulai: register[0] === "Invalid date" ? "" : register.join(","),
+        pelatihan_mulai: pelaksanaan[0] === "Invalid date" ? "" : pelaksanaan.join(","),
+        status_pelatihan: statusPelatihan != null ? statusPelatihan.label : "",
+        penyelenggara: penyelenggara != null ? penyelenggara.label : "",
+        akademi: academy !== null ?  academy.label : "",
+        tema: theme !== null ? theme.label : "",
+      },
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    }
+
+     axios.get(link, config).then((res) => {
+      window.open(res.data.data, '_blank');
     });
   };
 
@@ -297,7 +332,7 @@ const ListSummary = ({ token }) => {
                   </div>
                 </div>
 
-                <div className="col-lg-4 col-xl-4 justify-content-end d-flex">
+                <div className="col-lg-4 col-xl-4 justify-content-end d-flex mt-3">
                   <button
                     className="btn border d-flex align-items-center justify-content-between mb-2 w-100"
                     style={{
@@ -313,10 +348,9 @@ const ListSummary = ({ token }) => {
                     <i className="ri-arrow-down-s-line"></i>
                   </button>
                 </div>
-
                 <div className="col-md-2">
                   <button
-                    className="btn w-100 btn-rounded-full bg-blue-secondary text-white"
+                    className="d-flex justify-content-center btn w-100 btn-rounded-full bg-blue-secondary text-white"
                     type="button"
                     onClick={handleExportReport}
                   >
@@ -331,7 +365,13 @@ const ListSummary = ({ token }) => {
               <div className="table-responsive">
                 <LoadingTable loading={loading} />
                 {loading === false && (
-                  <table className="table table-separate table-head-custom table-checkable">
+                  <table
+                    className="table table-separate table-head-custom table-checkable"
+                    style={{
+                      WebkitColumnWidth: "100%",
+                      MozColumnWidth: "100%",
+                    }}
+                  >
                     <thead style={{ background: "#F3F6F9" }}>
                       <tr>
                         <th className="text-center ">No</th>
@@ -357,7 +397,7 @@ const ListSummary = ({ token }) => {
                                 ? i + 1 * (page * 5) - (5 - 1)
                                 : i + 1 * (page * limit) - (limit - 1)}
                             </td>
-                            <td className="align-middle">CC00{row.id}</td>
+                            <td className="align-middle">{row.slug}{row.id}</td>
                             <td className="align-middle">
                               <p className="font-weight-bolder my-0">
                                 {row.name}
@@ -390,8 +430,8 @@ const ListSummary = ({ token }) => {
                                 {row.status_pelatihan}
                               </span>
                             </td>
-                            <td className="align-middle">
-                              <div className="d-flex">
+                            <td className="align-middle ml-4">
+                              <div className="d-flex mr-10">
                                 <Link
                                   href={`/pelatihan/pelatihan/view-pelatihan/${row.id}`}
                                 >
@@ -399,7 +439,7 @@ const ListSummary = ({ token }) => {
                                     className="btn btn-link-action bg-blue-secondary text-white mr-2"
                                     data-toggle="tooltip"
                                     data-placement="bottom"
-                                    title="Edit"
+                                    title="View"
                                   >
                                     <i className="ri-eye-fill text-white p-0"></i>
                                   </a>
@@ -551,24 +591,32 @@ const ListSummary = ({ token }) => {
           <div className="row">
             <div className="form-group mb-5 col-md-6">
               <label className="p-0">Tanggal Pendaftaran</label>
-              <input
-                type="date"
-                name=""
-                id=""
+              <DatePicker
+                wrapperClassName="datepicker"
                 className="form-control"
-                value={dateRegister}
-                onChange={(e) => setDateRegister(e.target.value)}
+                name="start_date"
+                selectsRange={true}
+                onChange={(date) => {
+                  setDateRegister(date);
+                }}
+                startDate={dateRegisterStart}
+                endDate={dateRegisterEnd}
+                dateFormat="dd/MM/yyyy"
+                autoComplete="off"
               />
             </div>
             <div className="form-group mb-5 col-md-6">
               <label className="p-0">Tanggal Pelaksanaan</label>
-              <input
-                type="date"
-                name=""
-                id=""
+              <DatePicker
+                wrapperClassName="datepicker"
                 className="form-control"
-                value={dateStart}
-                onChange={(e) => setDateStart(e.target.value)}
+                name="start_date"
+                selectsRange={true}
+                onChange={(date) => setDatePelaksanaan(date)}
+                startDate={datePelaksanaanStart}
+                endDate={datePelaksanaanEnd}
+                dateFormat="dd/MM/yyyy"
+                autoComplete="off"
               />
             </div>
           </div>
