@@ -34,6 +34,39 @@ const Berita = () => {
     // const [ category_name, setCategoryName ] = useState("")
     const [ category_academy, setCategoryAcademy ] = useState("")
     const [ tag, setTag ] = useState("")
+    const [ showFilter, setShowFilter ] = useState(false)
+
+    const getWindowDimensions = () => {
+        // if (typeof window === 'undefined') {
+        //     global.window = {}
+        // }
+
+        const { innerWidth: width, innerHeight: height } = window;
+        return {
+            width,
+            height,
+        };
+    };
+    
+    const [windowDimensions, setWindowDimensions] = useState(
+        // getWindowDimensions()
+        {
+            
+        }
+    );
+
+    useEffect(() => {
+        function handleResize() {
+            setWindowDimensions(getWindowDimensions());
+        }
+        setWindowDimensions(getWindowDimensions());
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    },[akademi])
+
+    useEffect(()=> {
+
+    },[windowDimensions])
 
     const handleFilterKategori = (str) => {
         // e.preventDefault();
@@ -127,14 +160,14 @@ const Berita = () => {
         // setTag(str)
         dispatch (getAllBerandaBerita(
             activePage, 
-            str, 
+            keyword, 
             limit, 
             filterPublish, 
             sort, 
             category_id, 
             kategoriBerita, 
             category_academy,
-            tag
+            str
         ))
 
     }
@@ -158,7 +191,10 @@ const Berita = () => {
     return (
         <div>
             {/* BreadCrumb */}
-            <div className="row my-5 mx-1 py-3 px-8 bg-white rounded-pill d-flex align-items-center border">
+            {
+                console.log (windowDimensions)
+            }
+            <div className="row mb-5 mt-15 mx-1 py-3 px-8 bg-white rounded-pill d-flex align-items-center border">
                 <span className="text-primary">
                     <Link href="/">
                         Beranda 
@@ -277,6 +313,151 @@ const Berita = () => {
 
                 {/* Left Side */}
                 <div className="col-md-8 col-12">
+
+                    {/* Filter at mobile screen */}
+                    {
+                        
+                        windowDimensions && windowDimensions.width && windowDimensions.width <= 770 ?
+                            <div className="border rounded-lg p-5 order-1 mb-5">
+                                <div className="row mt-5 "> 
+                                    <div className="col-2 my-auto ml-3">
+                                        <Image 
+                                            src={`/assets/media/logo-filter.svg`}
+                                            width={40}
+                                            height={40}
+                                            alt="Logo filter"
+                                        />
+                                    </div>
+                                    <div className="col-7 my-auto">
+                                        <h3 className=" font-weight-bolder">
+                                            Filter
+                                        </h3>
+                                    </div>
+                                    <div className="col-2 my-auto text-right">
+                                        {
+                                            showFilter === false ?
+                                                <div onClick={() => setShowFilter(true)}>
+                                                    <i className="ri-arrow-right-s-line"></i>
+                                                </div>
+                                            :
+                                                <div onClick={() => setShowFilter(false)}>
+                                                    <i className="ri-arrow-down-s-line"></i>
+                                                </div>
+                                        }
+                                        
+                                    </div>
+                                </div>
+
+                                {
+                                    showFilter === true ?
+                                        <>
+                                            <div className="row ml-3 mt-5">
+                                                <p>
+                                                    Urutkan Berdasarkan
+                                                </p>
+                                            </div>
+
+                                            <div className="row mx-3 mb-3 d-flex justify-content-between">
+                                                <div className=" col-6">
+                                                    {
+                                                        filterPublish === "desc" ?
+                                                            <button className="btn btn-primary rounded-pill btn-block" onClick={() => handleFilterPublish("")}>
+                                                                Terbaru
+                                                            </button>
+                                                        :
+                                                            <button className="btn btn-outline-light rounded-pill btn-block" onClick={() => handleFilterPublish("desc")}>
+                                                                Terbaru
+                                                            </button>
+                                                    }
+                                                </div>
+
+                                                <div className="col-6">
+                                                    {
+                                                        filterPublish === "asc" ?
+                                                            <button className="btn btn-primary rounded-pill btn-block" onClick={() => handleFilterPublish("")}>
+                                                                Terlama
+                                                            </button>
+                                                        :
+                                                            <button className="btn btn-outline-light rounded-pill btn-block" onClick={() => handleFilterPublish("asc")}>
+                                                                Terlama
+                                                            </button>
+                                                    }
+                                                </div>
+                                            </div>
+
+                                            <div className="row mx-3 mb-3 d-flex justify-content-between">
+                                                <div className="col-6">
+                                                    {
+                                                        sort === "asc" ?
+                                                            <button className="btn btn-primary rounded-pill btn-block" onClick={() => handleSort("")}>
+                                                                A-Z
+                                                            </button>
+                                                        :
+                                                            <button className="btn btn-outline-light rounded-pill btn-block" onClick={() => handleSort("asc")}>
+                                                                A-Z
+                                                            </button>
+                                                    }
+                                                </div>
+
+                                                <div className="col-6">
+                                                    {
+                                                        sort === "desc" ?
+                                                            <button className="btn btn-primary rounded-pill btn-block" onClick={() => handleSort("")}>
+                                                                Z-A
+                                                            </button>
+                                                        :
+                                                            <button className="btn btn-outline-light rounded-pill btn-block" onClick={() => handleSort("desc")}>
+                                                                Z-A
+                                                            </button>
+                                                    }
+                                                    
+                                                </div>
+                                            </div>
+
+                                            <div className="row ml-3 mt-5">
+                                                <p>
+                                                    Akademix
+                                                </p>
+                                            </div>
+
+                                            <div className="row mx-3 mb-7">
+                                                {
+                                                    akademi && akademi.length !== 0 &&
+                                                        <select 
+                                                            className="form-control rounded-pill"
+                                                            onChange={(e) => handleCategoryAcademy(e.target.value)}
+                                                        >
+                                                            {/* <option defaultValue="" >Semua Akademi</option> */}
+                                                            {
+                                                                akademi.map ((el, i) => {
+                                                                    return (
+                                                                        <option value={el.slug} key={i}>{el.slug}</option>
+                                                                    )
+                                                                })
+                                                            }
+                                                        </select>
+                                                }
+                                                
+                                            </div>
+
+                                            <div className="row mx-3 mb-3">
+                                                <button 
+                                                    className="btn btn-primary-dashboard rounded-pill btn-block"
+                                                    onClick={() => submitFilter()}
+                                                >
+                                                    Tampilkan
+                                                </button>
+                                            </div>
+                                        </>
+                                    :
+                                        null
+                                }
+                                
+
+                            </div>
+                        :
+                            null
+                    }
                     
                     {/* Search Tab */}
                     <form className="mb-3 ml-1">
@@ -450,135 +631,140 @@ const Berita = () => {
                 <div className="col-md-4 col-12">
 
                     {/* Filter */}
-                    <div className="border rounded p-5">
-                        <div className="row mt-5 "> 
-                            <div className="col-2 my-auto ml-3">
-                                <Image 
-                                    src={`/assets/media/logo-filter.svg`}
-                                    width={40}
-                                    height={40}
-                                    alt="Logo filter"
-                                />
-                            </div>
-                            <div className="col-9 my-auto">
-                                <h3 className=" font-weight-bolder">
-                                    Filter
-                                </h3>
-                            </div>
-                        </div>
+                    {
+                        windowDimensions && windowDimensions.width && windowDimensions.width > 770 ?
+                            <div className="border rounded-lg p-5 order-1">
+                                <div className="row mt-5 "> 
+                                    <div className="col-2 my-auto ml-3">
+                                        <Image 
+                                            src={`/assets/media/logo-filter.svg`}
+                                            width={40}
+                                            height={40}
+                                            alt="Logo filter"
+                                        />
+                                    </div>
+                                    <div className="col-9 my-auto">
+                                        <h3 className=" font-weight-bolder">
+                                            Filter
+                                        </h3>
+                                    </div>
+                                </div>
 
-                        <div className="row ml-3 mt-5">
-                            <p>
-                                Urutkan Berdasarkan
-                            </p>
-                        </div>
+                                <div className="row ml-3 mt-5">
+                                    <p>
+                                        Urutkan Berdasarkan
+                                    </p>
+                                </div>
 
-                        <div className="row mx-3 mb-3 d-flex justify-content-between">
-                            <div className="col-md-6 col-12">
-                                {
-                                    filterPublish === "desc" ?
-                                        <button className="btn btn-primary rounded-pill btn-block" onClick={() => handleFilterPublish("")}>
-                                            Terbaru
-                                        </button>
-                                    :
-                                        <button className="btn btn-outline-light rounded-pill btn-block" onClick={() => handleFilterPublish("desc")}>
-                                            Terbaru
-                                        </button>
-                                }
-                            </div>
-
-                            <div className="col-md-6 col-12">
-                                {
-                                    filterPublish === "asc" ?
-                                        <button className="btn btn-primary rounded-pill btn-block" onClick={() => handleFilterPublish("")}>
-                                            Terlama
-                                        </button>
-                                    :
-                                        <button className="btn btn-outline-light rounded-pill btn-block" onClick={() => handleFilterPublish("asc")}>
-                                            Terlama
-                                        </button>
-                                }
-                            </div>
-                        </div>
-
-                        <div className="row mx-3 mb-3 d-flex justify-content-between">
-                            <div className="col-md-6 col-12">
-                                {
-                                    sort === "asc" ?
-                                        <button className="btn btn-primary rounded-pill btn-block" onClick={() => handleSort("")}>
-                                            A-Z
-                                        </button>
-                                    :
-                                        <button className="btn btn-outline-light rounded-pill btn-block" onClick={() => handleSort("asc")}>
-                                            A-Z
-                                        </button>
-                                }
-                            </div>
-
-                            <div className="col-md-6 col-12">
-                                {
-                                    sort === "desc" ?
-                                        <button className="btn btn-primary rounded-pill btn-block" onClick={() => handleSort("")}>
-                                            Z-A
-                                        </button>
-                                    :
-                                        <button className="btn btn-outline-light rounded-pill btn-block" onClick={() => handleSort("desc")}>
-                                            Z-A
-                                        </button>
-                                }
-                                
-                            </div>
-                        </div>
-
-                        <div className="row ml-3 mt-5">
-                            <p>
-                                Akademi
-                            </p>
-                        </div>
-
-                        <div className="row mx-3 mb-3">
-                            {
-                                akademi && akademi.length !== 0 ?
-                                    <select 
-                                        className="form-control rounded-pill"
-                                        onChange={(e) => handleCategoryAcademy(e.target.value)}
-                                    >
-                                        <option value="" selected>Semua Akademi</option>
+                                <div className="row mx-3 mb-3 d-flex justify-content-between">
+                                    <div className="col-md-6 col-12">
                                         {
-                                            akademi.map ((el, i) => {
-                                                return (
-                                                    <option value={el.slug} key={i}>{el.slug}</option>
-                                                )
-                                            })
+                                            filterPublish === "desc" ?
+                                                <button className="btn btn-primary rounded-pill btn-block" onClick={() => handleFilterPublish("")}>
+                                                    Terbaru
+                                                </button>
+                                            :
+                                                <button className="btn btn-outline-light rounded-pill btn-block" onClick={() => handleFilterPublish("desc")}>
+                                                    Terbaru
+                                                </button>
                                         }
-                                    </select>
-                                :
-                                    <select className="form-control rounded-pill">
-                                        <option value="" selected>Semua Akademi</option>
-                                        <option value="">
-                                            <div className="spinner-border text-dark" role="status">
-                                                <span className="sr-only">Memuat...</span>
-                                            </div>
-                                        </option>
-                                    </select>
-                            }
-                            
-                        </div>
+                                    </div>
 
-                        <div className="row mx-3 mb-3">
-                            <button 
-                                className="btn btn-primary-dashboard rounded-pill btn-block"
-                                onClick={() => submitFilter()}
-                            >
-                                Tampilkan
-                            </button>
-                        </div>
+                                    <div className="col-md-6 col-12">
+                                        {
+                                            filterPublish === "asc" ?
+                                                <button className="btn btn-primary rounded-pill btn-block" onClick={() => handleFilterPublish("")}>
+                                                    Terlama
+                                                </button>
+                                            :
+                                                <button className="btn btn-outline-light rounded-pill btn-block" onClick={() => handleFilterPublish("asc")}>
+                                                    Terlama
+                                                </button>
+                                        }
+                                    </div>
+                                </div>
 
-                    </div>
+                                <div className="row mx-3 mb-3 d-flex justify-content-between">
+                                    <div className="col-md-6 col-12">
+                                        {
+                                            sort === "asc" ?
+                                                <button className="btn btn-primary rounded-pill btn-block" onClick={() => handleSort("")}>
+                                                    A-Z
+                                                </button>
+                                            :
+                                                <button className="btn btn-outline-light rounded-pill btn-block" onClick={() => handleSort("asc")}>
+                                                    A-Z
+                                                </button>
+                                        }
+                                    </div>
+
+                                    <div className="col-md-6 col-12">
+                                        {
+                                            sort === "desc" ?
+                                                <button className="btn btn-primary rounded-pill btn-block" onClick={() => handleSort("")}>
+                                                    Z-A
+                                                </button>
+                                            :
+                                                <button className="btn btn-outline-light rounded-pill btn-block" onClick={() => handleSort("desc")}>
+                                                    Z-A
+                                                </button>
+                                        }
+                                        
+                                    </div>
+                                </div>
+
+                                <div className="row ml-3 mt-5">
+                                    <p>
+                                        Akademi
+                                    </p>
+                                </div>
+
+                                <div className="row mx-3 mb-3">
+                                    {
+                                        akademi && akademi.length !== 0 ?
+                                            <select 
+                                                className="form-control rounded-pill"
+                                                onChange={(e) => handleCategoryAcademy(e.target.value)}
+                                            >
+                                                <option value="" selected>Semua Akademi</option>
+                                                {
+                                                    akademi.map ((el, i) => {
+                                                        return (
+                                                            <option value={el.slug} key={i}>{el.slug}</option>
+                                                        )
+                                                    })
+                                                }
+                                            </select>
+                                        :
+                                            <select className="form-control rounded-pill">
+                                                <option value="" selected>Semua Akademi</option>
+                                                <option value="">
+                                                    <div className="spinner-border text-dark" role="status">
+                                                        <span className="sr-only">Memuat...</span>
+                                                    </div>
+                                                </option>
+                                            </select>
+                                    }
+                                    
+                                </div>
+
+                                <div className="row mx-3 mb-3">
+                                    <button 
+                                        className="btn btn-primary-dashboard rounded-pill btn-block"
+                                        onClick={() => submitFilter()}
+                                    >
+                                        Tampilkan
+                                    </button>
+                                </div>
+
+                            </div>
+                        :
+                            null
+                    }
                     {/* End of Filter */}
 
                     {/* Tag */}
-                    <div className="row mt-5 d-flex flex-column mx-10 d-flex justify-content-center">
+                    <div className="row mt-5 d-flex flex-column mx-10 d-flex justify-content-center order-3">
                         <h3 className="font-weight-bolder"> 
                             Temukan lebih banyak berita yang sesuai:
                         </h3>
