@@ -21,13 +21,11 @@ const TambahApi = ({ token }) => {
  
 
   const detailUnitWork = useSelector((state) => state.detailUnitWork);
- console.log("detailUnitWork",detailUnitWork)
   let sortirOptionTempProv = detailUnitWork?.unitWork?.provinsi
   let optionTempProv = sortirOptionTempProv.map((items)=>{
     return {...items,label:items.provinsi,region:items.provinsi}
   })
 
-  console.log("optionTempProv",optionTempProv)
 
   
 
@@ -116,23 +114,6 @@ let sortirOptionTempProvList = allProvincesSite?.data
     }
   };
 
- 
-
-  // useEffect(() => {
-  //   let optionProvinsi = tempOptionsProvinsi.map((items) => {
-  //     return { ...items, label: items.value };
-  //   });
-  //   setProvinsi(optionProvinsi);
-
-
-    
-  //   let optionProvinsiApiDefault = defaultOptionFromApi.map((items) => {
-  //     return { ...items, label: items.provinsi };
-  //   });
-  //   setDefaultValueProvisniApi(optionProvinsiApiDefault);
-
-
-  // }, [defaultOptionFromApi,tempOptionsProvinsi]);
   return (
     <PageWrapper>
       <form>

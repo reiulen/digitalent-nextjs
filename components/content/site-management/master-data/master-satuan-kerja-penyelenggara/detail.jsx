@@ -1,8 +1,7 @@
 import React from "react";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import PageWrapper from "../../../../wrapper/page.wrapper";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 const Table = ({ token }) => {
 
