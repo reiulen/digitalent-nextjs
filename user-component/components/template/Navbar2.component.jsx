@@ -18,7 +18,6 @@ import {
   Dropdown,
   Col,
   Row,
-  DropdownButton,
 } from "react-bootstrap";
 import IconSearch from "../../../components/assets/icon/Search";
 import IconLogin from "../../../components/assets/icon-dashboard-peserta/Login";
@@ -28,6 +27,8 @@ import Logo from "/public/assets/logo/mainlogo.png";
 import Simonas from "/public/assets/logo/image 10.png";
 import Beasiswa from "/public/assets/logo/Logo besiswa fix  3.png";
 import { getAllAkademi } from "../../../redux/actions/beranda/beranda.actions";
+import axios from "axios";
+import { getDataPribadi } from "../../../redux/actions/pelatihan/function.actions";
 const Sidebar = dynamic(
   () => import("../../../user-component/components/template/Sidebar.component"),
   {
@@ -40,14 +41,69 @@ const Sidebar = dynamic(
 
 const Navigationbar = ({ session }) => {
   const dispatch = useDispatch();
+  const router = useRouter();
   const [isShowDropdown, setIsShowDropdown] = useState(false);
-  // const [akademi, setAkademi] = useState([]);
   const { error: errorDataPribadi, dataPribadi } = useSelector(
     (state) => state.getDataPribadi
   );
-  const { error: errorAkademi, akademi } = useSelector(
-    (state) => state.allAkademi
-  );
+
+  useEffect(() => {
+    dispatch(getDataPribadi(session.token));
+    if (!dataPribadi.status) {
+      router.push("/peserta/wizzard");
+    }
+  }, [dataPribadi.status]);
+  // const { error: errorAkademi, akademi } = useSelector(
+  //   (state) => state.allAkademi
+  // );
+  const [akademi, setAkademi] = useState([]);
+  const getAkademi = async () => {
+    let link =
+      process.env.END_POINT_API_PELATIHAN + `api/v1/akademi/dasboard-akademi`;
+    const { data } = await axios.get(link);
+    setAkademi(data.data);
+    return data.data;
+  };
+  useEffect(() => {
+    getAkademi();
+    getSimonas();
+    getBeasiswa();
+  }, []);
+
+  useEffect(() => {
+    // console.log(simonas, "ini useeffect simonas");
+    // console.log(beasiswa, "ini useeffect beasiswa");
+  }, [simonas, beasiswa]);
+
+  const getSimonas = async () => {
+    const link = "http://simonas-dev.majapahit.id/api/job";
+    try {
+      const data = await axios.get("http://simonas-dev.majapahit.id/api/job");
+      if (data) {
+        setSimonas(data);
+        console.log(data, "ini data simonas");
+      }
+    } catch (error) {
+      notify(error);
+    }
+  };
+  const [beasiswa, setBeasiswa] = useState([]);
+  const [simonas, setSimonas] = useState([]);
+
+  const getBeasiswa = async () => {
+    const link = "https://beasiswa-dev.majapahit.id/api/get-scholarship-data";
+    try {
+      const data = await axios.get(
+        "https://beasiswa-dev.majapahit.id/api/get-scholarship-data"
+      );
+      if (data) {
+        setBeasiswa(data);
+        console.log(data, "ini data Beasiswa");
+      }
+    } catch (error) {
+      notify(error);
+    }
+  };
 
   const handlerLogout = () => {
     Cookies.remove("id_tema");
@@ -164,25 +220,15 @@ const Navigationbar = ({ session }) => {
                     </div>
                   </button>
                   <div className="dropdown-menu ml-3">
-                    <Link href={`/detail/akademi/14`}>
-                      <a className="dropdown-item navdropdown-child">VSGA</a>
-                    </Link>
-
-                    <Link href={`/detail/akademi/13`}>
-                      <a className="dropdown-item navdropdown-child">FGA</a>
-                    </Link>
-
-                    <Link href={`/detail/akademi/16`}>
-                      <a className="dropdown-item navdropdown-child">PRO</a>
-                    </Link>
-
-                    <Link href={`/detail/akademi/6`}>
-                      <a className="dropdown-item navdropdown-child">TA</a>
-                    </Link>
-
-                    <Link href={`/detail/akademi/18`}>
-                      <a className="dropdown-item navdropdown-child">TSA</a>
-                    </Link>
+                    {akademi.map((item, i) => {
+                      return (
+                        <Link key={item.id} href={`/detail/akademi/${item.id}`}>
+                          <a className="dropdown-item navdropdown-child">
+                            {item.slug}
+                          </a>
+                        </Link>
+                      );
+                    })}
                   </div>
                 </div>
                 <div className="btn-group dropright">
@@ -232,24 +278,29 @@ const Navigationbar = ({ session }) => {
                     </div>
                   </button>
                   <div className="dropdown-menu ml-3">
-                    <a className="dropdown-item navdropdown-child" href="#">
-                      Berita
-                    </a>
-                    <a className="dropdown-item navdropdown-child" href="#">
-                      Artikel
-                    </a>
-                    <a className="dropdown-item navdropdown-child" href="#">
-                      Galeri
-                    </a>
-                    <a className="dropdown-item navdropdown-child" href="#">
-                      Video
-                    </a>
+                    <Link href="/berita">
+                      <a className="dropdown-item navdropdown-child" href="#">
+                        Berita
+                      </a>
+                    </Link>
+                    <Link>
+                      <a className="dropdown-item navdropdown-child" href="#">
+                        Artikel
+                      </a>
+                    </Link>
+                    <Link>
+                      <a className="dropdown-item navdropdown-child" href="#">
+                        Galeri
+                      </a>
+                    </Link>
+                    <Link>
+                      <a className="dropdown-item navdropdown-child" href="#">
+                        Video
+                      </a>
+                    </Link>
                   </div>
                 </div>
-                <NavDropdown.Item
-                  href="#action/3.4"
-                  className="navdropdown-child"
-                >
+                <NavDropdown.Item href="/faq" className="navdropdown-child">
                   FAQ
                 </NavDropdown.Item>
                 <NavDropdown.Item
@@ -405,7 +456,7 @@ const Navigationbar = ({ session }) => {
                 Menu
               </Col>
               <Col sm={12} className="mb-8">
-                Beranda
+                <Link href="/">Beranda</Link>
               </Col>
 
               <Col sm={12}>
@@ -427,13 +478,17 @@ const Navigationbar = ({ session }) => {
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
                     {/* gw nge map disini */}
-                    <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                    <Dropdown.Item href="#/action-2">
-                      Another action
-                    </Dropdown.Item>
-                    <Dropdown.Item href="#/action-3">
-                      Something else
-                    </Dropdown.Item>
+                    {akademi &&
+                      akademi.map((item, i) => {
+                        return (
+                          <Dropdown.Item
+                            href={`/detail/akademi/${item.id}`}
+                            key={item.id}
+                          >
+                            {item.slug}
+                          </Dropdown.Item>
+                        );
+                      })}
                   </Dropdown.Menu>
                 </Dropdown>
               </Col>
@@ -488,18 +543,18 @@ const Navigationbar = ({ session }) => {
                     </div>
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
-                    <Dropdown.Item href="#/action-1">Berita</Dropdown.Item>
-                    <Dropdown.Item href="#/action-2">Artikel</Dropdown.Item>
-                    <Dropdown.Item href="#/action-3">Galeri</Dropdown.Item>
-                    <Dropdown.Item href="#/action-3">Video</Dropdown.Item>
+                    <Dropdown.Item href="/berita">Berita</Dropdown.Item>
+                    <Dropdown.Item href="/artikel">Artikel</Dropdown.Item>
+                    <Dropdown.Item href="/galeri">Galeri</Dropdown.Item>
+                    <Dropdown.Item href="/video">Video</Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
               </Col>
               <Col className="mb-8" sm={12}>
-                FAQ
+                <Link href="/faq">FAQ</Link>
               </Col>
               <Col className="mb-8" sm={12}>
-                Kontak
+                <Link href="">Kontak</Link>
               </Col>
             </Row>
             <hr />

@@ -476,7 +476,7 @@ export default function SUBM(props) {
               }}
               required
             >
-              <option disabled selected>
+              <option selected> 
                 {" "}
                 --------------- PILIH PELATIHAN ------------------
               </option>

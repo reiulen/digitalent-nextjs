@@ -307,7 +307,7 @@ const Artikel = () => {
                             artikel && artikel.artikel && artikel.artikel.length !== 0 ?
                                 artikel.artikel.map ((el, i) => {
                                     return (
-                                        <div className="row my-10 ml-1 flex-column-reverse flex-xl-row" key={i}>
+                                        <div className="row my-20 ml-1 flex-column-reverse flex-xl-row" key={i}>
                                             <div className="col col-xl-7 col-12">
                                                 <div className="row d-flex justify-content-between align-items-center">
                                                     <div className="d-flex align-self-center">
@@ -348,7 +348,7 @@ const Artikel = () => {
 
                                                 <div className="row my-5">
                                                     {/* Insert Title Here */}
-                                                    <Link href={`/artikel/detail/1`}>
+                                                    <Link href={`/artikel/detail/${el.id}`}>
                                                         <a>
                                                             <h1 className="text-dark">
                                                                 {handleTitleToTrim(el.judul)}
@@ -398,7 +398,7 @@ const Artikel = () => {
                                                 className="col col-xl-5 col-12 position-relative"
                                             >
                                                 {/* Insert Card Image Here */}
-                                                <Link href={`/artikel/detail/1`}>
+                                                <Link href={`/artikel/detail/${el.id}`}>
                                                     <a>
                                                         <img 
                                                             src={
@@ -408,7 +408,7 @@ const Artikel = () => {
                                                             width="100%"
                                                             height="100%"
                                                             alt="Card Image"
-                                                            className="rounded"
+                                                            className="rounded-lg"
                                                         />
                                                     </a>
                                                 </Link>

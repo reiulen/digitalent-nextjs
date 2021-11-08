@@ -65,7 +65,7 @@ export const getAllBerandaArtikel =
 
 export const getDetailBerandaArtikel = (id) => async dispatch => {
     try {
-        let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/artikel/${id}`
+        let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/home/artikel/${id}`
 
         const { data } = await axios.get(link)
 
