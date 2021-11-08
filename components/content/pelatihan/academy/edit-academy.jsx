@@ -172,11 +172,15 @@ const EditAcademy = ({ token }) => {
         name,
         deskripsi: description,
         logo: logoFile,
-        brosur: browsurFile,
+        brosur:
+          browsurName === "Belum ada file" && browsurFile === ""
+            ? "dihapus"
+            : browsurFile,
         status: status.value,
         id: idInt,
       };
-      dispatch(updateAcademy(data, token));
+      console.log(data);
+      // dispatch(updateAcademy(data, token));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
