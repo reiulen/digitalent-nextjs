@@ -29,6 +29,7 @@ import Beasiswa from "/public/assets/logo/Logo besiswa fix  3.png";
 import { getAllAkademi } from "../../../redux/actions/beranda/beranda.actions";
 import axios from "axios";
 import { getDataPribadi } from "../../../redux/actions/pelatihan/function.actions";
+
 const Sidebar = dynamic(
   () => import("../../../user-component/components/template/Sidebar.component"),
   {
@@ -64,6 +65,7 @@ const Navigationbar = ({ session }) => {
     setAkademi(data.data);
     return data.data;
   };
+
   useEffect(() => {
     getAkademi();
     getSimonas();
@@ -81,7 +83,6 @@ const Navigationbar = ({ session }) => {
       const data = await axios.get("http://simonas-dev.majapahit.id/api/job");
       if (data) {
         setSimonas(data);
-        console.log(data, "ini data simonas");
       }
     } catch (error) {
       notify(error);
@@ -98,7 +99,6 @@ const Navigationbar = ({ session }) => {
       );
       if (data) {
         setBeasiswa(data);
-        console.log(data, "ini data Beasiswa");
       }
     } catch (error) {
       notify(error);
@@ -192,7 +192,7 @@ const Navigationbar = ({ session }) => {
         )}
         <Navbar.Collapse id="basic-navbar-nav" className={`${style.collapsed}`}>
           <Nav className="me-auto dropdown-explore btn-masuk-peserta mr-1 d-lg-block d-none">
-            {/* Menu */}
+            {/* MENU */}
             <div className="row mx-1 my-0">
               <NavDropdown
                 title="Menu"
@@ -283,17 +283,17 @@ const Navigationbar = ({ session }) => {
                         Berita
                       </a>
                     </Link>
-                    <Link>
+                    <Link href="/artikel">
                       <a className="dropdown-item navdropdown-child" href="#">
                         Artikel
                       </a>
                     </Link>
-                    <Link>
+                    <Link href="/galeri">
                       <a className="dropdown-item navdropdown-child" href="#">
                         Galeri
                       </a>
                     </Link>
-                    <Link>
+                    <Link href="video">
                       <a className="dropdown-item navdropdown-child" href="#">
                         Video
                       </a>
@@ -311,6 +311,7 @@ const Navigationbar = ({ session }) => {
                 </NavDropdown.Item>
               </NavDropdown>
             </div>
+            {/* END MENU */}
           </Nav>
           {/* Search Bar */}
           <Form className="w-100 my-2 mx-1 row ">
@@ -554,7 +555,7 @@ const Navigationbar = ({ session }) => {
                 <Link href="/faq">FAQ</Link>
               </Col>
               <Col className="mb-8" sm={12}>
-                <Link href="">Kontak</Link>
+                <Link href="/kontak">Kontak</Link>
               </Col>
             </Row>
             <hr />
