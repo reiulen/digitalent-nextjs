@@ -20,10 +20,35 @@ import {
   BERANDA_PUBLIKASI_REQUEST,
   BERANDA_PUBLIKASI_SUCCESS,
   BERANDA_PUBLIKASI_FAIL,
+  BERANDA_FOOTER_REQUEST,
+  BERANDA_FOOTER_SUCCESS,
+  BERANDA_FOOTER_FAIL,
   CLEAR_ERRORS,
 } from "../../types/beranda/beranda.type";
 
 import axios from "axios";
+
+// GET FOOTER
+export const getBerandaFooter = () => async (dispatch) => {
+  try {
+    dispatch({ type: BERANDA_FOOTER_REQUEST });
+
+    let link =
+      process.env.END_POINT_API_SITE_MANAGEMENT + `api/setting/general/get`;
+
+    const { data } = await axios.get(link);
+
+    dispatch({
+      type: BERANDA_FOOTER_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: BERANDA_FOOTER_FAIL,
+      payload: error.message,
+    });
+  }
+};
 
 export const addNotifTema = (dataNotif, token) => async (dispatch) => {
   try {
