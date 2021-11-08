@@ -225,7 +225,7 @@ export default function SUBM(props) {
             name="judul"
             className="form-control"
             id="formGroupExampleInput"
-            placeholder="Example input"
+            placeholder="Masukkan Judul"
             required
             onChange={(e) => {
               setTitle(e.target.value);
@@ -476,7 +476,7 @@ export default function SUBM(props) {
               }}
               required
             >
-              <option disabled selected>
+              <option selected> 
                 {" "}
                 --------------- PILIH PELATIHAN ------------------
               </option>

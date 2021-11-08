@@ -68,6 +68,13 @@ import {
   updateSettingPublikasiReducer,
 } from "./publikasi/setting.reducers";
 
+import {
+  allVideoContentReducer,
+  allTagReducer,
+  playVideoContentReducer,
+  kategoriVideoContentReducer
+} from "./beranda/video-content.reducer"
+
 import { allDashboardPublikasiReducer } from "./publikasi/dashboard-publikasi.reducers";
 
 // Subvit
@@ -307,7 +314,9 @@ import {
   updateStatusReducer,
   getEditTrainingReducer,
   getEditTraining2Reducer,
-  getEditTraining3Reducer
+  getEditTraining3Reducer,
+  getFormLPJReducer,
+  getFormEvidenceReducer,
 } from "./pelatihan/admin/training.reducers";
 // =================== review pelatihan ==================
 import {
@@ -322,7 +331,10 @@ import {
 } from "./pelatihan/admin/review.reducers";
 // =================== report pelatihan ==================
 
-import {getDataReportTrainingReducer} from './pelatihan/admin/report-training.reducers'
+import {
+  detailReportTrainingReducer,
+  getDataReportTrainingReducer,
+} from "./pelatihan/admin/report-training.reducers";
 // =================== rekap pelatihan ==================
 import {
   getFormBuilderReducer,
@@ -392,9 +404,12 @@ import { reducerFunctionals } from "./utils/functionals.reducer";
 // ========== beranda ========
 import {
   allAkademiReducer,
+  allKotaPesertaReducer,
+  allPenyelenggaraPesertaReducer,
   temaByAkademiReducer,
   pelatihanByTemaReducer,
   allPublikasiBerandaReducer,
+  addNotifTemaReducer,
 } from "../reducers/beranda/beranda.reducers";
 
 // ========== detail akademi ========
@@ -408,11 +423,31 @@ import {
   detailPelatihanReducer,
   checkRegisteredPelatihanReducer,
 } from "../reducers/beranda/detail-pelatihan.reducers";
+
+// ========== artikel ========
+import {
+  allBerandaArtikelReducer,
+  detailBerandaArtikelReducer,
+  kategoriBerandaArtikelReducer,
+  allTagBerandaArtikelReducer,
+} from "../reducers/beranda/artikel.reducers";
+
+// ========== galeri ========
+import {
+  allBerandaGaleriReducer,
+  detailBerandaGaleriReducer,
+  kategoriBerandaGaleriReducer,
+} from "../reducers/beranda/galeri.reducer";
 //END BERANDA
+
 import {
   getAllRiwayatPelatihanPesertaReducer,
   getDetailRiwayatPelatihanReducer,
 } from "../reducers/pelatihan/peserta/riwayat-pelatihan.reducer";
+import {
+  allBeasiswaReducer,
+  allSimonasReducer,
+} from "./beranda/simonasAndBeasiswa";
 
 const reducer = combineReducers({
   // PUBLIKASI
@@ -473,6 +508,10 @@ const reducer = combineReducers({
   updateSettingPublikasi: updateSettingPublikasiReducer,
 
   allDashboardPublikasi: allDashboardPublikasiReducer,
+
+  allKategoriContent: kategoriVideoContentReducer,
+  allTagContent: allTagReducer,
+  playVideo: playVideoContentReducer,
 
   // Subvit
   // =============== substansi ==================
@@ -669,7 +708,8 @@ const reducer = combineReducers({
   getEditTraining: getEditTrainingReducer,
   getEditTraining2: getEditTraining2Reducer,
   getEditTraining3: getEditTraining3Reducer,
-
+  getFormLPJ: getFormLPJReducer,
+  getFormEvidence: getFormEvidenceReducer,
   // ========== review pelatihan ========
   allListReview: allListReviewReducer,
   cardReview: cardReviewReducer,
@@ -696,6 +736,7 @@ const reducer = combineReducers({
 
   // =============== rpoert oelatihan ========
   getDataReportTraining: getDataReportTrainingReducer,
+  detailReportTraining: detailReportTrainingReducer,
 
   // ========== pendaftaran pelatihan ========
   getFormBuilder: getFormBuilderReducer,
@@ -743,7 +784,10 @@ const reducer = combineReducers({
 
   //BERANDA
   // ========== beranda ========
+  addNotifTema: addNotifTemaReducer,
   allAkademi: allAkademiReducer,
+  allPenyelenggaraPeserta: allPenyelenggaraPesertaReducer,
+  allKotaPeserta: allKotaPesertaReducer,
   temaByAkademi: temaByAkademiReducer,
   pelatihanByTema: pelatihanByTemaReducer,
   allPublikasiBeranda: allPublikasiBerandaReducer,
@@ -756,10 +800,23 @@ const reducer = combineReducers({
   detailPelatihan: detailPelatihanReducer,
   checkRegisteredPelatihan: checkRegisteredPelatihanReducer,
 
+  // ========== artikel ========
+  allBerandaArtikel: allBerandaArtikelReducer,
+  detailBerandaArtikel: detailBerandaArtikelReducer,
+  kategoriBerandaArtikel: kategoriBerandaArtikelReducer,
+  allTagBerandaArtikel: allTagBerandaArtikelReducer,
+
+  // ========== galeri ========
+  allBerandaGaleri: allBerandaGaleriReducer,
+  detailBerandaGaleri: detailBerandaGaleriReducer,
+  kategoriBerandaGaleri: kategoriBerandaGaleriReducer,
   //END BERANDA
+
   // ========== Riwayat Pelatihan ========
   getAllRiwayatPelatihanPeserta: getAllRiwayatPelatihanPesertaReducer,
   getDetailRiwayatPelatihanPeserta: getDetailRiwayatPelatihanReducer,
+  allBeasiswa: allBeasiswaReducer,
+  allSimonas: allSimonasReducer,
 });
 
 export default reducer;

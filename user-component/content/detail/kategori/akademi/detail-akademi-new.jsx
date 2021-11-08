@@ -6,7 +6,8 @@ import { useRouter } from "next/router";
 import Pagination from "react-js-pagination";
 import moment from "moment";
 import DatePicker from "react-datepicker";
-import { TagsInput } from "react-tag-input-component";
+import Select from "react-select";
+
 import {
   Container,
   Card,
@@ -37,13 +38,18 @@ import { getAllPelatihanByAkademi } from "../../../../../redux/actions/beranda/d
 
 const DetailAkademi = ({ session }) => {
   const { akademi } = useSelector((state) => state.detailAkademi);
+
   const { pelatihan, loading: loadingPelatihan } = useSelector(
     (state) => state.allPelatihan
   );
+  const { loading: loadingPenyeleggara, penyelenggara: allPenyelenggara } =
+    useSelector((state) => state.allPenyelenggaraPeserta);
 
   const textToTrim = 200;
   const dispatch = useDispatch();
   const router = useRouter();
+
+  const { id, tema_id } = router.query;
 
   const [show, setShow] = useState([]);
   const [showDetail, setShowDetail] = useState([]);
@@ -57,9 +63,34 @@ const DetailAkademi = ({ session }) => {
 
   const [filterPenyelenggara, setFilterPenyelenggara] = useState(null);
   const [filterKategori, setFilterKategori] = useState(null);
-  const [filterKataKunci, setFilterKataKunci] = useState(null);
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+
+  let selectRefKategoriPeserta = null;
+  const optionsKategoriPeserta = [
+    { value: "umum", label: "Umum" },
+    { value: "disabilitas", label: "Disabilitas" },
+  ];
+
+  let selectRefPenyelenggara = null;
+  const optionsPenyelenggara = [];
+  if (allPenyelenggara.data) {
+    for (let index = 0; index < allPenyelenggara.data.length; index++) {
+      let val = {
+        value: allPenyelenggara.data[index].id,
+        label: allPenyelenggara.data[index].label,
+      };
+      optionsPenyelenggara.push(val);
+    }
+  }
+
+  const customStylesSide = {
+    control: (styles) => ({
+      ...styles,
+      borderRadius: "30px",
+      paddingLeft: "10px",
+    }),
+  };
 
   useEffect(() => {
     handleHoverCard();
@@ -74,7 +105,6 @@ const DetailAkademi = ({ session }) => {
         str = akademi.deskripsi.slice(0, textToTrim) + "...";
       }
 
-      // setAkademiName(akademi.name)
       setAkademiDesc(str);
       setAkademiId(akademi.id);
       setOldAkademiDesc(akademi.deskripsi);
@@ -83,7 +113,6 @@ const DetailAkademi = ({ session }) => {
 
   const handleShowMoreText = (status) => {
     setSeeMoreStatus(status);
-    // setAkademiDesc(text)
   };
 
   const handleHoverCard = () => {
@@ -186,8 +215,6 @@ const DetailAkademi = ({ session }) => {
 
   const handlePagination = (pageNumber) => {
     setActivePage(pageNumber);
-    let id = akademiId;
-    let tema_id = null;
     let provinsi = null;
     let tipe_pelatihan = null;
     let penyelenggara = null;
@@ -214,22 +241,49 @@ const DetailAkademi = ({ session }) => {
   };
 
   const handleFilter = () => {
-    let dataToSend = {
-      akademi_id: akademiId,
-      tema_id: temaId,
-      penyelenggara: filterPenyelenggara,
-      kategori_peserta: filterKategori,
-      kata_kunci: filterKataKunci,
+    let data = {
+      akademi_id: id,
+      tema_id: tema_id || null,
+      kota: null,
+      penyelenggara:
+        filterPenyelenggara !== null ? filterPenyelenggara.label : null,
+      kategori_peserta: filterKategori !== null ? filterKategori.value : null,
       tanggal_mulai: startDate,
       tanggal_akhir: endDate,
     };
 
-    // dispatch(getAllPelatihanByAkademi(dataToSend))
+    dispatch(
+      getAllPelatihanByAkademi(
+        data.akademi_id,
+        data.tema_id,
+        data.kota,
+        null,
+        data.penyelenggara,
+        data.kategori_peserta,
+        data.tanggal_mulai,
+        data.tanggal_akhir,
+        1
+      )
+    );
+  };
+
+  const handleReset = () => {
+    setFilterPenyelenggara(null);
+    selectRefPenyelenggara.select.clearValue();
+    setFilterKategori(null);
+    selectRefKategoriPeserta.select.clearValue();
+    setStartDate("");
+    setEndDate("");
+    dispatch(
+      getAllPelatihanByAkademi(id, null, null, null, null, null, null, null, 1)
+    );
   };
   return (
     <>
       <Container fluid className="px-10 py-5">
-        <SubHeaderComponent />
+        <SubHeaderComponent
+          data={[{ link: router.asPath, name: akademi.name }]}
+        />
         <section className={`card-akademi`}>
           <Card className="rounded-xl">
             <Card.Body>
@@ -297,8 +351,7 @@ const DetailAkademi = ({ session }) => {
         <section className={`content-detail mt-4`}>
           <Row>
             <Col md={4} className="mb-5">
-              <TrainingReminder />
-
+              <TrainingReminder session={session} />
               <div className="filter-content border p-10">
                 <div className="d-flex align-items-center mb-3 filter-title">
                   <div>
@@ -313,74 +366,64 @@ const DetailAkademi = ({ session }) => {
                 </div>
                 <div className="filter-body mt-7">
                   <Form.Group className="mb-5 w-100 rounded-xl mr-4">
-                    <Form.Label className="fz-16">Penyelenggara</Form.Label>
-                    <Form.Select
-                      aria-label="Default select example"
-                      className="form-control pr-5"
-                      style={{ borderRadius: "30px" }}
-                      placeholder="Pilih Akademi"
-                    >
-                      <option disabled selected>
-                        Semua Penyelanggara
-                      </option>
-                      <option value="1">VSGA</option>
-                      <option value="2">FGA</option>
-                      <option value="3">GTA</option>
-                    </Form.Select>
-                  </Form.Group>
-                  <Form.Group className="mb-5 w-100 rounded-xl mr-4">
-                    <Form.Label className="fz-16">Kategori Peserta</Form.Label>
-                    <Form.Select
-                      aria-label="Default select example"
-                      className="form-control pr-5"
-                      style={{ borderRadius: "30px" }}
-                      placeholder="Pilih Akademi"
-                    >
-                      <option disabled selected>
-                        Peserta Umum
-                      </option>
-                      <option value="1">VSGA</option>
-                      <option value="2">FGA</option>
-                      <option value="3">GTA</option>
-                    </Form.Select>
-                  </Form.Group>
-                  <Form.Group className="mb-5 w-100">
-                    <Form.Label className="fz-16">Kata Kunci</Form.Label>
-                    <TagsInput
-                      className="bg-white mb-5 w-100 rounded-xl"
-                      placeHolder="Isi Tag & Enter"
+                    <Form.Label className="fz-14">Penyelenggara</Form.Label>
+                    <Select
+                      ref={(ref) => (selectRefPenyelenggara = ref)}
+                      options={optionsPenyelenggara}
+                      styles={customStylesSide}
+                      placeholder="Pilih Penyelenggara"
+                      isClearable
+                      onChange={(e) => setFilterPenyelenggara(e)}
                     />
                   </Form.Group>
                   <Form.Group className="mb-5 w-100 rounded-xl mr-4">
-                    <Form.Label className="fz-16">
+                    <Form.Label className="fz-14">Kategori Peserta</Form.Label>
+                    <Select
+                      ref={(ref) => (selectRefKategoriPeserta = ref)}
+                      options={optionsKategoriPeserta}
+                      styles={customStylesSide}
+                      placeholder="Pilih Kategori Peserta"
+                      isClearable
+                      onChange={(e) => setFilterKategori(e)}
+                    />
+                  </Form.Group>
+                  <Form.Group className="mb-5 w-100 rounded-xl mr-4">
+                    <Form.Label className="fz-14">
                       Tanggal Mulai Pelaksanaan
                     </Form.Label>
                     <Form.Control
                       className="form-control pr-5"
                       style={{ borderRadius: "30px" }}
                       type="date"
+                      value={startDate}
+                      onChange={(e) => setStartDate(e.target.value)}
                     />
                   </Form.Group>
                   <Form.Group className="mb-5 w-100 rounded-xl mr-4">
-                    <Form.Label className="fz-16">
+                    <Form.Label className="fz-14">
                       Tanggal Akhir Pelaksanaan
                     </Form.Label>
                     <Form.Control
                       className="form-control pr-5"
                       style={{ borderRadius: "30px" }}
                       type="date"
+                      value={endDate}
+                      onChange={(e) => setEndDate(e.target.value)}
                     />
                   </Form.Group>
                 </div>
                 <div className="mt-7">
                   <div className="row d-flex justify-content-around">
-                    <button className="btn btn-white-ghost-rounded-full text-primary">
+                    <button
+                      className="btn btn-white-ghost-rounded-full text-primary"
+                      onClick={() => handleReset()}
+                    >
                       Reset
                     </button>
 
                     <button
                       className="btn btn-primary rounded-pill px-5 fw-600"
-                      //   onClick={() => handleFilter()}
+                      onClick={() => handleFilter()}
                     >
                       Tampilkan
                     </button>
@@ -389,7 +432,6 @@ const DetailAkademi = ({ session }) => {
               </div>
             </Col>
             <Col md={8} className="mb-5">
-              {console.log(showDetail.filter((e) => e === true).length)}
               <Row>
                 {loadingPelatihan ? (
                   <>
@@ -415,7 +457,7 @@ const DetailAkademi = ({ session }) => {
                               }`}
                               key={i}
                             >
-                              <Card className="h-100 shadow">
+                              <Card className="h-100 shadow-sm">
                                 {el.status !== "Open" ? (
                                   <Button
                                     variant="transparent"
@@ -423,17 +465,11 @@ const DetailAkademi = ({ session }) => {
                                     className={`p-0 mb-0 ${style.btn_disabled_tema}`}
                                   >
                                     <div
-                                      className=""
-                                      style={
-                                        show[i] !== true && el.status === "Open"
-                                          ? {
-                                              filter: "brightness(1)",
-                                            }
-                                          : {
-                                              filter: "brightness(0.8)",
-                                              transition: "0.5s ease",
-                                            }
-                                      }
+                                      style={{
+                                        width: "100%",
+                                        height: "180px",
+                                        position: "relative",
+                                      }}
                                     >
                                       <Image
                                         className={`${style.image_dashboard}`}
@@ -444,8 +480,7 @@ const DetailAkademi = ({ session }) => {
                                               el.gambar) ||
                                           "/assets/media/default-card.png"
                                         }
-                                        width={410}
-                                        height={180}
+                                        layout="fill"
                                         objectFit="cover"
                                         alt="Image Thumbnail"
                                       />
@@ -536,7 +571,7 @@ const DetailAkademi = ({ session }) => {
                                           )}
                                         </div>
                                       </div>
-                                      <div className="d-flex align-items-start flex-wrap flex-column">
+                                      <div className="d-flex flex-wrap flex-column">
                                         <p
                                           className={`my-0 ${style.title_card}`}
                                         >
@@ -547,6 +582,7 @@ const DetailAkademi = ({ session }) => {
                                             fontSize: "14px",
                                             color: "#6C6C6C",
                                           }}
+                                          className=" text-left"
                                         >
                                           {el.akademi}
                                         </p>
@@ -590,9 +626,15 @@ const DetailAkademi = ({ session }) => {
                                         show[i] !== true && el.status === "Open"
                                           ? {
                                               filter: "brightness(1)",
+                                              width: "100%",
+                                              height: "180px",
+                                              position: "relative",
                                             }
                                           : {
                                               filter: "brightness(0.8)",
+                                              width: "100%",
+                                              height: "180px",
+                                              position: "relative",
                                             }
                                       }
                                     >
@@ -605,8 +647,7 @@ const DetailAkademi = ({ session }) => {
                                               el.gambar) ||
                                           "/assets/media/default-card.png"
                                         }
-                                        width={410}
-                                        height={180}
+                                        layout="fill"
                                         objectFit="cover"
                                         alt="Image Thumbnail"
                                       />
@@ -769,9 +810,11 @@ const DetailAkademi = ({ session }) => {
                                     </div>
                                     <Image
                                       src={
-                                        process.env
-                                          .END_POINT_API_IMAGE_BEASISWA +
-                                        el.gambar
+                                        (el.gambar &&
+                                          process.env
+                                            .END_POINT_API_IMAGE_BEASISWA +
+                                            el.gambar) ||
+                                        "/assets/media/default-card.png"
                                       }
                                       alt="image card detail"
                                       layout="fill"
@@ -913,7 +956,11 @@ const DetailAkademi = ({ session }) => {
                         );
                       })
                     ) : (
-                      <h1>Error Pelatihan</h1>
+                      <div className="container-fluid">
+                        <div className="d-flex justify-content-center">
+                          <h1>Pelatihan Tidak Tersedia</h1>
+                        </div>
+                      </div>
                     )}
                   </>
                 )}

@@ -123,7 +123,7 @@ const Tambah = ({ token }) => {
                 </label>
                 <input
                   required
-                  placeholder="Masukkan Kategori Lembaga"
+                  placeholder="Masukkan Kategori Kerjasama"
                   type="text"
                   name="category_cooperation"
                   className="form-control"

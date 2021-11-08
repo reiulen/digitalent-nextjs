@@ -17,6 +17,7 @@ const Tambah = ({ token }) => {
   let selectRefProvinsi = null;
   let selectRefKabupaten = null;
 
+
   const [nameZonation, setNameZonation] = useState("");
   const [status, setStatus] = useState("");
   // state provinsi for set in option provinsi
@@ -30,6 +31,7 @@ const Tambah = ({ token }) => {
     {
       provinsi: [],
       kabupaten: [],
+      value:[]
     },
   ]);
   // value to send api
@@ -48,6 +50,19 @@ const Tambah = ({ token }) => {
   const changeListProvinces = async (e, index) => {
     let _temp = [...formInput];
     let _tempValue = [...valueSend];
+
+    _temp[index].value = []
+
+
+    
+
+    
+        // selectRefKabupaten.select.clearValue();
+
+        
+
+
+
 
     try {
       let { data } = await axios.get(
@@ -71,6 +86,10 @@ const Tambah = ({ token }) => {
   // onchange set value to form input loop
   const changeListKabupaten = (e, index) => {
     let _tempValue = [...valueSend];
+    let _temp = [...formInput]
+    _temp[index]['value'] = e
+    setFormInput(_temp)
+
     _tempValue[index].kota_kabupaten = e.map((items) => {
       return { label: items.label };
     });
@@ -85,6 +104,7 @@ const Tambah = ({ token }) => {
     _temp.push({
       provinsi: [],
       kabupaten: [],
+      value:[]
     });
     _tempValue.push({
       provinsi: "",
@@ -191,14 +211,14 @@ const Tambah = ({ token }) => {
             </h3>
           </div>
           <form>
-            <div className="card-body pt-0">
+            <div className="card-body pt-0 px-4 px-sm-8">
               <div className="form-group">
                 <label>
                   Nama Zonasi
                 </label>
                 <input
                   onChange={(e) => setNameZonation(e.target.value)}
-                  placeholder="Masukan nama zonasi"
+                  placeholder="Masukkan nama zonasi"
                   type="text"
                   className="form-control"
                 />
@@ -247,10 +267,11 @@ const Tambah = ({ token }) => {
                               Kota / Kabupaten
                             </label>
                             <Select
-                              ref={(ref) => (selectRefKabupaten = ref)}
+                              // ref={(ref) => (selectRefKabupaten = ref)}
+                              value={items.value}
                               className="basic-single"
                               classNamePrefix="select"
-                              placeholder="Pilih kabupaten"
+                              placeholder="Pilih kota/kabupaten"
                               isMulti
                               isDisabled={false}
                               isLoading={false}

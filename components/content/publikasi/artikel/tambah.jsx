@@ -78,7 +78,7 @@ const TambahArtikel = ({ token, id }) => {
   const [publishDate, setPublishDate] = useState(null);
   const [disablePublishDate, setDisablePublishDate] = useState(true)
   const [disableTag, setDisableTag] = useState(false)
-  const [akademi_value, setAkademiValue]=useState("");
+  const [kategori_akademi, setKategoriAkademi]=useState("");
 
   const onChangeGambar = (e) => {
     const type = ["image/jpg", "image/png", "image/jpeg"]
@@ -168,7 +168,7 @@ const TambahArtikel = ({ token, id }) => {
           judul_artikel,
           isi_artikel,
           gambar,
-          akademi_value,
+          kategori_akademi,
           kategori_id,
           users_id,
           tag,
@@ -198,6 +198,7 @@ const TambahArtikel = ({ token, id }) => {
           judul_artikel,
           isi_artikel,
           gambar,
+          kategori_akademi,
           kategori_id,
           users_id,
           tag,
@@ -413,10 +414,10 @@ const TambahArtikel = ({ token, id }) => {
                       name=""
                       id=""
                       className="form-control dropdownArt"
-                      value={akademi_value}
-                      onChange={(e) => setAkademiValue(e.target.value)}
+                      value={kategori_akademi}
+                      onChange={(e) => setKategoriAkademi(e.target.value)}
                       onBlur={(e) => {
-                        setAkademiValue(e.target.value);
+                        setKategoriAkademi(e.target.value);
                         simpleValidator.current.showMessageFor("akademi");
                       }}
                     >
@@ -431,7 +432,7 @@ const TambahArtikel = ({ token, id }) => {
                         dataAkademi.data.map((row) => {
                           return (
                             // row.jenis_kategori == "Artikel" ?
-                              <option key={row.value} value={row.value}>
+                              <option key={row.value} value={row.label}>
                                 {row.label}
                               </option>
                               // :
@@ -442,7 +443,7 @@ const TambahArtikel = ({ token, id }) => {
                     </select>
                     {simpleValidator.current.message(
                       "akademi",
-                      akademi_value,
+                      kategori_akademi,
                       "required",
                       { className: "text-danger" }
                     )}

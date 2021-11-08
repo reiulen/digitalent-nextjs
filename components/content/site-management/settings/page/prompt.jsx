@@ -1,41 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from 'axios'
 
 import { putDataPrompt} from '../../../../../redux/actions/site-management/settings/pelatihan.actions'
 
 export default function Prompt(props) {
 
-      const [notification, setNotification] = useState(0);
-      const [email, setEmail] = useState(0);
+  const allPrompt = useSelector(state => state.allPrompt)
+
+      const [notification, setNotification] = useState(allPrompt.notification.training_rules.notification[0].status);
+      const [email, setEmail] = useState(allPrompt.notification.training_rules.email[0].status);
     
       let dispatch = useDispatch()
-    
-      useEffect(() => {
-        axios.get(
-          `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-trainings/list-propt`,
-          {
-            headers: {
-              authorization: `Bearer ${props.token}`,
-            },
-          }
-        ).then(items => {
-          setNotification(items.data.data.training_rules.notification[0].status)
-          setEmail(items.data.data.training_rules.email[0].status)
-        })
-      }, [props.token])
 
       const handleSubmit = (e) => {
         e.preventDefault()
-        dispatch(putDataPrompt(props.token, notification || notification === 1 ? 1 : 0, email || email === 1 ? 1 : 0))
-      };
-
-      const onChange = (e) => {
-        setNotification(e.target.checked)
-      };
-
-      const onChangeEmail = (e) => {
-        setEmail(e.target.checked)
+        dispatch(putDataPrompt(props.token, notification === "1" || notification === true  ? "1" : "0",  email === "1" || email === true  ? "1" : "0"))
       };
     
   return (
@@ -53,12 +33,15 @@ export default function Prompt(props) {
               <input
                 type="checkbox"
                 name="notification"
-                checked={notification}
-                onChange={onChange}
+                value={notification}
+                defaultChecked={notification === "1"}
+                onClick={e => {
+                  setNotification(e.target.checked)
+                }}
               />
               <span className="email-check"></span>
             </label>
-            <span className="isAktif">{notification === 1 || notification === true ? "Aktif" : "Tidak Aktif"}</span>
+            <span className="isAktif">{notification === "1" || notification === true ? "Aktif" : "Tidak Aktif"}</span>
           </span>
         </div>
         <div className="email">
@@ -71,12 +54,15 @@ export default function Prompt(props) {
                 type="checkbox"
                 name="select"
                 id="email-check"
-                checked={email}
-                onChange={onChangeEmail}
+                value={email}
+                defaultChecked={email === "1"}
+                onClick={e => {
+                  setEmail(e.target.checked)
+                }}
               />
               <span></span>
             </label>
-            <span className="isAktif">{email === 1 || email === true ? "Aktif" : "Tidak Aktif"}</span>
+            <span className="isAktif">{email === "1" || email === true ? "Aktif" : "Tidak Aktif"}</span>
           </span>
         </div>
         <div className="button-submit-notif mb-5">

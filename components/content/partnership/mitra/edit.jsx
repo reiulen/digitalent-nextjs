@@ -103,7 +103,7 @@ const EditMitra = ({ token }) => {
           setNamePDF(selectedFile.name);
         };
       } else {
-        notify("gambar harus PNG atau JPG dan max size 2mb");
+        notify("gambar harus PNG dan max size 2mb");
       }
     } else {
       notify("upload gambar dulu");
@@ -114,10 +114,8 @@ const EditMitra = ({ token }) => {
     // e.preventDefault();
     if (!institution_name) {
       setError({ ...error, institution_name: "Harus isi nama lembaga" });
-      notify("Harus isi nama lembaga");
     } else if (!email) {
       setError({ ...error, email: "Harus isi email" });
-      notify("Harus isi email");
     } else if (!website) {
       setError({ ...error, website: "Harus isi nama website" });
     } else if (!address) {
@@ -130,7 +128,6 @@ const EditMitra = ({ token }) => {
       notify("Harus isi pilih provinsi");
     } else if (indonesia_cities_id === "") {
       setError({ ...error, indonesia_cities_id: "Harus isi pilih kota/kab" });
-      notify("Harus isi pilih kota/kab");
     } else if (
       postal_code === "" ||
       postal_code.length < 5 ||
@@ -140,19 +137,15 @@ const EditMitra = ({ token }) => {
         ...error,
         postal_code: "Harus isi kode pos minimal dan maksimal 5 karakter",
       });
-      notify("Harus isi kode pos minimal dan maksimal 5 karakter");
     } else if (pic_name === "") {
       setError({ ...error, pic_name: "Harus isi nama PIC" });
-      notify("Harus isi nama PIC");
     } else if (pic_contact_number === "" || pic_contact_number.length < 9) {
       setError({
         ...error,
         pic_contact_number: "Harus isi No. Kontak PIC dan minimal 9 karakter",
       });
-      notify("Harus isi No. Kontak PIC");
     } else if (pic_email === "") {
       setError({ ...error, pic_email: "Harus isi Email PIC" });
-      notify("Harus isi Email PIC");
     } else {
       Swal.fire({
         title: "Apakah anda yakin ingin simpan ?",

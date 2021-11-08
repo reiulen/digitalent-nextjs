@@ -8,6 +8,7 @@ import LoadingSkeleton from "../../../components/LoadingSkeleton";
 import { middlewareAuthPesertaSession } from "../../../utils/middleware/authMiddleware";
 import { getAllRiwayatPelatihanPeserta } from "../../../redux/actions/pelatihan/riwayat-pelatihan.actions";
 import { getDataPribadi } from "../../../redux/actions/pelatihan/function.actions";
+import { getAllAkademi } from "../../../redux/actions/beranda/beranda.actions";
 
 const RiwayatPelatihan = dynamic(
   () =>
@@ -54,6 +55,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         getAllRiwayatPelatihanPeserta(session.user.user.data.user.token)
       );
       await store.dispatch(getDataPribadi(session.user.user.data.user.token));
+      await store.dispatch(getAllAkademi());
 
       return {
         props: { data: "auth", session, title: "Riwayat Pelatihan - Peserta" },

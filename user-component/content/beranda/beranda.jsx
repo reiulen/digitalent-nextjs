@@ -249,7 +249,6 @@ const Beranda = ({ session }) => {
       if (data.status === true) {
         router.push(`${router.pathname}/peserta/form-pendaftaran?id=${id}`);
       } else if (data.status === false) {
-        // let errMessage = data.message[0].toUpperCase()  + string.substring(1)
         let errMessage = data.message;
         toast.error(errMessage);
       }
@@ -260,11 +259,9 @@ const Beranda = ({ session }) => {
 
   return (
     <div style={{ backgroundColor: "white" }}>
-      {/* <Navigationbar /> */}
-
       {/* Carousel 1 */}
       <div
-        className="max-container position-relative py-10"
+        className=" py-10"
         style={{ backgroundColor: "#FAFAFB", zIndex: "99" }}
       >
         {publikasi && publikasi.imagetron.length !== 0 && (
@@ -276,7 +273,7 @@ const Beranda = ({ session }) => {
       {akademi ? (
         <div
           className="container-fluid max-container position-relative"
-          style={{ marginTop: "-15px" }}
+          style={{ marginTop: "-15px", zIndex: "1" }}
         >
           <div className="carousel-secondarys">
             <Splide
@@ -307,30 +304,33 @@ const Beranda = ({ session }) => {
                     perPage: 1,
                   },
                   590: {
+                    width: "100",
                     height: "120",
                     perPage: 1,
                   },
                   514: {
+                    width: "100",
                     height: "160px",
                     perPage: 1,
                   },
                   450: {
+                    width: "100",
                     height: "150px",
                     perPage: 1,
                   },
                   425: {
+                    width: "100",
                     height: "150px",
                     perPage: 1,
                   },
                   320: {
+                    width: "100",
                     height: "100px",
                     perPage: 1,
                   },
                 },
               }}
               hasSliderWrapper
-              // hasAutoplayControls
-              // hasAutoplayProgress
             >
               {akademi.map((el, i) => {
                 return (
@@ -341,7 +341,7 @@ const Beranda = ({ session }) => {
                         onClick={() => handleActive(i, el.id)}
                         style={{ cursor: "pointer" }}
                       >
-                        <div className="card-1">
+                        <div className="card-1 bg-white">
                           <h1 className="mb-0 mr-2 fw-700">{el.slug}</h1>
                           <div>
                             <p className="mb-0">{el.name}</p>
@@ -372,7 +372,10 @@ const Beranda = ({ session }) => {
         </div>
       ) : null}
 
-      <div className="container-fluid max-container">
+      <div
+        className="container-fluid max-container position-relative"
+        style={{ zIndex: "1" }}
+      >
         {loadingTema ? (
           <>
             <div className="container-fluid">
@@ -397,7 +400,7 @@ const Beranda = ({ session }) => {
                       <div>
                         {el.pelatihan !== null && (
                           <Link
-                            href={`/detail/akademi/${akademiId}?id=${akademiId}&tema_id=${el.id}`}
+                            href={`/detail/akademi/${akademiId}?tema_id=${el.id}`}
                           >
                             <a className="d-flex align-items-center">
                               <>
@@ -447,18 +450,11 @@ const Beranda = ({ session }) => {
                                           >
                                             <div
                                               className=""
-                                              style={
-                                                show[i].pelatihan[index]
-                                                  .hover !== true &&
-                                                element.status === "Open"
-                                                  ? {
-                                                      filter: "brightness(1)",
-                                                    }
-                                                  : {
-                                                      filter: "brightness(0.8)",
-                                                      transition: "0.5s ease",
-                                                    }
-                                              }
+                                              style={{
+                                                width: "100%",
+                                                height: "180px",
+                                                position: "relative",
+                                              }}
                                             >
                                               <Image
                                                 className={`${style.image_dashboard}`}
@@ -469,8 +465,7 @@ const Beranda = ({ session }) => {
                                                       element.gambar) ||
                                                   "/assets/media/default-card.png"
                                                 }
-                                                width={400}
-                                                height={180}
+                                                layout="fill"
                                                 objectFit="cover"
                                                 alt="Image Thumbnail"
                                               />
@@ -622,9 +617,15 @@ const Beranda = ({ session }) => {
                                                 element.status === "Open"
                                                   ? {
                                                       filter: "brightness(1)",
+                                                      width: "100%",
+                                                      height: "180px",
+                                                      position: "relative",
                                                     }
                                                   : {
                                                       filter: "brightness(0.8)",
+                                                      width: "100%",
+                                                      height: "180px",
+                                                      position: "relative",
                                                     }
                                               }
                                             >
@@ -637,8 +638,7 @@ const Beranda = ({ session }) => {
                                                       element.gambar) ||
                                                   "/assets/media/default-card.png"
                                                 }
-                                                width={400}
-                                                height={180}
+                                                layout="fill"
                                                 objectFit="cover"
                                                 alt="Image Thumbnail"
                                               />
@@ -840,9 +840,11 @@ const Beranda = ({ session }) => {
                                   <div style={{ minHeight: "300px" }}>
                                     <Image
                                       src={
-                                        process.env
-                                          .END_POINT_API_IMAGE_BEASISWA +
-                                        cardImage
+                                        (cardImage &&
+                                          process.env
+                                            .END_POINT_API_IMAGE_BEASISWA +
+                                            cardImage) ||
+                                        "/assets/media/default-card.png"
                                       }
                                       alt="image card detail"
                                       layout="fill"
@@ -1038,18 +1040,14 @@ const Beranda = ({ session }) => {
       <GaleryUpdate
         gambar={
           publikasi && publikasi.gallery && publikasi.gallery.length !== 0
-            ? publikasi.gallery.length
+            ? publikasi.gallery
             : null
         }
       />
 
       {/* Informasi Dalam Video Terkini */}
       <InfoVideo
-        video={
-          publikasi && publikasi.video && publikasi.video.length !== 0
-            ? publikasi.video.length
-            : null
-        }
+        video={publikasi && publikasi.video ? publikasi.video : null}
       />
 
       {/* Ayo Bergabung, Jadi Jagoan Digital! */}
