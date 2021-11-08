@@ -138,6 +138,12 @@ const Tambah = ({ token }) => {
     setFormReferenceAndText(_temp);
   };
 
+  const [labelReference, setLabeReferencel] = useState("")
+  const handleInputChange =(e)=>{
+    console.log("e.target.value",e)
+    setLabeReferencel(e)
+  }
+
   useEffect(() => {
     async function getAllDataReference(token) {
       try {
@@ -149,6 +155,7 @@ const Tambah = ({ token }) => {
             },
           }
         );
+        
         let resultOptionReference = data.data.map((items) => {
           return { ...items, label: items.value };
         });
@@ -160,19 +167,20 @@ const Tambah = ({ token }) => {
 
     getAllDataReference(token);
 
-    if (idReference) {
+    if (idReference || (labelReference.length===3)) {
       async function getAllDataFromIdReference(token, id) {
         try {
           let { data } = await axios.get(
-            `${process.env.END_POINT_API_SITE_MANAGEMENT}api/option/reference-choose/${id}`,
+            `${process.env.END_POINT_API_SITE_MANAGEMENT}api/option/reference-choose/${id}?keyword=${labelReference}`,
             {
               headers: {
                 authorization: `Bearer ${token}`,
               },
             }
           );
+          console.log("data",data)
           let resultOptionReferenceChooce = data.data.map((items) => {
-            return { ...items, label: items.value };
+            return { ...items, label: items.label,value: items.label };
           });
           setOptionFromReference(resultOptionReferenceChooce);
         } catch (error) {
@@ -182,7 +190,7 @@ const Tambah = ({ token }) => {
 
       getAllDataFromIdReference(token, idReference);
     }
-  }, [token, idReference]);
+  }, [token, idReference,labelReference]);
 
   return (
     <PageWrapper>
@@ -260,6 +268,7 @@ const Tambah = ({ token }) => {
                           isRtl={false}
                           isSearchable={true}
                           name="color"
+                          onInputChange={handleInputChange}
                           onChange={(e) => handleCHangeNameReference(e, idx)}
                           options={optionFromReference}
                         />
