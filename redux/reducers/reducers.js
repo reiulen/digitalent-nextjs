@@ -72,8 +72,8 @@ import {
   allVideoContentReducer,
   allTagReducer,
   playVideoContentReducer,
-  kategoriVideoContentReducer
-} from "./beranda/video-content.reducer"
+  kategoriVideoContentReducer,
+} from "./beranda/video-content.reducer";
 
 import { allDashboardPublikasiReducer } from "./publikasi/dashboard-publikasi.reducers";
 
@@ -410,6 +410,7 @@ import {
   pelatihanByTemaReducer,
   allPublikasiBerandaReducer,
   addNotifTemaReducer,
+  berandaFooterReducer,
 } from "../reducers/beranda/beranda.reducers";
 
 // ========== detail akademi ========
@@ -438,6 +439,15 @@ import {
   detailBerandaGaleriReducer,
   kategoriBerandaGaleriReducer,
 } from "../reducers/beranda/galeri.reducer";
+
+// ========== berita ========
+import {
+  allBerandaBeritaReducer,
+  detailBerandaBeritaReducer,
+  kategoriBerandaBeritaReducer,
+  allTagBerandaBeritaReducer,
+} from "../reducers/beranda/berita.reducers"
+
 //END BERANDA
 
 import {
@@ -791,6 +801,7 @@ const reducer = combineReducers({
   temaByAkademi: temaByAkademiReducer,
   pelatihanByTema: pelatihanByTemaReducer,
   allPublikasiBeranda: allPublikasiBerandaReducer,
+  berandaFooter: berandaFooterReducer,
 
   // ========== detail akademi ========
   detailAkademi: detailAkademiReducer,
@@ -810,6 +821,12 @@ const reducer = combineReducers({
   allBerandaGaleri: allBerandaGaleriReducer,
   detailBerandaGaleri: detailBerandaGaleriReducer,
   kategoriBerandaGaleri: kategoriBerandaGaleriReducer,
+
+  // ========== berita ========
+  allBerandaBerita: allBerandaBeritaReducer, 
+  detailBerandaBerita: detailBerandaBeritaReducer,
+  kategoriBerandaBerita: kategoriBerandaBeritaReducer,
+  allTagBerandaBerita: allTagBerandaBeritaReducer,
   //END BERANDA
 
   // ========== Riwayat Pelatihan ========
