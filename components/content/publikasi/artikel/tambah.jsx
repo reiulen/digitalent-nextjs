@@ -136,7 +136,9 @@ const TambahArtikel = ({ token, id }) => {
         data.splice([i], 1);
       }
     }
-    setTag(data);
+    if ((data).includes(data) !== true) {
+      setTag(data);
+    }
   }
 
   const onSubmit = (e) => {
@@ -431,12 +433,9 @@ const TambahArtikel = ({ token, id }) => {
                         dataAkademi.data &&
                         dataAkademi.data.map((row) => {
                           return (
-                            // row.jenis_kategori == "Artikel" ?
                               <option key={row.value} value={row.label}>
                                 {row.label}
                               </option>
-                              // :
-                              // null
                           );
                         })
                       )}
