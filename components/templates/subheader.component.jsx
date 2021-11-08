@@ -63,7 +63,10 @@ const SubHeader = () => {
               return (
                 <Link href={breadcrumb.href} key={i}>
                   {/* <Link href="/" key={i}> */}
-                  <a>
+                  <a style={{
+                    cursor: i !== 1 ? "default" : "",
+                    pointerEvents: i !== 1 ? "none" : ""
+                  }}>
                     <p className="text-default mt-2 mb-2">
                       &nbsp;
                       {/* {
