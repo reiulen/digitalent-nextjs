@@ -9,7 +9,7 @@ const CardPage = ({
   value,
   titleValue,
   title,
-  publishedVal,
+  publishedVal = "",
   routePublish,
 }) => {
   return (

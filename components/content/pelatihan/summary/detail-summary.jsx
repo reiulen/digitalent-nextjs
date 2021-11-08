@@ -84,7 +84,19 @@ const DetailSummary = ({ token }) => {
   };
 
   const handleFilter = () => {
-    console.log(statusTesSubstansi.value);
+    setShowModal(false);
+    dispatch(
+      getPendaftaranPeserta(
+        token,
+        id,
+        search,
+        limit,
+        1,
+        statusBerkas === null ? "" : statusBerkas.value,
+        statusPeserta === null ? "" : statusPeserta.value,
+        statusTesSubstansi === null ? "" : statusTesSubstansi.value
+      )
+    );
   };
 
   const handleExportReport = async () => {
@@ -133,8 +145,19 @@ const DetailSummary = ({ token }) => {
             value={statusPendaftar[1].count}
             titleValue=""
             title="Verivied Administrasi"
-            publishedVal="sudah-mengerjakan"
-            routePublish={() => handlePublish("sudah-mengerjakan")}
+            publishedVal="verified"
+            routePublish={(e) => { dispatch(
+              getPendaftaranPeserta(
+                token,
+                id,
+                null,
+                5,
+                1,
+                "verified",
+                statusPeserta === null ? "" : statusPeserta.value,
+                statusTesSubstansi === null ? "" : statusTesSubstansi.value
+              )
+            );}}
           />
           <CardPage
             background="bg-success"
@@ -144,7 +167,18 @@ const DetailSummary = ({ token }) => {
             titleValue=""
             title="Lulus Tes Substansi"
             publishedVal="sedang-mengerjakan"
-            routePublish={() => handlePublish("sedang-mengerjakan")}
+            routePublish={() => dispatch(
+              getPendaftaranPeserta(
+                token,
+                id,
+                null,
+                5,
+                1,
+                null,
+                statusPeserta === null ? "" : statusPeserta.value,
+                "lulus tes"
+              )
+            )}
           />
           <CardPage
             background="bg-warning"
