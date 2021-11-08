@@ -288,12 +288,9 @@ const StepOne = ({ token }) => {
                         })
                     }
                   >
-                    {dataPelatihan2 && dataPelatihan2.length > 0 ? (
-                      <option selected disabled value="">
-                        -Pilih Pelatihan-
-                      </option>
-                    ) : (
-                      <option selected disabled value="">
+                    {subtance.academy_id !== parseInt(academy_id) && (
+                      <option selected value="">
+                        {" "}
                         -Pilih Pelatihan-
                       </option>
                     )}
