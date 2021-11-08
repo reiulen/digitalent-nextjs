@@ -1,139 +1,19 @@
 // #Next & React
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 // #Page, Component & Library
 import PageWrapper from "../../../wrapper/page.wrapper";
+import Select from "react-select";
 
-// #Icon
-import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import {
-  getAllSertifikat,
-  searchKeyword,
-  setValueAcademy,
-  setValueTheme,
-} from "../../../../redux/actions/sertifikat/kelola-sertifikat.action";
-import { RESET_VALUE_FILTER } from "../../../../redux/types/sertifikat/kelola-sertifikat.type";
+import SimpleReactValidator from "simple-react-validator";
 
 import { Card } from "react-bootstrap";
 export default function MasterPelatihan({ token }) {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const { loading, error, certificate, academyOptions, themeOptions } =
-    useSelector((state) => state.allCertificates);
-
-  const allCertificates = useSelector((state) => state.allCertificates);
-  const [academy, setAcademy] = useState("");
-  const [temaPelatihan, setTemaPelatihan] = useState("");
-  const [disable, setDisable] = useState(true);
-  const [dataTemaPelatihan, setDataTemaPelatihan] = useState([]);
-  const [dataAcademy, setDataAcademy] = useState([]);
-  const [search, setSearch] = useState("");
-  const [limit, setLimit] = useState(null);
-
-  let selectRefAkademi = null;
-  let temaRef = null;
-
-  const resetValueSort = (e) => {
-    e.preventDefault();
-    temaRef.select.clearValue();
-    selectRefAkademi.select.clearValue();
-    setDisable(true);
-    dispatch({ type: RESET_VALUE_FILTER });
-  };
-
-  useEffect(() => {
-    let arr = [];
-    academyOptions.forEach((el) => {
-      arr.push({ id: el.id, value: el.name, label: el.name });
-    });
-    setDataAcademy(arr);
-  }, [academyOptions]);
-
-  useEffect(() => {
-    const filteredTheme = themeOptions.filter(
-      (items) => items.id == academy?.id
-    );
-    const data = filteredTheme.map((el) => {
-      return { ...el, value: el.name, label: el.name };
-    });
-    setDataTemaPelatihan(data);
-  }, [academy, themeOptions]);
-
-  const handleSearch = (e) => {
-    e.preventDefault();
-    dispatch(searchKeyword(search));
-  };
-
-  const handleSelectAcademy = (e) => {
-    setAcademy(e);
-    setDisable(false);
-    temaRef.select.clearValue();
-  };
-
-  const handleFilter = (e) => {
-    e.preventDefault();
-    if (!academy && !temaPelatihan) {
-      Swal.fire(
-        "Oops !",
-        "Harap memilih kategori Akademi atau Tema pelatihan terlebih dahulu.",
-        "error"
-      );
-    } else {
-      if (academy) {
-        dispatch(setValueAcademy(academy.value));
-      }
-      if (temaPelatihan) {
-        dispatch(setValueTheme(temaPelatihan.value));
-      }
-    }
-  };
-
-  const handleResetError = () => {
-    if (error) {
-      dispatch(clearErrors);
-    }
-  };
-
-  useEffect(() => {
-    dispatch(getAllSertifikat(token));
-  }, [
-    dispatch,
-    token,
-    allCertificates.keyword,
-    allCertificates.page,
-    allCertificates.theme,
-    allCertificates.academy,
-    allCertificates.limit,
-  ]);
-
-  const list = [
-    {
-      no: 1,
-      id_pelatihan: "C001",
-      name: "Nama Form Pendaftaran",
-      status: "listed",
-    },
-    {
-      no: 2,
-      id_pelatihan: "C002",
-      name: "Nama Form Pendaftaran",
-      status: "listed",
-    },
-    {
-      no: 3,
-      id_pelatihan: "C003",
-      name: "Nama Form Pendaftaran",
-      status: "unlisted",
-    },
-    {
-      no: 4,
-      id_pelatihan: "C004",
-      name: "Nama Form Pendaftaran",
-      status: "listed",
-    },
-  ];
+  const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
 
   const [radio, setRadio] = useState(1);
   const [judul, setJudul] = useState("");
@@ -142,6 +22,14 @@ export default function MasterPelatihan({ token }) {
     console.log(judul);
   }, [judul]);
 
+  const dropdown = [
+    { label: 1, value: 1 },
+    { label: 2, value: 2 },
+    { label: 3, value: 3 },
+  ];
+
+  const [dropdownValue, setDropdownValue] = useState();
+  const error = false;
   return (
     <PageWrapper>
       {/* error START */}
@@ -223,6 +111,52 @@ export default function MasterPelatihan({ token }) {
               placeholder="Silahkan Masukkan Judul Form"
               onChange={(e) => setJudul(e.currentTarget.value)}
             />
+            <div className="d-flex row mt-10">
+              <div className="col">
+                <div className="mb-3">Nama Field</div>
+                <input className="form-control" placeholder="Placeholder" />
+              </div>
+              <div className="col ">
+                <div className="form-group mb-4">
+                  <label className="col-form-label font-weight-bold">
+                    Level Pelatihan
+                  </label>
+                  <div className="position-relative" style={{ zIndex: "6" }}>
+                    <Select
+                      placeholder="Silahkan Pilih Level Pelatihan"
+                      options={dropdown}
+                      defaultValue={dropdown[0]}
+                      onChange={(e) =>
+                        setDropdownValue({ value: e?.value, label: e?.label })
+                      }
+                      onBlur={() =>
+                        simpleValidator.current.showMessageFor(
+                          "level pelatihan"
+                        )
+                      }
+                    />
+                  </div>
+                  {simpleValidator.current.message(
+                    "level pelatihan",
+                    dropdownValue,
+                    "required",
+                    { className: "text-danger" }
+                  )}
+                </div>
+              </div>
+              <div className="col">
+                <div>Size</div>
+              </div>
+              <div className="col">
+                <div>Size</div>
+              </div>
+              <div className="col">
+                <div>Option</div>
+              </div>
+              <div className="col">
+                <div>Required</div>
+              </div>
+            </div>
           </Card.Body>
         </Card>
       </div>
