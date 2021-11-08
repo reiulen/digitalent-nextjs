@@ -346,8 +346,8 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
         pelatihan_mulai: startDateTraining,
         pelatihan_selesai: endDateTraining,
         deskripsi: description,
-        kuota_pendaftar: targetKuotaRegister,
-        kuota_peserta: targetKuotaUser,
+        kuota_pendaftar: +targetKuotaRegister,
+        kuota_peserta: +targetKuotaUser,
         status_kuota: statusKuota,
         alur_pendaftaran: plotRegistration,
         sertifikasi: sertification,
@@ -363,8 +363,6 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
         tuna_rungu,
         tuna_daksa,
       };
-      // dispatch(storeTrainingStep1(data));
-      // propsStep(2);
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);

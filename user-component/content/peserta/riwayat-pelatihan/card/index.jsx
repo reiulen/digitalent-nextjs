@@ -17,6 +17,8 @@ import IsiLpj from "./survey-isi-lpj";
 import style from "../style.module.css";
 import TestCardTemplate from "./testCardTemplate";
 
+import CustomButton from "./Buttons/CustomButton.jsx";
+
 import React, { useState, useEffect, Fragment } from "react";
 import { Col, Row, Card, Button, Container, Modal } from "react-bootstrap";
 import Link from "next/link";
@@ -429,18 +431,21 @@ export default function CardTemplateOriginal({ data }) {
               </Col>
             </Fragment>
           ) : data.status == "menunggu administrasi" ? (
-            <Col className="d-flex justify-content-center ">
-              <Button
-                className={`btn-rounded-full font-weight-bold btn-block justify-content-center mt-5 `}
-                style={{ height: "40px", fontSize: "14px" }}
-                onClick={() => {
-                  console.log("ini click button 2 ");
-                }}
-              >
-                <i className="ri-download-2-fill mr-2"></i>
-                Bukti Pendaftaran
-              </Button>
-            </Col>
+            <Fragment>
+              <Col className="d-flex justify-content-center ">
+                <Button
+                  className={`btn-rounded-full font-weight-bold btn-block justify-content-center mt-5 `}
+                  style={{ height: "40px", fontSize: "14px" }}
+                  onClick={() => {
+                    console.log("ini click button 2 ");
+                  }}
+                >
+                  <i className="ri-download-2-fill mr-2"></i>
+                  Bukti Pendaftaran
+                </Button>
+              </Col>
+              <CustomButton />
+            </Fragment>
           ) : data.status == "menunggu tes substansi" ? (
             <Fragment>
               <Col className="d-flex justify-content-center ">
