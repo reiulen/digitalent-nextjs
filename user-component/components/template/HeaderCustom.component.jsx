@@ -211,7 +211,7 @@ const Header = ({ breadcrumb }) => {
                             ) : router.pathname.includes("form-pendaftaran") ? (
                               <Fragment>
                                 <div style={{ fontSize: "14px" }}>
-                                  <Link href="/">
+                                  <Link href="/" passHref>
                                     <a>
                                       <u className="d-none d-lg-inline-block">
                                         Beranda
@@ -223,14 +223,14 @@ const Header = ({ breadcrumb }) => {
                                   </Link>
                                   <span className="mx-3">&gt;</span>
                                   <u className="d-none d-lg-inline-block">
-                                    {pelatihan.akademi}
+                                    {pelatihan?.akademi}
                                   </u>
                                   <u className="d-lg-none d-inline-block">
                                     ...
                                   </u>
                                   <span className="mx-3">&gt;</span>
                                   <u className="d-none d-lg-inline-block">
-                                    {pelatihan.name}
+                                    {pelatihan?.name}
                                   </u>
                                   <u className="d-lg-none d-inline-block">
                                     ...

@@ -4,8 +4,6 @@ import Head from "next/head";
 import { ToastContainer } from "react-toastify";
 import LoadingNavbar from "../../user-component/content/peserta/components/loader/LoadingNavbar";
 import LoadingFooter from "../../user-component/content/peserta/components/loader/LoadingFooter";
-// import NavigationBar from "../../user-component/components/template/Navbar.component"
-// import Footer from "../../user-component/components/beranda/footer"
 
 import "../../styles/beranda.module.css";
 

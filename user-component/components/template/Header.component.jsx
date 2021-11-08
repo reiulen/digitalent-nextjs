@@ -223,14 +223,14 @@ const Header = () => {
                                   </Link>
                                   <span className="mx-3">&gt;</span>
                                   <u className="d-none d-lg-inline-block">
-                                    {pelatihan.akademi}
+                                    {pelatihan?.akademi}
                                   </u>
                                   <u className="d-lg-none d-inline-block">
                                     ...
                                   </u>
                                   <span className="mx-3">&gt;</span>
                                   <u className="d-none d-lg-inline-block">
-                                    {pelatihan.name}
+                                    {pelatihan?.name}
                                   </u>
                                   <u className="d-lg-none d-inline-block">
                                     ...
