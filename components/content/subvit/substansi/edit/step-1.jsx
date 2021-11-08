@@ -242,18 +242,18 @@ const StepOne = ({ token }) => {
                     className="form-control"
                     defaultValue={theme_id}
                   >
+                    <option selected disabled value="">
+                      {" "}
+                      -Pilih Tema-
+                    </option>
+
                     {data.data &&
                       data.data.map((item, index) => {
-                        <option selected disabled value="">
-                          {" "}
-                          -Pilih Tema-
-                        </option>;
                         return (
                           <>
                             <option
                               value={item.value}
                               key={index}
-                              selected
                               defaultValue={item.value}
                             >
                               {item.label}
@@ -300,7 +300,7 @@ const StepOne = ({ token }) => {
                       dataPelatihan2.map((item, index) => {
                         return (
                           <>
-                            <option value={item.value} key={index} selected>
+                            <option value={item.value} key={index}>
                               {item.label}
                             </option>
                           </>
