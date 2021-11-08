@@ -3,6 +3,8 @@ import { getSession } from "next-auth/client";
 
 import { wrapper } from "../../redux/store";
 import { getDataPribadi } from "../../redux/actions/pelatihan/function.actions"
+import { getAllBerandaBerita, getKategoriBerandaBerita,  getTagBerandaBerita} from "../../redux/actions/beranda/berita.actions"
+import { getAllAkademi } from "../../redux/actions/beranda/beranda.actions";
 
 const Berita  =  dynamic (() => 
     import (
@@ -34,12 +36,38 @@ export default function BerandaBerita(props) {
 
 export const getServerSideProps = wrapper.getServerSideProps(
     ( store ) => 
-        async ({params, req}) => {
+        async ({query, req}) => {
             const session = await getSession({ req });
 
             let sessionToken = session?.user.user.data.user.token;
 
             await store.dispatch(getDataPribadi(sessionToken));
+
+            await store.dispatch(
+                getAllBerandaBerita(
+                    query.page,
+                    query.keyword,
+                    query.limit,
+                    query.filterPublish,
+                    query.sort,
+                    query.category_id,
+                    query.category_name,
+                    query.category_akademi,
+                    query.tag
+                )
+            )
+            
+            await store.dispatch (
+                getKategoriBerandaBerita()
+            )
+
+            await store.dispatch(
+                getAllAkademi()
+            );
+
+            await store.dispatch(
+                getTagBerandaBerita()
+            )
 
             return {
                 props: {

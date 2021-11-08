@@ -438,6 +438,15 @@ import {
   detailBerandaGaleriReducer,
   kategoriBerandaGaleriReducer,
 } from "../reducers/beranda/galeri.reducer";
+
+// ========== berita ========
+import {
+  allBerandaBeritaReducer,
+  detailBerandaBeritaReducer,
+  kategoriBerandaBeritaReducer,
+  allTagBerandaBeritaReducer,
+} from "../reducers/beranda/berita.reducers"
+
 //END BERANDA
 
 import {
@@ -810,6 +819,12 @@ const reducer = combineReducers({
   allBerandaGaleri: allBerandaGaleriReducer,
   detailBerandaGaleri: detailBerandaGaleriReducer,
   kategoriBerandaGaleri: kategoriBerandaGaleriReducer,
+
+  // ========== berita ========
+  allBerandaBerita: allBerandaBeritaReducer, 
+  detailBerandaBerita: detailBerandaBeritaReducer,
+  kategoriBerandaBerita: kategoriBerandaBeritaReducer,
+  allTagBerandaBerita: allTagBerandaBeritaReducer,
   //END BERANDA
 
   // ========== Riwayat Pelatihan ========
