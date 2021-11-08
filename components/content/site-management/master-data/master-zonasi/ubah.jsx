@@ -38,6 +38,7 @@ const Tambah = ({ token }) => {
       return {
         provinsi: [{ label: items.provinsi, value: items.provinsi }],
         kabupaten: items.kota_kabupaten,
+        value:items.kota_kabupaten
       };
     })
   );
@@ -55,6 +56,7 @@ const Tambah = ({ token }) => {
     _temp.push({
       provinsi: [],
       kabupaten: [],
+      value:[]
     });
     _tempValue.push({
       provinsi_old: "",
@@ -83,6 +85,12 @@ const Tambah = ({ token }) => {
     let _temp = [...formInput];
     let _tempValue = [...valueSend];
 
+    
+    _temp[index].value = []
+    _temp[index].kabupaten = []
+    _tempValue[index].kota_kabupaten = []
+    console.log("_tempValue",_tempValue[index])
+
     try {
       let { data } = await axios.get(
         `${process.env.END_POINT_API_SITE_MANAGEMENT}api/option/provinsi-choose/${e.id}`,
@@ -106,10 +114,14 @@ const Tambah = ({ token }) => {
 
   const changeListKabupaten = (e, index) => {
     let _tempValue = [...valueSend];
+    let _temp = [...formInput]
     _tempValue[index].kota_kabupaten = e.map((items) => {
       return { label: items.label };
     });
     setValueSend(_tempValue);
+
+    _temp[index]['value'] = e
+    setFormInput(_temp)
   };
 
   const submit = (e) => {
@@ -196,7 +208,7 @@ const Tambah = ({ token }) => {
                 <label>Nama Zonasi</label>
                 <input
                   onChange={(e) => setNameZonation(e.target.value)}
-                  placeholder="Masukan nama zonasi"
+                  placeholder="Masukkan nama zonasi"
                   type="text"
                   value={nameZonation}
                   className="form-control"
@@ -256,10 +268,11 @@ const Tambah = ({ token }) => {
                             <div className="form-group w-100 mr-6 mb-1">
                               <label>Kota / Kabupaten</label>
                               <Select
-                                ref={(ref) => (selectRefKabupaten = ref)}
+                                // ref={(ref) => (selectRefKabupaten = ref)}
+                                value={items.value}
                                 className="basic-single"
                                 classNamePrefix="select"
-                                placeholder="Pilih kabupaten"
+                                placeholder="Pilih kota/kabupaten"
                                 isMulti={true}
                                 isDisabled={false}
                                 isLoading={false}
