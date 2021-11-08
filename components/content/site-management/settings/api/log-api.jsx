@@ -88,7 +88,7 @@ const Table = ({ token }) => {
                 <div className="col-lg-12 col-xl-12">
                   <div className="row">
                     <div className="col-12 col-sm-4">
-                      <form onSubmit={handleSubmit}>
+                      <div>
                         <div className="position-relative overflow-hidden w-100 mt-5">
                           <IconSearch
                             style={{ left: "10" }}
@@ -114,12 +114,12 @@ const Table = ({ token }) => {
                             Cari
                           </button>
                         </div>
-                      </form>
+                      </div>
                     </div>
-
+                            
                     <div className="col-12 col-sm-8">
                       <div className="d-flex flex-wrap align-items-center justify-content-end mt-2">
-                        {/* sorotir by modal */}
+                        {/* sorotir by modal check */}
                         <button
                           type="button"
                           className="avatar item-rtl btn border d-flex align-items-center justify-content-between mt-2"

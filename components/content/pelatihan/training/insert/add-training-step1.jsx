@@ -102,7 +102,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
   const [description, setDescription] = useState(trainingData.deskripsi);
   //kuota
   const [targetKuotaRegister, setTargetKuotaRegister] = useState(
-    trainingData.kuota_pendaftar || 1
+    trainingData.kuota_pendaftar
   );
   const [targetKuotaUser, setTargetKuotaUser] = useState(
     trainingData.kuota_peserta
@@ -346,8 +346,8 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
         pelatihan_mulai: startDateTraining,
         pelatihan_selesai: endDateTraining,
         deskripsi: description,
-        kuota_pendaftar: targetKuotaRegister,
-        kuota_peserta: targetKuotaUser,
+        kuota_pendaftar: +targetKuotaRegister,
+        kuota_peserta: +targetKuotaUser,
         status_kuota: statusKuota,
         alur_pendaftaran: plotRegistration,
         sertifikasi: sertification,
@@ -396,7 +396,6 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
       }
     };
   }, [targetKuotaRegister]);
-
   useEffect(() => {
     const number = document.getElementById("number2");
     number.onkeydown = (e) => {
@@ -417,6 +416,17 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
       }
     };
   }, [targetKuotaUser]);
+  const [errorMessageKuota, setErrorMessageKuota] = useState(false);
+
+  useEffect(() => {
+    if (targetKuotaUser < targetKuotaRegister) {
+      setErrorMessageKuota(false);
+    }
+    if (+targetKuotaUser > +targetKuotaRegister) {
+      setErrorMessageKuota(true);
+      setTargetKuotaUser(+targetKuotaRegister);
+    }
+  }, [targetKuotaRegister, targetKuotaUser]);
 
   return (
     <div className="card card-custom card-stretch gutter-b">
@@ -895,7 +905,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                   setTargetKuotaRegister(e.target.value);
                 }}
                 className="form-control"
-                min="0"
+                min="1"
                 onBlur={() =>
                   simpleValidator.current.showMessageFor(
                     "kuota target pendaftar"
@@ -917,7 +927,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
               <input
                 placeholder="Silahkan Masukan Kuota Target Peserta"
                 type="number"
-                min="0"
+                min="1"
                 value={targetKuotaUser}
                 onChange={(e) => setTargetKuotaUser(e.target.value)}
                 className="form-control"
@@ -926,6 +936,11 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                 }
                 id="number2"
               />
+              {errorMessageKuota && (
+                <p className="text-danger">
+                  Kuota user tidak boleh lebih dari kuota register
+                </p>
+              )}
               {simpleValidator.current.message(
                 "kuota target peserta",
                 targetKuotaUser,

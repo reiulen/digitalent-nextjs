@@ -67,6 +67,18 @@ const ListTheme = ({ token }) => {
     { value: "0", label: "Unpublish" },
   ];
 
+  const getWindowDimensions = () => {
+    const { innerWidth: width, innerHeight: height } = window;
+    return {
+      width,
+      height,
+    };
+  };
+
+  const [windowDimensions, setWindowDimensions] = useState(
+    getWindowDimensions()
+  );
+
   useEffect(() => {
     if (isDeleted) {
       Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
@@ -81,12 +93,16 @@ const ListTheme = ({ token }) => {
         type: DELETE_THEME_RESET,
       });
     }
+
+    function handleResize() {
+      setWindowDimensions(getWindowDimensions());
+    }
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, [isDeleted, dispatch, token]);
 
   const handlePagination = (pageNumber) => {
-    // let link = `${router.pathname}?page=${pageNumber}`;
-    // if (limit) link = link.concat(`&limit=${limit}`);
-    // if (search) link = link.concat(`&keyword=${search}`);
     setPage(pageNumber);
     dispatch(
       getAllTheme(
@@ -98,7 +114,6 @@ const ListTheme = ({ token }) => {
         token
       )
     );
-    // router.push(link);
   };
 
   const handleSearch = () => {
@@ -119,10 +134,6 @@ const ListTheme = ({ token }) => {
   };
 
   const handleFilter = () => {
-    // let link = `${router.pathname}?page=${1}`;
-    // if (academy) link = link.concat(`&akademi=${academy.value}`);
-    // if (status) link = link.concat(`&status=${status.value}`);
-    // router.push(link);
     setPage(1);
     dispatch(
       getAllTheme(
@@ -146,7 +157,6 @@ const ListTheme = ({ token }) => {
   };
 
   const handleLimit = (val) => {
-    // router.push(`${router.pathname}?page=1&limit=${val}`);
     setLimit(val);
     setPage(1);
     dispatch(
@@ -315,7 +325,7 @@ const ListTheme = ({ token }) => {
                         <th>Tema</th>
                         <th>Peminat</th>
                         <th>Status</th>
-                        <th>Aksi</th>
+                        <th className="row-aksi-tema">Aksi</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -394,7 +404,7 @@ const ListTheme = ({ token }) => {
                       activePage={page}
                       itemsCountPerPage={theme.perPage}
                       totalItemsCount={theme.total}
-                      pageRangeDisplayed={3}
+                      pageRangeDisplayed={windowDimensions.width > 300 ? 3 : 1}
                       onChange={handlePagination}
                       nextPageText={">"}
                       prevPageText={"<"}

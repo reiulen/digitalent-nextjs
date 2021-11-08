@@ -72,7 +72,7 @@ export const getAllApi = (token) => async (dispatch, getState) => {
   }
 };
 
-export const deleteApi = (id, token) => async (dispatch) => {
+export const deleteApis = (id, token) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_API_REQUEST });
 
