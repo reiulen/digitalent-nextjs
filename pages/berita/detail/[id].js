@@ -3,6 +3,7 @@ import { getSession } from "next-auth/client";
 
 import { wrapper } from "../../../redux/store";
 import { getDataPribadi } from "../../../redux/actions/pelatihan/function.actions"
+import { getDetailBerandaBerita, getKategoriBerandaBerita,  getTagBerandaBerita} from "../../../redux/actions/beranda/berita.actions"
 
 const DetailBerita = dynamic (() => 
     import (
@@ -16,7 +17,7 @@ const Layout = dynamic (() =>
     )
 )
 
-export default function BerandaDetailArtikel(props) {
+export default function BerandaDetailBerita(props) {
     let session = null;
 
     if (props.session) {
@@ -40,6 +41,18 @@ export const getServerSideProps = wrapper.getServerSideProps(
             let sessionToken = session?.user.user.data.user.token;
 
             await store.dispatch(getDataPribadi(sessionToken));
+
+            await store.dispatch(
+                getDetailBerandaBerita(params.id)
+            )
+
+            await store.dispatch (
+                getKategoriBerandaBerita()
+            )
+
+            await store.dispatch(
+                getTagBerandaBerita()
+            )
 
             return {
                 props: {
