@@ -257,6 +257,10 @@ const Beranda = ({ session }) => {
     }
   };
 
+  function truncate(str, no_words) {
+    return str.split(" ").splice(0, no_words).join(" ");
+  }
+
   return (
     <div style={{ backgroundColor: "white" }}>
       {/* Carousel 1 */}
@@ -341,10 +345,15 @@ const Beranda = ({ session }) => {
                         onClick={() => handleActive(i, el.id)}
                         style={{ cursor: "pointer" }}
                       >
-                        <div className="card-1 bg-white">
+                        <div
+                          className="card-1 bg-white"
+                          style={{ height: "80px" }}
+                        >
                           <h1 className="mb-0 mr-2 fw-700">{el.slug}</h1>
                           <div>
-                            <p className="mb-0">{el.name}</p>
+                            <p className="mb-0">
+                              {el.name.split(" ").splice(0, 3).join(" ")}
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -354,12 +363,17 @@ const Beranda = ({ session }) => {
                         onClick={() => handleActive(i)}
                         style={{ cursor: "pointer" }}
                       >
-                        <div className="card-1 bg-secondary">
+                        <div
+                          className="card-1 bg-secondary"
+                          style={{ height: "80px" }}
+                        >
                           <h1 className="mb-0 mr-2 fw-700 text-white">
                             {el.slug}
                           </h1>
                           <div>
-                            <p className="mb-0 text-white">{el.name}</p>
+                            <p className="mb-0 text-white">
+                              {el.name.split(" ").splice(0, 3).join(" ")}
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -391,14 +405,14 @@ const Beranda = ({ session }) => {
               tema.map((el, i) => {
                 return (
                   <div key={i} className="my-5">
-                    <div className="d-flex align-items-center justify-content-between px-10 flex-wrap">
-                      <h1
-                        className={`${style.name_pelatihan_card} my-auto mr-3`}
-                      >
-                        {el.Name}
-                      </h1>
-                      <div>
-                        {el.pelatihan !== null && (
+                    {el.pelatihan !== null && (
+                      <div className="d-flex align-items-center justify-content-between px-10 flex-wrap">
+                        <h1
+                          className={`${style.name_pelatihan_card} my-auto mr-3`}
+                        >
+                          {el.Name}
+                        </h1>
+                        <div>
                           <Link
                             href={`/detail/akademi/${akademiId}?tema_id=${el.id}`}
                           >
@@ -419,9 +433,9 @@ const Beranda = ({ session }) => {
                               </>
                             </a>
                           </Link>
-                        )}
+                        </div>
                       </div>
-                    </div>
+                    )}
 
                     <div className="container-fluid">
                       <div className="row mt-5">

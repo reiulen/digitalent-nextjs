@@ -22,8 +22,40 @@ import {
   BERANDA_PUBLIKASI_REQUEST,
   BERANDA_PUBLIKASI_SUCCESS,
   BERANDA_PUBLIKASI_FAIL,
+  BERANDA_FOOTER_REQUEST,
+  BERANDA_FOOTER_SUCCESS,
+  BERANDA_FOOTER_FAIL,
   CLEAR_ERRORS,
 } from "../../types/beranda/beranda.type";
+
+export const berandaFooterReducer = (state = { footer: [] }, action) => {
+  switch (action.type) {
+    case BERANDA_FOOTER_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case BERANDA_FOOTER_SUCCESS:
+      return {
+        loading: false,
+        footer: action.payload.data,
+      };
+
+    case BERANDA_FOOTER_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
 
 export const addNotifTemaReducer = (state = { notifikasiTema: {} }, action) => {
   switch (action.type) {
