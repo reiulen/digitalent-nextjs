@@ -114,17 +114,16 @@ const StepOne = ({ token }) => {
   const { data: dataPelatihan2 } = useSelector(
     (state) => state.drowpdownPelatihanbyTema.data
   );
-  // console.log(dataPelatihan2);
+
   const [optionPelatihan, setOptionPelatihan] = useState([]);
 
   const handleChangePelatihan = (e) => {
-    // console.log(e.target.value);
     setThemeId(e.target.value);
   };
 
   const handleChangeTema = (e) => {
     setAcademyId(e.target.value);
-    // e.target.value && dispatch(dropdownTemabyAkademi(e.target.value, token));
+
     const config = {
       headers: {
         Authorization: "Bearer " + token,
@@ -242,24 +241,7 @@ const StepOne = ({ token }) => {
                     className="form-control"
                     defaultValue={theme_id}
                   >
-                    {/* {data.data &&
-                      data.data.length <= 1 &&
-                      ((
-                        <option selected disabled value="">
-                          {" "}
-                          -Pilih Tema-
-                        </option>
-                      ),
-                      data.data.map((item, index) => {
-                        return (
-                          <>
-                            <option value={item.value} key={index}>
-                              {item.label}
-                            </option>
-                          </>
-                        );
-                      }))} */}
-                    {data.data && data.data.length <= 1 && (
+                    {subtance.academy_id !== parseInt(academy_id) && (
                       <option selected value="">
                         {" "}
                         -Pilih Tema-
