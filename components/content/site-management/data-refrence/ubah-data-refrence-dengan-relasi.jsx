@@ -17,6 +17,7 @@ const Tambah = ({ token }) => {
   let selectRefDataFromReference = null;
 
   const detailDataReference = useSelector((state) => state.detailDataReference);
+  console.log("detailDataReference",detailDataReference)
   const allOptionReferenceSite = useSelector(
     (state) => state.allOptionReferenceSite
   );
@@ -40,6 +41,17 @@ const Tambah = ({ token }) => {
   const [nameListFromReference, setNameListFromReference] = useState("");
   const [optionFromReference, setOptionFromReference] = useState([]);
   const changeListDataReference = (e) => {
+    setFormReferenceAndText([
+        {
+          relasi_id: "",
+          value: [
+            {
+              label: "",
+            },
+          ],
+          values: [],
+        },
+      ]);
     setIdReference(e.key);
     setNameListFromReference(e.value);
   };
@@ -57,17 +69,19 @@ const Tambah = ({ token }) => {
       label: value,
     })
   );
-
+console.log("transformed",transformed)
   const [formReferenceAndText, setFormReferenceAndText] = useState(
     transformed.map((items) => {
       return {
         ...items,
+        values:items.label,
         value: items.value.map((itemx) => {
           return { ...itemx, label: itemx.value, label_old: itemx.value };
         }),
       };
     })
   );
+  console.log("formReferenceAndText",formReferenceAndText)
   const [formReferenceAndTextValue, setFormReferenceAndTextValue] = useState(
     transformed.map((items) => {
       return {
@@ -91,6 +105,7 @@ const Tambah = ({ token }) => {
           value: "",
         },
       ],
+      values: [],
     });
     _tempValue.push({
       relasi_id: "",
@@ -131,10 +146,13 @@ const Tambah = ({ token }) => {
   };
 
   const handleCHangeNameReference = (e, index) => {
-
+    let _tempOption = [...optionFromReference]
+    let _newTempOption = _tempOption.filter(items => items.label !== e.label)
+    setOptionFromReference(_newTempOption);
     let _temp = [...formReferenceAndText];
     let _tempValue = [...formReferenceAndTextValue];
     _temp[index].relasi_id = e.id;
+    _temp[index].values = [e];
     _tempValue[index].relasi_id = e.id;
     setFormReferenceAndText(_temp);
     setFormReferenceAndTextValue(_tempValue);
@@ -194,7 +212,16 @@ const Tambah = ({ token }) => {
       Swal.fire("Gagal", `Status tidak boleh kosong`, "error");
     } else if (idReference === "") {
       Swal.fire("Gagal", `Harus pilih data reference`, "error");
-    } else {
+    } 
+    else if (!formReferenceAndText[0].relasi_id || !formReferenceAndText[0].value[0].label ) {
+      Swal.fire(
+        "Gagal",
+        `List data dan value tidak boleh kosong`,
+        "error"
+      );
+    } 
+
+    else {
 
       formReferenceAndTextValue.map((items, index) => {
         items.value.map((itemz, idx) => {
@@ -211,6 +238,7 @@ const Tambah = ({ token }) => {
         data_references_relasi_id: idReference,
         data: formReferenceAndTextValue,
       };
+
 
       try {
         let { data } = await axios.post(
@@ -240,11 +268,11 @@ const Tambah = ({ token }) => {
   }, [tempOptionsReference]);
 
   useEffect(() => {
-    if (idReference || (labelReference.length===3)) {
+    if (idReference || (labelReference.length > 3)) {
       async function getAllDataFromIdReference(token, id) {
         try {
           let { data } = await axios.get(
-            `${process.env.END_POINT_API_SITE_MANAGEMENT}api/option/reference-choose/${id}`,
+            `${process.env.END_POINT_API_SITE_MANAGEMENT}api/option/reference-choose/${id}?keyword=${labelReference}`,
             {
               headers: {
                 authorization: `Bearer ${token}`,
@@ -262,7 +290,7 @@ const Tambah = ({ token }) => {
 
       getAllDataFromIdReference(token, idReference);
     }
-  }, [token, idReference]);
+  }, [token, idReference,labelReference]);
 
   return (
     <PageWrapper>
@@ -340,7 +368,7 @@ const Tambah = ({ token }) => {
                         <label>List {nameListFromReference}</label>
 
                         <Select
-                          ref={(ref) => (selectRefDataFromReference = ref)}
+                          value={itemsRef.values}
                           className="basic-single"
                           classNamePrefix="select"
                           placeholder="Pilih provinsi"
@@ -351,6 +379,7 @@ const Tambah = ({ token }) => {
                           isRtl={false}
                           isSearchable={true}
                           name="color"
+                          onInputChange={handleInputChange}
                           onChange={(e) => handleCHangeNameReference(e, idx)}
                           options={optionFromReference}
                         />
@@ -363,7 +392,7 @@ const Tambah = ({ token }) => {
                             <div className="position-relative d-flex align-items-start w-100">
                               <div className="w-100 mr-6">
                                 <input
-                                  value={items.value}
+                                  value={items.label}
                                   type="text"
                                   className="form-control"
                                   placeholder="Masukan data value"
@@ -422,7 +451,7 @@ const Tambah = ({ token }) => {
                     onClick={() => handleAddFormReferenceText()}
                   >
                     <IconAdd className="mr-3" width="14" height="14" />
-                    Tambah Value
+                    Tambah Relasi
                   </p>
                 </div>
               </div>
