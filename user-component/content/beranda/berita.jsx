@@ -193,72 +193,11 @@ const Berita = () => {
             </div>
 
             {/* Filter Button */}
-            {/* <div className="row my-5">
-                <div className="col-12 col-md-8 d-flex flex-row flex-wrap">
-
-                   {
-                       kategoriBerita === "" ?
-                            <div 
-                                className="d-flex align-items-center rounded-pill bg-primary-dashboard py-1 px-3 mr-3 my-5" 
-                                style={{ cursor: "pointer" }}
-                                onClick={() => handleFilterKategori("")}
-                            >
-                                <div className="my-1 mx-3 py-1 px-3 text-white">
-                                    Semua
-                                </div>
-                            </div>
-                        :
-                            <div 
-                                className="d-flex align-items-center border rounded-pill bg-whitepy-1 px-3 mr-3 my-5" 
-                                style={{ cursor: "pointer" }}
-                                onClick={() => handleFilterKategori("")}
-                            >
-                                <div className="my-1 mx-3 py-1 px-3 text-muted">
-                                    Semua
-                                </div>
-                            </div>
-                   }
-                    
-
-                    {
-                        kategori ?
-                            kategori.map((el, i) => {
-                                return (
-                                    kategoriBerita == el.nama_kategori ?
-                                        <div 
-                                            className="d-flex align-items-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-3 my-5" 
-                                            style={{ cursor: "pointer" }}
-                                            onClick={() => handleFilterKategori(el.nama_kategori)}
-                                            key={i}
-                                        >
-                                            <div className="my-1 mx-3 py-1 px-3 text-white">
-                                                {el.nama_kategori}
-                                            </div>
-                                        </div> 
-                                    :
-                                        <div 
-                                            className="d-flex align-items-center border rounded-pill bg-white py-1 px-3 mr-3 my-5" 
-                                            style={{ cursor: "pointer" }}
-                                            onClick={() => handleFilterKategori(el.nama_kategori)}
-                                            key={i}
-                                        >
-                                            <div className="my-1 mx-3 py-1 px-3 text-muted">
-                                                {el.nama_kategori}
-                                            </div>
-                                        </div> 
-                                )
-                            })
-                        :
-                            null
-                    }
-                </div>
-               
-            </div> */}
-
             {
                 kategori ? (
                     <div
                         className="row my-5"
+                        style={{overflowX:"hidden"}}
                     >
                         <Carousel
                             indicators={false}
@@ -268,12 +207,12 @@ const Berita = () => {
                             prevLabel={false}
                         >
                             <Carousel.Item>
-                                <div className="d-flex flex-row ml-4">
+                                <div className="d-flex flex-row ml-6">
                                     {
                                         kategoriBerita === "" ?
                                                 <div 
                                                     className="d-flex align-items-center rounded-pill bg-primary-dashboard py-1 px-3 mr-3 my-5" 
-                                                    style={{ cursor: "pointer" }}
+                                                    style={{ cursor: "pointer", height:"40px" }}
                                                     onClick={() => handleFilterKategori("")}
                                                 >
                                                     <div className="my-1 mx-3 py-1 px-3 text-white">
@@ -283,7 +222,7 @@ const Berita = () => {
                                             :
                                                 <div 
                                                     className="d-flex align-items-center border rounded-pill bg-whitepy-1 px-3 mr-3 my-5" 
-                                                    style={{ cursor: "pointer" }}
+                                                    style={{ cursor: "pointer", height:"40px" }}
                                                     onClick={() => handleFilterKategori("")}
                                                 >
                                                     <div className="my-1 mx-3 py-1 px-3 text-muted">
@@ -299,7 +238,7 @@ const Berita = () => {
                                                     kategoriBerita == el.nama_kategori ?
                                                         <div 
                                                             className="d-flex align-items-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-3 my-5" 
-                                                            style={{ cursor: "pointer" }}
+                                                            style={{ cursor: "pointer", height:"40px" }}
                                                             onClick={() => handleFilterKategori(el.nama_kategori)}
                                                             key={i}
                                                         >
@@ -310,7 +249,7 @@ const Berita = () => {
                                                     :
                                                         <div 
                                                             className="d-flex align-items-center border rounded-pill bg-white py-1 px-3 mr-3 my-5" 
-                                                            style={{ cursor: "pointer" }}
+                                                            style={{ cursor: "pointer", height:"40px" }}
                                                             onClick={() => handleFilterKategori(el.nama_kategori)}
                                                             key={i}
                                                         >
@@ -340,7 +279,7 @@ const Berita = () => {
                 <div className="col-md-8 col-12">
                     
                     {/* Search Tab */}
-                    <form className="mb-3">
+                    <form className="mb-3 ml-1">
                         <div className="input-group">
                             <div className="input-group-prepend">
                                 <div 
@@ -639,11 +578,11 @@ const Berita = () => {
                     {/* End of Filter */}
 
                     {/* Tag */}
-                    <div className="row mt-5 d-flex flex-column mx-3">
+                    <div className="row mt-5 d-flex flex-column mx-10 d-flex justify-content-center">
                         <h3 className="font-weight-bolder"> 
-                            Temukan Lebih Banyak Berita Yang Sesuai:
+                            Temukan lebih banyak berita yang sesuai:
                         </h3>
-                        <div className=" d-flex flex-wrap justify-content-around flex-row">
+                        <div className=" d-flex flex-wrap justify-content-md-around  flex-row">
                             {
                                 tags && tags.tag && tags.tag.length !== 0 ?
                                     tags.tag.map ((el, i) => {

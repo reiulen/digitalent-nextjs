@@ -39,7 +39,7 @@ const Navigationbar = ({ session }) => {
       <Navbar
         bg="white"
         expand="lg"
-        className="shadow header-dashboard"
+        className="shadow header-dashboard px-35"
         sticky="top"
       >
         <Navbar.Brand href="/">

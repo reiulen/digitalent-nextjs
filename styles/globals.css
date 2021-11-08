@@ -76,8 +76,8 @@ a {
 }
 
 .page-item-dashboard.active .page-link-dashboard {
-  background-color: #0063CC;
-  border-color: #0063CC;
+  background-color: #0063cc;
+  border-color: #0063cc;
 }
 
 .page-link-dashboard {
@@ -113,7 +113,7 @@ a {
 }
 
 .form-control-auth {
-  background: #ffffff !important;
+  /* background: #ffffff !important; */
   border-radius: 10px;
   height: 46px;
   /* width: 400px; */
@@ -345,8 +345,20 @@ a {
   }
 }
 
+@media screen and (max-width: 300px) {
+  .g-recaptcha {
+    transform: scale(0.55);
+    -webkit-transform: scale(0.55);
+    transform-origin: 0 0;
+    -webkit-transform-origin: 0 0;
+  }
+}
+
 @-moz-document url-prefix() {
   .row-aksi-pelatihan {
     width: 300px;
+  }
+  .row-aksi-tema {
+    width: 100px;
   }
 }
