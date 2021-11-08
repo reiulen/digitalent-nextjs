@@ -183,7 +183,10 @@ export default function MasterPelatihan({ token }) {
               List Master Pendaftar
             </h3>
             <div className="card-toolbar">
-              <Link href="/pelatihan/pelatihan/tambah-pelatihan" passHref>
+              <Link
+                href="/pelatihan/master-pelatihan/tambah-form-pendaftaran"
+                passHref
+              >
                 <a
                   href="#"
                   className="btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2"
@@ -411,6 +414,15 @@ export default function MasterPelatihan({ token }) {
                                 </div>
                               </td>
                               <td className="align-middle d-flex">
+                                <button
+                                  className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                  onClick={() => handleDelete(item.id)}
+                                  data-toggle="tooltip"
+                                  data-placement="bottom"
+                                  title="Hapus"
+                                >
+                                  <i className="ri-pencil-fill p-0 text-white"></i>
+                                </button>
                                 <Link
                                   href={`/sertifikat/kelola-sertifikat/${item.name
                                     .split(" ")
@@ -433,6 +445,15 @@ export default function MasterPelatihan({ token }) {
                                     <i className="ri-eye-fill p-0 text-white"></i>
                                   </a>
                                 </Link>
+                                <button
+                                  className="btn btn-link-action bg-blue-secondary text-white"
+                                  onClick={() => handleDelete(item.id)}
+                                  data-toggle="tooltip"
+                                  data-placement="bottom"
+                                  title="Hapus"
+                                >
+                                  <i className="ri-delete-bin-fill p-0 text-white"></i>
+                                </button>
                               </td>
                               {/* END TABLE DATA */}
                             </tr>

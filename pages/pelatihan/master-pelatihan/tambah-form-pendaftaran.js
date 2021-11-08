@@ -4,23 +4,15 @@ import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
 import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
 
-import {
-  getAllTraining,
-  getCardTraining,
-} from "../../../redux/actions/pelatihan/training.actions";
-import {
-  dropdownAkademi,
-  dropdownTema,
-  dropdownPenyelenggara,
-} from "../../../redux/actions/pelatihan/function.actions";
+import { getCardTraining } from "../../../redux/actions/pelatihan/training.actions";
 
 import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
 
-const MasterTraining = dynamic(
+const InsertTraining = dynamic(
   () =>
     import(
-      "../../../components/content/pelatihan/master-pelatihan/list-pelatihan.jsx"
+      "../../../components/content/pelatihan/master-pelatihan/insert-pelatihan.jsx"
     ),
   {
     loading: function loadingNow() {
@@ -35,7 +27,7 @@ export default function ListTrainingPage(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <MasterTraining token={session.token} />
+        <InsertTraining token={session.token} />
       </div>
     </>
   );
@@ -46,6 +38,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
     async ({ query, req }) => {
       const session = await getSession({ req });
       const middleware = middlewareAuthAdminSession(session);
+
       if (!middleware.status) {
         return {
           redirect: {
@@ -55,26 +48,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
-      await store.dispatch(
-        getAllTraining(
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          session.user.user.data.token
-        )
-      );
-
       await store.dispatch(getCardTraining(session.user.user.data.token));
-      await store.dispatch(dropdownAkademi(session.user.user.data.token));
-      await store.dispatch(dropdownTema(session.user.user.data.token));
-      await store.dispatch(dropdownPenyelenggara(session.user.user.data.token));
 
       return {
         props: { session, title: "List Pelatihan - Pelatihan" },
