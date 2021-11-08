@@ -134,8 +134,8 @@ const Tambah = ({ token }) => {
 
     let _temp = [...formReferenceAndText];
     let _tempValue = [...formReferenceAndTextValue];
-    _temp[index].relasi_id = e.key;
-    _tempValue[index].relasi_id = e.key;
+    _temp[index].relasi_id = e.id;
+    _tempValue[index].relasi_id = e.id;
     setFormReferenceAndText(_temp);
     setFormReferenceAndTextValue(_tempValue);
   };
@@ -179,6 +179,12 @@ const Tambah = ({ token }) => {
       setFormReferenceAndTextValue(_tempValue);
     }
   };
+
+  const [labelReference, setLabeReferencel] = useState("")
+  const handleInputChange =(e)=>{
+    console.log("e.target.value",e)
+    setLabeReferencel(e)
+  }
 
   const submit = async (e) => {
     e.preventDefault();
@@ -234,7 +240,7 @@ const Tambah = ({ token }) => {
   }, [tempOptionsReference]);
 
   useEffect(() => {
-    if (idReference) {
+    if (idReference || (labelReference.length===3)) {
       async function getAllDataFromIdReference(token, id) {
         try {
           let { data } = await axios.get(
@@ -246,7 +252,7 @@ const Tambah = ({ token }) => {
             }
           );
           let resultOptionReferenceChooce = data.data.map((items) => {
-            return { ...items, label: items.value };
+           return { ...items, label: items.label,value: items.label };
           });
           setOptionFromReference(resultOptionReferenceChooce);
         } catch (error) {

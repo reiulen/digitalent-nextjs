@@ -33,52 +33,29 @@ const Tambah = ({ token }) => {
     },
   ]);
 
+  console.log("formReferenceAndText",formReferenceAndText)
+
   const [nameListFromReference, setNameListFromReference] = useState("");
-  const submit = async (e) => {
-    e.preventDefault();
-    if (nameReference === "") {
-      Swal.fire("Gagal", `Nama data reference tidak boleh kosong`, "error");
-    } else if (status === "") {
-      Swal.fire("Gagal", `Status tidak boleh kosong`, "error");
-    } else if (idReference === "") {
-      Swal.fire("Gagal", `Harus pilih data reference`, "error");
-    } else if (formValue.length === 1) {
-      Swal.fire(
-        "Gagal",
-        `Form data provinsi dan kabupaten tidak boleh kosong`,
-        "error"
-      );
-    } else {
-      let sendData = {
-        name: nameReference,
-        status: status,
-        data_references_relasi_id: idReference,
-        data: formReferenceAndText,
-      };
-
-      try {
-        let { data } = await axios.post(
-          `${process.env.END_POINT_API_SITE_MANAGEMENT}api/reference/store-relasi`,
-          sendData,
-          {
-            headers: {
-              authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
-        Swal.fire("Berhasil", "Data berhasil disimpan", "success").then(() => {
-          router.push("/site-management/reference");
-        });
-      } catch (error) {
-        Swal.fire("Gagal simpan", `${error.response.data.message}`, "error");
-      }
-    }
-  };
+  
 
   const changeListDataReference = (e) => {
+
+    
+
+    setFormReferenceAndText([
+    {
+      relasi_id: "",
+      value: [
+        {
+          label: "",
+        },
+      ],
+    },
+  ])
     setIdReference(e.key);
     setNameListFromReference(e.value);
+
+  
   };
 
   const handleAddInput = (idx, index) => {
@@ -121,13 +98,20 @@ const Tambah = ({ token }) => {
         },
       ],
     });
+
+    console.log("_temp",_temp)
     setFormReferenceAndText(_temp);
   };
 
   const handleCHangeNameReference = (e, index) => {
     let _temp = [...formReferenceAndText];
-    _temp[index].relasi_id = e.key;
+    
+    _temp[index].relasi_id = e.id;
     setFormReferenceAndText(_temp);
+
+
+
+    
   };
 
   const handleChangeTextForm = (e, idx, index) => {
@@ -143,6 +127,53 @@ const Tambah = ({ token }) => {
     console.log("e.target.value",e)
     setLabeReferencel(e)
   }
+
+  const submit = async (e) => {
+    e.preventDefault();
+    if (nameReference === "") {
+      Swal.fire("Gagal", `Nama data reference tidak boleh kosong`, "error");
+    } else if (status === "") {
+      Swal.fire("Gagal", `Status tidak boleh kosong`, "error");
+    } else if (idReference === "") {
+      Swal.fire("Gagal", `Harus pilih data reference`, "error");
+    } else if (formValue.length === 1) {
+      Swal.fire(
+        "Gagal",
+        `Form data provinsi dan kabupaten tidak boleh kosong`,
+        "error"
+      );
+    } else {
+
+      console.log("formReferenceAndText test",formReferenceAndText)
+
+
+      let sendData = {
+        name: nameReference,
+        status: status,
+        data_references_relasi_id: idReference,
+        data: formReferenceAndText,
+      };
+
+      try {
+        let { data } = await axios.post(
+          `${process.env.END_POINT_API_SITE_MANAGEMENT}api/reference/store-relasi`,
+          sendData,
+          {
+            headers: {
+              authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        Swal.fire("Berhasil", "Data berhasil disimpan", "success").then(() => {
+        
+          router.push("/site-management/reference");
+        });
+      } catch (error) {
+        Swal.fire("Gagal simpan", `${error.response.data.message}`, "error");
+      }
+    }
+  };
 
   useEffect(() => {
     async function getAllDataReference(token) {
@@ -342,7 +373,7 @@ const Tambah = ({ token }) => {
                     onClick={() => handleAddFormReferenceText()}
                   >
                     <IconAdd className="mr-3" width="14" height="14" />
-                    Tambah Value
+                    Tambah Relasi
                   </p>
                 </div>
               </div>

@@ -55,7 +55,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       return {
         props: {
           session,
-          title: "Ubah Reference tanpa relasi - Site Management",
+          title: "Tambah Reference tanpa relasi - Site Management",
         },
       };
     }

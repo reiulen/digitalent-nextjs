@@ -49,9 +49,10 @@ const Tambah = ({ token }) => {
       Swal.fire("Gagal", `Nama data reference tidak boleh kosong`, "error");
     } else if (status === "") {
       Swal.fire("Gagal", `Status tidak boleh kosong`, "error");
-    } else if (values.length === 1){
-      Swal.fire("Gagal", `Form value tidak boleh kosong`, "error");
     } 
+    // else if (values.length === 1){
+    //   Swal.fire("Gagal", `Form value tidak boleh kosong`, "error");
+    // } 
     
     else {
       let formData = new FormData();
