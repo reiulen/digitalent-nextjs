@@ -21,7 +21,7 @@ const TambahApi = ({ token }) => {
  
 
   const detailUnitWork = useSelector((state) => state.detailUnitWork);
- 
+ console.log("detailUnitWork",detailUnitWork)
   let sortirOptionTempProv = detailUnitWork?.unitWork?.provinsi
   let optionTempProv = sortirOptionTempProv.map((items)=>{
     return {...items,label:items.provinsi,region:items.provinsi}
@@ -68,12 +68,10 @@ let sortirOptionTempProvList = allProvincesSite?.data
         "Form nama satuan kerja tidak boleh kosong",
         "error"
       );
-    } else if (status === "") {
+    } 
+    else if (status === "") {
       Swal.fire("Gagal simpan", "Form status tidak boleh kosong", "error");
     } 
-    // else if (valueProvinsi.length === 0) {
-    //   Swal.fire("Gagal simpan", "Form provinsi tidak boleh kosong", "error");
-    // } 
     else {
       Swal.fire({
         title: "Apakah anda yakin simpan ?",
@@ -165,16 +163,16 @@ let sortirOptionTempProvList = allProvincesSite?.data
                     className="form-control"
                     onChange={(e) => setStatus(e.target.value)}
                   >
-                    <option value="1">Aktif</option>
                     <option value="0">Tidak Aktif</option>
+                    <option value="1">Aktif</option>
                   </select>
                 ) : (
                   <select
                     className="form-control"
                     onChange={(e) => setStatus(e.target.value)}
                   >
-                    <option value="0">Tidak Aktif</option>
                     <option value="1">Aktif</option>
+                    <option value="0">Tidak Aktif</option>
                   </select>
                 )}
               </div>
