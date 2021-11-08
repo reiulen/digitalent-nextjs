@@ -172,7 +172,9 @@ const EditArtikel = ({ token, idUser }) => {
         data.splice([i], 1);
       }
     }
-    setTag(data);
+    if ((data).includes(data) !== true) {
+      setTag(data);
+    }
   }
 
   const onSubmit = e => {
@@ -472,7 +474,7 @@ const EditArtikel = ({ token, idUser }) => {
                         alt="image"
                         width={160}
                         height={160}
-                        objectFit="cover"
+                        objectFit="fill"
                       />
                     </figure>
                     <div className="position-relative">
@@ -506,7 +508,7 @@ const EditArtikel = ({ token, idUser }) => {
                     ) : null}
                   </div>
 
-                  <div className="mt-3 col-sm-6 col-md-6 col-lg-7 text-muted">
+                  <div className="mt-3 col-sm-6 col-md-6 col-lg-7 col-xl-3 text-muted">
                     <p>
                       Resolusi yang direkomendasikan adalah 1024 * 512. Fokus
                       visual pada bagian tengah gambar
@@ -622,12 +624,12 @@ const EditArtikel = ({ token, idUser }) => {
                   >
                     Tag
                   </label>
-                  <div className="col-sm-12">
+                  <div className="col-sm-12" style={{ wordBreak: 'break-word' }}>
                     <TagsInput
                       value={tag}
                       onChange={(data) => handleTag(data)}
                       name="fruits"
-                      placeHolder="Isi Tag disini"
+                      placeHolder="Isi Tag disini dan Enter"
                       seprators={["Enter", "Tab"]}
                     // onBlur={() => simpleValidator.current.showMessageFor('tag')}
                     />
