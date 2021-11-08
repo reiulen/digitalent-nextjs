@@ -1,10 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
 export default function Carousel({ imagetron }) {
   const router = useRouter();
+
+  const getWindowDimensions = () => {
+    const { innerWidth: width, innerHeight: height } = window;
+    return {
+      width,
+      height,
+    };
+  };
+
+  const [windowDimensions, setWindowDimensions] = useState(
+    getWindowDimensions()
+  );
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowDimensions(getWindowDimensions());
+    }
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   function SamplePrevArrow(props) {
     const { className, style, onClick } = props;
@@ -77,7 +98,7 @@ export default function Carousel({ imagetron }) {
                 row.gambar
               }
               width={1200}
-              height={400}
+              height={windowDimensions.width < 800 ? 550 : 400}
               objectFit="cover"
               className="img-carousel"
               // onClick={() => router.push(row.url_link)} ROUTING IMAGE WHEN TRIGRER CLICK

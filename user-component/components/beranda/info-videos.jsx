@@ -34,8 +34,8 @@ export default function infoVideos({ video }) {
                 Informasi Dalam Video Terkini
               </h1>
               <p className="fz-16 my-10" style={{ color: "#6C6C6C" }}>
-                Temukan konten terupdate dan terkini mengenai Digital
-                <br /> Talent Scholarship
+                {(video && video.isi_video.substring(0, 200) + " ...") ||
+                  "Temukan konten terupdate dan terkini mengenai Digital Talent Scholarship"}
               </p>
               <Link href="/video">
                 <a>
