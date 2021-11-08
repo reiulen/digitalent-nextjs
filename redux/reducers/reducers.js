@@ -72,8 +72,8 @@ import {
   allVideoContentReducer,
   allTagReducer,
   playVideoContentReducer,
-  kategoriVideoContentReducer
-} from "./beranda/video-content.reducer"
+  kategoriVideoContentReducer,
+} from "./beranda/video-content.reducer";
 
 import { allDashboardPublikasiReducer } from "./publikasi/dashboard-publikasi.reducers";
 
@@ -410,6 +410,7 @@ import {
   pelatihanByTemaReducer,
   allPublikasiBerandaReducer,
   addNotifTemaReducer,
+  berandaFooterReducer,
 } from "../reducers/beranda/beranda.reducers";
 
 // ========== detail akademi ========
@@ -800,6 +801,7 @@ const reducer = combineReducers({
   temaByAkademi: temaByAkademiReducer,
   pelatihanByTema: pelatihanByTemaReducer,
   allPublikasiBeranda: allPublikasiBerandaReducer,
+  berandaFooter: berandaFooterReducer,
 
   // ========== detail akademi ========
   detailAkademi: detailAkademiReducer,

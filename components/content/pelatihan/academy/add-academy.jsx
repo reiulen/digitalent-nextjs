@@ -350,7 +350,7 @@ const AddAcademy = ({ token }) => {
 
               <div className="form-group mb-3">
                 <label className="col-form-label font-weight-bold">
-                  Upload Browsur (Optional)
+                  Upload Brosur (Optional)
                 </label>
                 <div className="d-flex">
                   <div className="custom-file">

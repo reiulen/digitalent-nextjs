@@ -56,23 +56,25 @@ const SuportDocument = ({ commitment, lpj, saran }) => {
             <h5 className="font-weight-bolder pb-5">Pelaksanaan Kegiatan</h5>
             {lpj.form_lpj.map((row, i) => (
               <div className="row mb-3" key={i}>
-                {/* <div className="col-md-10">
-                <p className="text-neutral-body my-0">Uraian {i + 1}</p>
-                <p className="text-dark">{row.uraian}</p>
-              </div>
-              <div className="col-md-2">
-                <p className="text-dark my-0">Checklis</p>
-                <div className="form-check mt-2">
-                  <input
-                    type="checkbox"
-                    name="reminder"
-                    className="form-check-input"
-                    value={true}
-                    checked={row.value === true}
-                    disabled
-                  />
+                <div className="col-md-10">
+                  <p className="text-neutral-body my-0">Uraian {i + 1}</p>
+                  <p className="text-dark">{row.name}</p>
                 </div>
-              </div> */}
+                <div className="col-md-2 mb-5">
+                  <div className="ceklis">
+                    <p className="form-check-label text-dark my-0">Checklis</p>
+                    <div className="form-check mt-0 mt-md-2">
+                      <input
+                        type="checkbox"
+                        name="reminder"
+                        className="form-check-input"
+                        value={true}
+                        checked={row.value === "1"}
+                        disabled
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
             ))}
 

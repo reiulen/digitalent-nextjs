@@ -15,10 +15,6 @@ import {
 import { middlewareAuthPesertaSession } from "../../../utils/middleware/authMiddleware";
 import { getAllAkademi } from "../../../redux/actions/beranda/beranda.actions";
 
-const Layout = dynamic(() =>
-  import("../../../user-component/components/template/Layout.component")
-);
-
 const IndexForm = dynamic(
   () =>
     import(
@@ -62,9 +58,7 @@ export default function FormPendaftaran(props) {
   }, [dataForm, dispatch]);
   return (
     <>
-      <Layout title="Form Pendaftaran Peserta - Pelatihan" session={session}>
-        <IndexForm token={session.token} />
-      </Layout>
+      <IndexForm token={session.token} session={session} />
     </>
   );
 }
