@@ -394,10 +394,35 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
       }
     };
   }, [targetKuotaRegister]);
+  useEffect(() => {
+    const number = document.getElementById("number2");
+    number.onkeydown = (e) => {
+      if (e.code == "Minus") {
+        return false;
+      }
+      if (e.code == "Period") {
+        return false;
+      }
+      if (e.code == "NumpadAdd") {
+        return false;
+      }
+      if (e.code == "NumpadSubtract") {
+        return false;
+      }
+      if (e.code == "Equal") {
+        return false;
+      }
+    };
+  }, [targetKuotaUser]);
+  const [errorMessageKuota, setErrorMessageKuota] = useState(false);
 
   useEffect(() => {
-    if (targetKuotaUser > targetKuotaRegister) {
-      setTargetKuotaUser(targetKuotaRegister);
+    if (targetKuotaUser < targetKuotaRegister) {
+      setErrorMessageKuota(false);
+    }
+    if (+targetKuotaUser > +targetKuotaRegister) {
+      setErrorMessageKuota(true);
+      setTargetKuotaUser(+targetKuotaRegister);
     }
   }, [targetKuotaRegister, targetKuotaUser]);
 
@@ -900,16 +925,20 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
               <input
                 placeholder="Silahkan Masukan Kuota Target Peserta"
                 type="number"
-                min="2"
-                max={targetKuotaRegister}
+                min="1"
                 value={targetKuotaUser}
-                onChange={(e) => setTargetKuotaUser(+e.target.value)}
+                onChange={(e) => setTargetKuotaUser(e.target.value)}
                 className="form-control"
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("kuota target peserta")
                 }
                 id="number2"
               />
+              {errorMessageKuota && (
+                <p className="text-danger">
+                  Kuota user tidak boleh lebih dari kuota register
+                </p>
+              )}
               {simpleValidator.current.message(
                 "kuota target peserta",
                 targetKuotaUser,
