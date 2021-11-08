@@ -214,6 +214,11 @@ const DetailAkademi = ({ session }) => {
   };
 
   const handlePagination = (pageNumber) => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+
     setActivePage(pageNumber);
     let provinsi = null;
     let tipe_pelatihan = null;
