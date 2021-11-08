@@ -363,8 +363,8 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
         tuna_rungu,
         tuna_daksa,
       };
-      // dispatch(storeTrainingStep1(data));
-      // propsStep(2);
+      dispatch(storeTrainingStep1(data));
+      propsStep(2);
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
