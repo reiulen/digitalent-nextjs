@@ -95,27 +95,6 @@ const TambahApi = ({ token,id }) => {
       }
     }
   };
-
-  const btnIconPlus = {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    width: "19px",
-    height: "19px",
-    borderRadius: "5px",
-    backgroundColor: "#ADB5BD",
-  };
-  const btnMin = {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    width: "19px",
-    height: "19px",
-    borderRadius: "5px",
-    backgroundColor: "#4299E1",
-  };
-
-  
   return (
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">
@@ -135,7 +114,7 @@ const TambahApi = ({ token,id }) => {
                   value={nameCooperation}
                   type="text"
                   className="form-control"
-                  placeholder="Masukan nama lengkap"
+                  placeholder="Masukkan nama lengkap"
                   onChange={(e) => setNameCooperation(e.target.value)}
                 />
               </div>
@@ -146,7 +125,7 @@ const TambahApi = ({ token,id }) => {
                   value={email && email}
                   type="email"
                   className="form-control"
-                  placeholder="Masukan email"
+                  placeholder="mitra@gmail.com"
                 />
               </div>
               <div className="form-group">
@@ -157,7 +136,7 @@ const TambahApi = ({ token,id }) => {
                     id="input-password"
                     type="password"
                     className="form-control"
-                    placeholder="Masukan password"
+                    placeholder="Masukkan password"
                   />
                   {hidePassword === true ? (
                     <i
@@ -182,7 +161,7 @@ const TambahApi = ({ token,id }) => {
                     id="input-password-confirm"
                     type="password"
                     className="form-control"
-                    placeholder="Masukan password konfirmasi"
+                    placeholder="Masukkan password konfirmasi"
                   />
                   {hidePasswordConfirm === true ? (
                     <i
@@ -199,6 +178,11 @@ const TambahApi = ({ token,id }) => {
                   )}
                 </div>
               </div>
+              <p style={{color:"#b7b5cf"}}>
+                Min 8 Karakter,<br/>
+                Case Sensitivity (min t.d 1 Uppercase, 1 lowercase)<br/>
+                Min 1 Symbol/angka
+              </p>
               <div className="form-group">
                 <label>Status</label>
                 {mitaSite.status == 1 ? (

@@ -612,7 +612,7 @@ const Imagetron = ({ token }) => {
                                         <tbody>
                                             {
                                                 !imagetron || imagetron && imagetron.data.imagetron.length === 0 ?
-                                                    <td className='align-middle text-center' colSpan={9}>Data Tidak Ditemukan</td> :
+                                                    <td className='align-middle text-center' colSpan={9}>Data Kosong</td> :
                                                     imagetron && imagetron.data.imagetron.map((row, i) => {
                                                         return <tr key={row.id}>
                                                             <td className='align-middle text-center'>

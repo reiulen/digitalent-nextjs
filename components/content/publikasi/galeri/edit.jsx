@@ -260,7 +260,9 @@ const EditGaleri = ({ token }) => {
                 data.splice([i], 1);
             }
         }
-        setTag(data);
+        if ((data).includes(data) !== true) {
+            setTag(data);
+        }
     }
 
     const handleData = (temps, onCall) => {
@@ -466,7 +468,7 @@ const EditGaleri = ({ token }) => {
                                                                     alt="image"
                                                                     width={160}
                                                                     height={160}
-                                                                    objectFit="cover"
+                                                                    objectFit="fill"
                                                                     id={row.imagePreview}
                                                                 />
 
@@ -572,12 +574,12 @@ const EditGaleri = ({ token }) => {
 
                             <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Tag</label>
-                                <div className="col-sm-12">
+                                <div className="col-sm-12" style={{ wordBreak: 'break-word' }}>
                                     <TagsInput
                                         value={tag}
                                         onChange={(data) => handleTag(data)}
                                         name="fruits"
-                                        placeHolder="Isi Tag disini"
+                                        placeHolder="Isi Tag disini dan Enter"
                                     // onBlur={() => simpleValidator.current.showMessageFor('tag')}
                                     />
                                     {
