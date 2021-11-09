@@ -151,168 +151,174 @@ const DetailBerita = () => {
             {/* End of Header */}
 
             {/* Content */}
-            <div className="row mt-10">
+            {
+                detail ?
+                    <div className="row mt-10">
 
-                {/* Left Side */}
-                <div className="col-12 col-md-8">
-                    {/* Image */}
-                    <Image
-                        // src="/assets/media/default-detail-image.png"
-                        src={
-                            process.env.END_POINT_API_IMAGE_PUBLIKASI +
-                            "publikasi/images/" + detail.gambar
-                        }
-                        width="1500vw"
-                        height="1000vh" 
-                        // layout="fill"
-                        objectFit="cover"
-                        alt="Detail Image"
-                        className="rounded-lg"
-                    />
-
-                    {/* Berita */}
-                    <div className="border rounded-lg mb-5 mt-15">
-                        <div className="row my-5 mx-5">
-                            {
-                                searchWords ?
-                                    <Highlighter 
-                                        highlightClassName="YourHighlightClass"
-                                        searchWords={searchWords}
-                                        autoEscape={true}
-                                        textToHighlight={detail.isi_berita}
-                                        // textToHighlight={<div dangerouslySetInnerHTML={{__html: detail.isi_artikel}}/>}
-                                    />
-                                :
-                                    <div dangerouslySetInnerHTML={{__html: detail.isi_berita}}/>
-                            }
-                        </div>
-
-                        <div className="row m-3 d-flex justify-content-between pb-5">
-                            <div className="row d-flex justify-content-between ml-3">
-                                {
-                                    detail && detail.tag && detail.tag.length !== 0 ?
-                                        detail.tag.map ((el, i) => {
-                                            return (
-                                                <div className="mr-3 border p-3 rounded" key={i}>
-                                                {el}
-                                                </div>
-                                            )
-                                        })
-                                    :
-                                        null
+                        {/* Left Side */}
+                        <div className="col-12 col-md-8">
+                            {/* Image */}
+                            <Image
+                                // src="/assets/media/default-detail-image.png"
+                                src={
+                                    process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                    "publikasi/images/" + detail.gambar
                                 }
-                            </div>
+                                width="1500vw"
+                                height="1000vh" 
+                                // layout="fill"
+                                objectFit="cover"
+                                alt="Detail Image"
+                                className="rounded-lg"
+                            />
 
-                            <div className="row">
-                                <button className="btn btn-outline-light rounded-circle mr-3">
-                                    <i className="ri-share-line p-0"></i>
-                                </button>
-                                
-                                <button className="btn btn-outline-light rounded-circle mr-3">
-                                    <i className="ri-heart-line p-0"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {/* End of Left Side */}
-
-                {/* Right Side */}
-                {
-                    windowDimensions && windowDimensions.width && windowDimensions.width > 750 ?
-                        <div className="col-12 col-md-4">
-
-                            {/* Search */}
-                            <div className="border rounded">
-                                <div className="row mt-10 mb-5"> 
-                                    <div className="col-2 my-auto ml-5">
-                                        <Image 
-                                            src={`/assets/media/logo-filter.svg`}
-                                            width={40}
-                                            height={40}
-                                            alt="Logo filter"
-                                        />
-                                    </div>
-                                    <div className="col-9 my-auto">
-                                        <h3 className=" font-weight-bolder">
-                                            Pencarian
-                                        </h3>
-                                    </div>
-                                </div>
-
-                                <form className="mb-10 mx-5">
-                                    <div className="input-group">
-                                        {/* <i className="ri-search-line position-absolute my-5 ml-3" style={{zIndex:"10"}} ></i> */}
-
-                                        <div className="input-group-prepend">
-                                            <div 
-                                                className="input-group-text bg-light border-right-0 pr-1"
-                                                style={{borderTopLeftRadius:"150px", borderBottomLeftRadius:"150px"}}
-                                            >
-                                                <i className="ri-search-line"></i>
-                                            </div>
-                                        </div>
-
-                                        <input 
-                                            type="text" 
-                                            className="form-control border-left-0 border p-0 bg-light"  
-                                            placeholder="Cari Berita"
-                                            // style={{borderTopLeftRadius:"150px", borderBottomLeftRadius:"150px"}}
-                                            onChange={(e) => setKeyword(e.target.value)}
-                                        />
-                        
-                                        <div>
-                                            <button 
-                                                className="btn btn-primary-dashboard" 
-                                                onClick={(e) => handleHighlightWords(e, detail.isi_berita)}
-                                                style={{borderTopRightRadius:"150px", borderBottomRightRadius:"150px"}}
-                                            >
-                                                Cari
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-
-                            </div>
-
-                            {/* Tag */}
-                            <div className="row mt-10 d-flex flex-column mx-10">
-                                <h3 className="font-weight-bolder"> 
-                                    Temukan Lebih Banyak Berita Yang Sesuai:
-                                </h3>
-                                <div className=" d-flex flex-wrap flex-row">
+                            {/* Berita */}
+                            <div className="border rounded-lg mb-5 mt-15">
+                                <div className="row my-5 mx-5">
                                     {
-                                        tags && tags.tag && tags.tag.length !== 0 ?
-                                            tags.tag.map ((el, i) => {
-                                                return (
-                                                    <div 
-                                                        className="border px-2 py-1 rounded my-3 mr-3" 
-                                                        key={i}
-                                                        onClick={() => handleFilterTag(el)}
-                                                        style={{cursor:"pointer"}}
-                                                    >
-                                                        {el}
-                                                    </div>
-                                                )
-                                            })
+                                        searchWords ?
+                                            <Highlighter 
+                                                highlightClassName="YourHighlightClass"
+                                                searchWords={searchWords}
+                                                autoEscape={true}
+                                                textToHighlight={detail.isi_berita}
+                                                // textToHighlight={<div dangerouslySetInnerHTML={{__html: detail.isi_artikel}}/>}
+                                            />
                                         :
-                                            <div className="row text-center">
-                                                <h3 className="text-muted">
-                                                    <em>
-                                                        Tag Belum Tersedia
-                                                    </em>
-                                                </h3>
-                                            </div>
+                                            <div dangerouslySetInnerHTML={{__html: detail.isi_berita}}/>
                                     }
                                 </div>
+
+                                <div className="row m-3 d-flex justify-content-between pb-5">
+                                    <div className="row d-flex justify-content-between ml-3">
+                                        {
+                                            detail && detail.tag && detail.tag.length !== 0 ?
+                                                detail.tag.map ((el, i) => {
+                                                    return (
+                                                        <div className="mr-3 border p-3 rounded" key={i}>
+                                                        {el}
+                                                        </div>
+                                                    )
+                                                })
+                                            :
+                                                null
+                                        }
+                                    </div>
+
+                                    <div className="row">
+                                        <button className="btn btn-outline-light rounded-circle mr-3">
+                                            <i className="ri-share-line p-0"></i>
+                                        </button>
+                                        
+                                        <button className="btn btn-outline-light rounded-circle mr-3">
+                                            <i className="ri-heart-line p-0"></i>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    :
-                        null
-                }
-                
-                {/* End of Right Side */}
-            </div>
+                        {/* End of Left Side */}
+
+                        {/* Right Side */}
+                        {
+                            windowDimensions && windowDimensions.width && windowDimensions.width > 750 ?
+                                <div className="col-12 col-md-4">
+
+                                    {/* Search */}
+                                    <div className="border rounded">
+                                        <div className="row mt-10 mb-5"> 
+                                            <div className="col-2 my-auto ml-5">
+                                                <Image 
+                                                    src={`/assets/media/logo-filter.svg`}
+                                                    width={40}
+                                                    height={40}
+                                                    alt="Logo filter"
+                                                />
+                                            </div>
+                                            <div className="col-9 my-auto">
+                                                <h3 className=" font-weight-bolder">
+                                                    Pencarian
+                                                </h3>
+                                            </div>
+                                        </div>
+
+                                        <form className="mb-10 mx-5">
+                                            <div className="input-group">
+                                                {/* <i className="ri-search-line position-absolute my-5 ml-3" style={{zIndex:"10"}} ></i> */}
+
+                                                <div className="input-group-prepend">
+                                                    <div 
+                                                        className="input-group-text bg-light border-right-0 pr-1"
+                                                        style={{borderTopLeftRadius:"150px", borderBottomLeftRadius:"150px"}}
+                                                    >
+                                                        <i className="ri-search-line"></i>
+                                                    </div>
+                                                </div>
+
+                                                <input 
+                                                    type="text" 
+                                                    className="form-control border-left-0 border p-0 bg-light"  
+                                                    placeholder="Cari Berita"
+                                                    // style={{borderTopLeftRadius:"150px", borderBottomLeftRadius:"150px"}}
+                                                    onChange={(e) => setKeyword(e.target.value)}
+                                                />
+                                
+                                                <div>
+                                                    <button 
+                                                        className="btn btn-primary-dashboard" 
+                                                        onClick={(e) => handleHighlightWords(e, detail.isi_berita)}
+                                                        style={{borderTopRightRadius:"150px", borderBottomRightRadius:"150px"}}
+                                                    >
+                                                        Cari
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+
+                                    </div>
+
+                                    {/* Tag */}
+                                    <div className="row mt-10 d-flex flex-column mx-10">
+                                        <h3 className="font-weight-bolder"> 
+                                            Temukan Lebih Banyak Berita Yang Sesuai:
+                                        </h3>
+                                        <div className=" d-flex flex-wrap flex-row">
+                                            {
+                                                tags && tags.tag && tags.tag.length !== 0 ?
+                                                    tags.tag.map ((el, i) => {
+                                                        return (
+                                                            <div 
+                                                                className="border px-2 py-1 rounded my-3 mr-3" 
+                                                                key={i}
+                                                                onClick={() => handleFilterTag(el)}
+                                                                style={{cursor:"pointer"}}
+                                                            >
+                                                                {el}
+                                                            </div>
+                                                        )
+                                                    })
+                                                :
+                                                    <div className="row text-center">
+                                                        <h3 className="text-muted">
+                                                            <em>
+                                                                Tag Belum Tersedia
+                                                            </em>
+                                                        </h3>
+                                                    </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            :
+                                null
+                        }
+                        
+                        {/* End of Right Side */}
+                    </div>
+                :
+                    null
+            }
+            
             {/* End of Content */}
         </div>
     )
