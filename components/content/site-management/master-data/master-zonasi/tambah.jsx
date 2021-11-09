@@ -53,17 +53,6 @@ const Tambah = ({ token }) => {
 
     _temp[index].value = []
 
-
-    
-
-    
-        // selectRefKabupaten.select.clearValue();
-
-        
-
-
-
-
     try {
       let { data } = await axios.get(
         `${process.env.END_POINT_API_SITE_MANAGEMENT}api/option/provinsi-choose/${e.id}`,

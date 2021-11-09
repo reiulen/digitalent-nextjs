@@ -15,7 +15,7 @@ const SubHeaderComponent = ({ data = [] }) => {
               <i className="ri-arrow-right-s-line"></i>
             </span>
             <Link href={row.link} passHref>
-              <span>{row.name}</span>
+              <span>{row.name.substring(0, 30) + " ..."}</span>
             </Link>
           </div>
         ))}

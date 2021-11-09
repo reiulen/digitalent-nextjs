@@ -88,9 +88,6 @@ const DashbardPublikasi = ({ token }) => {
         },
     ])
 
-    // const [ colors, setColors ] = useState (["#215480", "#4299E1"])
-    // const [ totalPublish, setTotalPublish ] = useState ()
-
     const [dataDashboardBerita, setDataDashboardBerita] = useState(dashboard_publikasi.berita ? dashboard_publikasi.berita : null)
     const [dataDashboardArtikel, setDataDashboardArtikel] = useState(dashboard_publikasi.artikel ? dashboard_publikasi.artikel : null)
     const [dataDashboardGallery, setDataDashboardGallery] = useState(dashboard_publikasi.gallery ? dashboard_publikasi.gallery : null)
@@ -102,7 +99,6 @@ const DashbardPublikasi = ({ token }) => {
         <>
             <PageWrapper>
                 <div className="row">
-                    {/* <div className="col-lg-12 col-xxl-12 my-5"> */}
                     <div className={`${styles.haloAdmin} col-lg-12 col-xxl-12`}>
                         <div className="card card-custom bg-white">
                             <div className="card-body pt-2" style={{ backgroundPosition: 'left bottom', backgroundImage: "url('/assets/media/Frame-White.svg')", backgroundRepeat: 'no-repeat', borderRadius: '6px' }}>
@@ -131,7 +127,6 @@ const DashbardPublikasi = ({ token }) => {
                             </div>
                         </div>
                     </div>
-                    {/* <div className="col-lg-6 col-xxl-6 my-5"> */}
                     <div className={`${styles.kontenPublish} col-lg-6 col-xxl-6`}>
                         <div className="card card-custom card-stretch gutter-b">
                             <div className="card-body pt-2" style={{ backgroundColor: "#215480", borderRadius: "6px" }}>
@@ -166,7 +161,6 @@ const DashbardPublikasi = ({ token }) => {
                                             <div style={{ backgroundColor: "#4299E1", width: "50px", height: "50px", borderRadius: "6px" }}>
 
                                             </div>
-                                            {/* <Image src="/assets/icon/new/mail-purple.svg" width={50} height={50} alt="publish-pict" /> */}
                                             <div className=" ml-3 my-2">
                                                 <h3 className="font-weight-bold">
                                                     {totalPublishContent}
@@ -181,7 +175,6 @@ const DashbardPublikasi = ({ token }) => {
                                             <div style={{ backgroundColor: "#4CBDE2", width: "50px", height: "50px", borderRadius: "6px" }}>
 
                                             </div>
-                                            {/* <Image src="/assets/icon/new/blue-bars.svg" width={50} height={50} alt="publish-pict" /> */}
                                             <div className=" ml-3 my-2">
                                                 <h3 className="font-weight-bold">
                                                     {totalUnpublishContent}
@@ -198,8 +191,7 @@ const DashbardPublikasi = ({ token }) => {
                             </div>
                         </div>
                     </div>
-
-                    {/* <div className="col-lg-6 col-xxl-6 my-5"> */}
+                    \
                     <div className={`${styles.totalUser} col-lg-6 col-xxl-6`}>
                         <div className="card card-custom card-stretch gutter-b">
                             <div className="card-body pt-2">
@@ -212,15 +204,12 @@ const DashbardPublikasi = ({ token }) => {
                                     <PieChart width={350} height={350}>
                                         <Pie
                                             data={dataPieChart}
-                                            // dataKey="value"
-                                            // nameKey="name"
                                             cx="50%"
                                             cy="50%"
                                             innerRadius={115}
                                             outerRadius={140}
                                             paddingAngle={-10}
                                             cornerRadius={30}
-                                        // fill="#215480"
                                         >
                                             {
                                                 dataPieChart.map((el, i) => {
@@ -247,7 +236,6 @@ const DashbardPublikasi = ({ token }) => {
                             </div>
                             <div className="card-body" style={{ marginTop: "20vh" }}>
                                 <div className="mb-10 flex-column">
-                                    {/* <h3 className="card-title font-weight-bolder text-muted">Total Konten</h3> */}
                                     <div className="row">
                                         <div className="col-6 d-flex flex-row d-flex justify-content-center">
                                             <Image src="/assets/icon/new/mail-purple.svg" width={50} height={50} alt="publish-pict" />
@@ -280,224 +268,155 @@ const DashbardPublikasi = ({ token }) => {
                         </div>
                     </div>
 
-                    <div className="col-lg-12 col-xxl-12">
-                        {/* <!--begin::Row--> */}
-                        {/* <div className="row m-0">
-                            <CardDashboard background='bg-white' color='text-dark' icon='mail.svg' title='Total Berita yang dibaca' muted='Dibaca' mutedValue='200k' />
-                            <CardDashboard background='bg-primary' color='text-white' icon='list-white.svg' title='Total Artikel yang dibaca' muted='Dibaca' mutedValue='200k' />
-                            <CardDashboard background='bg-warning' color='text-white' icon='blok4-white.svg' title='Jumlah Semua Konten' muted='Publish' mutedValue='200k' />
-                        </div> */}
-                        {/* <!--end::Row--> */}
-                    </div>
-                    {/* <!--end::Stats--> */}
+                    <div className="col-lg-12 col-xxl-12"></div>
 
-                    {/* <div className="col-lg-6 col-xxl-6"> */}
                     <div className={`${styles.topBerita} col-lg-6 col-xxl-6`}>
-                        {/* <!--begin::List Widget 3--> */}
 
                         {
                             dataDashboardBerita.top_berita ?
                                 <div className="card card-custom card-stretch gutter-b">
-                                    {/* <!--begin::Header--> */}
                                     <div className="card-header border-0">
                                         <h3 className="card-title font-weight-bolder text-dark">3 Top Berita</h3>
                                     </div>
-                                    {/* <!--end::Header--> */}
-                                    {/* <!--begin::Body--> */}
                                     <div className="card-body pt-2">
-                                        {/* <!--begin::Item--> */}
                                         {
                                             dataDashboardBerita.top_berita.map((el, i) => {
                                                 return (
                                                     <div className="d-flex align-items-center mb-10" key={i}>
-                                                        {/* <!--begin::Symbol--> */}
                                                         <div className="symbol symbol-40 symbol-light-success mr-5">
                                                             <Image width={94} height={63} src="/assets/media/dummy-banner.png" className="align-self-end rounded" alt="" />
                                                         </div>
-                                                        {/* <!--end::Symbol--> */}
-                                                        {/* <!--begin::Text--> */}
                                                         <div className="d-flex flex-column flex-grow-1 font-weight-bold">
                                                             <p className="text-dark text-hover-primary mb-1 font-size-lg">{el.judul_berita}</p>
                                                             <span className="text-muted">Kategori : <span className='text-primary'>{el.kategori}</span></span>
                                                             <span className="text-muted">Created By : <span className='text-primary'>{el.dibuat}</span></span>
                                                         </div>
-                                                        {/* <!--end::Text--> */}
 
-                                                        {/* <!--begin::Text--> */}
                                                         <div className="d-flex flex-column flex-grow-1 font-weight-bold text-right">
                                                             <p className="text-dark text-hover-primary mb-1 font-size-lg font-weight-bold display-4">{el.total_views}</p>
                                                             <span className="text-muted">Dibaca</span>
                                                         </div>
-                                                        {/* <!--end::Text--> */}
                                                     </div>
                                                 )
                                             })
                                         }
-                                        {/* <!--end::Item--> */}
 
                                     </div>
-                                    {/* <!--end::Body--> */}
                                 </div>
                                 :
                                 <LoadingTable />
                         }
 
-                        {/* <!--end::List Widget 3--> */}
                     </div>
 
-                    {/* <div className="col-lg-6 col-xxl-6 order-1 order-xxl-2"> */}
                     <div className={`${styles.topArtikel} col-lg-6 col-xxl-6 order-1 order-xxl-2`}>
-                        {/* <!--begin::List Widget 3--> */}
                         {
                             dataDashboardArtikel.top_artikel ?
                                 <div className="card card-custom card-stretch gutter-b">
-                                    {/* <!--begin::Header--> */}
                                     <div className="card-header border-0">
                                         <h3 className="card-title font-weight-bolder text-dark">3 Top Artikel</h3>
                                     </div>
-                                    {/* <!--end::Header--> */}
-                                    {/* <!--begin::Body--> */}
                                     <div className="card-body pt-2">
-                                        {/* <!--begin::Item--> */}
                                         {
                                             dataDashboardArtikel.top_artikel.map((el, i) => {
                                                 return (
                                                     <div className="d-flex align-items-center mb-10" key={i}>
-                                                        {/* <!--begin::Symbol--> */}
                                                         <div className="symbol symbol-40 symbol-light-success mr-5">
                                                             <Image width={94} height={63} src="/assets/media/dummy-banner.png" className="align-self-end rounded" alt="" />
                                                         </div>
-                                                        {/* <!--end::Symbol--> */}
-                                                        {/* <!--begin::Text--> */}
                                                         <div className="d-flex flex-column flex-grow-1 font-weight-bold">
                                                             <p className="text-dark text-hover-primary mb-1 font-size-lg">{el.judul_artikel}</p>
                                                             <span className="text-muted">Kategori : <span className='text-primary'>{el.kategori}</span></span>
                                                             <span className="text-muted">Created By : <span className='text-primary'>{el.dibuat}</span></span>
                                                         </div>
-                                                        {/* <!--end::Text--> */}
 
-                                                        {/* <!--begin::Text--> */}
                                                         <div className="d-flex flex-column flex-grow-1 font-weight-bold text-right">
                                                             <p className="text-dark text-hover-primary mb-1 font-size-lg font-weight-bold display-4">{el.total_views}</p>
                                                             <span className="text-muted">Dibaca</span>
                                                         </div>
-                                                        {/* <!--end::Text--> */}
                                                     </div>
                                                 )
                                             })
                                         }
-                                        {/* <!--end::Item--> */}
 
                                     </div>
-                                    {/* <!--end::Body--> */}
                                 </div>
                                 :
                                 <LoadingTable />
                         }
-                        {/* <!--end::List Widget 3--> */}
                     </div>
 
-                    {/* <div className="col-lg-6 col-xxl-6 order-1 order-xxl-2"> */}
                     <div className={`${styles.topGaleri} col-lg-6 col-xxl-6 order-1 order-xxl-2`}>
-                        {/* <!--begin::List Widget 3--> */}
                         {
                             dataDashboardGallery.top_gallery ?
                                 <div className="card card-custom card-stretch gutter-b">
-                                    {/* <!--begin::Header--> */}
                                     <div className="card-header border-0">
                                         <h3 className="card-title font-weight-bolder text-dark">3 Top Galeri</h3>
                                     </div>
-                                    {/* <!--end::Header--> */}
-                                    {/* <!--begin::Body--> */}
                                     <div className="card-body pt-2">
-                                        {/* <!--begin::Item--> */}
                                         {
                                             dataDashboardGallery.top_gallery.map((el, i) => {
                                                 return (
                                                     <div className="d-flex align-items-center mb-10" key={i}>
-                                                        {/* <!--begin::Symbol--> */}
                                                         <div className="symbol symbol-40 symbol-light-success mr-5" key={i}>
                                                             <Image width={94} height={63} src="/assets/media/dummy-banner.png" className="align-self-end rounded" alt="" />
                                                         </div>
-                                                        {/* <!--end::Symbol--> */}
-                                                        {/* <!--begin::Text--> */}
                                                         <div className="d-flex flex-column flex-grow-1 font-weight-bold">
                                                             <p className="text-dark text-hover-primary mb-1 font-size-lg">{el.judul}</p>
                                                             <span className="text-muted">Kategori : <span className='text-primary'>{el.nama_kategori}</span></span>
                                                             <span className="text-muted">Created By : <span className='text-primary'>{el.dibuat}</span></span>
                                                         </div>
-                                                        {/* <!--end::Text--> */}
 
-                                                        {/* <!--begin::Text--> */}
                                                         <div className="d-flex flex-column flex-grow-1 font-weight-bold text-right">
                                                             <p className="text-dark text-hover-primary mb-1 font-size-lg font-weight-bold display-4">{el.total_views}</p>
                                                             <span className="text-muted">Dibaca</span>
                                                         </div>
-                                                        {/* <!--end::Text--> */}
                                                     </div>
                                                 )
                                             })
                                         }
-                                        {/* <!--end::Item--> */}
 
                                     </div>
-                                    {/* <!--end::Body--> */}
                                 </div>
                                 :
                                 <LoadingTable />
                         }
-                        {/* <!--end::List Widget 3--> */}
                     </div>
                     <div className={`${styles.topVideo} col-lg-6 col-xxl-6 order-1 order-xxl-2`}>
-                        {/* <div className="col-lg-6 col-xxl-6 order-1 order-xxl-2"> */}
-                        {/* <!--begin::List Widget 3--> */}
                         {
                             dataDashboardVideo.top_video ?
                                 <div className="card card-custom card-stretch gutter-b">
-                                    {/* <!--begin::Header--> */}
                                     <div className="card-header border-0">
                                         <h3 className="card-title font-weight-bolder text-dark">3 Top Video</h3>
                                     </div>
-                                    {/* <!--end::Header--> */}
-                                    {/* <!--begin::Body--> */}
                                     <div className="card-body pt-2">
-                                        {/* <!--begin::Item--> */}
                                         {
                                             dataDashboardVideo.top_video.map((el, i) => {
                                                 return (
                                                     <div className="d-flex align-items-center mb-10" key={i}>
-                                                        {/* <!--begin::Symbol--> */}
                                                         <div className="symbol symbol-40 symbol-light-success mr-5">
                                                             <Image width={94} height={63} src="/assets/media/dummy-banner.png" className="align-self-end rounded" alt="" />
                                                         </div>
-                                                        {/* <!--end::Symbol--> */}
-                                                        {/* <!--begin::Text--> */}
                                                         <div className="d-flex flex-column flex-grow-1 font-weight-bold">
                                                             <p className="text-dark text-hover-primary mb-1 font-size-lg">{el.judul_video}</p>
                                                             <span className="text-muted">Kategori : <span className='text-primary'>{el.kategori}</span></span>
                                                             <span className="text-muted">Created By : <span className='text-primary'>{el.dibuat}</span></span>
                                                         </div>
-                                                        {/* <!--end::Text--> */}
 
-                                                        {/* <!--begin::Text--> */}
                                                         <div className="d-flex flex-column flex-grow-1 font-weight-bold text-right">
                                                             <p className="text-dark text-hover-primary mb-1 font-size-lg font-weight-bold display-4">{el.total_views}</p>
                                                             <span className="text-muted">Dibaca</span>
                                                         </div>
-                                                        {/* <!--end::Text--> */}
                                                     </div>
                                                 )
                                             })
                                         }
-                                        {/* <!--end::Item--> */}
 
                                     </div>
-                                    {/* <!--end::Body--> */}
                                 </div>
                                 :
                                 <LoadingTable />
                         }
-                        {/* <!--end::List Widget 3--> */}
                     </div>
                 </div>
             </PageWrapper>

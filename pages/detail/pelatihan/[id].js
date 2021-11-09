@@ -2,6 +2,7 @@ import { getSession } from "next-auth/client";
 import dynamic from "next/dynamic";
 import { wrapper } from "../../../redux/store";
 import { getDetailPelatihan } from "../../../redux/actions/beranda/detail-pelatihan.actions";
+import { getAllTemaOriginal } from "../../../redux/actions/beranda/beranda.actions";
 import { getDataPribadi } from "../../../redux/actions/pelatihan/function.actions";
 import LoadingDetailPelatihan from "../../../user-component/components/loader/DetailPelatihanLoader";
 
@@ -45,6 +46,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
       let sessionToken = session?.user.user.data.user.token;
 
       await store.dispatch(getDataPribadi(sessionToken));
+
+      await store.dispatch(getAllTemaOriginal());
 
       await store.dispatch(getDetailPelatihan(params.id));
 
