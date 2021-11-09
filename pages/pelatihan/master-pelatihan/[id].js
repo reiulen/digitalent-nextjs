@@ -1,13 +1,12 @@
 import React from "react";
 
 import dynamic from "next/dynamic";
-import LoadingSkeleton from "../../../../../components/LoadingSkeleton";
-import { middlewareAuthAdminSession } from "../../../../../utils/middleware/authMiddleware";
-
-import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
 
 import { getReviewStep2Revisi } from "../../../redux/actions/pelatihan/review.actions";
+import { wrapper } from "../../../redux/store";
+import LoadingSkeleton from "../../../components/LoadingSkeleton";
+import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
 
 const ViewTraining = dynamic(
   () =>
@@ -23,7 +22,8 @@ const ViewTraining = dynamic(
   }
 );
 
-export default function ViewTrainingPage() {
+export default function ViewTrainingPage(props) {
+  console.log(props);
   return (
     <>
       <div className="d-flex flex-column flex-root">
@@ -46,10 +46,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
-
-      await store.dispatch(
-        getReviewStep2Revisi(session.user.user.data.token, params.id)
-      );
 
       return {
         props: { session, title: "View Form Pendaftaran - Pelatihan" },

@@ -424,10 +424,10 @@ export default function MasterPelatihan({ token }) {
                                   <i className="ri-pencil-fill p-0 text-white"></i>
                                 </button>
                                 <Link
-                                  href={`/sertifikat/kelola-sertifikat/${item.name
+                                  href={`/pelatihan/master-pelatihan/${item.name
                                     .split(" ")
                                     .join("-")
-                                    .toLowerCase()}?id=${item.id}`}
+                                    .toLowerCase()}?id=1`}
                                   passHref
                                 >
                                   <a

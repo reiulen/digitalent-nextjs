@@ -4,16 +4,6 @@ import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
 import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
 
-import {
-  getAllTraining,
-  getCardTraining,
-} from "../../../redux/actions/pelatihan/training.actions";
-import {
-  dropdownAkademi,
-  dropdownTema,
-  dropdownPenyelenggara,
-} from "../../../redux/actions/pelatihan/function.actions";
-
 import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
 

@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
-import PageWrapper from "../../../../wrapper/page.wrapper";
-import StepViewPelatihan from "../../../../StepViewPelatihan";
+import PageWrapper from "../../../wrapper/page.wrapper";
 import { useDispatch, useSelector } from "react-redux";
 
 const ViewTrainingStep2 = () => {
@@ -14,8 +13,44 @@ const ViewTrainingStep2 = () => {
   );
 
   const [titleForm] = useState(review.judul_form);
-  const [formBuilder] = useState(review.FormBuilder);
-
+  // const [formBuilder] = useState(review.FormBuilder);
+  const formBuilder = {
+    judul_form: "Tambah Data User",
+    formBuilder: [
+      {
+        name: "Nama Depan",
+        element: "text",
+        size: "col-md-6",
+        option: "jenis kelamin",
+        dataOption: "laki,perempuan",
+        required: "1",
+      },
+      {
+        name: "Nama Belakang",
+        element: "text",
+        size: "col-md-6",
+        option: "hobi",
+        dataOption: "makan,tidur,rebahan",
+        required: "1",
+      },
+      {
+        name: "Nama Belakang",
+        element: "text",
+        size: "col-md-6",
+        option: "hobi",
+        dataOption: "makan,tidur,rebahan",
+        required: "1",
+      },
+      {
+        name: "Ijasah",
+        element: "file_doc",
+        size: "col-md-12",
+        option: "",
+        dataOption: "",
+        required: "1",
+      },
+    ],
+  };
   const { id } = router.query;
 
   const readerElementHandler = (row, i) => {
@@ -52,7 +87,6 @@ const ViewTrainingStep2 = () => {
             </select>
           </div>
         );
-        break;
       case "checkbox":
         return (
           <div className={`form-group mt-0 mb-0 ${row.size}`}>
@@ -77,7 +111,6 @@ const ViewTrainingStep2 = () => {
             </div>
           </div>
         );
-        break;
       case "textarea":
         return (
           <div className={`form-group mt-0 mb-0 ${row.size}`}>
@@ -93,7 +126,6 @@ const ViewTrainingStep2 = () => {
             />
           </div>
         );
-        break;
       case "radio":
         return (
           <div className={`form-group mt-0 mb-0 ${row.size}`}>
@@ -118,7 +150,6 @@ const ViewTrainingStep2 = () => {
             </div>
           </div>
         );
-        break;
       case "file_image":
         return (
           <div className={`form-group mt-0 mb-0 ${row.size}`}>
@@ -138,7 +169,6 @@ const ViewTrainingStep2 = () => {
             </div>
           </div>
         );
-        break;
       case "file_doc":
         return (
           <div className={`form-group mt-0 mb-0 ${row.size}`}>
@@ -181,25 +211,13 @@ const ViewTrainingStep2 = () => {
 
   return (
     <PageWrapper>
-      <StepViewPelatihan
-        step={2}
-        title1="Data Pelatihan"
-        title2="Form Pendaftaran"
-        title3="Form Komitmen"
-        title4="Parameter"
-        link1={`/pelatihan/pelatihan/view-pelatihan/${id}`}
-        link2={`/pelatihan/pelatihan/view-pelatihan/view-form-pendaftaran/${id}`}
-        link3={`/pelatihan/pelatihan/view-pelatihan/view-komitmen/${id}`}
-        link4={`/pelatihan/pelatihan/view-pelatihan/view-parameter/${id}`}
-      />
-
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-body py-4">
             <h3 className="font-weight-bolder pb-5 pt-4">{titleForm}</h3>
 
             <div className="row">
-              {formBuilder.map((row, i) => (
+              {formBuilder.formBuilder.map((row, i) => (
                 <>{readerElementHandler(row, i)}</>
               ))}
             </div>

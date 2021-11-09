@@ -476,11 +476,7 @@ const Sidebar = ({ session }) => {
     return () => {
       localStorage.removeItem("submenuActive");
     };
-  });
-
-  useEffect(() => {
-  
-  },[menu]);
+  }, []);
 
   const handleOpenMenu = (e, i, condition) => {
     const pathRoute = router.route;
