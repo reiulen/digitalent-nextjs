@@ -63,7 +63,7 @@ const Table = ({ token }) => {
           <div className="card-body pt-0 px-4 px-sm-8">
             <div className="table-filter">
               <div className="row align-items-center">
-                <div className="col-lg-12 col-xl-12">
+                <div className="col-12 col-xl-12">
                   <div
                     className="d-flex align-items-center w-100"
                   >
