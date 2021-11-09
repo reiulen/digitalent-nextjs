@@ -25,6 +25,7 @@ const StepTwo = ({ token }) => {
   const router = useRouter();
 
   let { metode, id } = router.query;
+  console.log(id);
   const { loading, error, success } = useSelector(
     (state) => state.newSubtanceQuestionDetail
   );
@@ -87,10 +88,17 @@ const StepTwo = ({ token }) => {
         });
       } else if (typeSave === "draft") {
         handleResetForm();
-        router.push({
-          pathname: `/subvit/substansi/tambah-step-2-${metode}`,
-          query: { id, metode },
-        });
+        if (router.query.metode) {
+          router.push({
+            pathname: `/subvit/substansi/tambah-step-2-${metode}`,
+            query: { metode },
+          });
+        } else {
+          router.push({
+            pathname: `/subvit/substansi/tambah-step-2-entry`,
+            query: { id },
+          });
+        }
       }
     }
   }, [dispatch, error, success, typeSave, id, metode, router]);

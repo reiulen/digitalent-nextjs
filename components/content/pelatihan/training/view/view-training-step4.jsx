@@ -93,7 +93,7 @@ const ViewTrainingStep4 = () => {
                 <button
                   className="btn btn-primary-rounded-full mr-2"
                   type="button"
-                  onClick={() => router.back()}
+                  onClick={() => router.push(`/pelatihan/pelatihan/view-pelatihan/view-komitmen/${id}`)}
                 >
                   Kembali
                 </button>
