@@ -7,6 +7,7 @@ import Pagination from "react-js-pagination";
 import { Modal } from "react-bootstrap";
 import moment from "moment";
 import Select from "react-select";
+import axios from 'axios'
 
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingTable from "../../../LoadingTable";
@@ -72,6 +73,15 @@ const DetailSummary = ({ token }) => {
     dispatch(getPendaftaranPeserta(token, id, search, limit, pageNumber));
   };
 
+  function capitalize(s) {
+    let a = s.split(" ")
+    let result = []
+    for (let i = 0; i < a.length; i++) {
+       result.push(a[i].charAt(0).toUpperCase() + a[i].slice(1, a[i].length))
+    }
+    return result.join(" ")
+  }
+
   const handleSearch = () => {
     setPage(1);
     dispatch(getPendaftaranPeserta(token, id, search, limit, 1));
@@ -84,17 +94,23 @@ const DetailSummary = ({ token }) => {
   };
 
   const handleFilter = () => {
-    console.log(statusTesSubstansi.value);
+    dispatch(
+      getPendaftaranPeserta(
+        token,
+        id,
+        search,
+        limit,
+        1,
+        statusBerkas === null ? "" : statusBerkas.value,
+        statusPeserta === null ? "" : statusPeserta.value,
+        statusTesSubstansi === null ? "" : statusTesSubstansi.value
+        )
+        );
+        setShowModal(false);
   };
 
   const handleExportReport = async () => {
-    let link =
-      process.env.END_POINT_API_PELATIHAN +
-      `/api/v1/pelatihan/export-rekap-pendaftaran`;
-    if (search) link = link.concat(`&cari=${search}`);
-    await axios.get(link).then((res) => {
-      window.location.href = res.data.data;
-    });
+
   };
 
   const handleSecondsToTime = (secs) => {
@@ -106,10 +122,10 @@ const DetailSummary = ({ token }) => {
     return hours + ":" + minutes + ":" + seconds;
   };
 
-  const handleResetError = () => {
-    if (error) {
-      dispatch(clearErrors());
-    }
+  const handleReset = () => {
+    setStatusPeserta(null)
+    setStatusTesSubstansi(null)
+    setStatusBerkas(null)
   };
 
   return (
@@ -130,31 +146,70 @@ const DetailSummary = ({ token }) => {
             background="bg-secondary"
             icon="new/done-circle.svg"
             color="#FFFFFF"
-            value={statusPendaftar[1].count}
+            value={statusPendaftar[2].count}
             titleValue=""
             title="Verivied Administrasi"
-            publishedVal="sudah-mengerjakan"
-            routePublish={() => handlePublish("sudah-mengerjakan")}
+            publishedVal="verified"
+            routePublish={(e) => { }}
+            search={(e) => { dispatch(
+              getPendaftaranPeserta(
+                token,
+                id,
+                null,
+                5,
+                1,
+                "verified",
+                statusPeserta === null ? "" : statusPeserta.value,
+                statusTesSubstansi === null ? "" : statusTesSubstansi.value
+              )
+            );}}
           />
           <CardPage
             background="bg-success"
             icon="new/open-book.svg"
             color="#FFFFFF"
-            value={statusPendaftar[2].count}
+            value={statusPendaftar[3].count}
             titleValue=""
             title="Lulus Tes Substansi"
             publishedVal="sedang-mengerjakan"
-            routePublish={() => handlePublish("sedang-mengerjakan")}
+            search={() => {
+              dispatch(
+                getPendaftaranPeserta(
+                  token,
+                  id,
+                  null,
+                  5,
+                  1,
+                  null,
+                  statusPeserta === null ? "" : statusPeserta.value,
+                  "lulus tes"
+                )
+              )
+            }}
+            routePublish={() => {
+
+            }}
           />
           <CardPage
             background="bg-warning"
             icon="new/mail-white.svg"
             color="#FFFFFF"
-            value={statusPendaftar[3].count}
+            value={statusPendaftar[4].count}
             titleValue=""
             title="Verified Administrasi Lulus Tes Substansi"
             publishedVal="belum-mengerjakan"
-            routePublish={() => handlePublish("belum-mengerjakan")}
+            routePublish={() => dispatch(
+              getPendaftaranPeserta(
+                token,
+                id,
+                null,
+                5,
+                1,
+                "verified",
+                statusPeserta === null ? "" : statusPeserta.value,
+                "lulus tes"
+              )
+            )}
           />
           <CardPage
             background="bg-extras"
@@ -164,7 +219,18 @@ const DetailSummary = ({ token }) => {
             titleValue=""
             title="Diterima"
             publishedVal="gagal-test"
-            routePublish={() => handlePublish("gagal-test")}
+            routePublish={() => dispatch(
+              getPendaftaranPeserta(
+                token,
+                id,
+                null,
+                5,
+                1,
+                null,
+                "diterima",
+                null
+              )
+            )}
           />
         </div>
       </div>
@@ -268,7 +334,7 @@ const DetailSummary = ({ token }) => {
                   </div>
                 </div>
 
-                <div className="col-lg-4 col-xl-4 justify-content-end d-flex">
+                <div className="col-lg-4 col-xl-4 justify-content-end d-flex mt-3">
                   <button
                     className="btn border d-flex align-items-center justify-content-between mt-1 btn-block"
                     style={{
@@ -285,23 +351,20 @@ const DetailSummary = ({ token }) => {
                   </button>
                 </div>
 
-                <div className="col-md-2">
+                <div className="col-md-2 mt-3" >
                   <Link href="/pelatihan/rekap-pendaftaran/import-peserta">
-                    <a className="btn w-100 btn-rounded-full bg-success text-white mt-2">
+                    <a className="btn w-100 btn-rounded-full bg-success text-white mt-2" style={{width: "max-content"}}>
                       <i className="ri-download-2-line mr-2 mt-1 text-white"></i>
                       Import
                     </a>
                   </Link>
                 </div>
-                <div className="col-md-2">
-                  <button
-                    className="btn w-100 btn-rounded-full bg-blue-secondary text-white mt-2"
-                    type="button"
-                    onClick={handleExportReport}
-                  >
-                    Export
-                    <i className="ri-arrow-down-s-line ml-3 mt-1 text-white"></i>
-                  </button>
+                <div className="col-md-2 mt-3">
+                  <select className="btn w-100 btn-rounded-full bg-blue-secondary text-white mt-2">
+                    <option value="" disabled selected>Export</option>
+                    <option value="LMS">LMS</option>
+                    <option value="CSV">CSV</option>
+                  </select>
                 </div>
               </div>
             </div>
@@ -353,7 +416,7 @@ const DetailSummary = ({ token }) => {
                                     : "text-success"
                                 } `}
                               >
-                                {row.subtansi_status || "-"}
+                                {capitalize(row.subtansi_status)  || "-"}
                               </p>
                               <p className="my-0">
                                 {Math.round(row.nilai) || "-"}
@@ -364,12 +427,12 @@ const DetailSummary = ({ token }) => {
                             </td>
                             <td>
                               <span className="label label-inline label-light-success font-weight-bold">
-                                {row.administrasi}
+                                {capitalize(row.administrasi) }
                               </span>
                             </td>
                             <td>
                               <span className="label label-inline label-light-success font-weight-bold">
-                                {row.status}
+                                { capitalize(row.status) }
                               </span>
                             </td>
                             <td>
@@ -384,7 +447,7 @@ const DetailSummary = ({ token }) => {
                               </p>
                             </td>
                             <td>
-                              <div className="d-flex">
+                              <div className="d-flex mr-10">
                                 <Link
                                   href={`/pelatihan/rekap-pendaftaran/detail-rekap-pendaftaran/data-peserta?pelatihan_id=${id}&index=${
                                     i + limit * (page - 1) + 1
@@ -490,6 +553,7 @@ const DetailSummary = ({ token }) => {
             <Select
               placeholder="Silahkan Pilih Tes Substansi"
               options={optionsSubstansi}
+              value={statusTesSubstansi}
               onChange={(e) =>
                 setStatusTesSubstansi({ label: e.label, value: e.value })
               }
@@ -500,6 +564,7 @@ const DetailSummary = ({ token }) => {
             <Select
               placeholder="Silahkan Pilih Status Berkas"
               options={optionsBerkas}
+              value={statusBerkas}
               onChange={(e) =>
                 setStatusBerkas({ label: e.label, value: e.value })
               }
@@ -510,6 +575,7 @@ const DetailSummary = ({ token }) => {
             <Select
               placeholder="Silahkan Pilih Status Peserta"
               options={optionsPeserta}
+              value={statusPeserta}
               onChange={(e) =>
                 setStatusPeserta({ label: e.label, value: e.value })
               }
@@ -519,7 +585,10 @@ const DetailSummary = ({ token }) => {
         <Modal.Footer>
           <button
             className="btn btn-light-ghost-rounded-full mr-2"
-            type="reset"
+            type="button"
+            onClick={() => {
+              handleReset( )
+            }}
           >
             Reset
           </button>
