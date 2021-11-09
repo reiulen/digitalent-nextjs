@@ -6,6 +6,8 @@
 @media (max-width: 800px) {
   .collapsed {
     max-height: 300px;
+    max-width: 100%;
+    overflow-x: hidden;
     overflow-y: scroll;
     z-index: 1;
   }

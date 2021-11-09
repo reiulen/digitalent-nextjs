@@ -75,7 +75,7 @@ const DetailAkademi = ({ session }) => {
 
   let selectRefPenyelenggara = null;
   const optionsPenyelenggara = [];
-  if (allPenyelenggara.data) {
+  if (allPenyelenggara && allPenyelenggara.data) {
     for (let index = 0; index < allPenyelenggara.data.length; index++) {
       let val = {
         value: allPenyelenggara.data[index].id,

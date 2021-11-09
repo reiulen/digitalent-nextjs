@@ -23,7 +23,13 @@ export default function rilisMedia({ berita }) {
               <div className="col-sm-12 col-md-4 mb-5">
                 <Card className="h-100 shadow rounded-xl">
                   <Image
-                    src={"/assets/media/default-card.png"}
+                    src={
+                      (row.gambar &&
+                        process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                          "publikasi/images/" +
+                          row.gambar) ||
+                      "/assets/media/default-card.png"
+                    }
                     width={360}
                     height={250}
                     objectFit="cover"
@@ -57,7 +63,7 @@ export default function rilisMedia({ berita }) {
                         right: "16px",
                       }}
                     >
-                      <Link href="/" passHref>
+                      <Link href={`/berita/detail/${row.slug}`} passHref>
                         <a className={`${style.link_rilis}`}>
                           Lihat Detail {"->"}
                         </a>

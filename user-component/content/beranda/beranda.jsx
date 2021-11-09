@@ -18,7 +18,6 @@ import { getTemaByAkademi } from "../../../redux/actions/beranda/beranda.actions
 import { checkRegisterPelatihan } from "../../../redux/actions/beranda/detail-pelatihan.actions";
 import { SweatAlert } from "../../../utils/middleware/helper";
 
-import BerandaWrapper from "../../../components/wrapper/beranda.wrapper";
 import "../../../styles/beranda.module.css";
 
 import { Splide, SplideSlide } from "@splidejs/react-splide";

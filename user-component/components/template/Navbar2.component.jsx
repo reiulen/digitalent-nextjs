@@ -49,11 +49,15 @@ const Navigationbar = ({ session }) => {
   );
 
   useEffect(() => {
-    dispatch(getDataPribadi(session.token));
-    if (!dataPribadi.status) {
+    dispatch(getDataPribadi(session?.token));
+    if (
+      dataPribadi &&
+      Object.keys(dataPribadi).length !== 0 &&
+      !dataPribadi.status
+    ) {
       router.push("/peserta/wizzard");
     }
-  }, [dataPribadi.status]);
+  }, [dataPribadi]);
   // const { error: errorAkademi, akademi } = useSelector(
   //   (state) => state.allAkademi
   // );
@@ -213,9 +217,7 @@ const Navigationbar = ({ session }) => {
                     <div className="row">
                       <div className={`col-9 text-left `}>Pelatihan</div>
                       <div className="col-1 text-right">
-                        <i className="ri-arrow-right-s-line text-dark ml-1">
-                          {" "}
-                        </i>
+                        <i className="ri-arrow-right-s-line text-dark"> </i>
                       </div>
                     </div>
                   </button>
@@ -560,11 +562,13 @@ const Navigationbar = ({ session }) => {
             </Row>
             <hr />
             {/* Start side bar */}
-            <Sidebar
-              screenClass={"d-block d-lg-none"}
-              accountFalse={`d-none d-lg-block`}
-              titleAkun={"Lainnya"}
-            />
+            {session && (
+              <Sidebar
+                screenClass={"d-block d-lg-none"}
+                accountFalse={`d-none d-lg-block`}
+                titleAkun={"Lainnya"}
+              />
+            )}
             {/* End side bar */}
           </div>
         </Navbar.Collapse>
