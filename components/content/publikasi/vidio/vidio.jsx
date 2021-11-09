@@ -605,7 +605,7 @@ const Vidio = ({ token }) => {
                                         <tbody>
                                             {
                                                 !video || video && video.video.length === 0 ?
-                                                    <td className='align-middle text-center' colSpan={12}>Data Tidak Ditemukan</td> :
+                                                    <td className='align-middle text-center' colSpan={12}>Data Kosong</td> :
                                                     video && video.video.map((row, i) => {
                                                         return <tr key={row.id}>
                                                             <td className='align-middle text-center'>

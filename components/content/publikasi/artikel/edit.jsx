@@ -509,7 +509,7 @@ const EditArtikel = ({ token, idUser }) => {
                         -- Akademi --
                       </option>
                       {!dataAkademi || (dataAkademi && dataAkademi.length === 0) ? (
-                        <option value="">Data Tidak Ditemukan</option>
+                        <option value="">Data Kosong</option>
                       ) : (
                         dataAkademi &&
                         dataAkademi.data &&
@@ -558,7 +558,7 @@ const EditArtikel = ({ token, idUser }) => {
                         -- Artikel --
                       </option>
                       {!kategori || (kategori && kategori.length === 0) ? (
-                        <option value="">Data Tidak Ditemukan</option>
+                        <option value="">Data Kosong</option>
                       ) : (
                         kategori &&
                         kategori.kategori &&
@@ -572,7 +572,7 @@ const EditArtikel = ({ token, idUser }) => {
                               {row.nama_kategori}
                             </option>
                           ) : null;
-                          })
+                        })
                       )}
                     </select>
                     {simpleValidator.current.message(
@@ -650,7 +650,6 @@ const EditArtikel = ({ token, idUser }) => {
                           onChange={date => handlePublishDate(date)}
                           selectsStart
                           startDate={publishDate}
-                          // endDate={endDate}
                           dateFormat="dd/MM/yyyy"
                           placeholderText="Silahkan Isi Tanggal Publish"
                           wrapperClassName="col-12 col-lg-12 col-xl-12"
@@ -713,7 +712,7 @@ const EditArtikel = ({ token, idUser }) => {
                   src={gambarPreview}
                   alt="image"
                   layout="fill"
-                  objectFit="cover"
+                  objectFit="fill"
                 />
               </div>
               <div className="modal-footer">

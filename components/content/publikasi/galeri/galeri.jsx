@@ -483,11 +483,11 @@ const Galeri = ({ token }) => {
                     id="carouselExampleIndicators"
                     className="carousel slide"
                     data-ride="carousel"
-                    style={{ position: "relative" }}
+                    // style={{ position: "relative" }}
                 >
                     <div
                         className="carousel-inner"
-                        style={{ position: "absolute", left: "-12px" }}
+                        // style={{ position: "absolute", left: "-12px" }}
                     >
                         {isViewed && isViewed.length !== 0
                             ? isViewed.gambar.map((row, i) => {
@@ -517,7 +517,7 @@ const Galeri = ({ token }) => {
                                         <div
                                             className="position-relative"
                                             style={{
-                                                height: "447px",
+                                                height: "460px",
                                                 width: "auto"
                                             }}
                                         >
@@ -536,42 +536,47 @@ const Galeri = ({ token }) => {
                             })
                             : null}
                     </div>
-                    <button
-                        className="carousel-control-prev"
-                        type="button"
-                        data-target="#carouselExampleIndicators"
-                        data-slide="prev"
-                        style={{
-                            position: "absolute",
-                            left: "-14px",
-                            top: "250px",
-                            border: "none",
-                            background: "none",
-                        }}
-                    >
-                        <span
-                            className="carousel-control-prev-icon"
-                            aria-hidden="true"
-                        ></span>
-                    </button>
-                    <button
-                        className="carousel-control-next"
-                        type="button"
-                        data-target="#carouselExampleIndicators"
-                        data-slide="next"
-                        style={{
-                            position: "absolute",
-                            right: "7px",
-                            top: "250px",
-                            border: "none",
-                            background: "none",
-                        }}
-                    >
-                        <span
-                            className="carousel-control-next-icon"
-                            aria-hidden="true"
-                        ></span>
-                    </button>
+                    {
+                        isViewed.gambar.length === 1 ? null :
+                            <div>
+                                <button
+                                    className="carousel-control-prev"
+                                    type="button"
+                                    data-target="#carouselExampleIndicators"
+                                    data-slide="prev"
+                                    style={{
+                                        position: "absolute",
+                                        left: "-14px",
+                                        top: "250px",
+                                        border: "none",
+                                        background: "none",
+                                    }}
+                                >
+                                    <span
+                                        className="carousel-control-prev-icon"
+                                        aria-hidden="true"
+                                    ></span>
+                                </button>
+                                <button
+                                    className="carousel-control-next"
+                                    type="button"
+                                    data-target="#carouselExampleIndicators"
+                                    data-slide="next"
+                                    style={{
+                                        position: "absolute",
+                                        right: "7px",
+                                        top: "250px",
+                                        border: "none",
+                                        background: "none",
+                                    }}
+                                >
+                                    <span
+                                        className="carousel-control-next-icon"
+                                        aria-hidden="true"
+                                    ></span>
+                                </button>
+                            </div>
+                    }
                 </div>
             </>
         ) : null;
@@ -897,7 +902,7 @@ const Galeri = ({ token }) => {
                                         <tbody>
                                             {!galeri || (galeri && galeri.gallery.length === 0) ? (
                                                 <td className="align-middle text-center" colSpan={9}>
-                                                    Data Tidak Ditemukan
+                                                    Data Kosong
                                                 </td>
                                             ) : (
                                                 galeri &&
@@ -1143,25 +1148,27 @@ const Galeri = ({ token }) => {
                 aria-labelledby="exampleModalCenterTitle"
                 aria-hidden="true"
             >
-                <div className="modal-dialog modal-dialog-centered" role="document">
-                    <div className={`${styles.rightSideBar} modal-content`}>
+                <div className="modal-dialog modal-xl modal-dialog-centered" role="document">
+                    {/* <div className={`${styles.rightSideBar} modal-content`}> */}
+                    <div className="modal-content">
                         {/* <div className="modal-header">
                             <h5 className="modal-title" id="exampleModalLongTitle">Pratinjau Gambar</h5>
                             <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div> */}
-                        <div className="modal-body">
-                            <div className={`${styles.fullBar} row`}>
+                        <div className="">
+                            {/* <div className={`${styles.fullBar} row`}> */}
+                            <div className="row">
                                 <div className="col-sm-12 col-md-6 col-lg-6">
-                                    <div className={styles["img-left"]}>
+                                    {/* <div className={styles["img-left"]}> */}
                                         {
                                             isViewed &&
                                             <>
                                                 {printImage()}
                                             </>
                                         }
-                                    </div>
+                                    {/* </div> */}
                                 </div>
                                 <div className="col-sm-12 col-md-6 col-lg-6" style={{ padding: "30px" }}>
                                     <div className={styles["rightSide"]}>
@@ -1191,18 +1198,21 @@ const Galeri = ({ token }) => {
                                                     style={{ border: "none", background: "none" }}
                                                 ></button> */}
                                                 </div>
-                                                <div className="row mb-4">
-                                                    <div className="col-sm-7 col-8">
+                                                <div className="row justify-content-between mb-4 p-1">
+                                                    <div className="">
                                                         <div className={styles["subMenuPreview"]}>
-                                                            <div className="mb-1 p-0 d-flex align-items-center">
-                                                                <div className={styles["iconPreview"]}>
-                                                                    <i className="flaticon2-calendar-4"></i>
-                                                                </div>
-                                                                <span className="ml-2">
-                                                                    Publish:{" "}
-                                                                    {moment(galeri.gallery[index_galleri].tanggal_publish).format("LL")}
-                                                                </span>
-                                                            </div>
+                                                            {
+                                                                galeri.gallery[index_galleri].publish === 0 ? null :
+                                                                    <div className="mb-1 p-0 d-flex align-items-center">
+                                                                        <div className={styles["iconPreview"]}>
+                                                                            <i className="flaticon2-calendar-4"></i>
+                                                                        </div>
+                                                                        <span className="ml-2">
+                                                                            Publish:{" "}
+                                                                            {moment(galeri.gallery[index_galleri].tanggal_publish).format("LL")}
+                                                                        </span>
+                                                                    </div>
+                                                            }
 
                                                             {/* <div className="mb-1 p-0 d-flex align-items-center">
                                                             <i className="flaticon2-user"></i>
@@ -1213,7 +1223,7 @@ const Galeri = ({ token }) => {
                                                         </div>
                                                     </div>
 
-                                                    <div className="col-sm-5 col-4" style={{}}>
+                                                    <div className="" style={{}}>
                                                         <span className="label label-inline label-light-success font-weight-bold p-2">
                                                             {(galeri.gallery[index_galleri].nama_kategori).toUpperCase()}
                                                         </span>
@@ -1243,7 +1253,7 @@ const Galeri = ({ token }) => {
                                                                     return (
                                                                         <span
                                                                             style={{ background: "#fff", border: '1px solid #d7e1ea' }}
-                                                                            className="mr-3 px-3 py-1 rounded"
+                                                                            className="mr-3 px-3 py-1 rounded mb-1"
                                                                             key={i}
                                                                         >
                                                                             <div className={styles["tagModal"]}>
