@@ -1,3 +1,5 @@
+import Swal from "sweetalert2";
+
 export const disablePlusMinusPeriod = (e) => {
   if (e.code == "Minus") {
     return false;
@@ -14,4 +16,13 @@ export const disablePlusMinusPeriod = (e) => {
   if (e.code == "Equal") {
     return false;
   }
+};
+
+export const SweatAlert = (title, message, status) => {
+  Swal.fire({
+    icon: status,
+    title: title,
+    text: message,
+    confirmButtonText: "Tutup",
+  });
 };

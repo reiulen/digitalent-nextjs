@@ -2,9 +2,10 @@ import React from "react";
 import Image from "next/image";
 import { Container, Row, Col } from "react-bootstrap";
 import moment from "moment";
-import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
+
+import { SweatAlert } from "../../../../../utils/middleware/helper";
 
 import style from "../../../../../styles/peserta/dashboard.module.css";
 
@@ -27,7 +28,7 @@ const DetailPelatihan = ({ session }) => {
         router.push(`/peserta/form-pendaftaran?id=${id}`);
       } else if (data.status === false) {
         let errMessage = data.message;
-        toast.error(errMessage);
+        SweatAlert("Gagal", errMessage, "error");
       }
     } else {
       router.push(`/login`);
