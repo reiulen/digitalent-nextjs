@@ -44,6 +44,15 @@ const TrainingReminder = ({ session }) => {
       borderRadius: "30px",
       paddingLeft: "10px",
     }),
+    multiValue: (styles) => ({
+      ...styles,
+      backgroundColor: "#E6F2FF",
+      borderRadius: "30px",
+    }),
+    multiValueLabel: (styles) => ({
+      ...styles,
+      color: "#0063CC",
+    }),
   };
 
   const handleTemaNotif = () => {

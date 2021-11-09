@@ -47,7 +47,6 @@ const ViewTrainingStep2 = () => {
   //     required: false,
   //   },
   // ]);
-
   const readerElementHandler = (row, i) => {
     switch (row.element) {
       case "text":
@@ -58,9 +57,9 @@ const ViewTrainingStep2 = () => {
             </label>
             <input
               type={row.element}
-              name=""
               className="form-control"
               required={row.required}
+              disabled
             />
           </div>
         );
@@ -71,7 +70,7 @@ const ViewTrainingStep2 = () => {
             <label className="col-form-label font-weight-bold">
               {row.name}
             </label>
-            <select name="" className="form-control" required={row.required}>
+            <select name="" className="form-control" required={row.required} disabled>
               {row.option === "manual"
                 ? row.dataOption.split(";").map((dat, i) => (
                     <option value={dat} key={i}>
@@ -99,6 +98,7 @@ const ViewTrainingStep2 = () => {
                         className="form-check-input"
                         required={row.required}
                         value={dat}
+                        disabled
                       />
                       <label className="form-check-label">{dat}</label>
                     </div>
@@ -120,6 +120,7 @@ const ViewTrainingStep2 = () => {
               rows="5"
               className="form-control"
               required={row.required}
+              disabled
             />
           </div>
         );
@@ -140,6 +141,7 @@ const ViewTrainingStep2 = () => {
                         className="form-check-input"
                         value={dat}
                         required={row.required}
+                        disabled
                       />
                       <label className="form-check-label">{dat}</label>
                     </div>
@@ -161,6 +163,7 @@ const ViewTrainingStep2 = () => {
                 className="custom-file-input"
                 accept="image/png, image/jpeg , image/jpg"
                 required={row.required}
+                disabled
               />
               <label className="custom-file-label" htmlFor="customFile">
                 Belum ada File
@@ -181,6 +184,7 @@ const ViewTrainingStep2 = () => {
                 className="custom-file-input"
                 accept="application/pdf"
                 required={row.required}
+                disabled
               />
               <label className="custom-file-label" htmlFor="customFile">
                 Belum ada File
@@ -200,6 +204,7 @@ const ViewTrainingStep2 = () => {
               name=""
               className="form-control"
               required={row.required}
+              disabled
             />
           </div>
         );
@@ -239,7 +244,7 @@ const ViewTrainingStep2 = () => {
                 <button
                   className="btn btn-primary-rounded-full mr-2"
                   type="button"
-                  onClick={() => router.back()}
+                  onClick={() => router.push(`/pelatihan/pelatihan/view-pelatihan/${id}`)}
                 >
                   Kembali
                 </button>
