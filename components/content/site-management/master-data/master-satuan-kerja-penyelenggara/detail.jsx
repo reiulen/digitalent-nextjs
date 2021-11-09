@@ -1,8 +1,7 @@
 import React from "react";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import PageWrapper from "../../../../wrapper/page.wrapper";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 const Table = ({ token }) => {
 
@@ -17,17 +16,18 @@ const Table = ({ token }) => {
               className="card-title font-weight-bolder text-dark titles-1"
             >
               Detail Satuan Kerja Penyelenggara
-            </h3>{" "}
+            </h3>
+           
           </div>
+          <hr className="mx-8 my-1" />
           <div className="card-body pt-0 px-4 px-sm-8">
-            {" "}
             <div className="table-page mt-5">
               <div className="table-responsive">
                 <table className="table table-separate table-head-custom table-checkable">
                   <thead style={{ background: "#F3F6F9" }}>
                     <tr>
-                      <th className="text-left">No</th>
-                      <th className="text-left align-middle">Provinsi</th>
+                      <th className="text-left fz-14">No</th>
+                      <th className="text-left align-middle fz-14">Provinsi</th>
                     </tr>
                   </thead>
                   <tbody>

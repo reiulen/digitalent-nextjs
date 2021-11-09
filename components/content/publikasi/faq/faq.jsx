@@ -440,11 +440,7 @@ const Faq = ({ token }) => {
 
                                         {/* modal */}
                                         <form
-                                            // id="kt_docs_formvalidation_text"
                                             className="form text-left"
-                                        // action="#"
-                                        // autoComplete="off"
-                                        // onSubmit={handleSubmitSearchMany}
                                         >
                                             <div
                                                 className="modal fade"
@@ -497,8 +493,6 @@ const Faq = ({ token }) => {
                                                                         dateFormat="dd/MM/yyyy"
                                                                         placeholderText="Silahkan Isi Tanggal Dari"
                                                                         wrapperClassName="col-12 col-lg-12 col-xl-12"
-                                                                    // minDate={moment().toDate()}
-                                                                    // minDate={addDays(new Date(), 20)}
                                                                     />
                                                                 </div>
                                                             </div>
@@ -518,12 +512,10 @@ const Faq = ({ token }) => {
                                                                         endDate={endDate}
                                                                         dateFormat="dd/MM/yyyy"
                                                                         minDate={startDate}
-                                                                        // minDate={moment().toDate()}
                                                                         maxDate={addDays(startDate, 20)}
                                                                         placeholderText="Silahkan Isi Tanggal Sampai"
                                                                         wrapperClassName="col-12 col-lg-12 col-xl-12"
                                                                         disabled={disableEndDate === true || disableEndDate === null}
-                                                                    // minDate={addDays(new Date(), 20)}
                                                                     />
                                                                 </div>
                                                                 {

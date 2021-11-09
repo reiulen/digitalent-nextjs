@@ -53,7 +53,6 @@ const TambahFaq = ({ token, id }) => {
     const [publishDate, setPublishDate] = useState(null);
     const [disablePublishDate, setDisablePublishDate] = useState(true)
     const [, forceUpdate] = useState();
-    // const forceUpdate = React.useReducer(() => ({}))[1]
 
     const handleChangePublish = (e) => {
         setDisablePublishDate(!disablePublishDate)
@@ -272,7 +271,6 @@ const TambahFaq = ({ token, id }) => {
                                                 className="checkbox"
                                                 checked={publish}
                                                 type="checkbox"
-                                                // onChange={(checked) => setPublish(checked)}
                                                 onChange={(e) => handleChangePublish(e)}
                                             />
                                             <span
@@ -295,16 +293,12 @@ const TambahFaq = ({ token, id }) => {
                                                     className="form-search-date form-control-sm form-control"
                                                     selected={publishDate}
                                                     onChange={(date) => handlePublishDate(date)}
-                                                    // onChange={(date) => setPublishDate(date)}
                                                     selectsStart
                                                     startDate={publishDate}
-                                                    // endDate={endDate}
                                                     dateFormat="dd/MM/yyyy"
                                                     placeholderText="Silahkan Isi Tanggal Publish"
                                                     wrapperClassName="col-12 col-lg-12 col-xl-12"
-                                                    // minDate={moment().toDate()}
                                                     disabled={disablePublishDate === true || disablePublishDate === null}
-                                                // minDate={addDays(new Date(), 20)}
                                                 />
                                             </div>
                                         </div>
@@ -330,7 +324,6 @@ const TambahFaq = ({ token, id }) => {
                                                 className="checkbox"
                                                 checked={pinned}
                                                 type="checkbox"
-                                                // onChange={(checked) => setPublish(checked)}
                                                 onChange={(e) => handleChangePinned(e)}
                                             />
                                             <span
