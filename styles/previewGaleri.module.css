@@ -74,31 +74,30 @@
   font-size: 10px;
 }
 
-@media only screen and (max-width: 1200px) {
+/* @media only screen and (max-width: 1200px) {
   .img-prevModal {
     height: 460px;
   }
-}
+} */
 @media only screen and (max-width: 1024px) {
   .modal-body {
     height: 400px;
     width: 650px;
     margin-left: -75px;
   }
-  .img-prevModal {
+  /* .img-prevModal {
     height: 435px;
-  }
-  .rightSideBar {
+  } */
+  /* .rightSideBar {
     margin-left: -78px;
-  }
+  } */
   .description-img {
-    /* border: 1px solid black; */
-    width: 90%;
+    width: 98%;
     height: 235px;
   }
   .strip {
-    width: 315px;
-    margin-left: -35px;
+    width: 117%;
+    margin-left: -42px;
   }
 }
 
@@ -129,38 +128,49 @@
 }
 
 @media only screen and (max-width: 576px) {
-  .modal-body {
+  /* .modal-body {
     width: 333px;
     height: 100%;
     margin-left: 15px;
-  }
-  .img-left {
+  } */
+  /* .img-left {
     height: 180px;
     margin-left: 2px;
-  }
-  .img-prevModal {
+  } */
+  /* .img-prevModal {
     height: 200px;
-  }
-  .rightSideBar {
+  } */
+  /* .rightSideBar {
     width: 330px;
     margin-left: 15px;
-  }
-  .rightSide {
+  } */
+  /* .rightSide {
     height: 200px;
+  } */
+  .cari{
+    font-size: 9px;
+  }
+  .fontCari{
+    font-size: 9px;
+  }
+  .filter{
+    font-size: 9px;
+    margin-left: -10px;
   }
   .subMenuPreview {
     font-size: 6px;
   }
   .iconPreview {
     font-size: 6px;
+    margin-left: 7px;
   }
   .description-img {
     height: 97px;
-    width: 200px;
+    width: 100%;
     font-size: 7px;
   }
   .tagModal {
-    font-size: 8px;
+    font-size: 6px;
   }
   .hideTitle {
     display: none;
@@ -170,5 +180,19 @@
   }
   .btnTambah {
     font-size: 9px;
+  }
+}
+
+@media only screen and (max-width: 320px){
+  .cari{
+    font-size: 7.5px;
+  }
+  .filterDate{
+    /* margin-left: 50px;
+    width: 50%; */
+  }
+  .filter{
+    font-size: 9px;
+    /* margin-left: -10px; */
   }
 }
