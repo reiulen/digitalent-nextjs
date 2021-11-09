@@ -112,7 +112,7 @@ const Table = ({ token }) => {
                     </thead>
                     <tbody>
                       {allUnitWork.data.unit_work.length === 0 ? (
-                        <td class="align-middle text-center" colspan="4">
+                        <td className="align-middle text-center" colSpan="4">
                           Data Masih Kosong
                         </td>
                       ) : (
