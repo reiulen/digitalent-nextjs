@@ -12,6 +12,7 @@ import moment from "moment";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import CardPage from "../../../CardPage";
 import StepParticipantPelatihan from "../../../StepParticipantPelatihan";
+import LoadingTable from "../../../LoadingTable";
 
 import ProfileUser from "./participant/profile";
 import HistoryPage from "./participant/history";
@@ -283,20 +284,26 @@ const DataParticipant = ({ token }) => {
 
             <div className="form-group mt-7">
               <div className="text-right">
-                <button
-                  className="btn btn-light-ghost-rounded-full mr-2"
-                  type="button"
-                  onClick={() => router.back()}
-                >
-                  Batal
-                </button>
-                <button
-                  className="btn btn-primary-rounded-full"
-                  type="button"
-                  onClick={() => handleStatusPeserta()}
-                >
-                  Simpan
-                </button>
+                {loading !== true ? (
+                  <>
+                    <button
+                      className="btn btn-light-ghost-rounded-full mr-2"
+                      type="button"
+                      onClick={() => router.back()}
+                    >
+                      Batal
+                    </button>
+                    <button
+                      className="btn btn-primary-rounded-full"
+                      type="button"
+                      onClick={() => handleStatusPeserta()}
+                    >
+                      Simpan
+                    </button>
+                  </>
+                ) : (
+                  <LoadingTable loading={loading} />
+                )}
               </div>
             </div>
           </div>
