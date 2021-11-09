@@ -51,7 +51,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       );
 
       return {
-        props: { session, title: "View Rekap Pendaftaran - Pelatihan" },
+        props: { session, title: "View Data Pelatihan - Rekap Pendaftaran" },
       };
     }
 );
