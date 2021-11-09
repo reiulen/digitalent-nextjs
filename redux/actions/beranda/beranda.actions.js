@@ -11,6 +11,9 @@ import {
   BERANDA_TEMA_REQUEST,
   BERANDA_TEMA_SUCCESS,
   BERANDA_TEMA_FAIL,
+  BERANDA_TEMA_ORIGINAL_REQUEST,
+  BERANDA_TEMA_ORIGINAL_SUCCESS,
+  BERANDA_TEMA_ORIGINAL_FAIL,
   BERANDA_KOTA_REQUEST,
   BERANDA_KOTA_SUCCESS,
   BERANDA_KOTA_FAIL,
@@ -97,6 +100,27 @@ export const getAllAkademi = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: BERANDA_AKADEMI_FAIL,
+      payload: error.message,
+    });
+  }
+};
+
+// GET TEMA ORIGINAL
+export const getAllTemaOriginal = () => async (dispatch) => {
+  try {
+    dispatch({ type: BERANDA_TEMA_ORIGINAL_REQUEST });
+
+    let link = process.env.END_POINT_API_PELATIHAN + `api/v1/tema/dropdown`;
+
+    const { data } = await axios.get(link);
+
+    dispatch({
+      type: BERANDA_TEMA_ORIGINAL_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: BERANDA_TEMA_ORIGINAL_FAIL,
       payload: error.message,
     });
   }

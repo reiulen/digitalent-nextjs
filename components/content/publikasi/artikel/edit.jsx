@@ -51,20 +51,12 @@ const EditArtikel = ({ token, idUser }) => {
   useEffect(() => {
 
     editorRef.current = {
-      CKEditor: require('@ckeditor/ckeditor5-react').CKEditor, //Added .CKEditor
+      CKEditor: require('@ckeditor/ckeditor5-react').CKEditor, 
       ClassicEditor: require('@ckeditor/ckeditor5-build-classic'),
-      // Base64UploadAdapter: require('@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter')
     }
 
     setEditorLoaded(true);
     if (success) {
-      // setJudulArtikel('')
-      // setIsiArtikel('')
-      // setGambar('')
-      // setGambarPreview('/assets/media/default.jpg')
-      // setKategoriId('')
-      // setTag('')
-
       router.push({
         pathname: `/publikasi/artikel`,
         query: { success: true },
@@ -85,10 +77,6 @@ const EditArtikel = ({ token, idUser }) => {
     "publikasi/images/" +
     artikel.gambar
   );
-  // const [gambar, setGambar] = useState(artikel.gambar);
-  // const [gambarPreview, setGambarPreview] = useState(
-  //   "/assets/media/default.jpg"
-  // ); //belum
   const [iconPlus, setIconPlus] = useState("/assets/icon/Add.svg");
   const [gambarPreview, setGambarPreview] = useState(
     process.env.END_POINT_API_IMAGE_PUBLIKASI +
@@ -96,11 +84,10 @@ const EditArtikel = ({ token, idUser }) => {
     artikel.gambar
   );
   const [gambarName, setGambarName] = useState(artikel.gambar);
-  const [kategori_id, setKategoriId] = useState(artikel.kategori_id); //belum
+  const [kategori_id, setKategoriId] = useState(artikel.kategori_id); 
   const [kategori_akademi, setKategoriAkademi] = useState(artikel.kategori_akademi);
   const [users_id, setUserId] = useState(artikel.users_id);
   const [tag, setTag] = useState(artikel.tag);
-  // const [publish, setPublish] = useState(artikel.publish === 1 ? true : false);
   const [publish, setPublish] = useState(artikel.publish);
   const [publishDate, setPublishDate] = useState(
     artikel.tanggal_publish ? new Date(artikel.tanggal_publish) : null
@@ -130,11 +117,6 @@ const EditArtikel = ({ token, idUser }) => {
         setGambarName(e.target.files[0].name);
       }
     } else {
-      // setGambar("")
-      // setGambarPreview("/assets/media/default.jpg")
-      // setGambarName(null)
-      // simpleValidator.current.showMessages();
-      // forceUpdate(1);
       e.target.value = null;
       Swal.fire(
         "Oops !",
@@ -172,7 +154,9 @@ const EditArtikel = ({ token, idUser }) => {
         data.splice([i], 1);
       }
     }
-    setTag(data);
+    if ((data).includes(data) !== true) {
+      setTag(data);
+    }
   }
 
   const onSubmit = e => {
@@ -418,7 +402,6 @@ const EditArtikel = ({ token, idUser }) => {
                           editor={ClassicEditor}
                           data={isi_artikel}
                           onReady={editor => {
-                            // You can store the "editor" and use when it is needed.
                           }}
                           onChange={(event, editor) => {
                             const data = editor.getData();
@@ -429,17 +412,6 @@ const EditArtikel = ({ token, idUser }) => {
                               "isi_artikel"
                             )
                           }
-                        // config={
-                        //   {
-                        //     //   ckfinder: {
-                        //     //   // Upload the images to the server using the CKFinder QuickUpload command.
-                        //     //   // uploadUrl: 'https://example.com/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images&responseType=json',
-                        //     //   uploadUrl: process.env.END_POINT_API_PUBLIKASI + `api/artikel/${id}`
-                        //     // }
-                        //     allowedContent: true
-
-                        //   }
-                        // }
                         />
                       ) : (
                         <p>Tunggu Sebentar</p>
@@ -472,7 +444,7 @@ const EditArtikel = ({ token, idUser }) => {
                         alt="image"
                         width={160}
                         height={160}
-                        objectFit="cover"
+                        objectFit="fill"
                       />
                     </figure>
                     <div className="position-relative">
@@ -506,7 +478,7 @@ const EditArtikel = ({ token, idUser }) => {
                     ) : null}
                   </div>
 
-                  <div className="mt-3 col-sm-6 col-md-6 col-lg-7 text-muted">
+                  <div className="mt-3 col-sm-6 col-md-6 col-lg-7 col-xl-3 text-muted">
                     <p>
                       Resolusi yang direkomendasikan adalah 1024 * 512. Fokus
                       visual pada bagian tengah gambar
@@ -551,8 +523,6 @@ const EditArtikel = ({ token, idUser }) => {
                               {row.label}
                             </option>
                           )
-                          // : null;
-                          // <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>{row.nama_kategori}</option>
                         })
                       )}
                     </select>
@@ -602,8 +572,7 @@ const EditArtikel = ({ token, idUser }) => {
                               {row.nama_kategori}
                             </option>
                           ) : null;
-                          // <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>{row.nama_kategori}</option>
-                        })
+                          })
                       )}
                     </select>
                     {simpleValidator.current.message(
@@ -622,12 +591,12 @@ const EditArtikel = ({ token, idUser }) => {
                   >
                     Tag
                   </label>
-                  <div className="col-sm-12">
+                  <div className="col-sm-12" style={{ wordBreak: 'break-word' }}>
                     <TagsInput
                       value={tag}
                       onChange={(data) => handleTag(data)}
                       name="fruits"
-                      placeHolder="Isi Tag disini"
+                      placeHolder="Isi Tag disini dan Enter"
                       seprators={["Enter", "Tab"]}
                     // onBlur={() => simpleValidator.current.showMessageFor('tag')}
                     />
@@ -668,27 +637,6 @@ const EditArtikel = ({ token, idUser }) => {
                   </div>
                 </div>
 
-                {/* <div className="form-group row">
-                  <label
-                    htmlFor="staticEmail"
-                    className="col-sm-2 col-form-label"
-                  >
-                    Publish
-                  </label>
-                  <div className="col-sm-1">
-                    <SwitchButton
-                      checked={publish}
-                      onlabel=" "
-                      onstyle="primary"
-                      offlabel=" "
-                      offstyle="danger"
-                      size="sm"
-                      width={30}
-                      onChange={(checked) => setPublish(checked)}
-                    />
-                  </div>
-                </div> */}
-
                 {disablePublishDate === false ? (
                   <div className="form-group">
                     <label className="col-sm-5 col-form-label font-weight-bolder">
@@ -700,27 +648,18 @@ const EditArtikel = ({ token, idUser }) => {
                           className="form-search-date form-control-sm form-control"
                           selected={publishDate}
                           onChange={date => handlePublishDate(date)}
-                          // onChange={(date) => setPublishDate(date)}
                           selectsStart
                           startDate={publishDate}
                           // endDate={endDate}
                           dateFormat="dd/MM/yyyy"
                           placeholderText="Silahkan Isi Tanggal Publish"
                           wrapperClassName="col-12 col-lg-12 col-xl-12"
-                          // minDate={moment().toDate()}
-                          // minDate={addDays(new Date(), 20)}
                           disabled={
                             disablePublishDate === true ||
                             disablePublishDate === null
                           }
                         />
                       </div>
-                      {/* {
-                          disablePublishDate === true ?
-                            <small className="text-muted">Harap ubah status publikasi menjadi aktif untuk mengisi Tanggal Publish</small>
-                          :
-                            null
-                        } */}
                     </div>
                   </div>
                 ) : null}
