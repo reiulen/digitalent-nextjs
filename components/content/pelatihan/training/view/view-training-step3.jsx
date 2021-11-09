@@ -55,7 +55,7 @@ const ViewTrainingStep3 = () => {
                 <button
                   className="btn btn-primary-rounded-full mr-2"
                   type="button"
-                  onClick={() => router.back()}
+                  onClick={() => router.push(`/pelatihan/pelatihan/view-pelatihan/view-form-pendaftaran/${id}`)}
                 >
                   Kembali
                 </button>
