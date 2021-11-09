@@ -16,8 +16,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Card, Badge, Button } from "react-bootstrap";
 import { getTemaByAkademi } from "../../../redux/actions/beranda/beranda.actions";
 import { checkRegisterPelatihan } from "../../../redux/actions/beranda/detail-pelatihan.actions";
+import { SweatAlert } from "../../../utils/middleware/helper";
 
-import BerandaWrapper from "../../../components/wrapper/beranda.wrapper";
 import "../../../styles/beranda.module.css";
 
 import { Splide, SplideSlide } from "@splidejs/react-splide";
@@ -250,16 +250,12 @@ const Beranda = ({ session }) => {
         router.push(`${router.pathname}/peserta/form-pendaftaran?id=${id}`);
       } else if (data.status === false) {
         let errMessage = data.message;
-        toast.error(errMessage);
+        SweatAlert("Gagal", errMessage, "error");
       }
     } else {
       router.push(`${router.pathname}/login`);
     }
   };
-
-  function truncate(str, no_words) {
-    return str.split(" ").splice(0, no_words).join(" ");
-  }
 
   return (
     <div style={{ backgroundColor: "white" }}>
