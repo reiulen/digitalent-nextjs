@@ -169,6 +169,7 @@ const Table = ({ token }) => {
                                 ? index + 1
                                 : (allApi.page - 1) * allApi.limit +
                                   (index + 1)}
+                                  
                             </td>
                             <td className="align-middle text-left">
                               {items.api_name}
