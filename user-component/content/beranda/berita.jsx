@@ -311,8 +311,8 @@ const Berita = () => {
                     {
                         
                         windowDimensions && windowDimensions.width && windowDimensions.width <= 770 ?
-                            <div className="border rounded-lg p-5 order-1 mb-5">
-                                <div className="row mt-5 "> 
+                            <div className="border rounded-lg p-2 order-1 mb-5">
+                                <div className="row "> 
                                     <div className="col-2 my-auto ml-3">
                                         <Image 
                                             src={`/assets/media/logo-filter.svg`}
@@ -568,7 +568,7 @@ const Berita = () => {
                                                                     return (
                                                                         
                                                                         <div 
-                                                                            className=" border px-2 py-1 my-1"
+                                                                            className=" border px-2 py-1 my-1 mr-3"
                                                                             onClick={() => handleFilterTag(element)}
                                                                             style={{cursor:"pointer"}}
                                                                             key={index}
@@ -615,7 +615,7 @@ const Berita = () => {
                                 })
                                 
                             :
-                                <div className="row">
+                                <div className="row d-flex justify-content-center my-5">
                                     <h1 className="font-weight-bolder">
                                         Berita Tidak Tersedia
                                     </h1>
@@ -631,7 +631,7 @@ const Berita = () => {
                     {/* Filter */}
                     {
                         windowDimensions && windowDimensions.width && windowDimensions.width > 770 ?
-                            <div className="border rounded-lg p-5 order-1">
+                            <div className="border rounded-lg p-5 order-1 mb-10">
                                 <div className="row mt-5 "> 
                                     <div className="col-2 my-auto ml-3">
                                         <Image 
@@ -762,7 +762,7 @@ const Berita = () => {
                     {/* End of Filter */}
 
                     {/* Tag */}
-                    <div className="row mt-10 d-flex flex-column mx-10 d-flex justify-content-center order-3">
+                    <div className="row d-flex flex-column mx-10 d-flex justify-content-center order-3">
                         <h3 className="font-weight-bolder"> 
                             Temukan lebih banyak berita yang sesuai:
                         </h3>
