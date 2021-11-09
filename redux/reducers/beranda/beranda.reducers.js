@@ -13,6 +13,9 @@ import {
   BERANDA_TEMA_REQUEST,
   BERANDA_TEMA_SUCCESS,
   BERANDA_TEMA_FAIL,
+  BERANDA_TEMA_ORIGINAL_REQUEST,
+  BERANDA_TEMA_ORIGINAL_SUCCESS,
+  BERANDA_TEMA_ORIGINAL_FAIL,
   BERANDA_KOTA_REQUEST,
   BERANDA_KOTA_SUCCESS,
   BERANDA_KOTA_FAIL,
@@ -139,6 +142,35 @@ export const allAkademiReducer = (state = { akademi: [] }, action) => {
       };
 
     case BERANDA_AKADEMI_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const allTemaOriginalReducer = (state = { tema: [] }, action) => {
+  switch (action.type) {
+    case BERANDA_TEMA_ORIGINAL_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case BERANDA_TEMA_ORIGINAL_SUCCESS:
+      return {
+        loading: false,
+        tema: action.payload.data,
+      };
+
+    case BERANDA_TEMA_ORIGINAL_FAIL:
       return {
         loading: false,
         error: action.payload,
