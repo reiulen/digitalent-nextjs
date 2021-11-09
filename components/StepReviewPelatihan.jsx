@@ -53,7 +53,7 @@ const StepReviewPelatihan = (props) => {
               <div className={`col-12 d-flex rounded-top h-100 ${stepBg1}`}>
                 <div className="my-6 mx-3">
                   <button className={`btn ${stepNumber1} my-auto`}>
-                    <i className="ri-task-line text-white text-center pr-0"></i>
+                    1
                   </button>
                 </div>
                 <div className="d-flex align-items-center mt-2">
@@ -73,7 +73,7 @@ const StepReviewPelatihan = (props) => {
               <div className={`col-12 d-flex rounded-top h-100 ${stepBg2}`}>
                 <div className="my-6 mx-3">
                   <button className={`btn ${stepNumber2} my-auto`}>
-                    <i className="ri-todo-line text-white text-center pr-0"></i>
+                    2
                   </button>
                 </div>
                 <div className="d-flex align-items-center mt-2">
@@ -93,7 +93,7 @@ const StepReviewPelatihan = (props) => {
               <div className={`col-12 d-flex rounded-top h-100 ${stepBg3}`}>
                 <div className="my-6 mx-3">
                   <button className={`btn ${stepNumber3} my-auto`}>
-                    <i className="ri-article-line text-white text-center pr-0"></i>
+                    3
                   </button>
                 </div>
                 <div className="d-flex align-items-center mt-2">
