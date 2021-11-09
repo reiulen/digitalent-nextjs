@@ -4,7 +4,6 @@ import PageWrapper from "../../../../wrapper/page.wrapper";
 import Swal from "sweetalert2";
 import { useRouter } from "next/router";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import IconAdd from "../../../../assets/icon/Add";
 import IconDelete from "../../../../assets/icon/Delete";
@@ -85,6 +84,11 @@ const Tambah = ({ token }) => {
     let _temp = [...formInput];
     let _tempValue = [...valueSend];
 
+    let _tempOption = [...provincesOption];
+
+    let _newTempOption = _tempOption.filter(items => items.label !== e.label)
+    setProvincesOption(_newTempOption);
+
     
     _temp[index].value = []
     _temp[index].kabupaten = []
@@ -127,14 +131,33 @@ const Tambah = ({ token }) => {
   const submit = (e) => {
     e.preventDefault();
 
+    // cek field loop field kab
+    let isRightKab = true 
+    formInput.forEach(element => {
+      if(element.value.length === 0){
+        isRightKab = false
+      }
+    });
+    // cek field loop field prov
+    let isRightProv = true 
+    valueSend.forEach(element => {
+      if(!element.provinsi){
+        isRightProv = false
+      }
+    });
+
     if (nameZonation === "") {
       Swal.fire("Gagal simpan", "Nama zonasi tidak boleh kosong", "error");
     } else if (status === "") {
       Swal.fire("Gagal simpan", "Form status tidak boleh kosong", "error");
     }
-    // else if (valueProvinsi === "") {
-    //   Swal.fire("Gagal simpan", "Form provinsi tidak boleh kosong", "error");
-    // }
+
+    else if (!isRightProv) {
+      Swal.fire("Gagal simpan", "Form Provinsi tidak boleh kosong", "error");
+    } 
+    else if (!isRightKab) {
+      Swal.fire("Gagal simpan", "Form Kabupaten tidak boleh kosong", "error");
+    } 
     else {
       Swal.fire({
         title: "Apakah anda yakin simpan ?",
@@ -154,6 +177,7 @@ const Tambah = ({ token }) => {
             status: status,
             data: valueSend,
           };
+
 
           try {
             let { data } = await axios.post(
@@ -284,9 +308,6 @@ const Tambah = ({ token }) => {
                                 onChange={(e) => changeListKabupaten(e, index)}
                                 options={items.kabupaten}
                               />
-                              {/* <span className="form-text text-muted">
-                                Please enter your full name
-                              </span> */}
                             </div>
 
                             {index === 0 ? (
