@@ -11,6 +11,10 @@ import {
     KATEGORI_BERANDA_GALERI_SUCCESS,
     KATEGORI_BERANDA_GALERI_FAIL,
 
+    TAG_BERANDA_GALERI_REQUEST,
+    TAG_BERANDA_GALERI_SUCCESS,
+    TAG_BERANDA_GALERI_FAIL,
+
     CLEAR_ERRORS
 } from "../../types/beranda/galeri.type"
 
@@ -99,5 +103,34 @@ export const kategoriBerandaGaleriReducer = (state = {kategori: [] }, action) =>
         
         default:
             return state;
+    }
+}
+
+export const allTagBerandaGaleriReducer = (state = { tags: [] }, action) => {
+    switch (action.type) {
+        case TAG_BERANDA_GALERI_REQUEST:
+            return {
+                loading: true
+            }
+
+        case TAG_BERANDA_GALERI_SUCCESS:
+            return {
+                loading: false,
+                tags: action.payload.data
+            }
+
+        case TAG_BERANDA_GALERI_FAIL:
+            return {
+                loading: false,
+                error: action.payload
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                error: null
+            }
+
+        default:
+            return state
     }
 }

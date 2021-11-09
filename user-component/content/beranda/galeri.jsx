@@ -7,8 +7,9 @@ import { Carousel } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 
-import { getDetailBerandaGaleri } from "../../../redux/actions/beranda/galeri.actions"
+import { getAllBerandaGaleri, getDetailBerandaGaleri } from "../../../redux/actions/beranda/galeri.actions"
 import style from "../../../styles/peserta/galeri.module.css"
+
 const Galeri = () => {
     const dispatch = useDispatch();
     const router = useRouter();
@@ -66,23 +67,23 @@ const Galeri = () => {
     }
 
     const handleFilterKategori = (str) => {
+
         setKategoriGaleri(str)
 
-        if(kategoriGaleri !== ""){
-            router.push ( `${router.pathname}?page=1&keyword=${str}`)
-        } else {
-            router.push ( `${router.pathname}?page=1`)
-        }
+        dispatch(getAllBerandaGaleri(
+            activePage,
+            str
+        ))
     }
 
     const handlePagination = (pageNumber) => {
         setActivePage(pageNumber)
 
-        if ( kategoriGaleri !== "" ){
-            router.push ( `${router.pathname}?page=${pageNumber}&keyword=${kategoriGaleri}`)
-        } else {
-            router.push ( `${router.pathname}?page=${pageNumber}`)
-        }
+        dispatch(getAllBerandaGaleri(
+            pageNumber,
+            kategoriGaleri
+        ))
+       
     }
 
     return (
@@ -114,10 +115,8 @@ const Galeri = () => {
             </div>
 
             {/* Filter Button */}
-            <div className="row my-5">
+            {/* <div className="row my-5">
                 <div className="col-12 d-flex justify-content-around flex-row flex-wrap">
-
-                    {/* Selected & Unselected */}
                     {
                         kategoriGaleri === "" ?
                             <div 
@@ -175,7 +174,86 @@ const Galeri = () => {
 
                 </div>
                
-            </div>
+            </div> */}
+
+            {
+                kategori ? (
+                    <div
+                        className="row my-5"
+                        style={{overflowX:"hidden"}}
+                    >
+                        <Carousel
+                            indicators={false}
+                            nextIcon={false}
+                            nextLabel={false}
+                            prevIcon={false}
+                            prevLabel={false}
+                        >
+                            <Carousel.Item>
+                                <div className="col-12 d-flex flex-row ">
+                                    {
+                                        kategoriGaleri === "" ?
+                                                <div 
+                                                    className="d-flex align-items-center rounded-pill bg-primary-dashboard py-1 px-3 mr-3 my-5" 
+                                                    style={{ cursor: "pointer", height:"40px" }}
+                                                    onClick={() => handleFilterKategori("")}
+                                                >
+                                                    <div className="my-1 mx-3 py-1 px-3 text-white">
+                                                        Semua
+                                                    </div>
+                                                </div>
+                                            :
+                                                <div 
+                                                    className="d-flex align-items-center border rounded-pill bg-whitepy-1 px-3 mr-3 my-5" 
+                                                    style={{ cursor: "pointer", height:"40px" }}
+                                                    onClick={() => handleFilterKategori("")}
+                                                >
+                                                    <div className="my-1 mx-3 py-1 px-3 text-muted">
+                                                        Semua
+                                                    </div>
+                                                </div>
+                                    }
+
+                                    {
+                                        kategori ?
+                                            kategori.map((el, i) => {
+                                                return (
+                                                    kategoriGaleri == el.nama_kategori ?
+                                                        <div 
+                                                            className="d-flex align-items-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-3 my-5" 
+                                                            style={{ cursor: "pointer", height:"40px" }}
+                                                            onClick={() => handleFilterKategori(el.nama_kategori)}
+                                                            key={i}
+                                                        >
+                                                            <div className="my-1 mx-3 py-1 px-3 text-white">
+                                                                {el.nama_kategori}
+                                                            </div>
+                                                        </div> 
+                                                    :
+                                                        <div 
+                                                            className="d-flex align-items-center border rounded-pill bg-white py-1 px-3 mr-3 my-5" 
+                                                            style={{ cursor: "pointer", height:"40px" }}
+                                                            onClick={() => handleFilterKategori(el.nama_kategori)}
+                                                            key={i}
+                                                        >
+                                                            <div className="my-1 mx-3 py-1 px-3 text-muted">
+                                                                {el.nama_kategori}
+                                                            </div>
+                                                        </div> 
+                                                )
+                                            })
+                                        :
+                                            null
+                                    }
+                                </div>
+
+                            </Carousel.Item>
+                            
+                        </Carousel>
+                        
+                    </div>
+                ) : null
+            }
             {/* End Filter Button */}
 
             {/* Content */}
@@ -187,7 +265,7 @@ const Galeri = () => {
                             return (
                                 <div 
                                     key={i} 
-                                    className="position-relative m-3"
+                                    className="position-relative my-5"
                                     onMouseEnter={() => handleMouseEnter(i)}
                                     onMouseLeave={() => handleMouseLeave(i)}
                                 >
@@ -202,7 +280,7 @@ const Galeri = () => {
                                                     alt="Card Gallery" 
                                                     width= "400px"
                                                     height= "400px"
-                                                    className="rounded"
+                                                    className="rounded-lg"
                                                 />
                                             </div>
                                         :
@@ -210,9 +288,11 @@ const Galeri = () => {
                                                 <div 
                                                     // className={`position-relative ${style.card_thumbnail}`}
                                                     style={{
-                                                        filter: "brightness(0.5)", 
-                                                        cursor: "pointer" 
-                                                        // backgroundImage: "linear-gradient(white, black)",
+                                                        zIndex:"20",
+                                                        cursor: "pointer",
+                                                        transition: "height 0.5s ease-out",
+                                                        background: "linear-gradient(to bottom, transparent 0%, black 100%)",
+                                                        borderRadius: "10px"
                                                     }}
                                                     onClick={() => handleDataModal(el.id_gallery)}
                                                     data-target="#modalGaleri"
@@ -226,7 +306,7 @@ const Galeri = () => {
                                                         alt="Card Gallery" 
                                                         width= "400px"
                                                         height= "400px"
-                                                        className="rounded"
+                                                        className="rounded-lg"
                                                     />
                                                 </div>
                                                 
