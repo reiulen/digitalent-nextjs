@@ -35,14 +35,21 @@ const EditSoalTrivia = ({ token }) => {
   );
   let { id } = router.query;
 
-  const [methodAdd, setMethodAdd] = useState(survey_question_detail && survey_question_detail.type);
+  console.log(survey_question_detail);
 
-  const [question, setQuestion] = useState(survey_question_detail && survey_question_detail.question);
+  const [methodAdd, setMethodAdd] = useState(
+    survey_question_detail && survey_question_detail.type
+  );
+
+  const [question, setQuestion] = useState(
+    survey_question_detail && survey_question_detail.question
+  );
   const [question_image, setQuestionImage] = useState(
     survey_question_detail && survey_question_detail.question_image
   );
   const [question_image_preview, setQuestionImagePreview] = useState(
-    process.env.END_POINT_API_IMAGE_SUBVIT + (survey_question_detail && survey_question_detail.question_image_preview)
+    process.env.END_POINT_API_IMAGE_SUBVIT +
+      (survey_question_detail && survey_question_detail.question_image_preview)
   );
   const [question_image_name, setQuestionImageName] = useState("Pilih Gambar");
 
@@ -50,7 +57,9 @@ const EditSoalTrivia = ({ token }) => {
     JSON.parse(survey_question_detail && survey_question_detail.answer)
   );
 
-  const [status, setStatus] = useState(survey_question_detail && survey_question_detail.status);
+  const [status, setStatus] = useState(
+    survey_question_detail && survey_question_detail.status
+  );
 
   useEffect(() => {
     if (success) {
@@ -278,7 +287,8 @@ const EditSoalTrivia = ({ token }) => {
           <form onSubmit={handleSubmit}>
             <div className="card-header border-0 d-flex pb-0">
               <h3 className="card-title font-weight-bolder text-dark">
-                Soal {survey_question_detail.bank_soal + 1}
+                Soal{" "}
+                {survey_question_detail && survey_question_detail.bank_soal + 1}
               </h3>
               <div className="card-toolbar ml-auto"></div>
             </div>

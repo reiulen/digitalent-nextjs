@@ -51,11 +51,12 @@ const DetailSurvey = ({ token }) => {
   const handlePagination = (pageNumber) => {
     router.push({
       pathname: `${router.pathname}`,
-      query: { id, page: pageNumber },
+      query: { id, page: pageNumber, limit: limit || 5 },
     });
   };
 
   const handleLimit = (val) => {
+    setLimit(val);
     router.push({
       pathname: `${router.pathname}`,
       query: { id, page: 1, limit: val },
@@ -156,7 +157,8 @@ const DetailSurvey = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h2 className="card-title h2 text-dark">
-              Survey FGA - Cloud Computing
+              Survey {survey.academy ? survey.academy.name : ""} -{" "}
+              {survey.theme ? survey.theme.name : ""}
             </h2>
             <div className="card-toolbar">
               <Link href={`/subvit/survey/edit?id=${id}`}>
@@ -289,7 +291,13 @@ const DetailSurvey = ({ token }) => {
                             <tr key={question.id}>
                               <td className="align-middle text-center">
                                 <span className="">
-                                  {i + 1 * (page * 5 || limit) - 4}
+                                  {limit === null ? (
+                                    <span>{i + 1 * (page * 5) - (5 - 1)}</span>
+                                  ) : (
+                                    <span>
+                                      {i + 1 * (page * limit) - (limit - 1)}
+                                    </span>
+                                  )}
                                 </span>
                               </td>
                               <td className="align-middle font-weight-bold">
