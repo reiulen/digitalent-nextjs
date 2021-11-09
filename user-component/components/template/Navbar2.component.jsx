@@ -119,13 +119,13 @@ const Navigationbar = ({ session }) => {
       <Navbar
         bg="white"
         expand="lg"
-        className="shadow header-dashboard d-flex"
+        className="shadow header-dashboard d-flex pr-0 pl-3"
         sticky="top"
       >
         <Col
           sm={12}
           lg={1}
-          className="d-flex justify-content-between justify-content-lg-center align-items-center"
+          className=" d-flex justify-content-between justify-content-lg-center align-items-center"
         >
           <Navbar.Brand href="/">
             <Image
