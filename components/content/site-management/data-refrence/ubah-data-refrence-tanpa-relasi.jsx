@@ -16,7 +16,6 @@ const Tambah = ({ token }) => {
   const [nameReference, setNameReference] = useState(
     detailDataReference.dataReference.name
   );
-  // const [number, setNumber] = useState(1);
   const [status, setStatus] = useState(
     detailDataReference.dataReference.status
   );
@@ -35,14 +34,12 @@ const Tambah = ({ token }) => {
     let _temp = [...values];
     let _tempValue = [...formInput];
     _temp.push({
-      // name: `Value ${number + 1}`,
       value: "",
     });
     _tempValue.push({
       value_old: "",
       value: "",
     });
-    // setNumber(number + 1);
     setValues(_temp);
     setFormInput(_tempValue);
   };
