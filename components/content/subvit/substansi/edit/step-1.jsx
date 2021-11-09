@@ -117,9 +117,13 @@ const StepOne = ({ token }) => {
 
   const [optionPelatihan, setOptionPelatihan] = useState([]);
 
+  const handleChangePelatihan = (e) => {
+    setThemeId(e.target.value);
+  };
+
   const handleChangeTema = (e) => {
     setAcademyId(e.target.value);
-    // e.target.value && dispatch(dropdownTemabyAkademi(e.target.value, token));
+
     const config = {
       headers: {
         Authorization: "Bearer " + token,
@@ -127,24 +131,30 @@ const StepOne = ({ token }) => {
     };
     axios
       .get(
-        `http://api-dts-dev.majapahit.id/pelatihan/api/v1/tema/dropdown-tema-by-akademi?akademi_id=${e.target.value}`,
+        process.env.END_POINT_API_PELATIHAN +
+          `api/v1/tema/dropdown-tema-by-akademi?akademi_id=${e.target.value}`,
         config
       )
       .then((res) => {
         const id = res.data.data.map((item) => {
           return item.value;
         });
+        console.log(theme_id);
         axios
           .get(
-            `http://api-dts-dev.majapahit.id/pelatihan/api/v1/pelatihan/dropdown-pelatihan-tema?id=${id}`,
+            process.env.END_POINT_API_PELATIHAN +
+              `api/v1/pelatihan/dropdown-pelatihan-tema?id=${theme_id}`,
             config
           )
-          .then((res) => setOptionPelatihan(res.data.data));
+          .then((res) => {
+            console.log(res);
+            setOptionPelatihan(res.data.data);
+          });
       });
   };
 
-  const handleChangePelatihan = (e) => {
-    setThemeId(e.target.value);
+  const handleTraining = (e) => {
+    setTrainingId(parseInt(e.target.value));
   };
 
   return (
@@ -231,18 +241,20 @@ const StepOne = ({ token }) => {
                     className="form-control"
                     defaultValue={theme_id}
                   >
+                    {subtance.academy_id !== parseInt(academy_id) && (
+                      <option selected value="">
+                        {" "}
+                        -Pilih Tema-
+                      </option>
+                    )}
+                    )
                     {data.data &&
                       data.data.map((item, index) => {
-                        <option selected disabled value="">
-                          {" "}
-                          -Pilih Tema-
-                        </option>;
                         return (
                           <>
                             <option
                               value={item.value}
                               key={index}
-                              selected
                               defaultValue={item.value}
                             >
                               {item.label}
@@ -265,24 +277,33 @@ const StepOne = ({ token }) => {
                   <select
                     name="training_id"
                     id=""
-                    onChange={(e) => setTrainingId(e.target.value)}
+                    onChange={(e) => handleTraining(e)}
                     className="form-control"
-                    defaultValue={training_id}
+                    defaultValue={
+                      dataPelatihan2 &&
+                      dataPelatihan2
+                        .filter((res) => res.value === training_id)
+                        .map((item) => {
+                          return item.value;
+                        })
+                    }
                   >
-                    <option selected disabled value="">
-                      {" "}
-                      -Pilih Pelatihan-
-                    </option>
-                    {optionPelatihan.map((item, index) => {
-                      return (
-                        <>
-                          <option value={item.value} key={index}>
-                            {" "}
-                            {item.label}
-                          </option>
-                        </>
-                      );
-                    })}
+                    {subtance.academy_id !== parseInt(academy_id) && (
+                      <option selected value="">
+                        {" "}
+                        -Pilih Pelatihan-
+                      </option>
+                    )}
+                    {dataPelatihan2 &&
+                      dataPelatihan2.map((item, index) => {
+                        return (
+                          <>
+                            <option value={item.value} key={index} selected>
+                              {item.label}
+                            </option>
+                          </>
+                        );
+                      })}
                   </select>
                 </div>
               </div>
