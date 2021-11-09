@@ -119,10 +119,11 @@ export const getPendaftaranPeserta =
     token,
     pelatihanId,
     keyword = "",
-    limit = null,
-    page = null,
-    administrasi = null,
-    pelatihan = null
+    limit = 5,
+    page = 1,
+    administrasi = "",
+    pelatihan = "",
+    subtansi = ""
   ) =>
   async (dispatch) => {
     try {
@@ -136,6 +137,7 @@ export const getPendaftaranPeserta =
       if (page) link = link.concat(`&page=${page}`);
       if (administrasi) link = link.concat(`&administrasi=${administrasi}`);
       if (pelatihan) link = link.concat(`&pelatihan=${pelatihan}`);
+      if (subtansi) link = link.concat(`&subtansi=${subtansi}`);
 
       const config = {
         headers: {
