@@ -1,6 +1,8 @@
 import StepOne from "/components/content/subvit/trivia/tambah/step-1";
 import { wrapper } from "../../../../redux/store";
 import { getSession } from "next-auth/client";
+import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
+import { dropdownAkademi } from "../../../../redux/actions/pelatihan/function.actions";
 
 export default function TambahBankSoalTesTriviaStep1(props) {
   const session = props.session.user.user.data;
@@ -17,16 +19,20 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
-      if (!session) {
+      const middleware = middlewareAuthAdminSession(session);
+      if (!middleware.status) {
         return {
           redirect: {
-            destination: "http://dts-dev.majapahit.id/login/admin",
+            destination: middleware.redirect,
             permanent: false,
           },
         };
       }
+
+      await store.dispatch(dropdownAkademi(session.user.user.data.token));
+
       return {
-        props: { session, title: "Step 1 - Subvit" },
+        props: { session, title: "Tambah TRIVIA - Subvit" },
       };
     }
 );
