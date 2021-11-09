@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import Pagination from "react-js-pagination";
 import PageWrapper from "../../../../wrapper/page.wrapper";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,7 +17,6 @@ import {
 
 const Table = ({ token }) => {
   let dispatch = useDispatch();
-  const router = useRouter();
 
   const allMitraSite = useSelector((state) => state.allMitraSite);
   const [valueSearch, setValueSearch] = useState("");
@@ -114,11 +112,9 @@ const Table = ({ token }) => {
                     </thead>
                     <tbody>
                       {allMitraSite.data.list_mitras.length === 0 ? (
-                        <tr>
-                          <td colSpan="6" className="text-center">
-                            <h4>Data tidak ditemukan</h4>
-                          </td>
-                        </tr>
+                        <td className="align-middle text-center" colSpan="6">
+                          Data Masih Kosong
+                        </td>
                       ) : (
                         allMitraSite.data.list_mitras.map((items, index) => {
                           return (
