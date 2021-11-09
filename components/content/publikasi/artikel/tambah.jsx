@@ -433,12 +433,9 @@ const TambahArtikel = ({ token, id }) => {
                         dataAkademi.data &&
                         dataAkademi.data.map((row) => {
                           return (
-                            // row.jenis_kategori == "Artikel" ?
                               <option key={row.value} value={row.label}>
                                 {row.label}
                               </option>
-                              // :
-                              // null
                           );
                         })
                       )}

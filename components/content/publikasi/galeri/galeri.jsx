@@ -536,42 +536,47 @@ const Galeri = ({ token }) => {
                             })
                             : null}
                     </div>
-                    <button
-                        className="carousel-control-prev"
-                        type="button"
-                        data-target="#carouselExampleIndicators"
-                        data-slide="prev"
-                        style={{
-                            position: "absolute",
-                            left: "-14px",
-                            top: "250px",
-                            border: "none",
-                            background: "none",
-                        }}
-                    >
-                        <span
-                            className="carousel-control-prev-icon"
-                            aria-hidden="true"
-                        ></span>
-                    </button>
-                    <button
-                        className="carousel-control-next"
-                        type="button"
-                        data-target="#carouselExampleIndicators"
-                        data-slide="next"
-                        style={{
-                            position: "absolute",
-                            right: "7px",
-                            top: "250px",
-                            border: "none",
-                            background: "none",
-                        }}
-                    >
-                        <span
-                            className="carousel-control-next-icon"
-                            aria-hidden="true"
-                        ></span>
-                    </button>
+                    {
+                        isViewed.gambar.length === 1 ? null :
+                            <div>
+                                <button
+                                    className="carousel-control-prev"
+                                    type="button"
+                                    data-target="#carouselExampleIndicators"
+                                    data-slide="prev"
+                                    style={{
+                                        position: "absolute",
+                                        left: "-14px",
+                                        top: "250px",
+                                        border: "none",
+                                        background: "none",
+                                    }}
+                                >
+                                    <span
+                                        className="carousel-control-prev-icon"
+                                        aria-hidden="true"
+                                    ></span>
+                                </button>
+                                <button
+                                    className="carousel-control-next"
+                                    type="button"
+                                    data-target="#carouselExampleIndicators"
+                                    data-slide="next"
+                                    style={{
+                                        position: "absolute",
+                                        right: "7px",
+                                        top: "250px",
+                                        border: "none",
+                                        background: "none",
+                                    }}
+                                >
+                                    <span
+                                        className="carousel-control-next-icon"
+                                        aria-hidden="true"
+                                    ></span>
+                                </button>
+                            </div>
+                    }
                 </div>
             </>
         ) : null;
@@ -1194,15 +1199,18 @@ const Galeri = ({ token }) => {
                                                 <div className="row mb-4">
                                                     <div className="col-sm-7 col-8">
                                                         <div className={styles["subMenuPreview"]}>
-                                                            <div className="mb-1 p-0 d-flex align-items-center">
-                                                                <div className={styles["iconPreview"]}>
-                                                                    <i className="flaticon2-calendar-4"></i>
-                                                                </div>
-                                                                <span className="ml-2">
-                                                                    Publish:{" "}
-                                                                    {moment(galeri.gallery[index_galleri].tanggal_publish).format("LL")}
-                                                                </span>
-                                                            </div>
+                                                            {
+                                                                galeri.gallery[index_galleri].publish === 0 ? null :
+                                                                    <div className="mb-1 p-0 d-flex align-items-center">
+                                                                        <div className={styles["iconPreview"]}>
+                                                                            <i className="flaticon2-calendar-4"></i>
+                                                                        </div>
+                                                                        <span className="ml-2">
+                                                                            Publish:{" "}
+                                                                            {moment(galeri.gallery[index_galleri].tanggal_publish).format("LL")}
+                                                                        </span>
+                                                                    </div>
+                                                            }
 
                                                             {/* <div className="mb-1 p-0 d-flex align-items-center">
                                                             <i className="flaticon2-user"></i>
@@ -1243,7 +1251,7 @@ const Galeri = ({ token }) => {
                                                                     return (
                                                                         <span
                                                                             style={{ background: "#fff", border: '1px solid #d7e1ea' }}
-                                                                            className="mr-3 px-3 py-1 rounded"
+                                                                            className="mr-3 px-3 py-1 rounded mb-1"
                                                                             key={i}
                                                                         >
                                                                             <div className={styles["tagModal"]}>

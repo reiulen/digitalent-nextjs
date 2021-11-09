@@ -30,7 +30,6 @@ const EditBerita = ({ token, idUser }) => {
 
     const simpleValidator = useRef(new SimpleReactValidator({ locale: 'id' }))
     const [, forceUpdate] = useState();
-    // const forceUpdate = React.useReducer(() => ({}))[1]
     const { berita } = useSelector(state => state.detailBerita)
     const { loading, error, success } = useSelector(state => state.updatedBerita)
     const { loading: allLoading, error: allError, kategori } = useSelector((state) => state.allKategori);
@@ -67,10 +66,8 @@ const EditBerita = ({ token, idUser }) => {
     const [id, setId] = useState(berita.id)
     const [judul_berita, setJudulBerita] = useState(berita.judul_berita)
     const [isi_berita, setIsiBerita] = useState(berita.isi_berita);
-    // const [gambar, setGambar] = useState(berita.gambar)
     const [gambar, setGambar] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + berita.gambar)
     const [gambarDB, setGambardb] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + berita.gambar);
-    // const [gambarPreview, setGambarPreview] = useState("/assets/media/default.jpg") 
     const [iconPlus, setIconPlus] = useState(
         "/assets/icon/Add.svg"
     );
@@ -109,11 +106,6 @@ const EditBerita = ({ token, idUser }) => {
             }
         }
         else {
-            // setGambar("")
-            // setGambarPreview("/assets/media/default.jpg")
-            // setGambarName(null)
-            // simpleValidator.current.showMessages();
-            // forceUpdate(1);
             e.target.value = null
             Swal.fire(
                 'Oops !',
@@ -560,7 +552,6 @@ const EditBerita = ({ token, idUser }) => {
                                                     className="checkbox"
                                                     checked={publish}
                                                     type="checkbox"
-                                                    // onChange={(checked) => setPublish(checked)}
                                                     onChange={(e) => handleChangePublish(e)}
                                                 />
                                                 <span
@@ -583,15 +574,11 @@ const EditBerita = ({ token, idUser }) => {
                                                         className="form-search-date form-control-sm form-control"
                                                         selected={publishDate}
                                                         onChange={(date) => handlePublishDate(date)}
-                                                        // onChange={(date) => setPublishDate(date)}
                                                         selectsStart
                                                         startDate={publishDate}
-                                                        // endDate={endDate}
                                                         dateFormat="dd/MM/yyyy"
                                                         placeholderText="Silahkan Isi Tanggal Publish"
                                                         wrapperClassName="col-12 col-lg-12 col-xl-12"
-                                                        // minDate={moment().toDate()}
-                                                        // minDate={addDays(new Date(), 20)}
                                                         disabled={disablePublishDate === true || disablePublishDate === null}
                                                     />
                                                 </div>

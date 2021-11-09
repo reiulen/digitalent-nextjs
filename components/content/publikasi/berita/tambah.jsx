@@ -181,8 +181,7 @@ const TambahBerita = ({ token, id }) => {
                 })
                     .then((result) => {
                         if (result.isConfirmed) {
-                            console.log("data : ", data)
-                            // dispatch(newBerita(data, token))
+                            dispatch(newBerita(data, token))
                         }
                     });
             } else {
@@ -210,8 +209,7 @@ const TambahBerita = ({ token, id }) => {
                 })
                     .then((result) => {
                         if (result.isConfirmed) {
-                            console.log("data : ", data)
-                            // dispatch(newBerita(data, token))
+                            dispatch(newBerita(data, token))
                         }
                     });
             }
@@ -280,7 +278,7 @@ const TambahBerita = ({ token, id }) => {
                                             data={isi_berita}
                                             onReady={editor => {
                                                 // You can store the "editor" and use when it is needed.
-                                                // console.log('Editor is ready to use!', editor);
+
                                             }}
                                             onChange={(event, editor) => {
                                                 const data = editor.getData()
@@ -383,12 +381,9 @@ const TambahBerita = ({ token, id }) => {
                                         ) : (
                                             dataAkademi && dataAkademi.data && dataAkademi.data.map((row) => {
                                                 return (
-                                                    // row.jenis_kategori == "Berita" ?
                                                     <option key={row.value} value={row.label}>
                                                         {row.label}
                                                     </option>
-                                                    // :
-                                                    // null
                                                 )
                                             })
                                         )}

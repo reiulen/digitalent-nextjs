@@ -431,17 +431,6 @@ const EditArtikel = ({ token, idUser }) => {
                               "isi_artikel"
                             )
                           }
-                        // config={
-                        //   {
-                        //     //   ckfinder: {
-                        //     //   // Upload the images to the server using the CKFinder QuickUpload command.
-                        //     //   // uploadUrl: 'https://example.com/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images&responseType=json',
-                        //     //   uploadUrl: process.env.END_POINT_API_PUBLIKASI + `api/artikel/${id}`
-                        //     // }
-                        //     allowedContent: true
-
-                        //   }
-                        // }
                         />
                       ) : (
                         <p>Tunggu Sebentar</p>
@@ -539,7 +528,7 @@ const EditArtikel = ({ token, idUser }) => {
                         -- Akademi --
                       </option>
                       {!dataAkademi || (dataAkademi && dataAkademi.length === 0) ? (
-                        <option value="">Data Tidak Ditemukan</option>
+                        <option value="">Data Kosong</option>
                       ) : (
                         dataAkademi &&
                         dataAkademi.data &&
@@ -553,8 +542,6 @@ const EditArtikel = ({ token, idUser }) => {
                               {row.label}
                             </option>
                           )
-                          // : null;
-                          // <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>{row.nama_kategori}</option>
                         })
                       )}
                     </select>
@@ -590,7 +577,7 @@ const EditArtikel = ({ token, idUser }) => {
                         -- Artikel --
                       </option>
                       {!kategori || (kategori && kategori.length === 0) ? (
-                        <option value="">Data Tidak Ditemukan</option>
+                        <option value="">Data Kosong</option>
                       ) : (
                         kategori &&
                         kategori.kategori &&
@@ -604,7 +591,6 @@ const EditArtikel = ({ token, idUser }) => {
                               {row.nama_kategori}
                             </option>
                           ) : null;
-                          // <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>{row.nama_kategori}</option>
                         })
                       )}
                     </select>
@@ -670,27 +656,6 @@ const EditArtikel = ({ token, idUser }) => {
                   </div>
                 </div>
 
-                {/* <div className="form-group row">
-                  <label
-                    htmlFor="staticEmail"
-                    className="col-sm-2 col-form-label"
-                  >
-                    Publish
-                  </label>
-                  <div className="col-sm-1">
-                    <SwitchButton
-                      checked={publish}
-                      onlabel=" "
-                      onstyle="primary"
-                      offlabel=" "
-                      offstyle="danger"
-                      size="sm"
-                      width={30}
-                      onChange={(checked) => setPublish(checked)}
-                    />
-                  </div>
-                </div> */}
-
                 {disablePublishDate === false ? (
                   <div className="form-group">
                     <label className="col-sm-5 col-form-label font-weight-bolder">
@@ -702,27 +667,17 @@ const EditArtikel = ({ token, idUser }) => {
                           className="form-search-date form-control-sm form-control"
                           selected={publishDate}
                           onChange={date => handlePublishDate(date)}
-                          // onChange={(date) => setPublishDate(date)}
                           selectsStart
                           startDate={publishDate}
-                          // endDate={endDate}
                           dateFormat="dd/MM/yyyy"
                           placeholderText="Silahkan Isi Tanggal Publish"
                           wrapperClassName="col-12 col-lg-12 col-xl-12"
-                          // minDate={moment().toDate()}
-                          // minDate={addDays(new Date(), 20)}
                           disabled={
                             disablePublishDate === true ||
                             disablePublishDate === null
                           }
                         />
                       </div>
-                      {/* {
-                          disablePublishDate === true ?
-                            <small className="text-muted">Harap ubah status publikasi menjadi aktif untuk mengisi Tanggal Publish</small>
-                          :
-                            null
-                        } */}
                     </div>
                   </div>
                 ) : null}

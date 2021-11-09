@@ -267,11 +267,7 @@ const Kategori = ({ token }) => {
 
                     {/* modal */}
                     <form
-                      // id="kt_docs_formvalidation_text"
                       className="form text-left"
-                    // action="#"
-                    // autoComplete="off"
-                    // onSubmit={handleSubmitSearchMany}
                     >
                       <div
                         className="modal fade"
@@ -334,49 +330,6 @@ const Kategori = ({ token }) => {
                                   <option value="Faq">Faq</option>
                                 </select>
                               </div>
-                              {/* <label className="required fw-bold fs-6 mb-2">
-                                                                    Tanggal
-                                                                    </label>
-
-                                                                    <div>
-                                                                    <DatePicker
-                                                                        className="form-search-date form-control-sm form-control"
-                                                                        selected={startDate}
-                                                                        onChange={(date) => setStartDate(date)}
-                                                                        selectsStart
-                                                                        startDate={startDate}
-                                                                        endDate={endDate}
-                                                                        dateFormat="dd/MM/yyyy"
-                                                                        placeholderText="Silahkan Isi Tanggal Dari"
-                                                                        wrapperClassName="col-12 col-lg-12 col-xl-12"
-                                                                        minDate={moment().toDate()}
-                                                                    // minDate={addDays(new Date(), 20)}
-                                                                    />
-                                                                    </div> */}
-
-                              {/* <div className="mb-10 col-12">
-                                                                    <label className="required fw-bold fs-6 mb-2">
-                                                                    Tanggal
-                                                                    </label>
-                                                        
-                                                                    <div>
-                                                                    <DatePicker
-                                                                        className="form-search-date form-control-sm form-control"
-                                                                        selected={endDate}
-                                                                        onChange={(date) => setEndDate(date)}
-                                                                        selectsEnd
-                                                                        startDate={startDate}
-                                                                        endDate={endDate}
-                                                                        dateFormat="dd/MM/yyyy"
-                                                                        // minDate={startDate}
-                                                                        minDate={moment().toDate()}
-                                                                        maxDate={addDays(startDate, 20)}
-                                                                        placeholderText="Silahkan Isi Tanggal Sampai"
-                                                                        wrapperClassName="col-12 col-lg-12 col-xl-12"
-                                                                    // minDate={addDays(new Date(), 20)}
-                                                                    />
-                                                                    </div>
-                                                                </div> */}
                             </div>
                             <div className="modal-footer">
                               <div className="d-flex justify-content-end align-items-center">
@@ -471,19 +424,6 @@ const Kategori = ({ token }) => {
                                   </div>
                                 </button>
                               </td>
-                              {/* <td className='align-middle text-center'>
-                                <ButtonAction icon='write.svg' link={`/publikasi/kategori/${row.id}`} title="Edit" />
-                                <button
-                                  onClick={() => handleDelete(row.id)}
-                                  className='btn mr-1'
-                                  style={{ background: '#F3F6F9', borderRadius: '6px' }}
-                                  data-toggle="tooltip"
-                                  data-placement="bottom"
-                                  title="Hapus"
-                                >
-                                  <Image alt='button-action' src={`/assets/icon/trash.svg`} width={18} height={18} />
-                                </button>
-                              </td> */}
                             </tr>
                           );
                         })
@@ -499,7 +439,6 @@ const Kategori = ({ token }) => {
                 <div className="row">
                   {paginateKategori.perPage < kategori.total && (
                     <div className={`${stylesPag.pagination} table-pagination`}>
-                      {/* <div className="table-pagination"> */}
                       <Pagination
                         activePage={page}
                         itemsCountPerPage={paginateKategori.perPage}
