@@ -20,7 +20,7 @@ export const disablePlusMinusPeriod = (e) => {
 
 export const SweatAlert = (title, message, status) => {
   Swal.fire({
-    icon: status,
+    icon: status, // error || success
     title: title,
     text: message,
     confirmButtonText: "Tutup",
