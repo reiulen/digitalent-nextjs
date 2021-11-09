@@ -63,7 +63,7 @@ const DetailSummary = ({ token }) => {
   const optionsSubstansi = [
     { value: "belum tersedia", label: "Belum Tersedia" },
     { value: "belum mengerjakan", label: "Belum Mengerjakan" },
-    { value: "gagal tes", label: "Gagal Tes" },
+    { value: "tidak lulus", label: "Gagal Tes" },
     { value: "lulus tes", label: "Lulus Tes" },
   ];
 
@@ -84,7 +84,6 @@ const DetailSummary = ({ token }) => {
   };
 
   const handleFilter = () => {
-    setShowModal(false);
     dispatch(
       getPendaftaranPeserta(
         token,
@@ -95,8 +94,9 @@ const DetailSummary = ({ token }) => {
         statusBerkas === null ? "" : statusBerkas.value,
         statusPeserta === null ? "" : statusPeserta.value,
         statusTesSubstansi === null ? "" : statusTesSubstansi.value
-      )
-    );
+        )
+        );
+        setShowModal(false);
   };
 
   const handleExportReport = async () => {
@@ -118,10 +118,10 @@ const DetailSummary = ({ token }) => {
     return hours + ":" + minutes + ":" + seconds;
   };
 
-  const handleResetError = () => {
-    if (error) {
-      dispatch(clearErrors());
-    }
+  const handleReset = () => {
+    setStatusPeserta(null)
+    setStatusTesSubstansi(null)
+    setStatusBerkas(null)
   };
 
   return (
@@ -146,7 +146,8 @@ const DetailSummary = ({ token }) => {
             titleValue=""
             title="Verivied Administrasi"
             publishedVal="verified"
-            routePublish={(e) => { dispatch(
+            routePublish={(e) => { }}
+            search={(e) => { dispatch(
               getPendaftaranPeserta(
                 token,
                 id,
@@ -167,18 +168,23 @@ const DetailSummary = ({ token }) => {
             titleValue=""
             title="Lulus Tes Substansi"
             publishedVal="sedang-mengerjakan"
-            routePublish={() => dispatch(
-              getPendaftaranPeserta(
-                token,
-                id,
-                null,
-                5,
-                1,
-                null,
-                statusPeserta === null ? "" : statusPeserta.value,
-                "lulus tes"
+            search={() => {
+              dispatch(
+                getPendaftaranPeserta(
+                  token,
+                  id,
+                  null,
+                  5,
+                  1,
+                  null,
+                  statusPeserta === null ? "" : statusPeserta.value,
+                  "lulus tes"
+                )
               )
-            )}
+            }}
+            routePublish={() => {
+
+            }}
           />
           <CardPage
             background="bg-warning"
@@ -188,7 +194,18 @@ const DetailSummary = ({ token }) => {
             titleValue=""
             title="Verified Administrasi Lulus Tes Substansi"
             publishedVal="belum-mengerjakan"
-            routePublish={() => handlePublish("belum-mengerjakan")}
+            routePublish={() => dispatch(
+              getPendaftaranPeserta(
+                token,
+                id,
+                null,
+                5,
+                1,
+                "verified",
+                statusPeserta === null ? "" : statusPeserta.value,
+                "lulus tes"
+              )
+            )}
           />
           <CardPage
             background="bg-extras"
@@ -198,7 +215,18 @@ const DetailSummary = ({ token }) => {
             titleValue=""
             title="Diterima"
             publishedVal="gagal-test"
-            routePublish={() => handlePublish("gagal-test")}
+            routePublish={() => dispatch(
+              getPendaftaranPeserta(
+                token,
+                id,
+                null,
+                5,
+                1,
+                null,
+                "diterima",
+                null
+              )
+            )}
           />
         </div>
       </div>
@@ -524,6 +552,7 @@ const DetailSummary = ({ token }) => {
             <Select
               placeholder="Silahkan Pilih Tes Substansi"
               options={optionsSubstansi}
+              value={statusTesSubstansi}
               onChange={(e) =>
                 setStatusTesSubstansi({ label: e.label, value: e.value })
               }
@@ -534,6 +563,7 @@ const DetailSummary = ({ token }) => {
             <Select
               placeholder="Silahkan Pilih Status Berkas"
               options={optionsBerkas}
+              value={statusBerkas}
               onChange={(e) =>
                 setStatusBerkas({ label: e.label, value: e.value })
               }
@@ -544,6 +574,7 @@ const DetailSummary = ({ token }) => {
             <Select
               placeholder="Silahkan Pilih Status Peserta"
               options={optionsPeserta}
+              value={statusPeserta}
               onChange={(e) =>
                 setStatusPeserta({ label: e.label, value: e.value })
               }
@@ -553,7 +584,10 @@ const DetailSummary = ({ token }) => {
         <Modal.Footer>
           <button
             className="btn btn-light-ghost-rounded-full mr-2"
-            type="reset"
+            type="button"
+            onClick={() => {
+              handleReset()
+            }}
           >
             Reset
           </button>
