@@ -7,6 +7,7 @@ import Pagination from "react-js-pagination";
 import { Modal } from "react-bootstrap";
 import moment from "moment";
 import Select from "react-select";
+import axios from 'axios'
 
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingTable from "../../../LoadingTable";
@@ -72,6 +73,15 @@ const DetailSummary = ({ token }) => {
     dispatch(getPendaftaranPeserta(token, id, search, limit, pageNumber));
   };
 
+  function capitalize(s) {
+    let a = s.split(" ")
+    let result = []
+    for (let i = 0; i < a.length; i++) {
+       result.push(a[i].charAt(0).toUpperCase() + a[i].slice(1, a[i].length))
+    }
+    return result.join(" ")
+  }
+
   const handleSearch = () => {
     setPage(1);
     dispatch(getPendaftaranPeserta(token, id, search, limit, 1));
@@ -100,13 +110,7 @@ const DetailSummary = ({ token }) => {
   };
 
   const handleExportReport = async () => {
-    let link =
-      process.env.END_POINT_API_PELATIHAN +
-      `/api/v1/pelatihan/export-rekap-pendaftaran`;
-    if (search) link = link.concat(`&cari=${search}`);
-    await axios.get(link).then((res) => {
-      window.location.href = res.data.data;
-    });
+
   };
 
   const handleSecondsToTime = (secs) => {
@@ -356,14 +360,12 @@ const DetailSummary = ({ token }) => {
                   </Link>
                 </div>
                 <div className="col-md-2">
-                  <button
-                    className="btn w-100 btn-rounded-full bg-blue-secondary text-white mt-2"
-                    type="button"
-                    onClick={handleExportReport}
-                  >
-                    Export
-                    <i className="ri-arrow-down-s-line ml-3 mt-1 text-white"></i>
-                  </button>
+                  <select className="btn w-100 btn-rounded-full bg-blue-secondary text-white mt-2">
+                    <option value="" disabled selected>Export</option>
+                    <option value="LMS">LMS</option>
+                    <option value="CSV">CSV</option>
+                  </select>
+                     <i className="ri-arrow-down-s-line ml-3 mt-1 text-white"></i>
                 </div>
               </div>
             </div>
@@ -415,7 +417,7 @@ const DetailSummary = ({ token }) => {
                                     : "text-success"
                                 } `}
                               >
-                                {row.subtansi_status || "-"}
+                                {capitalize(row.subtansi_status)  || "-"}
                               </p>
                               <p className="my-0">
                                 {Math.round(row.nilai) || "-"}
@@ -426,12 +428,12 @@ const DetailSummary = ({ token }) => {
                             </td>
                             <td>
                               <span className="label label-inline label-light-success font-weight-bold">
-                                {row.administrasi}
+                                {capitalize(row.administrasi) }
                               </span>
                             </td>
                             <td>
                               <span className="label label-inline label-light-success font-weight-bold">
-                                {row.status}
+                                { capitalize(row.status) }
                               </span>
                             </td>
                             <td>
@@ -586,7 +588,7 @@ const DetailSummary = ({ token }) => {
             className="btn btn-light-ghost-rounded-full mr-2"
             type="button"
             onClick={() => {
-              handleReset()
+              handleReset( )
             }}
           >
             Reset
