@@ -497,8 +497,8 @@ const Berita = () => {
                             berita && berita.berita && berita.berita.length !== 0 ?
                                 berita.berita.map ((el, i) => {
                                     return (
-                                        <div className="row my-20 ml-1 flex-column-reverse flex-xl-row" key={i}>
-                                            <div className="col col-xl-7 col-12">
+                                        <div className="row my-20 ml-1 " key={i}>
+                                            <div className="col col-7">
                                                 <div className="row d-flex justify-content-between align-items-center">
                                                     <div className="d-flex align-self-center">
                                                         <div className="border rounded-circle py-1 px-2">
@@ -556,19 +556,19 @@ const Berita = () => {
 
                                                 <div className="row mb-3 d-flex align-items-center">
                                                     {/* Insert Date and View Here */}
-                                                    <div className="text-muted col-5">
+                                                    <div className="text-muted col-xl-5 col-12 pl-0">
                                                         {moment(el.tanggal_publish).format("DD MMMM")} | {el.dibaca} dibaca
                                                     </div>
 
                                                     {/* Insert Tag(s) here */}
-                                                    <div className="col-7 d-flex flex-row flex-wrap">
+                                                    <div className="col-xl-7 col-12 d-flex flex-row flex-wrap my-3 pl-0 ">
                                                         {
                                                             el.tag && el.tag.length !== 0 ?
                                                                 el.tag.map ((element, index) => {
                                                                     return (
                                                                         
                                                                         <div 
-                                                                            className="ml-3 border px-2 py-1 my-1"
+                                                                            className=" border px-2 py-1 my-1"
                                                                             onClick={() => handleFilterTag(element)}
                                                                             style={{cursor:"pointer"}}
                                                                             key={index}
@@ -589,7 +589,8 @@ const Berita = () => {
                                             </div>
 
                                             <div 
-                                                className="col col-xl-5 col-12 position-relative"
+                                                className="col col-5 position-relative d-flex align-self-center" 
+                                                style={{objectFit:"contain"}}
                                             >
                                                 {/* Insert Card Image Here */}
                                                 <Link href={`/berita/detail/${el.slug}`}>
@@ -599,11 +600,11 @@ const Berita = () => {
                                                                 process.env.END_POINT_API_IMAGE_PUBLIKASI +
                                                                 "publikasi/images/" + el.gambar
                                                             }
-                                                            // style={{objectFit:"contain"}}
                                                             width="100%"
-                                                            height="100%"
+                                                            height="auto"
                                                             alt="Card Image"
                                                             className="rounded-lg"
+                                                            // style={{objectFit:"contain"}}
                                                         />
                                                     </a>
                                                 </Link>
