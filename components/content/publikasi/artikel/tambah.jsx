@@ -136,7 +136,9 @@ const TambahArtikel = ({ token, id }) => {
         data.splice([i], 1);
       }
     }
-    setTag(data);
+    if ((data).includes(data) !== true) {
+      setTag(data);
+    }
   }
 
   const onSubmit = (e) => {
@@ -425,7 +427,7 @@ const TambahArtikel = ({ token, id }) => {
                         -- Akademi --
                       </option>
                       {!dataAkademi || (dataAkademi && dataAkademi.length === 0) ? (
-                        <option value="">Data Tidak Ditemukan</option>
+                        <option value="">Data Kosong</option>
                       ) : (
                         dataAkademi &&
                         dataAkademi.data &&
@@ -473,7 +475,7 @@ const TambahArtikel = ({ token, id }) => {
                         -- Artikel --
                       </option>
                       {!kategori || (kategori && kategori.length === 0) ? (
-                        <option value="">Data Tidak Ditemukan</option>
+                        <option value="">Data Kosong</option>
                       ) : (
                         kategori &&
                         kategori.kategori &&
@@ -626,7 +628,7 @@ const TambahArtikel = ({ token, id }) => {
                   src={gambarPreview}
                   alt="image"
                   layout="fill"
-                  objectFit="cover"
+                  objectFit="fill"
                 />
               </div>
               <div className="modal-footer">

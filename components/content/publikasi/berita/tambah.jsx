@@ -128,7 +128,9 @@ const TambahBerita = ({ token, id }) => {
                 data.splice([i], 1);
             }
         }
-        setTag(data);
+        if ((data).includes(data) !== true) {
+            setTag(data);
+        }
     }
 
     const onSubmit = (e) => {
@@ -179,7 +181,8 @@ const TambahBerita = ({ token, id }) => {
                 })
                     .then((result) => {
                         if (result.isConfirmed) {
-                            dispatch(newBerita(data, token))
+                            console.log("data : ", data)
+                            // dispatch(newBerita(data, token))
                         }
                     });
             } else {
@@ -207,7 +210,8 @@ const TambahBerita = ({ token, id }) => {
                 })
                     .then((result) => {
                         if (result.isConfirmed) {
-                            dispatch(newBerita(data, token))
+                            console.log("data : ", data)
+                            // dispatch(newBerita(data, token))
                         }
                     });
             }
