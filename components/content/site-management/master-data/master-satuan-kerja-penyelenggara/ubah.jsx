@@ -21,13 +21,11 @@ const TambahApi = ({ token }) => {
  
 
   const detailUnitWork = useSelector((state) => state.detailUnitWork);
- 
   let sortirOptionTempProv = detailUnitWork?.unitWork?.provinsi
   let optionTempProv = sortirOptionTempProv.map((items)=>{
     return {...items,label:items.provinsi,region:items.provinsi}
   })
 
-  console.log("optionTempProv",optionTempProv)
 
   
 
@@ -68,12 +66,10 @@ let sortirOptionTempProvList = allProvincesSite?.data
         "Form nama satuan kerja tidak boleh kosong",
         "error"
       );
-    } else if (status === "") {
+    } 
+    else if (status === "") {
       Swal.fire("Gagal simpan", "Form status tidak boleh kosong", "error");
     } 
-    // else if (valueProvinsi.length === 0) {
-    //   Swal.fire("Gagal simpan", "Form provinsi tidak boleh kosong", "error");
-    // } 
     else {
       Swal.fire({
         title: "Apakah anda yakin simpan ?",
@@ -118,23 +114,6 @@ let sortirOptionTempProvList = allProvincesSite?.data
     }
   };
 
- 
-
-  // useEffect(() => {
-  //   let optionProvinsi = tempOptionsProvinsi.map((items) => {
-  //     return { ...items, label: items.value };
-  //   });
-  //   setProvinsi(optionProvinsi);
-
-
-    
-  //   let optionProvinsiApiDefault = defaultOptionFromApi.map((items) => {
-  //     return { ...items, label: items.provinsi };
-  //   });
-  //   setDefaultValueProvisniApi(optionProvinsiApiDefault);
-
-
-  // }, [defaultOptionFromApi,tempOptionsProvinsi]);
   return (
     <PageWrapper>
       <form>
@@ -165,16 +144,16 @@ let sortirOptionTempProvList = allProvincesSite?.data
                     className="form-control"
                     onChange={(e) => setStatus(e.target.value)}
                   >
-                    <option value="1">Aktif</option>
                     <option value="0">Tidak Aktif</option>
+                    <option value="1">Aktif</option>
                   </select>
                 ) : (
                   <select
                     className="form-control"
                     onChange={(e) => setStatus(e.target.value)}
                   >
-                    <option value="0">Tidak Aktif</option>
                     <option value="1">Aktif</option>
+                    <option value="0">Tidak Aktif</option>
                   </select>
                 )}
               </div>
