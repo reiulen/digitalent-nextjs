@@ -497,7 +497,7 @@ const ListReview = ({ token }) => {
                             </td>
                             <td className="align-middle">
                               {row.status_substansi === "review" && (
-                                <div className="d-flex">
+                                <div className="d-flex mr-10">
                                   <Link
                                     href={`/pelatihan/review/view-pelatihan/${row.id}`}
                                   >
