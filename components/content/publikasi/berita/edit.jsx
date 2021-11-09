@@ -30,7 +30,6 @@ const EditBerita = ({ token, idUser }) => {
 
     const simpleValidator = useRef(new SimpleReactValidator({ locale: 'id' }))
     const [, forceUpdate] = useState();
-    // const forceUpdate = React.useReducer(() => ({}))[1]
     const { berita } = useSelector(state => state.detailBerita)
     const { loading, error, success } = useSelector(state => state.updatedBerita)
     const { loading: allLoading, error: allError, kategori } = useSelector((state) => state.allKategori);
@@ -67,10 +66,8 @@ const EditBerita = ({ token, idUser }) => {
     const [id, setId] = useState(berita.id)
     const [judul_berita, setJudulBerita] = useState(berita.judul_berita)
     const [isi_berita, setIsiBerita] = useState(berita.isi_berita);
-    // const [gambar, setGambar] = useState(berita.gambar)
     const [gambar, setGambar] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + berita.gambar)
     const [gambarDB, setGambardb] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + berita.gambar);
-    // const [gambarPreview, setGambarPreview] = useState("/assets/media/default.jpg") 
     const [iconPlus, setIconPlus] = useState(
         "/assets/icon/Add.svg"
     );
@@ -109,11 +106,6 @@ const EditBerita = ({ token, idUser }) => {
             }
         }
         else {
-            // setGambar("")
-            // setGambarPreview("/assets/media/default.jpg")
-            // setGambarName(null)
-            // simpleValidator.current.showMessages();
-            // forceUpdate(1);
             e.target.value = null
             Swal.fire(
                 'Oops !',
@@ -126,14 +118,14 @@ const EditBerita = ({ token, idUser }) => {
     const handleChangePublish = e => {
         setDisablePublishDate(!disablePublishDate);
         setPublishDate(null);
-    
+
         if (e.target.checked === false) {
-          setPublishDate(null);
-          setPublish(0);
+            setPublishDate(null);
+            setPublish(0);
         } else {
-          setPublish(1);
+            setPublish(1);
         }
-      };
+    };
 
     const handlePublishDate = (date) => {
         if (disablePublishDate === false) {
@@ -151,7 +143,9 @@ const EditBerita = ({ token, idUser }) => {
                 data.splice([i], 1);
             }
         }
-        setTag(data);
+        if ((data).includes(data) !== true) {
+            setTag(data);
+        }
     }
 
     const onSubmit = (e) => {
@@ -325,7 +319,7 @@ const EditBerita = ({ token, idUser }) => {
     }
 
     const onNewReset = () => {
-        dispatch({ 
+        dispatch({
             type: UPDATE_BERITA_RESET
         })
     }
@@ -421,7 +415,7 @@ const EditBerita = ({ token, idUser }) => {
                                                 alt="image"
                                                 width={160}
                                                 height={160}
-                                                objectFit="cover"
+                                                objectFit="fill"
                                             />
                                         </figure>
                                         <div>
@@ -485,9 +479,9 @@ const EditBerita = ({ token, idUser }) => {
                                             ) : (
                                                 dataAkademi && dataAkademi.data && dataAkademi.data.map((row) => {
                                                     return (
-                                                            <option key={row.value} value={row.label} selected={kategori_akademi === row.label ? true : false}>
-                                                                {row.label}
-                                                            </option>
+                                                        <option key={row.value} value={row.label} selected={kategori_akademi === row.label ? true : false}>
+                                                            {row.label}
+                                                        </option>
                                                     )
                                                 })
                                             )}
@@ -524,12 +518,12 @@ const EditBerita = ({ token, idUser }) => {
 
                                 <div className="form-group">
                                     <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Tag</label>
-                                    <div className="col-sm-12">
+                                    <div className="col-sm-12" style={{ wordBreak: 'break-word' }}>
                                         <TagsInput
                                             value={tag}
                                             onChange={(data) => handleTag(data)}
                                             name="tag"
-                                            placeHolder="Isi Tag disini"
+                                            placeHolder="Isi Tag disini dan Enter"
                                             seprators={["Enter", "Tab"]}
                                         />
                                         {
@@ -558,7 +552,6 @@ const EditBerita = ({ token, idUser }) => {
                                                     className="checkbox"
                                                     checked={publish}
                                                     type="checkbox"
-                                                    // onChange={(checked) => setPublish(checked)}
                                                     onChange={(e) => handleChangePublish(e)}
                                                 />
                                                 <span
@@ -581,15 +574,11 @@ const EditBerita = ({ token, idUser }) => {
                                                         className="form-search-date form-control-sm form-control"
                                                         selected={publishDate}
                                                         onChange={(date) => handlePublishDate(date)}
-                                                        // onChange={(date) => setPublishDate(date)}
                                                         selectsStart
                                                         startDate={publishDate}
-                                                        // endDate={endDate}
                                                         dateFormat="dd/MM/yyyy"
                                                         placeholderText="Silahkan Isi Tanggal Publish"
                                                         wrapperClassName="col-12 col-lg-12 col-xl-12"
-                                                        // minDate={moment().toDate()}
-                                                        // minDate={addDays(new Date(), 20)}
                                                         disabled={disablePublishDate === true || disablePublishDate === null}
                                                     />
                                                 </div>
@@ -629,7 +618,7 @@ const EditBerita = ({ token, idUser }) => {
                                     src={gambarPreview}
                                     alt='image'
                                     layout='fill'
-                                    objectFit='cover'
+                                    objectFit='fill'
                                 />
                             </div>
                             <div className="modal-footer">
