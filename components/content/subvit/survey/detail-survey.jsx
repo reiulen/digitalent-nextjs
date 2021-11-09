@@ -182,9 +182,9 @@ const DetailSurvey = ({ token }) => {
                     <p>Status</p>
                   </div>
                   <div className="col-sm-8 value-1">
-                    <p>{survey ? survey.academy.name : "-"}</p>
-                    <p>{survey ? survey.theme.name : "-"} </p>
-                    <p>{survey ? survey.training.name : ""}</p>
+                    <p>{survey.academy ? survey.academy.name : "-"}</p>
+                    <p>{survey.theme ? survey.theme.name : "-"} </p>
+                    <p>{survey.training ? survey.training.name : "-"}</p>
                     <p>{survey ? "Publish" : "Draft"}</p>
                   </div>
                 </div>
