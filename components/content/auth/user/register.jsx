@@ -7,7 +7,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 import SimpleReactValidator from "simple-react-validator";
 import axios from "axios";
 import PhoneInput from "react-phone-input-2";
-import Swal from "sweetalert2";
+import { SweatAlert } from "../../../../utils/middleware/helper";
 
 import AuthWrapper from "../../../wrapper/auth.wrapper";
 import LoadingTable from "../../../LoadingTable";
@@ -105,12 +105,7 @@ const RegisterUser = () => {
         })
         .catch((err) => {
           setLoading(false);
-          Swal.fire({
-            icon: "error",
-            title: "Gagal",
-            text: err.response.data.message,
-            confirmButtonText: "Tutup",
-          });
+          SweatAlert("Gagal", err.response.data.message, "error");
         });
     } else {
       setLoading(false);
