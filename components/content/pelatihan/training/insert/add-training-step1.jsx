@@ -396,6 +396,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
       }
     };
   }, [targetKuotaRegister]);
+
   useEffect(() => {
     const number = document.getElementById("number2");
     number.onkeydown = (e) => {

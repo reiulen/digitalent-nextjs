@@ -348,17 +348,51 @@ const AddRegistrationStep2 = ({ propsStep }) => {
 
   const [status, setStatus] = useState(1);
   useEffect(() => {}, [status]);
-
-  const byStatus = () => {
-    switch (status) {
-      case 2:
-        break;
-      case 3:
-        break;
-      default:
-        status1();
-    }
+  const test1 = [
+    { value: 1, label: 1 },
+    { value: 2, label: 2 },
+    { value: 3, label: 3 },
+  ];
+  const [test2, setTest2] = useState();
+  const handleFormChange = (e) => {
+    e.preventDefault();
+    console.log(e.currentTarget.value);
   };
+
+  useEffect(() => {
+    console.log(test2);
+  }, [test2]);
+  const status2 = () => {
+    return (
+      <Fragment>
+        <div className="form-group mb-4">
+          <label className="col-form-label font-weight-bold">
+            Nama Form Pendaftaran
+          </label>
+          <select
+            className="form-control"
+            name="FormPendaftaran"
+            value={test2}
+            onChange={(e) => setTest2(e.currentTarget.value)}
+          >
+            <option value="" disabled selected>
+              -- PILIH --
+            </option>
+            {test1.map((el, i) => {
+              return (
+                <option key={i} value={el.value}>
+                  {el.label}
+                </option>
+              );
+            })}
+            {/* {dataOptions.map((datOpt, i) => (
+            ))} */}
+          </select>
+        </div>
+      </Fragment>
+    );
+  };
+
   const status1 = () => {
     return (
       <Fragment>
@@ -501,6 +535,9 @@ const AddRegistrationStep2 = ({ propsStep }) => {
       </Fragment>
     );
   };
+  const status3 = () => {
+    return <Fragment>status3</Fragment>;
+  };
   return (
     <>
       <div className="card card-custom card-stretch gutter-b">
@@ -514,49 +551,60 @@ const AddRegistrationStep2 = ({ propsStep }) => {
                 Tambah Form
               </label>
               <div className="d-flex">
-                <div class="form-check">
+                <div className="form-check">
                   <input
-                    class="form-check-input"
+                    className="form-check-input"
                     type="radio"
                     name="flexRadioDefault"
                     id="flexRadioDefault1"
                     checked={status == 1}
                     onChange={() => setStatus(1)}
                   />
-                  <label class="form-check-label" for="flexRadioDefault1">
+                  <label
+                    className="form-check-label"
+                    htmlFor="flexRadioDefault1"
+                  >
                     Buat Manual
                   </label>
                 </div>
-                <div class="form-check mx-4">
+                <div className="form-check mx-4">
                   <input
-                    class="form-check-input"
+                    className="form-check-input"
                     type="radio"
                     name="flexRadioDefault"
                     id="flexRadioDefault2"
                     checked={status == 2}
                     onChange={() => setStatus(2)}
                   />
-                  <label class="form-check-label" for="flexRadioDefault2">
+                  <label
+                    className="form-check-label"
+                    htmlFor="flexRadioDefault2"
+                  >
                     Copy Form
                   </label>
                 </div>
-                <div class="form-check">
+                <div className="form-check">
                   <input
-                    class="form-check-input"
+                    className="form-check-input"
                     type="radio"
                     name="flexRadioDefault"
                     id="flexRadioDefault2"
                     checked={status == 3}
                     onChange={() => setStatus(3)}
                   />
-                  <label class="form-check-label" for="flexRadioDefault2">
+                  <label
+                    className="form-check-label"
+                    htmlFor="flexRadioDefault2"
+                  >
                     Copy & Edit Form
                   </label>
                 </div>
               </div>
             </div>
             {/* {invoke disini} */}
-            {byStatus()}
+            {status == 1 && status1()}
+            {status == 2 && status2()}
+            {status == 3 && status3()}
             <div className="form-group mt-9">
               <div className="text-right">
                 <button

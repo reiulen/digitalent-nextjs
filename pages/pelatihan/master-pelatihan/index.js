@@ -55,27 +55,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
-      await store.dispatch(
-        getAllTraining(
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          session.user.user.data.token
-        )
-      );
-
-      await store.dispatch(getCardTraining(session.user.user.data.token));
-      await store.dispatch(dropdownAkademi(session.user.user.data.token));
-      await store.dispatch(dropdownTema(session.user.user.data.token));
-      await store.dispatch(dropdownPenyelenggara(session.user.user.data.token));
-
       return {
         props: { session, title: "List Pelatihan - Pelatihan" },
       };
