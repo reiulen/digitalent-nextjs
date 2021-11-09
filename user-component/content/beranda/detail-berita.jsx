@@ -1,14 +1,68 @@
 import React, { useEffect, useState } from "react"
 import Link from "next/link";
 import Image from "next/image";
+import moment from "moment";
+import { useDispatch, useSelector } from "react-redux";
+import Highlighter from "react-highlight-words";
+import { useRouter } from "next/router";
 
 const DetailBerita = () => {
+    const dispatch = useDispatch();
+    const router = useRouter();
+
+    const { detail } = useSelector((state) => state.detailBerandaBerita)
+    const { tags } = useSelector((state) => state.allTagBerandaBerita)
+
+    const [ keyword, setKeyword ] = useState (null)
+    const [ searchWords, setSearchWords ] = useState (null)
+
+    const getWindowDimensions = () => {
+        // if (typeof window === 'undefined') {
+        //     global.window = {}
+        // }
+
+        const { innerWidth: width, innerHeight: height } = window;
+        return {
+            width,
+            height,
+        };
+    };
+
+    const [windowDimensions, setWindowDimensions] = useState(
+        // getWindowDimensions()
+        {}
+    );
+
+    useEffect(() => {
+        function handleResize() {
+            setWindowDimensions(getWindowDimensions());
+        }
+        setWindowDimensions(getWindowDimensions());
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    },[detail])
+
+    useEffect(()=> {
+
+    },[windowDimensions])
+
+    const handleFilterTag = (str) => {
+        router.push (`/berita?tag=${str}`)
+    }
+
+    const handleHighlightWords = (e) => {
+        e.preventDefault();
+        let result = keyword.split (" ")
+        
+        setSearchWords(result)
+    }
+    
     return (
         <div>
             {/* BreadCrumb */}
             <div className="row my-5 mx-1 py-3 px-8 bg-white rounded-pill d-flex align-items-center border">
                 <span className="text-primary">
-                    <Link href="#">
+                    <Link href="/">
                         Beranda 
                     </Link>
                 </span>
@@ -33,48 +87,52 @@ const DetailBerita = () => {
                 <div className="badge badge-light mr-2 col-1">
                     <div className="text-primary">
                         {/* Insert Kategori Here */}
-                        Pengumuman
+                        {detail.nama_kategori}
                     </div>
                 </div>
                 <div className="mt-5">
                     <h1 className="font-weight-bolder">
                         {/* Insert Title Here */}
-                        Pengumuman Kelulusan Peserta Pelatihan Daring Gelombang 1 Program VSGA DTS 2021
+                        {detail.judul}
                     </h1>
                 </div>
 
                 <div className="mt-5 d-flex flex-row align-items-center">
                     <span className="font-weight-bolder">
                         {/* Insert Akademi Here */}
-                        SVGA
+                        {detail.kategori_akademi}
                     </span>
                     <span className="mr-1 ml-3">
                         <i className="ri-eye-line"></i> 
                     </span>
                     <span className="text-muted">
                         {/* Insert Views Here */}
-                        Dibaca 120
+                        Dibaca {detail.dibaca}
                     </span>
                 </div>
 
-                <div className="mt-5 d-flex flex-row align-items-center justify-content-between">
+                <div className="mt-5 d-flex flex-row align-items-center justify-content-between mx-3">
                     <div className="row">
-                        <div className="border rounded-circle py-1 px-2">
+                        <div className="">
                             {/* Insert Logo Image Here */}
                             <Image
-                                src="/assets/media/logo-default.png" 
+                                src={
+                                    process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                    "publikasi/images/" + detail.foto
+                                }
                                 width={30}
                                 height={30}
                                 alt="Logo Image"
+                                className="border rounded-circle"
                             />
                         </div>
                         <div className="d-flex flex-column ml-3">
                             <div className="font-weight-bolder">
                                 {/* Insert Admin Here */}
-                                Admin Pokja
+                                {detail.dibuat}
                             </div>
                             <div className="text-muted">
-                                22 September 2021
+                                {moment(detail.tanggal_publish).format("DD MMMM YYYY")}
                             </div>
                         </div>
                     </div>
@@ -93,43 +151,56 @@ const DetailBerita = () => {
             {/* End of Header */}
 
             {/* Content */}
-            <div className="row">
+            <div className="row mt-10">
 
                 {/* Left Side */}
                 <div className="col-12 col-md-8">
                     {/* Image */}
                     <Image
-                        src="/assets/media/default-detail-image.png"
+                        // src="/assets/media/default-detail-image.png"
+                        src={
+                            process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                            "publikasi/images/" + detail.gambar
+                        }
                         width="1500vw"
                         height="1000vh" 
                         // layout="fill"
                         objectFit="cover"
                         alt="Detail Image"
-                        className="rounded"
+                        className="rounded-lg"
                     />
 
                     {/* Berita */}
-                    <div className="border rounded mb-5">
+                    <div className="border rounded-lg mb-5 mt-15">
                         <div className="row my-5 mx-5">
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque ac sem eget odio pellentesque bibendum. Nam mattis ullamcorper velit vitae rhoncus. Donec convallis nulla eget augue semper, sed vulputate diam eleifend. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean laoreet, arcu sit amet condimentum tincidunt, diam quam convallis felis, eu commodo mi nisl a purus. Nulla facilisi. Nulla sodales lectus sit amet leo euismod, eu consectetur quam sagittis. Nullam non mauris fermentum, suscipit lacus laoreet, gravida sapien. Aliquam a mattis elit. Morbi viverra faucibus posuere. Duis bibendum mauris sit amet dui blandit pulvinar. Morbi id sapien eu ante maximus consequat in at sem.
-                            </p>
+                            {
+                                searchWords ?
+                                    <Highlighter 
+                                        highlightClassName="YourHighlightClass"
+                                        searchWords={searchWords}
+                                        autoEscape={true}
+                                        textToHighlight={detail.isi_berita}
+                                        // textToHighlight={<div dangerouslySetInnerHTML={{__html: detail.isi_artikel}}/>}
+                                    />
+                                :
+                                    <div dangerouslySetInnerHTML={{__html: detail.isi_berita}}/>
+                            }
                         </div>
 
-                        <div className="row m-3 d-flex justify-content-between">
+                        <div className="row m-3 d-flex justify-content-between pb-5">
                             <div className="row d-flex justify-content-between ml-3">
-                                <div className="border p-3 rounded">
-                                    #SVGA
-                                </div>
-                                <div className="ml-3 border p-3 rounded">
-                                    #Pelatihan
-                                </div>
-                                <div className="ml-3 border p-3 rounded">
-                                    #Java
-                                </div>
-                                <div className="ml-3 border p-3 rounded">
-                                    #Linux
-                                </div>
+                                {
+                                    detail && detail.tag && detail.tag.length !== 0 ?
+                                        detail.tag.map ((el, i) => {
+                                            return (
+                                                <div className="mr-3 border p-3 rounded" key={i}>
+                                                {el}
+                                                </div>
+                                            )
+                                        })
+                                    :
+                                        null
+                                }
                             </div>
 
                             <div className="row">
@@ -147,80 +218,99 @@ const DetailBerita = () => {
                 {/* End of Left Side */}
 
                 {/* Right Side */}
-                <div className="col-12 col-md-4">
+                {
+                    windowDimensions && windowDimensions.width && windowDimensions.width > 750 ?
+                        <div className="col-12 col-md-4">
 
-                    {/* Search */}
-                    <div className="border rounded">
-                        <div className="row mt-5 "> 
-                            <div className="col-2 my-auto ml-3">
-                                <Image 
-                                    src={`/assets/media/logo-filter.svg`}
-                                    width={40}
-                                    height={40}
-                                    alt="Logo filter"
-                                />
+                            {/* Search */}
+                            <div className="border rounded">
+                                <div className="row mt-10 mb-5"> 
+                                    <div className="col-2 my-auto ml-5">
+                                        <Image 
+                                            src={`/assets/media/logo-filter.svg`}
+                                            width={40}
+                                            height={40}
+                                            alt="Logo filter"
+                                        />
+                                    </div>
+                                    <div className="col-9 my-auto">
+                                        <h3 className=" font-weight-bolder">
+                                            Pencarian
+                                        </h3>
+                                    </div>
+                                </div>
+
+                                <form className="mb-10 mx-5">
+                                    <div className="input-group">
+                                        {/* <i className="ri-search-line position-absolute my-5 ml-3" style={{zIndex:"10"}} ></i> */}
+
+                                        <div className="input-group-prepend">
+                                            <div 
+                                                className="input-group-text bg-light border-right-0 pr-1"
+                                                style={{borderTopLeftRadius:"150px", borderBottomLeftRadius:"150px"}}
+                                            >
+                                                <i className="ri-search-line"></i>
+                                            </div>
+                                        </div>
+
+                                        <input 
+                                            type="text" 
+                                            className="form-control border-left-0 border p-0 bg-light"  
+                                            placeholder="Cari Berita"
+                                            // style={{borderTopLeftRadius:"150px", borderBottomLeftRadius:"150px"}}
+                                            onChange={(e) => setKeyword(e.target.value)}
+                                        />
+                        
+                                        <div>
+                                            <button 
+                                                className="btn btn-primary-dashboard" 
+                                                onClick={(e) => handleHighlightWords(e, detail.isi_berita)}
+                                                style={{borderTopRightRadius:"150px", borderBottomRightRadius:"150px"}}
+                                            >
+                                                Cari
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+
                             </div>
-                            <div className="col-9 my-auto">
-                                <h3 className=" font-weight-bolder">
-                                    Pencarian
+
+                            {/* Tag */}
+                            <div className="row mt-10 d-flex flex-column mx-10">
+                                <h3 className="font-weight-bolder"> 
+                                    Temukan Lebih Banyak Berita Yang Sesuai:
                                 </h3>
-                            </div>
-                        </div>
-
-                        <form className="mb-3 mx-3">
-                            <div className="input-group">
-                                <i className="ri-search-line position-absolute my-5 ml-3" style={{zIndex:"10"}} ></i>
-
-                                <input 
-                                    type="text" 
-                                    className="form-control" 
-                                    placeholder="    Cari Berita"
-                                    style={{borderTopLeftRadius:"150px", borderBottomLeftRadius:"150px"}}
-                                />
-                
-                                <div>
-                                    <button 
-                                        className="btn btn-primary-dashboard" 
-                                        style={{borderTopRightRadius:"150px", borderBottomRightRadius:"150px"}}
-                                    >
-                                        Cari
-                                    </button>
+                                <div className=" d-flex flex-wrap flex-row">
+                                    {
+                                        tags && tags.tag && tags.tag.length !== 0 ?
+                                            tags.tag.map ((el, i) => {
+                                                return (
+                                                    <div 
+                                                        className="border px-2 py-1 rounded my-3 mr-3" 
+                                                        key={i}
+                                                        onClick={() => handleFilterTag(el)}
+                                                        style={{cursor:"pointer"}}
+                                                    >
+                                                        {el}
+                                                    </div>
+                                                )
+                                            })
+                                        :
+                                            <div className="row text-center">
+                                                <h3 className="text-muted">
+                                                    <em>
+                                                        Tag Belum Tersedia
+                                                    </em>
+                                                </h3>
+                                            </div>
+                                    }
                                 </div>
                             </div>
-                        </form>
-
-                    </div>
-
-                    {/* Tag */}
-                    <div className="row mt-5 d-flex flex-column mx-2">
-                        <h3 className="font-weight-bolder"> 
-                            Temukan Lebih Banyak Berita Yang Sesuai:
-                        </h3>
-                        <div className=" d-flex flex-wrap justify-content-around flex-row">
-                            <div className="border px-2 py-1 rounded my-3 mr-3">
-                                #SVGA
-                            </div>
-                            <div className="border px-2 py-1 rounded my-3 mr-3">
-                                #PELATIHAN
-                            </div>
-                            <div className="border px-2 py-1 rounded my-3 mr-3">
-                                #UIUXDESIGNER
-                            </div>
-                            <div className="border px-2 py-1 rounded my-3 mr-3">
-                                #JAVA
-                            </div>
-                            <div className="border px-2 py-1 rounded my-3 mr-3">
-                                #C++
-                            </div>
-                            <div className="border px-2 py-1 rounded my-3 mr-3">
-                                #LINUX
-                            </div>
-                            <div className="border px-2 py-1 rounded my-3 mr-3">
-                                #IOS
-                            </div>
                         </div>
-                    </div>
-                </div>
+                    :
+                        null
+                }
+                
                 {/* End of Right Side */}
             </div>
             {/* End of Content */}

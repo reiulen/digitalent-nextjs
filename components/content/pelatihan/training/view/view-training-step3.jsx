@@ -42,11 +42,9 @@ const ViewTrainingStep3 = () => {
                 <p className="text-neutral-body">Komitmen Peserta</p>
                 <p className="text-dark">{komitmenPeserta}</p>
               </div>
-              <div className="col-md-12">
-                <p className="text-neutral-body">Form Komitmen</p>
-                <textarea rows="6" className="form-control" disabled>
-                  {formKomitmen}
-                </textarea>
+              <div className="col-md-12 mt-4">
+                <p className="font-weight-400">Form Komitmen</p>
+               <div className="border px-4 py-4 rounded text-gray" dangerouslySetInnerHTML={{__html: formKomitmen}} />
               </div>
             </div>
 
@@ -55,7 +53,7 @@ const ViewTrainingStep3 = () => {
                 <button
                   className="btn btn-primary-rounded-full mr-2"
                   type="button"
-                  onClick={() => router.back()}
+                  onClick={() => router.push(`/pelatihan/pelatihan/view-pelatihan/view-form-pendaftaran/${id}`)}
                 >
                   Kembali
                 </button>

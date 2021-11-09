@@ -1,4 +1,8 @@
+import React, { useEffect } from "react";
 import Image from "next/image";
+import { useDispatch, useSelector } from "react-redux";
+import { getBerandaFooter } from "../../../redux/actions/beranda/beranda.actions";
+
 import IconFacebook from "../../../components/assets/icon/Facebook";
 import IconInstagram from "../../../components/assets/icon/Instagram";
 import IconTwitter from "../../../components/assets/icon/Twitter";
@@ -6,6 +10,12 @@ import IconYoututbe from "../../../components/assets/icon/Youtube";
 import ImageWhiteLogo from "../../../components/assets/icon-dashboard-peserta/whitelogo.png";
 
 export default function footer() {
+  const dispatch = useDispatch();
+  const { footer, loading } = useSelector((state) => state.berandaFooter);
+
+  useEffect(() => {
+    dispatch(getBerandaFooter());
+  }, [dispatch]);
   return (
     <div style={{ backgroundColor: "#203E80" }}>
       <div className="container-fluid">

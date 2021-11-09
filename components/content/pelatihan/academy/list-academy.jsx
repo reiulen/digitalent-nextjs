@@ -53,6 +53,18 @@ const ListAcademy = ({ token }) => {
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(null);
 
+  const getWindowDimensions = () => {
+    const { innerWidth: width, innerHeight: height } = window;
+    return {
+      width,
+      height,
+    };
+  };
+
+  const [windowDimensions, setWindowDimensions] = useState(
+    getWindowDimensions()
+  );
+
   useEffect(() => {
     if (isDeleted) {
       Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
@@ -66,6 +78,13 @@ const ListAcademy = ({ token }) => {
         type: DELETE_ACADEMY_RESET,
       });
     }
+
+    function handleResize() {
+      setWindowDimensions(getWindowDimensions());
+    }
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, [isDeleted, dispatch, token]);
 
   const handlePagination = (pageNumber) => {
@@ -228,7 +247,7 @@ const ListAcademy = ({ token }) => {
                         <th>Pelatihan</th>
                         <th>Penyelenggara</th>
                         <th>Status</th>
-                        <th>Aksi</th>
+                        <th className="row-aksi-tema">Aksi</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -315,7 +334,7 @@ const ListAcademy = ({ token }) => {
                       activePage={page}
                       itemsCountPerPage={academy.perPage}
                       totalItemsCount={academy.total}
-                      pageRangeDisplayed={3}
+                      pageRangeDisplayed={windowDimensions.width > 300 ? 3 : 1}
                       onChange={handlePagination}
                       nextPageText={">"}
                       prevPageText={"<"}

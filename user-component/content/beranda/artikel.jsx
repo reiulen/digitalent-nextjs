@@ -5,6 +5,7 @@ import Pagination from "react-js-pagination";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
+import { Carousel } from "react-bootstrap";
 import { getAllBerandaArtikel } from "../../../redux/actions/beranda/artikel.actions"
 import PulseLoaderRender from "../../components/loader/PulseLoader";
 
@@ -17,7 +18,7 @@ const Artikel = () => {
     const { akademi } = useSelector((state) => state.allAkademi);
     const { tags } = useSelector((state) => state.allTagBerandaArtikel)
 
-    const titleToTrim = 20
+    const titleToTrim = 25
     const descToTrim = 100
 
     const [ activeTitle, setActiveTitle ] = useState("Ada Apa di Digitalent")
@@ -31,6 +32,37 @@ const Artikel = () => {
     // const [ category_name, setCategoryName ] = useState("")
     const [ category_academy, setCategoryAcademy ] = useState("")
     const [ tag, setTag ] = useState("")
+    const [ showFilter, setShowFilter ] = useState(false)
+
+    const getWindowDimensions = () => {
+        // if (typeof window === 'undefined') {
+        //     global.window = {}
+        // }
+
+        const { innerWidth: width, innerHeight: height } = window;
+        return {
+            width,
+            height,
+        };
+    };
+    
+    const [windowDimensions, setWindowDimensions] = useState(
+        // getWindowDimensions()
+        {}
+    );
+
+    useEffect(() => {
+        function handleResize() {
+            setWindowDimensions(getWindowDimensions());
+        }
+        setWindowDimensions(getWindowDimensions());
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    },[akademi])
+
+    useEffect(()=> {
+
+    },[windowDimensions])
 
     const handleFilterKategori = (str) => {
         // e.preventDefault();
@@ -124,14 +156,14 @@ const Artikel = () => {
         // setTag(str)
         dispatch (getAllBerandaArtikel(
             activePage, 
-            str, 
+            keyword, 
             limit, 
             filterPublish, 
             sort, 
             category_id, 
             kategoriArtikel, 
             category_academy,
-            tag
+            str
         ))
 
     }
@@ -179,7 +211,7 @@ const Artikel = () => {
                 {
                     activeTitle == "Ada Apa di Digitalent" ?
                         <div className="mt-3">
-                            Cerita mitra, berita seru, dan Artikel terbaru. Baca semua artikel soal Digitalent di sini.
+                            Cerita mitra, berita seru, dan artikel terbaru. Baca semua artikel soal Digitalent di sini.
                         </div>
                     :
                         <div className="mt-3">
@@ -190,68 +222,83 @@ const Artikel = () => {
             </div>
 
             {/* Filter Button */}
-            <div className="row my-5">
-                <div className="col-12 col-md-8 d-flex flex-row flex-wrap">
-                   {/* Selected & Unselected */}
+            {
+                kategori ? (
+                    <div
+                        className="row my-5"
+                        style={{overflowX:"hidden"}}
+                    >
+                        <Carousel
+                            indicators={false}
+                            nextIcon={false}
+                            nextLabel={false}
+                            prevIcon={false}
+                            prevLabel={false}
+                        >
+                            <Carousel.Item>
+                                <div className="d-flex flex-row ml-6">
+                                    {
+                                        kategoriArtikel === "" ?
+                                                <div 
+                                                    className="d-flex align-items-center rounded-pill bg-primary-dashboard py-1 px-3 mr-3 my-5" 
+                                                    style={{ cursor: "pointer", height:"40px" }}
+                                                    onClick={() => handleFilterKategori("")}
+                                                >
+                                                    <div className="my-1 mx-3 py-1 px-3 text-white">
+                                                        Semua
+                                                    </div>
+                                                </div>
+                                            :
+                                                <div 
+                                                    className="d-flex align-items-center border rounded-pill bg-whitepy-1 px-3 mr-3 my-5" 
+                                                    style={{ cursor: "pointer", height:"40px" }}
+                                                    onClick={() => handleFilterKategori("")}
+                                                >
+                                                    <div className="my-1 mx-3 py-1 px-3 text-muted">
+                                                        Semua
+                                                    </div>
+                                                </div>
+                                    }
 
-                   {
-                       kategoriArtikel === "" ?
-                            <div 
-                                className="d-flex align-items-center rounded-pill bg-primary-dashboard py-1 px-3 mr-3 my-5" 
-                                style={{ cursor: "pointer" }}
-                                onClick={() => handleFilterKategori("")}
-                            >
-                                <div className="my-1 mx-3 py-1 px-3 text-white">
-                                    Semua
+                                    {
+                                        kategori ?
+                                            kategori.map((el, i) => {
+                                                return (
+                                                    kategoriArtikel == el.nama_kategori ?
+                                                        <div 
+                                                            className="d-flex align-items-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-3 my-5" 
+                                                            style={{ cursor: "pointer", height:"40px" }}
+                                                            onClick={() => handleFilterKategori(el.nama_kategori)}
+                                                            key={i}
+                                                        >
+                                                            <div className="my-1 mx-3 py-1 px-3 text-white">
+                                                                {el.nama_kategori}
+                                                            </div>
+                                                        </div> 
+                                                    :
+                                                        <div 
+                                                            className="d-flex align-items-center border rounded-pill bg-white py-1 px-3 mr-3 my-5" 
+                                                            style={{ cursor: "pointer", height:"40px" }}
+                                                            onClick={() => handleFilterKategori(el.nama_kategori)}
+                                                            key={i}
+                                                        >
+                                                            <div className="my-1 mx-3 py-1 px-3 text-muted">
+                                                                {el.nama_kategori}
+                                                            </div>
+                                                        </div> 
+                                                )
+                                            })
+                                        :
+                                            null
+                                    }
                                 </div>
-                            </div>
-                        :
-                            <div 
-                                className="d-flex align-items-center border rounded-pill bg-whitepy-1 px-3 mr-3 my-5" 
-                                style={{ cursor: "pointer" }}
-                                onClick={() => handleFilterKategori("")}
-                            >
-                                <div className="my-1 mx-3 py-1 px-3 text-muted">
-                                    Semua
-                                </div>
-                            </div>
-                   }
-                    
 
-                    {
-                        kategori ?
-                            kategori.map((el, i) => {
-                                return (
-                                    kategoriArtikel == el.nama_kategori ?
-                                        <div 
-                                            className="d-flex align-items-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-3 my-5" 
-                                            style={{ cursor: "pointer" }}
-                                            onClick={() => handleFilterKategori(el.nama_kategori)}
-                                            key={i}
-                                        >
-                                            <div className="my-1 mx-3 py-1 px-3 text-white">
-                                                {el.nama_kategori}
-                                            </div>
-                                        </div> 
-                                    :
-                                        <div 
-                                            className="d-flex align-items-center border rounded-pill bg-white py-1 px-3 mr-3 my-5" 
-                                            style={{ cursor: "pointer" }}
-                                            onClick={() => handleFilterKategori(el.nama_kategori)}
-                                            key={i}
-                                        >
-                                            <div className="my-1 mx-3 py-1 px-3 text-muted">
-                                                {el.nama_kategori}
-                                            </div>
-                                        </div> 
-                                )
-                            })
-                        :
-                            null
-                    }
-                </div>
-               
-            </div>
+                            </Carousel.Item>
+                            
+                        </Carousel>
+                        
+                    </div>
+                ) : null}
             {/* End Filter Button */}
 
             {/* Content */}
@@ -259,13 +306,158 @@ const Artikel = () => {
 
                 {/* Left Side */}
                 <div className="col-md-8 col-12">
+
+                    {/* Filter at mobile screen */}
+                    {
+                        
+                        windowDimensions && windowDimensions.width && windowDimensions.width <= 770 ?
+                            <div className="border rounded-lg p-2 order-1 mb-10">
+                                <div className="row"> 
+                                    <div className="col-2 my-auto ml-3">
+                                        <Image 
+                                            src={`/assets/media/logo-filter.svg`}
+                                            width={40}
+                                            height={40}
+                                            alt="Logo filter"
+                                        />
+                                    </div>
+                                    <div className="col-7 my-auto">
+                                        <h3 className=" font-weight-bolder">
+                                            Filter
+                                        </h3>
+                                    </div>
+                                    <div className="col-2 my-auto text-right">
+                                        {
+                                            showFilter === false ?
+                                                <div onClick={() => setShowFilter(true)}>
+                                                    <i className="ri-arrow-right-s-line"></i>
+                                                </div>
+                                            :
+                                                <div onClick={() => setShowFilter(false)}>
+                                                    <i className="ri-arrow-down-s-line"></i>
+                                                </div>
+                                        }
+                                        
+                                    </div>
+                                </div>
+
+                                {
+                                    showFilter === true ?
+                                        <>
+                                            <div className="row ml-3 mt-5">
+                                                <p>
+                                                    Urutkan Berdasarkan
+                                                </p>
+                                            </div>
+
+                                            <div className="row mx-3 mb-3 d-flex justify-content-between">
+                                                <div className=" col-6">
+                                                    {
+                                                        filterPublish === "desc" ?
+                                                            <button className="btn btn-primary rounded-pill btn-block" onClick={() => handleFilterPublish("")}>
+                                                                Terbaru
+                                                            </button>
+                                                        :
+                                                            <button className="btn btn-outline-light rounded-pill btn-block" onClick={() => handleFilterPublish("desc")}>
+                                                                Terbaru
+                                                            </button>
+                                                    }
+                                                </div>
+
+                                                <div className="col-6">
+                                                    {
+                                                        filterPublish === "asc" ?
+                                                            <button className="btn btn-primary rounded-pill btn-block" onClick={() => handleFilterPublish("")}>
+                                                                Terlama
+                                                            </button>
+                                                        :
+                                                            <button className="btn btn-outline-light rounded-pill btn-block" onClick={() => handleFilterPublish("asc")}>
+                                                                Terlama
+                                                            </button>
+                                                    }
+                                                </div>
+                                            </div>
+
+                                            <div className="row mx-3 mb-3 d-flex justify-content-between">
+                                                <div className="col-6">
+                                                    {
+                                                        sort === "asc" ?
+                                                            <button className="btn btn-primary rounded-pill btn-block" onClick={() => handleSort("")}>
+                                                                A-Z
+                                                            </button>
+                                                        :
+                                                            <button className="btn btn-outline-light rounded-pill btn-block" onClick={() => handleSort("asc")}>
+                                                                A-Z
+                                                            </button>
+                                                    }
+                                                </div>
+
+                                                <div className="col-6">
+                                                    {
+                                                        sort === "desc" ?
+                                                            <button className="btn btn-primary rounded-pill btn-block" onClick={() => handleSort("")}>
+                                                                Z-A
+                                                            </button>
+                                                        :
+                                                            <button className="btn btn-outline-light rounded-pill btn-block" onClick={() => handleSort("desc")}>
+                                                                Z-A
+                                                            </button>
+                                                    }
+                                                    
+                                                </div>
+                                            </div>
+
+                                            <div className="row ml-3 mt-5">
+                                                <p>
+                                                    Akademi
+                                                </p>
+                                            </div>
+
+                                            <div className="row mx-3 mb-7">
+                                                {
+                                                    akademi && akademi.length !== 0 &&
+                                                        <select 
+                                                            className="form-control rounded-pill"
+                                                            onChange={(e) => handleCategoryAcademy(e.target.value)}
+                                                        >
+                                                            <option defaultValue="" >Semua Akademi</option>
+                                                            {
+                                                                akademi.map ((el, i) => {
+                                                                    return (
+                                                                        <option value={el.slug} key={i}>{el.slug}</option>
+                                                                    )
+                                                                })
+                                                            }
+                                                        </select>
+                                                }
+                                                
+                                            </div>
+
+                                            <div className="row mx-3 mb-3">
+                                                <button 
+                                                    className="btn btn-primary-dashboard rounded-pill btn-block"
+                                                    onClick={() => submitFilter()}
+                                                >
+                                                    Tampilkan
+                                                </button>
+                                            </div>
+                                        </>
+                                    :
+                                        null
+                                }
+                                
+
+                            </div>
+                        :
+                            null
+                    }
                     
                     {/* Search Tab */}
                     <form className="mb-3">
                         <div className="input-group">
                             <div className="input-group-prepend">
                                 <div 
-                                    className="input-group-text bg-white"
+                                    className="input-group-text bg-light border-right-0 pr-1"
                                     style={{borderTopLeftRadius:"150px", borderBottomLeftRadius:"150px"}}
                                 >
                                     <i className="ri-search-line"></i>
@@ -274,9 +466,8 @@ const Artikel = () => {
 
                             <input 
                                 type="text" 
-                                className="form-control" 
+                                className="form-control border-left-0 border p-0 bg-light" 
                                 placeholder="Cari Artikel"
-                                // style={{borderTopLeftRadius:"150px", borderBottomLeftRadius:"150px"}}
                                 onChange={(e) => setKeyword(e.target.value)}
                             />
             
@@ -295,7 +486,6 @@ const Artikel = () => {
                     {/* End Search Tab */}
 
                     {/* Card */}
-
                     {
                         loadingArtikel ?
                             <div className="container-fluid">
@@ -307,8 +497,8 @@ const Artikel = () => {
                             artikel && artikel.artikel && artikel.artikel.length !== 0 ?
                                 artikel.artikel.map ((el, i) => {
                                     return (
-                                        <div className="row my-20 ml-1 flex-column-reverse flex-xl-row" key={i}>
-                                            <div className="col col-xl-7 col-12">
+                                        <div className="row my-20 ml-1 " key={i}>
+                                            <div className="col col-7">
                                                 <div className="row d-flex justify-content-between align-items-center">
                                                     <div className="d-flex align-self-center">
                                                         <div className="border rounded-circle py-1 px-2">
@@ -348,7 +538,7 @@ const Artikel = () => {
 
                                                 <div className="row my-5">
                                                     {/* Insert Title Here */}
-                                                    <Link href={`/artikel/detail/${el.id}`}>
+                                                    <Link href={`/artikel/detail/${el.slug}`}>
                                                         <a>
                                                             <h1 className="text-dark">
                                                                 {handleTitleToTrim(el.judul)}
@@ -364,38 +554,41 @@ const Artikel = () => {
                                                 
                                                 </div>
 
-                                                <div className="row mb-3">
+                                                <div className="row mb-3 d-flex align-items-center">
                                                     {/* Insert Date and View Here */}
-                                                    <span>
+                                                    <div className="text-muted col-xl-5 col-12 pl-0">
                                                         {moment(el.tanggal_publish).format("DD MMMM")} | {el.dibaca} dibaca
-                                                    </span>
+                                                    </div>
 
                                                     {/* Insert Tag(s) here */}
-                                                    {
-                                                        el.tag && el.tag.length !== 0 ?
-                                                            el.tag.map ((element, index) => {
-                                                                return (
-                                                                    <span className="row ml-5" key={index}>
+                                                    <div className="col-xl-7 col-12 d-flex flex-row flex-wrap my-3 pl-0 ">
+                                                        {
+                                                            el.tag && el.tag.length !== 0 ?
+                                                                el.tag.map ((element, index) => {
+                                                                    return (
                                                                         <div 
-                                                                            className="ml-3 border px-2 py-1"
+                                                                            className=" border px-2 py-1 my-1 mr-3"
                                                                             onClick={() => handleFilterTag(element)}
                                                                             style={{cursor:"pointer"}}
+                                                                            key={index}
                                                                         >
                                                                             {element}
                                                                         </div>
-                                                                    </span>
-                                                                )
-                                                            })
-                                                            
-                                                        :
-                                                            null
-                                                    }
+                                                                    )
+                                                                })
+                                                                
+                                                            :
+                                                                null
+                                                        }
+                                                    </div>
+                                                    
                                                     
                                                 </div>
                                             </div>
 
                                             <div 
-                                                className="col col-xl-5 col-12 position-relative"
+                                                className="col col-5 position-relative d-flex align-self-center" 
+                                                style={{objectFit:"contain"}}
                                             >
                                                 {/* Insert Card Image Here */}
                                                 <Link href={`/artikel/detail/${el.id}`}>
@@ -406,7 +599,7 @@ const Artikel = () => {
                                                                 "publikasi/images/" + el.gambar
                                                             }
                                                             width="100%"
-                                                            height="100%"
+                                                            height="auto"
                                                             alt="Card Image"
                                                             className="rounded-lg"
                                                         />
@@ -419,7 +612,7 @@ const Artikel = () => {
                                 })
                                 
                             :
-                                <div className="row">
+                                <div className="row d-flex justify-content-center my-5">
                                     <h1 className="font-weight-bolder">
                                         Artikel Tidak Tersedia
                                     </h1>
@@ -434,139 +627,144 @@ const Artikel = () => {
                 {/* Right Side */}
                 <div className="col-md-4 col-12">
                     {/* Filter */}
-                    <div className="border rounded p-5">
-                        <div className="row mt-5 "> 
-                            <div className="col-2 my-auto ml-3">
-                                <Image 
-                                    src={`/assets/media/logo-filter.svg`}
-                                    width={40}
-                                    height={40}
-                                    alt="Logo filter"
-                                />
-                            </div>
-                            <div className="col-9 my-auto">
-                                <h3 className=" font-weight-bolder">
-                                    Filter
-                                </h3>
-                            </div>
-                        </div>
+                    {
+                        windowDimensions && windowDimensions.width && windowDimensions.width > 770 ?
+                            <div className="border rounded-lg p-5 order-1 mb-10">
+                                <div className="row mt-5 "> 
+                                    <div className="col-2 my-auto ml-3">
+                                        <Image 
+                                            src={`/assets/media/logo-filter.svg`}
+                                            width={40}
+                                            height={40}
+                                            alt="Logo filter"
+                                        />
+                                    </div>
+                                    <div className="col-9 my-auto">
+                                        <h3 className=" font-weight-bolder">
+                                            Filter
+                                        </h3>
+                                    </div>
+                                </div>
 
-                        <div className="row ml-3 mt-5">
-                            <p>
-                                Urutkan Berdasarkan
-                            </p>
-                        </div>
+                                <div className="row ml-3 mt-5">
+                                    <p>
+                                        Urutkan Berdasarkan
+                                    </p>
+                                </div>
 
-                        <div className="row mx-3 mb-3 d-flex justify-content-between">
-                            <div className="col-md-6 col-12">
-                                {
-                                    filterPublish === "desc" ?
-                                        <button className="btn btn-primary rounded-pill btn-block" onClick={() => handleFilterPublish("")}>
-                                            Terbaru
-                                        </button>
-                                    :
-                                        <button className="btn btn-outline-light rounded-pill btn-block" onClick={() => handleFilterPublish("desc")}>
-                                            Terbaru
-                                        </button>
-                                }
-                            </div>
-
-                            <div className="col-md-6 col-12">
-                                {
-                                    filterPublish === "asc" ?
-                                        <button className="btn btn-primary rounded-pill btn-block" onClick={() => handleFilterPublish("")}>
-                                            Terlama
-                                        </button>
-                                    :
-                                        <button className="btn btn-outline-light rounded-pill btn-block" onClick={() => handleFilterPublish("asc")}>
-                                            Terlama
-                                        </button>
-                                }
-                            </div>
-                        </div>
-
-                        <div className="row mx-3 mb-3 d-flex justify-content-between">
-                            <div className="col-md-6 col-12">
-                                {
-                                    sort === "desc" ?
-                                        <button className="btn btn-primary rounded-pill btn-block" onClick={() => handleSort("")}>
-                                            A-Z
-                                        </button>
-                                    :
-                                        <button className="btn btn-outline-light rounded-pill btn-block" onClick={() => handleSort("desc")}>
-                                            A-Z
-                                        </button>
-                                }
-                            </div>
-
-                            <div className="col-md-6 col-12">
-                                {
-                                    sort === "asc" ?
-                                        <button className="btn btn-primary rounded-pill btn-block" onClick={() => handleSort("")}>
-                                            Z-A
-                                        </button>
-                                    :
-                                        <button className="btn btn-outline-light rounded-pill btn-block" onClick={() => handleSort("asc")}>
-                                            Z-A
-                                        </button>
-                                }
-                                
-                            </div>
-                        </div>
-
-                        <div className="row ml-3 mt-5">
-                            <p>
-                                Akademi
-                            </p>
-                        </div>
-
-                        <div className="row mx-3 mb-3">
-                            {
-                                akademi && akademi.length !== 0 ?
-                                    <select 
-                                        className="form-control rounded-pill"
-                                        onChange={(e) => handleCategoryAcademy(e.target.value)}
-                                    >
-                                        <option value="" selected>Semua Akademi</option>
+                                <div className="row mx-3 mb-3 d-flex justify-content-between">
+                                    <div className="col-md-6 col-12">
                                         {
-                                            akademi.map ((el, i) => {
-                                                return (
-                                                    <option value={el.slug} key={i}>{el.slug}</option>
-                                                )
-                                            })
+                                            filterPublish === "desc" ?
+                                                <button className="btn btn-primary rounded-pill btn-block" onClick={() => handleFilterPublish("")}>
+                                                    Terbaru
+                                                </button>
+                                            :
+                                                <button className="btn btn-outline-light rounded-pill btn-block" onClick={() => handleFilterPublish("desc")}>
+                                                    Terbaru
+                                                </button>
                                         }
-                                    </select>
-                                :
-                                    <select className="form-control rounded-pill">
-                                        <option value="" selected>Semua Akademi</option>
-                                        <option value="">
-                                            <div className="spinner-border text-dark" role="status">
-                                                <span className="sr-only">Memuat...</span>
-                                            </div>
-                                        </option>
-                                    </select>
-                            }
-                            
-                        </div>
+                                    </div>
 
-                        <div className="row mx-3 mb-3">
-                            <button 
-                                className="btn btn-primary-dashboard rounded-pill btn-block"
-                                onClick={() => submitFilter()}
-                            >
-                                Tampilkan
-                            </button>
-                        </div>
+                                    <div className="col-md-6 col-12">
+                                        {
+                                            filterPublish === "asc" ?
+                                                <button className="btn btn-primary rounded-pill btn-block" onClick={() => handleFilterPublish("")}>
+                                                    Terlama
+                                                </button>
+                                            :
+                                                <button className="btn btn-outline-light rounded-pill btn-block" onClick={() => handleFilterPublish("asc")}>
+                                                    Terlama
+                                                </button>
+                                        }
+                                    </div>
+                                </div>
 
-                    </div>
+                                <div className="row mx-3 mb-3 d-flex justify-content-between">
+                                    <div className="col-md-6 col-12">
+                                        {
+                                            sort === "asc" ?
+                                                <button className="btn btn-primary rounded-pill btn-block" onClick={() => handleSort("")}>
+                                                    A-Z
+                                                </button>
+                                            :
+                                                <button className="btn btn-outline-light rounded-pill btn-block" onClick={() => handleSort("asc")}>
+                                                    A-Z
+                                                </button>
+                                        }
+                                    </div>
+
+                                    <div className="col-md-6 col-12">
+                                        {
+                                            sort === "desc" ?
+                                                <button className="btn btn-primary rounded-pill btn-block" onClick={() => handleSort("")}>
+                                                    Z-A
+                                                </button>
+                                            :
+                                                <button className="btn btn-outline-light rounded-pill btn-block" onClick={() => handleSort("desc")}>
+                                                    Z-A
+                                                </button>
+                                        }
+                                        
+                                    </div>
+                                </div>
+
+                                <div className="row ml-3 mt-5">
+                                    <p>
+                                        Akademi
+                                    </p>
+                                </div>
+
+                                <div className="row mx-3 mb-7">
+                                    {
+                                        akademi && akademi.length !== 0 ?
+                                            <select 
+                                                className="form-control rounded-pill"
+                                                onChange={(e) => handleCategoryAcademy(e.target.value)}
+                                            >
+                                                <option value="" selected>Semua Akademi</option>
+                                                {
+                                                    akademi.map ((el, i) => {
+                                                        return (
+                                                            <option value={el.slug} key={i}>{el.slug}</option>
+                                                        )
+                                                    })
+                                                }
+                                            </select>
+                                        :
+                                            <select className="form-control rounded-pill">
+                                                <option value="" selected>Semua Akademi</option>
+                                                <option value="">
+                                                    <div className="spinner-border text-dark" role="status">
+                                                        <span className="sr-only">Memuat...</span>
+                                                    </div>
+                                                </option>
+                                            </select>
+                                    }
+                                    
+                                </div>
+
+                                <div className="row mx-3 mb-3">
+                                    <button 
+                                        className="btn btn-primary-dashboard rounded-pill btn-block"
+                                        onClick={() => submitFilter()}
+                                    >
+                                        Tampilkan
+                                    </button>
+                                </div>
+
+                            </div>
+                        :
+                            null
+                    }
                     {/* End of Filter */}
 
                     {/* Tag */}
-                    <div className="row mt-5 d-flex flex-column mx-3">
+                    <div className="row d-flex flex-column mx-10 d-flex justify-content-center order-3">
                         <h3 className="font-weight-bolder"> 
-                            Temukan Lebih Banyak Artikel Yang Sesuai:
+                            Temukan lebih banyak artikel yang sesuai:
                         </h3>
-                        <div className=" d-flex flex-wrap justify-content-around flex-row">
+                        <div className=" d-flex flex-wrap justify-content-md-around  flex-row">
                             {
                                 tags && tags.tag && tags.tag.length !== 0 ?
                                     tags.tag.map ((el, i) => {
@@ -598,7 +796,8 @@ const Artikel = () => {
 
             </div>
             {/* End Content */}
-
+            
+            {/* Pagination */}
             {
                 artikel ?
                     <div className="row my-5 d-flex justify-content-center">
@@ -609,7 +808,7 @@ const Artikel = () => {
                                 itemsCountPerPage={artikel.perPage}
                                 // totalItemsCount={5}
                                 totalItemsCount={artikel.total}
-                                // pageRangeDisplayed={3}
+                                pageRangeDisplayed={windowDimensions.width > 300 ? 3 : 1}
                                 onChange={handlePagination}
                                 nextPageText={">"}
                                 prevPageText={"<"}
@@ -624,7 +823,7 @@ const Artikel = () => {
                 :
                     null
             }
-            
+            {/* End of Pagination */}
             
             
         </div>

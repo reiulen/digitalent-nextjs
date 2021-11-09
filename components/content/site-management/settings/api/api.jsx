@@ -12,7 +12,7 @@ import IconAdd from "../../../../assets/icon/Add";
 import IconSearch from "../../../../assets/icon/Search";
 
 import {
-  deleteApi,
+  deleteApis,
   getAllApi,
   setPage,
   searchCooporation,
@@ -56,7 +56,7 @@ const Table = ({ token }) => {
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteApi(id, token));
+        dispatch(deleteApis(id, token));
       }
     });
   };
@@ -169,6 +169,7 @@ const Table = ({ token }) => {
                                 ? index + 1
                                 : (allApi.page - 1) * allApi.limit +
                                   (index + 1)}
+                                  
                             </td>
                             <td className="align-middle text-left">
                               {items.api_name}
