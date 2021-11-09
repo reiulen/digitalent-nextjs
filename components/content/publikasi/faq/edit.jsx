@@ -274,7 +274,6 @@ const EditFaq = ({ token }) => {
                                                         className="checkbox"
                                                         checked={publish}
                                                         type="checkbox"
-                                                        // onChange={(checked) => setPublish(checked)}
                                                         onChange={(e) => handleChangePublish(e)}
                                                     />
                                                     <span
@@ -297,16 +296,12 @@ const EditFaq = ({ token }) => {
                                                             className="form-search-date form-control-sm form-control"
                                                             selected={publishDate}
                                                             onChange={(date) => handlePublishDate(date)}
-                                                            // onChange={(date) => setPublishDate(date)}
                                                             selectsStart
                                                             startDate={publishDate}
-                                                            // endDate={endDate}
                                                             dateFormat="dd/MM/yyyy"
                                                             placeholderText="Silahkan Isi Tanggal Publish"
                                                             wrapperClassName="col-12 col-lg-12 col-xl-12"
-                                                            // minDate={moment().toDate()}
                                                             disabled={disablePublishDate === true || disablePublishDate === null}
-                                                        // minDate={addDays(new Date(), 20)}
                                                         />
                                                     </div>
                                                 </div>
@@ -330,7 +325,6 @@ const EditFaq = ({ token }) => {
                                                         className="checkbox"
                                                         checked={pinned}
                                                         type="checkbox"
-                                                        // onChange={(checked) => setPublish(checked)}
                                                         onChange={(e) => handleChangePinned(e)}
                                                     />
                                                     <span

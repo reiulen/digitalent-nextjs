@@ -9,13 +9,21 @@ const CardPage = ({
   value,
   titleValue,
   title,
-  publishedVal,
+  publishedVal = "",
   routePublish,
+  search
 }) => {
   return (
     <div
       className={`col ${background} px-6 py-8 rounded-xl mr-3 mb-7 ml-3`}
-      onClick={(publishedVal) => routePublish(publishedVal)}
+      onClick={(publishedVal) => {
+        if(search){
+        search()
+        }else{
+
+          routePublish(publishedVal)
+        }
+      }}
       style={
         publishedVal !== ""
           ? {
