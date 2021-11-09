@@ -4,11 +4,7 @@ import Image from "next/image";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import Highlighter from "react-highlight-words";
-
-import { getAllBerandaArtikel } from "../../../redux/actions/beranda/artikel.actions"
 import { useRouter } from "next/router";
-// import styles from './Highlighter.example.css'
-
 
 const DetailArtikel = () => {
     const dispatch = useDispatch();
@@ -19,10 +15,39 @@ const DetailArtikel = () => {
 
     const [ keyword, setKeyword ] = useState (null)
     const [ searchWords, setSearchWords ] = useState (null)
-    const [ description, setDescription ] = useState (null)
+
+    const getWindowDimensions = () => {
+        // if (typeof window === 'undefined') {
+        //     global.window = {}
+        // }
+
+        const { innerWidth: width, innerHeight: height } = window;
+        return {
+            width,
+            height,
+        };
+    };
+
+    const [windowDimensions, setWindowDimensions] = useState(
+        // getWindowDimensions()
+        {}
+    );
+
+    useEffect(() => {
+        function handleResize() {
+            setWindowDimensions(getWindowDimensions());
+        }
+        setWindowDimensions(getWindowDimensions());
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    },[detail])
+
+    useEffect(()=> {
+
+    },[windowDimensions])
 
     const handleFilterTag = (str) => {
-        router.push (`/artikel?keyword=${str}`)
+        router.push (`/artikel?tag=${str}`)
     }
 
     const handleHighlightWords = (e) => {
@@ -31,38 +56,6 @@ const DetailArtikel = () => {
         
         setSearchWords(result)
     }
-
-    // const highlightText = (text) => {
-    //     let result = null
-
-    //     if (keyword === null){
-    //         result = text
-
-    //         // setDescription(result)
-    //         return result
-
-    //     } else {
-    //         let splitWords = keyword.split(" ")
-    //         let splitText = text.split (" ")
-
-    //         for (let i = 0; i < splitText.length; i++){
-    //             for (let j = 0; j < splitWords.length; j++){
-    //                 if (splitWords[j] == splitText[i]){
-
-    //                     result += <mark>{splitText[i]}</mark>
-    //                     // result += "test"
-    //                 } else {
-
-    //                     // result += splitText[i]
-    //                     result += <span>{splitText[i]}</span>
-    //                 }
-    //             }
-    //         }
-    //             // setDescription(result)
-    //             // setDescription(<div>{result}</div>)
-    //             return result
-    //     }
-    // }
 
     return(
         <div>
@@ -120,9 +113,9 @@ const DetailArtikel = () => {
                             </span>
                         </div>
 
-                        <div className="mt-5 d-flex flex-row align-items-center justify-content-between">
+                        <div className="mt-5 d-flex flex-row align-items-center justify-content-between mx-3">
                             <div className="row">
-                                <div className="border rounded-circle py-1 px-2">
+                                <div className="">
                                     {/* Insert Logo Image Here */}
                                     <Image
                                         src={
@@ -132,7 +125,7 @@ const DetailArtikel = () => {
                                         width={30}
                                         height={30}
                                         alt="Logo Image"
-                                        className="rounded-circle"
+                                        className="border rounded-circle"
                                     />
                                 </div>
                                 <div className="d-flex flex-column ml-3">
@@ -165,7 +158,7 @@ const DetailArtikel = () => {
             {/* Content */}
             {
                 detail ?
-                    <div className="row">
+                    <div className="row mt-10">
 
                         {/* Left Side */}
                         <div className="col-12 col-md-8">
@@ -183,7 +176,7 @@ const DetailArtikel = () => {
                             />
 
                             {/* Artikel */}
-                            <div className="border rounded mb-5">
+                            <div className="border rounded-lg mb-5 mt-15">
                                 <div className="row my-5 mx-5">
                                     {
                                         searchWords ?
@@ -199,7 +192,7 @@ const DetailArtikel = () => {
                                     }
                                 </div>
 
-                                <div className="row m-3 d-flex justify-content-between">
+                                <div className="row m-3 d-flex justify-content-between pb-5">
 
                                     <div className="row d-flex justify-content-between ml-3">
                                         {
@@ -231,97 +224,103 @@ const DetailArtikel = () => {
                         {/* End of Left Side */}
 
                         {/* Right Side */}
-                        <div className="col-12 col-md-4">
+                        {
+                            windowDimensions && windowDimensions.width && windowDimensions.width > 750 ?
+                                <div className="col-12 col-md-4">
 
-                            {/* Search */}
-                            <div className="border rounded">
-                                <div className="row mt-5 "> 
-                                    <div className="col-2 my-auto ml-3">
-                                        <Image 
-                                            src={`/assets/media/logo-filter.svg`}
-                                            width={40}
-                                            height={40}
-                                            alt="Logo filter"
-                                        />
-                                    </div>
-                                    <div className="col-9 my-auto">
-                                        <h3 className=" font-weight-bolder">
-                                            Pencarian
-                                        </h3>
-                                    </div>
-                                </div>
-
-                                <form className="mb-3 mx-3">
-                                    <div className="input-group">
-                                        <div className="input-group-prepend">
-                                            <div 
-                                                className="input-group-text bg-white"
-                                                style={{borderTopLeftRadius:"150px", borderBottomLeftRadius:"150px"}}
-                                            >
-                                                <i className="ri-search-line"></i>
+                                    {/* Search */}
+                                    <div className="border rounded">
+                                        <div className="row mt-10 mb-5"> 
+                                            <div className="col-2 my-auto ml-5">
+                                                <Image 
+                                                    src={`/assets/media/logo-filter.svg`}
+                                                    width={40}
+                                                    height={40}
+                                                    alt="Logo filter"
+                                                />
                                             </div>
-                                        </div>
-
-                                        <input 
-                                            type="text" 
-                                            className="form-control" 
-                                            placeholder="Cari Artikel"
-                                            // style={{borderTopLeftRadius:"150px", borderBottomLeftRadius:"150px"}}
-                                            onChange={(e) => setKeyword(e.target.value)}
-                                        />
-                        
-                                        <div>
-                                            <button 
-                                                className="btn btn-primary-dashboard" 
-                                                onClick={(e) => handleHighlightWords(e, detail.isi_artikel)}
-                                                style={{borderTopRightRadius:"150px", borderBottomRightRadius:"150px"}}
-                                                type="submit"
-                                            >
-                                                Cari
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-
-                            </div>
-
-                            {/* Tag */}
-                            <div className="row mt-5 d-flex flex-column mx-2">
-                                <h3 className="font-weight-bolder"> 
-                                    Temukan Lebih Banyak Artikel Yang Sesuai:
-                                </h3>
-                                <div className=" d-flex flex-wrap justify-content-around flex-row">
-                                    {
-                                        tags && tags.tag && tags.tag.length !== 0 ?
-                                            tags.tag.map ((el, i) => {
-                                                return (
-                                                    <div 
-                                                        className="border px-2 py-1 rounded my-3 mr-3" 
-                                                        key={i}
-                                                        onClick={() => handleFilterTag(el)}
-                                                        style={{cursor:"pointer"}}
-                                                    >
-                                                        {el}
-                                                    </div>
-                                                )
-                                            })
-                                        :
-                                            <div className="row text-center">
-                                                <h3 className="text-muted">
-                                                    <em>
-                                                        Tag Belum Tersedia
-                                                    </em>
+                                            <div className="col-9 my-auto">
+                                                <h3 className=" font-weight-bolder">
+                                                    Pencarian
                                                 </h3>
                                             </div>
-                                    }
+                                        </div>
+
+                                        <form className="mb-10 mx-5">
+                                            <div className="input-group">
+                                                <div className="input-group-prepend">
+                                                    <div 
+                                                        className="input-group-text bg-light border-right-0 pr-1"
+                                                        style={{borderTopLeftRadius:"150px", borderBottomLeftRadius:"150px"}}
+                                                    >
+                                                        <i className="ri-search-line"></i>
+                                                    </div>
+                                                </div>
+
+                                                <input 
+                                                    type="text" 
+                                                    className="form-control border-left-0 border p-0 bg-light"
+                                                    placeholder="Cari Artikel"
+                                                    // style={{borderTopLeftRadius:"150px", borderBottomLeftRadius:"150px"}}
+                                                    onChange={(e) => setKeyword(e.target.value)}
+                                                />
+                                
+                                                <div>
+                                                    <button 
+                                                        className="btn btn-primary-dashboard" 
+                                                        onClick={(e) => handleHighlightWords(e, detail.isi_artikel)}
+                                                        style={{borderTopRightRadius:"150px", borderBottomRightRadius:"150px"}}
+                                                        type="submit"
+                                                    >
+                                                        Cari
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+
+                                    </div>
+
+                                    {/* Tag */}
+                                    <div className="row mt-10 d-flex flex-column mx-10">
+                                        <h3 className="font-weight-bolder"> 
+                                            Temukan Lebih Banyak Artikel Yang Sesuai:
+                                        </h3>
+                                        <div className=" d-flex flex-wrap flex-row">
+                                            {
+                                                tags && tags.tag && tags.tag.length !== 0 ?
+                                                    tags.tag.map ((el, i) => {
+                                                        return (
+                                                            <div 
+                                                                className="border px-2 py-1 rounded my-3 mr-3" 
+                                                                key={i}
+                                                                onClick={() => handleFilterTag(el)}
+                                                                style={{cursor:"pointer"}}
+                                                            >
+                                                                {el}
+                                                            </div>
+                                                        )
+                                                    })
+                                                :
+                                                    <div className="row text-center">
+                                                        <h3 className="text-muted">
+                                                            <em>
+                                                                Tag Belum Tersedia
+                                                            </em>
+                                                        </h3>
+                                                    </div>
+                                            }
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
+                            :
+                                null
+                        }
+                        
                         {/* End of Right Side */}
                     </div>
                 :
-                    <div className="row text-center">
-                        <h1>
+                    <div className="row d-flex justify-content-center my-5">
+                        <h1 className="font-weight-bolder">
                             Artikel Tidak Tersedia
                         </h1>
                     </div>
