@@ -316,7 +316,11 @@ const DetailBerita = () => {
                         {/* End of Right Side */}
                     </div>
                 :
-                    null
+                    <div className="row d-flex justify-content-center my-5">
+                        <h1 className="font-weight-bolder">
+                            Berita Tidak Tersedia
+                        </h1>
+                    </div>
             }
             
             {/* End of Content */}
