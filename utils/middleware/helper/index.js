@@ -18,7 +18,7 @@ export const disablePlusMinusPeriod = (e) => {
   }
 };
 
-export const SweatAlert = (title, message, status) => {
+export const SweetAlert = (title, message, status) => {
   Swal.fire({
     icon: status, // error || success
     title: title,
