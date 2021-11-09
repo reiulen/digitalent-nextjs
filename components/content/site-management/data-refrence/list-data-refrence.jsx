@@ -83,7 +83,7 @@ const Table = ({ token }) => {
                     className="d-flex align-items-center w-100"
                   >
                     <div className="row w-100">
-                      <div className="col-12 col-sm-6">
+                      <div className="col-12 col-xl-4">
                         <div className="position-relative overflow-hidden w-100">
                           <IconSearch
                             style={{ left: "10" }}
@@ -134,11 +134,11 @@ const Table = ({ token }) => {
                     </thead>
                     <tbody>
                       {allDataReference.data.list_reference.length === 0 ? (
-                        <tr>
-                          <td colSpan="4" className="text-center">
-                            <h4>Data tidak ditemukan</h4>
-                          </td>
-                        </tr>
+                       
+
+                        <td className="align-middle text-center" colSpan="4">Data Masih Kosong</td>
+
+
                       ) : (
                         allDataReference.data.list_reference.map(
                           (items, index) => {

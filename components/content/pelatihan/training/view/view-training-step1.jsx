@@ -88,15 +88,8 @@ const ViewTrainingStep1 = () => {
                 <p className="text-neutral-body">Peserta DTS</p>
                 <p>{dataPelatihan.peserta}</p>
               </div>
-              <div className="col-md-6">
-                <p className="text-neutral-body">Ketentuan Peserta</p>
-                <p className="font-weight-bold">
-                  {dataPelatihan.ketentuanPeserta}
-                </p>
-              </div>
             </div>
-
-            <div className="row mt-2">
+            <div className="row mt-4">
               <div className="col-md-6">
                 <p className="text-neutral-body">Nama Pelatihan</p>
                 <p className="text-dark">{dataPelatihan.namaPelatihan}</p>
@@ -107,7 +100,7 @@ const ViewTrainingStep1 = () => {
               </div>
             </div>
 
-            <div className="row mt-2">
+            <div className="row mt-4">
               <div className="col-md-6">
                 <p className="text-neutral-body">Akademi</p>
                 <p className="text-dark">{dataPelatihan.akademi}</p>
@@ -117,11 +110,14 @@ const ViewTrainingStep1 = () => {
                 <p className="text-dark">{dataPelatihan.tema}</p>
               </div>
             </div>
-
-            <div className="row mt-2">
+            <div className="row mt-4">
               <div className="col-md-6">
                 <p className="text-neutral-body">Logo Reference</p>
                 <div className="">
+                  {dataPelatihan.logoReference.includes("default") && (
+                    <p>-</p>
+                  )}
+                  {dataPelatihan.logoReference.includes("https") && (
                   <figure
                     className="avatar item-rtl"
                     data-toggle="modal"
@@ -135,11 +131,16 @@ const ViewTrainingStep1 = () => {
                       objectFit="cover"
                     />
                   </figure>
+                  )}
                 </div>
               </div>
               <div className="col-md-6">
                 <p className="text-neutral-body">Thumbnail</p>
                 <div className="">
+                {dataPelatihan.logoReference.includes("default") && (
+                    <p>-</p>
+                  )}
+                  {dataPelatihan.logoReference.includes("https") && (
                   <figure
                     className="avatar item-rtl"
                     data-toggle="modal"
@@ -153,14 +154,15 @@ const ViewTrainingStep1 = () => {
                       objectFit="cover"
                     />
                   </figure>
+                  )}
                 </div>
               </div>
             </div>
 
-            <div className="row mt-2">
+            <div className="row mt-4">
               <div className="col-md-6">
                 <p className="text-neutral-body">Silabus</p>
-                <p className="text-dark">{dataPelatihan.silabus}</p>
+                <p className="text-dark">{dataPelatihan.silabus.split("/")[2]}</p>
               </div>
               <div className="col-md-6">
                 <p className="text-neutral-body">Metode Pelatihan</p>
@@ -168,7 +170,7 @@ const ViewTrainingStep1 = () => {
               </div>
             </div>
 
-            <div className="row mt-2">
+            <div className="row mt-4">
               <div className="col-md-6">
                 <p className="text-neutral-body">Penyelenggara</p>
                 <p className="text-dark">{dataPelatihan.penyelenggara}</p>
@@ -179,7 +181,7 @@ const ViewTrainingStep1 = () => {
               </div>
             </div>
 
-            <div className="row mt-2">
+            <div className="row mt-4">
               <div className="col-md-6">
                 <p className="text-neutral-body">Tanggal Pendaftaran</p>
                 <p className="text-dark">{dataPelatihan.tanggalPendaftaran}</p>
@@ -190,7 +192,7 @@ const ViewTrainingStep1 = () => {
               </div>
             </div>
 
-            <div className="row mt-2">
+            <div className="row mt-4">
               <div className="col-md-12">
                 <p className="text-neutral-body">Deskripsi</p>
 
@@ -215,7 +217,7 @@ const ViewTrainingStep1 = () => {
               </div>
             </div>
 
-            <div className="row mt-2">
+            <div className="row mt-4">
               <div className="col-md-6">
                 <p className="text-neutral-body">Komitmen Peserta</p>
                 <p className="text-dark">{kuotaPelatihan.komitmenPeserta}</p>
@@ -226,7 +228,7 @@ const ViewTrainingStep1 = () => {
               </div>
             </div>
 
-            <div className="row mt-2">
+            <div className="row mt-4">
               <div className="col-md-6">
                 <p className="text-neutral-body">Info Sertifikasi</p>
                 <p className="text-dark"> {kuotaPelatihan.infoSertifikasi}</p>
@@ -237,7 +239,7 @@ const ViewTrainingStep1 = () => {
               </div>
             </div>
 
-            <div className="row mt-2">
+            <div className="row mt-4">
               <div className="col-md-6">
                 <p className="text-neutral-body">Status Kuota</p>
                 <p className="text-dark"> {kuotaPelatihan.statusKuota}</p>
@@ -248,7 +250,7 @@ const ViewTrainingStep1 = () => {
               </div>
             </div>
 
-            <div className="row mt-2">
+            <div className="row mt-4">
               <div className="col-md-6">
                 <p className="text-neutral-body">Zonasi</p>
                 <p className="text-dark"> {kuotaPelatihan.zonasi}</p>
@@ -258,7 +260,6 @@ const ViewTrainingStep1 = () => {
                 <p className="text-dark"> {kuotaPelatihan.batch}</p>
               </div>
             </div>
-
             <h3 className="font-weight-bolder pb-5 pt-4">Alamat</h3>
             <div className="row">
               <div className="col-md-12">
@@ -267,7 +268,7 @@ const ViewTrainingStep1 = () => {
               </div>
             </div>
 
-            <div className="row mt-2">
+            <div className="row mt-4">
               <div className="col-md-6">
                 <p className="text-neutral-body">Provinsi</p>
                 <p className="text-dark">{alamatPelatihan.provinsi}</p>
@@ -278,7 +279,7 @@ const ViewTrainingStep1 = () => {
               </div>
             </div>
 
-            <div className="row mt-2">
+            <div className="row mt-4">
               <div className="col-md-12">
                 <p className="text-neutral-body">Disabilitas</p>
                 <p className="text-dark">{alamatPelatihan.disabilitas}</p>
@@ -290,7 +291,7 @@ const ViewTrainingStep1 = () => {
                 <button
                   className="btn btn-primary-rounded-full mr-2"
                   type="button"
-                  onClick={() => router.back()}
+                  onClick={() => router.push("/pelatihan/pelatihan")}
                 >
                   Kembali
                 </button>

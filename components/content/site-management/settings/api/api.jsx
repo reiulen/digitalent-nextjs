@@ -159,7 +159,7 @@ const Table = ({ token }) => {
                   </thead>
                   <tbody>
                     {allApi.data.setting_api.length === 0 ? (
-                      <td class="align-middle text-center" colspan="8">Data Masih Kosong</td>
+                      <td className="align-middle text-center" colSpan="8">Data Masih Kosong</td>
                     ) : (
                       allApi.data.setting_api.map((items, index) => {
                         return (
@@ -169,6 +169,7 @@ const Table = ({ token }) => {
                                 ? index + 1
                                 : (allApi.page - 1) * allApi.limit +
                                   (index + 1)}
+                                  
                             </td>
                             <td className="align-middle text-left">
                               {items.api_name}
