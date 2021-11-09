@@ -52,7 +52,7 @@ export default function Pengaturan({ session }) {
   const [showUbahEmailModal, setShowUbahEmailModal] = useState(false);
   const handleCloseEmailModal = () => setShowUbahEmailModal(false);
   const handleShowUbahEmail = () => setShowUbahEmailModal(true);
-  const [otpEmail, setOtpEmail] = useState();
+  const [otpEmail, setOtpEmail] = useState("");
   const [showUbahEmailModalOtp, setShowUbahEmailModalOtp] = useState(false);
   const handleCloseEmailOtp = () => setShowUbahEmailModalOtp(false);
   const handleShowUbahEmailOtp = () => setShowUbahEmailModalOtp(true);

@@ -323,7 +323,6 @@ const AddRegistrationStep2 = ({ propsStep }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    // router.push("/pelatihan/pelatihan/tambah-pelatihan/tambah-form-komitmen");
     if (simpleValidator.current.allValid()) {
       const data = {
         judul_form: title,
@@ -343,19 +342,13 @@ const AddRegistrationStep2 = ({ propsStep }) => {
   };
 
   return (
-    // <PageWrapper>
-    //   <StepInputPelatihan
-    //     step={2}
-    //     title1="Tambah Pelatihan"
-    //     title2="Tambah Form Pendaftaran"
-    //     title3="Tambah Form Komitmen"
-    //   />
-    //   <div className="col-lg-12 order-1 px-0">
     <>
       <div className="card card-custom card-stretch gutter-b">
         <div className="card-body py-4">
           <form onSubmit={submitHandler}>
-            <h3 className="font-weight-bolder pb-5 pt-4">Form Pendaftaran</h3>
+            <h3 className="font-weight-bolder pb-5 pt-4">
+              Edit Form Pendaftaran
+            </h3>
             <div className="form-group mb-4">
               <label className="col-form-label font-weight-bold">
                 Judul Form
