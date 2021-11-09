@@ -48,7 +48,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       return {
         props: {
           session,
-          title: "Edit data administrator - Site Management",
+          title: "Edit Mitra - Site Management",
         },
       };
     }
