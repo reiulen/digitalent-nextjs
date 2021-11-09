@@ -64,7 +64,7 @@ const DetailSummary = ({ token }) => {
   const optionsSubstansi = [
     { value: "belum tersedia", label: "Belum Tersedia" },
     { value: "belum mengerjakan", label: "Belum Mengerjakan" },
-    { value: "tidak lulus", label: "Gagal Tes" },
+    { value: "gagal tes", label: "Gagal Tes" },
     { value: "lulus tes", label: "Lulus Tes" },
   ];
 
@@ -146,7 +146,7 @@ const DetailSummary = ({ token }) => {
             background="bg-secondary"
             icon="new/done-circle.svg"
             color="#FFFFFF"
-            value={statusPendaftar[1].count}
+            value={statusPendaftar[2].count}
             titleValue=""
             title="Verivied Administrasi"
             publishedVal="verified"
@@ -168,7 +168,7 @@ const DetailSummary = ({ token }) => {
             background="bg-success"
             icon="new/open-book.svg"
             color="#FFFFFF"
-            value={statusPendaftar[2].count}
+            value={statusPendaftar[3].count}
             titleValue=""
             title="Lulus Tes Substansi"
             publishedVal="sedang-mengerjakan"
@@ -194,7 +194,7 @@ const DetailSummary = ({ token }) => {
             background="bg-warning"
             icon="new/mail-white.svg"
             color="#FFFFFF"
-            value={statusPendaftar[3].count}
+            value={statusPendaftar[4].count}
             titleValue=""
             title="Verified Administrasi Lulus Tes Substansi"
             publishedVal="belum-mengerjakan"
@@ -334,7 +334,7 @@ const DetailSummary = ({ token }) => {
                   </div>
                 </div>
 
-                <div className="col-lg-4 col-xl-4 justify-content-end d-flex">
+                <div className="col-lg-4 col-xl-4 justify-content-end d-flex mt-3">
                   <button
                     className="btn border d-flex align-items-center justify-content-between mt-1 btn-block"
                     style={{
@@ -351,21 +351,20 @@ const DetailSummary = ({ token }) => {
                   </button>
                 </div>
 
-                <div className="col-md-2">
+                <div className="col-md-2 mt-3" >
                   <Link href="/pelatihan/rekap-pendaftaran/import-peserta">
-                    <a className="btn w-100 btn-rounded-full bg-success text-white mt-2">
+                    <a className="btn w-100 btn-rounded-full bg-success text-white mt-2" style={{width: "max-content"}}>
                       <i className="ri-download-2-line mr-2 mt-1 text-white"></i>
                       Import
                     </a>
                   </Link>
                 </div>
-                <div className="col-md-2">
+                <div className="col-md-2 mt-3">
                   <select className="btn w-100 btn-rounded-full bg-blue-secondary text-white mt-2">
                     <option value="" disabled selected>Export</option>
                     <option value="LMS">LMS</option>
                     <option value="CSV">CSV</option>
                   </select>
-                     <i className="ri-arrow-down-s-line ml-3 mt-1 text-white"></i>
                 </div>
               </div>
             </div>
@@ -448,7 +447,7 @@ const DetailSummary = ({ token }) => {
                               </p>
                             </td>
                             <td>
-                              <div className="d-flex">
+                              <div className="d-flex mr-10">
                                 <Link
                                   href={`/pelatihan/rekap-pendaftaran/detail-rekap-pendaftaran/data-peserta?pelatihan_id=${id}&index=${
                                     i + limit * (page - 1) + 1
