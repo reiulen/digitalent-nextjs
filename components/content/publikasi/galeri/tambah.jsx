@@ -285,7 +285,9 @@ const TambahGaleri = ({ token, id }) => {
                 data.splice([i], 1);
             }
         }
-        setTag(data);
+        if ((data).includes(data) !== true) {
+            setTag(data);
+        }
     }
 
     const handleData = (temps, onCall) => {
@@ -1501,7 +1503,7 @@ const TambahGaleri = ({ token, id }) => {
                                                             alt="image"
                                                             width={160}
                                                             height={160}
-                                                            objectFit="cover"
+                                                            objectFit="fill"
                                                         />
                                                         {/* <div
                                                 className="circle-top"
@@ -1610,7 +1612,7 @@ const TambahGaleri = ({ token, id }) => {
                                             -- Galeri --
                                         </option>
                                         {!kategori || (kategori && kategori.length === 0) ? (
-                                            <option value="">Data Tidak Ditemukan</option>
+                                            <option value="">Data Kosong</option>
                                         ) : (
                                             kategori &&
                                             kategori.kategori &&
@@ -1637,7 +1639,7 @@ const TambahGaleri = ({ token, id }) => {
 
                             <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Tag</label>
-                                <div className="col-sm-12">
+                                <div className="col-sm-12" style={{ wordBreak: 'break-word' }}>
                                     <TagsInput
                                         value={tag}
                                         onChange={(data) => handleTag(data)}
