@@ -11,6 +11,9 @@ import {
   BERANDA_TEMA_REQUEST,
   BERANDA_TEMA_SUCCESS,
   BERANDA_TEMA_FAIL,
+  BERANDA_TEMA_ORIGINAL_REQUEST,
+  BERANDA_TEMA_ORIGINAL_SUCCESS,
+  BERANDA_TEMA_ORIGINAL_FAIL,
   BERANDA_KOTA_REQUEST,
   BERANDA_KOTA_SUCCESS,
   BERANDA_KOTA_FAIL,
@@ -20,10 +23,35 @@ import {
   BERANDA_PUBLIKASI_REQUEST,
   BERANDA_PUBLIKASI_SUCCESS,
   BERANDA_PUBLIKASI_FAIL,
+  BERANDA_FOOTER_REQUEST,
+  BERANDA_FOOTER_SUCCESS,
+  BERANDA_FOOTER_FAIL,
   CLEAR_ERRORS,
 } from "../../types/beranda/beranda.type";
 
 import axios from "axios";
+
+// GET FOOTER
+export const getBerandaFooter = () => async (dispatch) => {
+  try {
+    dispatch({ type: BERANDA_FOOTER_REQUEST });
+
+    let link =
+      process.env.END_POINT_API_SITE_MANAGEMENT + `api/setting/general/get`;
+
+    const { data } = await axios.get(link);
+
+    dispatch({
+      type: BERANDA_FOOTER_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: BERANDA_FOOTER_FAIL,
+      payload: error.message,
+    });
+  }
+};
 
 export const addNotifTema = (dataNotif, token) => async (dispatch) => {
   try {
@@ -72,6 +100,27 @@ export const getAllAkademi = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: BERANDA_AKADEMI_FAIL,
+      payload: error.message,
+    });
+  }
+};
+
+// GET TEMA ORIGINAL
+export const getAllTemaOriginal = () => async (dispatch) => {
+  try {
+    dispatch({ type: BERANDA_TEMA_ORIGINAL_REQUEST });
+
+    let link = process.env.END_POINT_API_PELATIHAN + `api/v1/tema/dropdown`;
+
+    const { data } = await axios.get(link);
+
+    dispatch({
+      type: BERANDA_TEMA_ORIGINAL_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: BERANDA_TEMA_ORIGINAL_FAIL,
       payload: error.message,
     });
   }

@@ -23,7 +23,7 @@ const TambahApi = ({ token }) => {
   const [provinsi, setProvinsi] = useState([]);
   const [nameUnitWork, setNameUnitWork] = useState("");
   const [status, setStatus] = useState("");
-  const [valueProvinsi, setValueProvinsi] = useState("");
+  const [valueProvinsi, setValueProvinsi] = useState([]);
   const [kabupaten, setKabupaten] = useState([]);
 
   const changeListProvinsi = (e) => {
@@ -42,14 +42,6 @@ const TambahApi = ({ token }) => {
   const submit = (e) => {
     e.preventDefault();
 
-    const sendData = {
-            name: nameUnitWork,
-            status: status,
-            data: valueProvinsi,
-          };
-
-
-
     if (nameUnitWork === "") {
       Swal.fire(
         "Gagal simpan",
@@ -58,7 +50,7 @@ const TambahApi = ({ token }) => {
       );
     } else if (status === "") {
       Swal.fire("Gagal simpan", "Form status tidak boleh kosong", "error");
-    } else if (valueProvinsi === "") {
+    } else if (!valueProvinsi.length) {
       Swal.fire("Gagal simpan", "Form provinsi tidak boleh kosong", "error");
     } else {
       Swal.fire({
@@ -121,9 +113,7 @@ const TambahApi = ({ token }) => {
         <div className="col-lg-12 order-1 px-0">
           <div className="card card-custom card-stretch gutter-b">
             <div className="card-header border-0">
-              <h3
-                className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 mb-5 mt-5 titles-1"
-              >
+              <h3 className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 mb-5 mt-5 titles-1">
                 Tambah Satuan Kerja Penyelenggara
               </h3>
             </div>
@@ -134,11 +124,8 @@ const TambahApi = ({ token }) => {
                   onChange={(e) => setNameUnitWork(e.target.value)}
                   type="text"
                   className="form-control"
-                  placeholder="Masukan nama satuan kerja"
+                  placeholder="Masukkan nama satuan kerja"
                 />
-                {/* <span className="form-text text-muted">
-                  Please enter your full name
-                </span> */}
               </div>
               <div className="form-group">
                 <label>Status</label>
@@ -170,9 +157,6 @@ const TambahApi = ({ token }) => {
                   onChange={(e) => changeListProvinsi(e)}
                   options={provinsi}
                 />
-                {/* <span className="form-text text-muted">
-                  Please enter your full name
-                </span> */}
               </div>
               <div className="form-group row">
                 <div className="col-sm-12 d-flex justify-content-end">

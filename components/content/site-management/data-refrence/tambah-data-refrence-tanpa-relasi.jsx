@@ -4,7 +4,6 @@ import PageWrapper from "../../../wrapper/page.wrapper";
 import Swal from "sweetalert2";
 import { useRouter } from "next/router";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import IconAdd from "../../../assets/icon/Add";
 
@@ -49,10 +48,7 @@ const Tambah = ({ token }) => {
       Swal.fire("Gagal", `Nama data reference tidak boleh kosong`, "error");
     } else if (status === "") {
       Swal.fire("Gagal", `Status tidak boleh kosong`, "error");
-    } else if (values.length === 1){
-      Swal.fire("Gagal", `Form value tidak boleh kosong`, "error");
     } 
-    
     else {
       let formData = new FormData();
       formData.append("name", nameReference);

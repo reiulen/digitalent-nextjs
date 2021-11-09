@@ -136,7 +136,9 @@ const TambahArtikel = ({ token, id }) => {
         data.splice([i], 1);
       }
     }
-    setTag(data);
+    if ((data).includes(data) !== true) {
+      setTag(data);
+    }
   }
 
   const onSubmit = (e) => {
@@ -359,7 +361,7 @@ const TambahArtikel = ({ token, id }) => {
                         alt="image"
                         width={160}
                         height={160}
-                        objectFit="cover"
+                        objectFit="fill"
                       />
                     </figure>
                     <div className="position-relative">
@@ -431,12 +433,9 @@ const TambahArtikel = ({ token, id }) => {
                         dataAkademi.data &&
                         dataAkademi.data.map((row) => {
                           return (
-                            // row.jenis_kategori == "Artikel" ?
                               <option key={row.value} value={row.label}>
                                 {row.label}
                               </option>
-                              // :
-                              // null
                           );
                         })
                       )}
@@ -505,12 +504,12 @@ const TambahArtikel = ({ token, id }) => {
                   >
                     Tag
                   </label>
-                  <div className="col-sm-12">
+                  <div className="col-sm-12" style={{ wordBreak: 'break-word' }}>
                     <TagsInput
                       value={tag}
                       onChange={(data) => handleTag(data)}
                       name="fruits"
-                      placeHolder="Isi Tag disini"
+                      placeHolder="Isi Tag disini dan Enter"
                       // onBlur={() => simpleValidator.current.showMessageFor('tag')}
                       seprators={["Enter", "Tab"]}
                     />

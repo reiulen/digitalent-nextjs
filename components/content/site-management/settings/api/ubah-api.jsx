@@ -1,51 +1,50 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import Pagination from "react-js-pagination";
 import PageWrapper from "../../../../wrapper/page.wrapper";
 import { useDispatch, useSelector } from "react-redux";
-import LoadingTable from "../../../../LoadingTable";
-import IconEye from "../../../../assets/icon/Eye";
-import IconPencil from "../../../../assets/icon/Pencil";
-import IconDelete from "../../../../assets/icon/Delete";
-import IconAdd from "../../../../assets/icon/Add";
-import IconSearch from "../../../../assets/icon/Search";
 import DatePicker from "react-datepicker";
 import axios from "axios";
 import IconCalender from "../../../../assets/icon/Calender";
 import Select from "react-select";
 
-
 const UbahApi = ({ token }) => {
-  let dispatch = useDispatch();
   const router = useRouter();
   let selectRefListApi = null;
   let selectRefListField = null;
 
   const detailApi = useSelector((state) => state.detailApi);
-  console.log("detailApi",detailApi)
+
   const [optionListField, setOptionListField] = useState([]);
-  const listApi = useSelector(state => state.listApi)
-  const [optionListApi, setOptionListApi] = useState(listApi.listApi.map((items)=>{
-    return {label:items.api_url,value:items.api_url,id:items.id}
-  }))
+  const listApi = useSelector((state) => state.listApi);
+  const [optionListApi, setOptionListApi] = useState(
+    listApi.listApi.map((items) => {
+      return { label: items.api_url, value: items.api_url, id: items.id };
+    })
+  );
+  const [valueFieldDefault, setValueFieldDefault] = useState(
+    detailApi.apies.data.fields.map((items, index) => {
+      return { label: items, value: items };
+    })
+  );
   const [nameApi, setNameApi] = useState(detailApi.apies.data.api_name);
   const [nameUser, setNameUser] = useState(detailApi.apies.data.username);
   const [status, setStatus] = useState(detailApi.apies.data.status);
   const [apiChoice, setApiChoice] = useState(detailApi.apies.data.id_api);
-  const [defaultOptionListApi, setDefaultOptionListApi] = useState({label:detailApi.apies.data.api_url,value:detailApi.apies.data.api_url})
-  const [nameApiChoice, setNameApiChoice] = useState(detailApi.apies.data.api_url)
-const [defaultValueListField, setDefaultValueListField] = useState(detailApi.apies.data.fields.map((items)=>{
-  return {label:items,value:items}
-}))
+  const [defaultOptionListApi, setDefaultOptionListApi] = useState({
+    label: detailApi.apies.data.api_url,
+    value: detailApi.apies.data.api_url,
+  });
+  const [defaultValueListField, setDefaultValueListField] = useState(
+    detailApi.apies.data.fields.map((items) => {
+      return { label: items, value: items };
+    })
+  );
 
-const [valueField, setValueField] = useState([])
-console.log("valueField",valueField)
+  const [valueField, setValueField] = useState([]);
   const [from, setFrom] = useState(detailApi.apies.data.from_date);
   const [to, setTo] = useState(detailApi.apies.data.to_date);
   const [field, setField] = useState(detailApi.apies.data.fields);
-
-  console.log("field",field)
 
   const onChangePeriodeDateStart = (date) => {
     setFrom(moment(date).format("YYYY-MM-DD"));
@@ -55,17 +54,17 @@ console.log("valueField",valueField)
   };
 
   const changeListApi = (e) => {
-    setApiChoice(e.id)
+    setApiChoice(e.id);
+    setDefaultValueListField([]);
   };
-  
+
   const changeListField = (e) => {
-    let resultSelect = e.map((items)=>{
-      return items.field_name
-    })
-    setValueField(resultSelect)
-  }
-
-
+    let resultSelect = e.map((items) => {
+      return items.field_name;
+    });
+    setValueField(resultSelect);
+    setDefaultValueListField(e);
+  };
 
   useEffect(() => {
     if (apiChoice) {
@@ -88,7 +87,6 @@ console.log("valueField",valueField)
           });
 
           setOptionListField(optionListFieldResult);
-
         } catch (error) {
           return;
         }
@@ -96,7 +94,7 @@ console.log("valueField",valueField)
 
       getListField(apiChoice, token);
     }
-  }, [apiChoice,token])
+  }, [apiChoice, token]);
 
   const submit = (e) => {
     e.preventDefault();
@@ -105,14 +103,15 @@ console.log("valueField",valueField)
       Swal.fire("Gagal simpan", "Nama api tidak boleh kosong", "error");
     } else if (nameUser === "") {
       Swal.fire("Gagal simpan", "Status tidak boleh kosong", "error");
-    }
-    else if(apiChoice === ""){
+    } else if (apiChoice === "") {
       Swal.fire("Gagal simpan", "Api tidak boleh kosong", "error");
-    }
-    else if((valueField.length === 0) && (field.length === 0)){
+    } else if (!defaultValueListField.length) {
       Swal.fire("Gagal simpan", "Field tidak boleh kosong", "error");
-    }
-    else {
+    } else if (!from) {
+      Swal.fire("Gagal simpan", "Field From tidak boleh kosong", "error");
+    } else if (!to) {
+      Swal.fire("Gagal simpan", "Field To tidak boleh kosong", "error");
+    } else {
       Swal.fire({
         title: "Apakah anda yakin simpan ?",
         // text: "Data ini tidak bisa dikembalikan !",
@@ -132,8 +131,9 @@ console.log("valueField",valueField)
             from_date: from,
             to_date: to,
             status: status,
-            fields: valueField.length === 0 ? field : valueField  ,
+            fields: valueField.length === 0 ? field : valueField,
           };
+          console.log("sendData", sendData);
 
           try {
             let { data } = await axios.post(
@@ -163,16 +163,12 @@ console.log("valueField",valueField)
     }
   };
 
-
-
   return (
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3
-              className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 mb-5 mt-5 titles-1"
-            >
+            <h3 className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 mb-5 mt-5 titles-1">
               Ubah API
             </h3>
           </div>
@@ -202,7 +198,10 @@ console.log("valueField",valueField)
               {status == "1" ? (
                 <div className="form-group">
                   <label>Status</label>
-                  <select onChange={(e)=>setStatus(e.target.value)} className="form-control">
+                  <select
+                    onChange={(e) => setStatus(e.target.value)}
+                    className="form-control"
+                  >
                     <option value="1">Aktif</option>
                     <option value="0">Nonaktif</option>
                   </select>
@@ -210,7 +209,10 @@ console.log("valueField",valueField)
               ) : (
                 <div className="form-group">
                   <label>Status</label>
-                  <select onChange={(e)=>setStatus(e.target.value)} className="form-control">
+                  <select
+                    onChange={(e) => setStatus(e.target.value)}
+                    className="form-control"
+                  >
                     <option value="0">Nonaktif</option>
                     <option value="1">Aktif</option>
                   </select>
@@ -230,17 +232,16 @@ console.log("valueField",valueField)
                   isClearable={false}
                   isRtl={false}
                   isSearchable={true}
-                  onChange={(e)=>changeListApi(e)}
+                  onChange={(e) => changeListApi(e)}
                   name="color"
                   options={optionListApi}
                 />
               </div>
 
-
               <div className="form-group">
                 <label>Field</label>
-                 <Select
-                  ref={(ref) => (selectRefListField = ref)}
+                <Select
+                  value={defaultValueListField}
                   isMulti
                   className="basic-single"
                   classNamePrefix="select"
@@ -303,7 +304,7 @@ console.log("valueField",valueField)
                 </Link>
                 <button
                   type="button"
-                  onClick={(e)=>submit(e)}
+                  onClick={(e) => submit(e)}
                   className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
                 >
                   Simpan
