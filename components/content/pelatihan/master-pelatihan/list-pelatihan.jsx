@@ -26,6 +26,7 @@ import {
 } from "../../../../redux/actions/sertifikat/kelola-sertifikat.action";
 import { RESET_VALUE_FILTER } from "../../../../redux/types/sertifikat/kelola-sertifikat.type";
 import Cookies from "js-cookie";
+import Swal from "sweetalert2";
 
 export default function MasterPelatihan({ token }) {
   const router = useRouter();
@@ -145,6 +146,24 @@ export default function MasterPelatihan({ token }) {
       status: "listed",
     },
   ];
+
+  const handleDelete = (id) => {
+    Swal.fire({
+      title: "Apakah anda yakin ?",
+      text: "Data ini tidak bisa dikembalikan !",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Ya !",
+      cancelButtonText: "Batal",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        console.log("yes");
+        // dispatch(deleteTraining(id, token));
+      }
+    });
+  };
 
   return (
     <PageWrapper>
@@ -416,7 +435,11 @@ export default function MasterPelatihan({ token }) {
                               <td className="align-middle d-flex">
                                 <button
                                   className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                                  onClick={() => handleDelete(item.id)}
+                                  onClick={() =>
+                                    router.push(
+                                      "/pelatihan/master-pelatihan/edit-form-pendaftaran"
+                                    )
+                                  }
                                   data-toggle="tooltip"
                                   data-placement="bottom"
                                   title="Hapus"
@@ -447,7 +470,7 @@ export default function MasterPelatihan({ token }) {
                                 </Link>
                                 <button
                                   className="btn btn-link-action bg-blue-secondary text-white"
-                                  onClick={() => handleDelete(item.id)}
+                                  onClick={() => handleDelete(item.no)}
                                   data-toggle="tooltip"
                                   data-placement="bottom"
                                   title="Hapus"

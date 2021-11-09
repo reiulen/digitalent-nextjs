@@ -14,7 +14,44 @@ const AddRegistrationStep2 = ({ propsStep }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const { registrationData } = useSelector((state) => state.registrationStep2);
+  // const { registrationData } = useSelector((state) => state.registrationStep2);
+  const registrationData = {
+    judul_form: "Tambah Data User",
+    formBuilder: [
+      {
+        name: "Nama Depan",
+        element: "text",
+        size: "col-md-6",
+        option: "jenis kelamin",
+        dataOption: "laki,perempuan",
+        required: "1",
+      },
+      {
+        name: "Nama Belakang",
+        element: "text",
+        size: "col-md-6",
+        option: "hobi",
+        dataOption: "makan,tidur,rebahan",
+        required: "1",
+      },
+      {
+        name: "Nama Belakang",
+        element: "text",
+        size: "col-md-6",
+        option: "hobi",
+        dataOption: "makan,tidur,rebahan",
+        required: "1",
+      },
+      {
+        name: "Ijasah",
+        element: "file_doc",
+        size: "col-md-12",
+        option: "",
+        dataOption: "",
+        required: "1",
+      },
+    ],
+  };
 
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
