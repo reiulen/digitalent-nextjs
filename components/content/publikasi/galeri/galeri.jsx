@@ -897,7 +897,7 @@ const Galeri = ({ token }) => {
                                         <tbody>
                                             {!galeri || (galeri && galeri.gallery.length === 0) ? (
                                                 <td className="align-middle text-center" colSpan={9}>
-                                                    Data Tidak Ditemukan
+                                                    Data Kosong
                                                 </td>
                                             ) : (
                                                 galeri &&

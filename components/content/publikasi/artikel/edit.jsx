@@ -776,7 +776,7 @@ const EditArtikel = ({ token, idUser }) => {
                   src={gambarPreview}
                   alt="image"
                   layout="fill"
-                  objectFit="cover"
+                  objectFit="fill"
                 />
               </div>
               <div className="modal-footer">

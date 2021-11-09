@@ -427,7 +427,7 @@ const Kategori = ({ token }) => {
                         (paginateKategori &&
                           paginateKategori.kategori.length === 0) ? (
                         <td className="align-middle text-center" colSpan={4}>
-                          Data Tidak Ditemukan
+                          Data Kosong
                         </td>
                       ) : (
                         paginateKategori &&

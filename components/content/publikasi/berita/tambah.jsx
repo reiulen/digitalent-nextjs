@@ -317,7 +317,7 @@ const TambahBerita = ({ token, id }) => {
                                             alt="image"
                                             width={160}
                                             height={160}
-                                            objectFit="cover"
+                                            objectFit="fill"
                                         />
                                     </figure>
                                     <div>
@@ -375,7 +375,7 @@ const TambahBerita = ({ token, id }) => {
                                     <select name="" id="" className='form-control' value={kategori_akademi} onChange={e => setKategoriAkademi(e.target.value)} onBlur={e => { setKategoriAkademi(e.target.value); simpleValidator.current.showMessageFor('akademi') }} >
                                         <option selected disabled value=''>-- Akademi --</option>
                                         {!dataAkademi || (dataAkademi && dataAkademi.length === 0) ? (
-                                            <option value="">Data Tidak Ditemukan</option>
+                                            <option value="">Data Kosong</option>
                                         ) : (
                                             dataAkademi && dataAkademi.data && dataAkademi.data.map((row) => {
                                                 return (
@@ -400,7 +400,7 @@ const TambahBerita = ({ token, id }) => {
                                     <select name="" id="" className='form-control' value={kategori_id} onChange={e => setKategoriId(e.target.value)} onBlur={e => { setKategoriId(e.target.value); simpleValidator.current.showMessageFor('kategori_id') }} >
                                         <option selected disabled value=''>-- Berita --</option>
                                         {!kategori || (kategori && kategori.length === 0) ? (
-                                            <option value="">Data Tidak Ditemukan</option>
+                                            <option value="">Data Kosong</option>
                                         ) : (
                                             kategori && kategori.kategori && kategori.kategori.map((row) => {
                                                 return (
@@ -421,13 +421,12 @@ const TambahBerita = ({ token, id }) => {
 
                             <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Tag</label>
-                                <div className="col-sm-12">
+                                <div className="col-sm-12" style={{ wordBreak: 'break-word' }}>
                                     <TagsInput
                                         value={tag}
-                                        // onChange={setTag}
                                         onChange={(data) => handleTag(data)}
                                         name="tag"
-                                        placeHolder="Isi Tag disini"
+                                        placeHolder="Isi Tag disini dan Enter"
                                         seprators={["Enter", "Tab"]}
                                     />
                                     {
@@ -438,7 +437,6 @@ const TambahBerita = ({ token, id }) => {
                                             :
                                             null
                                     }
-                                    {/* <input type="text" className="form-control" placeholder="Isi Tag disini" value={tag} onChange={e => setTag(e.target.value)} /> */}
                                 </div>
                             </div>
 
@@ -457,7 +455,6 @@ const TambahBerita = ({ token, id }) => {
                                                 className="checkbox"
                                                 checked={publish}
                                                 type="checkbox"
-                                                // onChange={(checked) => setPublish(checked)}
                                                 onChange={(e) => handleChangePublish(e)}
                                             />
                                             <span
@@ -525,7 +522,7 @@ const TambahBerita = ({ token, id }) => {
                                 src={gambarPreview}
                                 alt='image'
                                 layout='fill'
-                                objectFit='cover'
+                                objectFit='fill'
                             />
                         </div>
                         <div className="modal-footer">

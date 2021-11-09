@@ -126,14 +126,14 @@ const EditBerita = ({ token, idUser }) => {
     const handleChangePublish = e => {
         setDisablePublishDate(!disablePublishDate);
         setPublishDate(null);
-    
+
         if (e.target.checked === false) {
-          setPublishDate(null);
-          setPublish(0);
+            setPublishDate(null);
+            setPublish(0);
         } else {
-          setPublish(1);
+            setPublish(1);
         }
-      };
+    };
 
     const handlePublishDate = (date) => {
         if (disablePublishDate === false) {
@@ -151,7 +151,9 @@ const EditBerita = ({ token, idUser }) => {
                 data.splice([i], 1);
             }
         }
-        setTag(data);
+        if ((data).includes(data) !== true) {
+            setTag(data);
+        }
     }
 
     const onSubmit = (e) => {
@@ -325,7 +327,7 @@ const EditBerita = ({ token, idUser }) => {
     }
 
     const onNewReset = () => {
-        dispatch({ 
+        dispatch({
             type: UPDATE_BERITA_RESET
         })
     }
@@ -421,7 +423,7 @@ const EditBerita = ({ token, idUser }) => {
                                                 alt="image"
                                                 width={160}
                                                 height={160}
-                                                objectFit="cover"
+                                                objectFit="fill"
                                             />
                                         </figure>
                                         <div>
@@ -485,9 +487,9 @@ const EditBerita = ({ token, idUser }) => {
                                             ) : (
                                                 dataAkademi && dataAkademi.data && dataAkademi.data.map((row) => {
                                                     return (
-                                                            <option key={row.value} value={row.label} selected={kategori_akademi === row.label ? true : false}>
-                                                                {row.label}
-                                                            </option>
+                                                        <option key={row.value} value={row.label} selected={kategori_akademi === row.label ? true : false}>
+                                                            {row.label}
+                                                        </option>
                                                     )
                                                 })
                                             )}
@@ -524,12 +526,12 @@ const EditBerita = ({ token, idUser }) => {
 
                                 <div className="form-group">
                                     <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Tag</label>
-                                    <div className="col-sm-12">
+                                    <div className="col-sm-12" style={{ wordBreak: 'break-word' }}>
                                         <TagsInput
                                             value={tag}
                                             onChange={(data) => handleTag(data)}
                                             name="tag"
-                                            placeHolder="Isi Tag disini"
+                                            placeHolder="Isi Tag disini dan Enter"
                                             seprators={["Enter", "Tab"]}
                                         />
                                         {
@@ -629,7 +631,7 @@ const EditBerita = ({ token, idUser }) => {
                                     src={gambarPreview}
                                     alt='image'
                                     layout='fill'
-                                    objectFit='cover'
+                                    objectFit='fill'
                                 />
                             </div>
                             <div className="modal-footer">

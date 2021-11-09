@@ -544,8 +544,8 @@ const ArtikelPeserta = ({ token }) => {
                                         <tbody>
                                             {
                                                 !artikel_peserta || artikel_peserta && artikel_peserta.artikel.length === 0 ?
-                                                <td className='align-middle text-center' colSpan={9}>Data Tidak Ditemukan</td> :
-                                                <td className='align-middle text-center' colSpan={9}>Data Tidak Ditemukan</td>
+                                                <td className='align-middle text-center' colSpan={9}>Data Kosong</td> :
+                                                <td className='align-middle text-center' colSpan={9}>Data Kosong</td>
                                             }
                                         </tbody>
                                     </table> : ''
