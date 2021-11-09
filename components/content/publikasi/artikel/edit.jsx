@@ -51,20 +51,12 @@ const EditArtikel = ({ token, idUser }) => {
   useEffect(() => {
 
     editorRef.current = {
-      CKEditor: require('@ckeditor/ckeditor5-react').CKEditor, //Added .CKEditor
+      CKEditor: require('@ckeditor/ckeditor5-react').CKEditor, 
       ClassicEditor: require('@ckeditor/ckeditor5-build-classic'),
-      // Base64UploadAdapter: require('@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter')
     }
 
     setEditorLoaded(true);
     if (success) {
-      // setJudulArtikel('')
-      // setIsiArtikel('')
-      // setGambar('')
-      // setGambarPreview('/assets/media/default.jpg')
-      // setKategoriId('')
-      // setTag('')
-
       router.push({
         pathname: `/publikasi/artikel`,
         query: { success: true },
@@ -85,10 +77,6 @@ const EditArtikel = ({ token, idUser }) => {
     "publikasi/images/" +
     artikel.gambar
   );
-  // const [gambar, setGambar] = useState(artikel.gambar);
-  // const [gambarPreview, setGambarPreview] = useState(
-  //   "/assets/media/default.jpg"
-  // ); //belum
   const [iconPlus, setIconPlus] = useState("/assets/icon/Add.svg");
   const [gambarPreview, setGambarPreview] = useState(
     process.env.END_POINT_API_IMAGE_PUBLIKASI +
@@ -96,11 +84,10 @@ const EditArtikel = ({ token, idUser }) => {
     artikel.gambar
   );
   const [gambarName, setGambarName] = useState(artikel.gambar);
-  const [kategori_id, setKategoriId] = useState(artikel.kategori_id); //belum
+  const [kategori_id, setKategoriId] = useState(artikel.kategori_id); 
   const [kategori_akademi, setKategoriAkademi] = useState(artikel.kategori_akademi);
   const [users_id, setUserId] = useState(artikel.users_id);
   const [tag, setTag] = useState(artikel.tag);
-  // const [publish, setPublish] = useState(artikel.publish === 1 ? true : false);
   const [publish, setPublish] = useState(artikel.publish);
   const [publishDate, setPublishDate] = useState(
     artikel.tanggal_publish ? new Date(artikel.tanggal_publish) : null
@@ -130,11 +117,6 @@ const EditArtikel = ({ token, idUser }) => {
         setGambarName(e.target.files[0].name);
       }
     } else {
-      // setGambar("")
-      // setGambarPreview("/assets/media/default.jpg")
-      // setGambarName(null)
-      // simpleValidator.current.showMessages();
-      // forceUpdate(1);
       e.target.value = null;
       Swal.fire(
         "Oops !",
@@ -420,7 +402,6 @@ const EditArtikel = ({ token, idUser }) => {
                           editor={ClassicEditor}
                           data={isi_artikel}
                           onReady={editor => {
-                            // You can store the "editor" and use when it is needed.
                           }}
                           onChange={(event, editor) => {
                             const data = editor.getData();

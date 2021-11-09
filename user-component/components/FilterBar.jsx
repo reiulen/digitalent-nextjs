@@ -78,6 +78,15 @@ const FilterBar = () => {
       borderRadius: "30px",
       paddingLeft: "25px",
     }),
+    multiValue: (styles) => ({
+      ...styles,
+      backgroundColor: "#E6F2FF",
+      borderRadius: "30px",
+    }),
+    multiValueLabel: (styles) => ({
+      ...styles,
+      color: "#0063CC",
+    }),
   };
 
   const handleSearch = () => {
@@ -116,7 +125,7 @@ const FilterBar = () => {
 
   return (
     <div className="d-flex align-content-stretch align-items-center flex-lg-nowrap flex-wrap mt-13">
-      <div className="mb-5 w-100 rounded-xl mr-4">
+      <div className="mb-5 w-100 rounded-xl mr-md-4 mr-0">
         <Select
           options={optionsAkademi}
           styles={customStylesTop}
@@ -126,7 +135,7 @@ const FilterBar = () => {
         />
       </div>
 
-      <div className="mb-5 w-100 mr-4 position-relative">
+      <div className="mb-5 w-100 mr-md-4 mr-0 position-relative">
         <Select
           options={optionsTheme}
           styles={customStylesTop}
@@ -141,7 +150,7 @@ const FilterBar = () => {
         ></i>
       </div>
 
-      <div className="mb-5 position-relative w-100 mr-4">
+      <div className="mb-5 position-relative w-100 mr-md-4 mr-0">
         <Select
           options={optionsCity}
           styles={customStylesTop}
@@ -155,7 +164,7 @@ const FilterBar = () => {
         ></i>
       </div>
 
-      <div className="mb-5 position-relative w-100 mr-4">
+      <div className="mb-5 position-relative w-100 mr-md-4 mr-0">
         <Select
           options={optionsTipePelatihan}
           styles={customStylesTop}
@@ -169,7 +178,7 @@ const FilterBar = () => {
         ></i>
       </div>
 
-      <div className="mb-5 w-100">
+      <div className="mb-5 w-md-50 w-100">
         <button
           className="btn btn-primary rounded-pill btn-block fw-500"
           onClick={() => handleSearch()}

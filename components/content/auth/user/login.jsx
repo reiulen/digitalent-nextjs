@@ -128,12 +128,14 @@ const LoginUser = () => {
                 </div>
                 <div className="form-group">
                   <label className="form-auth-label">Password</label>
+                  <Link href="login/forgot-password">
                   <a
                     className="float-right font-weight-bold"
                     style={{ color: "#4CBDE2" }}
-                  >
+                    >
                     Lupa Password ?
                   </a>
+                    </Link>
                   <div className="position-relative">
                     <input
                       id="input-password"
