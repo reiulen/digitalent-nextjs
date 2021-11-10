@@ -219,9 +219,9 @@ const Table = ({ token }) => {
                     <th className="text-left">No</th>
                     <th className="text-left align-middle">Logo</th>
                     <th className="text-left align-middle">Mitra</th>
+                    <th className="text-left align-middle">Status</th>
                     <th className="text-left align-middle">Website</th>
                     <th className="text-left align-middle">Kerjasama</th>
-                    <th className="text-left align-middle">Status</th>
                     <th className="text-left align-middle">Aksi</th>
                   </tr>
                 }
@@ -268,14 +268,10 @@ const Table = ({ token }) => {
                               />
                             )}
                           </td>
+                           
                           <td className="align-middle text-left text-overflow-ens">
                             {item.user.name}
-                          </td>
-                          <td className="align-middle text-left text-overflow-ens">
-                            {item.website}
-                          </td>
-                          <td className="align-middle text-left text-overflow-ens">
-                            {item.cooperations_count} Kerjasama
+                         
                           </td>
                           <td className="align-middle text-left ">
                             {item.status == "1" ? (
@@ -322,6 +318,12 @@ const Table = ({ token }) => {
                                 />
                               </div>
                             )}
+                          </td>
+                          <td className="align-middle text-left text-overflow-ens">
+                            {item.website}
+                          </td>
+                          <td className="align-middle text-left text-overflow-ens">
+                            {item.cooperations_count} Kerjasama
                           </td>
                           <td className="align-middle text-left">
                             <div className="d-flex align-items-center">
