@@ -116,7 +116,7 @@ const Sidebar = ({ session }) => {
         {
           id: 2,
           name: "Review Pelatihan",
-          href: "/pelatihan/review",
+          href: "/pelatihan/review-pelatihan",
           selected: false,
           child: [],
         },

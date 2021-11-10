@@ -8,6 +8,7 @@ import Pagination from "react-js-pagination";
 import { Modal } from "react-bootstrap";
 import Select from "react-select";
 import moment from "moment";
+import DatePicker from "react-datepicker";
 
 import {
   getAllListReview,
@@ -50,8 +51,11 @@ const ListReview = ({ token }) => {
   const [theme, setTheme] = useState(null);
   const [statusSubstansi, setStatusSubstansi] = useState(null);
   const [statusPelatihan, setStatusPelatihan] = useState(null);
-  const [dateRegister, setDateRegister] = useState(null);
-  const [dateStart, setDateStart] = useState(null);
+  const [dateRegister, setDateRegister] = useState([null, null]);
+  const [dateRegisterStart, dateRegisterEnd] = dateRegister;
+
+  const [datePelaksanaan, setDatePelaksanaan] = useState([null, null]);
+  const [datePelaksanaanStart, datePelaksanaanEnd] = datePelaksanaan;
 
   const [showModal, setShowModal] = useState(false);
   const [publishValue, setPublishValue] = useState(null);
@@ -88,13 +92,19 @@ const ListReview = ({ token }) => {
 
   const handlePagination = (pageNumber) => {
     setPage(pageNumber);
+    let register = dateRegister.map((item) => {
+      return moment(item).format("YYYY-MM-DD");
+    });
+    let pelaksanaan = datePelaksanaan.map((item) => {
+      return moment(item).format("YYYY-MM-DD");
+    });
     dispatch(
       getAllListReview(
         pageNumber,
         search,
         limit,
-        dateRegister,
-        dateStart,
+        register[0] === "Invalid date" ? "" : register.join(","),
+        pelaksanaan[0] === "Invalid date" ? "" : pelaksanaan.join(","),
         statusSubstansi != null ? statusSubstansi.value : null,
         statusPelatihan != null ? statusPelatihan.value : null,
         penyelenggara != null ? penyelenggara.value : null,
@@ -107,14 +117,20 @@ const ListReview = ({ token }) => {
 
   const handleFilter = () => {
     setShowModal(false);
+    let register = dateRegister.map((item) => {
+      return moment(item).format("YYYY-MM-DD");
+    });
+    let pelaksanaan = datePelaksanaan.map((item) => {
+      return moment(item).format("YYYY-MM-DD");
+    });
     setPage(1);
     dispatch(
       getAllListReview(
         1,
         search,
         limit,
-        dateRegister,
-        dateStart,
+        register[0] === "Invalid date" ? "" : register.join(","),
+        pelaksanaan[0] === "Invalid date" ? "" : pelaksanaan.join(","),
         statusSubstansi != null ? statusSubstansi.value : null,
         statusPelatihan != null ? statusPelatihan.value : null,
         penyelenggara != null ? penyelenggara.value : null,
@@ -434,7 +450,7 @@ const ListReview = ({ token }) => {
                                 ? i + 1 * (page * 5) - (5 - 1)
                                 : i + 1 * (page * limit) - (limit - 1)}
                             </td>
-                            <td className="align-middle">CC00{row.id}</td>
+                            <td className="align-middle">{row.slug}{row.id}</td>
                             <td>
                               <p className="font-weight-bolder my-0">
                                 {row.name}
@@ -499,7 +515,7 @@ const ListReview = ({ token }) => {
                               {row.status_substansi === "review" && (
                                 <div className="d-flex mr-10">
                                   <Link
-                                    href={`/pelatihan/review/view-pelatihan/${row.id}`}
+                                    href={`/pelatihan/review-pelatihan/view-pelatihan/${row.id}`}
                                   >
                                     <a
                                       className="btn btn-link-action bg-blue-secondary text-white mr-2"
@@ -646,24 +662,32 @@ const ListReview = ({ token }) => {
           <div className="row">
             <div className="form-group mb-5 col-md-6">
               <label className="p-0">Tanggal Pendaftaran</label>
-              <input
-                type="date"
-                name=""
-                id=""
+              <DatePicker
+                wrapperClassName="datepicker"
                 className="form-control"
-                value={dateRegister}
-                onChange={(e) => setDateRegister(e.target.value)}
+                name="start_date"
+                selectsRange={true}
+                onChange={(date) => {
+                  setDateRegister(date);
+                }}
+                startDate={dateRegisterStart}
+                endDate={dateRegisterEnd}
+                dateFormat="dd/MM/yyyy"
+                autoComplete="off"
               />
             </div>
             <div className="form-group mb-5 col-md-6">
               <label className="p-0">Tanggal Pelaksanaan</label>
-              <input
-                type="date"
-                name=""
-                id=""
+              <DatePicker
+                wrapperClassName="datepicker"
                 className="form-control"
-                value={dateStart}
-                onChange={(e) => setDateStart(e.target.value)}
+                name="start_date"
+                selectsRange={true}
+                onChange={(date) => setDatePelaksanaan(date)}
+                startDate={datePelaksanaanStart}
+                endDate={datePelaksanaanEnd}
+                dateFormat="dd/MM/yyyy"
+                autoComplete="off"
               />
             </div>
           </div>
