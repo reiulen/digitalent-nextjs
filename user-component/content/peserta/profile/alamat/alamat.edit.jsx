@@ -541,6 +541,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard }) => {
               )}
             </Form.Group>
           </Row>
+          <hr className={style.hr} style={{ marginTop: "40px" }} />
         </div>
 
         <div className="alamat-domisili mt-6">

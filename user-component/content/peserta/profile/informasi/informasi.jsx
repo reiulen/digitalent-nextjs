@@ -12,7 +12,7 @@ const Informasi = ({ funcViewEdit, token }) => {
 
   useEffect(() => {
     dispatch(getDataPribadi(token));
-  }, [dispatch]);
+  }, [dispatch, token]);
 
   return (
     <>
@@ -89,7 +89,7 @@ const Informasi = ({ funcViewEdit, token }) => {
         <Row>
           <Col md={12}>
             <p className="text-neutral-body my-1">KTP</p>
-            <p>{(dataPribadi && dataPribadi.File_ktp) || "-"}</p>
+            <p>{(dataPribadi && dataPribadi.File_ktp.split("/ktp/")) || "-"}</p>
           </Col>
         </Row>
       </div>

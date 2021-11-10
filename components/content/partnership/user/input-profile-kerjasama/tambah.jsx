@@ -302,7 +302,7 @@ const Tambah = ({ token }) => {
 
   const onNewReset = () => {
     router.replace(
-      "/partnership/user/input-profile",
+      "/partnership/user/profile-lembaga",
       undefined,
       { shallow: true }
     );

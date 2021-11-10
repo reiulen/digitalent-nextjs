@@ -198,9 +198,9 @@ const ViewReviewTraining = ({ token }) => {
         title1="Data Pelatihan"
         title2="Form Pendaftaran"
         title3="Form Komitmen"
-        link1={`/pelatihan/review/view-pelatihan/${id}`}
-        link2={`/pelatihan/review/view-pelatihan/view-form-pendaftaran/${id}`}
-        link3={`/pelatihan/review/view-pelatihan/view-form-komitmen/${id}`}
+        link1={`/pelatihan/review-pelatihan/view-pelatihan/${id}`}
+        link2={`/pelatihan/review-pelatihan/view-pelatihan/view-form-pendaftaran/${id}`}
+        link3={`/pelatihan/review-pelatihan/view-pelatihan/view-form-komitmen/${id}`}
       />
 
       <div className="col-lg-12 order-1 px-0">

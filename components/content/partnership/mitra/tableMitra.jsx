@@ -167,9 +167,9 @@ const Table = ({ token }) => {
           </div>
           {/*  */}
 
-          <div className="card-body pt-0">
+          <div className="card-body pt-0 px-4 px-sm-8">
             <div className="row w-100">
-              <div className="col-12 col-sm-6">
+              <div className="col-12 col-xl-4">
                 <div className="position-relative overflow-hidden w-100 mt-3">
                   <IconSearch
                     style={{ left: "10" }}
@@ -196,7 +196,7 @@ const Table = ({ token }) => {
                 </div>
               </div>
 
-              <div className="col-12 col-sm-6">
+              <div className="col-12 col-xl-8">
                 <div className="d-flex align-items-center justify-content-end mt-2">
                   {/* disini sortir modal */}
 
@@ -219,9 +219,9 @@ const Table = ({ token }) => {
                     <th className="text-left">No</th>
                     <th className="text-left align-middle">Logo</th>
                     <th className="text-left align-middle">Mitra</th>
+                    <th className="text-left align-middle">Status</th>
                     <th className="text-left align-middle">Website</th>
                     <th className="text-left align-middle">Kerjasama</th>
-                    <th className="text-left align-middle">Status</th>
                     <th className="text-left align-middle">Aksi</th>
                   </tr>
                 }
@@ -268,14 +268,10 @@ const Table = ({ token }) => {
                               />
                             )}
                           </td>
+                           
                           <td className="align-middle text-left text-overflow-ens">
                             {item.user.name}
-                          </td>
-                          <td className="align-middle text-left text-overflow-ens">
-                            {item.website}
-                          </td>
-                          <td className="align-middle text-left text-overflow-ens">
-                            {item.cooperations_count} Kerjasama
+                         
                           </td>
                           <td className="align-middle text-left ">
                             {item.status == "1" ? (
@@ -322,6 +318,12 @@ const Table = ({ token }) => {
                                 />
                               </div>
                             )}
+                          </td>
+                          <td className="align-middle text-left text-overflow-ens">
+                            {item.website}
+                          </td>
+                          <td className="align-middle text-left text-overflow-ens">
+                            {item.cooperations_count} Kerjasama
                           </td>
                           <td className="align-middle text-left">
                             <div className="d-flex align-items-center">

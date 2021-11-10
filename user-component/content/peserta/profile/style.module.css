@@ -20,3 +20,22 @@
   font-weight: 600;
   font-size: 14px;
 }
+
+/* =================================================================================
+INFORMASI PRIBADI
+================================================================================= */
+.label {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 13px;
+  line-height: 160%;
+  color: #1f1f1f;
+  margin-top: 5px;
+}
+.formControl {
+  margin-bottom: 10px;
+}
+.hr {
+  border: 0.05px solid #d7e1ea;
+}
