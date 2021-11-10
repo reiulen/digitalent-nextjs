@@ -2,6 +2,12 @@ import {
   ADMIN_SITE_REQUEST,
   ADMIN_SITE_SUCCESS,
   ADMIN_SITE_FAIL,
+  ROLES_LIST_REQUEST,
+  ROLES_LIST_SUCCESS,
+  ROLES_LIST_FAIL,
+  UNIT_WORK_LIST_REQUEST,
+  UNIT_WORK_LIST_SUCCESS,
+  UNIT_WORK_LIST_FAIL,
   GET_LIST_ADMIN_SITE_REQUEST,
   GET_LIST_ADMIN_SITE_SUCCESS,
   GET_LIST_ADMIN_SITE_FAIL,
@@ -81,6 +87,59 @@ export const allAdminSiteReducer = (state = initialState, action) => {
         ...state,
         limit: action.limitValue,
         page: 1,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const allRolesListReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case ROLES_LIST_REQUEST:
+      return {
+        ...state,
+        status: statuslist.process,
+      };
+
+    case ROLES_LIST_SUCCESS:
+      return {
+        ...state,
+        status: statuslist.success,
+        data: action.payload,
+      };
+
+    case ROLES_LIST_FAIL:
+      return {
+        ...state,
+        status: statuslist.error,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+export const allUnitWorkListReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case UNIT_WORK_LIST_REQUEST:
+      return {
+        ...state,
+        status: statuslist.process,
+      };
+
+    case UNIT_WORK_LIST_SUCCESS:
+      return {
+        ...state,
+        status: statuslist.success,
+        data: action.payload,
+      };
+
+    case UNIT_WORK_LIST_FAIL:
+      return {
+        ...state,
+        status: statuslist.error,
+        error: null,
       };
 
     default:

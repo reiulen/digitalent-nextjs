@@ -17,6 +17,17 @@ import IconMinus from "../../../../../public/assets/icon/Minus.svg";
 const TambahApi = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
+  const [name, setName] = useState("")
+  const [email, setEmail] = useState("")
+  const [status, setStatus] = useState("")
+  const [password, setPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")
+  const [role, setRole] = useState("")
+  const [unitWork, setUnitWork] = useState("")
+  const [statusAcademy, setStatusAcademy] = useState("")
+  const [pelatihan, setPelatihan] = useState([])
+
+
   const allRoles = useSelector((state) => state.allRoles);
   console.log("allRoles",allRoles)
   const allUnitWork = useSelector((state) => state.allUnitWork);
@@ -64,6 +75,8 @@ const TambahApi = ({ token }) => {
                 <label>Nama Lengkap</label>
                 <input
                   type="text"
+                  value={name}
+                  onChange={()=>setName(e.target.value)}
                   className="form-control"
                   placeholder="Masukkan nama lengkap"
                 />
@@ -72,6 +85,8 @@ const TambahApi = ({ token }) => {
               <div className="form-group">
                 <label>Email</label>
                 <input
+                value={email}
+                onChange={(e)=>setEmail(e.target.value)}
                   type="email"
                   className="form-control"
                   placeholder="Masukkan email"
@@ -79,15 +94,17 @@ const TambahApi = ({ token }) => {
                 
               </div>
               <div className="form-group">
-                <label htmlFor="exampleSelect1">Status</label>
-                <select className="form-control" id="exampleSelect1">
-                  <option>Placeholder</option>
+                <label>Status</label>
+                <select className="form-control" onChange={(e)=>setStatus(e.target.value)}>
+                  <option value="1">Aktif</option>
+                  <option value="0">Tidak Aktif</option>
                 </select>
                 
               </div>
               <div className="form-group">
                 <label>Password</label>
                 <input
+                value={password}
                   type="password"
                   className="form-control"
                   placeholder="Masukkan password"
@@ -97,6 +114,7 @@ const TambahApi = ({ token }) => {
               <div className="form-group">
                 <label>Konfirmasi Password</label>
                 <input
+                value={confirmPassword}
                   type="password"
                   className="form-control"
                   placeholder="Masukkan konfirmasi password"
@@ -104,15 +122,15 @@ const TambahApi = ({ token }) => {
                 
               </div>
               <div className="form-group">
-                <label htmlFor="exampleSelect1">Role</label>
-                <select className="form-control" id="exampleSelect1">
+                <label>Role</label>
+                <select className="form-control">
                   <option>Placeholder</option>
                 </select>
                 
               </div>
               <div className="form-group">
-                <label htmlFor="exampleSelect1">Satuan Kerja</label>
-                <select className="form-control" id="exampleSelect1">
+                <label>Satuan Kerja</label>
+                <select className="form-control">
                   <option>Placeholder</option>
                 </select>
                 

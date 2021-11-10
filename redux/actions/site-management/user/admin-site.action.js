@@ -2,6 +2,12 @@ import {
   ADMIN_SITE_REQUEST,
   ADMIN_SITE_SUCCESS,
   ADMIN_SITE_FAIL,
+  ROLES_LIST_REQUEST,
+  ROLES_LIST_SUCCESS,
+  ROLES_LIST_FAIL,
+  UNIT_WORK_LIST_REQUEST,
+  UNIT_WORK_LIST_SUCCESS,
+  UNIT_WORK_LIST_FAIL,
   GET_LIST_ADMIN_SITE_REQUEST,
   GET_LIST_ADMIN_SITE_SUCCESS,
   GET_LIST_ADMIN_SITE_FAIL,
@@ -60,6 +66,29 @@ export const getAllAdminSite = (token) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: ADMIN_SITE_FAIL,
+    });
+  }
+};
+export const getListRoles = (token) => async (dispatch) => {
+  try {
+    dispatch({ type: ROLES_LIST_REQUEST });
+
+    const { data } = await axios.get(
+      `${process.env.END_POINT_API_SITE_MANAGEMENT}api/role/all`,
+      {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    dispatch({
+      type: ROLES_LIST_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ROLES_LIST_FAIL,
     });
   }
 };
