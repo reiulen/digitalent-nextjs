@@ -110,7 +110,7 @@ export const getAllTemaOriginal = () => async (dispatch) => {
   try {
     dispatch({ type: BERANDA_TEMA_ORIGINAL_REQUEST });
 
-    let link = process.env.END_POINT_API_PELATIHAN + `api/v1/tema/dropdown`;
+    let link = process.env.END_POINT_API_PELATIHAN + `api/v1/tema/list-tema`;
 
     const { data } = await axios.get(link);
 

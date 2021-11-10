@@ -14,6 +14,7 @@ import SubHeaderComponent from "../../../../components/template/Subheader.compon
 import IconLove from "../../../../../components/assets/icon/Love";
 import IconShare from "../../../../../components/assets/icon/Share";
 import { checkRegisterPelatihan } from "../../../../../redux/actions/beranda/detail-pelatihan.actions";
+import axios from "axios";
 
 const DetailPelatihan = ({ session }) => {
   const router = useRouter();
@@ -33,6 +34,11 @@ const DetailPelatihan = ({ session }) => {
     } else {
       router.push(`/login`);
     }
+  };
+
+  const handleDownloadSilabus = async () => {
+    let silabus = pelatihan.file_path + pelatihan.silabus;
+    await axios.get(silabus);
   };
 
   return (
@@ -142,7 +148,10 @@ const DetailPelatihan = ({ session }) => {
                     Daftar Pelatihan
                   </button>
                 )}
-                <button className="btn btn-outline-primary-new rounded-pill btn-block fw-500">
+                <button
+                  className="btn btn-outline-primary-new rounded-pill btn-block fw-500"
+                  onClick={() => handleDownloadSilabus()}
+                >
                   <i className="ri-download-cloud-fill"></i>
                   <span>Unduh Silabus</span>
                 </button>
