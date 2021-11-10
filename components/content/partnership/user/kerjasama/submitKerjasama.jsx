@@ -28,7 +28,6 @@ const DetailDokumenKerjasama = ({ token }) => {
     period: "",
     periodUnit: "",
     AllCooperation: "",
-    // institution_name: "",
   });
 
   const [date, setDate] = useState("");
@@ -52,6 +51,26 @@ const DetailDokumenKerjasama = ({ token }) => {
   const submit = (e) => {
     e.preventDefault();
 
+    console.log("AllCooperation",AllCooperation)
+    let isError = false
+
+    if(AllCooperation === ""){
+      setError({
+        ...error,
+        AllCooperation: "Kerjasama form tidak boleh kosong",
+      });
+    }else{
+      let errorAllCooperation = AllCooperation.map((items)=>{
+        if(!items.cooperation){
+          isError = true
+          return {...items,error:`Harus isi ${items.cooperation_form}`}
+        }else{
+          return {...items}
+        }
+      })
+      setAllCooperation(errorAllCooperation)
+    }
+
     if (date === "") {
       setError({ ...error, date: "Harus isi data tanggal" });
     } else if (title === "") {
@@ -68,12 +87,17 @@ const DetailDokumenKerjasama = ({ token }) => {
       });
     } else if (periodUnit === "") {
       setError({ ...error, periodUnit: "Period unit tidak boleh kosong" });
-    } else if (AllCooperation === "") {
+    } 
+    else if (AllCooperation === "") {
       setError({
         ...error,
         AllCooperation: "Kerjasama form tidak boleh kosong",
       });
-    } else {
+    } 
+    else if (isError) {
+      return;
+    } 
+    else {
       Swal.fire({
         title: "Apakah anda yakin ingin simpan ?",
         // text: "Data ini tidak bisa dikembalikan !",
@@ -268,6 +292,7 @@ const DetailDokumenKerjasama = ({ token }) => {
                     className="form-control mb-3 mb-lg-0 border-0"
                     style={{ backgroundColor: "transparent" }}
                   />
+                  <div className="box-hide-arrow"></div>
                   {/* icon calender */}
                 </div>
                 {error.date ? <p className="error-text">{error.date}</p> : ""}
@@ -374,21 +399,24 @@ const DetailDokumenKerjasama = ({ token }) => {
                               cols="30"
                               rows="5"
                               className="form-control"
-                              placeholder="Masukan Tujuan Kerjasama"
+                              placeholder={`Masukan ${items.cooperation_form}`}
                             ></textarea>
-                            {error.AllCooperation ? (
-                              <p className="error-text">
-                                {error.AllCooperation}
-                              </p>
-                            ) : (
-                              ""
-                            )}
+                            {AllCooperation[index]?.error ? <p className="error-text">{AllCooperation[index]?.error}</p> :""}
                           </div>
                         </div>
                       );
                     }
-                  )}
+                    )}
+
+                    {console.log("error page",error)}
               {/* end loopingg */}
+                    {error.AllCooperation ? (
+                      <p className="error-text">
+                        {error.AllCooperation}
+                      </p>
+                    ) : (
+                      ""
+                    )}
 
               <div className="form-group row">
                 <div className="col-sm-12 d-flex justify-content-end">
