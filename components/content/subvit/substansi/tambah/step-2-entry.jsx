@@ -25,7 +25,7 @@ const StepTwo = ({ token }) => {
   const router = useRouter();
 
   let { metode, id } = router.query;
-  console.log(id);
+
   const { loading, error, success } = useSelector(
     (state) => state.newSubtanceQuestionDetail
   );
