@@ -434,3 +434,12 @@
   }
 }
 
+.w-max-cs {
+  background-color: transparent;
+}
+
+@media(min-width:336px) and (max-width:360px) {
+  .w-max-cs {
+    background-color: #f7f7f7;
+  }
+}
