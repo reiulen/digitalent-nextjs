@@ -68,53 +68,81 @@ const Edit = ({ token }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if(categoryCooporation === ""){
-      notify("Kategory kerjasama tidak boleh kosong")
-
-    }else if(stateDataSingle[0].name === ""){
-      notify("Form kerjasama tidak boleh kosong")
-    }
-    else{
+    if (categoryCooporation === "") {
+      // notify("Kategory kerjasama tidak boleh kosong")
+      Swal.fire("Gagal", `Kategory kerjasama tidak boleh kosong`, "error");
+    } else if (stateDataSingle[0].name === "") {
+      // notify("Form kerjasama tidak boleh kosong")
+      Swal.fire("Gagal", `Form kerjasama tidak boleh kosong`, "error");
+    } else {
       Swal.fire({
-      title: "Apakah anda yakin ingin ubah data?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      cancelButtonText: "Batal",
-      confirmButtonText: "Ya !",
-      dismissOnDestroy: false,
-    }).then(async (result) => {
-      if (result.value) {
-        let formData = new FormData();
-        formData.append("cooperation_categories", categoryCooporation);
-        formData.append("_method", "PUT");
-        for (let i = 0; i < stateDataSingle.length; i++) {
-          let statusPro = status ? 1 : 0;
-          let method = "PUT";
-          if (stateDataSingle[i].isTipe === stateDataSingleOld[i].isTipe) {
-            formData.append("_method", method);
-            formData.append(
-              `cooperation_form_old[${i}]`,
-              stateDataSingleOld[i].cooperation_form
+        title: "Apakah anda yakin ingin ubah data?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        cancelButtonText: "Batal",
+        confirmButtonText: "Ya !",
+        dismissOnDestroy: false,
+      }).then(async (result) => {
+        if (result.value) {
+          let formData = new FormData();
+          formData.append("cooperation_categories", categoryCooporation);
+          formData.append("_method", "PUT");
+          for (let i = 0; i < stateDataSingle.length; i++) {
+            let statusPro = status ? 1 : 0;
+            let method = "PUT";
+            if (stateDataSingle[i].isTipe === stateDataSingleOld[i].isTipe) {
+              formData.append("_method", method);
+              formData.append(
+                `cooperation_form_old[${i}]`,
+                stateDataSingleOld[i].cooperation_form
+              );
+              formData.append(
+                `cooperation_form[${i}]`,
+                stateDataSingle[i].name
+              );
+              formData.append("status", statusPro);
+            } else {
+              formData.append("_method", method);
+              formData.append(
+                `cooperation_form_old[${i}]`,
+                stateDataSingle[i].name
+              );
+              formData.append(
+                `cooperation_form[${i}]`,
+                stateDataSingle[i].name
+              );
+              formData.append("status", statusPro);
+            }
+          }
+
+          // dispatch(updateMasterCategory(token, formData, router.query.id));
+          try {
+            let { data } = await axios.post(
+              `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/${router.query.id}`,
+              formData,
+              {
+                headers: {
+                  authorization: `Bearer ${token}`,
+                },
+              }
             );
-            formData.append(`cooperation_form[${i}]`, stateDataSingle[i].name);
-            formData.append("status", statusPro);
-          } else {
-            formData.append("_method", method);
-            formData.append(
-              `cooperation_form_old[${i}]`,
-              stateDataSingle[i].name
+
+            Swal.fire("Berhasil", "Data berhasil tersimpan", "success").then(
+              () => {
+                router.push({
+                  pathname: "/partnership/master-kategori-kerjasama",
+                  query: { update: true },
+                });
+              }
             );
-            formData.append(`cooperation_form[${i}]`, stateDataSingle[i].name);
-            formData.append("status", statusPro);
+          } catch (error) {
+            Swal.fire("Gagal", `${error.response.data.message}`, "error");
           }
         }
-        dispatch(updateMasterCategory(token, formData, router.query.id));
-      }
-    });
+      });
     }
-    
   };
 
   const notify = (value) =>
@@ -183,9 +211,7 @@ const Edit = ({ token }) => {
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3
-              className="card-title font-weight-bolder text-dark titles-1"
-            >
+            <h3 className="card-title font-weight-bolder text-dark titles-1">
               Ubah Master Kategori Kerjasama
             </h3>
           </div>
@@ -240,7 +266,18 @@ const Edit = ({ token }) => {
                                 className="btn"
                                 style={{ backgroundColor: "#EE2D41" }}
                               >
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path fill="none" d="M0 0h24v24H0z"/><path d="M17 4h5v2h-2v15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6H2V4h5V2h10v2zM9 9v8h2V9H9zm4 0v8h2V9h-2z" fill="rgba(255,255,255,1)"/></svg>
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  viewBox="0 0 24 24"
+                                  width="16"
+                                  height="16"
+                                >
+                                  <path fill="none" d="M0 0h24v24H0z" />
+                                  <path
+                                    d="M17 4h5v2h-2v15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6H2V4h5V2h10v2zM9 9v8h2V9H9zm4 0v8h2V9h-2z"
+                                    fill="rgba(255,255,255,1)"
+                                  />
+                                </svg>
                               </button>
                             )}
                           </div>

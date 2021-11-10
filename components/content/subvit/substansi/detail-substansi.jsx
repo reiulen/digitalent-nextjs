@@ -286,7 +286,8 @@ const DetailSubstansi = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h2 className="card-title h2 text-dark">
-              Substansi FGA - Cloud Computing
+              Substansi {subtance.academy ? subtance.academy.name : ""} -{" "}
+              {subtance.theme ? subtance.theme.name : ""}
             </h2>
             <div className="card-toolbar">
               <Link href={`/subvit/substansi/edit?id=${id}`}>

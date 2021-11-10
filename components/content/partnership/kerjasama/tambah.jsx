@@ -54,6 +54,26 @@ const Tambah = ({ token }) => {
   const submit = (e) => {
     e.preventDefault();
 
+    let isError = false
+
+    if(AllCooperation === ""){
+      setError({
+        ...error,
+        AllCooperation: "Kerjasama form tidak boleh kosong",
+      });
+    }else{
+      let errorAllCooperation = AllCooperation.map((items)=>{
+        if(!items.cooperation){
+          isError = true
+          return {...items,error:`Harus isi ${items.cooperation_form}`}
+        }else{
+          return {...items}
+        }
+      })
+      setAllCooperation(errorAllCooperation)
+    }
+
+
     if (institution_name === "") {
       setError({ ...error, institution_name: "Harus pilih nama lembaga" });
     } 
@@ -77,12 +97,20 @@ const Tambah = ({ token }) => {
         ...error,
         periodUnit: "Field period unit tidak boleh kosong",
       });;
-    } else if (AllCooperation === "") {
+    } 
+    else if (AllCooperation === "") {
       setError({
         ...error,
         AllCooperation: "Field kerjasama form tidak boleh kosong",
       });
-    } else {
+    }
+    else if (isError) {
+      return;
+    } 
+    
+    
+    
+    else {
       Swal.fire({
         title: "Apakah anda yakin ?",
         // text: "Data ini tidak bisa dikembalikan !",
@@ -120,8 +148,7 @@ const Tambah = ({ token }) => {
     const regex = new RegExp(/[^0-9]/, "g");
     const val = e.target.value;
     if (val.match(regex)) {
-      setError({ ...error, period: "Masukan angka" });
-      notify("Masukan angka");
+      setError({ ...error, period: "Masukkan angka" });
       setPeriod("");
     } else {
       setPeriod(e.target.value);
@@ -187,7 +214,7 @@ const Tambah = ({ token }) => {
             <form onSubmit={submit}>
               <div className="fv-row mb-10">
                 <label className="required fw-bold fs-6 mb-2">Tanggal</label>
-
+                <div className="position-relative">
                 <input
                   disabled
                   type="text"
@@ -196,6 +223,9 @@ const Tambah = ({ token }) => {
                   className="form-control mb-3 mb-lg-0 border-0"
                   style={{backgroundColor:"transparent"}}
                 />
+                <div className="box-hide-arrow"></div>
+                  {/* icon calender */}
+                </div>
 
                 {error.date ? <p className="error-text">{error.date}</p> : ""}
               </div>
@@ -289,7 +319,7 @@ const Tambah = ({ token }) => {
                   type="text"
                   name="text_input"
                   className="form-control mb-3 mb-lg-0"
-                  placeholder="Masukan judul kerjasama"
+                  placeholder="Masukkan judul kerjasama"
                   onChange={(e) => setTitle(e.target.value)}
                 />
                 {error.title ? <p className="error-text">{error.title}</p> : ""}
@@ -350,21 +380,29 @@ const Tambah = ({ token }) => {
                               cols="30"
                               rows="5"
                               className="form-control"
-                              placeholder="Masukan Tujuan Kerjasama"
+                              placeholder={`Masukan ${items.cooperation_form}`}
                             ></textarea>
-                            {error.AllCooperation ? (
+                            {/* {error.AllCooperation ? (
                               <p className="error-text">
                                 {error.AllCooperation}
                               </p>
                             ) : (
                               ""
-                            )}
+                            )} */}
+                            {AllCooperation[index]?.error ? <p className="error-text">{AllCooperation[index]?.error}</p> :""}
                           </div>
                         </div>
                       );
                     }
                   )}
               {/* end loopingg */}
+              {error.AllCooperation ? (
+                      <p className="error-text">
+                        {error.AllCooperation}
+                      </p>
+                    ) : (
+                      ""
+                    )}
               <div className="form-group row">
                 <div className="col-sm-12 d-flex justify-content-end">
                   <Link href="/partnership/kerjasama">
