@@ -73,10 +73,18 @@ const StepTwo = ({ token }) => {
         });
       } else if (typeSave === "draft") {
         handleResetForm();
-        router.push({
-          pathname: `/subvit/trivia/tambah/step-2-${metode}`,
-          query: { metode, id },
-        });
+        if (router.query.metode) {
+          router.push({
+            pathname: `/subvit/trivia/tambah/step-2-${metode}`,
+            query: { metode, id },
+          });
+        } else {
+          router.push({
+            pathname: `/subvit/trivia/tambah/step-2-entry`,
+            query: { id },
+          });
+        }
+
         window.location.reload();
       }
     }
@@ -541,7 +549,9 @@ const StepTwo = ({ token }) => {
                   <div className="row">
                     <div className="col-md-5 col-lg-5 col-xl-7"></div>
                     {/* <div className="col-sm-12 col-md-6 col-lg-6 col-xl-5 buttoon float-right row justify-content-between" style={{border:'1px solid black'}}> */}
-                    <div className={`${styles.btnSave} col-12 col-sm-12 col-md-7 col-lg-7 col-xl-5 buttoon float-right row justify-content-between`}>
+                    <div
+                      className={`${styles.btnSave} col-12 col-sm-12 col-md-7 col-lg-7 col-xl-5 buttoon float-right row justify-content-between`}
+                    >
                       <button
                         className={`${styles.btnNext} col-12 col-sm-12 col-md-5 col-lg-5 col-xl-5 btn btn-light-ghost-rounded-full`}
                         type="submit"

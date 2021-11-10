@@ -30,6 +30,7 @@ import IconLove from "../../../../../components/assets/icon/Love";
 import IconShare from "../../../../../components/assets/icon/Share";
 import IconTime from "../../../../../components/assets/icon-dashboard-peserta/Time";
 import IconPeserta from "../../../../../components/assets/icon-dashboard-peserta/Peserta";
+import { SweatAlert } from "../../../../../utils/middleware/helper";
 
 import PulseLoaderRender from "../../../../components/loader/PulseLoader";
 
@@ -74,7 +75,7 @@ const DetailAkademi = ({ session }) => {
 
   let selectRefPenyelenggara = null;
   const optionsPenyelenggara = [];
-  if (allPenyelenggara.data) {
+  if (allPenyelenggara && allPenyelenggara.data) {
     for (let index = 0; index < allPenyelenggara.data.length; index++) {
       let val = {
         value: allPenyelenggara.data[index].id,
@@ -194,7 +195,7 @@ const DetailAkademi = ({ session }) => {
         router.push(`${router.pathname}/peserta/form-pendaftaran?id=${id}`);
       } else if (data.status === false) {
         let errMessage = data.message;
-        toast.error(errMessage);
+        SweatAlert("Gagal", errMessage, "error");
       }
     } else {
       router.push(`${router.pathname}/login`);
