@@ -97,10 +97,17 @@ const StepTwo = ({ token }) => {
         });
       } else if (typeSave === "draft") {
         handleResetForm();
-        router.push({
-          pathname: `/subvit/survey/tambah/step-2-${metode}`,
-          query: { metode, id },
-        });
+        if (router.query.metode) {
+          router.push({
+            pathname: `/subvit/survey/tambah/step-2-${metode}`,
+            query: { metode, id },
+          });
+        } else {
+          router.push({
+            pathname: `/subvit/survey/tambah/step-2-entry`,
+            query: { id },
+          });
+        }
       }
     }
   }, [dispatch, success, typeSave, id, metode, router]);
