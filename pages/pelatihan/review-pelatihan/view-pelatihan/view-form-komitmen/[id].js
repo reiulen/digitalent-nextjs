@@ -22,7 +22,7 @@ const ViewReviewCommitment = dynamic(
       return <LoadingSkeleton />;
     },
     ssr: false,
-  }
+  } 
 );
 
 export default function ViewReviewCommitmentPage(props) {
