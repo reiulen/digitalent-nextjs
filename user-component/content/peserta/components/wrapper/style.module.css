@@ -66,3 +66,23 @@
   background: #007cff;
   color: #ffffff;
 }
+.btnVerification {
+  background-color: #e6fff7 !important;
+  border: #e6fff7;
+  border-radius: 40px;
+  width: 126px;
+  height: 32px;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 160%;
+  /* or 19px */
+  padding: 6px 12px;
+  letter-spacing: 0.02em;
+
+  /* Status/Success/Normal */
+
+  color: #00b37a !important;
+  cursor: unset !important;
+}

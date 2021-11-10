@@ -92,7 +92,18 @@ const Header = () => {
     return e;
   };
   const [breadCrumbsName, setBreadCrumbsName] = useState([]);
+
   useEffect(() => {}, []);
+
+  const condition = localStorage.getItem("viewEdit");
+
+  const handleCloseBreadcrumb = () => {
+    // localStorage.setItem("viewEdit", false);
+  };
+
+  const handleProfile = (e) => {
+    localStorage.setItem("btn", 0);
+  };
 
   return (
     <>
@@ -136,23 +147,157 @@ const Header = () => {
                   >
                     <div className="d-flex flex-row " style={{ float: "left" }}>
                       <div className="p-1">
-                        {router.pathname.includes("substansi")
-                          ? "Test Substansi"
-                          : router.pathname.includes("survey")
-                          ? "Survey & LPJ"
-                          : router.pathname.includes("trivia")
-                          ? "Trivia"
-                          : router.pathname.includes("test-subtansi")
-                          ? "Test Substansi"
-                          : router.pathname.includes("riwayat-pelatihan")
-                          ? "Riwayat Pelatihan"
-                          : router.pathname.includes("administrasi")
-                          ? "Administrasi"
-                          : router.pathname.includes("mid-test")
-                          ? "Mid Test"
-                          : router.pathname.includes("done-mid-tes")
-                          ? "Mid Test"
-                          : "Dashboard"}
+                        {router.pathname.includes("substansi") ? (
+                          "Test Substansi"
+                        ) : router.pathname.includes("survey") ? (
+                          "Survey & LPJ"
+                        ) : router.pathname.includes("trivia") ? (
+                          "Trivia"
+                        ) : router.pathname.includes("test-subtansi") ? (
+                          "Test Substansi"
+                        ) : router.pathname.includes("riwayat-pelatihan") ? (
+                          "Riwayat Pelatihan"
+                        ) : router.pathname.includes("administrasi") ? (
+                          "Administrasi"
+                        ) : router.pathname.includes("mid-test") ? (
+                          "Mid Test"
+                        ) : router.pathname.includes("done-mid-tes") ? (
+                          "Mid Test"
+                        ) : router.pathname.includes("profile") &&
+                          localStorage.getItem("btn") === "0" ? (
+                          <>
+                            <a
+                              onClick={(event) => handleProfile(event)}
+                              className={styles.breadcrumbProfile}
+                            >
+                              Profile
+                            </a>
+
+                            {condition === "true" ? (
+                              <>
+                                <span className="mx-3">&gt;</span>{" "}
+                                <span
+                                  onClick={handleCloseBreadcrumb}
+                                  className={styles.breadCrumbNameLink}
+                                >
+                                  Informasi Pribadi
+                                </span>
+                                <span className="mx-3">&gt;</span>{" "}
+                                <span className={styles.breadCrumbName}>
+                                  Ubah Informasi Pribadi
+                                </span>
+                              </>
+                            ) : (
+                              <>
+                                <span className="mx-3">&gt;</span>{" "}
+                                <span className={styles.breadCrumbName}>
+                                  Informasi Pribadi
+                                </span>
+                              </>
+                            )}
+                          </>
+                        ) : router.pathname.includes("profile") &&
+                          localStorage.getItem("btn") === "1" ? (
+                          <>
+                            <a
+                              onClick={(event) => handleProfile(event)}
+                              className={styles.breadcrumbProfile}
+                            >
+                              Profile
+                            </a>
+
+                            {condition === "true" ? (
+                              <>
+                                <span className="mx-3">&gt;</span>{" "}
+                                <span
+                                  onClick={handleCloseBreadcrumb}
+                                  className={styles.breadCrumbNameLink}
+                                >
+                                  Alamat
+                                </span>
+                                <span className="mx-3">&gt;</span>{" "}
+                                <span className={styles.breadCrumbName}>
+                                  Ubah Alamat
+                                </span>
+                              </>
+                            ) : (
+                              <>
+                                <span className="mx-3">&gt;</span>{" "}
+                                <span className={styles.breadCrumbName}>
+                                  Alamat
+                                </span>
+                              </>
+                            )}
+                          </>
+                        ) : router.pathname.includes("profile") &&
+                          localStorage.getItem("btn") === "2" ? (
+                          <>
+                            <a
+                              onClick={(event) => handleProfile(event)}
+                              className={styles.breadcrumbProfile}
+                            >
+                              Profile
+                            </a>
+
+                            {condition === "true" ? (
+                              <>
+                                <span className="mx-3">&gt;</span>{" "}
+                                <span
+                                  onClick={handleCloseBreadcrumb}
+                                  className={styles.breadCrumbNameLink}
+                                >
+                                  Pendidikan
+                                </span>
+                                <span className="mx-3">&gt;</span>{" "}
+                                <span className={styles.breadCrumbName}>
+                                  Ubah Pendidikan
+                                </span>
+                              </>
+                            ) : (
+                              <>
+                                <span className="mx-3">&gt;</span>{" "}
+                                <span className={styles.breadCrumbName}>
+                                  Pendidikan
+                                </span>
+                              </>
+                            )}
+                          </>
+                        ) : router.pathname.includes("profile") &&
+                          localStorage.getItem("btn") === "3" ? (
+                          <>
+                            <a
+                              onClick={(event) => handleProfile(event)}
+                              className={styles.breadcrumbProfile}
+                            >
+                              Profile
+                            </a>
+
+                            {condition === "true" ? (
+                              <>
+                                <span className="mx-3">&gt;</span>{" "}
+                                <span
+                                  onClick={handleCloseBreadcrumb}
+                                  className={styles.breadCrumbNameLink}
+                                >
+                                  Pekerjaan
+                                </span>
+                                <span className="mx-3">&gt;</span>{" "}
+                                <span className={styles.breadCrumbName}>
+                                  Ubah Pekerjaan
+                                </span>
+                              </>
+                            ) : (
+                              <>
+                                <span className="mx-3">&gt;</span>{" "}
+                                <span className={styles.breadCrumbName}>
+                                  Pekerjaan
+                                </span>
+                              </>
+                            )}
+                          </>
+                        ) : (
+                          "Dashboard"
+                        )}
                       </div>
                     </div>
                     <div className="d-flex">
@@ -318,6 +463,46 @@ const Header = () => {
                           marginRight: "15px",
                         }}
                       ></i>
+                    ) : router.pathname.includes("profile") &&
+                      localStorage.getItem("btn") === "0" ? (
+                      <i
+                        className="ri-user-3-line"
+                        style={{
+                          color: "#fff",
+                          fontSize: "20px",
+                          marginRight: "15px",
+                        }}
+                      ></i>
+                    ) : router.pathname.includes("profile") &&
+                      localStorage.getItem("btn") === "1" ? (
+                      <i
+                        className="ri-map-pin-add-line"
+                        style={{
+                          color: "#fff",
+                          fontSize: "20px",
+                          marginRight: "15px",
+                        }}
+                      ></i>
+                    ) : router.pathname.includes("profile") &&
+                      localStorage.getItem("btn") === "2" ? (
+                      <i
+                        className="ri-book-2-line"
+                        style={{
+                          color: "#fff",
+                          fontSize: "20px",
+                          marginRight: "15px",
+                        }}
+                      ></i>
+                    ) : router.pathname.includes("profile") &&
+                      localStorage.getItem("btn") === "3" ? (
+                      <i
+                        className="ri-briefcase-4-line"
+                        style={{
+                          color: "#fff",
+                          fontSize: "20px",
+                          marginRight: "15px",
+                        }}
+                      ></i>
                     ) : (
                       <i
                         className="ri-article-line"
@@ -344,6 +529,18 @@ const Header = () => {
                       ? "Mid Test"
                       : router.pathname.includes("form-pendaftaran")
                       ? "Pendaftaran Pelatihan"
+                      : router.pathname.includes("profile") &&
+                        localStorage.getItem("btn") === "0"
+                      ? "Informasi Pribadi"
+                      : router.pathname.includes("profile") &&
+                        localStorage.getItem("btn") === "1"
+                      ? "Alamat"
+                      : router.pathname.includes("profile") &&
+                        localStorage.getItem("btn") === "2"
+                      ? "Pendidikan"
+                      : router.pathname.includes("profile") &&
+                        localStorage.getItem("btn") === "3"
+                      ? "Pekerjaan"
                       : "Dashboard"}
                   </div>
                 </div>
