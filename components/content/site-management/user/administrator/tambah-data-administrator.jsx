@@ -17,6 +17,10 @@ import IconMinus from "../../../../../public/assets/icon/Minus.svg";
 const TambahApi = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
+  const allRoles = useSelector((state) => state.allRoles);
+  console.log("allRoles",allRoles)
+  const allUnitWork = useSelector((state) => state.allUnitWork);
+  console.log("allUnitWork",allUnitWork)
 
   const onNewReset = () => {
     router.replace("/site-management/api", undefined, {
@@ -61,7 +65,7 @@ const TambahApi = ({ token }) => {
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Placeholder"
+                  placeholder="Masukkan nama lengkap"
                 />
                 
               </div>
@@ -70,7 +74,7 @@ const TambahApi = ({ token }) => {
                 <input
                   type="email"
                   className="form-control"
-                  placeholder="Placeholder"
+                  placeholder="Masukkan email"
                 />
                 
               </div>
@@ -86,7 +90,7 @@ const TambahApi = ({ token }) => {
                 <input
                   type="password"
                   className="form-control"
-                  placeholder="Placeholder"
+                  placeholder="Masukkan password"
                 />
                 
               </div>
@@ -95,7 +99,7 @@ const TambahApi = ({ token }) => {
                 <input
                   type="password"
                   className="form-control"
-                  placeholder="Placeholder"
+                  placeholder="Masukkan konfirmasi password"
                 />
                 
               </div>

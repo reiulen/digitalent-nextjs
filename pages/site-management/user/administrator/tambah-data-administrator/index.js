@@ -3,7 +3,8 @@ import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../../../components/LoadingSkeleton";
 import { wrapper } from "../../../../../redux/store";
 import { getSession } from "next-auth/client";
-
+import { getAllUnitWork } from "../../../../../redux/actions/site-management/unit-work.actions";
+import { getAllRoles } from "../../../../../redux/actions/site-management/role.actions";
 const ListUser = dynamic(
   () =>
     import(
@@ -41,14 +42,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
-      // await store.dispatch(
-      //   getAllRoles(
-      //     query.page,
-      //     query.keyword,
-      //     query.limit,
-      //     session.user.user.data.token
-      //   )
-      // );
+      await store.dispatch(getAllUnitWork(session.user.user.data.token));
+
+      await store.dispatch(getAllRoles(session.user.user.data.token));
 
       return {
         props: {
