@@ -11,12 +11,15 @@ import DatePicker from 'react-datepicker'
 // import Swal from "sweetalert2";
 import { TagsInput } from "react-tag-input-component";
 
+import styles from "../../../../styles/previewGaleri.module.css";
+
 import { newGaleri, clearErrors } from '../../../../redux/actions/publikasi/galeri.actions'
 import { NEW_GALERI_RESET } from '../../../../redux/types/publikasi/galeri.type'
 // import { getAllKategori } from "../../../../redux/actions/publikasi/kategori.actions";
 
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingPage from "../../../LoadingPage";
+import { style } from 'dom-helpers';
 
 const thumbsContainer = {
     display: 'flex',
@@ -430,7 +433,7 @@ const TambahGaleri = ({ token, id }) => {
                             <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Judul</label>
                                 <div className="col-sm-12">
-                                    <input type="text" className="form-control" placeholder="Masukkan Judul Disini" value={judul} onChange={(e) => setJudulGaleri(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("judul")} />
+                                    <input type="text" className={`${styles.judulTambah} form-control`} placeholder="Masukkan Judul Disini" value={judul} onChange={(e) => setJudulGaleri(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("judul")} />
                                     {simpleValidator.current.message(
                                         "judul",
                                         judul,
@@ -443,7 +446,7 @@ const TambahGaleri = ({ token, id }) => {
                             <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Deskripsi</label>
                                 <div className="col-sm-12">
-                                    <textarea className='form-control' placeholder='Tulis Deskripsi' name="deskripsi" id="" rows="10" onChange={e => setIsiGaleri(e.target.value)} value={isi_galleri} onBlur={() => simpleValidator.current.showMessageFor("deskripsi")}></textarea>
+                                    <textarea className={`${styles.deskripsiTambah} form-control`} placeholder='Tulis Deskripsi' name="deskripsi" id="" rows="10" onChange={e => setIsiGaleri(e.target.value)} value={isi_galleri} onBlur={() => simpleValidator.current.showMessageFor("deskripsi")}></textarea>
                                     {simpleValidator.current.message(
                                         "judul",
                                         judul,
@@ -1482,9 +1485,9 @@ const TambahGaleri = ({ token, id }) => {
                                 </div> */}
 
                                 <div className="form-group mb-4">
-                                    <div className="row align-items-center">
+                                    <div className="row align-items-center ml-3">
                                         {image.map((row, i) => (
-                                            <div className="col-4 col-md-2 col-lg-2 p-0 ml-5" key={row.key} >
+                                            <div className={`${styles.imgPrevTambah} col-4 col-md-2 col-lg-2 p-0 mb-2`} key={row.key} >
                                                 <div
                                                     className="position-relative mx-auto mt-5"
                                                     style={{ maxWidth: "max-content" }}
@@ -1582,7 +1585,7 @@ const TambahGaleri = ({ token, id }) => {
                                         </button>
                                     </div>
 
-                                    <div className="mt-3 col-sm-6 col-md-6 col-lg-7 col-xl-3 text-muted">
+                                    <div className={`${styles.resolusiTambah} mt-3 col-sm-6 col-md-6 col-lg-7 col-xl-3 text-muted`}>
                                         <p>Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar.</p>
                                     </div>
                                 </div>
@@ -1600,7 +1603,7 @@ const TambahGaleri = ({ token, id }) => {
                                     <select
                                         name=""
                                         id=""
-                                        className="form-control"
+                                        className={`${styles.selectKategori} form-control`}
                                         value={kategori_id}
                                         onChange={(e) => setKategoriId(e.target.value)}
                                         onBlur={(e) => {
@@ -1639,7 +1642,7 @@ const TambahGaleri = ({ token, id }) => {
 
                             <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Tag</label>
-                                <div className="col-sm-12" style={{ wordBreak: 'break-word' }}>
+                                <div className={`${styles.tagStyle} col-sm-12`} style={{ wordBreak: 'break-word' }}>
                                     <TagsInput
                                         value={tag}
                                         onChange={(data) => handleTag(data)}

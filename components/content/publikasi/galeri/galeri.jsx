@@ -483,11 +483,11 @@ const Galeri = ({ token }) => {
                     id="carouselExampleIndicators"
                     className="carousel slide"
                     data-ride="carousel"
-                    // style={{ position: "relative" }}
+                // style={{ position: "relative" }}
                 >
                     <div
                         className="carousel-inner"
-                        // style={{ position: "absolute", left: "-12px" }}
+                    // style={{ position: "absolute", left: "-12px" }}
                     >
                         {isViewed && isViewed.length !== 0
                             ? isViewed.gambar.map((row, i) => {
@@ -547,7 +547,6 @@ const Galeri = ({ token }) => {
                                     style={{
                                         position: "absolute",
                                         left: "-14px",
-                                        top: "250px",
                                         border: "none",
                                         background: "none",
                                     }}
@@ -564,8 +563,7 @@ const Galeri = ({ token }) => {
                                     data-slide="next"
                                     style={{
                                         position: "absolute",
-                                        right: "7px",
-                                        top: "250px",
+                                        right: "-12px",
                                         border: "none",
                                         background: "none",
                                     }}
@@ -1059,21 +1057,38 @@ const Galeri = ({ token }) => {
 
                             <div className="row">
                                 {galeri && galeri.perPage < galeri.total && (
-                                    <div className={`${stylesPag.pagination} table-pagination`}>
-                                        <Pagination
-                                            activePage={page}
-                                            itemsCountPerPage={galeri.perPage}
-                                            totalItemsCount={galeri.total}
-                                            pageRangeDisplayed={3}
-                                            onChange={handlePagination}
-                                            nextPageText={">"}
-                                            prevPageText={"<"}
-                                            firstPageText={"<<"}
-                                            lastPageText={">>"}
-                                            itemClass="page-item"
-                                            linkClass="page-link"
-                                        />
-                                    </div>
+                                    <>
+                                        <div className={`${stylesPag.pagination} table-pagination`}>
+                                            <Pagination
+                                                activePage={page}
+                                                itemsCountPerPage={galeri.perPage}
+                                                totalItemsCount={galeri.total}
+                                                pageRangeDisplayed={3}
+                                                onChange={handlePagination}
+                                                nextPageText={">"}
+                                                prevPageText={"<"}
+                                                firstPageText={"<<"}
+                                                lastPageText={">>"}
+                                                itemClass="page-item"
+                                                linkClass="page-link"
+                                            />
+                                        </div>
+                                        <div className={`${stylesPag.pagination2} table-pagination`}>
+                                            <Pagination
+                                                activePage={page}
+                                                itemsCountPerPage={galeri.perPage}
+                                                totalItemsCount={galeri.total}
+                                                pageRangeDisplayed={1}
+                                                onChange={handlePagination}
+                                                nextPageText={">"}
+                                                prevPageText={"<"}
+                                                firstPageText={"<<"}
+                                                lastPageText={">>"}
+                                                itemClass="page-item"
+                                                linkClass="page-link"
+                                            />
+                                        </div>
+                                    </>
                                 )}
                                 {galeri ? (
                                     <div className={`${stylesPag.rightPag} table-total ml-auto`}>
@@ -1165,12 +1180,12 @@ const Galeri = ({ token }) => {
                             <div className="row">
                                 <div className="col-sm-12 col-md-6 col-lg-6">
                                     {/* <div className={styles["img-left"]}> */}
-                                        {
-                                            isViewed &&
-                                            <>
-                                                {printImage()}
-                                            </>
-                                        }
+                                    {
+                                        isViewed &&
+                                        <>
+                                            {printImage()}
+                                        </>
+                                    }
                                     {/* </div> */}
                                 </div>
                                 <div className="col-sm-12 col-md-6 col-lg-6" style={{ padding: "30px" }}>

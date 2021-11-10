@@ -28,7 +28,7 @@ const FaqPage = () => {
         return item.nama_kategori
     })
 
-    const content = faq.faq.map((row, i) => {
+    const content = faq?.faq.map((row, i) => {
         return (
             {
                 ...row, isShow: false
@@ -66,7 +66,7 @@ const FaqPage = () => {
                         <input
                             type="text"
                             className="form-control pl-10"
-                            placeholder="Cari Penyelenggara..."
+                            placeholder="Cari Pertanyaan..."
                             style={{ borderRadius: '30px', backgroundColor: '#fafafb' }}
                             onChange={(e) => setKeyword(e.target.value)}
                         />
