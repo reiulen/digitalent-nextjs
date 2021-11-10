@@ -52,6 +52,32 @@ const DetailDokumenKerjasama = ({ token }) => {
   const submit = (e) => {
     e.preventDefault();
 
+    console.log("AllCooperation",AllCooperation)
+    let isError = false
+
+    if(AllCooperation === ""){
+      return
+    }else{
+
+      let errorAllCooperation = AllCooperation.map((items)=>{
+        if(!items.cooperation){
+          isError = true
+          return {...items,error:`Harus isi ${items.cooperation_form}`}
+        }else{
+          return {...items}
+        }
+      })
+    }
+
+
+    setAllCooperation(errorAllCooperation)
+
+    
+     
+    // console.log("datarr",datarr)
+
+
+
     if (date === "") {
       setError({ ...error, date: "Harus isi data tanggal" });
     } else if (title === "") {
@@ -68,12 +94,22 @@ const DetailDokumenKerjasama = ({ token }) => {
       });
     } else if (periodUnit === "") {
       setError({ ...error, periodUnit: "Period unit tidak boleh kosong" });
-    } else if (AllCooperation === "") {
+    } 
+    else if (AllCooperation === "") {
       setError({
         ...error,
         AllCooperation: "Kerjasama form tidak boleh kosong",
       });
-    } else {
+      // return;
+    } 
+    else if (isError) {
+      // setError({
+      //   ...error,
+      //   AllCooperation: "Kerjasama form tidak boleh kosong",
+      // });
+      return;
+    } 
+    else {
       Swal.fire({
         title: "Apakah anda yakin ingin simpan ?",
         // text: "Data ini tidak bisa dikembalikan !",
@@ -86,38 +122,39 @@ const DetailDokumenKerjasama = ({ token }) => {
         dismissOnDestroy: false,
       }).then(async (result) => {
         if (result.value) {
-          let formData = new FormData();
-          formData.append("date", date);
-          formData.append("title", title);
-          formData.append("cooperation_category_id", cooperationC_id);
-          formData.append("period", period);
-          formData.append("period_unit", periodUnit);
+          alert('berhasil')
+          // let formData = new FormData();
+          // formData.append("date", date);
+          // formData.append("title", title);
+          // formData.append("cooperation_category_id", cooperationC_id);
+          // formData.append("period", period);
+          // formData.append("period_unit", periodUnit);
 
-          let parseAllCooperation = AllCooperation;
-          let dataee = parseAllCooperation.map((items, i) => {
-            return items.cooperation;
-          });
-          dataee.forEach((item, i) => {
-            formData.append(`cooperation_form_content[${i}]`, item);
-          });
+          // let parseAllCooperation = AllCooperation;
+          // let dataee = parseAllCooperation.map((items, i) => {
+          //   return items.cooperation;
+          // });
+          // dataee.forEach((item, i) => {
+          //   formData.append(`cooperation_form_content[${i}]`, item);
+          // });
 
-          try {
-            let { data } = await axios.post(
-              `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal`,
-              formData,
-              {
-                headers: {
-                  authorization: `Bearer ${token}`,
-                },
-              }
-            );
-            router.push({
-              pathname: `/partnership/user/kerjasama/review-kerjasama`,
-              query: { successSubmitKerjasama: true, id: data.data.id },
-            });
-          } catch (error) {
-            notify(error.response.data.message);
-          }
+          // try {
+          //   let { data } = await axios.post(
+          //     `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal`,
+          //     formData,
+          //     {
+          //       headers: {
+          //         authorization: `Bearer ${token}`,
+          //       },
+          //     }
+          //   );
+          //   router.push({
+          //     pathname: `/partnership/user/kerjasama/review-kerjasama`,
+          //     query: { successSubmitKerjasama: true, id: data.data.id },
+          //   });
+          // } catch (error) {
+          //   notify(error.response.data.message);
+          // }
         }
       });
     }
@@ -268,6 +305,7 @@ const DetailDokumenKerjasama = ({ token }) => {
                     className="form-control mb-3 mb-lg-0 border-0"
                     style={{ backgroundColor: "transparent" }}
                   />
+                  <div className="box-hide-arrow"></div>
                   {/* icon calender */}
                 </div>
                 {error.date ? <p className="error-text">{error.date}</p> : ""}
@@ -374,21 +412,22 @@ const DetailDokumenKerjasama = ({ token }) => {
                               cols="30"
                               rows="5"
                               className="form-control"
-                              placeholder="Masukan Tujuan Kerjasama"
+                              placeholder={`Masukan ${items.cooperation_form}`}
                             ></textarea>
-                            {error.AllCooperation ? (
-                              <p className="error-text">
-                                {error.AllCooperation}
-                              </p>
-                            ) : (
-                              ""
-                            )}
+                            {AllCooperation[index]?.error ? <p className="error-text">{AllCooperation[index]?.error}</p> :""}
                           </div>
                         </div>
                       );
                     }
-                  )}
+                    )}
               {/* end loopingg */}
+                    {error.AllCooperation ? (
+                      <p className="error-text">
+                        {error.AllCooperation}
+                      </p>
+                    ) : (
+                      ""
+                    )}
 
               <div className="form-group row">
                 <div className="col-sm-12 d-flex justify-content-end">
