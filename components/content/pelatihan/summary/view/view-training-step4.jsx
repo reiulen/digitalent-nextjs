@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
 
 import PageWrapper from "../../../../wrapper/page.wrapper";
 import StepViewPelatihan from "../../../../StepViewPelatihan";
