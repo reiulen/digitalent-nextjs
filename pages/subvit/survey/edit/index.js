@@ -1,6 +1,11 @@
 import { getSession } from "next-auth/client";
 import EditSurveyStep1 from "../../../../components/content/subvit/survey/edit/step-1";
 import Layout from "../../../../components/templates/layout.component";
+import {
+  dropdownAkademi,
+  dropdownPelatihan,
+  dropdownTema,
+} from "../../../../redux/actions/pelatihan/function.actions";
 
 import { getDetailSurveyQuestionBanks } from "../../../../redux/actions/subvit/survey-question.actions";
 import { wrapper } from "../../../../redux/store";
@@ -28,6 +33,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+
+      await store.dispatch(dropdownAkademi(session.user.user.data.token));
+      await store.dispatch(dropdownTema(session.user.user.data.token));
+      await store.dispatch(dropdownPelatihan(session.user.user.data.token));
+
       await store.dispatch(
         getDetailSurveyQuestionBanks(query.id, session.user.user.data.token)
       );
