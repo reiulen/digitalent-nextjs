@@ -197,6 +197,7 @@ const StepThree = ({ token }) => {
                     endDate={endDate}
                     dateFormat="dd/MM/yyyy"
                     autoComplete="off"
+                    placeholderText="Silahkan Pilih Tanggal Dari"
                   />
 
                   {simpleValidator.current.message(
@@ -229,6 +230,7 @@ const StepThree = ({ token }) => {
                     dateFormat="dd/MM/yyyy"
                     autoComplete="off"
                     disabled={!startDate}
+                    placeholderText="Silahkan Pilih Tanggal Sampai"
                   />
 
                   {simpleValidator.current.message(
@@ -259,6 +261,7 @@ const StepThree = ({ token }) => {
                         simpleValidator.current.showMessageFor("jumlah soal")
                       }
                       min={1}
+                      placeholder="0"
                     />
                     <div className="input-group-append">
                       <span
@@ -295,6 +298,7 @@ const StepThree = ({ token }) => {
                         simpleValidator.current.showMessageFor("durasi")
                       }
                       min={1}
+                      placeholder="0"
                     />
                     <div className="input-group-append bg-sedondary">
                       <span

@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import ReCAPTCHA from "react-google-recaptcha";
 import { signIn } from "next-auth/client";
 import SimpleReactValidator from "simple-react-validator";
-import Swal from "sweetalert2";
+import { SweatAlert } from "../../../../utils/middleware/helper";
 
 import AuthWrapper from "../../../wrapper/auth.wrapper";
 import LoadingTable from "../../../LoadingTable";
@@ -47,12 +47,7 @@ const LoginUser = () => {
       const result = await signIn("credentials", data);
 
       if (result.error) {
-        Swal.fire({
-          icon: "error",
-          title: "Gagal",
-          text: result.error,
-          confirmButtonText: "Tutup",
-        });
+        SweatAlert("Gagal", result.error, "error");
         setLoading(false);
       } else {
         setLoading(false);
@@ -129,13 +124,13 @@ const LoginUser = () => {
                 <div className="form-group">
                   <label className="form-auth-label">Password</label>
                   <Link href="login/forgot-password">
-                  <a
-                    className="float-right font-weight-bold"
-                    style={{ color: "#4CBDE2" }}
+                    <a
+                      className="float-right font-weight-bold"
+                      style={{ color: "#4CBDE2" }}
                     >
-                    Lupa Password ?
-                  </a>
-                    </Link>
+                      Lupa Password ?
+                    </a>
+                  </Link>
                   <div className="position-relative">
                     <input
                       id="input-password"

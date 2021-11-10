@@ -591,7 +591,7 @@ const Artikel = () => {
                                                 style={{objectFit:"contain"}}
                                             >
                                                 {/* Insert Card Image Here */}
-                                                <Link href={`/artikel/detail/${el.id}`}>
+                                                <Link href={`/artikel/detail/${el.slug}`}>
                                                     <a>
                                                         <img 
                                                             src={

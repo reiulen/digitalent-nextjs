@@ -52,7 +52,7 @@ export default function Pengaturan({ session }) {
   const [showUbahEmailModal, setShowUbahEmailModal] = useState(false);
   const handleCloseEmailModal = () => setShowUbahEmailModal(false);
   const handleShowUbahEmail = () => setShowUbahEmailModal(true);
-  const [otpEmail, setOtpEmail] = useState();
+  const [otpEmail, setOtpEmail] = useState("");
   const [showUbahEmailModalOtp, setShowUbahEmailModalOtp] = useState(false);
   const handleCloseEmailOtp = () => setShowUbahEmailModalOtp(false);
   const handleShowUbahEmailOtp = () => setShowUbahEmailModalOtp(true);
@@ -133,11 +133,13 @@ export default function Pengaturan({ session }) {
     password_konfirmasi
   ) => {
     simpleValidator.current.fields.Email = true;
+    simpleValidator.current.fields["nomor handphone"] = true;
     const body = {
       old_password,
       password,
       password_konfirmasi,
     };
+
     if (simpleValidator.current.allValid()) {
       try {
         const data = await axios.post(
@@ -145,6 +147,7 @@ export default function Pengaturan({ session }) {
           body,
           config
         );
+        console.log(data, " masuk sini");
         if (data) {
           Swal.fire(
             "Berhasil!",
@@ -386,6 +389,7 @@ export default function Pengaturan({ session }) {
                   className="rounded-full mt-5 py-3 px-10"
                   onClick={() => {
                     verifikasiEmail();
+                    setCount(30);
                   }}
                 >
                   Verifikasi
@@ -432,6 +436,7 @@ export default function Pengaturan({ session }) {
                   className="rounded-full mt-5 py-3 px-10"
                   onClick={() => {
                     verifikasiHp();
+                    setCount(30);
                   }}
                 >
                   Verifikasi
@@ -815,7 +820,18 @@ export default function Pengaturan({ session }) {
               )}
             </div>
           </Form>
+
           <div className="d-flex justify-content-end mt-14">
+            <Button
+              variant="white"
+              className="rounded-full py-4 px-8 mx-5"
+              style={{ fontSize: "14px", color: "#3699FF" }}
+              onClick={() => {
+                handleClosePasswordModal();
+              }}
+            >
+              Batal
+            </Button>
             <Button
               variant="primary"
               className="rounded-full py-4 px-8"
@@ -824,7 +840,7 @@ export default function Pengaturan({ session }) {
                 handleLanjutPassword(passwordLama, passwordBaru, passwordBaru2);
               }}
             >
-              Lanjut
+              Konfirmasi
             </Button>
           </div>
         </Modal.Body>

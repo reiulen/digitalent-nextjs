@@ -433,7 +433,7 @@ const ListSummary = ({ token }) => {
                             <td className="align-middle ml-4">
                               <div className="d-flex mr-10">
                                 <Link
-                                  href={`/pelatihan/pelatihan/view-pelatihan/${row.id}`}
+                                  href={`/pelatihan/rekap-pendaftaran/view-rekap-pendaftaran/${row.id}`}
                                 >
                                   <a
                                     className="btn btn-link-action bg-blue-secondary text-white mr-2"
