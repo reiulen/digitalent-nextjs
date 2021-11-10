@@ -82,7 +82,6 @@ const SubtansiUser = ({ token }) => {
   const [numberAnswer, setNumberAnswer] = useState(false);
   const [modalSoal, setModalSoal] = useState(false);
   const [modalResponsive, setModalResponsive] = useState(false);
-  // console.log(data.time_left);
   const [count, setCount] = useState(data.time_left);
   const [modalDone, setModalDone] = useState(false);
 
@@ -94,9 +93,6 @@ const SubtansiUser = ({ token }) => {
   );
 
   useEffect(() => {
-    console.log(
-      data.list_questions && data.list_questions[parseInt(router.query.id) - 1]
-    );
     if (count >= 0) {
       const secondsLeft = setInterval(() => {
         setCount((c) => c - 1);
