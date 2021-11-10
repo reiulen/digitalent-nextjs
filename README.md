@@ -16,4 +16,4 @@ Site Management Module is one of many modules in Digi Talent Scholarship Applica
 - [x] go to folder dts-fe
 - [x] run npm install
 - [x] and finally run npm run dev
-- [x] deployment some fix and checking - checking
+- [x] deployment some fix and checking
