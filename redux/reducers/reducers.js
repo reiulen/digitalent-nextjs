@@ -233,6 +233,9 @@ import {
   updateAdminSiteReducer,
   detailAdminSiteReducer,
   deleteAdminSiteReducer,
+  allUnitWorkListReducer,
+  allRolesListReducer,
+  allAcademyListReducer,
 } from "./site-management/user/admin-site.reducers";
 // ============== data reference ===============
 import {
@@ -654,6 +657,9 @@ const reducer = combineReducers({
   updateAdminSite: updateAdminSiteReducer,
   detailAdminSite: detailAdminSiteReducer,
   deleteAdminSite: deleteAdminSiteReducer,
+  allUnitWorkList: allUnitWorkListReducer,
+  allRolesList: allRolesListReducer,
+  allAcademyList: allAcademyListReducer,
 
   // ============ DATA REFERENCE =======
   allDataReference: allDataReferenceReducer,

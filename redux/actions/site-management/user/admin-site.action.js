@@ -5,6 +5,9 @@ import {
   ROLES_LIST_REQUEST,
   ROLES_LIST_SUCCESS,
   ROLES_LIST_FAIL,
+  GET_ACADEMY_REQUEST,
+  GET_ACADEMY_SUCCESS,
+  GET_ACADEMY_FAIL,
   UNIT_WORK_LIST_REQUEST,
   UNIT_WORK_LIST_SUCCESS,
   UNIT_WORK_LIST_FAIL,
@@ -89,6 +92,52 @@ export const getListRoles = (token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ROLES_LIST_FAIL,
+    });
+  }
+};
+export const getListUnitWorks = (token) => async (dispatch) => {
+  try {
+    dispatch({ type: UNIT_WORK_LIST_REQUEST });
+
+    const { data } = await axios.get(
+      `${process.env.END_POINT_API_SITE_MANAGEMENT}api/satuan/all`,
+      {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    dispatch({
+      type: UNIT_WORK_LIST_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: UNIT_WORK_LIST_FAIL,
+    });
+  }
+};
+export const getListAcademy = (token) => async (dispatch) => {
+  try {
+    dispatch({ type: GET_ACADEMY_REQUEST });
+
+    const { data } = await axios.get(
+      `${process.env.END_POINT_API_PELATIHAN}api/v1/akademi/dropdown`,
+      {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    dispatch({
+      type: GET_ACADEMY_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_ACADEMY_FAIL,
     });
   }
 };
