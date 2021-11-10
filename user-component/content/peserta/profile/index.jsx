@@ -79,40 +79,50 @@ const Profile = ({ session }) => {
   const [viewProfile, setViewProfile] = useState(1);
   const [viewEdit, setViewEdit] = useState(false);
 
+  localStorage.setItem("viewEdit", viewEdit);
+
   const handleViewProfile = () => {
     switch (viewProfile) {
       case 1:
-        return viewEdit ? (
-          <InformasiEdit
-            funcViewEdit={(val) => setViewEdit(val)}
-            token={session.token}
-          />
-        ) : (
-          <Informasi
-            funcViewEdit={(val) => setViewEdit(val)}
-            token={session.token}
-          />
-        );
+        return viewEdit
+          ? (localStorage.setItem("btn", 0),
+            (
+              <InformasiEdit
+                funcViewEdit={(val) => setViewEdit(val)}
+                token={session.token}
+              />
+            ))
+          : (localStorage.setItem("btn", 0),
+            (
+              <Informasi
+                funcViewEdit={(val) => setViewEdit(val)}
+                token={session.token}
+              />
+            ));
         break;
       case 2:
-        return viewEdit ? (
-          <AlamatEdit
-            funcViewEdit={(val) => setViewEdit(val)}
-            token={session.token}
-          />
-        ) : (
-          <Alamat token={session.token} />
-        );
+        return viewEdit
+          ? (localStorage.setItem("btn", 1),
+            (
+              <AlamatEdit
+                funcViewEdit={(val) => setViewEdit(val)}
+                token={session.token}
+              />
+            ))
+          : (localStorage.setItem("btn", 1),
+            (<Alamat token={session.token} />));
         break;
       case 3:
-        return viewEdit ? (
-          <PendidikanEdit
-            funcViewEdit={(val) => setViewEdit(val)}
-            token={session.token}
-          />
-        ) : (
-          <Pendidikan token={session.token} />
-        );
+        return viewEdit
+          ? (localStorage.setItem("btn", 2),
+            (
+              <PendidikanEdit
+                funcViewEdit={(val) => setViewEdit(val)}
+                token={session.token}
+              />
+            ))
+          : (localStorage.setItem("btn", 2),
+            (<Pendidikan token={session.token} />));
         break;
       case 4:
         return viewEdit ? (
@@ -122,20 +132,30 @@ const Profile = ({ session }) => {
         );
         break;
       case 5:
-        return viewEdit ? (
-          <PekerjaanEdit
-            funcViewEdit={(val) => setViewEdit(val)}
-            token={session.token}
-          />
-        ) : (
-          <Pekerjaan token={session.token} />
-        );
+        return viewEdit
+          ? (localStorage.setItem("btn", 3),
+            (
+              <PekerjaanEdit
+                funcViewEdit={(val) => setViewEdit(val)}
+                token={session.token}
+              />
+            ))
+          : (localStorage.setItem("btn", 3),
+            (<Pekerjaan token={session.token} />));
         break;
       default:
         return <Informasi token={session.token} />;
         break;
     }
   };
+  const condition = localStorage.getItem("viewEdit");
+  console.log(condition);
+  useEffect(() => {
+    if (condition === "false") {
+      setViewEdit(false);
+    }
+    console.log(condition);
+  }, [viewEdit, condition]);
 
   return (
     <>

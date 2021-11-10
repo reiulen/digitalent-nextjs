@@ -177,17 +177,17 @@ export const updateProfilePendidikan =
     }
   };
 
-  export const getDataAsalSekolah =
+export const getDataAsalSekolah =
   (token, page, limit, keyword) => async (dispatch) => {
     try {
       const params = {
         page,
         limit,
-        keyword
-      }
+        keyword,
+      };
 
       let link =
-      process.env.END_POINT_API_SITE_MANAGEMENT +
+        process.env.END_POINT_API_SITE_MANAGEMENT +
         `api/option/origin-of-school`;
 
       const config = {
@@ -203,10 +203,9 @@ export const updateProfilePendidikan =
         payload: data.data.list_signatures,
       });
     } catch (error) {
-      throw(error)
+      throw error;
     }
   };
-
 
 //END PENDIDIKAN
 
