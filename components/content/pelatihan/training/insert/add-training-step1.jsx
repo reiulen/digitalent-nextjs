@@ -363,6 +363,8 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
         tuna_rungu,
         tuna_daksa,
       };
+      dispatch(storeTrainingStep1(data));
+      propsStep(2);
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -394,6 +396,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
       }
     };
   }, [targetKuotaRegister]);
+
   useEffect(() => {
     const number = document.getElementById("number2");
     number.onkeydown = (e) => {

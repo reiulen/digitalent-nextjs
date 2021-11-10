@@ -3,10 +3,7 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { getBerandaFooter } from "../../../redux/actions/beranda/beranda.actions";
 
-import IconFacebook from "../../../components/assets/icon/Facebook";
-import IconInstagram from "../../../components/assets/icon/Instagram";
-import IconTwitter from "../../../components/assets/icon/Twitter";
-import IconYoututbe from "../../../components/assets/icon/Youtube";
+import Link from "next/link";
 import ImageWhiteLogo from "../../../components/assets/icon-dashboard-peserta/whitelogo.png";
 
 export default function footer() {
@@ -23,7 +20,13 @@ export default function footer() {
           <div className="col-12 col-sm-3">
             <div>
               <Image
-                src={ImageWhiteLogo}
+                src={
+                  (footer &&
+                    process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                      "site-management/images/" +
+                      footer.footer_logo) ||
+                  ImageWhiteLogo
+                }
                 width={120}
                 height={120}
                 alt="brand-navbar"
@@ -33,20 +36,37 @@ export default function footer() {
           <div className="col-12 col-sm-6">
             <div className="h-100 d-flex align-items-center mt-md-2">
               <p className="fw-500 text-white">
-                Program Digital Talent Scholarship bertujuan untuk meningkatkan
-                keterampilan dan daya saing, produktivitas, profesionalisme SDM
-                bidang teknologi informasi dan komunikasi bagi angkatan kerja
-                muda Indonesia, masyarakat umum, dan aparatur sipil negara.
+                {(footer && footer.logo_description) ||
+                  "Program Digital Talent Scholarship bertujuan untuk meningkatkan keterampilan dan daya saing, produktivitas, profesionalisme SDM bidang teknologi informasi dan komunikasi bagi angkatan kerja muda Indonesia, masyarakat umum, dan aparatur sipil negara"}
               </p>
             </div>
           </div>
           <div className="col-12 col-sm-2 my-5">
             <div className="h-100 w-100">
-              <div className="pl-md-10 d-flex border-left-md align-items-md-center justify-content-md-center  h-100 w-100">
-                <IconFacebook />
-                <IconTwitter className="mx-6" />
-                <IconYoututbe />
-                <IconInstagram className="ml-6" />
+              <div className="pl-md-10 d-flex border-left-md align-items-md-center justify-content-md-between  h-100 w-100">
+                {footer &&
+                  footer.social_media &&
+                  footer.social_media.length !== 0 &&
+                  footer.social_media.map((row, i) => (
+                    <Link href={row.link_social_media}>
+                      <div className="cursor-pointer mx-md-0 mx-2">
+                        <Image
+                          key={i}
+                          src={
+                            (footer &&
+                              process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                "site-management/images/" +
+                                row.image_logo) ||
+                            "/assets/media/logo-default.png"
+                          }
+                          alt={row.name}
+                          width={20}
+                          height={20}
+                          objectFit="cover"
+                        />
+                      </div>
+                    </Link>
+                  ))}
               </div>
             </div>
           </div>
@@ -57,31 +77,37 @@ export default function footer() {
             <div>
               <h1 className="fw-700 fz-20 text-white">Alamat</h1>
               <p className="text-white fw-500">
-                Kementerian Komunikasi dan Informatika RI <br /> Jl. Medan
-                Merdeka Barat No. 9 <br /> Jakarta Pusat, 10110
+                {(footer && footer.alamat) ||
+                  "Kementerian Komunikasi dan Informatika RI Jl. Medan Merdeka Barat No. 9 Jakarta Pusat, 10110"}
               </p>
             </div>
           </div>
-          <div className="col-12 col-sm-4">
-            <div>
-              <h1 className="fw-700 fz-20 text-white">Pranala Luar</h1>
-              <p className="text-white fw-500">Kementrian Kominfo</p>
-              <p className="text-white fw-500">Badan Litbang SDM Kominfo</p>
-              <p className="text-white fw-500">Pusbang Proserti</p>
-              <p className="text-white fw-500">Kementrian Kominfo</p>
-              <p className="text-white fw-500">Badan Litbang SDM Kominfo</p>
-            </div>
-          </div>
-          <div className="col-12 col-sm-4">
-            <div>
-              <h1 className="fw-700 fz-20" style={{ color: "transparent" }}>
-                Alamat
-              </h1>
-              <p className="text-white fw-500">Kementrian Kominfo</p>
-              <p className="text-white fw-500">Badan Litbang SDM Kominfo</p>
-              <p className="text-white fw-500">Pusbang Proserti</p>
-              <p className="text-white fw-500">Kementrian Kominfo</p>
-              <p className="text-white fw-500">Badan Litbang SDM Kominfo</p>
+          <div className="col-12 col-sm-8">
+            <h1 className="fw-700 fz-20 text-white">Pranala Luar</h1>
+            <div
+              className={
+                footer &&
+                footer.external_link &&
+                footer.external_link.length > 5 &&
+                `row ml-0`
+              }
+            >
+              {footer &&
+                footer.external_link &&
+                footer.external_link.length > 0 &&
+                footer.external_link.map((row, i) => (
+                  <div
+                    className={
+                      footer.external_link.length > 5
+                        ? `col-md-6 pl-0`
+                        : `col-md-12 pl-0`
+                    }
+                  >
+                    <Link href={row.link}>
+                      <a className="text-white fw-500">{row.name}</a>
+                    </Link>
+                  </div>
+                ))}
             </div>
           </div>
         </div>
