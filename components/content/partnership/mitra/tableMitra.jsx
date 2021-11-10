@@ -167,9 +167,9 @@ const Table = ({ token }) => {
           </div>
           {/*  */}
 
-          <div className="card-body pt-0">
+          <div className="card-body pt-0 px-4 px-sm-8">
             <div className="row w-100">
-              <div className="col-12 col-sm-6">
+              <div className="col-12 col-xl-4">
                 <div className="position-relative overflow-hidden w-100 mt-3">
                   <IconSearch
                     style={{ left: "10" }}
@@ -196,7 +196,7 @@ const Table = ({ token }) => {
                 </div>
               </div>
 
-              <div className="col-12 col-sm-6">
+              <div className="col-12 col-xl-8">
                 <div className="d-flex align-items-center justify-content-end mt-2">
                   {/* disini sortir modal */}
 
