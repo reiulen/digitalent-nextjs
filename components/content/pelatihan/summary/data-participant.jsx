@@ -4,9 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-import Swal from "sweetalert2";
+import { SweatAlert } from "../../../../utils/middleware/helper";
 import Select from "react-select";
-import { toast } from "react-toastify";
 import moment from "moment";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
@@ -131,12 +130,12 @@ const DataParticipant = ({ token }) => {
     }
 
     if (errorUpdateStatus) {
-      toast.error(errorUpdateStatus);
+      SweatAlert("Gagal", errorUpdateStatus, "error");
       dispatch(clearErrors());
     }
 
     if (errorReminderUp) {
-      toast.error(errorReminderUp);
+      SweatAlert("Gagal", errorReminderUp, "error");
       dispatch(clearErrors());
     }
 
@@ -147,7 +146,7 @@ const DataParticipant = ({ token }) => {
       dispatch(getBerkasPendaftaran(token, peserta.list[0].id));
       dispatch(getFormKomitmen(token, peserta.list[0].id));
       dispatch(getFormLpj(token, peserta.list[0].id));
-      toast.success("Berhasil Mengubah Status");
+      SweatAlert("Berhasil", "Berhasil Mengubah Status", "success");
       dispatch({ type: UPDATE_STATUS_RESET });
     }
 
@@ -158,7 +157,6 @@ const DataParticipant = ({ token }) => {
       dispatch(getBerkasPendaftaran(token, peserta.list[0].id));
       dispatch(getFormKomitmen(token, peserta.list[0].id));
       dispatch(getFormLpj(token, peserta.list[0].id));
-      // toast.success("Berhasil Mengubah Reminder");
       dispatch({ type: UPDATE_REMINDER_RESET });
     }
   }, [

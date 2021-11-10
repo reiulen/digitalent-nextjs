@@ -8,7 +8,7 @@ import LoadingFooter from "../../user-component/content/peserta/components/loade
 import "../../styles/beranda.module.css";
 
 const NavigationBar = dynamic(
-  () => import("../../user-component/components/template/Navbar.component"),
+  () => import("../../user-component/components/template/Navbar2.component"),
   {
     loading: function loadingNow() {
       return <LoadingNavbar />;

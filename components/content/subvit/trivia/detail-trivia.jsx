@@ -50,10 +50,13 @@ const DetailTrivia = ({ token }) => {
   }, [isDeleted, trivia]);
 
   const handlePagination = (pageNumber) => {
-    router.push(`${router.pathname}?id=${id}&page=${pageNumber}`);
+    router.push(
+      `${router.pathname}?id=${id}&page=${pageNumber}&limit=${limit || 5}`
+    );
   };
 
   const handleLimit = (val) => {
+    setLimit(val);
     router.push(`${router.pathname}?id=${id}&page=${1}&limit=${val}`);
   };
 
@@ -141,7 +144,9 @@ const DetailTrivia = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h2 className="card-title h2 text-dark">
-              Substansi FGA - Cloud Computing
+              TRIVIA {trivia.academy ? trivia.academy.name : ""}{" "}
+              {trivia.academy && trivia.theme && "-"}{" "}
+              {trivia.theme ? trivia.theme.name : ""}
             </h2>
             <div className="card-toolbar">
               <Link href={`/subvit/trivia/edit?id=${id}`}>
@@ -158,16 +163,16 @@ const DetailTrivia = ({ token }) => {
               <div className="col-md-6">
                 <div className="row">
                   <div
-                    className="col title-1 font-weight-bold"
+                    className="col-md-3 title-1 font-weight-bold"
                     style={{ color: "#000000" }}
                   >
                     <p>Akademi</p>
                     <p>Tema</p>
                     <p>Pelatihan</p>
                   </div>
-                  <div className="col value-1">
-                    <p>{trivia.academy.name}</p>
-                    <p>{trivia.theme.name}</p>
+                  <div className="col-md-9 value-1">
+                    <p>{trivia.academy ? trivia.academy.name : "-"}</p>
+                    <p>{trivia.theme ? trivia.theme.name : "-"}</p>
                     <p>
                       {trivia.training != null ? trivia.training.name : "-"}
                     </p>
@@ -284,7 +289,13 @@ const DetailTrivia = ({ token }) => {
                             <tr key={question.id}>
                               <td className="align-middle text-center">
                                 <span className="">
-                                  {i + 1 * (page * 5 || limit) - 4}
+                                  {limit === null ? (
+                                    <span>{i + 1 * (page * 5) - (5 - 1)}</span>
+                                  ) : (
+                                    <span>
+                                      {i + 1 * (page * limit) - (limit - 1)}
+                                    </span>
+                                  )}
                                 </span>
                               </td>
                               <td className="align-middle">CC{question.id}</td>
