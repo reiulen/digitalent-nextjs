@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
 
 import PageWrapper from "../../../../wrapper/page.wrapper";
 import StepViewPelatihan from "../../../../StepViewPelatihan";
@@ -9,21 +10,25 @@ const ViewTrainingStep4 = () => {
 
   const { id } = router.query;
 
+  const { error: errorReview, getReviewStep4 } = useSelector(
+    (state) => state.getReviewStep4
+  );
+
   const [substansi] = useState({
-    value: "Tersedia",
-    date: "1 Oktober 2021 - 5 Oktober 2021",
+    value: getReviewStep4 ? getReviewStep4?.status_test_substansi : "",
+    date: getReviewStep4 ? getReviewStep4?.tanggal_test_substansi?.start_at + " - " + getReviewStep4?.tanggal_test_substansi?.end_at : "",
   });
   const [midTest] = useState({
-    value: "Tidak Tersedia",
-    date: "-",
+    value: getReviewStep4 ? getReviewStep4?.status_mid_test : "",
+    date: getReviewStep4 ? getReviewStep4?.tanggal_mid_test?.start_at + " - " + getReviewStep4?.tanggal_mid_test?.end_at : "",
   });
   const [survey] = useState({
-    value: "Tersedia",
-    date: "1 Oktober 2021 - 5 Oktober 2021",
+    value: getReviewStep4 ? getReviewStep4?.status_survei : "",
+    date: getReviewStep4 ? getReviewStep4?.tanggal_survei?.start_at + " - " + getReviewStep4?.tanggal_survei?.end_at : "",
   });
   const [sertifikat] = useState({
-    value: "Tidak Tersedia",
-    date: "-",
+    value: getReviewStep4 ? getReviewStep4?.status_sertifikat : "",
+    date: getReviewStep4 ? getReviewStep4?.tanggal_sertifikat?.start_at : "",
   });
 
   return (

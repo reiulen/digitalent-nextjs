@@ -312,26 +312,32 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
           )}
 
           {jengjangPendidikan.label === "D3" && (
-            <Form.Group className="mb-3" controlId="formGridAdress1">
-              <Form.Label>Asal Sekolah / Perguruan Tinggi</Form.Label>
-              <div className="position-relative" style={{ zIndex: "4" }}>
-                <input
-                  list="data"
-                  type="text"
-                  className="form-control"
-                  value={asalSekolah}
-                  onChange={(e) => {
-                    setAsalSekolah(e.target.value);
-                  }}
-                />
-                <datalist id="data">
-                  {dataAsalSekolah === undefined
-                    ? "kosong"
-                    : dataAsalSekolah.map((item, index) => {
-                        return <option value={item.label} key={index} />;
-                      })}
-                </datalist>
-                {/* <Select
+            <Row>
+              <Form.Group
+                as={Col}
+                md={6}
+                className="mb-3"
+                controlId="formGridAdress1"
+              >
+                <Form.Label>Asal Sekolah / Perguruan Tinggi</Form.Label>
+                <div className="position-relative" style={{ zIndex: "4" }}>
+                  <input
+                    list="data"
+                    type="text"
+                    className="form-control"
+                    value={asalSekolah}
+                    onChange={(e) => {
+                      setAsalSekolah(e.target.value);
+                    }}
+                  />
+                  <datalist id="data">
+                    {dataAsalSekolah === undefined
+                      ? "kosong"
+                      : dataAsalSekolah.map((item, index) => {
+                          return <option value={item.label} key={index} />;
+                        })}
+                  </datalist>
+                  {/* <Select
                   placeholder={
                     (pendidikan && pendidikan.asal_pendidikan) ||
                     "Silahkan Pilih Asal Sekolah"
@@ -345,17 +351,17 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     )
                   }
                 /> */}
-              </div>
-              {simpleValidator.current.message(
-                "asal sekolah",
-                asalSekolah,
-                asalSekolah === null ? "required" : "",
-                {
-                  className: "text-danger",
-                }
-              )}
+                </div>
+                {simpleValidator.current.message(
+                  "asal sekolah",
+                  asalSekolah,
+                  asalSekolah === null ? "required" : "",
+                  {
+                    className: "text-danger",
+                  }
+                )}
 
-              {/* <input
+                {/* <input
                 type="text"
                 className="form-control"
                 value={asalSekolah}
@@ -374,30 +380,61 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   );
                 })}
               </datalist> */}
-            </Form.Group>
+              </Form.Group>
+              <Form.Group
+                as={Col}
+                md={6}
+                className="mb-3"
+                controlId="formGridAddress1"
+              >
+                <Form.Label>Program Studi</Form.Label>
+                <Form.Control
+                  placeholder="Silahkan Masukan Program Studi"
+                  value={programStudi}
+                  onChange={(e) => setProgramStudi(e.target.value)}
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("program studi")
+                  }
+                />
+                {simpleValidator.current.message(
+                  "program studi",
+                  programStudi,
+                  programStudi === null ? "required" : "",
+                  {
+                    className: "text-danger",
+                  }
+                )}
+              </Form.Group>
+            </Row>
           )}
 
           {jengjangPendidikan.label === "S1" && (
-            <Form.Group className="mb-3" controlId="formGridAdress1">
-              <Form.Label>Asal Sekolah / Perguruan Tinggi</Form.Label>
-              <div className="position-relative" style={{ zIndex: "4" }}>
-                <input
-                  list="data"
-                  type="text"
-                  className="form-control"
-                  value={asalSekolah}
-                  onChange={(e) => {
-                    setAsalSekolah(e.target.value);
-                  }}
-                />
-                <datalist id="data">
-                  {dataAsalSekolah === undefined
-                    ? "kosong"
-                    : dataAsalSekolah.map((item, index) => {
-                        return <option value={item.label} key={index} />;
-                      })}
-                </datalist>
-                {/* <Select
+            <Row>
+              <Form.Group
+                as={Col}
+                md={6}
+                className="mb-3"
+                controlId="formGridAdress1"
+              >
+                <Form.Label>Asal Sekolah / Perguruan Tinggi</Form.Label>
+                <div className="position-relative" style={{ zIndex: "4" }}>
+                  <input
+                    list="data"
+                    type="text"
+                    className="form-control"
+                    value={asalSekolah}
+                    onChange={(e) => {
+                      setAsalSekolah(e.target.value);
+                    }}
+                  />
+                  <datalist id="data">
+                    {dataAsalSekolah === undefined
+                      ? "kosong"
+                      : dataAsalSekolah.map((item, index) => {
+                          return <option value={item.label} key={index} />;
+                        })}
+                  </datalist>
+                  {/* <Select
                   placeholder={
                     (pendidikan && pendidikan.asal_pendidikan) ||
                     "Silahkan Pilih Asal Sekolah"
@@ -411,17 +448,17 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     )
                   }
                 /> */}
-              </div>
-              {simpleValidator.current.message(
-                "asal sekolah",
-                asalSekolah,
-                asalSekolah === null ? "required" : "",
-                {
-                  className: "text-danger",
-                }
-              )}
+                </div>
+                {simpleValidator.current.message(
+                  "asal sekolah",
+                  asalSekolah,
+                  asalSekolah === null ? "required" : "",
+                  {
+                    className: "text-danger",
+                  }
+                )}
 
-              {/* <input
+                {/* <input
                 type="text"
                 className="form-control"
                 value={asalSekolah}
@@ -440,29 +477,60 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   );
                 })}
               </datalist> */}
-            </Form.Group>
+              </Form.Group>
+              <Form.Group
+                as={Col}
+                md={6}
+                className="mb-3"
+                controlId="formGridAddress1"
+              >
+                <Form.Label>Program Studi</Form.Label>
+                <Form.Control
+                  placeholder="Silahkan Masukan Program Studi"
+                  value={programStudi}
+                  onChange={(e) => setProgramStudi(e.target.value)}
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("program studi")
+                  }
+                />
+                {simpleValidator.current.message(
+                  "program studi",
+                  programStudi,
+                  programStudi === null ? "required" : "",
+                  {
+                    className: "text-danger",
+                  }
+                )}
+              </Form.Group>
+            </Row>
           )}
           {jengjangPendidikan.label === "S2" && (
-            <Form.Group className="mb-3" controlId="formGridAdress1">
-              <Form.Label>Asal Sekolah / Perguruan Tinggi</Form.Label>
-              <div className="position-relative" style={{ zIndex: "4" }}>
-                <input
-                  list="data"
-                  type="text"
-                  className="form-control"
-                  value={asalSekolah}
-                  onChange={(e) => {
-                    setAsalSekolah(e.target.value);
-                  }}
-                />
-                <datalist id="data">
-                  {dataAsalSekolah === undefined
-                    ? "kosong"
-                    : dataAsalSekolah.map((item, index) => {
-                        return <option value={item.label} key={index} />;
-                      })}
-                </datalist>
-                {/* <Select
+            <Row>
+              <Form.Group
+                as={Col}
+                md={6}
+                className="mb-3"
+                controlId="formGridAdress1"
+              >
+                <Form.Label>Asal Sekolah / Perguruan Tinggi</Form.Label>
+                <div className="position-relative" style={{ zIndex: "4" }}>
+                  <input
+                    list="data"
+                    type="text"
+                    className="form-control"
+                    value={asalSekolah}
+                    onChange={(e) => {
+                      setAsalSekolah(e.target.value);
+                    }}
+                  />
+                  <datalist id="data">
+                    {dataAsalSekolah === undefined
+                      ? "kosong"
+                      : dataAsalSekolah.map((item, index) => {
+                          return <option value={item.label} key={index} />;
+                        })}
+                  </datalist>
+                  {/* <Select
                   placeholder={
                     (pendidikan && pendidikan.asal_pendidikan) ||
                     "Silahkan Pilih Asal Sekolah"
@@ -476,17 +544,17 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     )
                   }
                 /> */}
-              </div>
-              {simpleValidator.current.message(
-                "asal sekolah",
-                asalSekolah,
-                asalSekolah === null ? "required" : "",
-                {
-                  className: "text-danger",
-                }
-              )}
+                </div>
+                {simpleValidator.current.message(
+                  "asal sekolah",
+                  asalSekolah,
+                  asalSekolah === null ? "required" : "",
+                  {
+                    className: "text-danger",
+                  }
+                )}
 
-              {/* <input
+                {/* <input
                 type="text"
                 className="form-control"
                 value={asalSekolah}
@@ -505,29 +573,60 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   );
                 })}
               </datalist> */}
-            </Form.Group>
+              </Form.Group>
+              <Form.Group
+                as={Col}
+                md={6}
+                className="mb-3"
+                controlId="formGridAddress1"
+              >
+                <Form.Label>Program Studi</Form.Label>
+                <Form.Control
+                  placeholder="Silahkan Masukan Program Studi"
+                  value={programStudi}
+                  onChange={(e) => setProgramStudi(e.target.value)}
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("program studi")
+                  }
+                />
+                {simpleValidator.current.message(
+                  "program studi",
+                  programStudi,
+                  programStudi === null ? "required" : "",
+                  {
+                    className: "text-danger",
+                  }
+                )}
+              </Form.Group>
+            </Row>
           )}
           {jengjangPendidikan.label === "S3" && (
-            <Form.Group className="mb-3" controlId="formGridAdress1">
-              <Form.Label>Asal Sekolah / Perguruan Tinggi</Form.Label>
-              <div className="position-relative" style={{ zIndex: "4" }}>
-                <input
-                  list="data"
-                  type="text"
-                  className="form-control"
-                  value={asalSekolah}
-                  onChange={(e) => {
-                    setAsalSekolah(e.target.value);
-                  }}
-                />
-                <datalist id="data">
-                  {dataAsalSekolah === undefined
-                    ? "kosong"
-                    : dataAsalSekolah.map((item, index) => {
-                        return <option value={item.label} key={index} />;
-                      })}
-                </datalist>
-                {/* <Select
+            <Row>
+              <Form.Group
+                as={Col}
+                md={6}
+                className="mb-3"
+                controlId="formGridAdress1"
+              >
+                <Form.Label>Asal Sekolah / Perguruan Tinggi</Form.Label>
+                <div className="position-relative" style={{ zIndex: "4" }}>
+                  <input
+                    list="data"
+                    type="text"
+                    className="form-control"
+                    value={asalSekolah}
+                    onChange={(e) => {
+                      setAsalSekolah(e.target.value);
+                    }}
+                  />
+                  <datalist id="data">
+                    {dataAsalSekolah === undefined
+                      ? "kosong"
+                      : dataAsalSekolah.map((item, index) => {
+                          return <option value={item.label} key={index} />;
+                        })}
+                  </datalist>
+                  {/* <Select
                   placeholder={
                     (pendidikan && pendidikan.asal_pendidikan) ||
                     "Silahkan Pilih Asal Sekolah"
@@ -541,17 +640,17 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     )
                   }
                 /> */}
-              </div>
-              {simpleValidator.current.message(
-                "asal sekolah",
-                asalSekolah,
-                asalSekolah === null ? "required" : "",
-                {
-                  className: "text-danger",
-                }
-              )}
+                </div>
+                {simpleValidator.current.message(
+                  "asal sekolah",
+                  asalSekolah,
+                  asalSekolah === null ? "required" : "",
+                  {
+                    className: "text-danger",
+                  }
+                )}
 
-              {/* <input
+                {/* <input
                 type="text"
                 className="form-control"
                 value={asalSekolah}
@@ -570,7 +669,32 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   );
                 })}
               </datalist> */}
-            </Form.Group>
+              </Form.Group>
+              <Form.Group
+                as={Col}
+                md={6}
+                className="mb-3"
+                controlId="formGridAddress1"
+              >
+                <Form.Label>Program Studi</Form.Label>
+                <Form.Control
+                  placeholder="Silahkan Masukan Program Studi"
+                  value={programStudi}
+                  onChange={(e) => setProgramStudi(e.target.value)}
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("program studi")
+                  }
+                />
+                {simpleValidator.current.message(
+                  "program studi",
+                  programStudi,
+                  programStudi === null ? "required" : "",
+                  {
+                    className: "text-danger",
+                  }
+                )}
+              </Form.Group>
+            </Row>
           )}
 
           {jengjangPendidikan.label === "TK" && (
@@ -847,7 +971,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
               </small>
             </div>
           )}
-
+          {/* 
           {jengjangPendidikan.label === "D3" && (
             <Form.Group className="mb-3" controlId="formGridAddress1">
               <Form.Label>Program Studi</Form.Label>
@@ -868,8 +992,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 }
               )}
             </Form.Group>
-          )}
-          {jengjangPendidikan.label === "S1" && (
+          )} */}
+          {/* {jengjangPendidikan.label === "S1" && (
             <Form.Group className="mb-3" controlId="formGridAddress1">
               <Form.Label>Program Studi</Form.Label>
               <Form.Control
@@ -889,8 +1013,34 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 }
               )}
             </Form.Group>
-          )}
-          {jengjangPendidikan.label === "S2" && (
+          )} */}
+          {/* {jengjangPendidikan.label === "S2" && (
+            <Form.Group
+              as={Col}
+              md={6}
+              className="mb-3"
+              controlId="formGridAddress1"
+            >
+              <Form.Label>Program Studi</Form.Label>
+              <Form.Control
+                placeholder="Silahkan Masukan Program Studi"
+                value={programStudi}
+                onChange={(e) => setProgramStudi(e.target.value)}
+                onBlur={() =>
+                  simpleValidator.current.showMessageFor("program studi")
+                }
+              />
+              {simpleValidator.current.message(
+                "program studi",
+                programStudi,
+                programStudi === null ? "required" : "",
+                {
+                  className: "text-danger",
+                }
+              )}
+            </Form.Group>
+          )} */}
+          {/* {jengjangPendidikan.label === "S3" && (
             <Form.Group className="mb-3" controlId="formGridAddress1">
               <Form.Label>Program Studi</Form.Label>
               <Form.Control
@@ -910,28 +1060,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 }
               )}
             </Form.Group>
-          )}
-          {jengjangPendidikan.label === "S3" && (
-            <Form.Group className="mb-3" controlId="formGridAddress1">
-              <Form.Label>Program Studi</Form.Label>
-              <Form.Control
-                placeholder="Silahkan Masukan Program Studi"
-                value={programStudi}
-                onChange={(e) => setProgramStudi(e.target.value)}
-                onBlur={() =>
-                  simpleValidator.current.showMessageFor("program studi")
-                }
-              />
-              {simpleValidator.current.message(
-                "program studi",
-                programStudi,
-                programStudi === null ? "required" : "",
-                {
-                  className: "text-danger",
-                }
-              )}
-            </Form.Group>
-          )}
+          )} */}
 
           {jengjangPendidikan.label === "D3" && (
             <Row className="mb-3">

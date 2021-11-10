@@ -21,6 +21,7 @@ import {
   TOLAK_REVIEW_FAIL,
   TOLAK_REVIEW_RESET,
   CLEAR_ERRORS,
+  GET_REVIEW_STEP4_SUCCESS,
 } from "../../../types/pelatihan/review.type";
 
 export const allListReviewReducer = (state = { review: [] }, action) => {
@@ -161,6 +162,18 @@ export const getReviewStep3Reducer = (state = { review: {} }, action) => {
       return {
         ...state,
         error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const getReviewStep4Reducer = (state = { data: {} }, action) => {
+  switch (action.type) {
+    case GET_REVIEW_STEP4_SUCCESS:
+      return {
+        data: action.payload.data,
       };
 
     default:

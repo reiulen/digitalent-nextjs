@@ -119,7 +119,7 @@ const Table = ({ token }) => {
                     className="d-flex align-items-center w-100"
                   >
                     <div className="row w-100">
-                      <div className="col-12 col-sm-6">
+                      <div className="col-12 col-xl-4">
                         <div className="position-relative overflow-hidden w-100">
                           <IconSearch
                             style={{ left: "10" }}

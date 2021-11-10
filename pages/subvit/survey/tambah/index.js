@@ -2,6 +2,8 @@ import TambahSurveyStep1 from "../../../../components/content/subvit/survey/tamb
 import Layout from "../../../../components/templates/layout.component";
 import { getSession } from "next-auth/client";
 import { wrapper } from "../../../../redux/store";
+import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
+import { dropdownAkademi } from "../../../../redux/actions/pelatihan/function.actions";
 
 export default function TambahSurveyStep1Page(props) {
   const session = props.session.user.user.data;
@@ -15,17 +17,20 @@ export default function TambahSurveyStep1Page(props) {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  () =>
-    async ({ req }) => {
+  (store) =>
+    async ({ query, req }) => {
       const session = await getSession({ req });
-      if (!session) {
+      const middleware = middlewareAuthAdminSession(session);
+      if (!middleware.status) {
         return {
           redirect: {
-            destination: "http://dts-dev.majapahit.id/login/admin",
+            destination: middleware.redirect,
             permanent: false,
           },
         };
       }
+
+      await store.dispatch(dropdownAkademi(session.user.user.data.token));
 
       return {
         props: { session, title: "Tambah Survey - Subvit" },
