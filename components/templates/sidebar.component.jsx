@@ -108,6 +108,13 @@ const Sidebar = ({ session }) => {
         },
         {
           id: 2,
+          name: "Master Pelatihan",
+          href: "/pelatihan/master-pelatihan",
+          selected: false,
+          child: [],
+        },
+        {
+          id: 2,
           name: "Review Pelatihan",
           href: "/pelatihan/review",
           selected: false,
@@ -451,19 +458,16 @@ const Sidebar = ({ session }) => {
     const pathRoute = router.route;
     const splitRouteToMakingActive = pathRoute.split("/");
 
-
     initializeMenu.map((row, index) => {
       if (splitRouteToMakingActive[1] == row.name.toLowerCase()) {
         initializeMenu[index].selected = true;
 
-        if(session && session?.user?.user?.data?.user?.roles[0] !== "mitra"){
-           if(splitRouteToMakingActive[1] !== "dashboard"){
+        if (session && session?.user?.user?.data?.user?.roles[0] !== "mitra") {
+          if (splitRouteToMakingActive[1] !== "dashboard") {
             const idSubmenuActive = localStorage.getItem("submenuActive");
             initializeMenu[index].child[idSubmenuActive].selected = true;
           }
         }
-       
-        
       }
     });
     let _temp = [...initializeMenu];
@@ -472,22 +476,17 @@ const Sidebar = ({ session }) => {
     return () => {
       localStorage.removeItem("submenuActive");
     };
-  });
-
-  useEffect(() => {
-  
-  },[menu]);
+  }, []);
 
   const handleOpenMenu = (e, i, condition) => {
     const pathRoute = router.route;
     const splitRouteToMakingActive = pathRoute.split("/");
 
-    if(condition != null){
-
+    if (condition != null) {
       if (splitRouteToMakingActive[1]) {
         initializeMenu[i].selected = !condition;
       }
-  
+
       if (i) {
         if (splitRouteToMakingActive[1]) {
           initializeMenu[i].selected = !condition;
@@ -499,7 +498,6 @@ const Sidebar = ({ session }) => {
           }
         }
       }
-
     }
 
     let _temp = [...initializeMenu];

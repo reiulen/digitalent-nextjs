@@ -17,6 +17,7 @@ import {
   setPage,
   limitCooporation,
   deleteRoles,
+  searchCooporation
 } from "../../../../redux/actions/site-management/role.actions";
 import axios from "axios";
 
@@ -27,6 +28,7 @@ const Table = ({ token }) => {
   const router = useRouter();
 
   const allRoles = useSelector((state) => state.allRoles);
+  console.log("allRoles",allRoles)
 
   const { isDeleted } = useSelector((state) => state.deleteRoles);
 
@@ -99,13 +101,14 @@ const Table = ({ token }) => {
             <div className="table-filter">
               <div className="row align-items-center">
                 <div className="col-lg-12 col-xl-12">
-                  <form
-                    onSubmit={handleSubmit}
-                    className="d-flex align-items-center w-100"
+
+                  <div className="row w-100 ml-0 ml-sm-0">
+
+
+                  <div
+                    className="col-12 col-xl-4"
                   >
-                    <div className="row w-100">
-                      <div className="col-12 col-sm-6">
-                        <div className="position-relative overflow-hidden w-100">
+                    <div className="position-relative overflow-hidden w-100">
                           <IconSearch
                             style={{ left: "10" }}
                             className="left-center-absolute"
@@ -120,7 +123,8 @@ const Table = ({ token }) => {
                             }
                           />
                           <button
-                            type="submit"
+                            type="button"
+                            onClick={(e)=>handleSubmit(e)}
                             className="btn bg-blue-primary text-white right-center-absolute"
                             style={{
                               borderTopLeftRadius: "0",
@@ -130,9 +134,9 @@ const Table = ({ token }) => {
                             Cari
                           </button>
                         </div>
-                      </div>
-                    </div>
-                  </form>
+                  </div>
+                  </div>
+
                 </div>
               </div>
             </div>
@@ -153,11 +157,7 @@ const Table = ({ token }) => {
                     </thead>
                     <tbody>
                       {allRoles.data.list_role.length === 0 ? (
-                        <tr>
-                          <td colSpan="5" className="text-center">
-                            <h4>Data tidak ditemukan</h4>
-                          </td>
-                        </tr>
+                        <td className="align-middle text-center" colSpan="5">Data Masih Kosong</td>
                       ) : (
                         allRoles.data.list_role.map((items, index) => {
                           return (
