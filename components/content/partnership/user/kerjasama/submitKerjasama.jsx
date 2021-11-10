@@ -28,7 +28,6 @@ const DetailDokumenKerjasama = ({ token }) => {
     period: "",
     periodUnit: "",
     AllCooperation: "",
-    // institution_name: "",
   });
 
   const [date, setDate] = useState("");
@@ -56,9 +55,11 @@ const DetailDokumenKerjasama = ({ token }) => {
     let isError = false
 
     if(AllCooperation === ""){
-      return
+      setError({
+        ...error,
+        AllCooperation: "Kerjasama form tidak boleh kosong",
+      });
     }else{
-
       let errorAllCooperation = AllCooperation.map((items)=>{
         if(!items.cooperation){
           isError = true
@@ -67,16 +68,8 @@ const DetailDokumenKerjasama = ({ token }) => {
           return {...items}
         }
       })
+      setAllCooperation(errorAllCooperation)
     }
-
-
-    setAllCooperation(errorAllCooperation)
-
-    
-     
-    // console.log("datarr",datarr)
-
-
 
     if (date === "") {
       setError({ ...error, date: "Harus isi data tanggal" });
@@ -100,13 +93,8 @@ const DetailDokumenKerjasama = ({ token }) => {
         ...error,
         AllCooperation: "Kerjasama form tidak boleh kosong",
       });
-      // return;
     } 
     else if (isError) {
-      // setError({
-      //   ...error,
-      //   AllCooperation: "Kerjasama form tidak boleh kosong",
-      // });
       return;
     } 
     else {
@@ -122,39 +110,38 @@ const DetailDokumenKerjasama = ({ token }) => {
         dismissOnDestroy: false,
       }).then(async (result) => {
         if (result.value) {
-          alert('berhasil')
-          // let formData = new FormData();
-          // formData.append("date", date);
-          // formData.append("title", title);
-          // formData.append("cooperation_category_id", cooperationC_id);
-          // formData.append("period", period);
-          // formData.append("period_unit", periodUnit);
+          let formData = new FormData();
+          formData.append("date", date);
+          formData.append("title", title);
+          formData.append("cooperation_category_id", cooperationC_id);
+          formData.append("period", period);
+          formData.append("period_unit", periodUnit);
 
-          // let parseAllCooperation = AllCooperation;
-          // let dataee = parseAllCooperation.map((items, i) => {
-          //   return items.cooperation;
-          // });
-          // dataee.forEach((item, i) => {
-          //   formData.append(`cooperation_form_content[${i}]`, item);
-          // });
+          let parseAllCooperation = AllCooperation;
+          let dataee = parseAllCooperation.map((items, i) => {
+            return items.cooperation;
+          });
+          dataee.forEach((item, i) => {
+            formData.append(`cooperation_form_content[${i}]`, item);
+          });
 
-          // try {
-          //   let { data } = await axios.post(
-          //     `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal`,
-          //     formData,
-          //     {
-          //       headers: {
-          //         authorization: `Bearer ${token}`,
-          //       },
-          //     }
-          //   );
-          //   router.push({
-          //     pathname: `/partnership/user/kerjasama/review-kerjasama`,
-          //     query: { successSubmitKerjasama: true, id: data.data.id },
-          //   });
-          // } catch (error) {
-          //   notify(error.response.data.message);
-          // }
+          try {
+            let { data } = await axios.post(
+              `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal`,
+              formData,
+              {
+                headers: {
+                  authorization: `Bearer ${token}`,
+                },
+              }
+            );
+            router.push({
+              pathname: `/partnership/user/kerjasama/review-kerjasama`,
+              query: { successSubmitKerjasama: true, id: data.data.id },
+            });
+          } catch (error) {
+            notify(error.response.data.message);
+          }
         }
       });
     }
@@ -420,6 +407,8 @@ const DetailDokumenKerjasama = ({ token }) => {
                       );
                     }
                     )}
+
+                    {console.log("error page",error)}
               {/* end loopingg */}
                     {error.AllCooperation ? (
                       <p className="error-text">
