@@ -450,7 +450,7 @@ const ListReview = ({ token }) => {
                                 ? i + 1 * (page * 5) - (5 - 1)
                                 : i + 1 * (page * limit) - (limit - 1)}
                             </td>
-                            <td className="align-middle">CC00{row.id}</td>
+                            <td className="align-middle">{row.slug}{row.id}</td>
                             <td>
                               <p className="font-weight-bolder my-0">
                                 {row.name}
