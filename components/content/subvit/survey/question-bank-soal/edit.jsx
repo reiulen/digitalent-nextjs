@@ -35,8 +35,6 @@ const EditSoalTrivia = ({ token }) => {
   );
   let { id } = router.query;
 
-  console.log(survey_question_detail);
-
   const [methodAdd, setMethodAdd] = useState(
     survey_question_detail && survey_question_detail.type
   );

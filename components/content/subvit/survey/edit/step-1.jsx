@@ -133,7 +133,7 @@ const StepOne = ({ token }) => {
         const id = res.data.data.map((item) => {
           return item.value;
         });
-        console.log(theme_id);
+
         axios
           .get(
             process.env.END_POINT_API_PELATIHAN +
@@ -141,7 +141,6 @@ const StepOne = ({ token }) => {
             config
           )
           .then((res) => {
-            console.log(res);
             setOptionPelatihan(res.data.data);
           });
       });
