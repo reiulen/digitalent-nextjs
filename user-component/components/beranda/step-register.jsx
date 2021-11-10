@@ -4,7 +4,7 @@ import Image from "next/image";
 import ImageShapes1 from "../../../components/assets/icon-dashboard-peserta/bg-stepes.png";
 export default function stepRegister() {
   return (
-    <div className="position-relative step-registers max-container">
+    <div className="position-relative step-registers">
       <div className="images-shapes">
         <Image src={ImageShapes1} layout="fill" objectFit="fill" />
       </div>
