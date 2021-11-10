@@ -6,21 +6,54 @@ import moment from "moment";
 import { Carousel } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
-
+import { Card } from "react-bootstrap";
 import { getAllBerandaGaleri, getDetailBerandaGaleri } from "../../../redux/actions/beranda/galeri.actions"
+import PulseLoaderRender from "../../components/loader/PulseLoader";
 import style from "../../../styles/peserta/galeri.module.css"
 
 const Galeri = () => {
     const dispatch = useDispatch();
     const router = useRouter();
 
-    const { galeri } = useSelector((state) => state.allBerandaGaleri)
-    const { detail } = useSelector((state) => state.detailBerandaGaleri)
+    const { galeri, loading: loadingGaleri } = useSelector((state) => state.allBerandaGaleri)
+    const { detail, loading: loadingDetail } = useSelector((state) => state.detailBerandaGaleri)
     const { kategori } = useSelector((state) => state.kategoriBerandaGaleri)
-    
+    const descToTrim = 100
+
     const [ show, setShow ] = useState(null);
     const [ kategoriGaleri, setKategoriGaleri ] = useState("") 
     const [ activePage, setActivePage ] = useState(1)
+    const [ showFullDesc, setShowFullDesc ] = useState(false)
+
+    const getWindowDimensions = () => {
+        // if (typeof window === 'undefined') {
+        //     global.window = {}
+        // }
+
+        const { innerWidth: width, innerHeight: height } = window;
+        return {
+            width,
+            height,
+        };
+    };
+    
+    const [windowDimensions, setWindowDimensions] = useState(
+        // getWindowDimensions()
+        {}
+    );
+
+    useEffect(() => {
+        function handleResize() {
+            setWindowDimensions(getWindowDimensions());
+        }
+        setWindowDimensions(getWindowDimensions());
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    },[detail])
+
+    useEffect(()=> {
+
+    },[windowDimensions])
 
     useEffect(() => {
         handleCardIndex()
@@ -64,10 +97,10 @@ const Galeri = () => {
 
     const handleDataModal = (id) => {
         dispatch (getDetailBerandaGaleri(id))
+        setShowFullDesc(false)
     }
 
     const handleFilterKategori = (str) => {
-
         setKategoriGaleri(str)
 
         dispatch(getAllBerandaGaleri(
@@ -86,10 +119,22 @@ const Galeri = () => {
        
     }
 
+    const handleDescToTrim = (str) => {
+        let result = null
+        
+        if (str.length > descToTrim){
+            result = str.slice(0, descToTrim) + "..."
+
+        } else {
+            result = str
+        }
+        return result
+    }
+
     return (
-        <div>
+        <div className="mx-35">
            {/* BreadCrumb */}
-           <div className="row my-5 mx-1 py-3 px-8 bg-white rounded-pill d-flex align-items-center border">
+           <div className="row my-15 mx-1 py-3 px-8 bg-white rounded-pill d-flex align-items-center border">
                 <span className="text-primary">
                     <Link href="/">
                         Beranda 
@@ -115,67 +160,6 @@ const Galeri = () => {
             </div>
 
             {/* Filter Button */}
-            {/* <div className="row my-5">
-                <div className="col-12 d-flex justify-content-around flex-row flex-wrap">
-                    {
-                        kategoriGaleri === "" ?
-                            <div 
-                                className="d-flex align-items-center rounded-pill bg-primary-dashboard py-1 px-9 m-2" 
-                                style={{ cursor: "pointer" }}
-                                onClick={() => handleFilterKategori("")}
-                            >
-                                <div className="my-1 mx-5 py-1 px-9 text-white">
-                                    Semua
-                                </div>
-                            </div>
-                        :
-                            <div 
-                                className="d-flex align-items-center rounded-pill bg-white py-1 px-9 border border-muted m-2" 
-                                style={{ cursor: "pointer" }}
-                                onClick={() => handleFilterKategori("")}
-                            >
-                                <div className="my-1 mx-5 py-1 px-9 text-muted">
-                                    Semua
-                                </div>
-                            </div>
-                    }   
-                    
-                    {
-                        kategori ?
-                            kategori.map ((el, i) => {
-                                return (
-                                    kategoriGaleri === el.nama_kategori ?
-                                        <div 
-                                            className="d-flex align-items-center rounded-pill bg-primary-dashboard py-1 px-9 border border-muted m-2" 
-                                            style={{ cursor: "pointer" }}
-                                            onClick={() => handleFilterKategori(el.nama_kategori)}
-                                            key={i}
-                                        >
-                                            <div className="my-1 mx-5 py-1 px-9 text-white">
-                                                {el.nama_kategori}
-                                            </div>
-                                        </div>
-                                    :
-                                        <div 
-                                            className="d-flex align-items-center rounded-pill bg-white py-1 px-9 border border-muted m-2" 
-                                            style={{ cursor: "pointer" }}
-                                            onClick={() => handleFilterKategori(el.nama_kategori)}
-                                            key={i}
-                                        >
-                                            <div className="my-1 mx-5 py-1 px-9 text-muted">
-                                                {el.nama_kategori}
-                                            </div>
-                                        </div>
-                                )
-                            })
-                        :
-                            null
-                    }
-
-                </div>
-               
-            </div> */}
-
             {
                 kategori ? (
                     <div
@@ -190,7 +174,7 @@ const Galeri = () => {
                             prevLabel={false}
                         >
                             <Carousel.Item>
-                                <div className="col-12 d-flex flex-row ">
+                                <div className="col-12 d-flex flex-row ml-3">
                                     {
                                         kategoriGaleri === "" ?
                                                 <div 
@@ -257,108 +241,136 @@ const Galeri = () => {
             {/* End Filter Button */}
 
             {/* Content */}
-            <div className="col-12 d-flex flex-wrap justify-content-between">
-                {   
-                    galeri && galeri.gallery.length ?
-
-                        galeri.gallery.map ((el, i) => {
-                            return (
-                                <div 
-                                    key={i} 
-                                    className="position-relative my-5"
-                                    onMouseEnter={() => handleMouseEnter(i)}
-                                    onMouseLeave={() => handleMouseLeave(i)}
-                                >
-                                    {
-                                        show && show[i] === false ?
-                                            <div>
-                                                <img 
-                                                   src={
-                                                        process.env.END_POINT_API_IMAGE_PUBLIKASI +
-                                                        "publikasi/images/" + el.gambar
-                                                    }
-                                                    alt="Card Gallery" 
-                                                    width= "400px"
-                                                    height= "400px"
-                                                    className="rounded-lg"
-                                                />
-                                            </div>
-                                        :
-                                            <div>   
-                                                <div 
-                                                    // className={`position-relative ${style.card_thumbnail}`}
-                                                    style={{
-                                                        zIndex:"20",
-                                                        cursor: "pointer",
-                                                        transition: "height 0.5s ease-out",
-                                                        background: "linear-gradient(to bottom, transparent 0%, black 100%)",
-                                                        borderRadius: "10px"
-                                                    }}
-                                                    onClick={() => handleDataModal(el.id_gallery)}
-                                                    data-target="#modalGaleri"
-                                                    data-toggle="modal"
-                                                >
-                                                    <img 
-                                                        src={
-                                                            process.env.END_POINT_API_IMAGE_PUBLIKASI +
-                                                            "publikasi/images/" + el.gambar
-                                                        }
-                                                        alt="Card Gallery" 
-                                                        width= "400px"
-                                                        height= "400px"
-                                                        className="rounded-lg"
-                                                    />
-                                                </div>
-                                                
-
-                                                <div className="position-absolute col-12 " style={{marginTop:"-10vh"}}>
-                                                    <div>
-                                                        <h5 className="font-weight-bolder text-white">
-                                                            {el.judul}
-                                                        </h5>
-                                                    </div>
-                                                    
-                                                    {
-
-                                                    }
-                                                    <div>
-                                                        <div className="badge badge-light mr-2">
-                                                            <div className="text-primary">
-                                                                {/* Insert Kategori Here */}
-                                                                {el.nama_kategori}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    
-                                                </div>
-                                            </div>
-                                    }
-                                    
-                                </div>
-                            )
-                        })
-                    :
+            {
+                loadingGaleri ?
+                    <div className="container-fluid">
                         <div className="row">
-                            <h1 className="font-weight-bolder">
-                                Galeri Tidak Tersedia
-                            </h1>
+                            <PulseLoaderRender />
                         </div>
-                }
-            </div>
+                    </div>
+                :
+                    <div className="col-12 row d-flex flex-wrap justify-content-between">
+                        
+                        {   
+                            galeri && galeri.gallery && galeri.gallery.length !== 0 ?
+
+                                galeri.gallery.map ((el, i) => {
+                                    return (
+                                        <div 
+                                            key={i} 
+                                            className={`position-relative my-5 col-4`}
+                                            onMouseEnter={() => handleMouseEnter(i)}
+                                            onMouseLeave={() => handleMouseLeave(i)}
+                                        >
+                                            {
+                                                show && show[i] === false ?
+                                                    <div >
+                                                        <Image
+                                                            src={
+                                                                process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                                                "publikasi/images/" + el.gambar
+                                                            }
+                                                            alt="Card Gallery"
+                                                            width= "400px"
+                                                            height= "400px"
+                                                            className="rounded-lg"
+                                                            style={{objectFit:"cover"}}
+                                                        />
+                                                    </div>
+                                                :
+                                                    <div 
+                                                        style={{
+                                                            width: "400px",
+                                                            height: "400px"
+                                                        }}
+
+                                                        onClick={() => handleDataModal(el.id_gallery)}
+                                                        data-target="#modalGaleri"
+                                                        data-toggle="modal"
+                                                    >   
+                                                        <div>
+                                                            <Image
+                                                                src={
+                                                                    process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                                                    "publikasi/images/" + el.gambar
+                                                                }
+                                                                alt="Card Gallery" 
+                                                                width= "400px"
+                                                                height= "400px"
+                                                                className="rounded-lg"
+                                                                style={{objectFit:"cover"}}
+                                                            />
+                                                        </div>
+                                                        
+                                                        <Card.ImgOverlay className="ml-4 p-0">
+                                                            <div 
+                                                                className="col-12 d-flex align-items-end m-0 p-0"
+                                                                style={{ 
+                                                                    width: "400px",
+                                                                    height: "400px",
+                                                                    cursor: "pointer",
+                                                                    transition: "height 0.5s ease-out",
+                                                                    background: "linear-gradient(to bottom, transparent 0%, black 100%)",
+                                                                    borderRadius:"10px"
+                                                                }}
+                                                            >
+                                                                <div className="d-flex flex-column">
+                                                                    <div>
+                                                                        <h5 className="font-weight-bolder text-white mb-5 mx-5">
+                                                                            {el.judul}
+                                                                        </h5>
+                                                                    </div>
+                                                                
+                                                                    <div>
+                                                                        <div className="badge badge-light mx-5 mb-5">
+                                                                            <div className="text-primary">
+                                                                                {/* Insert Kategori Here */}
+                                                                                {el.nama_kategori}
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                
+                                                                
+                                                            </div>
+                                                        </Card.ImgOverlay> 
+                                                    </div>
+
+                                            }
+                                            
+                                        </div>
+                                    )
+                                })
+                            :
+                                <div className="col-12 d-flex justify-content-center my-5">
+                                    <h1 className="font-weight-bolder">
+                                        Galeri Tidak Tersedia
+                                    </h1>
+                                </div>
+                        }
+                    </div>
+            }
             {/* End of Content */}
 
             {/* Modal */}
             {
                 detail ? 
-                    <div className="modal fade" id="modalGaleri">
-                        <div className="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+                    <div className="modal fade rounded-lg" id="modalGaleri">
+                        <div 
+                            // className="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable"
+                            className={windowDimensions.width > 1030 ? 
+                                "modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable" 
+                            :
+                                "modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable"
+                        }
+                        >
                             <div className="modal-content">
                                 <div className="">
                                     <div className="row">
                                         {/* Slide */}
                                         {
-                                            detail.gambar !== undefined && detail.gambar.length !== 0 ?
-                                                <div className="col-12 col-xl-6 m-0 p-0">
+                                            detail.gambar  && detail.gambar.length !== 0 ?
+                                                <div className="col-12 col-xl-7 m-0 p-0">
                                                     <Carousel
                                                         nextIcon = {
                                                             detail.gambar.length > 1 ?  
@@ -383,10 +395,18 @@ const Galeri = () => {
                                                                         <Carousel.Item key = {i}>
                                                                             <div 
                                                                                 className="position-relative"
-                                                                                style={{
-                                                                                    height:"650px",
-                                                                                    width: "650px"
-                                                                                }}
+                                                                                // style={{width:"auto", height:"auto"}}
+                                                                                style={ windowDimensions.width > 1030 ? 
+                                                                                        {
+                                                                                            height:"650px",
+                                                                                            width: "650px"
+                                                                                        }
+                                                                                    :
+                                                                                        {
+                                                                                            height:"250px",
+                                                                                            width: "350px"
+                                                                                        }
+                                                                                }
                                                                             >
                                                                                 <Image
                                                                                     src={
@@ -396,6 +416,14 @@ const Galeri = () => {
                                                                                     alt="Slider" 
                                                                                     objectFit="cover"
                                                                                     layout="fill"
+                                                                                    // height={
+                                                                                    //     windowDimensions > 1030 ?
+                                                                                    //     "650px" : "250px"
+                                                                                    // }
+                                                                                    // width={
+                                                                                    //     windowDimensions > 1030 ?
+                                                                                    //     "650px" : "350px"
+                                                                                    // }
                                                                                 />
                                                                             </div>
                                                                             
@@ -408,12 +436,16 @@ const Galeri = () => {
                                                     </Carousel>
                                                 </div>
                                             :
-                                                null
+                                                <div className="container-fluid">
+                                                    <div className="row">
+                                                        <PulseLoaderRender />
+                                                    </div>
+                                                </div>
                                         }
                                         
 
                                         {/* Content */}
-                                        <div className="col-12 col-xl-6">
+                                        <div className="col-12 col-xl-5">
                                             <div className="row">
                                                 <h5 className="text-dark font-weight-bolder ml-5 mt-3">
                                                     { detail.judul }
@@ -433,7 +465,7 @@ const Galeri = () => {
                                                     kategori.map ((element, index) => {
                                                         return (
                                                             detail.kategori_id == element.id ?
-                                                                <div className="badge badge-light mr-5" key ={index}>
+                                                                <div className="badge badge-light mr-10" key ={index}>
                                                                     <div className="text-primary">
                                                                         {/* Insert Kategori Here */}
                                                                         {element.nama_kategori}
@@ -449,42 +481,71 @@ const Galeri = () => {
 
                                             <hr/>
 
-                                            <div className="row p-3">
+                                            <div 
+                                                className="p-3" 
+                                                style={{
+                                                    overflowY:"auto",
+                                                    overflowX:"hidden",
+                                                    maxHeight:"80vh"
+                                                }}
+                                            >
                                                 {/* Insert Desc Here */}
-                                                <p>
-                                                    {detail.isi_galeri}
-                                                </p>
-                                                
-                                            </div>
-
-                                            <hr/>
-
-                                            <div className="row d-flex justify-content-between mb-5">
-                                                <div className="row d-flex justify-content-between ml-3">
-                                                    {
-                                                        detail.tag ?
-                                                            detail.tag.map ((el, i) => {
-                                                                return (
-                                                                    <div className="border p-3 rounded mx-1" key={i}>
-                                                                        {el}
-                                                                    </div>
-                                                    
-                                                                )
-                                                            })
+                                                {
+                                                    windowDimensions.width > 1030 ?
+                                                        <p>
+                                                            {detail.isi_galeri}
+                                                        </p>
+                                                    :
+                                                        detail.isi_galeri && showFullDesc === false ?
+                                                            <div>
+                                                                <span>
+                                                                    {handleDescToTrim(detail.isi_galeri)}
+                                                                </span>
+                                                                <span 
+                                                                    className="ml-2" 
+                                                                    style={{color:"#007CFF"}}
+                                                                    onClick={() => setShowFullDesc(true)}
+                                                                >
+                                                                    Lihat Selengkapnya
+                                                                </span>
+                                                            </div>
                                                         :
-                                                            null
-                                                    }
-                                                    
-                                                </div>
+                                                            <p>
+                                                                {detail.isi_galeri}
+                                                            </p>
 
-                                                <div className="row mr-3">
-                                                    <button className="btn btn-outline-light rounded-circle mr-3">
-                                                        <i className="ri-share-line p-0"></i>
-                                                    </button>
-                                                    
-                                                    <button className="btn btn-outline-light rounded-circle mr-3">
-                                                        <i className="ri-heart-line p-0"></i>
-                                                    </button>
+                                                }
+                                                
+                                                
+                                                <hr/>
+
+                                                <div className="row mb-5">
+                                                    <div className="col-5 d-flex flex-row  flex-wrap">
+                                                        {
+                                                            detail.tag ?
+                                                                detail.tag.map ((el, i) => {
+                                                                    return (
+                                                                        <div className="border p-3 rounded mr-5 my-1" key={i}>
+                                                                            #{el}
+                                                                        </div>
+                                                        
+                                                                    )
+                                                                })
+                                                            :
+                                                                null
+                                                        }
+                                                        
+                                                    </div>
+
+                                                    <div className="col-6 mr-3 d-flex justify-content-end">
+                                                        <button className="btn btn-outline-light rounded-circle mr-3 text-center" style={{width: "40px", height:"40px" }}>
+                                                            <i className="ri-share-line p-auto m-auto"></i>
+                                                        </button>
+                                                        
+                                                        <button className="btn btn-outline-light rounded-circle mr-3 text-center" style={{width: "40px", height:"40px" }}>
+                                                            <i className="ri-heart-line p-auto m-auto"></i>
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
 
@@ -500,13 +561,18 @@ const Galeri = () => {
                         <div className="modal-dialog">
                             <div className="modal-content">
                                 <div className="modal-header">
-                                    <h5 className="modal-title">Error</h5>
+                                    <h5 className="modal-title">Memuat...</h5>
                                     <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
                                 <div className="modal-body">
-                                    <p>Data Tidak Tersedia</p>
+                                    {/* <p>Data Tidak Tersedia</p> */}
+                                    <div className="container-fluid">
+                                        <div className="row">
+                                            <PulseLoaderRender />
+                                        </div>
+                                    </div>
                                 </div>
                                 <div className="modal-footer">
                                     <button type="button" className="btn btn-secondary" data-dismiss="modal">Tutup</button>
@@ -518,23 +584,30 @@ const Galeri = () => {
             
 
             {/* Pagination */}
-            <div className="row my-5 d-flex justify-content-center">
-                <div className="table-pagination">
-                    <Pagination 
-                        activePage = {activePage}
-                        itemsCountPerPage={galeri.perPage}
-                        totalItemsCount={galeri.total}
-                        pageRangeDisplayed={3}
-                        onChange={handlePagination}
-                        nextPageText={">"}
-                        prevPageText={"<"}
-                        firstPageText={"<<"}
-                        lastPageText={">>"}
-                        itemClass="page-item-dashboard"
-                        linkClass="page-link-dashboard"
-                    />
-                </div>
-            </div>
+            {
+                galeri ?
+                    <div className="row my-5 d-flex justify-content-center">
+                        <div className="table-pagination">
+                            <Pagination 
+                                activePage = {activePage}
+                                // itemsCountPerPage={galeri.perPage}
+                                itemsCountPerPage={9}
+                                totalItemsCount={galeri.total}
+                                pageRangeDisplayed={3}
+                                onChange={handlePagination}
+                                nextPageText={">"}
+                                prevPageText={"<"}
+                                firstPageText={"<<"}
+                                lastPageText={">>"}
+                                itemClass="page-item-dashboard"
+                                linkClass="page-link-dashboard"
+                            />
+                        </div>
+                    </div>
+                :
+                    null
+            }
+            
             {/* End of Pagination */}
 
         </div>

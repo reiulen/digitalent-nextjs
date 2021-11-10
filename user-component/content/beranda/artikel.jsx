@@ -152,7 +152,7 @@ const Artikel = () => {
     }
 
     const handleFilterTag = (str) => {
-        setActiveTitle(str)
+        setActiveTitle(`#${str}`)
         // setTag(str)
         dispatch (getAllBerandaArtikel(
             activePage, 
@@ -185,9 +185,9 @@ const Artikel = () => {
 
 
     return (
-        <div>
+        <div className="mx-35">
             {/* BreadCrumb */}
-            <div className="row my-5 mx-1 py-3 px-8 bg-white rounded-pill d-flex align-items-center border">
+            <div className="row my-15 mx-1 py-3 px-8 bg-white rounded-pill d-flex align-items-center border">
                 <span className="text-primary">
                     <Link href="/">
                         Beranda 
@@ -548,11 +548,15 @@ const Artikel = () => {
                                                     
                                                 </div>
 
-                                                <div className="row my-5">
-                                                    {/* Insert Desc Here */}
-                                                    <div dangerouslySetInnerHTML={{__html: handleDescToTrim(el.isi_artikel)}} />
-                                                
-                                                </div>
+                                                {
+                                                    windowDimensions && windowDimensions.width && windowDimensions.width > 770 ?
+                                                        <div className="row my-5">
+                                                            {/* Insert Desc Here */}
+                                                            <div dangerouslySetInnerHTML={{__html: handleDescToTrim(el.isi_artikel)}} />
+                                                        </div>
+                                                    :
+                                                        null
+                                                }
 
                                                 <div className="row mb-3 d-flex align-items-center">
                                                     {/* Insert Date and View Here */}
@@ -572,7 +576,7 @@ const Artikel = () => {
                                                                             style={{cursor:"pointer"}}
                                                                             key={index}
                                                                         >
-                                                                            {element}
+                                                                            #{element}
                                                                         </div>
                                                                     )
                                                                 })
@@ -602,6 +606,7 @@ const Artikel = () => {
                                                             height="auto"
                                                             alt="Card Image"
                                                             className="rounded-lg"
+                                                            // style={{objectFit:"cover"}}
                                                         />
                                                     </a>
                                                 </Link>
@@ -764,18 +769,18 @@ const Artikel = () => {
                         <h3 className="font-weight-bolder"> 
                             Temukan lebih banyak artikel yang sesuai:
                         </h3>
-                        <div className=" d-flex flex-wrap justify-content-md-around  flex-row">
+                        <div className=" d-flex flex-wrap  flex-row">
                             {
                                 tags && tags.tag && tags.tag.length !== 0 ?
                                     tags.tag.map ((el, i) => {
                                         return (
                                             <div 
-                                                className="border px-2 py-1 rounded my-3 mr-3" 
+                                                className="border px-2 py-1 rounded my-3 mr-3 text-center d-flex align-items-center justify-content-center" 
                                                 key={i}
                                                 onClick={() => handleFilterTag(el)}
-                                                style={{cursor:"pointer"}}
+                                                style={{cursor:"pointer", height:"38px", width:"83px", fontSize:"14px"}}
                                             >
-                                                {el}
+                                                #{el}
                                             </div>
                                         )
                                     })
@@ -805,7 +810,7 @@ const Artikel = () => {
                             <Pagination 
                                 activePage = {activePage}
                                 itemsCountPerPage={5}
-                                itemsCountPerPage={artikel.perPage}
+                                // itemsCountPerPage={artikel.perPage}
                                 // totalItemsCount={5}
                                 totalItemsCount={artikel.total}
                                 pageRangeDisplayed={windowDimensions.width > 300 ? 3 : 1}

@@ -49,14 +49,21 @@ export const allBerandaGaleriReducer = (state = { galeri: [] }, action) => {
 
 export const detailBerandaGaleriReducer = (state = {detail: {} }, action) => {
     switch (action.type) {
+        case DETAIL_BERANDA_GALERI_REQUEST:
+            return {
+                loading: true
+            }
+
         case DETAIL_BERANDA_GALERI_SUCCESS:
             return {
                 detail: action.payload,
+                loading: false
             }
 
         case DETAIL_BERANDA_GALERI_FAIL:
             return {
                 error: action.payload,
+                loading: false
             }
 
         case CLEAR_ERRORS:
