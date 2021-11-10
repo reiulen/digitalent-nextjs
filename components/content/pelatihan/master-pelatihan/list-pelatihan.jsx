@@ -27,6 +27,7 @@ import {
 import { RESET_VALUE_FILTER } from "../../../../redux/types/sertifikat/kelola-sertifikat.type";
 import Cookies from "js-cookie";
 import Swal from "sweetalert2";
+import { updateStatusPublishMaster } from "../../../../redux/actions/pelatihan/master-pelatihan.action";
 
 export default function MasterPelatihan({ token }) {
   const router = useRouter();
@@ -120,32 +121,55 @@ export default function MasterPelatihan({ token }) {
     allCertificates.limit,
   ]);
 
-  const list = [
-    {
-      no: 1,
-      id_pelatihan: "C001",
-      name: "Nama Form Pendaftaran",
-      status: "listed",
-    },
-    {
-      no: 2,
-      id_pelatihan: "C002",
-      name: "Nama Form Pendaftaran",
-      status: "listed",
-    },
-    {
-      no: 3,
-      id_pelatihan: "C003",
-      name: "Nama Form Pendaftaran",
-      status: "unlisted",
-    },
-    {
-      no: 4,
-      id_pelatihan: "C004",
-      name: "Nama Form Pendaftaran",
-      status: "listed",
-    },
-  ];
+  const list = {
+    perPage: 10,
+    total: 1,
+    totalFiltered: 1,
+    page: 1,
+    limit: 5,
+    list: [
+      {
+        id: 1,
+        id_pelatihan: "C001",
+        judul_form: "Nama Form Pendaftaran",
+        status: "1",
+      },
+      {
+        id: 2,
+        id_pelatihan: "C002",
+        judul_form: "Nama Form Pendaftaran",
+        status: "1",
+      },
+      {
+        id: 3,
+        id_pelatihan: "C003",
+        judul_form: "Nama Form Pendaftaran",
+        status: "1",
+      },
+      {
+        id: 4,
+        id_pelatihan: "C004",
+        judul_form: "Nama Form Pendaftaran",
+        status: "1",
+      },
+      {
+        id: 2,
+        judul_form: "list data",
+        status: "0",
+        created_at: "2021-11-09T18:05:42.482493+07:00",
+        updated_at: "2021-11-09T18:05:42.482493+07:00",
+        deleted_at: null,
+      },
+      {
+        id: 2,
+        judul_form: "list data",
+        status: "0",
+        created_at: "2021-11-09T18:05:42.482493+07:00",
+        updated_at: "2021-11-09T18:05:42.482493+07:00",
+        deleted_at: null,
+      },
+    ],
+  };
 
   const handleDelete = (id) => {
     Swal.fire({
@@ -160,10 +184,18 @@ export default function MasterPelatihan({ token }) {
     }).then((result) => {
       if (result.isConfirmed) {
         console.log(id);
-
-        // dispatch(deleteTraining(id, token));
+        dispatch();
+        dispatch(deleteTraining(id, token));
       }
     });
+  };
+
+  const handleStatusPublish = (e, id, value) => {
+    const data = {
+      status_publish: val,
+      pelatian_id: id,
+    };
+    dispatch(updateStatusPublishMaster(data, token));
   };
 
   return (
@@ -386,9 +418,7 @@ export default function MasterPelatihan({ token }) {
                       </tr>
                     </thead>
                     <tbody>
-                      {!certificate ||
-                      (certificate &&
-                        certificate.list_certificate.length === 0) ? (
+                      {!list || (list && list.list.length === 0) ? (
                         <tr>
                           <td className="text-center" colSpan={6}>
                             Data Tidak Ditemukan
@@ -396,26 +426,24 @@ export default function MasterPelatihan({ token }) {
                         </tr>
                       ) : (
                         list &&
-                        list.map((item, i) => {
+                        list.list.map((item, i) => {
                           return (
-                            <tr key={certificate.id}>
+                            <tr key={list.id}>
                               <td className="align-middle text-center">
-                                {allCertificates.page === 1
+                                {list.page === 1
                                   ? i + 1
-                                  : (allCertificates.page - 1) *
-                                      allCertificates.limit +
-                                    (i + 1)}
+                                  : (list.page - 1) * list.limit + (i + 1)}
                               </td>
                               {/* START TABLE DATA */}
                               <td className="align-middle">{item.id}</td>
-                              <td className="align-middle">{item.name}</td>
+                              <td className="align-middle">
+                                {item.judul_form}
+                              </td>
                               <td className="align-middle">
                                 <div className="position-relative w-max-content">
                                   <select
-                                    name=""
-                                    id=""
                                     className={`select-pelatihan ${
-                                      item.status === "listed"
+                                      item.status === "1"
                                         ? "select-pelatihan-success"
                                         : "select-pelatihan-danger"
                                     }`}
@@ -428,8 +456,8 @@ export default function MasterPelatihan({ token }) {
                                       )
                                     }
                                   >
-                                    <option value="listed">Listed</option>
-                                    <option value="unlisted">Unlisted</option>
+                                    <option value="1">Listed</option>
+                                    <option value="0">Unlisted</option>
                                   </select>
                                 </div>
                               </td>
@@ -449,7 +477,7 @@ export default function MasterPelatihan({ token }) {
                                 </button>
                                 <Link
                                   href={`/pelatihan/master-pelatihan/${item.name
-                                    .split(" ")
+                                    ?.split(" ")
                                     .join("-")
                                     .toLowerCase()}?id=1`}
                                   passHref
@@ -460,10 +488,7 @@ export default function MasterPelatihan({ token }) {
                                     data-placement="bottom"
                                     title="Detail"
                                     onClick={() => {
-                                      Cookies.set(
-                                        "tema_pelatihan_id",
-                                        certificate.id
-                                      );
+                                      Cookies.set("tema_pelatihan_id", list.id);
                                     }}
                                   >
                                     <i className="ri-eye-fill p-0 text-white"></i>
@@ -492,12 +517,12 @@ export default function MasterPelatihan({ token }) {
               </div>
               {/* START Pagination */}
               <div className="row">
-                {certificate && (
+                {list && (
                   <div className="table-pagination my-auto">
                     <Pagination
-                      activePage={allCertificates.page}
-                      itemsCountPerPage={certificate.perPage}
-                      totalItemsCount={certificate.total}
+                      activePage={list.page}
+                      itemsCountPerPage={list.perPage}
+                      totalItemsCount={list.total}
                       pageRangeDisplayed={3}
                       onChange={(page) => dispatch(setValuePage(page))}
                       nextPageText={">"}
@@ -537,7 +562,7 @@ export default function MasterPelatihan({ token }) {
                         className="align-middle my-auto"
                         style={{ color: "#B5B5C3" }}
                       >
-                        Total Data {certificate.total}
+                        Total Data {list.total}
                       </p>
                     </div>
                   </div>

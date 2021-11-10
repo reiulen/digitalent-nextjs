@@ -22,6 +22,9 @@ import {
   SET_KEYWORD_VALUE,
   SET_LIMIT_VALUE,
   SET_PAGE_VALUE,
+  REQUEST_STATUS_PUBLISH,
+  UPDATE_STATUS_PUBLISH,
+  FAIL_STATUS_PUBLISH,
 } from "../../../types/pelatihan/master-pelatihan.type";
 
 const initialStates = {
@@ -219,6 +222,42 @@ export const updateMasterPelatihanReducer = (state = {}, action) => {
       return {
         loading: false,
         error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const updateStatusMasterReducer = (state = { status: {} }, action) => {
+  switch (action.type) {
+    case REQUEST_STATUS_PUBLISH:
+      return {
+        loading: true,
+      };
+
+    case UPDATE_STATUS_PUBLISH:
+      return {
+        loading: false,
+        success: action.payload.message,
+        status: action.payload.data,
+      };
+
+    case FAIL_STATUS_PUBLISH:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    case CLEAR_STATUS:
+      return {
+        success: false,
       };
 
     case CLEAR_ERRORS:

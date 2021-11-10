@@ -466,6 +466,7 @@ import {
   detailMasterPelatihanReducer,
   newMasterTrainingReducer,
   updateMasterPelatihanReducer,
+  updateStatusMasterReducer,
 } from "./pelatihan/admin/master-pelatihan.reducer";
 
 const reducer = combineReducers({
@@ -851,6 +852,7 @@ const reducer = combineReducers({
   getDetailMasterPelatihan: detailMasterPelatihanReducer,
   newMasterPelatihan: newMasterTrainingReducer,
   updateMasterPelatihan: updateMasterPelatihanReducer,
+  updateStatusMaster: updateStatusMasterReducer,
 });
 
 export default reducer;
