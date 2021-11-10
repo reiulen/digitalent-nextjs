@@ -629,7 +629,8 @@ const Table = ({ token }) => {
                                         }
                                       >
                                         <option value="1">
-                                          {items.status.name}
+                                          {/* {items.status.name} */}
+                                          Aktif
                                         </option>
                                         <option value="2">Tidak Aktif</option>
                                       </select>

@@ -445,3 +445,9 @@
 }
 
 /* test */
+
+@media(max-width:1254px){
+  .img-ds{
+      display: none;   
+  }
+}

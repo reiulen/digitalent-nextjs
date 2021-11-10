@@ -148,8 +148,7 @@ const Tambah = ({ token }) => {
     const regex = new RegExp(/[^0-9]/, "g");
     const val = e.target.value;
     if (val.match(regex)) {
-      setError({ ...error, period: "Masukan angka" });
-      // notify("Masukan angka");
+      setError({ ...error, period: "Masukkan angka" });
       setPeriod("");
     } else {
       setPeriod(e.target.value);
@@ -320,7 +319,7 @@ const Tambah = ({ token }) => {
                   type="text"
                   name="text_input"
                   className="form-control mb-3 mb-lg-0"
-                  placeholder="Masukan judul kerjasama"
+                  placeholder="Masukkan judul kerjasama"
                   onChange={(e) => setTitle(e.target.value)}
                 />
                 {error.title ? <p className="error-text">{error.title}</p> : ""}
