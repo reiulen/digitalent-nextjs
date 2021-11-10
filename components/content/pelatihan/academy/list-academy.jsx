@@ -278,7 +278,7 @@ const ListAcademy = ({ token }) => {
                               <p className="font-weight-bolder my-0 h6">
                                 {row.slug}
                               </p>
-                              <p>{row.name}</p>
+                              <p style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '13rem' }}>{row.name}</p>
                             </td>
                             <td className="align-middle">{row.tema}</td>
                             <td className="align-middle">{row.pelatihan}</td>
