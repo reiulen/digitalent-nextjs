@@ -73,25 +73,20 @@ const SubmitKerjasama = ({ token }) => {
         ...error,
         period_date_start: "Harus isi tanggal priode kerjasama",
       });
-      // notify("Harus isi tanggal priode kerjasama");
     } else if (agreement_number_partner === "") {
       setError({
         ...error,
         agreement_number_partner: "Harus isi nomor perjanjian lembaga",
       });
-      // notify("Harus isi nomor perjanjian lembaga");
     } else if (agreement_number_kemkominfo === "") {
       setError({
         ...error,
         agreement_number_kemkominfo: "Harus isi nomor perjanjian kemkominfo",
       });
-      // notify("Harus isi nomor perjanjian kemkominfo");
     } else if (signing_date === "") {
-      setError({ ...error, signing_date: "Harus isi tanggal penandatangan" });
-      // notify("Harus isi tanggal penandantangan");
+      setError({ ...error, signing_date: "Harus isi tanggal penandatanganan" });
     } else if (document === "") {
       setError({ ...error, document: "Harus unggah file" });
-      // notify("Harus unggah file");
     } else {
       Swal.fire({
         title: "Apakah anda yakin ?",

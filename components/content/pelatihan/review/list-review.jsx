@@ -425,7 +425,7 @@ const ListReview = ({ token }) => {
                   <table className="table table-separate table-head-custom table-checkable">
                     <thead style={{ background: "#F3F6F9" }}>
                       <tr>
-                        <th className="text-center ">No</th>
+                        <th className="text-center">No</th>
                         <th>ID Pelatihan</th>
                         <th>Pelatihan</th>
                         <th>Jadwal</th>
