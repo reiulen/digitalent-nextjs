@@ -556,7 +556,7 @@ const EditDokumentKerjasama = ({ token }) => {
                         value={signinDate}
                         minDate={moment().toDate()}
                         dateFormat="dd/MM/yyyy"
-                        placeholderText="Sampai Tanggal"
+                        placeholderText="Tanggal"
                       />
                       <IconCalender
                         className="right-center-absolute"
