@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
-import Highlighter from "react-highlight-words";
+// import Highlighter from "react-highlight-words";
 import { useRouter } from "next/router";
 
 const DetailArtikel = () => {
@@ -180,13 +180,14 @@ const DetailArtikel = () => {
                                 <div className="row my-5 mx-5 text-justify" style={{overflowX:"hidden"}}>
                                     {
                                         searchWords ?
-                                            <Highlighter 
-                                                highlightClassName="YourHighlightClass"
-                                                searchWords={searchWords}
-                                                autoEscape={true}
-                                                textToHighlight={detail.isi_artikel}
-                                                // textToHighlight={<div dangerouslySetInnerHTML={{__html: detail.isi_artikel}}/>}
-                                            />
+                                            // <Highlighter 
+                                            //     highlightClassName="YourHighlightClass"
+                                            //     searchWords={searchWords}
+                                            //     autoEscape={true}
+                                            //     textToHighlight={detail.isi_artikel}
+                                            //     // textToHighlight={<div dangerouslySetInnerHTML={{__html: detail.isi_artikel}}/>}
+                                            // />
+                                            <div></div>
                                         :
                                             <div dangerouslySetInnerHTML={{__html: detail.isi_artikel}}/>
                                     }

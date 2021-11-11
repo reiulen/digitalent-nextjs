@@ -17,7 +17,7 @@ const Tambah = ({ token }) => {
   let selectRefDataFromReference = null;
 
   const detailDataReference = useSelector((state) => state.detailDataReference);
-  console.log("detailDataReference",detailDataReference)
+
   const allOptionReferenceSite = useSelector(
     (state) => state.allOptionReferenceSite
   );
@@ -69,7 +69,6 @@ const Tambah = ({ token }) => {
       label: value,
     })
   );
-console.log("transformed",transformed)
   const [formReferenceAndText, setFormReferenceAndText] = useState(
     transformed.map((items) => {
       return {
@@ -81,7 +80,6 @@ console.log("transformed",transformed)
       };
     })
   );
-  console.log("formReferenceAndText",formReferenceAndText)
   const [formReferenceAndTextValue, setFormReferenceAndTextValue] = useState(
     transformed.map((items) => {
       return {
@@ -200,7 +198,6 @@ console.log("transformed",transformed)
 
   const [labelReference, setLabeReferencel] = useState("")
   const handleInputChange =(e)=>{
-    console.log("e.target.value",e)
     setLabeReferencel(e)
   }
 

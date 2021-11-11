@@ -1,3 +1,5 @@
+/* Galeri */
+
 .headTitle {
   font-size: 25px;
   font-weight: 600;
@@ -15,6 +17,10 @@
 
 .posModal {
   display: flex;
+}
+
+.modalsRight{
+  padding: 30px;
 }
 
 .img-left {
@@ -38,11 +44,9 @@
 
 .subMenuPreview {
   font-size: 11px;
-  /* margin-left: -10px; */
 }
 
 .description-img {
-  /* border: 1px solid black; */
   text-align: left;
   width: 100%;
   height: 260px;
@@ -70,27 +74,27 @@
   display: flex;
 }
 
+.modals{
+  height: 460px;
+  width: auto;
+}
+
 .tagModal {
   font-size: 10px;
 }
 
-/* @media only screen and (max-width: 1200px) {
-  .img-prevModal {
-    height: 460px;
-  }
-} */
+/* Tambah Galeri */
+
+.imgPrevTambah{
+  margin-right: 25px;
+}
+
 @media only screen and (max-width: 1024px) {
   .modal-body {
     height: 400px;
     width: 650px;
     margin-left: -75px;
   }
-  /* .img-prevModal {
-    height: 435px;
-  } */
-  /* .rightSideBar {
-    margin-left: -78px;
-  } */
   .description-img {
     width: 98%;
     height: 235px;
@@ -104,7 +108,7 @@
 @media only screen and (max-width: 768px) {
   .subMenuPreview {
     font-size: 9px;
-    margin-left: -10px;
+    margin-left: -5px;
   }
   .rightSideBar {
     width: 660px;
@@ -128,25 +132,6 @@
 }
 
 @media only screen and (max-width: 576px) {
-  /* .modal-body {
-    width: 333px;
-    height: 100%;
-    margin-left: 15px;
-  } */
-  /* .img-left {
-    height: 180px;
-    margin-left: 2px;
-  } */
-  /* .img-prevModal {
-    height: 200px;
-  } */
-  /* .rightSideBar {
-    width: 330px;
-    margin-left: 15px;
-  } */
-  /* .rightSide {
-    height: 200px;
-  } */
   .cari{
     font-size: 9px;
   }
@@ -159,6 +144,7 @@
   }
   .subMenuPreview {
     font-size: 6px;
+    margin-left: -10px;
   }
   .iconPreview {
     font-size: 6px;
@@ -168,6 +154,13 @@
     height: 97px;
     width: 100%;
     font-size: 7px;
+  }
+  .modals{
+    height: 200px;
+    width: auto;
+  }
+  .modalsRight{
+    padding: 30px;
   }
   .tagModal {
     font-size: 6px;
@@ -181,18 +174,68 @@
   .btnTambah {
     font-size: 9px;
   }
+  .tagStyle{
+    font-size: 11px;
+  }
+  .modalsPrevImage{
+    height: 200px;
+  }
 }
 
 @media only screen and (max-width: 320px){
   .cari{
-    font-size: 7.5px;
-  }
-  .filterDate{
-    /* margin-left: 50px;
-    width: 50%; */
+    font-size: 9px;
   }
   .filter{
     font-size: 9px;
-    /* margin-left: -10px; */
+  }
+  .judulTambah{
+    font-size: 8.5px;
+  }
+  .deskripsiTambah{
+    font-size: 8.5px;
+  }
+  .tagStyle{
+    font-size: 8.5px;
+  }
+  .resolusiTambah{
+    font-size: 8.5px;
+  }
+  .circleTop{
+    width: 20px;
+    height: 20px;
+    margin: 5px 10px 0 0;
+  }
+  .circleBottom{
+    width: 20px;
+    height: 20px;
+    margin: 0 10px 13px 0;
+  }
+  .selectKategori{
+    font-size: 8.5px;
+  }
+  .setPublish{
+    font-size: 8.5px;
+  }
+  .btnKembali{
+    font-size: 8.5px;
+  }
+  .btnSimpan{
+    font-size: 8.5px;
+  }
+}
+
+@media only screen and (max-width: 280px){
+  .cari{
+    font-size: 7.5px;
+  }
+  .filter{
+    font-size: 9px;
+  }
+  .tagStyle{
+    font-size: 6.7px;
+  }
+  .deskripsiTambah{
+    font-size: 6.7px;
   }
 }

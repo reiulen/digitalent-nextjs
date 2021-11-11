@@ -346,7 +346,7 @@ export default function Pengaturan({ session }) {
   return (
     <PesertaWrapper>
       <Col lg={12} className="px-0">
-        <Card className="card-custom card-stretch gutter-b p-0">
+        <Card className="card-custom card-stretch gutter-b p-0 mt-n8 mt-lg-0">
           <Card.Body className="p-10">
             <div>
               <h1 className="font-weight-bolder">Kontak</h1>

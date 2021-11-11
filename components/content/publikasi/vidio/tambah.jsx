@@ -10,6 +10,8 @@ import Swal from "sweetalert2";
 import { TagsInput } from "react-tag-input-component";
 import DatePicker from 'react-datepicker'
 
+import styles from "../../../../styles/previewGaleri.module.css";
+
 import { newVideo, clearErrors } from '../../../../redux/actions/publikasi/video.actions'
 import { NEW_VIDEO_RESET } from '../../../../redux/types/publikasi/video.type'
 import { getAllKategori } from "../../../../redux/actions/publikasi/kategori.actions";
@@ -99,7 +101,9 @@ const TambahVidio = ({ token, id }) => {
                 data.splice([i], 1);
             }
         }
-        setTag(data);
+        if ((data).includes(data) !== true) {
+          setTag(data);
+        }
     }
 
     const handleChangePublish = (e) => {
@@ -236,14 +240,14 @@ const TambahVidio = ({ token, id }) => {
                 }
                 <div className="card card-custom card-stretch gutter-b">
                     <div className="card-header">
-                        <h3 className="card-title font-weight-bolder text-dark">Tambah Video</h3>
+                        <h3 className="col-sm-4 card-title font-weight-bolder text-dark">Tambah Video</h3>
                     </div>
                     <div className="card-body">
                         <form onSubmit={onSubmit}>
                             <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Judul</label>
-                                <div className="col-sm-12">
-                                    <input type="text" className="form-control" placeholder="Masukkan Judul Disini" value={judul_video} onChange={(e) => setJudulVideo(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("judul_video")} />
+                                <div className={`${styles.judulTambah} col-sm-12`}>
+                                    <input type="text" className={`${styles.judulTambah} form-control`} placeholder="Masukkan Judul Disini" value={judul_video} onChange={(e) => setJudulVideo(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("judul_video")} />
                                     {simpleValidator.current.message(
                                         "judul_video",
                                         judul_video,
@@ -255,8 +259,8 @@ const TambahVidio = ({ token, id }) => {
 
                             <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-4 col-form-label font-weight-bolder">Deskripsi Video</label>
-                                <div className="col-sm-12">
-                                    <textarea className='form-control' placeholder='Tulis Deskripsi' name="deskripsi" id="" rows="10" onChange={e => setIsiVideo(e.target.value)} value={isi_video} onBlur={() => simpleValidator.current.showMessageFor("isi_video")}></textarea>
+                                <div className={`${styles.deskripsiTambah} col-sm-12`}>
+                                    <textarea className={`${styles.deskripsiTambah} form-control`} placeholder='Tulis Deskripsi' name="deskripsi" id="" rows="10" onChange={e => setIsiVideo(e.target.value)} value={isi_video} onBlur={() => simpleValidator.current.showMessageFor("isi_video")}></textarea>
                                     {simpleValidator.current.message("isi_video", isi_video, "required|min:5|max:7000", { className: "text-danger" })}
                                 </div>
                             </div>
@@ -268,7 +272,7 @@ const TambahVidio = ({ token, id }) => {
                                 >
                                     Upload Thumbnail
                                 </label>
-                                <div className="ml-3 row">
+                                <div className="ml-4 row">
                                     <figure
                                         className="avatar item-rtl"
                                         data-toggle="modal"
@@ -279,7 +283,7 @@ const TambahVidio = ({ token, id }) => {
                                             alt="image"
                                             width={160}
                                             height={160}
-                                            objectFit="cover"
+                                            objectFit="fill"
                                         />
                                     </figure>
                                     <div>
@@ -308,7 +312,7 @@ const TambahVidio = ({ token, id }) => {
 
                                 </div>
 
-                                <div className="ml-3">
+                                <div className="ml-4">
                                     {simpleValidator.current.message(
                                         "gambar",
                                         gambar,
@@ -323,7 +327,7 @@ const TambahVidio = ({ token, id }) => {
                                     }
                                 </div>
 
-                                <div className="mt-3 col-sm-6 col-md-6 col-lg-7 col-xl-3 text-muted">
+                                <div className={`${styles.resolusiTambah} mt-3 col-sm-6 col-md-6 col-lg-7 col-xl-3 text-muted`}>
                                     <p>
                                         Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar
                                     </p>
@@ -334,9 +338,9 @@ const TambahVidio = ({ token, id }) => {
 
                             <div className="form-group">
                                 <label className='col-sm-4 col-form-label font-weight-bolder'>Link URL Video</label>
-                                <div className="col-sm-12">
+                                <div className={`${styles.judulTambah} col-sm-12`}>
                                     <div className="input-group">
-                                        <input type="text" className="form-control" value={url_video} onChange={e => setUrlVideo(e.target.value)} placeholder="https://www.example.com" onBlur={() => simpleValidator.current.showMessageFor("url video")} />
+                                        <input type="text" className={`${styles.judulTambah} form-control`} value={url_video} onChange={e => setUrlVideo(e.target.value)} placeholder="https://www.example.com" onBlur={() => simpleValidator.current.showMessageFor("url video")} />
 
                                     </div>
                                     {simpleValidator.current.message(
@@ -355,11 +359,11 @@ const TambahVidio = ({ token, id }) => {
                                 >
                                     Kategori
                                 </label>
-                                <div className="col-sm-12">
+                                <div className={`${styles.selectKategori} col-sm-12`}>
                                     <select
                                         name=""
                                         id=""
-                                        className="form-control"
+                                        className={`${styles.selectKategori} form-control`}
                                         value={kategori_id}
                                         onChange={(e) => setKategoriId(e.target.value)}
                                         onBlur={(e) => {
@@ -371,7 +375,7 @@ const TambahVidio = ({ token, id }) => {
                                             -- Video --
                                         </option>
                                         {!kategori || (kategori && kategori.length === 0) ? (
-                                            <option value="">Data Tidak Ditemukan</option>
+                                            <option value="">Data Kosong</option>
                                         ) : (
                                             kategori &&
                                             kategori.kategori &&
@@ -398,13 +402,13 @@ const TambahVidio = ({ token, id }) => {
 
                             <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Tag</label>
-                                <div className="col-sm-12">
+                                <div className={`${styles.tagStyle} col-sm-12`} style={{ wordBreak: 'break-word' }}>
                                     {/* <div>{tag}</div> */}
                                     <TagsInput
                                         value={tag}
                                         onChange={(data) => handleTag(data)}
                                         name="fruits"
-                                        placeHolder="Isi Tag disini"
+                                        placeHolder="Isi Tag disini dan Enter"
                                         seprators={["Enter", "Tab"]}
                                     // onBlur={() => simpleValidator.current.showMessageFor('tag')}
                                     />
@@ -433,7 +437,6 @@ const TambahVidio = ({ token, id }) => {
                                                 className="checkbox"
                                                 checked={publish}
                                                 type="checkbox"
-                                                // onChange={(checked) => setPublish(checked)}
                                                 onChange={(e) => handleChangePublish(e)}
                                             />
                                             <span
@@ -453,7 +456,7 @@ const TambahVidio = ({ token, id }) => {
                                         <div className="col-sm-12">
                                             <div className="input-group">
                                                 <DatePicker
-                                                    className="form-search-date form-control-sm form-control"
+                                                    className={`${styles.setPublish} form-search-date form-control-sm form-control`}
                                                     selected={publishDate}
                                                     onChange={(date) => handlePublishDate(date)}
                                                     // onChange={(date) => setPublishDate(date)}
@@ -477,13 +480,13 @@ const TambahVidio = ({ token, id }) => {
 
 
 
-                            <div className="form-group row">
+                            <div className="form-group row mr-0">
                                 <div className="col-sm-2"></div>
                                 <div className="col-sm-10 text-right">
                                     <Link href='/publikasi/video'>
-                                        <a className='btn btn-white-ghost-rounded-full rounded-pill mr-2 btn-sm'>Kembali</a>
+                                        <a className={`${styles.btnKembali} btn btn-white-ghost-rounded-full rounded-pill mr-2 btn-sm`}>Kembali</a>
                                     </Link>
-                                    <button className='btn btn-primary-rounded-full rounded-pill btn-sm'>Simpan</button>
+                                    <button className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill btn-sm`}>Simpan</button>
                                 </div>
                             </div>
                         </form>
@@ -500,12 +503,12 @@ const TambahVidio = ({ token, id }) => {
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div className="modal-body text-center" style={{ height: '400px' }}>
+                        <div className={`${styles.modalsPrevImage} modal-body text-center`}>
                             <Image
                                 src={gambarPreview}
                                 alt='image'
                                 layout='fill'
-                                objectFit='cover'
+                                objectFit='fill'
                             />
                         </div>
                         <div className="modal-footer">

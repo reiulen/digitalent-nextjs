@@ -233,6 +233,10 @@ import {
   updateAdminSiteReducer,
   detailAdminSiteReducer,
   deleteAdminSiteReducer,
+  allUnitWorkListReducer,
+  allRolesListReducer,
+  allAcademyListReducer,
+  allListPelatihanReducer,
 } from "./site-management/user/admin-site.reducers";
 // ============== data reference ===============
 import {
@@ -462,6 +466,15 @@ import {
   allSimonasReducer,
 } from "./beranda/simonasAndBeasiswa";
 
+import {
+  allMasterPelatihanListReducer,
+  deleteMasterPelatihanReducer,
+  detailMasterPelatihanReducer,
+  newMasterTrainingReducer,
+  updateMasterPelatihanReducer,
+  updateStatusMasterReducer,
+} from "./pelatihan/admin/master-pelatihan.reducer";
+
 const reducer = combineReducers({
   // PUBLIKASI
   allArtikel: allArtikelReducer,
@@ -650,12 +663,16 @@ const reducer = combineReducers({
   newMitraSite: newMitraSiteReducer,
   detailMitraSite: detailMitraSiteReducer,
   updateMitraSite: updateMitraSiteReducer,
-  // ============ MITRA SITE =======
+  // ============ ADMIN SITE =======
   allAdminSite: allAdminSiteReducer,
   newAdminSite: newAdminSiteReducer,
   updateAdminSite: updateAdminSiteReducer,
   detailAdminSite: detailAdminSiteReducer,
   deleteAdminSite: deleteAdminSiteReducer,
+  allUnitWorkList: allUnitWorkListReducer,
+  allRolesList: allRolesListReducer,
+  allAcademyList: allAcademyListReducer,
+  allListPelatihan: allListPelatihanReducer,
 
   // ============ DATA REFERENCE =======
   allDataReference: allDataReferenceReducer,
@@ -840,6 +857,14 @@ const reducer = combineReducers({
   getDetailRiwayatPelatihanPeserta: getDetailRiwayatPelatihanReducer,
   allBeasiswa: allBeasiswaReducer,
   allSimonas: allSimonasReducer,
+
+  // ========== Master Pelatihan ========
+  getAllMasterPelatihan: allMasterPelatihanListReducer,
+  deleteMasterPelatihan: deleteMasterPelatihanReducer,
+  getDetailMasterPelatihan: detailMasterPelatihanReducer,
+  newMasterPelatihan: newMasterTrainingReducer,
+  updateMasterPelatihan: updateMasterPelatihanReducer,
+  updateStatusMaster: updateStatusMasterReducer,
 });
 
 export default reducer;
