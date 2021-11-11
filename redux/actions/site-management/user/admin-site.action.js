@@ -70,7 +70,6 @@ export const getAllAdminSite = (token) => async (dispatch, getState) => {
       payload: data,
     });
   } catch (error) {
-    console.log("object asd", error);
     dispatch({
       type: ADMIN_SITE_FAIL,
     });
@@ -81,14 +80,10 @@ export const getAllListPelatihan = (token) => async (dispatch, getState) => {
   try {
     dispatch({ type: PELATIHAN_LIST_REQUEST });
 
-    // let pageState = getState().allAdminSite.page || 1;
     let cariState = getState().allListPelatihan.cari || "";
-    // let limitState = getState().allAdminSite.limit || 5;
 
     const params = {
-      // page: pageState,
       cari: cariState,
-      // limit: limitState,
     };
 
     const { data } = await axios.get(

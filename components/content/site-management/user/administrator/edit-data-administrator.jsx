@@ -26,33 +26,28 @@ const TambahApi = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
   const allUnitWorkList = useSelector((state) => state.allUnitWorkList);
-  console.log("allUnitWorkList", allUnitWorkList);
+
   const allRolesList = useSelector((state) => state.allRolesList);
-  console.log("allRolesList", allRolesList);
+
   const allAcademyList = useSelector((state) => state.allAcademyList);
-  console.log("allAcademyList", allAcademyList);
+
   const allListPelatihan = useSelector((state) => state.allListPelatihan);
-  console.log("allListPelatihan", allListPelatihan);
+
   const detailAdminSite = useSelector((state) => state.detailAdminSite);
-  console.log("detailAdminSite", detailAdminSite);
-  
 
   useEffect(() => {
-    dispatch(getDetailAdminSite(router.query.id,token))
-  dispatch(getListRoles(token))
-  dispatch(getListUnitWorks(token))
-  dispatch(getListAcademy(token))
-  dispatch(getAllListPelatihan(token))
-  }, [router.query.id,token])
+    dispatch(getDetailAdminSite(router.query.id, token));
+    dispatch(getListRoles(token));
+    dispatch(getListUnitWorks(token));
+    dispatch(getListAcademy(token));
+    dispatch(getAllListPelatihan(token));
+  }, [router.query.id, token,dispatch]);
   return (
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3
-              className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 mb-5 mt-5 titles-1"
-      
-            >
+            <h3 className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 mb-5 mt-5 titles-1">
               Edit Data Administrator
             </h3>
           </div>
@@ -65,7 +60,6 @@ const TambahApi = ({ token }) => {
                   className="form-control"
                   placeholder="Placeholder"
                 />
-                
               </div>
               <div className="form-group">
                 <label>Email</label>
@@ -74,14 +68,12 @@ const TambahApi = ({ token }) => {
                   className="form-control"
                   placeholder="Placeholder"
                 />
-                
               </div>
               <div className="form-group">
                 <label htmlFor="exampleSelect1">Status</label>
                 <select className="form-control" id="exampleSelect1">
                   <option>Placeholder</option>
                 </select>
-                
               </div>
               <div className="form-group">
                 <label>Password</label>
@@ -90,7 +82,6 @@ const TambahApi = ({ token }) => {
                   className="form-control"
                   placeholder="Placeholder"
                 />
-                
               </div>
               <div className="form-group">
                 <label>Konfirmasi Password</label>
@@ -99,26 +90,21 @@ const TambahApi = ({ token }) => {
                   className="form-control"
                   placeholder="Placeholder"
                 />
-                
               </div>
               <div className="form-group">
                 <label htmlFor="exampleSelect1">Role</label>
                 <select className="form-control" id="exampleSelect1">
                   <option>Placeholder</option>
                 </select>
-                
               </div>
               <div className="form-group">
                 <label htmlFor="exampleSelect1">Satuan Kerja</label>
                 <select className="form-control" id="exampleSelect1">
                   <option>Placeholder</option>
                 </select>
-                
               </div>{" "}
               {/* hak akses disini */}
-              <h3
-                className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 mb-5 mt-5 titles-1"
-              >
+              <h3 className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 mb-5 mt-5 titles-1">
                 Hak Akses Pelatihan
               </h3>
               <ul className="nav nav-tabs" id="myTab" role="tablist">
@@ -161,7 +147,6 @@ const TambahApi = ({ token }) => {
                     <select className="form-control" id="exampleSelect1">
                       <option>Placeholder</option>
                     </select>
-                    
                   </div>
                 </div>
                 <div
@@ -172,7 +157,7 @@ const TambahApi = ({ token }) => {
                 >
                   <div className="table-page mt-5">
                     <div className="table-responsive">
-                       <div className="table-filter">
+                      <div className="table-filter">
                         <div className="row align-items-center">
                           <div className="col-lg-12 col-xl-12">
                             <form
@@ -212,8 +197,8 @@ const TambahApi = ({ token }) => {
                           </div>
                         </div>
                       </div>
-                      
-                     <table className="table table-separate table-head-custom table-checkable mt-5">
+
+                      <table className="table table-separate table-head-custom table-checkable mt-5">
                         <thead style={{ background: "#F3F6F9" }}>
                           <tr>
                             <th

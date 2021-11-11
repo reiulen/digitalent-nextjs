@@ -27,17 +27,13 @@ const TambahApi = ({ token }) => {
   const [role, setRole] = useState("");
   const [unitWork, setUnitWork] = useState("");
   const [statusAcademy, setStatusAcademy] = useState([]);
-  console.log("statusAcademy", statusAcademy);
   const [typeAccess, setTypeAccess] = useState("akademi");
-  // console.log("typeAccess", typeAccess);
 
   const [pelatihan, setPelatihan] = useState([]);
   const allUnitWorkList = useSelector((state) => state.allUnitWorkList);
-  // console.log("allUnitWorkList", allUnitWorkList);
   const allRolesList = useSelector((state) => state.allRolesList);
-  // console.log("allRolesList", allRolesList);
   const allAcademyList = useSelector((state) => state.allAcademyList);
-  // console.log("allAcademyList", allAcademyList);
+
   const allListPelatihan = useSelector((state) => state.allListPelatihan);
   const [sortListPelatihan, setSortListPelatihan] = useState(
     allListPelatihan.data.map((items) => {
@@ -49,8 +45,6 @@ const TambahApi = ({ token }) => {
       };
     })
   );
-  // console.log("allListPelatihan", allListPelatihan);
-  // console.log("sortListPelatihan", sortListPelatihan);
 
   const [hidePassword, setHidePassword] = useState(true);
   const [hidePasswordConfirm, setHidePasswordConfirm] = useState(true);
@@ -76,11 +70,6 @@ const TambahApi = ({ token }) => {
   };
 
   const changeListAcademy = (e) => {
-    console.log("e,index", e);
-    // let _temp = []
-    // let data = e.map((items)=>{
-    //   return items.value
-    // })
     setStatusAcademy(e);
   };
 
@@ -124,7 +113,6 @@ const TambahApi = ({ token }) => {
       return {...items,training_id:items.value}
     })
 
-    console.log("newData",newData)
 
 
 
@@ -228,7 +216,6 @@ const TambahApi = ({ token }) => {
               training_access: newData,
               status: 1,
             };
-            console.log("sendData type pelatihan",sendData)
             try {
               let { data } = await axios.post(
                 `${process.env.END_POINT_API_SITE_MANAGEMENT}/api/user/store`,
@@ -424,7 +411,6 @@ const TambahApi = ({ token }) => {
                   </a>
                   <input
                     type="radio"
-                    className="left-center-absolute"
                     className="left-center-absolute"
                     checked={typeAccess === "akademi" ? true : false}
                     name="action"
