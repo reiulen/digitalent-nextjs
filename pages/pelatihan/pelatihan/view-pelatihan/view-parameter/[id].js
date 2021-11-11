@@ -46,7 +46,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
-      // await store.dispatch(getReviewStep4Revisi(session.user.user.data.token, params.id))
+      await store.dispatch(getReviewStep4Revisi(session.user.user.data.token, params.id))
 
       return {
         props: { session, title: "View Parameter - Pelatihan" },
