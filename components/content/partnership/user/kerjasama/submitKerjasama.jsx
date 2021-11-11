@@ -50,8 +50,6 @@ const DetailDokumenKerjasama = ({ token }) => {
 
   const submit = (e) => {
     e.preventDefault();
-
-    console.log("AllCooperation",AllCooperation)
     let isError = false
 
     if(AllCooperation === ""){
@@ -408,7 +406,6 @@ const DetailDokumenKerjasama = ({ token }) => {
                     }
                     )}
 
-                    {console.log("error page",error)}
               {/* end loopingg */}
                     {error.AllCooperation ? (
                       <p className="error-text">
