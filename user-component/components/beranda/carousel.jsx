@@ -92,7 +92,6 @@ export default function Carousel({ data }) {
 
   return (
     <>
-      {console.log(data.imagetron.length)}
       <Slider {...settings}>
         {data.imagetron.map((row, i) => (
           <div style={{ width: 1200 }} key={i}>

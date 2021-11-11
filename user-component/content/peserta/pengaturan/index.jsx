@@ -5,11 +5,13 @@ import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
 import style from "./style.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import SimpleReactValidator from "simple-react-validator";
-import OtpInput from "react-otp-input";
+// import OtpInput from "react-otp-input";
 import axios from "axios";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import { getDataPribadi } from "../../../../redux/actions/pelatihan/function.actions";
+
+import OtpInput from "react-otpcode-input";
 
 export default function Pengaturan({ session }) {
   const { error: errorDataPribadi, dataPribadi } = useSelector(
@@ -147,7 +149,6 @@ export default function Pengaturan({ session }) {
           body,
           config
         );
-        console.log(data, " masuk sini");
         if (data) {
           Swal.fire(
             "Berhasil!",
@@ -598,6 +599,23 @@ export default function Pengaturan({ session }) {
               shouldAutoFocus
               isInputNum
             ></OtpInput>
+            <OtpInput
+              numberOfInputs={6}
+              onChange={(code) => setOtpEmail(code)}
+              onComplete={() => {
+                if (postStatus == "email") {
+                  handlePostOtpEmail(otpEmail, email);
+                } else if (postStatus == "verifyHp") {
+                  handlePostOtpHpVerifikasi(otpEmail);
+                } else if (postStatus == "ubahHandphone") {
+                  handlePostOtpUbahHandphone(otpEmail);
+                } else if (postStatus == "verifyEmail") {
+                  handlePostOtpEmailVerifikasi(otpEmail);
+                }
+              }}
+              otp={otpEmail}
+              autoFocus={true}
+            />
           </div>
 
           <div className="d-flex justify-content-between mx-5 mt-14">

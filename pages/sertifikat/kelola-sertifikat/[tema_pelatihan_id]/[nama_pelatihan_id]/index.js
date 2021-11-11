@@ -51,7 +51,7 @@ const PublishedSertifikat = dynamic(
 export default function KelokaSertifikatPage(props) {
   const session = props.session.user.user.data;
 
-  if (props.status == "publish") {
+  if (props.status == "1") {
     return (
       <>
         <div className="d-flex flex-column flex-root">
@@ -79,7 +79,7 @@ export default function KelokaSertifikatPage(props) {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  store =>
+  (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
       if (!session) {
@@ -91,7 +91,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
-      if (query.status == "publish") {
+      if (query.status == "1") {
         await store.dispatch(
           getPublishedSertifikat(query.id, session.user.user.data.token)
         );
@@ -103,7 +103,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       } else if (query.status == "edit") {
-        await store.dispatch(
+        const data = await store.dispatch(
           getSingleSertifikat(query.id, session.user.user.data.token)
         );
         return {

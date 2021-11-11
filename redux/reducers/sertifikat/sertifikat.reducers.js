@@ -73,7 +73,7 @@ export const allSertifikatReducers = (state = initialStates, action) => {
     case OPTIONS_ACADEMY_REQUEST:
       return {
         ...state,
-        loading: true,
+        // loading: true,
       };
     case OPTIONS_ACADEMY_SUCCESS:
       return {
@@ -90,7 +90,7 @@ export const allSertifikatReducers = (state = initialStates, action) => {
     case OPTIONS_THEME_REQUEST:
       return {
         ...state,
-        loading: true,
+        // loading: true,
       };
     case OPTIONS_THEME_SUCCESS:
       return {
@@ -191,6 +191,7 @@ export const allThemeOptionsReducer = (state = [], action) => {
     case OPTIONS_THEME_SUCCESS:
       return {
         ...state,
+        loading: false,
         themeOptions: action.payload.data,
       };
     case OPTIONS_THEME_FAIL:
