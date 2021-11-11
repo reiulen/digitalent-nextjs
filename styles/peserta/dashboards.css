@@ -108,6 +108,10 @@
   z-index: -1 !important;
 }
 
+.carousel-secondarys {
+  margin-top: 0;
+}
+
 .carousel-secondarys .splide__pagination {
   display: none !important;
 }
@@ -122,7 +126,7 @@
 
 @media (max-width: 768px) {
   .carousel-secondarys .splide__slider {
-    margin: 0 0px;
+    margin: 0 60px;
   }
 }
 
