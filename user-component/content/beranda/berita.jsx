@@ -186,7 +186,7 @@ const Berita = () => {
 
 
     return (
-        <div className="mx-35">
+        <div>
             {/* BreadCrumb */}
             <div className="row my-15 mt-15 mx-1 py-3 px-8 bg-white rounded-pill d-flex align-items-center border">
                 <span className="text-primary">
@@ -525,7 +525,7 @@ const Berita = () => {
 
                                                 <div className="row my-5">
                                                     {/* Insert Title Here */}
-                                                    <Link href={`/artikel/detail/${el.slug}`}>
+                                                    <Link href={`/berita/detail/${el.slug}`}>
                                                         <a>
                                                             <h1 className="text-dark">
                                                                 {handleTitleToTrim(el.judul)}
@@ -583,7 +583,7 @@ const Berita = () => {
                                                 style={{objectFit:"cover"}}
                                             >
                                                 {/* Insert Card Image Here */}
-                                                <Link href={`/artikel/detail/${el.slug}`}>
+                                                <Link href={`/berita/detail/${el.slug}`}>
                                                     <a>
                                                         <Image
                                                             src={
