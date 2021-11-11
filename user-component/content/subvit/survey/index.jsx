@@ -316,6 +316,27 @@ const SubtansiUser = ({ token }) => {
   const handleCloseModalDone = () => {
     setModalDone(false);
   };
+
+  const handleTest = (e, i, it) => {
+    // console.log(i);
+    if (e.target.checked === true) {
+      localStorage.setItem(router.query.id + "/" + i, it.key);
+
+      // console.log(it);
+    } else {
+      localStorage.removeItem(router.query.id + "/" + i);
+    }
+    // console.log(as);
+    // console.log(e.target, i, it);
+    let list22 = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      list22.push(localStorage.getItem(key));
+      // console.log(key);
+    }
+    console.log(list22);
+  };
+
   return (
     <>
       <Container className={styles.baseAll} fluid>
@@ -324,10 +345,14 @@ const SubtansiUser = ({ token }) => {
             <Col xs={12} sm={6} style={{ marginTop: "8px" }}>
               <table>
                 <tr>
-                  <td className={styles.academy}>{data && data.academy}</td>
+                  <td className={styles.academy}>
+                    {(data && data.academy) || "FGA"}
+                  </td>
 
                   <td>&nbsp;</td>
-                  <td className={styles.training}>{data && data.theme}</td>
+                  <td className={styles.training}>
+                    {(data && data.theme) || "Cloud Computing"}
+                  </td>
                 </tr>
               </table>
             </Col>
@@ -426,7 +451,7 @@ const SubtansiUser = ({ token }) => {
                 )}
               </h1>
               <hr hidden={data[parseInt(router.query.id) - 1].open === true} />
-              {data &&
+              {/* {data &&
               data[parseInt(router.query.id) - 1]?.answer !== null &&
               data &&
               data[parseInt(router.query.id) - 1].open === true
@@ -477,6 +502,9 @@ const SubtansiUser = ({ token }) => {
                                 </Card>
                               </div>
                             </div>
+                          ) : data[parseInt(router.query.id) - 1].type ===
+                            "multiple_choice" ? (
+                            <p>TEst</p>
                           ) : (
                             <Card
                               className={
@@ -544,6 +572,10 @@ const SubtansiUser = ({ token }) => {
                                 </Card>
                               </div>
                             </div>
+                          ) : data[parseInt(router.query.id) - 1]?.answer &&
+                            data[parseInt(router.query.id) - 1].type ===
+                              "multiple_choice" ? (
+                            <p>TEST</p>
                           ) : (
                             <Card
                               className={
@@ -567,7 +599,23 @@ const SubtansiUser = ({ token }) => {
                         </>
                       );
                     }
-                  )}
+                  )} */}
+              {data[parseInt(router.query.id) - 1].type === "multiple_choice" &&
+                data[parseInt(router.query.id) - 1]?.answer &&
+                data[parseInt(router.query.id) - 1]?.answer.map(
+                  (item, index) => {
+                    return (
+                      <>
+                        <Form.Check
+                          className={styles.check}
+                          inline
+                          label={item.key + "." + item.option}
+                          onClick={(event) => handleTest(event, index, item)}
+                        />
+                      </>
+                    );
+                  }
+                )}
 
               {data[parseInt(router.query.id) - 1].open === true && (
                 <>

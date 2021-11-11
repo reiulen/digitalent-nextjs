@@ -97,7 +97,9 @@
     color: #007cff;
   }
 }
-
+.check {
+  user-select: none;
+}
 .soalResponsive {
   display: none;
 }
