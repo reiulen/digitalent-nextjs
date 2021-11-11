@@ -476,7 +476,7 @@ export default function MasterPelatihan({ token }) {
                                   <i className="ri-pencil-fill p-0 text-white"></i>
                                 </button>
                                 <Link
-                                  href={`/pelatihan/master-pelatihan/${item.name
+                                  href={`/pelatihan/master-pelatihan/${item.judul_form
                                     ?.split(" ")
                                     .join("-")
                                     .toLowerCase()}?id=1`}

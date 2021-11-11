@@ -255,11 +255,6 @@ export const updateStatusMasterReducer = (state = { status: {} }, action) => {
         error: action.payload,
       };
 
-    case CLEAR_STATUS:
-      return {
-        success: false,
-      };
-
     case CLEAR_ERRORS:
       return {
         ...state,
