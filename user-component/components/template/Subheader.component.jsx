@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const SubHeaderComponent = ({ data = [] }) => {
   return (
-    <div className="rounded-pill d-flex align-items-center border px-4 py-2 my-md-7 mb-5">
+    <div className="rounded-pill d-flex align-items-center border px-4 py-2 my-md-7 mb-10 mb-md-13">
       <span className="text-primary">
         <Link href="/">Beranda</Link>
       </span>
@@ -15,7 +15,7 @@ const SubHeaderComponent = ({ data = [] }) => {
               <i className="ri-arrow-right-s-line"></i>
             </span>
             <Link href={row.link} passHref>
-              <span>{row.name.substring(0, 30) + " ..."}</span>
+              <span>{row.name.substring(0, 25) + " ..."}</span>
             </Link>
           </div>
         ))}

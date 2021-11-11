@@ -55,12 +55,20 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse }) => {
     }
   };
 
+  const handleDropFalse = () => {
+    setDrop(false);
+  };
+
   return (
     <Fragment>
       <div className={screenClass}>
         <div className={styles.titlePlatform}>PLATFORM</div>
         <div
-          className={drop ? styles.active : styles.subMenuTitle}
+          className={
+            drop && !router.pathname.includes("/peserta/profile")
+              ? styles.active
+              : styles.subMenuTitle
+          }
           onClick={(event) => handleDown(event)}
         >
           <div className="d-flex flex-row align-items-center">
@@ -291,6 +299,7 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse }) => {
                   ? styles.akunMenuActive
                   : styles.akunMenu
               }
+              onClick={handleDropFalse}
             >
               <div className="d-flex flex-row">
                 <div className="p-2">

@@ -58,9 +58,9 @@ const DetailBerita = () => {
     }
     
     return (
-        <div>
+        <div className="mx-35">
             {/* BreadCrumb */}
-            <div className="row my-5 mx-1 py-3 px-8 bg-white rounded-pill d-flex align-items-center border">
+            <div className="row my-7 mx-1 py-3 px-8 bg-white rounded-pill d-flex align-items-center border">
                 <span className="text-primary">
                     <Link href="/">
                         Beranda 
@@ -85,7 +85,7 @@ const DetailBerita = () => {
             {/* Header */}
             <div className="row my-5 d-flex flex-column ml-3">
                 <div className="badge badge-light mr-2 col-1">
-                    <div className="text-primary">
+                    <div className="text-primary" style={{overflowX:"hidden"}}>
                         {/* Insert Kategori Here */}
                         {detail.nama_kategori}
                     </div>
@@ -174,7 +174,7 @@ const DetailBerita = () => {
 
                             {/* Berita */}
                             <div className="border rounded-lg mb-5 mt-15">
-                                <div className="row my-5 mx-5">
+                                <div className="row my-5 mx-5 text-justify" style={{overflowX:"hidden"}}>
                                     {
                                         searchWords ?
                                             <Highlighter 
@@ -196,7 +196,7 @@ const DetailBerita = () => {
                                                 detail.tag.map ((el, i) => {
                                                     return (
                                                         <div className="mr-3 border p-3 rounded" key={i}>
-                                                        {el}
+                                                        #{el}
                                                         </div>
                                                     )
                                                 })
@@ -288,13 +288,13 @@ const DetailBerita = () => {
                                                     tags.tag.map ((el, i) => {
                                                         return (
                                                             <div 
-                                                                className="border px-2 py-1 rounded my-3 mr-3" 
-                                                                key={i}
-                                                                onClick={() => handleFilterTag(el)}
-                                                                style={{cursor:"pointer"}}
-                                                            >
-                                                                {el}
-                                                            </div>
+                                                            className="border px-2 py-1 rounded my-3 mr-3 text-center d-flex align-items-center justify-content-center" 
+                                                            key={i}
+                                                            onClick={() => handleFilterTag(el)}
+                                                            style={{cursor:"pointer", height:"38px", width:"83px", fontSize:"14px"}}
+                                                        >
+                                                            #{el}
+                                                        </div>
                                                         )
                                                     })
                                                 :

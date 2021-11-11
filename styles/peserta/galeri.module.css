@@ -1,16 +1,27 @@
-.card-thumbnail {
-    filter: brightness(100%);
-    /* background-image: linear-gradient(white, black); */
+.card_thumbnail_gallery {
+    position: relative;
+    /* border: 10px black solid; */
 }
 
-.card_thumbnail :hover {
-    filter: brightness(70%);
-    background-image: none;
-    background-color: linear-gradient(white, black);
+/* .card_thumbnail_gallery :before {
+  content: '';
+  display: block;
+  position: absolute;
+  height: 0%;
+  width: 100%;
+  bottom: 0;
+  transition: height 0.5s ease-out;
+  background: linear-gradient(to bottom, transparent 0%, black 100%);
+} */
+
+.card_thumbnail_gallery :hover {
+  transition: height 0.5s ease-out;
+  background: linear-gradient(to bottom, transparent 0%, black 100%);
+  z-index: 99999 !important;
 }
 
 /* Pagination */
-.page_dashboard_item {
+/* .page_dashboard_item {
     width: 33px;
     height: 30px;
     margin-right: 10px;
@@ -39,4 +50,4 @@
   
   .page_dashboard_link:hover {
     color: #9e9e9e;
-  }
+  } */
