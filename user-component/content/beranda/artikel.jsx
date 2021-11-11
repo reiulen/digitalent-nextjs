@@ -305,7 +305,7 @@ const Artikel = () => {
             <div className="row">
 
                 {/* Left Side */}
-                <div className="col-md-8 col-12">
+                <div className="col-md-8 col-12 pr-15">
 
                     {/* Filter at mobile screen */}
                     {
@@ -497,7 +497,7 @@ const Artikel = () => {
                             artikel && artikel.artikel && artikel.artikel.length !== 0 ?
                                 artikel.artikel.map ((el, i) => {
                                     return (
-                                        <div className="row my-20 ml-1 " key={i}>
+                                        <div className="row my-20 ml-1" key={i}>
                                             <div className="col col-7">
                                                 <div className="row d-flex justify-content-between align-items-center">
                                                     <div className="d-flex align-self-center">
@@ -778,7 +778,7 @@ const Artikel = () => {
                                                 className="border px-2 py-1 rounded my-3 mr-3 text-center d-flex align-items-center justify-content-center" 
                                                 key={i}
                                                 onClick={() => handleFilterTag(el)}
-                                                style={{cursor:"pointer", height:"38px", width:"83px", fontSize:"14px"}}
+                                                style={{cursor:"pointer", height:"38px", fontSize:"14px"}}
                                             >
                                                 #{el}
                                             </div>

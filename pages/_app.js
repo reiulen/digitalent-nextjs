@@ -18,7 +18,7 @@ import "../components/Table/tableStyle.css";
 import "../components/content/sertifikat/style.css";
 import "../styles/sitemanagement/pelatihan.css";
 import "../styles/peserta/dashboards.css";
-import "../styles/peserta/galeri.module.css"
+// import "../styles/peserta/galeri.module.css"
 import "../styles/homepage/landingpage.css";
 
 import SimpleReactValidator from "simple-react-validator";
