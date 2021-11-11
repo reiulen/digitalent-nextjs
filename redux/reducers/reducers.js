@@ -440,6 +440,7 @@ import {
   allBerandaGaleriReducer,
   detailBerandaGaleriReducer,
   kategoriBerandaGaleriReducer,
+  allTagBerandaGaleriReducer
 } from "../reducers/beranda/galeri.reducer";
 
 // ========== berita ========
@@ -825,6 +826,7 @@ const reducer = combineReducers({
   allBerandaGaleri: allBerandaGaleriReducer,
   detailBerandaGaleri: detailBerandaGaleriReducer,
   kategoriBerandaGaleri: kategoriBerandaGaleriReducer,
+  allTagBerandaGaleri: allTagBerandaGaleriReducer,
 
   // ========== berita ========
   allBerandaBerita: allBerandaBeritaReducer,

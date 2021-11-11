@@ -152,7 +152,7 @@ const Berita = () => {
     }
 
     const handleFilterTag = (str) => {
-        setActiveTitle(str)
+        setActiveTitle(`#${str}`)
         // setTag(str)
         dispatch (getAllBerandaBerita(
             activePage, 
@@ -185,9 +185,9 @@ const Berita = () => {
 
 
     return (
-        <div>
+        <div className="mx-35">
             {/* BreadCrumb */}
-            <div className="row mb-5 mt-15 mx-1 py-3 px-8 bg-white rounded-pill d-flex align-items-center border">
+            <div className="row my-15 mt-15 mx-1 py-3 px-8 bg-white rounded-pill d-flex align-items-center border">
                 <span className="text-primary">
                     <Link href="/">
                         Beranda 
@@ -490,7 +490,7 @@ const Berita = () => {
                         loadingBerita ?
                             <div className="container-fluid">
                                 <div className="row">
-                                <PulseLoaderRender />
+                                    <PulseLoaderRender />
                                 </div>
                             </div>
                         :
@@ -538,7 +538,7 @@ const Berita = () => {
 
                                                 <div className="row my-5">
                                                     {/* Insert Title Here */}
-                                                    <Link href={`/berita/detail/${el.slug}`}>
+                                                    <Link href={`/artikel/detail/${el.slug}`}>
                                                         <a>
                                                             <h1 className="text-dark">
                                                                 {handleTitleToTrim(el.judul)}
@@ -547,13 +547,17 @@ const Berita = () => {
                                                     </Link>
                                                     
                                                 </div>
-
-                                                <div className="row my-5">
-                                                    {/* Insert Desc Here */}
-                                                    <div dangerouslySetInnerHTML={{__html: handleDescToTrim(el.isi_berita)}} />
                                                 
-                                                </div>
-
+                                                {
+                                                    windowDimensions && windowDimensions.width && windowDimensions.width > 770 ?
+                                                        <div className="row my-5">
+                                                            {/* Insert Desc Here */}
+                                                            <div dangerouslySetInnerHTML={{__html: handleDescToTrim(el.isi_berita)}} />
+                                                        </div>
+                                                    :
+                                                        null
+                                                }
+                                                
                                                 <div className="row mb-3 d-flex align-items-center">
                                                     {/* Insert Date and View Here */}
                                                     <div className="text-muted col-xl-5 col-12 pl-0">
@@ -566,16 +570,14 @@ const Berita = () => {
                                                             el.tag && el.tag.length !== 0 ?
                                                                 el.tag.map ((element, index) => {
                                                                     return (
-                                                                        
                                                                         <div 
                                                                             className=" border px-2 py-1 my-1 mr-3"
                                                                             onClick={() => handleFilterTag(element)}
                                                                             style={{cursor:"pointer"}}
                                                                             key={index}
                                                                         >
-                                                                            {element}
+                                                                            #{element}
                                                                         </div>
-                                                                      
                                                                     )
                                                                 })
                                                                 
@@ -583,17 +585,16 @@ const Berita = () => {
                                                                 null
                                                         }
                                                     </div>
-                                                    
-                                                    
                                                 </div>
                                             </div>
 
                                             <div 
                                                 className="col col-5 position-relative d-flex align-self-center" 
-                                                style={{objectFit:"contain"}}
+                                                // style={{objectFit:"contain"}}
+                                                style={{objectFit:"cover"}}
                                             >
                                                 {/* Insert Card Image Here */}
-                                                <Link href={`/berita/detail/${el.slug}`}>
+                                                <Link href={`/artikel/detail/${el.slug}`}>
                                                     <a>
                                                         <img 
                                                             src={
@@ -604,7 +605,7 @@ const Berita = () => {
                                                             height="auto"
                                                             alt="Card Image"
                                                             className="rounded-lg"
-                                                            // style={{objectFit:"contain"}}
+                                                            style={{objectFit:"cover"}}
                                                         />
                                                     </a>
                                                 </Link>
@@ -617,7 +618,7 @@ const Berita = () => {
                             :
                                 <div className="row d-flex justify-content-center my-5">
                                     <h1 className="font-weight-bolder">
-                                        Berita Tidak Tersedia
+                                        Artikel Tidak Tersedia
                                     </h1>
                                 </div>
                     }
@@ -766,18 +767,18 @@ const Berita = () => {
                         <h3 className="font-weight-bolder"> 
                             Temukan lebih banyak berita yang sesuai:
                         </h3>
-                        <div className=" d-flex flex-wrap justify-content-md-around  flex-row">
+                        <div className=" d-flex flex-wrap  flex-row">
                             {
                                 tags && tags.tag && tags.tag.length !== 0 ?
                                     tags.tag.map ((el, i) => {
                                         return (
                                             <div 
-                                                className="border px-2 py-1 rounded my-3 mr-3" 
+                                                className="border px-2 py-1 rounded my-3 mr-3 text-center d-flex align-items-center justify-content-center" 
                                                 key={i}
                                                 onClick={() => handleFilterTag(el)}
-                                                style={{cursor:"pointer"}}
+                                                style={{cursor:"pointer", height:"38px", width:"83px", fontSize:"14px"}}
                                             >
-                                                {el}
+                                                #{el}
                                             </div>
                                         )
                                     })
