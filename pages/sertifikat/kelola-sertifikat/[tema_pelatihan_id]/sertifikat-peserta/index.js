@@ -30,7 +30,7 @@ export default function KelokaSertifikatPage() {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  store =>
+  (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
       if (!session) {
@@ -42,17 +42,16 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
       query.id ? query.id : (query.id = req.cookies.nama_pelatihan_id);
-
       await store.dispatch(
         getDetailParticipant(
           query.id ? query.id : req.cookies.nama_pelatihan_id,
           query.page,
           query.keyword,
           query.limit,
+          session.user.user.data.token,
           query.publish,
           query.startdate,
-          query.enddate,
-          session.user.user.data.token
+          query.enddate
         )
       );
 

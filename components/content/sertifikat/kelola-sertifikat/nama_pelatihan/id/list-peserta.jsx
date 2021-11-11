@@ -20,6 +20,7 @@ export default function ListPeserta() {
     (state) => state.detailParticipant
   );
 
+  console.log(participant, "ini participant");
   // #Pagination
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(null);
@@ -64,6 +65,7 @@ export default function ListPeserta() {
       dispatch(clearErrors());
     }
   };
+
   return (
     <PageWrapper>
       {/* error START */}
@@ -151,9 +153,7 @@ export default function ListPeserta() {
                       </tr>
                     </thead>
                     <tbody>
-                      {!participant ||
-                      (participant &&
-                        participant.data.list_certificate.length === 0) ? (
+                      {!participant.status ? (
                         <tr>
                           <td className="text-center" colSpan={6}>
                             Data Tidak Ditemukan
@@ -161,7 +161,7 @@ export default function ListPeserta() {
                         </tr>
                       ) : (
                         participant &&
-                        participant.data.list_certificate.map(
+                        participant?.data?.list_certificate.map(
                           (participant, i) => {
                             return (
                               <tr key={i}>
@@ -243,8 +243,8 @@ export default function ListPeserta() {
                   <div className="table-pagination">
                     <Pagination
                       activePage={+page}
-                      itemsCountPerPage={participant.data.perPage}
-                      totalItemsCount={participant.data.total}
+                      itemsCountPerPage={participant?.data?.perPage}
+                      totalItemsCount={participant?.data?.total}
                       pageRangeDisplayed={3}
                       onChange={handlePagination}
                       nextPageText={">"}
@@ -283,7 +283,8 @@ export default function ListPeserta() {
                           className="align-middle my-auto"
                           style={{ color: "#B5B5C3" }}
                         >
-                          Total Data {participant.data.list_certificate.length}
+                          Total Data{" "}
+                          {participant?.data?.list_certificate.length || "-"}
                         </p>
                       </div>
                     </div>

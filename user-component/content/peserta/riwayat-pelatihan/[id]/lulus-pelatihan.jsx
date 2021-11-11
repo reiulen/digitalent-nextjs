@@ -1,19 +1,14 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { Card, Col, Row, Badge, Button, Modal } from "react-bootstrap";
-import Link from "next/link";
-import Image from "next/image";
 import style from "../style.module.css";
-import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
-import Cookies from "js-cookie";
 import PesertaWrapper from "../../../../components/wrapper/Peserta.wrapper";
 import axios from "axios";
+
 export default function SeleksiAdministrasi(props) {
   const { state: data } = useSelector(
     (state) => state.getDetailRiwayatPelatihanPeserta
   );
-  const router = useRouter();
-  console.log(data);
   const [description, setDescription] = useState(data.deskripsi);
   const [finalDescription, setFinalDescription] = useState();
   const dateFrom = moment(data.pendaftaran_mulai).format("LL");
@@ -81,7 +76,6 @@ export default function SeleksiAdministrasi(props) {
   };
 
   const uploadSertifikasi = async (data, id) => {
-    console.log(props);
     const link = `${process.env.END_POINT_API_PELATIHAN}api/v1/formPendaftaran/update-sertifikat`;
 
     const config = {
@@ -97,9 +91,8 @@ export default function SeleksiAdministrasi(props) {
     };
     try {
       const data = await axios.post(link, body, config);
-      console.log(data);
     } catch (error) {
-      console.log(error, "masuk sini errornya");
+      Swal.fire("Gagal", `${error.response.data.message}`, "error");
     }
   };
 
@@ -170,9 +163,6 @@ export default function SeleksiAdministrasi(props) {
                       <Button
                         className={`btn-rounded-full font-weight-bold btn-block justify-content-center mt-5 `}
                         style={{ height: "40px", fontSize: "14px" }}
-                        onClick={() => {
-                          console.log("ini click button 2 ");
-                        }}
                       >
                         <i className="ri-download-2-fill mr-2"></i>
                         Bukti Pendaftaran

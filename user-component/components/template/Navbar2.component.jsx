@@ -58,9 +58,7 @@ const Navigationbar = ({ session }) => {
       router.push("/peserta/wizzard");
     }
   }, [dataPribadi]);
-  // const { error: errorAkademi, akademi } = useSelector(
-  //   (state) => state.allAkademi
-  // );
+
   const [akademi, setAkademi] = useState([]);
   const getAkademi = async () => {
     let link =
@@ -75,11 +73,6 @@ const Navigationbar = ({ session }) => {
     getSimonas();
     getBeasiswa();
   }, []);
-
-  useEffect(() => {
-    // console.log(simonas, "ini useeffect simonas");
-    // console.log(beasiswa, "ini useeffect beasiswa");
-  }, [simonas, beasiswa]);
 
   const getSimonas = async () => {
     const link = "http://simonas-dev.majapahit.id/api/job";
@@ -167,9 +160,9 @@ const Navigationbar = ({ session }) => {
               className="p-3"
             >
               {isNavOpen ? (
-                <i class="ri-close-line"></i>
+                <i className="ri-close-line"></i>
               ) : (
-                <i class="ri-menu-line"></i>
+                <i className="ri-menu-line"></i>
               )}
             </Navbar.Toggle>
           </div>
