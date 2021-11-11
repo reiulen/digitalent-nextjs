@@ -7,7 +7,7 @@ import SimpleReactValidator from "simple-react-validator";
 import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
 
-import { SweatAlert } from "../../../../utils/middleware/helper";
+import SweatAlert from "../../../../utils/middleware/helper";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import {
   newAcademy,

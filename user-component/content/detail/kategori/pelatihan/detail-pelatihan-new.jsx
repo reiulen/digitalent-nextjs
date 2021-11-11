@@ -5,7 +5,7 @@ import moment from "moment";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 
-import { SweatAlert } from "../../../../../utils/middleware/helper";
+import SweatAlert from "../../../../../utils/middleware/helper";
 
 import style from "../../../../../styles/peserta/dashboard.module.css";
 
