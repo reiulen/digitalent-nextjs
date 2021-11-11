@@ -338,7 +338,6 @@ const GeneralPage = ({ token }) => {
           }
         );
 
-        console.log("data datarrrr", data);
 
         if (data) {
           setIsUpdate(true);

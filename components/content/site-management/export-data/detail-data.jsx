@@ -27,7 +27,7 @@ const Table = ({ token }) => {
   const router = useRouter();
 
   const detailExportData = useSelector((state) => state.detailExportData);
-  console.log("detailExportData", detailExportData);
+
 
   const [valueSearch, setValueSearch] = useState("");
   const handleChangeValueSearch = (value) => {

@@ -382,9 +382,9 @@ const Faq = ({ token }) => {
 
             <div className="col-lg-12 order-1 px-0">
                 <div className="card card-custom card-stretch gutter-b">
-                    <div className="card-header border-0">
-                        <h3 className={`${styles.headTitle}`}>FAQ</h3>
-                        <div className="card-toolbar">
+                    <div className="card-header row border-0">
+                        <h3 className={`${styles.headTitle} col-12 col-sm-8 col-md-8 col-lg-8 col-xl-9`}>FAQ</h3>
+                        <div className="card-toolbar col-12 col-sm-4 col-md-4 col-lg-4 col-xl-3">
                             <Link href='/publikasi/faq/tambah'>
                                 <a className={`${styles.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bold btn-block`}>
                                     <i className="ri-add-line pb-1 text-white mr-2 "></i>
@@ -395,7 +395,6 @@ const Faq = ({ token }) => {
                     </div>
 
                     <div className="card-body pt-0">
-
                         <div className="table-filter">
                             <div className="row align-items-center">
                                 <div className="col-sm-6 col-md-6 col-lg-6 col-xl-6">
@@ -405,13 +404,13 @@ const Faq = ({ token }) => {
                                         <i className="ri-search-line left-center-absolute ml-2"></i>
                                         <input
                                             type="text"
-                                            className="form-control pl-10"
+                                            className={`${styles.cari} form-control pl-10`}
                                             placeholder="Ketik disini untuk Pencarian..."
                                             value={search}
                                             onChange={(e) => setSearch(e.target.value)}
                                         />
                                         <button
-                                            className="btn bg-blue-primary text-white right-center-absolute"
+                                            className={`${styles.fontCari} btn bg-blue-primary text-white right-center-absolute`}
                                             style={{
                                                 borderTopLeftRadius: "0",
                                                 borderBottomLeftRadius: "0",
@@ -422,16 +421,16 @@ const Faq = ({ token }) => {
                                         </button>
                                     </div>
                                 </div>
-                                <div className="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                <div className={`${styles.filterDate} col-sm-6 col-md-6 col-lg-6 col-xl-6`}>
                                     <div className="d-flex flex-wrap align-items-center justify-content-end mt-2">
                                         {/* sortir by modal */}
                                         <button
                                             className="col-sm-12 col-md-6 avatar item-rtl btn border d-flex align-items-center justify-content-between mt-2"
                                             data-toggle="modal"
                                             data-target="#exampleModalCenter"
-                                            style={{ color: "#464646", minWidth: "230px" }}
+                                            style={{ color: "#464646" }}
                                         >
-                                            <div className="d-flex align-items-center">
+                                            <div className={`${styles.filter} d-flex align-items-center`}>
                                                 <IconFilter className="mr-3" />
                                                 Pilih Filter
                                             </div>
@@ -599,7 +598,7 @@ const Faq = ({ token }) => {
                                                                 }
 
                                                             </td>
-                                                            <td className='align-middle' style={{overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',maxWidth:'11rem'}}>{row.judul}</td>
+                                                            <td className='align-middle' style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '11rem' }}>{row.judul}</td>
                                                             <td className='align-middle'>{row.kategori}</td>
                                                             <td className='align-middle'>
                                                                 {row.publish === 1 ? (
@@ -684,21 +683,38 @@ const Faq = ({ token }) => {
 
                             <div className="row">
                                 {faq && faq.perPage < faq.total &&
-                                    <div className={`${stylesPag.pagination} table-pagination`}>
-                                        <Pagination
-                                            activePage={page}
-                                            itemsCountPerPage={faq.perPage}
-                                            totalItemsCount={faq.total}
-                                            pageRangeDisplayed={3}
-                                            onChange={handlePagination}
-                                            nextPageText={'>'}
-                                            prevPageText={'<'}
-                                            firstPageText={'<<'}
-                                            lastPageText={'>>'}
-                                            itemClass='page-item'
-                                            linkClass='page-link'
-                                        />
-                                    </div>
+                                    <>
+                                        <div className={`${stylesPag.pagination} table-pagination`}>
+                                            <Pagination
+                                                activePage={page}
+                                                itemsCountPerPage={faq.perPage}
+                                                totalItemsCount={faq.total}
+                                                pageRangeDisplayed={3}
+                                                onChange={handlePagination}
+                                                nextPageText={'>'}
+                                                prevPageText={'<'}
+                                                firstPageText={'<<'}
+                                                lastPageText={'>>'}
+                                                itemClass='page-item'
+                                                linkClass='page-link'
+                                            />
+                                        </div>
+                                        <div className={`${stylesPag.pagination2} table-pagination`}>
+                                            <Pagination
+                                                activePage={page}
+                                                itemsCountPerPage={faq.perPage}
+                                                totalItemsCount={faq.total}
+                                                pageRangeDisplayed={1}
+                                                onChange={handlePagination}
+                                                nextPageText={'>'}
+                                                prevPageText={'<'}
+                                                firstPageText={'<<'}
+                                                lastPageText={'>>'}
+                                                itemClass='page-item'
+                                                linkClass='page-link'
+                                            />
+                                        </div>
+                                    </>
                                 }
                                 <div className={`${stylesPag.rightPag} table-total ml-auto`}>
                                     <div className="row">
