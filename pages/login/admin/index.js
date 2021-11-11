@@ -1,5 +1,5 @@
 import LoginAdmin from "../../../components/content/auth/admin/login";
-import Beranda from "../../../user-component/content/beranda/beranda";
+// import Beranda from "../../../user-component/content/beranda/beranda";
 import { getSession } from "next-auth/client";
 
 export default function LoginAdminPage() {
@@ -17,7 +17,7 @@ export async function getServerSideProps(context) {
   const session = await getSession({ req: context.req });
   if (session) {
     const data = session.user.user.data;
-    
+
     if (data.user.roles[0] === "user") {
       return {
         redirect: {
