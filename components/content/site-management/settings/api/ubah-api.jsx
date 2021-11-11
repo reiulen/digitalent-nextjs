@@ -133,7 +133,6 @@ const UbahApi = ({ token }) => {
             status: status,
             fields: valueField.length === 0 ? field : valueField,
           };
-          console.log("sendData", sendData);
 
           try {
             let { data } = await axios.post(

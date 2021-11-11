@@ -2,6 +2,18 @@ import {
   ADMIN_SITE_REQUEST,
   ADMIN_SITE_SUCCESS,
   ADMIN_SITE_FAIL,
+  ROLES_LIST_REQUEST,
+  ROLES_LIST_SUCCESS,
+  ROLES_LIST_FAIL,
+  PELATIHAN_LIST_REQUEST,
+  PELATIHAN_LIST_SUCCESS,
+  PELATIHAN_LIST_FAIL,
+  GET_ACADEMY_REQUEST,
+  GET_ACADEMY_SUCCESS,
+  GET_ACADEMY_FAIL,
+  UNIT_WORK_LIST_REQUEST,
+  UNIT_WORK_LIST_SUCCESS,
+  UNIT_WORK_LIST_FAIL,
   GET_LIST_ADMIN_SITE_REQUEST,
   GET_LIST_ADMIN_SITE_SUCCESS,
   GET_LIST_ADMIN_SITE_FAIL,
@@ -60,6 +72,107 @@ export const getAllAdminSite = (token) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: ADMIN_SITE_FAIL,
+    });
+  }
+};
+
+export const getAllListPelatihan = (token) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: PELATIHAN_LIST_REQUEST });
+
+    let cariState = getState().allListPelatihan.cari || "";
+
+    const params = {
+      cari: cariState,
+    };
+
+    const { data } = await axios.get(
+      `${process.env.END_POINT_API_PELATIHAN}api/v1/pelatihan/dropdown`,
+      {
+        params,
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    dispatch({
+      type: PELATIHAN_LIST_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: PELATIHAN_LIST_FAIL,
+    });
+  }
+};
+
+export const getListRoles = (token) => async (dispatch) => {
+  try {
+    dispatch({ type: ROLES_LIST_REQUEST });
+
+    const { data } = await axios.get(
+      `${process.env.END_POINT_API_SITE_MANAGEMENT}api/role/all`,
+      {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    dispatch({
+      type: ROLES_LIST_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ROLES_LIST_FAIL,
+    });
+  }
+};
+export const getListUnitWorks = (token) => async (dispatch) => {
+  try {
+    dispatch({ type: UNIT_WORK_LIST_REQUEST });
+
+    const { data } = await axios.get(
+      `${process.env.END_POINT_API_SITE_MANAGEMENT}api/satuan/all`,
+      {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    dispatch({
+      type: UNIT_WORK_LIST_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: UNIT_WORK_LIST_FAIL,
+    });
+  }
+};
+export const getListAcademy = (token) => async (dispatch) => {
+  try {
+    dispatch({ type: GET_ACADEMY_REQUEST });
+
+    const { data } = await axios.get(
+      `${process.env.END_POINT_API_PELATIHAN}api/v1/akademi/dropdown`,
+      {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    dispatch({
+      type: GET_ACADEMY_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_ACADEMY_FAIL,
     });
   }
 };

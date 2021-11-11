@@ -136,8 +136,6 @@ const Tambah = ({ token }) => {
       );
     } 
     else {
-      console.log("formReferenceAndText test", formReferenceAndText);
-
       let sendData = {
         name: nameReference,
         status: status,
@@ -200,7 +198,6 @@ const Tambah = ({ token }) => {
               },
             }
           );
-          console.log("data", data);
           let resultOptionReferenceChooce = data.data.map((items) => {
             return { ...items, label: items.label, value: items.label };
           });
