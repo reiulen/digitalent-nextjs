@@ -10,7 +10,10 @@ import "react-toastify/dist/ReactToastify.css";
 import Swal from "sweetalert2";
 const Table = ({ token }) => {
   const [array, setArray] = useState([]);
-  const [array2, setArray233333333333333333] = useState([]);
+  // const [array2, setArray233333333333333333] = useState([]);
+
+  console.log("array",array)
+  // console.log("array2",array2)
 
   const firstPush = () => {
     let _temp = [...array];
@@ -34,7 +37,6 @@ const Table = ({ token }) => {
         });
       }
     });
-
     setArray(_temp);
   };
 
@@ -154,7 +156,8 @@ const Table = ({ token }) => {
       dismissOnDestroy: false,
     }).then((result) => {
       if (result.isConfirmed) {
-        setArray(array2);
+         let arrayStorage = JSON.parse(sessionStorage.getItem("array2"));
+        setArray(arrayStorage);
       }
     });
   };
@@ -171,7 +174,9 @@ const Table = ({ token }) => {
           }
         );
         setArray(data.data);
-        setArray233333333333333333(data.data);
+        // setArray233333333333333333([{...data.data}]);
+        sessionStorage.setItem("array2", JSON.stringify(data.data));
+        localStorage.setItem("array2",array)
       } catch (error) {
         notify(error.response.data.message);
       }
