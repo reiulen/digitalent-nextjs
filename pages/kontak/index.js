@@ -11,7 +11,7 @@ import {
 import { getAllAkademi } from "../../redux/actions/beranda/beranda.actions";
 
 const Berita = dynamic(() =>
-  import("../../user-component/content/beranda/berita")
+  import("../../user-component/content/beranda/kontak")
 );
 
 const Layout = dynamic(() =>
@@ -42,22 +42,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
       let sessionToken = session?.user.user.data.user.token;
 
       await store.dispatch(getDataPribadi(sessionToken));
-
-      await store.dispatch(
-        getAllBerandaBerita(
-          query.page,
-          query.keyword,
-          query.limit,
-          query.filterPublish,
-          query.sort,
-          query.category_id,
-          query.category_name,
-          query.category_akademi,
-          query.tag
-        )
-      );
-
-      await store.dispatch(getKategoriBerandaBerita());
 
       await store.dispatch(getAllAkademi());
 

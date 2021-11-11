@@ -120,7 +120,7 @@ const Dashboard = ({ session, success }) => {
 
   return (
     <>
-      <PesertaWrapper>
+      <PesertaWrapper padding={"10"}>
         <Row className="mx-1">
           <CardPill
             background="bg-extras"
@@ -266,7 +266,7 @@ const Dashboard = ({ session, success }) => {
                     <p className={style.card_title}>Pelatihan Terkini</p>
                   </Card.Title>
 
-                  <Card className="shadow rounded-md">
+                  <Card className=" shadow rounded-md">
                     <Image
                       className={`${style.image_dashboard}`}
                       src={
@@ -280,7 +280,10 @@ const Dashboard = ({ session, success }) => {
                       objectFit="cover"
                     />
                     <Card.ImgOverlay>
-                      <Badge bg={` rounded-xl py-3 px-4 ${style.badge_card}`}>
+                      <Badge
+                        bg={`rounded-xl py-3 px-4 ${style.badge_card}`}
+                        className="d-none d-lg-inline-block"
+                      >
                         Pelatihan{" "}
                         {pelatihan.pelatihan_berjalan.metode_pelatihan}
                       </Badge>

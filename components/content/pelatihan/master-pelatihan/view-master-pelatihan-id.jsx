@@ -66,6 +66,7 @@ const ViewTrainingStep2 = () => {
               name=""
               className="form-control"
               required={row.required}
+              disabled
             />
           </div>
         );
@@ -103,6 +104,7 @@ const ViewTrainingStep2 = () => {
                         className="form-check-input"
                         required={row.required}
                         value={dat}
+                        disabled
                       />
                       <label className="form-check-label">{dat}</label>
                     </div>
@@ -142,6 +144,7 @@ const ViewTrainingStep2 = () => {
                         className="form-check-input"
                         value={dat}
                         required={row.required}
+                        disabled
                       />
                       <label className="form-check-label">{dat}</label>
                     </div>
@@ -158,6 +161,7 @@ const ViewTrainingStep2 = () => {
             </label>
             <div className="custom-file">
               <input
+                disabled
                 type="file"
                 className="custom-file-input"
                 accept="image/png, image/jpeg , image/jpg"
@@ -181,6 +185,7 @@ const ViewTrainingStep2 = () => {
                 className="custom-file-input"
                 accept="application/pdf"
                 required={row.required}
+                disabled
               />
               <label className="custom-file-label" htmlFor="customFile">
                 Belum ada File
@@ -196,6 +201,7 @@ const ViewTrainingStep2 = () => {
               {row.name}
             </label>
             <input
+              disabled
               type={row.element}
               name=""
               className="form-control"
