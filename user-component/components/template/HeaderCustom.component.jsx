@@ -173,7 +173,7 @@ const Header = ({ breadcrumb }) => {
                 </Row>
               </Card>
               <h1
-                className={styles.mainText}
+                className={styles.mainText + " p-0"}
                 hidden={router.pathname.includes(routerPath)}
               >
                 Digital Talent Scholarship
@@ -263,7 +263,7 @@ const Header = ({ breadcrumb }) => {
                       </Col>
                     </Row>
                   </Card>
-                  <Col xs={12}>
+                  <Col xs={12} className="p-0">
                     <h1 className={styles.mainText}>
                       Digital Talent Scholarship
                     </h1>

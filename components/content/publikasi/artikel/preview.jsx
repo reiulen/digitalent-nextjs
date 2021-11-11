@@ -4,26 +4,13 @@ import Image from "next/image";
 import moment from "moment";
 import IconFilter from "../../../assets/icon/Filter";
 
-// import PageWrapper from "../../../wrapper/page.wrapper";
 import PreviewWrapper from "../../../wrapper/preview.wrapper";
 import Backdrop from "../../../../public/assets/media/backdrop.svg";
 import styles from "../../../../styles/preview.module.css";
 
 const Preview = () => {
-    // const editorRef = useRef();
-    // const dispatch = useDispatch();
-
-    // const { CKEditor, ClassicEditor, Base64UploadAdapter } =
-    // editorRef.current || {};
 
     useEffect(() => {
-        // editorRef.current = {
-        //     CKEditor: require("@ckeditor/ckeditor5-react").CKEditor, //Added .CKEditor
-        //     ClassicEditor: require("@ckeditor/ckeditor5-build-classic"),
-        //     // Base64UploadAdapter: require('@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter')
-        //   };
-
-        // dispatch (decodeHTML(artikel.isi_artikel))
 
     }, [])
 
@@ -38,37 +25,14 @@ const Preview = () => {
     const [isi_artikel, setIsiArtikel] = useState(artikel.isi_artikel)
     const [tags, setTags] = useState(artikel.tag)
 
-    // const decodeHTML = (str) => {
-    //     if(str && typeof str === 'string') {
-    //         // strip script/html tags
-    //         str = str.replace(/<script[^>]*>([\S\s]*?)<\/script>/gmi, '');
-    //         str = str.replace(/<\/?\w(?:[^"'>]|"[^"]*"|'[^']*')*>/gmi, '');
-    //         element.innerHTML = str;
-    //         str = element.textContent;
-    //         element.textContent = '';
-    //       }
-
-    //       return str;
-    // }
-
     return (
         <>
-            {/* <div className="" style={{ height: '150px' }}>
-                <Image
-                    // className={styles['title-Pratinjau']}
-                    src={Backdrop}
-                    alt="backdrop"
-                    layout="responsive"
-                    objectFit="fill"
-                // objectPosition="center"
-                >
-                </Image>
-            </div> */}
             <PreviewWrapper title="Pratinjau Artikel - Publikasi">
 
-                <div className="col-lg-12 order-1 px-0 position-relative">
+                <div className="col-lg-12 order-1 px-0 my-5 position-relative">
                     <div className="" style={{ height: '100%' }}>
-                        <div className="container">
+                        <div className="row flex-column container">
+                        <div className={`${styles.headBreadcrumb}`}>
                             <nav aria-label="breadcrumb">
                                 <ol className="breadcrumb bg-transparent my-5 ps-5" style={{ border: '1px solid gray', borderRadius: '20px' }}>
                                     <li className="breadcrumb-item" style={{ color: 'blue' }}>Beranda</li>
@@ -76,6 +40,7 @@ const Preview = () => {
                                     <li className="breadcrumb-item" aria-current="page">Detail Artikel</li>
                                 </ol>
                             </nav>
+                        </div>
 
                             <div className="ml-0">
                                 <h1 className={`${styles.titlePratinjau} font-weight-bold my-5`}>
@@ -85,8 +50,7 @@ const Preview = () => {
                                 <div className="row mb-4">
                                     <div className="rounded mt-1" style={{ marginLeft: '25px' }}>
                                         <div className={styles['titleSubMenu-2']}>
-                                            {/* <i className="ri-dashboard-line"></i> */}
-                                            <span className="label label-inline label-light-success font-weight-bold">
+                                            <span className={`${styles.titleKategori} label label-inline label-light-success font-weight-bold`}>
                                                 {(jenis_kategori).toUpperCase()}
                                             </span>
                                         </div>
@@ -109,35 +73,19 @@ const Preview = () => {
                                         </div>
                                     </div>
 
-                                    {/* <div className="col-sm-4 col-md-2 col-1 d-flex align-items-center justify-content-end">
-                                        <div className={styles['iconBorder']}>
-                                            <i className={`${styles.icon} socicon-sharethis`}></i>
-                                        </div>
-                                        <div className={styles['iconBorder']}>
-                                            <i className={`${styles.icon} flaticon-black`}></i>
-                                        </div>
-                                    </div> */}
                                 </div>
                             </div>
                         </div>
 
                         <div className="container">
                             <div className="row">
-                                {/* <div className="col-8"> */}
                                 <div className="pt-0" style={{ height: '100%' }}>
-                                    {/* <div className="text-center mt-5">
-                                    <h3>
-                                        {judul_artikel}
-                                    </h3>
-                                </div> */}
-
-                                    <div className="d-flex justify-content-center my-3">
+                                   
+                                    <div className={`${styles.imgPreview} d-flex justify-content-center my-3`}>
                                         <Image
                                             src={process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + gambar}
                                             alt="gambar-artikel"
                                             objectFit="fill"
-                                            // width= "100%"
-                                            // height= "100%"
                                             width="1200vh"
                                             height="500vh"
                                             className="mt-5 pt-5"
@@ -146,7 +94,7 @@ const Preview = () => {
 
                                     <div className="text-justify my-5 p-3" style={{ border: '1px solid #d7e1ea', borderRadius: '10px' }}>
                                         {/* To render html Tag */}
-                                        <div dangerouslySetInnerHTML={{ __html: isi_artikel }} style={{ overflowWrap: 'break-word' }}></div>
+                                        <div dangerouslySetInnerHTML={{ __html: isi_artikel }} className={`${styles.isiArtikel}`}></div>
                                         <div className="row">
                                             <div className="col-sm-8 col-md-10 col-11">
                                                 <div className="row my-3 ml-0">
@@ -168,72 +116,10 @@ const Preview = () => {
                                                     </div>
                                                 </div>
                                             </div>
-
-                                            {/* <div className="col-sm-4 col-md-2 col-1 d-flex align-items-center justify-content-end">
-                                                <div className={styles['iconBorder']}>
-                                                    <i className={`${styles.icon} socicon-sharethis`}></i>
-                                                </div>
-                                                <div className={styles['iconBorder']}>
-                                                    <i className={`${styles.icon} flaticon-black`}></i>
-                                                </div>
-                                            </div> */}
                                         </div>
                                     </div>
 
                                 </div>
-                                {/* </div>
-                            <div className="col-4" style={{ padding: '35px' }}>
-                                <div className="p-5" style={{ border: '1px solid gray', borderRadius: '15px' }}>
-                                    <div className="d-flex align-items-center font-weight-bolder">
-                                        <IconFilter className="mr-3 label label-inline font-weight-bold" style={{ borderRadius: '50%', height: '22px', backgroundColor: '#007cff' }} />
-                                        Pencarian
-                                    </div>
-                                    <div className="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                                        <div className="position-relative overflow-hidden mt-3" style={{ width: '260px', marginLeft: '-10px' }}>
-                                            <i className="ri-search-line left-center-absolute ml-2"></i>
-                                            <input
-                                                type="text"
-                                                className="form-control pl-10 rounded-pill"
-                                                placeholder="Cari Artikel.."
-                                            // onChange={e => setSearch(e.target.value)}
-                                            />
-                                            <button
-                                                className="btn text-white right-center-absolute"
-                                                style={{
-                                                    borderTopRightRadius: '45%',
-                                                    borderBottomRightRadius: '45%',
-                                                    backgroundColor: '#007cff'
-                                                }}
-                                            // onClick={handleSearch}
-                                            >
-                                                Cari
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="my-5">
-                                    <h4>TEMUKAN LEBIH BANYAK APA YANG PENTING BAGI ANDA</h4>
-                                    <div className="col-sm-8 col-md-10 col-11 mt-5">
-                                        <div className="row my-3">
-                                            <div className={styles['listTag']}>
-                                                {
-                                                    tags.map((el, i) => {
-                                                        return (
-                                                            <div style={{ background: "#fff", border: '1px solid #d7e1ea' }}
-                                                                className="mr-5 px-3 py-1 rounded"
-                                                                key={i}>
-                                                                <div className="text-center">
-                                                                    #{(el).toUpperCase()}
-                                                                </div>
-                                                            </div>
-                                                        )
-                                                    })
-                                                }
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> */}
                             </div>
                         </div>
                     </div>

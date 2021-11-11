@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
-import { BarChart, Bar, PieChart, Pie, Cell, Tooltip, Legend, XAxis } from 'recharts';
+import { BarChart, Bar, PieChart, Pie, Cell, Tooltip, Legend, XAxis, ResponsiveContainer } from 'recharts';
 import { useDispatch, useSelector } from "react-redux";
 
 import CardDashboard from '../../../CardDashboard'
 import PageWrapper from '../../../wrapper/page.wrapper'
 import LoadingTable from "../../../LoadingTable"
+
 import styles from "../../../../styles/pagination.module.css"
 
 import { clearErrors } from "../../../../redux/actions/publikasi/dashboard-publikasi.actions";
@@ -93,7 +94,19 @@ const DashbardPublikasi = ({ token }) => {
     const [dataDashboardGallery, setDataDashboardGallery] = useState(dashboard_publikasi.gallery ? dashboard_publikasi.gallery : null)
     const [dataDashboardVideo, setDataDashboardVideo] = useState(dashboard_publikasi.video ? dashboard_publikasi.video : null)
 
+    const titleToTrim = 30;
 
+    const handleTitleToTrim = (str) => {
+        let result = null;
+
+        if (str.length > titleToTrim) {
+            result = str.slice(0, titleToTrim) + "...";
+        } else {
+            result = str;
+        }
+
+        return result;
+    };
 
     return (
         <>
@@ -127,12 +140,12 @@ const DashbardPublikasi = ({ token }) => {
                             </div>
                         </div>
                     </div>
-                    <div className={`${styles.kontenPublish} col-lg-6 col-xxl-6`}>
+                    <div className={`${styles.kontenPublish} col-md-12 col-lg-6 col-xxl-6`}>
                         <div className="card card-custom card-stretch gutter-b">
                             <div className="card-body pt-2" style={{ backgroundColor: "#215480", borderRadius: "6px" }}>
-                                <h3 className="card-title font-weight-bolder text-light mt-5">Total Publish dan Belum Dipublish</h3>
-                                <div className="d-flex align-items-center justify-content-center col-sm-12">
-                                    <BarChart width={350} height={350} data={dataBarChart}>
+                                <h3 className="card-title font-weight-bolder text-light mt-5">Total Publish dan Unpublish</h3>
+                                <div className={`${styles.barChart} d-flex align-items-center justify-content-center col-sm-12`}>
+                                    <BarChart width={260} height={350} data={dataBarChart}>
                                         <XAxis dataKey="name" hide={true} />
                                         <Bar
                                             dataKey="publish"
@@ -191,23 +204,23 @@ const DashbardPublikasi = ({ token }) => {
                             </div>
                         </div>
                     </div>
-                    \
-                    <div className={`${styles.totalUser} col-lg-6 col-xxl-6`}>
+
+                    <div className={`${styles.totalUser} col-md-12 col-lg-6 col-xxl-6`}>
                         <div className="card card-custom card-stretch gutter-b">
                             <div className="card-body pt-2">
-                                <h3 className="card-title font-weight-bolder text-dark mt-5">Total Author, Peserta DTS dan Admin Publikasi </h3>
+                                <h3 className="card-title font-weight-bolder text-dark mt-5">Total Author dan Admin Publikasi</h3>
                                 <div className="text-muted" style={{ marginTop: "-20px" }}>
                                     Total User
                                 </div>
 
                                 <div className="d-flex align-items-center justify-content-center">
-                                    <PieChart width={350} height={350}>
+                                    <PieChart width={280} height={350}>
                                         <Pie
                                             data={dataPieChart}
                                             cx="50%"
                                             cy="50%"
-                                            innerRadius={115}
-                                            outerRadius={140}
+                                            innerRadius={100}
+                                            outerRadius={120}
                                             paddingAngle={-10}
                                             cornerRadius={30}
                                         >
@@ -286,15 +299,17 @@ const DashbardPublikasi = ({ token }) => {
                                                         <div className="symbol symbol-40 symbol-light-success mr-5">
                                                             <Image width={94} height={63} src="/assets/media/dummy-banner.png" className="align-self-end rounded" alt="" />
                                                         </div>
-                                                        <div className="d-flex flex-column flex-grow-1 font-weight-bold">
-                                                            <p className="text-dark text-hover-primary mb-1 font-size-lg">{el.judul_berita}</p>
-                                                            <span className="text-muted">Kategori : <span className='text-primary'>{el.kategori}</span></span>
-                                                            <span className="text-muted">Created By : <span className='text-primary'>{el.dibuat}</span></span>
-                                                        </div>
+                                                        <div className="row align-items-center" style={{ width: '100%' }}>
+                                                            <div className="col-12 col-md-9 col-lg-6 d-flex flex-column flex-grow-1 font-weight-bold">
+                                                                <p className="text-dark text-hover-primary mb-1 font-size-lg">{handleTitleToTrim(el.judul_berita)}</p>
+                                                                <span className="text-muted">Kategori : <span className='text-primary'>{el.kategori}</span></span>
+                                                                <span className="text-muted">Created By : <span className='text-primary'>{el.dibuat}</span></span>
+                                                            </div>
 
-                                                        <div className="d-flex flex-column flex-grow-1 font-weight-bold text-right">
-                                                            <p className="text-dark text-hover-primary mb-1 font-size-lg font-weight-bold display-4">{el.total_views}</p>
-                                                            <span className="text-muted">Dibaca</span>
+                                                            <div className={`${styles.totalView} col-12 col-md-3 col-lg-6 d-flex flex-column flex-grow-1 font-weight-bold`}>
+                                                                <p className="text-dark text-hover-primary mb-1 font-size-lg font-weight-bold display-4">{el.total_views}</p>
+                                                                <span className="text-muted">Dibaca</span>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 )
@@ -324,15 +339,17 @@ const DashbardPublikasi = ({ token }) => {
                                                         <div className="symbol symbol-40 symbol-light-success mr-5">
                                                             <Image width={94} height={63} src="/assets/media/dummy-banner.png" className="align-self-end rounded" alt="" />
                                                         </div>
-                                                        <div className="d-flex flex-column flex-grow-1 font-weight-bold">
-                                                            <p className="text-dark text-hover-primary mb-1 font-size-lg">{el.judul_artikel}</p>
-                                                            <span className="text-muted">Kategori : <span className='text-primary'>{el.kategori}</span></span>
-                                                            <span className="text-muted">Created By : <span className='text-primary'>{el.dibuat}</span></span>
-                                                        </div>
+                                                        <div className="row align-items-center" style={{ width: '100%' }}>
+                                                            <div className="col-12 col-md-9 col-lg-6 d-flex flex-column flex-grow-1 font-weight-bold">
+                                                                <p className="text-dark text-hover-primary mb-1 font-size-lg">{handleTitleToTrim(el.judul_artikel)}</p>
+                                                                <span className="text-muted">Kategori : <span className='text-primary'>{el.kategori}</span></span>
+                                                                <span className="text-muted">Created By : <span className='text-primary'>{el.dibuat}</span></span>
+                                                            </div>
 
-                                                        <div className="d-flex flex-column flex-grow-1 font-weight-bold text-right">
-                                                            <p className="text-dark text-hover-primary mb-1 font-size-lg font-weight-bold display-4">{el.total_views}</p>
-                                                            <span className="text-muted">Dibaca</span>
+                                                            <div className={`${styles.totalView} col-12 col-md-3 col-lg-6 d-flex flex-column flex-grow-1 font-weight-bold`}>
+                                                                <p className="text-dark text-hover-primary mb-1 font-size-lg font-weight-bold display-4">{el.total_views}</p>
+                                                                <span className="text-muted">Dibaca</span>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 )
@@ -361,15 +378,17 @@ const DashbardPublikasi = ({ token }) => {
                                                         <div className="symbol symbol-40 symbol-light-success mr-5" key={i}>
                                                             <Image width={94} height={63} src="/assets/media/dummy-banner.png" className="align-self-end rounded" alt="" />
                                                         </div>
-                                                        <div className="d-flex flex-column flex-grow-1 font-weight-bold">
-                                                            <p className="text-dark text-hover-primary mb-1 font-size-lg">{el.judul}</p>
-                                                            <span className="text-muted">Kategori : <span className='text-primary'>{el.nama_kategori}</span></span>
-                                                            <span className="text-muted">Created By : <span className='text-primary'>{el.dibuat}</span></span>
-                                                        </div>
+                                                        <div className="row align-items-center" style={{ width: '100%' }}>
+                                                            <div className="col-12 col-md-9 col-lg-6 d-flex flex-column flex-grow-1 font-weight-bold">
+                                                                <p className="text-dark text-hover-primary mb-1 font-size-lg">{handleTitleToTrim(el.judul)}</p>
+                                                                <span className="text-muted">Kategori : <span className='text-primary'>{el.nama_kategori}</span></span>
+                                                                <span className="text-muted">Created By : <span className='text-primary'>{el.dibuat}</span></span>
+                                                            </div>
 
-                                                        <div className="d-flex flex-column flex-grow-1 font-weight-bold text-right">
-                                                            <p className="text-dark text-hover-primary mb-1 font-size-lg font-weight-bold display-4">{el.total_views}</p>
-                                                            <span className="text-muted">Dibaca</span>
+                                                            <div className={`${styles.totalView} col-12 col-md-3 col-lg-6 d-flex flex-column flex-grow-1 font-weight-bold`}>
+                                                                <p className="text-dark text-hover-primary mb-1 font-size-lg font-weight-bold display-4">{el.total_views}</p>
+                                                                <span className="text-muted">Dibaca</span>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 )
@@ -397,15 +416,17 @@ const DashbardPublikasi = ({ token }) => {
                                                         <div className="symbol symbol-40 symbol-light-success mr-5">
                                                             <Image width={94} height={63} src="/assets/media/dummy-banner.png" className="align-self-end rounded" alt="" />
                                                         </div>
-                                                        <div className="d-flex flex-column flex-grow-1 font-weight-bold">
-                                                            <p className="text-dark text-hover-primary mb-1 font-size-lg">{el.judul_video}</p>
-                                                            <span className="text-muted">Kategori : <span className='text-primary'>{el.kategori}</span></span>
-                                                            <span className="text-muted">Created By : <span className='text-primary'>{el.dibuat}</span></span>
-                                                        </div>
+                                                        <div className="row align-items-center" style={{ width: '100%' }}>
+                                                            <div className="col-12 col-md-9 col-lg-6 d-flex flex-column flex-grow-1 font-weight-bold">
+                                                                <p className="text-dark text-hover-primary mb-1 font-size-lg">{handleTitleToTrim(el.judul_video)}</p>
+                                                                <span className="text-muted">Kategori : <span className='text-primary'>{el.kategori}</span></span>
+                                                                <span className="text-muted">Created By : <span className='text-primary'>{el.dibuat}</span></span>
+                                                            </div>
 
-                                                        <div className="d-flex flex-column flex-grow-1 font-weight-bold text-right">
-                                                            <p className="text-dark text-hover-primary mb-1 font-size-lg font-weight-bold display-4">{el.total_views}</p>
-                                                            <span className="text-muted">Dibaca</span>
+                                                            <div className={`${styles.totalView} col-12 col-md-3 col-lg-6 d-flex flex-column flex-grow-1 font-weight-bold`}>
+                                                                <p className="text-dark text-hover-primary mb-1 font-size-lg font-weight-bold display-4">{el.total_views}</p>
+                                                                <span className="text-muted">Dibaca</span>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 )
