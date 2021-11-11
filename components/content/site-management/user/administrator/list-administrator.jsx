@@ -160,10 +160,10 @@ const Table = ({ token }) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {allAdminSite.data.list_role.length === 0 ? (
+                      {allAdminSite?.data?.list_role?.length === 0 ? (
                         <td className="align-middle text-center" colSpan="6">Data Masih Kosong</td>
                       ) : (
-                        allAdminSite.data.list_role.map((items, index) => {
+                        allAdminSite?.data?.list_role?.map((items, index) => {
                           return (
                             <tr key={index}>
                               <td className="align-middle text-left">
@@ -211,19 +211,38 @@ const Table = ({ token }) => {
                               </td>
                               <td className="align-middle text-left">
                                 <div className="d-flex align-items-center">
-                                  <button
+                                  
+                                  {/* <Link href={`/site-management/user/administrator/edit-data-administrator/${items.id}`} passHref>
+                                  
+                                  
+                                  <a
                                     className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                                    onClick={() =>
-                                      router.push(
-                                        `/site-management/user/administrator/edit-data-administrator`
-                                      )
-                                    }
                                   >
                                     <IconPencil width="16" height="16" />
                                     <div className="text-hover-show-hapus">
                                       Ubah
                                     </div>
-                                  </button>
+                                  </a>
+
+                                  </Link> */}
+
+                                  <Link
+                                    href={{
+                                      pathname:"/site-management/user/administrator/edit-data-administrator",
+                                      query:{id:items.id}
+                                    }}
+                                  >
+                                    <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
+                                      <IconPencil width="16" height="16" />
+                                      <div className="text-hover-show-hapus">
+                                        Ubah
+                                      </div>
+                                    </a>
+                                  </Link>
+
+
+
+
                                   <button
                                     className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete"
                                     onClick={() =>

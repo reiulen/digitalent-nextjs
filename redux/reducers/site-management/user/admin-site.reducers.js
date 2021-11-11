@@ -8,6 +8,9 @@ import {
   UNIT_WORK_LIST_REQUEST,
   UNIT_WORK_LIST_SUCCESS,
   UNIT_WORK_LIST_FAIL,
+  PELATIHAN_LIST_REQUEST,
+  PELATIHAN_LIST_SUCCESS,
+  PELATIHAN_LIST_FAIL,
   GET_LIST_ADMIN_SITE_REQUEST,
   GET_LIST_ADMIN_SITE_SUCCESS,
   GET_LIST_ADMIN_SITE_FAIL,
@@ -113,6 +116,32 @@ export const allRolesListReducer = (state = initialState, action) => {
       };
 
     case ROLES_LIST_FAIL:
+      return {
+        ...state,
+        status: statuslist.error,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+export const allListPelatihanReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case PELATIHAN_LIST_REQUEST:
+      return {
+        ...state,
+        status: statuslist.process,
+      };
+
+    case PELATIHAN_LIST_SUCCESS:
+      return {
+        ...state,
+        status: statuslist.success,
+        data: action.payload.data,
+      };
+
+    case PELATIHAN_LIST_FAIL:
       return {
         ...state,
         status: statuslist.error,
@@ -258,8 +287,7 @@ export const detailAdminSiteReducer = (state = { adminSite: {} }, action) => {
     case DETAIL_ADMIN_SITE_SUCCESS:
       return {
         loading: false,
-        success: action.payload.message,
-        adminSite: action.payload.data,
+        adminSite: action.payload,
       };
 
     case DETAIL_ADMIN_SITE_FAIL:

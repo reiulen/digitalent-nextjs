@@ -244,12 +244,16 @@ const Navigationbar = ({ session }) => {
                     Pusat Informasi
                   </button>
                   <div className="dropdown-menu ml-3">
-                    <a className="dropdown-item navdropdown-child" href="#">
+                    <Link href="/peserta/menu/pusat-informasi">
+                    <a className="dropdown-item navdropdown-child">
                       Panduan Test Substansi
                     </a>
-                    <a className="dropdown-item navdropdown-child" href="#">
+                    </Link>
+                    <Link href="/peserta/menu/pusat-informasi">
+                    <a className="dropdown-item navdropdown-child">
                       Hak dan Kewajiban
                     </a>
+                    </Link>
                   </div>
                 </div>
                 <NavDropdown.Item

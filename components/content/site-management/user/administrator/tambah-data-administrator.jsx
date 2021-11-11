@@ -14,7 +14,7 @@ import Image from "next/image";
 import IconPlus from "../../../../../public/assets/icon/Plus.svg";
 import IconMinus from "../../../../../public/assets/icon/Minus.svg";
 import Select from "react-select";
-
+import axios from "axios";
 
 const TambahApi = ({ token }) => {
   let dispatch = useDispatch();
@@ -27,15 +27,30 @@ const TambahApi = ({ token }) => {
   const [role, setRole] = useState("");
   const [unitWork, setUnitWork] = useState("");
   const [statusAcademy, setStatusAcademy] = useState([]);
-  console.log("statusAcademy",statusAcademy)
-  const [typeAccess, setTypeAccess] = useState("")
+  console.log("statusAcademy", statusAcademy);
+  const [typeAccess, setTypeAccess] = useState("akademi");
+  // console.log("typeAccess", typeAccess);
+
   const [pelatihan, setPelatihan] = useState([]);
   const allUnitWorkList = useSelector((state) => state.allUnitWorkList);
-  console.log("allUnitWorkList", allUnitWorkList);
+  // console.log("allUnitWorkList", allUnitWorkList);
   const allRolesList = useSelector((state) => state.allRolesList);
-  console.log("allRolesList", allRolesList);
+  // console.log("allRolesList", allRolesList);
   const allAcademyList = useSelector((state) => state.allAcademyList);
-  console.log("allAcademyList", allAcademyList);
+  // console.log("allAcademyList", allAcademyList);
+  const allListPelatihan = useSelector((state) => state.allListPelatihan);
+  const [sortListPelatihan, setSortListPelatihan] = useState(
+    allListPelatihan.data.map((items) => {
+      return {
+        ...items,
+        manage: false,
+        view: false,
+        allSelect: false,
+      };
+    })
+  );
+  // console.log("allListPelatihan", allListPelatihan);
+  // console.log("sortListPelatihan", sortListPelatihan);
 
   const [hidePassword, setHidePassword] = useState(true);
   const [hidePasswordConfirm, setHidePasswordConfirm] = useState(true);
@@ -60,37 +75,93 @@ const TambahApi = ({ token }) => {
     }
   };
 
-  const changeListAcademy = (e)=>{
-    console.log("e,index",e)
-    setStatusAcademy(e)
-  }
+  const changeListAcademy = (e) => {
+    console.log("e,index", e);
+    // let _temp = []
+    // let data = e.map((items)=>{
+    //   return items.value
+    // })
+    setStatusAcademy(e);
+  };
 
-   const handleSubmit = () => {
-    
+  const handleChangePelatihan = (e, index) => {
+    let _temp = [...sortListPelatihan];
+    if (e.target.name === "select-all") {
+      if (_temp[index].allSelect) {
+        _temp[index] = {
+          ..._temp[index],
+          allSelect: false,
+          view: false,
+          manage: false,
+        };
+      } else {
+        _temp[index] = {
+          ..._temp[index],
+          allSelect: true,
+          view: true,
+          manage: true,
+        };
+      }
+    } else if (e.target.name === "select-manage") {
+      if (_temp[index].manage) {
+        _temp[index] = { ..._temp[index], manage: false };
+      } else {
+        _temp[index] = { ..._temp[index], manage: true };
+      }
+    } else {
+      if (_temp[index].view) {
+        _temp[index] = { ..._temp[index], view: false };
+      } else {
+        _temp[index] = { ..._temp[index], view: true };
+      }
+    }
+    setSortListPelatihan(_temp);
+  };
+
+  const handleSubmit = async () => {
+
+    let newData = sortListPelatihan?.map((items)=>{
+      return {...items,training_id:items.value}
+    })
+
+    console.log("newData",newData)
+
+
+
     if (name === "") {
-      Swal.fire(
-        "Gagal simpan",
-        "Nama lengkap tidak boleh kosong",
-        "error"
-      );
+      Swal.fire("Gagal simpan", "Nama lengkap tidak boleh kosong", "error");
     } else if (email === "") {
       Swal.fire("Gagal simpan", "Email tidak boleh kosong", "error");
-    } 
-    else if (status === "") {
+    } else if (!email.includes("@")) {
+      Swal.fire("Gagal simpan", "Format email tidak valid", "error");
+    } else if (status === "") {
       Swal.fire("Gagal simpan", "Status tidak boleh kosong", "error");
-    } 
-    else if (password === "") {
+    } else if (password === "") {
       Swal.fire("Gagal simpan", "Password tidak boleh kosong", "error");
-    } 
-    else if (confirmPassword === "") {
-      Swal.fire("Gagal simpan", "Konfirmasi password tidak boleh kosong", "error");
-    } 
-    else if (role === "") {
+    } else if (confirmPassword === "") {
+      Swal.fire(
+        "Gagal simpan",
+        "Konfirmasi password tidak boleh kosong",
+        "error"
+      );
+    } else if (password !== confirmPassword) {
+      Swal.fire(
+        "Gagal simpan",
+        "Password dan konfirmasi password harus sama",
+        "error"
+      );
+    } else if (role === "") {
       Swal.fire("Gagal simpan", "Role  tidak boleh kosong", "error");
-    } 
-    else if (unitWork === "") {
+    } else if (unitWork === "") {
       Swal.fire("Gagal simpan", "Satuan kerja tidak boleh kosong", "error");
     } 
+    
+    else if (typeAccess === "akademi" && statusAcademy.length === 0) {
+      Swal.fire("Gagal simpan", "Status akademy tidak boleh kosong", "error");
+    } 
+    // else if (typeAccess === "pelatihan" && pelatihan.length === 0) {
+    //   Swal.fire("Gagal simpan", "Data pelatihan tidak boleh kosong", "error");
+    // } 
     else {
       Swal.fire({
         title: "Apakah anda yakin simpan ?",
@@ -104,41 +175,91 @@ const TambahApi = ({ token }) => {
         dismissOnDestroy: false,
       }).then(async (result) => {
         if (result.value) {
-          const sendData = {
-            name: nameZonation,
-            status: status,
-            data: valueSend,
-          };
-          try {
-            let { data } = await axios.post(
-              `${process.env.END_POINT_API_SITE_MANAGEMENT}api/zonasi/store`,
-              sendData,
-              {
-                headers: {
-                  authorization: `Bearer ${token}`,
-                },
-              }
-            );
 
-            Swal.fire("Berhasil", "Data berhasil disimpan", "success").then(
-              () => {
-                router.push(
-                  `/site-management/master-data/master-zonasi`
-                );
-              }
-            );
-          } catch (error) {
-            Swal.fire(
-              "Gagal simpan",
-              `${error.response.data.message}`,
-              "error"
-            );
+          if(typeAccess === "akademi"){
+            const sendData = {
+              name: name,
+              email: email,
+              password: password,
+              role: role,
+              unit_work_id: unitWork,
+              type_access: typeAccess,
+              
+              academy_ids: statusAcademy.map((items) => {
+                return items.value;
+              }),
+              status: 1,
+            };
+            try {
+              let { data } = await axios.post(
+                `${process.env.END_POINT_API_SITE_MANAGEMENT}/api/user/store`,
+                sendData,
+                {
+                  headers: {
+                    authorization: `Bearer ${token}`,
+                  },
+                }
+              );
+  
+             
+  
+              Swal.fire("Berhasil", "Data berhasil disimpan", "success").then(
+                () => {
+                  router.push(
+                    `/site-management/user/administrator`
+                  );
+                }
+              );
+            } catch (error) {
+              Swal.fire(
+                "Gagal simpan",
+                `${error.response.data.message}`,
+                "error"
+              );
+            }
+          }else{
+             const sendData = {
+              name: name,
+              email: email,
+              password: password,
+              role: role,
+              unit_work_id: unitWork,
+              type_access: typeAccess,
+              training_access: newData,
+              status: 1,
+            };
+            console.log("sendData type pelatihan",sendData)
+            try {
+              let { data } = await axios.post(
+                `${process.env.END_POINT_API_SITE_MANAGEMENT}/api/user/store`,
+                sendData,
+                {
+                  headers: {
+                    authorization: `Bearer ${token}`,
+                  },
+                }
+              );
+  
+              Swal.fire("Berhasil", "Data berhasil disimpan", "success").then(
+                () => {
+                  router.push(
+                    `/site-management/user/administrator`
+                  );
+                }
+              );
+            } catch (error) {
+              Swal.fire(
+                "Gagal simpan",
+                `${error.response.data.message}`,
+                "error"
+              );
+            }
           }
+          
         }
       });
     }
   };
-
 
   return (
     <PageWrapper>
@@ -156,7 +277,7 @@ const TambahApi = ({ token }) => {
                 <input
                   type="text"
                   value={name}
-                  onChange={() => setName(e.target.value)}
+                  onChange={(e) => setName(e.target.value)}
                   className="form-control"
                   placeholder="Masukkan nama lengkap"
                 />
@@ -178,6 +299,7 @@ const TambahApi = ({ token }) => {
                   className="form-control"
                   onChange={(e) => setStatus(e.target.value)}
                 >
+                  <option value="">Piliha status</option>
                   <option value="1">Aktif</option>
                   <option value="0">Tidak Aktif</option>
                 </select>
@@ -186,6 +308,7 @@ const TambahApi = ({ token }) => {
                 <label>Password</label>
                 <div className="position-relative">
                   <input
+                    value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     type="password"
                     id="input-password"
@@ -209,8 +332,9 @@ const TambahApi = ({ token }) => {
               </div>
               <div className="form-group mb-2">
                 <label>Konfirmasi Password</label>
-                 <div className="position-relative">
+                <div className="position-relative">
                   <input
+                    value={confirmPassword}
                     id="confirm-input-password"
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     type="password"
@@ -232,14 +356,20 @@ const TambahApi = ({ token }) => {
                   )}
                 </div>
               </div>
-              <p style={{color:"#b7b5cf"}}>
-                Min 8 Karakter,<br/>
-                Case Sensitivity (min t.d 1 Uppercase, 1 lowercase)<br/>
+              <p style={{ color: "#b7b5cf" }}>
+                Min 8 Karakter,
+                <br />
+                Case Sensitivity (min t.d 1 Uppercase, 1 lowercase)
+                <br />
                 Min 1 Symbol/angka
               </p>
               <div className="form-group">
                 <label>Role</label>
-                <select onChange={(e)=>setRole(e.target.value)} className="form-control">
+                <select
+                  value={role}
+                  onChange={(e) => setRole(e.target.value)}
+                  className="form-control"
+                >
                   <option value="">Pilih Roles</option>
                   {allRolesList.data.list_role.map((items, index) => {
                     return (
@@ -252,10 +382,18 @@ const TambahApi = ({ token }) => {
               </div>
               <div className="form-group">
                 <label>Satuan Kerja</label>
-                <select onChange={(e)=>setUnitWork(e.target.value)} className="form-control">
+                <select
+                  value={unitWork}
+                  onChange={(e) => setUnitWork(e.target.value)}
+                  className="form-control"
+                >
                   <option value="">Pilih Satuan Kerja</option>
                   {allUnitWorkList.data.unit_work.map((items, index) => {
-                    return <option key={index} value={items.id}>{items.name}</option>;
+                    return (
+                      <option key={index} value={items.id}>
+                        {items.name}
+                      </option>
+                    );
                   })}
                 </select>
               </div>{" "}
@@ -263,8 +401,16 @@ const TambahApi = ({ token }) => {
               <h3 className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 mb-5 mt-5 titles-1">
                 Hak Akses Pelatihan
               </h3>
-              <ul className="nav nav-tabs" id="myTab" role="tablist">
-                <li className="nav-item" role="presentation" onClick={()=>setTypeAccess("akademi")}>
+              <ul
+                className="nav nav-tabs tabs-admin-site"
+                id="myTab"
+                role="tablist"
+              >
+                <li
+                  className="nav-item position-relative"
+                  role="presentation"
+                  onClick={() => setTypeAccess("akademi")}
+                >
                   <a
                     className="nav-link active"
                     id="home-tab"
@@ -276,8 +422,20 @@ const TambahApi = ({ token }) => {
                   >
                     Akademi
                   </a>
+                  <input
+                    type="radio"
+                    className="left-center-absolute"
+                    className="left-center-absolute"
+                    checked={typeAccess === "akademi" ? true : false}
+                    name="action"
+                    onChange={() => setTypeAccess("akademi")}
+                  />
                 </li>
-                <li className="nav-item" role="presentation" onClick={()=>setTypeAccess("pelatihan")}>
+                <li
+                  className="nav-item position-relative"
+                  role="presentation"
+                  onClick={() => setTypeAccess("pelatihan")}
+                >
                   <a
                     className="nav-link"
                     id="profile-tab"
@@ -289,6 +447,13 @@ const TambahApi = ({ token }) => {
                   >
                     Pelatihan
                   </a>
+                  <input
+                    type="radio"
+                    className="left-center-absolute"
+                    checked={typeAccess === "pelatihan" ? true : false}
+                    name="action"
+                    onChange={() => setTypeAccess("pelatihan")}
+                  />
                 </li>
               </ul>
               <div className="tab-content" id="myTabContent">
@@ -299,22 +464,22 @@ const TambahApi = ({ token }) => {
                   aria-labelledby="home-tab"
                 >
                   <div className="form-group mt-6">
-                    <label >Status</label>
-                    <Select 
-                              value={statusAcademy}
-                              className="basic-single"
-                              classNamePrefix="select"
-                              placeholder="Pilih status"
-                              isMulti
-                              isDisabled={false}
-                              isLoading={false}
-                              isClearable={false}
-                              isRtl={false}
-                              isSearchable={true}
-                              name="color"
-                              onChange={(e) => changeListAcademy(e)}
-                              options={allAcademyList.data.data}
-                            />
+                    <label>Status</label>
+                    <Select
+                      value={statusAcademy}
+                      className="basic-single"
+                      classNamePrefix="select"
+                      placeholder="Pilih status"
+                      isMulti
+                      isDisabled={false}
+                      isLoading={false}
+                      isClearable={false}
+                      isRtl={false}
+                      isSearchable={true}
+                      name="color"
+                      onChange={(e) => changeListAcademy(e)}
+                      options={allAcademyList.data.data}
+                    />
                   </div>
                 </div>
                 <div
@@ -328,9 +493,7 @@ const TambahApi = ({ token }) => {
                       <div className="table-filter">
                         <div className="row align-items-center">
                           <div className="col-lg-12 col-xl-12">
-                            <form
-                              className="d-flex align-items-center w-100"
-                            >
+                            <form className="d-flex align-items-center w-100">
                               <div className="row w-100">
                                 <div className="col-12 col-sm-6">
                                   <div className="position-relative overflow-hidden w-100">
@@ -396,71 +559,61 @@ const TambahApi = ({ token }) => {
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td className="text-left">1</td>
+                          {sortListPelatihan.map((items, index) => {
+                            return (
+                              <tr key={index}>
+                                <td className="text-left">{index + 1}</td>
 
-                            <td>1</td>
-                            <td>2</td>
-                            <td>3</td>
-                            <td
-                              className="text-right child-permission align-middle"
-                              style={{ width: "10rem" }}
-                            >
-                              <label className="checkbox">
-                                <input
-                                  type="checkbox"
-                                  checked="checked"
-                                  name="Checkboxes1"
-                                />
-                                <span></span>
-                              </label>
-                            </td>
-                            <td
-                              className="text-right child-permission align-middle"
-                              style={{ width: "0" }}
-                            >
-                              <label className="checkbox">
-                                <input
-                                  type="checkbox"
-                                  checked="checked"
-                                  name="Checkboxes1"
-                                />
-                                <span></span>
-                              </label>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td className="text-left">1</td>
-                            <td>1</td>
-                            <td>2</td>
-                            <td>3</td>
-                            <td
-                              className="text-right child-permission align-middle"
-                              style={{ width: "10rem" }}
-                            >
-                              <label className="checkbox">
-                                <input
-                                  type="checkbox"
-                                  checked="checked"
-                                  name="Checkboxes1"
-                                />
-                                <span></span>
-                              </label>
-                            </td>
-                            <td
-                              className="text-right child-permission align-middle"
-                              style={{ width: "0" }}
-                            >
-                              <label className="checkbox">
-                                <input
-                                  type="checkbox"
-                                  checked="checked"
-                                  name="Checkboxes1"
-                                />
-                                <span></span>
-                              </label>
-                            </td>
-                          </tr>
+                                <td>{items.value}</td>
+                                <td>{items.label}</td>
+                                <td>
+                                  <label className="checkbox">
+                                    <input
+                                      type="checkbox"
+                                      checked={items.allSelect}
+                                      name="select-all"
+                                      onChange={(e) =>
+                                        handleChangePelatihan(e, index)
+                                      }
+                                    />
+                                    <span></span>
+                                  </label>
+                                </td>
+                                <td
+                                  className="text-right child-permission align-middle"
+                                  style={{ width: "10rem" }}
+                                >
+                                  <label className="checkbox">
+                                    <input
+                                      type="checkbox"
+                                      checked={items.manage}
+                                      name="select-manage"
+                                      onChange={(e) =>
+                                        handleChangePelatihan(e, index)
+                                      }
+                                    />
+                                    <span></span>
+                                  </label>
+                                </td>
+                                <td
+                                  className="text-right child-permission align-middle"
+                                  style={{ width: "0" }}
+                                >
+                                  <label className="checkbox">
+                                    <input
+                                      type="checkbox"
+                                      checked={items.view}
+                                      name="select-view"
+                                      onChange={(e) =>
+                                        handleChangePelatihan(e, index)
+                                      }
+                                    />
+                                    <span></span>
+                                  </label>
+                                </td>
+                              </tr>
+                            );
+                          })}
                         </tbody>
                       </table>
                     </div>

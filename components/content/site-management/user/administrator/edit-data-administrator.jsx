@@ -14,34 +14,36 @@ import Image from "next/image";
 import IconPlus from "../../../../../public/assets/icon/Plus.svg";
 import IconMinus from "../../../../../public/assets/icon/Minus.svg";
 
+import {
+  getDetailAdminSite,
+  getListRoles,
+  getListUnitWorks,
+  getListAcademy,
+  getAllListPelatihan,
+} from "../../../../../redux/actions/site-management/user/admin-site.action";
+
 const TambahApi = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
+  const allUnitWorkList = useSelector((state) => state.allUnitWorkList);
+  console.log("allUnitWorkList", allUnitWorkList);
+  const allRolesList = useSelector((state) => state.allRolesList);
+  console.log("allRolesList", allRolesList);
+  const allAcademyList = useSelector((state) => state.allAcademyList);
+  console.log("allAcademyList", allAcademyList);
+  const allListPelatihan = useSelector((state) => state.allListPelatihan);
+  console.log("allListPelatihan", allListPelatihan);
+  const detailAdminSite = useSelector((state) => state.detailAdminSite);
+  console.log("detailAdminSite", detailAdminSite);
+  
 
-  const onNewReset = () => {
-    router.replace("/site-management/api", undefined, {
-      shallow: true,
-    });
-  };
-
-  const btnIconPlus = {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    width: "19px",
-    height: "19px",
-    borderRadius: "5px",
-    backgroundColor: "#ADB5BD",
-  };
-  const btnMin = {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    width: "19px",
-    height: "19px",
-    borderRadius: "5px",
-    backgroundColor: "#4299E1",
-  };
+  useEffect(() => {
+    dispatch(getDetailAdminSite(router.query.id,token))
+  dispatch(getListRoles(token))
+  dispatch(getListUnitWorks(token))
+  dispatch(getListAcademy(token))
+  dispatch(getAllListPelatihan(token))
+  }, [router.query.id,token])
   return (
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">

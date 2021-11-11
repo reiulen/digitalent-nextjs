@@ -5,6 +5,9 @@ import {
   ROLES_LIST_REQUEST,
   ROLES_LIST_SUCCESS,
   ROLES_LIST_FAIL,
+  PELATIHAN_LIST_REQUEST,
+  PELATIHAN_LIST_SUCCESS,
+  PELATIHAN_LIST_FAIL,
   GET_ACADEMY_REQUEST,
   GET_ACADEMY_SUCCESS,
   GET_ACADEMY_FAIL,
@@ -67,11 +70,48 @@ export const getAllAdminSite = (token) => async (dispatch, getState) => {
       payload: data,
     });
   } catch (error) {
+    console.log("object asd", error);
     dispatch({
       type: ADMIN_SITE_FAIL,
     });
   }
 };
+
+export const getAllListPelatihan = (token) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: PELATIHAN_LIST_REQUEST });
+
+    // let pageState = getState().allAdminSite.page || 1;
+    let cariState = getState().allListPelatihan.cari || "";
+    // let limitState = getState().allAdminSite.limit || 5;
+
+    const params = {
+      // page: pageState,
+      cari: cariState,
+      // limit: limitState,
+    };
+
+    const { data } = await axios.get(
+      `${process.env.END_POINT_API_PELATIHAN}api/v1/pelatihan/dropdown`,
+      {
+        params,
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    dispatch({
+      type: PELATIHAN_LIST_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: PELATIHAN_LIST_FAIL,
+    });
+  }
+};
+
 export const getListRoles = (token) => async (dispatch) => {
   try {
     dispatch({ type: ROLES_LIST_REQUEST });

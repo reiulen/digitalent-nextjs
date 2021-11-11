@@ -7,6 +7,7 @@ import {
   getListRoles,
   getListUnitWorks,
   getListAcademy,
+  getAllListPelatihan,
 } from "../../../../../redux/actions/site-management/user/admin-site.action";
 const ListUser = dynamic(
   () =>
@@ -46,6 +47,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       await store.dispatch(getListRoles(session.user.user.data.token));
+      await store.dispatch(getAllListPelatihan(session.user.user.data.token));
       await store.dispatch(getListUnitWorks(session.user.user.data.token));
       await store.dispatch(getListAcademy(session.user.user.data.token));
 

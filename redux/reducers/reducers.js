@@ -236,6 +236,7 @@ import {
   allUnitWorkListReducer,
   allRolesListReducer,
   allAcademyListReducer,
+  allListPelatihanReducer,
 } from "./site-management/user/admin-site.reducers";
 // ============== data reference ===============
 import {
@@ -652,7 +653,7 @@ const reducer = combineReducers({
   newMitraSite: newMitraSiteReducer,
   detailMitraSite: detailMitraSiteReducer,
   updateMitraSite: updateMitraSiteReducer,
-  // ============ MITRA SITE =======
+  // ============ ADMIN SITE =======
   allAdminSite: allAdminSiteReducer,
   newAdminSite: newAdminSiteReducer,
   updateAdminSite: updateAdminSiteReducer,
@@ -661,6 +662,7 @@ const reducer = combineReducers({
   allUnitWorkList: allUnitWorkListReducer,
   allRolesList: allRolesListReducer,
   allAcademyList: allAcademyListReducer,
+  allListPelatihan: allListPelatihanReducer,
 
   // ============ DATA REFERENCE =======
   allDataReference: allDataReferenceReducer,
