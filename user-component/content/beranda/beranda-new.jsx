@@ -472,6 +472,7 @@ const Beranda = ({ session }) => {
                                             fontSize: "14px",
                                             color: "#6C6C6C",
                                           }}
+                                          className=" text-left"
                                         >
                                           {row.akademi}
                                         </p>
