@@ -73,7 +73,6 @@
     "react-dropzone": "^11.3.4",
     "react-form-stepper": "^1.4.3",
     "react-google-recaptcha": "^2.1.0",
-    "react-highlight-words": "^0.17.0",
     "react-icons": "^4.3.1",
     "react-image-crop": "^9.0.4",
     "react-inlinesvg": "^2.3.0",
@@ -81,8 +80,11 @@
     "react-js-pagination": "^3.0.3",
     "react-loading-skeleton": "^2.2.0",
     "react-multi-carousel": "^2.6.5",
+<<<<<<< HEAD
     "react-otp-input": "^2.0.2",
     "react-otpcode-input": "^1.1.7",
+=======
+>>>>>>> 352d9c1bbfc50db90476f33b651e10326af8e14b
     "react-pdf-to-image": "^1.0.2",
     "react-phone-input-2": "^2.14.0",
     "react-player": "^2.9.0",

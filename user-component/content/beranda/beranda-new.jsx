@@ -280,50 +280,54 @@ const Beranda = ({ session }) => {
       </section>
 
       <section className="tema-carousel-new carousel-secondarys mb-4">
-        <Splide options={optionsSplide} hasSliderWrapper>
-          {akademi &&
-            akademi.map((row, i) => (
-              <SplideSlide key={i}>
-                <div
-                  className="d-flex align-items-center h-100"
-                  onClick={() => handleActive(i, row.id)}
-                  style={{ cursor: "pointer" }}
-                >
+        {akademi && (
+          <Splide options={optionsSplide} hasSliderWrapper>
+            {akademi &&
+              akademi.map((row, i) => (
+                <SplideSlide key={i}>
                   <div
-                    className={`card-1 ${
-                      activeTab !== i ? "bg-white" : "bg-secondary"
-                    }`}
-                    style={{ height: "80px" }}
+                    className="d-flex align-items-center h-100"
+                    onClick={() => handleActive(i, row.id)}
+                    style={{ cursor: "pointer" }}
                   >
-                    <h1
-                      className={`mb-0 mr-2 fw-700 ${
-                        activeTab === i && "text-white"
+                    <div
+                      className={`card-1 ${
+                        activeTab !== i ? "bg-white" : "bg-secondary"
                       }`}
+                      style={{ height: "80px" }}
                     >
-                      {row.slug}
-                    </h1>
-                    <div>
-                      <p className={`mb-0 ${activeTab === i && "text-white"}`}>
-                        {row.name.split(" ").splice(0, 3).join(" ")}
-                      </p>
+                      <h1
+                        className={`mb-0 mr-2 fw-700 ${
+                          activeTab === i && "text-white"
+                        }`}
+                      >
+                        {row.slug}
+                      </h1>
+                      <div>
+                        <p
+                          className={`mb-0 ${activeTab === i && "text-white"}`}
+                        >
+                          {row.name.split(" ").splice(0, 3).join(" ")}
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </SplideSlide>
-            ))}
-        </Splide>
+                </SplideSlide>
+              ))}
+          </Splide>
+        )}
       </section>
 
-      {loadingTema ? (
-        <>
-          <div className="container-fluid">
-            <div className="row">
-              <PulseLoaderRender />
+      <section className="pelatihan-new">
+        {loadingTema ? (
+          <>
+            <div className="container-fluid">
+              <div className="row">
+                <PulseLoaderRender />
+              </div>
             </div>
-          </div>
-        </>
-      ) : (
-        <section className="pelatihan-new">
+          </>
+        ) : (
           <Container fluid className="px-md-20 px-10 pb-10">
             {tema ? (
               tema.map((row, i) => (
@@ -885,7 +889,7 @@ const Beranda = ({ session }) => {
                 </>
               ))
             ) : (
-              <div className="container-fluid">
+              <div className="container-fluid mt-20">
                 <div className="row">
                   <h1 className="text-center text-muted col-12 font-weight-bolder">
                     Tema Pelatihan Belum Tersedia
@@ -904,8 +908,8 @@ const Beranda = ({ session }) => {
               </div>
             )}
           </Container>
-        </section>
-      )}
+        )}
+      </section>
 
       <section className="step-register-new mt-10 mb-20 ">
         <Container fluid className="px-md-20 pb-10">

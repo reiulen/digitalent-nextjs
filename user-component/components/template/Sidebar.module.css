@@ -167,6 +167,10 @@
   padding: 10px 0px;
 }
 
+.headBreadcrumb{
+  margin: 50px 0 55px 0;
+}
+
 @media (max-width: 900px) {
   .akunMenu {
     /* padding: 0px 10px; */
@@ -318,5 +322,17 @@
     line-height: 160%;
     cursor: pointer;
     padding: 10px 0px;
+  }
+}
+
+@media only screen and (max-width: 556px){
+  .headBreadcrumb{
+    font-size: 10px;
+  }
+}
+
+@media only screen and (max-width: 280px){
+  .headBreadcrumb{
+    font-size: 9.5px;
   }
 }

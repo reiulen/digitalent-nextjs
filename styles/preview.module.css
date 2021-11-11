@@ -10,6 +10,11 @@
   margin-top: 30px;
 }
 
+.modalContent{
+  width: 700px;
+  height: 490px;
+}
+
 .playVideo {
   position: relative;
   text-align: right;
@@ -17,6 +22,11 @@
   width: 700px;
   height: 270px;
   margin-bottom: 20px;
+}
+
+.btnClose{
+  border: none;
+  background: none;
 }
 
 .descriptionVideo{
@@ -29,6 +39,10 @@
 
 .isiVideoPrev {
   margin: 10px;
+}
+
+.modalPublish{
+  font-size: 11px;
 }
 
 .titlePratinjau {
@@ -56,14 +70,46 @@
   overflow-wrap: break-word;
 }
 
+.isiArtikel{
+  overflow-wrap: break-word;
+}
+
 .listTag {
   display: flex;
+  align-items: center;
+}
+
+.isiTag{
+  font-size: 10px;
 }
 
 .titleSubMenu-2 {
   display: flex;
   align-items: center;
   margin-left: -13px;
+}
+
+/* Pengaturan */
+
+.uploadImage{
+  height: 60px;
+  margin-top: 20px;
+  margin-right: 20px;
+}
+
+.inputData{
+  /* width: 100px;
+  border: 1px solid black; */
+}
+
+.validator{
+  width: 200px;
+  font-size: 11px;
+}
+
+.btnSave{
+  /* border: 1px solid black; */
+  /* margin-left: 15px; */
 }
 
 @media only screen and (max-width: 1024px) {
@@ -78,9 +124,14 @@
   }
   .isiVideoPrev {
     flex-wrap: wrap;
-
     width: 10px;
     font-size: 11px;
+  }
+
+  /* Pengaturan */
+ 
+  .uploadImage{
+    margin-right: 50px;
   }
 }
 
@@ -100,13 +151,19 @@
 
 @media only screen and (max-width: 556px) {
   .titlePratinjau {
-    font-size: 30px;
+    font-size: 18px;
   }
   .titleSubMenu {
     font-size: 10px;
   }
   .titleSubMenu-2 {
-    font-size: 10px;
+    font-size: 9px;
+  }
+  .titleKategori{
+    font-size: 9px;
+  }
+  .imgPreview{
+    height: 300px;
   }
   .isiBerita {
     font-size: 8px;
@@ -115,6 +172,12 @@
     width: 90%;
     font-size: 8px;
   }
+  .isiTag{
+    font-size: 9px;
+  }
+  .namaKategori{
+    font-size: 9px;
+  }
   .iconBorder {
     width: 50px;
     height: 21px;
@@ -122,5 +185,77 @@
   }
   .icon{
     font-size: 12px;
+  }
+  .headBreadcrumb{
+    font-size: 10px;
+  }
+  .modalsJudul{
+    font-size: 13px;
+  }
+  .descriptionVideo{
+    font-size: 10px;
+    height: 100px;
+  }
+  .modalPublish{
+    font-size: 8px;
+  }
+  .validator{
+    width: 150px;
+  }
+}
+
+@media only screen and (max-width: 320px){
+  .btnClose{
+    margin-right: 5px;
+  }
+  .modal-body{
+    height: 380px;
+  }
+  .modalContent{
+    height: 420px;
+  }
+
+  /* Pengaturan */
+
+  .uploadImage{
+    /* font-size: 9px; */
+    /* margin-right: 8px; */
+  }
+  /* .inputData{
+    width: 80px;
+  } */
+  .validator{
+    width: 100px;
+    /* font-size: 11px; */
+  }
+  .btnSave{
+    /* margin-left: 15px; */
+  }
+}
+
+@media only screen and (max-width: 280px){
+  .isiTag{
+    font-size: 7px;
+  }
+  .namaKategori{
+    font-size: 7px;
+    margin-right: 7px;
+  }
+  .descriptionVideo{
+    font-size: 8px;
+  }
+  
+  /* Pengaturan */
+
+  .uploadImage{
+    /* font-size: 9px; */
+    margin-right: 65px;
+  }
+  /* .inputData{
+    width: 100px;
+  } */
+  .validator{
+    width: 100px;
+    font-size: 9px;
   }
 }

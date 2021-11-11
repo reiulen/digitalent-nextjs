@@ -20,6 +20,9 @@ const FilterBar = () => {
   const { loading: loadingKota, kota: allKota } = useSelector(
     (state) => state.allKotaPeserta
   );
+  const { loading: loadingTemaOriginal, tema: allTamaOriginal } = useSelector(
+    (state) => state.allTemaOriginal
+  );
 
   const [akademiId, setAkademiId] = useState(null);
   const [temaId, setTemaId] = useState(null); // multiple
@@ -47,24 +50,16 @@ const FilterBar = () => {
       optionsCity.push(val);
     }
   }
-  // if (allTema) {
-  //   for (let index = 0; index < allTema.length; index++) {
-  //     let val = {
-  //       value: allTema[index].id,
-  //       label: allTema[index].slug,
-  //     };
-  //     if (allTema[index].id === tema_id) {
-  //       setActiveTheme(index);
-  //     }
-  //     optionsAkademi.push(val);
-  //   }
-  // }
-
-  const optionsTheme = [
-    { value: "1", label: "Multimedia" },
-    { value: "2", label: "UI UX" },
-    { value: "3", label: "Frontend" },
-  ];
+  const optionsTheme = [];
+  if (allTamaOriginal) {
+    for (let index = 0; index < allTamaOriginal.length; index++) {
+      let val = {
+        value: allTamaOriginal[index].value,
+        label: allTamaOriginal[index].label,
+      };
+      optionsTheme.push(val);
+    }
+  }
 
   const optionsTipePelatihan = [
     { value: "online", label: "Online" },

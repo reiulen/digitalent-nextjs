@@ -237,12 +237,16 @@ const Navigationbar = ({ session }) => {
                     Pusat Informasi
                   </button>
                   <div className="dropdown-menu ml-3">
-                    <a className="dropdown-item navdropdown-child" href="#">
+                    <Link href="/peserta/menu/pusat-informasi">
+                    <a className="dropdown-item navdropdown-child">
                       Panduan Test Substansi
                     </a>
-                    <a className="dropdown-item navdropdown-child" href="#">
+                    </Link>
+                    <Link href="/peserta/menu/pusat-informasi">
+                    <a className="dropdown-item navdropdown-child">
                       Hak dan Kewajiban
                     </a>
+                    </Link>
                   </div>
                 </div>
                 <NavDropdown.Item
@@ -251,12 +255,11 @@ const Navigationbar = ({ session }) => {
                 >
                   Tentang Kami
                 </NavDropdown.Item>
-                <NavDropdown.Item
-                  href="#action/3.4"
-                  className="navdropdown-child"
-                >
-                  Penyelenggara
-                </NavDropdown.Item>
+                <Link href="/penyelenggara" passHref>
+                  <NavDropdown.Item className="navdropdown-child">
+                    Penyelenggara
+                  </NavDropdown.Item>
+                </Link>
                 <div className="btn-group dropright">
                   <button
                     type="button"
@@ -519,7 +522,7 @@ const Navigationbar = ({ session }) => {
                 Tentang Kami
               </Col>
               <Col className="mb-8" sm={12}>
-                Penyelenggara
+                <Link href="/penyelenggara">Penyelenggara</Link>
               </Col>
               <Col sm={12}>
                 <Dropdown color="white">

@@ -93,7 +93,6 @@ const Tambah = ({ token }) => {
     _temp[index].value = []
     _temp[index].kabupaten = []
     _tempValue[index].kota_kabupaten = []
-    console.log("_tempValue",_tempValue[index])
 
     try {
       let { data } = await axios.get(

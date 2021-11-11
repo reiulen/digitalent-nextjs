@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
-import Highlighter from "react-highlight-words";
+// import Highlighter from "react-highlight-words";
 import { useRouter } from "next/router";
 
 const DetailBerita = () => {
@@ -15,6 +15,7 @@ const DetailBerita = () => {
 
     const [ keyword, setKeyword ] = useState (null)
     const [ searchWords, setSearchWords ] = useState (null)
+    const [ resultText, setResultText ] = useState(null)
 
     const getWindowDimensions = () => {
         // if (typeof window === 'undefined') {
@@ -50,11 +51,27 @@ const DetailBerita = () => {
         router.push (`/berita?tag=${str}`)
     }
 
-    const handleHighlightWords = (e) => {
+    const handleHighlightWords = (e, text) => {
         e.preventDefault();
-        let result = keyword.split (" ")
-        
-        setSearchWords(result)
+
+        let result = ""
+        let splitWords = keyword.split (" ")
+        let splitText = text.split(" ")
+        // let splitWords = keyword
+        // setSearchWords(splitWords)
+
+        for (let i = 0; i < splitWords.length; i++){
+            for (let j = 0; j < splitText.length; j++){
+                if (splitWords[i].toLowerCase() === splitText[j].toLowerCase()){
+                    result += `<mark>`+splitText[j]+`</mark>`+" "
+
+                } else {
+                    result += `<span>`+splitText[j]+`</span>`+" "
+                }
+            }
+        }
+
+        setResultText(result)
     }
     
     return (
@@ -84,12 +101,15 @@ const DetailBerita = () => {
 
             {/* Header */}
             <div className="row my-5 d-flex flex-column ml-3">
-                <div className="badge badge-light mr-2 col-1">
-                    <div className="text-primary" style={{overflowX:"hidden"}}>
-                        {/* Insert Kategori Here */}
-                        {detail.nama_kategori}
+                <div className="col-2">
+                    <div className="badge badge-light mr-2">
+                        <div className="text-primary">
+                        
+                            {detail.nama_kategori}
+                        </div>
                     </div>
                 </div>
+                
                 <div className="mt-5">
                     <h1 className="font-weight-bolder">
                         {/* Insert Title Here */}
@@ -120,14 +140,14 @@ const DetailBerita = () => {
                                     process.env.END_POINT_API_IMAGE_PUBLIKASI +
                                     "publikasi/images/" + detail.foto
                                 }
-                                width={30}
-                                height={30}
+                                width={40}
+                                height={40}
                                 alt="Logo Image"
                                 className="border rounded-circle"
                             />
                         </div>
                         <div className="d-flex flex-column ml-3">
-                            <div className="font-weight-bolder">
+                            <div className="font-weight-bolder mb-2">
                                 {/* Insert Admin Here */}
                                 {detail.dibuat}
                             </div>
@@ -174,20 +194,14 @@ const DetailBerita = () => {
 
                             {/* Berita */}
                             <div className="border rounded-lg mb-5 mt-15">
-                                <div className="row my-5 mx-5 text-justify" style={{overflowX:"hidden"}}>
+                                {/* <div className="row my-5 mx-5 text-justify" style={{overflowX:"hidden"}}>
                                     {
-                                        searchWords ?
-                                            <Highlighter 
-                                                highlightClassName="YourHighlightClass"
-                                                searchWords={searchWords}
-                                                autoEscape={true}
-                                                textToHighlight={detail.isi_berita}
-                                                // textToHighlight={<div dangerouslySetInnerHTML={{__html: detail.isi_artikel}}/>}
-                                            />
+                                        resultText ?
+                                            <div dangerouslySetInnerHTML={{__html: resultText}}></div>
                                         :
                                             <div dangerouslySetInnerHTML={{__html: detail.isi_berita}}/>
                                     }
-                                </div>
+                                </div> */}
 
                                 <div className="row m-3 d-flex justify-content-between pb-5">
                                     <div className="row d-flex justify-content-between ml-3">
@@ -291,7 +305,7 @@ const DetailBerita = () => {
                                                             className="border px-2 py-1 rounded my-3 mr-3 text-center d-flex align-items-center justify-content-center" 
                                                             key={i}
                                                             onClick={() => handleFilterTag(el)}
-                                                            style={{cursor:"pointer", height:"38px", width:"83px", fontSize:"14px"}}
+                                                            style={{cursor:"pointer", height:"38px", fontSize:"14px"}}
                                                         >
                                                             #{el}
                                                         </div>

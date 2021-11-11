@@ -599,23 +599,6 @@ export default function Pengaturan({ session }) {
               shouldAutoFocus
               isInputNum
             ></OtpInput>
-            <OtpInput
-              numberOfInputs={6}
-              onChange={(code) => setOtpEmail(code)}
-              onComplete={() => {
-                if (postStatus == "email") {
-                  handlePostOtpEmail(otpEmail, email);
-                } else if (postStatus == "verifyHp") {
-                  handlePostOtpHpVerifikasi(otpEmail);
-                } else if (postStatus == "ubahHandphone") {
-                  handlePostOtpUbahHandphone(otpEmail);
-                } else if (postStatus == "verifyEmail") {
-                  handlePostOtpEmailVerifikasi(otpEmail);
-                }
-              }}
-              otp={otpEmail}
-              autoFocus={true}
-            />
           </div>
 
           <div className="d-flex justify-content-between mx-5 mt-14">
