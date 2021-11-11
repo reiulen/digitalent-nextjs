@@ -6,23 +6,40 @@ import { useSelector, useDispatch } from 'react-redux';
 import styles from "../../components/template/Sidebar.module.css";
 
 import { getAllFaq } from "../../../redux/actions/beranda/faq-content.actions"
+import { set } from 'js-cookie';
 
 const FaqPage = () => {
 
     const dispatch = useDispatch();
 
     const { loading, error, faq } = useSelector(state => state.allFaq)
-    const [deskripsi, setDeskripsi] = useState(faq?.faq[0].id || 0)
+    const [deskripsi, setDeskripsi] = useState(faq?.faq[0].nama_kategori || "")
     const [title, setTitle] = useState(faq?.faq[0].nama_kategori)
     const [disableBtn, setDisableBtn] = useState(false)
     const [keyword, setKeyword] = useState("")
-    const [disableBtnPlus, setDisableBtnPlus] = useState(false)
+    const [disableBtnPlus, setDisableBtnPlus] = useState(null)
+    const [active, setActive] = useState(false)
+    const [content , setContent] = useState( faq?.faq.map((row, i) => {
+        return (
+            {
+                ...row, isShow: false
+            }
+        )
+    }))
 
     const handleFilterKeyword = (e) => {
         e.preventDefault();
         dispatch(getAllFaq(keyword))
     }
 
+    let sidebar = faq?.faq.map(item => {
+        return item.nama_kategori
+    })
+
+    const sideBar = (sidebar?.filter((item, pos) => {
+        return sidebar.indexOf(item) === pos
+    }))
+    
     return (
         <>
             <div className="row mx-1 py-3 px-8 bg-white rounded-pill d-flex align-items-center border" style={{ marginTop: '50px', marginBottom: '55px' }}>
@@ -49,7 +66,7 @@ const FaqPage = () => {
                         <input
                             type="text"
                             className="form-control pl-10"
-                            placeholder="Cari Penyelenggara..."
+                            placeholder="Cari Pertanyaan..."
                             style={{ borderRadius: '30px', backgroundColor: '#fafafb' }}
                             onChange={(e) => setKeyword(e.target.value)}
                         />
@@ -67,10 +84,42 @@ const FaqPage = () => {
                             Cari
                         </button>
                     </div>
-
                     <div className="mb-5">
                         <h4 style={{ fontWeight: '600', marginTop: '50px' }}>Kategori Pertanyaan</h4>
                         {
+                            sideBar ?
+                                sideBar?.map((row, i) => {
+                                    return (
+                                        <div style={{ marginLeft: '-35px' }} key={i}>
+                                            <div className="d-flex flex-row">
+                                                <div
+                                                    className={`${deskripsi === row
+                                                        ? styles.activeMenuFaqItem
+                                                        : styles.menuItem
+                                                        } d-flex align-items-center my-5`}
+                                                    onClick={() => {
+                                                        setDisableBtn(!disableBtn)
+                                                        setDeskripsi(row)
+                                                        setTitle(row)
+                                                    }}
+                                                >
+                                                    <i className="fas fa-arrow-right mr-3"></i>
+                                                    <td>
+                                                        {row}
+                                                    </td>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )
+                                })
+                                :
+                                <div className="row">
+                                    <h1 className="font-weight-bolder">
+                                        Kategori FAQ Tidak Tersedia
+                                    </h1>
+                                </div>
+                        }
+                        {/* {
                             faq ?
                                 faq?.faq.map((row, i) => {
                                     return (
@@ -102,7 +151,7 @@ const FaqPage = () => {
                                         Kategori FAQ Tidak Tersedia
                                     </h1>
                                 </div>
-                        }
+                        } */}
                     </div>
                 </div>
 
@@ -111,16 +160,27 @@ const FaqPage = () => {
                         <h2 style={{ fontWeight: '800', marginTop: '20px', color: '#203e80' }}>{title}</h2>
                         <div style={{ marginTop: '60px', marginBottom: '40px' }}>
                             {
-                                faq ?
-                                    faq?.faq.map((row, i) => {
-                                        if (row.id === deskripsi) {
+                                content ?
+                                    content.map((row, i) => {
+                                        if (row.nama_kategori === deskripsi) {
+
                                             return (
                                                 <div className="accordion" id="selector">
                                                     <div className="accordion-item" style={{ marginTop: '30px', borderRadius: '6px', border: '1px solid black' }}>
                                                         <div className="accordion-header d-flex justify-content-between align-items-center pt-1" style={{ marginLeft: '30px' }}>
-                                                            <h6 style={{ fontWeight: '700' }}>{row.judul}</h6>
-                                                            <button className="accordion-button btn" onClick={() => setDisableBtnPlus(!disableBtnPlus)} type="button" data-toggle="collapse" data-target={i === 0 ? "#collapseExample" : `#collapseExample${i}`} key={i} data-parent="#selector" aria-expanded="false" aria-controls="collapseExample">
-                                                                <i className={disableBtnPlus ? "fas fa-minus-circle" : "fas fa-plus-circle"} style={{ color: '#3699ff' }}></i>
+                                                            <h6 style={{ fontWeight: '700' }}>
+                                                                {row.judul}
+                                                            </h6>
+                                                            <button className="accordion-button btn" onClick={() => {
+                                                                
+                                                              setContent(content.filter(item => {
+                                                                  if(row.id === item.id){
+                                                                    row.isShow = !row.isShow
+                                                                  }
+                                                                  return item
+                                                              }))
+                                                            }} type="button" data-toggle="collapse" data-target={i === 0 ? "#collapseExample" : `#collapseExample${i}`} key={i} data-parent="#selector" aria-expanded="false" aria-controls="collapseExample">
+                                                                <i className={row.isShow === true ? "fas fa-minus-circle" : "fas fa-plus-circle"} style={{ color: '#3699ff' }}></i>
                                                             </button>
                                                         </div>
                                                         <div className="collapse" id={i === 0 ? "collapseExample" : `collapseExample${i}`} key={i}>

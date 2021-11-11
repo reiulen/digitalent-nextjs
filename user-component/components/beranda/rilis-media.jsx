@@ -8,7 +8,7 @@ import moment from "moment";
 
 export default function rilisMedia({ berita }) {
   return (
-    <div className="container-fluid max-container">
+    <div className="container-fluid">
       <div className="rillirs-media container-fluid mb-5">
         <h1
           className="fw-600 text-center mt-26 position-relative"
@@ -65,7 +65,7 @@ export default function rilisMedia({ berita }) {
                     >
                       <Link href={`/berita/detail/${row.slug}`} passHref>
                         <a className={`${style.link_rilis}`}>
-                          Lihat Detail {"->"}
+                          Lihat Detail &rarr;
                         </a>
                       </Link>
                     </div>
@@ -80,14 +80,7 @@ export default function rilisMedia({ berita }) {
             <Link href="/login">
               <a>
                 <button className="btn btn-outline-primary-new font-weight-bolder rounded-pill py-3 px-12">
-                  Lihat Selengkapnya
-                  <IconArrow
-                    width="8"
-                    height="10"
-                    fill="#0063CC"
-                    className="ml-2"
-                    style={{ transform: "rotate(0)" }}
-                  />
+                  Lihat Selengkapnya &rarr;
                 </button>
               </a>
             </Link>
