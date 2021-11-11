@@ -254,14 +254,24 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse }) => {
         </div>
 
         <div>
-          <div className={`${styles.menuItem} d-flex flex-row`}>
-            <div className="p-2">
-              <i className={`${styles.iconMenu} ri-menu-2-line`}></i>
+          <Link href="/peserta/artikel" passHref>
+            <div className={`${
+                router.pathname === "/peserta/artikel"
+                  ? styles.activeMenuItem
+                  : styles.menuItem
+              } d-flex flex-row`}>
+              <div className="p-2">
+                <i className={`${
+                    router.pathname === "/peserta/artikel"
+                      ? styles.activeIconMenu
+                      : styles.iconMenu
+                  } ri-bar-chart-horizontal-line`}></i>
+              </div>
+              <div className="p-2">
+                <td>Artikel</td>
+              </div>
             </div>
-            <div className="p-2">
-              <td>Artikel</td>
-            </div>
-          </div>
+          </Link>
         </div>
 
         <div

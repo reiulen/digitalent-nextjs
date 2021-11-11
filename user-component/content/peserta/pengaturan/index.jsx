@@ -5,7 +5,7 @@ import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
 import style from "./style.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import SimpleReactValidator from "simple-react-validator";
-import OtpInput from "react-otp-input";
+// import OtpInput from "react-otp-input";
 import axios from "axios";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
@@ -590,14 +590,14 @@ export default function Pengaturan({ session }) {
             </p>
           </div>
           <div>
-            <OtpInput
+            {/* <OtpInput
               value={otpEmail}
               onChange={(e) => setOtpEmail(e)}
               numInputs={6}
               inputStyle="w-100 p-4 mx-5 my-10 form-control"
               shouldAutoFocus
               isInputNum
-            ></OtpInput>
+            ></OtpInput> */}
           </div>
 
           <div className="d-flex justify-content-between mx-5 mt-14">
