@@ -14,6 +14,14 @@
     top: -10px;
 }
 
+/* .barChart{
+    width: 70%;
+} */
+
+.totalView{
+    text-align: right;
+}
+
 .kontenPublish{
     margin: 35px 0 10px 0;
 }
@@ -28,6 +36,13 @@
 
 .topBerita{
     margin: 0 0 10px 0;
+}
+
+@media only screen and (max-width: 1600px){
+    .pagination2{
+        /* display: none; */
+        visibility: hidden;
+    }
 }
 
 @media only screen and (max-width: 1024px) {
@@ -78,22 +93,33 @@
     .topVideo{
         margin: 10px 0 0 0;
     }
+    
+    .totalView{
+        margin-top: 10px;
+        text-align: left;
+    }
 }
 
 @media only screen and (max-width: 320px){
     .pagination {
         /* border: 1px solid black; */
-        margin-left: 23px;
         /* width: 5px; */
         /* font-size: 10px; */
+        visibility: hidden;
+    }
+    .pagination2 {
+        visibility: visible;
+        margin-left: 23px;
+        margin-top: -40px;
+        /* display */
     }
 }
 
-@media only screen and (max-width: 300px){
-    .pagination {
-        border: 1px solid black;
-        margin-left: 12px;
-        width: 100%;
+@media only screen and (max-width: 280px){
+    .pagination2 {
+        /* border: 1px solid black; */
+        margin-left: 19px;
+        width: 90%;
         /* font-size: 10px; */
     }
 }

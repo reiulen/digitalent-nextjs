@@ -11,12 +11,15 @@ import DatePicker from 'react-datepicker'
 // import Swal from "sweetalert2";
 import { TagsInput } from "react-tag-input-component";
 
+import styles from "../../../../styles/previewGaleri.module.css";
+
 import { newGaleri, clearErrors } from '../../../../redux/actions/publikasi/galeri.actions'
 import { NEW_GALERI_RESET } from '../../../../redux/types/publikasi/galeri.type'
 // import { getAllKategori } from "../../../../redux/actions/publikasi/kategori.actions";
 
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingPage from "../../../LoadingPage";
+import { style } from 'dom-helpers';
 
 const thumbsContainer = {
     display: 'flex',
@@ -429,8 +432,8 @@ const TambahGaleri = ({ token, id }) => {
                         <form onSubmit={onSubmit}>
                             <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Judul</label>
-                                <div className="col-sm-12">
-                                    <input type="text" className="form-control" placeholder="Masukkan Judul Disini" value={judul} onChange={(e) => setJudulGaleri(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("judul")} />
+                                <div className={`${styles.judulTambah} col-sm-12`}>
+                                    <input type="text" className={`${styles.judulTambah} form-control`} placeholder="Masukkan Judul Disini" value={judul} onChange={(e) => setJudulGaleri(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("judul")} />
                                     {simpleValidator.current.message(
                                         "judul",
                                         judul,
@@ -442,11 +445,11 @@ const TambahGaleri = ({ token, id }) => {
 
                             <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Deskripsi</label>
-                                <div className="col-sm-12">
-                                    <textarea className='form-control' placeholder='Tulis Deskripsi' name="deskripsi" id="" rows="10" onChange={e => setIsiGaleri(e.target.value)} value={isi_galleri} onBlur={() => simpleValidator.current.showMessageFor("deskripsi")}></textarea>
+                                <div className={`${styles.deskripsiTambah} col-sm-12`}>
+                                    <textarea className={`${styles.deskripsiTambah} form-control`} placeholder='Tulis Deskripsi' name="deskripsi" id="" rows="10" onChange={e => setIsiGaleri(e.target.value)} value={isi_galleri} onBlur={() => simpleValidator.current.showMessageFor("deskripsi")}></textarea>
                                     {simpleValidator.current.message(
-                                        "judul",
-                                        judul,
+                                        "deskripsi",
+                                        isi_galleri,
                                         "required|min:5|max:12000",
                                         { className: "text-danger" }
                                     )}
@@ -1482,9 +1485,9 @@ const TambahGaleri = ({ token, id }) => {
                                 </div> */}
 
                                 <div className="form-group mb-4">
-                                    <div className="row align-items-center">
+                                    <div className="row align-items-center ml-3">
                                         {image.map((row, i) => (
-                                            <div className="col-4 col-md-2 col-lg-2 p-0 ml-5" key={row.key} >
+                                            <div className={`${styles.imgPrevTambah} col-4 col-md-2 col-lg-2 p-0 mb-2`} key={row.key} >
                                                 <div
                                                     className="position-relative mx-auto mt-5"
                                                     style={{ maxWidth: "max-content" }}
@@ -1512,7 +1515,8 @@ const TambahGaleri = ({ token, id }) => {
                                                 >
                                                     <i className="ri-delete-bin-fill text-dark"></i>
                                                 </div> */}
-                                                        <label className="circle-top" htmlFor={`inputGroupFile${i}`}>
+                                                        {/* <label className="circle-top" htmlFor={`inputGroupFile${i}`}> */}
+                                                        <label className={`${styles.circleTop} circle-top`} htmlFor={`inputGroupFile${i}`}>
                                                             {
                                                                 row.imageName ?
                                                                     <i className="ri-pencil-fill text-dark"></i>
@@ -1538,7 +1542,7 @@ const TambahGaleri = ({ token, id }) => {
                                                             :
                                                             <div className="position-relative">
                                                                 <label
-                                                                    className="circle-bottom"
+                                                                    className={`${styles.circleBottom} circle-bottom`}
                                                                     // htmlFor={`inputGroupFile${i}`}
                                                                     onClick={() => onDeleteImage(i)}
                                                                 >
@@ -1560,7 +1564,7 @@ const TambahGaleri = ({ token, id }) => {
                                                     {
                                                         image[i].imageName !== "" ?
 
-                                                            <div className="mt-3 ml-3 text-danger">
+                                                            <div className="mt-3 text-danger">
                                                                 <small className="text-danger">{image[i].imageName}</small>
                                                             </div>
                                                             :
@@ -1582,7 +1586,7 @@ const TambahGaleri = ({ token, id }) => {
                                         </button>
                                     </div>
 
-                                    <div className="mt-3 col-sm-6 col-md-6 col-lg-7 col-xl-3 text-muted">
+                                    <div className={`${styles.resolusiTambah} mt-3 col-sm-6 col-md-6 col-lg-7 col-xl-3 text-muted`}>
                                         <p>Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar.</p>
                                     </div>
                                 </div>
@@ -1596,11 +1600,12 @@ const TambahGaleri = ({ token, id }) => {
                                 >
                                     Kategori
                                 </label>
-                                <div className="col-sm-12">
+                                {/* <div className="col-sm-12"> */}
+                                <div className={`${styles.selectKategori} col-sm-12`}>
                                     <select
                                         name=""
                                         id=""
-                                        className="form-control"
+                                        className={`${styles.selectKategori} form-control`}
                                         value={kategori_id}
                                         onChange={(e) => setKategoriId(e.target.value)}
                                         onBlur={(e) => {
@@ -1639,7 +1644,7 @@ const TambahGaleri = ({ token, id }) => {
 
                             <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Tag</label>
-                                <div className="col-sm-12" style={{ wordBreak: 'break-word' }}>
+                                <div className={`${styles.tagStyle} col-sm-12`} style={{ wordBreak: 'break-word' }}>
                                     <TagsInput
                                         value={tag}
                                         onChange={(data) => handleTag(data)}
@@ -1693,7 +1698,7 @@ const TambahGaleri = ({ token, id }) => {
                                         <div className="col-sm-12">
                                             <div className="input-group">
                                                 <DatePicker
-                                                    className="form-search-date form-control-sm form-control"
+                                                    className={`${styles.setPublish} form-search-date form-control-sm form-control`}
                                                     selected={publishDate}
                                                     onChange={(date) => handlePublishDate(date)}
                                                     // onChange={(date) => setPublishDate(date)}
@@ -1714,13 +1719,13 @@ const TambahGaleri = ({ token, id }) => {
                                     null
                             }
 
-                            <div className="form-group row">
+                            <div className="form-group row mr-0">
                                 <div className="col-sm-2"></div>
                                 <div className="col-sm-10 text-right">
                                     <Link href='/publikasi/galeri'>
-                                        <a className='btn btn-white-ghost-rounded-full rounded-pill mr-2 btn-sm'>Kembali</a>
+                                        <a className={`${styles.btnKembali} btn btn-white-ghost-rounded-full rounded-pill mr-2 btn-sm`}>Kembali</a>
                                     </Link>
-                                    <button className='btn btn-primary-rounded-full rounded-pill btn-sm'>Simpan</button>
+                                    <button className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill btn-sm`}>Simpan</button>
                                 </div>
                             </div>
                         </form>

@@ -397,9 +397,9 @@ const Vidio = ({ token }) => {
 
             <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
                 <div className="card card-custom card-stretch gutter-b">
-                    <div className="card-header border-0">
-                        <h3 className={`${styles2.headTitle}`}>Video</h3>
-                        <div className="card-toolbar">
+                    <div className="card-header row border-0">
+                        <h3 className={`${styles2.headTitle} col-12 col-sm-8 col-md-8 col-lg-8 col-xl-9`}>Video</h3>
+                        <div className="card-toolbar col-12 col-sm-4 col-md-4 col-lg-4 col-xl-3">
                             <Link href='/publikasi/video/tambah'>
                                 <a className={`${styles2.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bold btn-block`}>
                                     <i className="ri-add-fill pb-1 text-white mr-2 "></i>
@@ -421,13 +421,13 @@ const Vidio = ({ token }) => {
                                         <i className="ri-search-line left-center-absolute ml-2"></i>
                                         <input
                                             type="text"
-                                            className="form-control pl-10"
+                                            className={`${styles2.cari} form-control pl-10`}
                                             placeholder="Ketik disini untuk Pencarian..."
                                             value={search}
                                             onChange={(e) => setSearch(e.target.value)}
                                         />
                                         <button
-                                            className="btn bg-blue-primary text-white right-center-absolute"
+                                            className={`${styles2.fontCari} btn bg-blue-primary text-white right-center-absolute`}
                                             style={{
                                                 borderTopLeftRadius: "0",
                                                 borderBottomLeftRadius: "0",
@@ -438,16 +438,16 @@ const Vidio = ({ token }) => {
                                         </button>
                                     </div>
                                 </div>
-                                <div className="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                <div className={`${styles2.filterDate} col-sm-6 col-md-6 col-lg-6 col-xl-6`}>
                                     <div className="d-flex flex-wrap align-items-center justify-content-end mt-2">
                                         {/* sortir by modal */}
                                         <button
                                             className="col-sm-12 col-md-6 avatar item-rtl btn border d-flex align-items-center justify-content-between mt-2"
                                             data-toggle="modal"
                                             data-target="#exampleModalCenter"
-                                            style={{ color: "#464646", minWidth: "230px" }}
+                                            style={{ color: "#464646" }}
                                         >
-                                            <div className="d-flex align-items-center">
+                                            <div className={`${styles2.filter} d-flex align-items-center`}>
                                                 <IconFilter className="mr-3" />
                                                 Pilih Filter
                                             </div>
@@ -704,21 +704,38 @@ const Vidio = ({ token }) => {
 
                             <div className="row">
                                 {video && video.perPage < video.total &&
-                                    <div className={`${stylesPag.pagination} table-pagination`}>
-                                        <Pagination
-                                            activePage={page}
-                                            itemsCountPerPage={video.perPage}
-                                            totalItemsCount={video.total}
-                                            pageRangeDisplayed={3}
-                                            onChange={handlePagination}
-                                            nextPageText={'>'}
-                                            prevPageText={'<'}
-                                            firstPageText={'<<'}
-                                            lastPageText={'>>'}
-                                            itemClass='page-item'
-                                            linkClass='page-link'
-                                        />
-                                    </div>
+                                    <>
+                                        <div className={`${stylesPag.pagination} table-pagination`}>
+                                            <Pagination
+                                                activePage={page}
+                                                itemsCountPerPage={video.perPage}
+                                                totalItemsCount={video.total}
+                                                pageRangeDisplayed={3}
+                                                onChange={handlePagination}
+                                                nextPageText={'>'}
+                                                prevPageText={'<'}
+                                                firstPageText={'<<'}
+                                                lastPageText={'>>'}
+                                                itemClass='page-item'
+                                                linkClass='page-link'
+                                            />
+                                        </div>
+                                        <div className={`${stylesPag.pagination2} table-pagination`}>
+                                            <Pagination
+                                                activePage={page}
+                                                itemsCountPerPage={video.perPage}
+                                                totalItemsCount={video.total}
+                                                pageRangeDisplayed={1}
+                                                onChange={handlePagination}
+                                                nextPageText={'>'}
+                                                prevPageText={'<'}
+                                                firstPageText={'<<'}
+                                                lastPageText={'>>'}
+                                                itemClass='page-item'
+                                                linkClass='page-link'
+                                            />
+                                        </div>
+                                    </>
                                 }
                                 {video ?
                                     <div className={`${stylesPag.rightPag} table-total ml-auto`}>
@@ -753,7 +770,7 @@ const Vidio = ({ token }) => {
             {/* Modal */}
             <div className="modal fade" id="videoPlayerModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" >
                 <div className="modal-dialog modal-dialog-centered" role="document">
-                    <div className="modal-content" style={{ width: '700px', height: '490px' }}>
+                    <div className={`${styles.modalContent} modal-content`}>
                         {/* <div className="modal-header">
                             <h5 className="modal-title" id="exampleModalLongTitle">Pratinjau Video</h5>
                             <button type="button" className="close" data-dismiss="modal" aria-label="Close">
@@ -764,27 +781,27 @@ const Vidio = ({ token }) => {
                             {/* <div className={styles['title-preview-video']}> */}
                             {/* <div className="mb-2" style={{ textAlign: 'right' }}> */}
                             <div className={styles['playVideo']}>
-                                <button type="button" className="col-1 flaticon2-delete mb-2" data-dismiss="modal" aria-label="Close" style={{ border: 'none', background: 'none' }}></button>
+                                <button type="button" className={`${styles.btnClose} col-1 flaticon2-delete mb-2`} data-dismiss="modal" aria-label="Close"></button>
                                 {/* </div> */}
                                 <ReactPlayer url={url_video} controls width="100%" height="100%" playing={video_playing} onPlay={handleIsPlayed} />
                             </div>
                             {/* </div> */}
                             <div className="ml-3" style={{ marginTop: '30px' }}>
-                                <h3 className="font-weight-bolder">
+                                <h3 className={`${styles.modalsJudul} font-weight-bolder`}>
                                     {judul_video}
                                 </h3>
                             </div>
                             <div className="row align-items-center" style={{ marginLeft: '0' }}>
-                                <div className="col-3">
-                                    <span className="text-muted" style={{ fontSize: '11px' }}>
+                                <div className="col-4 col-md-4 col-lg-4">
+                                    <span className={`${styles.modalPublish} text-muted`}>
                                         {
                                             tanggal_publish !== null ? `${tanggal_publish}  | 120 Ditonton`
-                                        : ""
+                                                : ""
                                         }
                                         {/* {tanggal_publish} | 120 Ditonton */}
                                     </span>
                                 </div>
-                                <div className="col-6">
+                                <div className="col-5 col-md-5 col-lg-5">
                                     <div className={styles['listTag']}>
                                         {
                                             (tag === null) ? null :
@@ -793,7 +810,7 @@ const Vidio = ({ token }) => {
                                                         <div style={{ background: "#fff", border: '1px solid #d7e1ea' }}
                                                             className="mr-2 px-3 py-1 rounded"
                                                             key={i}>
-                                                            <div className="text-center" style={{ fontSize: '10px' }}>
+                                                            <div className={`${styles.isiTag} text-center`}>
                                                                 #{el.toUpperCase()}
                                                             </div>
                                                         </div>
@@ -802,8 +819,8 @@ const Vidio = ({ token }) => {
                                         }
                                     </div>
                                 </div>
-                                <div className="col-3" style={{ textAlign: 'center' }}>
-                                    <span className="p-2 label label-inline label-light-success font-weight-bold">
+                                <div className="col-3 col-md-3 col-lg-3" style={{ textAlign: 'center' }}>
+                                    <span className={`${styles.namaKategori} p-2 label label-inline label-light-success font-weight-bold`}>
                                         {kategori}
                                     </span>
                                 </div>
