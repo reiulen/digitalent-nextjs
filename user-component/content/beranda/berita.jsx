@@ -186,7 +186,7 @@ const Berita = () => {
 
 
     return (
-        <div className="mx-35">
+        <div>
             {/* BreadCrumb */}
             <div className="row my-15 mt-15 mx-1 py-3 px-8 bg-white rounded-pill d-flex align-items-center border">
                 <span className="text-primary">

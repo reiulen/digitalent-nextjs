@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import { Carousel } from "react-bootstrap";
 import { getAllBerandaArtikel } from "../../../redux/actions/beranda/artikel.actions"
 import PulseLoaderRender from "../../components/loader/PulseLoader";
+import style from '../../../styles/peserta/galeri.module.css'
 
 const Artikel = () => {
     const dispatch = useDispatch();
@@ -187,7 +188,7 @@ const Artikel = () => {
     return (
         <div>
             {/* BreadCrumb */}
-            <div className="row my-15 mx-1 py-3 px-8 bg-white rounded-pill d-flex align-items-center border">
+            <div className="row my-15 mt-15 mx-1 py-3 px-8 bg-white rounded-pill d-flex align-items-center border">
                 <span className="text-primary">
                     <Link href="/">
                         Beranda 
@@ -225,79 +226,65 @@ const Artikel = () => {
             {
                 kategori ? (
                     <div
-                        className="row my-5"
-                        style={{overflowX:"hidden"}}
+                        className="my-5 col-md-8 d-flex flex-row col-12"
                     >
-                        <Carousel
-                            indicators={false}
-                            nextIcon={false}
-                            nextLabel={false}
-                            prevIcon={false}
-                            prevLabel={false}
-                        >
-                            <Carousel.Item>
-                                <div className="d-flex flex-row ml-6">
-                                    {
-                                        kategoriArtikel === "" ?
+                        <div className={`d-flex flex-row pr-15 overflow-scroll ${style.responsive_overflow}`}>
+                            {
+                                kategoriArtikel === "" ?
+                                        <div 
+                                            className="d-flex align-items-center rounded-pill bg-primary-dashboard py-1 px-3 mr-7 my-5" 
+                                            style={{ cursor: "pointer", height:"40px" }}
+                                            onClick={() => handleFilterKategori("")}
+                                        >
+                                            <div className="my-1 mx-3 py-1 px-3 text-white">
+                                                Semua
+                                            </div>
+                                        </div>
+                                    :
+                                        <div 
+                                            className="d-flex align-items-center border rounded-pill bg-white py-1 px-3 mr-7 my-5" 
+                                            style={{ cursor: "pointer", height:"40px" }}
+                                            onClick={() => handleFilterKategori("")}
+                                        >
+                                            <div className="my-1 mx-3 py-1 px-3 text-muted">
+                                                Semua
+                                            </div>
+                                        </div>
+                            }
+
+                            {
+                                kategori ?
+                                    kategori.map((el, i) => {
+                                        return (
+                                            kategoriArtikel == el.nama_kategori ?
                                                 <div 
-                                                    className="d-flex align-items-center rounded-pill bg-primary-dashboard py-1 px-3 mr-3 my-5" 
+                                                    className="d-flex align-items-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-7 my-5" 
                                                     style={{ cursor: "pointer", height:"40px" }}
-                                                    onClick={() => handleFilterKategori("")}
+                                                    onClick={() => handleFilterKategori(el.nama_kategori)}
+                                                    key={i}
                                                 >
                                                     <div className="my-1 mx-3 py-1 px-3 text-white">
-                                                        Semua
+                                                        {el.nama_kategori}
                                                     </div>
-                                                </div>
+                                                </div> 
                                             :
                                                 <div 
-                                                    className="d-flex align-items-center border rounded-pill bg-whitepy-1 px-3 mr-3 my-5" 
+                                                    className="d-flex align-items-center border rounded-pill bg-white py-1 px-3 mr-7 my-5" 
                                                     style={{ cursor: "pointer", height:"40px" }}
-                                                    onClick={() => handleFilterKategori("")}
+                                                    onClick={() => handleFilterKategori(el.nama_kategori)}
+                                                    key={i}
                                                 >
                                                     <div className="my-1 mx-3 py-1 px-3 text-muted">
-                                                        Semua
+                                                        {el.nama_kategori}
                                                     </div>
-                                                </div>
-                                    }
-
-                                    {
-                                        kategori ?
-                                            kategori.map((el, i) => {
-                                                return (
-                                                    kategoriArtikel == el.nama_kategori ?
-                                                        <div 
-                                                            className="d-flex align-items-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-3 my-5" 
-                                                            style={{ cursor: "pointer", height:"40px" }}
-                                                            onClick={() => handleFilterKategori(el.nama_kategori)}
-                                                            key={i}
-                                                        >
-                                                            <div className="my-1 mx-3 py-1 px-3 text-white">
-                                                                {el.nama_kategori}
-                                                            </div>
-                                                        </div> 
-                                                    :
-                                                        <div 
-                                                            className="d-flex align-items-center border rounded-pill bg-white py-1 px-3 mr-3 my-5" 
-                                                            style={{ cursor: "pointer", height:"40px" }}
-                                                            onClick={() => handleFilterKategori(el.nama_kategori)}
-                                                            key={i}
-                                                        >
-                                                            <div className="my-1 mx-3 py-1 px-3 text-muted">
-                                                                {el.nama_kategori}
-                                                            </div>
-                                                        </div> 
-                                                )
-                                            })
-                                        :
-                                            null
-                                    }
-                                </div>
-
-                            </Carousel.Item>
-                            
-                        </Carousel>
-                        
-                    </div>
+                                                </div> 
+                                        )
+                                    })
+                                :
+                                    null
+                            }
+                        </div>
+                    </div> 
                 ) : null}
             {/* End Filter Button */}
 
@@ -453,7 +440,7 @@ const Artikel = () => {
                     }
                     
                     {/* Search Tab */}
-                    <form className="mb-3">
+                    <form className="mb-3 ml-4">
                         <div className="input-group">
                             <div className="input-group-prepend">
                                 <div 
@@ -488,16 +475,16 @@ const Artikel = () => {
                     {/* Card */}
                     {
                         loadingArtikel ?
-                            <div className="container-fluid">
-                                <div className="row">
-                                <PulseLoaderRender />
+                            <div className="row my-20 ml-5">
+                                <div className="col col-12">
+                                    <PulseLoaderRender />
                                 </div>
                             </div>
                         :
                             artikel && artikel.artikel && artikel.artikel.length !== 0 ?
                                 artikel.artikel.map ((el, i) => {
                                     return (
-                                        <div className="row my-20 ml-1" key={i}>
+                                        <div className="row my-20 ml-5" key={i}>
                                             <div className="col col-7">
                                                 <div className="row d-flex justify-content-between align-items-center">
                                                     <div className="d-flex align-self-center">
@@ -509,8 +496,8 @@ const Artikel = () => {
                                                                     process.env.END_POINT_API_IMAGE_PUBLIKASI +
                                                                     "publikasi/images/" + el.foto
                                                                 }
-                                                                width={30}
-                                                                height={30}
+                                                                width={20}
+                                                                height={20}
                                                                 alt="Logo Image"
                                                                 className="rounded-circle"
                                                             />
@@ -550,7 +537,7 @@ const Artikel = () => {
 
                                                 {
                                                     windowDimensions && windowDimensions.width && windowDimensions.width > 770 ?
-                                                        <div className="row my-5">
+                                                        <div className="row my-5 d-flex flex-wrap">
                                                             {/* Insert Desc Here */}
                                                             <div dangerouslySetInnerHTML={{__html: handleDescToTrim(el.isi_artikel)}} />
                                                         </div>
@@ -592,7 +579,7 @@ const Artikel = () => {
 
                                             <div 
                                                 className="col col-5 position-relative d-flex align-self-center" 
-                                                style={{objectFit:"contain"}}
+                                                style={{objectFit:"cover"}}
                                             >
                                                 {/* Insert Card Image Here */}
                                                 <Link href={`/artikel/detail/${el.slug}`}>
@@ -602,11 +589,10 @@ const Artikel = () => {
                                                                 process.env.END_POINT_API_IMAGE_PUBLIKASI +
                                                                 "publikasi/images/" + el.gambar
                                                             }
-                                                            width="100%"
-                                                            height="auto"
+                                                            width={350}
+                                                            height={250}
                                                             alt="Card Image"
                                                             className="rounded-lg"
-                                                            // style={{objectFit:"cover"}}
                                                         />
                                                     </a>
                                                 </Link>
@@ -617,10 +603,12 @@ const Artikel = () => {
                                 })
                                 
                             :
-                                <div className="row d-flex justify-content-center my-5">
-                                    <h1 className="font-weight-bolder">
-                                        Artikel Tidak Tersedia
-                                    </h1>
+                                <div className="row my-20 ml-5">
+                                    <div className="col col-12 d-flex justify-content-center">
+                                        <h1 className="font-weight-bolder">
+                                            Artikel Tidak Tersedia
+                                        </h1>
+                                    </div>
                                 </div>
                     }
                     
@@ -634,7 +622,7 @@ const Artikel = () => {
                     {/* Filter */}
                     {
                         windowDimensions && windowDimensions.width && windowDimensions.width > 770 ?
-                            <div className="border rounded-lg p-5 order-1 mb-10">
+                            <div className="border rounded-lg p-5 order-1 mb-15">
                                 <div className="row mt-5 "> 
                                     <div className="col-2 my-auto ml-3">
                                         <Image 
