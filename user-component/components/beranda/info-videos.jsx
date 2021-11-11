@@ -5,10 +5,7 @@ import IconArrow from "../../../components/assets/icon/Arrow2";
 
 export default function infoVideos({ video }) {
   return (
-    <div
-      style={{ backgroundColor: "white" }}
-      className="py-0 py-xl-30 info-video max-container container"
-    >
+    <div className="py-0 py-xl-30 info-video">
       <div className="container-fluid">
         <div className="row">
           <div className="col-12 col-sm-6 m-auto">
@@ -40,14 +37,7 @@ export default function infoVideos({ video }) {
               <Link href="/video">
                 <a>
                   <button className="btn btn-outline-primary-new font-weight-bolder rounded-pill py-3 px-12 mb-5">
-                    Lihat Selengkapnya
-                    <IconArrow
-                      width="8"
-                      height="10"
-                      fill="#0063CC"
-                      className="ml-2"
-                      style={{ transform: "rotate(0)" }}
-                    />
+                    Lihat Selengkapnya &rarr;
                   </button>
                 </a>
               </Link>

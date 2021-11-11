@@ -286,7 +286,7 @@ const DetailAkademi = ({ session }) => {
   };
   return (
     <>
-      <Container fluid className="px-10 py-5">
+      <Container fluid className="px-md-30 px-10 py-10">
         <SubHeaderComponent
           data={[{ link: router.asPath, name: akademi.name }]}
         />
