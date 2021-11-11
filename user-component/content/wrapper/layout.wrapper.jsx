@@ -37,10 +37,7 @@ const Layout = ({ children, title, session }) => {
       <NavigationBar session={session} />
       <ToastContainer position="top-right" />
       <div className="d-flex flex-column-fluid bg-white">
-        <div 
-          // className="container"
-          style={{overflowX:"hidden"}}
-        >
+        <div className="container" style={{ overflowX: "hidden" }}>
           {children}
         </div>
       </div>
