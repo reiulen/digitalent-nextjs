@@ -433,11 +433,7 @@ const Berita = ({ token }) => {
 
                                         {/* modal */}
                                         <form
-                                            // id="kt_docs_formvalidation_text"
                                             className="form text-left"
-                                        // action="#"
-                                        // autoComplete="off"
-                                        // onSubmit={handleSubmitSearchMany}
                                         >
                                             <div
                                                 className="modal fade"
@@ -490,8 +486,6 @@ const Berita = ({ token }) => {
                                                                         dateFormat="dd/MM/yyyy"
                                                                         placeholderText="Silahkan Isi Tanggal Dari"
                                                                         wrapperClassName="col-12 col-lg-12 col-xl-12"
-                                                                    // minDate={moment().toDate()}
-                                                                    // minDate={addDays(new Date(), 20)}
                                                                     />
                                                                 </div>
                                                             </div>
@@ -511,12 +505,10 @@ const Berita = ({ token }) => {
                                                                         endDate={endDate}
                                                                         dateFormat="dd/MM/yyyy"
                                                                         minDate={startDate}
-                                                                        // minDate={moment().toDate()}
                                                                         maxDate={addDays(startDate, 20)}
                                                                         placeholderText="Silahkan Isi Tanggal Sampai"
                                                                         wrapperClassName="col-12 col-lg-12 col-xl-12"
                                                                         disabled={disableEndDate === true || disableEndDate === null}
-                                                                    // minDate={addDays(new Date(), 20)}
                                                                     />
                                                                 </div>
                                                                 {
@@ -557,48 +549,6 @@ const Berita = ({ token }) => {
                                     </div>
                                 </div>
                             </div>
-                            {/* <div className="row align-items-right">
-                                <div className="col-lg-2 col-xl-2">
-                                    <small className="form-text text-muted">
-                                        Dari Tanggal
-                                    </small>
-                                    <DatePicker
-                                        className="form-search-date form-control-sm form-control"
-                                        selected={startDate}
-                                        onChange={(date) => setStartDate(date)}
-                                        selectsStart
-                                        startDate={startDate}
-                                        endDate={endDate}
-                                        dateFormat="dd/MM/yyyy"
-                                    // minDate={addDays(new Date(), 20)}
-                                    />
-                                </div>
-                                <div className="col-lg-2 col-xl-2">
-                                    <small className="form-text text-muted">
-                                        Sampai Tanggal
-                                    </small>
-                                    <DatePicker
-                                        className="form-search-date form-control-sm form-control"
-                                        selected={endDate}
-                                        onChange={(date) => setEndDate(date)}
-                                        selectsEnd
-                                        startDate={startDate}
-                                        endDate={endDate}
-                                        minDate={startDate}
-                                        maxDate={addDays(startDate, 20)}
-                                        dateFormat="dd/MM/yyyy"
-                                    />
-                                </div>
-                                <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
-                                <button
-                                    type='button'
-                                    className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block"
-                                    onClick={handleSearchDate}
-                                >
-                                    Cari
-                                </button>
-                                </div>
-                            </div> */}
                         </div>
                         <div className="table-page mt-5">
                             <div className="table-responsive">
@@ -679,11 +629,6 @@ const Berita = ({ token }) => {
                                                             </td>
                                                             <td className='align-middle'>
                                                                 {row.role[0].name}
-                                                                {/* {
-                                                                    typeof row.role === "string" ?
-                                                                        row.role
-                                                                        : row.role[0].name
-                                                                } */}
                                                             </td>
                                                             <td className="align-middle d-flex">
 
@@ -719,29 +664,6 @@ const Berita = ({ token }) => {
                                                                     </div>
                                                                 </button>
                                                             </td>
-
-                                                            {/* <td className='align-middle'>
-                                                                <ButtonNewTab icon='setting.svg' link={`/publikasi/berita/preview/${row.id}`} title="Preview"/>
-                                                                <ButtonAction icon='write.svg' link={`/publikasi/berita/${row.id}`} title="Edit"/>
-                                                                <button 
-                                                                    onClick={() => handleDelete(row.id)} 
-                                                                    className='btn mr-1' 
-                                                                    style={{ 
-                                                                        background: '#F3F6F9', 
-                                                                        borderRadius: '6px' 
-                                                                    }}
-                                                                    data-toggle="tooltip" 
-                                                                    data-placement="bottom" 
-                                                                    title="Hapus"
-                                                                    >
-                                                                    <Image 
-                                                                        alt='button-action' 
-                                                                        src={`/assets/icon/trash.svg`} 
-                                                                        width={18} 
-                                                                        height={18} 
-                                                                    />
-                                                                </button>
-                                                            </td> */}
                                                         </tr>
 
                                                     })

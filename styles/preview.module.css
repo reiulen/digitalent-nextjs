@@ -94,15 +94,22 @@
 .uploadImage{
   height: 60px;
   margin-top: 20px;
+  margin-right: 20px;
 }
 
 .inputData{
-  /* width: 100px; */
+  /* width: 100px;
+  border: 1px solid black; */
 }
 
 .validator{
   width: 200px;
   font-size: 11px;
+}
+
+.btnSave{
+  /* border: 1px solid black; */
+  /* margin-left: 15px; */
 }
 
 @media only screen and (max-width: 1024px) {
@@ -119,6 +126,12 @@
     flex-wrap: wrap;
     width: 10px;
     font-size: 11px;
+  }
+
+  /* Pengaturan */
+ 
+  .uploadImage{
+    margin-right: 50px;
   }
 }
 
@@ -186,6 +199,9 @@
   .modalPublish{
     font-size: 8px;
   }
+  .validator{
+    width: 150px;
+  }
 }
 
 @media only screen and (max-width: 320px){
@@ -205,12 +221,15 @@
     /* font-size: 9px; */
     /* margin-right: 8px; */
   }
-  .inputData{
+  /* .inputData{
     width: 80px;
-  }
+  } */
   .validator{
     width: 100px;
     /* font-size: 11px; */
+  }
+  .btnSave{
+    /* margin-left: 15px; */
   }
 }
 
@@ -229,12 +248,12 @@
   /* Pengaturan */
 
   .uploadImage{
-    font-size: 9px;
-    margin-right: 11px;
+    /* font-size: 9px; */
+    margin-right: 65px;
   }
-  .inputData{
-    width: 70px;
-  }
+  /* .inputData{
+    width: 100px;
+  } */
   .validator{
     width: 100px;
     font-size: 9px;

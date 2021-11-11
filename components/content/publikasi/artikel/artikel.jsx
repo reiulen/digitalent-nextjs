@@ -655,11 +655,6 @@ const Artikel = ({ token }) => {
                               </td>
                               <td className="align-middle">
                                 {artikel.role[0].name}
-                                {/* {
-                                  typeof row.role === "string" ?
-                                    row.role
-                                    : row.role[0].name
-                                } */}
                               </td>
                               <td className="align-middle d-flex">
 

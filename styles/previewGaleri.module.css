@@ -19,6 +19,10 @@
   display: flex;
 }
 
+.modalsRight{
+  padding: 30px;
+}
+
 .img-left {
   width: 350px;
 }

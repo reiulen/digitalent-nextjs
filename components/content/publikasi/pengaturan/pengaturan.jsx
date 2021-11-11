@@ -271,10 +271,11 @@ const Pengaturan = ({ token }) => {
                             <div className="card-body">
                                 <form>
                                     <div className="form-group row form-inline">
-                                        <label htmlFor="staticEmail" className="col-4 col-md-2 col-lg-3 col-xl-2 col-form-label">Upload Image</label>
+                                        <label htmlFor="staticEmail" className="col-12 col-md-2 col-lg-3 col-xl-2 col-form-label">Upload Image</label>
                                         <div className={`${styles.uploadImage} col-7 col-md-4 col-lg-4 col-xl-3`}>
                                             <div className="d-flex align-items-center">
-                                                <input style={{width:'100px'}}
+                                                <input
+                                                    style={{ width: '100px' }}
                                                     type="number" min="1"
                                                     className={`${styles.inputData} form-control mr-4`}
                                                     value={upload_image}
@@ -296,7 +297,7 @@ const Pengaturan = ({ token }) => {
                                             </div>
                                         </div>
                                         <button
-                                            className="col-2 col-md-6 col-lg-7 col-xl-5 btn btn-link-action text-white"
+                                            className={`${styles.btnSave} col-3 col-md-6 col-lg-7 col-xl-5 btn btn-link-action text-white`}
                                             onClick={(e) => submitImagePublikasi(e)}
                                             style={{ marginLeft: '-30px' }}
                                         >
@@ -310,10 +311,10 @@ const Pengaturan = ({ token }) => {
 
                                     </div>
                                     <div className="form-group row form-inline">
-                                        <label htmlFor="staticEmail" className="col-4 col-md-2 col-lg-3 col-xl-2 col-form-label">Upload Imagetron</label>
+                                        <label htmlFor="staticEmail" className="col-12 col-md-2 col-lg-3 col-xl-2 col-form-label">Upload Imagetron</label>
                                         <div className={`${styles.uploadImage} col-7 col-md-4 col-lg-4 col-xl-3`}>
                                             <div className="d-flex align-items-center">
-                                                <input style={{width:'100px'}} type="number" min="1" className={`${styles.inputData} form-control mr-4`} value={upload_imagetron} onChange={(e) => setUploadImagetron(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("upload_imagetron")} />
+                                                <input style={{ width: '100px' }} type="number" min="1" className={`${styles.inputData} form-control mr-4`} value={upload_imagetron} onChange={(e) => setUploadImagetron(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("upload_imagetron")} />
                                                 <div>MB</div>
                                             </div>
                                             <div className={`${styles.validator}`}>
@@ -326,7 +327,7 @@ const Pengaturan = ({ token }) => {
                                             </div>
                                         </div>
                                         <button
-                                            className="col-2 col-md-6 col-lg-7 col-xl-5 btn btn-link-action text-white"
+                                            className="col-3 col-md-6 col-lg-7 col-xl-5 btn btn-link-action text-white"
                                             onClick={(e) => submitImagetron(e)}
                                             style={{ marginLeft: '-30px' }}
                                         >
@@ -339,10 +340,10 @@ const Pengaturan = ({ token }) => {
                                         </button>
                                     </div>
                                     <div className="form-group row form-inline">
-                                        <label htmlFor="staticEmail" className="col-4 col-md-2 col-lg-3 col-xl-2 col-form-label">Batas Slider</label>
+                                        <label htmlFor="staticEmail" className="col-12 col-md-2 col-lg-3 col-xl-2 col-form-label">Batas Slider</label>
                                         <div className={`${styles.uploadImage} col-7 col-md-4 col-lg-4 col-xl-3`}>
                                             <div className="d-flex align-items-center">
-                                                <input style={{width:'100px'}} type="number" min="1" className={`${styles.inputData} form-control mr-4`} value={batas_slider} onChange={(e) => setBatasSlider(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("batas_slider")} />
+                                                <input style={{ width: '100px' }} type="number" min="1" className={`${styles.inputData} form-control mr-4`} value={batas_slider} onChange={(e) => setBatasSlider(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("batas_slider")} />
                                                 <div>Page</div>
                                             </div>
                                             <div className={`${styles.validator}`}>
@@ -355,7 +356,7 @@ const Pengaturan = ({ token }) => {
                                             </div>
                                         </div>
                                         <button
-                                            className="col-2 col-md-6 col-lg-7 col-xl-5 btn btn-link-action text-white"
+                                            className="col-3 col-md-6 col-lg-7 col-xl-5 btn btn-link-action text-white"
                                             onClick={(e) => submitSlider(e)}
                                             style={{ marginLeft: '-30px' }}
                                         >
@@ -368,10 +369,10 @@ const Pengaturan = ({ token }) => {
                                         </button>
                                     </div>
                                     <div className="form-group row form-inline">
-                                        <label htmlFor="staticEmail" className="col-4 col-md-2 col-lg-3 col-xl-2 col-form-label">Maksimal FAQ</label>
+                                        <label htmlFor="staticEmail" className="col-12 col-md-2 col-lg-3 col-xl-2 col-form-label">Maksimal FAQ</label>
                                         <div className={`${styles.uploadImage} col-7 col-md-4 col-lg-4 col-xl-3`}>
                                             <div className="d-flex align-items-center">
-                                                <input style={{width:'100px'}} type="number" min="1" className={`${styles.inputData} form-control mr-4`} value={maxfaq} onChange={(e) => setMaxfaq(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("maxfaq")} />
+                                                <input style={{ width: '100px' }} type="number" min="1" className={`${styles.inputData} form-control mr-4`} value={maxfaq} onChange={(e) => setMaxfaq(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("maxfaq")} />
                                                 <div>Page</div>
                                             </div>
                                             <div className={`${styles.validator}`}>
@@ -384,7 +385,7 @@ const Pengaturan = ({ token }) => {
                                             </div>
                                         </div>
                                         <button
-                                            className="col-2 col-md-6 col-lg-7 col-xl-5 btn btn-link-action text-white"
+                                            className="col-3 col-md-6 col-lg-7 col-xl-5 btn btn-link-action text-white"
                                             onClick={(e) => submitFaq(e)}
                                             style={{ marginLeft: '-30px' }}
                                         >
@@ -396,7 +397,6 @@ const Pengaturan = ({ token }) => {
                                             />
                                         </button>
                                     </div>
-
 
                                     <div className="form-group row">
                                         <div className="col-sm-12 text-right">
