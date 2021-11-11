@@ -3,7 +3,7 @@ import Slider from "react-slick";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
-export default function Carousel({ imagetron }) {
+export default function Carousel({ data }) {
   const router = useRouter();
 
   const getWindowDimensions = () => {
@@ -51,9 +51,13 @@ export default function Carousel({ imagetron }) {
   const settings = {
     dots: true,
     infinite: true,
+    autoplay: true,
+    speed: 2000,
+    autoplaySpeed: 2000,
+    cssEase: "linear",
     speed: 500,
     slidesToScroll: 1,
-    variableWidth: true,
+    variableWidth: data.imagetron.length > 1 ? true : false,
     centerMode: true,
     centerPadding: "40px",
     nextArrow: <SampleNextArrow />,
@@ -78,7 +82,7 @@ export default function Carousel({ imagetron }) {
       {
         breakpoint: 1124,
         settings: {
-          variableWidth: false,
+          variableWidth: true,
           centerMode: true,
           centerPadding: "40px",
         },
@@ -88,8 +92,9 @@ export default function Carousel({ imagetron }) {
 
   return (
     <>
+      {console.log(data.imagetron.length)}
       <Slider {...settings}>
-        {imagetron.map((row, i) => (
+        {data.imagetron.map((row, i) => (
           <div style={{ width: 1200 }} key={i}>
             <Image
               src={
@@ -101,7 +106,6 @@ export default function Carousel({ imagetron }) {
               height={windowDimensions.width < 800 ? 550 : 400}
               objectFit="cover"
               className="img-carousel"
-              // onClick={() => router.push(row.url_link)} ROUTING IMAGE WHEN TRIGRER CLICK
             />
           </div>
         ))}

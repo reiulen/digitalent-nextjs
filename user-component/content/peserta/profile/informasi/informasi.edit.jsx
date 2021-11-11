@@ -69,7 +69,6 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
     (dataPribadi && dataPribadi.file_path + dataPribadi.File_ktp) || ""
   );
 
-
   // const [cvName, setCvName] = useState(
   //   (dataPribadi && dataPribadi.cv) || "Belum ada file"
   // );
@@ -188,6 +187,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
         nomorHandphone,
         email,
       };
+
       dispatch(updateProfileDataPribadi(data, token));
     } else {
       simpleValidator.current.showMessages();
@@ -200,30 +200,44 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
     }
   };
 
+  const handleInfoEdit = () => {
+    if (localStorage.getItem("viewEdit") === "false") {
+      funcViewEdit(false);
+    }
+    funcViewEdit(false);
+  };
+
   return (
     <>
       <Form onSubmit={handleSubmit}>
         <div className="informasi-pribadi">
           <h3 className="font-weight-bolder mb-5">Informasi Pribadi</h3>
 
-          <Form.Group className="mb-3">
-            <Form.Label>Nama Lengkap</Form.Label>
-            <Form.Control
-              placeholder="Masukan Nama Lengkap"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              onBlur={() =>
-                simpleValidator.current.showMessageFor("nama lengkap")
-              }
-            />
-            {simpleValidator.current.message("nama lengkap", name, "required", {
-              className: "text-danger",
-            })}
-          </Form.Group>
           <Row className="mb-3">
             <Form.Group as={Col} md={6}>
-              <Form.Label>Email</Form.Label>
+              <Form.Label className={style.label}>Nama Lengkap</Form.Label>
               <Form.Control
+                className={style.formControl}
+                placeholder="Masukan Nama Lengkap"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                onBlur={() =>
+                  simpleValidator.current.showMessageFor("nama lengkap")
+                }
+              />
+              {simpleValidator.current.message(
+                "nama lengkap",
+                name,
+                "required",
+                {
+                  className: "text-danger",
+                }
+              )}
+            </Form.Group>
+            <Form.Group as={Col} md={6}>
+              <Form.Label className={style.label}>Email</Form.Label>
+              <Form.Control
+                className={style.formControl}
                 disabled
                 type="email"
                 placeholder="Masukan Email"
@@ -235,9 +249,27 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
                 className: "text-danger",
               })}
             </Form.Group>
+          </Row>
+          <Row className="mb-3">
+            <Form.Group as={Col} md={6} controlId="formGridNik">
+              <Form.Label className={style.label}>NIK</Form.Label>
+              <Form.Control
+                className={style.formControl}
+                disabled
+                type="text"
+                placeholder="Masukan NIK"
+                value={nik}
+                onChange={(e) => setNik(e.target.value)}
+                onBlur={() => simpleValidator.current.showMessageFor("nik")}
+              />
+              {simpleValidator.current.message("nik", nik, "required|integer", {
+                className: "text-danger",
+              })}
+            </Form.Group>
             <Form.Group as={Col} md={6} controlId="formGridKelamin">
-              <Form.Label>Jenis Kelamin</Form.Label>
+              <Form.Label className={style.label}>Jenis Kelamin</Form.Label>
               <Select
+                className={style.formControl}
                 placeholder={`${
                   kelamin === "" ? "Silahkan Pilih Jenis Kelamin" : kelamin
                 }`}
@@ -259,24 +291,10 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
             </Form.Group>
           </Row>
           <Row className="mb-3">
-            <Form.Group as={Col} md={6} controlId="formGridNik">
-              <Form.Label>NIK</Form.Label>
-              <Form.Control
-                disabled
-                type="text"
-                placeholder="Masukan NIK"
-                value={nik}
-                onChange={(e) => setNik(e.target.value)}
-                onBlur={() => simpleValidator.current.showMessageFor("nik")}
-              />
-              {simpleValidator.current.message("nik", nik, "required|integer", {
-                className: "text-danger",
-              })}
-            </Form.Group>
-
             <Form.Group as={Col} md={6} controlId="formGridPassword">
-              <Form.Label>Nomor Handphone</Form.Label>
+              <Form.Label className={style.label}>Nomor Handphone</Form.Label>
               <Form.Control
+                className={style.formControl}
                 disabled
                 type="text"
                 placeholder="Masukan Nomor Handphone"
@@ -295,29 +313,32 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
                 }
               )}
             </Form.Group>
-          </Row>
-          <Form.Group className="mb-3">
-            <Form.Label>Agama</Form.Label>
-            <Select
-              placeholder={`${
-                agama === "" ? "Silahkan Pilih Agama" : dataPribadi.agama
-              }`}
-              options={optionsAgama}
-              defaultValue={{ value: agama, label: agama }}
-              onChange={(e) => setAgama({ label: e.label, value: e.value })}
-              onBlur={() =>
-                simpleValidator.current.showMessageFor("jenis kelamin")
-              }
-            />
+            <Form.Group as={Col} md={6} controlId="formGridAgama">
+              <Form.Label className={style.label}>Agama</Form.Label>
+              <Select
+                className={style.formControl}
+                placeholder={`${
+                  agama === "" ? "Silahkan Pilih Agama" : dataPribadi.agama
+                }`}
+                options={optionsAgama}
+                defaultValue={{ value: agama, label: agama }}
+                onChange={(e) => setAgama({ label: e.label, value: e.value })}
+                onBlur={() =>
+                  simpleValidator.current.showMessageFor("jenis kelamin")
+                }
+              />
 
-            {simpleValidator.current.message("agama", agama, "required", {
-              className: "text-danger",
-            })}
-          </Form.Group>
+              {simpleValidator.current.message("agama", agama, "required", {
+                className: "text-danger",
+              })}
+            </Form.Group>
+          </Row>
+          <Form.Group className="mb-3"></Form.Group>
           <Row className="mb-3">
             <Form.Group as={Col} md={6}>
-              <Form.Label>Tempat Lahir</Form.Label>
+              <Form.Label className={style.label}>Tempat Lahir</Form.Label>
               <Form.Control
+                className={style.formControl}
                 type="text"
                 placeholder="Masukan Tempat Lahir"
                 value={tempatLahir}
@@ -337,8 +358,9 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
             </Form.Group>
 
             <Form.Group as={Col} md={6} controlId="formGridPassword">
-              <Form.Label>Tanggal lahir</Form.Label>
+              <Form.Label className={style.label}>Tanggal lahir</Form.Label>
               <Form.Control
+                className={style.formControl}
                 type="date"
                 value={tanggalLahir}
                 onChange={(e) => setTanggalLahir(e.target.value)}
@@ -356,12 +378,14 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
               )}
             </Form.Group>
           </Row>
+          <hr className={style.hr} />
         </div>
         <div className="kontak-darurat mt-6">
           <h3 className="font-weight-bolder mb-5">Kontak Darurat</h3>
           <Form.Group className="mb-3">
             <Form.Label>Nama Lengkap</Form.Label>
             <Form.Control
+              className={style.formControl}
               placeholder="Masukan Nama Lengkap"
               value={nameUrgent}
               onChange={(e) => setNameUrgent(e.target.value)}
@@ -382,6 +406,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
             <Form.Group as={Col} md={6}>
               <Form.Label>Nomor Handphone</Form.Label>
               <Form.Control
+                className={style.formControl}
                 type="number"
                 placeholder="Masukan Nomor Handphone"
                 value={nomorUrgent}
@@ -405,6 +430,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
             <Form.Group as={Col} md={6} controlId="formGridKelamin">
               <Form.Label>Hubungan</Form.Label>
               <Form.Control
+                className={style.formControl}
                 type="text"
                 placeholder="Masukan Hubungan"
                 value={hubunganUrgent}
@@ -423,6 +449,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
               )}
             </Form.Group>
           </Row>
+          <hr className={style.hr} />
         </div>
         <div className="unggah-berkas-pribadi mt-6">
           <h3 className="font-weight-bolder">Upload Berkas Pribadi</h3>
@@ -439,7 +466,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
                   onBlur={() => simpleValidator.current.showMessageFor("ktp")}
                 />
                 <label className="custom-file-label" htmlFor="customFile">
-                  {ktpName}
+                  {ktpName.split("/ktp/")}
                 </label>
                 <label style={{ marginTop: "15px" }}>
                   {simpleValidator.current.message(
@@ -507,7 +534,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
               <Button
                 className={`${style.button_profile_batal} rounded-xl mr-2`}
                 type="button"
-                onClick={() => funcViewEdit(false)}
+                onClick={() => handleInfoEdit()}
               >
                 Batal
               </Button>

@@ -1,10 +1,6 @@
 import { getSession } from "next-auth/client";
 import dynamic from "next/dynamic";
 
-// import LoginAdmin from "../components/content/auth/admin/login";
-// import Beranda from "../user-component/content/beranda/beranda"
-// import Wrapper from "../"
-
 import { wrapper } from "../redux/store";
 import { getAllAkademi } from "../redux/actions/beranda/beranda.actions";
 import { getTemaByAkademi } from "../redux/actions/beranda/beranda.actions";
@@ -14,7 +10,7 @@ import { getDataPribadi } from "../redux/actions/pelatihan/function.actions";
 import LoadingLanding from "../user-component/components/loader/LandingLoader";
 
 const Beranda = dynamic(
-  () => import("../user-component/content/beranda/beranda"),
+  () => import("../user-component/content/beranda/beranda-new"),
   {
     loading: function loadingNow() {
       return <LoadingLanding />;
@@ -34,7 +30,7 @@ export default function HomePage(props) {
 
   return (
     <>
-      <div className="d-flex flex-column flex-root">
+      <div style={{ backgroundColor: "white" }}>
         <Layout title="Digitalent" session={session}>
           <Beranda session={session} />
         </Layout>

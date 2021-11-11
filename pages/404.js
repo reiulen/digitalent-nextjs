@@ -12,6 +12,7 @@ export default function Custom404() {
           width={700}
           height={500}
           objectFit="cover"
+          alt="image-404"
         />
         <div className="text-center">
           <h1 className="font-weight-bolder">404:Not Found</h1>

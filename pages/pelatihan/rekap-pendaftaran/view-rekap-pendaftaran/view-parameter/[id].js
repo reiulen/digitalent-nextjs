@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../../../components/LoadingSkeleton";
 import { middlewareAuthAdminSession } from "../../../../../utils/middleware/authMiddleware";
 
+import { getReviewStep4Revisi } from '../../../../../redux/actions/pelatihan/review.actions'
 import { wrapper } from "../../../../../redux/store";
 import { getSession } from "next-auth/client";
 
@@ -43,6 +44,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+      await store.dispatch(getReviewStep4Revisi(session.user.user.data.token, params.id))
 
       return {
         props: { session, title: "View Parameter - Rekap Pendaftaran" },

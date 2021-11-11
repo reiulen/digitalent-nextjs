@@ -1,5 +1,6 @@
 import React from "react";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 const StepViewPelatihan = (props) => {
   const router = useRouter();
@@ -64,7 +65,9 @@ const StepViewPelatihan = (props) => {
               <div className={`col-12 d-flex rounded-top h-100 ${stepBg1}`}>
                 <div className="my-6 mx-3">
                   <button className={`btn ${stepNumber1} my-auto`}>
-                    <i className="ri-task-line text-white text-center pr-0"></i>
+                    <i className="ri-task-line text-white text-center pr-0" style={{
+                      fontSize: "26px"
+                    }}></i>
                   </button>
                 </div>
                 <div className="d-flex align-items-center mt-2">
@@ -84,7 +87,9 @@ const StepViewPelatihan = (props) => {
               <div className={`col-12 d-flex rounded-top h-100 ${stepBg2}`}>
                 <div className="my-6 mx-3">
                   <button className={`btn ${stepNumber2} my-auto`}>
-                    <i className="ri-todo-line text-white text-center pr-0"></i>
+                    <i className="ri-todo-line text-white text-center pr-0"style={{
+                      fontSize: "26px"
+                    }} ></i>
                   </button>
                 </div>
                 <div className="d-flex align-items-center mt-2">
@@ -104,7 +109,9 @@ const StepViewPelatihan = (props) => {
               <div className={`col-12 d-flex rounded-top h-100 ${stepBg3}`}>
                 <div className="my-6 mx-3">
                   <button className={`btn ${stepNumber3} my-auto`}>
-                    <i className="ri-article-line text-white text-center pr-0"></i>
+                    <i className="ri-article-line text-white text-center pr-0" style={{
+                      fontSize: "26px"
+                    }}></i>
                   </button>
                 </div>
                 <div className="d-flex align-items-center mt-2">
@@ -124,7 +131,16 @@ const StepViewPelatihan = (props) => {
               <div className={`col-12 d-flex rounded-top h-100 ${stepBg4}`}>
                 <div className="my-6 mx-3">
                   <button className={`btn ${stepNumber4} my-auto`}>
-                    <i className="ri-attachment-line text-white text-center pr-0"></i>
+                    <div className="text-white text-center px-0 py-0">
+                      <Image
+                        src={"/assets/icon/Attachment2.png"}
+                        alt="param"
+                        width={20}
+                        height={20}
+                        objectFit="cover"
+                      />
+                    </div>
+                    {/* <i className="ri-attachment-line text-white text-center pr-0"></i> */}
                   </button>
                 </div>
                 <div className="d-flex align-items-center mt-2">

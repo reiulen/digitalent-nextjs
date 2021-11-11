@@ -434,3 +434,20 @@
   }
 }
 
+.w-max-cs {
+  background-color: transparent;
+}
+
+@media(min-width:336px) and (max-width:360px) {
+  .w-max-cs {
+    background-color: #f7f7f7;
+  }
+}
+
+/* test */
+
+@media(max-width:1254px){
+  .img-ds{
+      display: none;   
+  }
+}

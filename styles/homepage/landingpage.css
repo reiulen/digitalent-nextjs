@@ -1,0 +1,212 @@
+/* HOME PAGE */
+.pelatihan-new {
+  background-image: url("/assets/media/section/section-pelatihan-1.png");
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  background-size: 700px;
+}
+
+.rilis-media-new {
+  background-image: url("/assets/media/section/section-rilis-media-2.png"),
+    url("/assets/media/section/section-rilis-media-3.png");
+  background-position: left top, right bottom;
+  background-repeat: no-repeat;
+  background-size: 700px;
+}
+
+.info-vidio-new {
+  background-image: url("/assets/media/section/section-video-4.png");
+  background-repeat: no-repeat;
+  background-position: right top;
+  background-size: 700px;
+}
+
+.title-pelatihan {
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 140%;
+  letter-spacing: 0.015em;
+  color: #1f1f1f;
+}
+
+.link-pelatihan-new {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 160%;
+  letter-spacing: 0.015em;
+  color: #0063cc;
+  cursor: pointer;
+}
+
+.image-list-pelatihan-new {
+  border-radius: 8px 8px 0px 0px;
+  transition: 0.5s ease;
+}
+
+.badge-card-pelatihan-new {
+  background-color: #e6f2ff;
+  color: #0063cc;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 12px;
+  border-radius: 40px;
+}
+
+.wishlist-card-new {
+  border-radius: 50% !important;
+  font-size: 20px;
+  width: 32px;
+  height: 32px;
+}
+
+.parent-image-pelatihan-new {
+  width: 100%;
+  height: 180px;
+  position: relative;
+}
+
+.parent-image-pelatihan-new-hover {
+  width: 100%;
+  height: 180px;
+  position: relative;
+  filter: brightness(0.8);
+}
+
+.mitra-pelatihan-new {
+  position: absolute;
+  top: -32px;
+  left: 14px;
+}
+
+.mitra-pelatihan-image-new {
+  border-radius: 50%;
+  border: 4px solid #ffffff !important;
+  padding: 0;
+}
+
+.text-mitra-new {
+  font-size: 14px;
+  font-weight: 600;
+  color: #6c6c6c;
+  text-align: start;
+}
+
+.status-mitra-open-new {
+  background: #e6fff7;
+  border-radius: 40px;
+  color: #00996a;
+  font-size: 12px;
+  padding: 4px 12px;
+  font-weight: 600;
+}
+
+.status-mitra-close-new {
+  background: #ffe6e8;
+  border-radius: 40px;
+  color: #ee2d41;
+  font-size: 12px;
+  padding: 4px 12px;
+  font-weight: 600;
+}
+
+.title-card-new {
+  font-weight: 600;
+  font-size: 18px;
+  color: #1f1f1f;
+  text-align: start;
+}
+
+.text-date-register-new {
+  font-size: 13px;
+  color: #6c6c6c;
+  line-height: 21px;
+  text-align: start;
+}
+
+.btn-quick-view-new {
+  background-color: #ffffff !important;
+  border: 1px solid #007cff !important;
+  color: #007cff !important;
+  box-sizing: border-box;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.btn-quick-view-new:hover {
+  background-color: #007cff !important;
+  border: none !important;
+  color: #ffffff !important;
+  font-weight: 600;
+  font-size: 14px;
+  box-sizing: border-box;
+  border: 1px solid #007cff !important;
+}
+
+.btn-disabled-pelatihan-new {
+  background-color: #ffffff;
+  opacity: 0.5 !important;
+  cursor: default !important;
+}
+
+.btn-disabled-pelatihan-new:hover {
+  background-color: #ffffff;
+}
+
+/* STEP REGISTER */
+.title-step-register h1 {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 140%;
+  text-align: center;
+  color: #1f1f1f;
+}
+
+@media (min-width: 768px) {
+  .title-step-register h1 {
+    font-size: 40px;
+  }
+}
+
+/* END HOME PAGE */
+
+/* PENYELENGGARA */
+.penyelenggara-title-filter h1 {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 40px;
+  line-height: 120%;
+  letter-spacing: 0.025em;
+  color: #1f1f1f;
+}
+
+.penyelenggara-title-filter p {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 160%;
+  color: #6c6c6c;
+}
+
+.filter-action p {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 160%;
+  color: #1f1f1f;
+}
+
+.btn-penyelenggara-rounded {
+  width: 120px;
+  height: 46px;
+  border-radius: 30px;
+}
+
+.bg-penyelenggara-primary {
+  background: #007cff;
+}
+.bg-penyelenggara-light {
+  background: #ffffff;
+  border: 1px solid #d7e1ea;
+  box-sizing: border-box;
+}
+/* END PENYELENGGARA */

@@ -328,6 +328,7 @@ import {
   getReviewStep3Reducer,
   revisiReviewReducer,
   tolakReviewReducer,
+  getReviewStep4Reducer,
 } from "./pelatihan/admin/review.reducers";
 // =================== report pelatihan ==================
 
@@ -439,6 +440,7 @@ import {
   allBerandaGaleriReducer,
   detailBerandaGaleriReducer,
   kategoriBerandaGaleriReducer,
+  allTagBerandaGaleriReducer
 } from "../reducers/beranda/galeri.reducer";
 
 // ========== berita ========
@@ -459,6 +461,15 @@ import {
   allBeasiswaReducer,
   allSimonasReducer,
 } from "./beranda/simonasAndBeasiswa";
+
+import {
+  allMasterPelatihanListReducer,
+  deleteMasterPelatihanReducer,
+  detailMasterPelatihanReducer,
+  newMasterTrainingReducer,
+  updateMasterPelatihanReducer,
+  updateStatusMasterReducer,
+} from "./pelatihan/admin/master-pelatihan.reducer";
 
 const reducer = combineReducers({
   // PUBLIKASI
@@ -728,6 +739,7 @@ const reducer = combineReducers({
   getReviewStep1: getReviewStep1Reducer,
   getReviewStep2: getReviewStep2Reducer,
   getReviewStep3: getReviewStep3Reducer,
+  getReviewStep4: getReviewStep4Reducer,
   revisiReview: revisiReviewReducer,
   tolakReview: tolakReviewReducer,
 
@@ -823,6 +835,7 @@ const reducer = combineReducers({
   allBerandaGaleri: allBerandaGaleriReducer,
   detailBerandaGaleri: detailBerandaGaleriReducer,
   kategoriBerandaGaleri: kategoriBerandaGaleriReducer,
+  allTagBerandaGaleri: allTagBerandaGaleriReducer,
 
   // ========== berita ========
   allBerandaBerita: allBerandaBeritaReducer,
@@ -836,6 +849,14 @@ const reducer = combineReducers({
   getDetailRiwayatPelatihanPeserta: getDetailRiwayatPelatihanReducer,
   allBeasiswa: allBeasiswaReducer,
   allSimonas: allSimonasReducer,
+
+  // ========== Master Pelatihan ========
+  getAllMasterPelatihan: allMasterPelatihanListReducer,
+  deleteMasterPelatihan: deleteMasterPelatihanReducer,
+  getDetailMasterPelatihan: detailMasterPelatihanReducer,
+  newMasterPelatihan: newMasterTrainingReducer,
+  updateMasterPelatihan: updateMasterPelatihanReducer,
+  updateStatusMaster: updateStatusMasterReducer,
 });
 
 export default reducer;

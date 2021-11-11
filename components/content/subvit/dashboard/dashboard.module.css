@@ -1,10 +1,49 @@
+@media (max-width: 414px) {
+  .cardSubstansi {
+    display: none;
+  }
+  .pieChart {
+    position: absolute;
+    top: 350;
+    width: 400px !important;
+    left: -90px !important;
+  }
+}
+
 @media (max-width: 490px) {
   .cardSubstansi {
     display: none;
   }
+  .pieChart {
+    position: absolute;
+    top: 350;
+    width: 400px !important;
+    left: -60px !important;
+  }
+}
+
+@media (max-width: 376px) {
+  .cardSubstansi {
+    display: none;
+  }
+  .pieChart {
+    position: absolute;
+    top: 350;
+    width: 400px !important;
+    left: -85px !important;
+  }
 }
 
 @media (max-width: 1024px) {
+  .pieChart {
+    position: absolute;
+    top: 350;
+    width: 400px !important;
+    left: -85px !important;
+  }
+  .cardList {
+    height: 40px !important;
+  }
   .cardTwo {
     height: 100%;
   }
@@ -28,6 +67,17 @@
   .note {
     font-size: 8px !important;
   }
+}
+
+.pieChart {
+  position: absolute;
+  top: 350;
+  left: 15px;
+}
+
+.cardBottom {
+  position: absolute;
+  bottom: 0;
 }
 
 .textCardTwo {
@@ -106,28 +156,28 @@
   height: 500px;
 }
 .headPeserta {
-  font-family: Montserrat;
+  font-family: Poppins;
   font-style: normal;
   font-weight: 600;
-  font-size: 14px;
-  line-height: 140%;
-  /* or 22px */
+  font-size: 16px;
+  line-height: 160%;
+  /* identical to box height, or 26px */
 
-  /* Lama/Neutral/80 */
+  /* Neutral/Heading */
 
-  color: #464e5f;
+  color: #1f1f1f;
 }
 .subHeadPeserta {
-  font-family: Montserrat;
+  font-family: Poppins;
   font-style: normal;
-  font-weight: 500;
-  font-size: 10px;
-  line-height: 140%;
-  /* identical to box height, or 20px */
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 18px;
+  /* identical to box height */
 
-  /* Lama/Neutral/70 */
+  /* Neutral/Body */
 
-  color: #80808f;
+  color: #6c6c6c;
 }
 .labelChart {
   font-family: Montserrat;
