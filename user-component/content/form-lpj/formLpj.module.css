@@ -1,0 +1,130 @@
+.mainContainer {
+  position: absolute;
+  top: 300px;
+}
+.title {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 160%;
+  letter-spacing: 0.015em;
+  color: #1f1f1f;
+}
+.subTitle {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 140%;
+  color: #1f1f1f;
+  margin-top: 30px;
+}
+.label {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 160%;
+  letter-spacing: 0.015em;
+  color: #6c6c6c;
+  margin-bottom: 24px;
+}
+.content {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 160%;
+  color: #1f1f1f;
+}
+.tableLabel {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 200%;
+  color: #1f1f1f;
+}
+.numberTable {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 200%;
+  vertical-align: top;
+  color: #1f1f1f;
+}
+.contentTable {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 200%;
+  color: #1f1f1f;
+}
+.checkbox {
+  text-align: center;
+  border: 0.5px;
+}
+.textArea {
+  background: #ffffff;
+  border: 1px solid #d7e1ea;
+  box-sizing: border-box;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+.textArea::placeholder {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 11px;
+  line-height: 160%;
+  letter-spacing: 0.015em;
+  color: #adb5bd;
+}
+.confirmation {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 160%;
+  color: #1f1f1f;
+  margin-top: 10px;
+}
+.btnBack {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 160%;
+  text-align: center;
+  letter-spacing: 0.015em;
+  text-decoration: none;
+  color: #007cff;
+}
+.btnBack:hover,
+.btnBack:focus {
+  text-decoration: none !important;
+}
+.btnSend {
+  background: #007cff;
+  padding: 8px 20px;
+  border-radius: 30px;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 160%;
+  text-align: center;
+  letter-spacing: 0.015em;
+  color: #ffffff;
+}
+.footer {
+  position: absolute;
+  bottom: 100;
+  left: 0;
+  padding: 0px;
+  margin-left: 0px;
+  margin-top: 50px;
+}

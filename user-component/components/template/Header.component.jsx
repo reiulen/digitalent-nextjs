@@ -27,6 +27,7 @@ const Header = () => {
     routerPath = "/peserta/subvit/trivia/[id]";
   if (router.pathname === "/peserta/subvit/mid-test/[id]")
     routerPath = "/peserta/subvit/mid-test/[id]";
+  if (router.pathname === "/peserta/form-lpj") routerPath = "/peserta/form-lpj";
 
   var date = new Date();
 
@@ -295,6 +296,8 @@ const Header = () => {
                               </>
                             )}
                           </>
+                        ) : router.pathname.includes("form-lpj") ? (
+                          "Survey & LPJ"
                         ) : (
                           "Dashboard"
                         )}
@@ -386,6 +389,14 @@ const Header = () => {
                                   </span>
                                 </div>
                               </Fragment>
+                            ) : router.pathname.includes("form-lpj") ? (
+                              <>
+                                Survey & LPJ
+                                <span className="mx-3">&gt;</span>
+                                <span className={styles.breadCrumbName}>
+                                  Form LPJ
+                                </span>
+                              </>
                             ) : (
                               "Dashboard"
                             )}
@@ -457,6 +468,15 @@ const Header = () => {
                     ) : router.pathname.includes("form-pendaftaran") ? (
                       <i
                         className="ri-folder-user-line"
+                        style={{
+                          color: "#fff",
+                          fontSize: "20px",
+                          marginRight: "15px",
+                        }}
+                      ></i>
+                    ) : router.pathname.includes("form-lpj") ? (
+                      <i
+                        className="ri-file-user-line"
                         style={{
                           color: "#fff",
                           fontSize: "20px",
@@ -541,6 +561,8 @@ const Header = () => {
                       : router.pathname.includes("profile") &&
                         localStorage.getItem("btn") === "3"
                       ? "Pekerjaan"
+                      : router.pathname.includes("form-lpj")
+                      ? "Form LPJ"
                       : "Dashboard"}
                   </div>
                 </div>
