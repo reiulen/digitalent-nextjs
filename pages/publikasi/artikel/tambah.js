@@ -10,6 +10,7 @@ import { wrapper } from "../../../redux/store";
 
 import LoadingPage from "../../../components/LoadingPage";
 import { getSettingPublikasi } from "../../../redux/actions/publikasi/setting.actions";
+// import { getAllAkademi } from "../../../redux/actions/beranda/beranda.actions";
 import { dropdownAkademi } from "../../../redux/actions/pelatihan/function.actions";
 
 const Tambah = dynamic(

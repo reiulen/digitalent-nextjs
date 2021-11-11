@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import SimpleReactValidator from "simple-react-validator"
 import Swal from 'sweetalert2'
 
+import styles from "../../../../styles/previewGaleri.module.css";
+
 import { newKategori, clearErrors } from '../../../../redux/actions/publikasi/kategori.actions'
 import { NEW_KATEGORI_RESET } from '../../../../redux/types/publikasi/kategori.type'
 import PageWrapper from '../../../wrapper/page.wrapper';
@@ -109,10 +111,10 @@ const TambahKategori = ({ token }) => {
                         <form onSubmit={onSubmit}>
                             <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-4 col-form-label font-weight-bolder">Nama Kategori</label>
-                                <div className="col-sm-12">
+                                <div className={`${styles.judulTambah} col-sm-12`}>
                                     <input
                                         type="text"
-                                        className="form-control"
+                                        className={`${styles.judulTambah} form-control`}
                                         placeholder="Masukkan Nama kategori disini"
                                         value={nama}
                                         onChange={(e) => setNamaKategori(e.target.value)}
@@ -129,10 +131,10 @@ const TambahKategori = ({ token }) => {
 
                             <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-4 col-form-label font-weight-bolder">Jenis Kategori</label>
-                                <div className="col-sm-12">
+                                <div className={`${styles.selectKategori} col-sm-12`}>
                                     <select
                                         value={jenis_kategori}
-                                        className='form-control'
+                                        className={`${styles.selectKategori} form-control`}
                                         onChange={e => setJenisKategori(e.target.value)}
                                         onBlur={e => { setJenisKategori(e.target.value); simpleValidator.current.showMessageFor("jenis kategori") }}
                                     >
@@ -153,13 +155,13 @@ const TambahKategori = ({ token }) => {
                                 </div>
                             </div>
 
-                            <div className="form-group row">
+                            <div className="form-group row mr-0">
                                 <div className="col-sm-2"></div>
                                 <div className="col-sm-10 text-right">
                                     <Link href='/publikasi/kategori'>
-                                        <a className='btn btn-white-ghost-rounded-full rounded-pill mr-2 btn-sm'>Kembali</a>
+                                        <a className={`${styles.btnKembali} btn btn-white-ghost-rounded-full rounded-pill mr-2 btn-sm`}>Kembali</a>
                                     </Link>
-                                    <button className='btn btn-primary-rounded-full rounded-pill btn-sm'>Simpan</button>
+                                    <button className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill btn-sm`}>Simpan</button>
                                 </div>
                             </div>
                         </form>

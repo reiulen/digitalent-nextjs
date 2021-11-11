@@ -8,6 +8,8 @@ import SimpleReactValidator from "simple-react-validator"
 import Swal from 'sweetalert2'
 import DatePicker from 'react-datepicker'
 
+import styles from "../../../../styles/previewGaleri.module.css";
+
 import { newFaq, clearErrors } from '../../../../redux/actions/publikasi/faq.actions'
 import { NEW_FAQ_RESET } from '../../../../redux/types/publikasi/faq.type'
 import { getAllKategori } from '../../../../redux/actions/publikasi/kategori.actions'
@@ -196,10 +198,10 @@ const TambahFaq = ({ token, id }) => {
                         <form onSubmit={onSubmit}>
                             <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-4 col-form-label font-weight-bolder">Judul Pertanyaan</label>
-                                <div className="col-sm-12">
+                                <div className={`${styles.judulTambah} col-sm-12`}>
                                     <input
                                         type="text"
-                                        className="form-control description-text"
+                                        className={`${styles.judulTambah} form-control description-text`}
                                         placeholder="Masukkan Judul Disini"
                                         value={judul}
                                         onChange={(e) => setJudulPertanyaan(e.target.value)}
@@ -211,9 +213,9 @@ const TambahFaq = ({ token, id }) => {
 
                             <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Jawaban</label>
-                                <div className="col-sm-12">
+                                <div className={`${styles.deskripsiTambah} col-sm-12`}>
                                     <textarea
-                                        className='form-control'
+                                        className={`${styles.deskripsiTambah} form-control`}
                                         placeholder='Tulis disini'
                                         name="jawaban"
                                         rows="10"
@@ -227,16 +229,16 @@ const TambahFaq = ({ token, id }) => {
 
                             <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Kategori</label>
-                                <div className="col-sm-12">
+                                <div className={`${styles.selectKategori} col-sm-12`}>
                                     <select
-                                        className='form-control'
+                                        className={`${styles.selectKategori} form-control`}
                                         value={kategori_id}
                                         onChange={e => setKategoriId(e.target.value)}
                                         onBlur={e => { setKategoriId(e.target.value); simpleValidator.current.showMessageFor("kategori") }}
                                     >
                                         <option value="" disabled selected>-- FAQ --</option>
                                         {!kategori || (kategori && kategori.length === 0) ? (
-                                            <option value="">Data Tidak Ditemukan</option>
+                                            <option value="">Data Kosong</option>
                                         ) : (
                                             kategori &&
                                             kategori.kategori &&
@@ -290,7 +292,7 @@ const TambahFaq = ({ token, id }) => {
                                         <div className="col-sm-12">
                                             <div className="input-group">
                                                 <DatePicker
-                                                    className="form-search-date form-control-sm form-control"
+                                                    className={`${styles.setPublish} form-search-date form-control-sm form-control`}
                                                     selected={publishDate}
                                                     onChange={(date) => handlePublishDate(date)}
                                                     selectsStart
@@ -336,13 +338,13 @@ const TambahFaq = ({ token, id }) => {
                                 </div>
                             </div>
 
-                            <div className="form-group row">
+                            <div className="form-group row mr-0">
                                 <div className="col-sm-2"></div>
                                 <div className="col-sm-10 text-right">
                                     <Link href='/publikasi/faq'>
-                                        <a className='btn btn-white-ghost-rounded-full rounded-pill mr-2 btn-sm'>Kembali</a>
+                                        <a className={`${styles.btnKembali} btn btn-white-ghost-rounded-full rounded-pill mr-2 btn-sm`}>Kembali</a>
                                     </Link>
-                                    <button className='btn btn-primary-rounded-full rounded-pill btn-sm'>Simpan</button>
+                                    <button className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill btn-sm`}>Simpan</button>
                                 </div>
                             </div>
                         </form>
