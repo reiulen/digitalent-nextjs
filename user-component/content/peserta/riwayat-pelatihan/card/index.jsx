@@ -118,6 +118,11 @@ export default function CardTemplateOriginal({ data }) {
       }
     }
   };
+
+  const handleClick = (action) => {
+    console.log(action);
+  };
+
   return (
     <Fragment>
       {console.log(data)}
@@ -444,7 +449,7 @@ export default function CardTemplateOriginal({ data }) {
                   Bukti Pendaftaran
                 </Button>
               </Col>
-              <CustomButton />
+              <CustomButton click={() => handleClick("download")} />
             </Fragment>
           ) : data.status == "menunggu tes substansi" ? (
             <Fragment>

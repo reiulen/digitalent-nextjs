@@ -1,3 +1,4 @@
+/* HOME PAGE */
 .pelatihan-new {
   background-image: url("/assets/media/section/section-pelatihan-1.png");
   background-repeat: no-repeat;
@@ -165,3 +166,47 @@
     font-size: 40px;
   }
 }
+
+/* END HOME PAGE */
+
+/* PENYELENGGARA */
+.penyelenggara-title-filter h1 {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 40px;
+  line-height: 120%;
+  letter-spacing: 0.025em;
+  color: #1f1f1f;
+}
+
+.penyelenggara-title-filter p {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 160%;
+  color: #6c6c6c;
+}
+
+.filter-action p {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 160%;
+  color: #1f1f1f;
+}
+
+.btn-penyelenggara-rounded {
+  width: 120px;
+  height: 46px;
+  border-radius: 30px;
+}
+
+.bg-penyelenggara-primary {
+  background: #007cff;
+}
+.bg-penyelenggara-light {
+  background: #ffffff;
+  border: 1px solid #d7e1ea;
+  box-sizing: border-box;
+}
+/* END PENYELENGGARA */

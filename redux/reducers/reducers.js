@@ -462,6 +462,15 @@ import {
   allSimonasReducer,
 } from "./beranda/simonasAndBeasiswa";
 
+import {
+  allMasterPelatihanListReducer,
+  deleteMasterPelatihanReducer,
+  detailMasterPelatihanReducer,
+  newMasterTrainingReducer,
+  updateMasterPelatihanReducer,
+  updateStatusMasterReducer,
+} from "./pelatihan/admin/master-pelatihan.reducer";
+
 const reducer = combineReducers({
   // PUBLIKASI
   allArtikel: allArtikelReducer,
@@ -840,6 +849,14 @@ const reducer = combineReducers({
   getDetailRiwayatPelatihanPeserta: getDetailRiwayatPelatihanReducer,
   allBeasiswa: allBeasiswaReducer,
   allSimonas: allSimonasReducer,
+
+  // ========== Master Pelatihan ========
+  getAllMasterPelatihan: allMasterPelatihanListReducer,
+  deleteMasterPelatihan: deleteMasterPelatihanReducer,
+  getDetailMasterPelatihan: detailMasterPelatihanReducer,
+  newMasterPelatihan: newMasterTrainingReducer,
+  updateMasterPelatihan: updateMasterPelatihanReducer,
+  updateStatusMaster: updateStatusMasterReducer,
 });
 
 export default reducer;
