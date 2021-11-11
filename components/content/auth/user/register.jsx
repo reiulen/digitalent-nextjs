@@ -7,7 +7,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 import SimpleReactValidator from "simple-react-validator";
 import axios from "axios";
 import PhoneInput from "react-phone-input-2";
-import SweatAlert from "../../../../utils/middleware/helper";
+import { SweatAlert } from "../../../../utils/middleware/helper";
 
 import AuthWrapper from "../../../wrapper/auth.wrapper";
 import LoadingTable from "../../../LoadingTable";

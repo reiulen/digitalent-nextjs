@@ -30,7 +30,7 @@ import IconLove from "../../../../../components/assets/icon/Love";
 import IconShare from "../../../../../components/assets/icon/Share";
 import IconTime from "../../../../../components/assets/icon-dashboard-peserta/Time";
 import IconPeserta from "../../../../../components/assets/icon-dashboard-peserta/Peserta";
-import SweatAlert from "../../../../../utils/middleware/helper";
+import { SweatAlert } from "../../../../../utils/middleware/helper";
 
 import PulseLoaderRender from "../../../../components/loader/PulseLoader";
 

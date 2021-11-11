@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import ReCAPTCHA from "react-google-recaptcha";
 import { signIn } from "next-auth/client";
 import SimpleReactValidator from "simple-react-validator";
-import SweatAlert from "../../../../utils/middleware/helper";
+import { SweatAlert } from "../../../../utils/middleware/helper";
 
 import AuthWrapper from "../../../wrapper/auth.wrapper";
 import LoadingTable from "../../../LoadingTable";
