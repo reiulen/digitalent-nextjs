@@ -12,6 +12,7 @@ export default function Custom500() {
           width={700}
           height={500}
           objectFit="cover"
+          alt="image-500"
         />
         <div className="text-center">
           <h1 className="font-weight-bolder">500:Internal Server Error</h1>
