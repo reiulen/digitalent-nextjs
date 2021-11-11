@@ -268,8 +268,7 @@ const ListReport = ({token}) => {
                       totalItemsCount={getDataReportTraining.total}
                       pageRangeDisplayed={3}
                       onChange={(e) => {setPage(e)
-                      dispatch(listsReportTraining(token, e, limit, search, penyelenggara.label, academy.label, theme.label));
-                      router.push("/report-pelatihan")
+                      dispatch(listsReportTraining(token, e, limit, search, penyelenggara.label, academy.label, theme.label))
                       }}
                       nextPageText={">"}
                       prevPageText={"<"}

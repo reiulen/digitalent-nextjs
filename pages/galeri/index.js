@@ -46,7 +46,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
             await store.dispatch(
                 getAllBerandaGaleri(
                     query.page,
-                    query.keyword
+                    query.category_name,
                 )
             )
 

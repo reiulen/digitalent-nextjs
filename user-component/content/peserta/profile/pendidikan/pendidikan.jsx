@@ -36,26 +36,26 @@ const Pendidikan = ({ token }) => {
               </p>
               {pendidikan.jenjang === "Tidak Sekolah" && <p>-</p>}
               {pendidikan.jenjang === "TK" && (
-                  <p>
-                    {pendidikan !== undefined && pendidikan.lainnya === "0"
-                      ? "-"
-                      : pendidikan.lainya}
-                  </p>
-                )}
-                {pendidikan.jenjang === "SD/Sederajat" && (
-                  <p>
-                    {pendidikan !== undefined && pendidikan.lainnya === "0"
-                      ? "-"
-                      : pendidikan.lainya}
-                  </p>
-                )}
-                {pendidikan.jenjang === "SMP/Sederajat" && (
-                  <p>
-                    {pendidikan !== undefined && pendidikan.lainnya === "0"
-                      ? "-"
-                      : pendidikan.lainya}
-                  </p>
-                )}
+                <p>
+                  {pendidikan !== undefined && pendidikan.lainnya === "0"
+                    ? "-"
+                    : pendidikan.lainya}
+                </p>
+              )}
+              {pendidikan.jenjang === "SD/Sederajat" && (
+                <p>
+                  {pendidikan !== undefined && pendidikan.lainnya === "0"
+                    ? "-"
+                    : pendidikan.lainya}
+                </p>
+              )}
+              {pendidikan.jenjang === "SMP/Sederajat" && (
+                <p>
+                  {pendidikan !== undefined && pendidikan.lainnya === "0"
+                    ? "-"
+                    : pendidikan.lainya}
+                </p>
+              )}
               {pendidikan && pendidikan.jenjang === "D3" && (
                 <p>
                   {pendidikan.asal_pendidikan === "0"
@@ -93,7 +93,7 @@ const Pendidikan = ({ token }) => {
               )}
             </Col>
             {pendidikan.jenjang === "TK" && (
-                <Col md={6}>
+              <Col md={6}>
                 <p className="text-neutral-body my-1">Tahun Masuk</p>
                 <p>
                   {((pendidikan &&
@@ -101,12 +101,13 @@ const Pendidikan = ({ token }) => {
                     pendidikan.tahun_masuk === 0) ||
                   (pendidikan !== undefined && pendidikan.tahun_masuk === 1)
                     ? "-"
-                    : pendidikan !== undefined && pendidikan.tahun_masuk) || "-"}
+                    : pendidikan !== undefined && pendidikan.tahun_masuk) ||
+                    "-"}
                 </p>
               </Col>
             )}
-             {pendidikan.jenjang === "SD/Sederajat" && (
-                <Col md={6}>
+            {pendidikan.jenjang === "SD/Sederajat" && (
+              <Col md={6}>
                 <p className="text-neutral-body my-1">Tahun Masuk</p>
                 <p>
                   {((pendidikan &&
@@ -114,12 +115,13 @@ const Pendidikan = ({ token }) => {
                     pendidikan.tahun_masuk === 0) ||
                   (pendidikan !== undefined && pendidikan.tahun_masuk === 1)
                     ? "-"
-                    : pendidikan !== undefined && pendidikan.tahun_masuk) || "-"}
+                    : pendidikan !== undefined && pendidikan.tahun_masuk) ||
+                    "-"}
                 </p>
               </Col>
             )}
-             {pendidikan.jenjang === "SMP/Sederajat" && (
-                <Col md={6}>
+            {pendidikan.jenjang === "SMP/Sederajat" && (
+              <Col md={6}>
                 <p className="text-neutral-body my-1">Tahun Masuk</p>
                 <p>
                   {((pendidikan &&
@@ -127,12 +129,13 @@ const Pendidikan = ({ token }) => {
                     pendidikan.tahun_masuk === 0) ||
                   (pendidikan !== undefined && pendidikan.tahun_masuk === 1)
                     ? "-"
-                    : pendidikan !== undefined && pendidikan.tahun_masuk) || "-"}
+                    : pendidikan !== undefined && pendidikan.tahun_masuk) ||
+                    "-"}
                 </p>
               </Col>
             )}
-             {pendidikan.jenjang === "SMA/Sederajat" && (
-                <Col md={6}>
+            {pendidikan.jenjang === "SMA/Sederajat" && (
+              <Col md={6}>
                 <p className="text-neutral-body my-1">Tahun Masuk</p>
                 <p>
                   {((pendidikan &&
@@ -140,171 +143,172 @@ const Pendidikan = ({ token }) => {
                     pendidikan.tahun_masuk === 0) ||
                   (pendidikan !== undefined && pendidikan.tahun_masuk === 1)
                     ? "-"
-                    : pendidikan !== undefined && pendidikan.tahun_masuk) || "-"}
+                    : pendidikan !== undefined && pendidikan.tahun_masuk) ||
+                    "-"}
                 </p>
               </Col>
             )}
 
             {pendidikan.jenjang === "D3" && (
-            <Col md={6}>
-              <p className="text-neutral-body my-1">Program Studi</p>
-              <p>
-                {(pendidikan &&
-                pendidikan !== undefined &&
-                pendidikan.program_studi === "0"
-                  ? "-"
-                  : pendidikan !== undefined && pendidikan.program_studi) ||
-                  "-"}
-              </p>
-            </Col>
+              <Col md={6}>
+                <p className="text-neutral-body my-1">Program Studi</p>
+                <p>
+                  {(pendidikan &&
+                  pendidikan !== undefined &&
+                  pendidikan.program_studi === "0"
+                    ? "-"
+                    : pendidikan !== undefined && pendidikan.program_studi) ||
+                    "-"}
+                </p>
+              </Col>
             )}
             {pendidikan.jenjang === "S1" && (
-            <Col md={6}>
-              <p className="text-neutral-body my-1">Program Studi</p>
-              <p>
-                {(pendidikan &&
-                pendidikan !== undefined &&
-                pendidikan.program_studi === "0"
-                  ? "-"
-                  : pendidikan !== undefined && pendidikan.program_studi) ||
-                  "-"}
-              </p>
-            </Col>
+              <Col md={6}>
+                <p className="text-neutral-body my-1">Program Studi</p>
+                <p>
+                  {(pendidikan &&
+                  pendidikan !== undefined &&
+                  pendidikan.program_studi === "0"
+                    ? "-"
+                    : pendidikan !== undefined && pendidikan.program_studi) ||
+                    "-"}
+                </p>
+              </Col>
             )}
             {pendidikan.jenjang === "S2" && (
-            <Col md={6}>
-              <p className="text-neutral-body my-1">Program Studi</p>
-              <p>
-                {(pendidikan &&
-                pendidikan !== undefined &&
-                pendidikan.program_studi === "0"
-                  ? "-"
-                  : pendidikan !== undefined && pendidikan.program_studi) ||
-                  "-"}
-              </p>
-            </Col>
+              <Col md={6}>
+                <p className="text-neutral-body my-1">Program Studi</p>
+                <p>
+                  {(pendidikan &&
+                  pendidikan !== undefined &&
+                  pendidikan.program_studi === "0"
+                    ? "-"
+                    : pendidikan !== undefined && pendidikan.program_studi) ||
+                    "-"}
+                </p>
+              </Col>
             )}
             {pendidikan.jenjang === "S3" && (
-            <Col md={6}>
-              <p className="text-neutral-body my-1">Program Studi</p>
-              <p>
-                {(pendidikan &&
-                pendidikan !== undefined &&
-                pendidikan.program_studi === "0"
-                  ? "-"
-                  : pendidikan !== undefined && pendidikan.program_studi) ||
-                  "-"}
-              </p>
-            </Col>
+              <Col md={6}>
+                <p className="text-neutral-body my-1">Program Studi</p>
+                <p>
+                  {(pendidikan &&
+                  pendidikan !== undefined &&
+                  pendidikan.program_studi === "0"
+                    ? "-"
+                    : pendidikan !== undefined && pendidikan.program_studi) ||
+                    "-"}
+                </p>
+              </Col>
             )}
           </Row>
           {pendidikan.jenjang === "D3" && (
-          <Row>
-            <Col md={6}>
-              <p className="text-neutral-body my-1">IPK</p>
-              <p>
-                {(pendidikan &&
-                pendidikan !== undefined &&
-                pendidikan !== undefined &&
-                pendidikan.ipk === "0"
-                  ? "-"
-                  : pendidikan !== undefined && pendidikan.ipk) || "-"}
-              </p>
-            </Col>
-            <Col md={6}>
-              <p className="text-neutral-body my-1">Tahun Masuk</p>
-              <p>
-                {((pendidikan &&
+            <Row>
+              <Col md={6}>
+                <p className="text-neutral-body my-1">IPK</p>
+                <p>
+                  {(pendidikan &&
                   pendidikan !== undefined &&
-                  pendidikan.tahun_masuk === 0) ||
-                (pendidikan !== undefined && pendidikan.tahun_masuk === 1)
-                  ? "-"
-                  : pendidikan !== undefined && pendidikan.tahun_masuk) || "-"}
-              </p>
-            </Col>
-          </Row>
-
+                  pendidikan !== undefined &&
+                  pendidikan.ipk === "0"
+                    ? "-"
+                    : pendidikan !== undefined && pendidikan.ipk) || "-"}
+                </p>
+              </Col>
+              <Col md={6}>
+                <p className="text-neutral-body my-1">Tahun Masuk</p>
+                <p>
+                  {((pendidikan &&
+                    pendidikan !== undefined &&
+                    pendidikan.tahun_masuk === 0) ||
+                  (pendidikan !== undefined && pendidikan.tahun_masuk === 1)
+                    ? "-"
+                    : pendidikan !== undefined && pendidikan.tahun_masuk) ||
+                    "-"}
+                </p>
+              </Col>
+            </Row>
           )}
-           {pendidikan.jenjang === "S1" && (
-          <Row>
-            <Col md={6}>
-              <p className="text-neutral-body my-1">IPK</p>
-              <p>
-                {(pendidikan &&
-                pendidikan !== undefined &&
-                pendidikan !== undefined &&
-                pendidikan.ipk === "0"
-                  ? "-"
-                  : pendidikan !== undefined && pendidikan.ipk) || "-"}
-              </p>
-            </Col>
-            <Col md={6}>
-              <p className="text-neutral-body my-1">Tahun Masuk</p>
-              <p>
-                {((pendidikan &&
+          {pendidikan.jenjang === "S1" && (
+            <Row>
+              <Col md={6}>
+                <p className="text-neutral-body my-1">IPK</p>
+                <p>
+                  {(pendidikan &&
                   pendidikan !== undefined &&
-                  pendidikan.tahun_masuk === 0) ||
-                (pendidikan !== undefined && pendidikan.tahun_masuk === 1)
-                  ? "-"
-                  : pendidikan !== undefined && pendidikan.tahun_masuk) || "-"}
-              </p>
-            </Col>
-          </Row>
-
+                  pendidikan !== undefined &&
+                  pendidikan.ipk === "0"
+                    ? "-"
+                    : pendidikan !== undefined && pendidikan.ipk) || "-"}
+                </p>
+              </Col>
+              <Col md={6}>
+                <p className="text-neutral-body my-1">Tahun Masuk</p>
+                <p>
+                  {((pendidikan &&
+                    pendidikan !== undefined &&
+                    pendidikan.tahun_masuk === 0) ||
+                  (pendidikan !== undefined && pendidikan.tahun_masuk === 1)
+                    ? "-"
+                    : pendidikan !== undefined && pendidikan.tahun_masuk) ||
+                    "-"}
+                </p>
+              </Col>
+            </Row>
           )}
-           {pendidikan.jenjang === "S2" && (
-          <Row>
-            <Col md={6}>
-              <p className="text-neutral-body my-1">IPK</p>
-              <p>
-                {(pendidikan &&
-                pendidikan !== undefined &&
-                pendidikan !== undefined &&
-                pendidikan.ipk === "0"
-                  ? "-"
-                  : pendidikan !== undefined && pendidikan.ipk) || "-"}
-              </p>
-            </Col>
-            <Col md={6}>
-              <p className="text-neutral-body my-1">Tahun Masuk</p>
-              <p>
-                {((pendidikan &&
+          {pendidikan.jenjang === "S2" && (
+            <Row>
+              <Col md={6}>
+                <p className="text-neutral-body my-1">IPK</p>
+                <p>
+                  {(pendidikan &&
                   pendidikan !== undefined &&
-                  pendidikan.tahun_masuk === 0) ||
-                (pendidikan !== undefined && pendidikan.tahun_masuk === 1)
-                  ? "-"
-                  : pendidikan !== undefined && pendidikan.tahun_masuk) || "-"}
-              </p>
-            </Col>
-          </Row>
-
+                  pendidikan !== undefined &&
+                  pendidikan.ipk === "0"
+                    ? "-"
+                    : pendidikan !== undefined && pendidikan.ipk) || "-"}
+                </p>
+              </Col>
+              <Col md={6}>
+                <p className="text-neutral-body my-1">Tahun Masuk</p>
+                <p>
+                  {((pendidikan &&
+                    pendidikan !== undefined &&
+                    pendidikan.tahun_masuk === 0) ||
+                  (pendidikan !== undefined && pendidikan.tahun_masuk === 1)
+                    ? "-"
+                    : pendidikan !== undefined && pendidikan.tahun_masuk) ||
+                    "-"}
+                </p>
+              </Col>
+            </Row>
           )}
-           {pendidikan.jenjang === "S3" && (
-          <Row>
-            <Col md={6}>
-              <p className="text-neutral-body my-1">IPK</p>
-              <p>
-                {(pendidikan &&
-                pendidikan !== undefined &&
-                pendidikan !== undefined &&
-                pendidikan.ipk === "0"
-                  ? "-"
-                  : pendidikan !== undefined && pendidikan.ipk) || "-"}
-              </p>
-            </Col>
-            <Col md={6}>
-              <p className="text-neutral-body my-1">Tahun Masuk</p>
-              <p>
-                {((pendidikan &&
+          {pendidikan.jenjang === "S3" && (
+            <Row>
+              <Col md={6}>
+                <p className="text-neutral-body my-1">IPK</p>
+                <p>
+                  {(pendidikan &&
                   pendidikan !== undefined &&
-                  pendidikan.tahun_masuk === 0) ||
-                (pendidikan !== undefined && pendidikan.tahun_masuk === 1)
-                  ? "-"
-                  : pendidikan !== undefined && pendidikan.tahun_masuk) || "-"}
-              </p>
-            </Col>
-          </Row>
-
+                  pendidikan !== undefined &&
+                  pendidikan.ipk === "0"
+                    ? "-"
+                    : pendidikan !== undefined && pendidikan.ipk) || "-"}
+                </p>
+              </Col>
+              <Col md={6}>
+                <p className="text-neutral-body my-1">Tahun Masuk</p>
+                <p>
+                  {((pendidikan &&
+                    pendidikan !== undefined &&
+                    pendidikan.tahun_masuk === 0) ||
+                  (pendidikan !== undefined && pendidikan.tahun_masuk === 1)
+                    ? "-"
+                    : pendidikan !== undefined && pendidikan.tahun_masuk) ||
+                    "-"}
+                </p>
+              </Col>
+            </Row>
           )}
           <Row>
             <Col md={12}>
@@ -313,7 +317,7 @@ const Pendidikan = ({ token }) => {
                 {(pendidikan !== undefined &&
                   pendidikan &&
                   pendidikan !== undefined &&
-                  pendidikan.ijasah) ||
+                  pendidikan.ijasah.split("/ijasah/")) ||
                   "-"}
               </p>
             </Col>
