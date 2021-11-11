@@ -103,12 +103,13 @@ const Penyelenggara = () => {
                 <div className="penyelenggara-mitra">
                   <div className="penyelenggara-wrapper mx-auto d-flex align-items-center justify-content-center">
                     <Image
-                      src="/assets/media/default.jpg"
+                      src="/assets/media/image-404.png"
                       width={90}
                       height={90}
+                      objectFit="contain"
                     />
                   </div>
-                  <p className="my-5">Google</p>
+                  <p className="my-5 ">Google</p>
                 </div>
               </Col>
             ))}

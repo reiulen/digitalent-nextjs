@@ -58,5 +58,6 @@ module.exports = {
 
     END_POINT_API_IMAGE_LOGO_MITRA:
       "https://dts-partnership-dev.s3-ap-southeast-1.amazonaws.com",
+    END_POINT_LOCAL_SITE_MANAGEMENT_PESERTA_DTS: "http://192.168.1.96:81/",
   },
 };
