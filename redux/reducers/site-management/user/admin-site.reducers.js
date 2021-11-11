@@ -2,9 +2,21 @@ import {
   ADMIN_SITE_REQUEST,
   ADMIN_SITE_SUCCESS,
   ADMIN_SITE_FAIL,
+  ROLES_LIST_REQUEST,
+  ROLES_LIST_SUCCESS,
+  ROLES_LIST_FAIL,
+  UNIT_WORK_LIST_REQUEST,
+  UNIT_WORK_LIST_SUCCESS,
+  UNIT_WORK_LIST_FAIL,
+  PELATIHAN_LIST_REQUEST,
+  PELATIHAN_LIST_SUCCESS,
+  PELATIHAN_LIST_FAIL,
   GET_LIST_ADMIN_SITE_REQUEST,
   GET_LIST_ADMIN_SITE_SUCCESS,
   GET_LIST_ADMIN_SITE_FAIL,
+  GET_ACADEMY_REQUEST,
+  GET_ACADEMY_SUCCESS,
+  GET_ACADEMY_FAIL,
   DETAIL_ADMIN_SITE_REQUEST,
   DETAIL_ADMIN_SITE_SUCCESS,
   DETAIL_ADMIN_SITE_FAIL,
@@ -81,6 +93,111 @@ export const allAdminSiteReducer = (state = initialState, action) => {
         ...state,
         limit: action.limitValue,
         page: 1,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const allRolesListReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case ROLES_LIST_REQUEST:
+      return {
+        ...state,
+        status: statuslist.process,
+      };
+
+    case ROLES_LIST_SUCCESS:
+      return {
+        ...state,
+        status: statuslist.success,
+        data: action.payload.data,
+      };
+
+    case ROLES_LIST_FAIL:
+      return {
+        ...state,
+        status: statuslist.error,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+export const allListPelatihanReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case PELATIHAN_LIST_REQUEST:
+      return {
+        ...state,
+        status: statuslist.process,
+      };
+
+    case PELATIHAN_LIST_SUCCESS:
+      return {
+        ...state,
+        status: statuslist.success,
+        data: action.payload.data,
+      };
+
+    case PELATIHAN_LIST_FAIL:
+      return {
+        ...state,
+        status: statuslist.error,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+export const allAcademyListReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case GET_ACADEMY_REQUEST:
+      return {
+        ...state,
+        status: statuslist.process,
+      };
+
+    case GET_ACADEMY_SUCCESS:
+      return {
+        ...state,
+        status: statuslist.success,
+        data: action.payload,
+      };
+
+    case GET_ACADEMY_FAIL:
+      return {
+        ...state,
+        status: statuslist.error,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+export const allUnitWorkListReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case UNIT_WORK_LIST_REQUEST:
+      return {
+        ...state,
+        status: statuslist.process,
+      };
+
+    case UNIT_WORK_LIST_SUCCESS:
+      return {
+        ...state,
+        status: statuslist.success,
+        data: action.payload.data,
+      };
+
+    case UNIT_WORK_LIST_FAIL:
+      return {
+        ...state,
+        status: statuslist.error,
+        error: null,
       };
 
     default:
@@ -170,8 +287,7 @@ export const detailAdminSiteReducer = (state = { adminSite: {} }, action) => {
     case DETAIL_ADMIN_SITE_SUCCESS:
       return {
         loading: false,
-        success: action.payload.message,
-        adminSite: action.payload.data,
+        adminSite: action.payload,
       };
 
     case DETAIL_ADMIN_SITE_FAIL:
