@@ -37,6 +37,7 @@ export default function SubvitDone(props) {
     if (pelatihan) {
       dispatch(getPelatihan(session.token, pelatihan.pelatihan_berjalan.id));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pelatihan, session]);
 
   return (
