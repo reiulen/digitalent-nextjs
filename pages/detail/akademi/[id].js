@@ -9,6 +9,7 @@ import {
   getAllAkademi,
   getAllKotaPeserta,
   getAllPenyeleggaraPeserta,
+  getAllTemaOriginal,
 } from "../../../redux/actions/beranda/beranda.actions";
 
 import LoadingDetailAkademi from "../../../user-component/components/loader/DetailAkademiLoader";
@@ -57,6 +58,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
       await store.dispatch(getDetailAkademi(params.id));
       await store.dispatch(getAllAkademi());
+      await store.dispatch(getAllTemaOriginal());
       await store.dispatch(getAllKotaPeserta());
       await store.dispatch(getAllPenyeleggaraPeserta());
 
