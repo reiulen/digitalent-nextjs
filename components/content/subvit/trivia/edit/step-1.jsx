@@ -72,6 +72,7 @@ const StepOne = ({ token }) => {
         });
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, error, isUpdated, id, router, typeSave]);
 
   // const saveAndContinue = () => {

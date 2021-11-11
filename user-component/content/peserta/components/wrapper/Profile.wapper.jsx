@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import check from "../../../../../public/assets/media/logos/double.png";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -152,6 +153,7 @@ const ProfileWrapper = ({
                   style={{ width: "max-content" }}
                 >
                   <img
+                    alt=""
                     className={`${style.image_profile_wrapper} position-relative`}
                     src={`${
                       dataPribadi && dataPribadi.foto
@@ -176,8 +178,26 @@ const ProfileWrapper = ({
               <Col md={8}>
                 <div className="information">
                   <p className={`${style.name_profile_wrapper} my-0`}>
-                    {dataPribadi ? dataPribadi.name || "-" : "-"}
+                    {dataPribadi ? dataPribadi.name || "-" : "-"}{" "}
+                    {/* KEBUTUHAN SPRINT DEPAN */}
+                    {
+                      (dataPribadi.handphone_verifikasi,
+                      dataPribadi.email_verifikasi === true && (
+                        <span>
+                          <Button className={style.btnVerification}>
+                            <div className="d-flex flex-row">
+                              <div>
+                                <Image src={check} alt="verification" />
+                              </div>
+                              <div>Terverifikasi</div>
+                            </div>
+                          </Button>
+                        </span>
+                      ))
+                    }
+                    {/* KEBUTUHAN SPRINT DEPAN */}
                   </p>
+
                   <p className={`${style.muted_profile_wrapper} my-0`}>
                     NIK : {dataPribadi ? dataPribadi.nik || "-" : "-"}
                   </p>
@@ -299,7 +319,7 @@ const ProfileWrapper = ({
                   document.getElementById("update-foto").click();
                 }}
               >
-                <i class="ri-upload-2-fill text-white"></i> Pilih Foto
+                <i className="ri-upload-2-fill text-white"></i> Pilih Foto
               </Button>
             ) : (
               <Button
@@ -308,7 +328,7 @@ const ProfileWrapper = ({
                   document.getElementById("update-foto").click();
                 }}
               >
-                <i class="ri-pencil-fill text-primary"></i> Ubah Foto
+                <i className="ri-pencil-fill text-primary"></i> Ubah Foto
               </Button>
             )}
             <input

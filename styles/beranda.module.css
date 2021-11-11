@@ -186,7 +186,7 @@
   bottom: 26px !important;
 }
 .carousel-secondarys .splide__slider {
-  margin: 0 60px;
+  margin: 0 0px;
 }
 
 @media (max-width: 768px) {
