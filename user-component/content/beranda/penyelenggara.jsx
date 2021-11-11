@@ -28,7 +28,7 @@ const Penyelenggara = () => {
 
           <div className="filter my-15">
             <Row>
-              <Col md={7}>
+              <Col md={7} className="my-auto">
                 <form className="mb-3">
                   <div className="input-group">
                     <div className="input-group-prepend">
@@ -64,18 +64,22 @@ const Penyelenggara = () => {
                   </div>
                 </form>
               </Col>
-              <Col md={5}>
-                <div className="d-flex flex-row align-items-center justify-content-end filter-action">
-                  <p className="mb-0">Urutkan berdasarkan :</p>
+              <Col md={2} className="my-auto ">
+                <p className="mb-3 mb-md-0 float-right">
+                  Urutkan berdasarkan :
+                </p>
+              </Col>
+              <Col md={3} className="my-auto">
+                <div className="d-flex filter-action">
                   <Button
                     variant="transparent"
-                    className="btn-penyelenggara-rounded bg-penyelenggara-primary mx-8 text-white"
+                    className="btn-penyelenggara-rounded btn-block bg-penyelenggara-primary text-white mr-3"
                   >
                     A - Z
                   </Button>
                   <Button
                     variant="transparent"
-                    className="btn-penyelenggara-rounded bg-penyelenggara-light"
+                    className="btn-penyelenggara-rounded mt-0 btn-block bg-penyelenggara-light text-dark"
                   >
                     Z - A
                   </Button>

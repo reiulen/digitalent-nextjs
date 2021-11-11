@@ -190,13 +190,13 @@
 }
 
 .btn-penyelenggara-rounded {
-  width: 120px;
-  height: 46px;
   border-radius: 30px;
 }
 
 .bg-penyelenggara-primary {
   background: #007cff;
+  border: 1px solid #007cff;
+  box-sizing: border-box;
 }
 .bg-penyelenggara-light {
   background: #ffffff;
@@ -253,9 +253,6 @@
     font-size: 40px;
   }
   .filter-action p {
-    font-size: 16px;
-  }
-  .filter-action p {
-    font-size: 16px;
+    font-size: 15px;
   }
 }
