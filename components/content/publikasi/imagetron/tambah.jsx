@@ -10,6 +10,8 @@ import Swal from "sweetalert2";
 import { TagsInput } from "react-tag-input-component";
 import DatePicker from "react-datepicker";
 
+import styles from "../../../../styles/previewGaleri.module.css";
+
 import {
   newImagetron,
   clearErrors,
@@ -231,11 +233,11 @@ const TambahImagetron = ({ token, id }) => {
                 >
                   Kategori
                 </label>
-                <div className="col-sm-12">
+                <div className={`${styles.selectKategori} col-sm-12`}>
                   <select
                     name=""
                     id=""
-                    className="form-control"
+                    className={`${styles.selectKategori} form-control`}
                     value={kategori_id}
                     onChange={(e) => setKategoriId(e.target.value)}
                     onBlur={(e) => {
@@ -247,7 +249,7 @@ const TambahImagetron = ({ token, id }) => {
                       -- Imagetron --
                     </option>
                     {!kategori || (kategori && kategori.length === 0) ? (
-                      <option value="">Data Tidak Ditemukan</option>
+                      <option value="">Data Kosong</option>
                     ) : (
                       kategori &&
                       kategori.kategori &&
@@ -274,10 +276,10 @@ const TambahImagetron = ({ token, id }) => {
 
               <div className="form-group">
                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Judul</label>
-                <div className="col-sm-12">
+                <div className={`${styles.judulTambah} col-sm-12`}>
                   <input
                     type="text"
-                    className="form-control"
+                    className={`${styles.judulTambah} form-control`}
                     placeholder="Masukkan Judul Disini"
                     value={judul}
                     onChange={(e) => setJudulImagetron(e.target.value)}
@@ -294,9 +296,9 @@ const TambahImagetron = ({ token, id }) => {
 
               <div className="form-group">
                 <label className='col-sm-4 col-form-label font-weight-bolder'>Link URL</label>
-                <div className="col-sm-12">
+                <div className={`${styles.judulTambah} col-sm-12`}>
                   <div className="input-group">
-                    <input type="text" className="form-control" value={url_link} onChange={e => setUrlRedirect(e.target.value)} placeholder="https://www.example.com" onBlur={() => simpleValidator.current.showMessageFor("url_link")} />
+                    <input type="text" className={`${styles.judulTambah} form-control`} value={url_link} onChange={e => setUrlRedirect(e.target.value)} placeholder="https://www.example.com" onBlur={() => simpleValidator.current.showMessageFor("url_link")} />
 
                   </div>
                   {/* {simpleValidator.current.message(
@@ -315,7 +317,7 @@ const TambahImagetron = ({ token, id }) => {
                 >
                   Upload Thumbnail
                 </label>
-                <div className="ml-3 row">
+                <div className="ml-4 row">
                   <figure
                     className="avatar item-rtl"
                     data-toggle="modal"
@@ -326,7 +328,7 @@ const TambahImagetron = ({ token, id }) => {
                       alt="image"
                       width={160}
                       height={160}
-                      objectFit="cover"
+                      objectFit="fill"
                     />
                   </figure>
                   <div>
@@ -355,7 +357,7 @@ const TambahImagetron = ({ token, id }) => {
 
                 </div>
 
-                <div className="ml-3">
+                <div className="ml-4">
                   {simpleValidator.current.message(
                     "gambar",
                     gambar,
@@ -370,7 +372,7 @@ const TambahImagetron = ({ token, id }) => {
                   }
                 </div>
 
-                <div className="mt-3 col-sm-6 col-md-6 col-lg-7 col-xl-3 text-muted">
+                <div className={`${styles.resolusiTambah} mt-3 col-sm-6 col-md-6 col-lg-7 col-xl-3 text-muted`}>
                   <p>
                     Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar
                   </p>
@@ -412,7 +414,6 @@ const TambahImagetron = ({ token, id }) => {
                         className="checkbox"
                         checked={publish}
                         type="checkbox"
-                        // onChange={(checked) => setPublish(checked)}
                         onChange={(e) => handleChangePublish(e)}
                       />
                       <span
@@ -431,18 +432,14 @@ const TambahImagetron = ({ token, id }) => {
                     <div className="col-sm-12">
                       <div className="input-group">
                         <DatePicker
-                          className="form-search-date form-control-sm form-control"
+                          className={`${styles.setPublish} form-search-date form-control-sm form-control`}
                           selected={publishDate}
                           onChange={(date) => handlePublishDate(date)}
-                          // onChange={(date) => setPublishDate(date)}
                           selectsStart
                           startDate={publishDate}
-                          // endDate={endDate}
                           dateFormat="dd/MM/yyyy"
                           placeholderText="Silahkan Isi Tanggal Publish"
                           wrapperClassName="col-12 col-lg-12 col-xl-12"
-                          // minDate={moment().toDate()}
-                          // minDate={addDays(new Date(), 20)}
                           disabled={disablePublishDate === true || disablePublishDate === null}
                         />
                       </div>
@@ -452,13 +449,13 @@ const TambahImagetron = ({ token, id }) => {
                   null
               }
 
-              <div className="form-group row">
+              <div className="form-group row mr-0">
                 <div className="col-sm-2"></div>
                 <div className="col-sm-10 text-right">
                   <Link href='/publikasi/imagetron'>
-                    <a className='btn btn-white-ghost-rounded-full rounded-pill mr-2 btn-sm'>Kembali</a>
+                    <a className={`${styles.btnKembali} btn btn-white-ghost-rounded-full rounded-pill mr-2 btn-sm`}>Kembali</a>
                   </Link>
-                  <button className='btn btn-primary-rounded-full rounded-pill btn-sm'>Simpan</button>
+                  <button className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill btn-sm`}>Simpan</button>
                 </div>
               </div>
             </form>
@@ -475,12 +472,12 @@ const TambahImagetron = ({ token, id }) => {
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <div className="modal-body text-center" style={{ height: '400px' }}>
+            <div className={`${styles.modalsPrevImage} modal-body text-center`}>
               <Image
                 src={gambarPreview}
                 alt='image'
                 layout='fill'
-                objectFit='cover'
+                objectFit='fill'
               />
             </div>
             <div className="modal-footer">

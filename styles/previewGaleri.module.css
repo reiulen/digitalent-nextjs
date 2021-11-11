@@ -70,6 +70,11 @@
   display: flex;
 }
 
+.modals{
+  height: 460px;
+  width: auto;
+}
+
 .tagModal {
   font-size: 10px;
 }
@@ -99,7 +104,7 @@
 @media only screen and (max-width: 768px) {
   .subMenuPreview {
     font-size: 9px;
-    margin-left: -10px;
+    margin-left: -5px;
   }
   .rightSideBar {
     width: 660px;
@@ -135,6 +140,7 @@
   }
   .subMenuPreview {
     font-size: 6px;
+    margin-left: -10px;
   }
   .iconPreview {
     font-size: 6px;
@@ -144,6 +150,13 @@
     height: 97px;
     width: 100%;
     font-size: 7px;
+  }
+  .modals{
+    height: 200px;
+    width: auto;
+  }
+  .modalsRight{
+    padding: 30px;
   }
   .tagModal {
     font-size: 6px;
@@ -156,6 +169,12 @@
   }
   .btnTambah {
     font-size: 9px;
+  }
+  .tagStyle{
+    font-size: 11px;
+  }
+  .modalsPrevImage{
+    height: 200px;
   }
 }
 
@@ -178,7 +197,26 @@
   .resolusiTambah{
     font-size: 8.5px;
   }
+  .circleTop{
+    width: 20px;
+    height: 20px;
+    margin: 5px 10px 0 0;
+  }
+  .circleBottom{
+    width: 20px;
+    height: 20px;
+    margin: 0 10px 13px 0;
+  }
   .selectKategori{
+    font-size: 8.5px;
+  }
+  .setPublish{
+    font-size: 8.5px;
+  }
+  .btnKembali{
+    font-size: 8.5px;
+  }
+  .btnSimpan{
     font-size: 8.5px;
   }
 }
@@ -189,5 +227,11 @@
   }
   .filter{
     font-size: 9px;
+  }
+  .tagStyle{
+    font-size: 6.7px;
+  }
+  .deskripsiTambah{
+    font-size: 6.7px;
   }
 }

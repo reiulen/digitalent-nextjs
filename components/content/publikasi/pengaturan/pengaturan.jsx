@@ -4,6 +4,8 @@ import Image from 'next/image'
 import SimpleReactValidator from "simple-react-validator";
 import { useDispatch, useSelector } from 'react-redux'
 
+import styles from '../../../../styles/preview.module.css'
+
 import { updateSettingImagePublikasi, updateSettingImagetronPublikasi, updateSettingSliderPublikasi, updateSettingFaqPublikasi, clearErrors } from '../../../../redux/actions/publikasi/setting.actions'
 import { UPDATE_SETTING_RESET } from "../../../../redux/types/publikasi/setting.type";
 
@@ -269,17 +271,22 @@ const Pengaturan = ({ token }) => {
                             <div className="card-body">
                                 <form>
                                     <div className="form-group row form-inline">
-                                        <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Upload Image</label>
-                                        <div className="col-sm-3" style={{ height: '60px', marginTop: '20px' }}>
-                                            <input style={{ width: '100px' }}
-                                                type="number" min="1"
-                                                className="form-control mr-4"
-                                                value={upload_image}
-                                                onChange={(e) => setUploadImage(e.target.value)}
-                                                onBlur={() => simpleValidator.current.showMessageFor("upload_image")}
-                                            /> MB
+                                        <label htmlFor="staticEmail" className="col-4 col-md-2 col-lg-3 col-xl-2 col-form-label">Upload Image</label>
+                                        <div className={`${styles.uploadImage} col-7 col-md-4 col-lg-4 col-xl-3`}>
+                                            <div className="d-flex align-items-center">
+                                                <input style={{width:'100px'}}
+                                                    type="number" min="1"
+                                                    className={`${styles.inputData} form-control mr-4`}
+                                                    value={upload_image}
+                                                    onChange={(e) => setUploadImage(e.target.value)}
+                                                    onBlur={() => simpleValidator.current.showMessageFor("upload_image")}
+                                                />
+                                                <div>
+                                                    MB
+                                                </div>
+                                            </div>
                                             {/* <input style={{ width: '100px' }} type="number" min="1" className="form-control mr-4" value={upload_image} onChange={(e) => setUploadImage(e.target.value)} min='0' onBlur={() =>simpleValidator.current.showMessageFor("upload_image")}/> MB */}
-                                            <div style={{ width: '200px', fontSize: '11px' }}>
+                                            <div className={`${styles.validator}`}>
                                                 {simpleValidator.current.message(
                                                     "upload_image",
                                                     upload_image,
@@ -289,7 +296,7 @@ const Pengaturan = ({ token }) => {
                                             </div>
                                         </div>
                                         <button
-                                            className="btn btn-link-action text-white"
+                                            className="col-2 col-md-6 col-lg-7 col-xl-5 btn btn-link-action text-white"
                                             onClick={(e) => submitImagePublikasi(e)}
                                             style={{ marginLeft: '-30px' }}
                                         >
@@ -303,10 +310,13 @@ const Pengaturan = ({ token }) => {
 
                                     </div>
                                     <div className="form-group row form-inline">
-                                        <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Upload Imagetron</label>
-                                        <div className="col-sm-3" style={{ height: '60px', marginTop: '20px' }}>
-                                            <input style={{ width: '100px' }} type="number" min="1" className="form-control mr-4" value={upload_imagetron} onChange={(e) => setUploadImagetron(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("upload_imagetron")} /> MB
-                                            <div style={{ width: '200px', fontSize: '11px' }}>
+                                        <label htmlFor="staticEmail" className="col-4 col-md-2 col-lg-3 col-xl-2 col-form-label">Upload Imagetron</label>
+                                        <div className={`${styles.uploadImage} col-7 col-md-4 col-lg-4 col-xl-3`}>
+                                            <div className="d-flex align-items-center">
+                                                <input style={{width:'100px'}} type="number" min="1" className={`${styles.inputData} form-control mr-4`} value={upload_imagetron} onChange={(e) => setUploadImagetron(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("upload_imagetron")} />
+                                                <div>MB</div>
+                                            </div>
+                                            <div className={`${styles.validator}`}>
                                                 {simpleValidator.current.message(
                                                     "upload_imagetron",
                                                     upload_imagetron,
@@ -316,7 +326,7 @@ const Pengaturan = ({ token }) => {
                                             </div>
                                         </div>
                                         <button
-                                            className="btn btn-link-action text-white"
+                                            className="col-2 col-md-6 col-lg-7 col-xl-5 btn btn-link-action text-white"
                                             onClick={(e) => submitImagetron(e)}
                                             style={{ marginLeft: '-30px' }}
                                         >
@@ -329,10 +339,13 @@ const Pengaturan = ({ token }) => {
                                         </button>
                                     </div>
                                     <div className="form-group row form-inline">
-                                        <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Batas Slider</label>
-                                        <div className="col-sm-3" style={{ height: '60px', marginTop: '20px' }}>
-                                            <input style={{ width: '100px' }} type="number" min="1" className="form-control mr-4" value={batas_slider} onChange={(e) => setBatasSlider(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("batas_slider")} /> Page
-                                            <div style={{ width: '200px', fontSize: '11px' }}>
+                                        <label htmlFor="staticEmail" className="col-4 col-md-2 col-lg-3 col-xl-2 col-form-label">Batas Slider</label>
+                                        <div className={`${styles.uploadImage} col-7 col-md-4 col-lg-4 col-xl-3`}>
+                                            <div className="d-flex align-items-center">
+                                                <input style={{width:'100px'}} type="number" min="1" className={`${styles.inputData} form-control mr-4`} value={batas_slider} onChange={(e) => setBatasSlider(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("batas_slider")} />
+                                                <div>Page</div>
+                                            </div>
+                                            <div className={`${styles.validator}`}>
                                                 {simpleValidator.current.message(
                                                     "batas_slider",
                                                     batas_slider,
@@ -342,7 +355,7 @@ const Pengaturan = ({ token }) => {
                                             </div>
                                         </div>
                                         <button
-                                            className="btn btn-link-action text-white"
+                                            className="col-2 col-md-6 col-lg-7 col-xl-5 btn btn-link-action text-white"
                                             onClick={(e) => submitSlider(e)}
                                             style={{ marginLeft: '-30px' }}
                                         >
@@ -355,10 +368,13 @@ const Pengaturan = ({ token }) => {
                                         </button>
                                     </div>
                                     <div className="form-group row form-inline">
-                                        <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Maksimal FAQ</label>
-                                        <div className="col-sm-3" style={{ height: '60px', marginTop: '20px' }}>
-                                            <input style={{ width: '100px' }} type="number" min="1" className="form-control mr-4" value={maxfaq} onChange={(e) => setMaxfaq(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("maxfaq")} /> Page
-                                            <div style={{ width: '200px', fontSize: '11px' }}>
+                                        <label htmlFor="staticEmail" className="col-4 col-md-2 col-lg-3 col-xl-2 col-form-label">Maksimal FAQ</label>
+                                        <div className={`${styles.uploadImage} col-7 col-md-4 col-lg-4 col-xl-3`}>
+                                            <div className="d-flex align-items-center">
+                                                <input style={{width:'100px'}} type="number" min="1" className={`${styles.inputData} form-control mr-4`} value={maxfaq} onChange={(e) => setMaxfaq(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("maxfaq")} />
+                                                <div>Page</div>
+                                            </div>
+                                            <div className={`${styles.validator}`}>
                                                 {simpleValidator.current.message(
                                                     "maxfaq",
                                                     maxfaq,
@@ -368,7 +384,7 @@ const Pengaturan = ({ token }) => {
                                             </div>
                                         </div>
                                         <button
-                                            className="btn btn-link-action text-white"
+                                            className="col-2 col-md-6 col-lg-7 col-xl-5 btn btn-link-action text-white"
                                             onClick={(e) => submitFaq(e)}
                                             style={{ marginLeft: '-30px' }}
                                         >

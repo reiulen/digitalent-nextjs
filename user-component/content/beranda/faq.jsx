@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import styles from "../../components/template/Sidebar.module.css";
 
 import { getAllFaq } from "../../../redux/actions/beranda/faq-content.actions"
+import { set } from 'js-cookie';
 
 const FaqPage = () => {
 
@@ -17,7 +18,14 @@ const FaqPage = () => {
     const [disableBtn, setDisableBtn] = useState(false)
     const [keyword, setKeyword] = useState("")
     const [disableBtnPlus, setDisableBtnPlus] = useState(null)
-    const [id, setId] = useState(null)
+    const [active, setActive] = useState(false)
+    const [content , setContent] = useState( faq?.faq.map((row, i) => {
+        return (
+            {
+                ...row, isShow: false
+            }
+        )
+    }))
 
     const handleFilterKeyword = (e) => {
         e.preventDefault();
@@ -28,18 +36,10 @@ const FaqPage = () => {
         return item.nama_kategori
     })
 
-    const content = faq?.faq.map((row, i) => {
-        return (
-            {
-                ...row, isShow: false
-            }
-        )
-    })
-
     const sideBar = (sidebar?.filter((item, pos) => {
         return sidebar.indexOf(item) === pos
     }))
-
+    
     return (
         <>
             <div className="row mx-1 py-3 px-8 bg-white rounded-pill d-flex align-items-center border" style={{ marginTop: '50px', marginBottom: '55px' }}>
@@ -172,9 +172,13 @@ const FaqPage = () => {
                                                                 {row.judul}
                                                             </h6>
                                                             <button className="accordion-button btn" onClick={() => {
-                                                                // console.log("show :", row.isShow)
-                                                                setId(row.id)
-                                                                row.isShow = !row.isShow
+                                                                
+                                                              setContent(content.filter(item => {
+                                                                  if(row.id === item.id){
+                                                                    row.isShow = !row.isShow
+                                                                  }
+                                                                  return item
+                                                              }))
                                                             }} type="button" data-toggle="collapse" data-target={i === 0 ? "#collapseExample" : `#collapseExample${i}`} key={i} data-parent="#selector" aria-expanded="false" aria-controls="collapseExample">
                                                                 <i className={row.isShow === true ? "fas fa-minus-circle" : "fas fa-plus-circle"} style={{ color: '#3699ff' }}></i>
                                                             </button>

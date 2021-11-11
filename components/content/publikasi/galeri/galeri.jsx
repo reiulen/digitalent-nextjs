@@ -515,11 +515,11 @@ const Galeri = ({ token }) => {
                                         </div> */}
 
                                         <div
-                                            className="position-relative"
-                                            style={{
-                                                height: "460px",
-                                                width: "auto"
-                                            }}
+                                            className={`${styles.modals} position-relative`}
+                                        // style={{
+                                        //     height: "460px",
+                                        //     width: "auto"
+                                        // }}
                                         >
                                             <Image
                                                 src={
@@ -722,7 +722,6 @@ const Galeri = ({ token }) => {
                                             onChange={e => setSearch(e.target.value)}
                                         />
                                         <button
-                                            // className="btn bg-blue-primary text-white right-center-absolute"
                                             className={`${styles.fontCari} btn bg-blue-primary text-white right-center-absolute`}
                                             style={{
                                                 borderTopLeftRadius: "0",
@@ -734,7 +733,6 @@ const Galeri = ({ token }) => {
                                         </button>
                                     </div>
                                 </div>
-                                {/* <div className="col-11 col-sm-6 col-md-6 col-lg-6 col-xl-6"> */}
                                 <div className={`${styles.filterDate} col-sm-6 col-md-6 col-lg-6 col-xl-6`}>
                                     <div className="d-flex flex-wrap align-items-center justify-content-end mt-2">
                                         {/* sortir by modal */}
@@ -744,7 +742,6 @@ const Galeri = ({ token }) => {
                                             data-target="#exampleModalCenter"
                                             style={{ color: "#464646" }}
                                         >
-                                            {/* <div className="d-flex align-items-center"> */}
                                             <div className={`${styles.filter} d-flex align-items-center`}>
                                                 <IconFilter className="mr-3" />
                                                 Pilih Filter
@@ -1188,8 +1185,8 @@ const Galeri = ({ token }) => {
                                     }
                                     {/* </div> */}
                                 </div>
-                                <div className="col-sm-12 col-md-6 col-lg-6" style={{ padding: "30px" }}>
-                                    <div className={styles["rightSide"]}>
+                                <div className={`${styles.modalsRight} col-sm-12 col-md-6 col-lg-6`}>
+                                    <div className={`${styles.rightSide}`}>
                                         {galeri &&
                                             galeri.gallery.length !== 0 &&
                                             index_galleri !== null ? (
