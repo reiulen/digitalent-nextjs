@@ -525,7 +525,7 @@ const Berita = () => {
 
                                                 <div className="row my-5">
                                                     {/* Insert Title Here */}
-                                                    <Link href={`/artikel/detail/${el.slug}`}>
+                                                    <Link href={`/berita/detail/${el.slug}`}>
                                                         <a>
                                                             <h1 className="text-dark">
                                                                 {handleTitleToTrim(el.judul)}
@@ -583,7 +583,7 @@ const Berita = () => {
                                                 style={{objectFit:"cover"}}
                                             >
                                                 {/* Insert Card Image Here */}
-                                                <Link href={`/artikel/detail/${el.slug}`}>
+                                                <Link href={`/berita/detail/${el.slug}`}>
                                                     <a>
                                                         <Image
                                                             src={
