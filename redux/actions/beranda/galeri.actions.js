@@ -21,14 +21,15 @@ import axios from "axios";
 export const getAllBerandaGaleri = 
 (
     page = 1,
-    keyword = ""
+    category_name=""
 ) => 
     async dispatch => {
         try {
             dispatch({ type: BERANDA_GALERI_REQUEST})
 
-            let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/gallery?page=${page}`
-            if (keyword) link = link.concat(`&keyword=${keyword}`);
+            let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/home/gallery?page=${page}`
+
+            if (category_name) link = link.concat(`&category_name=${category_name}`);
 
             const { data } = await axios.get(link);
 
@@ -36,6 +37,8 @@ export const getAllBerandaGaleri =
                 type: BERANDA_GALERI_SUCCESS,
                 payload: data,
             })
+
+            console.log (data)
             
         } catch (error) {
             dispatch({
@@ -47,6 +50,9 @@ export const getAllBerandaGaleri =
 
 export const getDetailBerandaGaleri = (id) => async dispatch => {
     try {
+
+        dispatch({ type: DETAIL_BERANDA_GALERI_REQUEST})
+
         let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/gallery/${id}`
 
         const { data } = await axios.get(link)
