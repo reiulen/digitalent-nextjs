@@ -104,7 +104,11 @@ const Header = () => {
                     {/* <span className="menu-text">Dashboard</span> */}
                     {breadcrumbs ? (
                       <span className="menu-text">
-                        {convertBreadcrumb(breadcrumbs[1].breadcrumb)}
+                        {convertBreadcrumb(
+                          breadcrumbs[1].breadcrumb.includes("subvit?page")
+                            ? breadcrumbs[1].breadcrumb.substr(0, 6)
+                            : breadcrumbs[1].breadcrumb
+                        )}
                       </span>
                     ) : (
                       <span className="menu-text">Dashboard</span>
