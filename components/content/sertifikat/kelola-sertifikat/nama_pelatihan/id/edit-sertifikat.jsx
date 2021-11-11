@@ -32,7 +32,6 @@ export default function EditSertifikat({ token }) {
   const { error: updateError, isUpdated } = useSelector(
     (state) => state.updateCertificates
   );
-
   if (!certificate) {
     router.replace(
       {
@@ -580,14 +579,14 @@ export default function EditSertifikat({ token }) {
                           className="text-center font-weight-bolder w-100"
                           style={{ fontSize: "125%" }}
                         >
-                          {certificate?.data?.certificate?.theme?.name ||
+                          {certificate?.data?.pelatihan?.name ||
                             "Tema Sertifikat"}
                         </div>
                         <div className="mt-2 w-100">
                           <span className="w-100">
                             Program{" "}
                             <span className="font-weight-bold w-100">
-                              {certificate?.data?.certificate?.academy.name ||
+                              {certificate?.data?.pelatihan?.akademi ||
                                 "Nama Akademi"}
                             </span>{" "}
                             Selama
@@ -1204,7 +1203,7 @@ export default function EditSertifikat({ token }) {
                 <div className="row p-0">
                   {/* START COL */}
                   <div className="border-primary p-0 border col-lg-8 col-12 position-relative">
-                    <div className="p-0" ref={divReferenceSilabus}>
+                    <div className="p-0 " ref={divReferenceSilabus}>
                       {localBackgroundSyllabus ? (
                         <img
                           className="position-absolute w-100 h-100"
@@ -1219,6 +1218,7 @@ export default function EditSertifikat({ token }) {
                           src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/background-syllabus/${background_syllabus}`}
                           alt={`Background Image ${background_syllabus}`}
                           layout="fill"
+                          style={{ objectFit: "contain" }}
                           objectFit="fill"
                         />
                       ) : (
