@@ -3,6 +3,8 @@ import { Container, Row, Col, InputGroup, Form, Button } from "react-bootstrap";
 import SubHeaderComponent from "../../components/template/Subheader.component";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
+import Image from "next/image";
+import Pagination from "react-js-pagination";
 
 const Penyelenggara = () => {
   const dispatch = useDispatch();
@@ -67,7 +69,7 @@ const Penyelenggara = () => {
                   <p className="mb-0">Urutkan berdasarkan :</p>
                   <Button
                     variant="transparent"
-                    className="btn-penyelenggara-rounded bg-penyelenggara-primary mx-10 text-white"
+                    className="btn-penyelenggara-rounded bg-penyelenggara-primary mx-8 text-white"
                   >
                     A - Z
                   </Button>
@@ -84,16 +86,44 @@ const Penyelenggara = () => {
         </section>
 
         <section className="penyelenggara-content">
-          <Row>
-            {[1, 2, 3, 4, 5, 6].map((row, i) => (
-              <Col md={2} className="text-center">
-                <div className="penyelenggara-head">
-                  <div className="penyelenggara-wrapper">
-                    <h1>Hello</h1>
+          <Row className="d-flex justify-content-between">
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((row, i) => (
+              <Col
+                md={4}
+                lg={3}
+                xl={2}
+                sm={6}
+                xs={6}
+                className="text-center mb-10"
+              >
+                <div className="penyelenggara-mitra">
+                  <div className="penyelenggara-wrapper mx-auto d-flex align-items-center justify-content-center">
+                    <Image
+                      src="/assets/media/default.jpg"
+                      width={90}
+                      height={90}
+                    />
                   </div>
+                  <p className="my-5">Google</p>
                 </div>
               </Col>
             ))}
+          </Row>
+          <Row className="my-5 d-flex justify-content-center">
+            <div className="table-pagination">
+              <Pagination
+                activePage={1}
+                itemsCountPerPage={3}
+                totalItemsCount={7}
+                pageRangeDisplayed={3}
+                nextPageText={">"}
+                prevPageText={"<"}
+                firstPageText={"<<"}
+                lastPageText={">>"}
+                itemClass="page-item"
+                linkClass="page-link"
+              />
+            </div>
           </Row>
         </section>
       </Container>

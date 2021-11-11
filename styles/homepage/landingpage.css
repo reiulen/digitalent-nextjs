@@ -161,19 +161,13 @@
   color: #1f1f1f;
 }
 
-@media (min-width: 768px) {
-  .title-step-register h1 {
-    font-size: 40px;
-  }
-}
-
 /* END HOME PAGE */
 
 /* PENYELENGGARA */
 .penyelenggara-title-filter h1 {
   font-style: normal;
   font-weight: bold;
-  font-size: 40px;
+  font-size: 20px;
   line-height: 120%;
   letter-spacing: 0.025em;
   color: #1f1f1f;
@@ -182,7 +176,7 @@
 .penyelenggara-title-filter p {
   font-style: normal;
   font-weight: normal;
-  font-size: 18px;
+  font-size: 14px;
   line-height: 160%;
   color: #6c6c6c;
 }
@@ -190,7 +184,7 @@
 .filter-action p {
   font-style: normal;
   font-weight: normal;
-  font-size: 16px;
+  font-size: 12px;
   line-height: 160%;
   color: #1f1f1f;
 }
@@ -209,4 +203,59 @@
   border: 1px solid #d7e1ea;
   box-sizing: border-box;
 }
+
+.penyelenggara-mitra .penyelenggara-wrapper {
+  width: 173px;
+  height: 173px;
+  left: 0px;
+  top: 0px;
+  background: #ffffff;
+  border: 1px solid #d7e1ea;
+  box-sizing: border-box;
+  border-radius: 100px;
+}
+
+.penyelenggara-mitra .penyelenggara-wrapper:hover {
+  border: 4px solid #007cff;
+  box-sizing: border-box;
+}
+
+.penyelenggara-mitra p {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 160%;
+  text-align: center;
+  letter-spacing: 0.015em;
+  color: #1f1f1f;
+}
+
+@media (max-width: 395px) {
+  .penyelenggara-mitra .penyelenggara-wrapper {
+    width: 130px;
+    height: 130px;
+  }
+}
+
+@media (max-width: 295px) {
+  .penyelenggara-mitra .penyelenggara-wrapper {
+    width: 100px;
+    height: 100px;
+  }
+}
 /* END PENYELENGGARA */
+
+@media (min-width: 768px) {
+  .title-step-register h1 {
+    font-size: 40px;
+  }
+  .penyelenggara-title-filter h1 {
+    font-size: 40px;
+  }
+  .filter-action p {
+    font-size: 16px;
+  }
+  .filter-action p {
+    font-size: 16px;
+  }
+}
