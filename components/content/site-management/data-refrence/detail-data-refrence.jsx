@@ -4,7 +4,7 @@ import PageWrapper from "../../../wrapper/page.wrapper";
 import { useSelector } from "react-redux";
 const DetailRefrence = ({ token }) => {
   const detailDataReference = useSelector((state) => state.detailDataReference);
-  console.log("detailDataReference",detailDataReference)
+
   return (
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">
