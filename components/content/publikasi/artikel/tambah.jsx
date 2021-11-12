@@ -38,7 +38,8 @@ const TambahArtikel = ({ token, id }) => {
 
   const { loading, error, success } = useSelector((state) => state.newArtikel);
   const { setting } = useSelector(state => state.allSettingPublikasi)
-  const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(state => state.drowpdownAkademi);
+  // const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(state => state.drowpdownAkademi);
+  const { akademi } = useSelector(state => state.allAkademi);
   const {
     loading: allLoading,
     error: allError,
@@ -427,15 +428,14 @@ const TambahArtikel = ({ token, id }) => {
                       <option selected disabled value="">
                         -- Akademi --
                       </option>
-                      {!dataAkademi || (dataAkademi && dataAkademi.length === 0) ? (
+                      {!akademi || (akademi && akademi.length === 0) ? (
                         <option value="">Data Kosong</option>
                       ) : (
-                        dataAkademi &&
-                        dataAkademi.data &&
-                        dataAkademi.data.map((row) => {
+                        akademi &&
+                        akademi.map((row) => {
                           return (
-                            <option key={row.value} value={row.label}>
-                              {row.label}
+                            <option key={row.id} value={row.slug}>
+                              {row.slug}
                             </option>
                           );
                         })
