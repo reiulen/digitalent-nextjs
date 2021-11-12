@@ -10,7 +10,7 @@ import {
 
 export const getAllParticipant =
   (id, page = 1, keyword = "", limit = 5, token) =>
-  async dispatch => {
+  async (dispatch) => {
     try {
       dispatch({ type: LIST_PESERTA_REQUEST });
       let link =
@@ -38,7 +38,7 @@ export const getAllParticipant =
 
 export const getDetailParticipant =
   (id, page = 1, keyword = "", limit = 5, token) =>
-  async dispatch => {
+  async (dispatch) => {
     try {
       dispatch({ type: DETAIL_LIST_PESERTA_REQUEST });
       let link =
@@ -52,7 +52,6 @@ export const getDetailParticipant =
           Authorization: `Bearer ${token}`,
         },
       };
-
       const { data } = await axios.get(link, config);
       if (data) {
         dispatch({ type: DETAIL_LIST_PESERTA_SUCCESS, payload: data });

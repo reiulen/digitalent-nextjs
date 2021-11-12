@@ -11,6 +11,8 @@ import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import { getDataPribadi } from "../../../../redux/actions/pelatihan/function.actions";
 
+import OtpInput from "react-otpcode-input";
+
 export default function Pengaturan({ session }) {
   const { error: errorDataPribadi, dataPribadi } = useSelector(
     (state) => state.getDataPribadi
@@ -147,7 +149,6 @@ export default function Pengaturan({ session }) {
           body,
           config
         );
-        console.log(data, " masuk sini");
         if (data) {
           Swal.fire(
             "Berhasil!",
@@ -590,14 +591,14 @@ export default function Pengaturan({ session }) {
             </p>
           </div>
           <div>
-            {/* <OtpInput
+            <OtpInput
               value={otpEmail}
               onChange={(e) => setOtpEmail(e)}
               numInputs={6}
               inputStyle="w-100 p-4 mx-5 my-10 form-control"
               shouldAutoFocus
               isInputNum
-            ></OtpInput> */}
+            ></OtpInput>
           </div>
 
           <div className="d-flex justify-content-between mx-5 mt-14">

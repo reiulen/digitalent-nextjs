@@ -54,12 +54,13 @@ export default function TambahMasterSertifikat({ token }) {
     }
   }, [newCertificate, query.theme_name, query.theme_id, router]);
 
+  // console.log(certificate)
   // #Redux state
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
 
   // #START FORM DATA
   const [certificate_type, setCertificate_type] = useState(
-    certificate.data.list_certificate[0].certificate_type || "1 lembar"
+    certificate?.data?.pelatihan?.list[0]?.certificate_type || "1 lembar"
   );
 
   const [number_of_signatures, setNumber_of_signatures] = useState(1);
@@ -280,6 +281,14 @@ export default function TambahMasterSertifikat({ token }) {
 
   // # END IMAGE
   const handlePost = async (e, status) => {
+    const currentData = certificate.data.pelatihan.list.filter(
+      (el) => el.id == query.id
+    );
+    const id = {
+      training_id: currentData[0].training_id,
+      theme_id: currentData[0].theme_id,
+      academy_id: currentData[0].academy_id,
+    };
     try {
       e.preventDefault();
       if (certificate_type == "1 lembar") {
@@ -287,8 +296,6 @@ export default function TambahMasterSertifikat({ token }) {
         simpleValidator.current.fields.Nama = true;
         simpleValidator.current.fields["Tanda tangan"] = true;
       }
-
-      const id = query.id;
 
       if (simpleValidator.current.allValid()) {
         let formData = new FormData();
@@ -514,16 +521,13 @@ export default function TambahMasterSertifikat({ token }) {
                         className="text-center font-weight-bolder w-100 "
                         style={{ fontSize: "125%" }}
                       >
-                        {certificate.theme || "Tema Sertifikat"}
+                        {certificate?.data.tema.name || "Tema Sertifikat"}
                       </div>
                       <div className="mt-2 w-100">
                         <span className="w-100">
                           Program{" "}
                           <span className="font-weight-boldest w-100">
-                            {
-                              certificate?.data?.list_certificate[0]?.academy
-                                .name
-                            }
+                            {certificate?.data?.pelatihan.list[0]?.academy.name}
                           </span>{" "}
                           Selama
                         </span>
