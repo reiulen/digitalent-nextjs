@@ -48,7 +48,8 @@ const EditArtikel = ({ token, idUser }) => {
     kategori,
   } = useSelector(state => state.allKategori);
   const { setting } = useSelector(state => state.allSettingPublikasi)
-  const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(state => state.drowpdownAkademi);
+  const { akademi } = useSelector(state => state.allAkademi);
+  // const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(state => state.drowpdownAkademi);
 
   useEffect(() => {
 
@@ -510,19 +511,18 @@ const EditArtikel = ({ token, idUser }) => {
                       <option selected disabled value="">
                         -- Akademi --
                       </option>
-                      {!dataAkademi || (dataAkademi && dataAkademi.length === 0) ? (
+                      {!akademi || (akademi && akademi.length === 0) ? (
                         <option value="">Data Kosong</option>
                       ) : (
-                        dataAkademi &&
-                        dataAkademi.data &&
-                        dataAkademi.data.map(row => {
+                        akademi &&
+                        akademi.map(row => {
                           return (
                             <option
-                              key={row.value}
-                              value={row.label}
-                              selected={kategori_akademi === row.label ? true : false}
+                              key={row.id}
+                              value={row.slug}
+                              selected={kategori_akademi === row.slug ? true : false}
                             >
-                              {row.label}
+                              {row.slug}
                             </option>
                           )
                         })
