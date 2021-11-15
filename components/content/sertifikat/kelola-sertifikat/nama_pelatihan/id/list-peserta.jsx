@@ -202,7 +202,7 @@ export default function ListPeserta() {
                                 <td className="align-middle d-flex">
                                   {participant.status == 1 ? (
                                     <>
-                                      <Link
+                                      {/* <Link
                                         href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/sertifikat-peserta/${participant.name}?id=${query.id}`}
                                       >
                                         <a
@@ -219,7 +219,7 @@ export default function ListPeserta() {
                                         >
                                           <i className="ri-eye-fill p-0 text-white"></i>
                                         </a>
-                                      </Link>
+                                      </Link> */}
                                     </>
                                   ) : (
                                     ""
