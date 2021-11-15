@@ -32,10 +32,12 @@ const TambahBerita = ({ token, id }) => {
     })
     const simpleValidator = useRef(new SimpleReactValidator({ locale: 'id' }))
     const [, forceUpdate] = useState();
+
     const { loading, error, success } = useSelector(state => state.newBerita)
     const { loading: allLoading, error: allError, kategori } = useSelector((state) => state.allKategori);
     const { setting } = useSelector(state => state.allSettingPublikasi)
-    const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(state => state.drowpdownAkademi);
+    const { akademi } = useSelector(state => state.allAkademi);
+    // const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(state => state.drowpdownAkademi);
 
     useEffect(() => {
 
@@ -377,13 +379,13 @@ const TambahBerita = ({ token, id }) => {
                                 <div className={`${styles.selectKategori} col-sm-12`}>
                                     <select name="" id="" className={`${styles.selectKategori} form-control`} value={kategori_akademi} onChange={e => setKategoriAkademi(e.target.value)} onBlur={e => { setKategoriAkademi(e.target.value); simpleValidator.current.showMessageFor('akademi') }} >
                                         <option selected disabled value=''>-- Akademi --</option>
-                                        {!dataAkademi || (dataAkademi && dataAkademi.length === 0) ? (
+                                        {!akademi || (akademi && akademi.length === 0) ? (
                                             <option value="">Data Kosong</option>
                                         ) : (
-                                            dataAkademi && dataAkademi.data && dataAkademi.data.map((row) => {
+                                            akademi && akademi.map((row) => {
                                                 return (
-                                                    <option key={row.value} value={row.label}>
-                                                        {row.label}
+                                                    <option key={row.id} value={row.slug}>
+                                                        {row.slug}
                                                     </option>
                                                 )
                                             })
