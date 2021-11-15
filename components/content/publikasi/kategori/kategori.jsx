@@ -99,16 +99,19 @@ const Kategori = ({ token }) => {
   const handlePagination = pageNumber => {
     if (limit !== null && search === "" && searchKategori === null) {
       router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}`);
+
     } else if (limit !== null && search !== "" && searchKategori === null) {
-      router.push(
-        `${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}`
-      );
+      router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}`);
+
     } else if (limit === null && search !== "" && searchKategori === null) {
       router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}`);
+
+    } else if (limit === null && search === "" && searchKategori !== null) {
+      router.push(`${router.pathname}?page=${pageNumber}&keyword=${searchKategori}`);
+
     } else if (limit !== null && search === "" && searchKategori !== null) {
-      router.push(
-        `${router.pathname}?page=${pageNumber}&limit=${limit}&keyword=${searchKategori}`
-      );
+      router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&keyword=${searchKategori}`);
+
     } else {
       router.push(`${router.pathname}?page=${pageNumber}`);
     }
