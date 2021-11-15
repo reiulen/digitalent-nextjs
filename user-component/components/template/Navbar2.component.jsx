@@ -49,15 +49,17 @@ const Navigationbar = ({ session }) => {
   );
 
   useEffect(() => {
-    dispatch(getDataPribadi(session?.token));
-    if (
-      dataPribadi &&
-      Object.keys(dataPribadi).length !== 0 &&
-      !dataPribadi.status
-    ) {
-      router.push("/peserta/wizzard");
+    if (session) {
+      dispatch(getDataPribadi(session?.token));
+      if (
+        dataPribadi &&
+        Object.keys(dataPribadi).length !== 0 &&
+        !dataPribadi.status
+      ) {
+        router.push("/peserta/wizzard");
+      }
     }
-  }, [dataPribadi]);
+  }, [dispatch, router]);
 
   const [akademi, setAkademi] = useState([]);
   const getAkademi = async () => {
@@ -238,14 +240,14 @@ const Navigationbar = ({ session }) => {
                   </button>
                   <div className="dropdown-menu ml-3">
                     <Link href="/peserta/menu/pusat-informasi">
-                    <a className="dropdown-item navdropdown-child">
-                      Panduan Test Substansi
-                    </a>
+                      <a className="dropdown-item navdropdown-child">
+                        Panduan Test Substansi
+                      </a>
                     </Link>
                     <Link href="/peserta/menu/pusat-informasi">
-                    <a className="dropdown-item navdropdown-child">
-                      Hak dan Kewajiban
-                    </a>
+                      <a className="dropdown-item navdropdown-child">
+                        Hak dan Kewajiban
+                      </a>
                     </Link>
                   </div>
                 </div>
