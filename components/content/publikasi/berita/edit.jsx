@@ -141,12 +141,16 @@ const EditBerita = ({ token, idUser }) => {
     }
 
     const handleTag = (data) => {
-        for (let i = 0; i < data.length; i++) {
-            if (hasWhiteSpace(data[i])) {
-                data.splice([i], 1);
+        if ((tag).includes(data)) {
+            // Swal.fire("Oops !", "Tag tidak boleh sama", "error");
+            // setTag(data);
+            data.splice(0, data.length - 1)
+        } else {
+            for (let i = 0; i < data.length; i++) {
+                if (hasWhiteSpace(data[i])) {
+                    data.splice([i], 1);
+                }
             }
-        }
-        if ((data).includes(data) !== true) {
             setTag(data);
         }
     }
@@ -497,7 +501,7 @@ const EditBerita = ({ token, idUser }) => {
                                 <div className="form-group">
                                     <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Kategori</label>
                                     <div className={`${styles.selectKategori} col-sm-12`}>
-                                        <select name="" id="" className={`${styles.selectKategori} form-control`} value={kategori_id} onChange={e => setKategoriId(e.target.value)} onBlur={e => { setKategoriId(e.target.value); simpleValidator.current.showMessageFor('kategori_id') }} >
+                                        <select name="" id="" className={`${styles.selectKategori} form-control`} value={kategori_id} onChange={e => setKategoriId(e.target.value)} onBlur={e => { setKategoriId(e.target.value); simpleValidator.current.showMessageFor('kategori') }} >
                                             <option selected disabled value=''>-- Berita --</option>
                                             {!kategori || (kategori && kategori.length === 0) ? (
                                                 <option value="">Data Tidak Ditemukan</option>
@@ -515,7 +519,7 @@ const EditBerita = ({ token, idUser }) => {
                                             )}
 
                                         </select>
-                                        {simpleValidator.current.message('kategori_id', kategori_id, 'required', { className: 'text-danger' })}
+                                        {simpleValidator.current.message('kategori', kategori_id, 'required', { className: 'text-danger' })}
                                     </div>
                                 </div>
 

@@ -158,10 +158,10 @@ const TambahArtikelPeserta = () => {
                                         <select
                                             name=""
                                             id=""
-                                            className={`${styles.selectKategori} form-control dropdownArt`}
+                                            className={`${styles.selectKategori} text-muted form-control dropdownArt`}
                                         >
                                             <option selected disabled value="">
-                                                -- Akademi --
+                                                Pilih Akademi
                                             </option>
                                             <option value="">Data Kosong</option>
                                         </select>
@@ -179,10 +179,10 @@ const TambahArtikelPeserta = () => {
                                         <select
                                             name=""
                                             id=""
-                                            className={`${styles.selectKategori} form-control dropdownArt`}
+                                            className={`${styles.selectKategori} text-muted form-control dropdownArt`}
                                         >
                                             <option selected disabled value="">
-                                                -- Artikel --
+                                                Pilih Artikel
                                             </option>
                                             <option value="">Data Kosong</option>
                                         </select>
@@ -199,7 +199,7 @@ const TambahArtikelPeserta = () => {
                                     <div className={`${styles.tagStyle} col-sm-12`} style={{ wordBreak: 'break-word' }}>
                                         <TagsInput
                                             name="fruits"
-                                            placeHolder="Isi Tag disini dan Enter"
+                                            placeHolder="Isi Tag disini"
                                             seprators={["Enter", "Tab"]}
                                         />
                                     </div>
@@ -210,7 +210,7 @@ const TambahArtikelPeserta = () => {
                                     <div className="col-sm-10 text-right">
                                         <Link href="/publikasi/artikel">
                                             <a className={`${styles.btnKembali} btn btn-white-ghost-rounded-full rounded-pill mr-2 btn-sm`}>
-                                                Kembali
+                                                Batal
                                             </a>
                                         </Link>
                                         <button className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill btn-sm border-0`} style={{ backgroundColor: '#007cff' }}>Simpan</button>
