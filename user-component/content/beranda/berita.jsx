@@ -184,6 +184,10 @@ const Berita = () => {
         ))
     }
 
+    const setInnerHtml = (text) => {
+        return {_html: text}
+    }
+
 
     return (
         <div>
@@ -538,10 +542,14 @@ const Berita = () => {
                                                 {
                                                     windowDimensions && windowDimensions.width && windowDimensions.width > 770 ?
                                                         <div 
-                                                            className="row my-5 d-flex flex-wrap" 
+                                                            className="row my-5 d-flex flex-wrap"
                                                         >
                                                             {/* Insert Desc Here */}
-                                                            <div dangerouslySetInnerHTML={{__html: handleDescToTrim(el.isi_berita)}}/>
+                                                            <div 
+                                                                dangerouslySetInnerHTML={{__html: handleDescToTrim(el.isi_berita)}}
+                                                                className="text-wrap d-flex flex-wrap overflow-hidden text-truncate"
+                                                                style={{maxWidth:"450px"}}
+                                                            />
                                                         </div>
                                                     :
                                                         null
