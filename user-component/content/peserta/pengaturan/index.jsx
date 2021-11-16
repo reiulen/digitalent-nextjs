@@ -5,7 +5,7 @@ import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
 import style from "./style.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import SimpleReactValidator from "simple-react-validator";
-// import OtpInput from "react-otp-input";
+import OtpInput from "react-otp-input";
 import axios from "axios";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
@@ -361,7 +361,10 @@ export default function Pengaturan({ session }) {
                   <div
                     className={`rounded-circle d-flex align-items-center justify-content-center mx-5 ${style.iconBackgroundSuccess}`}
                   >
-                    <i class="ri-check-fill" style={{ color: "#00996A" }}></i>
+                    <i
+                      className="ri-check-fill"
+                      style={{ color: "#00996A" }}
+                    ></i>
                   </div>
                 ) : (
                   <div
@@ -408,7 +411,10 @@ export default function Pengaturan({ session }) {
                   <div
                     className={`rounded-circle d-flex align-items-center justify-content-center mx-5 ${style.iconBackgroundSuccess}`}
                   >
-                    <i class="ri-check-fill" style={{ color: "#00996A" }}></i>
+                    <i
+                      className="ri-check-fill"
+                      style={{ color: "#00996A" }}
+                    ></i>
                   </div>
                 ) : (
                   <div
@@ -484,7 +490,7 @@ export default function Pengaturan({ session }) {
             onClick={handleCloseEmailModal}
           >
             <button className={`${style.btn_ubah}`}>
-              <i class="ri-close-fill"></i>
+              <i className="ri-close-fill"></i>
             </button>
           </Modal.Title>
         </Modal.Header>
@@ -562,7 +568,7 @@ export default function Pengaturan({ session }) {
             onClick={handleCloseEmailOtp}
           >
             <button className={`${style.btn_ubah}`}>
-              <i class="ri-close-fill"></i>
+              <i className="ri-close-fill"></i>
             </button>
           </Modal.Title>
         </Modal.Header>
@@ -593,10 +599,9 @@ export default function Pengaturan({ session }) {
           <div>
             {/* <OtpInput
               value={otpEmail}
-              onChange={(e) => setOtpEmail(e)}
+              onChange={e => setOtpEmail(e)}
               numInputs={6}
               inputStyle="w-100 p-4 mx-5 my-10 form-control"
-              shouldAutoFocus
               isInputNum
             ></OtpInput> */}
           </div>
@@ -670,7 +675,7 @@ export default function Pengaturan({ session }) {
             onClick={handleClosePasswordModal}
           >
             <button className={`${style.btn_ubah}`}>
-              <i class="ri-close-fill"></i>
+              <i className="ri-close-fill"></i>
             </button>
           </Modal.Title>
         </Modal.Header>
@@ -862,7 +867,7 @@ export default function Pengaturan({ session }) {
             onClick={handleCloseHandphoneModal}
           >
             <button className={`${style.btn_ubah}`}>
-              <i class="ri-close-fill"></i>
+              <i className="ri-close-fill"></i>
             </button>
           </Modal.Title>
         </Modal.Header>
