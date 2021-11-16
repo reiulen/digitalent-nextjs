@@ -136,19 +136,20 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
         };
       })[0]
   );
+  
   //tanggal pendaftaran
   const [startDateRegistration, setStartDateRegistration] = useState(
-    new Date(getEditTraining.pendaftaran_mulai)
+    new Date(getEditTraining.pendaftaran_mulai.slice(0, getEditTraining.pendaftaran_mulai.length -1))
   );
   const [endDateRegistration, setEndDateRegistration] = useState(
-    new Date(getEditTraining.pendaftaran_selesai)
+    new Date(getEditTraining.pendaftaran_selesai.slice(0, getEditTraining.pendaftaran_selesai.length -1))
   );
   //tanggal pelatihan
   const [startDateTraining, setStartDateTraining] = useState(
-    new Date(getEditTraining.pelatihan_mulai)
+    new Date(getEditTraining.pelatihan_mulai.slice(0, getEditTraining.pelatihan_mulai.length -1))
   );
   const [endDateTraining, setEndDateTraining] = useState(
-    new Date(getEditTraining.pelatihan_selesai)
+    new Date(getEditTraining.pelatihan_selesai.slice(0, getEditTraining.pelatihan_selesai.length -1))
   );
   const [description, setDescription] = useState(getEditTraining.deskripsi);
   //kuota
@@ -799,6 +800,7 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                 </label>
                 <DatePicker
                   selected={startDateRegistration}
+                  value={startDateRegistration}
                   onChange={(date) => setStartDateRegistration(date)}
                   showTimeSelect
                   minDate={today}
@@ -860,6 +862,7 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                   onChange={(date) => setStartDateTraining(date)}
                   minDate={endDateRegistration}
                   showTimeSelect
+                  value={startDateTraining}
                   className="form-control w-100 d-block"
                   locale="pt-BR"
                   timeFormat="HH:mm"
