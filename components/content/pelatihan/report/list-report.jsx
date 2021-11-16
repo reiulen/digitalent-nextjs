@@ -62,7 +62,7 @@ const ListReport = ({token}) => {
     }
   }
   
-  const listReportTraining = getDataReportTraining.list.map((item, index) => {
+  const listReportTraining = getDataReportTraining.list?.length > 0 ? getDataReportTraining.list.map((item, index) => {
     return (
       <tr key={index}>
         <td className="text-center">{index + limit * (page - 1) + 1}</td>
@@ -123,7 +123,9 @@ const ListReport = ({token}) => {
         </td>
       </tr>
     );
-  });
+  }) : <td className="align-middle text-center" colSpan={8}>
+  Data Kosong
+</td>;
 
 
 
@@ -369,7 +371,6 @@ const ListReport = ({token}) => {
           <div className="row">
             <div className="form-group mb-5 col-md-6">
               <label className="p-0">Tanggal Pendaftaran</label>
-              
               <DatePicker
                 wrapperClassName="datepicker"
                 className="form-control"
@@ -408,7 +409,13 @@ const ListReport = ({token}) => {
           </button>
           <button className="btn btn-primary-rounded-full" type="button" onClick={() => {
              setShowModal(false);
-            dispatch(listsReportTraining(token, page, limit, search, penyelenggara.label, academy.label, theme.label))
+             let register = dateRegister.map(item => {
+               return moment(item).format("YYYY/MM/DD")
+             })
+             let pelaksanaan = datePelaksanaan.map(item => {
+              return moment(item).format("YYYY/MM/DD")
+            })
+            dispatch(listsReportTraining(token, page, limit, search, penyelenggara.label, academy.label, theme.label, register[0] === "Invalid date" ? "" : register.join(","), pelaksanaan[0] === "Invalid date" ? "" : pelaksanaan.join(",")))
           }}>
             Terapkan
           </button>

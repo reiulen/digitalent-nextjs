@@ -172,7 +172,10 @@ const EditAcademy = ({ token }) => {
         name,
         deskripsi: description,
         logo: logoFile,
-        brosur: browsurFile,
+        brosur:
+          browsurName === "Belum ada file" && browsurFile === ""
+            ? "dihapus"
+            : browsurFile,
         status: status.value,
         id: idInt,
       };

@@ -10,6 +10,8 @@ import CardPage from "../../../components/peserta/CardPage";
 import { useRouter } from "next/router";
 import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
 import Cookies from "js-cookie";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 const Dashboard = ({ session, success }) => {
   const router = useRouter();
@@ -19,12 +21,11 @@ const Dashboard = ({ session, success }) => {
   );
   const { count, pelatihan, subvit } = dataDashboard;
 
-  useEffect(() => {
-    if (!success) {
-      router.push("/peserta/wizzard");
-    }
-  }, [success]);
-  // console.log(success, "ini success");
+  // useEffect(() => {
+  //   if (!success) {
+  //     router.push("/peserta/wizzard");
+  //   }
+  // }, [success]);
 
   const [cardPelatihan, setCardPelatihan] = useState([
     {
@@ -65,6 +66,31 @@ const Dashboard = ({ session, success }) => {
     }
   }, [errorDashboard, totalSubvit]);
 
+  const [simonasData, setSimonasData] = useState([]);
+
+  useEffect(() => {
+    const getSimonasData = async () => {
+      try {
+        const data = axios.get(
+          "https://beasiswa-dev.majapahit.id/api/get-scholarship-data"
+        );
+        // const data = axios.get("http://simonas-dev.majapahit.id/api/job", {
+        //   headers: {
+        //     "Content-Type": "application/json",
+        //   },
+        // });
+        if (data) {
+          return setSimonasData(data);
+        } else {
+          return;
+        }
+      } catch (error) {
+        Swal.fire("Gagal", `${error.response.data.message}`, "error");
+      }
+    };
+    getSimonasData();
+  }, []);
+
   const handleHoverCard = (index, status) => {
     let list = [...cardPelatihan];
     list[index].hover = status;
@@ -92,7 +118,7 @@ const Dashboard = ({ session, success }) => {
 
   return (
     <>
-      <PesertaWrapper>
+      <PesertaWrapper padding={"10"}>
         <Row className="mx-1">
           <CardPill
             background="bg-extras"
@@ -238,7 +264,7 @@ const Dashboard = ({ session, success }) => {
                     <p className={style.card_title}>Pelatihan Terkini</p>
                   </Card.Title>
 
-                  <Card className="shadow rounded-md">
+                  <Card className=" shadow rounded-md">
                     <Image
                       className={`${style.image_dashboard}`}
                       src={
@@ -252,7 +278,10 @@ const Dashboard = ({ session, success }) => {
                       objectFit="cover"
                     />
                     <Card.ImgOverlay>
-                      <Badge bg={` rounded-xl py-3 px-4 ${style.badge_card}`}>
+                      <Badge
+                        bg={`rounded-xl py-3 px-4 ${style.badge_card}`}
+                        className="d-none d-lg-inline-block"
+                      >
                         Pelatihan{" "}
                         {pelatihan.pelatihan_berjalan.metode_pelatihan}
                       </Badge>
@@ -461,7 +490,7 @@ const Dashboard = ({ session, success }) => {
                 <Card.Title className="d-flex">
                   <p className={style.card_title}>SIMONAS</p>
                   <div className="ml-auto">
-                    <Link href="/peserta" passHref>
+                    <Link href="http://simonas-dev.majapahit.id/jobs" passHref>
                       <p
                         className={`d-flex align-items-center ${style.kunjungi_link}`}
                       >

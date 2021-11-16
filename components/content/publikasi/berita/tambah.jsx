@@ -10,6 +10,7 @@ import { TagsInput } from 'react-tag-input-component';
 import Swal from "sweetalert2";
 import DatePicker from 'react-datepicker'
 
+import styles from "../../../../styles/previewGaleri.module.css";
 
 import { newBerita, clearErrors } from '../../../../redux/actions/publikasi/berita.actions'
 import { getAllKategori } from '../../../../redux/actions/publikasi/kategori.actions'
@@ -31,10 +32,12 @@ const TambahBerita = ({ token, id }) => {
     })
     const simpleValidator = useRef(new SimpleReactValidator({ locale: 'id' }))
     const [, forceUpdate] = useState();
+
     const { loading, error, success } = useSelector(state => state.newBerita)
     const { loading: allLoading, error: allError, kategori } = useSelector((state) => state.allKategori);
     const { setting } = useSelector(state => state.allSettingPublikasi)
-    const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(state => state.drowpdownAkademi);
+    const { akademi } = useSelector(state => state.allAkademi);
+    // const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(state => state.drowpdownAkademi);
 
     useEffect(() => {
 
@@ -57,7 +60,7 @@ const TambahBerita = ({ token, id }) => {
 
     const [kategori_id, setKategoriId] = useState('')
     const [users_id, setUserId] = useState(id)
-    const [akademi_value, setAkademiValue] = useState("")
+    const [kategori_akademi, setKategoriAkademi] = useState("")
     const [judul_berita, setJudulBerita] = useState('')
     const [isi_berita, setIsiBerita] = useState('');
     const [gambar, setGambar] = useState('')
@@ -128,7 +131,9 @@ const TambahBerita = ({ token, id }) => {
                 data.splice([i], 1);
             }
         }
-        setTag(data);
+        if ((data).includes(data) !== true) {
+            setTag(data);
+        }
     }
 
     const onSubmit = (e) => {
@@ -156,7 +161,7 @@ const TambahBerita = ({ token, id }) => {
                 let today = new Date
 
                 const data = {
-                    akademi_value,
+                    kategori_akademi,
                     kategori_id,
                     users_id,
                     judul_berita,
@@ -184,7 +189,7 @@ const TambahBerita = ({ token, id }) => {
                     });
             } else {
                 const data = {
-                    akademi_value,
+                    kategori_akademi,
                     kategori_id,
                     users_id,
                     judul_berita,
@@ -255,8 +260,8 @@ const TambahBerita = ({ token, id }) => {
                         <form onSubmit={onSubmit}>
                             <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Judul</label>
-                                <div className="col-sm-12">
-                                    <input type="text" className="form-control" placeholder="Masukkan Judul Disini" value={judul_berita} onChange={(e) => setJudulBerita(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("judul_berita")} />
+                                <div className={`${styles.judulTambah} col-sm-12`}>
+                                    <input type="text" className={`${styles.judulTambah} form-control`} placeholder="Masukkan Judul Disini" value={judul_berita} onChange={(e) => setJudulBerita(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("judul_berita")} />
                                     {simpleValidator.current.message(
                                         "judul_berita",
                                         judul_berita,
@@ -268,7 +273,7 @@ const TambahBerita = ({ token, id }) => {
 
                             <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-4 col-form-label font-weight-bolder">Isi Berita</label>
-                                <div className="col-sm-12">
+                                <div className={`${styles.deskripsiTambah} col-sm-12`}>
                                     <div className="ckeditor">
                                         {editorLoaded ? <CKEditor
                                             ck-editor__editable
@@ -276,7 +281,7 @@ const TambahBerita = ({ token, id }) => {
                                             data={isi_berita}
                                             onReady={editor => {
                                                 // You can store the "editor" and use when it is needed.
-                                                // console.log('Editor is ready to use!', editor);
+
                                             }}
                                             onChange={(event, editor) => {
                                                 const data = editor.getData()
@@ -306,7 +311,7 @@ const TambahBerita = ({ token, id }) => {
                                 >
                                     Upload Thumbnail
                                 </label>
-                                <div className="ml-3 row">
+                                <div className="ml-4 row">
                                     <figure
                                         className="avatar item-rtl"
                                         data-toggle="modal"
@@ -317,7 +322,7 @@ const TambahBerita = ({ token, id }) => {
                                             alt="image"
                                             width={160}
                                             height={160}
-                                            objectFit="cover"
+                                            objectFit="fill"
                                         />
                                     </figure>
                                     <div>
@@ -346,7 +351,7 @@ const TambahBerita = ({ token, id }) => {
 
                                 </div>
 
-                                <div className="ml-3">
+                                <div className="ml-4">
                                     {simpleValidator.current.message(
                                         "gambar",
                                         gambar,
@@ -361,7 +366,7 @@ const TambahBerita = ({ token, id }) => {
                                     }
                                 </div>
 
-                                <div className="mt-3 col-sm-6 col-md-6 col-lg-7 col-xl-3 text-muted">
+                                <div className={`${styles.resolusiTambah} mt-3 col-sm-6 col-md-6 col-lg-7 col-xl-3 text-muted`}>
                                     <p>
                                         Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar
                                     </p>
@@ -371,36 +376,33 @@ const TambahBerita = ({ token, id }) => {
 
                             <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Akademi</label>
-                                <div className="col-sm-12">
-                                    <select name="" id="" className='form-control' value={akademi_value} onChange={e => setAkademiValue(e.target.value)} onBlur={e => { setAkademiValue(e.target.value); simpleValidator.current.showMessageFor('akademi') }} >
+                                <div className={`${styles.selectKategori} col-sm-12`}>
+                                    <select name="" id="" className={`${styles.selectKategori} form-control`} value={kategori_akademi} onChange={e => setKategoriAkademi(e.target.value)} onBlur={e => { setKategoriAkademi(e.target.value); simpleValidator.current.showMessageFor('akademi') }} >
                                         <option selected disabled value=''>-- Akademi --</option>
-                                        {!dataAkademi || (dataAkademi && dataAkademi.length === 0) ? (
-                                            <option value="">Data Tidak Ditemukan</option>
+                                        {!akademi || (akademi && akademi.length === 0) ? (
+                                            <option value="">Data Kosong</option>
                                         ) : (
-                                            dataAkademi && dataAkademi.data && dataAkademi.data.map((row) => {
+                                            akademi && akademi.map((row) => {
                                                 return (
-                                                    // row.jenis_kategori == "Berita" ?
-                                                        <option key={row.value} value={row.value}>
-                                                            {row.label}
-                                                        </option>
-                                                        // :
-                                                        // null
+                                                    <option key={row.id} value={row.slug}>
+                                                        {row.slug}
+                                                    </option>
                                                 )
                                             })
                                         )}
 
                                     </select>
-                                    {simpleValidator.current.message('akademi', akademi_value, 'required', { className: 'text-danger' })}
+                                    {simpleValidator.current.message('akademi', kategori_akademi, 'required', { className: 'text-danger' })}
                                 </div>
                             </div>
 
                             <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Kategori</label>
-                                <div className="col-sm-12">
-                                    <select name="" id="" className='form-control' value={kategori_id} onChange={e => setKategoriId(e.target.value)} onBlur={e => { setKategoriId(e.target.value); simpleValidator.current.showMessageFor('kategori_id') }} >
+                                <div className={`${styles.selectKategori} col-sm-12`}>
+                                    <select name="" id="" className={`${styles.selectKategori} form-control`} value={kategori_id} onChange={e => setKategoriId(e.target.value)} onBlur={e => { setKategoriId(e.target.value); simpleValidator.current.showMessageFor('kategori_id') }} >
                                         <option selected disabled value=''>-- Berita --</option>
                                         {!kategori || (kategori && kategori.length === 0) ? (
-                                            <option value="">Data Tidak Ditemukan</option>
+                                            <option value="">Data Kosong</option>
                                         ) : (
                                             kategori && kategori.kategori && kategori.kategori.map((row) => {
                                                 return (
@@ -421,13 +423,12 @@ const TambahBerita = ({ token, id }) => {
 
                             <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Tag</label>
-                                <div className="col-sm-12">
+                                <div className={`${styles.tagStyle} col-sm-12`} style={{ wordBreak: 'break-word' }}>
                                     <TagsInput
                                         value={tag}
-                                        // onChange={setTag}
                                         onChange={(data) => handleTag(data)}
                                         name="tag"
-                                        placeHolder="Isi Tag disini"
+                                        placeHolder="Isi Tag disini dan Enter"
                                         seprators={["Enter", "Tab"]}
                                     />
                                     {
@@ -438,7 +439,6 @@ const TambahBerita = ({ token, id }) => {
                                             :
                                             null
                                     }
-                                    {/* <input type="text" className="form-control" placeholder="Isi Tag disini" value={tag} onChange={e => setTag(e.target.value)} /> */}
                                 </div>
                             </div>
 
@@ -457,7 +457,6 @@ const TambahBerita = ({ token, id }) => {
                                                 className="checkbox"
                                                 checked={publish}
                                                 type="checkbox"
-                                                // onChange={(checked) => setPublish(checked)}
                                                 onChange={(e) => handleChangePublish(e)}
                                             />
                                             <span
@@ -478,7 +477,7 @@ const TambahBerita = ({ token, id }) => {
                                         <div className="col-sm-12">
                                             <div className="input-group">
                                                 <DatePicker
-                                                    className="form-search-date form-control-sm form-control"
+                                                    className={`${styles.setPublish} form-search-date form-control-sm form-control`}
                                                     selected={publishDate}
                                                     onChange={(date) => handlePublishDate(date)}
                                                     selectsStart
@@ -497,13 +496,13 @@ const TambahBerita = ({ token, id }) => {
 
 
 
-                            <div className="form-group row">
+                            <div className="form-group row mr-0">
                                 <div className="col-sm-2"></div>
                                 <div className="col-sm-10 text-right">
                                     <Link href='/publikasi/berita'>
-                                        <a className='btn btn-white-ghost-rounded-full rounded-pill mr-2 btn-sm'>Kembali</a>
+                                        <a className={`${styles.btnKembali} btn btn-white-ghost-rounded-full rounded-pill mr-2 btn-sm`}>Kembali</a>
                                     </Link>
-                                    <button className='btn btn-primary-rounded-full rounded-pill btn-sm'>Simpan</button>
+                                    <button className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill btn-sm`}>Simpan</button>
                                 </div>
                             </div>
                         </form>
@@ -520,12 +519,12 @@ const TambahBerita = ({ token, id }) => {
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div className="modal-body text-center" style={{ height: '400px' }}>
+                        <div className={`${styles.modalsPrevImage} modal-body text-center`}>
                             <Image
                                 src={gambarPreview}
                                 alt='image'
                                 layout='fill'
-                                objectFit='cover'
+                                objectFit='fill'
                             />
                         </div>
                         <div className="modal-footer">

@@ -67,6 +67,7 @@ export const getAllSertifikat = (token) => async (dispatch, getState) => {
       dispatch({ type: SERTIFIKAT_SUCCESS, payload: data });
     }
   } catch (error) {
+    // console.log(error, "ini error cuyy");
     dispatch({ type: SERTIFIKAT_FAIL, payload: error.response.data.message });
   }
 };
@@ -122,9 +123,7 @@ export const getDetailSertifikat =
           Authorization: `Bearer ${token}`,
         },
       };
-
       const { data } = await axios.get(link, config);
-
       if (data) {
         dispatch({ type: DETAIL_SERTIFIKAT_SUCCESS, payload: data });
       }
@@ -141,7 +140,7 @@ export const newSertifikat = (id, formData, token) => async (dispatch) => {
     dispatch({ type: NEW_SERTIFIKAT_REQUEST });
     let link =
       process.env.END_POINT_API_SERTIFIKAT +
-      `api/manage_certificates/store/${id}`;
+      `api/manage_certificates/store/${id.academy_id}/${id.theme_id}/${id.training_id}`;
 
     const config = {
       headers: {
@@ -185,6 +184,7 @@ export const getSingleSertifikat = (id, token) => async (dispatch) => {
     if (data) {
       dispatch({ type: SINGLE_SERTIFIKAT_SUCCESS, payload: data });
     }
+    return data;
   } catch (error) {
     dispatch({
       type: SINGLE_SERTIFIKAT_FAIL,
@@ -199,8 +199,7 @@ export const getPublishedSertifikat = (id, token) => async (dispatch) => {
     dispatch({ type: PUBLISHED_SERTIFIKAT_REQUEST });
 
     let link =
-      process.env.END_POINT_API_SERTIFIKAT +
-      `api/manage_certificates/image/${id}`;
+      process.env.END_POINT_API_SERTIFIKAT + `api/manage_certificates/${id}`;
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -208,7 +207,7 @@ export const getPublishedSertifikat = (id, token) => async (dispatch) => {
     };
 
     const { data } = await axios.get(link, config);
-
+    console.log(data, "ini data");
     if (data) {
       dispatch({
         type: PUBLISHED_SERTIFIKAT_SUCCESS,

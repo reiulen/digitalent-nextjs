@@ -15,9 +15,26 @@ import StepInputPublish from "/components/StepInputPublish";
 import LoadingPage from "../../../../LoadingPage";
 import styles from "./step.module.css";
 
+import {
+  dropdownPelatihanbyTema,
+  dropdownTemabyAkademi,
+} from "../../../../../redux/actions/pelatihan/function.actions";
+import axios from "axios";
+
 const StepOne = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
+
+  const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(
+    (state) => state.drowpdownAkademi
+  );
+
+  const { data: dataTema } = useSelector((state) => state.drowpdownTema.data);
+
+  const { data: dataPelatihan } = useSelector(
+    (state) => state.drowpdownPelatihan.data
+  );
+
   let { id } = router.query;
 
   const { error: detailData, trivia } = useSelector(
@@ -36,7 +53,9 @@ const StepOne = ({ token }) => {
     // if (error) {
     //     dispatch(clearErrors())
     // }
-
+    optionPelatihan;
+    dispatch(dropdownTemabyAkademi(academy_id, token));
+    dispatch(dropdownPelatihanbyTema(theme_id, token));
     if (isUpdated) {
       dispatch({
         type: UPDATE_TRIVIA_QUESTION_BANKS_PUBLISH_RESET,
@@ -53,6 +72,7 @@ const StepOne = ({ token }) => {
         });
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, error, isUpdated, id, router, typeSave]);
 
   // const saveAndContinue = () => {
@@ -89,16 +109,51 @@ const StepOne = ({ token }) => {
     }
   };
 
-  const handleTheme = (e) => {
+  const { data } = useSelector((state) => state.drowpdownTemabyAkademi);
+
+  const { data: dataPelatihan2 } = useSelector(
+    (state) => state.drowpdownPelatihanbyTema.data
+  );
+
+  const [optionPelatihan, setOptionPelatihan] = useState([]);
+
+  const handleChangePelatihan = (e) => {
     setThemeId(e.target.value);
   };
 
-  const handleAcademy = (e) => {
+  const handleChangeTema = (e) => {
     setAcademyId(e.target.value);
+
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    axios
+      .get(
+        process.env.END_POINT_API_PELATIHAN +
+          `api/v1/tema/dropdown-tema-by-akademi?akademi_id=${e.target.value}`,
+        config
+      )
+      .then((res) => {
+        const id = res.data.data.map((item) => {
+          return item.value;
+        });
+
+        axios
+          .get(
+            process.env.END_POINT_API_PELATIHAN +
+              `api/v1/pelatihan/dropdown-pelatihan-tema?id=${theme_id}`,
+            config
+          )
+          .then((res) => {
+            setOptionPelatihan(res.data.data);
+          });
+      });
   };
 
   const handleTraining = (e) => {
-    setTrainingId(e.target.value);
+    setTrainingId(parseInt(e.target.value));
   };
   return (
     <PageWrapper>
@@ -148,24 +203,24 @@ const StepOne = ({ token }) => {
                   <select
                     name="academy_id"
                     id=""
-                    onChange={(event) => handleAcademy(event)}
+                    onChange={(event) => handleChangeTema(event)}
                     className="form-control"
                     defaultValue={academy_id}
                   >
-                    <option value="" disabled>
+                    <option selected disabled value="">
                       {" "}
                       -Pilih Akademi -
                     </option>
-                    <option value={1} selected>
-                      {" "}
-                      VSGA{" "}
-                    </option>
-                    <option value={2}> FGA </option>
-                    <option value={3}>PRO</option>
-                    <option value={4}>TA</option>
-                    <option value={5}>GTA</option>
-                    <option value={6}>DEA</option>
-                    <option value={7}> TSA</option>
+                    {dataAkademi.data.map((item, index) => {
+                      return (
+                        <>
+                          <option value={item.value} key={index}>
+                            {" "}
+                            {item.label}{" "}
+                          </option>
+                        </>
+                      );
+                    })}
                   </select>
                 </div>
               </div>
@@ -181,22 +236,32 @@ const StepOne = ({ token }) => {
                   <select
                     name="the_id"
                     id=""
-                    onChange={(event) => handleTheme(event)}
+                    onChange={(event) => handleChangePelatihan(event)}
                     className="form-control"
                     defaultValue={theme_id}
                   >
-                    <option value="" disabled>
-                      -Pilih Tema-
-                    </option>
-                    <option value="1" selected>
-                      {""}
-                      Cloud Computing Analyst{""}
-                    </option>
-                    <option value="2"> Data Management Staff </option>
-                    <option value="3"> Artificial Intelligence </option>
-                    <option value="4"> Cloud Computing </option>
-                    <option value="5"> Data Science Fundamental </option>
-                    <option value="6"> Get Connected</option>
+                    {trivia.academy &&
+                      trivia.academy_id !== parseInt(academy_id) && (
+                        <option selected value="">
+                          {" "}
+                          -Pilih Tema-
+                        </option>
+                      )}
+                    )
+                    {data.data &&
+                      data.data.map((item, index) => {
+                        return (
+                          <>
+                            <option
+                              value={item.value}
+                              key={index}
+                              defaultValue={item.value}
+                            >
+                              {item.label}
+                            </option>
+                          </>
+                        );
+                      })}
                   </select>
                 </div>
               </div>
@@ -216,20 +281,22 @@ const StepOne = ({ token }) => {
                     className="form-control"
                     defaultValue={training_id}
                   >
-                    <option value="" disabled>
-                      {" "}
-                      -Pilih Pelatihan-
-                    </option>
-                    <option value="1"> Mobile App Flutter</option>
-                    <option value="2"> Mobile App React Native </option>
-                    <option value="3"> Web Backend Laravel </option>
-                    <option value="4"> Web Backend Golang </option>
-                    <option value="5"> Web Backend Node Js </option>
-                    <option value="6"> Web Backend Python </option>
-                    <option value="7"> Frontend Web React Js </option>
-                    <option value="8"> Frontend Web Vue Js </option>
-                    <option value="9"> Machine Learning </option>
-                    <option value="10">UI / UX Design</option>
+                    {trivia.academy_id !== parseInt(academy_id) && (
+                      <option selected value="">
+                        {" "}
+                        -Pilih Pelatihan-
+                      </option>
+                    )}
+                    {dataPelatihan2 &&
+                      dataPelatihan2.map((item, index) => {
+                        return (
+                          <>
+                            <option value={item.value} key={index} selected>
+                              {item.label}
+                            </option>
+                          </>
+                        );
+                      })}
                     {/* <option value={1} selected>
                       {" "}
                       Google Cloud Computing{" "}

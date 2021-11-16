@@ -1,3 +1,5 @@
+/* Galeri */
+
 .headTitle {
   font-size: 25px;
   font-weight: 600;
@@ -17,6 +19,10 @@
   display: flex;
 }
 
+.modalsRight{
+  padding: 30px;
+}
+
 .img-left {
   width: 350px;
 }
@@ -31,12 +37,13 @@
 }
 
 .img-prevModal {
-  height: 470px;
+  position: relative;
+  height: 423px;
+  width: 100%;
 }
 
 .subMenuPreview {
   font-size: 11px;
-  margin-left: -10px;
 }
 
 .description-img {
@@ -59,50 +66,49 @@
 }
 
 .strip {
-  width: 390px;
-  margin-left: -35px;
+  width: 112.3%;
+  margin-left: -44px;
 }
 
 .listTagGaleri {
   display: flex;
 }
 
+.modals{
+  height: 460px;
+  width: auto;
+}
+
 .tagModal {
   font-size: 10px;
 }
 
-@media only screen and (max-width: 1200px) {
-  .img-prevModal {
-    height: 460px;
-  }
+/* Tambah Galeri */
+
+.imgPrevTambah{
+  margin-right: 25px;
 }
+
 @media only screen and (max-width: 1024px) {
   .modal-body {
     height: 400px;
     width: 650px;
     margin-left: -75px;
   }
-  .img-prevModal {
-    height: 435px;
-  }
-  .rightSideBar {
-    margin-left: -78px;
-  }
   .description-img {
-    /* border: 1px solid black; */
-    width: 90%;
+    width: 98%;
     height: 235px;
   }
   .strip {
-    width: 315px;
-    margin-left: -35px;
+    width: 117%;
+    margin-left: -42px;
   }
 }
 
 @media only screen and (max-width: 768px) {
   .subMenuPreview {
     font-size: 9px;
-    margin-left: -10px;
+    margin-left: -5px;
   }
   .rightSideBar {
     width: 660px;
@@ -126,38 +132,38 @@
 }
 
 @media only screen and (max-width: 576px) {
-  .modal-body {
-    width: 333px;
-    height: 100%;
-    margin-left: 15px;
+  .cari{
+    font-size: 9px;
   }
-  .img-left {
-    height: 180px;
-    margin-left: 2px;
+  .fontCari{
+    font-size: 9px;
   }
-  .img-prevModal {
-    height: 200px;
-  }
-  .rightSideBar {
-    width: 330px;
-    margin-left: 15px;
-  }
-  .rightSide {
-    height: 200px;
+  .filter{
+    font-size: 9px;
+    margin-left: -10px;
   }
   .subMenuPreview {
     font-size: 6px;
+    margin-left: -10px;
   }
   .iconPreview {
     font-size: 6px;
+    margin-left: 7px;
   }
   .description-img {
     height: 97px;
-    width: 200px;
+    width: 100%;
     font-size: 7px;
   }
+  .modals{
+    height: 200px;
+    width: auto;
+  }
+  .modalsRight{
+    padding: 30px;
+  }
   .tagModal {
-    font-size: 8px;
+    font-size: 6px;
   }
   .hideTitle {
     display: none;
@@ -167,5 +173,69 @@
   }
   .btnTambah {
     font-size: 9px;
+  }
+  .tagStyle{
+    font-size: 11px;
+  }
+  .modalsPrevImage{
+    height: 200px;
+  }
+}
+
+@media only screen and (max-width: 320px){
+  .cari{
+    font-size: 9px;
+  }
+  .filter{
+    font-size: 9px;
+  }
+  .judulTambah{
+    font-size: 8.5px;
+  }
+  .deskripsiTambah{
+    font-size: 8.5px;
+  }
+  .tagStyle{
+    font-size: 8.5px;
+  }
+  .resolusiTambah{
+    font-size: 8.5px;
+  }
+  .circleTop{
+    width: 20px;
+    height: 20px;
+    margin: 5px 10px 0 0;
+  }
+  .circleBottom{
+    width: 20px;
+    height: 20px;
+    margin: 0 10px 13px 0;
+  }
+  .selectKategori{
+    font-size: 8.5px;
+  }
+  .setPublish{
+    font-size: 8.5px;
+  }
+  .btnKembali{
+    font-size: 8.5px;
+  }
+  .btnSimpan{
+    font-size: 8.5px;
+  }
+}
+
+@media only screen and (max-width: 280px){
+  .cari{
+    font-size: 7.5px;
+  }
+  .filter{
+    font-size: 9px;
+  }
+  .tagStyle{
+    font-size: 6.7px;
+  }
+  .deskripsiTambah{
+    font-size: 6.7px;
   }
 }

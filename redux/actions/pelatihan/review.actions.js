@@ -19,6 +19,7 @@ import {
   TOLAK_REVIEW_SUCCESS,
   TOLAK_REVIEW_FAIL,
   CLEAR_ERRORS,
+  GET_REVIEW_STEP4_SUCCESS,
 } from "../../types/pelatihan/review.type";
 
 import axios from "axios";
@@ -209,6 +210,27 @@ export const getReviewStep3Revisi = (token, id) => async (dispatch) => {
       type: GET_REVIEW_STEP3_FAIL,
       payload: error.response.data.message,
     });
+  }
+};
+
+export const getReviewStep4Revisi = (token, id) => async (dispatch) => {
+  try {
+    let link = "http://192.168.1.96:81" + `/api/v1/pelatihan/pelatihan-parameter`;
+
+    const config = {
+      params: {
+        pelatian_id: id,
+      },
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    const { data } = await axios.get(link, config);
+    dispatch({
+      type: GET_REVIEW_STEP4_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
   }
 };
 

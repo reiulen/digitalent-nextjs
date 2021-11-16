@@ -87,8 +87,7 @@ const Table = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3
-              className="card-title font-weight-bolder text-dark"
-              style={{ fontSize: "24px" }}
+              className="card-title font-weight-bolder text-dark titles-1"
             >
               List Administrator
             </h3>
@@ -104,16 +103,14 @@ const Table = ({ token }) => {
               </Link>
             </div>
           </div>
-          <div className="card-body pt-0">
+          <div className="card-body pt-0 px-4 px-sm-8">
             <div className="table-filter">
               <div className="row align-items-center">
                 <div className="col-lg-12 col-xl-12">
-                  <form
-                    onSubmit={handleSubmit}
-                    className="d-flex align-items-center w-100"
+                  <div
+                    className="row w-100 ml-0 ml-sm-0"
                   >
-                    <div className="row w-100">
-                      <div className="col-12 col-sm-6">
+                      <div className="col-12 col-xl-4">
                         <div className="position-relative overflow-hidden w-100">
                           <IconSearch
                             style={{ left: "10" }}
@@ -129,7 +126,8 @@ const Table = ({ token }) => {
                             }
                           />
                           <button
-                            type="submit"
+                            type="button"
+                            onClick={handleSubmit}
                             className="btn bg-blue-primary text-white right-center-absolute"
                             style={{
                               borderTopLeftRadius: "0",
@@ -140,8 +138,7 @@ const Table = ({ token }) => {
                           </button>
                         </div>
                       </div>
-                    </div>
-                  </form>
+                  </div>
                 </div>
               </div>
             </div>
@@ -162,14 +159,10 @@ const Table = ({ token }) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {allAdminSite.data.list_role.length === 0 ? (
-                        <tr>
-                          <td colSpan="6" className="text-center">
-                            <h4>Data tidak ditemukan</h4>
-                          </td>
-                        </tr>
+                      {allAdminSite?.data?.list_role?.length === 0 ? (
+                        <td className="align-middle text-center" colSpan="6">Data Masih Kosong</td>
                       ) : (
-                        allAdminSite.data.list_role.map((items, index) => {
+                        allAdminSite?.data?.list_role?.map((items, index) => {
                           return (
                             <tr key={index}>
                               <td className="align-middle text-left">
@@ -217,19 +210,38 @@ const Table = ({ token }) => {
                               </td>
                               <td className="align-middle text-left">
                                 <div className="d-flex align-items-center">
-                                  <button
+                                  
+                                  {/* <Link href={`/site-management/user/administrator/edit-data-administrator/${items.id}`} passHref>
+                                  
+                                  
+                                  <a
                                     className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                                    onClick={() =>
-                                      router.push(
-                                        `/site-management/user/administrator/edit-data-administrator`
-                                      )
-                                    }
                                   >
                                     <IconPencil width="16" height="16" />
                                     <div className="text-hover-show-hapus">
                                       Ubah
                                     </div>
-                                  </button>
+                                  </a>
+
+                                  </Link> */}
+
+                                  <Link
+                                    href={{
+                                      pathname:"/site-management/user/administrator/edit-data-administrator",
+                                      query:{id:items.id}
+                                    }}
+                                  >
+                                    <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
+                                      <IconPencil width="16" height="16" />
+                                      <div className="text-hover-show-hapus">
+                                        Ubah
+                                      </div>
+                                    </a>
+                                  </Link>
+
+
+
+
                                   <button
                                     className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete"
                                     onClick={() =>
@@ -266,8 +278,8 @@ const Table = ({ token }) => {
                 )}
               </div>
 
-              <div className="row">
-                <div className="table-pagination paginate-cs">
+              <div className="row px-4">
+                <div className="table-pagination">
                   <Pagination
                     activePage={allAdminSite.page}
                     itemsCountPerPage={allAdminSite.data.perPage}
@@ -283,11 +295,11 @@ const Table = ({ token }) => {
                   />
                 </div>
 
-                <div className="table-total ml-auto">
-                  <div className="row">
+                <div className="table-total ml-auto mr-4">
+                  <div className="row mt-4">
                     <div className="col-4 mr-0 p-0">
                       <select
-                        className="form-control mr-5 cursor-pointer"
+                        className="form-control pr-2 cursor-pointer"
                         id="exampleFormControlSelect2"
                         defaultValue=""
                         style={{

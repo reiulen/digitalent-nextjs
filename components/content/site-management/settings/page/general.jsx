@@ -1,15 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import Pagination from "react-js-pagination";
 import PageWrapper from "../../../../wrapper/page.wrapper";
-import { useDispatch, useSelector } from "react-redux";
-import LoadingTable from "../../../../LoadingTable";
-import IconEye from "../../../../assets/icon/Eye";
-import IconPencil from "../../../../assets/icon/Pencil";
-import IconDelete from "../../../../assets/icon/Delete";
 import IconAdd from "../../../../assets/icon/Add";
-import IconSearch from "../../../../assets/icon/Search";
 import Image from "next/image";
 import Swal from "sweetalert2";
 import axios from "axios";
@@ -17,8 +8,6 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const GeneralPage = ({ token }) => {
-  let dispatch = useDispatch();
-  const router = useRouter();
   const [imageLogo, setImageLogo] = useState("");
   const [imageLogo2, setImageLogo2] = useState("");
   const [description, setDescription] = useState("");
@@ -71,7 +60,7 @@ const GeneralPage = ({ token }) => {
   const submit = (e) => {
     e.preventDefault();
     if (description === "") {
-      Swal.fire("Gagal simpan", "Form caption tidak boleh kosong", "error");
+      Swal.fire("Gagal simpan", "Form description tidak boleh kosong", "error");
     } else {
       Swal.fire({
         title: "Apakah anda yakin simpan ?",
@@ -87,8 +76,8 @@ const GeneralPage = ({ token }) => {
         if (result.value) {
           const sendData = {
             logo: {
-              header_logo: !imageLogo?imageLogoApi:imageLogo,
-              footer_logo: !imageLogo2?imageLogoApi2:imageLogo2
+              header_logo: !imageLogo ? imageLogoApi : imageLogo,
+              footer_logo: !imageLogo2 ? imageLogoApi2 : imageLogo2,
             },
             logo_description: description,
             social_media: formSocialMedia,
@@ -107,7 +96,7 @@ const GeneralPage = ({ token }) => {
                 },
               }
             );
-            Swal.fire("Berhasil", "Berhasil simpan data", "success")
+            Swal.fire("Berhasil", "Berhasil simpan data", "success");
           } catch (error) {
             Swal.fire(
               "Gagal simpan",
@@ -122,8 +111,17 @@ const GeneralPage = ({ token }) => {
 
   const addExternalLink = () => {
     let _temp = [...formExternalLink];
-    _temp.push({ name: "", link: "" });
-    setFormExternalLink(_temp);
+
+    if (_temp.length > 20) {
+      Swal.fire(
+        "Gagal simpan",
+        `Data external link tidak boleh lebih dari 20`,
+        "error"
+      );
+    } else {
+      _temp.push({ name: "", link: "" });
+      setFormExternalLink(_temp);
+    }
   };
 
   const removeExternalLink = (index) => {
@@ -251,8 +249,17 @@ const GeneralPage = ({ token }) => {
 
   const addSocialMedia = () => {
     let _temp = [...formSocialMedia];
-    _temp.push({ image_logo: "", name: "", link_social_media: "" });
-    setFormSocialMedia(_temp);
+
+    if (_temp.length > 5) {
+      Swal.fire(
+        "Gagal simpan",
+        `Data social media tidak boleh lebih dari 5`,
+        "error"
+      );
+    } else {
+      _temp.push({ image_logo: "", name: "", link_social_media: "" });
+      setFormSocialMedia(_temp);
+    }
   };
 
   const removeSocialMedia = (index) => {
@@ -331,15 +338,16 @@ const GeneralPage = ({ token }) => {
           }
         );
 
+
         if (data) {
-          setIsUpdate(true)
-          setAddress(data.data.alamat)
-          setColor(data.data.color)
-          setFormExternalLink(data.data.external_link)
-          setImageLogoApi(data.data.header_logo)
-          setImageLogoApi2(data.data.footer_logo)
-          setDescription(data.data.logo_description)
-          setFormSocialMedia(data.data.social_media)
+          setIsUpdate(true);
+          setAddress(data.data.alamat);
+          setColor(data.data.color);
+          setFormExternalLink(data.data.external_link);
+          setImageLogoApi(data.data.header_logo);
+          setImageLogoApi2(data.data.footer_logo);
+          setDescription(data.data.logo_description);
+          setFormSocialMedia(data.data.social_media);
         }
       } catch (error) {
         notify(error.response.data.message);
@@ -366,13 +374,11 @@ const GeneralPage = ({ token }) => {
         <div className="col-12 order-1">
           <div className="card card-custom card-stretch gutter-b">
             <div className="card-header border-0">
-              <h3
-                className="card-title font-weight-bolder text-dark w-100 pb-5 mb-5 mt-5 titles-1"
-              >
+              <h3 className="card-title font-weight-bolder text-dark w-100 pb-5 mb-5 mt-5 titles-1">
                 General
               </h3>
             </div>
-            <div className="card-body pt-0">
+            <div className="card-body pt-0 px-4 px-sm-8">
               <div>
                 <form>
                   <div className="d-flex flex-wrap">
@@ -409,8 +415,18 @@ const GeneralPage = ({ token }) => {
                             title=""
                             data-original-title="Change avatar"
                           >
-                            {/* <i className="fa fa-pen icon-sm text-muted"></i> */}
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="12" height="12"><path fill="none" d="M0 0h24v24H0z"/><path d="M12.9 6.858l4.242 4.243L7.242 21H3v-4.243l9.9-9.9zm1.414-1.414l2.121-2.122a1 1 0 0 1 1.414 0l2.829 2.829a1 1 0 0 1 0 1.414l-2.122 2.121-4.242-4.242z" fill="rgba(108,108,108,1)"/></svg>
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 24 24"
+                              width="12"
+                              height="12"
+                            >
+                              <path fill="none" d="M0 0h24v24H0z" />
+                              <path
+                                d="M12.9 6.858l4.242 4.243L7.242 21H3v-4.243l9.9-9.9zm1.414-1.414l2.121-2.122a1 1 0 0 1 1.414 0l2.829 2.829a1 1 0 0 1 0 1.414l-2.122 2.121-4.242-4.242z"
+                                fill="rgba(108,108,108,1)"
+                              />
+                            </svg>
                             <input
                               type="file"
                               name="profile_avatar"
@@ -434,13 +450,19 @@ const GeneralPage = ({ token }) => {
                             data-action="remove"
                             data-toggle="tooltip"
                           >
-                            {/* <i
-                              className="ki ki-bold-close icon-xs text-muted"
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 24 24"
+                              width="12"
+                              height="12"
                               onClick={() => removeImageLogo()}
-                            ></i> */}
-
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="12" height="12" onClick={() => removeImageLogo()}><path fill="none" d="M0 0h24v24H0z"/><path d="M17 4h5v2h-2v15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6H2V4h5V2h10v2zM9 9v8h2V9H9zm4 0v8h2V9h-2z" fill="rgba(108,108,108,1)"/></svg>
-                            
+                            >
+                              <path fill="none" d="M0 0h24v24H0z" />
+                              <path
+                                d="M17 4h5v2h-2v15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6H2V4h5V2h10v2zM9 9v8h2V9H9zm4 0v8h2V9h-2z"
+                                fill="rgba(108,108,108,1)"
+                              />
+                            </svg>
                           </span>
                         </div>
                         <span className="form-text text-muted mt-6">
@@ -482,8 +504,19 @@ const GeneralPage = ({ token }) => {
                             title=""
                             data-original-title="Change avatar"
                           >
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="12" height="12"><path fill="none" d="M0 0h24v24H0z"/><path d="M12.9 6.858l4.242 4.243L7.242 21H3v-4.243l9.9-9.9zm1.414-1.414l2.121-2.122a1 1 0 0 1 1.414 0l2.829 2.829a1 1 0 0 1 0 1.414l-2.122 2.121-4.242-4.242z" fill="rgba(108,108,108,1)"/></svg>
-                            {/* <i className="fa fa-pen icon-sm text-muted"></i> */}
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 24 24"
+                              width="12"
+                              height="12"
+                            >
+                              <path fill="none" d="M0 0h24v24H0z" />
+                              <path
+                                d="M12.9 6.858l4.242 4.243L7.242 21H3v-4.243l9.9-9.9zm1.414-1.414l2.121-2.122a1 1 0 0 1 1.414 0l2.829 2.829a1 1 0 0 1 0 1.414l-2.122 2.121-4.242-4.242z"
+                                fill="rgba(108,108,108,1)"
+                              />
+                            </svg>
+
                             <input
                               type="file"
                               name="profile_avatar"
@@ -507,13 +540,19 @@ const GeneralPage = ({ token }) => {
                             data-action="remove"
                             data-toggle="tooltip"
                           >
-                            {/* <i
-                              className="ki ki-bold-close icon-xs text-muted"
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 24 24"
+                              width="12"
+                              height="12"
                               onClick={() => removeImageLogo2()}
-                            ></i> */}
-
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="12" height="12" onClick={() => removeImageLogo2()}><path fill="none" d="M0 0h24v24H0z"/><path d="M17 4h5v2h-2v15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6H2V4h5V2h10v2zM9 9v8h2V9H9zm4 0v8h2V9h-2z" fill="rgba(108,108,108,1)"/></svg>
-
+                            >
+                              <path fill="none" d="M0 0h24v24H0z" />
+                              <path
+                                d="M17 4h5v2h-2v15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6H2V4h5V2h10v2zM9 9v8h2V9H9zm4 0v8h2V9h-2z"
+                                fill="rgba(108,108,108,1)"
+                              />
+                            </svg>
                           </span>
                         </div>
                         <span className="form-text text-muted mt-6">
@@ -525,7 +564,7 @@ const GeneralPage = ({ token }) => {
                   <div className="form-group">
                     <label>Desciption:</label>
                     <input
-                    value={description}
+                      value={description}
                       onChange={(e) => setDescription(e.target.value)}
                       type="text"
                       className="form-control"
@@ -575,9 +614,18 @@ const GeneralPage = ({ token }) => {
                                   title=""
                                   data-original-title="Change avatar"
                                 >
-                                  {/* <i className="fa fa-pen icon-sm text-muted"></i> */}
-
-                                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="12" height="12"><path fill="none" d="M0 0h24v24H0z"/><path d="M12.9 6.858l4.242 4.243L7.242 21H3v-4.243l9.9-9.9zm1.414-1.414l2.121-2.122a1 1 0 0 1 1.414 0l2.829 2.829a1 1 0 0 1 0 1.414l-2.122 2.121-4.242-4.242z" fill="rgba(108,108,108,1)"/></svg>
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24"
+                                    width="12"
+                                    height="12"
+                                  >
+                                    <path fill="none" d="M0 0h24v24H0z" />
+                                    <path
+                                      d="M12.9 6.858l4.242 4.243L7.242 21H3v-4.243l9.9-9.9zm1.414-1.414l2.121-2.122a1 1 0 0 1 1.414 0l2.829 2.829a1 1 0 0 1 0 1.414l-2.122 2.121-4.242-4.242z"
+                                      fill="rgba(108,108,108,1)"
+                                    />
+                                  </svg>
 
                                   <input
                                     type="file"
@@ -608,10 +656,19 @@ const GeneralPage = ({ token }) => {
                                   data-toggle="tooltip"
                                   onClick={() => handleRemoveImageSocial(index)}
                                 >
-                                  {/* <i className="ki ki-bold-close icon-xs text-muted"></i> */}
-
-                                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="12" height="12" onClick={() => handleRemoveImageSocial()}><path fill="none" d="M0 0h24v24H0z"/><path d="M17 4h5v2h-2v15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6H2V4h5V2h10v2zM9 9v8h2V9H9zm4 0v8h2V9h-2z" fill="rgba(108,108,108,1)"/></svg>
-
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24"
+                                    width="12"
+                                    height="12"
+                                    onClick={() => handleRemoveImageSocial()}
+                                  >
+                                    <path fill="none" d="M0 0h24v24H0z" />
+                                    <path
+                                      d="M17 4h5v2h-2v15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6H2V4h5V2h10v2zM9 9v8h2V9H9zm4 0v8h2V9h-2z"
+                                      fill="rgba(108,108,108,1)"
+                                    />
+                                  </svg>
                                 </span>
                               </div>
                               <span className="form-text text-muted mt-6">
@@ -630,7 +687,7 @@ const GeneralPage = ({ token }) => {
                                     handleChangeNameSocial(e, index)
                                   }
                                   className="form-control"
-                                  placeholder="Lalaracing@gmail.com"
+                                  placeholder="Masukkan Nama"
                                 />
                               </div>
                             </div>
@@ -647,8 +704,8 @@ const GeneralPage = ({ token }) => {
                                       onChange={(e) =>
                                         handleChangeLinkSocial(e, index)
                                       }
-                                      className="form-control"
-                                      placeholder="Lalaracing@gmail.com"
+                                      className="form-control pr-10"
+                                      placeholder="Masukkan Link"
                                     />
                                   </div>
                                 </div>
@@ -664,7 +721,18 @@ const GeneralPage = ({ token }) => {
                                         className="btn"
                                         style={{ backgroundColor: "#EE2D41" }}
                                       >
-                                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path fill="none" d="M0 0h24v24H0z"/><path d="M17 4h5v2h-2v15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6H2V4h5V2h10v2zM9 9v8h2V9H9zm4 0v8h2V9h-2z" fill="rgba(255,255,255,1)"/></svg>
+                                        <svg
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          viewBox="0 0 24 24"
+                                          width="16"
+                                          height="16"
+                                        >
+                                          <path fill="none" d="M0 0h24v24H0z" />
+                                          <path
+                                            d="M17 4h5v2h-2v15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6H2V4h5V2h10v2zM9 9v8h2V9H9zm4 0v8h2V9h-2z"
+                                            fill="rgba(255,255,255,1)"
+                                          />
+                                        </svg>
                                       </button>
                                     </div>
                                   </div>
@@ -708,7 +776,7 @@ const GeneralPage = ({ token }) => {
                                   type="text"
                                   value={items.name}
                                   className="form-control"
-                                  placeholder="Lalaracing@gmail.com"
+                                  placeholder="Masukkan Nama"
                                 />
                               </div>
                             </div>
@@ -725,12 +793,9 @@ const GeneralPage = ({ token }) => {
                                       }
                                       type="text"
                                       value={items.link}
-                                      className="form-control"
-                                      placeholder="Lalaracing@gmail.com"
+                                      className="form-control pr-10"
+                                      placeholder="Masukkan Link"
                                     />
-                                    {/* <span className="form-text text-muted">
-                                      Please enter your full name
-                                    </span> */}
                                   </div>
                                 </div>
 
@@ -747,7 +812,18 @@ const GeneralPage = ({ token }) => {
                                         className="btn"
                                         style={{ backgroundColor: "#EE2D41" }}
                                       >
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path fill="none" d="M0 0h24v24H0z"/><path d="M17 4h5v2h-2v15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6H2V4h5V2h10v2zM9 9v8h2V9H9zm4 0v8h2V9h-2z" fill="rgba(255,255,255,1)"/></svg>
+                                        <svg
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          viewBox="0 0 24 24"
+                                          width="16"
+                                          height="16"
+                                        >
+                                          <path fill="none" d="M0 0h24v24H0z" />
+                                          <path
+                                            d="M17 4h5v2h-2v15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6H2V4h5V2h10v2zM9 9v8h2V9H9zm4 0v8h2V9h-2z"
+                                            fill="rgba(255,255,255,1)"
+                                          />
+                                        </svg>
                                       </button>
                                     </div>
                                   </div>
@@ -782,7 +858,7 @@ const GeneralPage = ({ token }) => {
                       <textarea
                         value={address}
                         onChange={(e) => setAddress(e.target.value)}
-                        placeholder="Kementrian Komunikasi dan Informatika RI JL. Medan Merdeka Barat No.9 Jakarta Pusat, 10110"
+                        placeholder="Masukkan alamat lengkap"
                         className="form-control"
                         name=""
                         id=""
@@ -805,7 +881,7 @@ const GeneralPage = ({ token }) => {
                               value={items.color}
                               type="text"
                               className="form-control pl-16"
-                              placeholder="Lalaracing@gmail.com"
+                              placeholder="Masukan color"
                               onChange={(e) => changeColor(e, index)}
                             />
                             <div

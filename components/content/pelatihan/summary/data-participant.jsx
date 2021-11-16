@@ -4,14 +4,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-import Swal from "sweetalert2";
+import { SweatAlert } from "../../../../utils/middleware/helper";
 import Select from "react-select";
-import { toast } from "react-toastify";
 import moment from "moment";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
 import CardPage from "../../../CardPage";
 import StepParticipantPelatihan from "../../../StepParticipantPelatihan";
+import LoadingTable from "../../../LoadingTable";
 
 import ProfileUser from "./participant/profile";
 import HistoryPage from "./participant/history";
@@ -130,12 +130,12 @@ const DataParticipant = ({ token }) => {
     }
 
     if (errorUpdateStatus) {
-      toast.error(errorUpdateStatus);
+      SweatAlert("Gagal", errorUpdateStatus, "error");
       dispatch(clearErrors());
     }
 
     if (errorReminderUp) {
-      toast.error(errorReminderUp);
+      SweatAlert("Gagal", errorReminderUp, "error");
       dispatch(clearErrors());
     }
 
@@ -146,7 +146,7 @@ const DataParticipant = ({ token }) => {
       dispatch(getBerkasPendaftaran(token, peserta.list[0].id));
       dispatch(getFormKomitmen(token, peserta.list[0].id));
       dispatch(getFormLpj(token, peserta.list[0].id));
-      toast.success("Berhasil Mengubah Status");
+      SweatAlert("Berhasil", "Berhasil Mengubah Status", "success");
       dispatch({ type: UPDATE_STATUS_RESET });
     }
 
@@ -157,7 +157,6 @@ const DataParticipant = ({ token }) => {
       dispatch(getBerkasPendaftaran(token, peserta.list[0].id));
       dispatch(getFormKomitmen(token, peserta.list[0].id));
       dispatch(getFormLpj(token, peserta.list[0].id));
-      // toast.success("Berhasil Mengubah Reminder");
       dispatch({ type: UPDATE_REMINDER_RESET });
     }
   }, [
@@ -283,20 +282,26 @@ const DataParticipant = ({ token }) => {
 
             <div className="form-group mt-7">
               <div className="text-right">
-                <button
-                  className="btn btn-light-ghost-rounded-full mr-2"
-                  type="button"
-                  onClick={() => router.back()}
-                >
-                  Batal
-                </button>
-                <button
-                  className="btn btn-primary-rounded-full"
-                  type="button"
-                  onClick={() => handleStatusPeserta()}
-                >
-                  Simpan
-                </button>
+                {loading !== true ? (
+                  <>
+                    <button
+                      className="btn btn-light-ghost-rounded-full mr-2"
+                      type="button"
+                      onClick={() => router.back()}
+                    >
+                      Batal
+                    </button>
+                    <button
+                      className="btn btn-primary-rounded-full"
+                      type="button"
+                      onClick={() => handleStatusPeserta()}
+                    >
+                      Simpan
+                    </button>
+                  </>
+                ) : (
+                  <LoadingTable loading={loading} />
+                )}
               </div>
             </div>
           </div>

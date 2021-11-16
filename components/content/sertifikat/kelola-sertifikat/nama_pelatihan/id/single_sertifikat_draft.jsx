@@ -24,7 +24,6 @@ export default function KelolasertifikatID({ token }) {
       dispatch(clearErrors());
     }
   };
-
   return (
     <PageWrapper>
       {/* error START */}
@@ -140,13 +139,13 @@ export default function KelolasertifikatID({ token }) {
                             fontSize: "125%",
                           }}
                         >
-                          {certificate?.data?.certificate?.theme?.name}
+                          {certificate?.data?.pelatihan?.name || "-"}
                         </div>
                         <div className="mt-2 w-100">
                           <span className="w-100">
                             Program{" "}
                             <span className="font-size-h6 font-weight-bold w-100">
-                              {certificate?.data?.certificate.academy.name}
+                              {certificate?.data?.pelatihan?.akademi || "-"}
                             </span>{" "}
                             Selama
                           </span>

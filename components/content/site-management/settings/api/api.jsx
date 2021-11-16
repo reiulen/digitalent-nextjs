@@ -12,7 +12,7 @@ import IconAdd from "../../../../assets/icon/Add";
 import IconSearch from "../../../../assets/icon/Search";
 
 import {
-  deleteApi,
+  deleteApis,
   getAllApi,
   setPage,
   searchCooporation,
@@ -32,7 +32,7 @@ const Table = ({ token }) => {
     isDeleted,
   } = useSelector((state) => state.deleteApi);
 
-  const deleteApi = useSelector(state => state.deleteApi)
+  const deleteApi = useSelector((state) => state.deleteApi);
   const [valueSearch, setValueSearch] = useState("");
   const handleChangeValueSearch = (value) => {
     setValueSearch(value);
@@ -42,7 +42,6 @@ const Table = ({ token }) => {
     event.preventDefault();
     dispatch(searchCooporation(valueSearch));
   };
-
 
   const handleDelete = (id, token) => {
     Swal.fire({
@@ -56,7 +55,7 @@ const Table = ({ token }) => {
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteApi(id, token));
+        dispatch(deleteApis(id, token));
       }
     });
   };
@@ -75,22 +74,20 @@ const Table = ({ token }) => {
         }
       );
     }
-    if(deleteError){
-      Swal.fire("Gagal", "Data gagal dihapus.", "error")
+    if (deleteError) {
+      Swal.fire("Gagal", "Data gagal dihapus.", "error");
     }
     dispatch({
       type: DELETE_API_RESET,
     });
-  }, [isDeleted, dispatch, token,deleteError]);
+  }, [isDeleted, dispatch, token, deleteError]);
 
   return (
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3
-              className="card-title font-weight-bolder text-dark titles-1" 
-            >
+            <h3 className="card-title font-weight-bolder text-dark titles-1">
               List API
             </h3>
             <div className="card-toolbar">
@@ -102,40 +99,40 @@ const Table = ({ token }) => {
               </Link>
             </div>
           </div>
-          <div className="card-body pt-0">
+          <div className="card-body pt-0 px-4 px-sm-8">
             <div className="table-filter">
               <div className="row align-items-center">
                 <div className="col-lg-12 col-xl-12">
-                    <div className="row w-100">
-                      <div className="col-12 col-sm-4">
-                        <div className="position-relative overflow-hidden w-100">
-                          <IconSearch
-                            style={{ left: "10" }}
-                            className="left-center-absolute"
-                          />
-                          <input
-                            id="kt_datatable_search_query"
-                            type="text"
-                            className="form-control pl-10"
-                            placeholder="Ketik disini untuk Pencarian..."
-                            onChange={(e) =>
-                              handleChangeValueSearch(e.target.value)
-                            }
-                          />
-                          <button
-                            type="button"
-                            onClick={(e)=>handleSubmit(e)}
-                            className="btn bg-blue-primary text-white right-center-absolute"
-                            style={{
-                              borderTopLeftRadius: "0",
-                              borderBottomLeftRadius: "0",
-                            }}
-                          >
-                            Cari
-                          </button>
-                        </div>
+                  <div className="row w-100 ml-0 ml-sm-0">
+                    <div className="col-12 col-xl-4">
+                      <div className="position-relative overflow-hidden w-100">
+                        <IconSearch
+                          style={{ left: "10" }}
+                          className="left-center-absolute"
+                        />
+                        <input
+                          id="kt_datatable_search_query"
+                          type="text"
+                          className="form-control pl-10"
+                          placeholder="Ketik disini untuk Pencarian..."
+                          onChange={(e) =>
+                            handleChangeValueSearch(e.target.value)
+                          }
+                        />
+                        <button
+                          type="button"
+                          onClick={(e) => handleSubmit(e)}
+                          className="btn bg-blue-primary text-white right-center-absolute"
+                          style={{
+                            borderTopLeftRadius: "0",
+                            borderBottomLeftRadius: "0",
+                          }}
+                        >
+                          Cari
+                        </button>
                       </div>
                     </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -144,138 +141,133 @@ const Table = ({ token }) => {
                 {allApi.status === "process" ? (
                   <LoadingTable />
                 ) : (
-                <table className="table table-separate table-head-custom table-checkable">
-                  <thead style={{ background: "#F3F6F9" }}>
-                    <tr>
-                      <th className="text-left">No</th>
-                      <th className="text-left align-middle">API</th>
-                      <th className="text-left align-middle">URL</th>
-                      <th className="text-left align-middle">KEY</th>
-                      <th className="text-left align-middle">Pengguna</th>
-                      <th className="text-left align-middle">Masa Berlaku</th>
-                      <th className="text-left align-middle">Status</th>
-                      <th className="text-left align-middle">Aksi</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {allApi.data.setting_api.length === 0 ? (
+                  <table className="table table-separate table-head-custom table-checkable">
+                    <thead style={{ background: "#F3F6F9" }}>
                       <tr>
-                        <td colSpan="8" className="text-center">
-                          <h4>Data tidak ditemukan</h4>
-                        </td>
+                        <th className="text-left">No</th>
+                        <th className="text-left align-middle">API</th>
+                        <th className="text-left align-middle">URL</th>
+                        <th className="text-left align-middle">KEY</th>
+                        <th className="text-left align-middle">Pengguna</th>
+                        <th className="text-left align-middle">Masa Berlaku</th>
+                        <th className="text-left align-middle">Status</th>
+                        <th className="text-left align-middle">Aksi</th>
                       </tr>
-                    ) : (
-                      allApi.data.setting_api.map((items, index) => {
-                        return (
-                          <tr key={index}>
-                            <td className="align-middle text-left">
-                              {allApi.page === 1
-                                ? index + 1
-                                : (allApi.page - 1) * allApi.limit +
-                                  (index + 1)}
-                            </td>
-                            <td className="align-middle text-left">
-                              {items.api_name}
-                            </td>
-                            <td className="align-middle text-left">
-                              {items.api_url}
-                            </td>
-                            <td className="align-middle text-left">
-                              {items.api_key}
-                            </td>
-                            <td className="align-middle text-left">
-                              {items.username}
-                            </td>
-                            <td className="align-middle text-left">
-                              {items.from_date} / {items.to_date}
-                            </td>
-                            <td className="align-middle text-left">
-                              {items.status == 1 ?
-                        <p
-                        className="status-div-green mb-0"
-                        style={{ width: "max-content" }}
-                        >
-                          Aktif
-                        </p>
-                        :
+                    </thead>
+                    <tbody>
+                      {allApi.data.setting_api.length === 0 ? (
+                        <td className="align-middle text-center" colSpan="8">
+                          Data Masih Kosong
+                        </td>
+                      ) : (
+                        allApi.data.setting_api.map((items, index) => {
+                          return (
+                            <tr key={index}>
+                              <td className="align-middle text-left">
+                                {allApi.page === 1
+                                  ? index + 1
+                                  : (allApi.page - 1) * allApi.limit +
+                                    (index + 1)}
+                              </td>
+                              <td className="align-middle text-left">
+                                {items.api_name}
+                              </td>
+                              <td className="align-middle text-left">
+                                {items.api_url}
+                              </td>
+                              <td className="align-middle text-left">
+                                {items.api_key}
+                              </td>
+                              <td className="align-middle text-left">
+                                {items.username}
+                              </td>
+                              <td className="align-middle text-left">
+                                {items.from_date} / {items.to_date}
+                              </td>
+                              <td className="align-middle text-left">
+                                {items.status == 1 ? (
+                                  <p
+                                    className="status-div-green mb-0"
+                                    style={{ width: "max-content" }}
+                                  >
+                                    Aktif
+                                  </p>
+                                ) : (
+                                  <p
+                                    className="status-div-red mb-0"
+                                    style={{ width: "max-content" }}
+                                  >
+                                    Tidak Aktif
+                                  </p>
+                                )}
+                              </td>
+                              <td className="align-middle text-left">
+                                <div className="d-flex align-items-center">
+                                  <Link
+                                    href={`/site-management/setting/api/ubah-api/${items.id}`}
+                                  >
+                                    <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
+                                      <IconPencil width="16" height="16" />
+                                      <div className="text-hover-show-hapus">
+                                        Ubah
+                                      </div>
+                                    </a>
+                                  </Link>
+                                  <Link
+                                    href={`/site-management/setting/api/detail-api/${items.id}`}
+                                  >
+                                    <a className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete">
+                                      <IconEye width="16" height="16" />
+                                      <div className="text-hover-show-hapus">
+                                        Detail
+                                      </div>
+                                    </a>
+                                  </Link>
 
-                        <p
-                        className="status-div-red mb-0"
-                        style={{ width: "max-content" }}
-                        >
-                          Tidak Aktif
-                        </p>
-                        }
-                            </td>
-                            <td className="align-middle text-left">
-                              <div className="d-flex align-items-center">
-                                <Link
-                                  href={`/site-management/setting/api/ubah-api/${items.id}`}
-                                >
-                                  <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
-                                    <IconPencil width="16" height="16" />
-                                    <div className="text-hover-show-hapus">
-                                      Ubah
-                                    </div>
-                                  </a>
-                                </Link>
-                                <Link
-                                  href={`/site-management/setting/api/detail-api/${items.id}`}
-                                >
-                                  <a className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete">
-                                    <IconEye width="16" height="16" />
-                                    <div className="text-hover-show-hapus">
-                                      Detail
-                                    </div>
-                                  </a>
-                                </Link>
-
-                                <button
-                                  className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                                  onClick={() =>
+                                  <button
+                                    className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                    onClick={() =>
                                       handleDelete(items.id, token)
                                     }
-                                >
-                                  <IconDelete width="16" height="16" />
-                                  <div className="text-hover-show-hapus">
-                                    Hapus
-                                  </div>
-                                </button>
-                              </div>
-                            </td>
-                          </tr>
-                        );
-                      })
-                    )}
-                  </tbody>
-                </table>
+                                  >
+                                    <IconDelete width="16" height="16" />
+                                    <div className="text-hover-show-hapus">
+                                      Hapus
+                                    </div>
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          );
+                        })
+                      )}
+                    </tbody>
+                  </table>
                 )}
               </div>
 
-              <div className="row mt-6">
-                <div className="table-pagination paginate-cs">
-                    <div className="table-pagination">
-                      <Pagination
-                        activePage={allApi.page}
-                        itemsCountPerPage={allApi.data.perPage}
-                        totalItemsCount={allApi.data.total}
-                        pageRangeDisplayed={3}
-                        onChange={(page) => dispatch(setPage(page))}
-                        nextPageText={">"}
-                        prevPageText={"<"}
-                        firstPageText={"<<"}
-                        lastPageText={">>"}
-                        itemClass="page-item"
-                        linkClass="page-link"
-                      />
-                    </div>
+              <div className="row px-4">
+                <div className="table-pagination">
+                  <Pagination
+                    activePage={allApi.page}
+                    itemsCountPerPage={allApi.data.perPage}
+                    totalItemsCount={allApi.data.total}
+                    pageRangeDisplayed={3}
+                    onChange={(page) => dispatch(setPage(page))}
+                    nextPageText={">"}
+                    prevPageText={"<"}
+                    firstPageText={"<<"}
+                    lastPageText={">>"}
+                    itemClass="page-item"
+                    linkClass="page-link"
+                  />
                 </div>
 
-                <div className="table-total ml-auto">
-                  <div className="row">
+                <div className="table-total ml-auto mr-4">
+                  <div className="row mt-4">
                     <div className="col-4 mr-0 p-0">
                       <select
-                        className="form-control mr-5 cursor-pointer"
+                        className="form-control pr-2 cursor-pointer"
                         id="exampleFormControlSelect2"
                         defaultValue=""
                         style={{
@@ -300,8 +292,7 @@ const Table = ({ token }) => {
                         className="align-middle mt-3"
                         style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}
                       >
-                        Total Data {allApi.data &&
-                          allApi.data.total} List Data
+                        Total Data {allApi.data && allApi.data.total} List Data
                       </p>
                     </div>
                   </div>

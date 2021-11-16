@@ -16,12 +16,15 @@ import {
   dropdownTemabyAkademi,
 } from "../../../../../redux/actions/pelatihan/function.actions";
 import LoadingPage from "../../../../LoadingPage";
+import { disablePlusMinusPeriod } from "../../../../../utils/middleware/helper";
+import { CustomNumberInput } from "../../../../formCustomComponent/input";
+import moment from "moment";
 
 const AddTrainingStep1 = ({ propsStep, token }) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
-
+  const today = new Date();
   const drowpdownTemabyAkademi = useSelector(
     (state) => state.drowpdownTemabyAkademi
   );
@@ -343,8 +346,8 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
         pelatihan_mulai: startDateTraining,
         pelatihan_selesai: endDateTraining,
         deskripsi: description,
-        kuota_pendaftar: targetKuotaRegister,
-        kuota_peserta: targetKuotaUser,
+        kuota_pendaftar: +targetKuotaRegister,
+        kuota_peserta: +targetKuotaUser,
         status_kuota: statusKuota,
         alur_pendaftaran: plotRegistration,
         sertifikasi: sertification,
@@ -373,13 +376,66 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
     }
   };
 
+  useEffect(() => {
+    const number = document.getElementById("number1");
+    number.onkeydown = (e) => {
+      if (e.code == "Minus") {
+        return false;
+      }
+      if (e.code == "Period") {
+        return false;
+      }
+      if (e.code == "NumpadAdd") {
+        return false;
+      }
+      if (e.code == "NumpadSubtract") {
+        return false;
+      }
+      if (e.code == "Equal") {
+        return false;
+      }
+    };
+  }, [targetKuotaRegister]);
+
+  useEffect(() => {
+    const number = document.getElementById("number2");
+    number.onkeydown = (e) => {
+      if (e.code == "Minus") {
+        return false;
+      }
+      if (e.code == "Period") {
+        return false;
+      }
+      if (e.code == "NumpadAdd") {
+        return false;
+      }
+      if (e.code == "NumpadSubtract") {
+        return false;
+      }
+      if (e.code == "Equal") {
+        return false;
+      }
+    };
+  }, [targetKuotaUser]);
+  const [errorMessageKuota, setErrorMessageKuota] = useState(false);
+
+  useEffect(() => {
+    if (targetKuotaUser < targetKuotaRegister) {
+      setErrorMessageKuota(false);
+    }
+    if (+targetKuotaUser > +targetKuotaRegister) {
+      setErrorMessageKuota(true);
+      setTargetKuotaUser(+targetKuotaRegister);
+    }
+  }, [targetKuotaRegister, targetKuotaUser]);
+
   return (
     <div className="card card-custom card-stretch gutter-b">
       <div className="card-body py-4">
         <form onSubmit={submitHandler}>
           <h3 className="font-weight-bolder pb-5 pt-4">Data Pelatihan</h3>
 
-          <div className="form-group row mb-4">
+          <div className="form-group row mb-2">
             <label className="col-form-label font-weight-bold col-sm-2">
               Program DTS
             </label>
@@ -415,38 +471,6 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
               {simpleValidator.current.message(
                 "program dts",
                 program,
-                "required",
-                { className: "text-danger" }
-              )}
-            </div>
-          </div>
-
-          <div className="form-group row mb-4">
-            <label className="col-form-label font-weight-bold col-sm-2">
-              Ketentuan Peserta
-            </label>
-            <div className="col-sm-10 ">
-              <div className="d-flex flex-row  align-items-start pt-2">
-                <div className="form-check form-check-inline pt-1">
-                  <input
-                    type="checkbox"
-                    className="form-check-input"
-                    checked={ketentuan}
-                    value={ketentuan}
-                    onClick={() => setKetentuan(!ketentuan)}
-                    onBlur={() =>
-                      simpleValidator.current.showMessageFor("ketentuan")
-                    }
-                  />
-                </div>
-                <label className="form-check-label">
-                  Peserta dapat mengikuti pelatihan <br /> ini ditahun yang sama
-                  pada Akademi ini
-                </label>
-              </div>
-              {simpleValidator.current.message(
-                "ketentuan",
-                ketentuan,
                 "required",
                 { className: "text-danger" }
               )}
@@ -725,19 +749,12 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
               </label>
               <div className="position-relative">
                 <DatePicker
-                  wrapperClassName="datepicker"
-                  className="form-control w-100 d-block"
-                  name="start_date"
                   selected={startDateRegistration}
                   onChange={(date) => setStartDateRegistration(date)}
-                  onBlur={() =>
-                    simpleValidator.current.showMessageFor("tanggal mulai")
-                  }
-                  selectsStart
-                  startDate={startDateRegistration}
-                  endDate={endDateRegistration}
-                  dateFormat="dd/MM/yyyy"
-                  autoComplete="off"
+                  showTimeSelect
+                  minDate={today}
+                  className="form-control w-100 d-block"
+                  dateFormat="d MMMM yyyy - h : mm"
                   placeholderText="Silahkan Pilih Tanggal Dari"
                 />
                 <i className="ri-calendar-line right-center-absolute pr-3"></i>
@@ -755,19 +772,21 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
               </label>
               <div className="position-relative">
                 <DatePicker
-                  wrapperClassName="datepicker"
-                  className="form-control w-100"
-                  selected={endDateRegistration}
-                  onChange={(date) => setEndDateRegistration(date)}
-                  onBlur={() =>
-                    simpleValidator.current.showMessageFor("tanggal sampai")
+                  selected={
+                    startDateRegistration > endDateRegistration
+                      ? ""
+                      : endDateRegistration
                   }
-                  selectsEnd
-                  startDate={startDateRegistration}
-                  endDate={endDateRegistration}
+                  value={
+                    startDateRegistration > endDateRegistration
+                      ? ""
+                      : endDateRegistration
+                  }
+                  onChange={(date) => setEndDateRegistration(date)}
                   minDate={startDateRegistration}
-                  dateFormat="dd/MM/yyyy"
-                  autoComplete="off"
+                  showTimeSelect
+                  className="form-control w-100 d-block"
+                  dateFormat="d MMMM yyyy - h : mm"
                   placeholderText="Silahkan Pilih Tanggal Sampai"
                 />
                 <i className="ri-calendar-line right-center-absolute pr-3"></i>
@@ -790,19 +809,12 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
               </label>
               <div className="position-relative">
                 <DatePicker
-                  wrapperClassName="datepicker"
-                  className="form-control w-100 d-block"
-                  name="start_date"
                   selected={startDateTraining}
                   onChange={(date) => setStartDateTraining(date)}
-                  onBlur={() =>
-                    simpleValidator.current.showMessageFor("tanggal mulai")
-                  }
-                  selectsStart
-                  startDate={startDateTraining}
-                  endDate={endDateTraining}
-                  dateFormat="dd/MM/yyyy"
-                  autoComplete="off"
+                  minDate={today}
+                  showTimeSelect
+                  className="form-control w-100 d-block"
+                  dateFormat="d MMMM yyyy - h : mm"
                   placeholderText="Silahkan Pilih Tanggal Dari"
                 />
                 <i className="ri-calendar-line right-center-absolute pr-3"></i>
@@ -820,19 +832,17 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
               </label>
               <div className="position-relative">
                 <DatePicker
-                  wrapperClassName="datepicker"
-                  className="form-control w-100"
-                  selected={endDateTraining}
                   onChange={(date) => setEndDateTraining(date)}
-                  onBlur={() =>
-                    simpleValidator.current.showMessageFor("tanggal sampai")
-                  }
-                  selectsEnd
-                  startDate={startDateTraining}
-                  endDate={endDateTraining}
                   minDate={startDateTraining}
-                  dateFormat="dd/MM/yyyy"
-                  autoComplete="off"
+                  selected={
+                    startDateTraining > endDateTraining ? "" : endDateTraining
+                  }
+                  value={
+                    startDateTraining > endDateTraining ? "" : endDateTraining
+                  }
+                  showTimeSelect
+                  className="form-control w-100 d-block"
+                  dateFormat="d MMMM yyyy - h : mm"
                   placeholderText="Silahkan Pilih Tanggal Sampai"
                 />
                 <i className="ri-calendar-line right-center-absolute pr-3"></i>
@@ -883,17 +893,26 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
               <label className="col-form-label font-weight-bold">
                 Kuota Target Pendaftar
               </label>
+              {/* <CustomNumberInput
+                state={targetKuotaUser}
+                placeholder="Silahkan Masukan Kuota Target Pendaftar"
+                onChange={handleOnChange}
+              /> */}
               <input
                 placeholder="Silahkan Masukan Kuota Target Pendaftar"
                 type="number"
                 value={targetKuotaRegister}
-                onChange={(e) => setTargetKuotaRegister(e.target.value)}
+                onChange={(e) => {
+                  setTargetKuotaRegister(e.target.value);
+                }}
                 className="form-control"
+                min="1"
                 onBlur={() =>
                   simpleValidator.current.showMessageFor(
                     "kuota target pendaftar"
                   )
                 }
+                id="number1"
               />
               {simpleValidator.current.message(
                 "kuota target pendaftar",
@@ -909,13 +928,20 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
               <input
                 placeholder="Silahkan Masukan Kuota Target Peserta"
                 type="number"
+                min="1"
                 value={targetKuotaUser}
                 onChange={(e) => setTargetKuotaUser(e.target.value)}
                 className="form-control"
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("kuota target peserta")
                 }
+                id="number2"
               />
+              {errorMessageKuota && (
+                <p className="text-danger">
+                  Kuota user tidak boleh lebih dari kuota register
+                </p>
+              )}
               {simpleValidator.current.message(
                 "kuota target peserta",
                 targetKuotaUser,
@@ -1277,6 +1303,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("kota/kabupaten")
                 }
+                isDisabled={province ? false : true}
               />
               {simpleValidator.current.message(
                 "kota/kabupaten",

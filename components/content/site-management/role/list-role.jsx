@@ -17,6 +17,7 @@ import {
   setPage,
   limitCooporation,
   deleteRoles,
+  searchCooporation
 } from "../../../../redux/actions/site-management/role.actions";
 import axios from "axios";
 
@@ -82,8 +83,7 @@ const Table = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3
-              className="card-title font-weight-bolder text-dark"
-              style={{ fontSize: "24px" }}
+              className="card-title font-weight-bolder text-dark titles-1"
             >
               List Role
             </h3>
@@ -96,17 +96,18 @@ const Table = ({ token }) => {
               </Link>
             </div>
           </div>
-          <div className="card-body pt-0">
+          <div className="card-body pt-0 px-4 px-sm-8">
             <div className="table-filter">
               <div className="row align-items-center">
                 <div className="col-lg-12 col-xl-12">
-                  <form
-                    onSubmit={handleSubmit}
-                    className="d-flex align-items-center w-100"
+
+                  <div className="row w-100 ml-0 ml-sm-0">
+
+
+                  <div
+                    className="col-12 col-xl-4"
                   >
-                    <div className="row w-100">
-                      <div className="col-12 col-sm-6">
-                        <div className="position-relative overflow-hidden w-100">
+                    <div className="position-relative overflow-hidden w-100">
                           <IconSearch
                             style={{ left: "10" }}
                             className="left-center-absolute"
@@ -121,7 +122,8 @@ const Table = ({ token }) => {
                             }
                           />
                           <button
-                            type="submit"
+                            type="button"
+                            onClick={(e)=>handleSubmit(e)}
                             className="btn bg-blue-primary text-white right-center-absolute"
                             style={{
                               borderTopLeftRadius: "0",
@@ -131,9 +133,9 @@ const Table = ({ token }) => {
                             Cari
                           </button>
                         </div>
-                      </div>
-                    </div>
-                  </form>
+                  </div>
+                  </div>
+
                 </div>
               </div>
             </div>
@@ -154,11 +156,7 @@ const Table = ({ token }) => {
                     </thead>
                     <tbody>
                       {allRoles.data.list_role.length === 0 ? (
-                        <tr>
-                          <td colSpan="5" className="text-center">
-                            <h4>Data tidak ditemukan</h4>
-                          </td>
-                        </tr>
+                        <td className="align-middle text-center" colSpan="5">Data Masih Kosong</td>
                       ) : (
                         allRoles.data.list_role.map((items, index) => {
                           return (
@@ -244,8 +242,8 @@ const Table = ({ token }) => {
                 )}
               </div>
 
-              <div className="row">
-                <div className="table-pagination paginate-cs">
+              <div className="row px-4">
+                <div className="table-pagination">
                   <Pagination
                     activePage={allRoles.page}
                     itemsCountPerPage={allRoles.data.perPage}
@@ -261,11 +259,11 @@ const Table = ({ token }) => {
                   />
                 </div>
 
-                <div className="table-total ml-auto">
-                  <div className="row">
+                <div className="table-total ml-auto mr-4">
+                  <div className="row mt-4">
                     <div className="col-4 mr-0 p-0">
                       <select
-                        className="form-control mr-5 cursor-pointer"
+                        className="form-control cursor-pointer pr-2"
                         id="exampleFormControlSelect2"
                         defaultValue=""
                         style={{

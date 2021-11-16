@@ -22,14 +22,14 @@ const Tambah = ({ token }) => {
     setValueCreateCooporations(list);
   };
 
-  const handleDelete = i => {
+  const handleDelete = (i) => {
     let filterResult = valueCreateCooporations.filter(
       (items, index) => index !== i
     );
     setValueCreateCooporations(filterResult);
   };
 
-  const handleChangeStatus = e => {
+  const handleChangeStatus = (e) => {
     setStatus(e.target.checked);
   };
 
@@ -37,7 +37,7 @@ const Tambah = ({ token }) => {
     setValueCreateCooporations([...valueCreateCooporations, ""]);
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     Swal.fire({
@@ -71,18 +71,22 @@ const Tambah = ({ token }) => {
             }
           );
 
-          router.push({
-            pathname: `/partnership/master-kategori-kerjasama`,
-            query: { success: true },
-          });
+          Swal.fire("Berhasil", "Data berhasil tersimpan", "success").then(
+              () => {
+                router.push({
+                  pathname: "/partnership/master-kategori-kerjasama",
+                  query: { success: true },
+                });
+              }
+            );
         } catch (error) {
-          notify(error.response.data.message);
+          Swal.fire("Gagal", `${error.response.data.message}`, "error");
         }
       }
     });
   };
 
-  const notify = value =>
+  const notify = (value) =>
     toast.info(`${value}`, {
       position: "top-right",
       autoClose: 5000,
@@ -109,9 +113,7 @@ const Tambah = ({ token }) => {
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3
-              className="card-title font-weight-bolder text-dark titles-1"
-            >
+            <h3 className="card-title font-weight-bolder text-dark titles-1">
               Tambah Master Kategori Kerjasama
             </h3>
           </div>
@@ -123,11 +125,11 @@ const Tambah = ({ token }) => {
                 </label>
                 <input
                   required
-                  placeholder="Masukkan Kategori Lembaga"
+                  placeholder="Masukkan Kategori Kerjasama"
                   type="text"
                   name="category_cooperation"
                   className="form-control"
-                  onChange={e => setCategoryCooporation(e.target.value)}
+                  onChange={(e) => setCategoryCooporation(e.target.value)}
                 />
               </div>
 
@@ -135,22 +137,24 @@ const Tambah = ({ token }) => {
               {valueCreateCooporations.map((valueCreateCooporation, index) => {
                 return (
                   <div className="form-group" key={index}>
-                    {index === 0 ? 
-                    <label htmlFor="staticEmail" className="col-form-label">
-                    
-                    Form Kerjasama
-                    
-                    </label>
-                    : ""}
+                    {index === 0 ? (
+                      <label htmlFor="staticEmail" className="col-form-label">
+                        Form Kerjasama
+                      </label>
+                    ) : (
+                      ""
+                    )}
                     <div className="position-relative d-flex align-items-center">
                       <input
                         required
                         placeholder={
-                          index === 0 ? "Tujuan kerja sama" : "Opsional"
+                          index === 0
+                            ? `Form Kerjasama ${index + 1}`
+                            : `Form Kerjasama ${index + 1}`
                         }
                         name={`cooperation${index}`}
                         type="text"
-                        onChange={e => handleChange(e, index)}
+                        onChange={(e) => handleChange(e, index)}
                         className="form-control mr-6"
                         value={valueCreateCooporation}
                       />
@@ -161,9 +165,20 @@ const Tambah = ({ token }) => {
                           type="button"
                           onClick={() => handleDelete(index)}
                           className="btn"
-                          style={{ backgroundColor:"#EE2D41" }}
+                          style={{ backgroundColor: "#EE2D41" }}
                         >
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path fill="none" d="M0 0h24v24H0z"/><path d="M17 4h5v2h-2v15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6H2V4h5V2h10v2zM9 9v8h2V9H9zm4 0v8h2V9h-2z" fill="rgba(255,255,255,1)"/></svg>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            width="16"
+                            height="16"
+                          >
+                            <path fill="none" d="M0 0h24v24H0z" />
+                            <path
+                              d="M17 4h5v2h-2v15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6H2V4h5V2h10v2zM9 9v8h2V9H9zm4 0v8h2V9h-2z"
+                              fill="rgba(255,255,255,1)"
+                            />
+                          </svg>
                         </button>
                       )}
                     </div>
@@ -200,7 +215,7 @@ const Tambah = ({ token }) => {
                         className="checkbox"
                         checked={status}
                         type="checkbox"
-                        onChange={e => handleChangeStatus(e)}
+                        onChange={(e) => handleChangeStatus(e)}
                       />
                       <span
                         className={`sliders round ${
@@ -228,7 +243,7 @@ const Tambah = ({ token }) => {
                   <button
                     type="button"
                     className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
-                    onClick={e => handleSubmit(e)}
+                    onClick={(e) => handleSubmit(e)}
                   >
                     Simpan
                   </button>

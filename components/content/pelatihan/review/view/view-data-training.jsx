@@ -198,9 +198,9 @@ const ViewReviewTraining = ({ token }) => {
         title1="Data Pelatihan"
         title2="Form Pendaftaran"
         title3="Form Komitmen"
-        link1={`/pelatihan/review/view-pelatihan/${id}`}
-        link2={`/pelatihan/review/view-pelatihan/view-form-pendaftaran/${id}`}
-        link3={`/pelatihan/review/view-pelatihan/view-form-komitmen/${id}`}
+        link1={`/pelatihan/review-pelatihan/view-pelatihan/${id}`}
+        link2={`/pelatihan/review-pelatihan/view-pelatihan/view-form-pendaftaran/${id}`}
+        link3={`/pelatihan/review-pelatihan/view-pelatihan/view-form-komitmen/${id}`}
       />
 
       <div className="col-lg-12 order-1 px-0">
@@ -247,6 +247,10 @@ const ViewReviewTraining = ({ token }) => {
               <div className="col-md-6">
                 <p className="text-neutral-body">Logo Reference</p>
                 <div className="">
+                {dataPelatihan.logoReference.split("/").length === 3 && (
+                    <p>-</p>
+                  )}
+                   {dataPelatihan.logoReference.split("/").length > 3 && (
                   <figure
                     className="avatar item-rtl"
                     data-toggle="modal"
@@ -260,11 +264,17 @@ const ViewReviewTraining = ({ token }) => {
                       objectFit="cover"
                     />
                   </figure>
+                
+                  )}
                 </div>
               </div>
               <div className="col-md-6">
                 <p className="text-neutral-body">Thumbnail</p>
                 <div className="">
+                {dataPelatihan.thumbnail.includes("default") && (
+                    <p>-</p>
+                  )}
+                   {dataPelatihan.thumbnail.includes("https") && (
                   <figure
                     className="avatar item-rtl"
                     data-toggle="modal"
@@ -278,6 +288,7 @@ const ViewReviewTraining = ({ token }) => {
                       objectFit="cover"
                     />
                   </figure>
+                  )}
                 </div>
               </div>
             </div>

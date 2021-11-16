@@ -3,6 +3,7 @@ import { getSession } from "next-auth/client";
 
 import { wrapper } from "../../../redux/store";
 import { getDataPribadi } from "../../../redux/actions/pelatihan/function.actions"
+import { getDetailBerandaArtikel, getKategoriBerandaArtikel,  getTagBerandaArtikel} from "../../../redux/actions/beranda/artikel.actions"
 
 const DetailArtikel = dynamic (() => 
     import (
@@ -40,6 +41,18 @@ export const getServerSideProps = wrapper.getServerSideProps(
             let sessionToken = session?.user.user.data.user.token;
 
             await store.dispatch(getDataPribadi(sessionToken));
+
+            await store.dispatch(
+                getDetailBerandaArtikel(params.id)
+            )
+
+            await store.dispatch (
+                getKategoriBerandaArtikel()
+            )
+
+            await store.dispatch(
+                getTagBerandaArtikel()
+            )
 
             return {
                 props: {

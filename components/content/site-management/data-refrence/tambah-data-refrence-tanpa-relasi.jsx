@@ -4,7 +4,6 @@ import PageWrapper from "../../../wrapper/page.wrapper";
 import Swal from "sweetalert2";
 import { useRouter } from "next/router";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import IconAdd from "../../../assets/icon/Add";
 
@@ -38,6 +37,7 @@ const Tambah = ({ token }) => {
     let _temp = [...values];
     let resultTemp = _temp.filter((items, idx) => idx !== index);
     setValues(resultTemp);
+    setNumber(number-1)
   };
 
   const handleSubmit = async (e) => {
@@ -48,10 +48,7 @@ const Tambah = ({ token }) => {
       Swal.fire("Gagal", `Nama data reference tidak boleh kosong`, "error");
     } else if (status === "") {
       Swal.fire("Gagal", `Status tidak boleh kosong`, "error");
-    } else if (values.length === 1){
-      Swal.fire("Gagal", `Form value tidak boleh kosong`, "error");
     } 
-    
     else {
       let formData = new FormData();
       formData.append("name", nameReference);
@@ -92,7 +89,7 @@ const Tambah = ({ token }) => {
             </h3>
           </div>
           <form>
-            <div className="card-body pt-0">
+            <div className="card-body pt-0 px-4 px-sm-8">
               <div className="form-group">
                 <label htmlFor="staticEmail" className="col-form-label">
                   Nama Data Reference
@@ -121,7 +118,8 @@ const Tambah = ({ token }) => {
                 return (
                   <div className="form-group" key={index}>
                     <label htmlFor="staticEmail" className="col-form-label">
-                      {items.name}
+                      {/* {items.name} */}
+                      Value {index + 1}
                     </label>
                     <div className="position-relative d-flex align-items-center">
                       <input
@@ -146,8 +144,8 @@ const Tambah = ({ token }) => {
                           style={{ bottom: "2px" }}
                           xmlns="http://www.w3.org/2000/svg"
                           viewBox="0 0 24 24"
-                          width="24"
-                          height="24"
+                          width="16"
+                          height="16"
                         >
                           <path fill="none" d="M0 0h24v24H0z" />
                           <path

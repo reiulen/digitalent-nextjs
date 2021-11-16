@@ -11,11 +11,12 @@ import { TagsInput } from "react-tag-input-component";
 import DatePicker from 'react-datepicker'
 import Select from 'react-select'
 
+import styles from "../../../../styles/previewGaleri.module.css";
+
 import {
   newArtikel,
   clearErrors,
 } from "../../../../redux/actions/publikasi/artikel.actions";
-// import { getAllKategori } from "../../../../redux/actions/publikasi/kategori.actions";
 import { NEW_ARTIKEL_RESET } from "../../../../redux/types/publikasi/artikel.type";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingPage from "../../../LoadingPage";
@@ -37,7 +38,8 @@ const TambahArtikel = ({ token, id }) => {
 
   const { loading, error, success } = useSelector((state) => state.newArtikel);
   const { setting } = useSelector(state => state.allSettingPublikasi)
-  const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(state => state.drowpdownAkademi);
+  // const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(state => state.drowpdownAkademi);
+  const { akademi } = useSelector(state => state.allAkademi);
   const {
     loading: allLoading,
     error: allError,
@@ -78,7 +80,7 @@ const TambahArtikel = ({ token, id }) => {
   const [publishDate, setPublishDate] = useState(null);
   const [disablePublishDate, setDisablePublishDate] = useState(true)
   const [disableTag, setDisableTag] = useState(false)
-  const [akademi_value, setAkademiValue]=useState("");
+  const [kategori_akademi, setKategoriAkademi] = useState("");
 
   const onChangeGambar = (e) => {
     const type = ["image/jpg", "image/png", "image/jpeg"]
@@ -136,7 +138,9 @@ const TambahArtikel = ({ token, id }) => {
         data.splice([i], 1);
       }
     }
-    setTag(data);
+    if ((data).includes(data) !== true) {
+      setTag(data);
+    }
   }
 
   const onSubmit = (e) => {
@@ -168,7 +172,7 @@ const TambahArtikel = ({ token, id }) => {
           judul_artikel,
           isi_artikel,
           gambar,
-          akademi_value,
+          kategori_akademi,
           kategori_id,
           users_id,
           tag,
@@ -198,6 +202,7 @@ const TambahArtikel = ({ token, id }) => {
           judul_artikel,
           isi_artikel,
           gambar,
+          kategori_akademi,
           kategori_id,
           users_id,
           tag,
@@ -237,7 +242,6 @@ const TambahArtikel = ({ token, id }) => {
   return (
     <>
       <PageWrapper>
-        {console.log("Data Akademi :", dataAkademi)}
         {error ? (
           <div
             className="alert alert-custom alert-light-danger fade show mb-5"
@@ -268,7 +272,7 @@ const TambahArtikel = ({ token, id }) => {
           {loading ? <LoadingPage loading={loading} /> : ""}
           <div className="card card-custom card-stretch gutter-b">
             <div className="card-header">
-              <h3 className="card-title font-weight-bolder text-dark">
+              <h3 className="col-sm-4 card-title font-weight-bolder text-dark">
                 Tambah Artikel
               </h3>
             </div>
@@ -281,10 +285,10 @@ const TambahArtikel = ({ token, id }) => {
                   >
                     Judul
                   </label>
-                  <div className="col-sm-12">
+                  <div className={`${styles.judulTambah} col-sm-12`}>
                     <input
                       type="text"
-                      className="form-control"
+                      className={`${styles.judulTambah} form-control`}
                       placeholder="Masukkan Judul Disini"
                       value={judul_artikel}
                       onChange={(e) => setJudulArtikel(e.target.value)}
@@ -308,7 +312,7 @@ const TambahArtikel = ({ token, id }) => {
                   >
                     Isi Artikel
                   </label>
-                  <div className="col-sm-12">
+                  <div className={`${styles.deskripsiTambah} col-sm-12`}>
                     <div className="ckeditor">
                       {editorLoaded ? (
                         <CKEditor
@@ -348,7 +352,7 @@ const TambahArtikel = ({ token, id }) => {
                   >
                     Upload Thumbnail
                   </label>
-                  <div className="ml-3 row">
+                  <div className="row ml-4">
                     <figure
                       className="avatar item-rtl position-relative"
                       data-toggle="modal"
@@ -359,7 +363,7 @@ const TambahArtikel = ({ token, id }) => {
                         alt="image"
                         width={160}
                         height={160}
-                        objectFit="cover"
+                        objectFit="fill"
                       />
                     </figure>
                     <div className="position-relative">
@@ -381,7 +385,7 @@ const TambahArtikel = ({ token, id }) => {
                     </div>
                   </div>
 
-                  <div className="ml-3">
+                  <div className="ml-4">
                     {simpleValidator.current.message(
                       "gambar",
                       gambar,
@@ -396,7 +400,7 @@ const TambahArtikel = ({ token, id }) => {
                     }
                   </div>
 
-                  <div className="mt-3 col-sm-6 col-md-6 col-lg-7 col-xl-3 text-muted">
+                  <div className={`${styles.resolusiTambah} mt-3 col-sm-6 col-md-6 col-lg-7 col-xl-3 text-muted`}>
                     <p>
                       Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar.
                     </p>
@@ -409,41 +413,37 @@ const TambahArtikel = ({ token, id }) => {
                   >
                     Akademi
                   </label>
-                  <div className="col-sm-12">
+                  <div className={`${styles.selectKategori} col-sm-12`}>
                     <select
                       name=""
                       id=""
-                      className="form-control dropdownArt"
-                      value={akademi_value}
-                      onChange={(e) => setAkademiValue(e.target.value)}
+                      className={`${styles.selectKategori} form-control dropdownArt`}
+                      value={kategori_akademi}
+                      onChange={(e) => setKategoriAkademi(e.target.value)}
                       onBlur={(e) => {
-                        setAkademiValue(e.target.value);
+                        setKategoriAkademi(e.target.value);
                         simpleValidator.current.showMessageFor("akademi");
                       }}
                     >
                       <option selected disabled value="">
                         -- Akademi --
                       </option>
-                      {!dataAkademi || (dataAkademi && dataAkademi.length === 0) ? (
-                        <option value="">Data Tidak Ditemukan</option>
+                      {!akademi || (akademi && akademi.length === 0) ? (
+                        <option value="">Data Kosong</option>
                       ) : (
-                        dataAkademi &&
-                        dataAkademi.data &&
-                        dataAkademi.data.map((row) => {
+                        akademi &&
+                        akademi.map((row) => {
                           return (
-                            // row.jenis_kategori == "Artikel" ?
-                              <option key={row.value} value={row.value}>
-                                {row.label}
-                              </option>
-                              // :
-                              // null
+                            <option key={row.id} value={row.slug}>
+                              {row.slug}
+                            </option>
                           );
                         })
                       )}
                     </select>
                     {simpleValidator.current.message(
                       "akademi",
-                      akademi_value,
+                      kategori_akademi,
                       "required",
                       { className: "text-danger" }
                     )}
@@ -457,11 +457,11 @@ const TambahArtikel = ({ token, id }) => {
                   >
                     Kategori
                   </label>
-                  <div className="col-sm-12">
+                  <div className={`${styles.selectKategori} col-sm-12`}>
                     <select
                       name=""
                       id=""
-                      className="form-control dropdownArt"
+                      className={`${styles.selectKategori} form-control dropdownArt`}
                       value={kategori_id}
                       onChange={(e) => setKategoriId(e.target.value)}
                       onBlur={(e) => {
@@ -473,7 +473,7 @@ const TambahArtikel = ({ token, id }) => {
                         -- Artikel --
                       </option>
                       {!kategori || (kategori && kategori.length === 0) ? (
-                        <option value="">Data Tidak Ditemukan</option>
+                        <option value="">Data Kosong</option>
                       ) : (
                         kategori &&
                         kategori.kategori &&
@@ -505,12 +505,12 @@ const TambahArtikel = ({ token, id }) => {
                   >
                     Tag
                   </label>
-                  <div className="col-sm-12">
+                  <div className={`${styles.tagStyle} col-sm-12`} style={{ wordBreak: 'break-word' }}>
                     <TagsInput
                       value={tag}
                       onChange={(data) => handleTag(data)}
                       name="fruits"
-                      placeHolder="Isi Tag disini"
+                      placeHolder="Isi Tag disini dan Enter"
                       // onBlur={() => simpleValidator.current.showMessageFor('tag')}
                       seprators={["Enter", "Tab"]}
                     />
@@ -560,7 +560,7 @@ const TambahArtikel = ({ token, id }) => {
                       <div className="col-sm-12">
                         <div className="input-group">
                           <DatePicker
-                            className="form-search-date form-control-sm form-control"
+                            className={`${styles.setPublish} form-search-date form-control-sm form-control`}
                             selected={publishDate}
                             onChange={(date) => handlePublishDate(date)}
                             selectsStart
@@ -579,15 +579,15 @@ const TambahArtikel = ({ token, id }) => {
                 }
 
 
-                <div className="form-group row">
+                <div className="form-group row mr-0">
                   <div className="col-sm-2"></div>
                   <div className="col-sm-10 text-right">
                     <Link href="/publikasi/artikel">
-                      <a className="btn btn-white-ghost-rounded-full rounded-pill mr-2 btn-sm">
+                      <a className={`${styles.btnKembali} btn btn-white-ghost-rounded-full rounded-pill mr-2 btn-sm`}>
                         Kembali
                       </a>
                     </Link>
-                    <button className="btn btn-primary-rounded-full rounded-pill btn-sm">Simpan</button>
+                    <button className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill btn-sm`}>Simpan</button>
                   </div>
                 </div>
               </form>
@@ -619,14 +619,13 @@ const TambahArtikel = ({ token, id }) => {
                 </button>
               </div>
               <div
-                className="modal-body text-center"
-                style={{ height: "400px" }}
+                className={`${styles.modalsPrevImage} modal-body text-center`}
               >
                 <Image
                   src={gambarPreview}
                   alt="image"
                   layout="fill"
-                  objectFit="cover"
+                  objectFit="fill"
                 />
               </div>
               <div className="modal-footer">

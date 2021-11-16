@@ -483,17 +483,17 @@ const Galeri = ({ token }) => {
                     id="carouselExampleIndicators"
                     className="carousel slide"
                     data-ride="carousel"
-                    style={{ position: "relative" }}
+                // style={{ position: "relative" }}
                 >
                     <div
                         className="carousel-inner"
-                        style={{ position: "absolute", left: "-13px" }}
+                    // style={{ position: "absolute", left: "-12px" }}
                     >
                         {isViewed && isViewed.length !== 0
                             ? isViewed.gambar.map((row, i) => {
                                 return (
                                     <div className={i === 0 ? "carousel-item active" : "carousel-item"} key={i}>
-                                        <div className={styles["img-prevModal"]}>
+                                        {/* <div className={styles["img-prevModal"]}>
                                             <Image
                                                 unoptimized={process.env.ENVIRONMENT !== "PRODUCTION"}
                                                 loader={() =>
@@ -509,6 +509,26 @@ const Galeri = ({ token }) => {
                                                 alt="image"
                                                 layout="fill"
                                                 objectFit="fill"
+                                                // width={400}
+                                                // height={511}
+                                            />
+                                        </div> */}
+
+                                        <div
+                                            className={`${styles.modals} position-relative`}
+                                        // style={{
+                                        //     height: "460px",
+                                        //     width: "auto"
+                                        // }}
+                                        >
+                                            <Image
+                                                src={
+                                                    process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                                    "publikasi/images/" + row.gambar
+                                                }
+                                                alt="Slider"
+                                                objectFit="fill"
+                                                layout="fill"
                                             />
                                         </div>
                                     </div>
@@ -516,42 +536,45 @@ const Galeri = ({ token }) => {
                             })
                             : null}
                     </div>
-                    <button
-                        className="carousel-control-prev"
-                        type="button"
-                        data-target="#carouselExampleIndicators"
-                        data-slide="prev"
-                        style={{
-                            position: "absolute",
-                            left: "-14px",
-                            top: "250px",
-                            border: "none",
-                            background: "none",
-                        }}
-                    >
-                        <span
-                            className="carousel-control-prev-icon"
-                            aria-hidden="true"
-                        ></span>
-                    </button>
-                    <button
-                        className="carousel-control-next"
-                        type="button"
-                        data-target="#carouselExampleIndicators"
-                        data-slide="next"
-                        style={{
-                            position: "absolute",
-                            right: "7px",
-                            top: "250px",
-                            border: "none",
-                            background: "none",
-                        }}
-                    >
-                        <span
-                            className="carousel-control-next-icon"
-                            aria-hidden="true"
-                        ></span>
-                    </button>
+                    {
+                        isViewed.gambar.length === 1 ? null :
+                            <div>
+                                <button
+                                    className="carousel-control-prev"
+                                    type="button"
+                                    data-target="#carouselExampleIndicators"
+                                    data-slide="prev"
+                                    style={{
+                                        position: "absolute",
+                                        left: "-14px",
+                                        border: "none",
+                                        background: "none",
+                                    }}
+                                >
+                                    <span
+                                        className="carousel-control-prev-icon"
+                                        aria-hidden="true"
+                                    ></span>
+                                </button>
+                                <button
+                                    className="carousel-control-next"
+                                    type="button"
+                                    data-target="#carouselExampleIndicators"
+                                    data-slide="next"
+                                    style={{
+                                        position: "absolute",
+                                        right: "-12px",
+                                        border: "none",
+                                        background: "none",
+                                    }}
+                                >
+                                    <span
+                                        className="carousel-control-next-icon"
+                                        aria-hidden="true"
+                                    ></span>
+                                </button>
+                            </div>
+                    }
                 </div>
             </>
         ) : null;
@@ -671,9 +694,9 @@ const Galeri = ({ token }) => {
 
             <div className="col-lg-12 order-1 px-0">
                 <div className="card card-custom card-stretch gutter-b">
-                    <div className="card-header border-0">
-                        <h3 className={`${styles.headTitle}`}>Galeri</h3>
-                        <div className="card-toolbar">
+                    <div className="card-header row border-0">
+                        <h3 className={`${styles.headTitle} col-12 col-sm-8 col-md-8 col-lg-8 col-xl-9`}>Galeri</h3>
+                        <div className="card-toolbar col-12 col-sm-4 col-md-4 col-lg-4 col-xl-3">
                             <Link href="/publikasi/galeri/tambah">
                                 <a className={`${styles.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bold btn-block`}>
                                     <i className="ri-add-fill pb-1 text-white mr-2 "></i>
@@ -693,13 +716,13 @@ const Galeri = ({ token }) => {
                                         <i className="ri-search-line left-center-absolute ml-2"></i>
                                         <input
                                             type="text"
-                                            className="form-control pl-10"
+                                            className={`${styles.cari} form-control pl-10`}
                                             placeholder="Ketik disini untuk Pencarian..."
                                             value={search}
                                             onChange={e => setSearch(e.target.value)}
                                         />
                                         <button
-                                            className="btn bg-blue-primary text-white right-center-absolute"
+                                            className={`${styles.fontCari} btn bg-blue-primary text-white right-center-absolute`}
                                             style={{
                                                 borderTopLeftRadius: "0",
                                                 borderBottomLeftRadius: "0",
@@ -710,16 +733,16 @@ const Galeri = ({ token }) => {
                                         </button>
                                     </div>
                                 </div>
-                                <div className="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                <div className={`${styles.filterDate} col-sm-6 col-md-6 col-lg-6 col-xl-6`}>
                                     <div className="d-flex flex-wrap align-items-center justify-content-end mt-2">
                                         {/* sortir by modal */}
                                         <button
                                             className="col-sm-12 col-md-6 avatar item-rtl btn border d-flex align-items-center justify-content-between mt-2"
                                             data-toggle="modal"
                                             data-target="#exampleModalCenter"
-                                            style={{ color: "#464646", minWidth: "230px" }}
+                                            style={{ color: "#464646" }}
                                         >
-                                            <div className="d-flex align-items-center">
+                                            <div className={`${styles.filter} d-flex align-items-center`}>
                                                 <IconFilter className="mr-3" />
                                                 Pilih Filter
                                             </div>
@@ -877,7 +900,7 @@ const Galeri = ({ token }) => {
                                         <tbody>
                                             {!galeri || (galeri && galeri.gallery.length === 0) ? (
                                                 <td className="align-middle text-center" colSpan={9}>
-                                                    Data Tidak Ditemukan
+                                                    Data Kosong
                                                 </td>
                                             ) : (
                                                 galeri &&
@@ -1031,21 +1054,38 @@ const Galeri = ({ token }) => {
 
                             <div className="row">
                                 {galeri && galeri.perPage < galeri.total && (
-                                    <div className={`${stylesPag.pagination} table-pagination`}>
-                                        <Pagination
-                                            activePage={page}
-                                            itemsCountPerPage={galeri.perPage}
-                                            totalItemsCount={galeri.total}
-                                            pageRangeDisplayed={3}
-                                            onChange={handlePagination}
-                                            nextPageText={">"}
-                                            prevPageText={"<"}
-                                            firstPageText={"<<"}
-                                            lastPageText={">>"}
-                                            itemClass="page-item"
-                                            linkClass="page-link"
-                                        />
-                                    </div>
+                                    <>
+                                        <div className={`${stylesPag.pagination} table-pagination`}>
+                                            <Pagination
+                                                activePage={page}
+                                                itemsCountPerPage={galeri.perPage}
+                                                totalItemsCount={galeri.total}
+                                                pageRangeDisplayed={3}
+                                                onChange={handlePagination}
+                                                nextPageText={">"}
+                                                prevPageText={"<"}
+                                                firstPageText={"<<"}
+                                                lastPageText={">>"}
+                                                itemClass="page-item"
+                                                linkClass="page-link"
+                                            />
+                                        </div>
+                                        <div className={`${stylesPag.pagination2} table-pagination`}>
+                                            <Pagination
+                                                activePage={page}
+                                                itemsCountPerPage={galeri.perPage}
+                                                totalItemsCount={galeri.total}
+                                                pageRangeDisplayed={1}
+                                                onChange={handlePagination}
+                                                nextPageText={">"}
+                                                prevPageText={"<"}
+                                                firstPageText={"<<"}
+                                                lastPageText={">>"}
+                                                itemClass="page-item"
+                                                linkClass="page-link"
+                                            />
+                                        </div>
+                                    </>
                                 )}
                                 {galeri ? (
                                     <div className={`${stylesPag.rightPag} table-total ml-auto`}>
@@ -1123,28 +1163,30 @@ const Galeri = ({ token }) => {
                 aria-labelledby="exampleModalCenterTitle"
                 aria-hidden="true"
             >
-                <div className="modal-dialog modal-dialog-centered" role="document">
-                    <div className={`${styles.rightSideBar} modal-content`}>
+                <div className="modal-dialog modal-xl modal-dialog-centered" role="document">
+                    {/* <div className={`${styles.rightSideBar} modal-content`}> */}
+                    <div className="modal-content">
                         {/* <div className="modal-header">
                             <h5 className="modal-title" id="exampleModalLongTitle">Pratinjau Gambar</h5>
                             <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div> */}
-                        <div className="modal-body">
-                            <div className={`${styles.fullBar} row`}>
+                        <div className="">
+                            {/* <div className={`${styles.fullBar} row`}> */}
+                            <div className="row">
                                 <div className="col-sm-12 col-md-6 col-lg-6">
-                                    <div className={styles["img-left"]}>
-                                        {
-                                            isViewed &&
-                                            <>
-                                                {printImage()}
-                                            </>
-                                        }
-                                    </div>
+                                    {/* <div className={styles["img-left"]}> */}
+                                    {
+                                        isViewed &&
+                                        <>
+                                            {printImage()}
+                                        </>
+                                    }
+                                    {/* </div> */}
                                 </div>
-                                <div className="col-sm-12 col-md-6 col-lg-6" style={{ padding: "30px" }}>
-                                    <div className={styles["rightSide"]}>
+                                <div className={`${styles.modalsRight} col-sm-12 col-md-6 col-lg-6`}>
+                                    <div className={`${styles.rightSide}`}>
                                         {galeri &&
                                             galeri.gallery.length !== 0 &&
                                             index_galleri !== null ? (
@@ -1171,18 +1213,21 @@ const Galeri = ({ token }) => {
                                                     style={{ border: "none", background: "none" }}
                                                 ></button> */}
                                                 </div>
-                                                <div className="row mb-4">
-                                                    <div className="col-sm-7 col-8">
+                                                <div className="row justify-content-between mb-4 p-1">
+                                                    <div className="">
                                                         <div className={styles["subMenuPreview"]}>
-                                                            <div className="mb-1 p-0 d-flex align-items-center">
-                                                                <div className={styles["iconPreview"]}>
-                                                                    <i className="flaticon2-calendar-4"></i>
-                                                                </div>
-                                                                <span className="ml-2">
-                                                                    Publish:{" "}
-                                                                    {moment(galeri.gallery[index_galleri].tanggal_publish).format("LL")}
-                                                                </span>
-                                                            </div>
+                                                            {
+                                                                galeri.gallery[index_galleri].publish === 0 ? null :
+                                                                    <div className="mb-1 p-0 d-flex align-items-center">
+                                                                        <div className={styles["iconPreview"]}>
+                                                                            <i className="flaticon2-calendar-4"></i>
+                                                                        </div>
+                                                                        <span className="ml-2">
+                                                                            Publish:{" "}
+                                                                            {moment(galeri.gallery[index_galleri].tanggal_publish).format("LL")}
+                                                                        </span>
+                                                                    </div>
+                                                            }
 
                                                             {/* <div className="mb-1 p-0 d-flex align-items-center">
                                                             <i className="flaticon2-user"></i>
@@ -1193,7 +1238,7 @@ const Galeri = ({ token }) => {
                                                         </div>
                                                     </div>
 
-                                                    <div className="col-sm-5 col-4" style={{}}>
+                                                    <div className="" style={{}}>
                                                         <span className="label label-inline label-light-success font-weight-bold p-2">
                                                             {(galeri.gallery[index_galleri].nama_kategori).toUpperCase()}
                                                         </span>
@@ -1217,13 +1262,13 @@ const Galeri = ({ token }) => {
                                                         }}
                                                     ></p>
                                                     <div className="row justify-content-between align-items-center" style={{ width: '100%' }}>
-                                                        <div className="col-sm-12 col-md-12 col-12" style={{ display:'flex', flexWrap:'wrap',overflowWrap:'break-word'}}>
+                                                        <div className="col-sm-12 col-md-12 col-12" style={{ display: 'flex', flexWrap: 'wrap', overflowWrap: 'break-word' }}>
                                                             {galeri.gallery[index_galleri].tag !== null
                                                                 ? galeri.gallery[index_galleri].tag.map((row, i) => {
                                                                     return (
                                                                         <span
                                                                             style={{ background: "#fff", border: '1px solid #d7e1ea' }}
-                                                                            className="mr-3 px-3 py-1 rounded"
+                                                                            className="mr-3 px-3 py-1 rounded mb-1"
                                                                             key={i}
                                                                         >
                                                                             <div className={styles["tagModal"]}>

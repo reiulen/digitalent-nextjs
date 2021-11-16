@@ -48,8 +48,7 @@ const DetailRole = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3
-              className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 mb-5 mt-5"
-              style={{ fontSize: "24px" }}
+              className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 mb-5 mt-5 titles-1"
             >
               Detail Role
             </h3>
@@ -103,8 +102,8 @@ const DetailRole = ({ token }) => {
 
             <div>
               <h3
-                className="card-title font-weight-bolder text-dark w-100 pb-5 mb-5 mt-5"
-                style={{ fontSize: "24px" }}
+                className="card-title font-weight-bolder text-dark w-100 pb-5 mb-5 mt-5 titles-1"
+             
               >
                 Access Role
               </h3>
@@ -231,7 +230,7 @@ const DetailRole = ({ token }) => {
             </div>
 
             {/* start footer btn */}
-            <div className="form-group row">
+            <div className="form-group row mt-8">
               <div className="col-sm-12 d-flex justify-content-end">
 
                 <Link href="/site-management/role" passHref>

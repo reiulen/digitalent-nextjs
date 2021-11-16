@@ -1,22 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import Pagination from "react-js-pagination";
 import PageWrapper from "../../../../wrapper/page.wrapper";
-import { useDispatch, useSelector } from "react-redux";
-import LoadingTable from "../../../../LoadingTable";
-import IconEye from "../../../../assets/icon/Eye";
-import IconPencil from "../../../../assets/icon/Pencil";
-import IconDelete from "../../../../assets/icon/Delete";
-import IconAdd from "../../../../assets/icon/Add";
-import IconSearch from "../../../../assets/icon/Search";
-import Image from "next/image";
-import IconPlus from "../../../../../public/assets/icon/Plus.svg";
-import IconMinus from "../../../../../public/assets/icon/Minus.svg";
 import axios from "axios";
 import Swal from "sweetalert2";
 const TambahApi = ({ token }) => {
-  let dispatch = useDispatch();
   const router = useRouter();
   const [nameCooperation, setNameCooperation] = useState("");
   const [email, setEmail] = useState("");
@@ -93,44 +81,26 @@ const TambahApi = ({ token }) => {
     }
   };
 
-  const btnIconPlus = {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    width: "19px",
-    height: "19px",
-    borderRadius: "5px",
-    backgroundColor: "#ADB5BD",
-  };
-  const btnMin = {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    width: "19px",
-    height: "19px",
-    borderRadius: "5px",
-    backgroundColor: "#4299E1",
-  };
+ 
   return (
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3
-              className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 mb-5 mt-5"
-              style={{ fontSize: "24px" }}
+              className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 mb-5 mt-5 titles-1"
             >
               Tambah Mitra
             </h3>
           </div>
-          <div className="card-body pt-0">
+          <div className="card-body pt-0 px-4 px-sm-8">
             <form>
               <div className="form-group">
                 <label>Nama Lengkap</label>
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Masukan nama lengkap"
+                  placeholder="Masukkan nama lengkap"
                   onChange={(e) => setNameCooperation(e.target.value)}
                 />
               </div>
@@ -140,7 +110,7 @@ const TambahApi = ({ token }) => {
                   onChange={(e) => setEmail(e.target.value)}
                   type="email"
                   className="form-control"
-                  placeholder="Masukan email"
+                  placeholder="mitra@gmail.com"
                 />
               </div>
               <div className="form-group">
@@ -151,7 +121,7 @@ const TambahApi = ({ token }) => {
                     type="password"
                     id="input-password"
                     className="form-control"
-                    placeholder="Masukan password"
+                    placeholder="Masukkan password"
                   />
                   {hidePassword === true ? (
                     <i
@@ -168,7 +138,7 @@ const TambahApi = ({ token }) => {
                   )}
                 </div>
               </div>
-              <div className="form-group">
+              <div className="form-group mb-2">
                 <label>Konfirmasi Password</label>
                 <div className="position-relative">
                   <input
@@ -176,7 +146,7 @@ const TambahApi = ({ token }) => {
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     type="password"
                     className="form-control"
-                    placeholder="Masukan konfirmasi password"
+                    placeholder="Masukkan konfirmasi password"
                   />
                   {hidePasswordConfirm === true ? (
                     <i
@@ -193,6 +163,11 @@ const TambahApi = ({ token }) => {
                   )}
                 </div>
               </div>
+              <p style={{color:"#b7b5cf"}}>
+                Min 8 Karakter,<br/>
+                Case Sensitivity (min t.d 1 Uppercase, 1 lowercase)<br/>
+                Min 1 Symbol/angka
+              </p>
 
               <div className="form-group">
                 <label>Status</label>
@@ -206,7 +181,7 @@ const TambahApi = ({ token }) => {
                 </select>
               </div>
             </form>
-            <div className="form-group row">
+            <div className="form-group row mt-8">
               <div className="col-sm-12 d-flex justify-content-end">
                 <Link href="/site-management/user/mitra" passHref>
                   <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">

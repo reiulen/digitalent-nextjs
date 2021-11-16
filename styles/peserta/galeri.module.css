@@ -1,11 +1,20 @@
-.card-thumbnail {
-    filter: brightness(100%);
-    /* background-image: linear-gradient(white, black); */
+@media (max-width: 1135px) {
+  .responsive_overflow{
+    overflow-x: scroll;
+    max-width: 1135px;
+  }
 }
 
-.card_thumbnail :hover {
-    filter: brightness(70%);
-    background-image: none;
-    background-color: linear-gradient(white, black);
+@media (max-width: 550px) {
+  .responsive_overflow{
+    overflow-x: scroll;
+    max-width: 550px;
+  }
 }
 
+@media (max-width: 320px) {
+  .responsive_overflow{
+    overflow-x: scroll;
+    max-width: 320px;
+  }
+}

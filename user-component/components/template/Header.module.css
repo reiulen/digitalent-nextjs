@@ -7,10 +7,57 @@
   );
 }
 
-@media (min-width: 425px) {
+@media (min-width: 375px) {
   .textCardRight {
     display: none;
   }
+}
+
+.breadcrumbProfile {
+  text-decoration: underline !important;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 160%;
+  /* or 22px */
+  cursor: pointer;
+  letter-spacing: 0.015em;
+  text-decoration-line: underline;
+
+  /* Neutral/White */
+
+  color: #ffffff;
+}
+
+.breadCrumbName {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 160%;
+  /* or 22px */
+
+  letter-spacing: 0.015em;
+
+  /* Neutral/White */
+
+  color: #ffffff;
+}
+
+.breadCrumbNameLink {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 160%;
+  /* or 22px */
+  text-decoration: underline;
+  letter-spacing: 0.015em;
+  cursor: pointer;
+  /* Neutral/White */
+
+  color: #ffffff;
 }
 
 .body {
@@ -63,7 +110,6 @@
   /* Neutral/White */
 
   color: #ffffff;
-  float: right;
 }
 .mainText {
   font-family: Poppins;
@@ -123,4 +169,22 @@
 }
 .imageProfile {
   border-radius: 50%;
+}
+
+.responsive_truncation {
+  display: inline-block;
+  white-space: nowrap;
+  width: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 320px) {
+  .responsive_truncation {
+    display: inline-block;
+    white-space: nowrap;
+    width: 50px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }

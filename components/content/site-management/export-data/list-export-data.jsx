@@ -29,8 +29,7 @@ const Table = ({ token }) => {
 
   const allExportData = useSelector(state => state.allExportData)
   const deleteExportData = useSelector(state => state.deleteExportData)
-  console.log("allExportData",allExportData)
-  console.log("deleteExportData",deleteExportData)
+ 
 
   const [valueSearch, setValueSearch] = useState("");
   const handleChangeValueSearch = (value) => {
@@ -52,18 +51,17 @@ const Table = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3
-              className="card-title font-weight-bolder text-dark"
-              style={{ fontSize: "24px" }}
+              className="card-title font-weight-bolder text-dark titles-1"
             >
               Export Data
             </h3>
           </div>
-          <div className="card-body pt-0">
+          <div className="card-body pt-0 px-4 px-sm-8">
             <div className="table-filter">
               <div className="row">
                 <div className="col-12 col-sm-6">
                   <div
-                    className="d-flex align-items-center w-100"
+                    className="d-flex align-items-center w-100 mt-4"
                   >
                     <div className="position-relative overflow-hidden w-100">
                       <IconSearch
@@ -93,7 +91,7 @@ const Table = ({ token }) => {
                   </div>
                 </div>
                 <div className="col-12 col-sm-6">
-                  <div className="d-flex justify-content-end">
+                  <div className="d-flex justify-content-end mt-4">
                     <Link href="/site-management/export-data/filter-export-data" passHref>
 
                     <a className="btn btn-rounded-full bg-blue-secondary text-white">
@@ -215,9 +213,8 @@ const Table = ({ token }) => {
                 )}
               </div>
 
-              <div className="row">
-                <div className="table-pagination paginate-cs">
-                  <div className="table-pagination">
+              <div className="row px-4">
+                <div className="table-pagination">
                       <Pagination
                         activePage={allExportData.page}
                         itemsCountPerPage={allExportData.data.perPage}
@@ -231,14 +228,13 @@ const Table = ({ token }) => {
                         itemClass="page-item"
                         linkClass="page-link"
                       />
-                    </div>
                 </div>
 
-                <div className="table-total ml-auto">
-                  <div className="row">
+                <div className="table-total ml-auto mr-4">
+                  <div className="row mt-4">
                     <div className="col-4 mr-0 p-0">
                       <select
-                        className="form-control mr-5 cursor-pointer"
+                        className="form-control cursor-pointer pr-2"
                         id="exampleFormControlSelect2"
                         defaultValue=""
                         style={{

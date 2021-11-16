@@ -3,6 +3,11 @@ import EditTriviaStep1 from "../../../../components/content/subvit/trivia/edit/s
 import { getDetailTriviaQuestionBanks } from "../../../../redux/actions/subvit/trivia-question.actions";
 import { wrapper } from "../../../../redux/store";
 import { getSession } from "next-auth/client";
+import {
+  dropdownAkademi,
+  dropdownPelatihan,
+  dropdownTema,
+} from "../../../../redux/actions/pelatihan/function.actions";
 
 export default function EditTriviaStep1Page(props) {
   const session = props.session.user.user.data;
@@ -28,6 +33,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+
+      await store.dispatch(dropdownAkademi(session.user.user.data.token));
+      await store.dispatch(dropdownTema(session.user.user.data.token));
+      await store.dispatch(dropdownPelatihan(session.user.user.data.token));
       await store.dispatch(
         getDetailTriviaQuestionBanks(query.id, session.user.user.data.token)
       );

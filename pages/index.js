@@ -1,52 +1,49 @@
 import { getSession } from "next-auth/client";
 import dynamic from "next/dynamic";
 
-// import LoginAdmin from "../components/content/auth/admin/login";
-// import Beranda from "../user-component/content/beranda/beranda"
-// import Wrapper from "../"
-
 import { wrapper } from "../redux/store";
 import { getAllAkademi } from "../redux/actions/beranda/beranda.actions";
 import { getTemaByAkademi } from "../redux/actions/beranda/beranda.actions";
 import { getAllPublikasi } from "../redux/actions/beranda/beranda.actions";
 import { getDataPribadi } from "../redux/actions/pelatihan/function.actions";
-// import { getPelatihanByTema } from "../redux/actions/beranda/beranda.actions";
+import React, { useState } from "react";
+import LoadingLanding from "../user-component/components/loader/LandingLoader";
 
-const Beranda = dynamic(() =>
-  import("../user-component/content/beranda/beranda")
+const Beranda = dynamic(
+  () => import("../user-component/content/beranda/beranda-new"),
+  {
+    loading: function loadingNow() {
+      return <LoadingLanding />;
+    },
+    ssr: false,
+  }
 );
-const Wrapper = dynamic(() => import("../components/wrapper/beranda.wrapper"));
+const Layout = dynamic(() => import("../components/wrapper/beranda.wrapper"), {
+  ssr: false,
+});
 
 export default function HomePage(props) {
   let session = null;
   if (props.session) {
     session = props.session.user.user.data.user;
   }
-
+  const [otpEmail, setOtpEmail] = useState("");
   return (
     <>
-      <div className="d-flex flex-column flex-root">
-        <Wrapper title="Digitalent" session={session}>
+      <div style={{ backgroundColor: "white" }}>
+        <Layout title="Digitalent" session={session}>
           <Beranda session={session} />
-        </Wrapper>
+        </Layout>
       </div>
     </>
   );
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  (store) =>
+  store =>
     async ({ query, req }) => {
       const session = await getSession({ req });
-      // const middleware = middlewareAuthAdminSession(session);
-      // if (!middleware.status) {
-      //   return {
-      //     redirect: {
-      //       destination: middleware.redirect,
-      //       permanent: false,
-      //     },
-      //   };
-      // }
+
       if (session) {
         await store.dispatch(
           getDataPribadi(session?.user.user.data.user.token)
@@ -58,10 +55,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
       await store.dispatch(getTemaByAkademi());
 
       await store.dispatch(getAllPublikasi());
-
-      // await store.dispatch (
-      //   getPelatihanByTema()
-      // )
 
       return {
         props: {

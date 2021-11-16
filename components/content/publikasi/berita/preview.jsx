@@ -23,16 +23,18 @@ const Preview = () => {
     return (
         <>
             <PreviewWrapper title="Pratinjau Berita - Publikasi">
-                <div className="col-lg-12 order-1 px-0 position-relative">
+                <div className="col-lg-12 order-1 px-0 my-5 position-relative">
                     <div className="" style={{ height: '100%' }}>
-                        <div className="container">
-                            <nav aria-label="breadcrumb">
-                                <ol className="breadcrumb bg-transparent my-5 ps-5" style={{ border: '1px solid gray', borderRadius: '20px' }}>
-                                    <li className="breadcrumb-item" style={{ color: 'blue' }}>Beranda</li>
-                                    <li className="breadcrumb-item" style={{ color: 'blue' }}>Berita</li>
-                                    <li className="breadcrumb-item" aria-current="page">Detail Berita</li>
-                                </ol>
-                            </nav>
+                        <div className="row flex-column container">
+                            <div className={`${styles.headBreadcrumb}`}>
+                                <nav aria-label="breadcrumb">
+                                    <ol className="breadcrumb bg-transparent my-5 ps-5" style={{ border: '1px solid gray', borderRadius: '20px' }}>
+                                        <li className="breadcrumb-item" style={{ color: 'blue' }}>Beranda</li>
+                                        <li className="breadcrumb-item" style={{ color: 'blue' }}>Berita</li>
+                                        <li className="breadcrumb-item" aria-current="page">Detail Berita</li>
+                                    </ol>
+                                </nav>
+                            </div>
 
                             <div className="ml-0">
                                 <h1 className={`${styles.titlePratinjau} font-weight-bold my-5`}>
@@ -43,7 +45,7 @@ const Preview = () => {
                                     <div className="rounded mt-1" style={{ marginLeft: '25px' }}>
                                         <div className={styles['titleSubMenu-2']}>
                                             {/* <i className="ri-dashboard-line"></i> */}
-                                            <span className="label label-inline label-light-success font-weight-bold">
+                                            <span className={`${styles.titleKategori} label label-inline label-light-success font-weight-bold`}>
                                                 {(jenis_kategori).toUpperCase()}
                                             </span>
                                         </div>
@@ -72,7 +74,7 @@ const Preview = () => {
                             <div className="row">
                                 <div className="pt-0" style={{ height: '100%' }}>
 
-                                    <div className="d-flex justify-content-center my-3">
+                                    <div className={`${styles.imgPreview} d-flex justify-content-center my-3`}>
                                         <Image
                                             src={process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + gambar}
                                             alt="gambar-artikel"
@@ -85,7 +87,7 @@ const Preview = () => {
 
                                     <div className="text-justify my-5 p-3" style={{ border: '1px solid #d7e1ea', borderRadius: '10px' }}>
                                         {/* To render html Tag */}
-                                        <div dangerouslySetInnerHTML={{ __html: isi_berita }} style={{ overflowWrap: 'break-word' }}></div>
+                                        <div dangerouslySetInnerHTML={{ __html: isi_berita }} className={`${styles.isiArtikel}`} style={{ overflowWrap: 'break-word' }}></div>
                                         <div className="row">
                                             <div className="col-sm-8 col-md-10 col-11">
                                                 <div className="row my-3 ml-0">

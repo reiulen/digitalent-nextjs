@@ -4,9 +4,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import ReCAPTCHA from "react-google-recaptcha";
-import { toast } from "react-toastify";
 import { signIn } from "next-auth/client";
 import SimpleReactValidator from "simple-react-validator";
+import { SweatAlert } from "../../../../utils/middleware/helper";
 
 import AuthWrapper from "../../../wrapper/auth.wrapper";
 import LoadingTable from "../../../LoadingTable";
@@ -47,7 +47,7 @@ const LoginUser = () => {
       const result = await signIn("credentials", data);
 
       if (result.error) {
-        toast.error(result.error);
+        SweatAlert("Gagal", result.error, "error");
         setLoading(false);
       } else {
         setLoading(false);
@@ -123,12 +123,14 @@ const LoginUser = () => {
                 </div>
                 <div className="form-group">
                   <label className="form-auth-label">Password</label>
-                  <a
-                    className="float-right font-weight-bold"
-                    style={{ color: "#4CBDE2" }}
-                  >
-                    Lupa Password ?
-                  </a>
+                  <Link href="login/forgot-password">
+                    <a
+                      className="float-right font-weight-bold"
+                      style={{ color: "#4CBDE2" }}
+                    >
+                      Lupa Password ?
+                    </a>
+                  </Link>
                   <div className="position-relative">
                     <input
                       id="input-password"

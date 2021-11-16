@@ -30,8 +30,7 @@ const Table = ({ token }) => {
     setValueSearch(value);
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const handleSubmit = () => {
     dispatch(searchCooporation(valueSearch));
   };
 
@@ -45,8 +44,7 @@ const Table = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3
-              className="card-title font-weight-bolder text-dark"
-              style={{ fontSize: "24px" }}
+              className="card-title font-weight-bolder text-dark titles-1"
             >
               List Master Zonasi
             </h3>
@@ -62,16 +60,15 @@ const Table = ({ token }) => {
               </Link>
             </div>
           </div>
-          <div className="card-body pt-0">
+          <div className="card-body pt-0 px-4 px-sm-8">
             <div className="table-filter">
               <div className="row align-items-center">
-                <div className="col-lg-12 col-xl-12">
-                  <form
-                    onSubmit={handleSubmit}
+                <div className="col-12 col-xl-12">
+                  <div
                     className="d-flex align-items-center w-100"
                   >
                     <div className="row w-100">
-                      <div className="col-12 col-sm-6">
+                      <div className="col-12 col-xl-4">
                         <div className="position-relative overflow-hidden w-100">
                           <IconSearch
                             style={{ left: "10" }}
@@ -87,7 +84,8 @@ const Table = ({ token }) => {
                             }
                           />
                           <button
-                            type="submit"
+                            type="button"
+                            onClick={()=>handleSubmit()}
                             className="btn bg-blue-primary text-white right-center-absolute"
                             style={{
                               borderTopLeftRadius: "0",
@@ -99,7 +97,7 @@ const Table = ({ token }) => {
                         </div>
                       </div>
                     </div>
-                  </form>
+                  </div>
                 </div>
               </div>
             </div>
@@ -118,14 +116,10 @@ const Table = ({ token }) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {allZonasi.data.zonasi.length === 0 ? (
-                        <tr>
-                          <td colSpan="4" className="text-center">
-                            <h4>Data tidak ditemukan</h4>
-                          </td>
-                        </tr>
+                      {allZonasi?.data?.zonasi?.length === 0 ? (
+                        <td className="align-middle text-center" colSpan="4">Data Masih Kosong</td>
                       ) : (
-                        allZonasi.data.zonasi.map((items, index) => {
+                        allZonasi?.data?.zonasi?.map((items, index) => {
                           return (
                             <tr key={index}>
                               <td className="align-middle text-left">
@@ -190,12 +184,12 @@ const Table = ({ token }) => {
                 )}
               </div>
 
-              <div className="row">
-                <div className="table-pagination paginate-cs">
+              <div className="row px-4">
+                <div className="table-pagination">
                   <Pagination
-                    activePage={allZonasi.page}
-                    itemsCountPerPage={allZonasi.data.perPage}
-                    totalItemsCount={allZonasi.data.total}
+                    activePage={allZonasi?.page}
+                    itemsCountPerPage={allZonasi?.data?.perPage}
+                    totalItemsCount={allZonasi?.data?.total}
                     pageRangeDisplayed={3}
                     onChange={(page) => dispatch(setPage(page))}
                     nextPageText={">"}
@@ -207,11 +201,11 @@ const Table = ({ token }) => {
                   />
                 </div>
 
-                <div className="table-total ml-auto">
-                  <div className="row">
+                <div className="table-total ml-auto mr-4">
+                  <div className="row mt-4">
                     <div className="col-4 mr-0 p-0">
                       <select
-                        className="form-control mr-5 cursor-pointer"
+                        className="form-control cursor-pointer pr-2"
                         id="exampleFormControlSelect2"
                         defaultValue=""
                         style={{
@@ -236,7 +230,7 @@ const Table = ({ token }) => {
                         className="align-middle mt-3"
                         style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}
                       >
-                        Total Data {allZonasi.data && allZonasi.data.total} List
+                        Total Data {allZonasi?.data && allZonasi?.data?.total} List
                         Data
                       </p>
                     </div>

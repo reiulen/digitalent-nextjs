@@ -577,7 +577,7 @@ const ListTraining = ({ token }) => {
                   </div>
                 </div>
 
-                <div className="col-lg-4 col-xl-4 justify-content-end d-flex">
+                <div className="col-lg-4 col-xl-4 justify-content-end d-flex mt-3">
                   <button
                     className="btn border d-flex align-items-center justify-content-between mb-2 w-100"
                     style={{
@@ -629,7 +629,7 @@ const ListTraining = ({ token }) => {
                       (training && training.list === null) ||
                       training.list.length === 0 ? (
                         <td className="align-middle text-center" colSpan={8}>
-                          Data Masih Kosong
+                          Data Kosong
                         </td>
                       ) : (
                         training.list.map((row, i) => (

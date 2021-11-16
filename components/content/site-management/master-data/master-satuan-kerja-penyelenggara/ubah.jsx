@@ -21,11 +21,11 @@ const TambahApi = ({ token }) => {
  
 
   const detailUnitWork = useSelector((state) => state.detailUnitWork);
- 
   let sortirOptionTempProv = detailUnitWork?.unitWork?.provinsi
   let optionTempProv = sortirOptionTempProv.map((items)=>{
-    return {...items,label:items.provinsi}
+    return {...items,label:items.provinsi,region:items.provinsi}
   })
+
 
   
 
@@ -66,11 +66,11 @@ let sortirOptionTempProvList = allProvincesSite?.data
         "Form nama satuan kerja tidak boleh kosong",
         "error"
       );
-    } else if (status === "") {
+    } 
+    else if (status === "") {
       Swal.fire("Gagal simpan", "Form status tidak boleh kosong", "error");
-    } else if (valueProvinsi.length === 0) {
-      Swal.fire("Gagal simpan", "Form provinsi tidak boleh kosong", "error");
-    } else {
+    } 
+    else {
       Swal.fire({
         title: "Apakah anda yakin simpan ?",
         // text: "Data ini tidak bisa dikembalikan !",
@@ -87,7 +87,7 @@ let sortirOptionTempProvList = allProvincesSite?.data
             id:router.query.id,
             name: nameUnitWork,
             status: status,
-            data: valueProvinsi,
+            data: valueProvinsi.length === 0 ? optionTempProv : valueProvinsi,
           };
 
           try {
@@ -114,23 +114,6 @@ let sortirOptionTempProvList = allProvincesSite?.data
     }
   };
 
- 
-
-  // useEffect(() => {
-  //   let optionProvinsi = tempOptionsProvinsi.map((items) => {
-  //     return { ...items, label: items.value };
-  //   });
-  //   setProvinsi(optionProvinsi);
-
-
-    
-  //   let optionProvinsiApiDefault = defaultOptionFromApi.map((items) => {
-  //     return { ...items, label: items.provinsi };
-  //   });
-  //   setDefaultValueProvisniApi(optionProvinsiApiDefault);
-
-
-  // }, [defaultOptionFromApi,tempOptionsProvinsi]);
   return (
     <PageWrapper>
       <form>
@@ -138,13 +121,12 @@ let sortirOptionTempProvList = allProvincesSite?.data
           <div className="card card-custom card-stretch gutter-b">
             <div className="card-header border-0">
               <h3
-                className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 mb-5 mt-5"
-                style={{ fontSize: "24px" }}
+                className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 mb-5 mt-5 titles-1"
               >
                 Ubah Satuan Kerja Penyelenggara
               </h3>
             </div>
-            <div className="card-body pt-0">
+            <div className="card-body pt-0 px-4 px-sm-8">
               <div className="form-group">
                 <label>Nama Satuan Kerja</label>
                 <input

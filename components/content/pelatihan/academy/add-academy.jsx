@@ -3,11 +3,11 @@ import React, { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
-import Swal from "sweetalert2";
 import SimpleReactValidator from "simple-react-validator";
 import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
 
+import { SweatAlert } from "../../../../utils/middleware/helper";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import {
   newAcademy,
@@ -81,7 +81,7 @@ const AddAcademy = ({ token }) => {
       if (type.includes(e.target.files[0].type)) {
         if (e.target.files[0].size > 5000000) {
           e.target.value = null;
-          Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
+          SweatAlert("Oops !", "Gambar maksimal 5 MB", "error");
         } else {
           setLogoFile(e.target.files[0]);
           const reader = new FileReader();
@@ -95,9 +95,9 @@ const AddAcademy = ({ token }) => {
         }
       } else {
         e.target.value = null;
-        Swal.fire(
+        SweatAlert(
           "Oops !",
-          "Data yang bisa dimasukkan hanya berupa data gambar.",
+          "Data yang bisa dimasukkan hanya berupa data gambar",
           "error"
         );
       }
@@ -116,7 +116,7 @@ const AddAcademy = ({ token }) => {
       if (type.includes(e.target.files[0].type)) {
         if (e.target.files[0].size > 10000000) {
           e.target.value = null;
-          Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
+          SweatAlert("Oops !", "Gambar maksimal 5 MB", "error");
         } else {
           const reader = new FileReader();
           reader.onload = () => {
@@ -130,9 +130,9 @@ const AddAcademy = ({ token }) => {
         }
       } else {
         e.target.value = null;
-        Swal.fire(
+        SweatAlert(
           "Oops !",
-          "Data yang bisa dimasukkan hanya berupa data gambar.",
+          "Data yang bisa dimasukkan hanya berupa data gambar",
           "error"
         );
       }
@@ -161,11 +161,7 @@ const AddAcademy = ({ token }) => {
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Isi data dengan benar !",
-      });
+      SweatAlert("Oops !", "Isi data dengan benar !", "error");
     }
   };
 
@@ -350,7 +346,7 @@ const AddAcademy = ({ token }) => {
 
               <div className="form-group mb-3">
                 <label className="col-form-label font-weight-bold">
-                  Upload Browsur (Optional)
+                  Upload Brosur (Optional)
                 </label>
                 <div className="d-flex">
                   <div className="custom-file">

@@ -1,34 +1,20 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import Pagination from "react-js-pagination";
 import PageWrapper from "../../../../wrapper/page.wrapper";
-import { useDispatch, useSelector } from "react-redux";
-import LoadingTable from "../../../../LoadingTable";
-import IconEye from "../../../../assets/icon/Eye";
-import IconPencil from "../../../../assets/icon/Pencil";
-import IconDelete from "../../../../assets/icon/Delete";
-import IconAdd from "../../../../assets/icon/Add";
-import IconSearch from "../../../../assets/icon/Search";
+import {  useSelector } from "react-redux";
 import DatePicker from "react-datepicker";
 import moment from "moment";
 import IconCalender from "../../../../assets/icon/Calender";
 import axios from "axios";
-import {
-  getListApi,
-  getListField,
-  postApi,
-} from "../../../../../redux/actions/site-management/settings/api.actions";
 import Select from "react-select";
 import Swal from "sweetalert2";
 
-import { POST_API_RESET } from "../../../../../redux/types/site-management/settings/api.type";
-
 const TambahApi = ({ token }) => {
-  let dispatch = useDispatch();
   const router = useRouter();
 
   let selectRefField = null;
+
 
   const listApi = useSelector((state) => state.listApi);
 
@@ -37,6 +23,7 @@ const TambahApi = ({ token }) => {
   const [status, setStatus] = useState("");
   const [apiChoice, setApiChoice] = useState("");
   const [field, setField] = useState([]);
+  const [valueField, setValueField] = useState([])
   const [optionListField, setOptionListField] = useState([]);
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
@@ -48,12 +35,19 @@ const TambahApi = ({ token }) => {
     setTo(moment(date).format("YYYY-MM-DD"));
   };
 
+
   const changeListApi = (e) => {
     let resultSelect = e.map((items) => {
       return items.label;
     });
+    setValueField(e)
     setField(resultSelect);
   };
+
+  const changeChoiceApi = (e) => {
+    setApiChoice(e.target.value)
+    setValueField([])
+  }
 
   const submit = (e) => {
     e.preventDefault();
@@ -66,12 +60,15 @@ const TambahApi = ({ token }) => {
     else if(apiChoice === ""){
       Swal.fire("Gagal simpan", "Api tidak boleh kosong", "error");
     }
-    else if(field.length === 0){
+    else if(!valueField.length){
       Swal.fire("Gagal simpan", "Field tidak boleh kosong", "error");
     }
-    // else if (valueProvinsi === "") {
-    //   Swal.fire("Gagal simpan", "Form provinsi tidak boleh kosong", "error");
-    // }
+    else if(!from){
+      Swal.fire("Gagal simpan", "Field From tidak boleh kosong", "error");
+    }
+    else if(!to){
+      Swal.fire("Gagal simpan", "Field To tidak boleh kosong", "error");
+    }
     else {
       Swal.fire({
         title: "Apakah anda yakin simpan ?",
@@ -144,8 +141,6 @@ const TambahApi = ({ token }) => {
           });
 
           setOptionListField(optionListFieldResult);
-
-          // change list add label and value sisa implementasi ke render html list field and set state needed
         } catch (error) {return;
         }
       }
@@ -173,7 +168,7 @@ const TambahApi = ({ token }) => {
                   type="text"
                   onChange={(e) => setNameApi(e.target.value)}
                   className="form-control"
-                  placeholder="Masukan nama api"
+                  placeholder="Masukkan nama api"
                 />
               </div>
               <div className="form-group">
@@ -182,7 +177,7 @@ const TambahApi = ({ token }) => {
                   onChange={(e) => setNameUser(e.target.value)}
                   type="text"
                   className="form-control"
-                  placeholder="Masukan nama pengguna"
+                  placeholder="Masukkan nama pengguna"
                 />
               </div>
               <div className="form-group">
@@ -200,7 +195,7 @@ const TambahApi = ({ token }) => {
               <div className="form-group">
                 <label>Pilih API</label>
                 <select
-                  onChange={(e) => setApiChoice(e.target.value)}
+                  onChange={(e) => changeChoiceApi(e)}
                   className="form-control"
                 >
                   <option value="">Pilih api</option>
@@ -216,7 +211,7 @@ const TambahApi = ({ token }) => {
               <div className="form-group">
                 <label>Field</label>
                 <Select
-                  ref={(ref) => (selectRefField = ref)}
+                  value={valueField}
                   className="basic-single"
                   classNamePrefix="select"
                   placeholder="Pilih Field"
@@ -256,9 +251,10 @@ const TambahApi = ({ token }) => {
                       className="form-search-date form-control cursor-pointer"
                       onChange={(date) => onChangePeriodeDateEnd(date)}
                       value={to}
+                      disabled={!from}
                       dateFormat="YYYY-MM-DD"
                       placeholderText="To"
-                      minDate={moment().toDate()}
+                      minDate={moment(from).toDate()}
                     />
                     <IconCalender
                       className="right-center-absolute"

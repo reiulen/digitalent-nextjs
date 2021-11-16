@@ -39,7 +39,7 @@ const Navigationbar = ({ session }) => {
       <Navbar
         bg="white"
         expand="lg"
-        className="shadow header-dashboard"
+        className="shadow header-dashboard px-35"
         sticky="top"
       >
         <Navbar.Brand href="/">
@@ -120,12 +120,19 @@ const Navigationbar = ({ session }) => {
                     Pusat Informasi
                   </button>
                   <div className="dropdown-menu ml-3">
+                    
+                    <Link href="/peserta/menu/pusat-informasi">
                     <a className="dropdown-item navdropdown-child" href="#">
                       Panduan Test Substansi
                     </a>
+                    </Link>
+
+                    <Link href="/peserta/menu/pusat-informasi">
                     <a className="dropdown-item navdropdown-child" href="#">
                       Hak dan Kewajiban
                     </a>
+                    </Link>
+
                   </div>
                 </div>
                 <NavDropdown.Item
@@ -157,29 +164,20 @@ const Navigationbar = ({ session }) => {
                   </button>
                   <div className="dropdown-menu ml-3">
                     <Link href={`/berita`}>
-                      <a className="dropdown-item navdropdown-child">
-                        Berita
-                      </a>
+                      <a className="dropdown-item navdropdown-child">Berita</a>
                     </Link>
                     <Link href={`/artikel`}>
-                      <a className="dropdown-item navdropdown-child">
-                        Artikel
-                      </a>
+                      <a className="dropdown-item navdropdown-child">Artikel</a>
                     </Link>
                     <Link href={`/galeri`}>
-                      <a className="dropdown-item navdropdown-child">
-                        Galeri
-                      </a>
+                      <a className="dropdown-item navdropdown-child">Galeri</a>
                     </Link>
                     <a className="dropdown-item navdropdown-child" href="#">
                       Video
                     </a>
                   </div>
                 </div>
-                <NavDropdown.Item
-                  href="/faq"
-                  className="navdropdown-child"
-                >
+                <NavDropdown.Item href="/faq" className="navdropdown-child">
                   FAQ
                 </NavDropdown.Item>
                 <NavDropdown.Item
@@ -266,7 +264,7 @@ const Navigationbar = ({ session }) => {
                   />
                 </div>
 
-                {isShowDropdown ? (
+                {isShowDropdown && (
                   <ul className="list-wrap-accounts">
                     <Link href="/peserta" passHref>
                       <li className="items-lists">
@@ -301,8 +299,6 @@ const Navigationbar = ({ session }) => {
                       </button>
                     </li>
                   </ul>
-                ) : (
-                  ""
                 )}
               </div>
             ) : (

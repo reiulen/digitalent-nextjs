@@ -78,7 +78,7 @@ export default function DashboardPage({ token }) {
         className="position-relative br-12 bg-white py-10 px-6 overflow-hidden"
         style={{ height: "197px", maxHeight: "197px" }}
       >
-        <div className="right-center-absolute">
+        <div className="right-center-absolute img-ds">
           <Image src={ImageHero} alt="imagehero" />
         </div>
 
@@ -87,7 +87,7 @@ export default function DashboardPage({ token }) {
         </div>
 
         <h5 className="text-blue-secondary fw-600 fz-24">
-          Hallo {user.name} !
+          Halo {user.name} !
         </h5>
         <p className="text-gray-primary fw-600 fz-16">
           Selamat Datang di Dashboard Partnership, yuk cek pengajuan kerjasama
@@ -124,7 +124,7 @@ export default function DashboardPage({ token }) {
             </h5>
             <h5 className="fw-500 fz-14 text-gray-secondary">
               {allDashboard.data_dashboard.data?.cooperation_active +
-                allDashboard.data_dashboard.data?.cooperation_approved}{" "}
+                allDashboard.data_dashboard.data?.cooperation_approved}
               Total Aktif dan Tidak Aktif
             </h5>
             <div className="wrapper-chart-pie">
@@ -143,7 +143,7 @@ export default function DashboardPage({ token }) {
                   innerRadius={60}
                   outerRadius={80}
                   paddingAngle={-10}
-                  cornerRadius={30}
+                  cornerRadius={30} 
                 >
                   {dataPieChartStatusPengajuan &&
                     dataPieChartStatusPengajuan.map((el, i) => {
@@ -186,7 +186,7 @@ export default function DashboardPage({ token }) {
 
                     <div className="ml-4">
                       <p className="mb-0 fz-16 fw-600 text-blue-primary">
-                        {allDashboard.data_dashboard.data?.cooperation_approved}
+                        {allDashboard.data_dashboard.data?.cooperation_non_active}
                       </p>
                       <p className="mb-0 mt-2 text-gray-secondary fw-500 fz-12">
                         Tidak Aktif

@@ -1,75 +1,188 @@
-import React from "react";
-import { 
-    Dropdown,
-    Col,
-    Form,
-    InputGroup,
-    FormControl
-} from "react-bootstrap";
+import React, { useState } from "react";
+import { Dropdown, Col, Form, InputGroup, FormControl } from "react-bootstrap";
 
-import { TagsInput } from "react-tag-input-component";
+import Select from "react-select";
+import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router";
+
+import { getAllPelatihanByAkademi } from "../../redux/actions/beranda/detail-akademi.actions";
+import { getDetailAkademi } from "../../redux/actions/beranda/detail-akademi.actions";
 
 const FilterBar = () => {
-    return(
-        <div className="row mt-3 ml-1 p-3 bg-white rounded d-flex align-items-center">
-            <Dropdown className="border rounded">
-                <Dropdown.Toggle variant="white" id="dropdown-basic">
-                    VSGA
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                    <Dropdown.Item href="#/action-1">VSGA</Dropdown.Item>
-                    <Dropdown.Item href="#/action-2">FGA</Dropdown.Item>
-                    <Dropdown.Item href="#/action-3">PRO</Dropdown.Item>
-                    <Dropdown.Item href="#/action-3">TA</Dropdown.Item>
-                    <Dropdown.Item href="#/action-3">GTA</Dropdown.Item>
-                    <Dropdown.Item href="#/action-3">DEA</Dropdown.Item>
-                    <Dropdown.Item href="#/action-3">TSA</Dropdown.Item>
-                </Dropdown.Menu>
-            </Dropdown>
+  const dispatch = useDispatch();
+  const router = useRouter();
 
-            <div className="col-5 bg-white mr-1">
-                <TagsInput 
-                    className="bg-white"
-                />
-            </div>
-            
-            <div className="col-2">
-                <div>
-                    <div className="input-group mb-2 pt-2">
-                        <div className="input-group-prepend">
-                            <div className="input-group-text bg-white">
-                                <i className="ri-map-pin-line mr-2"></i>
-                            </div>
-                        </div>
-                        <input type="text" className="form-control" id="inlineFormInputGroup" placeholder="Jakarta Barat" />
-                    </div>
-                </div>
-            </div>
+  const { tema_id } = router.query;
 
-            <div className="col-3">
-                <div>   
-                    <div className="input-group mb-2 pt-2">
-                        <div className="input-group-prepend">
-                            <div className="input-group-text bg-white">
-                                <i className="ri-briefcase-4-line mr-2"></i>
-                            </div>
-                        </div>
-                        <input type="text" className="form-control col-6" id="inlineFormInputGroup" placeholder="Tipe Pelatihan" />
-                    </div>
-                </div>
-                
-            </div>
+  const { akademi: allAkademi, loading: loadingAllAkademi } = useSelector(
+    (state) => state.allAkademi
+  );
+  const { loading: loadingKota, kota: allKota } = useSelector(
+    (state) => state.allKotaPeserta
+  );
+  const { loading: loadingTemaOriginal, tema: allTamaOriginal } = useSelector(
+    (state) => state.allTemaOriginal
+  );
 
-            <div>
-                <button className="btn btn-primary rounded-pill">
-                    <i className="ri-search-line mr-2"></i>
-                    Search
-                </button>
-            </div>
-            
-            
-        </div>
-    )
-}
+  const [akademiId, setAkademiId] = useState(null);
+  const [temaId, setTemaId] = useState(null); // multiple
+  const [kota, setKota] = useState(null);
+  const [tipePelatihan, setTipePelatihan] = useState(null);
+  const [activeTheme, setActiveTheme] = useState(null);
 
-export default FilterBar
+  const optionsAkademi = [];
+  if (allAkademi) {
+    for (let index = 0; index < allAkademi.length; index++) {
+      let val = {
+        value: allAkademi[index].id,
+        label: allAkademi[index].slug,
+      };
+      optionsAkademi.push(val);
+    }
+  }
+  const optionsCity = [];
+  if (allKota) {
+    for (let index = 0; index < allKota.length; index++) {
+      let val = {
+        value: allKota[index].id,
+        label: allKota[index].label,
+      };
+      optionsCity.push(val);
+    }
+  }
+  const optionsTheme = [];
+  if (allTamaOriginal) {
+    for (let index = 0; index < allTamaOriginal.length; index++) {
+      let val = {
+        value: allTamaOriginal[index].value,
+        label: allTamaOriginal[index].label,
+      };
+      optionsTheme.push(val);
+    }
+  }
+
+  const optionsTipePelatihan = [
+    { value: "online", label: "Online" },
+    { value: "offline", label: "Offline" },
+    { value: "", label: "Online dan Offlane" },
+  ];
+
+  const customStylesTop = {
+    control: (styles) => ({
+      ...styles,
+      borderRadius: "30px",
+      paddingLeft: "25px",
+    }),
+    multiValue: (styles) => ({
+      ...styles,
+      backgroundColor: "#E6F2FF",
+      borderRadius: "30px",
+    }),
+    multiValueLabel: (styles) => ({
+      ...styles,
+      color: "#0063CC",
+    }),
+  };
+
+  const handleSearch = () => {
+    let temaArr = [];
+    temaId !== null &&
+      temaId.forEach((row, i) => {
+        temaArr.push(row.value);
+      });
+    const data = {
+      akademi_id: akademiId !== null ? akademiId.value : null,
+      tema_id: temaArr.join(","),
+      kota: kota !== null ? kota.label : null,
+      tipe_pelatihan: tipePelatihan !== null ? tipePelatihan.value : null,
+    };
+
+    if (data && data.akademi_id !== null) {
+      router.replace(
+        {
+          pathname: `/detail/akademi/${data.akademi_id}`,
+          query: { tema_id: data.tema_id },
+        },
+        undefined,
+        { shallow: true }
+      );
+    }
+    dispatch(getDetailAkademi(data.akademi_id));
+    dispatch(
+      getAllPelatihanByAkademi(
+        data.akademi_id,
+        data.tema_id,
+        data.kota,
+        data.tipe_pelatihan
+      )
+    );
+  };
+
+  return (
+    <div className="d-flex align-content-stretch align-items-center flex-lg-nowrap flex-wrap mt-13">
+      <div className="mb-5 w-100 rounded-xl mr-md-4 mr-0">
+        <Select
+          options={optionsAkademi}
+          styles={customStylesTop}
+          placeholder="Pilih Akademi"
+          isClearable
+          onChange={(e) => setAkademiId(e)}
+        />
+      </div>
+
+      <div className="mb-5 w-100 mr-md-4 mr-0 position-relative">
+        <Select
+          options={optionsTheme}
+          styles={customStylesTop}
+          placeholder="Pilih Tema"
+          isMulti
+          onChange={(e) => setTemaId(e)}
+          defaultValue={[optionsTheme[activeTheme]]}
+        />
+        <i
+          className="ri-search-line left-center-absolute"
+          style={{ left: "10px" }}
+        ></i>
+      </div>
+
+      <div className="mb-5 position-relative w-100 mr-md-4 mr-0">
+        <Select
+          options={optionsCity}
+          styles={customStylesTop}
+          placeholder="Cari Lokasi"
+          isClearable
+          onChange={(e) => setKota(e)}
+        />
+        <i
+          className="ri-map-pin-line left-center-absolute"
+          style={{ left: "10px" }}
+        ></i>
+      </div>
+
+      <div className="mb-5 position-relative w-100 mr-md-4 mr-0">
+        <Select
+          options={optionsTipePelatihan}
+          styles={customStylesTop}
+          placeholder="Tipe Pelatihan"
+          isClearable
+          onChange={(e) => setTipePelatihan(e)}
+        />
+        <i
+          className="ri-book-mark-line left-center-absolute"
+          style={{ left: "10px" }}
+        ></i>
+      </div>
+
+      <div className="mb-5 w-md-50 w-100">
+        <button
+          className="btn btn-primary rounded-pill btn-block fw-500"
+          onClick={() => handleSearch()}
+        >
+          Search
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default FilterBar;

@@ -15,6 +15,10 @@ import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInput from "/components/StepInput";
 import LoadingPage from "../../../../LoadingPage";
 import styles from "../edit/step.module.css";
+import {
+  dropdownPelatihanbyTema,
+  dropdownTemabyAkademi,
+} from "../../../../../redux/actions/pelatihan/function.actions";
 
 const TambahTriviaStepOne = ({ token }) => {
   const dispatch = useDispatch();
@@ -23,6 +27,11 @@ const TambahTriviaStepOne = ({ token }) => {
   const { loading, error, success, trivia } = useSelector(
     (state) => state.newTriviaQuestionBanks
   );
+
+  const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(
+    (state) => state.drowpdownAkademi
+  );
+
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
   const [typeSave, setTypeSave] = useState("lanjut");
@@ -31,11 +40,8 @@ const TambahTriviaStepOne = ({ token }) => {
   const [theme_id, setThemeId] = useState("");
   const [training_id, setTrainingId] = useState("");
   const [metode, setMetode] = useState("entry");
-  useEffect(() => {
-    console.log(training_id);
-  }, [training_id]);
-  useEffect(() => {
 
+  useEffect(() => {
     if (success) {
       const id = trivia.id;
       if (typeSave === "lanjut") {
@@ -51,6 +57,20 @@ const TambahTriviaStepOne = ({ token }) => {
       }
     }
   }, [dispatch, error, success, typeSave, router, metode, trivia]);
+
+  const handleChangeTema = (e) => {
+    setAcademyId(e.target.value);
+    e.target.value && dispatch(dropdownTemabyAkademi(e.target.value, token));
+  };
+
+  const handleChangePelatihan = (e) => {
+    setThemeId(e.target.value);
+    e.target.value && dispatch(dropdownPelatihanbyTema(e.target.value, token));
+  };
+
+  const { data } = useSelector((state) => state.drowpdownTemabyAkademi);
+
+  const { drowpdownPelatihanbyTema } = useSelector((state) => state);
 
   const saveDraft = () => {
     setTypeSave("draft");
@@ -169,13 +189,14 @@ const TambahTriviaStepOne = ({ token }) => {
                 </label>
                 <div className="">
                   <select
+                    defaultValue={academy_id}
                     name="academy_id"
                     id=""
                     value={academy_id}
-                    onChange={(e) => setAcademyId(e.target.value)}
-                    onBlur={(e) => {
-                      setAcademyId(e.target.value);
-                      simpleValidator.current.showMessageFor("akademi");
+                    onChange={(event) => handleChangeTema(event)}
+                    onBlur={(event) => {
+                      handleChangeTema(event);
+                      simpleValidator.current.showMessageFor("academy_id");
                     }}
                     className="form-control"
                   >
@@ -183,13 +204,16 @@ const TambahTriviaStepOne = ({ token }) => {
                       {" "}
                       -Pilih Akademi -
                     </option>
-                    <option value="1"> VSGA </option>
-                    <option value="2"> FGA </option>
-                    <option value="3">PRO</option>
-                    <option value="4">TA</option>
-                    <option value="5">GTA</option>
-                    <option value="6">DEA</option>
-                    <option value="7"> TSA</option>
+                    {dataAkademi.data.map((item, index) => {
+                      return (
+                        <>
+                          <option value={item.value} key={index}>
+                            {" "}
+                            {item.label}{" "}
+                          </option>
+                        </>
+                      );
+                    })}
                   </select>
                   {simpleValidator.current.message(
                     "akademi",
@@ -211,23 +235,28 @@ const TambahTriviaStepOne = ({ token }) => {
                   <select
                     name="the_id"
                     id=""
-                    onChange={(e) => setThemeId(e.target.value)}
-                    onBlur={(e) => {
-                      setThemeId(e.target.value);
-                      simpleValidator.current.showMessageFor("tema");
+                    onChange={(event) => handleChangePelatihan(event)}
+                    onBlur={(event) => {
+                      handleChangePelatihan(event);
+                      simpleValidator.current.showMessageFor("theme_id");
                     }}
                     className="form-control"
+                    defaultValue={theme_id}
                   >
                     <option selected disabled value="">
                       {" "}
                       -Pilih Tema-
                     </option>
-                    <option value="1"> Cloud Computing Analyst </option>
-                    <option value="2"> Data Management Staff </option>
-                    <option value="3"> Artificial Intelligence </option>
-                    <option value="4"> Cloud Computing </option>
-                    <option value="5"> Data Science Fundamental </option>
-                    <option value="6">Get Connected</option>
+                    {data.data &&
+                      data.data.map((item, index) => {
+                        return (
+                          <>
+                            <option value={item.value} key={index}>
+                              {item.label}
+                            </option>
+                          </>
+                        );
+                      })}
                   </select>
                   {simpleValidator.current.message(
                     "tema",
@@ -253,20 +282,21 @@ const TambahTriviaStepOne = ({ token }) => {
                     onBlur={(e) => setTrainingId(e.target.value)}
                     className="form-control"
                   >
-                    <option selected disabled>
+                    <option selected disabled value="">
                       {" "}
                       -Pilih Pelatihan-
                     </option>
-                    <option value="1"> Mobile App Flutter</option>
-                    <option value="2"> Mobile App React Native </option>
-                    <option value="3"> Web Backend Laravel </option>
-                    <option value="4"> Web Backend Golang </option>
-                    <option value="5"> Web Backend Node Js </option>
-                    <option value="6"> Web Backend Python </option>
-                    <option value="7"> Frontend Web React Js </option>
-                    <option value="8"> Frontend Web Vue Js </option>
-                    <option value="9"> Machine Learning </option>
-                    <option value="10">UI / UX Design</option>
+                    {drowpdownPelatihanbyTema.data.data &&
+                      drowpdownPelatihanbyTema.data.data.map((item, index) => {
+                        return (
+                          <>
+                            <option value={item.value} key={index}>
+                              {" "}
+                              {item.label}
+                            </option>
+                          </>
+                        );
+                      })}
                   </select>
                 </div>
               </div>

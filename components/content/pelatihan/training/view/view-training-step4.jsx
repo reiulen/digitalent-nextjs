@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
 
 import PageWrapper from "../../../../wrapper/page.wrapper";
 import StepViewPelatihan from "../../../../StepViewPelatihan";
@@ -9,21 +10,23 @@ const ViewTrainingStep4 = () => {
 
   const { id } = router.query;
 
+  const getReviewStep4 = useSelector(state => state.getReviewStep4)
+
   const [substansi] = useState({
-    value: "Tersedia",
-    date: "1 Oktober 2021 - 5 Oktober 2021",
+    value: getReviewStep4 ? getReviewStep4?.data.status_test_substansi : "",
+    date: getReviewStep4 ? getReviewStep4?.data.tanggal_test_substansi?.start_at + " - " + getReviewStep4?.data.tanggal_test_substansi?.end_at : "",
   });
   const [midTest] = useState({
-    value: "Tidak Tersedia",
-    date: "-",
+    value: getReviewStep4 ? getReviewStep4?.data.status_mid_test : "",
+    date: getReviewStep4 ? getReviewStep4?.data.tanggal_mid_test?.start_at + " - " + getReviewStep4?.data.tanggal_mid_test?.end_at : "",
   });
   const [survey] = useState({
-    value: "Tersedia",
-    date: "1 Oktober 2021 - 5 Oktober 2021",
+    value: getReviewStep4 ? getReviewStep4?.data.status_survei : "",
+    date: getReviewStep4 ? getReviewStep4?.data.tanggal_survei?.start_at + " - " + getReviewStep4?.data.tanggal_survei?.end_at : "",
   });
   const [sertifikat] = useState({
-    value: "Tidak Tersedia",
-    date: "-",
+    value: getReviewStep4 ? getReviewStep4?.data.status_sertifikat : "",
+    date: getReviewStep4 ? getReviewStep4?.data.tanggal_sertifikat?.start_at : "",
   });
 
   return (
@@ -93,8 +96,7 @@ const ViewTrainingStep4 = () => {
                 <button
                   className="btn btn-primary-rounded-full mr-2"
                   type="button"
-                  onClick={() => router.back()}
-                >
+                  onClick={() => router.push(`/pelatihan/pelatihan/view-pelatihan/view-komitmen/${id}`)}                >
                   Kembali
                 </button>
               </div>

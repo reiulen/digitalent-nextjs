@@ -49,7 +49,7 @@ const TambahMitra = ({ token }) => {
      if (institution_name === "") {
       setError({ ...error, institution_name: "Harus isi nama lembaga" });
     } else if (wesite === "") {
-      setError({ ...error, wesite: "Harus isi nama website" });
+      setError({ ...error, wesite: "Harus isi alamat website" });
     }else if (email === "") {
       setError({ ...error, email: "Harus isi email" });
     } 
@@ -552,7 +552,7 @@ const TambahMitra = ({ token }) => {
                       minLength="9"
                       type="number"
                       className="form-control"
-                      placeholder="Masukkan NO. Kontak"
+                      placeholder="Masukkan No. Kontak"
                       onChange={(e) => setPic_contact_number(e.target.value)}
                     />
                     <div className="box-hide-arrow"></div>

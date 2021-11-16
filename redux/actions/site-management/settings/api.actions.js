@@ -72,7 +72,7 @@ export const getAllApi = (token) => async (dispatch, getState) => {
   }
 };
 
-export const deleteApi = (id, token) => async (dispatch) => {
+export const deleteApis = (id, token) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_API_REQUEST });
 
@@ -282,6 +282,7 @@ export const changeDates = (from, to) => {
 export const exportFileCSV = (token, id) => {
   return async () => {
     try {
+      // type=csv
       let urlExport = await axios.get(
         `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-api/export/${id}`,
         {

@@ -198,12 +198,13 @@ const ForgotPassword = () => {
                       />
                     )}
                   </div>
+                  
                 </div>
                 <div className="form-group">
                   <label className="form-auth-label">
                     Konfirmasi Password Baru
                   </label>
-                  <div className="position-relative">
+                  <div className="position-relative mb-4">
                     <input
                       onChange={(e) => setConfirmNewPassword(e.target.value)}
                       id="input-password-confirm"
@@ -225,6 +226,7 @@ const ForgotPassword = () => {
                       />
                     )}
                   </div>
+                  <span className="text-white">Minimal 8 Karakter yang berisi kombinasi huruf besar, huruf kecil, angka, dan simbol.</span>
                 </div>
 
                 <button

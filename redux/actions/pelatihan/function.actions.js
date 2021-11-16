@@ -42,11 +42,12 @@ import {
 } from "../../types/pelatihan/function.type";
 
 import axios from "axios";
+import { getAllAkademi } from "../beranda/beranda.actions";
 
 export const getDataPribadi = (token) => async (dispatch) => {
   try {
     let link =
-      process.env.END_POINT_API_PELATIHAN + `/api/v1/auth/get-data-pribadi`;
+      process.env.END_POINT_API_PELATIHAN + `api/v1/auth/get-data-pribadi`;
 
     const config = {
       headers: {
@@ -60,11 +61,12 @@ export const getDataPribadi = (token) => async (dispatch) => {
       type: GET_DATA_PRIBADI_SUCCESS,
       payload: data,
     });
+    dispatch(getAllAkademi());
     return data;
   } catch (error) {
     dispatch({
       type: GET_DATA_PRIBADI_FAIL,
-      payload: error.response.data.message,
+      payload: error.message,
     });
   }
 };

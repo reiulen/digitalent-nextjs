@@ -27,7 +27,7 @@ const Table = ({ token }) => {
   const router = useRouter();
 
   const detailExportData = useSelector((state) => state.detailExportData);
-  console.log("detailExportData", detailExportData);
+
 
   const [valueSearch, setValueSearch] = useState("");
   const handleChangeValueSearch = (value) => {
@@ -56,13 +56,12 @@ const Table = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3
-              className="card-title font-weight-bolder text-dark"
-              style={{ fontSize: "24px" }}
+              className="card-title font-weight-bolder text-dark titles-1"
             >
               Export Data
             </h3>
           </div>
-          <div className="card-body pt-0">
+          <div className="card-body pt-0 px-4 px-sm-8">
             <div className="table-filter">
               <div className="row">
                 <div className="col-12 col-sm-6">
@@ -152,7 +151,7 @@ const Table = ({ token }) => {
               </div>
 
               {/* start footer btn */}
-              <div className="form-group row">
+              <div className="form-group row mt-4">
                 <div className="col-sm-12 d-flex justify-content-end">
                   <Link href="/site-management/export-data" passHref>
                     <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">

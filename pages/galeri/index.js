@@ -3,6 +3,8 @@ import { getSession } from "next-auth/client";
 
 import { wrapper } from "../../redux/store";
 import { getDataPribadi } from "../../redux/actions/pelatihan/function.actions"
+import { getAllBerandaGaleri, getKategoriBerandaGaleri } from "../../redux/actions/beranda/galeri.actions"
+// import { getKategoriBerandaGaleri  } from "../../redux/actions/beranda/galeri.actions"
 
 const Galeri  =  dynamic (() => 
     import (
@@ -34,12 +36,23 @@ export default function BerandaGaleri(props) {
 
 export const getServerSideProps = wrapper.getServerSideProps(
     ( store ) => 
-        async ({params, req}) => {
+        async ({query, req}) => {
             const session = await getSession({ req });
 
             let sessionToken = session?.user.user.data.user.token;
 
             await store.dispatch(getDataPribadi(sessionToken));
+
+            await store.dispatch(
+                getAllBerandaGaleri(
+                    query.page,
+                    query.category_name,
+                )
+            )
+
+            await store.dispatch (
+                getKategoriBerandaGaleri()
+            )
 
             return {
                 props: {

@@ -4,7 +4,6 @@ import PageWrapper from "../../../wrapper/page.wrapper";
 import Swal from "sweetalert2";
 import { useRouter } from "next/router";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import IconAdd from "../../../assets/icon/Add";
 import IconDelete from "../../../assets/icon/Delete";
@@ -21,7 +20,6 @@ const Tambah = ({ token }) => {
   const [idReference, setIdReference] = useState("");
   const [optionReference, setOptionReference] = useState([]);
   const [optionFromReference, setOptionFromReference] = useState([]);
-  const [formValue, setFormValue] = useState([]);
   const [formReferenceAndText, setFormReferenceAndText] = useState([
     {
       relasi_id: "",
@@ -30,59 +28,29 @@ const Tambah = ({ token }) => {
           label: "",
         },
       ],
+      values: [],
     },
   ]);
 
   const [nameListFromReference, setNameListFromReference] = useState("");
-  const submit = async (e) => {
-    e.preventDefault();
-    if (nameReference === "") {
-      Swal.fire("Gagal", `Nama data reference tidak boleh kosong`, "error");
-    } else if (status === "") {
-      Swal.fire("Gagal", `Status tidak boleh kosong`, "error");
-    } else if (idReference === "") {
-      Swal.fire("Gagal", `Harus pilih data reference`, "error");
-    } else if (formValue.length === 1) {
-      Swal.fire(
-        "Gagal",
-        `Form data provinsi dan kabupaten tidak boleh kosong`,
-        "error"
-      );
-    } else {
-      let sendData = {
-        name: nameReference,
-        status: status,
-        data_references_relasi_id: idReference,
-        data: formReferenceAndText,
-      };
-
-      try {
-        let { data } = await axios.post(
-          `${process.env.END_POINT_API_SITE_MANAGEMENT}api/reference/store-relasi`,
-          sendData,
-          {
-            headers: {
-              authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
-        Swal.fire("Berhasil", "Data berhasil disimpan", "success").then(() => {
-          router.push("/site-management/reference");
-        });
-      } catch (error) {
-        Swal.fire("Gagal simpan", `${error.response.data.message}`, "error");
-      }
-    }
-  };
 
   const changeListDataReference = (e) => {
-    setIdReference(e.key);
-    setNameListFromReference(e.value);
+      setFormReferenceAndText([
+        {
+          relasi_id: "",
+          value: [
+            {
+              label: "",
+            },
+          ],
+          values: [],
+        },
+      ]);
+      setIdReference(e.key);
+      setNameListFromReference(e.value);
   };
 
   const handleAddInput = (idx, index) => {
- 
     let _temp = [...formReferenceAndText];
     _temp.map((items, ids) => {
       if (ids === idx) {
@@ -120,13 +88,21 @@ const Tambah = ({ token }) => {
           label: "",
         },
       ],
+      values: [],
     });
+
     setFormReferenceAndText(_temp);
   };
 
   const handleCHangeNameReference = (e, index) => {
+    let _tempOption = [...optionFromReference]
+    let _newTempOption = _tempOption.filter(items => items.label !== e.label)
+    setOptionFromReference(_newTempOption);
     let _temp = [...formReferenceAndText];
-    _temp[index].relasi_id = e.key;
+
+    _temp[index].relasi_id = e.id;
+    _temp[index].values = [e];
+
     setFormReferenceAndText(_temp);
   };
 
@@ -136,6 +112,56 @@ const Tambah = ({ token }) => {
     _temp[idx].value[index].label = e.target.value;
 
     setFormReferenceAndText(_temp);
+  };
+
+  const [labelReference, setLabeReferencel] = useState("");
+  const handleInputChange = (e) => {
+    setLabeReferencel(e);
+  };
+
+  const submit = async (e) => {
+    e.preventDefault();
+    if (nameReference === "") {
+      Swal.fire("Gagal", `Nama data reference tidak boleh kosong`, "error");
+    } else if (status === "") {
+      Swal.fire("Gagal", `Status tidak boleh kosong`, "error");
+    } else if (idReference === "") {
+      Swal.fire("Gagal", `Harus pilih data reference`, "error");
+    } 
+    else if (!formReferenceAndText[0].relasi_id || !formReferenceAndText[0].value[0].label ) {
+      Swal.fire(
+        "Gagal",
+        `List data dan value tidak boleh kosong`,
+        "error"
+      );
+    } 
+    else {
+      let sendData = {
+        name: nameReference,
+        status: status,
+        data_references_relasi_id: idReference,
+        data: formReferenceAndText,
+      };
+
+
+      try {
+        let { data } = await axios.post(
+          `${process.env.END_POINT_API_SITE_MANAGEMENT}api/reference/store-relasi`,
+          sendData,
+          {
+            headers: {
+              authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        Swal.fire("Berhasil", "Data berhasil disimpan", "success").then(() => {
+          router.push("/site-management/reference");
+        });
+      } catch (error) {
+        Swal.fire("Gagal simpan", `${error.response.data.message}`, "error");
+      }
+    }
   };
 
   useEffect(() => {
@@ -149,6 +175,7 @@ const Tambah = ({ token }) => {
             },
           }
         );
+
         let resultOptionReference = data.data.map((items) => {
           return { ...items, label: items.value };
         });
@@ -160,11 +187,11 @@ const Tambah = ({ token }) => {
 
     getAllDataReference(token);
 
-    if (idReference) {
+    if (idReference || labelReference.length > 3) {
       async function getAllDataFromIdReference(token, id) {
         try {
           let { data } = await axios.get(
-            `${process.env.END_POINT_API_SITE_MANAGEMENT}api/option/reference-choose/${id}`,
+            `${process.env.END_POINT_API_SITE_MANAGEMENT}api/option/reference-choose/${id}?keyword=${labelReference}`,
             {
               headers: {
                 authorization: `Bearer ${token}`,
@@ -172,7 +199,7 @@ const Tambah = ({ token }) => {
             }
           );
           let resultOptionReferenceChooce = data.data.map((items) => {
-            return { ...items, label: items.value };
+            return { ...items, label: items.label, value: items.label };
           });
           setOptionFromReference(resultOptionReferenceChooce);
         } catch (error) {
@@ -182,21 +209,19 @@ const Tambah = ({ token }) => {
 
       getAllDataFromIdReference(token, idReference);
     }
-  }, [token, idReference]);
+  }, [token, idReference, labelReference]);
 
   return (
     <PageWrapper>
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3
-              className="card-title font-weight-bolder text-dark titles-1 mb-0"
-            >
+            <h3 className="card-title font-weight-bolder text-dark titles-1 mb-0">
               Tambah Reference Dengan Relasi
             </h3>
           </div>
           <form>
-            <div className="card-body pt-0">
+            <div className="card-body pt-0 px-4 px-sm-8">
               <div className="form-group">
                 <label htmlFor="staticEmail" className="col-form-label">
                   Nama Data Reference
@@ -249,17 +274,17 @@ const Tambah = ({ token }) => {
                         <label>List {nameListFromReference}</label>
 
                         <Select
-                          ref={(ref) => (selectRefDataFromReference = ref)}
+                          value={itemsRef.values}
                           className="basic-single"
                           classNamePrefix="select"
                           placeholder="Pilih provinsi"
-                          // defaultValue={allMK.stateListMitra[0]}
                           isDisabled={false}
                           isLoading={false}
                           isClearable={false}
                           isRtl={false}
                           isSearchable={true}
                           name="color"
+                          onInputChange={handleInputChange}
                           onChange={(e) => handleCHangeNameReference(e, idx)}
                           options={optionFromReference}
                         />
@@ -274,6 +299,7 @@ const Tambah = ({ token }) => {
                             <div className="position-relative d-flex align-items-start w-100">
                               <div className="w-100 mr-6">
                                 <input
+                                value={items.label}
                                   type="text"
                                   className="form-control"
                                   placeholder="Masukan data value"
@@ -333,7 +359,7 @@ const Tambah = ({ token }) => {
                     onClick={() => handleAddFormReferenceText()}
                   >
                     <IconAdd className="mr-3" width="14" height="14" />
-                    Tambah Value
+                    Tambah Relasi
                   </p>
                 </div>
               </div>

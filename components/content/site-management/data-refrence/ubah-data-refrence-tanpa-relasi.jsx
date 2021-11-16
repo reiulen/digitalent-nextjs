@@ -1,15 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import Swal from "sweetalert2";
 import { useRouter } from "next/router";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import IconAdd from "../../../assets/icon/Add";
-import IconDelete from "../../../assets/icon/Delete";
-import { useDispatch, useSelector } from "react-redux";
-import Select from "react-select";
+import { useSelector } from "react-redux";
 
 const Tambah = ({ token }) => {
   const router = useRouter();
@@ -19,7 +16,6 @@ const Tambah = ({ token }) => {
   const [nameReference, setNameReference] = useState(
     detailDataReference.dataReference.name
   );
-  const [number, setNumber] = useState(1);
   const [status, setStatus] = useState(
     detailDataReference.dataReference.status
   );
@@ -38,14 +34,12 @@ const Tambah = ({ token }) => {
     let _temp = [...values];
     let _tempValue = [...formInput];
     _temp.push({
-      name: `Value ${number + 1}`,
       value: "",
     });
     _tempValue.push({
       value_old: "",
       value: "",
     });
-    setNumber(number + 1);
     setValues(_temp);
     setFormInput(_tempValue);
   };
@@ -135,7 +129,7 @@ const Tambah = ({ token }) => {
             </h3>
           </div>
           <form>
-            <div className="card-body pt-0">
+            <div className="card-body pt-0 px-4 px-sm-8">
               <div className="form-group">
                 <label htmlFor="staticEmail" className="col-form-label">
                   Nama Data Reference
@@ -150,7 +144,7 @@ const Tambah = ({ token }) => {
               </div>
               <div className="form-group">
                 <label>Status</label>
-                {status == 1 ? (
+                {detailDataReference.dataReference.status == 1 ? (
                   <select
                     onChange={(e) => setStatus(e.target.value)}
                     className="form-control"
@@ -173,7 +167,8 @@ const Tambah = ({ token }) => {
                 return (
                   <div className="form-group" key={index}>
                     <label htmlFor="staticEmail" className="col-form-label">
-                      {items.name}
+                      Value {index+1} 
+                      {/* {items.name} */}
                     </label>
                     <div className="position-relative d-flex align-items-center">
                       <input

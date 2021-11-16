@@ -10,6 +10,8 @@ import Swal from "sweetalert2";
 import SimpleReactValidator from "simple-react-validator";
 import DatePicker from "react-datepicker";
 
+import styles from "../../../../styles/previewGaleri.module.css";
+
 import {
   updateArtikel,
   clearErrors,
@@ -46,25 +48,18 @@ const EditArtikel = ({ token, idUser }) => {
     kategori,
   } = useSelector(state => state.allKategori);
   const { setting } = useSelector(state => state.allSettingPublikasi)
-  const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(state => state.drowpdownAkademi);
+  const { akademi } = useSelector(state => state.allAkademi);
+  // const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(state => state.drowpdownAkademi);
 
   useEffect(() => {
 
     editorRef.current = {
-      CKEditor: require('@ckeditor/ckeditor5-react').CKEditor, //Added .CKEditor
+      CKEditor: require('@ckeditor/ckeditor5-react').CKEditor, 
       ClassicEditor: require('@ckeditor/ckeditor5-build-classic'),
-      // Base64UploadAdapter: require('@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter')
     }
 
     setEditorLoaded(true);
     if (success) {
-      // setJudulArtikel('')
-      // setIsiArtikel('')
-      // setGambar('')
-      // setGambarPreview('/assets/media/default.jpg')
-      // setKategoriId('')
-      // setTag('')
-
       router.push({
         pathname: `/publikasi/artikel`,
         query: { success: true },
@@ -85,10 +80,6 @@ const EditArtikel = ({ token, idUser }) => {
     "publikasi/images/" +
     artikel.gambar
   );
-  // const [gambar, setGambar] = useState(artikel.gambar);
-  // const [gambarPreview, setGambarPreview] = useState(
-  //   "/assets/media/default.jpg"
-  // ); //belum
   const [iconPlus, setIconPlus] = useState("/assets/icon/Add.svg");
   const [gambarPreview, setGambarPreview] = useState(
     process.env.END_POINT_API_IMAGE_PUBLIKASI +
@@ -96,11 +87,10 @@ const EditArtikel = ({ token, idUser }) => {
     artikel.gambar
   );
   const [gambarName, setGambarName] = useState(artikel.gambar);
-  const [kategori_id, setKategoriId] = useState(artikel.kategori_id); //belum
-  const [akademi_value, setAkademiValue] = useState(artikel.akademi_value);
+  const [kategori_id, setKategoriId] = useState(artikel.kategori_id); 
+  const [kategori_akademi, setKategoriAkademi] = useState(artikel.kategori_akademi);
   const [users_id, setUserId] = useState(artikel.users_id);
   const [tag, setTag] = useState(artikel.tag);
-  // const [publish, setPublish] = useState(artikel.publish === 1 ? true : false);
   const [publish, setPublish] = useState(artikel.publish);
   const [publishDate, setPublishDate] = useState(
     artikel.tanggal_publish ? new Date(artikel.tanggal_publish) : null
@@ -130,11 +120,6 @@ const EditArtikel = ({ token, idUser }) => {
         setGambarName(e.target.files[0].name);
       }
     } else {
-      // setGambar("")
-      // setGambarPreview("/assets/media/default.jpg")
-      // setGambarName(null)
-      // simpleValidator.current.showMessages();
-      // forceUpdate(1);
       e.target.value = null;
       Swal.fire(
         "Oops !",
@@ -172,7 +157,9 @@ const EditArtikel = ({ token, idUser }) => {
         data.splice([i], 1);
       }
     }
-    setTag(data);
+    if ((data).includes(data) !== true) {
+      setTag(data);
+    }
   }
 
   const onSubmit = e => {
@@ -202,6 +189,7 @@ const EditArtikel = ({ token, idUser }) => {
             judul_artikel,
             isi_artikel,
             gambar,
+            kategori_akademi,
             kategori_id,
             users_id,
             tag,
@@ -230,6 +218,7 @@ const EditArtikel = ({ token, idUser }) => {
             judul_artikel,
             isi_artikel,
             gambar,
+            kategori_akademi,
             kategori_id,
             users_id,
             tag,
@@ -263,6 +252,7 @@ const EditArtikel = ({ token, idUser }) => {
             judul_artikel,
             isi_artikel,
             gambar: "",
+            kategori_akademi,
             kategori_id,
             users_id,
             tag,
@@ -291,6 +281,7 @@ const EditArtikel = ({ token, idUser }) => {
             judul_artikel,
             isi_artikel,
             gambar: "",
+            kategori_akademi,
             kategori_id,
             users_id,
             tag,
@@ -379,10 +370,10 @@ const EditArtikel = ({ token, idUser }) => {
                   >
                     Judul
                   </label>
-                  <div className="col-sm-12">
+                  <div className={`${styles.judulTambah} col-sm-12`}>
                     <input
                       type="text"
-                      className="form-control"
+                      className={`${styles.judulTambah} form-control`}
                       placeholder="Isi Judul disini"
                       value={judul_artikel}
                       onChange={e => setJudulArtikel(e.target.value)}
@@ -406,7 +397,7 @@ const EditArtikel = ({ token, idUser }) => {
                   >
                     Isi Artikel
                   </label>
-                  <div className="col-sm-12">
+                  <div className={`${styles.deskripsiTambah} col-sm-12`}>
                     <div className="ckeditor">
                       {editorLoaded ? (
                         <CKEditor
@@ -414,7 +405,6 @@ const EditArtikel = ({ token, idUser }) => {
                           editor={ClassicEditor}
                           data={isi_artikel}
                           onReady={editor => {
-                            // You can store the "editor" and use when it is needed.
                           }}
                           onChange={(event, editor) => {
                             const data = editor.getData();
@@ -425,17 +415,6 @@ const EditArtikel = ({ token, idUser }) => {
                               "isi_artikel"
                             )
                           }
-                        // config={
-                        //   {
-                        //     //   ckfinder: {
-                        //     //   // Upload the images to the server using the CKFinder QuickUpload command.
-                        //     //   // uploadUrl: 'https://example.com/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images&responseType=json',
-                        //     //   uploadUrl: process.env.END_POINT_API_PUBLIKASI + `api/artikel/${id}`
-                        //     // }
-                        //     allowedContent: true
-
-                        //   }
-                        // }
                         />
                       ) : (
                         <p>Tunggu Sebentar</p>
@@ -457,7 +436,7 @@ const EditArtikel = ({ token, idUser }) => {
                   >
                     Upload Thumbnail
                   </label>
-                  <div className="ml-3 row">
+                  <div className="ml-4 row">
                     <figure
                       className="avatar item-rtl position-relative"
                       data-toggle="modal"
@@ -468,7 +447,7 @@ const EditArtikel = ({ token, idUser }) => {
                         alt="image"
                         width={160}
                         height={160}
-                        objectFit="cover"
+                        objectFit="fill"
                       />
                     </figure>
                     <div className="position-relative">
@@ -490,7 +469,7 @@ const EditArtikel = ({ token, idUser }) => {
                     </div>
                   </div>
 
-                  <div className="ml-3">
+                  <div className="ml-4">
                     {simpleValidator.current.message(
                       "gambar",
                       gambar,
@@ -502,7 +481,7 @@ const EditArtikel = ({ token, idUser }) => {
                     ) : null}
                   </div>
 
-                  <div className="mt-3 col-sm-6 col-md-6 col-lg-7 text-muted">
+                  <div className={`${styles.resolusiTambah} mt-3 col-sm-6 col-md-6 col-lg-7 col-xl-3 text-muted`}>
                     <p>
                       Resolusi yang direkomendasikan adalah 1024 * 512. Fokus
                       visual pada bagian tengah gambar
@@ -517,44 +496,41 @@ const EditArtikel = ({ token, idUser }) => {
                   >
                     Akademi
                   </label>
-                  <div className="col-sm-12">
+                  <div className={`${styles.selectKategori} col-sm-12`}>
                     <select
                       name=""
                       id=""
-                      className="form-control"
-                      value={akademi_value}
-                      onChange={e => setAkademiValue(e.target.value)}
+                      className={`${styles.selectKategori} form-control`}
+                      value={kategori_akademi}
+                      onChange={e => setKategoriAkademi(e.target.value)}
                       onBlur={e => {
-                        setAkademiValue(e.target.value);
+                        setKategoriAkademi(e.target.value);
                         simpleValidator.current.showMessageFor("akademi");
                       }}
                     >
                       <option selected disabled value="">
                         -- Akademi --
                       </option>
-                      {!dataAkademi || (dataAkademi && dataAkademi.length === 0) ? (
-                        <option value="">Data Tidak Ditemukan</option>
+                      {!akademi || (akademi && akademi.length === 0) ? (
+                        <option value="">Data Kosong</option>
                       ) : (
-                        dataAkademi &&
-                        dataAkademi.data &&
-                        dataAkademi.data.map(row => {
+                        akademi &&
+                        akademi.map(row => {
                           return (
                             <option
-                              key={row.value}
-                              value={row.value}
-                              selected={akademi_value === row.value ? true : false}
+                              key={row.id}
+                              value={row.slug}
+                              selected={kategori_akademi === row.slug ? true : false}
                             >
-                              {row.label}
+                              {row.slug}
                             </option>
                           )
-                          // : null;
-                          // <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>{row.nama_kategori}</option>
                         })
                       )}
                     </select>
                     {simpleValidator.current.message(
                       "akademi",
-                      akademi_value,
+                      kategori_akademi,
                       "required",
                       { className: "text-danger" }
                     )}
@@ -568,11 +544,11 @@ const EditArtikel = ({ token, idUser }) => {
                   >
                     Kategori
                   </label>
-                  <div className="col-sm-12">
+                  <div className={`${styles.selectKategori} col-sm-12`}>
                     <select
                       name=""
                       id=""
-                      className="form-control"
+                      className={`${styles.selectKategori} form-control`}
                       value={kategori_id}
                       onChange={e => setKategoriId(e.target.value)}
                       onBlur={e => {
@@ -584,7 +560,7 @@ const EditArtikel = ({ token, idUser }) => {
                         -- Artikel --
                       </option>
                       {!kategori || (kategori && kategori.length === 0) ? (
-                        <option value="">Data Tidak Ditemukan</option>
+                        <option value="">Data Kosong</option>
                       ) : (
                         kategori &&
                         kategori.kategori &&
@@ -598,7 +574,6 @@ const EditArtikel = ({ token, idUser }) => {
                               {row.nama_kategori}
                             </option>
                           ) : null;
-                          // <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>{row.nama_kategori}</option>
                         })
                       )}
                     </select>
@@ -618,12 +593,12 @@ const EditArtikel = ({ token, idUser }) => {
                   >
                     Tag
                   </label>
-                  <div className="col-sm-12">
+                  <div className={`${styles.tagStyle} col-sm-12`} style={{ wordBreak: 'break-word' }}>
                     <TagsInput
                       value={tag}
                       onChange={(data) => handleTag(data)}
                       name="fruits"
-                      placeHolder="Isi Tag disini"
+                      placeHolder="Isi Tag disini dan Enter"
                       seprators={["Enter", "Tab"]}
                     // onBlur={() => simpleValidator.current.showMessageFor('tag')}
                     />
@@ -664,27 +639,6 @@ const EditArtikel = ({ token, idUser }) => {
                   </div>
                 </div>
 
-                {/* <div className="form-group row">
-                  <label
-                    htmlFor="staticEmail"
-                    className="col-sm-2 col-form-label"
-                  >
-                    Publish
-                  </label>
-                  <div className="col-sm-1">
-                    <SwitchButton
-                      checked={publish}
-                      onlabel=" "
-                      onstyle="primary"
-                      offlabel=" "
-                      offstyle="danger"
-                      size="sm"
-                      width={30}
-                      onChange={(checked) => setPublish(checked)}
-                    />
-                  </div>
-                </div> */}
-
                 {disablePublishDate === false ? (
                   <div className="form-group">
                     <label className="col-sm-5 col-form-label font-weight-bolder">
@@ -693,43 +647,33 @@ const EditArtikel = ({ token, idUser }) => {
                     <div className="col-sm-12">
                       <div className="input-group">
                         <DatePicker
-                          className="form-search-date form-control-sm form-control"
+                          className={`${styles.setPublish} form-search-date form-control-sm form-control`}
                           selected={publishDate}
                           onChange={date => handlePublishDate(date)}
-                          // onChange={(date) => setPublishDate(date)}
                           selectsStart
                           startDate={publishDate}
-                          // endDate={endDate}
                           dateFormat="dd/MM/yyyy"
                           placeholderText="Silahkan Isi Tanggal Publish"
                           wrapperClassName="col-12 col-lg-12 col-xl-12"
-                          // minDate={moment().toDate()}
-                          // minDate={addDays(new Date(), 20)}
                           disabled={
                             disablePublishDate === true ||
                             disablePublishDate === null
                           }
                         />
                       </div>
-                      {/* {
-                          disablePublishDate === true ?
-                            <small className="text-muted">Harap ubah status publikasi menjadi aktif untuk mengisi Tanggal Publish</small>
-                          :
-                            null
-                        } */}
                     </div>
                   </div>
                 ) : null}
 
-                <div className="form-group row">
+                <div className="form-group row mr-0">
                   <div className="col-sm-2"></div>
                   <div className="col-sm-10 text-right">
                     <Link href="/publikasi/artikel">
-                      <a className="btn btn-white-ghost-rounded-full rounded-pill mr-2 btn-sm">
+                      <a className={`${styles.btnKembali} btn btn-white-ghost-rounded-full rounded-pill mr-2 btn-sm`}>
                         Kembali
                       </a>
                     </Link>
-                    <button className="btn btn-primary-rounded-full rounded-pill btn-sm">
+                    <button className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill btn-sm`}>
                       Simpan
                     </button>
                   </div>
@@ -763,14 +707,13 @@ const EditArtikel = ({ token, idUser }) => {
                 </button>
               </div>
               <div
-                className="modal-body text-center"
-                style={{ height: "400px" }}
+                className={`${styles.modalsPrevImage} modal-body text-center`}
               >
                 <Image
                   src={gambarPreview}
                   alt="image"
                   layout="fill"
-                  objectFit="cover"
+                  objectFit="fill"
                 />
               </div>
               <div className="modal-footer">

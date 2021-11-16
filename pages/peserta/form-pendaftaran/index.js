@@ -13,10 +13,7 @@ import {
   storeFormRegister,
 } from "../../../redux/actions/pelatihan/register-training.actions";
 import { middlewareAuthPesertaSession } from "../../../utils/middleware/authMiddleware";
-
-const Layout = dynamic(() =>
-  import("../../../user-component/components/template/Layout.component")
-);
+import { getAllAkademi } from "../../../redux/actions/beranda/beranda.actions";
 
 const IndexForm = dynamic(
   () =>
@@ -61,9 +58,7 @@ export default function FormPendaftaran(props) {
   }, [dataForm, dispatch]);
   return (
     <>
-      <Layout title="Form Pendaftaran Peserta - Pelatihan" session={session}>
-        <IndexForm token={session.token} />
-      </Layout>
+      <IndexForm token={session.token} session={session} />
     </>
   );
 }
@@ -83,6 +78,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+      await store.dispatch(getAllAkademi());
 
       await store.dispatch(getDataPribadi(session?.user.user.data.user.token));
       await store.dispatch(

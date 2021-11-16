@@ -1,21 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import Pagination from "react-js-pagination";
 import PageWrapper from "../../../wrapper/page.wrapper";
-import { useDispatch, useSelector } from "react-redux";
-import LoadingTable from "../../../LoadingTable";
-import IconEye from "../../../assets/icon/Eye";
-import IconPencil from "../../../assets/icon/Pencil";
-import IconDelete from "../../../assets/icon/Delete";
-import IconAdd from "../../../assets/icon/Add";
-import IconSearch from "../../../assets/icon/Search";
-
+import { useSelector } from "react-redux";
 const DetailRefrence = ({ token }) => {
-  let dispatch = useDispatch();
-  const router = useRouter();
-
   const detailDataReference = useSelector((state) => state.detailDataReference);
+
   return (
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">
@@ -58,9 +47,25 @@ const DetailRefrence = ({ token }) => {
                   Value
                 </p>
                 <ul>
-                  {detailDataReference.dataReference.value_reference.map((items,index)=>{
-                    return(
+                  {detailDataReference.dataReference.data_references_relasi_id === null ?
+                  
+                detailDataReference.dataReference.value_reference.map((items,index)=>{
+                   return(
 
+                 <li key={index}>
+                   <p
+                     className="fw-400 fz-16 mb-0"
+                     style={{ color: "#1F1F1F" }}
+                   >
+                     {items.value}
+                   </p>
+                 </li>
+                   )
+                 })
+                 :
+                 detailDataReference.dataReference.valueReference.map((items,index)=>{
+                    return(
+ 
                   <li key={index}>
                     <p
                       className="fw-400 fz-16 mb-0"
@@ -68,9 +73,23 @@ const DetailRefrence = ({ token }) => {
                     >
                       {items.value}
                     </p>
+                    <ul>
+                      {items.relasi.map((itemz,idx)=>{
+                        return(
+
+                        <li key={idx}>
+                          {itemz.value}
+                        </li>
+                        )
+                      })}
+                    </ul>
                   </li>
                     )
-                  })}
+                  })
+
+                 
+                  
+                }
                 </ul>
               </div>{" "}
             </div>

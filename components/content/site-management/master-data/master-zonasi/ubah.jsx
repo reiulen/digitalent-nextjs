@@ -4,7 +4,6 @@ import PageWrapper from "../../../../wrapper/page.wrapper";
 import Swal from "sweetalert2";
 import { useRouter } from "next/router";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import IconAdd from "../../../../assets/icon/Add";
 import IconDelete from "../../../../assets/icon/Delete";
@@ -38,6 +37,7 @@ const Tambah = ({ token }) => {
       return {
         provinsi: [{ label: items.provinsi, value: items.provinsi }],
         kabupaten: items.kota_kabupaten,
+        value:items.kota_kabupaten
       };
     })
   );
@@ -55,6 +55,7 @@ const Tambah = ({ token }) => {
     _temp.push({
       provinsi: [],
       kabupaten: [],
+      value:[]
     });
     _tempValue.push({
       provinsi_old: "",
@@ -83,6 +84,16 @@ const Tambah = ({ token }) => {
     let _temp = [...formInput];
     let _tempValue = [...valueSend];
 
+    let _tempOption = [...provincesOption];
+
+    let _newTempOption = _tempOption.filter(items => items.label !== e.label)
+    setProvincesOption(_newTempOption);
+
+    
+    _temp[index].value = []
+    _temp[index].kabupaten = []
+    _tempValue[index].kota_kabupaten = []
+
     try {
       let { data } = await axios.get(
         `${process.env.END_POINT_API_SITE_MANAGEMENT}api/option/provinsi-choose/${e.id}`,
@@ -106,23 +117,46 @@ const Tambah = ({ token }) => {
 
   const changeListKabupaten = (e, index) => {
     let _tempValue = [...valueSend];
+    let _temp = [...formInput]
     _tempValue[index].kota_kabupaten = e.map((items) => {
       return { label: items.label };
     });
     setValueSend(_tempValue);
+
+    _temp[index]['value'] = e
+    setFormInput(_temp)
   };
 
   const submit = (e) => {
     e.preventDefault();
+
+    // cek field loop field kab
+    let isRightKab = true 
+    formInput.forEach(element => {
+      if(element.value.length === 0){
+        isRightKab = false
+      }
+    });
+    // cek field loop field prov
+    let isRightProv = true 
+    valueSend.forEach(element => {
+      if(!element.provinsi){
+        isRightProv = false
+      }
+    });
 
     if (nameZonation === "") {
       Swal.fire("Gagal simpan", "Nama zonasi tidak boleh kosong", "error");
     } else if (status === "") {
       Swal.fire("Gagal simpan", "Form status tidak boleh kosong", "error");
     }
-    // else if (valueProvinsi === "") {
-    //   Swal.fire("Gagal simpan", "Form provinsi tidak boleh kosong", "error");
-    // }
+
+    else if (!isRightProv) {
+      Swal.fire("Gagal simpan", "Form Provinsi tidak boleh kosong", "error");
+    } 
+    else if (!isRightKab) {
+      Swal.fire("Gagal simpan", "Form Kabupaten tidak boleh kosong", "error");
+    } 
     else {
       Swal.fire({
         title: "Apakah anda yakin simpan ?",
@@ -142,6 +176,7 @@ const Tambah = ({ token }) => {
             status: status,
             data: valueSend,
           };
+
 
           try {
             let { data } = await axios.post(
@@ -185,19 +220,18 @@ const Tambah = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3
-              className="card-title font-weight-bolder text-dark"
-              style={{ fontSize: "24px" }}
+              className="card-title font-weight-bolder text-dark titles-1"
             >
               Ubah Zonasi
             </h3>
           </div>
           <form>
-            <div className="card-body">
+            <div className="card-body pt-0 px-4 px-sm-8">
               <div className="form-group">
                 <label>Nama Zonasi</label>
                 <input
                   onChange={(e) => setNameZonation(e.target.value)}
-                  placeholder="Masukan nama zonasi"
+                  placeholder="Masukkan nama zonasi"
                   type="text"
                   value={nameZonation}
                   className="form-control"
@@ -212,16 +246,16 @@ const Tambah = ({ token }) => {
                     className="form-control"
                     onChange={(e) => setStatus(e.target.value)}
                   >
-                    <option value="1">Aktif</option>
                     <option value="0">Tidak aktif</option>
+                    <option value="1">Aktif</option>
                   </select>
                 ) : (
                   <select
                     className="form-control"
                     onChange={(e) => setStatus(e.target.value)}
                   >
-                    <option value="0">Tidak aktif</option>
                     <option value="1">Aktif</option>
+                    <option value="0">Tidak aktif</option>
                   </select>
                 )}
               </div>
@@ -257,10 +291,11 @@ const Tambah = ({ token }) => {
                             <div className="form-group w-100 mr-6 mb-1">
                               <label>Kota / Kabupaten</label>
                               <Select
-                                ref={(ref) => (selectRefKabupaten = ref)}
+                                // ref={(ref) => (selectRefKabupaten = ref)}
+                                value={items.value}
                                 className="basic-single"
                                 classNamePrefix="select"
-                                placeholder="Pilih kabupaten"
+                                placeholder="Pilih kota/kabupaten"
                                 isMulti={true}
                                 isDisabled={false}
                                 isLoading={false}
@@ -272,9 +307,6 @@ const Tambah = ({ token }) => {
                                 onChange={(e) => changeListKabupaten(e, index)}
                                 options={items.kabupaten}
                               />
-                              {/* <span className="form-text text-muted">
-                                Please enter your full name
-                              </span> */}
                             </div>
 
                             {index === 0 ? (

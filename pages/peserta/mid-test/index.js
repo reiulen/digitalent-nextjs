@@ -10,6 +10,7 @@ import {
   getAllRiwayatPelatihanPeserta,
   getDetailRiwayatPelatihan,
 } from "../../../redux/actions/pelatihan/riwayat-pelatihan.actions";
+import { getAllAkademi } from "../../../redux/actions/beranda/beranda.actions";
 
 const TesSubstansiDetail = dynamic(
   () =>
@@ -71,39 +72,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
-      // if (!req.cookies.id_pelatihan) {
-      //   const { data } = await store.dispatch(
-      //     getAllRiwayatPelatihanPeserta(session.user.user.data.user.token)
-      //   );
-      //   if (data.list.length > 0) {
-      //     console.log(data);
-      //     const test_substansi = data.list.filter(
-      //       (item) => item.status == "tes substansi"
-      //     );
-      //     if (test_substansi.length > 0) {
-      //       await store.dispatch(
-      //         getDetailRiwayatPelatihan(
-      //           test_substansi[0].id,
-      //           session.user.user.data.user.token
-      //         )
-      //       );
-      //       success = true;
-      //     } else {
-      //       success = false;
-      //     }
-      //   } else {
-      //     success = false;
-      //   }
-      // } else {
-      //   await store.dispatch(
-      //     getDetailRiwayatPelatihan(
-      //       req.cookies.id_pelatihan,
-      //       session.user.user.data.user.token
-      //     )
-      //   );
-      //   success = true;
-      // }
-
       let success = false;
       if (!req.cookies.id_pelatihan) {
         const { data } = await store.dispatch(
@@ -138,6 +106,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       await store.dispatch(getDataPribadi(session.user.user.data.user.token));
+      await store.dispatch(getAllAkademi());
 
       return {
         props: { data: "auth", session, title: "Dashboard - Peserta", success },

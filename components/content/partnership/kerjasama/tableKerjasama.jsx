@@ -307,9 +307,8 @@ const Table = ({ token }) => {
             <div className="table-filter">
               <div className="row align-items-center">
                 <div className="col-lg-12 col-xl-12">
-                  {/* <form onSubmit={handleSubmit}> */}
                   <div className="row">
-                    <div className="col-12 col-sm-6">
+                    <div className="col-12 col-xl-4">
                       <div className="position-relative overflow-hidden w-100 mt-5">
                         <IconSearch
                           style={{ left: "10" }}
@@ -338,7 +337,7 @@ const Table = ({ token }) => {
                         </button>
                       </div>
                     </div>
-                    <div className="col-12 col-sm-6">
+                    <div className="col-12 col-sm-8">
                       <div className="d-flex flex-wrap align-items-center justify-content-end mt-2">
                         {/* sorotir by modal */}
                         <button
@@ -539,7 +538,7 @@ const Table = ({ token }) => {
                         allMK.m_cooporation.data.list_cooperations.map(
                           (items, index) => {
                             return (
-                              <tr key={index}>
+                              <tr key={index} style={{backgroundColor:items.visit == 0 ?"#f8f8ff":"inherit"}}>
                                 <td className="text-left align-middle">
                                   {allMK.page === 1
                                     ? index + 1
@@ -630,7 +629,8 @@ const Table = ({ token }) => {
                                         }
                                       >
                                         <option value="1">
-                                          {items.status.name}
+                                          {/* {items.status.name} */}
+                                          Aktif
                                         </option>
                                         <option value="2">Tidak Aktif</option>
                                       </select>
