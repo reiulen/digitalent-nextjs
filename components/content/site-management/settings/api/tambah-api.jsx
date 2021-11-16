@@ -1,29 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import PageWrapper from "../../../../wrapper/page.wrapper";
-import {  useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import DatePicker from "react-datepicker";
 import moment from "moment";
 import IconCalender from "../../../../assets/icon/Calender";
 import axios from "axios";
 import Select from "react-select";
 import Swal from "sweetalert2";
+import SimpleReactValidator from "simple-react-validator";
 
 const TambahApi = ({ token }) => {
+  const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
+  const [, forceUpdate] = useState();
   const router = useRouter();
-
-  let selectRefField = null;
-
-
   const listApi = useSelector((state) => state.listApi);
-
   const [nameApi, setNameApi] = useState("");
   const [nameUser, setNameUser] = useState("");
   const [status, setStatus] = useState("");
   const [apiChoice, setApiChoice] = useState("");
   const [field, setField] = useState([]);
-  const [valueField, setValueField] = useState([])
+  const [valueField, setValueField] = useState([]);
   const [optionListField, setOptionListField] = useState([]);
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
@@ -35,89 +33,67 @@ const TambahApi = ({ token }) => {
     setTo(moment(date).format("YYYY-MM-DD"));
   };
 
-
   const changeListApi = (e) => {
     let resultSelect = e.map((items) => {
       return items.label;
     });
-    setValueField(e)
+    setValueField(e);
     setField(resultSelect);
   };
 
   const changeChoiceApi = (e) => {
-    setApiChoice(e.target.value)
-    setValueField([])
-  }
+    setApiChoice(e.target.value);
+    setValueField([]);
+  };
 
   const submit = (e) => {
     e.preventDefault();
-
-    if (nameApi === "") {
-      Swal.fire("Gagal simpan", "Nama api tidak boleh kosong", "error");
-    } else if (nameUser === "") {
-      Swal.fire("Gagal simpan", "Status tidak boleh kosong", "error");
-    }
-    else if(apiChoice === ""){
-      Swal.fire("Gagal simpan", "Api tidak boleh kosong", "error");
-    }
-    else if(!valueField.length){
-      Swal.fire("Gagal simpan", "Field tidak boleh kosong", "error");
-    }
-    else if(!from){
-      Swal.fire("Gagal simpan", "Field From tidak boleh kosong", "error");
-    }
-    else if(!to){
-      Swal.fire("Gagal simpan", "Field To tidak boleh kosong", "error");
-    }
-    else {
-      Swal.fire({
-        title: "Apakah anda yakin simpan ?",
-        // text: "Data ini tidak bisa dikembalikan !",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        cancelButtonText: "Batal",
-        confirmButtonText: "Ya !",
-        dismissOnDestroy: false,
-      }).then(async (result) => {
-        if (result.value) {
-          const sendData = {
-            api_name: nameApi,
-            username: nameUser,
-            id_api: apiChoice,
-            from_date: from,
-            to_date: to,
-            status: status,
-            fields: field,
-          };
-
-          try {
-            let { data } = await axios.post(
-              `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-api/store`,
-              sendData,
-              {
-                headers: {
-                  authorization: `Bearer ${token}`,
-                },
-              }
-            );
-
-            Swal.fire("Berhasil", "Data berhasil disimpan", "success").then(
-              () => {
-                router.push(`/site-management/setting/api`);
-              }
-            );
-          } catch (error) {
-            Swal.fire(
-              "Gagal simpan",
-              `${error.response.data.message}`,
-              "error"
-            );
-          }
+    Swal.fire({
+      title: "Apakah anda yakin simpan ?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Batal",
+      confirmButtonText: "Ya !",
+      dismissOnDestroy: false,
+    }).then(async (result) => {
+      if (result.value) {
+        const sendData = {
+          api_name: nameApi,
+          username: nameUser,
+          id_api: apiChoice,
+          from_date: from,
+          to_date: to,
+          status: status,
+          fields: field,
+        };
+        try {
+          let { data } = await axios.post(
+            `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-api/store`,
+            sendData,
+            {
+              headers: {
+                authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          Swal.fire("Berhasil", "Data berhasil disimpan", "success").then(
+            () => {
+              router.push(`/site-management/setting/api`);
+            }
+          );
+        } catch (error) {
+          simpleValidator.current.showMessages();
+          forceUpdate(1);
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Isi data dengan benar !",
+          });
         }
-      });
-    }
+      }
+    });
   };
 
   useEffect(() => {
@@ -141,22 +117,21 @@ const TambahApi = ({ token }) => {
           });
 
           setOptionListField(optionListFieldResult);
-        } catch (error) {return;
+        } catch (error) {
+          return;
         }
       }
 
       getListField(apiChoice, token);
     }
-  }, [apiChoice,token]);
+  }, [apiChoice, token]);
 
   return (
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3
-              className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 mb-5 mt-5 titles-1"
-            >
+            <h3 className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 mb-5 mt-5 titles-1">
               Tambah API
             </h3>
           </div>
@@ -169,7 +144,16 @@ const TambahApi = ({ token }) => {
                   onChange={(e) => setNameApi(e.target.value)}
                   className="form-control"
                   placeholder="Masukkan nama api"
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("nameApi")
+                  }
                 />
+                {simpleValidator.current.message(
+                  "nameApi",
+                  nameApi,
+                  "required",
+                  { className: "text-danger" }
+                )}
               </div>
               <div className="form-group">
                 <label>Nama Pengguna</label>
@@ -178,23 +162,41 @@ const TambahApi = ({ token }) => {
                   type="text"
                   className="form-control"
                   placeholder="Masukkan nama pengguna"
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("nameUser")
+                  }
                 />
+                {simpleValidator.current.message(
+                  "nameUser",
+                  nameUser,
+                  "required",
+                  { className: "text-danger" }
+                )}
               </div>
               <div className="form-group">
                 <label>Status</label>
                 <select
                   onChange={(e) => setStatus(e.target.value)}
                   className="form-control"
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("status")
+                  }
                 >
                   <option value="">Pilih status</option>
                   <option value="1">Aktif</option>
                   <option value="0">Nonaktif</option>
                 </select>
+                {simpleValidator.current.message("status", status, "required", {
+                  className: "text-danger",
+                })}
               </div>
 
               <div className="form-group">
                 <label>Pilih API</label>
                 <select
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("apiChoice")
+                  }
                   onChange={(e) => changeChoiceApi(e)}
                   className="form-control"
                 >
@@ -207,6 +209,12 @@ const TambahApi = ({ token }) => {
                     );
                   })}
                 </select>
+                {simpleValidator.current.message(
+                  "apiChoice",
+                  apiChoice,
+                  "required",
+                  { className: "text-danger" }
+                )}
               </div>
               <div className="form-group">
                 <label>Field</label>
@@ -222,9 +230,18 @@ const TambahApi = ({ token }) => {
                   isRtl={false}
                   isSearchable={true}
                   name="color"
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("valueField")
+                  }
                   onChange={(e) => changeListApi(e)}
                   options={optionListField}
                 />
+                {simpleValidator.current.message(
+                  "valueField",
+                  valueField,
+                  "required",
+                  { className: "text-danger" }
+                )}
               </div>
               <div className="form-group row">
                 <div className="col-12 col-sm-6">
@@ -237,12 +254,18 @@ const TambahApi = ({ token }) => {
                       dateFormat="YYYY-MM-DD"
                       placeholderText="From"
                       minDate={moment().toDate()}
+                      onBlur={() =>
+                        simpleValidator.current.showMessageFor("from")
+                      }
                     />
                     <IconCalender
                       className="right-center-absolute"
                       style={{ right: "10px" }}
                     />
                   </div>
+                  {simpleValidator.current.message("from", from, "required", {
+                    className: "text-danger",
+                  })}
                 </div>
                 <div className="col-lg-6">
                   <label>To</label>
@@ -255,12 +278,18 @@ const TambahApi = ({ token }) => {
                       dateFormat="YYYY-MM-DD"
                       placeholderText="To"
                       minDate={moment(from).toDate()}
+                      onBlur={() =>
+                        simpleValidator.current.showMessageFor("to")
+                      }
                     />
                     <IconCalender
                       className="right-center-absolute"
                       style={{ right: "10px" }}
                     />
                   </div>
+                  {simpleValidator.current.message("to", to, "required", {
+                    className: "text-danger",
+                  })}
                 </div>
               </div>
 
