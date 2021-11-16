@@ -73,6 +73,10 @@
   font-size: 5px;
 }
 
+.responsive-normal-font-size {
+  font-size: 6px;
+}
+
 .responsive-font-size-nama-peserta {
   font-size: 12px;
 }
@@ -137,6 +141,9 @@
   }
   .responsive-margin-peserta-1 {
     top: 140px !important;
+  }
+  .responsive-normal-font-size {
+    font-size: 10px;
   }
 }
 
@@ -214,6 +221,9 @@
   .responsive-margin-peserta-1 {
     top: 130px !important;
   }
+  .responsive-normal-font-size {
+    font-size: 10px;
+  }
 }
 
 @media (min-width: 1200px) {
@@ -253,6 +263,10 @@
   .responsive-year {
     top: 340px;
     left: 60%;
+  }
+
+  .responsive-normal-font-size {
+    font-size: 12px;
   }
 
   .responsive-year-without-background {

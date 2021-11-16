@@ -10,15 +10,16 @@ import {
 } from "../../redux/actions/beranda/berita.actions";
 import { getAllAkademi } from "../../redux/actions/beranda/beranda.actions";
 
-const Berita = dynamic(() =>
+const Kontak = dynamic(() =>
   import("../../user-component/content/beranda/kontak")
 );
 
-const Layout = dynamic(() =>
-  import("../../user-component/content/wrapper/layout.wrapper")
+const Layout = dynamic(
+  () => import("../../components/wrapper/beranda.wrapper"),
+  { ssr: false }
 );
 
-export default function BerandaBerita(props) {
+export default function BerandaKontak(props) {
   let session = null;
 
   if (props.session) {
@@ -27,9 +28,11 @@ export default function BerandaBerita(props) {
 
   return (
     <>
-      <Layout title="Berita" session={session}>
-        <Berita session={session}></Berita>
-      </Layout>
+      <div style={{ backgroundColor: "white" }}>
+        <Layout title="Kontak" session={session}>
+          <Kontak session={session}></Kontak>
+        </Layout>
+      </div>
     </>
   );
 }
