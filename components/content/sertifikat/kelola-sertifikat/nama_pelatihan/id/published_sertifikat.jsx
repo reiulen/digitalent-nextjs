@@ -130,7 +130,7 @@ export default function KelolasertifikatID({ token }) {
                 />
                 <div
                   className={`position-absolute w-100 text-center ${
-                    certificate.data.certificate.background
+                    certificate?.data?.certificate?.background
                       ? "responsive-margin-peserta-1"
                       : "responsive-margin-without-background"
                   }`}
@@ -148,8 +148,8 @@ export default function KelolasertifikatID({ token }) {
           {/* END BODY */}
         </div>
         {/* START SECTION 2 */}
-        {certificate.data.certificate.certificate_type == "2 lembar" &&
-        certificate.data.certificate.certificate_type ? (
+        {certificate?.data?.certificate?.certificate_type == "2 lembar" &&
+        certificate?.data?.certificate?.certificate_type ? (
           <div className="card card-custom card-stretch gutter-b">
             <div className="card-body border-top">
               <div
