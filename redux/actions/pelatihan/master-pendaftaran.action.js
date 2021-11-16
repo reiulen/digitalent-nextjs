@@ -19,14 +19,15 @@ import {
   UPDATE_MASTER_TRAINING_RESET,
   UPDATE_MASTER_TRAINING_SUCCESS,
   CLEAR_ERRORS,
-  RESET_VALUE_FILTER,
+  RESET_STATUS_FILTER,
   SET_KEYWORD_VALUE,
   SET_LIMIT_VALUE,
   SET_PAGE_VALUE,
   FAIL_STATUS_PUBLISH,
   REQUEST_STATUS_PUBLISH,
   UPDATE_STATUS_PUBLISH,
-} from "../../types/pelatihan/master-pelatihan.type";
+  SET_STATUS_VALUE,
+} from "../../types/pelatihan/master-pendaftaran.type";
 
 export const getAllListMasterPelatihan =
   (token) => async (dispatch, getState) => {
@@ -36,14 +37,8 @@ export const getAllListMasterPelatihan =
         process.env.END_POINT_API_PELATIHAN + `api/v1/formBuilder/find`;
       let pageState = getState().getAllMasterPelatihan.page || 1;
       let limitState = getState().getAllMasterPelatihan.limit || 5;
-      let statusState = getState().getAllMasterPelatihan.theme || 0;
+      let statusState = getState().getAllMasterPelatihan.status || 0;
       let keywordState = getState().allCertificates.cari || "";
-      //    getAllMasterPelatihan: allMasterPelatihanListReducer,
-      //   deleteMasterPelatihan: deleteMasterPelatihanReducer,
-      //   getDetailMasterPelatihan: detailMasterPelatihanReducer,
-      //   newMasterPelatihan: newMasterTrainingReducer,
-      //   updateMasterPelatihan: updateMasterPelatihanReducer,
-      console.log("^^ ini getState");
       const params = {
         page: pageState,
         limit: limitState,
@@ -57,16 +52,16 @@ export const getAllListMasterPelatihan =
           Authorization: `Bearer ${token}`,
         },
       };
+      const { data } = await axios.get(link, config);
 
-      //   const { data } = await axios.get(link, config);
-      //   if (data) {
-      //     dispatch({ type: LIST_MASTER_TRAINING_SUCCESS, payload: data });
-      //   }
+      if (data) {
+        dispatch({ type: LIST_MASTER_TRAINING_SUCCESS, payload: data });
+      }
     } catch (error) {
-      //   dispatch({
-      //     type: LIST_MASTER_TRAINING_FAIL,
-      //     payload: error.response.data.message,
-      //   });
+      dispatch({
+        type: LIST_MASTER_TRAINING_FAIL,
+        payload: error.response.data.message || error,
+      });
     }
   };
 
@@ -91,18 +86,25 @@ export const setValueLimit = (text) => {
   };
 };
 
+export const setValueStatus = (text) => {
+  return {
+    type: SET_STATUS_VALUE,
+    text,
+  };
+};
+
 export const getDetailMasterPelatihan = (id, token) => async (dispatch) => {
   try {
     dispatch({ type: DETAIL_MASTER_TRAINING_REQUEST });
     let link =
-      process.env.END_POINT_API_SERTIFIKAT + `api/manage_certificates/${id}`;
+      process.env.END_POINT_API_PELATIHAN +
+      `api/v1/formBuilder/detail?id=${id}`;
 
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     };
-
     const { data } = await axios.get(link, config);
 
     if (data) {
@@ -111,14 +113,14 @@ export const getDetailMasterPelatihan = (id, token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: DETAIL_MASTER_TRAINING_FAIL,
-      payload: error.response.data.message,
+      payload: error.response.data.message || error,
     });
   }
 };
 
-export const newSertifikat = (id, formData, token) => async (dispatch) => {
+export const newMasterPelatihan = (id, formData, token) => async (dispatch) => {
   try {
-    dispatch({ type: NEW_SERTIFIKAT_REQUEST });
+    dispatch({ type: NEW_MASTER_TRAINING_REQUEST });
     let link =
       process.env.END_POINT_API_SERTIFIKAT +
       `api/manage_certificates/store/${id}`;
@@ -132,12 +134,12 @@ export const newSertifikat = (id, formData, token) => async (dispatch) => {
     const { data } = await axios.post(link, formData, config);
 
     if (data) {
-      dispatch({ type: NEW_SERTIFIKAT_SUCCESS, payload: data });
+      dispatch({ type: NEW_MASTER_TRAINING_SUCCESS, payload: data });
     }
   } catch (error) {
     dispatch({
-      type: NEW_SERTIFIKAT_FAIL,
-      payload: error.response.data.message,
+      type: NEW_MASTER_TRAINING_FAIL,
+      payload: error.response.data.message || error,
     });
   }
 };
@@ -148,34 +150,32 @@ export const clearErrors = () => async (dispatch) => {
   });
 };
 
-export const updateSertifikat = (id, formData, token) => async (dispatch) => {
-  try {
-    dispatch({ type: UPDATE_SERTIFIKAT_REQUEST });
+export const updateMasterPelatihanAction =
+  (formData, token) => async (dispatch) => {
+    try {
+      dispatch({ type: UPDATE_MASTER_TRAINING_REQUEST });
 
-    let link =
-      process.env.END_POINT_API_SERTIFIKAT +
-      `api/manage_certificates/update/${id}`;
+      let link =
+        process.env.END_POINT_API_PELATIHAN + `api/v1/formBuilder/update`;
 
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token.token}`,
-      },
-    };
-
-    const { data } = await axios.post(link, formData, config);
-
-    if (data) {
-      dispatch({ type: UPDATE_SERTIFIKAT_SUCCESS, payload: data });
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const { data } = await axios.post(link, formData, config);
+      if (data) {
+        dispatch({ type: UPDATE_MASTER_TRAINING_SUCCESS, payload: data });
+      }
+    } catch (error) {
+      dispatch({
+        type: UPDATE_MASTER_TRAINING_FAIL,
+        payload: error.response.data.message || error,
+      });
     }
-  } catch (error) {
-    dispatch({
-      type: UPDATE_SERTIFIKAT_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+  };
 
-export const deleteTraining = (id, token) => async (dispatch) => {
+export const deleteMasterTraining = (id, token) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_MASTER_TRAINING_REQUEST });
 
@@ -198,7 +198,7 @@ export const deleteTraining = (id, token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: DELETE_MASTER_TRAINING_FAIL,
-      payload: error.response.data.message,
+      payload: error.response.data.message || error,
     });
   }
 };
@@ -218,7 +218,7 @@ export const updateStatusPublishMaster =
 
       const { data } = await axios.post(
         process.env.END_POINT_API_PELATIHAN +
-          "api/v1/formBuilder/update-status-publish",
+          "api/v1/formBuilder/update-status",
         dataStatus,
         config
       );
@@ -230,7 +230,7 @@ export const updateStatusPublishMaster =
     } catch (error) {
       dispatch({
         type: FAIL_STATUS_PUBLISH,
-        payload: error.response.data.message,
+        payload: error.response.data.message || error,
       });
     }
   };
