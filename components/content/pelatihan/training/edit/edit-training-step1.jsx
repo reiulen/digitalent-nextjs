@@ -410,9 +410,9 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
         pelatian_id: parseInt(router.query.id),
         pelatihan_id: parseInt(router.query.id)
       };
-
-      dispatch(putTrainingStep1(token, data))
-      propsStep(2);
+      console.log("hasil", data)
+      // dispatch(putTrainingStep1(token, data))
+      // propsStep(2);
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -471,38 +471,6 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                 {simpleValidator.current.message(
                   "program dts",
                   program,
-                  "required",
-                  { className: "text-danger" }
-                )}
-              </div>
-            </div>
-
-            <div className="form-group row mb-4">
-              <label className="col-form-label font-weight-bold col-sm-2">
-                Ketentuan Peserta
-              </label>
-              <div className="col-sm-10 my-auto">
-                <div className="form-check form-check-inline ">
-                  <input
-                    type="checkbox"
-                    className="form-check-input"
-                    checked={ketentuan}
-                    value={ketentuan}
-                    onChange={(e) => {
-                      setKetentuan(e.target.checked);
-                    }}
-                    onBlur={() =>
-                      simpleValidator.current.showMessageFor("ketentuan")
-                    }
-                  />
-                  <label className="form-check-label">
-                    Peserta dapat mengikuti pelatihan <br /> ini ditahun yang
-                    sama pada Akademi ini
-                  </label>
-                </div>
-                {simpleValidator.current.message(
-                  "ketentuan",
-                  ketentuan,
                   "required",
                   { className: "text-danger" }
                 )}
