@@ -5,7 +5,7 @@ import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
 import style from "./style.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import SimpleReactValidator from "simple-react-validator";
-import OtpInput from "react-otp-input";
+// import OtpInput from "react-otp-input";
 import axios from "axios";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
