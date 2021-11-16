@@ -49,6 +49,7 @@ const Navigationbar = ({ session }) => {
   );
 
   useEffect(() => {
+    // dispatch(getDataPribadi(session?.token));
     if (session) {
       dispatch(getDataPribadi(session?.token));
       if (
@@ -70,11 +71,11 @@ const Navigationbar = ({ session }) => {
     return data.data;
   };
 
-  useEffect(() => {
-    getAkademi();
-    getSimonas();
-    getBeasiswa();
-  }, []);
+  // useEffect(() => {
+  //   getAkademi();
+  //   getSimonas();
+  //   getBeasiswa();
+  // }, []);
 
   const getSimonas = async () => {
     const link = "http://simonas-dev.majapahit.id/api/job";
