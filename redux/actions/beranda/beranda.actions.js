@@ -2,6 +2,9 @@ import {
   BERANDA_PENYELENGGARA_REQUEST,
   BERANDA_PENYELENGGARA_SUCCESS,
   BERANDA_PENYELENGGARA_FAIL,
+  BERANDA_PENYELENGGARA_PAGE_REQUEST,
+  BERANDA_PENYELENGGARA_PAGE_SUCCESS,
+  BERANDA_PENYELENGGARA_PAGE_FAIL,
   BERANDA_NOTIF_TEMA_REQUEST,
   BERANDA_NOTIF_TEMA_SUCCESS,
   BERANDA_NOTIF_TEMA_FAIL,
@@ -237,6 +240,34 @@ export const getAllPublikasi = () => async (dispatch) => {
     });
   }
 };
+
+// GET PENYELENGGARA PAGE
+export const getAllPenyeleggaraPage =
+  (page = 1, limit = 24, keyword, order) =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: BERANDA_PENYELENGGARA_PAGE_REQUEST });
+
+      let link =
+        process.env.END_POINT_API_PELATIHAN +
+        `api/v1/pelatihan/list-mitra?page=${page}`;
+      if (limit) link = link.concat(`&limit=${limit}`);
+      if (keyword) link = link.concat(`&keyword=${keyword}`);
+      if (order) link = link.concat(`&orderBy=${order}`); //asc || desc
+
+      const { data } = await axios.get(link);
+
+      dispatch({
+        type: BERANDA_PENYELENGGARA_PAGE_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: BERANDA_PENYELENGGARA_PAGE_FAIL,
+        payload: error.message,
+      });
+    }
+  };
 
 // Clear Error
 export const clearErrors = () => async (dispatch) => {

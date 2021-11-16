@@ -2,6 +2,7 @@ import { getSession } from "next-auth/client";
 import dynamic from "next/dynamic";
 import { wrapper } from "../../redux/store";
 import { getDataPribadi } from "../../redux/actions/pelatihan/function.actions";
+import { getAllPenyeleggaraPage } from "../../redux/actions/beranda/beranda.actions";
 
 import LoadingDetailAkademi from "../../user-component/components/loader/DetailAkademiLoader";
 
@@ -42,7 +43,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
       let sessionToken = session?.user.user.data.user.token;
 
-      //   await store.dispatch(getDataPribadi(sessionToken));
+      // await store.dispatch(getDataPribadi(sessionToken));
+      await store.dispatch(getAllPenyeleggaraPage());
 
       return {
         props: {
