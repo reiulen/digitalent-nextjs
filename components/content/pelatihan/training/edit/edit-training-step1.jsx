@@ -13,7 +13,10 @@ import PageWrapper from "../../../../wrapper/page.wrapper";
 import StepInputPelatihan from "../../../../StepInputPelatihan";
 import LoadingPage from "../../../../LoadingPage";
 
-import { putTrainingStep1, getEditTrainingStep1 } from "../../../../../redux/actions/pelatihan/training.actions";
+import {
+  putTrainingStep1,
+  getEditTrainingStep1,
+} from "../../../../../redux/actions/pelatihan/training.actions";
 import {
   dropdownAkademi,
   dropdownLevelPelatihan,
@@ -28,6 +31,7 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
+  const today = new Date();
 
   const [editorLoaded, setEditorLoaded] = useState(false);
   const { CKEditor, ClassicEditor, Base64UploadAdapter } =
@@ -71,7 +75,6 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
     (state) => state.drowpdownKabupaten
   );
 
-
   //data pelatihan
   const [program, setProgram] = useState(
     (getEditTraining && getEditTraining.program_dts) || ""
@@ -96,14 +99,24 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
     value: getEditTraining.tema_id,
   });
   const [logoFile, setLogoFile] = useState("");
-  const [logoBase, setLogoBase] = useState("");
-  const [logoName, setLogoName] = useState("Belum ada file");
+  const [logoBase, setLogoBase] = useState(getEditTraining.logo);
+  const [logoName, setLogoName] = useState(
+    getEditTraining.logo.length > 0 ? getEditTraining.logo : "Belum ada file"
+  );
   const [thumbnailFile, setThumbnailFile] = useState("");
-  const [thumbnailBase, setThumbnailBase] = useState("");
-  const [thumbnailName, setThumbnailName] = useState("Belum ada file");
+  const [thumbnailBase, setThumbnailBase] = useState(getEditTraining.thumbnail);
+  const [thumbnailName, setThumbnailName] = useState(
+    getEditTraining.thumbnail.length > 0
+      ? getEditTraining.thumbnail
+      : "Belum ada file"
+  );
   const [silabusFile, setSilabusFile] = useState("");
-  const [silabusBase, setSilabusBase] = useState("");
-  const [silabusName, setSilabusName] = useState(getEditTraining.silabus);
+  const [silabusBase, setSilabusBase] = useState(getEditTraining.silabus);
+  const [silabusName, setSilabusName] = useState(
+    getEditTraining.silabus.length > 0
+      ? getEditTraining.silabus
+      : "Belum ada file"
+  );
   const [metodeImplementation, setMetodeImplementation] = useState(
     getEditTraining.metode_pelaksanaan
   );
@@ -111,27 +124,32 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
     label: getEditTraining.penyelenggara,
     value: getEditTraining.penyelenggara,
   });
-  const [mitra, setMitra] = useState(dataMitra.data.filter(item => {
-    return item.name === getEditTraining.mitra_nama
-  }).map(item => {
-    return {
-      value: item.id,
-      label: item.name
-    }
-  })[0]);
+  const [mitra, setMitra] = useState(
+    dataMitra.data
+      .filter((item) => {
+        return item.name === getEditTraining.mitra_nama;
+      })
+      .map((item) => {
+        return {
+          value: item.id,
+          label: item.name,
+        };
+      })[0]
+  );
+  
   //tanggal pendaftaran
   const [startDateRegistration, setStartDateRegistration] = useState(
-    new Date(getEditTraining.pendaftaran_mulai)
+    new Date(getEditTraining.pendaftaran_mulai.slice(0, getEditTraining.pendaftaran_mulai.length -1))
   );
   const [endDateRegistration, setEndDateRegistration] = useState(
-    new Date(getEditTraining.pendaftaran_mulai)
+    new Date(getEditTraining.pendaftaran_selesai.slice(0, getEditTraining.pendaftaran_selesai.length -1))
   );
   //tanggal pelatihan
   const [startDateTraining, setStartDateTraining] = useState(
-    new Date(getEditTraining.pelatihan_mulai)
+    new Date(getEditTraining.pelatihan_mulai.slice(0, getEditTraining.pelatihan_mulai.length -1))
   );
   const [endDateTraining, setEndDateTraining] = useState(
-    new Date(getEditTraining.pelatihan_mulai)
+    new Date(getEditTraining.pelatihan_selesai.slice(0, getEditTraining.pelatihan_selesai.length -1))
   );
   const [description, setDescription] = useState(getEditTraining.deskripsi);
   //kuota
@@ -153,6 +171,7 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
     label: getEditTraining.zonasi,
     value: getEditTraining.zonasi,
   });
+
   const [batch, setBatch] = useState({
     label: getEditTraining.batch,
     value: getEditTraining.batch,
@@ -186,7 +205,6 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
 
     setEditorLoaded(true);
   }, [dispatch, router.query.id, token, academy.value]);
-
 
   const optionsLevelPelatihan = [];
   for (let index = 0; index < dataLevelPelatihan.data.length; index++) {
@@ -315,21 +333,23 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
     switch (type) {
       case "LOGO":
         setLogoFile("");
+        setLogoBase("");
         setLogoName("Belum ada file");
         break;
       case "THUMBNAIL":
         setThumbnailFile("");
+        setThumbnailBase("");
         setThumbnailName("Belum ada file");
         break;
       case "SILABUS":
         setSilabusFile("");
+        setSilabusBase("");
         setSilabusName("Belum ada file");
         break;
       default:
         break;
     }
   };
-
 
   const onSilabusHandler = (e) => {
     const type = ["application/pdf"];
@@ -378,18 +398,26 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
         akademi_id: academy.value,
         tema_id: theme.value,
         logoFile,
-        logoBase,
+        logo: logoBase,
         thumbnailFile,
-        thumbnailBase,
+        thumbnail: thumbnailBase,
         silabusFile,
-        silabusBase,
+        silabus: silabusBase,
         metode_pelaksanaan: metodeImplementation,
         penyelenggara: organizer.label,
         mitra: mitra.value.toString() || mitra.id.toString(),
-        pendaftaran_mulai: startDateRegistration,
-        pendaftaran_selesai: endDateRegistration,
-        pelatihan_mulai: startDateTraining,
-        pelatihan_selesai: endDateTraining,
+        pendaftaran_mulai: moment(startDateRegistration).format(
+          "YYYY-MM-DD HH:mm:ss"
+        ),
+        pendaftaran_selesai: moment(endDateRegistration).format(
+          "YYYY-MM-DD HH:mm:ss"
+        ),
+        pelatihan_mulai: moment(startDateTraining).format(
+          "YYYY-MM-DD HH:mm:ss"
+        ),
+        pelatihan_selesai: moment(endDateTraining).format(
+          "YYYY-MM-DD HH:mm:ss"
+        ),
         deskripsi: description,
         kuota_pendaftar: parseInt(targetKuotaRegister),
         kuota_peserta: targetKuotaUser,
@@ -408,10 +436,9 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
         tuna_rungu,
         tuna_daksa,
         pelatian_id: parseInt(router.query.id),
-        pelatihan_id: parseInt(router.query.id)
+        pelatihan_id: parseInt(router.query.id),
       };
-
-      dispatch(putTrainingStep1(token, data))
+      dispatch(putTrainingStep1(token, data));
       propsStep(2);
     } else {
       simpleValidator.current.showMessages();
@@ -477,38 +504,6 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
               </div>
             </div>
 
-            <div className="form-group row mb-4">
-              <label className="col-form-label font-weight-bold col-sm-2">
-                Ketentuan Peserta
-              </label>
-              <div className="col-sm-10 my-auto">
-                <div className="form-check form-check-inline ">
-                  <input
-                    type="checkbox"
-                    className="form-check-input"
-                    checked={ketentuan}
-                    value={ketentuan}
-                    onChange={(e) => {
-                      setKetentuan(e.target.checked);
-                    }}
-                    onBlur={() =>
-                      simpleValidator.current.showMessageFor("ketentuan")
-                    }
-                  />
-                  <label className="form-check-label">
-                    Peserta dapat mengikuti pelatihan <br /> ini ditahun yang
-                    sama pada Akademi ini
-                  </label>
-                </div>
-                {simpleValidator.current.message(
-                  "ketentuan",
-                  ketentuan,
-                  "required",
-                  { className: "text-danger" }
-                )}
-              </div>
-            </div>
-
             <div className="form-group mb-4">
               <label className="col-form-label font-weight-bold">
                 Nama Pelatihan
@@ -561,9 +556,14 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                 <Select
                   options={optionsAkademi}
                   defaultValue={academy}
-                  onChange={(e) =>
-                    setAcademy({ value: e?.value, label: e?.label })
-                  }
+                  onChange={(e) => {
+                    setAcademy({ value: e?.value, label: e?.label });
+                    if (e?.value === academy.value) {
+                      return
+                    } else {
+                      setTheme(null);
+                    }
+                  }}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("akademi")
                   }
@@ -578,8 +578,10 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
               <label className="col-form-label font-weight-bold">Tema</label>
               <div className="position-relative" style={{ zIndex: "4" }}>
                 <Select
+                  placeholder="Silahkan Pilih Tema"
                   options={drowpdownTemabyAkademi.data.data}
                   defaultValue={theme}
+                  value={theme}
                   onChange={(e) =>
                     setTheme({ value: e?.value, label: e?.label })
                   }
@@ -607,7 +609,7 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                     }
                   />
                   <label className="custom-file-label" htmlFor="customFile">
-                    {logoName}
+                    {logoName.includes("silabus") ? logoName.split("/")[2] : logoName}
                   </label>
                   <label style={{ marginTop: "15px" }}>
                     {simpleValidator.current.message(
@@ -647,7 +649,7 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                     }
                   />
                   <label className="custom-file-label" htmlFor="customFile">
-                    {thumbnailName}
+                    {thumbnailName.includes("silabus") ? thumbnailName.split("/")[2] : thumbnailName}
                   </label>
                   <label style={{ marginTop: "15px" }}>
                     {simpleValidator.current.message(
@@ -687,16 +689,9 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                     }
                   />
                   <label className="custom-file-label" htmlFor="customFile">
-                    {silabusName}
+                    {silabusName.includes("silabus") ? silabusName.split("/")[2] : silabusName}
                   </label>
-                  <label style={{ marginTop: "15px" }}>
-                    {simpleValidator.current.message(
-                      "upload silabus",
-                      silabusFile,
-                      "required",
-                      { className: "text-danger" }
-                    )}
-                  </label>
+                  <label style={{ marginTop: "15px" }}></label>
                 </div>
                 <button
                   className="btn btn-link-action bg-danger text-white ml-3"
@@ -791,9 +786,9 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                 onChange={(e) => setMitra({ value: e?.value, label: e?.label })}
                 onBlur={() => simpleValidator.current.showMessageFor("mitra")}
               />
-              {simpleValidator.current.message("mitra", mitra, "required", {
-                className: "text-danger",
-              })}
+              {simpleValidator.current.message("mitra", mitra, metodeImplementation === "Swakelola" ? "" : "required", {
+              className: "text-danger",
+            })}
             </div>
 
             <h3 className="font-weight-bolder pt-3">Tanggal Pendaftaran</h3>
@@ -804,19 +799,15 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                   Tanggal Mulai
                 </label>
                 <DatePicker
-                  wrapperClassName="datepicker"
-                  className="form-control w-100 d-block"
-                  name="start_date"
                   selected={startDateRegistration}
+                  value={startDateRegistration}
                   onChange={(date) => setStartDateRegistration(date)}
-                  onBlur={() =>
-                    simpleValidator.current.showMessageFor("tanggal mulai")
-                  }
-                  selectsStart
-                  startDate={startDateRegistration}
-                  endDate={endDateRegistration}
-                  dateFormat="dd/MM/yyyy"
-                  autoComplete="off"
+                  showTimeSelect
+                  minDate={today}
+                  locale="pt-BR"
+                  timeFormat="HH:mm"
+                  dateFormat="d MMMM yyyy - HH:mm"
+                  className="form-control w-100 d-block"
                   placeholderText="Silahkan Pilih Tanggal Dari"
                 />
                 {simpleValidator.current.message(
@@ -831,19 +822,23 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                   Tanggal Sampai
                 </label>
                 <DatePicker
-                  wrapperClassName="datepicker"
-                  className="form-control w-100"
-                  selected={endDateRegistration}
-                  onChange={(date) => setEndDateRegistration(date)}
-                  onBlur={() =>
-                    simpleValidator.current.showMessageFor("tanggal sampai")
+                  selected={
+                    startDateRegistration > endDateRegistration
+                      ? ""
+                      : endDateRegistration
                   }
-                  selectsEnd
-                  startDate={startDateRegistration}
-                  endDate={endDateRegistration}
+                  value={
+                    startDateRegistration > endDateRegistration
+                      ? ""
+                      : endDateRegistration
+                  }
+                  onChange={(date) => setEndDateRegistration(date)}
                   minDate={startDateRegistration}
-                  dateFormat="dd/MM/yyyy"
-                  autoComplete="off"
+                  showTimeSelect
+                  className="form-control w-100 d-block"
+                  locale="pt-BR"
+                  timeFormat="HH:mm"
+                  dateFormat="d MMMM yyyy - HH:mm"
                   placeholderText="Silahkan Pilih Tanggal Sampai"
                 />
                 {simpleValidator.current.message(
@@ -863,19 +858,15 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                   Tanggal Mulai
                 </label>
                 <DatePicker
-                  wrapperClassName="datepicker"
-                  className="form-control w-100 d-block"
-                  name="start_date"
                   selected={startDateTraining}
                   onChange={(date) => setStartDateTraining(date)}
-                  onBlur={() =>
-                    simpleValidator.current.showMessageFor("tanggal mulai")
-                  }
-                  selectsStart
-                  startDate={startDateTraining}
-                  endDate={endDateTraining}
-                  dateFormat="dd/MM/yyyy"
-                  autoComplete="off"
+                  minDate={endDateRegistration}
+                  showTimeSelect
+                  value={startDateTraining}
+                  className="form-control w-100 d-block"
+                  locale="pt-BR"
+                  timeFormat="HH:mm"
+                  dateFormat="d MMMM yyyy - HH:mm"
                   placeholderText="Silahkan Pilih Tanggal Dari"
                 />
                 {simpleValidator.current.message(
@@ -890,19 +881,19 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                   Tanggal Sampai
                 </label>
                 <DatePicker
-                  wrapperClassName="datepicker"
-                  className="form-control w-100"
-                  selected={endDateTraining}
                   onChange={(date) => setEndDateTraining(date)}
-                  onBlur={() =>
-                    simpleValidator.current.showMessageFor("tanggal sampai")
-                  }
-                  selectsEnd
-                  startDate={startDateTraining}
-                  endDate={endDateTraining}
                   minDate={startDateTraining}
-                  dateFormat="dd/MM/yyyy"
-                  autoComplete="off"
+                  selected={
+                    startDateTraining > endDateTraining ? "" : endDateTraining
+                  }
+                  value={
+                    startDateTraining > endDateTraining ? "" : endDateTraining
+                  }
+                  showTimeSelect
+                  className="form-control w-100 d-block"
+                  locale="pt-BR"
+                  timeFormat="HH:mm"
+                  dateFormat="d MMMM yyyy - HH:mm"
                   placeholderText="Silahkan Pilih Tanggal Sampai"
                 />
                 {simpleValidator.current.message(
@@ -1125,8 +1116,8 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                     name="sertification"
                     className="form-check-input"
                     value="Ya"
-                    checked={sertification === "Ya"}
-                    onClick={() => setSertification("Ya")}
+                    checked={sertification === "1"}
+                    onClick={() => setSertification("1")}
                     onBlur={() =>
                       simpleValidator.current.showMessageFor("sertifikasi")
                     }
@@ -1139,8 +1130,8 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                     name="sertification"
                     className="form-check-input"
                     value="Tidak"
-                    checked={sertification === "Tidak"}
-                    onClick={() => setSertification("Tidak")}
+                    checked={sertification === "0"}
+                    onClick={() => setSertification("0")}
                     onBlur={() =>
                       simpleValidator.current.showMessageFor("sertifikasi")
                     }
@@ -1167,8 +1158,8 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                     name="lpjPeserta"
                     className="form-check-input"
                     value="Ya"
-                    checked={lpjUser === "Ya"}
-                    onClick={() => setLpjUser("Ya")}
+                    checked={lpjUser === "1"}
+                    onClick={() => setLpjUser("1")}
                     onBlur={() =>
                       simpleValidator.current.showMessageFor("lpj peserta")
                     }
@@ -1181,8 +1172,8 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                     name="lpjPeserta"
                     className="form-check-input"
                     value="Tidak"
-                    checked={lpjUser === "Tidak"}
-                    onClick={() => setLpjUser("Tidak")}
+                    checked={lpjUser === "0"}
+                    onClick={() => setLpjUser("0")}
                     onBlur={() =>
                       simpleValidator.current.showMessageFor("lpj peserta")
                     }
@@ -1271,8 +1262,8 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                     name="metodeTraining"
                     className="form-check-input"
                     value="Online&Offline"
-                    checked={metodeTraining === "Online&Offline"}
-                    onClick={() => setMetodeTraining("Online&Offline")}
+                    checked={metodeTraining === "Online dan Offline"}
+                    onClick={() => setMetodeTraining("Online dan Offline")}
                     onBlur={() =>
                       simpleValidator.current.showMessageFor("metode pelatihan")
                     }
@@ -1317,6 +1308,7 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                   defaultValue={province}
                   onChange={(e) => {
                     setProvince({ label: e?.label, value: e?.value });
+                    setCity(null);
                     dispatch(dropdownKabupaten(token, e.value));
                   }}
                   onBlur={() =>
@@ -1340,6 +1332,7 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                   ref={(ref) => (selectRefKabupaten = ref)}
                   options={optionsKabupaten}
                   defaultValue={city}
+                  value={city}
                   onChange={(e) =>
                     setCity({ value: e?.value, label: e?.label })
                   }
@@ -1368,9 +1361,11 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                     type="checkbox"
                     name="plotRegistration"
                     className="form-check-input"
-                    checked={tuna_rungu}
-                    value={tuna_rungu}
-                    onChange={() => disabilitasHandler("Umum")}
+                    defaultChecked={umum === "1"}
+                    value={umum}
+                    onChange={(e) => {
+                      setUmum(e.target.checked === true ? "1" : "0");
+                    }}
                   />
                   <label className="form-check-label">Umum</label>
                 </div>
@@ -1379,9 +1374,11 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                     type="checkbox"
                     name="plotRegistration"
                     className="form-check-input"
-                    checked={tuna_rungu}
-                    value={tuna_rungu}
-                    onChange={() => disabilitasHandler("Tuna Netra")}
+                    defaultChecked={tuna_netra === "1"}
+                    value={tuna_netra}
+                    onClick={(e) => {
+                      setTunaNetra(e.target.checked === true ? "1" : "0");
+                    }}
                   />
                   <label className="form-check-label">Tuna Netra</label>
                 </div>
@@ -1390,9 +1387,11 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                     type="checkbox"
                     name="plotRegistration"
                     className="form-check-input"
-                    checked={tuna_rungu}
+                    defaultChecked={tuna_rungu === "1"}
                     value={tuna_rungu}
-                    onChange={() => disabilitasHandler("Tuna Rungu")}
+                    onClick={(e) =>
+                      setTunaRungu(e.target.checked === true ? "1" : "0")
+                    }
                   />
                   <label className="form-check-label">Tuna Rungu</label>
                 </div>
@@ -1401,9 +1400,11 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                     type="checkbox"
                     name="plotRegistration"
                     className="form-check-input"
-                    checked={tuna_rungu}
-                    value={tuna_rungu}
-                    onChange={() => disabilitasHandler("Tuna Daksa")}
+                    defaultChecked={tuna_daksa === "1"}
+                    value={tuna_daksa}
+                    onClick={(e) =>
+                      setTunaDaksa(e.target.checked === true ? "1" : "0")
+                    }
                   />
                   <label className="form-check-label">Tuna Daksa</label>
                 </div>

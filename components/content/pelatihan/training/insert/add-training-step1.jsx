@@ -353,7 +353,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
         sertifikasi: sertification,
         lpj_peserta: lpjUser,
         zonasi_id: zonasi,
-        batch,
+        batch: batch.label,
         metode_pelatihan: metodeTraining,
         alamat: address,
         provinsi: province,
@@ -529,9 +529,14 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                 placeholder="Silahkan Pilih Akademi"
                 options={optionsAkademi}
                 defaultValue={academy}
-                onChange={(e) =>
-                  setAcademy({ value: e?.value, label: e?.label })
-                }
+                onChange={(e) =>{
+                  setAcademy({ value: e?.value, label: e?.label });
+                  if (e?.value === academy.value) {
+                    return
+                  } else {
+                    setTheme(null);
+                  }
+                }}
                 onBlur={() => simpleValidator.current.showMessageFor("akademi")}
               />
             </div>
@@ -552,11 +557,12 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                 placeholder="Silahkan Pilih Tema"
                 options={drowpdownTemabyAkademi.data.data}
                 defaultValue={theme}
+                value={theme}
                 onChange={(e) => setTheme({ value: e?.value, label: e?.label })}
                 onBlur={() => simpleValidator.current.showMessageFor("tema")}
               />
             </div>
-            {simpleValidator.current.message("tema", theme.value, "required", {
+            {simpleValidator.current.message("tema", theme, "required", {
               className: "text-danger",
             })}
           </div>
@@ -735,7 +741,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
               onChange={(e) => setMitra({ value: e?.value, label: e?.label })}
               onBlur={() => simpleValidator.current.showMessageFor("mitra")}
             />
-            {simpleValidator.current.message("mitra", mitra.value, "required", {
+            {simpleValidator.current.message("mitra", mitra.value, metodeImplementation === "Swakelola" ? "" : "required", {
               className: "text-danger",
             })}
           </div>
@@ -748,13 +754,15 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                 Tanggal Mulai
               </label>
               <div className="position-relative">
-                <DatePicker
+              <DatePicker
                   selected={startDateRegistration}
                   onChange={(date) => setStartDateRegistration(date)}
                   showTimeSelect
                   minDate={today}
+                  locale="pt-BR"
+                  timeFormat="HH:mm"
+                  dateFormat="d MMMM yyyy - HH:mm"
                   className="form-control w-100 d-block"
-                  dateFormat="d MMMM yyyy - h : mm"
                   placeholderText="Silahkan Pilih Tanggal Dari"
                 />
                 <i className="ri-calendar-line right-center-absolute pr-3"></i>
@@ -771,7 +779,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                 Tanggal Sampai
               </label>
               <div className="position-relative">
-                <DatePicker
+              <DatePicker
                   selected={
                     startDateRegistration > endDateRegistration
                       ? ""
@@ -786,7 +794,9 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                   minDate={startDateRegistration}
                   showTimeSelect
                   className="form-control w-100 d-block"
-                  dateFormat="d MMMM yyyy - h : mm"
+                  locale="pt-BR"
+                  timeFormat="HH:mm"
+                  dateFormat="d MMMM yyyy - HH:mm"
                   placeholderText="Silahkan Pilih Tanggal Sampai"
                 />
                 <i className="ri-calendar-line right-center-absolute pr-3"></i>
@@ -808,13 +818,15 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                 Tanggal Mulai
               </label>
               <div className="position-relative">
-                <DatePicker
+              <DatePicker
                   selected={startDateTraining}
                   onChange={(date) => setStartDateTraining(date)}
-                  minDate={today}
+                  minDate={endDateRegistration}
                   showTimeSelect
                   className="form-control w-100 d-block"
-                  dateFormat="d MMMM yyyy - h : mm"
+                  locale="pt-BR"
+                  timeFormat="HH:mm"
+                  dateFormat="d MMMM yyyy - HH:mm"
                   placeholderText="Silahkan Pilih Tanggal Dari"
                 />
                 <i className="ri-calendar-line right-center-absolute pr-3"></i>
@@ -831,7 +843,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                 Tanggal Sampai
               </label>
               <div className="position-relative">
-                <DatePicker
+              <DatePicker
                   onChange={(date) => setEndDateTraining(date)}
                   minDate={startDateTraining}
                   selected={
@@ -842,7 +854,9 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                   }
                   showTimeSelect
                   className="form-control w-100 d-block"
-                  dateFormat="d MMMM yyyy - h : mm"
+                  locale="pt-BR"
+                  timeFormat="HH:mm"
+                  dateFormat="d MMMM yyyy - HH:mm"
                   placeholderText="Silahkan Pilih Tanggal Sampai"
                 />
                 <i className="ri-calendar-line right-center-absolute pr-3"></i>
