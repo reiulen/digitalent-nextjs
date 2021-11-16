@@ -10,6 +10,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import { getDataPribadi } from "../../../../redux/actions/pelatihan/function.actions";
+import { SweatAlert } from "../../../../utils/middleware/helper";
 
 // import OtpInput from "react-otpcode-input";
 
@@ -45,7 +46,10 @@ export default function Pengaturan({ session }) {
   const [newPhone, setNewPhone] = useState("");
 
   const [handphoneVerify, setHandphoneVerify] = useState(
-    dataPribadi.handphone_verifikasi
+    dataPribadi.handphone_verifikasi || false
+  );
+  const [emailVerify, setEmailVerify] = useState(
+    dataPribadi.email_verifikasi || false
   );
 
   //   START EMAIL
@@ -89,12 +93,13 @@ export default function Pengaturan({ session }) {
           config
         );
         if (data) {
+          setNewPhone(data.data.send);
           setPostStatus("ubahHandphone");
           handleShowUbahEmailOtp();
           handleCloseHandphoneModal();
         }
       } catch (error) {
-        notify(error.response.data.message);
+        SweatAlert("Gagal", error.response.data.message, "error");
       }
     } else {
       simpleValidator.current.showMessages();
@@ -120,14 +125,12 @@ export default function Pengaturan({ session }) {
           "Anda telah berhasil melakukan perubahan nomor handphone",
           "success"
         );
-        console.log(data, "ini data cuy");
-        // setNewEmail(data.data);
         setOtpEmail("");
         dispatch(getDataPribadi(session.token));
         handleCloseEmailOtp();
       }
     } catch (error) {
-      notify(error.response.data.message);
+      SweatAlert("Gagal", error.response.data.message, "error");
     }
   };
   // POST UBAH PASSWORD
@@ -160,7 +163,7 @@ export default function Pengaturan({ session }) {
           handleClosePasswordModal();
         }
       } catch (error) {
-        notify(error.response.data.message);
+        SweatAlert("Gagal", error.response.data.message, "error");
       }
     } else {
       simpleValidator.current.showMessages();
@@ -203,7 +206,7 @@ export default function Pengaturan({ session }) {
           handleCloseEmailModal();
         }
       } catch (error) {
-        notify(error.response.data.message);
+        SweatAlert("Gagal", error.response.data.message, "error");
       }
     } else {
       simpleValidator.current.showMessages();
@@ -236,7 +239,7 @@ export default function Pengaturan({ session }) {
         handleCloseEmailOtp();
       }
     } catch (error) {
-      notify(error.response.data.message);
+      SweatAlert("Gagal", error.response.data.message, "error");
     }
   };
 
@@ -256,7 +259,7 @@ export default function Pengaturan({ session }) {
         handleShowUbahEmailOtp();
       }
     } catch (error) {
-      notify(error.response.data.message);
+      SweatAlert("Gagal", error.response.data.message, "error");
     }
   };
 
@@ -272,11 +275,12 @@ export default function Pengaturan({ session }) {
         config
       );
       if (data) {
+        setEmailVerify(true);
         setPostStatus("verifyEmail");
         handleShowUbahEmailOtp();
       }
     } catch (error) {
-      notify(error.response.data.message);
+      SweatAlert("Gagal", error.response.data.message, "error");
     }
   };
   // POST OTP VERIFIKASI EMAIL
@@ -303,7 +307,7 @@ export default function Pengaturan({ session }) {
         handleCloseEmailOtp();
       }
     } catch (error) {
-      notify(error.response.data.message);
+      SweatAlert("Gagal", error.response.data.message, "error");
     }
   };
   // POST OTP VERIFIKASI HP
@@ -325,12 +329,13 @@ export default function Pengaturan({ session }) {
           "Anda telah berhasil melakukan verifikasi nomer handphone",
           "success"
         );
+        setHandphoneVerify(true);
         setOtpEmail("");
         dispatch(getDataPribadi(session.token));
         handleCloseEmailOtp();
       }
     } catch (error) {
-      notify(error.response.data.message);
+      SweatAlert("Gagal", error.response.data.message, "error");
     }
   };
 
@@ -360,7 +365,7 @@ export default function Pengaturan({ session }) {
                 style={{ height: "24px" }}
               >
                 Email
-                {dataPribadi.email_verifikasi ? (
+                {emailVerify ? (
                   <div
                     className={`rounded-circle d-flex align-items-center justify-content-center mx-5 ${style.iconBackgroundSuccess}`}
                   >
@@ -382,7 +387,7 @@ export default function Pengaturan({ session }) {
                 {dataPribadi.email_verifikasi == true && (
                   <span className="ml-5">
                     <button
-                      className={`text-primary ${style.btn_ubah}`}
+                      className={`text-primary p-0 ${style.btn_ubah}`}
                       onClick={handleShowUbahEmail}
                     >
                       Ubah
@@ -590,11 +595,11 @@ export default function Pengaturan({ session }) {
               ke
               <span className="font-weight-bolder mx-2">
                 {postStatus == "email"
-                  ? newEmail + " ini new Email "
+                  ? newEmail
                   : postStatus == "verifyHp"
                   ? dataPribadi.nomor_handphone
                   : postStatus == "ubahHandphone"
-                  ? dataPribadi.nomor_handphone
+                  ? newPhone
                   : dataPribadi.email}
               </span>
             </p>
