@@ -121,8 +121,8 @@ useEffect(()=> {
     if (str === ""){
       setActiveTitle("Video Terupdate dan Terkini")
     }
+    setActiveTitle(`#${str}`)
 
-    // setTag(str)
     dispatch(
       getAllVideoContent(
         activePage,
