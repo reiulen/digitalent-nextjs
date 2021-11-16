@@ -1,16 +1,11 @@
 import React, { useState } from "react";
-import Image from "next/image";
 import { useRouter } from "next/router";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 const ViewTrainingStep2 = () => {
   const router = useRouter();
-
-  const { error: errorReview, review } = useSelector(
-    (state) => state.getReviewStep2
-  );
 
   const { form } = useSelector((state) => state.getDetailMasterPelatihan);
   const [titleForm] = useState(form.data.judul_form);
