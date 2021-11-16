@@ -2,14 +2,12 @@ import { Card, Col, Container, Form, Row, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Footer from "../../../user-component/components/beranda/footer";
 import styles from "./formLpj.module.css";
-import Image from "next/dist/client/image";
-import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getBerandaFooter } from "../../../redux/actions/beranda/beranda.actions";
-import ImageWhiteLogo from "../../../components/assets/icon-dashboard-peserta/whitelogo.png";
 import moment from "moment";
 import "moment/locale/id";
-import { newLPJ } from "../../../redux/actions/pelatihan/summary.actions";
+import { SweatAlert } from "../../../utils/middleware/helper";
+import axios from "axios";
 
 const FormLPJ = ({ token }) => {
   const dispatch = useDispatch();
@@ -21,8 +19,6 @@ const FormLPJ = ({ token }) => {
   const { pelatihan: dataTraining } = useSelector(
     (state) => state.getPelatihan
   );
-
-  // console.log(dataLPJ);
 
   const [konfirmasi, setKonfirmasi] = useState("0");
   const [value, setValue] = useState("");
@@ -47,6 +43,15 @@ const FormLPJ = ({ token }) => {
   };
 
   const handlePost = () => {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    let link =
+      process.env.END_POINT_API_PELATIHAN + "api/v1/formPendaftaran/create-lpj";
+
     const setData = {
       pelatian_id: dataTraining.id,
       menyetujui: konfirmasi,
@@ -59,8 +64,11 @@ const FormLPJ = ({ token }) => {
         }
       }),
     };
-    dispatch(newLPJ(setData, token));
-    console.log(setData);
+
+    axios
+      .post(link, setData, config)
+      .then((res) => SweatAlert("Berhasil", res.data.data.message, "success"))
+      .catch((err) => SweatAlert("Gagal", err.response.data.message, "error"));
   };
 
   return (
