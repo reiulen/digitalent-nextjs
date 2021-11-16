@@ -68,12 +68,12 @@ import {
   updateSettingPublikasiReducer,
 } from "./publikasi/setting.reducers";
 
-import {
-  allVideoContentReducer,
-  allTagReducer,
-  playVideoContentReducer,
-  kategoriVideoContentReducer,
-} from "./beranda/video-content.reducer";
+// import {
+//   allVideoContentReducer,
+//   allTagReducer,
+//   playVideoContentReducer,
+//   kategoriVideoContentReducer,
+// } from "./beranda/video-content.reducer";
 
 import { allDashboardPublikasiReducer } from "./publikasi/dashboard-publikasi.reducers";
 
@@ -455,6 +455,14 @@ import {
   allTagBerandaBeritaReducer,
 } from "../reducers/beranda/berita.reducers";
 
+// ========== video ========
+import {
+  allVideoContentReducer,
+  kategoriVideoContentReducer,
+  allTagVideoContentReducer,
+  playVideoContentReducer,
+} from"../reducers/beranda/video-content.reducer"
+
 //END BERANDA
 
 import {
@@ -535,9 +543,9 @@ const reducer = combineReducers({
 
   allDashboardPublikasi: allDashboardPublikasiReducer,
 
-  allKategoriContent: kategoriVideoContentReducer,
-  allTagContent: allTagReducer,
-  playVideo: playVideoContentReducer,
+  // allKategoriContent: kategoriVideoContentReducer,
+  // allTagContent: allTagReducer,
+  // playVideo: playVideoContentReducer,
 
   // Subvit
   // =============== substansi ==================
@@ -850,6 +858,12 @@ const reducer = combineReducers({
   detailBerandaBerita: detailBerandaBeritaReducer,
   kategoriBerandaBerita: kategoriBerandaBeritaReducer,
   allTagBerandaBerita: allTagBerandaBeritaReducer,
+
+  // ========== video ========
+  allVideoContent: allVideoContentReducer,
+  kategoriVideoContent: kategoriVideoContentReducer,
+  allTagVideoContent: allTagVideoContentReducer,
+  playVideoContent: playVideoContentReducer,
   //END BERANDA
 
   // ========== Riwayat Pelatihan ========
