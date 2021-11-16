@@ -6,20 +6,21 @@ import AuthWrapper from "../../../wrapper/auth.wrapper";
 import "react-toastify/dist/ReactToastify.css";
 import Swal from "sweetalert2";
 import SimpleReactValidator from "simple-react-validator";
-import { useSelector, useDispatch } from "react-redux";
+import { SweatAlert } from "../../../../utils/middleware/helper";
+import axios from "axios";
+import LoadingTable from "../../../LoadingTable";
 
 const ForgotPassword = () => {
   const router = useRouter();
-  let dispatch = useDispatch();
 
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
 
   const [emailCode, setEmailCode] = useState("");
+  const [loading, setLoading] = useState(false);
   const [, forceUpdate] = useState();
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault();
-
     if (simpleValidator.current.allValid()) {
       Swal.fire({
         title: "Apakah anda yakin ?",
@@ -32,16 +33,31 @@ const ForgotPassword = () => {
         dismissOnDestroy: false,
       }).then(async (result) => {
         if (result.value) {
-          // here axios action reset password
-          let formData = new FormData();
-          formData.append("_method", "put");
-          formData.append("email", emailCode);
-          dispatch(resetPassword(formData));
+          setLoading(true);
+          const data = {
+            email: emailCode,
+          };
+          await axios
+            .post(
+              process.env.END_POINT_API_PELATIHAN +
+                "api/v1/auth/request-forgot-password",
+              data
+            )
+            .then((res) => {
+              setLoading(false);
+              console.log(res);
+            })
+            .catch((err) => {
+              setLoading(false);
+              console.log(err);
+            });
         }
       });
     } else {
+      setLoading(false);
       simpleValidator.current.showMessages();
       forceUpdate(1);
+      SweatAlert("Gagal", "Email Tidak Boleh Kosong", "error");
     }
   };
 
@@ -88,28 +104,46 @@ const ForgotPassword = () => {
                       type="email"
                       className="form-control form-control-auth"
                       placeholder="Masukan email anda"
+                      onBlur={() =>
+                        simpleValidator.current.showMessageFor("Email")
+                      }
                     />
+                    {simpleValidator.current.message(
+                      "Email",
+                      emailCode,
+                      "required|email",
+                      {
+                        className: "text-danger",
+                      }
+                    )}
                   </div>
                 </div>
-
-                <button
-                  type="submit"
-                  className="btn btn-primary-rounded-full bg-secondary btn-block mt-5"
-                >
-                  Kirim E-mail
-                </button>
-                <div className="mt-10 fz-16">
-                  <p className="text-white text-center">
-                    Belum menerima e-mail?
-                    <span>
-                      <Link href="/">
-                        <a className="ml-3" style={{ color: "#4CBDE2" }}>
-                          Kirim Ulang
-                        </a>
-                      </Link>
-                    </span>
-                  </p>
-                </div>
+                {loading ? (
+                  <div className="mt-5">
+                    <LoadingTable loading={loading} />
+                  </div>
+                ) : (
+                  <>
+                    <button
+                      type="submit"
+                      className="btn btn-primary-rounded-full bg-secondary btn-block mt-5"
+                    >
+                      Kirim E-mail
+                    </button>
+                    <div className="mt-10 fz-16">
+                      <p className="text-white text-center">
+                        Belum menerima e-mail?
+                        <span>
+                          <Link href="/">
+                            <a className="ml-3" style={{ color: "#4CBDE2" }}>
+                              Kirim Ulang
+                            </a>
+                          </Link>
+                        </span>
+                      </p>
+                    </div>
+                  </>
+                )}
               </form>
             </div>
           </div>
