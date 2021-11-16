@@ -5,7 +5,7 @@ import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
 import style from "./style.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import SimpleReactValidator from "simple-react-validator";
-// import OtpInput from "react-otp-input";
+import OtpInput from "react-otp-input";
 import axios from "axios";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
@@ -13,7 +13,7 @@ import { getDataPribadi } from "../../../../redux/actions/pelatihan/function.act
 
 export default function Pengaturan({ session }) {
   const { error: errorDataPribadi, dataPribadi } = useSelector(
-    (state) => state.getDataPribadi
+    state => state.getDataPribadi
   );
   const dispatch = useDispatch();
   const config = {
@@ -57,7 +57,7 @@ export default function Pengaturan({ session }) {
   const handleCloseEmailOtp = () => setShowUbahEmailModalOtp(false);
   const handleShowUbahEmailOtp = () => setShowUbahEmailModalOtp(true);
 
-  const notify = (value) =>
+  const notify = value =>
     toast.error(`${value}`, {
       position: "top-right",
       autoClose: 5000,
@@ -69,7 +69,7 @@ export default function Pengaturan({ session }) {
     });
 
   // POST LANJUT UBAH HANDPHONE
-  const handleLanjutUbahHandphone = async (nomor_hp) => {
+  const handleLanjutUbahHandphone = async nomor_hp => {
     const body = {
       old_nomor_hp: dataPribadi.nomor_handphone,
       nomor_hp,
@@ -100,7 +100,7 @@ export default function Pengaturan({ session }) {
     }
   };
   // POST OTP UBAH HANDPHONE
-  const handlePostOtpUbahHandphone = async (token) => {
+  const handlePostOtpUbahHandphone = async token => {
     const body = {
       old_nomor_hp: dataPribadi.nomor_handphone,
       nomor_hp: handphone,
@@ -147,7 +147,6 @@ export default function Pengaturan({ session }) {
           body,
           config
         );
-        console.log(data, " masuk sini");
         if (data) {
           Swal.fire(
             "Berhasil!",
@@ -176,7 +175,7 @@ export default function Pengaturan({ session }) {
   );
 
   //POST EMAIL LANJUT
-  const handleLanjutUbahEmail = async (email) => {
+  const handleLanjutUbahEmail = async email => {
     const body = {
       old_email: dataPribadi.email,
       email,
@@ -276,7 +275,7 @@ export default function Pengaturan({ session }) {
     }
   };
   // POST OTP VERIFIKASI EMAIL
-  const handlePostOtpEmailVerifikasi = async (token) => {
+  const handlePostOtpEmailVerifikasi = async token => {
     const body = {
       email: dataPribadi.email,
       token,
@@ -303,7 +302,7 @@ export default function Pengaturan({ session }) {
     }
   };
   // POST OTP VERIFIKASI HP
-  const handlePostOtpHpVerifikasi = async (token) => {
+  const handlePostOtpHpVerifikasi = async token => {
     const body = {
       email: dataPribadi.email,
       token,
@@ -335,7 +334,7 @@ export default function Pengaturan({ session }) {
     if (showUbahEmailModalOtp) {
       if (count > 0) {
         const secondsLeft = setInterval(() => {
-          setCount((c) => c - 1);
+          setCount(c => c - 1);
         }, 1000);
         return () => clearInterval(secondsLeft);
       }
@@ -360,7 +359,10 @@ export default function Pengaturan({ session }) {
                   <div
                     className={`rounded-circle d-flex align-items-center justify-content-center mx-5 ${style.iconBackgroundSuccess}`}
                   >
-                    <i class="ri-check-fill" style={{ color: "#00996A" }}></i>
+                    <i
+                      className="ri-check-fill"
+                      style={{ color: "#00996A" }}
+                    ></i>
                   </div>
                 ) : (
                   <div
@@ -407,7 +409,10 @@ export default function Pengaturan({ session }) {
                   <div
                     className={`rounded-circle d-flex align-items-center justify-content-center mx-5 ${style.iconBackgroundSuccess}`}
                   >
-                    <i class="ri-check-fill" style={{ color: "#00996A" }}></i>
+                    <i
+                      className="ri-check-fill"
+                      style={{ color: "#00996A" }}
+                    ></i>
                   </div>
                 ) : (
                   <div
@@ -483,7 +488,7 @@ export default function Pengaturan({ session }) {
             onClick={handleCloseEmailModal}
           >
             <button className={`${style.btn_ubah}`}>
-              <i class="ri-close-fill"></i>
+              <i className="ri-close-fill"></i>
             </button>
           </Modal.Title>
         </Modal.Header>
@@ -515,7 +520,7 @@ export default function Pengaturan({ session }) {
                 style={{ fontSize: "14px" }}
                 type="email"
                 placeholder="Masukkan Email Baru"
-                onChange={(e) => {
+                onChange={e => {
                   setEmail(e.target.value);
                 }}
               />
@@ -561,7 +566,7 @@ export default function Pengaturan({ session }) {
             onClick={handleCloseEmailOtp}
           >
             <button className={`${style.btn_ubah}`}>
-              <i class="ri-close-fill"></i>
+              <i className="ri-close-fill"></i>
             </button>
           </Modal.Title>
         </Modal.Header>
@@ -590,14 +595,14 @@ export default function Pengaturan({ session }) {
             </p>
           </div>
           <div>
-            {/* <OtpInput
+            <OtpInput
               value={otpEmail}
-              onChange={(e) => setOtpEmail(e)}
+              onChange={e => setOtpEmail(e)}
               numInputs={6}
               inputStyle="w-100 p-4 mx-5 my-10 form-control"
-              shouldAutoFocus
               isInputNum
-            ></OtpInput> */}
+              shouldAutoFocus
+            ></OtpInput>
           </div>
 
           <div className="d-flex justify-content-between mx-5 mt-14">
@@ -669,7 +674,7 @@ export default function Pengaturan({ session }) {
             onClick={handleClosePasswordModal}
           >
             <button className={`${style.btn_ubah}`}>
-              <i class="ri-close-fill"></i>
+              <i className="ri-close-fill"></i>
             </button>
           </Modal.Title>
         </Modal.Header>
@@ -688,7 +693,7 @@ export default function Pengaturan({ session }) {
                   type={hidePasswordLama ? "password" : "text"}
                   className="form-control form-control-auth pr-10"
                   value={passwordLama}
-                  onChange={(e) => setPasswordLama(e.target.value)}
+                  onChange={e => setPasswordLama(e.target.value)}
                   placeholder="Masukkan Password Anda"
                   // onBlur={() =>
                   //   simpleValidator.current.showMessageFor("Password")
@@ -737,7 +742,7 @@ export default function Pengaturan({ session }) {
                   type={hidePasswordBaru ? "password" : "text"}
                   className="form-control form-control-auth pr-10"
                   value={passwordBaru}
-                  onChange={(e) => setPasswordBaru(e.target.value)}
+                  onChange={e => setPasswordBaru(e.target.value)}
                   placeholder="Masukkan Password Anda"
                 />
                 {hidePasswordBaru === true ? (
@@ -785,7 +790,7 @@ export default function Pengaturan({ session }) {
                   type={hidePasswordBaru2 ? "password" : "text"}
                   className="form-control form-control-auth pr-10"
                   value={passwordBaru2}
-                  onChange={(e) => setPasswordBaru2(e.target.value)}
+                  onChange={e => setPasswordBaru2(e.target.value)}
                   placeholder="Masukkan Password Anda"
                 />
                 {hidePasswordBaru2 === true ? (
@@ -861,7 +866,7 @@ export default function Pengaturan({ session }) {
             onClick={handleCloseHandphoneModal}
           >
             <button className={`${style.btn_ubah}`}>
-              <i class="ri-close-fill"></i>
+              <i className="ri-close-fill"></i>
             </button>
           </Modal.Title>
         </Modal.Header>
@@ -893,7 +898,7 @@ export default function Pengaturan({ session }) {
                 style={{ fontSize: "14px" }}
                 type="email"
                 placeholder="Masukkan No HP Baru"
-                onChange={(e) => {
+                onChange={e => {
                   setHandphone(e.target.value);
                 }}
               />

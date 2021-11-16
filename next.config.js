@@ -46,7 +46,6 @@ module.exports = {
 
     // pelatihan
     END_POINT_API_PELATIHAN: "http://api-dts-dev.majapahit.id/pelatihan/",
-    // END_POINT_API_PELATIHAN: "http://192.168.43.127:81/",
 
     //sertifikat
     END_POINT_API_SERTIFIKAT: "http://dts-sertifikat-dev.majapahit.id/",
@@ -59,6 +58,5 @@ module.exports = {
 
     END_POINT_API_IMAGE_LOGO_MITRA:
       "https://dts-partnership-dev.s3-ap-southeast-1.amazonaws.com",
-    END_POINT_LOCAL_SITE_MANAGEMENT_PESERTA_DTS: "http://192.168.1.96:81/",
   },
 };

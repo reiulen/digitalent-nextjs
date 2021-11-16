@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
 import Cookies from "js-cookie";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const Dashboard = ({ session, success }) => {
   const router = useRouter();
@@ -66,6 +67,7 @@ const Dashboard = ({ session, success }) => {
   }, [errorDashboard, totalSubvit]);
 
   const [simonasData, setSimonasData] = useState([]);
+
   useEffect(() => {
     const getSimonasData = async () => {
       try {
@@ -82,16 +84,12 @@ const Dashboard = ({ session, success }) => {
         } else {
           return;
         }
-      } catch (e) {
-        console.log(e, "ini errornya");
+      } catch (error) {
+        Swal.fire("Gagal", `${error.response.data.message}`, "error");
       }
     };
     getSimonasData();
   }, []);
-
-  useEffect(() => {
-    console.log(simonasData, "ini data simonas");
-  }, [simonasData]);
 
   const handleHoverCard = (index, status) => {
     let list = [...cardPelatihan];
