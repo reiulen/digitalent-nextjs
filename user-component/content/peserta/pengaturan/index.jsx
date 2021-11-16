@@ -12,8 +12,6 @@ import Swal from "sweetalert2";
 import { getDataPribadi } from "../../../../redux/actions/pelatihan/function.actions";
 import { SweatAlert } from "../../../../utils/middleware/helper";
 
-// import OtpInput from "react-otpcode-input";
-
 export default function Pengaturan({ session }) {
   const { error: errorDataPribadi, dataPribadi } = useSelector(
     (state) => state.getDataPribadi
