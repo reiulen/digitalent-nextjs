@@ -1,18 +1,19 @@
+// import {
+//     VIDEO_REQUEST,
+//     VIDEO_SUCCESS,
+//     VIDEO_FAIL,
+//     TAG_REQUEST,
+//     TAG_SUCCESS,
+//     TAG_FAIL,
+//     PLAY_REQUEST,
+//     PLAY_SUCCESS,
+//     PLAY_FAIL,
+//     KATEGORI_VIDEO_CONTENT_REQUEST,
+//     KATEGORI_VIDEO_CONTENT_SUCCESS,
+//     KATEGORI_VIDEO_CONTENT_FAIL
+// } from "../../types/publikasi/video.type"
+
 import axios from 'axios'
-import {
-    VIDEO_REQUEST,
-    VIDEO_SUCCESS,
-    VIDEO_FAIL,
-    TAG_REQUEST,
-    TAG_SUCCESS,
-    TAG_FAIL,
-    PLAY_REQUEST,
-    PLAY_SUCCESS,
-    PLAY_FAIL,
-    KATEGORI_VIDEO_CONTENT_REQUEST,
-    KATEGORI_VIDEO_CONTENT_SUCCESS,
-    KATEGORI_VIDEO_CONTENT_FAIL
-} from "../../types/publikasi/video.type"
 
 export const getAllVideo = (
     page=1,
