@@ -34,12 +34,6 @@ const VideoPage = () => {
     video,
   } = useSelector((state) => state.allVideoContent);
 
-  const {
-    loading: playLoading,
-    error: playError,
-    isPlayed,
-  } = useSelector((state) => state.playVideo);
-
   const { dataTag } = useSelector((state) => state.allTagVideoContent);
   const { kategori } = useSelector((state) => state.kategoriVideoContent);
 
