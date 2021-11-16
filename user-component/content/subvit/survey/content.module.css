@@ -97,7 +97,9 @@
     color: #007cff;
   }
 }
-
+.check {
+  user-select: none;
+}
 .soalResponsive {
   display: none;
 }
@@ -405,7 +407,7 @@
   font-weight: normal;
   font-size: 12px;
   line-height: 160%;
-  background: #e6f2ff;
+  background: #007cff;
 
   /* border: 2px solid #007cff; */
   box-sizing: border-box;

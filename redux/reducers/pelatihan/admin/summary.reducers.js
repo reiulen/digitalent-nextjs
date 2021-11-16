@@ -21,6 +21,10 @@ import {
   GET_FORM_KOMITMEN_FAIL,
   GET_FORM_LPJ_SUCCESS,
   GET_FORM_LPJ_FAIL,
+  NEW_LPJ_REQUEST,
+  NEW_LPJ_SUCCESS,
+  NEW_LPJ_FAIL,
+  NEW_LPJ_RESET,
   UPDATE_STATUS_REQUEST,
   UPDATE_STATUS_SUCCESS,
   UPDATE_STATUS_RESET,
@@ -274,6 +278,42 @@ export const getFormLpjReducer = (state = { formLpj: {} }, action) => {
     case GET_FORM_LPJ_FAIL:
       return {
         error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const newLPJReducer = (state = { newLPJ: {} }, action) => {
+  switch (action.type) {
+    case NEW_LPJ_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case NEW_LPJ_SUCCESS:
+      return {
+        loading: false,
+        success: action.payload.message,
+        pendaftaran: action.payload.data,
+      };
+
+    case NEW_LPJ_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    case NEW_LPJ_RESET:
+      return {
+        success: false,
       };
 
     case CLEAR_ERRORS:

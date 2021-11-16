@@ -1,34 +1,53 @@
-import {
-    VIDEO_REQUEST,
-    VIDEO_SUCCESS,
-    VIDEO_FAIL,
-    TAG_REQUEST,
-    TAG_SUCCESS,
-    TAG_FAIL,
-    PLAY_REQUEST,
-    PLAY_SUCCESS,
-    PLAY_FAIL,
-    KATEGORI_VIDEO_CONTENT_REQUEST,
-    KATEGORI_VIDEO_CONTENT_SUCCESS,
-    KATEGORI_VIDEO_CONTENT_FAIL,
-    CLEAR_ERRORS
-} from "../../types/publikasi/video.type"
+// import {
+//     VIDEO_REQUEST,
+//     VIDEO_SUCCESS,
+//     VIDEO_FAIL,
+//     TAG_REQUEST,
+//     TAG_SUCCESS,
+//     TAG_FAIL,
+//     PLAY_REQUEST,
+//     PLAY_SUCCESS,
+//     PLAY_FAIL,
+//     KATEGORI_VIDEO_CONTENT_REQUEST,
+//     KATEGORI_VIDEO_CONTENT_SUCCESS,
+//     KATEGORI_VIDEO_CONTENT_FAIL,
+//     CLEAR_ERRORS
+// } from "../../types/publikasi/video.type"
 
-export const allVideoReducer = (state = { video: [] }, action) => {
+import {
+    BERANDA_VIDEO_REQUEST,
+    BERANDA_VIDEO_SUCCESS,
+    BERANDA_VIDEO_FAIL,
+
+    KATEGORI_BERANDA_VIDEO_REQUEST,
+    KATEGORI_BERANDA_VIDEO_SUCCESS,
+    KATEGORI_BERANDA_VIDEO_FAIL,
+
+    TAG_BERANDA_VIDEO_REQUEST,
+    TAG_BERANDA_VIDEO_SUCCESS,
+    TAG_BERANDA_VIDEO_FAIL,
+
+    PLAY_BERANDA_VIDEO_REQUEST,
+    PLAY_BERANDA_VIDEO_SUCCESS,
+    PLAY_BERANDA_VIDEO_FAIL,
+
+    CLEAR_ERRORS
+} from "../../types/beranda/video-content.type"
+
+export const allVideoContentReducer = (state = { video: [] }, action) => {
     switch (action.type) {
-        case VIDEO_REQUEST:
+        case BERANDA_VIDEO_REQUEST:
             return {
                 loading: true
             }
 
-        case VIDEO_SUCCESS:
+        case BERANDA_VIDEO_SUCCESS:
             return {
-                // ...state,
                 loading: false,
                 video: action.payload.data
             }
 
-        case VIDEO_FAIL:
+        case BERANDA_VIDEO_FAIL:
             return {
                 loading: false,
                 error: action.payload
@@ -46,12 +65,12 @@ export const allVideoReducer = (state = { video: [] }, action) => {
 
 export const kategoriVideoContentReducer = (state = { kategori: [] }, action) => {
     switch (action.type) {
-        case KATEGORI_VIDEO_CONTENT_REQUEST:
+        case KATEGORI_BERANDA_VIDEO_REQUEST:
             return {
                 loading: true
             }
 
-        case KATEGORI_VIDEO_CONTENT_SUCCESS:
+        case KATEGORI_BERANDA_VIDEO_SUCCESS:
             let result = []
 
             for (let i = 0; i < action.payload.data.kategori.length; i++){
@@ -64,13 +83,8 @@ export const kategoriVideoContentReducer = (state = { kategori: [] }, action) =>
                 loading: false,
                 kategori: result
             }
-            // return {
-            //     // ...state,
-            //     loading: false,
-            //     dataTag: action.payload.data
-            // }
 
-        case KATEGORI_VIDEO_CONTENT_FAIL:
+        case KATEGORI_BERANDA_VIDEO_FAIL:
             return {
                 loading: false,
                 error: action.payload
@@ -86,21 +100,20 @@ export const kategoriVideoContentReducer = (state = { kategori: [] }, action) =>
     }
 }
 
-export const allTagReducer = (state = { dataTag: [] }, action) => {
+export const allTagVideoContentReducer = (state = { dataTag: [] }, action) => {
     switch (action.type) {
-        case TAG_REQUEST:
+        case TAG_BERANDA_VIDEO_REQUEST:
             return {
                 loading: true
             }
 
-        case TAG_SUCCESS:
+        case TAG_BERANDA_VIDEO_SUCCESS:
             return {
-                // ...state,
                 loading: false,
                 dataTag: action.payload.data
             }
 
-        case TAG_FAIL:
+        case TAG_BERANDA_VIDEO_FAIL:
             return {
                 loading: false,
                 error: action.payload
@@ -118,19 +131,19 @@ export const allTagReducer = (state = { dataTag: [] }, action) => {
 
 export const playVideoContentReducer = (state = {}, action) => {
     switch (action.type) {
-        case PLAY_REQUEST:
+        case PLAY_BERANDA_VIDEO_REQUEST:
             return {
                 loading: true
             }
 
-        case PLAY_SUCCESS:
+        case PLAY_BERANDA_VIDEO_SUCCESS:
             return {
                 loading: false,
                 isPlayed: action.payload,
                 success: true
             }
 
-        case PLAY_FAIL:
+        case PLAY_BERANDA_VIDEO_FAIL:
             return {
                 loading: false,
                 error: action.payload
@@ -138,7 +151,6 @@ export const playVideoContentReducer = (state = {}, action) => {
 
         case CLEAR_ERRORS:
             return {
-                ...state,
                 error: null
             }
 
