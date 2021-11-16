@@ -4,19 +4,21 @@ import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 
 import Image from "next/image";
-import IconFilter from "../../../components/assets/icon/Filter";
 import Pagination from "react-js-pagination";
 import ReactPlayer from "react-player";
+import moment from "moment";
 
 import styles from "../../../styles/preview.module.css";
 import SubHeaderComponent from "../../components/template/Subheader.component";
 import { playVideo } from "../../../redux/actions/publikasi/video.actions";
+import IconFilter from "../../../components/assets/icon/Filter";
+
 import {
   playVideoContent,
-  getAllVideo,
+  getAllVideoContent,
 } from "../../../redux/actions/beranda/video-content.actions";
 
-const VideoPage = ({ token }) => {
+const VideoPage = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -24,14 +26,16 @@ const VideoPage = ({ token }) => {
     loading: allLoading,
     error,
     video,
-  } = useSelector((state) => state.allVideo);
-  const {
-    loading: playLoading,
-    error: playError,
-    isPlayed,
-  } = useSelector((state) => state.playVideo);
-  const { dataTag } = useSelector((state) => state.allTagContent);
-  const { kategori } = useSelector((state) => state.allKategoriContent);
+  } = useSelector((state) => state.allVideoContent);
+
+  // const {
+  //   loading: playLoading,
+  //   error: playError,
+  //   isPlayed,
+  // } = useSelector((state) => state.playVideo);
+
+  const { dataTag } = useSelector((state) => state.allTagVideoContent);
+  const { kategori } = useSelector((state) => state.kategoriVideoContent);
 
   const titleToTrim = 30;
   const descToTrim = 100;
@@ -58,7 +62,7 @@ const VideoPage = ({ token }) => {
   const handlePagination = (pageNumber) => {
     setActivePage(pageNumber);
     dispatch(
-      getAllVideo(
+      getAllVideoContent(
         pageNumber,
         activePage,
         keyword,
@@ -67,7 +71,6 @@ const VideoPage = ({ token }) => {
         sort,
         category_id,
         kategoriVideo,
-        category_academy,
         tag
       )
     );
@@ -89,24 +92,22 @@ const VideoPage = ({ token }) => {
     // setActiveTitle(str)
     // setTag(str)
     dispatch(
-      getAllVideo(
+      getAllVideoContent(
         activePage,
-        str,
         keyword,
         limit,
         filterPublish,
         sort,
         category_id,
         kategoriVideo,
-        category_academy,
-        tag
+        str
       )
     );
   };
 
   const submitFilter = () => {
     dispatch(
-      getAllVideo(
+      getAllVideoContent(
         activePage,
         keyword,
         limit,
@@ -114,7 +115,6 @@ const VideoPage = ({ token }) => {
         sort,
         category_id,
         kategoriVideo,
-        category_academy,
         tag
       )
     );
@@ -123,7 +123,7 @@ const VideoPage = ({ token }) => {
   const handleFilterKeyword = (e) => {
     e.preventDefault();
     dispatch(
-      getAllVideo(
+      getAllVideoContent(
         activePage,
         keyword,
         limit,
@@ -131,7 +131,6 @@ const VideoPage = ({ token }) => {
         sort,
         category_id,
         kategoriVideo,
-        category_academy,
         tag
       )
     );
@@ -148,11 +147,18 @@ const VideoPage = ({ token }) => {
   const handleFilterKategori = (str) => {
     setKategoriVideo(str);
 
-    if (kategoriVideo !== "") {
-      router.push(`${router.pathname}?page=1&keyword=${str}`);
-    } else {
-      router.push(`${router.pathname}?page=1`);
-    }
+    dispatch(
+      getAllVideoContent(
+        activePage,
+        keyword,
+        limit,
+        filterPublish,
+        sort,
+        category_id,
+        str,
+        tag
+      )
+    );
   };
 
   const handlePreview = (
@@ -187,6 +193,7 @@ const VideoPage = ({ token }) => {
 
   return (
     <>
+      {/* BreadCrumb */}
       <div className="row my-5 mx-1 py-3 px-8 bg-white rounded-pill d-flex align-items-center border">
         <span className="text-primary">
           <Link href="/">Beranda</Link>
@@ -196,7 +203,9 @@ const VideoPage = ({ token }) => {
         </span>
         <span>Video</span>
       </div>
+      {/* End of Breadcrumb */}
 
+      {/* Header */}
       <div>
         <h1 style={{ fontWeight: "600" }}>Video Terupdate dan Terkini</h1>
         <span>
@@ -204,6 +213,9 @@ const VideoPage = ({ token }) => {
           Scholarship
         </span>
       </div>
+      {/* End of Header */}
+
+      {/* Filter Button */}
       <div className="col-lg-10 row my-5">
         {kategoriVideo === "" ? (
           <div
@@ -250,8 +262,15 @@ const VideoPage = ({ token }) => {
               );
             })}
       </div>
+      {/* End of Filter Button */}
+
+      {/* Content */}
       <div className="row">
+        
+        {/* Left Side */}
         <div className="col-lg-8 my-5">
+
+          {/* Search Field */}
           <div className="position-relative overflow-hidden mt-3">
             <i className="ri-search-line left-center-absolute ml-2"></i>
             <input
@@ -275,8 +294,9 @@ const VideoPage = ({ token }) => {
               Cari
             </button>
           </div>
+          {/* End of Search Field */}
 
-          {/* CARD Video */}
+          {/* Card Video */}
           <div className="my-5">
             <div
               className="row justify-content-between"
@@ -355,6 +375,7 @@ const VideoPage = ({ token }) => {
               )}
             </div>
           </div>
+          {/* End of Card Video */}
 
           {/* PAGINATION */}
           <div>
@@ -376,9 +397,13 @@ const VideoPage = ({ token }) => {
               </div>
             ) : null}
           </div>
-        </div>
+          {/* End of Pagination */}
 
+        </div>
+        
+        {/* Right Side */}
         <div className="col-lg-4 my-5">
+          {/* Sort Filter Button */}
           <div className="card mb-4">
             <div className="row ml-5 mt-3">
               <Image
@@ -395,7 +420,7 @@ const VideoPage = ({ token }) => {
               <h5 style={{ marginLeft: "-10px" }}>Urutkan Berdasarkan</h5>
               <div className="row justify-content-between">
                 <div className="col-md-6 col-12">
-                  {filterPublish === "desc" ? (
+                  {filterPublish === "asc" ? (
                     <button
                       className="btn btn-primary rounded-pill btn-block"
                       onClick={() => handleFilterPublish("")}
@@ -405,7 +430,7 @@ const VideoPage = ({ token }) => {
                   ) : (
                     <button
                       className="btn btn-outline-light rounded-pill btn-block"
-                      onClick={() => handleFilterPublish("desc")}
+                      onClick={() => handleFilterPublish("asc")}
                     >
                       Terbaru
                     </button>
@@ -413,7 +438,7 @@ const VideoPage = ({ token }) => {
                 </div>
 
                 <div className="col-md-6 col-12">
-                  {filterPublish === "asc" ? (
+                  {filterPublish === "desc" ? (
                     <button
                       className="btn btn-primary rounded-pill btn-block"
                       onClick={() => handleFilterPublish("")}
@@ -423,7 +448,7 @@ const VideoPage = ({ token }) => {
                   ) : (
                     <button
                       className="btn btn-outline-light rounded-pill btn-block"
-                      onClick={() => handleFilterPublish("asc")}
+                      onClick={() => handleFilterPublish("desc")}
                     >
                       Terlama
                     </button>
@@ -434,7 +459,7 @@ const VideoPage = ({ token }) => {
               </div>
               <div className="row justify-content-between mt-3">
                 <div className="col-md-6 col-12">
-                  {sort === "desc" ? (
+                  {sort === "asc" ? (
                     <button
                       className="btn btn-primary rounded-pill btn-block"
                       onClick={() => handleSort("")}
@@ -444,7 +469,7 @@ const VideoPage = ({ token }) => {
                   ) : (
                     <button
                       className="btn btn-outline-light rounded-pill btn-block"
-                      onClick={() => handleSort("desc")}
+                      onClick={() => handleSort("asc")}
                     >
                       A-Z
                     </button>
@@ -452,7 +477,7 @@ const VideoPage = ({ token }) => {
                 </div>
 
                 <div className="col-md-6 col-12">
-                  {sort === "asc" ? (
+                  {sort === "desc" ? (
                     <button
                       className="btn btn-primary rounded-pill btn-block"
                       onClick={() => handleSort("")}
@@ -462,7 +487,7 @@ const VideoPage = ({ token }) => {
                   ) : (
                     <button
                       className="btn btn-outline-light rounded-pill btn-block"
-                      onClick={() => handleSort("asc")}
+                      onClick={() => handleSort("desc")}
                     >
                       Z-A
                     </button>
@@ -481,6 +506,7 @@ const VideoPage = ({ token }) => {
               Tampilkan
             </button>
           </div>
+          {/* End of Sort Filter Button */}
 
           {/* Tag */}
           <div className="row mt-5 d-flex flex-column mx-3 ml-5">
@@ -496,6 +522,7 @@ const VideoPage = ({ token }) => {
                         className="border px-2 py-1 rounded my-3 mr-3"
                         onClick={() => handleFilterTag(row)}
                         style={{ cursor: "pointer" }}
+                        key={i}
                       >
                         #{row.toUpperCase()}
                       </div>
@@ -511,8 +538,11 @@ const VideoPage = ({ token }) => {
               </div>
             </div>
           </div>
+          {/* End of Tag */}
         </div>
+        {/* End of Right Side */}
       </div>
+      {/* End of Content */}
 
       {/* Modal */}
       <div
@@ -546,7 +576,6 @@ const VideoPage = ({ token }) => {
                   onPlay={handleIsPlayed}
                 />
               </div>
-              {/* </div> */}
               <div className="ml-3" style={{ marginTop: "30px" }}>
                 <h3 className="font-weight-bolder">{judul_video}</h3>
               </div>
@@ -557,7 +586,7 @@ const VideoPage = ({ token }) => {
                 <div className="col-3">
                   <span className="text-muted" style={{ fontSize: "11px" }}>
                     {tanggal_publish !== null
-                      ? `${tanggal_publish}  | ${tonton} Ditonton`
+                      ? `${moment(tanggal_publish).format("MMMM DD")} | ${tonton} Ditonton`
                       : ""}
                   </span>
                 </div>
@@ -601,6 +630,7 @@ const VideoPage = ({ token }) => {
           </div>
         </div>
       </div>
+      {/* End of Modal */}
     </>
   );
 };
