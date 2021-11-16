@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import Link from "next/link";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import Swal from "sweetalert2";
@@ -8,12 +8,14 @@ import "react-toastify/dist/ReactToastify.css";
 import IconAdd from "../../../assets/icon/Add";
 import IconDelete from "../../../assets/icon/Delete";
 import Select from "react-select";
+import SimpleReactValidator from "simple-react-validator";
 
 const Tambah = ({ token }) => {
   const router = useRouter();
+  const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
+  const [, forceUpdate] = useState();
 
   let selectRefDataReference = null;
-  let selectRefDataFromReference = null;
 
   const [nameReference, setNameReference] = useState("");
   const [status, setStatus] = useState("");
@@ -121,21 +123,23 @@ const Tambah = ({ token }) => {
 
   const submit = async (e) => {
     e.preventDefault();
-    if (nameReference === "") {
-      Swal.fire("Gagal", `Nama data reference tidak boleh kosong`, "error");
-    } else if (status === "") {
-      Swal.fire("Gagal", `Status tidak boleh kosong`, "error");
-    } else if (idReference === "") {
-      Swal.fire("Gagal", `Harus pilih data reference`, "error");
-    } 
-    else if (!formReferenceAndText[0].relasi_id || !formReferenceAndText[0].value[0].label ) {
-      Swal.fire(
-        "Gagal",
-        `List data dan value tidak boleh kosong`,
-        "error"
-      );
-    } 
-    else {
+    // if (nameReference === "") {
+    //   Swal.fire("Gagal", `Nama data reference tidak boleh kosong`, "error");
+    // } else if (status === "") {
+    //   Swal.fire("Gagal", `Status tidak boleh kosong`, "error");
+    // } else if (idReference === "") {
+    //   Swal.fire("Gagal", `Harus pilih data reference`, "error");
+    // } 
+    // else if (!formReferenceAndText[0].relasi_id || !formReferenceAndText[0].value[0].label ) {
+    //   Swal.fire(
+    //     "Gagal",
+    //     `List data dan value tidak boleh kosong`,
+    //     "error"
+    //   );
+    // } 
+    // else {
+
+
       let sendData = {
         name: nameReference,
         status: status,
@@ -159,9 +163,16 @@ const Tambah = ({ token }) => {
           router.push("/site-management/reference");
         });
       } catch (error) {
-        Swal.fire("Gagal simpan", `${error.response.data.message}`, "error");
+        // Swal.fire("Gagal simpan", `${error.response.data.message}`, "error");
+        simpleValidator.current.showMessages();
+      forceUpdate(1);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Isi data dengan benar !",
+      });
       }
-    }
+    // }
   };
 
   useEffect(() => {
@@ -220,7 +231,7 @@ const Tambah = ({ token }) => {
               Tambah Reference Dengan Relasi
             </h3>
           </div>
-          <form>
+          <form onSubmit={submit}>
             <div className="card-body pt-0 px-4 px-sm-8">
               <div className="form-group">
                 <label htmlFor="staticEmail" className="col-form-label">
@@ -228,11 +239,20 @@ const Tambah = ({ token }) => {
                 </label>
                 <input
                   required
-                  placeholder="Masukan nama reference"
+                  placeholder="Masukkan nama reference"
                   type="text"
                   className="form-control"
                   onChange={(e) => setNameReference(e.target.value)}
+                  onBlur={() =>
+                        simpleValidator.current.showMessageFor("nameReference")
+                      }
                 />
+                {simpleValidator.current.message(
+                      "nameReference",
+                      nameReference,
+                      "required",
+                      { className: "text-danger" }
+                    )}
               </div>
               <div className="form-group">
                 <label>Status</label>
@@ -302,7 +322,7 @@ const Tambah = ({ token }) => {
                                 value={items.label}
                                   type="text"
                                   className="form-control"
-                                  placeholder="Masukan data value"
+                                  placeholder="Masukkan data value"
                                   onChange={(e) =>
                                     handleChangeTextForm(e, idx, index)
                                   }
@@ -372,9 +392,9 @@ const Tambah = ({ token }) => {
                     </a>
                   </Link>
                   <button
-                    type="button"
+                    type="submit"
                     className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
-                    onClick={(e) => submit(e)}
+                    // onClick={(e) => submit(e)}
                   >
                     Simpan
                   </button>

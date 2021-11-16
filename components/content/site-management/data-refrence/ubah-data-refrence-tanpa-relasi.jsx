@@ -135,7 +135,7 @@ const Tambah = ({ token }) => {
                   Nama Data Reference
                 </label>
                 <input
-                  placeholder="Masukan nama reference"
+                  placeholder="Masukkan nama reference"
                   type="text"
                   className="form-control"
                   value={nameReference}
@@ -172,7 +172,7 @@ const Tambah = ({ token }) => {
                     </label>
                     <div className="position-relative d-flex align-items-center">
                       <input
-                        placeholder="Masukan value"
+                        placeholder="Masukkan value"
                         type="text"
                         value={items.value}
                         onChange={(e) => handleChange(e, index)}
