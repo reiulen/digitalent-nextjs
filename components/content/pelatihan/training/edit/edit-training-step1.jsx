@@ -98,18 +98,25 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
     label: getEditTraining.tema,
     value: getEditTraining.tema_id,
   });
-
-  console.log(getEditTraining)
-  console.log(getEditTraining.batch.includes("object"));
   const [logoFile, setLogoFile] = useState("");
   const [logoBase, setLogoBase] = useState(getEditTraining.logo);
-  const [logoName, setLogoName] = useState(getEditTraining.logo);
+  const [logoName, setLogoName] = useState(
+    getEditTraining.logo.length > 0 ? getEditTraining.logo : "Belum ada file"
+  );
   const [thumbnailFile, setThumbnailFile] = useState("");
   const [thumbnailBase, setThumbnailBase] = useState(getEditTraining.thumbnail);
-  const [thumbnailName, setThumbnailName] = useState(getEditTraining.thumbnail);
+  const [thumbnailName, setThumbnailName] = useState(
+    getEditTraining.thumbnail.length > 0
+      ? getEditTraining.thumbnail
+      : "Belum ada file"
+  );
   const [silabusFile, setSilabusFile] = useState("");
   const [silabusBase, setSilabusBase] = useState(getEditTraining.silabus);
-  const [silabusName, setSilabusName] = useState(getEditTraining.silabus);
+  const [silabusName, setSilabusName] = useState(
+    getEditTraining.silabus.length > 0
+      ? getEditTraining.silabus
+      : "Belum ada file"
+  );
   const [metodeImplementation, setMetodeImplementation] = useState(
     getEditTraining.metode_pelaksanaan
   );
@@ -134,14 +141,14 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
     new Date(getEditTraining.pendaftaran_mulai)
   );
   const [endDateRegistration, setEndDateRegistration] = useState(
-    new Date(getEditTraining.pendaftaran_mulai)
+    new Date(getEditTraining.pendaftaran_selesai)
   );
   //tanggal pelatihan
   const [startDateTraining, setStartDateTraining] = useState(
     new Date(getEditTraining.pelatihan_mulai)
   );
   const [endDateTraining, setEndDateTraining] = useState(
-    new Date(getEditTraining.pelatihan_mulai)
+    new Date(getEditTraining.pelatihan_selesai)
   );
   const [description, setDescription] = useState(getEditTraining.deskripsi);
   //kuota
@@ -398,10 +405,18 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
         metode_pelaksanaan: metodeImplementation,
         penyelenggara: organizer.label,
         mitra: mitra.value.toString() || mitra.id.toString(),
-        pendaftaran_mulai: moment(startDateRegistration).format("YYYY-MM-DD HH:mm:ss"),
-        pendaftaran_selesai:  moment(endDateRegistration).format("YYYY-MM-DD HH:mm:ss"),
-        pelatihan_mulai:  moment(startDateTraining).format("YYYY-MM-DD HH:mm:ss"),
-        pelatihan_selesai:  moment(endDateTraining).format("YYYY-MM-DD HH:mm:ss"),
+        pendaftaran_mulai: moment(startDateRegistration).format(
+          "YYYY-MM-DD HH:mm:ss"
+        ),
+        pendaftaran_selesai: moment(endDateRegistration).format(
+          "YYYY-MM-DD HH:mm:ss"
+        ),
+        pelatihan_mulai: moment(startDateTraining).format(
+          "YYYY-MM-DD HH:mm:ss"
+        ),
+        pelatihan_selesai: moment(endDateTraining).format(
+          "YYYY-MM-DD HH:mm:ss"
+        ),
         deskripsi: description,
         kuota_pendaftar: parseInt(targetKuotaRegister),
         kuota_peserta: targetKuotaUser,
@@ -422,8 +437,7 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
         pelatian_id: parseInt(router.query.id),
         pelatihan_id: parseInt(router.query.id),
       };
-      // console.log("hasil", data);
-      dispatch(putTrainingStep1(token, data))
+      dispatch(putTrainingStep1(token, data));
       propsStep(2);
     } else {
       simpleValidator.current.showMessages();
@@ -541,9 +555,14 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                 <Select
                   options={optionsAkademi}
                   defaultValue={academy}
-                  onChange={(e) =>
-                    setAcademy({ value: e?.value, label: e?.label })
-                  }
+                  onChange={(e) => {
+                    setAcademy({ value: e?.value, label: e?.label });
+                    if (e?.value === academy.value) {
+                      return
+                    } else {
+                      setTheme(null);
+                    }
+                  }}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("akademi")
                   }
@@ -558,8 +577,10 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
               <label className="col-form-label font-weight-bold">Tema</label>
               <div className="position-relative" style={{ zIndex: "4" }}>
                 <Select
+                  placeholder="Silahkan Pilih Tema"
                   options={drowpdownTemabyAkademi.data.data}
                   defaultValue={theme}
+                  value={theme}
                   onChange={(e) =>
                     setTheme({ value: e?.value, label: e?.label })
                   }
@@ -587,7 +608,7 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                     }
                   />
                   <label className="custom-file-label" htmlFor="customFile">
-                    {logoName}
+                    {logoName.includes("silabus") ? logoName.split("/")[2] : logoName}
                   </label>
                   <label style={{ marginTop: "15px" }}>
                     {simpleValidator.current.message(
@@ -627,7 +648,7 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                     }
                   />
                   <label className="custom-file-label" htmlFor="customFile">
-                    {thumbnailName}
+                    {thumbnailName.includes("silabus") ? thumbnailName.split("/")[2] : thumbnailName}
                   </label>
                   <label style={{ marginTop: "15px" }}>
                     {simpleValidator.current.message(
@@ -667,7 +688,7 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                     }
                   />
                   <label className="custom-file-label" htmlFor="customFile">
-                    {silabusName}
+                    {silabusName.includes("silabus") ? silabusName.split("/")[2] : silabusName}
                   </label>
                   <label style={{ marginTop: "15px" }}></label>
                 </div>
@@ -1284,7 +1305,7 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                   defaultValue={province}
                   onChange={(e) => {
                     setProvince({ label: e?.label, value: e?.value });
-                    setCity(null)
+                    setCity(null);
                     dispatch(dropdownKabupaten(token, e.value));
                   }}
                   onBlur={() =>
@@ -1339,8 +1360,8 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                     className="form-check-input"
                     defaultChecked={umum === "1"}
                     value={umum}
-                    onChange={e => {
-                      setUmum(e.target.checked === true ? "1" : "0")
+                    onChange={(e) => {
+                      setUmum(e.target.checked === true ? "1" : "0");
                     }}
                   />
                   <label className="form-check-label">Umum</label>
@@ -1352,7 +1373,9 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                     className="form-check-input"
                     defaultChecked={tuna_netra === "1"}
                     value={tuna_netra}
-                    onClick={(e) => {setTunaNetra(e.target.checked === true ? "1" : "0")}}
+                    onClick={(e) => {
+                      setTunaNetra(e.target.checked === true ? "1" : "0");
+                    }}
                   />
                   <label className="form-check-label">Tuna Netra</label>
                 </div>
@@ -1363,7 +1386,9 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                     className="form-check-input"
                     defaultChecked={tuna_rungu === "1"}
                     value={tuna_rungu}
-                    onClick={(e) => setTunaRungu(e.target.checked === true ? "1" : "0")}
+                    onClick={(e) =>
+                      setTunaRungu(e.target.checked === true ? "1" : "0")
+                    }
                   />
                   <label className="form-check-label">Tuna Rungu</label>
                 </div>
@@ -1374,7 +1399,9 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                     className="form-check-input"
                     defaultChecked={tuna_daksa === "1"}
                     value={tuna_daksa}
-                    onClick={(e) => setTunaDaksa(e.target.checked === true ? "1" : "0")}
+                    onClick={(e) =>
+                      setTunaDaksa(e.target.checked === true ? "1" : "0")
+                    }
                   />
                   <label className="form-check-label">Tuna Daksa</label>
                 </div>

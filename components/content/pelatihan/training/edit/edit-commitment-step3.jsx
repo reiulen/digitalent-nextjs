@@ -57,6 +57,8 @@ const EditCommitmentStep3 = ({token, propsStep}) => {
         komitmen: commitment,
         deskripsi: commitment === "1" ? description : "",
       };
+      dispatch(putTrainingStep3(token, data))
+      router.push("/pelatihan/pelatihan");
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
