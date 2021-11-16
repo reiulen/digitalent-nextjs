@@ -58,15 +58,16 @@ export const getAllListMasterPelatihan =
         },
       };
 
-      //   const { data } = await axios.get(link, config);
-      //   if (data) {
-      //     dispatch({ type: LIST_MASTER_TRAINING_SUCCESS, payload: data });
-      //   }
+      const { data } = await axios.get(link, config);
+      console.log(data);
+      if (data) {
+        dispatch({ type: LIST_MASTER_TRAINING_SUCCESS, payload: data });
+      }
     } catch (error) {
-      //   dispatch({
-      //     type: LIST_MASTER_TRAINING_FAIL,
-      //     payload: error.response.data.message,
-      //   });
+      dispatch({
+        type: LIST_MASTER_TRAINING_FAIL,
+        payload: error.response.data.message || error,
+      });
     }
   };
 
