@@ -5,14 +5,12 @@ import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
 import style from "./style.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import SimpleReactValidator from "simple-react-validator";
-// import OtpInput from "react-otp-input";
 import axios from "axios";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import { getDataPribadi } from "../../../../redux/actions/pelatihan/function.actions";
-
-// import OtpInput from "react-otpcode-input";
-
+import { SweatAlert } from "../../../../utils/middleware/helper";
+import ReactCodeInput from "react-code-input";
 export default function Pengaturan({ session }) {
   const { error: errorDataPribadi, dataPribadi } = useSelector(
     (state) => state.getDataPribadi
@@ -32,11 +30,9 @@ export default function Pengaturan({ session }) {
   const [showUbahPasswordModal, setShowUbahPasswordModal] = useState(false);
   const handleClosePasswordModal = () => setShowUbahPasswordModal(false);
   const handleShowUbahPasswordModal = () => setShowUbahPasswordModal(true);
-
   const [hidePasswordLama, setHidePasswordLama] = useState(true);
   const [hidePasswordBaru, setHidePasswordBaru] = useState(true);
   const [hidePasswordBaru2, setHidePasswordBaru2] = useState(true);
-
   const [postStatus, setPostStatus] = useState("");
 
   // START HANDPHONE
@@ -44,12 +40,17 @@ export default function Pengaturan({ session }) {
   const [showUbahHandphoneModal, setShowUbahHandphoneModal] = useState(false);
   const handleCloseHandphoneModal = () => setShowUbahHandphoneModal(false);
   const handleShowUbahHandphone = () => setShowUbahHandphoneModal(true);
+  const [newPhone, setNewPhone] = useState("");
 
   const [handphoneVerify, setHandphoneVerify] = useState(
-    dataPribadi.handphone_verifikasi
+    dataPribadi.handphone_verifikasi || false
+  );
+  const [emailVerify, setEmailVerify] = useState(
+    dataPribadi.email_verifikasi || false
   );
 
   //   START EMAIL
+  const [newEmail, setNewEmail] = useState("");
   const [email, setEmail] = useState("");
   const [showUbahEmailModal, setShowUbahEmailModal] = useState(false);
   const handleCloseEmailModal = () => setShowUbahEmailModal(false);
@@ -89,12 +90,13 @@ export default function Pengaturan({ session }) {
           config
         );
         if (data) {
+          setNewPhone(data.data.send);
           setPostStatus("ubahHandphone");
           handleShowUbahEmailOtp();
           handleCloseHandphoneModal();
         }
       } catch (error) {
-        notify(error.response.data.message);
+        SweatAlert("Gagal", error.response.data.message, "error");
       }
     } else {
       simpleValidator.current.showMessages();
@@ -109,7 +111,7 @@ export default function Pengaturan({ session }) {
       token,
     };
     try {
-      const data = await axios.post(
+      const { data } = await axios.post(
         `${process.env.END_POINT_API_PELATIHAN}api/v1/auth/submit-update-handphone`,
         body,
         config
@@ -125,7 +127,7 @@ export default function Pengaturan({ session }) {
         handleCloseEmailOtp();
       }
     } catch (error) {
-      notify(error.response.data.message);
+      SweatAlert("Gagal", error.response.data.message, "error");
     }
   };
   // POST UBAH PASSWORD
@@ -158,7 +160,7 @@ export default function Pengaturan({ session }) {
           handleClosePasswordModal();
         }
       } catch (error) {
-        notify(error.response.data.message);
+        SweatAlert("Gagal", error.response.data.message, "error");
       }
     } else {
       simpleValidator.current.showMessages();
@@ -189,18 +191,19 @@ export default function Pengaturan({ session }) {
 
     if (simpleValidator.current.allValid()) {
       try {
-        const data = await axios.post(
+        const { data } = await axios.post(
           `${process.env.END_POINT_API_PELATIHAN}api/v1/auth/request-update-email`,
           body,
           config
         );
         if (data) {
+          setNewEmail(data.data.send);
           setPostStatus("email");
           handleShowUbahEmailOtp();
           handleCloseEmailModal();
         }
       } catch (error) {
-        notify(error.response.data.message);
+        SweatAlert("Gagal", error.response.data.message, "error");
       }
     } else {
       simpleValidator.current.showMessages();
@@ -233,7 +236,7 @@ export default function Pengaturan({ session }) {
         handleCloseEmailOtp();
       }
     } catch (error) {
-      notify(error.response.data.message);
+      SweatAlert("Gagal", error.response.data.message, "error");
     }
   };
 
@@ -253,7 +256,7 @@ export default function Pengaturan({ session }) {
         handleShowUbahEmailOtp();
       }
     } catch (error) {
-      notify(error.response.data.message);
+      SweatAlert("Gagal", error.response.data.message, "error");
     }
   };
 
@@ -269,11 +272,12 @@ export default function Pengaturan({ session }) {
         config
       );
       if (data) {
+        setEmailVerify(true);
         setPostStatus("verifyEmail");
         handleShowUbahEmailOtp();
       }
     } catch (error) {
-      notify(error.response.data.message);
+      SweatAlert("Gagal", error.response.data.message, "error");
     }
   };
   // POST OTP VERIFIKASI EMAIL
@@ -300,7 +304,7 @@ export default function Pengaturan({ session }) {
         handleCloseEmailOtp();
       }
     } catch (error) {
-      notify(error.response.data.message);
+      SweatAlert("Gagal", error.response.data.message, "error");
     }
   };
   // POST OTP VERIFIKASI HP
@@ -322,12 +326,13 @@ export default function Pengaturan({ session }) {
           "Anda telah berhasil melakukan verifikasi nomer handphone",
           "success"
         );
+        setHandphoneVerify(true);
         setOtpEmail("");
         dispatch(getDataPribadi(session.token));
         handleCloseEmailOtp();
       }
     } catch (error) {
-      notify(error.response.data.message);
+      SweatAlert("Gagal", error.response.data.message, "error");
     }
   };
 
@@ -357,7 +362,7 @@ export default function Pengaturan({ session }) {
                 style={{ height: "24px" }}
               >
                 Email
-                {dataPribadi.email_verifikasi ? (
+                {emailVerify ? (
                   <div
                     className={`rounded-circle d-flex align-items-center justify-content-center mx-5 ${style.iconBackgroundSuccess}`}
                   >
@@ -379,7 +384,7 @@ export default function Pengaturan({ session }) {
                 {dataPribadi.email_verifikasi == true && (
                   <span className="ml-5">
                     <button
-                      className={`text-primary ${style.btn_ubah}`}
+                      className={`text-primary p-0 ${style.btn_ubah}`}
                       onClick={handleShowUbahEmail}
                     >
                       Ubah
@@ -587,30 +592,36 @@ export default function Pengaturan({ session }) {
               ke
               <span className="font-weight-bolder mx-2">
                 {postStatus == "email"
-                  ? dataPribadi.email
+                  ? newEmail
                   : postStatus == "verifyHp"
                   ? dataPribadi.nomor_handphone
                   : postStatus == "ubahHandphone"
-                  ? dataPribadi.nomor_handphone
+                  ? newPhone
                   : dataPribadi.email}
               </span>
             </p>
           </div>
-          <div>
+          <div className="d-flex justify-content-center">
             {/* <OtpInput
               value={otpEmail}
-              onChange={e => setOtpEmail(e)}
+              onChange={(e) => setOtpEmail(e)}
               numInputs={6}
-              inputStyle="w-100 p-4 mx-5 my-10 form-control"
+              inputStyle="w-100 p-lg-4 p-2 mx-md-5 mx-2 my-md-10 form-control"
               isInputNum
             ></OtpInput> */}
+            <ReactCodeInput
+              inputMode="numeric"
+              fields={6}
+              onChange={(e) => setOtpEmail(e)}
+              value={otpEmail}
+            />
           </div>
 
           <div className="d-flex justify-content-between mx-5 mt-14">
             {count !== 0 ? (
               <div>
                 Mohon tunggu
-                <span className="mx-2 font-weight-bolder">
+                <span className="mx-2 font-weight-bolder  ">
                   {" "}
                   {count} detik
                 </span>{" "}
@@ -620,7 +631,7 @@ export default function Pengaturan({ session }) {
               <div>
                 Belum Menerima Kode OTP?
                 <button
-                  className={` font-weight-bolder text-primary ${style.btn_ubah}`}
+                  className={` p-md-2 font-weight-bolder text-primary ${style.btn_ubah}`}
                   onClick={() => {
                     if (postStatus == "email") {
                       handleLanjutUbahEmail(email);
@@ -640,7 +651,7 @@ export default function Pengaturan({ session }) {
             )}
             <Button
               variant="primary"
-              className="rounded-full py-4 px-8"
+              className="rounded-full py-md-4 px-md-8 py-0"
               style={{ fontSize: "14px" }}
               onClick={() => {
                 if (postStatus == "email") {
@@ -928,6 +939,7 @@ export default function Pengaturan({ session }) {
           </div>
         </Modal.Body>
       </Modal>
+
       {/* END MODAL HANDPHONE */}
     </PesertaWrapper>
   );

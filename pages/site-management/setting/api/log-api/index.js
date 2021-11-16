@@ -3,12 +3,11 @@ import { getSession } from "next-auth/client";
 // import { getAllArtikel } from "../../../redux/actions/publikasi/artikel.actions";
 import { wrapper } from "../../../../../redux/store";
 import LoadingPage from "../../../../../components/LoadingPage";
-import { getDetailApi } from "../../../../../redux/actions/site-management/settings/api.actions";
-
-const DetailApi = dynamic(
+import { getDetailLog } from "../../../../../redux/actions/site-management/settings/api.actions";
+const TambahApi = dynamic(
   () =>
     import(
-      "../../../../../components/content/site-management/settings/api/detail-api"
+      "../../../../../components/content/site-management/settings/api/log-api"
     ),
   {
     loading: function loadingNow() {
@@ -18,12 +17,12 @@ const DetailApi = dynamic(
   }
 );
 
-export default function DetailApiPage(props) {
+export default function LogApiPage(props) {
   const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <DetailApi token={session.token} />
+        <TambahApi token={session.token} />
       </div>
     </>
   );
@@ -31,7 +30,7 @@ export default function DetailApiPage(props) {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
-    async ({ params, req }) => {
+    async ({ params, req, query }) => {
       const session = await getSession({ req });
       if (!session) {
         return {
@@ -43,10 +42,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       await store.dispatch(
-        getDetailApi(params.id, session.user.user.data.token)
+        getDetailLog(query.id, session.user.user.data.token)
       );
       return {
-        props: { session, title: "Detail Api - Site Management" },
+        props: { session, title: "Log API - Site Management" },
       };
     }
 );

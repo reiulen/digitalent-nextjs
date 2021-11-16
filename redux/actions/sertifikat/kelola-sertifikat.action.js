@@ -67,8 +67,10 @@ export const getAllSertifikat = (token) => async (dispatch, getState) => {
       dispatch({ type: SERTIFIKAT_SUCCESS, payload: data });
     }
   } catch (error) {
-    // console.log(error, "ini error cuyy");
-    dispatch({ type: SERTIFIKAT_FAIL, payload: error.response.data.message });
+    dispatch({
+      type: SERTIFIKAT_FAIL,
+      payload: error.response.data.message || error,
+    });
   }
 };
 
@@ -130,7 +132,7 @@ export const getDetailSertifikat =
     } catch (error) {
       dispatch({
         type: DETAIL_SERTIFIKAT_FAIL,
-        payload: error.response.data.message,
+        payload: error.response.data.message || error,
       });
     }
   };
@@ -156,7 +158,7 @@ export const newSertifikat = (id, formData, token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: NEW_SERTIFIKAT_FAIL,
-      payload: error.response.data.message,
+      payload: error.response.data.message || error,
     });
   }
 };
@@ -189,7 +191,7 @@ export const getSingleSertifikat = (id, token) => async (dispatch) => {
     dispatch({
       type: SINGLE_SERTIFIKAT_FAIL,
       // payload: error.message
-      payload: error.response.data.message,
+      payload: error.response.data.message || error,
     });
   }
 };
@@ -217,7 +219,7 @@ export const getPublishedSertifikat = (id, token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: PUBLISHED_SERTIFIKAT_FAIL,
-      payload: error.response.data.message,
+      payload: error.response.data.message || error,
     });
   }
 };
@@ -244,7 +246,7 @@ export const updateSertifikat = (id, formData, token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: UPDATE_SERTIFIKAT_FAIL,
-      payload: error.response.data.message,
+      payload: error.response.data.message || error,
     });
   }
 };
@@ -268,7 +270,7 @@ export const getOptionsAcademy = (token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: OPTIONS_ACADEMY_FAIL,
-      payload: error.response.data.message,
+      payload: error.response.data.message || error,
     });
   }
 };
@@ -292,7 +294,7 @@ export const getOptionsTheme = (token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: OPTIONS_THEME_FAIL,
-      payload: error.response.data.message,
+      payload: error.response.data.message || error,
     });
   }
 };

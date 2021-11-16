@@ -6,13 +6,12 @@ import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddle
 
 import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
-import { getAllListMasterPelatihan } from "../../../redux/actions/pelatihan/master-pelatihan.action";
-import { getAllSertifikat } from "../../../redux/actions/sertifikat/kelola-sertifikat.action";
+import { getAllListMasterPelatihan } from "../../../redux/actions/pelatihan/master-pendaftaran.action";
 
 const MasterTraining = dynamic(
   () =>
     import(
-      "../../../components/content/pelatihan/master-pelatihan/list-pelatihan.jsx"
+      "../../../components/content/pelatihan/master-pendaftaran/list-pelatihan.jsx"
     ),
   {
     loading: function loadingNow() {
@@ -46,10 +45,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+
       await store.dispatch(
         getAllListMasterPelatihan(session.user.user.data.token)
       );
-      await store.dispatch(getAllSertifikat(session.user.user.data.token));
 
       return {
         props: { session, title: "List Pelatihan - Pelatihan" },

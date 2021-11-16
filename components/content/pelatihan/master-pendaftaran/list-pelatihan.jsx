@@ -16,91 +16,71 @@ import IconFilter from "../../../assets/icon/Filter";
 import { useSelector } from "react-redux";
 import Select from "react-select";
 import { useDispatch } from "react-redux";
+import { RESET_STATUS_FILTER } from "../../../../redux/types/pelatihan/master-pendaftaran.type";
+import Swal from "sweetalert2";
 import {
-  getAllSertifikat,
-  searchKeyword,
-  setValueAcademy,
+  deleteMasterTraining,
+  getAllListMasterPelatihan,
+  updateStatusPublishMaster,
   setValueLimit,
   setValuePage,
-  setValueTheme,
-} from "../../../../redux/actions/sertifikat/kelola-sertifikat.action";
-import { RESET_VALUE_FILTER } from "../../../../redux/types/sertifikat/kelola-sertifikat.type";
-import Cookies from "js-cookie";
-import Swal from "sweetalert2";
-import { updateStatusPublishMaster } from "../../../../redux/actions/pelatihan/master-pelatihan.action";
+  searchKeyword,
+  setValueStatus,
+} from "../../../../redux/actions/pelatihan/master-pendaftaran.action";
 
 export default function MasterPelatihan({ token }) {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const { loading, error, certificate, academyOptions, themeOptions } =
-    useSelector((state) => state.allCertificates);
+  const { loading, error, list } = useSelector(
+    (state) => state.getAllMasterPelatihan
+  );
 
-  const allCertificates = useSelector((state) => state.allCertificates);
-  const [academy, setAcademy] = useState("");
-  const [temaPelatihan, setTemaPelatihan] = useState("");
-  const [disable, setDisable] = useState(true);
-  const [dataTemaPelatihan, setDataTemaPelatihan] = useState([]);
-  const [dataAcademy, setDataAcademy] = useState([]);
+  const AllMasterPelatihan = useSelector(
+    (state) => state.getAllMasterPelatihan
+  );
+
+  const deleted = useSelector((state) => state.deleteMasterPelatihan);
+
+  useEffect(() => {
+    if (
+      deleted &&
+      Object.keys(deleted).length === 0 &&
+      Object.getPrototypeOf(deleted) === Object.prototype
+    ) {
+      return false;
+    } else {
+      dispatch(getAllListMasterPelatihan(token));
+    }
+  }, [deleted, dispatch, token]);
+
+  const [dataStatus, setDataStatus] = useState([
+    { label: "Listed", value: "1" },
+    { label: "Unlisted", value: "0" },
+  ]);
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(null);
 
   let selectRefAkademi = null;
-  let temaRef = null;
 
   const resetValueSort = (e) => {
     e.preventDefault();
-    temaRef.select.clearValue();
     selectRefAkademi.select.clearValue();
-    setDisable(true);
-    dispatch({ type: RESET_VALUE_FILTER });
+    dispatch({ type: RESET_STATUS_FILTER });
   };
-
-  useEffect(() => {
-    let arr = [];
-    academyOptions.forEach((el) => {
-      arr.push({ id: el.id, value: el.name, label: el.name });
-    });
-    setDataAcademy(arr);
-  }, [academyOptions]);
-
-  useEffect(() => {
-    const filteredTheme = themeOptions.filter(
-      (items) => items.id == academy?.id
-    );
-    const data = filteredTheme.map((el) => {
-      return { ...el, value: el.name, label: el.name };
-    });
-    setDataTemaPelatihan(data);
-  }, [academy, themeOptions]);
 
   const handleSearch = (e) => {
     e.preventDefault();
     dispatch(searchKeyword(search));
   };
-
-  const handleSelectAcademy = (e) => {
-    setAcademy(e);
-    setDisable(false);
-    temaRef.select.clearValue();
+  const [status, setStatus] = useState();
+  const handleSelectStatus = (e) => {
+    setStatus(e);
   };
 
   const handleFilter = (e) => {
     e.preventDefault();
-    if (!academy && !temaPelatihan) {
-      Swal.fire(
-        "Oops !",
-        "Harap memilih kategori Akademi atau Tema pelatihan terlebih dahulu.",
-        "error"
-      );
-    } else {
-      if (academy) {
-        dispatch(setValueAcademy(academy.value));
-      }
-      if (temaPelatihan) {
-        dispatch(setValueTheme(temaPelatihan.value));
-      }
-    }
+    dispatch(setValueStatus(status.value));
   };
 
   const handleResetError = () => {
@@ -110,66 +90,16 @@ export default function MasterPelatihan({ token }) {
   };
 
   useEffect(() => {
-    dispatch(getAllSertifikat(token));
+    dispatch(getAllListMasterPelatihan(token));
   }, [
     dispatch,
     token,
-    allCertificates.keyword,
-    allCertificates.page,
-    allCertificates.theme,
-    allCertificates.academy,
-    allCertificates.limit,
+    AllMasterPelatihan.keyword,
+    AllMasterPelatihan.page,
+    AllMasterPelatihan.theme,
+    AllMasterPelatihan.status,
+    AllMasterPelatihan.limit,
   ]);
-
-  const list = {
-    perPage: 10,
-    total: 1,
-    totalFiltered: 1,
-    page: 1,
-    limit: 5,
-    list: [
-      {
-        id: 1,
-        id_pelatihan: "C001",
-        judul_form: "Nama Form Pendaftaran",
-        status: "1",
-      },
-      {
-        id: 2,
-        id_pelatihan: "C002",
-        judul_form: "Nama Form Pendaftaran",
-        status: "1",
-      },
-      {
-        id: 3,
-        id_pelatihan: "C003",
-        judul_form: "Nama Form Pendaftaran",
-        status: "1",
-      },
-      {
-        id: 4,
-        id_pelatihan: "C004",
-        judul_form: "Nama Form Pendaftaran",
-        status: "1",
-      },
-      {
-        id: 2,
-        judul_form: "list data",
-        status: "0",
-        created_at: "2021-11-09T18:05:42.482493+07:00",
-        updated_at: "2021-11-09T18:05:42.482493+07:00",
-        deleted_at: null,
-      },
-      {
-        id: 2,
-        judul_form: "list data",
-        status: "0",
-        created_at: "2021-11-09T18:05:42.482493+07:00",
-        updated_at: "2021-11-09T18:05:42.482493+07:00",
-        deleted_at: null,
-      },
-    ],
-  };
 
   const handleDelete = (id) => {
     Swal.fire({
@@ -183,17 +113,15 @@ export default function MasterPelatihan({ token }) {
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
-        console.log(id);
-        dispatch();
-        dispatch(deleteTraining(id, token));
+        dispatch(deleteMasterTraining(id, token));
       }
     });
   };
 
   const handleStatusPublish = (e, id, value) => {
     const data = {
-      status_publish: val,
-      pelatian_id: id,
+      status: value,
+      id: id,
     };
     dispatch(updateStatusPublishMaster(data, token));
   };
@@ -236,7 +164,7 @@ export default function MasterPelatihan({ token }) {
             </h3>
             <div className="card-toolbar">
               <Link
-                href="/pelatihan/master-pelatihan/tambah-form-pendaftaran"
+                href="/pelatihan/master-pendaftaran/tambah-form-pendaftaran"
                 passHref
               >
                 <a
@@ -328,11 +256,11 @@ export default function MasterPelatihan({ token }) {
 
                             <div
                               className="modal-body text-left"
-                              style={{ height: "400px" }}
+                              // style={{ height: "200px" }}
                             >
                               <div className="fv-row mb-10">
                                 <label className="required fw-bold fs-6 mb-2">
-                                  Akademi
+                                  Status
                                 </label>
                                 <Select
                                   ref={(ref) => (selectRefAkademi = ref)}
@@ -346,30 +274,9 @@ export default function MasterPelatihan({ token }) {
                                   isSearchable={true}
                                   name="color"
                                   onChange={(e) => {
-                                    handleSelectAcademy(e);
+                                    handleSelectStatus(e);
                                   }}
-                                  options={dataAcademy}
-                                />
-                              </div>
-                              <div className="fv-row mb-10">
-                                <label className="required fw-bold fs-6 mb-2">
-                                  Tema Pelatihan
-                                </label>
-                                <Select
-                                  ref={(ref) => (temaRef = ref)}
-                                  className="basic-single"
-                                  classNamePrefix="select"
-                                  placeholder={
-                                    disable ? "Isi kolom akademi" : "Semua"
-                                  }
-                                  isDisabled={!academy ? true : false}
-                                  isLoading={false}
-                                  isClearable={false}
-                                  isRtl={false}
-                                  isSearchable={true}
-                                  name="color"
-                                  onChange={(e) => setTemaPelatihan(e?.value)}
-                                  options={dataTemaPelatihan}
+                                  options={dataStatus}
                                 />
                               </div>
                             </div>
@@ -411,7 +318,7 @@ export default function MasterPelatihan({ token }) {
                     <thead style={{ background: "#F3F6F9" }}>
                       <tr>
                         <th className="text-center">No</th>
-                        <th>ID Pelatihan</th>
+                        <th>ID Pendaftaran</th>
                         <th>Nama Form Pendaftaran</th>
                         <th>Status Publish</th>
                         <th>Aksi</th>
@@ -430,9 +337,11 @@ export default function MasterPelatihan({ token }) {
                           return (
                             <tr key={list.id}>
                               <td className="align-middle text-center">
-                                {list.page === 1
+                                {AllMasterPelatihan.page === 1
                                   ? i + 1
-                                  : (list.page - 1) * list.limit + (i + 1)}
+                                  : (AllMasterPelatihan.page - 1) *
+                                      AllMasterPelatihan.limit +
+                                    (i + 1)}
                               </td>
                               {/* START TABLE DATA */}
                               <td className="align-middle">{item.id}</td>
@@ -451,6 +360,7 @@ export default function MasterPelatihan({ token }) {
                                     value={item.status}
                                     onChange={(e) =>
                                       handleStatusPublish(
+                                        e,
                                         item.id,
                                         e.target.value
                                       )
@@ -466,7 +376,7 @@ export default function MasterPelatihan({ token }) {
                                   className="btn btn-link-action bg-blue-secondary text-white mr-2"
                                   onClick={() =>
                                     router.push(
-                                      "/pelatihan/master-pelatihan/edit-form-pendaftaran"
+                                      `/pelatihan/master-pendaftaran/edit-form-pendaftaran?id=${item.id}`
                                     )
                                   }
                                   data-toggle="tooltip"
@@ -476,10 +386,10 @@ export default function MasterPelatihan({ token }) {
                                   <i className="ri-pencil-fill p-0 text-white"></i>
                                 </button>
                                 <Link
-                                  href={`/pelatihan/master-pelatihan/${item.judul_form
+                                  href={`/pelatihan/master-pendaftaran/${item.judul_form
                                     ?.split(" ")
                                     .join("-")
-                                    .toLowerCase()}?id=1`}
+                                    .toLowerCase()}?id=${item.id}`}
                                   passHref
                                 >
                                   <a
@@ -487,16 +397,13 @@ export default function MasterPelatihan({ token }) {
                                     data-toggle="tooltip"
                                     data-placement="bottom"
                                     title="Detail"
-                                    onClick={() => {
-                                      Cookies.set("tema_pelatihan_id", list.id);
-                                    }}
                                   >
                                     <i className="ri-eye-fill p-0 text-white"></i>
                                   </a>
                                 </Link>
                                 <button
                                   className="btn btn-link-action bg-blue-secondary text-white"
-                                  onClick={() => handleDelete(item.no)}
+                                  onClick={() => handleDelete(item.id)}
                                   data-toggle="tooltip"
                                   data-placement="bottom"
                                   title="Hapus"

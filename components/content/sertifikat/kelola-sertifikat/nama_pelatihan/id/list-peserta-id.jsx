@@ -20,7 +20,7 @@ export default function ListPesertaID({ token }) {
   const { participant } = useSelector((state) => state.detailParticipant);
 
   const [type, setType] = useState(
-    certificate.data.certificate.certificate_type
+    certificate?.data?.certificate?.certificate_type
   );
   const [currentUser, setCurrentUser] = useState([]);
   useEffect(() => {
@@ -129,12 +129,12 @@ export default function ListPesertaID({ token }) {
                 ref={divReference}
               >
                 <div className="position-relative">
-                  <div className="position-absolute p-6 font-weight-boldest p-10 responsive-font-size-peserta zindex-1">
+                  <div className="position-absolute p-6 font-weight-boldest p-10 responsive-normal-font-size zindex-1">
                     {currentUser[0]?.registration_number}
                   </div>
                   <div
                     className={`position-absolute ${
-                      certificate.data.certificate.background
+                      certificate?.data?.certificate.background
                         ? "responsive-date-from"
                         : "responsive-date-from-without-background"
                     } font-weight-boldest zindex-1 responsive-date-text`}
@@ -144,7 +144,7 @@ export default function ListPesertaID({ token }) {
                   </div>
                   <div
                     className={`position-absolute ${
-                      certificate.data.certificate.background
+                      certificate?.data?.certificate?.background
                         ? "responsive-year"
                         : "responsive-year-without-background"
                     } font-weight-boldest zindex-1 responsive-date-text`}
@@ -157,11 +157,11 @@ export default function ListPesertaID({ token }) {
                     objectFit="fill"
                     width={842}
                     height={595}
-                    key={certificate.data.certificate.certificate_result}
+                    key={certificate?.data?.certificate?.certificate_result}
                   />
                   <div
                     className={`position-absolute w-100 text-center ${
-                      certificate.data.certificate.background
+                      certificate?.data?.certificate?.background
                         ? "responsive-margin-peserta-1"
                         : "responsive-margin-without-background"
                     }`}
@@ -202,12 +202,13 @@ export default function ListPesertaID({ token }) {
                 >
                   <Image
                     src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-syllabus-images/${certificate.data.certificate.certificate_result_syllabus}`}
-                    alt={`image ${certificate.data.certificate.certificate_result_syllabus}`}
+                    alt={`image ${certificate?.data?.certificate?.certificate_result_syllabus}`}
                     width={842}
                     height={595}
                     objectFit="fill"
                     key={
-                      certificate.data.certificate.certificate_result_syllabus
+                      certificate?.data?.certificate
+                        ?.certificate_result_syllabus
                     }
                     id="image2"
                   />

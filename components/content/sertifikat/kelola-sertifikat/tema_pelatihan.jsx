@@ -330,6 +330,7 @@ export default function NamaPelatihan({ token }) {
                     </thead>
                     <tbody>
                       {!certificate ||
+                      certificate.length == 0 ||
                       (certificate && certificate?.list?.length === 0) ? (
                         <tr>
                           <td className="text-center" colSpan={6}>

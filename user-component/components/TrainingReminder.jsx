@@ -60,13 +60,8 @@ const TrainingReminder = ({ session }) => {
   };
 
   const handleTemaNotif = () => {
-    let temaArr = [];
-    temaId !== null &&
-      temaId.forEach((row, i) => {
-        temaArr.push(row.value);
-      });
     const data = {
-      tema_id: temaArr.join(","),
+      tema_id: (temaId && temaId.value) || null,
     };
 
     if (session) {
@@ -97,8 +92,8 @@ const TrainingReminder = ({ session }) => {
             options={optionsTema}
             styles={customStyles}
             placeholder="Cari Tema"
-            isMulti
             onChange={(e) => setTemaId(e)}
+            isClearable
           />
         </div>
         <button
