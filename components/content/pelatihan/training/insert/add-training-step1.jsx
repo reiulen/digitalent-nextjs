@@ -741,7 +741,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
               onChange={(e) => setMitra({ value: e?.value, label: e?.label })}
               onBlur={() => simpleValidator.current.showMessageFor("mitra")}
             />
-            {simpleValidator.current.message("mitra", mitra.value, "required", {
+            {simpleValidator.current.message("mitra", mitra.value, metodeImplementation === "Swakelola" ? "" : "required", {
               className: "text-danger",
             })}
           </div>
@@ -821,7 +821,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
               <DatePicker
                   selected={startDateTraining}
                   onChange={(date) => setStartDateTraining(date)}
-                  minDate={today}
+                  minDate={endDateRegistration}
                   showTimeSelect
                   className="form-control w-100 d-block"
                   locale="pt-BR"
