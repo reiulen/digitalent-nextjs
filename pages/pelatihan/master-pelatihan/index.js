@@ -46,6 +46,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+
       await store.dispatch(
         getAllListMasterPelatihan(session.user.user.data.token)
       );
