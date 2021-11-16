@@ -183,7 +183,6 @@ export default function MasterPelatihan({ token }) {
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
-        console.log(id);
         dispatch();
         dispatch(deleteTraining(id, token));
       }
