@@ -139,7 +139,7 @@ const SubtansiUser = ({ token }) => {
   const [modalResponsive, setModalResponsive] = useState(false);
   const [multipleAnswer, setMultipleAnswer] = useState(multi);
   const [indexSoal, setIndexSoal] = useState(0);
-  console.log("hehe", multipleAnswer);
+  // console.log("hehe", multipleAnswer);
   const [count, setCount] = useState(data && data.time_left);
   const [modalDone, setModalDone] = useState(false);
 
@@ -335,10 +335,10 @@ const SubtansiUser = ({ token }) => {
       list22.push(localStorage.getItem(key));
       // console.log(key);
     }
-    console.log(list22);
+    // console.log(list22);
   };
 
-  console.log(multi);
+  // console.log(multi);
 
   return (
     <>
@@ -496,7 +496,7 @@ const SubtansiUser = ({ token }) => {
                                     } else {
                                       multi.push(item.key);
                                     }
-                                    console.log(multi);
+                                    // console.log(multi);
                                   }}
                                 >
                                   <table>
@@ -528,7 +528,7 @@ const SubtansiUser = ({ token }) => {
                                 } else {
                                   multi.push(item.key);
                                 }
-                                console.log(multi);
+                                // console.log(multi);
                               }}
                             >
                               <table>
@@ -578,7 +578,7 @@ const SubtansiUser = ({ token }) => {
                                     } else {
                                       multi.push(item.key);
                                     }
-                                    console.log(multi);
+                                    // console.log(multi);
                                   }}
                                 >
                                   <table>
@@ -611,7 +611,7 @@ const SubtansiUser = ({ token }) => {
                                 } else {
                                   multi.push(item.key);
                                 }
-                                console.log(multi);
+                                // console.log(multi);
                               }}
                             >
                               <table>
