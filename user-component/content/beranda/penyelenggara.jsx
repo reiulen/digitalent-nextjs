@@ -9,6 +9,11 @@ import Pagination from "react-js-pagination";
 const Penyelenggara = () => {
   const dispatch = useDispatch();
   const router = useRouter();
+
+  const { penyelenggara, loading, error } = useSelector(
+    (state) => state.allPenyelenggaraPage
+  );
+
   return (
     <>
       <Container fluid className="px-md-30 px-10 py-10">
@@ -73,7 +78,7 @@ const Penyelenggara = () => {
                 <div className="d-flex filter-action">
                   <Button
                     variant="transparent"
-                    className="btn-penyelenggara-rounded btn-block bg-penyelenggara-primary text-white mr-3"
+                    className="btn-penyelenggara-rounded btn-block bg-penyelenggara-light text-dark mr-3"
                   >
                     A - Z
                   </Button>
