@@ -5,13 +5,12 @@ import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
 import style from "./style.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import SimpleReactValidator from "simple-react-validator";
-import OtpInput from "react-otp-input";
 import axios from "axios";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import { getDataPribadi } from "../../../../redux/actions/pelatihan/function.actions";
 import { SweatAlert } from "../../../../utils/middleware/helper";
-
+import ReactCodeInput from "react-code-input";
 export default function Pengaturan({ session }) {
   const { error: errorDataPribadi, dataPribadi } = useSelector(
     (state) => state.getDataPribadi
@@ -602,14 +601,20 @@ export default function Pengaturan({ session }) {
               </span>
             </p>
           </div>
-          <div>
-            <OtpInput
+          <div className="d-flex justify-content-center">
+            {/* <OtpInput
               value={otpEmail}
               onChange={(e) => setOtpEmail(e)}
               numInputs={6}
               inputStyle="w-100 p-lg-4 p-2 mx-md-5 mx-2 my-md-10 form-control"
               isInputNum
-            ></OtpInput>
+            ></OtpInput> */}
+            <ReactCodeInput
+              inputMode="numeric"
+              fields={6}
+              onChange={(e) => setOtpEmail(e)}
+              value={otpEmail}
+            />
           </div>
 
           <div className="d-flex justify-content-between mx-5 mt-14">
@@ -934,6 +939,7 @@ export default function Pengaturan({ session }) {
           </div>
         </Modal.Body>
       </Modal>
+
       {/* END MODAL HANDPHONE */}
     </PesertaWrapper>
   );

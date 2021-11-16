@@ -81,8 +81,11 @@ const PasswordPemulihan = () => {
         if (result.value) {
           setLoading(true);
           const data = {
-            email: emailCode,
+            token: router.query.token,
+            password: password,
+            password_confirmasi: passwordConfirm,
           };
+
           await axios
             .post(
               process.env.END_POINT_API_PELATIHAN +
@@ -91,11 +94,13 @@ const PasswordPemulihan = () => {
             )
             .then((res) => {
               setLoading(false);
-              console.log(res);
+              // console.log(res); MASIH DIPAKE
+              SweatAlert("Berhasil", res.data.data, "success");
             })
             .catch((err) => {
               setLoading(false);
-              console.log(err);
+              SweatAlert("Gagal", err.response.data.message, "error");
+              // console.log(err); MASIH DIPAKE
             });
         }
       });

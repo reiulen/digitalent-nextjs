@@ -45,11 +45,11 @@ const ForgotPassword = () => {
             )
             .then((res) => {
               setLoading(false);
-              console.log(res);
+              // console.log(res);
             })
             .catch((err) => {
               setLoading(false);
-              console.log(err);
+              // console.log(err);
             });
         }
       });

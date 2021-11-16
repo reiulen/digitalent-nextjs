@@ -483,7 +483,7 @@ import {
   newMasterTrainingReducer,
   updateMasterPelatihanReducer,
   updateStatusMasterReducer,
-} from "./pelatihan/admin/master-pelatihan.reducer";
+} from "./pelatihan/admin/master-pendaftaran.reducer";
 
 const reducer = combineReducers({
   // PUBLIKASI

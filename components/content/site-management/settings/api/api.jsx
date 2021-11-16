@@ -157,7 +157,7 @@ const Table = ({ token }) => {
                     <tbody>
                       {allApi.data.setting_api.length === 0 ? (
                         <td className="align-middle text-center" colSpan="8">
-                          Data Masih Kosong
+                          Data kosong
                         </td>
                       ) : (
                         allApi.data.setting_api.map((items, index) => {
@@ -170,19 +170,29 @@ const Table = ({ token }) => {
                                     (index + 1)}
                               </td>
                               <td className="align-middle text-left">
-                                {items.api_name}
+                                <p className="p-part-t text-overflow-ens">
+                                  {items.api_name}
+                                </p>
                               </td>
                               <td className="align-middle text-left">
-                                {items.api_url}
+                                <p className="p-part-t text-overflow-ens">
+                                  {items.api_url}
+                                </p>
                               </td>
                               <td className="align-middle text-left">
-                                {items.api_key}
+                                <p className="p-part-t text-overflow-ens">
+                                  {items.api_key}
+                                </p>
                               </td>
                               <td className="align-middle text-left">
-                                {items.username}
+                                <p className="p-part-t text-overflow-ens">
+                                  {items.username}
+                                </p>
                               </td>
                               <td className="align-middle text-left">
-                                {items.from_date} / {items.to_date}
+                                <p className="p-part-t text-overflow-ens">
+                                  {items.from_date} / {items.to_date}
+                                </p>
                               </td>
                               <td className="align-middle text-left">
                                 {items.status == 1 ? (
@@ -204,7 +214,7 @@ const Table = ({ token }) => {
                               <td className="align-middle text-left">
                                 <div className="d-flex align-items-center">
                                   <Link
-                                    href={`/site-management/setting/api/ubah-api/${items.id}`}
+                                    href={`/site-management/setting/api/ubah-api?id=${items.id}`} passHref
                                   >
                                     <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
                                       <IconPencil width="16" height="16" />
@@ -214,7 +224,7 @@ const Table = ({ token }) => {
                                     </a>
                                   </Link>
                                   <Link
-                                    href={`/site-management/setting/api/detail-api/${items.id}`}
+                                    href={`/site-management/setting/api/detail-api?id=${items.id}`} passHref
                                   >
                                     <a className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete">
                                       <IconEye width="16" height="16" />
