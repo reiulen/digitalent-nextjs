@@ -14,19 +14,19 @@ const ViewTrainingStep4 = () => {
 
   const [substansi] = useState({
     value: getReviewStep4 ? getReviewStep4?.data.status_test_substansi : "",
-    date: getReviewStep4 ? getReviewStep4?.data.tanggal_test_substansi?.start_at + " - " + getReviewStep4?.data.tanggal_test_substansi?.end_at : "",
+    date: getReviewStep4 ? getReviewStep4?.data.tanggal_test_substansi?.start_at + " - " + getReviewStep4?.data.tanggal_test_substansi?.end_at : "-",
   });
   const [midTest] = useState({
     value: getReviewStep4 ? getReviewStep4?.data.status_mid_test : "",
-    date: getReviewStep4 ? getReviewStep4?.data.tanggal_mid_test?.start_at + " - " + getReviewStep4?.data.tanggal_mid_test?.end_at : "",
+    date: getReviewStep4 ? getReviewStep4?.data.tanggal_mid_test?.start_at + " - " + getReviewStep4?.data.tanggal_mid_test?.end_at : "-",
   });
   const [survey] = useState({
     value: getReviewStep4 ? getReviewStep4?.data.status_survei : "",
-    date: getReviewStep4 ? getReviewStep4?.data.tanggal_survei?.start_at + " - " + getReviewStep4?.data.tanggal_survei?.end_at : "",
+    date: getReviewStep4 ? getReviewStep4?.data.tanggal_survei?.start_at + " - " + getReviewStep4?.data.tanggal_survei?.end_at : "-",
   });
   const [sertifikat] = useState({
     value: getReviewStep4 ? getReviewStep4?.data.status_sertifikat : "",
-    date: getReviewStep4 ? getReviewStep4?.data.tanggal_sertifikat?.start_at : "",
+    date: getReviewStep4.data.tanggal_sertifikat.length > 0 ? getReviewStep4?.data.tanggal_sertifikat?.start_at : "-",
   });
 
   return (

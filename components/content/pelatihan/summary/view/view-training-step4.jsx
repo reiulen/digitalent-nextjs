@@ -26,7 +26,7 @@ const ViewTrainingStep4 = () => {
   });
   const [sertifikat] = useState({
     value: getReviewStep4 ? getReviewStep4?.data.status_sertifikat : "",
-    date: getReviewStep4 ? getReviewStep4?.data.tanggal_sertifikat?.start_at : "",
+    date: getReviewStep4.data.tanggal_sertifikat.length > 0 ? getReviewStep4?.data.tanggal_sertifikat?.start_at : "-",
   });
 
   return (
