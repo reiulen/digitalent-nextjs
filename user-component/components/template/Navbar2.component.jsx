@@ -295,7 +295,7 @@ const Navigationbar = ({ session }) => {
                         Galeri
                       </a>
                     </Link>
-                    <Link href="video">
+                    <Link href="/video">
                       <a className="dropdown-item navdropdown-child" href="#">
                         Video
                       </a>
