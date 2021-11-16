@@ -7,21 +7,21 @@ export default function Kontak() {
   const router = useRouter();
   return (
     <>
-      <Container fluid className="px-md-30 px-10 py-10 w-100">
+      <Container fluid className="px-md-30 px-10 py-10">
         <Subheader data={[{ link: router.asPath, name: "kontak" }]} />
         <div className="col-12 mt-5">
-          <h1 className="fw-700">Kontak</h1>
-          <div className="mt-3">
+          <h1 className="fw-700 fz-36">Kontak</h1>
+          <p className="mr-6 fz-18 text-muted fw-500">
             Layanan Contact Center Digital Talent Scholarship
-          </div>
+          </p>
         </div>
         <div className="my-10 w-100">
           <Card className="rounded-xl">
             <Row>
               <Col lg={6} className="d-flex align-items-center">
                 <div>
-                  <p className="fw-700 px-10">Alamat</p>
-                  <div className="px-10">
+                  <p className="fw-600 px-10 fz-20">Alamat</p>
+                  <div className="px-10 fz-16">
                     <div>Kementrian Komunikasi dan Informatika RI</div>
                     <div>Jl. Medan Merdeka Barat No. 9</div>
                     <div>Jakarta Pusat, 10110</div>

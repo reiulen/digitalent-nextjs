@@ -45,7 +45,7 @@ const Navigationbar = ({ session }) => {
   const router = useRouter();
   const [isShowDropdown, setIsShowDropdown] = useState(false);
   const { error: errorDataPribadi, dataPribadi } = useSelector(
-    state => state.getDataPribadi
+    (state) => state.getDataPribadi
   );
 
   useEffect(() => {
@@ -157,7 +157,7 @@ const Navigationbar = ({ session }) => {
             )}
             <Navbar.Toggle
               aria-controls="basic-navbar-nav"
-              onClick={e => {
+              onClick={(e) => {
                 setIsNavOpen(!isNavOpen);
               }}
               className="p-3"
@@ -199,9 +199,11 @@ const Navigationbar = ({ session }) => {
                 id="basic-nav-dropdown"
                 className="navdropdown-child position-relative w-100 text-menu"
               >
-                <NavDropdown.Item href="/" className="navdropdown-child">
-                  Beranda
-                </NavDropdown.Item>
+                <Link href="/" passHref>
+                  <NavDropdown.Item className="navdropdown-child">
+                    Beranda
+                  </NavDropdown.Item>
+                </Link>
                 <div className="btn-group dropright">
                   <button
                     type="button"
@@ -240,24 +242,23 @@ const Navigationbar = ({ session }) => {
                     Pusat Informasi
                   </button>
                   <div className="dropdown-menu ml-3">
-                    <Link href="/peserta/menu/pusat-informasi">
+                    <Link href="/pusat-informasi" passHref>
                       <a className="dropdown-item navdropdown-child">
                         Panduan Test Substansi
                       </a>
                     </Link>
-                    <Link href="/peserta/menu/pusat-informasi">
+                    <Link href="/pusat-informasi" passHref>
                       <a className="dropdown-item navdropdown-child">
                         Hak dan Kewajiban
                       </a>
                     </Link>
                   </div>
                 </div>
-                <NavDropdown.Item
-                  href="#action/3.4"
-                  className="navdropdown-child"
-                >
-                  Tentang Kami
-                </NavDropdown.Item>
+                <Link href="/tentang-kami" passHref>
+                  <NavDropdown.Item className="navdropdown-child">
+                    Tentang Kami
+                  </NavDropdown.Item>
+                </Link>
                 <Link href="/penyelenggara" passHref>
                   <NavDropdown.Item className="navdropdown-child">
                     Penyelenggara
@@ -301,15 +302,16 @@ const Navigationbar = ({ session }) => {
                     </Link>
                   </div>
                 </div>
-                <NavDropdown.Item href="/faq" className="navdropdown-child">
-                  FAQ
-                </NavDropdown.Item>
-                <NavDropdown.Item
-                  href="#action/3.4"
-                  className="navdropdown-child"
-                >
-                  Kontak
-                </NavDropdown.Item>
+                <Link href="/faq" passHref>
+                  <NavDropdown.Item className="navdropdown-child">
+                    FAQ
+                  </NavDropdown.Item>
+                </Link>
+                <Link href="/kontak" passHref>
+                  <NavDropdown.Item className="navdropdown-child">
+                    Kontak
+                  </NavDropdown.Item>
+                </Link>
               </NavDropdown>
             </div>
             {/* END MENU */}
