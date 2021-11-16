@@ -141,10 +141,12 @@ const EditBerita = ({ token, idUser }) => {
     }
 
     const handleTag = (data) => {
+        console.log((tag).includes(data))
         if ((tag).includes(data)) {
             // Swal.fire("Oops !", "Tag tidak boleh sama", "error");
             // setTag(data);
-            data.splice(0, data.length - 1)
+            // data.splice(0, data.length - 1)
+            return
         } else {
             for (let i = 0; i < data.length; i++) {
                 if (hasWhiteSpace(data[i])) {
