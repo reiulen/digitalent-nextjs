@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react"
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,7 +7,7 @@ import Image from "next/image";
 import Pagination from "react-js-pagination";
 import ReactPlayer from "react-player";
 import moment from "moment";
-
+import { Splide, SplideSlide } from "@splidejs/react-splide";
 import {
   Container,
   Modal
@@ -43,7 +43,7 @@ const VideoPage = () => {
   const { dataTag } = useSelector((state) => state.allTagVideoContent);
   const { kategori } = useSelector((state) => state.kategoriVideoContent);
 
-  const titleToTrim = 30;
+  const titleToTrim = 10;
   const descToTrim = 100;
   
   const [url_video, setUrlVideo] = useState("");
@@ -63,9 +63,36 @@ const VideoPage = () => {
   const [sort, setSort] = useState("");
   const [category_id, setCategoryId] = useState("");
   const [category_academy, setCategoryAcademy] = useState("");
-  const [limit, setLimit] = useState("");
+  const [ limit, setLimit ] = useState("");
   const [ activeTitle, setActiveTitle ] = useState("Video Terupdate dan Terkini")
   const [ show, setShow ] = useState (false)
+  const [ showFilter, setShowFilter ] = useState(false)
+
+  const getWindowDimensions = () => {
+    const { innerWidth: width, innerHeight: height } = window;
+    return {
+        width,
+        height,
+    };
+};
+
+const [windowDimensions, setWindowDimensions] = useState(
+    // getWindowDimensions()
+    {}
+);
+
+useEffect(() => {
+    function handleResize() {
+        setWindowDimensions(getWindowDimensions());
+    }
+    setWindowDimensions(getWindowDimensions());
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+},[video])
+
+useEffect(()=> {
+
+},[windowDimensions])
 
   const handlePagination = (pageNumber) => {
     setActivePage(pageNumber);
@@ -228,7 +255,7 @@ const VideoPage = () => {
         {/* End of Header */}
 
         {/* Filter Button */}
-        <div className="col-lg-10 row my-5">
+        {/* <div className="col-lg-10 row my-10">
           {kategoriVideo === "" ? (
             <div
               className="d-flex align-items-center rounded-pill bg-primary-dashboard py-1 px-9 m-2"
@@ -273,7 +300,81 @@ const VideoPage = () => {
                   </div>
                 );
               })}
+        </div> */}
+        <div 
+          className="col-lg-8 col-12 pl-0 ml-0 mt-10 mb-5 pr-15" 
+        >
+          <Splide
+            // hasSliderWrapper
+            options={{
+              arrows: false,
+              pagination: false,
+              gap: "1rem",
+              drag: "free",
+              perPage: 4,
+            }}
+          >
+           
+              {kategoriVideo === "" ? (
+                <SplideSlide>
+                  <div
+                    className="d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-9 m-2 "
+                    style={{ cursor: "pointer", height:"40px"}}
+                    onClick={() => handleFilterKategori("")}
+                  >
+                    <div className="my-1 mx-5 py-1 px-9 text-white text-center">SEMUA</div>
+                  </div>
+                </SplideSlide>
+                
+              ) : (
+                <SplideSlide>
+                  <div
+                    className="d-flex align-items-center justify-content-center rounded-pill bg-white py-1 px-9 border border-muted m-2 "
+                    style={{ cursor: "pointer", height:"40px"}}
+                    onClick={() => handleFilterKategori("")}
+                  >
+                    <div className="my-1 mx-5 py-1 px-9 text-muted text-center">SEMUA</div>
+                  </div>
+                </SplideSlide>
+              )}
+
+            {kategori && kategori.length === 0
+            ? null
+            : kategori.map((row, i) => {
+                return kategoriVideo === row.nama_kategori ? (
+                  <SplideSlide>
+                    <div
+                      className="d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-9 border border-muted m-2 "
+                      style={{ cursor: "pointer", height:"40px"}}
+                      onClick={() => handleFilterKategori(row.nama_kategori)}
+                      key={i}
+                    >
+                      <div className="my-1 mx-5 py-1 px-9 text-white text-center">
+                        {row.nama_kategori}
+                      </div>
+                    </div>
+                  </SplideSlide>
+                  
+                ) : (
+                  <SplideSlide>
+                    <div
+                      className="d-flex align-items-center justify-content-center rounded-pill bg-white py-1 px-9 border border-muted m-2 "
+                      style={{ cursor: "pointer", height:"40px"}}
+                      onClick={() => handleFilterKategori(row.nama_kategori)}
+                      key={i}
+                    >
+                      <div className="my-1 mx-5 py-1 px-9 text-muted text-center">
+                        {row.nama_kategori}
+                      </div>
+                    </div>
+                  </SplideSlide>
+                  
+                );
+              })}
+
+          </Splide>
         </div>
+        
         {/* End of Filter Button */}
 
         {/* Content */}
@@ -282,8 +383,136 @@ const VideoPage = () => {
           {/* Left Side */}
           <div className="col-lg-8 my-5 pr-15">
 
+            {/* Filter at mobile screen */}
+
+            {
+              windowDimensions && windowDimensions.width && windowDimensions.width <= 770 ?
+                <div className="card mb-15 p-5">
+                  <div className="row  mt-3">
+                    <div className="col-10 d-flex flex-row">
+                      <Image
+                        src={`/assets/media/logo-filter.svg`}
+                        width={40}
+                        height={40}
+                        alt="Logo filter"
+                      />
+                      <h3 className="d-flex align-items-center font-weight-bolder ml-3 mt-3">
+                        Filter
+                      </h3>
+                    </div>
+                    <div className="col-2 my-auto text-right">
+                      {
+                        showFilter === false ?
+                          <div onClick={() => setShowFilter(true)}>
+                              <i className="ri-arrow-right-s-line"></i>
+                          </div>
+                        :
+                          <div onClick={() => setShowFilter(false)}>
+                              <i className="ri-arrow-down-s-line"></i>
+                          </div>
+                      }
+                    </div>
+                  </div>
+                  
+                  {
+                    showFilter === true ?
+                        <>
+                          <div className="card-body">
+                            <h5 style={{ marginLeft: "-10px" }}>Urutkan Berdasarkan</h5>
+                            <div className="row justify-content-between">
+                              <div className="col-6">
+                                {filterPublish === "asc" ? (
+                                  <button
+                                    className="btn btn-primary rounded-pill btn-block"
+                                    onClick={() => handleFilterPublish("")}
+                                  >
+                                    Terbaru
+                                  </button>
+                                ) : (
+                                  <button
+                                    className="btn btn-outline-light rounded-pill btn-block"
+                                    onClick={() => handleFilterPublish("asc")}
+                                  >
+                                    Terbaru
+                                  </button>
+                                )}
+                              </div>
+
+                              <div className="col-6">
+                                {filterPublish === "desc" ? (
+                                  <button
+                                    className="btn btn-primary rounded-pill btn-block"
+                                    onClick={() => handleFilterPublish("")}
+                                  >
+                                    Terlama
+                                  </button>
+                                ) : (
+                                  <button
+                                    className="btn btn-outline-light rounded-pill btn-block"
+                                    onClick={() => handleFilterPublish("desc")}
+                                  >
+                                    Terlama
+                                  </button>
+                                )}
+                              </div>
+                            </div>
+                            <div className="row justify-content-between mt-3">
+                              <div className="col-6">
+                                {sort === "asc" ? (
+                                  <button
+                                    className="btn btn-primary rounded-pill btn-block"
+                                    onClick={() => handleSort("")}
+                                  >
+                                    A-Z
+                                  </button>
+                                ) : (
+                                  <button
+                                    className="btn btn-outline-light rounded-pill btn-block"
+                                    onClick={() => handleSort("asc")}
+                                  >
+                                    A-Z
+                                  </button>
+                                )}
+                              </div>
+
+                              <div className="col-6">
+                                {sort === "desc" ? (
+                                  <button
+                                    className="btn btn-primary rounded-pill btn-block"
+                                    onClick={() => handleSort("")}
+                                  >
+                                    Z-A
+                                  </button>
+                                ) : (
+                                  <button
+                                    className="btn btn-outline-light rounded-pill btn-block"
+                                    onClick={() => handleSort("desc")}
+                                  >
+                                    Z-A
+                                  </button>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                          <button
+                            type="button"
+                            className="btn btn-primary mb-5"
+                            style={{ width: "90%", margin: "auto", borderRadius: "30px" }}
+                            onClick={() => submitFilter()}
+                          >
+                            Tampilkan
+                          </button>
+                        </>
+                      :
+                        null
+                  }
+                </div>
+              :
+                null
+            }
+
             {/* Search Field */}
-            <form className="mb-3 mr-4">
+            <form className="mb-10 mr-4">
               <div className="input-group">
                   <div className="input-group-prepend">
                       <div 
@@ -411,13 +640,12 @@ const VideoPage = () => {
                   </div>
                 </div>
             }
-            
             {/* End of Card Video */}
 
             {/* PAGINATION */}
             <div>
               {video ? (
-                <div className="table-pagination" style={{ marginLeft: "35%" }}>
+                <div className="table-pagination mb-10" style={{ marginLeft: "35%" }}>
                   <Pagination
                     activePage={activePage}
                     itemsCountPerPage={video.perPage}
@@ -442,108 +670,114 @@ const VideoPage = () => {
           <div className="col-lg-4 my-5">
 
             {/* Sort Filter Button */}
-            <div className="card mb-4">
-              <div className="row ml-5 mt-3">
-                <Image
-                  src={`/assets/media/logo-filter.svg`}
-                  width={40}
-                  height={40}
-                  alt="Logo filter"
-                />
-                <h3 className="d-flex align-items-center font-weight-bolder ml-3 mt-3">
-                  Filter
-                </h3>
-              </div>
-              <div className="card-body">
-                <h5 style={{ marginLeft: "-10px" }}>Urutkan Berdasarkan</h5>
-                <div className="row justify-content-between">
-                  <div className="col-md-6 col-12">
-                    {filterPublish === "asc" ? (
-                      <button
-                        className="btn btn-primary rounded-pill btn-block"
-                        onClick={() => handleFilterPublish("")}
-                      >
-                        Terbaru
-                      </button>
-                    ) : (
-                      <button
-                        className="btn btn-outline-light rounded-pill btn-block"
-                        onClick={() => handleFilterPublish("asc")}
-                      >
-                        Terbaru
-                      </button>
-                    )}
+            {
+              windowDimensions && windowDimensions.width && windowDimensions.width <= 770 ?
+                null
+              :
+                <div className="card mb-15 p-5">
+                  <div className="row ml-5 mt-3">
+                    <Image
+                      src={`/assets/media/logo-filter.svg`}
+                      width={40}
+                      height={40}
+                      alt="Logo filter"
+                    />
+                    <h3 className="d-flex align-items-center font-weight-bolder ml-3 mt-3">
+                      Filter
+                    </h3>
                   </div>
+                  <div className="card-body">
+                    <h5 style={{ marginLeft: "-10px" }}>Urutkan Berdasarkan</h5>
+                    <div className="row justify-content-between">
+                      <div className="col-md-6 col-12">
+                        {filterPublish === "asc" ? (
+                          <button
+                            className="btn btn-primary rounded-pill btn-block"
+                            onClick={() => handleFilterPublish("")}
+                          >
+                            Terbaru
+                          </button>
+                        ) : (
+                          <button
+                            className="btn btn-outline-light rounded-pill btn-block"
+                            onClick={() => handleFilterPublish("asc")}
+                          >
+                            Terbaru
+                          </button>
+                        )}
+                      </div>
 
-                  <div className="col-md-6 col-12">
-                    {filterPublish === "desc" ? (
-                      <button
-                        className="btn btn-primary rounded-pill btn-block"
-                        onClick={() => handleFilterPublish("")}
-                      >
-                        Terlama
-                      </button>
-                    ) : (
-                      <button
-                        className="btn btn-outline-light rounded-pill btn-block"
-                        onClick={() => handleFilterPublish("desc")}
-                      >
-                        Terlama
-                      </button>
-                    )}
-                  </div>
-                </div>
-                <div className="row justify-content-between mt-3">
-                  <div className="col-md-6 col-12">
-                    {sort === "asc" ? (
-                      <button
-                        className="btn btn-primary rounded-pill btn-block"
-                        onClick={() => handleSort("")}
-                      >
-                        A-Z
-                      </button>
-                    ) : (
-                      <button
-                        className="btn btn-outline-light rounded-pill btn-block"
-                        onClick={() => handleSort("asc")}
-                      >
-                        A-Z
-                      </button>
-                    )}
-                  </div>
+                      <div className="col-md-6 col-12">
+                        {filterPublish === "desc" ? (
+                          <button
+                            className="btn btn-primary rounded-pill btn-block"
+                            onClick={() => handleFilterPublish("")}
+                          >
+                            Terlama
+                          </button>
+                        ) : (
+                          <button
+                            className="btn btn-outline-light rounded-pill btn-block"
+                            onClick={() => handleFilterPublish("desc")}
+                          >
+                            Terlama
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                    <div className="row justify-content-between mt-3">
+                      <div className="col-md-6 col-12">
+                        {sort === "asc" ? (
+                          <button
+                            className="btn btn-primary rounded-pill btn-block"
+                            onClick={() => handleSort("")}
+                          >
+                            A-Z
+                          </button>
+                        ) : (
+                          <button
+                            className="btn btn-outline-light rounded-pill btn-block"
+                            onClick={() => handleSort("asc")}
+                          >
+                            A-Z
+                          </button>
+                        )}
+                      </div>
 
-                  <div className="col-md-6 col-12">
-                    {sort === "desc" ? (
-                      <button
-                        className="btn btn-primary rounded-pill btn-block"
-                        onClick={() => handleSort("")}
-                      >
-                        Z-A
-                      </button>
-                    ) : (
-                      <button
-                        className="btn btn-outline-light rounded-pill btn-block"
-                        onClick={() => handleSort("desc")}
-                      >
-                        Z-A
-                      </button>
-                    )}
+                      <div className="col-md-6 col-12">
+                        {sort === "desc" ? (
+                          <button
+                            className="btn btn-primary rounded-pill btn-block"
+                            onClick={() => handleSort("")}
+                          >
+                            Z-A
+                          </button>
+                        ) : (
+                          <button
+                            className="btn btn-outline-light rounded-pill btn-block"
+                            onClick={() => handleSort("desc")}
+                          >
+                            Z-A
+                          </button>
+                        )}
+                      </div>
+                    </div>
                   </div>
+                  <button
+                    type="button"
+                    className="btn btn-primary mb-5"
+                    style={{ width: "90%", margin: "auto", borderRadius: "30px" }}
+                    onClick={() => submitFilter()}
+                  >
+                    Tampilkan
+                  </button>
                 </div>
-              </div>
-              <button
-                type="button"
-                className="btn btn-primary mb-5"
-                style={{ width: "90%", margin: "auto", borderRadius: "30px" }}
-                onClick={() => submitFilter()}
-              >
-                Tampilkan
-              </button>
-            </div>
+            }
+            
             {/* End of Sort Filter Button */}
 
             {/* Tag */}
-            <div className="row mt-5 d-flex flex-column mx-3 ml-5">
+            <div className="row mt-5 d-flex flex-column mx-10 ml-5">
               <h3 className="font-weight-bolder">
                 TEMUKAN LEBIH BANYAK APA YANG PENTING BAGI ANDA
               </h3>
@@ -579,55 +813,53 @@ const VideoPage = () => {
         {/* End of Content */}
 
         {/* Modal */}
-        {/* <div
-          className="modal fade"
-          id="videoPlayerModal"
-          tabIndex="-1"
-          role="dialog"
-          aria-labelledby="exampleModalCenterTitle"
-          aria-hidden="true"
+        <Modal
+          size="lg"
+          onHide={() => handleToggleModal()}
+          show={show}
+          centered
         >
-          <div className="modal-dialog modal-dialog-centered" role="document">
-            <div
-              className="modal-content"
-              style={{ width: "700px", height: "490px" }}
+          <Modal.Header>
+            <div 
+              className="col-12 d-flex justify-content-end"
             >
-              <div className={styles["modal-body"]}>
-                <div className={styles["playVideo"]}>
-                  <button
-                    type="button"
-                    className="col-1 flaticon2-delete mb-2"
-                    data-dismiss="modal"
-                    aria-label="Close"
-                    style={{ border: "none", background: "none" }}
-                  ></button>
-                  <ReactPlayer
-                    url={url_video}
-                    controls
-                    width="100%"
-                    height="100%"
-                    playing={video_playing}
-                    onPlay={handleIsPlayed}
-                  />
-                </div>
-                <div className="ml-3" style={{ marginTop: "30px" }}>
-                  <h3 className="font-weight-bolder">{judul_video}</h3>
-                </div>
-                <div
-                  className="row align-items-center"
-                  style={{ marginLeft: "0" }}
-                >
-                  <div className="col-3">
-                    <span className="text-muted" style={{ fontSize: "11px" }}>
-                      {tanggal_publish !== null
-                        ? `${moment(tanggal_publish).format("MMMM DD")} | ${tonton} Ditonton`
-                        : ""}
-                    </span>
+              <i 
+                className="ri-close-line text-dark" 
+                style={{cursor:"pointer"}}
+                onClick={() => handleToggleModal()}
+              />
+            </div>
+          </Modal.Header>
+          <Modal.Body className="p-0">
+            <ReactPlayer
+              url={url_video}
+              controls
+              width="100%"
+              height="50vh"
+              playing={video_playing}
+              onPlay={handleIsPlayed}
+            />
+          </Modal.Body>
+          <Modal.Footer>
+            <div className="col-12">
+              <h2 className="font-weight-bolder">
+                {judul_video}
+              </h2>
+
+              <div className="mt-10 mb-5 row d-flex justify-content-between">
+                <div className="d-flex align-self-center ml-4">
+                  <div className="mr-3">
+                    {
+                      tanggal_publish !== null ? 
+                        `${moment(tanggal_publish).format("MMMM DD")} | ${tonton} Ditonton`
+                      : 
+                      ""
+                    }
                   </div>
-                  <div className="col-6">
-                    <div className={styles["listTag"]}>
-                      {tags === null
-                        ? null
+                  <div className="d-flex flex-row">
+                    {
+                      tags === null ? 
+                        null
                         : tags.map((el, i) => {
                             return (
                               <div
@@ -646,33 +878,21 @@ const VideoPage = () => {
                                 </div>
                               </div>
                             );
-                          })}
-                    </div>
+                          })
+                      }
                   </div>
-                  <div className="col-3" style={{ textAlign: "center" }}>
-                    {dataKategori === null ? null : (
-                      <span className="p-2 label label-inline label-light-success font-weight-bold">
+                </div>
+
+                <div>
+                  {dataKategori === null ? null : (
+                      <span className="p-2 badge  badge-light font-weight-bold text-primary">
                         {dataKategori}
                       </span>
                     )}
-                  </div>
-                </div>
-                <div className={`${styles.descriptionVideo} text-break m-4`}>
-                  <span>{isiVideo}</span>
                 </div>
               </div>
             </div>
-          </div>
-        </div> */}
-
-        <Modal
-          size="lg"
-          onHide={() => handleToggleModal()}
-          show={show}
-        >
-          <Modal.Header>
-            <Modal.Title>Modal heading</Modal.Title>
-          </Modal.Header>
+          </Modal.Footer>
         </Modal>
         {/* End of Modal */}
       </Container>
