@@ -32,11 +32,9 @@ export default function Pengaturan({ session }) {
   const [showUbahPasswordModal, setShowUbahPasswordModal] = useState(false);
   const handleClosePasswordModal = () => setShowUbahPasswordModal(false);
   const handleShowUbahPasswordModal = () => setShowUbahPasswordModal(true);
-
   const [hidePasswordLama, setHidePasswordLama] = useState(true);
   const [hidePasswordBaru, setHidePasswordBaru] = useState(true);
   const [hidePasswordBaru2, setHidePasswordBaru2] = useState(true);
-
   const [postStatus, setPostStatus] = useState("");
 
   // START HANDPHONE
@@ -44,12 +42,14 @@ export default function Pengaturan({ session }) {
   const [showUbahHandphoneModal, setShowUbahHandphoneModal] = useState(false);
   const handleCloseHandphoneModal = () => setShowUbahHandphoneModal(false);
   const handleShowUbahHandphone = () => setShowUbahHandphoneModal(true);
+  const [newPhone, setNewPhone] = useState("");
 
   const [handphoneVerify, setHandphoneVerify] = useState(
     dataPribadi.handphone_verifikasi
   );
 
   //   START EMAIL
+  const [newEmail, setNewEmail] = useState("");
   const [email, setEmail] = useState("");
   const [showUbahEmailModal, setShowUbahEmailModal] = useState(false);
   const handleCloseEmailModal = () => setShowUbahEmailModal(false);
@@ -109,7 +109,7 @@ export default function Pengaturan({ session }) {
       token,
     };
     try {
-      const data = await axios.post(
+      const { data } = await axios.post(
         `${process.env.END_POINT_API_PELATIHAN}api/v1/auth/submit-update-handphone`,
         body,
         config
@@ -120,6 +120,8 @@ export default function Pengaturan({ session }) {
           "Anda telah berhasil melakukan perubahan nomor handphone",
           "success"
         );
+        console.log(data, "ini data cuy");
+        // setNewEmail(data.data);
         setOtpEmail("");
         dispatch(getDataPribadi(session.token));
         handleCloseEmailOtp();
@@ -189,12 +191,13 @@ export default function Pengaturan({ session }) {
 
     if (simpleValidator.current.allValid()) {
       try {
-        const data = await axios.post(
+        const { data } = await axios.post(
           `${process.env.END_POINT_API_PELATIHAN}api/v1/auth/request-update-email`,
           body,
           config
         );
         if (data) {
+          setNewEmail(data.data.send);
           setPostStatus("email");
           handleShowUbahEmailOtp();
           handleCloseEmailModal();
@@ -587,7 +590,7 @@ export default function Pengaturan({ session }) {
               ke
               <span className="font-weight-bolder mx-2">
                 {postStatus == "email"
-                  ? dataPribadi.email
+                  ? newEmail + " ini new Email "
                   : postStatus == "verifyHp"
                   ? dataPribadi.nomor_handphone
                   : postStatus == "ubahHandphone"
@@ -597,20 +600,20 @@ export default function Pengaturan({ session }) {
             </p>
           </div>
           <div>
-            {/* <OtpInput
+            <OtpInput
               value={otpEmail}
-              onChange={e => setOtpEmail(e)}
+              onChange={(e) => setOtpEmail(e)}
               numInputs={6}
-              inputStyle="w-100 p-4 mx-5 my-10 form-control"
+              inputStyle="w-100 p-lg-4 p-2 mx-md-5 mx-2 my-md-10 form-control"
               isInputNum
-            ></OtpInput> */}
+            ></OtpInput>
           </div>
 
           <div className="d-flex justify-content-between mx-5 mt-14">
             {count !== 0 ? (
               <div>
                 Mohon tunggu
-                <span className="mx-2 font-weight-bolder">
+                <span className="mx-2 font-weight-bolder  ">
                   {" "}
                   {count} detik
                 </span>{" "}
@@ -620,7 +623,7 @@ export default function Pengaturan({ session }) {
               <div>
                 Belum Menerima Kode OTP?
                 <button
-                  className={` font-weight-bolder text-primary ${style.btn_ubah}`}
+                  className={` p-md-2 font-weight-bolder text-primary ${style.btn_ubah}`}
                   onClick={() => {
                     if (postStatus == "email") {
                       handleLanjutUbahEmail(email);
@@ -640,7 +643,7 @@ export default function Pengaturan({ session }) {
             )}
             <Button
               variant="primary"
-              className="rounded-full py-4 px-8"
+              className="rounded-full py-md-4 px-md-8 py-0"
               style={{ fontSize: "14px" }}
               onClick={() => {
                 if (postStatus == "email") {
