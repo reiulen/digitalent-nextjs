@@ -40,6 +40,7 @@ const SubHeader = () => {
       const linkPath = router.asPath.split("/");
       // linkPath.splice(0, 2);
       linkPath.shift();
+      linkPath.splice(linkPath.length - 1,1)
       const pathArray = linkPath.map((path, i) => {
         return {
           breadcrumb: path,
