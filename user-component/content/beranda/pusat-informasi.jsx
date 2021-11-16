@@ -1,22 +1,23 @@
-import React from 'react'
+import React from "react";
 import IconArrow from "../../../components/assets/icon/Arrow2";
-export default function PusatInformasi() {
+import SubHeaderComponent from "../../components/template/Subheader.component";
+import { useRouter } from "next/router";
+import { Container, Row, Col } from "react-bootstrap";
+
+const PusatInformasi = () => {
+  const router = useRouter();
   return (
-    <div className="bg-white p-3 p-sm-10 pusat-informasi">
-        {/* breadcrum */}
-        <div className="breadcrums-manuals py-4 pl-8 pr-4 border mb-10 br-30">
-          <div className="d-flex align-items-center">
-            <span style={{ color: "#0063CC" }}>Beranda</span>
-            <IconArrow className="mx-4" fill="#0063CC" />
-            <span style={{ color: "#0063CC" }}>Pusat Informasi</span>
-          </div>
-        </div>
+    <Container fluid className="px-md-30 px-10 py-10">
+      <SubHeaderComponent
+        data={[{ link: router.asPath, name: "Pusat Informasi" }]}
+      />
+      <div>
         {/* content */}
-        <h1 className="fw-700 title-1">Pusat Informasi</h1>
-        <p className="fw-400 title-2">
+        <h1 className="fw-700 fz-36">Pusat Informasi</h1>
+        <p className="mr-6 fz-18 text-muted fw-500">
           Pusat Informasi untuk Panduan Test Substansi dan Hak & Kewajiban
         </p>
-        <div className="border br-20 px-6 py-10 mt-16 overflow-scroll">
+        <div className="border br-20 px-6 py-10 mt-10 overflow-scroll">
           <ul
             className="nav-tabs-customes nav nav-tabs"
             id="myTab"
@@ -61,26 +62,42 @@ export default function PusatInformasi() {
                   <li>
                     Sebelum mengerjakan tes, harap perhatikan dan lakukan
                     hal-hal berikut :
-                    <ol type="a">
+                    <ol className="pl-7">
                       <li>
                         Pastikan koneksi internet stabil (sangat disarankan
                         menggunakan koneksi internet broadband dengan kecepatan
-                        akses download 384 kbps ke atas). Cek hal ini melalui
-                        https://www.speedtest.net/
+                        akses download 384 kbps ke atas). Cek hal ini melalui{" "}
+                        <span>
+                          <a href="https://www.speedtest.net/" target="_blank">
+                            https://www.speedtest.net/
+                          </a>
+                        </span>
                       </li>
                       <li>
                         Gunakan browser : Mozilla Firefox atau Google Chrome
                         versi terbaru
                       </li>
                       <li>
-                        Pastikan Javascript ACTIVE/ENABLED. Cek hal ini melalui
-                        https://www.whatismybrowser.com/detect/is-javascript-enabled
+                        Pastikan Javascript ACTIVE/ENABLED. Cek hal ini melalui{" "}
+                        <span>
+                          <a
+                            href="https://www.whatismybrowser.com/detect/is-javascript-enabled"
+                            target="_blank"
+                          >
+                            https://www.whatismybrowser.com/detect/is-javascript-enabled
+                          </a>
+                        </span>
                         atau baca terlebih dahulu Panduan Pengaktifan
                       </li>
                       <li>
                         Pastikan Cookies ACTIVE/ENABLED. Baca Panduan
-                        Pengaktifan Cookie pada
-                        https://k-cloud.kominfo.go.id/s/XaJKPwL5PYWaXQo
+                        Pengaktifan Cookie pada{" "}
+                        <a
+                          href="https://k-cloud.kominfo.go.id/s/XaJKPwL5PYWaXQo"
+                          target="_blank"
+                        >
+                          https://k-cloud.kominfo.go.id/s/XaJKPwL5PYWaXQo
+                        </a>
                       </li>
                       <li>
                         Pastikan keyboard dan mouse/trackpad Anda dalam keadaan
@@ -181,5 +198,8 @@ export default function PusatInformasi() {
           </div>
         </div>
       </div>
-  )
-}
+    </Container>
+  );
+};
+
+export default PusatInformasi;

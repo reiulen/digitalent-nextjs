@@ -198,9 +198,11 @@ const Navigationbar = ({ session }) => {
                 id="basic-nav-dropdown"
                 className="navdropdown-child position-relative w-100 text-menu"
               >
-                <NavDropdown.Item href="/" className="navdropdown-child">
-                  Beranda
-                </NavDropdown.Item>
+                <Link href="/" passHref>
+                  <NavDropdown.Item className="navdropdown-child">
+                    Beranda
+                  </NavDropdown.Item>
+                </Link>
                 <div className="btn-group dropright">
                   <button
                     type="button"
@@ -251,12 +253,11 @@ const Navigationbar = ({ session }) => {
                     </Link>
                   </div>
                 </div>
-                <NavDropdown.Item
-                  href="#action/3.4"
-                  className="navdropdown-child"
-                >
-                  Tentang Kami
-                </NavDropdown.Item>
+                <Link href="/tentang-kami" passHref>
+                  <NavDropdown.Item className="navdropdown-child">
+                    Tentang Kami
+                  </NavDropdown.Item>
+                </Link>
                 <Link href="/penyelenggara" passHref>
                   <NavDropdown.Item className="navdropdown-child">
                     Penyelenggara
