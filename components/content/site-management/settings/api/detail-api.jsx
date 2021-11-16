@@ -63,7 +63,7 @@ const DetailApi = ({ token }) => {
                     </a>
                   </Link>
 
-                  <Link href={`/site-management/setting/api/log-api/${router.query.id}`} passHref>
+                  <Link href={`/site-management/setting/api/log-api?id=${router.query.id}`} passHref>
 
                     <a className="btn btn-sm btn-rounded-full bg-blue-primary text-white">
                       View log

@@ -215,7 +215,7 @@ export const getReviewStep3Revisi = (token, id) => async (dispatch) => {
 
 export const getReviewStep4Revisi = (token, id) => async (dispatch) => {
   try {
-    let link = "http://192.168.1.96:81" + `/api/v1/pelatihan/pelatihan-parameter`;
+    let link = process.env.END_POINT_API_PELATIHAN + `/api/v1/pelatihan/pelatihan-parameter`;
 
     const config = {
       params: {

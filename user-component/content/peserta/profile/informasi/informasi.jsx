@@ -57,7 +57,7 @@ const Informasi = ({ funcViewEdit, token }) => {
             <p className="text-neutral-body my-1">Tanggal lahir</p>
             <p>
               {(dataPribadi &&
-                moment(dataPribadi.tanggal_lahir).format("DD MMM YYYY")) ||
+                moment(dataPribadi.tanggal_lahir).format("LL")) ||
                 "-"}
             </p>
           </Col>

@@ -108,8 +108,8 @@ const Sidebar = ({ session }) => {
         },
         {
           id: 2,
-          name: "Master Pelatihan",
-          href: "/pelatihan/master-pelatihan",
+          name: "Master Pendaftaran",
+          href: "/pelatihan/master-pendaftaran",
           selected: false,
           child: [],
         },

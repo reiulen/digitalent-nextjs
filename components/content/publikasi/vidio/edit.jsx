@@ -450,7 +450,7 @@ const EditVideo = ({ token }) => {
                                 <div className="form-group">
                                     <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Kategori</label>
                                     <div className={`${styles.selectKategori} col-sm-12`}>
-                                        <select name="" id="" className={`${styles.selectKategori} form-control`} value={kategori_id} onChange={e => setKategoriId(e.target.value)} onBlur={e => { setKategoriId(e.target.value); simpleValidator.current.showMessageFor('kategori_id') }} >
+                                        <select name="" id="" className={`${styles.selectKategori} form-control`} value={kategori_id} onChange={e => setKategoriId(e.target.value)} onBlur={e => { setKategoriId(e.target.value); simpleValidator.current.showMessageFor('kategori') }} >
                                             <option selected disabled value=''>-- Video --</option>
                                             {!kategori || (kategori && kategori.length === 0) ? (
                                                 <option value="">Data Kosong</option>
@@ -469,7 +469,7 @@ const EditVideo = ({ token }) => {
                                             )}
 
                                         </select>
-                                        {simpleValidator.current.message('kategori_id', kategori_id, 'required', { className: 'text-danger' })}
+                                        {simpleValidator.current.message('kategori', kategori_id, 'required', { className: 'text-danger' })}
                                     </div>
                                 </div>
 

@@ -40,6 +40,9 @@ const SubHeader = () => {
       const linkPath = router.asPath.split("/");
       // linkPath.splice(0, 2);
       linkPath.shift();
+      if (!isNaN(linkPath[linkPath.length - 1])) {
+        linkPath.splice(linkPath.length - 1, 1);
+      }
       const pathArray = linkPath.map((path, i) => {
         return {
           breadcrumb: path,
@@ -63,10 +66,12 @@ const SubHeader = () => {
               return (
                 <Link href={breadcrumb.href} key={i}>
                   {/* <Link href="/" key={i}> */}
-                  <a style={{
-                    cursor: i !== 1 ? "default" : "",
-                    pointerEvents: i !== 1 ? "none" : ""
-                  }}>
+                  <a
+                    style={{
+                      cursor: i !== 1 ? "default" : "",
+                      pointerEvents: i !== 1 ? "none" : "",
+                    }}
+                  >
                     <p className="text-default mt-2 mb-2">
                       &nbsp;
                       {/* {

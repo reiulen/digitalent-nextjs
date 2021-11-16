@@ -111,8 +111,6 @@ export default function NamaPelatihan({ token }) {
     }
   };
 
-  console.log(certificate, "ini certificate");
-
   useEffect(() => {
     dispatch(getAllSertifikat(token));
   }, [
