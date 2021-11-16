@@ -460,6 +460,7 @@ import {
   allVideoContentReducer,
   kategoriVideoContentReducer,
   allTagVideoContentReducer,
+  playVideoContentReducer,
 } from"../reducers/beranda/video-content.reducer"
 
 //END BERANDA
@@ -862,7 +863,7 @@ const reducer = combineReducers({
   allVideoContent: allVideoContentReducer,
   kategoriVideoContent: kategoriVideoContentReducer,
   allTagVideoContent: allTagVideoContentReducer,
-
+  playVideoContent: playVideoContentReducer,
   //END BERANDA
 
   // ========== Riwayat Pelatihan ========

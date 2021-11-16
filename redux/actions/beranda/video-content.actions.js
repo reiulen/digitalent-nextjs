@@ -13,9 +13,29 @@
 //     KATEGORI_VIDEO_CONTENT_FAIL
 // } from "../../types/publikasi/video.type"
 
+import {
+    BERANDA_VIDEO_REQUEST,
+    BERANDA_VIDEO_SUCCESS,
+    BERANDA_VIDEO_FAIL,
+
+    KATEGORI_BERANDA_VIDEO_REQUEST,
+    KATEGORI_BERANDA_VIDEO_SUCCESS,
+    KATEGORI_BERANDA_VIDEO_FAIL,
+
+    TAG_BERANDA_VIDEO_REQUEST,
+    TAG_BERANDA_VIDEO_SUCCESS,
+    TAG_BERANDA_VIDEO_FAIL,
+
+    PLAY_BERANDA_VIDEO_REQUEST,
+    PLAY_BERANDA_VIDEO_SUCCESS,
+    PLAY_BERANDA_VIDEO_FAIL,
+
+    CLEAR_ERRORS
+} from "../../types/beranda/video-content.type"
+
 import axios from 'axios'
 
-export const getAllVideo = (
+export const getAllVideoContent = (
     page=1,
     keyword="",
     limit="",
@@ -24,11 +44,10 @@ export const getAllVideo = (
     category_id="",
     category_name="",
     tag="",
-    token
     ) => async (dispatch) => {
     try {
 
-        dispatch({ type: VIDEO_REQUEST })
+        dispatch({ type: BERANDA_VIDEO_REQUEST })
 
         let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/home/video?page=${page}`
         if (keyword) link = link.concat(`&keyword=${keyword}`)
@@ -39,104 +58,82 @@ export const getAllVideo = (
         if (category_name) link = link.concat(`&category_name=${category_name}`);
         if (tag) link = link.concat(`&tag=${tag}`);
 
-        const config = {
-            headers: {
-                Authorization: 'Bearer ' + token,
-            },
-        };
-
-        // const { data } = await axios.get(process.env.END_POINT_API_PUBLIKASI + 'api/video')
-        const { data } = await axios.get(link, config)
+        const { data } = await axios.get(link)
 
         dispatch({
-            type: VIDEO_SUCCESS,
+            type: BERANDA_VIDEO_SUCCESS,
             payload: data
         })
 
     } catch (error) {
         dispatch({
-            type: VIDEO_FAIL,
+            type: BERANDA_VIDEO_FAIL,
             payload: error.response.data.message
         })
     }
 }
 
 
-export const getKategoriVideoContent = (token) => async (dispatch) => {
+export const getKategoriVideoContent = () => async (dispatch) => {
     try {
 
-        dispatch({ type: KATEGORI_VIDEO_CONTENT_REQUEST })
+        dispatch({ type: KATEGORI_BERANDA_VIDEO_REQUEST })
         
         let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/kategori`
-        const config = {
-            headers: {
-                Authorization: 'Bearer ' + token,
-            },
-        };
         
-        const { data } = await axios.get(link, config)
+        const { data } = await axios.get(link)
 
         dispatch({
-            type: KATEGORI_VIDEO_CONTENT_SUCCESS,
+            type: KATEGORI_BERANDA_VIDEO_SUCCESS,
             payload: data
         })
 
     } catch (error) {
         dispatch({
-            type: KATEGORI_VIDEO_CONTENT_FAIL,
+            type: KATEGORI_BERANDA_VIDEO_FAIL,
             payload: error.response.data.message
         })
     }
 }
 
-export const getTagVideo = (token) => async (dispatch) => {
+export const getTagVideo = () => async (dispatch) => {
     try {
 
-        dispatch({ type: TAG_REQUEST })
+        dispatch({ type: TAG_BERANDA_VIDEO_REQUEST })
         
         let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/home/tag/video`
-        const config = {
-            headers: {
-                Authorization: 'Bearer ' + token,
-            },
-        };
         
-        const { data } = await axios.get(link, config)
+        const { data } = await axios.get(link)
 
         dispatch({
-            type: TAG_SUCCESS,
+            type: TAG_BERANDA_VIDEO_SUCCESS,
             payload: data
         })
 
     } catch (error) {
         dispatch({
-            type: TAG_FAIL,
+            type: TAG_BERANDA_VIDEO_FAIL,
             payload: error.response.data.message
         })
     }
 }
 
-export const playVideoContent = (videoData, token) => async (dispatch) => {
+export const playVideoContent = (videoData) => async (dispatch) => {
     try {
-        dispatch({ type: PLAY_REQUEST })
+        dispatch({ type: PLAY_BERANDA_VIDEO_REQUEST })
 
-        const config = {
-            headers: {
-                Authorization: 'Bearer ' + token,
-            },
-        };
         let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/video/play/${videoData.id}`
        
-        const { data } = await axios.get(link, videoData, config)
+        const { data } = await axios.get(link, videoData)
 
         dispatch({
-            type: PLAY_SUCCESS,
+            type: PLAY_BERANDA_VIDEO_SUCCESS,
             payload: data
         })
 
     } catch (error) {
         dispatch({
-            type: PLAY_FAIL,
+            type: PLAY_BERANDA_VIDEO_FAIL,
             payload: error.response.data.message
         })
     }
