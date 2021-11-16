@@ -411,6 +411,7 @@ import {
   allAkademiReducer,
   allKotaPesertaReducer,
   allPenyelenggaraPesertaReducer,
+  allPenyelenggaraPageReducer,
   temaByAkademiReducer,
   pelatihanByTemaReducer,
   allPublikasiBerandaReducer,
@@ -444,7 +445,7 @@ import {
   allBerandaGaleriReducer,
   detailBerandaGaleriReducer,
   kategoriBerandaGaleriReducer,
-  allTagBerandaGaleriReducer
+  allTagBerandaGaleriReducer,
 } from "../reducers/beranda/galeri.reducer";
 
 // ========== berita ========
@@ -818,6 +819,7 @@ const reducer = combineReducers({
   addNotifTema: addNotifTemaReducer,
   allAkademi: allAkademiReducer,
   allPenyelenggaraPeserta: allPenyelenggaraPesertaReducer,
+  allPenyelenggaraPage: allPenyelenggaraPageReducer,
   allKotaPeserta: allKotaPesertaReducer,
   temaByAkademi: temaByAkademiReducer,
   pelatihanByTema: pelatihanByTemaReducer,

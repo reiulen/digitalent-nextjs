@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import SimpleReactValidator from "simple-react-validator";
 import { useDispatch, useSelector } from "react-redux";
 import { Modal } from "react-bootstrap";
+import Select from "react-select";
 
 import {
   storeRegistrationStep2,
@@ -16,6 +17,10 @@ import PageWrapper from "../../../../wrapper/page.wrapper";
 import StepInputPelatihan from "../../../../StepInputPelatihan";
 import LoadingPage from "../../../../LoadingPage";
 import ModalPreview from "../components/modal-preview-form.component";
+
+import FormManual from "./step-registration/form-manual";
+import FormCopy from "./step-registration/form-copy";
+import FormCopyEdit from "./step-registration/form-copy-edit";
 
 const AddRegistrationStep2 = ({ propsStep }) => {
   const dispatch = useDispatch();
@@ -114,8 +119,15 @@ const AddRegistrationStep2 = ({ propsStep }) => {
     },
   ]);
 
+  const optionsForm = [
+    { value: "chocolate", label: "Chocolate" },
+    { value: "strawberry", label: "Strawberry" },
+    { value: "vanilla", label: "Vanilla" },
+  ];
+
   const [title, setTitle] = useState(registrationData.judul_form);
   const [formBuilder, setFormBuilder] = useState(registrationData.formBuilder);
+  const [viewForm, setViewForm] = useState("buat-manual");
 
   useEffect(() => {
     dispatch(getRegistrationStep2());
@@ -127,16 +139,16 @@ const AddRegistrationStep2 = ({ propsStep }) => {
     }
   };
 
-  const inputChangeHandler = (e, index) => {
-    const { value, name, checked } = e.target;
-    const list = [...formBuilder];
-    list[index][name] = value;
-    if (name === "required") {
-      let check = checked === true ? "1" : "0";
-      list[index]["required"] = check;
-    }
-    setFormBuilder(list);
-  };
+  // const inputChangeHandler = (e, index) => {
+  //   const { value, name, checked } = e.target;
+  //   const list = [...formBuilder];
+  //   list[index][name] = value;
+  //   if (name === "required") {
+  //     let check = checked === true ? "1" : "0";
+  //     list[index]["required"] = check;
+  //   }
+  //   setFormBuilder(list);
+  // };
 
   const addFieldHandler = () => {
     const newKey = formBuilder[formBuilder.length - 1].key + 1;
@@ -154,146 +166,15 @@ const AddRegistrationStep2 = ({ propsStep }) => {
     ]);
   };
 
-  const removeFieldHandler = (index) => {
-    const list = [...formBuilder];
-    list.splice(index, 1);
-    list.forEach((row, i) => {
-      let key = i + 1;
-      list[i]["key"] = key;
-    });
-    setFormBuilder(list);
-  };
-
-  const renderDataOptionHandler = (row, i) => {
-    if (row.option === "select_reference") {
-      return (
-        <div className="col-sm-12 col-md-2">
-          <div className="form-group mb-2">
-            <label className="col-form-label font-weight-bold">
-              Data Option
-            </label>
-            <select
-              className="form-control"
-              name="dataOption"
-              value={row.dataOption}
-              onChange={(e) => inputChangeHandler(e, i)}
-            >
-              <option value="" disabled selected>
-                -- PILIH --
-              </option>
-              {dataOptions.map((datOpt, i) => (
-                <option key={i} value={datOpt.value}>
-                  {datOpt.value}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-      );
-    } else {
-      return (
-        <div className="col-sm-12 col-md-2">
-          <div className="form-group mb-2">
-            <label className="col-form-label font-weight-bold">
-              Data Option
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              name="dataOption"
-              value={row.dataOption}
-              placeholder="data1;data2"
-              autoComplete="off"
-              onChange={(e) => inputChangeHandler(e, i)}
-            />
-          </div>
-        </div>
-      );
-    }
-  };
-
-  const renderMultipleHandler = (row, i) => {
-    if (
-      row.element === "select" ||
-      row.element === "checkbox" ||
-      row.element === "radio"
-    ) {
-      return (
-        <>
-          <div className="col-sm-12 col-md-2">
-            <div className="form-group mb-2">
-              <label className="col-form-label font-weight-bold">Option</label>
-              <select
-                className="form-control"
-                name="option"
-                value={row.option}
-                onChange={(e) => inputChangeHandler(e, i)}
-              >
-                <option value="" disabled selected>
-                  -- PILIH --
-                </option>
-                {options.map((opt, i) => (
-                  <option key={i} value={opt.value}>
-                    {opt.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-          {renderDataOptionHandler(row, i)}
-        </>
-      );
-    } else {
-      return (
-        <>
-          <div className="col-sm-12 col-md-2">
-            <div className="form-group mb-2">
-              <label className="col-form-label font-weight-bold">Option</label>
-              <select
-                className="form-control"
-                name="option"
-                value={row.option}
-                onChange={(e) => inputChangeHandler(e, i)}
-                disabled
-              >
-                <option value="" disabled selected>
-                  -- PILIH --
-                </option>
-                {options.map((opt, i) => (
-                  <option key={i} value={opt.value}>
-                    {opt.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-          <div className="col-sm-12 col-md-2">
-            <div className="form-group mb-2">
-              <label className="col-form-label font-weight-bold">
-                Data Option
-              </label>
-              <select
-                className="form-control"
-                name="dataOption"
-                value={row.dataOption}
-                onChange={(e) => inputChangeHandler(e, i)}
-                disabled
-              >
-                <option value="" disabled selected>
-                  -- PILIH --
-                </option>
-                {dataOptions.map((datOpt, i) => (
-                  <option key={i} value={datOpt.value}>
-                    {datOpt.value}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-        </>
-      );
-    }
-  };
+  // const removeFieldHandler = (index) => {
+  //   const list = [...formBuilder];
+  //   list.splice(index, 1);
+  //   list.forEach((row, i) => {
+  //     let key = i + 1;
+  //     list[i]["key"] = key;
+  //   });
+  //   setFormBuilder(list);
+  // };
 
   const showPreviewHandler = () => {
     let list = [...formBuilder];
@@ -330,7 +211,6 @@ const AddRegistrationStep2 = ({ propsStep }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    // router.push("/pelatihan/pelatihan/tambah-pelatihan/tambah-form-komitmen");
     if (simpleValidator.current.allValid()) {
       const data = {
         judul_form: title,
@@ -346,6 +226,50 @@ const AddRegistrationStep2 = ({ propsStep }) => {
         title: "Oops...",
         text: "Isi data dengan benar !",
       });
+    }
+  };
+
+  const viewRegistrationHandler = () => {
+    switch (viewForm) {
+      case "buat-manual":
+        return (
+          <FormManual
+            formBuilder={formBuilder}
+            funcFormBuilder={(value) => setFormBuilder(value)}
+            element={element}
+            size={size}
+            options={options}
+            dataOptions={dataOptions}
+          />
+        );
+        break;
+      case "copy-form":
+        return <FormCopy />;
+        break;
+      case "copy-edit":
+        return (
+          <FormCopyEdit
+            formBuilder={formBuilder}
+            funcFormBuilder={(value) => setFormBuilder(value)}
+            element={element}
+            size={size}
+            options={options}
+            dataOptions={dataOptions}
+          />
+        );
+        break;
+      default:
+        return (
+          <FormManual
+            formBuilder={formBuilder}
+            funcFormBuilder={(value) => setFormBuilder(value)}
+            element={element}
+            size={size}
+            options={options}
+            dataOptions={dataOptions}
+          />
+        );
+        break;
     }
   };
 
@@ -365,19 +289,85 @@ const AddRegistrationStep2 = ({ propsStep }) => {
             <h3 className="font-weight-bolder pb-5 pt-4">Form Pendaftaran</h3>
             <div className="form-group mb-4">
               <label className="col-form-label font-weight-bold">
+                Tambah Form
+              </label>
+              <div className="type-form">
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="inlineRadioOptions"
+                    id="buat-manual-1"
+                    value="buat-manual"
+                    checked={viewForm === "buat-manual" && true}
+                    onChange={(e) => setViewForm(e.target.value)}
+                  />
+                  <label class="form-check-label" for="buat-manual-1">
+                    Buat Manual
+                  </label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="inlineRadioOptions"
+                    id="copy-form-2"
+                    value="copy-form"
+                    checked={viewForm === "copy-form" && true}
+                    onChange={(e) => setViewForm(e.target.value)}
+                  />
+                  <label class="form-check-label" for="copy-form-2">
+                    Copy Form
+                  </label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="inlineRadioOptions"
+                    id="copy-edit-3"
+                    value="copy-edit"
+                    checked={viewForm === "copy-edit" && true}
+                    onChange={(e) => setViewForm(e.target.value)}
+                  />
+                  <label class="form-check-label" for="copy-edit-3">
+                    Copy & Edit Form
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div className="form-group mb-4">
+              <label className="col-form-label font-weight-bold">
                 Judul Form
               </label>
-              <input
-                type="text"
-                placeholder="Silahkan Masukan Judul Form"
-                className="form-control"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                onBlur={() =>
-                  simpleValidator.current.showMessageFor("judul form")
-                }
-                autoComplete="off"
-              />
+              {viewForm === "buat-manual" ? (
+                <input
+                  type="text"
+                  placeholder="Silahkan Masukan Judul Form"
+                  className="form-control"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("judul form")
+                  }
+                  autoComplete="off"
+                />
+              ) : (
+                <>
+                  <Select
+                    options={optionsForm}
+                    placeholder="Silahkan Masukkan Nama Form Pendaftaran"
+                    onChange={(e) => setTitle(e.label)}
+                  />
+                  {viewForm === "copy-form" && (
+                    <small class="form-text text-danger">
+                      *Form pendaftaran akan terhubung dengan master form
+                      pendaftaran. Apabila master form pendaftaran diubah maka
+                      form pendaftaran pelatihan ini akan ikut berubah.
+                    </small>
+                  )}
+                </>
+              )}
               {simpleValidator.current.message(
                 "judul form",
                 title,
@@ -386,108 +376,7 @@ const AddRegistrationStep2 = ({ propsStep }) => {
               )}
             </div>
 
-            {formBuilder.map((row, i) => (
-              <div className="builder row" key={i}>
-                <div className="col-sm-12 col-md-2">
-                  <div className="form-group mb-2">
-                    <label className="col-form-label font-weight-bold">
-                      Nama Field
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      name="name"
-                      value={row.name}
-                      placeholder="Field"
-                      autoComplete="off"
-                      onChange={(e) => inputChangeHandler(e, i)}
-                    />
-                  </div>
-                </div>
-                <div className="col-sm-12 col-md-2">
-                  <div className="form-group mb-2">
-                    <label className="col-form-label font-weight-bold">
-                      Pilih Element
-                    </label>
-                    <select
-                      className="form-control"
-                      name="element"
-                      value={row.element}
-                      onChange={(e) => inputChangeHandler(e, i)}
-                    >
-                      <option value="" disabled selected>
-                        -- PILIH --
-                      </option>
-                      {element.map((el, i) => (
-                        <option key={i} value={el.value}>
-                          {el.name}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-                <div className="col-sm-12 col-md-2">
-                  <div className="form-group mb-2">
-                    <label className="col-form-label font-weight-bold">
-                      Size
-                    </label>
-                    <select
-                      className="form-control"
-                      name="size"
-                      value={row.size}
-                      onChange={(e) => inputChangeHandler(e, i)}
-                    >
-                      <option value="" disabled selected>
-                        -- PILIH --
-                      </option>
-                      {size.map((siz, i) => (
-                        <option key={i} value={siz.value}>
-                          {siz.name}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-
-                {renderMultipleHandler(row, i)}
-
-                <div className="col-sm-6 col-md-2">
-                  <label className="col-form-label font-weight-bold">
-                    Required
-                  </label>
-                  <div className="d-flex align-items-end">
-                    <div className="form-group mr-7">
-                      <div className="form-check form-check-inline">
-                        <input
-                          type="checkbox"
-                          name="required"
-                          checked={row.required === "1" ? true : false}
-                          className="form-check-input"
-                          onChange={(e) => inputChangeHandler(e, i)}
-                        />
-                      </div>
-                    </div>
-                    {formBuilder.length !== 1 && row.key !== 1 ? (
-                      <button
-                        className="btn btn-link-action bg-danger text-white mb-3 ml-9"
-                        type="button"
-                        onClick={() => removeFieldHandler(i)}
-                      >
-                        <i className="ri-delete-bin-fill p-0 text-white"></i>
-                      </button>
-                    ) : (
-                      <button
-                        className="btn btn-link-action bg-danger text-white mb-3 ml-9 invisible"
-                        type="button"
-                        onClick={() => removeFieldHandler(i)}
-                      >
-                        <i className="ri-delete-bin-fill p-0 text-white"></i>
-                      </button>
-                    )}
-                  </div>
-                </div>
-              </div>
-            ))}
+            {viewRegistrationHandler()}
 
             <div className="form-group mb-9 mt-4">
               <div className="text-right">
@@ -499,16 +388,17 @@ const AddRegistrationStep2 = ({ propsStep }) => {
                 >
                   Review
                 </button>
-                <button
-                  className="btn btn-primary-rounded-full"
-                  type="button"
-                  onClick={addFieldHandler}
-                >
-                  <i className="ri-pencil-fill"></i> Tambah Field
-                </button>
+                {viewForm !== "copy-form" && (
+                  <button
+                    className="btn btn-primary-rounded-full"
+                    type="button"
+                    onClick={addFieldHandler}
+                  >
+                    <i className="ri-pencil-fill"></i> Tambah Field
+                  </button>
+                )}
               </div>
             </div>
-
             <div className="form-group mt-9">
               <div className="text-right">
                 <button
