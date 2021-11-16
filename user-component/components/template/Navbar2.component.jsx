@@ -45,19 +45,22 @@ const Navigationbar = ({ session }) => {
   const router = useRouter();
   const [isShowDropdown, setIsShowDropdown] = useState(false);
   const { error: errorDataPribadi, dataPribadi } = useSelector(
-    (state) => state.getDataPribadi
+    state => state.getDataPribadi
   );
 
   useEffect(() => {
-    dispatch(getDataPribadi(session?.token));
-    if (
-      dataPribadi &&
-      Object.keys(dataPribadi).length !== 0 &&
-      !dataPribadi.status
-    ) {
-      router.push("/peserta/wizzard");
+    // dispatch(getDataPribadi(session?.token));
+    if (session) {
+      dispatch(getDataPribadi(session?.token));
+      if (
+        dataPribadi &&
+        Object.keys(dataPribadi).length !== 0 &&
+        !dataPribadi.status
+      ) {
+        router.push("/peserta/wizzard");
+      }
     }
-  }, [dataPribadi]);
+  }, [dispatch, router]);
 
   const [akademi, setAkademi] = useState([]);
   const getAkademi = async () => {
@@ -68,11 +71,11 @@ const Navigationbar = ({ session }) => {
     return data.data;
   };
 
-  useEffect(() => {
-    getAkademi();
-    getSimonas();
-    getBeasiswa();
-  }, []);
+  // useEffect(() => {
+  //   getAkademi();
+  //   getSimonas();
+  //   getBeasiswa();
+  // }, []);
 
   const getSimonas = async () => {
     const link = "http://simonas-dev.majapahit.id/api/job";
@@ -154,7 +157,7 @@ const Navigationbar = ({ session }) => {
             )}
             <Navbar.Toggle
               aria-controls="basic-navbar-nav"
-              onClick={(e) => {
+              onClick={e => {
                 setIsNavOpen(!isNavOpen);
               }}
               className="p-3"
@@ -238,14 +241,14 @@ const Navigationbar = ({ session }) => {
                   </button>
                   <div className="dropdown-menu ml-3">
                     <Link href="/peserta/menu/pusat-informasi">
-                    <a className="dropdown-item navdropdown-child">
-                      Panduan Test Substansi
-                    </a>
+                      <a className="dropdown-item navdropdown-child">
+                        Panduan Test Substansi
+                      </a>
                     </Link>
                     <Link href="/peserta/menu/pusat-informasi">
-                    <a className="dropdown-item navdropdown-child">
-                      Hak dan Kewajiban
-                    </a>
+                      <a className="dropdown-item navdropdown-child">
+                        Hak dan Kewajiban
+                      </a>
                     </Link>
                   </div>
                 </div>
