@@ -55,10 +55,8 @@ const EditCommitmentStep3 = ({token, propsStep}) => {
       const data = {
         "Pelatian_id" : parseInt(router.query.id),
         komitmen: commitment,
-        deskripsi: description,
+        deskripsi: commitment === "1" ? description : "",
       };
-      dispatch(putTrainingStep3(token, data))
-      router.push("/pelatihan/pelatihan");
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -104,7 +102,6 @@ const EditCommitmentStep3 = ({token, propsStep}) => {
                     checked={commitment === "0"}
                     onClick={() => {
                       setCommitment("0");
-                      setDescription("");
                     }}
                     onBlur={() =>
                       simpleValidator.current.showMessageFor("komitmen")
