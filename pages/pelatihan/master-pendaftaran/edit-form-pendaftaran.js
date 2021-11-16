@@ -1,19 +1,12 @@
 import React from "react";
 
 import dynamic from "next/dynamic";
-import { getSession } from "next-auth/client";
-
-import { getReviewStep2Revisi } from "../../../redux/actions/pelatihan/review.actions";
-import { wrapper } from "../../../redux/store";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
-import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
-import { getDetailMasterPelatihan } from "../../../redux/actions/pelatihan/master-pelatihan.action";
 
-const ViewTraining = dynamic(
+const EditForm = dynamic(
   () =>
     import(
-      "../../../components/content/pelatihan/master-pelatihan/view-master-pelatihan-id"
-      //   "../../../../../components/content/pelatihan/training/view/view-training-step2"
+      "../../../components/content/pelatihan/master-pendaftaran/edit-master-pelatihan"
     ),
   {
     loading: function loadingNow() {
@@ -23,11 +16,17 @@ const ViewTraining = dynamic(
   }
 );
 
-export default function ViewTrainingPage(props) {
+import { getSession } from "next-auth/client";
+import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
+import { wrapper } from "../../../redux/store";
+import { getDetailMasterPelatihan } from "../../../redux/actions/pelatihan/master-pendaftaran.action";
+
+export default function AddTrainingPage(props) {
+  const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <ViewTraining />
+        <EditForm token={session.token} />
       </div>
     </>
   );
@@ -35,7 +34,7 @@ export default function ViewTrainingPage(props) {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
-    async ({ query, req, params }) => {
+    async ({ query, req }) => {
       const session = await getSession({ req });
       const middleware = middlewareAuthAdminSession(session);
       if (!middleware.status) {
@@ -46,12 +45,13 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+
       await store.dispatch(
         getDetailMasterPelatihan(query.id, session.user.user.data.token)
       );
 
       return {
-        props: { session, title: "View Form Pendaftaran - Pelatihan" },
+        props: { session, title: "Tambah Pelatihan - Pelatihan" },
       };
     }
 );

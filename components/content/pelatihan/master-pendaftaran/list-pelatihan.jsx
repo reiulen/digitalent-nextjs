@@ -31,7 +31,7 @@ import {
   deleteMasterTraining,
   getAllListMasterPelatihan,
   updateStatusPublishMaster,
-} from "../../../../redux/actions/pelatihan/master-pelatihan.action";
+} from "../../../../redux/actions/pelatihan/master-pendaftaran.action";
 
 export default function MasterPelatihan({ token }) {
   const router = useRouter();
@@ -207,7 +207,7 @@ export default function MasterPelatihan({ token }) {
             </h3>
             <div className="card-toolbar">
               <Link
-                href="/pelatihan/master-pelatihan/tambah-form-pendaftaran"
+                href="/pelatihan/master-pendaftaran/tambah-form-pendaftaran"
                 passHref
               >
                 <a
@@ -382,7 +382,7 @@ export default function MasterPelatihan({ token }) {
                     <thead style={{ background: "#F3F6F9" }}>
                       <tr>
                         <th className="text-center">No</th>
-                        <th>ID Pelatihan</th>
+                        <th>ID Pendaftaran</th>
                         <th>Nama Form Pendaftaran</th>
                         <th>Status Publish</th>
                         <th>Aksi</th>
@@ -439,7 +439,7 @@ export default function MasterPelatihan({ token }) {
                                   className="btn btn-link-action bg-blue-secondary text-white mr-2"
                                   onClick={() =>
                                     router.push(
-                                      "/pelatihan/master-pelatihan/edit-form-pendaftaran"
+                                      `/pelatihan/master-pendaftaran/edit-form-pendaftaran?id=${item.id}`
                                     )
                                   }
                                   data-toggle="tooltip"
@@ -449,7 +449,7 @@ export default function MasterPelatihan({ token }) {
                                   <i className="ri-pencil-fill p-0 text-white"></i>
                                 </button>
                                 <Link
-                                  href={`/pelatihan/master-pelatihan/${item.judul_form
+                                  href={`/pelatihan/master-pendaftaran/${item.judul_form
                                     ?.split(" ")
                                     .join("-")
                                     .toLowerCase()}?id=${item.id}`}

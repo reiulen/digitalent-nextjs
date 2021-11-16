@@ -26,7 +26,7 @@ import {
   FAIL_STATUS_PUBLISH,
   REQUEST_STATUS_PUBLISH,
   UPDATE_STATUS_PUBLISH,
-} from "../../types/pelatihan/master-pelatihan.type";
+} from "../../types/pelatihan/master-pendaftaran.type";
 
 export const getAllListMasterPelatihan =
   (token) => async (dispatch, getState) => {
@@ -52,7 +52,6 @@ export const getAllListMasterPelatihan =
         },
       };
       const { data } = await axios.get(link, config);
-      console.log(data);
 
       if (data) {
         dispatch({ type: LIST_MASTER_TRAINING_SUCCESS, payload: data });
@@ -113,7 +112,7 @@ export const getDetailMasterPelatihan = (id, token) => async (dispatch) => {
 
 export const newMasterPelatihan = (id, formData, token) => async (dispatch) => {
   try {
-    dispatch({ type: NEW_SERTIFIKAT_REQUEST });
+    dispatch({ type: NEW_MASTER_TRAINING_REQUEST });
     let link =
       process.env.END_POINT_API_SERTIFIKAT +
       `api/manage_certificates/store/${id}`;
@@ -127,11 +126,11 @@ export const newMasterPelatihan = (id, formData, token) => async (dispatch) => {
     const { data } = await axios.post(link, formData, config);
 
     if (data) {
-      dispatch({ type: NEW_SERTIFIKAT_SUCCESS, payload: data });
+      dispatch({ type: NEW_MASTER_TRAINING_SUCCESS, payload: data });
     }
   } catch (error) {
     dispatch({
-      type: NEW_SERTIFIKAT_FAIL,
+      type: NEW_MASTER_TRAINING_FAIL,
       payload: error.response.data.message || error,
     });
   }
@@ -143,32 +142,30 @@ export const clearErrors = () => async (dispatch) => {
   });
 };
 
-export const updateSertifikat = (id, formData, token) => async (dispatch) => {
-  try {
-    dispatch({ type: UPDATE_SERTIFIKAT_REQUEST });
+export const updateMasterPelatihanAction =
+  (formData, token) => async (dispatch) => {
+    try {
+      dispatch({ type: UPDATE_MASTER_TRAINING_REQUEST });
 
-    let link =
-      process.env.END_POINT_API_SERTIFIKAT +
-      `api/manage_certificates/update/${id}`;
+      let link =
+        process.env.END_POINT_API_PELATIHAN + `api/v1/formBuilder/update`;
 
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token.token}`,
-      },
-    };
-
-    const { data } = await axios.post(link, formData, config);
-
-    if (data) {
-      dispatch({ type: UPDATE_SERTIFIKAT_SUCCESS, payload: data });
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const { data } = await axios.post(link, formData, config);
+      if (data) {
+        dispatch({ type: UPDATE_MASTER_TRAINING_SUCCESS, payload: data });
+      }
+    } catch (error) {
+      dispatch({
+        type: UPDATE_MASTER_TRAINING_FAIL,
+        payload: error.response.data.message || error,
+      });
     }
-  } catch (error) {
-    dispatch({
-      type: UPDATE_SERTIFIKAT_FAIL,
-      payload: error.response.data.message || error,
-    });
-  }
-};
+  };
 
 export const deleteMasterTraining = (id, token) => async (dispatch) => {
   try {
@@ -229,25 +226,3 @@ export const updateStatusPublishMaster =
       });
     }
   };
-
-export const getMasterRegistrationStep2 = () => async (dispatch) => {
-  const data = {
-    judul_form: "",
-    formBuilder: [
-      {
-        key: 1,
-        name: "",
-        element: "",
-        size: "",
-        option: "",
-        dataOption: "",
-        required: "0",
-      },
-    ],
-  };
-
-  dispatch({
-    type: GET_MASTER_REGISTRATION_STEP2,
-    payload: data,
-  });
-};

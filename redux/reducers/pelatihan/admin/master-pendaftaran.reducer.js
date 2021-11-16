@@ -25,7 +25,7 @@ import {
   REQUEST_STATUS_PUBLISH,
   UPDATE_STATUS_PUBLISH,
   FAIL_STATUS_PUBLISH,
-} from "../../../types/pelatihan/master-pelatihan.type";
+} from "../../../types/pelatihan/master-pendaftaran.type";
 
 const initialStates = {
   list: [],

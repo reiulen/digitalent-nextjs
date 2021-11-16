@@ -5,19 +5,31 @@ import SimpleReactValidator from "simple-react-validator";
 import { useDispatch, useSelector } from "react-redux";
 import { Modal } from "react-bootstrap";
 import ModalPreview from "../training/components/modal-preview-form.component";
-import { getRegistrationStep2 } from "../../../../redux/actions/pelatihan/function.actions";
+import {
+  getRegistrationStep2,
+  storeRegistrationStep2,
+} from "../../../../redux/actions/pelatihan/function.actions";
 import PageWrapper from "../../../wrapper/page.wrapper";
-import axios from "axios";
+import { updateMasterPelatihanAction } from "../../../../redux/actions/pelatihan/master-pendaftaran.action";
+import { SweatAlert } from "../../../../utils/middleware/helper";
 
-const AddMasterPelatihan = ({ token }) => {
-  const dispatch = useDispatch();
+const AddRegistrationStep2 = ({ token }) => {
   const router = useRouter();
-
-  const { registrationData } = useSelector((state) => state.registrationStep2);
-  const [success, setSuccess] = useState("");
+  const dispatch = useDispatch();
+  const { form } = useSelector((state) => state.getDetailMasterPelatihan);
+  const updateState = useSelector((state) => state.updateMasterPelatihan);
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
   const [modalShow, setModalShow] = useState(false);
+
+  useEffect(() => {
+    if (updateState.success) {
+      SweatAlert("Berhasil", "Berhasil update form pendaftaran", "success");
+      return router.push("/pelatihan/master-pendaftaran");
+    } else if (updateState.error) {
+      SweatAlert("Gagal", updateState.error, "error");
+    }
+  }, [updateState]);
 
   const [element] = useState([
     {
@@ -106,12 +118,8 @@ const AddMasterPelatihan = ({ token }) => {
     },
   ]);
 
-  const [title, setTitle] = useState(registrationData.judul_form);
-  const [formBuilder, setFormBuilder] = useState(registrationData.formBuilder);
-
-  useEffect(() => {
-    dispatch(getRegistrationStep2());
-  }, [dispatch]);
+  const [title, setTitle] = useState(form.data.judul_form);
+  const [formBuilder, setFormBuilder] = useState(form.data.formBuilder);
 
   const handleResetError = () => {
     if (error) {
@@ -312,30 +320,20 @@ const AddMasterPelatihan = ({ token }) => {
   };
 
   const backHandler = () => {
-    router.push("/pelatihan/master-pelatihan");
+    router.push("/pelatihan/master-pendaftaran");
   };
 
-  const submitHandler = async (e) => {
+  const submitHandler = (e) => {
     e.preventDefault();
+
     if (simpleValidator.current.allValid()) {
       const data = {
         judul_form: title,
+        id: +router.query.id,
+        status: "0",
         formBuilder,
       };
-
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
-      const result = await axios.post(
-        process.env.END_POINT_API_PELATIHAN + `api/v1/formBuilder/create`,
-        data,
-        config
-      );
-      if (result.status == 200) {
-        setSuccess(true);
-      }
+      dispatch(updateMasterPelatihanAction(data, token));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -347,19 +345,15 @@ const AddMasterPelatihan = ({ token }) => {
     }
   };
 
-  useEffect(() => {
-    if (success) {
-      router.push("/pelatihan/master-pelatihan?success=true");
-    }
-  }, [success, router]);
-
   return (
     <PageWrapper>
       <>
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-body py-4">
             <form onSubmit={submitHandler}>
-              <h3 className="font-weight-bolder pb-5 pt-4">Form Pendaftaran</h3>
+              <h3 className="font-weight-bolder pb-5 pt-4">
+                Edit Form Pendaftaran
+              </h3>
               <div className="form-group mb-4">
                 <label className="col-form-label font-weight-bold">
                   Judul Form
@@ -433,6 +427,7 @@ const AddMasterPelatihan = ({ token }) => {
                         name="size"
                         value={row.size}
                         onChange={(e) => inputChangeHandler(e, i)}
+                        required
                       >
                         <option value="" disabled selected>
                           -- PILIH --
@@ -546,4 +541,4 @@ const AddMasterPelatihan = ({ token }) => {
   );
 };
 
-export default AddMasterPelatihan;
+export default AddRegistrationStep2;

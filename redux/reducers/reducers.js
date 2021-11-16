@@ -444,7 +444,7 @@ import {
   allBerandaGaleriReducer,
   detailBerandaGaleriReducer,
   kategoriBerandaGaleriReducer,
-  allTagBerandaGaleriReducer
+  allTagBerandaGaleriReducer,
 } from "../reducers/beranda/galeri.reducer";
 
 // ========== berita ========
@@ -473,7 +473,7 @@ import {
   newMasterTrainingReducer,
   updateMasterPelatihanReducer,
   updateStatusMasterReducer,
-} from "./pelatihan/admin/master-pelatihan.reducer";
+} from "./pelatihan/admin/master-pendaftaran.reducer";
 
 const reducer = combineReducers({
   // PUBLIKASI
