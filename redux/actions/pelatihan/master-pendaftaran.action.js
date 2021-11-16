@@ -19,13 +19,14 @@ import {
   UPDATE_MASTER_TRAINING_RESET,
   UPDATE_MASTER_TRAINING_SUCCESS,
   CLEAR_ERRORS,
-  RESET_VALUE_FILTER,
+  RESET_STATUS_FILTER,
   SET_KEYWORD_VALUE,
   SET_LIMIT_VALUE,
   SET_PAGE_VALUE,
   FAIL_STATUS_PUBLISH,
   REQUEST_STATUS_PUBLISH,
   UPDATE_STATUS_PUBLISH,
+  SET_STATUS_VALUE,
 } from "../../types/pelatihan/master-pendaftaran.type";
 
 export const getAllListMasterPelatihan =
@@ -81,6 +82,13 @@ export const setValuePage = (text) => {
 export const setValueLimit = (text) => {
   return {
     type: SET_LIMIT_VALUE,
+    text,
+  };
+};
+
+export const setValueStatus = (text) => {
+  return {
+    type: SET_STATUS_VALUE,
     text,
   };
 };
@@ -210,7 +218,7 @@ export const updateStatusPublishMaster =
 
       const { data } = await axios.post(
         process.env.END_POINT_API_PELATIHAN +
-          "api/v1/formBuilder/update-status-publish",
+          "api/v1/formBuilder/update-status",
         dataStatus,
         config
       );

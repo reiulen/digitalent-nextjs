@@ -16,21 +16,16 @@ import IconFilter from "../../../assets/icon/Filter";
 import { useSelector } from "react-redux";
 import Select from "react-select";
 import { useDispatch } from "react-redux";
-import {
-  getAllSertifikat,
-  searchKeyword,
-  setValueAcademy,
-  setValueLimit,
-  setValuePage,
-  setValueTheme,
-} from "../../../../redux/actions/sertifikat/kelola-sertifikat.action";
-import { RESET_VALUE_FILTER } from "../../../../redux/types/sertifikat/kelola-sertifikat.type";
-import Cookies from "js-cookie";
+import { RESET_STATUS_FILTER } from "../../../../redux/types/pelatihan/master-pendaftaran.type";
 import Swal from "sweetalert2";
 import {
   deleteMasterTraining,
   getAllListMasterPelatihan,
   updateStatusPublishMaster,
+  setValueLimit,
+  setValuePage,
+  searchKeyword,
+  setValueStatus,
 } from "../../../../redux/actions/pelatihan/master-pendaftaran.action";
 
 export default function MasterPelatihan({ token }) {
@@ -59,71 +54,33 @@ export default function MasterPelatihan({ token }) {
     }
   }, [deleted, dispatch, token]);
 
-  const allCertificates = useSelector((state) => state.allCertificates);
-  const [academy, setAcademy] = useState("");
-  const [temaPelatihan, setTemaPelatihan] = useState("");
-  const [disable, setDisable] = useState(true);
-  const [dataTemaPelatihan, setDataTemaPelatihan] = useState([]);
-  const [dataAcademy, setDataAcademy] = useState([]);
+  const [dataStatus, setDataStatus] = useState([
+    { label: "Listed", value: "1" },
+    { label: "Unlisted", value: "0" },
+  ]);
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(null);
 
   let selectRefAkademi = null;
-  let temaRef = null;
 
   const resetValueSort = (e) => {
     e.preventDefault();
-    temaRef.select.clearValue();
     selectRefAkademi.select.clearValue();
-    setDisable(true);
-    dispatch({ type: RESET_VALUE_FILTER });
+    dispatch({ type: RESET_STATUS_FILTER });
   };
-
-  // useEffect(() => {
-  // let arr = [];
-  // academyOptions.forEach((el) => {
-  //   arr.push({ id: el.id, value: el.name, label: el.name });
-  // });
-  // setDataAcademy(arr);
-  // }, [academyOptions]);
-
-  // useEffect(() => {
-  // const filteredTheme = themeOptions.filter(
-  //   (items) => items.id == academy?.id
-  // );
-  // const data = filteredTheme.map((el) => {
-  //   return { ...el, value: el.name, label: el.name };
-  // });
-  // setDataTemaPelatihan(data);
-  // }, [academy, themeOptions]);
 
   const handleSearch = (e) => {
     e.preventDefault();
     dispatch(searchKeyword(search));
   };
-
-  const handleSelectAcademy = (e) => {
-    setAcademy(e);
-    setDisable(false);
-    temaRef.select.clearValue();
+  const [status, setStatus] = useState();
+  const handleSelectStatus = (e) => {
+    setStatus(e);
   };
 
   const handleFilter = (e) => {
     e.preventDefault();
-    if (!academy && !temaPelatihan) {
-      Swal.fire(
-        "Oops !",
-        "Harap memilih kategori Akademi atau Tema pelatihan terlebih dahulu.",
-        "error"
-      );
-    } else {
-      if (academy) {
-        dispatch(setValueAcademy(academy.value));
-      }
-      if (temaPelatihan) {
-        dispatch(setValueTheme(temaPelatihan.value));
-      }
-    }
+    dispatch(setValueStatus(status.value));
   };
 
   const handleResetError = () => {
@@ -133,15 +90,15 @@ export default function MasterPelatihan({ token }) {
   };
 
   useEffect(() => {
-    dispatch(getAllSertifikat(token));
+    dispatch(getAllListMasterPelatihan(token));
   }, [
     dispatch,
     token,
-    allCertificates.keyword,
-    allCertificates.page,
-    allCertificates.theme,
-    allCertificates.academy,
-    allCertificates.limit,
+    AllMasterPelatihan.keyword,
+    AllMasterPelatihan.page,
+    AllMasterPelatihan.theme,
+    AllMasterPelatihan.status,
+    AllMasterPelatihan.limit,
   ]);
 
   const handleDelete = (id) => {
@@ -163,8 +120,8 @@ export default function MasterPelatihan({ token }) {
 
   const handleStatusPublish = (e, id, value) => {
     const data = {
-      status_publish: val,
-      pelatian_id: id,
+      status: value,
+      id: id,
     };
     dispatch(updateStatusPublishMaster(data, token));
   };
@@ -299,11 +256,11 @@ export default function MasterPelatihan({ token }) {
 
                             <div
                               className="modal-body text-left"
-                              style={{ height: "400px" }}
+                              // style={{ height: "200px" }}
                             >
                               <div className="fv-row mb-10">
                                 <label className="required fw-bold fs-6 mb-2">
-                                  Akademi
+                                  Status
                                 </label>
                                 <Select
                                   ref={(ref) => (selectRefAkademi = ref)}
@@ -317,30 +274,9 @@ export default function MasterPelatihan({ token }) {
                                   isSearchable={true}
                                   name="color"
                                   onChange={(e) => {
-                                    handleSelectAcademy(e);
+                                    handleSelectStatus(e);
                                   }}
-                                  options={dataAcademy}
-                                />
-                              </div>
-                              <div className="fv-row mb-10">
-                                <label className="required fw-bold fs-6 mb-2">
-                                  Tema Pelatihan
-                                </label>
-                                <Select
-                                  ref={(ref) => (temaRef = ref)}
-                                  className="basic-single"
-                                  classNamePrefix="select"
-                                  placeholder={
-                                    disable ? "Isi kolom akademi" : "Semua"
-                                  }
-                                  isDisabled={!academy ? true : false}
-                                  isLoading={false}
-                                  isClearable={false}
-                                  isRtl={false}
-                                  isSearchable={true}
-                                  name="color"
-                                  onChange={(e) => setTemaPelatihan(e?.value)}
-                                  options={dataTemaPelatihan}
+                                  options={dataStatus}
                                 />
                               </div>
                             </div>
@@ -424,6 +360,7 @@ export default function MasterPelatihan({ token }) {
                                     value={item.status}
                                     onChange={(e) =>
                                       handleStatusPublish(
+                                        e,
                                         item.id,
                                         e.target.value
                                       )

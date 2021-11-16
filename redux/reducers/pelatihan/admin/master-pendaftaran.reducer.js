@@ -18,13 +18,14 @@ import {
   UPDATE_MASTER_TRAINING_RESET,
   UPDATE_MASTER_TRAINING_SUCCESS,
   CLEAR_ERRORS,
-  RESET_VALUE_FILTER,
+  RESET_STATUS_FILTER,
   SET_KEYWORD_VALUE,
   SET_LIMIT_VALUE,
   SET_PAGE_VALUE,
   REQUEST_STATUS_PUBLISH,
   UPDATE_STATUS_PUBLISH,
   FAIL_STATUS_PUBLISH,
+  SET_STATUS_VALUE,
 } from "../../../types/pelatihan/master-pendaftaran.type";
 
 const initialStates = {
@@ -46,45 +47,57 @@ export const allMasterPelatihanListReducer = (
         ...state,
         loading: true,
       };
+
     case LIST_MASTER_TRAINING_SUCCESS:
       return {
         ...state,
         loading: false,
         list: action.payload.data,
       };
+
     case LIST_MASTER_TRAINING_FAIL:
       return {
         ...state,
         loading: false,
         error: action.payload,
       };
+
     case SET_KEYWORD_VALUE: {
       return {
         ...state,
-        keyword: action.text,
+        cari: action.text,
         page: 1,
       };
     }
+
     case SET_PAGE_VALUE: {
       return {
         ...state,
         page: action.text,
       };
     }
+
     case SET_LIMIT_VALUE: {
       return {
         ...state,
         limit: action.text,
       };
     }
-    case RESET_VALUE_FILTER: {
+
+    case SET_STATUS_VALUE: {
       return {
         ...state,
-        academy: "",
-        theme: "",
+        status: action.text,
+      };
+    }
+
+    case RESET_STATUS_FILTER: {
+      return {
+        ...state,
+        status: "",
         page: 1,
         limit: 5,
-        keyword: "",
+        cari: "",
       };
     }
 
