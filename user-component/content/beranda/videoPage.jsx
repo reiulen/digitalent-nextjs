@@ -121,7 +121,7 @@ useEffect(()=> {
     if (str === ""){
       setActiveTitle("Video Terupdate dan Terkini")
     }
-    setActiveTitle(`#${str}`)
+    setActiveTitle(`#${str.toUpperCase()}`)
 
     dispatch(
       getAllVideoContent(
