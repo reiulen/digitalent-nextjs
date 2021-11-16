@@ -32,7 +32,7 @@ const DashbardSubvit = ({ token }) => {
     (state) => state.dashboardSubvit
   );
 
-  console.log(loading);
+  // console.log(loading);
 
   const data = [];
   dashboard_subvit &&
