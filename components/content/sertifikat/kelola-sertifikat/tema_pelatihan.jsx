@@ -111,6 +111,8 @@ export default function NamaPelatihan({ token }) {
     }
   };
 
+  console.log(certificate, "ini certificate");
+
   useEffect(() => {
     dispatch(getAllSertifikat(token));
   }, [
@@ -330,6 +332,7 @@ export default function NamaPelatihan({ token }) {
                     </thead>
                     <tbody>
                       {!certificate ||
+                      certificate.length == 0 ||
                       (certificate && certificate?.list?.length === 0) ? (
                         <tr>
                           <td className="text-center" colSpan={6}>
