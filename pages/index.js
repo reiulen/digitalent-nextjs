@@ -27,7 +27,6 @@ export default function HomePage(props) {
   if (props.session) {
     session = props.session.user.user.data.user;
   }
-  const [otpEmail, setOtpEmail] = useState("");
   return (
     <>
       <div style={{ backgroundColor: "white" }}>
@@ -40,7 +39,7 @@ export default function HomePage(props) {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  store =>
+  (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
 
