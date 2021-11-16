@@ -201,12 +201,12 @@ const Dashboard = ({ session, success }) => {
                             <i className="ri-search-eye-fill text-white p-0"></i>
                           </a>
                         </Link>
-                        <Link href={`/peserta/artikel`}>
+                        <Link href={`/peserta/artikel/edit`}>
                           <a
                             className="btn btn-link-action btn-warning text-white mr-2"
                             data-toggle="tooltip"
                             data-placement="bottom"
-                            title="Detail"
+                            title="Edit"
                           >
                             <i className="ri-pencil-fill text-white p-0"></i>
                           </a>
@@ -216,7 +216,7 @@ const Dashboard = ({ session, success }) => {
                             className="btn btn-link-action btn-danger text-white"
                             data-toggle="tooltip"
                             data-placement="bottom"
-                            title="Detail"
+                            title="Delete"
                           >
                             <i className="ri-delete-bin-6-fill text-white p-0"></i>
                           </a>
@@ -258,12 +258,12 @@ const Dashboard = ({ session, success }) => {
                             <i className="ri-search-eye-fill text-white p-0"></i>
                           </a>
                         </Link>
-                        <Link href={`/peserta/artikel`}>
+                        <Link href={`/peserta/artikel/edit`}>
                           <a
                             className="btn btn-link-action btn-warning text-white mr-2"
                             data-toggle="tooltip"
                             data-placement="bottom"
-                            title="Detail"
+                            title="Edit"
                           >
                             <i className="ri-pencil-fill text-white p-0"></i>
                           </a>
@@ -273,7 +273,7 @@ const Dashboard = ({ session, success }) => {
                             className="btn btn-link-action btn-danger text-white"
                             data-toggle="tooltip"
                             data-placement="bottom"
-                            title="Detail"
+                            title="Delete"
                           >
                             <i className="ri-delete-bin-6-fill text-white p-0"></i>
                           </a>

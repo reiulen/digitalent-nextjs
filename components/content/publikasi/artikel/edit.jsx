@@ -553,7 +553,7 @@ const EditArtikel = ({ token, idUser }) => {
                       onChange={e => setKategoriId(e.target.value)}
                       onBlur={e => {
                         setKategoriId(e.target.value);
-                        simpleValidator.current.showMessageFor("kategori_id");
+                        simpleValidator.current.showMessageFor("kategori");
                       }}
                     >
                       <option selected disabled value="">
@@ -578,7 +578,7 @@ const EditArtikel = ({ token, idUser }) => {
                       )}
                     </select>
                     {simpleValidator.current.message(
-                      "kategori_id",
+                      "kategori",
                       kategori_id,
                       "required",
                       { className: "text-danger" }

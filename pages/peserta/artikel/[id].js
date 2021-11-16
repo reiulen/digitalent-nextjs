@@ -9,13 +9,13 @@ import { useRouter } from "next/router";
 import { getAllAkademi } from "../../../redux/actions/beranda/beranda.actions";
 import { wrapper } from "../../../redux/store";
 
-const TambahArtikelPeserta = dynamic(
-    () => import("../../../user-component/content/peserta/artikel/tambah-artikel"),
+const EditArtikelPeserta = dynamic(
+    () => import("../../../user-component/content/peserta/artikel/edit"),
     {
         loading: function loadingNow() {
             return <LoadingContent />
         },
-        ssr: false,
+        ssr: false
     }
 );
 
@@ -23,12 +23,12 @@ const Layout = dynamic(
     () => import("../../../user-component/components/template/Layout.component")
 );
 
-export default function TambahArtikel(props) {
+export default function EditArtikel(props) {
     const session = props.session.user.user.data.user;
     return (
         <>
-            <Layout title="Tambah Artikel" session={session}>
-                <TambahArtikelPeserta session={session} success={props.success} />
+            <Layout title="Edit Artikel" session={session} >
+                <EditArtikelPeserta session={session} success={props.success} />
             </Layout>
         </>
     )
@@ -37,7 +37,6 @@ export default function TambahArtikel(props) {
 export const getServerSideProps = wrapper.getServerSideProps(
     (store) =>
         async ({ req }) => {
-
             const session = await getSession({ req });
             if (!session) {
                 return {
@@ -52,7 +51,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
                 props: {
                     data: "auth",
                     session,
-                    title: "Tambah Artikel"
+                    title: "Edit Artikel"
                 }
             }
         }
