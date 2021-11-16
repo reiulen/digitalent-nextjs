@@ -9,7 +9,7 @@ const VideoPage = dynamic(
     () => import("../../user-component/content/beranda/videoPage")
 )
 const Layout = dynamic(
-    () => import("../../user-component/content/wrapper/layout.wrapper")
+    () => import("../../components/wrapper/beranda.wrapper")
 )
 
 export default function VideoDetail(props) {

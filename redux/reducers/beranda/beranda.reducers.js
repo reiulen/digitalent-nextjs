@@ -2,6 +2,9 @@ import {
   BERANDA_PENYELENGGARA_REQUEST,
   BERANDA_PENYELENGGARA_SUCCESS,
   BERANDA_PENYELENGGARA_FAIL,
+  BERANDA_PENYELENGGARA_PAGE_REQUEST,
+  BERANDA_PENYELENGGARA_PAGE_SUCCESS,
+  BERANDA_PENYELENGGARA_PAGE_FAIL,
   BERANDA_AKADEMI_REQUEST,
   BERANDA_AKADEMI_SUCCESS,
   BERANDA_AKADEMI_FAIL,
@@ -113,6 +116,38 @@ export const allPenyelenggaraPesertaReducer = (
       };
 
     case BERANDA_PENYELENGGARA_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const allPenyelenggaraPageReducer = (
+  state = { penyelenggara: [] },
+  action
+) => {
+  switch (action.type) {
+    case BERANDA_PENYELENGGARA_PAGE_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case BERANDA_PENYELENGGARA_PAGE_SUCCESS:
+      return {
+        loading: false,
+        penyelenggara: action.payload,
+      };
+
+    case BERANDA_PENYELENGGARA_PAGE_FAIL:
       return {
         loading: false,
         error: action.payload,

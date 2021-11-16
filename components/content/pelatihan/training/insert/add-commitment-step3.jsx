@@ -88,7 +88,7 @@ const AddCommitmentStep3 = ({ propsStep, token }) => {
       data.tema_id = data.tema_id.value;
       data.kuota_pendaftar = parseInt(data.kuota_pendaftar);
       data.kuota_peserta = parseInt(data.kuota_peserta);
-      data.batch = data.batch.value && toString(data.batch.value);
+      data.batch = data.batch.toString();
       data.kabupaten = data.kabupaten.label && data.kabupaten.label;
       data.level_pelatihan =
         data.level_pelatihan.label && data.level_pelatihan.label;
@@ -102,14 +102,14 @@ const AddCommitmentStep3 = ({ propsStep, token }) => {
       data.umum = data.umum ? "1" : "0";
       data.ketentuan_peserta = data.ketentuan_peserta ? "1" : "0";
       data.pendaftaran_mulai = moment(data.pendaftaran_mulai).format(
-        "YYYY-MM-DD"
+        "YYYY-MM-DD HH:mm:ss"
       );
       data.pendaftaran_selesai = moment(data.pendaftaran_selesai).format(
-        "YYYY-MM-DD"
+        "YYYY-MM-DD HH:mm:ss"
       );
-      data.pelatihan_mulai = moment(data.pelatihan_mulai).format("YYYY-MM-DD");
+      data.pelatihan_mulai = moment(data.pelatihan_mulai).format("YYYY-MM-DD HH:mm:ss");
       data.pelatihan_selesai = moment(data.pelatihan_selesai).format(
-        "YYYY-MM-DD"
+        "YYYY-MM-DD HH:mm:ss"
       );
       dispatch(newTrainingStep1(data, token));
     } else {

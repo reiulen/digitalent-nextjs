@@ -119,7 +119,7 @@ const Navigationbar = ({ session }) => {
       <Navbar
         bg="white"
         expand="lg"
-        className="shadow header-dashboard d-flex pr-0 pl-3"
+        className="shadow header-dashboard d-flex pr-0 px-md-25 px-10"
         sticky="top"
       >
         <Col
