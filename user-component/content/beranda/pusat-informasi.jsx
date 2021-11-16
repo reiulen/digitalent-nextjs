@@ -1,8 +1,7 @@
 import React from "react";
-import IconArrow from "../../../components/assets/icon/Arrow2";
 import SubHeaderComponent from "../../components/template/Subheader.component";
 import { useRouter } from "next/router";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 
 const PusatInformasi = () => {
   const router = useRouter();
@@ -17,7 +16,7 @@ const PusatInformasi = () => {
         <p className="mr-6 fz-18 text-muted fw-500">
           Pusat Informasi untuk Panduan Test Substansi dan Hak & Kewajiban
         </p>
-        <div className="border br-20 px-6 py-10 mt-10 overflow-scroll">
+        <div className="border px-6 py-10 mt-10">
           <ul
             className="nav-tabs-customes nav nav-tabs"
             id="myTab"
@@ -58,7 +57,7 @@ const PusatInformasi = () => {
               aria-labelledby="home-tab"
             >
               <div className="mt-8 list-pusat-informasi">
-                <ol className="pl-4">
+                <ol className="pl-4 text-break">
                   <li>
                     Sebelum mengerjakan tes, harap perhatikan dan lakukan
                     hal-hal berikut :
@@ -86,7 +85,7 @@ const PusatInformasi = () => {
                           >
                             https://www.whatismybrowser.com/detect/is-javascript-enabled
                           </a>
-                        </span>
+                        </span>{" "}
                         atau baca terlebih dahulu Panduan Pengaktifan
                       </li>
                       <li>

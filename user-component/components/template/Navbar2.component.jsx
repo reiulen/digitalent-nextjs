@@ -242,12 +242,12 @@ const Navigationbar = ({ session }) => {
                     Pusat Informasi
                   </button>
                   <div className="dropdown-menu ml-3">
-                    <Link href="/peserta/menu/pusat-informasi">
+                    <Link href="/pusat-informasi" passHref>
                       <a className="dropdown-item navdropdown-child">
                         Panduan Test Substansi
                       </a>
                     </Link>
-                    <Link href="/peserta/menu/pusat-informasi">
+                    <Link href="/pusat-informasi" passHref>
                       <a className="dropdown-item navdropdown-child">
                         Hak dan Kewajiban
                       </a>
@@ -302,15 +302,16 @@ const Navigationbar = ({ session }) => {
                     </Link>
                   </div>
                 </div>
-                <NavDropdown.Item href="/faq" className="navdropdown-child">
-                  FAQ
-                </NavDropdown.Item>
-                <NavDropdown.Item
-                  href="#action/3.4"
-                  className="navdropdown-child"
-                >
-                  Kontak
-                </NavDropdown.Item>
+                <Link href="/faq" passHref>
+                  <NavDropdown.Item className="navdropdown-child">
+                    FAQ
+                  </NavDropdown.Item>
+                </Link>
+                <Link href="/kontak" passHref>
+                  <NavDropdown.Item className="navdropdown-child">
+                    Kontak
+                  </NavDropdown.Item>
+                </Link>
               </NavDropdown>
             </div>
             {/* END MENU */}
