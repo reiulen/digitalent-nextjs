@@ -4,18 +4,64 @@ import Footer from "../../../user-component/components/beranda/footer";
 import styles from "./formLpj.module.css";
 import Image from "next/dist/client/image";
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getBerandaFooter } from "../../../redux/actions/beranda/beranda.actions";
 import ImageWhiteLogo from "../../../components/assets/icon-dashboard-peserta/whitelogo.png";
+import moment from "moment";
+import "moment/locale/id";
+import { newLPJ } from "../../../redux/actions/pelatihan/summary.actions";
 
-const FormLPJ = () => {
+const FormLPJ = ({ token }) => {
   const dispatch = useDispatch();
 
-  const { footer, loading } = useSelector((state) => state.berandaFooter);
+  const { dataPribadi } = useSelector((state) => state.getDataPribadi);
+
+  const { data: dataLPJ } = useSelector((state) => state.getFormLPJ.data);
+
+  const { pelatihan: dataTraining } = useSelector(
+    (state) => state.getPelatihan
+  );
+
+  // console.log(dataLPJ);
+
+  const [konfirmasi, setKonfirmasi] = useState("0");
+  const [value, setValue] = useState("");
+  const [saran, setSaran] = useState("");
+  const [idx, setIdx] = useState();
 
   useEffect(() => {
     dispatch(getBerandaFooter());
   }, [dispatch]);
+
+  const handleSaran = (e) => {
+    setSaran(e.target.value);
+  };
+
+  const handleKonfirmasi = (e) => {
+    e.target.checked === true ? setKonfirmasi("1") : setKonfirmasi("0");
+  };
+
+  const handleLPJ = (e, i) => {
+    setIdx(i);
+    e.target.checked === true ? setValue("1") : setValue("0");
+  };
+
+  const handlePost = () => {
+    const setData = {
+      pelatian_id: dataTraining.id,
+      menyetujui: konfirmasi,
+      saran: saran,
+      form_lpj: dataLPJ.map((item, index) => {
+        if (index === idx) {
+          return { ...item, value: value };
+        } else {
+          return { ...item, value: "0" };
+        }
+      }),
+    };
+    dispatch(newLPJ(setData, token));
+    console.log(setData);
+  };
 
   return (
     <>
@@ -31,25 +77,31 @@ const FormLPJ = () => {
                 Nama Lengkap
                 <br />
                 <span className={styles.content}>
-                  Muhammad Abdul Ghani Bin Abdullah Al Aziz
+                  {dataPribadi ? dataPribadi.name : "-"}
                 </span>
               </Col>
               <Col className={styles.label} xs={12} sm={6}>
                 No Identitas (KTP)
                 <br />
-                <span className={styles.content}>1234567890123456</span>
+                <span className={styles.content}>
+                  {dataPribadi ? dataPribadi.nik : "-"}
+                </span>
               </Col>
             </Row>
             <Row>
               <Col className={styles.label} xs={12} sm={6}>
                 Email
                 <br />
-                <span className={styles.content}>iniemail@gmail.com</span>
+                <span className={styles.content}>
+                  {dataPribadi ? dataPribadi.email : "-"}
+                </span>
               </Col>
               <Col className={styles.label} xs={12} sm={6}>
                 Nomor Handphone
                 <br />
-                <span className={styles.content}>081234567890</span>
+                <span className={styles.content}>
+                  {dataPribadi ? dataPribadi.nomor_handphone : "-"}
+                </span>
               </Col>
             </Row>
             <Row>
@@ -57,8 +109,7 @@ const FormLPJ = () => {
                 Alamat Domisili
                 <br />
                 <span className={styles.content}>
-                  Jl. Almuwahiddin Kp. Kaum Kidul Desa Karang Tengah No. 1 Depok
-                  Jawabarat
+                  {dataPribadi ? dataPribadi.address : "-"}
                 </span>
               </Col>
             </Row>
@@ -68,14 +119,14 @@ const FormLPJ = () => {
                 Akademi
                 <br />
                 <span className={styles.content}>
-                  Vocational School Graduate Academy (VSGA)
+                  {dataTraining ? dataTraining.akademi : "-"}
                 </span>
               </Col>
               <Col className={styles.label} xs={12} sm={6}>
                 Tema
                 <br />
                 <span className={styles.content}>
-                  Intermediate Multimedia Designer
+                  {dataTraining ? dataTraining.tema : "-"}
                 </span>
               </Col>
             </Row>
@@ -84,13 +135,16 @@ const FormLPJ = () => {
                 Pelatihan
                 <br />
                 <span className={styles.content}>
-                  Intermediate Multimedia Designer
+                  {dataTraining ? dataTraining.name : "-"}
                 </span>
               </Col>
               <Col className={styles.label} xs={12} sm={6}>
                 Penyelenggara
                 <br />
-                <span className={styles.content}>Gojek</span>
+                <span className={styles.content}>
+                  {" "}
+                  {dataTraining ? dataTraining.penyelenggara : "-"}
+                </span>
               </Col>
             </Row>
             <Row>
@@ -98,7 +152,13 @@ const FormLPJ = () => {
                 Tanggal Pelatihan
                 <br />
                 <span className={styles.content}>
-                  21 September 2021 - 21 Oktober 2021
+                  {dataTraining
+                    ? moment(dataTraining.pelatihan_mulai).format("LL")
+                    : "-"}{" "}
+                  -{" "}
+                  {dataTraining
+                    ? moment(dataTraining.pelatihan_selesai).format("LL")
+                    : "-"}
                 </span>
               </Col>
             </Row>
@@ -115,53 +175,23 @@ const FormLPJ = () => {
                 </td>
                 <td className={styles.tableLabel}>Checklist</td>
               </tr>
-              <tr>
-                <td className={styles.numberTable}>1</td>
-                <td className={styles.contentTable}>
-                  <b>Self-paced Learning</b> : Peserta pelatihan belajar secara
-                  mandiri melalui laptop/komputer, jadwal pelaksanaan Self-paced
-                  Learning diatur secara mandiri oleh peserta dalam batas durasi
-                  pelatihan Online Academy
-                </td>
-                <td className={styles.checkbox}>
-                  <input type="checkbox" />
-                </td>
-              </tr>
-              <tr>
-                <td className={styles.numberTable}>2</td>
-                <td className={styles.contentTable}>
-                  <b>Live Session</b> : Sesi tatap muka secara daring/online
-                  antara instruktur dan peserta pelatihan, peserta pelatihan
-                  mendapatkan kesempatan bertanya dan berinteraksi dengan
-                  instruktur pada tema pelatihan tertentu di Program Online
-                  Academy
-                </td>
-                <td className={styles.checkbox}>
-                  <input type="checkbox" />
-                </td>
-              </tr>
-              <tr>
-                <td className={styles.numberTable}>3</td>
-                <td className={styles.contentTable}>
-                  <b>Virtual Lab</b> : Peserta akan mengerjakan suatu project
-                  secara mandiri pada Virtual Lab
-                </td>
-                <td className={styles.checkbox}>
-                  <input type="checkbox" />
-                </td>
-              </tr>
-              <tr>
-                <td className={styles.numberTable}>4</td>
-                <td className={styles.contentTable}>
-                  <b>Certificate of Completion</b> : Diberikan kepada peserta
-                  yang menyelesaikan seluruh sesi pelatihan, mengisi survey dan
-                  mengunggah/upload Laporan Pertanggungjawaban (form ini) di
-                  digitalent.kominfo.go.id
-                </td>
-                <td className={styles.checkbox}>
-                  <input type="checkbox" />
-                </td>
-              </tr>
+              {dataLPJ &&
+                dataLPJ.map((item, index) => {
+                  return (
+                    <>
+                      <tr>
+                        <td className={styles.numberTable}>{index + 1}</td>
+                        <td className={styles.contentTable}>{item.name}</td>
+                        <td className={styles.checkbox}>
+                          <input
+                            type="checkbox"
+                            onChange={(event) => handleLPJ(event, index)}
+                          />
+                        </td>
+                      </tr>
+                    </>
+                  );
+                })}
             </table>
             <hr />
             <h1 className={styles.subTitle}>
@@ -172,12 +202,17 @@ const FormLPJ = () => {
               placeholder="Isi saran, kritik, atau rekomendasi mengenai pelatihan dan pelaksanaan kegiatan"
               style={{ height: "100px" }}
               className={styles.textArea}
+              onChange={(event) => handleSaran(event)}
             />
             <p className={styles.confirmation}>
               <table>
                 <tr>
                   <td style={{ verticalAlign: "top", paddingRight: "10px" }}>
-                    <input type="checkbox" />
+                    <input
+                      type="checkbox"
+                      value="1"
+                      onChange={handleKonfirmasi}
+                    />
                   </td>
                   <td>
                     Saya menyatakan telah menyetujui dengan sebenarnya, secara
@@ -191,7 +226,13 @@ const FormLPJ = () => {
               <Button className={styles.btnBack} variant="link">
                 Kembali
               </Button>
-              <Button className={styles.btnSend}>Kirim</Button>
+              <Button
+                className={styles.btnSend}
+                onClick={handlePost}
+                disabled={konfirmasi !== "1" || saran === ""}
+              >
+                Kirim
+              </Button>
             </div>
           </Card.Body>
         </Card>
