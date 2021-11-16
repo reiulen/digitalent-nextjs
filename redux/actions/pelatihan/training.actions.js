@@ -900,6 +900,7 @@ export const getFormLPJ = (token, pelatian_id) => async (dispatch) => {
     };
 
     const { data } = await axios.get(link, config);
+
     dispatch({
       type: GET_FORM_LPJ,
       payload: data,
