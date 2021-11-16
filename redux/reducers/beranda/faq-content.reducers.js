@@ -5,7 +5,7 @@ import {
     CLEAR_ERRORS
 } from "../../types/publikasi/faq.type"
 
-export const allFaqReducer = (state = { faq: [] }, action) => {
+export const allFaqReducer = (state = { data: {} }, action) => {
     switch (action.type) {
         case FAQ_REQUEST:
             return {

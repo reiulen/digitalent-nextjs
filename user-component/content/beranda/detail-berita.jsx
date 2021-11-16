@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
-// import HighlightText from 'highlight-search-text';
+// import Highlighter from "react-highlight-words";
 import { useRouter } from "next/router";
 
 const DetailBerita = () => {
@@ -305,7 +305,7 @@ const DetailBerita = () => {
                                                             className="border px-2 py-1 rounded my-3 mr-3 text-center d-flex align-items-center justify-content-center" 
                                                             key={i}
                                                             onClick={() => handleFilterTag(el)}
-                                                            style={{cursor:"pointer", height:"38px", width:"83px", fontSize:"14px"}}
+                                                            style={{cursor:"pointer", height:"38px", fontSize:"14px"}}
                                                         >
                                                             #{el}
                                                         </div>

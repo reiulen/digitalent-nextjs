@@ -179,8 +179,7 @@ const EditAcademy = ({ token }) => {
         status: status.value,
         id: idInt,
       };
-      console.log(data);
-      // dispatch(updateAcademy(data, token));
+      dispatch(updateAcademy(data, token));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
