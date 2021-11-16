@@ -33,6 +33,11 @@ const ImportParticipant = ({ token }) => {
     }
   };
 
+  const handleCloseFile = () => {
+    setFileName("");
+    setFile("");
+  };
+
   const handleUploadFile = async () => {
     const formdata = new FormData();
     formdata.append("pelatihan_id", id);
@@ -66,7 +71,7 @@ const ImportParticipant = ({ token }) => {
       })
       .catch((err) => {
         setLoading(false);
-        SweatAlert("Gagal", err, "success");
+        SweatAlert("Gagal", err.response.data.message, "error");
       });
   };
 
@@ -87,15 +92,15 @@ const ImportParticipant = ({ token }) => {
             <div className="form-group row mb-2">
               <div className="col-sm-6 col-md-4">
                 <label className="col-form-label">
-                  Untuh Template Form Peserta
+                  Unduh Template Form Peserta
                 </label>
                 <button
                   className="btn btn-rounded-full bg-blue-secondary text-white"
                   type="button"
                   onClick={() => handleDownloadTemplate()}
                 >
+                  <i className="ri-download-2-line mr-2 text-white"></i>
                   Unduh
-                  <i className="ri-arrow-down-s-line ml-3 mt-1 text-white"></i>
                 </button>
               </div>
               <div className="col-sm-6 col-md-8">
@@ -107,10 +112,29 @@ const ImportParticipant = ({ token }) => {
                     document.getElementById("upload-file").click();
                   }}
                 >
-                  <i className="ri-download-2-line mr-2 mt-1 text-white"></i>
+                  <i className="ri-upload-2-line mr-2 mt-1 text-white"></i>
                   Upload
                 </button>
-                <label className="mt-2">{fileName}</label>
+                {fileName && (
+                  <div
+                    class="alert alert-light alert-dismissible mt-3 w-50"
+                    role="alert"
+                  >
+                    <strong> {fileName}</strong>
+                    <button
+                      type="button"
+                      class="close"
+                      data-dismiss="alert"
+                      aria-label="Close"
+                      onClick={() => handleCloseFile()}
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                )}
+                <p className="mt-3 text-muted">
+                  Format Image(.csv) & Maximal 1MB
+                </p>
                 <input
                   type="file"
                   name="gambar"
