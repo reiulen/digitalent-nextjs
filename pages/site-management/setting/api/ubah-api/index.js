@@ -1,13 +1,15 @@
 import dynamic from "next/dynamic";
 import { getSession } from "next-auth/client";
-// import { getAllArtikel } from "../../../redux/actions/publikasi/artikel.actions";
 import { wrapper } from "../../../../../redux/store";
 import LoadingPage from "../../../../../components/LoadingPage";
-import { getDetailLog } from "../../../../../redux/actions/site-management/settings/api.actions";
-const TambahApi = dynamic(
+import {
+  getDetailApi,
+  getListApi,
+} from "../../../../../redux/actions/site-management/settings/api.actions";
+const UbahApi = dynamic(
   () =>
     import(
-      "../../../../../components/content/site-management/settings/api/log-api"
+      "../../../../../components/content/site-management/settings/api/ubah-api"
     ),
   {
     loading: function loadingNow() {
@@ -17,12 +19,12 @@ const TambahApi = dynamic(
   }
 );
 
-export default function LogApiPage(props) {
+export default function UbahPage(props) {
   const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <TambahApi token={session.token} />
+        <UbahApi token={session.token} />
       </div>
     </>
   );
@@ -30,7 +32,7 @@ export default function LogApiPage(props) {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
-    async ({ params, req }) => {
+    async ({ params, req, query }) => {
       const session = await getSession({ req });
       if (!session) {
         return {
@@ -42,10 +44,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       await store.dispatch(
-        getDetailLog(params.id, session.user.user.data.token)
+        getDetailApi(query.id, session.user.user.data.token)
       );
+      await store.dispatch(getListApi(session.user.user.data.token));
       return {
-        props: { session, title: "Log API - Site Management" },
+        props: { session, title: "Ubah API - Site Management" },
       };
     }
 );
