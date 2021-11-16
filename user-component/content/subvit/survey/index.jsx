@@ -127,6 +127,7 @@ const SubtansiUser = ({ token }) => {
       participant_answer: "TErlalu seri",
     },
   ];
+  let multi = [];
 
   const [data, setData] = useState(initialData);
   const [answer, setAnswer] = useState("");
@@ -136,9 +137,9 @@ const SubtansiUser = ({ token }) => {
   const [numberAnswer, setNumberAnswer] = useState(false);
   const [modalSoal, setModalSoal] = useState(false);
   const [modalResponsive, setModalResponsive] = useState(false);
-  const [multipleAnswer, setMultipleAnswer] = useState([]);
+  const [multipleAnswer, setMultipleAnswer] = useState(multi);
   const [indexSoal, setIndexSoal] = useState(0);
-
+  console.log("hehe", multipleAnswer);
   const [count, setCount] = useState(data && data.time_left);
   const [modalDone, setModalDone] = useState(false);
 
@@ -337,6 +338,8 @@ const SubtansiUser = ({ token }) => {
     console.log(list22);
   };
 
+  console.log(multi);
+
   return (
     <>
       <Container className={styles.baseAll} fluid>
@@ -451,7 +454,7 @@ const SubtansiUser = ({ token }) => {
                 )}
               </h1>
               <hr hidden={data[parseInt(router.query.id) - 1].open === true} />
-              {/* {data &&
+              {data &&
               data[parseInt(router.query.id) - 1]?.answer !== null &&
               data &&
               data[parseInt(router.query.id) - 1].open === true
@@ -482,13 +485,19 @@ const SubtansiUser = ({ token }) => {
                               >
                                 <Card
                                   className={
-                                    localStorage.getItem(router.query.id) ===
-                                    item.key
+                                    multipleAnswer.includes(item.key)
                                       ? styles.answer
                                       : styles.boxAnswer
                                   }
                                   key={index}
-                                  onClick={() => handleAnswer(item, index)}
+                                  onClick={() => {
+                                    if (multi.includes(item.key)) {
+                                      multi.splice(multi.indexOf(item.key), 1);
+                                    } else {
+                                      multi.push(item.key);
+                                    }
+                                    console.log(multi);
+                                  }}
                                 >
                                   <table>
                                     <tr>
@@ -508,13 +517,19 @@ const SubtansiUser = ({ token }) => {
                           ) : (
                             <Card
                               className={
-                                localStorage.getItem(router.query.id) ===
-                                item.key
+                                multipleAnswer.includes(item.key)
                                   ? styles.answer
                                   : styles.boxAnswer
                               }
                               key={index}
-                              onClick={() => handleAnswer(item, index)}
+                              onClick={() => {
+                                if (multi.includes(item.key)) {
+                                  multi.splice(multi.indexOf(item.key), 1);
+                                } else {
+                                  multi.push(item.key);
+                                }
+                                console.log(multi);
+                              }}
                             >
                               <table>
                                 <tr>
@@ -552,13 +567,19 @@ const SubtansiUser = ({ token }) => {
                               >
                                 <Card
                                   className={
-                                    localStorage.getItem(router.query.id) ===
-                                    item.key
+                                    multipleAnswer.includes(item.key)
                                       ? styles.answer
                                       : styles.boxAnswer
                                   }
                                   key={index}
-                                  onClick={() => handleAnswer(item, index)}
+                                  onClick={() => {
+                                    if (multi.includes(item.key)) {
+                                      multi.splice(multi.indexOf(item.key), 1);
+                                    } else {
+                                      multi.push(item.key);
+                                    }
+                                    console.log(multi);
+                                  }}
                                 >
                                   <table>
                                     <tr>
@@ -579,13 +600,19 @@ const SubtansiUser = ({ token }) => {
                           ) : (
                             <Card
                               className={
-                                localStorage.getItem(router.query.id) ===
-                                item.key
+                                multipleAnswer.includes(item.key)
                                   ? styles.answer
                                   : styles.boxAnswer
                               }
                               key={index}
-                              onClick={() => handleAnswer(item, index)}
+                              onClick={() => {
+                                if (multi.includes(item.key)) {
+                                  multi.splice(multi.indexOf(item.key), 1);
+                                } else {
+                                  multi.push(item.key);
+                                }
+                                console.log(multi);
+                              }}
                             >
                               <table>
                                 <tr>
@@ -599,7 +626,7 @@ const SubtansiUser = ({ token }) => {
                         </>
                       );
                     }
-                  )} */}
+                  )}
               {data[parseInt(router.query.id) - 1].type === "multiple_choice" &&
                 data[parseInt(router.query.id) - 1]?.answer &&
                 data[parseInt(router.query.id) - 1]?.answer.map(
