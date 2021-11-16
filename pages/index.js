@@ -6,7 +6,6 @@ import { getAllAkademi } from "../redux/actions/beranda/beranda.actions";
 import { getTemaByAkademi } from "../redux/actions/beranda/beranda.actions";
 import { getAllPublikasi } from "../redux/actions/beranda/beranda.actions";
 import { getDataPribadi } from "../redux/actions/pelatihan/function.actions";
-import OtpInput from "react-otpcode-input";
 import React, { useState } from "react";
 import LoadingLanding from "../user-component/components/loader/LandingLoader";
 
@@ -28,19 +27,10 @@ export default function HomePage(props) {
   if (props.session) {
     session = props.session.user.user.data.user;
   }
-  const [otpEmail, setOtpEmail] = useState("");
   return (
     <>
       <div style={{ backgroundColor: "white" }}>
         <Layout title="Digitalent" session={session}>
-          <OtpInput
-            numberOfInputs={6}
-            onChange={(code) => setOtpEmail(code)}
-            otp={otpEmail}
-            autoFocus={true}
-          >
-            tes 123
-          </OtpInput>
           <Beranda session={session} />
         </Layout>
       </div>

@@ -49,15 +49,18 @@ const Navigationbar = ({ session }) => {
   );
 
   useEffect(() => {
-    dispatch(getDataPribadi(session?.token));
-    if (
-      dataPribadi &&
-      Object.keys(dataPribadi).length !== 0 &&
-      !dataPribadi.status
-    ) {
-      router.push("/peserta/wizzard");
+    // dispatch(getDataPribadi(session?.token));
+    if (session) {
+      dispatch(getDataPribadi(session?.token));
+      if (
+        dataPribadi &&
+        Object.keys(dataPribadi).length !== 0 &&
+        !dataPribadi.status
+      ) {
+        router.push("/peserta/wizzard");
+      }
     }
-  }, [dataPribadi]);
+  }, [dispatch, router]);
 
   const [akademi, setAkademi] = useState([]);
   const getAkademi = async () => {
@@ -68,11 +71,11 @@ const Navigationbar = ({ session }) => {
     return data.data;
   };
 
-  useEffect(() => {
-    getAkademi();
-    getSimonas();
-    getBeasiswa();
-  }, []);
+  // useEffect(() => {
+  //   getAkademi();
+  //   getSimonas();
+  //   getBeasiswa();
+  // }, []);
 
   const getSimonas = async () => {
     const link = "http://simonas-dev.majapahit.id/api/job";
@@ -196,9 +199,11 @@ const Navigationbar = ({ session }) => {
                 id="basic-nav-dropdown"
                 className="navdropdown-child position-relative w-100 text-menu"
               >
-                <NavDropdown.Item href="/" className="navdropdown-child">
-                  Beranda
-                </NavDropdown.Item>
+                <Link href="/" passHref>
+                  <NavDropdown.Item className="navdropdown-child">
+                    Beranda
+                  </NavDropdown.Item>
+                </Link>
                 <div className="btn-group dropright">
                   <button
                     type="button"
@@ -237,24 +242,23 @@ const Navigationbar = ({ session }) => {
                     Pusat Informasi
                   </button>
                   <div className="dropdown-menu ml-3">
-                    <Link href="/peserta/menu/pusat-informasi">
-                    <a className="dropdown-item navdropdown-child">
-                      Panduan Test Substansi
-                    </a>
+                    <Link href="/pusat-informasi" passHref>
+                      <a className="dropdown-item navdropdown-child">
+                        Panduan Test Substansi
+                      </a>
                     </Link>
-                    <Link href="/peserta/menu/pusat-informasi">
-                    <a className="dropdown-item navdropdown-child">
-                      Hak dan Kewajiban
-                    </a>
+                    <Link href="/pusat-informasi" passHref>
+                      <a className="dropdown-item navdropdown-child">
+                        Hak dan Kewajiban
+                      </a>
                     </Link>
                   </div>
                 </div>
-                <NavDropdown.Item
-                  href="#action/3.4"
-                  className="navdropdown-child"
-                >
-                  Tentang Kami
-                </NavDropdown.Item>
+                <Link href="/tentang-kami" passHref>
+                  <NavDropdown.Item className="navdropdown-child">
+                    Tentang Kami
+                  </NavDropdown.Item>
+                </Link>
                 <Link href="/penyelenggara" passHref>
                   <NavDropdown.Item className="navdropdown-child">
                     Penyelenggara
@@ -298,15 +302,16 @@ const Navigationbar = ({ session }) => {
                     </Link>
                   </div>
                 </div>
-                <NavDropdown.Item href="/faq" className="navdropdown-child">
-                  FAQ
-                </NavDropdown.Item>
-                <NavDropdown.Item
-                  href="#action/3.4"
-                  className="navdropdown-child"
-                >
-                  Kontak
-                </NavDropdown.Item>
+                <Link href="/faq" passHref>
+                  <NavDropdown.Item className="navdropdown-child">
+                    FAQ
+                  </NavDropdown.Item>
+                </Link>
+                <Link href="/kontak" passHref>
+                  <NavDropdown.Item className="navdropdown-child">
+                    Kontak
+                  </NavDropdown.Item>
+                </Link>
               </NavDropdown>
             </div>
             {/* END MENU */}
