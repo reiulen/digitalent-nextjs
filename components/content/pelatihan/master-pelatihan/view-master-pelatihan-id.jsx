@@ -12,46 +12,8 @@ const ViewTrainingStep2 = () => {
     (state) => state.getReviewStep2
   );
 
-  const [titleForm] = useState(review.judul_form);
-  // const [formBuilder] = useState(review.FormBuilder);
-  const formBuilder = {
-    judul_form: "Tambah Data User",
-    formBuilder: [
-      {
-        name: "Nama Depan",
-        element: "text",
-        size: "col-md-6",
-        option: "jenis kelamin",
-        dataOption: "laki,perempuan",
-        required: "1",
-      },
-      {
-        name: "Nama Belakang",
-        element: "text",
-        size: "col-md-6",
-        option: "hobi",
-        dataOption: "makan,tidur,rebahan",
-        required: "1",
-      },
-      {
-        name: "Nama Belakang",
-        element: "text",
-        size: "col-md-6",
-        option: "hobi",
-        dataOption: "makan,tidur,rebahan",
-        required: "1",
-      },
-      {
-        name: "Ijasah",
-        element: "file_doc",
-        size: "col-md-12",
-        option: "",
-        dataOption: "",
-        required: "1",
-      },
-    ],
-  };
-  const { id } = router.query;
+  const { form } = useSelector((state) => state.getDetailMasterPelatihan);
+  const [titleForm] = useState(form.data.judul_form);
 
   const readerElementHandler = (row, i) => {
     switch (row.element) {
@@ -223,7 +185,7 @@ const ViewTrainingStep2 = () => {
             <h3 className="font-weight-bolder pb-5 pt-4">{titleForm}</h3>
 
             <div className="row">
-              {formBuilder.formBuilder.map((row, i) => (
+              {form.data.formBuilder.map((row, i) => (
                 <>{readerElementHandler(row, i)}</>
               ))}
             </div>

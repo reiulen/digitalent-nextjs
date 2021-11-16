@@ -36,14 +36,8 @@ export const getAllListMasterPelatihan =
         process.env.END_POINT_API_PELATIHAN + `api/v1/formBuilder/find`;
       let pageState = getState().getAllMasterPelatihan.page || 1;
       let limitState = getState().getAllMasterPelatihan.limit || 5;
-      let statusState = getState().getAllMasterPelatihan.theme || 0;
+      let statusState = getState().getAllMasterPelatihan.status || 0;
       let keywordState = getState().allCertificates.cari || "";
-      //    getAllMasterPelatihan: allMasterPelatihanListReducer,
-      //   deleteMasterPelatihan: deleteMasterPelatihanReducer,
-      //   getDetailMasterPelatihan: detailMasterPelatihanReducer,
-      //   newMasterPelatihan: newMasterTrainingReducer,
-      //   updateMasterPelatihan: updateMasterPelatihanReducer,
-      console.log("^^ ini getState");
       const params = {
         page: pageState,
         limit: limitState,
@@ -57,9 +51,9 @@ export const getAllListMasterPelatihan =
           Authorization: `Bearer ${token}`,
         },
       };
-
       const { data } = await axios.get(link, config);
       console.log(data);
+
       if (data) {
         dispatch({ type: LIST_MASTER_TRAINING_SUCCESS, payload: data });
       }
@@ -96,14 +90,14 @@ export const getDetailMasterPelatihan = (id, token) => async (dispatch) => {
   try {
     dispatch({ type: DETAIL_MASTER_TRAINING_REQUEST });
     let link =
-      process.env.END_POINT_API_SERTIFIKAT + `api/manage_certificates/${id}`;
+      process.env.END_POINT_API_PELATIHAN +
+      `api/v1/formBuilder/detail?id=${id}`;
 
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     };
-
     const { data } = await axios.get(link, config);
 
     if (data) {
@@ -112,12 +106,12 @@ export const getDetailMasterPelatihan = (id, token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: DETAIL_MASTER_TRAINING_FAIL,
-      payload: error.response.data.message,
+      payload: error.response.data.message || error,
     });
   }
 };
 
-export const newSertifikat = (id, formData, token) => async (dispatch) => {
+export const newMasterPelatihan = (id, formData, token) => async (dispatch) => {
   try {
     dispatch({ type: NEW_SERTIFIKAT_REQUEST });
     let link =
@@ -138,7 +132,7 @@ export const newSertifikat = (id, formData, token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: NEW_SERTIFIKAT_FAIL,
-      payload: error.response.data.message,
+      payload: error.response.data.message || error,
     });
   }
 };
@@ -171,12 +165,12 @@ export const updateSertifikat = (id, formData, token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: UPDATE_SERTIFIKAT_FAIL,
-      payload: error.response.data.message,
+      payload: error.response.data.message || error,
     });
   }
 };
 
-export const deleteTraining = (id, token) => async (dispatch) => {
+export const deleteMasterTraining = (id, token) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_MASTER_TRAINING_REQUEST });
 
@@ -199,7 +193,7 @@ export const deleteTraining = (id, token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: DELETE_MASTER_TRAINING_FAIL,
-      payload: error.response.data.message,
+      payload: error.response.data.message || error,
     });
   }
 };
@@ -231,7 +225,29 @@ export const updateStatusPublishMaster =
     } catch (error) {
       dispatch({
         type: FAIL_STATUS_PUBLISH,
-        payload: error.response.data.message,
+        payload: error.response.data.message || error,
       });
     }
   };
+
+export const getMasterRegistrationStep2 = () => async (dispatch) => {
+  const data = {
+    judul_form: "",
+    formBuilder: [
+      {
+        key: 1,
+        name: "",
+        element: "",
+        size: "",
+        option: "",
+        dataOption: "",
+        required: "0",
+      },
+    ],
+  };
+
+  dispatch({
+    type: GET_MASTER_REGISTRATION_STEP2,
+    payload: data,
+  });
+};

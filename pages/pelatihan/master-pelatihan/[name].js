@@ -7,6 +7,7 @@ import { getReviewStep2Revisi } from "../../../redux/actions/pelatihan/review.ac
 import { wrapper } from "../../../redux/store";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
 import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
+import { getDetailMasterPelatihan } from "../../../redux/actions/pelatihan/master-pelatihan.action";
 
 const ViewTraining = dynamic(
   () =>
@@ -23,7 +24,6 @@ const ViewTraining = dynamic(
 );
 
 export default function ViewTrainingPage(props) {
-  console.log(props);
   return (
     <>
       <div className="d-flex flex-column flex-root">
@@ -46,6 +46,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+      await store.dispatch(
+        getDetailMasterPelatihan(query.id, session.user.user.data.token)
+      );
 
       return {
         props: { session, title: "View Form Pendaftaran - Pelatihan" },

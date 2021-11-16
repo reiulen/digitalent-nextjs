@@ -27,14 +27,37 @@ import {
 import { RESET_VALUE_FILTER } from "../../../../redux/types/sertifikat/kelola-sertifikat.type";
 import Cookies from "js-cookie";
 import Swal from "sweetalert2";
-import { updateStatusPublishMaster } from "../../../../redux/actions/pelatihan/master-pelatihan.action";
+import {
+  deleteMasterTraining,
+  getAllListMasterPelatihan,
+  updateStatusPublishMaster,
+} from "../../../../redux/actions/pelatihan/master-pelatihan.action";
 
 export default function MasterPelatihan({ token }) {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const { loading, error, certificate, academyOptions, themeOptions } =
-    useSelector((state) => state.allCertificates);
+  const { loading, error, list } = useSelector(
+    (state) => state.getAllMasterPelatihan
+  );
+
+  const AllMasterPelatihan = useSelector(
+    (state) => state.getAllMasterPelatihan
+  );
+
+  const deleted = useSelector((state) => state.deleteMasterPelatihan);
+
+  useEffect(() => {
+    if (
+      deleted &&
+      Object.keys(deleted).length === 0 &&
+      Object.getPrototypeOf(deleted) === Object.prototype
+    ) {
+      return false;
+    } else {
+      dispatch(getAllListMasterPelatihan(token));
+    }
+  }, [deleted, dispatch, token]);
 
   const allCertificates = useSelector((state) => state.allCertificates);
   const [academy, setAcademy] = useState("");
@@ -56,23 +79,23 @@ export default function MasterPelatihan({ token }) {
     dispatch({ type: RESET_VALUE_FILTER });
   };
 
-  useEffect(() => {
-    let arr = [];
-    academyOptions.forEach((el) => {
-      arr.push({ id: el.id, value: el.name, label: el.name });
-    });
-    setDataAcademy(arr);
-  }, [academyOptions]);
+  // useEffect(() => {
+  // let arr = [];
+  // academyOptions.forEach((el) => {
+  //   arr.push({ id: el.id, value: el.name, label: el.name });
+  // });
+  // setDataAcademy(arr);
+  // }, [academyOptions]);
 
-  useEffect(() => {
-    const filteredTheme = themeOptions.filter(
-      (items) => items.id == academy?.id
-    );
-    const data = filteredTheme.map((el) => {
-      return { ...el, value: el.name, label: el.name };
-    });
-    setDataTemaPelatihan(data);
-  }, [academy, themeOptions]);
+  // useEffect(() => {
+  // const filteredTheme = themeOptions.filter(
+  //   (items) => items.id == academy?.id
+  // );
+  // const data = filteredTheme.map((el) => {
+  //   return { ...el, value: el.name, label: el.name };
+  // });
+  // setDataTemaPelatihan(data);
+  // }, [academy, themeOptions]);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -121,56 +144,6 @@ export default function MasterPelatihan({ token }) {
     allCertificates.limit,
   ]);
 
-  const list = {
-    perPage: 10,
-    total: 1,
-    totalFiltered: 1,
-    page: 1,
-    limit: 5,
-    list: [
-      {
-        id: 1,
-        id_pelatihan: "C001",
-        judul_form: "Nama Form Pendaftaran",
-        status: "1",
-      },
-      {
-        id: 2,
-        id_pelatihan: "C002",
-        judul_form: "Nama Form Pendaftaran",
-        status: "1",
-      },
-      {
-        id: 3,
-        id_pelatihan: "C003",
-        judul_form: "Nama Form Pendaftaran",
-        status: "1",
-      },
-      {
-        id: 4,
-        id_pelatihan: "C004",
-        judul_form: "Nama Form Pendaftaran",
-        status: "1",
-      },
-      {
-        id: 2,
-        judul_form: "list data",
-        status: "0",
-        created_at: "2021-11-09T18:05:42.482493+07:00",
-        updated_at: "2021-11-09T18:05:42.482493+07:00",
-        deleted_at: null,
-      },
-      {
-        id: 2,
-        judul_form: "list data",
-        status: "0",
-        created_at: "2021-11-09T18:05:42.482493+07:00",
-        updated_at: "2021-11-09T18:05:42.482493+07:00",
-        deleted_at: null,
-      },
-    ],
-  };
-
   const handleDelete = (id) => {
     Swal.fire({
       title: "Apakah anda yakin ?",
@@ -183,9 +156,7 @@ export default function MasterPelatihan({ token }) {
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
-        console.log(id);
-        dispatch();
-        dispatch(deleteTraining(id, token));
+        dispatch(deleteMasterTraining(id, token));
       }
     });
   };
@@ -430,9 +401,11 @@ export default function MasterPelatihan({ token }) {
                           return (
                             <tr key={list.id}>
                               <td className="align-middle text-center">
-                                {list.page === 1
+                                {AllMasterPelatihan.page === 1
                                   ? i + 1
-                                  : (list.page - 1) * list.limit + (i + 1)}
+                                  : (AllMasterPelatihan.page - 1) *
+                                      AllMasterPelatihan.limit +
+                                    (i + 1)}
                               </td>
                               {/* START TABLE DATA */}
                               <td className="align-middle">{item.id}</td>
@@ -479,7 +452,7 @@ export default function MasterPelatihan({ token }) {
                                   href={`/pelatihan/master-pelatihan/${item.judul_form
                                     ?.split(" ")
                                     .join("-")
-                                    .toLowerCase()}?id=1`}
+                                    .toLowerCase()}?id=${item.id}`}
                                   passHref
                                 >
                                   <a
@@ -487,16 +460,13 @@ export default function MasterPelatihan({ token }) {
                                     data-toggle="tooltip"
                                     data-placement="bottom"
                                     title="Detail"
-                                    onClick={() => {
-                                      Cookies.set("tema_pelatihan_id", list.id);
-                                    }}
                                   >
                                     <i className="ri-eye-fill p-0 text-white"></i>
                                   </a>
                                 </Link>
                                 <button
                                   className="btn btn-link-action bg-blue-secondary text-white"
-                                  onClick={() => handleDelete(item.no)}
+                                  onClick={() => handleDelete(item.id)}
                                   data-toggle="tooltip"
                                   data-placement="bottom"
                                   title="Hapus"

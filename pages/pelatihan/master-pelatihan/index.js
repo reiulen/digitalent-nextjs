@@ -50,8 +50,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
         getAllListMasterPelatihan(session.user.user.data.token)
       );
 
-      await store.dispatch(getAllSertifikat(session.user.user.data.token));
-
       return {
         props: { session, title: "List Pelatihan - Pelatihan" },
       };
