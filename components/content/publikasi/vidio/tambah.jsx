@@ -368,7 +368,7 @@ const TambahVidio = ({ token, id }) => {
                                         onChange={(e) => setKategoriId(e.target.value)}
                                         onBlur={(e) => {
                                             setKategoriId(e.target.value);
-                                            simpleValidator.current.showMessageFor("kategori_id");
+                                            simpleValidator.current.showMessageFor("kategori");
                                         }}
                                     >
                                         <option selected disabled value="">
@@ -392,7 +392,7 @@ const TambahVidio = ({ token, id }) => {
                                         )}
                                     </select>
                                     {simpleValidator.current.message(
-                                        "kategori_id",
+                                        "kategori",
                                         kategori_id,
                                         "required",
                                         { className: "text-danger" }

@@ -51,7 +51,7 @@ const StepInputPelatihan = ({ step, title1, title2, title3 }) => {
                 </div>
                 <div className="my-5">
                   <h5 className={`${textHeader1}`}>{title1}</h5>
-                  <p className={`${textDesc1}`}>Masukan Informasi Pelatihan</p>
+                  <p className={`${textDesc1}`}>Masukkan Informasi Pelatihan</p>
                 </div>
               </div>
             </div>

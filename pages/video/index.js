@@ -2,26 +2,25 @@ import { getSession } from "next-auth/client"
 import dynamic from "next/dynamic";
 import { wrapper } from "../../redux/store";
 
-import { getAllVideo, getTagVideo,getKategoriVideoContent } from "../../redux/actions/beranda/video-content.actions"
-// import { getAllKategori } from "../../redux/actions/beranda/kategori-content.actions"
+import { getAllVideoContent, getTagVideo,getKategoriVideoContent } from "../../redux/actions/beranda/video-content.actions"
 import { getDataPribadi } from "../../redux/actions/pelatihan/function.actions"
 
 const VideoPage = dynamic(
     () => import("../../user-component/content/beranda/videoPage")
 )
 const Layout = dynamic(
-    () => import("../../user-component/content/wrapper/layout.wrapper")
+    () => import("../../components/wrapper/beranda.wrapper")
 )
 
 export default function VideoDetail(props) {
     let session = null;
     if (props.session) {
-        session = props.session.user.user.data.Token
+        session = props.session.user.user.data.user;
     }
     return (
         <div>
-            <Layout title="Video" token={session}>
-                <VideoPage token={session} />
+            <Layout title="Video" session={session}>
+                <VideoPage session={session} />
             </Layout>
         </div>
     )
@@ -33,7 +32,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
             const session = await getSession({ req })
 
             await store.dispatch(getDataPribadi());
-            await store.dispatch(getAllVideo(
+            await store.dispatch(getAllVideoContent(
                 query.page,
                 query.keyword,
                 query.limit,

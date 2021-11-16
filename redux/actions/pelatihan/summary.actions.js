@@ -21,6 +21,10 @@ import {
   GET_FORM_KOMITMEN_FAIL,
   GET_FORM_LPJ_SUCCESS,
   GET_FORM_LPJ_FAIL,
+  NEW_LPJ_REQUEST,
+  NEW_LPJ_SUCCESS,
+  NEW_LPJ_FAIL,
+  NEW_LPJ_RESET,
   UPDATE_STATUS_REQUEST,
   UPDATE_STATUS_SUCCESS,
   UPDATE_STATUS_FAIL,
@@ -315,6 +319,32 @@ export const getFormKomitmen = (token, index) => async (dispatch) => {
   }
 };
 
+// LPJ
+export const newLPJ = (setData, token) => async (dispatch) => {
+  try {
+    dispatch({ type: NEW_LPJ_REQUEST });
+    let link =
+      process.env.END_POINT_API_PELATIHAN + "api/v1/formPendaftaran/create-lpj";
+
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    const { data } = await axios.post(link, setData, config);
+    console.log(data);
+    if (data) {
+      dispatch({ type: NEW_LPJ_SUCCESS, payload: data });
+    }
+  } catch (error) {
+    dispatch({
+      type: NEW_LPJ_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
 export const getFormLpj = (token, index) => async (dispatch) => {
   try {
     let link =
@@ -340,6 +370,7 @@ export const getFormLpj = (token, index) => async (dispatch) => {
     });
   }
 };
+// END LPJ
 
 export const updateStatusPeserta = (statusData, token) => async (dispatch) => {
   try {

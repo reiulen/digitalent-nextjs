@@ -127,6 +127,7 @@ const SubtansiUser = ({ token }) => {
       participant_answer: "TErlalu seri",
     },
   ];
+  let multi = [];
 
   const [data, setData] = useState(initialData);
   const [answer, setAnswer] = useState("");
@@ -136,9 +137,9 @@ const SubtansiUser = ({ token }) => {
   const [numberAnswer, setNumberAnswer] = useState(false);
   const [modalSoal, setModalSoal] = useState(false);
   const [modalResponsive, setModalResponsive] = useState(false);
-  const [multipleAnswer, setMultipleAnswer] = useState([]);
+  const [multipleAnswer, setMultipleAnswer] = useState(multi);
   const [indexSoal, setIndexSoal] = useState(0);
-
+  // console.log("hehe", multipleAnswer);
   const [count, setCount] = useState(data && data.time_left);
   const [modalDone, setModalDone] = useState(false);
 
@@ -316,6 +317,29 @@ const SubtansiUser = ({ token }) => {
   const handleCloseModalDone = () => {
     setModalDone(false);
   };
+
+  const handleTest = (e, i, it) => {
+    // console.log(i);
+    if (e.target.checked === true) {
+      localStorage.setItem(router.query.id + "/" + i, it.key);
+
+      // console.log(it);
+    } else {
+      localStorage.removeItem(router.query.id + "/" + i);
+    }
+    // console.log(as);
+    // console.log(e.target, i, it);
+    let list22 = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      list22.push(localStorage.getItem(key));
+      // console.log(key);
+    }
+    // console.log(list22);
+  };
+
+  // console.log(multi);
+
   return (
     <>
       <Container className={styles.baseAll} fluid>
@@ -324,10 +348,14 @@ const SubtansiUser = ({ token }) => {
             <Col xs={12} sm={6} style={{ marginTop: "8px" }}>
               <table>
                 <tr>
-                  <td className={styles.academy}>{data && data.academy}</td>
+                  <td className={styles.academy}>
+                    {(data && data.academy) || "FGA"}
+                  </td>
 
                   <td>&nbsp;</td>
-                  <td className={styles.training}>{data && data.theme}</td>
+                  <td className={styles.training}>
+                    {(data && data.theme) || "Cloud Computing"}
+                  </td>
                 </tr>
               </table>
             </Col>
@@ -457,13 +485,19 @@ const SubtansiUser = ({ token }) => {
                               >
                                 <Card
                                   className={
-                                    localStorage.getItem(router.query.id) ===
-                                    item.key
+                                    multipleAnswer.includes(item.key)
                                       ? styles.answer
                                       : styles.boxAnswer
                                   }
                                   key={index}
-                                  onClick={() => handleAnswer(item, index)}
+                                  onClick={() => {
+                                    if (multi.includes(item.key)) {
+                                      multi.splice(multi.indexOf(item.key), 1);
+                                    } else {
+                                      multi.push(item.key);
+                                    }
+                                    // console.log(multi);
+                                  }}
                                 >
                                   <table>
                                     <tr>
@@ -477,16 +511,25 @@ const SubtansiUser = ({ token }) => {
                                 </Card>
                               </div>
                             </div>
+                          ) : data[parseInt(router.query.id) - 1].type ===
+                            "multiple_choice" ? (
+                            <p>TEst</p>
                           ) : (
                             <Card
                               className={
-                                localStorage.getItem(router.query.id) ===
-                                item.key
+                                multipleAnswer.includes(item.key)
                                   ? styles.answer
                                   : styles.boxAnswer
                               }
                               key={index}
-                              onClick={() => handleAnswer(item, index)}
+                              onClick={() => {
+                                if (multi.includes(item.key)) {
+                                  multi.splice(multi.indexOf(item.key), 1);
+                                } else {
+                                  multi.push(item.key);
+                                }
+                                // console.log(multi);
+                              }}
                             >
                               <table>
                                 <tr>
@@ -524,13 +567,19 @@ const SubtansiUser = ({ token }) => {
                               >
                                 <Card
                                   className={
-                                    localStorage.getItem(router.query.id) ===
-                                    item.key
+                                    multipleAnswer.includes(item.key)
                                       ? styles.answer
                                       : styles.boxAnswer
                                   }
                                   key={index}
-                                  onClick={() => handleAnswer(item, index)}
+                                  onClick={() => {
+                                    if (multi.includes(item.key)) {
+                                      multi.splice(multi.indexOf(item.key), 1);
+                                    } else {
+                                      multi.push(item.key);
+                                    }
+                                    // console.log(multi);
+                                  }}
                                 >
                                   <table>
                                     <tr>
@@ -544,16 +593,26 @@ const SubtansiUser = ({ token }) => {
                                 </Card>
                               </div>
                             </div>
+                          ) : data[parseInt(router.query.id) - 1]?.answer &&
+                            data[parseInt(router.query.id) - 1].type ===
+                              "multiple_choice" ? (
+                            <p>TEST</p>
                           ) : (
                             <Card
                               className={
-                                localStorage.getItem(router.query.id) ===
-                                item.key
+                                multipleAnswer.includes(item.key)
                                   ? styles.answer
                                   : styles.boxAnswer
                               }
                               key={index}
-                              onClick={() => handleAnswer(item, index)}
+                              onClick={() => {
+                                if (multi.includes(item.key)) {
+                                  multi.splice(multi.indexOf(item.key), 1);
+                                } else {
+                                  multi.push(item.key);
+                                }
+                                // console.log(multi);
+                              }}
                             >
                               <table>
                                 <tr>
@@ -568,6 +627,22 @@ const SubtansiUser = ({ token }) => {
                       );
                     }
                   )}
+              {data[parseInt(router.query.id) - 1].type === "multiple_choice" &&
+                data[parseInt(router.query.id) - 1]?.answer &&
+                data[parseInt(router.query.id) - 1]?.answer.map(
+                  (item, index) => {
+                    return (
+                      <>
+                        <Form.Check
+                          className={styles.check}
+                          inline
+                          label={item.key + "." + item.option}
+                          onClick={(event) => handleTest(event, index, item)}
+                        />
+                      </>
+                    );
+                  }
+                )}
 
               {data[parseInt(router.query.id) - 1].open === true && (
                 <>
