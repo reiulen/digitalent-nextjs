@@ -49,14 +49,20 @@ export const allBerandaBeritaReducer = (state = { berita: [] }, action) => {
 
 export const detailBerandaBeritaReducer = (state = {detail: {} }, action) => {
     switch (action.type) {
+        case DETAIL_BERANDA_BERITA_REQUEST:
+            return {
+                loading: true
+            }
         case DETAIL_BERANDA_BERITA_SUCCESS:
             return {
                 detail: action.payload,
+                loading: false,
             }
 
         case DETAIL_BERANDA_BERITA_FAIL:
             return {
                 error: action.payload,
+                loading: false,
             }
 
         case CLEAR_ERRORS:
