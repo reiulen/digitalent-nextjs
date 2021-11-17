@@ -191,7 +191,7 @@ const Dashboard = ({ session, success }) => {
                     </td>
                     <td className="align-middle">
                       <div className="d-flex">
-                        <Link href={`/peserta/artikel`}>
+                        <Link href={`/peserta/artikel/preview/1`}>
                           <a
                             className="btn btn-link-action btn-primary text-white mr-2"
                             data-toggle="tooltip"
@@ -248,7 +248,7 @@ const Dashboard = ({ session, success }) => {
                     </td>
                     <td className="align-middle">
                       <div className="d-flex">
-                        <Link href={`/peserta/artikel`}>
+                        <Link href={`/peserta/artikel/preview/1`}>
                           <a
                             className="btn btn-link-action btn-primary text-white mr-2"
                             data-toggle="tooltip"
