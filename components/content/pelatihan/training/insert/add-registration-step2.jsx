@@ -292,9 +292,9 @@ const AddRegistrationStep2 = ({ propsStep }) => {
                 Tambah Form
               </label>
               <div className="type-form">
-                <div class="form-check form-check-inline">
+                <div className="form-check form-check-inline">
                   <input
-                    class="form-check-input"
+                    className="form-check-input"
                     type="radio"
                     name="inlineRadioOptions"
                     id="buat-manual-1"
@@ -302,13 +302,13 @@ const AddRegistrationStep2 = ({ propsStep }) => {
                     checked={viewForm === "buat-manual" && true}
                     onChange={(e) => setViewForm(e.target.value)}
                   />
-                  <label class="form-check-label" for="buat-manual-1">
+                  <label className="form-check-label" htmlFor="buat-manual-1">
                     Buat Manual
                   </label>
                 </div>
-                <div class="form-check form-check-inline">
+                <div className="form-check form-check-inline">
                   <input
-                    class="form-check-input"
+                    className="form-check-input"
                     type="radio"
                     name="inlineRadioOptions"
                     id="copy-form-2"
@@ -316,13 +316,13 @@ const AddRegistrationStep2 = ({ propsStep }) => {
                     checked={viewForm === "copy-form" && true}
                     onChange={(e) => setViewForm(e.target.value)}
                   />
-                  <label class="form-check-label" for="copy-form-2">
+                  <label className="form-check-label" htmlFor="copy-form-2">
                     Copy Form
                   </label>
                 </div>
-                <div class="form-check form-check-inline">
+                <div className="form-check form-check-inline">
                   <input
-                    class="form-check-input"
+                    className="form-check-input"
                     type="radio"
                     name="inlineRadioOptions"
                     id="copy-edit-3"
@@ -330,7 +330,7 @@ const AddRegistrationStep2 = ({ propsStep }) => {
                     checked={viewForm === "copy-edit" && true}
                     onChange={(e) => setViewForm(e.target.value)}
                   />
-                  <label class="form-check-label" for="copy-edit-3">
+                  <label className="form-check-label" htmlFor="copy-edit-3">
                     Copy & Edit Form
                   </label>
                 </div>
@@ -360,7 +360,7 @@ const AddRegistrationStep2 = ({ propsStep }) => {
                     onChange={(e) => setTitle(e.label)}
                   />
                   {viewForm === "copy-form" && (
-                    <small class="form-text text-danger">
+                    <small className="form-text text-danger">
                       *Form pendaftaran akan terhubung dengan master form
                       pendaftaran. Apabila master form pendaftaran diubah maka
                       form pendaftaran pelatihan ini akan ikut berubah.
