@@ -313,15 +313,16 @@ const DetailSummary = ({ token }) => {
 
           <div className="card-body pt-0">
             <div className="table-filter">
-              <div className="row align-items-center">
+              <div className="row align-items-center d-flex">
                 <div className="col-lg-4 col-xl-4">
-                  <div className="position-relative overflow-hidden mt-3">
+                  <div className="position-relative overflow-hidden mt-3" style={{width: "100%"}}>
                     <i className="ri-search-line left-center-absolute ml-2"></i>
                     <input
                       type="text"
                       className="form-control pl-10"
                       placeholder="Ketik disini untuk Pencarian..."
                       onChange={(e) => setSearch(e.target.value)}
+                      
                     />
                     <button
                       className="btn bg-blue-primary text-white right-center-absolute"
@@ -336,9 +337,9 @@ const DetailSummary = ({ token }) => {
                   </div>
                 </div>
 
-                <div className="col-lg-4 col-xl-4 justify-content-end d-flex mt-3">
+                <div className="col-lg-4 col-xl-4 justify-content-end d-flex mt-3 ml-auto">
                   <button
-                    className="btn border d-flex align-items-center justify-content-between mt-1 btn-block"
+                    className="btn border d-flex mt-1 btn-block"
                     style={{
                       color: "#bdbdbd",
                       float: "right",
@@ -353,31 +354,7 @@ const DetailSummary = ({ token }) => {
                   </button>
                 </div>
 
-                <div className="col-md-2 mt-3">
-                  <Link
-                    href={{
-                      pathname: "/pelatihan/rekap-pendaftaran/import-peserta",
-                      query: { pelatihan: dataPelatihan.name, id },
-                    }}
-                  >
-                    <a
-                      className="btn w-100 btn-rounded-full bg-success text-white mt-2"
-                      style={{ width: "max-content" }}
-                    >
-                      <i className="ri-download-2-line mr-2 mt-1 text-white"></i>
-                      Import
-                    </a>
-                  </Link>
-                </div>
-                <div className="col-md-2 mt-3">
-                  <select className="btn w-100 btn-rounded-full bg-blue-secondary text-white mt-2">
-                    <option value="" disabled selected>
-                      Export
-                    </option>
-                    <option value="LMS">LMS</option>
-                    <option value="CSV">CSV</option>
-                  </select>
-                </div>
+                
               </div>
             </div>
 
@@ -461,7 +438,7 @@ const DetailSummary = ({ token }) => {
                             <td>
                               <div className="d-flex mr-10">
                                 <Link
-                                  href={`/pelatihan/rekap-pendaftaran/detail-rekap-pendaftaran/data-peserta?pelatihan_id=${id}&index=${
+                                  href={`/pelatihan/pelatihan/view-list-peserta/data-peserta?pelatihan_id=${id}&index=${
                                     i + limit * (page - 1) + 1
                                   }`}
                                 >
