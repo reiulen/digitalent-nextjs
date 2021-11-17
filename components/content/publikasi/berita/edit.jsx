@@ -141,7 +141,6 @@ const EditBerita = ({ token, idUser }) => {
     }
 
     const handleTag = (data) => {
-        console.log((tag).includes(data))
         if ((tag).includes(data)) {
             // Swal.fire("Oops !", "Tag tidak boleh sama", "error");
             // setTag(data);
@@ -530,7 +529,8 @@ const EditBerita = ({ token, idUser }) => {
                                     <div className={`${styles.tagStyle} col-sm-12`} style={{ wordBreak: 'break-word' }}>
                                         <TagsInput
                                             value={tag}
-                                            onChange={(data) => handleTag(data)}
+                                            onChange={(data) => (handleTag(data)
+                                                )}
                                             name="tag"
                                             placeHolder="Isi Tag disini dan Enter"
                                             seprators={["Enter", "Tab"]}

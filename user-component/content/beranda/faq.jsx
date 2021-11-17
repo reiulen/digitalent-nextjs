@@ -80,7 +80,7 @@ const FaqPage = () => {
                         <input
                             type="text"
                             className="form-control pl-10"
-                            placeholder="Cari Pertanyaan..."
+                            placeholder="Cari..."
                             style={{ borderRadius: "30px", backgroundColor: "#fafafb" }}
                             onChange={(e) => setKeyword(e.target.value)}
                         />
