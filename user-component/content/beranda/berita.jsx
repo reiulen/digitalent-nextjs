@@ -795,7 +795,7 @@ const Berita = () => {
                                                 {
                                                     akademi.map ((el, i) => {
                                                         return (
-                                                            <option value={el.name} key={i}>{el.slug}</option>
+                                                            <option value={el.slug} key={i}>{el.slug}</option>
                                                         )
                                                     })
                                                 }
