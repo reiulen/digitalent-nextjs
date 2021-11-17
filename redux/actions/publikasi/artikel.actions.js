@@ -2,6 +2,9 @@ import {
   ARTIKEL_REQUEST,
   ARTIKEL_SUCCESS,
   ARTIKEL_FAIL,
+  ARTIKEL_PESERTA_REQUEST,
+  ARTIKEL_PESERTA_SUCCESS,
+  ARTIKEL_PESERTA_FAIL,
   NEW_ARTIKEL_REQUEST,
   NEW_ARTIKEL_SUCCESS,
   NEW_ARTIKEL_RESET,
@@ -59,6 +62,50 @@ export const getAllArtikel =
       } catch (error) {
         dispatch({
           type: ARTIKEL_FAIL,
+          payload: error.response.data.message,
+        });
+      }
+    };
+
+    export const getAllArtikelsPeserta =
+  (
+    token,
+    page = 1,
+    keyword = "",
+    limit = 5,
+    publish = "",
+    startdate = "",
+    enddate = "",
+  ) =>
+    async dispatch => {
+      try {
+        dispatch({ type: ARTIKEL_PESERTA_REQUEST });
+        let link =
+          process.env.END_POINT_API_PUBLIKASI + `api/artikel`;
+          
+          const config = {
+            params:{
+              page,
+              keyword,
+              limit,
+              publish,
+              startdate,
+              enddate
+            },
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          };
+          
+          const { data } = await axios.get(link, config);
+          console.log("link bos", data)
+        dispatch({
+          type: ARTIKEL_PESERTA_SUCCESS,
+          payload: data,
+        });
+      } catch (error) {
+        dispatch({
+          type: ARTIKEL_PESERTA_FAIL,
           payload: error.response.data.message,
         });
       }
