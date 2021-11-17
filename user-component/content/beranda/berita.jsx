@@ -26,6 +26,7 @@ const Berita = () => {
     const { tags } = useSelector((state) => state.allTagBerandaBerita)
 
     const titleToTrim = 20
+    const categoryToTrim = 9
     const descToTrim = 100
 
     const [ activeTitle, setActiveTitle ] = useState("Ada Apa di Digitalent")
@@ -112,6 +113,19 @@ const Berita = () => {
         
         if (str.length > titleToTrim){
             result = str.slice(0, titleToTrim) + "..."
+
+        } else {
+            result = str
+        }
+
+        return result
+    }
+
+    const handleCategoryToTrim = (str) => {
+        let result = null
+        
+        if (str.length > categoryToTrim){
+            result = str.slice(0, categoryToTrim) + "..."
 
         } else {
             result = str
@@ -239,9 +253,6 @@ const Berita = () => {
                                     830: {
                                         perPage: 2,
                                       },
-                                    450:{
-                                        perPage: 1,
-                                    },
                                 }
                             }}
                         >
@@ -285,7 +296,7 @@ const Berita = () => {
                                                         key={i}
                                                     >
                                                         <div className="my-1 mx-3 py-1 px-3 text-white">
-                                                            {el.nama_kategori}
+                                                            {handleCategoryToTrim(el.nama_kategori)}
                                                         </div>
                                                     </div>
                                                 </SplideSlide>
@@ -298,7 +309,7 @@ const Berita = () => {
                                                         key={i}
                                                     >
                                                         <div className="my-1 mx-3 py-1 px-3 text-muted">
-                                                            {el.nama_kategori}
+                                                            {handleCategoryToTrim(el.nama_kategori)}
                                                         </div>
                                                     </div> 
                                                 </SplideSlide>
