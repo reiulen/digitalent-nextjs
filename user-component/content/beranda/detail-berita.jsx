@@ -146,14 +146,19 @@ const DetailBerita = () => {
                                 </div>
                             </div>
 
-                            <div className="row">
-                                <button className="btn btn-outline-light rounded-circle mr-3">
-                                    <i className="ri-share-line p-0"></i>
-                                </button>
+                            <div className="row ml-1">
+                                <div className="mr-3">
+                                    <button className="btn btn-sm btn-outline-light rounded-circle">
+                                        <i className="ri-share-line px-0 py-1"></i>
+                                    </button>
+                                </div>
                                 
-                                <button className="btn btn-outline-light rounded-circle mr-3">
-                                    <i className="ri-heart-line p-0"></i>
-                                </button>
+                                <div className="mr-3">
+                                    <button className="btn btn-sm btn-outline-light rounded-circle">
+                                        <i className="ri-heart-line px-0 py-1"></i>
+                                    </button>
+                                </div>
+                                
                             </div>
                         </div>
                     </div>
@@ -201,8 +206,8 @@ const DetailBerita = () => {
                                             detail && detail.tag && detail.tag.length !== 0 ?
                                                 detail.tag.map ((el, i) => {
                                                     return (
-                                                        <div className="mr-3 border p-3 rounded mb-3" key={i}>
-                                                        #{el}
+                                                        <div className="mr-3 border p-3 rounded mb-3" key={i} style={{height:"38px"}}>
+                                                            #{el.toString().toUpperCase()}
                                                         </div>
                                                     )
                                                 })
@@ -212,13 +217,18 @@ const DetailBerita = () => {
                                     </div>
 
                                     <div className="row ml-1">
-                                        <button className="btn btn-outline-light rounded-circle mr-3">
-                                            <i className="ri-share-line p-0"></i>
-                                        </button>
+                                        <div className="mr-3">
+                                            <button className="btn btn-sm btn-outline-light rounded-circle">
+                                                <i className="ri-share-line px-0 py-1"></i>
+                                            </button>
+                                        </div>
                                         
-                                        <button className="btn btn-outline-light rounded-circle mr-3">
-                                            <i className="ri-heart-line p-0"></i>
-                                        </button>
+                                        <div className="mr-3">
+                                            <button className="btn btn-sm btn-outline-light rounded-circle">
+                                                <i className="ri-heart-line px-0 py-1"></i>
+                                            </button>
+                                        </div>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -231,7 +241,7 @@ const DetailBerita = () => {
                                 <div className="col-12 col-md-4">
 
                                     {/* Search */}
-                                    <div className="border rounded">
+                                    <div className="border rounded-lg">
                                         <div className="row mt-10 mb-5"> 
                                             <div className="col-2 my-auto ml-5">
                                                 <Image 
@@ -286,7 +296,7 @@ const DetailBerita = () => {
                                     {/* Tag */}
                                     <div className="row mt-10 d-flex flex-column mx-10">
                                         <h3 className="font-weight-bolder"> 
-                                            Temukan Lebih Banyak Berita Yang Sesuai:
+                                            TEMUKAN LEBIH BANYAK APA YANG PENTING BAGI ANDA
                                         </h3>
                                         <div className=" d-flex flex-wrap flex-row">
                                             {
@@ -299,7 +309,7 @@ const DetailBerita = () => {
                                                             onClick={() => handleFilterTag(el)}
                                                             style={{cursor:"pointer", height:"38px", fontSize:"14px"}}
                                                         >
-                                                            #{el}
+                                                            #{el.toString().toUpperCase()}
                                                         </div>
                                                         )
                                                     })
