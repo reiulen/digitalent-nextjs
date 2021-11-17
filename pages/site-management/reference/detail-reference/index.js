@@ -31,7 +31,7 @@ export default function UbahRoles(props) {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
-    async ({ params, req }) => {
+    async ({ params, req, query }) => {
       const session = await getSession({ req });
       if (!session) {
         return {
@@ -43,7 +43,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       await store.dispatch(
-        getDetailDataReference(params.id, session.user.user.data.token)
+        getDetailDataReference(query.id, session.user.user.data.token)
       );
       return {
         props: {
