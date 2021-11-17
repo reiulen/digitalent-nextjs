@@ -501,7 +501,7 @@ const Navigationbar = ({ session }) => {
                     className="p-0 w-100"
                   >
                     <div className="d-flex align-items-center justify-content-between p-0 m-0">
-                      Pelatihanaa
+                      Pelatihan
                       <i className="ri-arrow-right-s-line text-dark ml-1 position-absolute right-0"></i>
                     </div>
                   </Dropdown.Toggle>
