@@ -173,7 +173,7 @@ const Berita = () => {
     }
 
     const handleFilterTag = (str) => {
-        setActiveTitle(`#${str}`)
+        setActiveTitle(`#${str.toUpperCase()}`)
         // setTag(str)
         dispatch (getAllBerandaBerita(
             activePage, 
@@ -614,7 +614,7 @@ const Berita = () => {
                                                                             style={{cursor:"pointer"}}
                                                                             key={index}
                                                                         >
-                                                                            #{element}
+                                                                            #{element.toUpperCase()}
                                                                         </div>
                                                                     )
                                                                 })
@@ -844,7 +844,7 @@ const Berita = () => {
                                                 onClick={() => handleFilterTag(el)}
                                                 style={{cursor:"pointer", height:"38px", fontSize:"14px"}}
                                             >
-                                                #{el}
+                                                #{el.toString().toUpperCase()}
                                             </div>
                                         )
                                     })
