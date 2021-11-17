@@ -197,11 +197,24 @@
   background: #007cff;
   border: 1px solid #007cff;
   box-sizing: border-box;
+  color: #ffffff;
 }
+
+.bg-penyelenggara-primary:hover {
+  color: #ffffff;
+}
+
 .bg-penyelenggara-light {
   background: #ffffff;
   border: 1px solid #d7e1ea;
   box-sizing: border-box;
+}
+
+.bg-penyelenggara-light:hover {
+  background: #007cff;
+  border: 1px solid #007cff;
+  box-sizing: border-box;
+  color: #ffffff;
 }
 
 .penyelenggara-mitra .penyelenggara-wrapper {
