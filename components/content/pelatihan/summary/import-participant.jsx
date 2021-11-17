@@ -117,13 +117,13 @@ const ImportParticipant = ({ token }) => {
                 </button>
                 {fileName && (
                   <div
-                    class="alert alert-light alert-dismissible mt-3 w-50"
+                    className="alert alert-light alert-dismissible mt-3 w-50"
                     role="alert"
                   >
                     <strong> {fileName}</strong>
                     <button
                       type="button"
-                      class="close"
+                      className="close"
                       data-dismiss="alert"
                       aria-label="Close"
                       onClick={() => handleCloseFile()}

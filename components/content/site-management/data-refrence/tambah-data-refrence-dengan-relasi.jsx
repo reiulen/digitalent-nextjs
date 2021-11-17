@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import Swal from "sweetalert2";
@@ -8,12 +8,14 @@ import "react-toastify/dist/ReactToastify.css";
 import IconAdd from "../../../assets/icon/Add";
 import IconDelete from "../../../assets/icon/Delete";
 import Select from "react-select";
+import SimpleReactValidator from "simple-react-validator";
 
 const Tambah = ({ token }) => {
   const router = useRouter();
+  const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
+  const [, forceUpdate] = useState();
 
   let selectRefDataReference = null;
-  let selectRefDataFromReference = null;
 
   const [nameReference, setNameReference] = useState("");
   const [status, setStatus] = useState("");
@@ -35,19 +37,19 @@ const Tambah = ({ token }) => {
   const [nameListFromReference, setNameListFromReference] = useState("");
 
   const changeListDataReference = (e) => {
-      setFormReferenceAndText([
-        {
-          relasi_id: "",
-          value: [
-            {
-              label: "",
-            },
-          ],
-          values: [],
-        },
-      ]);
-      setIdReference(e.key);
-      setNameListFromReference(e.value);
+    setFormReferenceAndText([
+      {
+        relasi_id: "",
+        value: [
+          {
+            label: "",
+          },
+        ],
+        values: [],
+      },
+    ]);
+    setIdReference(e.key);
+    setNameListFromReference(e.value);
   };
 
   const handleAddInput = (idx, index) => {
@@ -95,8 +97,8 @@ const Tambah = ({ token }) => {
   };
 
   const handleCHangeNameReference = (e, index) => {
-    let _tempOption = [...optionFromReference]
-    let _newTempOption = _tempOption.filter(items => items.label !== e.label)
+    let _tempOption = [...optionFromReference];
+    let _newTempOption = _tempOption.filter((items) => items.label !== e.label);
     setOptionFromReference(_newTempOption);
     let _temp = [...formReferenceAndText];
 
@@ -121,46 +123,36 @@ const Tambah = ({ token }) => {
 
   const submit = async (e) => {
     e.preventDefault();
-    if (nameReference === "") {
-      Swal.fire("Gagal", `Nama data reference tidak boleh kosong`, "error");
-    } else if (status === "") {
-      Swal.fire("Gagal", `Status tidak boleh kosong`, "error");
-    } else if (idReference === "") {
-      Swal.fire("Gagal", `Harus pilih data reference`, "error");
-    } 
-    else if (!formReferenceAndText[0].relasi_id || !formReferenceAndText[0].value[0].label ) {
-      Swal.fire(
-        "Gagal",
-        `List data dan value tidak boleh kosong`,
-        "error"
+
+    let sendData = {
+      name: nameReference,
+      status: status,
+      data_references_relasi_id: idReference,
+      data: formReferenceAndText,
+    };
+
+    try {
+      let { data } = await axios.post(
+        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/reference/store-relasi`,
+        sendData,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
       );
-    } 
-    else {
-      let sendData = {
-        name: nameReference,
-        status: status,
-        data_references_relasi_id: idReference,
-        data: formReferenceAndText,
-      };
 
-
-      try {
-        let { data } = await axios.post(
-          `${process.env.END_POINT_API_SITE_MANAGEMENT}api/reference/store-relasi`,
-          sendData,
-          {
-            headers: {
-              authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
-        Swal.fire("Berhasil", "Data berhasil disimpan", "success").then(() => {
-          router.push("/site-management/reference");
-        });
-      } catch (error) {
-        Swal.fire("Gagal simpan", `${error.response.data.message}`, "error");
-      }
+      Swal.fire("Berhasil", "Data berhasil disimpan", "success").then(() => {
+        router.push("/site-management/reference");
+      });
+    } catch (error) {
+      simpleValidator.current.showMessages();
+      forceUpdate(1);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Isi data dengan benar !",
+      });
     }
   };
 
@@ -220,30 +212,44 @@ const Tambah = ({ token }) => {
               Tambah Reference Dengan Relasi
             </h3>
           </div>
-          <form>
+          <form onSubmit={submit}>
             <div className="card-body pt-0 px-4 px-sm-8">
               <div className="form-group">
                 <label htmlFor="staticEmail" className="col-form-label">
                   Nama Data Reference
                 </label>
                 <input
-                  required
-                  placeholder="Masukan nama reference"
+                  placeholder="Masukkan nama reference"
                   type="text"
                   className="form-control"
                   onChange={(e) => setNameReference(e.target.value)}
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("nameReference")
+                  }
                 />
+                {simpleValidator.current.message(
+                  "nameReference",
+                  nameReference,
+                  "required",
+                  { className: "text-danger" }
+                )}
               </div>
               <div className="form-group">
                 <label>Status</label>
                 <select
                   className="form-control"
                   onChange={(e) => setStatus(e.target.value)}
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("status")
+                  }
                 >
                   <option value="">Pilih status</option>
                   <option value="1">Aktif</option>
                   <option value="0">Tidak Aktif</option>
                 </select>
+                {simpleValidator.current.message("status", status, "required", {
+                  className: "text-danger",
+                })}
               </div>
               <div className="form-group">
                 <label>Pilih Data Reference</label>
@@ -252,8 +258,7 @@ const Tambah = ({ token }) => {
                   ref={(ref) => (selectRefDataReference = ref)}
                   className="basic-single"
                   classNamePrefix="select"
-                  placeholder="Pilih provinsi"
-                  // defaultValue={allMK.stateListMitra[0]}
+                  placeholder="Pilih data reference"
                   isDisabled={false}
                   isLoading={false}
                   isClearable={false}
@@ -262,7 +267,16 @@ const Tambah = ({ token }) => {
                   name="color"
                   onChange={(e) => changeListDataReference(e)}
                   options={optionReference}
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("Data reference")
+                  }
                 />
+                {simpleValidator.current.message(
+                  "Data reference",
+                  idReference,
+                  "required",
+                  { className: "text-danger" }
+                )}
               </div>
 
               {/*  */}
@@ -277,7 +291,7 @@ const Tambah = ({ token }) => {
                           value={itemsRef.values}
                           className="basic-single"
                           classNamePrefix="select"
-                          placeholder="Pilih provinsi"
+                          placeholder={`Pilih ${nameListFromReference}`}
                           isDisabled={false}
                           isLoading={false}
                           isClearable={false}
@@ -287,7 +301,18 @@ const Tambah = ({ token }) => {
                           onInputChange={handleInputChange}
                           onChange={(e) => handleCHangeNameReference(e, idx)}
                           options={optionFromReference}
+                          onBlur={() =>
+                            simpleValidator.current.showMessageFor(
+                              "nameListFromReference"
+                            )
+                          }
                         />
+                        {simpleValidator.current.message(
+                          "nameListFromReference",
+                          itemsRef.values,
+                          "required",
+                          { className: "text-danger" }
+                        )}
                       </div>
                     </div>
                     <div className="col-12 col-sm-6">
@@ -299,12 +324,17 @@ const Tambah = ({ token }) => {
                             <div className="position-relative d-flex align-items-start w-100">
                               <div className="w-100 mr-6">
                                 <input
-                                value={items.label}
+                                  value={items.label}
                                   type="text"
                                   className="form-control"
-                                  placeholder="Masukan data value"
+                                  placeholder="Masukkan data value"
                                   onChange={(e) =>
                                     handleChangeTextForm(e, idx, index)
+                                  }
+                                  onBlur={() =>
+                                    simpleValidator.current.showMessageFor(
+                                      "value"
+                                    )
                                   }
                                 />
                               </div>
@@ -332,6 +362,12 @@ const Tambah = ({ token }) => {
                                 )}
                               </div>
                             </div>
+                            {simpleValidator.current.message(
+                              "value",
+                              items.label,
+                              "required",
+                              { className: "text-danger" }
+                            )}
                           </div>
                         );
                       })}
@@ -372,9 +408,8 @@ const Tambah = ({ token }) => {
                     </a>
                   </Link>
                   <button
-                    type="button"
+                    type="submit"
                     className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
-                    onClick={(e) => submit(e)}
                   >
                     Simpan
                   </button>

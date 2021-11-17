@@ -136,7 +136,7 @@ const Table = ({ token }) => {
                       {allDataReference.data.list_reference.length === 0 ? (
                        
 
-                        <td className="align-middle text-center" colSpan="4">Data Masih Kosong</td>
+                        <td className="align-middle text-center" colSpan="4">Data kosong</td>
 
 
                       ) : (
@@ -176,7 +176,7 @@ const Table = ({ token }) => {
                                   <div className="d-flex align-items-center">
                                     {items.data_references_relasi_id ? (
                                       <Link
-                                        href={`/site-management/reference/ubah-reference-dengan-relasi/${items.id}`}
+                                        href={`/site-management/reference/ubah-reference-dengan-relasi?id=${items.id}`} passHref
                                       >
                                         <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
                                           <IconPencil width="16" height="16" />
@@ -187,7 +187,7 @@ const Table = ({ token }) => {
                                       </Link>
                                     ) : (
                                       <Link
-                                        href={`/site-management/reference/ubah-reference-tanpa-relasi/${items.id}`}
+                                        href={`/site-management/reference/ubah-reference-tanpa-relasi?id=${items.id}`} passHref
                                       >
                                         <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
                                           <IconPencil width="16" height="16" />
@@ -199,7 +199,7 @@ const Table = ({ token }) => {
                                     )}
 
                                     <Link
-                                      href={`/site-management/reference/detail-reference/${items.id}`}
+                                      href={`/site-management/reference/detail-reference?id=${items.id}`} passHref
                                     >
                                       <a className="btn btn-link-action bg-blue-secondary ml-3 position-relative btn-delete">
                                         <IconEye width="16" height="16" />
