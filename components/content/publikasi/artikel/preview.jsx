@@ -95,13 +95,14 @@ const Preview = () => {
 
     return (
         <>
-            <PreviewWrapper title="Pratinjau Artikel - Publikasi">
-                <div className="my-5">
+            {/* <PreviewWrapper title="Pratinjau Artikel - Publikasi"> */}
+            <Container fluid className="px-md-30 px-10 py-10 bg-white">
+                <div className="">
 
                     {/* Header */}
                     {artikel ? (
-                        <div className="row my-5 d-flex flex-column">
-                            <div className="col-2">
+                        <div className="row my-5 flex-column">
+                            <div className="ml-2">
                                 <div className="badge badge-light mr-2">
                                     <div className="text-primary">{(artikel.nama_kategori).toUpperCase()}</div>
                                 </div>
@@ -129,7 +130,7 @@ const Preview = () => {
 
                             <div className="mt-5 ml-5 d-flex flex-row align-items-center justify-content-between mx-3">
                                 <div className="row">
-                                    <div className="">
+                                    <div className="ml-2">
                                         {/* Insert Logo Image Here */}
                                         <Image
                                             src={
@@ -332,7 +333,8 @@ const Preview = () => {
 
                     {/* End of Content */}
                 </div>
-            </PreviewWrapper>
+                </Container>
+            {/* </PreviewWrapper> */}
         </>
 
     )
