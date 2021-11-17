@@ -445,7 +445,7 @@ export const addEvidenceReducer = (state = { evidence: {} }, action) => {
   }
 };
 
-export const cloneTrainingReducer = (state = { training: {} }, action) => {
+export const cloneTrainingReducer = (state = {}, action) => {
   switch (action.type) {
     case CLONE_TRAINING_REQUEST:
       return {
