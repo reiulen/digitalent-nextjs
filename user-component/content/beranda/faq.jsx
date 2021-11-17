@@ -218,7 +218,7 @@ const FaqPage = () => {
                                                             }
                                                             key={i}
                                                         >
-                                                            <div className="accordion-body card card-body border-0 mb-5">
+                                                            <div className="accordion-body card card-body border-0 mb-5 text-justify">
                                                                 {row.jawaban}
                                                             </div>
                                                         </div>
