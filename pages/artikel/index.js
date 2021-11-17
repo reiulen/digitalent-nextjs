@@ -14,7 +14,7 @@ const Artikel  =  dynamic (() =>
 
 const Layout = dynamic (() => 
     import (
-        "../../user-component/content/wrapper/layout.wrapper"
+        "../../components/wrapper/beranda.wrapper"
     )
 )
 

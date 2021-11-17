@@ -5,7 +5,10 @@ import Pagination from "react-js-pagination";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
-import { Carousel } from "react-bootstrap";
+import {
+    Container,
+    Modal
+  } from "react-bootstrap";
 import { getAllBerandaArtikel } from "../../../redux/actions/beranda/artikel.actions"
 import PulseLoaderRender from "../../components/loader/PulseLoader";
 import style from '../../../styles/peserta/galeri.module.css'
