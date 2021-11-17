@@ -1,20 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import Link from "next/link";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import Swal from "sweetalert2";
 import { useRouter } from "next/router";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import IconAdd from "../../../assets/icon/Add";
-import IconDelete from "../../../assets/icon/Delete";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Select from "react-select";
+import SimpleReactValidator from "simple-react-validator";
+
 
 const Tambah = ({ token }) => {
   const router = useRouter();
+  const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
+  const [, forceUpdate] = useState();
   let selectRefDataReference = null;
-  let selectRefDataFromReference = null;
+  const [labelReference, setLabeReferencel] = useState("")
 
   const detailDataReference = useSelector((state) => state.detailDataReference);
 
@@ -196,21 +198,14 @@ const Tambah = ({ token }) => {
     }
   };
 
-  const [labelReference, setLabeReferencel] = useState("")
+  
   const handleInputChange =(e)=>{
     setLabeReferencel(e)
   }
 
   const submit = async (e) => {
     e.preventDefault();
-    if (nameReference === "") {
-      Swal.fire("Gagal", `Nama data reference tidak boleh kosong`, "error");
-    } else if (status === "") {
-      Swal.fire("Gagal", `Status tidak boleh kosong`, "error");
-    } else if (idReference === "") {
-      Swal.fire("Gagal", `Harus pilih data reference`, "error");
-    } 
-    else if (!formReferenceAndText[0].relasi_id || !formReferenceAndText[0].value[0].label ) {
+    if (!formReferenceAndText[0].relasi_id || !formReferenceAndText[0].value[0].label ) {
       Swal.fire(
         "Gagal",
         `List data dan value tidak boleh kosong`,
@@ -252,7 +247,13 @@ const Tambah = ({ token }) => {
           router.push("/site-management/reference");
         });
       } catch (error) {
-        Swal.fire("Gagal simpan", `${error.response.data.message}`, "error");
+        simpleValidator.current.showMessages();
+      forceUpdate(1);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Isi data dengan benar !",
+      });
       }
     }
   };
@@ -312,7 +313,16 @@ const Tambah = ({ token }) => {
                   value={nameReference}
                   className="form-control"
                   onChange={(e) => setNameReference(e.target.value)}
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("nameReference")
+                  }
                 />
+                {simpleValidator.current.message(
+                  "nameReference",
+                  nameReference,
+                  "required",
+                  { className: "text-danger" }
+                )}
               </div>
 
               <div className="form-group">
@@ -321,19 +331,29 @@ const Tambah = ({ token }) => {
                   <select
                     className="form-control"
                     onChange={(e) => setStatus(e.target.value)}
+                    onBlur={() =>
+                    simpleValidator.current.showMessageFor("status")
+                  }
                   >
                     <option value="1">Aktif</option>
                     <option value="0">Tidak aktif</option>
                   </select>
+                  
                 ) : (
                   <select
                     className="form-control"
                     onChange={(e) => setStatus(e.target.value)}
+                    onBlur={() =>
+                    simpleValidator.current.showMessageFor("status")
+                  }
                   >
                     <option value="0">Tidak aktif</option>
                     <option value="1">Aktif</option>
                   </select>
                 )}
+                {simpleValidator.current.message("status", status, "required", {
+                  className: "text-danger",
+                })}
               </div>
 
               <div className="form-group">
@@ -342,7 +362,7 @@ const Tambah = ({ token }) => {
                   ref={(ref) => (selectRefDataReference = ref)}
                   className="basic-single"
                   classNamePrefix="select"
-                  placeholder="Pilih provinsi"
+                  placeholder="Pilih data reference"
                   defaultValue={defaultDataReference.map((items) => {
                     return { ...items, label: items.name, value: items.name };
                   })}
@@ -354,7 +374,16 @@ const Tambah = ({ token }) => {
                   name="color"
                   onChange={(e) => changeListDataReference(e)}
                   options={referenceOption}
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("Data reference")
+                  }
                 />
+                {simpleValidator.current.message(
+                  "Data reference",
+                  idReference,
+                  "required",
+                  { className: "text-danger" }
+                )}
               </div>
 
               {formReferenceAndText.map((itemsRef, idx) => {
@@ -368,7 +397,7 @@ const Tambah = ({ token }) => {
                           value={itemsRef.values}
                           className="basic-single"
                           classNamePrefix="select"
-                          placeholder="Pilih provinsi"
+                          placeholder={`Pilih ${nameListFromReference}`}
                           defaultValue={itemsRef.label}
                           isDisabled={false}
                           isLoading={false}
@@ -379,7 +408,18 @@ const Tambah = ({ token }) => {
                           onInputChange={handleInputChange}
                           onChange={(e) => handleCHangeNameReference(e, idx)}
                           options={optionFromReference}
+                          onBlur={() =>
+                            simpleValidator.current.showMessageFor(
+                              `List ${nameListFromReference}`
+                            )
+                          }
                         />
+                        {simpleValidator.current.message(
+                          `List ${nameListFromReference}`,
+                          itemsRef.values,
+                          "required",
+                          { className: "text-danger" }
+                        )}
                       </div>
                     </div>
                     <div className="col-12 col-sm-6">
@@ -423,6 +463,12 @@ const Tambah = ({ token }) => {
                                 )}
                               </div>
                             </div>
+                            {simpleValidator.current.message(
+                              "value",
+                              items.label,
+                              "required",
+                              { className: "text-danger" }
+                            )}
                           </div>
                         );
                       })}

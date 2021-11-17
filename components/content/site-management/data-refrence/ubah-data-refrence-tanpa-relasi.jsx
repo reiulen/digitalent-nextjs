@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useRef } from "react";
 import Link from "next/link";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import Swal from "sweetalert2";
@@ -8,8 +8,12 @@ import "react-toastify/dist/ReactToastify.css";
 import IconAdd from "../../../assets/icon/Add";
 import { useSelector } from "react-redux";
 
+import SimpleReactValidator from "simple-react-validator";
+
 const Tambah = ({ token }) => {
   const router = useRouter();
+   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
+  const [, forceUpdate] = useState();
 
   const detailDataReference = useSelector((state) => state.detailDataReference);
 
@@ -71,14 +75,6 @@ const Tambah = ({ token }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (nameReference === "") {
-      Swal.fire("Gagal", `Nama data reference tidak boleh kosong`, "error");
-    } else if (status === "") {
-      Swal.fire("Gagal", `Status tidak boleh kosong`, "error");
-    } else if (values.length === 1) {
-      Swal.fire("Gagal", `Form value tidak boleh kosong`, "error");
-    } else {
       let formData = new FormData();
 
       formData.append("id", router.query.id);
@@ -114,9 +110,15 @@ const Tambah = ({ token }) => {
           router.push("/site-management/reference");
         });
       } catch (error) {
-        Swal.fire("Gagal simpan", `${error.response.data.message}`, "error");
+        simpleValidator.current.showMessages();
+      forceUpdate(1);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Isi data dengan benar !",
+      });
       }
-    }
+    // }
   };
 
   return (
@@ -140,14 +142,27 @@ const Tambah = ({ token }) => {
                   className="form-control"
                   value={nameReference}
                   onChange={(e) => setNameReference(e.target.value)}
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor(
+                      "nama data reference"
+                    )
+                  }
                 />
+                {simpleValidator.current.message(
+                  "nama data reference",
+                  nameReference,
+                  "required",
+                  { className: "text-danger" }
+                )}
               </div>
               <div className="form-group">
                 <label>Status</label>
                 {detailDataReference.dataReference.status == 1 ? (
                   <select
                     onChange={(e) => setStatus(e.target.value)}
-                    className="form-control"
+                    className="form-control" onBlur={() =>
+                    simpleValidator.current.showMessageFor("status")
+                  }
                   >
                     <option value="1">Aktif</option>
                     <option value="0">Tidak Aktif</option>
@@ -155,12 +170,17 @@ const Tambah = ({ token }) => {
                 ) : (
                   <select
                     onChange={(e) => setStatus(e.target.value)}
-                    className="form-control"
+                    className="form-control" onBlur={() =>
+                    simpleValidator.current.showMessageFor("status")
+                  }
                   >
                     <option value="0">Tidak Aktif</option>
                     <option value="1">Aktif</option>
                   </select>
                 )}
+                {simpleValidator.current.message("status", status, "required", {
+                  className: "text-danger",
+                })}
               </div>
 
               {values.map((items, index) => {
@@ -177,6 +197,9 @@ const Tambah = ({ token }) => {
                         value={items.value}
                         onChange={(e) => handleChange(e, index)}
                         className="form-control mr-6"
+                        onBlur={() =>
+                          simpleValidator.current.showMessageFor("Value")
+                        }
                       />
                       {index == 0 ? (
                         ""
@@ -202,6 +225,12 @@ const Tambah = ({ token }) => {
                         </button>
                       )}
                     </div>
+                    {simpleValidator.current.message(
+                      "Value",
+                      items.value,
+                      "required",
+                      { className: "text-danger" }
+                    )}
                   </div>
                 );
               })}
