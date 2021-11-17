@@ -18,4 +18,4 @@ Site Management Module is one of many modules in Digi Talent Scholarship Applica
 - [x] and finally run npm run dev
 
 ## Deploy Issue
-- [x] deployment some issues in berita and otp, mb new folder check issue
+- [x] fixing issue otp
