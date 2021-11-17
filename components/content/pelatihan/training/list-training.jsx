@@ -955,7 +955,7 @@ const ListTraining = ({ token }) => {
                                 </Link>
                                 {row.status_pelatihan === "pendaftaran" && (
                                   <Link
-                                    href={`/pelatihan/rekap-pendaftaran/detail-rekap-pendaftaran/${row.id}`}
+                                    href={`/pelatihan/pelatihan/view-list-peserta/${row.id}`}
                                   >
                                     <a
                                       className="btn btn-link-action bg-blue-secondary text-white mr-2"
