@@ -64,10 +64,10 @@ const DetailPelatihan = ({ session }) => {
                 <Row className="mt-8">
                   <Col md={4} sm={6}>
                     <div>
-                      <p className="mb-2" style={{ color: "#6C6C6C" }}>
+                      <p className="mb-1 fz-16" style={{ color: "#6C6C6C" }}>
                         Registrasi
                       </p>
-                      <p className="fz-16">
+                      <p className="fz-18 fw-400">
                         {moment(pelatihan.pendaftaran_mulai).format(
                           "DD MMM YYYY"
                         )}{" "}
@@ -81,19 +81,23 @@ const DetailPelatihan = ({ session }) => {
 
                   <Col md={3} sm={6}>
                     <div>
-                      <p className="mb-2" style={{ color: "#6C6C6C" }}>
+                      <p className="mb-1 fz-16" style={{ color: "#6C6C6C" }}>
                         Pelaksanaan
                       </p>
-                      <p className="fz-16">{pelatihan.metode_pelatihan}</p>
+                      <p className="fz-18 fw-400">
+                        {pelatihan.metode_pelatihan}
+                      </p>
                     </div>
                   </Col>
 
                   <Col md={3} sm={6}>
                     <div>
-                      <p className="mb-2" style={{ color: "#6C6C6C" }}>
+                      <p className="mb-1 fz-16" style={{ color: "#6C6C6C" }}>
                         Pendaftar
                       </p>
-                      <p className="fz-16">{pelatihan.kuota_peserta} Peserta</p>
+                      <p className="fz-18 fw-400">
+                        {pelatihan.kuota_peserta} Peserta
+                      </p>
                     </div>
                   </Col>
 
@@ -161,12 +165,14 @@ const DetailPelatihan = ({ session }) => {
               </div>
               <hr className="my-7" />
               <div className="d-flex flex-wrap align-items-start">
-                <Image
-                  src={`/assets/icon/alamat-1.svg`}
-                  width={30}
-                  height={30}
-                />
-                <div className="ml-4">
+                <div className="mt-2">
+                  <Image
+                    src={`/assets/icon/alamat-1.svg`}
+                    width={30}
+                    height={30}
+                  />
+                </div>
+                <div className="ml-1 col-10">
                   <p className="fw-600 fz-18 mb-2">Alamat</p>
                   <p className="fz-16">{pelatihan.alamat}</p>
                 </div>
@@ -179,7 +185,7 @@ const DetailPelatihan = ({ session }) => {
                     height={30}
                   />
                 </div>
-                <div className="ml-1 col-8">
+                <div className="ml-1 col-10">
                   <p className="fw-600 fz-18 mb-2">Jadwal Pelatihan</p>
                   <p className="fz-16">
                     {moment(pelatihan.pelatihan_mulai).format("DD MMM YYYY")} -{" "}
