@@ -7,20 +7,23 @@ import { getTemaByAkademi } from "../redux/actions/beranda/beranda.actions";
 import { getAllPublikasi } from "../redux/actions/beranda/beranda.actions";
 import { getDataPribadi } from "../redux/actions/pelatihan/function.actions";
 import React, { useState } from "react";
-import LoadingLanding from "../user-component/components/loader/LandingLoader";
+import LoadingLandingPage from "../user-component-new/components/loader/LoadingLandingPage";
 
 const Beranda = dynamic(
-  () => import("../user-component/content/beranda/beranda-new"),
+  () => import("../user-component-new/content/home/beranda/Beranda.component"),
   {
     loading: function loadingNow() {
-      return <LoadingLanding />;
+      return <LoadingLandingPage />;
     },
     ssr: false,
   }
 );
-const Layout = dynamic(() => import("../components/wrapper/beranda.wrapper"), {
-  ssr: false,
-});
+const Layout = dynamic(
+  () => import("../user-component-new/components/template/Layout.component"),
+  {
+    ssr: false,
+  }
+);
 
 export default function HomePage(props) {
   let session = null;
