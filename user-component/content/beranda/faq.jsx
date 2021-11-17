@@ -80,7 +80,7 @@ const FaqPage = () => {
                         <input
                             type="text"
                             className="form-control pl-10"
-                            placeholder="Cari Pertanyaan..."
+                            placeholder="Cari..."
                             style={{ borderRadius: "30px", backgroundColor: "#fafafb" }}
                             onChange={(e) => setKeyword(e.target.value)}
                         />
@@ -218,7 +218,7 @@ const FaqPage = () => {
                                                             }
                                                             key={i}
                                                         >
-                                                            <div className="accordion-body card card-body border-0 mb-5">
+                                                            <div className="accordion-body card card-body border-0 mb-5 text-justify">
                                                                 {row.jawaban}
                                                             </div>
                                                         </div>
