@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, InputGroup, Form, Button } from "react-bootstrap";
-import SubHeaderComponent from "../../components/template/Subheader.component";
+import { Container, Row, Col, Button } from "react-bootstrap";
+import BreadcrumbComponent from "../../../components/global/Breadcrumb.component";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Pagination from "react-js-pagination";
-import { getAllPenyeleggaraPage } from "../../../redux/actions/beranda/beranda.actions";
-import { SweatAlert } from "../../../utils/middleware/helper/index";
-import PulseLoaderRender from "../../components/loader/PulseLoader";
+import { getAllPenyeleggaraPage } from "../../../../redux/actions/beranda/beranda.actions";
+import { SweatAlert } from "../../../../utils/middleware/helper/index";
+import PulseLoaderRender from "../../../components/loader/PulseLoader";
+import HomeWrapper from "../../../components/wrapper/Home.wrapper";
 
 const Penyelenggara = () => {
   const dispatch = useDispatch();
@@ -46,8 +47,8 @@ const Penyelenggara = () => {
 
   return (
     <>
-      <Container fluid className="px-md-30 px-10 py-10">
-        <SubHeaderComponent
+      <HomeWrapper>
+        <BreadcrumbComponent
           data={[{ link: router.asPath, name: "Penyelenggara Pelatihan" }]}
         />
 
@@ -102,7 +103,7 @@ const Penyelenggara = () => {
                 </form>
               </Col>
               <Col md={2} className="my-auto ">
-                <p className="mb-3 mb-md-0 float-right">
+                <p className="mb-3 mb-md-0 float-md-right">
                   Urutkan berdasarkan :
                 </p>
               </Col>
@@ -198,7 +199,7 @@ const Penyelenggara = () => {
               )}
           </Row>
         </section>
-      </Container>
+      </HomeWrapper>
     </>
   );
 };

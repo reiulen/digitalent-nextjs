@@ -4,10 +4,13 @@ import { wrapper } from "../../redux/store";
 import { getDataPribadi } from "../../redux/actions/pelatihan/function.actions";
 import { getAllPenyeleggaraPage } from "../../redux/actions/beranda/beranda.actions";
 
-import LoadingDetailAkademi from "../../user-component/components/loader/DetailAkademiLoader";
+import LoadingDetailAkademi from "../../user-component-new/components/loader/LoadingDetailAkademi";
 
 const Penyelenggara = dynamic(
-  () => import("../../user-component/content/beranda/penyelenggara"),
+  () =>
+    import(
+      "../../user-component-new/content/home/penyelenggara/Penyelenggara.component"
+    ),
   {
     loading: function loadingNow() {
       return <LoadingDetailAkademi />;
@@ -16,7 +19,7 @@ const Penyelenggara = dynamic(
   }
 );
 const Layout = dynamic(
-  () => import("../../components/wrapper/beranda.wrapper"),
+  () => import("../../user-component-new/components/template/Layout.component"),
   { ssr: false }
 );
 
