@@ -9,7 +9,7 @@ import Swal from "sweetalert2";
 import { Modal } from "react-bootstrap";
 import Select from "react-select";
 import moment from "moment";
-import axios from 'axios'
+import axios from "axios";
 
 import {
   deleteTraining,
@@ -41,7 +41,6 @@ import {
   dropdownTemabyAkademi,
   dropdownKabupaten,
 } from "../../../../redux/actions/pelatihan/function.actions";
-
 
 const ListTraining = ({ token }) => {
   const dispatch = useDispatch();
@@ -248,7 +247,7 @@ const ListTraining = ({ token }) => {
     token,
     revisi,
     cloneTraining.loading,
-    academy?.value
+    academy?.value,
   ]);
 
   const handlePagination = (pageNumber) => {
@@ -318,7 +317,7 @@ const ListTraining = ({ token }) => {
         academy,
         theme,
         token,
-        berjalan,
+        berjalan
       )
     );
   };
@@ -433,7 +432,7 @@ const ListTraining = ({ token }) => {
       setTheme(null);
       setStatusSubstansi(null);
       setBerjalan(null);
-      setStatusPelatihan({label: val, value: val});
+      setStatusPelatihan({ label: val, value: val });
       setDateRegister([null, null]);
       setDatePelaksanaan([null, null]);
       setSearch("");
@@ -459,7 +458,7 @@ const ListTraining = ({ token }) => {
       setAcademy(null);
       setTheme(null);
       setBerjalan(null);
-      setStatusSubstansi({label: val, value: val});
+      setStatusSubstansi({ label: val, value: val });
       setStatusPelatihan(null);
       setDateRegister([null, null]);
       setDatePelaksanaan([null, null]);
@@ -539,7 +538,7 @@ const ListTraining = ({ token }) => {
     }
   };
 
-  const handleExportReport =  () => {
+  const handleExportReport = () => {
     let register = dateRegister.map((item) => {
       return moment(item).format("YYYY-MM-DD");
     });
@@ -549,26 +548,27 @@ const ListTraining = ({ token }) => {
 
     let config = {
       params: {
-        cari:search,
-        pendaftaran_mulai: register[0] === "Invalid date" ? "" : register.join(","),
-        pelatihan_mulai: pelaksanaan[0] === "Invalid date" ? "" : pelaksanaan.join(","),
+        cari: search,
+        pendaftaran_mulai:
+          register[0] === "Invalid date" ? "" : register.join(","),
+        pelatihan_mulai:
+          pelaksanaan[0] === "Invalid date" ? "" : pelaksanaan.join(","),
         status_pelatihan: statusPelatihan != null ? statusPelatihan.label : "",
         penyelenggara: penyelenggara != null ? penyelenggara.label : "",
-        akademi: academy !== null ?  academy.label : "",
+        akademi: academy !== null ? academy.label : "",
         tema: theme !== null ? theme.label : "",
-        "WhereInPelatihan": berjalan,
-        status_substansi: statusSubstansi !== null ? statusSubstansi.label : ""
+        WhereInPelatihan: berjalan,
+        status_substansi: statusSubstansi !== null ? statusSubstansi.label : "",
       },
       headers: {
         Authorization: "Bearer " + token,
       },
-    }
+    };
 
     let link = `${process.env.END_POINT_API_PELATIHAN}api/v1/pelatihan/export`;
-   
 
     axios.get(link, config).then((res) => {
-      window.open(res.data.data, '_blank');
+      window.open(res.data.data, "_blank");
     });
   };
 
@@ -1100,7 +1100,10 @@ const ListTraining = ({ token }) => {
             <Select
               options={optionsAkademi}
               defaultValue={academy}
-              onChange={(e) => {setAcademy({ value: e.value, label: e.label }); setTheme(null)}}
+              onChange={(e) => {
+                setAcademy({ value: e.value, label: e.label });
+                setTheme(null);
+              }}
             />
           </div>
           <div className="form-group mb-5">

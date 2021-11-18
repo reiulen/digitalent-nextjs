@@ -27,7 +27,10 @@ const Table = ({ token }) => {
   const router = useRouter();
 
   const allAdminSite = useSelector((state) => state.allAdminSite);
-  const { isDeleted } = useSelector((state) => state.deleteAdminSite);
+  console.log("allAdminSite", allAdminSite);
+  const { isDeleted, error: deleteError } = useSelector(
+    (state) => state.deleteAdminSite
+  );
 
   const [valueSearch, setValueSearch] = useState("");
   const handleChangeValueSearch = (value) => {
@@ -39,7 +42,7 @@ const Table = ({ token }) => {
     dispatch(searchCooporation(valueSearch));
   };
 
-  const handleDelete = (id, token) => {
+  const handleDelete = (id) => {
     Swal.fire({
       title: "Apakah anda yakin menghapus data ?",
       text: "Data ini tidak bisa dikembalikan !",
@@ -58,12 +61,29 @@ const Table = ({ token }) => {
 
   useEffect(() => {
     dispatch(getAllAdminSite(token));
+    if (isDeleted) {
+      Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
+        (result) => {
+          if (result.isConfirmed) {
+            dispatch(getAllAdminSite(token));
+          }
+        }
+      );
+    }
+    if (deleteError) {
+      Swal.fire("Gagal", "Data gagal dihapus.", "error");
+    }
+    dispatch({
+      type: DETAIL_ADMIN_SITE_RESET,
+    });
   }, [
     dispatch,
     allAdminSite.cari,
     allAdminSite.page,
     allAdminSite.limit,
     token,
+    isDeleted,
+    deleteError,
   ]);
 
   useEffect(() => {
@@ -86,9 +106,7 @@ const Table = ({ token }) => {
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3
-              className="card-title font-weight-bolder text-dark titles-1"
-            >
+            <h3 className="card-title font-weight-bolder text-dark titles-1">
               List Administrator
             </h3>
             <div className="card-toolbar">
@@ -107,37 +125,35 @@ const Table = ({ token }) => {
             <div className="table-filter">
               <div className="row align-items-center">
                 <div className="col-lg-12 col-xl-12">
-                  <div
-                    className="row w-100 ml-0 ml-sm-0"
-                  >
-                      <div className="col-12 col-xl-4">
-                        <div className="position-relative overflow-hidden w-100">
-                          <IconSearch
-                            style={{ left: "10" }}
-                            className="left-center-absolute"
-                          />
-                          <input
-                            id="kt_datatable_search_query"
-                            type="text"
-                            className="form-control pl-10"
-                            placeholder="Ketik disini untuk Pencarian..."
-                            onChange={(e) =>
-                              handleChangeValueSearch(e.target.value)
-                            }
-                          />
-                          <button
-                            type="button"
-                            onClick={handleSubmit}
-                            className="btn bg-blue-primary text-white right-center-absolute"
-                            style={{
-                              borderTopLeftRadius: "0",
-                              borderBottomLeftRadius: "0",
-                            }}
-                          >
-                            Cari
-                          </button>
-                        </div>
+                  <div className="row w-100 ml-0 ml-sm-0">
+                    <div className="col-12 col-xl-4">
+                      <div className="position-relative overflow-hidden w-100">
+                        <IconSearch
+                          style={{ left: "10" }}
+                          className="left-center-absolute"
+                        />
+                        <input
+                          id="kt_datatable_search_query"
+                          type="text"
+                          className="form-control pl-10"
+                          placeholder="Ketik disini untuk Pencarian..."
+                          onChange={(e) =>
+                            handleChangeValueSearch(e.target.value)
+                          }
+                        />
+                        <button
+                          type="button"
+                          onClick={handleSubmit}
+                          className="btn bg-blue-primary text-white right-center-absolute"
+                          style={{
+                            borderTopLeftRadius: "0",
+                            borderBottomLeftRadius: "0",
+                          }}
+                        >
+                          Cari
+                        </button>
                       </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -160,7 +176,9 @@ const Table = ({ token }) => {
                     </thead>
                     <tbody>
                       {allAdminSite?.data?.list_role?.length === 0 ? (
-                        <td className="align-middle text-center" colSpan="6">Data Masih Kosong</td>
+                        <td className="align-middle text-center" colSpan="6">
+                          Data Kosong
+                        </td>
                       ) : (
                         allAdminSite?.data?.list_role?.map((items, index) => {
                           return (
@@ -176,7 +194,7 @@ const Table = ({ token }) => {
                                 {items.name}
                               </td>
                               <td className="align-middle text-left">
-                                Data masih null
+                                {items.email ? items.email : "-"}
                               </td>
                               <td className="align-middle text-left">role</td>
                               <td className="align-middle text-left">
@@ -210,26 +228,13 @@ const Table = ({ token }) => {
                               </td>
                               <td className="align-middle text-left">
                                 <div className="d-flex align-items-center">
-                                  
-                                  {/* <Link href={`/site-management/user/administrator/edit-data-administrator/${items.id}`} passHref>
-                                  
-                                  
-                                  <a
-                                    className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                                  >
-                                    <IconPencil width="16" height="16" />
-                                    <div className="text-hover-show-hapus">
-                                      Ubah
-                                    </div>
-                                  </a>
-
-                                  </Link> */}
-
                                   <Link
                                     href={{
-                                      pathname:"/site-management/user/administrator/edit-data-administrator",
-                                      query:{id:items.id}
+                                      pathname:
+                                        "/site-management/user/administrator/edit-data-administrator",
+                                      query: { id: items.id },
                                     }}
+                                    passHref
                                   >
                                     <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
                                       <IconPencil width="16" height="16" />
@@ -238,29 +243,25 @@ const Table = ({ token }) => {
                                       </div>
                                     </a>
                                   </Link>
-
-
-
-
-                                  <button
-                                    className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete"
-                                    onClick={() =>
-                                      router.push(
-                                        `/site-management/user/administrator/detail-administrator`
-                                      )
-                                    }
+                                  <Link
+                                    href={{
+                                      pathname:
+                                        "/site-management/user/administrator/detail-administrator",
+                                      query: { id: items.id },
+                                    }}
+                                    passHref
                                   >
-                                    <IconEye width="16" height="16" />
-                                    <div className="text-hover-show-hapus">
-                                      Detail
-                                    </div>
-                                  </button>
+                                    <a className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete">
+                                      <IconEye width="16" height="16" />
+                                      <div className="text-hover-show-hapus">
+                                        Detail
+                                      </div>
+                                    </a>
+                                  </Link>
 
                                   <button
                                     className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                                    // onClick={() =>
-                                    //   roleDelete(items.id)
-                                    // }
+                                    onClick={() => handleDelete(items.id)}
                                   >
                                     <IconDelete width="16" height="16" />
                                     <div className="text-hover-show-hapus">

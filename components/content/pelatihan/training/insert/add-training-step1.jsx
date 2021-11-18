@@ -139,48 +139,58 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
   }
 
   const optionsLevelPelatihan = [];
-  for (let index = 0; index < dataLevelPelatihan.data.length; index++) {
-    let val = {
-      value: dataLevelPelatihan.data[index].id,
-      label: dataLevelPelatihan.data[index].label,
-    };
-    optionsLevelPelatihan.push(val);
+  if (dataLevelPelatihan) {
+    for (let index = 0; index < dataLevelPelatihan.data.length; index++) {
+      let val = {
+        value: dataLevelPelatihan.data[index].id,
+        label: dataLevelPelatihan.data[index].label,
+      };
+      optionsLevelPelatihan.push(val);
+    }
   }
 
   const optionsPenyelenggara = [];
-  for (let index = 0; index < dataPenyelenggara.data.length; index++) {
-    let val = {
-      value: dataPenyelenggara.data[index].id,
-      label: dataPenyelenggara.data[index].label,
-    };
-    optionsPenyelenggara.push(val);
+  if (dataPenyelenggara) {
+    for (let index = 0; index < dataPenyelenggara.data.length; index++) {
+      let val = {
+        value: dataPenyelenggara.data[index].id,
+        label: dataPenyelenggara.data[index].label,
+      };
+      optionsPenyelenggara.push(val);
+    }
   }
 
   const optionsMitra = [];
-  for (let index = 0; index < dataMitra.data.length; index++) {
-    let val = {
-      value: dataMitra.data[index].id,
-      label: dataMitra.data[index].name,
-    };
-    optionsMitra.push(val);
+  if (dataMitra) {
+    for (let index = 0; index < dataMitra.data.length; index++) {
+      let val = {
+        value: dataMitra.data[index].id,
+        label: dataMitra.data[index].name,
+      };
+      optionsMitra.push(val);
+    }
   }
 
   const optionsZonasi = [];
-  for (let index = 0; index < dataZonasi.data.zonasi.length; index++) {
-    let val = {
-      value: dataZonasi.data.zonasi[index].value,
-      label: dataZonasi.data.zonasi[index].label,
-    };
-    optionsZonasi.push(val);
+  if (dataZonasi) {
+    for (let index = 0; index < dataZonasi.data.zonasi.length; index++) {
+      let val = {
+        value: dataZonasi.data.zonasi[index].value,
+        label: dataZonasi.data.zonasi[index].label,
+      };
+      optionsZonasi.push(val);
+    }
   }
 
   const optionsProvinsi = [];
-  for (let index = 0; index < dataProvinsi.data.length; index++) {
-    let val = {
-      value: dataProvinsi.data[index].id,
-      label: dataProvinsi.data[index].label,
-    };
-    optionsProvinsi.push(val);
+  if (dataProvinsi) {
+    for (let index = 0; index < dataProvinsi.data.length; index++) {
+      let val = {
+        value: dataProvinsi.data[index].id,
+        label: dataProvinsi.data[index].label,
+      };
+      optionsProvinsi.push(val);
+    }
   }
 
   let selectRefKabupaten = null;

@@ -3,10 +3,13 @@ import dynamic from "next/dynamic";
 import { wrapper } from "../../redux/store";
 import { getDataPribadi } from "../../redux/actions/pelatihan/function.actions";
 
-import LoadingDetailAkademi from "../../user-component/components/loader/DetailAkademiLoader";
+import LoadingDetailAkademi from "../../user-component-new/components/loader/LoadingDetailAkademi";
 
 const PusatInformasi = dynamic(
-  () => import("../../user-component/content/beranda/pusat-informasi"),
+  () =>
+    import(
+      "../../user-component-new/content/home/pusat-informasi/PusatInformasi.component"
+    ),
   {
     loading: function loadingNow() {
       return <LoadingDetailAkademi />;
@@ -15,7 +18,7 @@ const PusatInformasi = dynamic(
   }
 );
 const Layout = dynamic(
-  () => import("../../components/wrapper/beranda.wrapper"),
+  () => import("../../user-component-new/components/template/Layout.component"),
   { ssr: false }
 );
 

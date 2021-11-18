@@ -93,6 +93,36 @@ const Galeri = ({ token }) => {
     const onNewReset = () => {
         router.replace("/publikasi/galeri", undefined, { shallow: true });
     };
+    
+  const getWindowDimensions = () => {
+    // if (typeof window === 'undefined') {
+    //     global.window = {}
+    // }
+
+    const { innerWidth: width, innerHeight: height } = window;
+    return {
+      width,
+      height,
+    };
+  };
+
+  const [windowDimensions, setWindowDimensions] = useState(
+    // getWindowDimensions()
+    {}
+  );
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowDimensions(getWindowDimensions());
+    }
+    setWindowDimensions(getWindowDimensions());
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [galeri])
+
+  useEffect(() => {
+
+  }, [windowDimensions])
 
     const handleDelete = id => {
         Swal.fire({
@@ -1060,22 +1090,7 @@ const Galeri = ({ token }) => {
                                                 activePage={page}
                                                 itemsCountPerPage={galeri.perPage}
                                                 totalItemsCount={galeri.total}
-                                                pageRangeDisplayed={3}
-                                                onChange={handlePagination}
-                                                nextPageText={">"}
-                                                prevPageText={"<"}
-                                                firstPageText={"<<"}
-                                                lastPageText={">>"}
-                                                itemClass="page-item"
-                                                linkClass="page-link"
-                                            />
-                                        </div>
-                                        <div className={`${stylesPag.pagination2} table-pagination`}>
-                                            <Pagination
-                                                activePage={page}
-                                                itemsCountPerPage={galeri.perPage}
-                                                totalItemsCount={galeri.total}
-                                                pageRangeDisplayed={1}
+                                                pageRangeDisplayed={windowDimensions.width > 320 ? 3 : 1}
                                                 onChange={handlePagination}
                                                 nextPageText={">"}
                                                 prevPageText={"<"}
