@@ -145,19 +145,10 @@ const EditBerita = ({ token, idUser }) => {
             if (hasWhiteSpace(data[i])) {
                 data.splice([i], 1);
             }
-            // else if ((tag[i]).includes(data)) {
-            //     Swal.fire("Oops !", "Tag tidak boleh sama", "error");
-            //     data.splice([i], 1);
-            // }
-            tag.forEach((el, idx) => {
-                return (
-                    el.length === data.length && Swal.fire("Oops !", "Tag tidak boleh sama", "error")
-                )
-            })
         }
-
-        setTag(data);
-        // }
+        if ((tag).includes(data) !== true) {
+            setTag(data);
+        }
     }
 
     const onSubmit = (e) => {
@@ -363,7 +354,7 @@ const EditBerita = ({ token, idUser }) => {
                             <h3 className="col-sm-4 card-title font-weight-bolder text-dark">Ubah Berita</h3>
                         </div>
                         <div className="card-body">
-                            <form onSubmit={onSubmit}>
+                            <div>
                                 <div className="form-group">
                                     <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Judul</label>
                                     <div className={`${styles.judulTambah} col-sm-12`}>
@@ -609,10 +600,10 @@ const EditBerita = ({ token, idUser }) => {
                                         <Link href='/publikasi/berita'>
                                             <a className={`${styles.btnKembali} btn btn-white-ghost-rounded-full rounded-pill mr-2 btn-sm`}>Kembali</a>
                                         </Link>
-                                        <button className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill btn-sm`}>Simpan</button>
+                                        <button onClick={onSubmit} className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill btn-sm`}>Simpan</button>
                                     </div>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>

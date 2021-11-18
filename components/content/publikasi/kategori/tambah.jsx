@@ -108,7 +108,7 @@ const TambahKategori = ({ token }) => {
                         <h3 className="col-sm-4 card-title font-weight-bolder text-dark">Tambah Kategori</h3>
                     </div>
                     <div className="card-body">
-                        <form onSubmit={onSubmit}>
+                        <div>
                             <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-4 col-form-label font-weight-bolder">Nama Kategori</label>
                                 <div className={`${styles.judulTambah} col-sm-12`}>
@@ -161,10 +161,10 @@ const TambahKategori = ({ token }) => {
                                     <Link href='/publikasi/kategori'>
                                         <a className={`${styles.btnKembali} btn btn-white-ghost-rounded-full rounded-pill mr-2 btn-sm`}>Kembali</a>
                                     </Link>
-                                    <button className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill btn-sm`}>Simpan</button>
+                                    <button onClick={onSubmit} className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill btn-sm`}>Simpan</button>
                                 </div>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>

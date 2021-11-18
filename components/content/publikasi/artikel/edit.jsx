@@ -156,7 +156,7 @@ const EditArtikel = ({ token, idUser }) => {
         data.splice([i], 1);
       }
     }
-    if ((data).includes(data) !== true) {
+    if ((tag).includes(data) !== true) {
       setTag(data);
     }
   }
@@ -361,7 +361,7 @@ const EditArtikel = ({ token, idUser }) => {
               </h3>
             </div>
             <div className="card-body">
-              <form onSubmit={onSubmit}>
+              <div>
                 <div className="form-group">
                   <label
                     htmlFor="staticEmail"
@@ -672,12 +672,12 @@ const EditArtikel = ({ token, idUser }) => {
                         Kembali
                       </a>
                     </Link>
-                    <button className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill btn-sm`}>
+                    <button onClick={onSubmit} className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill btn-sm`}>
                       Simpan
                     </button>
                   </div>
                 </div>
-              </form>
+              </div>
             </div>
           </div>
         </div>
