@@ -659,7 +659,7 @@ const Artikel = () => {
 
                     {/* Pagination */}
                     {
-                        artikel ?
+                        artikel && artikel.total !== 0 ?
                             <div className="row mt-5 mb-10 d-flex justify-content-center">
                                 <div className="table-pagination">
                                     <Pagination 
