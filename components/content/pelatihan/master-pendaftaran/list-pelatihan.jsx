@@ -340,7 +340,7 @@ export default function MasterPelatihan({ token }) {
                       {!list || (list && list?.list?.length === 0) ? (
                         <tr>
                           <td className="text-center" colSpan={6}>
-                            Data Tidak Ditemukan
+                            Data Kosong
                           </td>
                         </tr>
                       ) : (

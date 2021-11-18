@@ -18,8 +18,10 @@ import { UPDATE_PENDIDIKAN_RESET } from "../../../../../redux/types/pelatihan/pr
 import {
   helperRegexGPA,
   helperRegexNumber,
+  SweatAlert,
   yyyy,
 } from "../../../../../utils/middleware/helper";
+import moment from "moment";
 
 const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
   const dispatch = useDispatch();
@@ -89,12 +91,12 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
     dispatch(getDataAsalSekolah(token, 1, 100, asalSekolah));
 
     if (errorUpdateData) {
-      toast.error(errorUpdateData);
+      SweatAlert("Gagal", errorUpdateData, "error");
       dispatch(clearErrors());
     }
 
     if (success) {
-      toast.success("Berhasil Update Data");
+      SweatAlert("Berhasil", "Berhasil Update Data", "success");
       dispatch({ type: UPDATE_PENDIDIKAN_RESET });
       if (wizzard) {
         funcViewEdit(4);
@@ -220,8 +222,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
   };
 
   useEffect(() => {
-    if (tahunMasuk > yyyy) {
-      setTahunMasuk(yyyy);
+    if (tahunMasuk > moment().year()) {
+      setTahunMasuk(moment().year());
     }
   }, [tahunMasuk]);
 
@@ -230,15 +232,10 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
     if (ipk >= 4) {
       setIpk(4);
     }
-    // if (ipk.length > 4) {
-    //   return false;
-    // }
-
-    // console.log(typeof ipk);
     if (validateIpk.test(ipk)) {
       setIpk(Math.round(ipk));
     }
-    const target = document.getElementById("ipk");
+    const target = document.getElementById("formGridIpk");
     if (target) {
       target.onkeydown = e => {
         if (e.code == "Minus") {
@@ -1153,7 +1150,6 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     setIpk(e.target.value);
                   }}
                   onBlur={() => simpleValidator.current.showMessageFor("ipk")}
-                  id="ipk"
                 />
                 {simpleValidator.current.message(
                   "ipk",
@@ -1207,7 +1203,6 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   }}
                   max={4}
                   onBlur={() => simpleValidator.current.showMessageFor("ipk")}
-                  id="ipk"
                 />
                 {simpleValidator.current.message(
                   "ipk",
@@ -1261,7 +1256,6 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   }}
                   max={4}
                   onBlur={() => simpleValidator.current.showMessageFor("ipk")}
-                  id="ipk"
                 />
                 {simpleValidator.current.message(
                   "ipk",
@@ -1315,7 +1309,6 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     setIpk(e.target.value);
                   }}
                   onBlur={() => simpleValidator.current.showMessageFor("ipk")}
-                  id="ipk"
                 />
                 {simpleValidator.current.message(
                   "ipk",

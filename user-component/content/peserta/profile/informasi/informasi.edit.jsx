@@ -76,16 +76,6 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
     (dataPribadi && dataPribadi.file_path + dataPribadi.File_ktp) || ""
   );
 
-  // const [cvName, setCvName] = useState(
-  //   (dataPribadi && dataPribadi.cv) || "Belum ada file"
-  // );
-  // const [cv, setCv] = useState("");
-  // const [cvPreview, setCvPreview] = useState(
-  //   (dataPribadi && dataPribadi.file_path + dataPribadi.cv) || ""
-  // );
-
-  // const [link, setLink] = useState((dataPribadi && dataPribadi.link) || "");
-
   const optionsKelamin = [
     { value: "0", label: "Laki - Laki" },
     { value: "1", label: "Perempuan" },
@@ -214,20 +204,6 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
     }
     funcViewEdit(false);
   };
-
-  const today = new Date();
-  const [dd, setdd] = useState(today.getDate());
-  const [mm, setmm] = useState(today.getMonth() + 1); //January is 0 so need to add 1 to make it 1!
-  const [yyyy, setyyyy] = useState(today.getFullYear());
-
-  useEffect(() => {
-    if (dd < 10) {
-      setdd((dd = "0" + dd));
-    }
-    if (mm < 10) {
-      setmm((mm = "0" + mm));
-    }
-  }, [dd, mm]);
 
   const [showUpdateGambar, setShowUpdateGambar] = useState(false);
   const [upImg, setUpImg] = useState();
@@ -614,7 +590,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("tanggal lahir")
                 }
-                max={yyyy - 1 + "-" + mm + "-" + dd}
+                max={moment().subtract(1, "year").format("YYYY-MM-DD")}
               />
               {simpleValidator.current.message(
                 "tanggal lahir",

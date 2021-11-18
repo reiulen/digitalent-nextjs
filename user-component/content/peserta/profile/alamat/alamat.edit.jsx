@@ -137,7 +137,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
   console.log(optionsKelurahan);
 
   const optionsKabupatenDomisili = [];
-  if (dataKabupatenDomisili.length !== 0) {
+  if (dataKabupatenDomisili?.length !== 0) {
     for (let index = 0; index < dataKabupatenDomisili.data.length; index++) {
       let val = {
         value: dataKabupatenDomisili.data[index].id,
