@@ -85,7 +85,6 @@ export const getAllArtikel =
           
           const config = {
             params:{
-              token,
               page,
               keyword,
               limit,

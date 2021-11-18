@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useSelector, useDispatch } from "react-redux";
-import { Row, Col, Card, Button, Badge, Modal } from "react-bootstrap";
+import { Row, Col, Card, Button, Badge, Modal, Select } from "react-bootstrap";
 import Pagination from "react-js-pagination";
+import PaginationPeserta from "../../../components/PaginationPeserta";
+import DatePicker from "react-datepicker";
 
 import style from "../../../../styles/peserta/dashboard.module.css";
 import CardPill from "../../../components/peserta/CardPill";
@@ -27,15 +29,15 @@ const Dashboard = ({ session, success }) => {
   const [keyword, setKeyword] = useState(null);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(5);
-  const [createdAt, setCreatedAt] = useState(null);
+  const [dateRegister, setDateRegister] = useState([null, null]);
+  const [dateRegisterStart, dateRegisterEnd] = dateRegister;
+  const [showModal, setShowModal] = useState(false);
 
   let loading = false;
 
   if (allArtikelsPeserta.loading) {
     loading = allArtikelsPeserta.loading;
   }
-
-  console.log(allArtikelsPeserta);
 
   const listArtikel =
     allArtikelsPeserta.artikel?.artikel.length > 0 ? (
@@ -138,8 +140,21 @@ const Dashboard = ({ session, success }) => {
 
   const handleSearch = () => {
     dispatch(
-      getAllArtikelsPeserta(session.token, 1, 5, keyword, null, null, null)
+      getAllArtikelsPeserta(session.token, 1, limit, keyword, null, null, null)
     );
+  };
+
+  const handlePagination = (pageNumber) => {
+    setPage(pageNumber);
+    dispatch(getAllArtikelsPeserta(
+      session.token,
+      pageNumber,
+      limit,
+      keyword,
+      null,
+      null,
+      null
+    ));
   };
 
   return (
@@ -223,6 +238,7 @@ const Dashboard = ({ session, success }) => {
                     color: "#bdbdbd",
                     float: "right",
                   }}
+                  onClick={() => setShowModal(true)}
                 >
                   <div className="d-flex align-items-center">
                     <i className="ri-filter-fill mr-3"></i>
@@ -301,57 +317,135 @@ const Dashboard = ({ session, success }) => {
                 </tbody>
               </table>
             </div>
-            <div className="row">
-                  <div className="table-pagination table-pagination pagination-custom col-12 col-md-6">
-                    <Pagination
-                      activePage={1}
-                      itemsCountPerPage={1}
-                      totalItemsCount={10}
-                      pageRangeDisplayed={3}
-                      // onChange={handlePagination}
-                      nextPageText={">"}
-                      prevPageText={"<"}
-                      firstPageText={"<<"}
-                      lastPageText={">>"}
-                      itemClass="page-item"
-                      linkClass="page-link"
-                    />
-                  </div>
-                  <div className="table-total ml-auto">
-                    <div className="row">
-                      <div className="col-4 mr-0 p-0 mt-3">
-                        <select
-                          className="form-control"
-                          id="exampleFormControlSelect2"
-                          style={{
-                            width: "65px",
-                            background: "#F3F6F9",
-                            borderColor: "#F3F6F9",
-                            color: "#9E9E9E",
-                          }}
-                          // onChange={(e) => handleLimit(e.target.value)}
-                          // onBlur={(e) => handleLimit(e.target.value)}
-                          value={limit}
-                        >
-                          <option value="5">5</option>
-                          <option value="10">10</option>
-                          <option value="30">30</option>
-                          <option value="40">40</option>
-                          <option value="50">50</option>
-                        </select>
-                      </div>
-                      <div className="col-8 my-auto pt-3">
-                        <p
-                          className="align-middle mt-3"
-                          style={{ color: "#B5B5C3" }}
-                        >
-                          Total Data 10
-                        </p>
-                      </div>
+            {allArtikelsPeserta.artikel?.artikel.length > 5 && (
+              <div className="row">
+                <div className="table-pagination table-pagination pagination-custom col-12 col-md-6">
+                  <Pagination
+                    activePage={page}
+                    itemsCountPerPage={allArtikelsPeserta.perPage}
+                    totalItemsCount={allArtikelsPeserta.total}
+                    pageRangeDisplayed={3}
+                    onChange={handlePagination}
+                    nextPageText={">"}
+                    prevPageText={"<"}
+                    firstPageText={"<<"}
+                    lastPageText={">>"}
+                    itemClass="page-item"
+                    linkClass="page-link"
+                  />
+                </div>
+                <div className="table-total ml-auto">
+                  <div className="row">
+                    <div className="col-4 mr-0 p-0 mt-3">
+                      <select
+                        className="form-control"
+                        id="exampleFormControlSelect2"
+                        onChange={e => {
+                          setLimit(e.target.value)
+                          dispatch(getAllArtikelsPeserta(
+                            session.token,
+                            page,
+                            e.target.value,
+                            keyword,
+                            null,
+                            null,
+                            null
+                          ));
+                        }}
+                        style={{
+                          width: "65px",
+                          background: "#F3F6F9",
+                          borderColor: "#F3F6F9",
+                          color: "#9E9E9E",
+                        }}
+                        // onChange={(e) => handleLimit(e.target.value)}
+                        // onBlur={(e) => handleLimit(e.target.value)}
+                        value={limit}
+                      >
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="30">30</option>
+                        <option value="40">40</option>
+                        <option value="50">50</option>
+                      </select>
+                    </div>
+                    <div className="col-8 my-auto pt-3">
+                      <p
+                        className="align-middle mt-3"
+                        style={{ color: "#B5B5C3" }}
+                      >
+                        Total Data {allArtikelsPeserta.artikel.total}
+                      </p>
                     </div>
                   </div>
+                </div>
               </div>
+            )}
           </div>
+          <Modal
+            show={showModal}
+            onHide={() => setShowModal(false)}
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+          >
+            <Modal.Header>
+              <Modal.Title>Filter</Modal.Title>
+              <button
+                type="button"
+                className="close"
+                onClick={() => setShowModal(false)}
+              >
+                <i className="ri-close-fill" style={{ fontSize: "25px" }}></i>
+              </button>
+            </Modal.Header>
+            <Modal.Body>
+              <div className="form-group mb-5">
+                <label className="p-0">Tanggal di Buat</label>
+                <DatePicker
+                wrapperClassName="datepicker"
+                className="form-control"
+                name="start_date"
+                selectsRange={true}
+                onChange={(date) => setDateRegister(date)}
+                startDate={dateRegisterStart}
+                endDate={dateRegisterEnd}
+                dateFormat="dd/MM/yyyy"
+                autoComplete="off"
+              />
+              </div>
+            </Modal.Body>
+            <Modal.Footer>
+              <button
+                className="btn btn-light-ghost-rounded-full mr-2"
+                type="button"
+                onClick={e => {
+                  setDateRegister([null, null])
+                }}
+              >
+                Reset
+              </button>
+              <button
+                className="btn btn-primary-rounded-full"
+                type="button"
+                onClick={() => {
+                  setPage(1)
+                  setDateRegister([null, null])
+                  setShowModal(false)
+                  dispatch(getAllArtikelsPeserta(
+                    session.token,
+                    1,
+                    limit,
+                    keyword,
+                    null,
+                    moment(dateRegister[0]).format("YYYY-MM-DD"),
+                    moment(dateRegister[1]).format("YYYY-MM-DD")
+                  ));
+                }}
+              >
+                Terapkan
+              </button>
+            </Modal.Footer>
+          </Modal>
         </div>
       </PesertaWrapper>
     </>
