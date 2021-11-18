@@ -24,7 +24,6 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
   const { error: errorPekerjaan, pekerjaan } = useSelector(
     state => state.dataPekerjaan
   );
-
   const { data: dataAsalSekolah } = useSelector(state => state.getAsalSekolah);
 
   const { error: errorStatusPekerjaan, data: dataStatusPekerjaan } =
