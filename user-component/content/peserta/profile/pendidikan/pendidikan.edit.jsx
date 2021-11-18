@@ -30,6 +30,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
   const { error: errorPendidikanData, pendidikan } = useSelector(
     (state) => state.dataPendidikan
   );
+
   const {
     error: errorUpdateData,
     loading,
@@ -58,7 +59,9 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
     (pendidikan && pendidikan.tahun_masuk) || "0"
   );
 
-  const [ijazahName, setIjazahName] = useState("Belum ada file");
+  const [ijazahName, setIjazahName] = useState(
+    pendidikan.ijasah ? pendidikan.ijasah.split("/ijasah/") : "Belum ada file"
+  );
   const [ijazah, setIjazah] = useState("");
   const [ijazahPreview, setIjazahPreview] = useState("");
   const [optionsAsalSekolah, setOptionsAsalSekolah] = useState(
