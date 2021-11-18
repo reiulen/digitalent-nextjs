@@ -4,8 +4,6 @@ import PageWrapper from "../../../wrapper/page.wrapper";
 import Swal from "sweetalert2";
 import { useRouter } from "next/router";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 const Tambah = ({ token }) => {
   const [valueCreateCooporations, setValueCreateCooporations] = useState([""]);
@@ -86,30 +84,11 @@ const Tambah = ({ token }) => {
     });
   };
 
-  const notify = (value) =>
-    toast.info(`${value}`, {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
+
 
   return (
     <PageWrapper>
-      <ToastContainer
-        position="bottom-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
+     
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
@@ -133,7 +112,6 @@ const Tambah = ({ token }) => {
                 />
               </div>
 
-              {/*  */}
               {valueCreateCooporations.map((valueCreateCooporation, index) => {
                 return (
                   <div className="form-group" key={index}>
@@ -186,7 +164,6 @@ const Tambah = ({ token }) => {
                 );
               })}
 
-              {/*  */}
               <div className="form-group">
                 <label htmlFor="staticEmail" className="col-form-label"></label>
 

@@ -1,9 +1,8 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 import Link from "next/link";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import DatePicker from "react-datepicker";
-import { addDays } from "date-fns";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
@@ -13,17 +12,12 @@ import {
   cancelChangeNamaLembaga,
   changeCooperationSelectByID,
   fetchListCooperationSelectById,
-  fetchListSelectMitra,
-  getEmail,
-  setNameLembaga,
   fetchDataEmail,
 } from "../../../../redux/actions/partnership/managementCooporation.actions";
 import IconCalender from "../../../assets/icon/Calender";
 import moment from "moment";
 
 import Swal from "sweetalert2";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 const EditDokumentKerjasamaById = ({ token }) => {
   const dispatch = useDispatch();
@@ -170,16 +164,10 @@ const EditDokumentKerjasamaById = ({ token }) => {
 
           router.push({
             pathname: `/partnership/mitra/detail-data-kerjasama-mitra`,
-            query: { id:idDetail,update: true },
+            query: { id: idDetail, update: true },
           });
-
-          // pathname:
-          //               "/partnership/mitra/detail-data-kerjasama-mitra",
-          //             query: { id: idDetail },
-
-
         } catch (error) {
-          notify(error.response.data.message);
+          Swal.fire("Gagal", `${error.response.data.message}`, "error");
         }
       }
     });
@@ -225,22 +213,6 @@ const EditDokumentKerjasamaById = ({ token }) => {
     }
   };
 
-  const changeInstitusi = (value) => {
-    setIsntitusiName(value);
-    dispatch(setNameLembaga(value));
-  };
-
-  const notify = (value) =>
-    toast.info(`${value}`, {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-
   useEffect(() => {
     async function setDataSingle(id, token) {
       try {
@@ -266,7 +238,7 @@ const EditDokumentKerjasamaById = ({ token }) => {
         setDocument(data.data.document_file);
         setEmail(data.data.email);
       } catch (error) {
-        notify(error.response.data.message);
+        Swal.fire("Gagal", `${error.response.data.message}`, "error");
       }
     }
     setDataSingle(router.query.id, token);
@@ -302,23 +274,9 @@ const EditDokumentKerjasamaById = ({ token }) => {
   return (
     <PageWrapper>
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
-        <ToastContainer
-          position="top-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3
-              className="card-title font-weight-bolder text-dark titles-1"
-           
-            >
+            <h3 className="card-title font-weight-bolder text-dark titles-1">
               Edit Kerjasama
             </h3>
           </div>
@@ -335,8 +293,7 @@ const EditDokumentKerjasamaById = ({ token }) => {
                   value={date}
                   name="text_input"
                   className="form-control mb-3 mb-lg-0 border-0"
-                  style={{backgroundColor:"transparent"}}
-             
+                  style={{ backgroundColor: "transparent" }}
                 />
               </div>
 
@@ -450,7 +407,7 @@ const EditDokumentKerjasamaById = ({ token }) => {
                       name="text_input"
                       className="form-control mb-3 mb-lg-0 border-0"
                       placeholder="Tahun"
-                      style={{backgroundColor:"transparent"}}
+                      style={{ backgroundColor: "transparent" }}
                     />
                   </div>
                 </div>
@@ -512,7 +469,7 @@ const EditDokumentKerjasamaById = ({ token }) => {
                       name="text_input"
                       className="form-control mb-3 mb-lg-0 border-0"
                       placeholder="Masukan Alamat E-mail"
-                      style={{backgroundColor:"transparent"}}
+                      style={{ backgroundColor: "transparent" }}
                     />
                   </div>
                 </div>
@@ -528,7 +485,7 @@ const EditDokumentKerjasamaById = ({ token }) => {
                       name="text_input"
                       className="form-control mb-3 mb-lg-0 border-0"
                       placeholder="Masukan Alamat E-mail"
-                      style={{backgroundColor:"transparent"}}
+                      style={{ backgroundColor: "transparent" }}
                     />
                   </div>
                 </div>
@@ -746,11 +703,13 @@ const EditDokumentKerjasamaById = ({ token }) => {
 
               <div className="form-group row">
                 <div className="col-sm-12 d-flex justify-content-end">
-                  <Link href={{
+                  <Link
+                    href={{
                       pathname:
                         "/partnership/mitra/detail-data-kerjasama-mitra",
                       query: { id: idDetail },
-                    }}>
+                    }}
+                  >
                     <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary">
                       Kembali
                     </a>

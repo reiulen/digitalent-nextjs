@@ -1,16 +1,10 @@
-import React, { useState, useRef, useEffect } from "react";
+import React from "react";
 
 import Link from "next/link";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import DatePicker from "react-datepicker";
-import { addDays } from "date-fns";
-import { useRouter } from "next/router";
-import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
 
 const DetailDokumenKerjasama = ({token}) => {
-  const dispatch = useDispatch();
-  const router = useRouter();
 
   return (
     <PageWrapper>
@@ -34,11 +28,6 @@ const DetailDokumenKerjasama = ({token}) => {
                 </label>
                 <input
                   readOnly
-                  // value={
-                  //   allMK.cooperationById.length === 0
-                  //     ? ""
-                  //     : allMK.cooperationById.data.submission_date
-                  // }
                   type="date"
                   className="form-control"
                 />
@@ -50,11 +39,6 @@ const DetailDokumenKerjasama = ({token}) => {
                 </label>
                 <input
                   readOnly
-                  // value={
-                  //   allMK.cooperationById.length === 0
-                  //     ? ""
-                  //     : allMK.cooperationById.data.title
-                  // }
                   type="text"
                   className="form-control"
                   placeholder="Judul Kerjasama"
@@ -67,11 +51,7 @@ const DetailDokumenKerjasama = ({token}) => {
                 </label>
                 <select name="" id="" className="form-control" disabled>
                   <option value="Kategori" selected>
-                    asaas
-                    {/* {allMK.cooperationById.length === 0
-                      ? ""
-                      : allMK.cooperationById.data.cooperation_category.name} */}
-                  </option>
+                    asaas  </option>
                 </select>
               </div>
 
@@ -83,38 +63,17 @@ const DetailDokumenKerjasama = ({token}) => {
                   <div className="col-12 col-sm-6 form-date-picker">
                     <DatePicker
                       className="form-control w-100"
-                      // selected={startDate}
-                      // onChange={(date) => setStartDate(date)}
                       selectsStart
                       readOnly
-                      // startDate={startDate}
-                      // endDate={endDate}
-                      // value={
-                      //   allMK.cooperationById.length === 0
-                      //     ? ""
-                      //     : allMK.cooperationById.data.period_date_start
-                      // }
                       dateFormat="dd/MM/yyyy"
                       placeholderText="Dari Tanggal"
-                      // minDate={addDays(new Date(), 20)}
                     />
                   </div>
                   <div className="col-12 col-sm-6 form-date-picker">
                     <DatePicker
                       className="form-control"
-                      // selected={endDate}
-                      // onChange={(date) => setEndDate(date)}
                       selectsEnd
-                      // value={
-                      //   allMK.cooperationById.length === 0
-                      //     ? ""
-                      //     : allMK.cooperationById.data.period_date_end
-                      // }
-                      // startDate={startDate}
-                      // endDate={endDate}
-                      // minDate={startDate}
                       readOnly
-                      // maxDate={addDays(startDate, 20)}
                       dateFormat="dd/MM/yyyy"
                       placeholderText="Sampai Tanggal"
                     />
@@ -128,52 +87,15 @@ const DetailDokumenKerjasama = ({token}) => {
                 </label>
                 <div className="row">
                   <div className="col-12 col-sm-6">
-                    {/* <DatePicker
-                        className="form-control-sm form-control"
-                        selected={startDate}
-                        onChange={(date) => setStartDate(date)}
-                        selectsStart
-                        value={allMK.cooperationById.length===0 ? "":allMK.cooperationById.data.period}
-                        readOnly
-                        startDate={startDate}
-                        endDate={endDate}
-                        dateFormat="dd/MM/yyyy"
-                        placeholderText="Dari Tanggal"
-                        // minDate={addDays(new Date(), 20)}
-                      /> */}
                     <input
                       type="text"
-                      // value={
-                      //   allMK.cooperationById.length === 0
-                      //     ? ""
-                      //     : allMK.cooperationById.data.period
-                      // }
                       readOnly
                       className="form-control"
                     />
                   </div>
                   <div className="col-12 col-sm-6">
-                    {/* <DatePicker
-                        className="form-control-sm form-control"
-                        // selected={endDate}
-                        readOnly
-                        
-                        // onChange={(date) => setEndDate(date)}
-                        selectsEnd
-                        // startDate={startDate}
-                        // endDate={endDate}
-                        // minDate={startDate}
-                        // maxDate={addDays(startDate, 20)}
-                        dateFormat="dd/MM/yyyy"
-                        placeholderText="Sampai Tanggal"
-                      /> */}
                     <input
                       type="text"
-                      // value={
-                      //   allMK.cooperationById.length === 0
-                      //     ? ""
-                      //     : allMK.cooperationById.data.period_unit
-                      // }
                       readOnly
                       className="form-control"
                     />
@@ -181,49 +103,12 @@ const DetailDokumenKerjasama = ({token}) => {
                 </div>
               </div>
 
-              {/* <div className="form-group">
-                <label htmlFor="staticEmail" className="col-form-label">
-                  Nama Lembaga
-                </label>
-                <input
-                  type="text"
-                  value={
-                    allMK.cooperationById.length === 0
-                      ? ""
-                      : allMK.cooperationById.data.institution_name
-                  }
-                  readOnly
-                  className="form-control"
-                />
-              </div> */}
-
-              {/* <div className="form-group">
-                <label htmlFor="staticEmail" className="col-form-label">
-                  Email
-                </label>
-                <input
-                  type="text"
-                  value={
-                    allMK.cooperationById.length === 0
-                      ? ""
-                      : allMK.cooperationById.data.email
-                  }
-                  readOnly
-                  className="form-control"
-                />
-              </div> */}
-
               <div className="form-group">
                 <label htmlFor="staticEmail" className="col-form-label">
                   Nomor Perjanjian Lembaga
                 </label>
                 <input
                   type="text"
-                  // value={
-                  //   allMK.cooperationById.length === 0
-                  //     ? ""
-                  //     : allMK.cooperationById.data.agreement_number_partner
-                  // }
                   readOnly
                   className="form-control"
                 />
@@ -235,11 +120,6 @@ const DetailDokumenKerjasama = ({token}) => {
                 </label>
                 <input
                   type="text"
-                  // value={
-                  //   allMK.cooperationById.length === 0
-                  //     ? ""
-                  //     : allMK.cooperationById.data.agreement_number_kemkominfo
-                  // }
                   readOnly
                   className="form-control"
                 />
@@ -253,11 +133,6 @@ const DetailDokumenKerjasama = ({token}) => {
                     </label>
                         <input
                           readOnly
-                          // value={
-                          //   allMK.cooperationById.length === 0
-                          //     ? ""
-                          //     : allMK.cooperationById.data.signing_date
-                          // }
                           type="date"
                           className="form-control"
                         />
@@ -269,19 +144,11 @@ const DetailDokumenKerjasama = ({token}) => {
                       Dokumen Kerjasama
                     </label>
                         <div className="position-relative overflow-hidden w-100 ">
-                          {/* <IconSearch
-                            style={{ left: "10" }}
-                            className="left-center-absolute"
-                          /> */}
+                      
                           <input
-                            // id="kt_datatable_search_query"
                             disabled
                             type="text"
                             className="form-control"
-                            // placeholder={`${pdfFIle}`}
-                            // onChange={(e) =>
-                            //   handleChangeValueSearch(e.target.value)
-                            // }
                           />
                           <button
                             type="submit"
@@ -292,7 +159,6 @@ const DetailDokumenKerjasama = ({token}) => {
                               backgroundColor:"#D7E1EA",
                               color:"#6C6C6C"
                             }}
-                            // onClick={()=>window.open(`https://dts-partnership-dev.s3.ap-southeast-1.amazonaws.com/partnership/files/document_cooperations/${pdfFIle}`)}
                           >
                             Buka File
                           </button>
@@ -303,45 +169,14 @@ const DetailDokumenKerjasama = ({token}) => {
 
               {/* ------------- jangan dihapus !! */}
 
-              {/* <div className="form-group">
-                <label htmlFor="staticEmail" className="col-form-label">
-                  Dokumen Kerjasama
-                </label>
-                <div className="row">
-                  <div className="col-12 col-sm-3">
-                    <button
-                      type="button"
-                      onClick={() => setShowPdf(showPdf ? false : true)}
-                      className="btn btn-primary btn-sm"
-                    >
-                      {showPdf ? "Tutup dokument" : "Lihat Dokumen"}
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              {showPdf ? (
-                <iframe
-                  className="mb-4 border"
-                  src={`https://dts-partnership-dev.s3.ap-southeast-1.amazonaws.com/partnership/files/document_cooperations/${pdfFIle}`}
-                  frameBorder="0"
-                  scrolling="auto"
-                  height={"500px"}
-                  width="100%"
-                ></iframe>
-              ) : (
-                ""
-              )} */}
-
               {/* start loop */}
                       <div className="form-group">
                         <label htmlFor="staticEmail" className="col-form-label">
-                          {/* {items.cooperation_form} */}
+                     
                           msmss
                         </label>
                         <textarea
                           readOnly
-                          // value={items.form_content}
                           name=""
                           id=""
                           cols="30"
