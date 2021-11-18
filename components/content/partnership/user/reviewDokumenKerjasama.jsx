@@ -1,24 +1,15 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import moment from "moment";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-import IconCalender from "../../../assets/icon/Calender";
-import DatePicker from "react-datepicker";
-import BtnIcon from "../components/BtnIcon";
 import AlertBar from "../components/BarAlert";
-
-import { addDays } from "date-fns";
+import Swal from "sweetalert2";
 
 function ReviewDokumenKerjasama({ token }) {
   const router = useRouter();
   const { revisiDone } = router.query;
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
 
   const [period_start, setPeriod_start] = useState("");
   const [period_end, setPeriod_end] = useState("");
@@ -29,23 +20,12 @@ function ReviewDokumenKerjasama({ token }) {
   const [catatanREvisi, setCatatanREvisi] = useState("");
 
   const [note, setNote] = useState("");
-
-  // const setDataSingle = async (id) => {
-
-  // };
-
-  // pdf from api
-  const [document, setDocument] = useState("");
-  const [showDokument, setShowDokument] = useState(null);
   // pdf from local upload
   const [viewPDF, setViewPDF] = useState(null);
   const [documentLocal, setDocumentLocal] = useState("");
   const [pdfFile, setPdfFile] = useState(null);
   const [pdfFileError, setPdfFileError] = useState("");
   const [NamePDF, setNamePDF] = useState(null);
-  // change state
-  const [changeDokumen, setChangeDokumen] = useState(false);
-
   // onchange pdf
 
   const fileType = ["application/pdf"];
@@ -70,40 +50,8 @@ function ReviewDokumenKerjasama({ token }) {
     }
   };
 
-  // show document
-  const showDocument = () => {
-    if (changeDokumen) {
-      if (!viewPDF) {
-        setViewPDF(pdfFile);
-      } else {
-        setViewPDF(null);
-      }
-    } else {
-      setShowDokument(showDokument ? false : true);
-    }
-  };
-  // change document batal
-  const setDocumentChange = () => {
-    setShowDokument(false);
-    setChangeDokumen(changeDokumen ? false : true);
-    setViewPDF(null);
-    setPdfFile(null);
-    setNamePDF(null);
-  };
-
-  const notify = (value) =>
-    toast.info(`${value}`, {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
 
   const handleSubmit = async () => {
-    // e.preventDefault();
     Swal.fire({
       title: "Apakah anda yakin ?",
       icon: "warning",
@@ -140,7 +88,7 @@ function ReviewDokumenKerjasama({ token }) {
             query: { revisiDone: true, id: router.query.id },
           });
         } catch (error) {         
-          notify(error.response.data.message);
+          Swal.fire("Gagal", `${error.response.data.message}`, "error")
         }
       }
     });
@@ -193,7 +141,7 @@ function ReviewDokumenKerjasama({ token }) {
           });
         }
       } catch (error) {
-        notify(error.response.data.message);
+        Swal.fire("Gagal", `${error.response.data.message}`, "error")
       }
     }
 
@@ -205,18 +153,6 @@ function ReviewDokumenKerjasama({ token }) {
       { revisiDone && (
         <AlertBar text="Berhasil merevisi data" className="alert-light-success" onClick={() => onNewReset()}/>
       )}
-      
-      <ToastContainer
-        position="bottom-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">

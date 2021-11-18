@@ -39,6 +39,8 @@ import {
   ERROR_DROPDOWN_KABUPATEN_DOMISILI,
   GET_DROPDOWN_PENYELENGGARA,
   ERROR_DROPDOWN_PENYELENGGARA,
+  GET_DROPDOWN_FORM_BUILDER,
+  ERROR_DROPDOWN_FORM_BUILDER,
   GET_DATA_PRIBADI_SUCCESS,
   GET_DATA_PRIBADI_FAIL,
   CLEAR_ERRORS,
@@ -146,6 +148,26 @@ export const drowpdownAkademiReducers = (state = { data: [] }, action) => {
         data: action.payload,
       };
     case ERROR_DROPDOWN_AKADEMI:
+      return {
+        error: action.payload,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};
+
+export const drowpdownFormBuilderReducers = (state = { data: [] }, action) => {
+  switch (action.type) {
+    case GET_DROPDOWN_FORM_BUILDER:
+      return {
+        data: action.payload,
+      };
+    case ERROR_DROPDOWN_FORM_BUILDER:
       return {
         error: action.payload,
       };

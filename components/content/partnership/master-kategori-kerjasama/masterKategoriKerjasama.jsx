@@ -12,6 +12,7 @@ import {
   setPage,
 } from "../../../../redux/actions/partnership/mk_cooporation.actions";
 import LoadingTable from "../../../LoadingTable";
+import Swal from "sweetalert2";
 import IconPencil from "../../../assets/icon/Pencil";
 import IconDelete from "../../../assets/icon/Delete";
 import IconAdd from "../../../assets/icon/Add";

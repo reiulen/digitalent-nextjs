@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
-import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import AuthWrapper from "../../../../wrapper/auth.wrapper";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import Swal from "sweetalert2";
 import { useSelector, useDispatch } from "react-redux";
 import { resetPassword } from "../../../../../redux/actions/partnership/user/authentication.actions";
@@ -53,13 +50,17 @@ const ForgotPassword = () => {
         ...error,
         newPassword: "Form password baru tidak boleh kosong",
       });
-      notify("Form password baru tidak boleh kosong");
+      Swal.fire("Gagal", `Form password baru tidak boleh kosong`, "error");
     } else if (confirmNewPassword === "") {
       setError({
         ...error,
         confirmNewPassword: "Form konfirmasi password baru tidak boleh kosong",
       });
-      notify("Form konfirmasi password baru tidak boleh kosong");
+      Swal.fire(
+        "Gagal",
+        `Form konfirmasi password baru tidak boleh kosong`,
+        "error"
+      );
     } else {
       Swal.fire({
         title: "Apakah anda yakin ingin ganti password ?",
@@ -72,7 +73,6 @@ const ForgotPassword = () => {
         dismissOnDestroy: false,
       }).then(async (result) => {
         if (result.value) {
-          // here axios action reset password
           let formData = new FormData();
           formData.append("_method", "put");
           formData.append("email", emailCode);
@@ -85,30 +85,17 @@ const ForgotPassword = () => {
     }
   };
 
-  const notify = (value) =>
-    toast.info(`${value}`, {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-
   useEffect(() => {
     if (router.query.code && router.query.email) {
       setEmailCode(router.query.email);
       setPasswordCode(router.query.code);
     }
-    // authentication reset password
     if (allAuthentication.status === "error") {
-      notify(allAuthentication.errorReset);
+      Swal.fire("Gagal", `${allAuthentication.errorReset}`, "error");
     } else if (allAuthentication.status === "success") {
       // jika sukses
       Swal.fire("Berhasil", "Password berhasil di reset", "success").then(
         () => {
-          // router.push("/partnership/user/auth/login");
           router.push("/login/mitra");
         }
       );
@@ -131,22 +118,11 @@ const ForgotPassword = () => {
   return (
     <>
       <AuthWrapper image="multiethnic-businesswoman.svg" title="Reset Password">
-        <ToastContainer
-          position="bottom-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
         <div
           className="col-lg-7 d-flex flex-wrap align-content-center"
           style={{ background: "#1A4367" }}
         >
-          <div className="container ">
+          <div className="container scroll-form-login">
             <div className="title-login text-center mt-6">
               <Image
                 src="/assets/logo/logo-6.svg"
@@ -177,12 +153,12 @@ const ForgotPassword = () => {
                 <div className="form-group mb-2">
                   <label className="form-auth-label">Password Baru</label>
                   <div className="position-relative">
-                  <input
-                    id="input-password"
-                    onChange={(e) => setNewPassword(e.target.value)}
-                    type="password"
-                    className="form-control form-control-auth"
-                    placeholder="Masukkan Password Anda"
+                    <input
+                      id="input-password"
+                      onChange={(e) => setNewPassword(e.target.value)}
+                      type="password"
+                      className="form-control form-control-auth"
+                      placeholder="Masukkan Password Anda"
                     />
                     {hidePassword === true ? (
                       <i
@@ -198,7 +174,6 @@ const ForgotPassword = () => {
                       />
                     )}
                   </div>
-                  
                 </div>
                 <div className="form-group">
                   <label className="form-auth-label">
@@ -226,7 +201,10 @@ const ForgotPassword = () => {
                       />
                     )}
                   </div>
-                  <span className="text-white">Minimal 8 Karakter yang berisi kombinasi huruf besar, huruf kecil, angka, dan simbol.</span>
+                  <span className="text-white">
+                    Minimal 8 Karakter yang berisi kombinasi huruf besar, huruf
+                    kecil, angka, dan simbol.
+                  </span>
                 </div>
 
                 <button

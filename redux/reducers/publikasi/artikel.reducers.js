@@ -2,6 +2,9 @@ import {
   ARTIKEL_REQUEST,
   ARTIKEL_SUCCESS,
   ARTIKEL_FAIL,
+  ARTIKEL_PESERTA_REQUEST,
+  ARTIKEL_PESERTA_SUCCESS,
+  ARTIKEL_PESERTA_FAIL,
   NEW_ARTIKEL_REQUEST,
   NEW_ARTIKEL_SUCCESS,
   NEW_ARTIKEL_RESET,
@@ -34,6 +37,35 @@ export const allArtikelReducer = (state = { artikel: [] }, action) => {
       };
 
     case ARTIKEL_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const allArtikelsPesertaReducer = (state = {}, action) => {
+  switch (action.type) {
+    case ARTIKEL_PESERTA_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case ARTIKEL_PESERTA_SUCCESS:
+      return {
+        loading: false,
+        artikel: action.payload.data,
+      };
+
+    case ARTIKEL_PESERTA_FAIL:
       return {
         loading: false,
         error: action.payload,

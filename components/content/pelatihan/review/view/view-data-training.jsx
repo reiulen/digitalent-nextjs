@@ -18,6 +18,7 @@ import {
   REVISI_REVIEW_RESET,
   TOLAK_REVIEW_RESET,
 } from "../../../../../redux/types/pelatihan/review.type";
+import { route } from "next/dist/server/router";
 
 const ViewReviewTraining = ({ token }) => {
   const router = useRouter();
@@ -122,7 +123,7 @@ const ViewReviewTraining = ({ token }) => {
     if (successRevisi) {
       dispatch({ type: REVISI_REVIEW_RESET });
       router.push({
-        pathname: `/pelatihan/review`,
+        pathname: `/pelatihan/review-pelatihan`,
         query: { success: true },
       });
     }
@@ -130,7 +131,7 @@ const ViewReviewTraining = ({ token }) => {
     if (successTolak) {
       dispatch({ type: TOLAK_REVIEW_RESET });
       router.push({
-        pathname: `/pelatihan/review`,
+        pathname: `/pelatihan/review-pelatihan`,
         query: { success: true },
       });
     }

@@ -157,7 +157,7 @@ const Preview = () => {
                     {berita ? (
                         <div className="row mt-10">
                             {/* Left Side */}
-                            <div className="col-12 col-md-8">
+                            <div className="col-12 col-md-12 col-lg-8">
                                 {/* Image */}
                                 <Image
                                     src={
@@ -203,7 +203,7 @@ const Preview = () => {
                             {/* Right Side */}
                             {windowDimensions &&
                                 windowDimensions.width &&
-                                windowDimensions.width > 750 ? (
+                                windowDimensions.width > 770 ? (
                                 <div className="col-12 col-md-4">
                                     {/* Search */}
                                     <div className="border rounded">

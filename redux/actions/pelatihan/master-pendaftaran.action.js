@@ -30,15 +30,16 @@ import {
 } from "../../types/pelatihan/master-pendaftaran.type";
 
 export const getAllListMasterPelatihan =
-  (token) => async (dispatch, getState) => {
+  token => async (dispatch, getState) => {
     try {
       dispatch({ type: LIST_MASTER_TRAINING_REQUEST });
       let link =
         process.env.END_POINT_API_PELATIHAN + `api/v1/formBuilder/find`;
       let pageState = getState().getAllMasterPelatihan.page || 1;
       let limitState = getState().getAllMasterPelatihan.limit || 5;
-      let statusState = getState().getAllMasterPelatihan.status || 0;
-      let keywordState = getState().allCertificates.cari || "";
+      let statusState = getState().getAllMasterPelatihan.status || "";
+      let keywordState = getState().getAllMasterPelatihan.cari || "";
+
       const params = {
         page: pageState,
         limit: limitState,
@@ -52,8 +53,8 @@ export const getAllListMasterPelatihan =
           Authorization: `Bearer ${token}`,
         },
       };
-      const { data } = await axios.get(link, config);
 
+      const { data } = await axios.get(link, config);
       if (data) {
         dispatch({ type: LIST_MASTER_TRAINING_SUCCESS, payload: data });
       }
@@ -65,35 +66,35 @@ export const getAllListMasterPelatihan =
     }
   };
 
-export const searchKeyword = (text) => {
+export const searchKeyword = text => {
   return {
     type: SET_KEYWORD_VALUE,
     text,
   };
 };
 
-export const setValuePage = (text) => {
+export const setValuePage = text => {
   return {
     type: SET_PAGE_VALUE,
     text,
   };
 };
 
-export const setValueLimit = (text) => {
+export const setValueLimit = text => {
   return {
     type: SET_LIMIT_VALUE,
     text,
   };
 };
 
-export const setValueStatus = (text) => {
+export const setValueStatus = text => {
   return {
     type: SET_STATUS_VALUE,
     text,
   };
 };
 
-export const getDetailMasterPelatihan = (id, token) => async (dispatch) => {
+export const getDetailMasterPelatihan = (id, token) => async dispatch => {
   try {
     dispatch({ type: DETAIL_MASTER_TRAINING_REQUEST });
     let link =
@@ -118,7 +119,7 @@ export const getDetailMasterPelatihan = (id, token) => async (dispatch) => {
   }
 };
 
-export const newMasterPelatihan = (id, formData, token) => async (dispatch) => {
+export const newMasterPelatihan = (id, formData, token) => async dispatch => {
   try {
     dispatch({ type: NEW_MASTER_TRAINING_REQUEST });
     let link =
@@ -144,14 +145,14 @@ export const newMasterPelatihan = (id, formData, token) => async (dispatch) => {
   }
 };
 
-export const clearErrors = () => async (dispatch) => {
+export const clearErrors = () => async dispatch => {
   dispatch({
     type: CLEAR_ERRORS,
   });
 };
 
 export const updateMasterPelatihanAction =
-  (formData, token) => async (dispatch) => {
+  (formData, token) => async dispatch => {
     try {
       dispatch({ type: UPDATE_MASTER_TRAINING_REQUEST });
 
@@ -175,7 +176,7 @@ export const updateMasterPelatihanAction =
     }
   };
 
-export const deleteMasterTraining = (id, token) => async (dispatch) => {
+export const deleteMasterTraining = (id, token) => async dispatch => {
   try {
     dispatch({ type: DELETE_MASTER_TRAINING_REQUEST });
 
@@ -204,7 +205,7 @@ export const deleteMasterTraining = (id, token) => async (dispatch) => {
 };
 
 export const updateStatusPublishMaster =
-  (dataStatus, token) => async (dispatch) => {
+  (dataStatus, token) => async dispatch => {
     try {
       dispatch({
         type: REQUEST_STATUS_PUBLISH,
