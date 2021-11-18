@@ -27,13 +27,13 @@ const Preview = () => {
     const [gambar, setGambar] = useState(artikel.gambar)
     const [user, setUser] = useState(artikel.dibuat)
     const [isi_artikel, setIsiArtikel] = useState(artikel.isi_artikel)
-    const [tags, setTags] = useState(artikel.tag)
+    const [tag, setTag] = useState(artikel.tag)
 
     const dispatch = useDispatch();
     const router = useRouter();
 
     // const { detail } = useSelector((state) => state.detailBerandaArtikel);
-    // const { tags } = useSelector((state) => state.allTagBerandaArtikel);
+    const { tags } = useSelector((state) => state.allTagBerandaArtikel);
 
     const [keyword, setKeyword] = useState(null);
     const [searchWords, setSearchWords] = useState(null);
@@ -95,16 +95,15 @@ const Preview = () => {
 
     return (
         <>
-            {/* <PreviewWrapper title="Pratinjau Artikel - Publikasi"> */}
-            <Container fluid className="px-md-20 px-10 pb-10" title="Pratinjau Artikel - Publikasi">
-                <div className="">
+            <PreviewWrapper title="Pratinjau Artikel - Publikasi">
+                <div className="my-5">
 
                     {/* Header */}
                     {artikel ? (
                         <div className="row my-5 d-flex flex-column">
                             <div className="col-2">
                                 <div className="badge badge-light mr-2">
-                                    <div className="text-primary">{artikel.nama_kategori}</div>
+                                    <div className="text-primary">{(artikel.nama_kategori).toUpperCase()}</div>
                                 </div>
                             </div>
                             <div className="mt-5 ml-3">
@@ -155,7 +154,7 @@ const Preview = () => {
                                     </div>
                                 </div>
 
-                                <div className="row">
+                                {/* <div className="row">
                                     <button className="btn btn-outline-light rounded-circle mr-3">
                                         <i className="ri-share-line p-0"></i>
                                     </button>
@@ -163,7 +162,7 @@ const Preview = () => {
                                     <button className="btn btn-outline-light rounded-circle mr-3">
                                         <i className="ri-heart-line p-0"></i>
                                     </button>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     ) : null}
@@ -205,14 +204,14 @@ const Preview = () => {
                                                 ? artikel.tag.map((el, i) => {
                                                     return (
                                                         <div className="mr-3 border p-3 rounded" key={i}>
-                                                            #{el}
+                                                            #{(el).toUpperCase()}
                                                         </div>
                                                     );
                                                 })
                                                 : null}
                                         </div>
 
-                                        <div className="row">
+                                        {/* <div className="row">
                                             <button className="btn btn-outline-light rounded-circle mr-3">
                                                 <i className="ri-share-line p-0"></i>
                                             </button>
@@ -220,7 +219,7 @@ const Preview = () => {
                                             <button className="btn btn-outline-light rounded-circle mr-3">
                                                 <i className="ri-heart-line p-0"></i>
                                             </button>
-                                        </div>
+                                        </div> */}
                                     </div>
                                 </div>
                             </div>
@@ -257,7 +256,7 @@ const Preview = () => {
                                                             borderBottomLeftRadius: "150px",
                                                         }}
                                                     >
-                                                        <i className="ri-search-line"></i>
+                                                        <i className="ri-search-line mr-2"></i>
                                                     </div>
                                                 </div>
 
@@ -294,9 +293,8 @@ const Preview = () => {
                                             Temukan Lebih Banyak Artikel Yang Sesuai:
                                         </h3>
                                         <div className=" d-flex flex-wrap flex-row">
-                                            {/* {tags && tags.tag && tags.tag.length !== 0 ? ( */}
-                                            {tags && tags.length !== 0 ? (
-                                                tags.map((el, i) => {
+                                            {tags && tags.tag && tags.tag.length !== 0 ? (
+                                                tags.tag.map((el, i) => {
                                                     return (
                                                         <div
                                                             className="border px-2 py-1 rounded my-3 mr-3 text-center d-flex align-items-center justify-content-center"
@@ -334,8 +332,7 @@ const Preview = () => {
 
                     {/* End of Content */}
                 </div>
-            </Container>
-            {/* </PreviewWrapper> */}
+            </PreviewWrapper>
         </>
 
     )

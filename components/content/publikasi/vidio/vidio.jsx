@@ -6,6 +6,7 @@ import { useRouter } from 'next/router'
 import styles from '../../../../styles/preview.module.css'
 import stylesPag from "../../../../styles/pagination.module.css";
 
+import { Modal, ModalBody, ModalTitle } from "react-bootstrap"
 import Pagination from 'react-js-pagination';
 import DatePicker from 'react-datepicker'
 import { addDays } from 'date-fns'
@@ -50,6 +51,7 @@ const Vidio = ({ token }) => {
     const [kategori, setKategori] = useState(null)
     const [isiVideo, setIsiVideo] = useState(null)
     const [tag, setTag] = useState([])
+    const [show, setShow] = useState(false)
 
     let loading = false
     let { page = 1, keyword, success } = router.query
@@ -284,6 +286,7 @@ const Vidio = ({ token }) => {
         setKategori(kategori)
         setIsiVideo(isi_video)
         setTag(tag)
+        setShow(true)
     }
 
     const handleIsPlayed = () => {
@@ -293,6 +296,11 @@ const Vidio = ({ token }) => {
             isplay: "1"
         }
         dispatch(playVideo(data, token))
+    }
+
+    const handleToggleModal = () => {
+        setShow(false)
+        setVideoPlaying(false)
     }
 
     const resetValueSort = () => {
@@ -768,85 +776,83 @@ const Vidio = ({ token }) => {
             </div>
 
             {/* Modal */}
-            <div className="modal fade" id="videoPlayerModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" >
-                <div className="modal-dialog modal-dialog-centered" role="document">
-                    <div className={`${styles.modalContent} modal-content`}>
-                        {/* <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLongTitle">Pratinjau Video</h5>
-                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div> */}
-                        <div className={styles['modal-body']}>
-                            {/* <div className={styles['title-preview-video']}> */}
-                            {/* <div className="mb-2" style={{ textAlign: 'right' }}> */}
-                            <div className={styles['playVideo']}>
-                                <button type="button" className={`${styles.btnClose} col-1 flaticon2-delete mb-2`} data-dismiss="modal" aria-label="Close"></button>
-                                {/* </div> */}
-                                <ReactPlayer url={url_video} controls width="100%" height="100%" playing={video_playing} onPlay={handleIsPlayed} />
+            <Modal
+                size="lg"
+                onHide={() => handleToggleModal()}
+                show={show}
+                centered
+            >
+                <Modal.Header>
+                    <div
+                        className="col-12 d-flex justify-content-end"
+                    >
+                        <i
+                            className="ri-close-line text-dark"
+                            style={{ cursor: "pointer" }}
+                            onClick={() => handleToggleModal()}
+                        />
+                    </div>
+                </Modal.Header>
+                <Modal.Body className="p-0">
+                    <ReactPlayer
+                        url={url_video}
+                        controls
+                        width="100%"
+                        height="50vh"
+                        playing={video_playing}
+                        onPlay={handleIsPlayed}
+                    />
+                </Modal.Body>
+                <Modal.Footer>
+                    <div className="col-12">
+                        <h2 className="font-weight-bolder">
+                            {judul_video}
+                        </h2>
+
+                        <div className="mt-10 mb-5 row align-items-center justify-content-between">
+                            <div className="col-12 col-md-4 col-lg-4">
+                                {
+                                    tanggal_publish !== null ?
+                                        `${moment(tanggal_publish).format("MMMM DD")} | 120 Ditonton`
+                                        :
+                                        ""
+                                }
                             </div>
-                            {/* </div> */}
-                            <div className="ml-3" style={{ marginTop: '30px' }}>
-                                <h3 className={`${styles.modalsJudul} font-weight-bolder`}>
-                                    {judul_video}
-                                </h3>
-                            </div>
-                            <div className="row align-items-center" style={{ marginLeft: '0' }}>
-                                <div className="col-4 col-md-4 col-lg-4">
-                                    <span className={`${styles.modalPublish} text-muted`}>
-                                        {
-                                            tanggal_publish !== null ? `${tanggal_publish}  | 120 Ditonton`
-                                                : ""
-                                        }
-                                        {/* {tanggal_publish} | 120 Ditonton */}
-                                    </span>
-                                </div>
-                                <div className="col-5 col-md-5 col-lg-5">
-                                    <div className={styles['listTag']}>
-                                        {
-                                            (tag === null) ? null :
-                                                tag.map((el, i) => {
-                                                    return (
-                                                        <div style={{ background: "#fff", border: '1px solid #d7e1ea' }}
-                                                            className="mr-2 px-3 py-1 rounded"
-                                                            key={i}>
-                                                            <div className={`${styles.isiTag} text-center`}>
-                                                                #{el.toUpperCase()}
-                                                            </div>
-                                                        </div>
-                                                    )
-                                                })
-                                        }
-                                    </div>
-                                </div>
-                                <div className="col-3 col-md-3 col-lg-3" style={{ textAlign: 'center' }}>
-                                    <span className={`${styles.namaKategori} p-2 label label-inline label-light-success font-weight-bold`}>
-                                        {kategori}
-                                    </span>
-                                </div>
-                                {/* <div
-                                    className="mr-5 px-3 py-1 rounded mb-1 ml-4 d-flex align-items-center">
-                                    <i className="flaticon2-calendar-4 "></i>
+                            <div className="col-12 col-md-5 col-lg-6 my-2">
+                                <div className="d-flex flex-row">
                                     {
-                                        tanggal_publish ?
-                                            <span className="ml-2">
-                                                Publish : {moment({ tanggal_publish }).format('LL')}
-                                            </span>
-                                            :
-                                            <span className="ml-2">
-                                                Belum dipublish
-                                            </span>
+                                        tag === null ?
+                                            null
+                                            : tag.map((el, i) => {
+                                                return (
+                                                    <div
+                                                        style={{
+                                                            background: "#fff",
+                                                            border: "1px solid #d7e1ea",
+                                                        }}
+                                                        className="mr-2 px-3 py-1 rounded"
+                                                        key={i}
+                                                    >
+                                                        <div
+                                                            className="text-center"
+                                                            style={{ fontSize: "10px" }}
+                                                        >
+                                                            #{el.toUpperCase()}
+                                                        </div>
+                                                    </div>
+                                                );
+                                            })
                                     }
                                 </div>
-
-                                <div
-                                    className=" rounded px-3 d-flex align-items-center">
-                                    <i className="ri-dashboard-line"></i>
-                                    <span className="ml-2 py-1">
-                                        Kategori: {kategori}
-                                    </span>
-                                </div> */}
                             </div>
+                            <div className="col-12 col-md-3 col-lg-2 text-sm-right text-md-right text-lg-right">
+                                {kategori === null ? null : (
+                                    <span className="p-2 badge  badge-light font-weight-bold text-primary">
+                                        {kategori}
+                                    </span>
+                                )}
+                            </div>
+
                             <div className={`${styles.descriptionVideo} text-break m-4`}>
                                 <span>
                                     {isiVideo}
@@ -854,10 +860,11 @@ const Vidio = ({ token }) => {
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                </Modal.Footer>
+            </Modal>
+
         </PageWrapper>
     )
 }
 
-export default Vidio
+export default Vidio;
