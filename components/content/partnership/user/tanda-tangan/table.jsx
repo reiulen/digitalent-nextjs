@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import Pagination from "react-js-pagination";
 import PageWrapper from "../../../../wrapper/page.wrapper";
-
+import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
@@ -23,7 +23,6 @@ import IconSearch from "../../../../assets/icon/Search";
 import IconPencil from "../../../../assets/icon/Pencil";
 import IconDelete from "../../../../assets/icon/Delete";
 import IconArrow from "../../../../assets/icon/Arrow";
-import BtnIcon from "../../components/BtnIcon";
 import AlertBar from "../../components/BarAlert";
 const Table = ({ token }) => {
   const dispatch = useDispatch();
@@ -54,7 +53,7 @@ const Table = ({ token }) => {
       if (result.value) {
         dispatch(deleteTandaTangan(id, token));
         setSuccessDelete(true);
-        setIsStatusBar(false)
+        setIsStatusBar(false);
         router.replace(`/partnership/user/tanda-tangan-digital`);
       }
     });
@@ -62,7 +61,7 @@ const Table = ({ token }) => {
 
   const onNewReset = () => {
     setSuccessDelete(false);
-    setIsStatusBar(false)
+    setIsStatusBar(false);
     router.replace("/partnership/user/tanda-tangan-digital", undefined, {
       shallow: true,
     });
@@ -86,8 +85,6 @@ const Table = ({ token }) => {
         formData.append("status", e.target.value);
         dispatch(changeStatusList(formData, id, token));
         setIsStatusBar(true);
-        // setDeleteBar(false);
-        // setIsChangeOption(true);
         router.replace("/partnership/user/tanda-tangan-digital", undefined, {
           shallow: true,
         });
@@ -110,32 +107,46 @@ const Table = ({ token }) => {
 
   return (
     <PageWrapper>
-     {success ? (
-        <AlertBar text="Berhasil menyimpan data" className="alert-light-success" onClick={() => onNewReset()}/>
+      {success ? (
+        <AlertBar
+          text="Berhasil menyimpan data"
+          className="alert-light-success"
+          onClick={() => onNewReset()}
+        />
       ) : (
         ""
       )}
       {successDelete ? (
-        <AlertBar text="Berhasil menghapus data" className="alert-light-danger" onClick={() => onNewReset()}/>
+        <AlertBar
+          text="Berhasil menghapus data"
+          className="alert-light-danger"
+          onClick={() => onNewReset()}
+        />
       ) : (
         ""
       )}
-       {update ? (
-        <AlertBar text="Berhasil mengubah data" className="alert-light-warning" onClick={() => onNewReset()}/>
+      {update ? (
+        <AlertBar
+          text="Berhasil mengubah data"
+          className="alert-light-warning"
+          onClick={() => onNewReset()}
+        />
       ) : (
         ""
       )}
       {isStatusBar ? (
-         <AlertBar text="Berhasil mengubah data" className="alert-light-success" onClick={() => onNewReset()}/>
+        <AlertBar
+          text="Berhasil mengubah data"
+          className="alert-light-success"
+          onClick={() => onNewReset()}
+        />
       ) : (
         ""
       )}
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3
-              className="card-title font-weight-bolder text-dark titles-1"
-            >
+            <h3 className="card-title font-weight-bolder text-dark titles-1">
               Tanda Tangan Digital
             </h3>
             <div className="card-toolbar">
@@ -149,7 +160,6 @@ const Table = ({ token }) => {
           </div>
 
           <div className="card-body pt-0">
-            {/* <form onSubmit={handleSubmit}> */}
             <div className="table-filter">
               <div className="row align-items-center">
                 <div className="col-lg-10 col-xl-10">
@@ -184,7 +194,6 @@ const Table = ({ token }) => {
                 </div>
               </div>
             </div>
-            {/* </form> */}
 
             <div className="table-page mt-5">
               <div className="table-responsive">

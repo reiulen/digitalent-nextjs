@@ -31,7 +31,7 @@ const WizzardProfile = dynamic(
 );
 
 const Layout = dynamic(() =>
-  import("../../../user-component/components/wizzard-template/wizzard-Layout")
+  import("../../../user-component/components/template/Layout.component")
 );
 
 export default function WizzardProfilePage(props) {
@@ -46,7 +46,7 @@ export default function WizzardProfilePage(props) {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  (store) =>
+  store =>
     async ({ query, req }) => {
       const session = await getSession({ req });
       const middleware = middlewareAuthPesertaSession(session);

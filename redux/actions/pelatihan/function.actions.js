@@ -129,6 +129,7 @@ export const storeTrainingStep1 = (data) => async (dispatch) => {
 export const getRegistrationStep2 = () => async (dispatch) => {
   const data = {
     judul_form: "",
+    type_form: "",
     formBuilder: [
       {
         key: 1,

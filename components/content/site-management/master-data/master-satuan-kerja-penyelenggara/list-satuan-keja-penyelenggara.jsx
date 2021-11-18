@@ -31,8 +31,30 @@ const Table = ({ token }) => {
     dispatch(searchCooporation(valueSearch));
   };
 
+  const getWindowDimensions = () => {
+    const { innerWidth: width, innerHeight: height } = window;
+    return {
+      width,
+      height,
+    };
+  };
+
+  const [windowDimensions, setWindowDimensions] = useState(
+    getWindowDimensions()
+  );
+
+
+
   useEffect(() => {
     dispatch(getAllUnitWork(token));
+
+    function handleResize() {
+      setWindowDimensions(getWindowDimensions());
+    }
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+
   }, [dispatch, allUnitWork.cari, allUnitWork.page, allUnitWork.limit, token]);
 
   return (
@@ -111,12 +133,12 @@ const Table = ({ token }) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {allUnitWork.data.unit_work.length === 0 ? (
+                      {allUnitWork?.data?.unit_work?.length === 0 ? (
                         <td className="align-middle text-center" colSpan="4">
                           Data Kosong
                         </td>
                       ) : (
-                        allUnitWork.data.unit_work.map((items, index) => {
+                        allUnitWork?.data?.unit_work?.map((items, index) => {
                           return (
                             <tr key={index}>
                               <td className="align-middle text-left">
@@ -125,7 +147,7 @@ const Table = ({ token }) => {
                                   : (allUnitWork.page - 1) * allUnitWork.limit +
                                     (index + 1)}
                               </td>
-                              <td className="align-middle text-left">
+                              <td className="align-middle text-left p-part-t text-overflow-ens">
                                 {items.name}
                               </td>
                               <td className="align-middle text-left">
@@ -182,10 +204,10 @@ const Table = ({ token }) => {
               <div className="row px-4">
                 <div className="table-pagination">
                   <Pagination
-                    activePage={allUnitWork.page}
-                    itemsCountPerPage={allUnitWork.data.perPage}
-                    totalItemsCount={allUnitWork.data.total}
-                    pageRangeDisplayed={3}
+                    activePage={allUnitWork?.page}
+                    itemsCountPerPage={allUnitWork?.data?.perPage}
+                    totalItemsCount={allUnitWork?.data?.total}
+                    pageRangeDisplayed={windowDimensions.width > 300 ? 3 : 1}
                     onChange={(page) => dispatch(setPage(page))}
                     nextPageText={">"}
                     prevPageText={"<"}

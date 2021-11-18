@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PageWrapper from "../../../../wrapper/page.wrapper";
 import StepInputPelatihan from "../../../../StepInputPelatihan";
 import LoadingSkeleton from "../../../../../components/LoadingSkeleton";
@@ -29,6 +29,7 @@ const AddCommitmentStep3 = dynamic(() => import("./add-commitment-step3"), {
 });
 
 import { clearErrors } from "../../../../../redux/actions/pelatihan/training.actions";
+import { SweatAlert } from "../../../../../utils/middleware/helper";
 
 const IndexInsert = ({ token }) => {
   const dispatch = useDispatch();
@@ -38,6 +39,13 @@ const IndexInsert = ({ token }) => {
   const { training, loading, success, error } = useSelector(
     (state) => state.newTraining
   );
+
+  useEffect(() => {
+    if (error) {
+      SweatAlert("Gagal", error, "error");
+      dispatch(clearErrors());
+    }
+  }, [error]);
 
   const stepView = () => {
     switch (view) {
@@ -71,38 +79,14 @@ const IndexInsert = ({ token }) => {
     }
   };
 
-  const handleResetError = () => {
-    if (error) {
-      dispatch(clearErrors());
-    }
-  };
+  // const handleResetError = () => {
+  //   if (error) {
+  //     dispatch(clearErrors());
+  //   }
+  // };
 
   return (
     <PageWrapper>
-      {error && (
-        <div
-          className="alert alert-cpropsStepustom alert-light-danger fade show mb-5"
-          role="alert"
-        >
-          <div className="alert-icon">
-            <i className="flaticon-warning"></i>
-          </div>
-          <div className="alert-text">{error}</div>
-          <div className="alert-close">
-            <button
-              type="button"
-              className="close"
-              data-dismiss="alert"
-              aria-label="Close"
-              onClick={handleResetError}
-            >
-              <span aria-hidden="true">
-                <i className="ki ki-close"></i>
-              </span>
-            </button>
-          </div>
-        </div>
-      )}
       <StepInputPelatihan
         step={view}
         title1="Tambah Pelatihan"

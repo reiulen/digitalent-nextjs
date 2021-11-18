@@ -3,14 +3,12 @@ import PageWrapper from "../../../wrapper/page.wrapper";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-
+import Swal from "sweetalert2";
 import Style from "../../../../styles/progressbar.module.css";
 import axios from "axios";
 
-function Pembahasan({token}) {
+function Pembahasan({ token }) {
   const router = useRouter();
-  const { id } = router.query;
-
 
   const [status, setStatus] = useState("");
 
@@ -18,22 +16,21 @@ function Pembahasan({token}) {
     // api cek progress
     async function cekProgresStatus(id) {
       try {
-      let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/cek-progres/${id}`,
-        {
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      setStatus(data.data.status_migrates_id.status);
-    } catch (error) {
-      notify(error.response.data.message);
-    }
-      
+        let { data } = await axios.get(
+          `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/cek-progres/${id}`,
+          {
+            headers: {
+              authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setStatus(data.data.status_migrates_id.status);
+      } catch (error) {
+        Swal.fire("Gagal", `${error.response.data.message}`, "error")
+      }
     }
     cekProgresStatus(router.query.id);
-  }, [router.query.id,token]);
+  }, [router.query.id, token]);
 
   return (
     <PageWrapper>
@@ -46,7 +43,6 @@ function Pembahasan({token}) {
             <div className="row mt-8 mb-10 position-relative">
               <div className="col-2 p-0">
                 <div className="progress-items">
-                  {/* <div className="line-progress"></div> */}
                   <div className="circle-progress active-circle">
                     <span className="title-progress">Submit Kerjasama</span>
                   </div>
@@ -72,8 +68,13 @@ function Pembahasan({token}) {
                 <div className="progress-items">
                   <div className="line-progress"></div>
                   <div className="circle-progress">
-                    <span className="title-progress text-center" style={{top:"-4rem"}}>
-                      Submit Dokumen<br/>Kerjasama
+                    <span
+                      className="title-progress text-center"
+                      style={{ top: "-4rem" }}
+                    >
+                      Submit Dokumen
+                      <br />
+                      Kerjasama
                     </span>
                   </div>
                 </div>
@@ -82,8 +83,13 @@ function Pembahasan({token}) {
                 <div className="progress-items">
                   <div className="line-progress"></div>
                   <div className="circle-progress">
-                    <span className="title-progress text-center" style={{top:"-4rem"}}>
-                      Review Dokumen<br/>Kerjasama
+                    <span
+                      className="title-progress text-center"
+                      style={{ top: "-4rem" }}
+                    >
+                      Review Dokumen
+                      <br />
+                      Kerjasama
                     </span>
                   </div>
                 </div>
@@ -116,14 +122,21 @@ function Pembahasan({token}) {
                     Selamat pengajuan kerjasama Anda telah diterima!
                   </p>
                   <p className="fz-16">
-                    Proses pembahasan mengenai detail kerjasama akan Kami infokan kepada PIC Anda
+                    Proses pembahasan mengenai detail kerjasama akan Kami
+                    infokan kepada PIC Anda
                   </p>
                 </div>
 
                 <div className="form-group row">
                   <div className="col-sm-12 d-flex flex-wrap justify-content-end">
-                    <Link href="/partnership/user/tanda-tangan-digital" passHref>
-                      <a className="btn bg-blue-secondary btn-rounded-full text-white mr-5 mt-3" style={{whiteSpace:"nowrap"}}>
+                    <Link
+                      href="/partnership/user/tanda-tangan-digital"
+                      passHref
+                    >
+                      <a
+                        className="btn bg-blue-secondary btn-rounded-full text-white mr-5 mt-3"
+                        style={{ whiteSpace: "nowrap" }}
+                      >
                         Tanda Tangan Digital
                       </a>
                     </Link>
@@ -133,17 +146,20 @@ function Pembahasan({token}) {
                     ) : status === "pengajuan-selesai" ? (
                       <Link
                         href={{
-                          pathname: "/partnership/user/kerjasama/submit-dokumen-kerjasama",
+                          pathname:
+                            "/partnership/user/kerjasama/submit-dokumen-kerjasama",
                           query: { id: router.query.id },
                         }}
                         passHref
                       >
-                        <a className="btn btn-rounded-full bg-blue-primary text-white mt-3" style={{whiteSpace:"nowrap"}}>
+                        <a
+                          className="btn btn-rounded-full bg-blue-primary text-white mt-3"
+                          style={{ whiteSpace: "nowrap" }}
+                        >
                           Submit Dokumen Kerjasama
                         </a>
                       </Link>
                     ) : (
-
                       ""
                     )}
                   </div>

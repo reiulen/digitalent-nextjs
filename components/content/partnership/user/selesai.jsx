@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React from "react";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import Image from "next/image";
 

@@ -3,8 +3,6 @@ import Link from "next/link";
 import PageWrapper from "../../../../wrapper/page.wrapper";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import Select from "react-select";
 import axios from "axios";
 import IconClose from "../../../../assets/icon/Close";
@@ -54,8 +52,7 @@ const Tambah = ({ token }) => {
       setError({ ...error, wesite: "Harus isi alamat website" });
     } else if (email === "") {
       setError({ ...error, email: "Harus isi email" });
-    }
-     else if (address === "") {
+    } else if (address === "") {
       setError({ ...error, address: "Harus isi alamat" });
     } else if (indonesia_provinces_id === "") {
       setError({
@@ -64,7 +61,6 @@ const Tambah = ({ token }) => {
       });
     } else if (indonesia_cities_id === "") {
       setError({ ...error, indonesia_cities_id: "Harus isi pilih kota/kab" });
-
     } else if (
       postal_code === "" ||
       postal_code.length < 5 ||
@@ -148,7 +144,7 @@ const Tambah = ({ token }) => {
               });
             }
           } catch (error) {
-            notify(error.response.data.message);
+            Swal.fire("Gagal", `${error.response.data.message}`, "error");
           }
         }
       });
@@ -174,25 +170,16 @@ const Tambah = ({ token }) => {
           setNamePDF(selectedFile.name);
         };
       } else {
-        notify("gambar harus PNG atau JPG dan max size 2mb");
+        Swal.fire(
+          "Gagal",
+          `gambar harus PNG atau JPG dan max size 2mb`,
+          "error"
+        );
       }
     } else {
-      notify("upload gambar dulu");
+      Swal.fire("Gagal", `upload gambar dulu`, "error");
     }
   };
-
-
-
-  const notify = (value) =>
-    toast.info(`${value}`, {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
 
   const onChangeProvinces = (e) => {
     setIndonesia_provinces_id(e.id);
@@ -236,9 +223,7 @@ const Tambah = ({ token }) => {
         );
 
         if (data) {
-          setImageview(
-            data.data.agency_logo
-          );
+          setImageview(data.data.agency_logo);
           setAddress(data.data.address === "-" ? "" : data.data.address);
           setPostal_code(
             data.data.postal_code === "-" ? "" : data.data.postal_code
@@ -280,7 +265,6 @@ const Tambah = ({ token }) => {
   }, [token]);
 
   useEffect(() => {
-    // get data cities
     if (indonesia_provinces_id !== "") {
       async function fetchAPI() {
         try {
@@ -297,36 +281,27 @@ const Tambah = ({ token }) => {
       }
       fetchAPI();
     }
-    
   }, [indonesia_provinces_id]);
 
   const onNewReset = () => {
-    router.replace(
-      "/partnership/user/profile-lembaga",
-      undefined,
-      { shallow: true }
-    );
+    router.replace("/partnership/user/profile-lembaga", undefined, {
+      shallow: true,
+    });
   };
 
   return (
     <PageWrapper>
       {successInputProfile ? (
-         <AlertBar text="Berhasil menyimpan data" className="alert-light-success" onClick={() => onNewReset()}/>
+        <AlertBar
+          text="Berhasil menyimpan data"
+          className="alert-light-success"
+          onClick={() => onNewReset()}
+        />
       ) : (
         ""
       )}
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
-        <ToastContainer
-          position="bottom-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
+
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0 px-4">
             <h3 className="card-title text-dark fw-600 titles-1">
@@ -334,8 +309,7 @@ const Tambah = ({ token }) => {
             </h3>
           </div>
           <div className="card-body pt-0 px-4 px-sm-6">
-            <form
-            >
+            <form>
               <div className="form-group mb-0 mb-sm-4">
                 <label htmlFor="staticE mail" className="col-form-label">
                   Nama Lembaga
@@ -346,7 +320,7 @@ const Tambah = ({ token }) => {
                   name="text_input"
                   className="form-control border-0"
                   value={institution_name}
-                  style={{backgroundColor:"transparent"}}
+                  style={{ backgroundColor: "transparent" }}
                 />
                 {error.institution_name ? (
                   <p className="error-text">{error.institution_name}</p>
@@ -366,7 +340,7 @@ const Tambah = ({ token }) => {
                       type="text"
                       name="text_input"
                       className="form-control"
-                      placeholder="Masukan Alamat Website"
+                      placeholder="Masukkan Alamat Website"
                       onChange={(e) => setWesite(e.target.value)}
                       value={wesite && wesite}
                     />
@@ -389,7 +363,7 @@ const Tambah = ({ token }) => {
                       name="text_input"
                       className="form-control border-0"
                       value={email}
-                      style={{backgroundColor:"transparent"}}
+                      style={{ backgroundColor: "transparent" }}
                     />
                     {error.email ? (
                       <p className="error-text">{error.email}</p>
@@ -418,7 +392,9 @@ const Tambah = ({ token }) => {
                     }}
                   >
                     <Image
-                      src={process.env.END_POINT_API_IMAGE_PARTNERSHIP + imageview}
+                      src={
+                        process.env.END_POINT_API_IMAGE_PARTNERSHIP + imageview
+                      }
                       alt="Picture of the author"
                       layout="fill"
                       objectFit="fill"
@@ -456,8 +432,6 @@ const Tambah = ({ token }) => {
                 ) : (
                   ""
                 )}
-
-
 
                 <div className="input-group">
                   <div className="custom-file">
@@ -518,13 +492,15 @@ const Tambah = ({ token }) => {
                       style={{ height: "400px" }}
                     >
                       {!agency_logo ? (
-
                         <Image
-                      src={process.env.END_POINT_API_IMAGE_PARTNERSHIP + imageview}
-                      alt="Picture of the author"
-                      layout="fill"
-                      objectFit="fill"
-                    />
+                          src={
+                            process.env.END_POINT_API_IMAGE_PARTNERSHIP +
+                            imageview
+                          }
+                          alt="Picture of the author"
+                          layout="fill"
+                          objectFit="fill"
+                        />
                       ) : (
                         <Image
                           src={agency_logo}
@@ -540,7 +516,7 @@ const Tambah = ({ token }) => {
 
               <div className="form-group mb-0 mb-sm-4">
                 <label htmlFor="staticEmail" className="col-form-label">
-                  Masukan Alamat Lengkap
+                  Masukkan Alamat Lengkap
                 </label>
                 <input
                   onFocus={() => setError({ ...error, address: "" })}
@@ -676,19 +652,19 @@ const Tambah = ({ token }) => {
                       Nomor Handphone Person In Charge (PIC)
                     </label>
                     <div className="position-relative">
-                    <input
-                      onFocus={() =>
-                        setError({ ...error, pic_contact_number: "" })
-                      }
-                      maxLength="13"
-                      minLength="9"
-                      type="number"
-                      className="form-control"
-                      placeholder="Masukkan NO. Kontak"
-                      onChange={(e) => setPic_contact_number(e.target.value)}
-                      value={pic_contact_number && pic_contact_number}
-                    />
-                    <div className="box-hide-arrow"></div>
+                      <input
+                        onFocus={() =>
+                          setError({ ...error, pic_contact_number: "" })
+                        }
+                        maxLength="13"
+                        minLength="9"
+                        type="number"
+                        className="form-control"
+                        placeholder="Masukkan NO. Kontak"
+                        onChange={(e) => setPic_contact_number(e.target.value)}
+                        value={pic_contact_number && pic_contact_number}
+                      />
+                      <div className="box-hide-arrow"></div>
                     </div>
                     {error.pic_contact_number ? (
                       <p className="error-text">{error.pic_contact_number}</p>
