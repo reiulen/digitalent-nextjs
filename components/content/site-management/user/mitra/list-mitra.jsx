@@ -29,8 +29,27 @@ const Table = ({ token }) => {
     dispatch(searchCooporation(valueSearch));
   };
 
+  const getWindowDimensions = () => {
+    const { innerWidth: width, innerHeight: height } = window;
+    return {
+      width,
+      height,
+    };
+  };
+
+  const [windowDimensions, setWindowDimensions] = useState(
+    getWindowDimensions()
+  );
+
   useEffect(() => {
     dispatch(getAllMitraSite(token));
+
+    function handleResize() {
+      setWindowDimensions(getWindowDimensions());
+    }
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, [
     dispatch,
     allMitraSite.keyword,
@@ -42,7 +61,7 @@ const Table = ({ token }) => {
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
-          <div className="card-header border-0">
+          <div className="card-header border-0 px-6">
             <h3 className="card-title font-weight-bolder text-dark titles-1">
               List User Mitra
             </h3>
@@ -58,10 +77,10 @@ const Table = ({ token }) => {
           <div className="card-body pt-0 px-4 px-sm-8">
             <div className="table-filter">
               <div className="row align-items-center">
-                <div className="col-lg-12 col-xl-12">
+                <div className="col-lg-12 col-xl-12 pr-0">
                   <div className="d-flex align-items-center w-100">
                     <div className="row w-100">
-                      <div className="col-12 col-xl-4">
+                      <div className="col-12 col-xl-4 pr-0">
                         <div className="position-relative overflow-hidden w-100">
                           <IconSearch
                             style={{ left: "10" }}
@@ -145,10 +164,10 @@ const Table = ({ token }) => {
                                   />
                                 )}
                               </td>
-                              <td className="align-middle text-left">
+                              <td className="align-middle text-left p-part-t text-overflow-ens">
                                 {items.user.name}
                               </td>
-                              <td className="align-middle text-left">
+                              <td className="align-middle text-left p-part-t text-overflow-ens">
                                 {!items.website ? "-" : items.website}
                               </td>
                               <td className="align-middle text-left">
@@ -177,19 +196,19 @@ const Table = ({ token }) => {
 
               <div className="row px-4">
                 <div className="table-pagination">
-                  <Pagination
-                    activePage={allMitraSite.page}
-                    itemsCountPerPage={allMitraSite.data.perPage}
-                    totalItemsCount={allMitraSite.data.total}
-                    pageRangeDisplayed={3}
-                    onChange={(page) => dispatch(setPage(page))}
-                    nextPageText={">"}
-                    prevPageText={"<"}
-                    firstPageText={"<<"}
-                    lastPageText={">>"}
-                    itemClass="page-item"
-                    linkClass="page-link"
-                  />
+                    <Pagination
+                      activePage={allMitraSite.page}
+                      itemsCountPerPage={allMitraSite.data.perPage}
+                      totalItemsCount={allMitraSite.data.total}
+                      pageRangeDisplayed={windowDimensions.width > 350 ? 3 : 1}
+                      onChange={(page) => dispatch(setPage(page))}
+                      nextPageText={">"}
+                      prevPageText={"<"}
+                      firstPageText={"<<"}
+                      lastPageText={">>"}
+                      itemClass="page-item"
+                      linkClass="page-link"
+                    />
                 </div>
 
                 <div className="table-total ml-auto mr-4">
