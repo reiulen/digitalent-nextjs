@@ -233,6 +233,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
           <h3 className="font-weight-bolder mb-5">Informasi Pribadi</h3>
 
           <Row className="mb-3">
+            {/* {wizzard && <div></div>} */}
             <Form.Group as={Col} md={6}>
               <Form.Label className={style.label}>Nama Lengkap</Form.Label>
               <Form.Control

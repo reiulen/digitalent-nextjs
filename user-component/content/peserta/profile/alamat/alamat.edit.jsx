@@ -195,7 +195,8 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
                 options={optionsProvinsi}
                 defaultValue={provinsiDomisili}
                 onChange={e => {
-                  selectRefKabupatenDomisili.select.clearValue();
+                  setKotaDomisili(null);
+                  // selectRefKabupatenDomisili.select.clearValue();
                   setProvinsiDomisili({ label: e?.label, value: e?.value });
                   dispatch(dropdownKabupatenDomisili(token, e.value));
                 }}
@@ -319,7 +320,8 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
                 }
                 options={optionsProvinsi}
                 onChange={e => {
-                  selectRefKabupatenDomisili.select.clearValue();
+                  setKotaDomisili(null);
+                  // selectRefKabupatenDomisili.select.clearValue();
                   setProvinsiDomisili({ label: e?.label, value: e?.value });
                   dispatch(dropdownKabupatenDomisili(token, e.value));
                 }}
@@ -351,6 +353,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("kota domisili")
                 }
+                value={kotaDomisili}
               />
               {simpleValidator.current.message(
                 "kota domisili",
@@ -428,13 +431,11 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
         address_ktp: alamatKtp,
         provinsi_ktp: provinsiKtp.label || provinsiKtp,
         kode_pos_ktp: kodePosKtp,
-        kota_ktp: "Jakarta",
         kecamatan_ktp: kecamatanKtp,
-        // kota_ktp: kotaKtp.label || kotaKtp,
+        kota_ktp: kotaKtp.label || kotaKtp,
         address: alamatDomisili,
         provinsi: provinsiDomisili.label || provinsiDomisili,
-        // kota: kotaDomisili.label || kotaDomisili,
-        kota: "Jakarta",
+        kota: kotaDomisili.label || kotaDomisili,
         kecamatan: kecamatanDomisili,
         kode_pos: kodePosDomisili,
       };

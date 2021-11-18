@@ -35,7 +35,8 @@ export const helperRegexNumber = /^[0-9\b]+$/;
 // ) {
 //   setKodePosKtp(e.target.value);
 // }
-export const helperRegexGPA = /^[0-4]\.\d\d$/;
+export const helperRegexGPA =
+  /^(([0-4]{1}\s)|([0-3]{1}\.\d{0,2}\s))|[4]\.[0]{0,2}\s/gm;
 
 export const today = new Date();
 export const dd = today.getDate();

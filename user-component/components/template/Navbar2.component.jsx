@@ -52,6 +52,8 @@ const Navigationbar = ({ session }) => {
 
   useEffect(() => {
     // dispatch(getDataPribadi(session?.token));
+    router.push("/peserta/wizzard");
+
     if (session) {
       dispatch(getDataPribadi(session?.token));
       if (
