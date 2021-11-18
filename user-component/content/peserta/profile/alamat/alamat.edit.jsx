@@ -298,6 +298,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
                 }
                 defaultValue={kecamatanDomisili}
                 options={optionsKecamatan}
+                value={kecamatanDomisili}
                 onChange={(e) => {
                   setKecamatanDomisili({ label: e?.label, value: e?.value });
                   dispatch(dropdownKecamatanToDesa(token, e.value));
@@ -335,6 +336,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
                 }
                 options={optionsKelurahan}
                 defaultValue={kelurahanDomisili}
+                value={kelurahanDomisili}
                 onChange={(e) => {
                   setKelurahanDomisili({ label: e?.label, value: e?.value });
                   dispatch(dropdownKecamatanToDesa(token, e.value));
