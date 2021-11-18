@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,20 +9,6 @@ import { getSession } from "next-auth/client";
 
 function Hasil({ token }) {
   const router = useRouter();
-  const headText = {
-    "font-weight": "bold",
-    "line-height": "124.5%",
-    "margin-top": "2rem",
-    color: "#626262",
-  };
-
-  const childText = {
-    "font-weight": "normal",
-    "font-size": "15px",
-    "line-height": "124.5%",
-    "margin-top": "1rem",
-    color: "#626262",
-  };
 
   const [user, setUser] = useState("")
 
@@ -48,7 +34,6 @@ function Hasil({ token }) {
             <div className="row mt-8 mb-10 position-relative">
               <div className="col-2 p-0">
                 <div className="progress-items">
-                  {/* <div className="line-progress"></div> */}
                   <div className="circle-progress active-circle">
                     <span className="title-progress">Submit Kerjasama</span>
                   </div>

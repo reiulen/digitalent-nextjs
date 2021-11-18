@@ -22,7 +22,6 @@ import LoadingTable from "../../../LoadingTable";
 import moment from "moment";
 import Image from "next/image";
 import Select from "react-select";
-import BtnIcon from "../components/BtnIcon";
 import AlertBar from "../components/BarAlert";
 
 import {
@@ -45,7 +44,7 @@ import { RESET_VALUE_SORTIR } from "../../../../redux/types/partnership/manageme
 
 const Table = ({ token }) => {
   const router = useRouter();
-  let { update, success, successTerima, successReject, successMakeREvisi } =
+  let { update, successTerima, successReject, successMakeREvisi } =
     router.query;
   let selectRefKerjasama = null;
   let selectRefStatus = null;
@@ -188,7 +187,7 @@ const Table = ({ token }) => {
         );
         setSumWillExpire(data.data.total);
       } catch (error) {
-        notify(error.response.data.message);
+        Swal.fire("Gagal", `${error.response.data.message}`, "error");
       }
     }
     getWillExpire(token);
@@ -383,7 +382,6 @@ const Table = ({ token }) => {
                                     <IconClose />
                                   </button>
                                 </div>
-
                                 <div
                                   className="modal-body text-left"
                                   style={{ height: "400px" }}
@@ -397,7 +395,6 @@ const Table = ({ token }) => {
                                       className="basic-single"
                                       classNamePrefix="select"
                                       placeholder="Semua"
-                                      // defaultValue={allMK.stateListMitra[0]}
                                       isDisabled={false}
                                       isLoading={false}
                                       isClearable={false}
@@ -417,9 +414,6 @@ const Table = ({ token }) => {
                                       className="basic-single"
                                       classNamePrefix="select"
                                       placeholder="Semua"
-                                      // defaultValue={
-                                      //   allMK.stateListKerjaSama[0]
-                                      // }
                                       isDisabled={false}
                                       isLoading={false}
                                       isClearable={false}
@@ -443,7 +437,6 @@ const Table = ({ token }) => {
                                       className="basic-single"
                                       classNamePrefix="select"
                                       placeholder="Semua"
-                                      // defaultValue={allMK.stateListStatus[0]}
                                       isDisabled={false}
                                       isLoading={false}
                                       isClearable={false}
@@ -471,6 +464,8 @@ const Table = ({ token }) => {
                                     <button
                                       className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
                                       type="button"
+                                      data-dismiss="modal"
+                                      aria-label="Close"
                                       onClick={(e) => handleSubmitSearchMany(e)}
                                     >
                                       Terapkan
@@ -538,7 +533,13 @@ const Table = ({ token }) => {
                         allMK.m_cooporation.data.list_cooperations.map(
                           (items, index) => {
                             return (
-                              <tr key={index} style={{backgroundColor:items.visit == 0 ?"#f8f8ff":"inherit"}}>
+                              <tr
+                                key={index}
+                                style={{
+                                  backgroundColor:
+                                    items.visit == 0 ? "#f8f8ff" : "inherit",
+                                }}
+                              >
                                 <td className="text-left align-middle">
                                   {allMK.page === 1
                                     ? index + 1
@@ -1029,20 +1030,6 @@ const Table = ({ token }) => {
                                           Detail
                                         </div>
                                       </button>
-                                      {/* <button
-                                        className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete"
-                                        onClick={() =>
-                                          router.push(
-                                            `/partnership/kerjasama/edit/${items.id}`
-                                          )
-                                        }
-                                      >
-                                        <IconPencil width="16" height="16" />
-
-                                        <div className="text-hover-show-hapus">
-                                          Ubah
-                                        </div>
-                                      </button> */}
                                       <button
                                         className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
                                         onClick={() =>

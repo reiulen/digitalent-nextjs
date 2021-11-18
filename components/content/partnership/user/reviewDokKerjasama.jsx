@@ -1,13 +1,9 @@
-import React, { useState, useRef, useEffect } from "react";
+import React from "react";
 
 import Link from "next/link";
 import PageWrapper from "../../../wrapper/page.wrapper";
-import DatePicker from "react-datepicker";
-import { addDays } from "date-fns";
 
-import Style from "../../../../styles/progressbar.module.css";
-
-const reviewDokKerjasama = ({token}) => {
+const reviewDokKerjasama = ({ token }) => {
   return (
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">
@@ -22,7 +18,6 @@ const reviewDokKerjasama = ({token}) => {
             <div className="row mt-8 mb-10">
               <div className="col-2 p-0">
                 <div className="progress-items">
-                  {/* <div className="line-progress"></div> */}
                   <div className="circle-progress active-circle">
                     <span className="title-progress">Submit Kerjasama</span>
                   </div>
@@ -48,8 +43,13 @@ const reviewDokKerjasama = ({token}) => {
                 <div className="progress-items">
                   <div className="line-progress"></div>
                   <div className="circle-progress">
-                    <span className="title-progress text-center" style={{top:"-4rem"}}>
-                      Submit Dokumen<br/>Kerjasama
+                    <span
+                      className="title-progress text-center"
+                      style={{ top: "-4rem" }}
+                    >
+                      Submit Dokumen
+                      <br />
+                      Kerjasama
                     </span>
                   </div>
                 </div>
@@ -58,8 +58,13 @@ const reviewDokKerjasama = ({token}) => {
                 <div className="progress-items">
                   <div className="line-progress"></div>
                   <div className="circle-progress">
-                    <span className="title-progress text-center" style={{top:"-4rem"}}>
-                      Review Dokumen<br/>Kerjasama
+                    <span
+                      className="title-progress text-center"
+                      style={{ top: "-4rem" }}
+                    >
+                      Review Dokumen
+                      <br />
+                      Kerjasama
                     </span>
                   </div>
                 </div>
@@ -77,104 +82,86 @@ const reviewDokKerjasama = ({token}) => {
             <form>
               <div className="row">
                 <div className="col-12 col-sm-6">
-                  {/* tanggal apakah diambil date now atau otomatis date sekarang */}
                   <div className="form-group mb-10">
                     <label className="required mb-2">Periode Kerjasama</label>
                     <div className="position-relative">
                       <input
                         placeholder="Pilih Tanggal"
-                        // readOnly
-                        // value={date}
                         type="date"
                         className="form-control mb-3 mb-lg-0"
                       />
-                      {/* icon calender */}
                     </div>
-                    {/* {error.date ? <p className="error-text">{error.date}</p> : ""} */}
                   </div>
                 </div>
                 <div className="col-12 col-sm-6">
-                  {/* tanggal apakah diambil date now atau otomatis date sekarang */}
                   <div className="form-group mb-10">
                     <label className="required mb-2"></label>
                     <div className="position-relative">
                       <input
                         placeholder="Pilih Tanggal"
-                        // readOnly
-                        // value={date}
                         type="date"
                         className="form-control mb-3 mb-lg-0 mt-2"
                       />
-                      {/* icon calender */}
                     </div>
-                    {/* {error.date ? <p className="error-text">{error.date}</p> : ""} */}
                   </div>
                 </div>
               </div>
               <div className="row">
                 <div className="col-12 col-sm-12">
                   <div className="form-group mb-10">
-                    <label className="required mb-2">Nomor Perjanjian Lembaga</label>
+                    <label className="required mb-2">
+                      Nomor Perjanjian Lembaga
+                    </label>
                     <input
                       placeholder="Masukan Nomor Perjanjian Lembaga"
-                      // readOnly
-                      // value={date}
                       type="number"
                       className="form-control mb-3 mb-lg-0"
                     />
-                    {/* {error.date ? <p className="error-text">{error.date}</p> : ""} */}
                   </div>
                 </div>
               </div>
               <div className="row">
                 <div className="col-12 col-sm-12">
                   <div className="form-group mb-10">
-                    <label className="required mb-2">Nomor Perjanjian Kemkominfo</label>
+                    <label className="required mb-2">
+                      Nomor Perjanjian Kemkominfo
+                    </label>
                     <input
                       placeholder="Masukan Nomor Perjanjian Kemkominfo"
-                      // readOnly
-                      // value={date}
                       type="number"
                       className="form-control mb-3 mb-lg-0"
                     />
-                    {/* {error.date ? <p className="error-text">{error.date}</p> : ""} */}
                   </div>
                 </div>
               </div>
 
               <div className="row">
                 <div className="col-12 col-sm-6">
-                  {/* tanggal apakah diambil date now atau otomatis date sekarang */}
                   <div className="form-group mb-10">
-                    <label className="required mb-2">Tanggal Penandatanganan</label>
+                    <label className="required mb-2">
+                      Tanggal Penandatanganan
+                    </label>
                     <div className="position-relative">
                       <input
                         placeholder="Pilih Tanggal"
-                        // readOnly
-                        // value={date}
                         type="date"
                         className="form-control mb-3 mb-lg-0"
                       />
-                      {/* icon calender */}
                     </div>
-                    {/* {error.date ? <p className="error-text">{error.date}</p> : ""} */}
                   </div>
                 </div>
                 <div className="col-12 col-sm-6">
-                  {/* tanggal apakah diambil date now atau otomatis date sekarang */}
                   <div className="form-group mb-10">
-                    <label className="required mb-2">Upload Dokumen Kerjasama</label>
+                    <label className="required mb-2">
+                      Upload Dokumen Kerjasama
+                    </label>
                     <div className="position-relative">
                       <input
                         placeholder="Pilih FIle"
-                        // readOnly
-                        // value={date}
                         type="file"
                         className="form-control mb-3 mb-lg-0"
                       />
-                      {/* icon calender */}
                     </div>
-                    {/* {error.date ? <p className="error-text">{error.date}</p> : ""} */}
                   </div>
                 </div>
               </div>
@@ -182,21 +169,20 @@ const reviewDokKerjasama = ({token}) => {
               <div className="row">
                 <div className="col-12">
                   <div className="form-group">
-                <label htmlFor="staticEmail" className="col-form-label">
-                  Catatan Tambahan
-                </label>
-                <div>
-                  <textarea
-                    name="cooperation"
-                    id=""
-                    cols="30"
-                    rows="5"
-                    className="form-control"
-                    placeholder="Tuliskan Catatan Tambahan"
-                  ></textarea>
-                </div>
-              </div>
-
+                    <label htmlFor="staticEmail" className="col-form-label">
+                      Catatan Tambahan
+                    </label>
+                    <div>
+                      <textarea
+                        name="cooperation"
+                        id=""
+                        cols="30"
+                        rows="5"
+                        className="form-control"
+                        placeholder="Tuliskan Catatan Tambahan"
+                      ></textarea>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -216,10 +202,6 @@ const reviewDokKerjasama = ({token}) => {
                 </div>
               </div>
             </form>
-          
-          
-          
-          
           </div>
         </div>
       </div>

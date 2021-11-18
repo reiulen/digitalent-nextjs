@@ -2,14 +2,9 @@ import React, { useState, useRef, useEffect } from "react";
 
 import Link from "next/link";
 import PageWrapper from "../../../wrapper/page.wrapper";
-import DatePicker from "react-datepicker";
-import { addDays } from "date-fns";
-
-import Style from "../../../../styles/progressbar.module.css";
 import axios from "axios";
 import { useRouter } from "next/router";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import Swal from "sweetalert2";
 
 const RevisiSubmit = ({token}) => {
   const router = useRouter();
@@ -24,7 +19,6 @@ const RevisiSubmit = ({token}) => {
   const [note, setNote] = useState("");
 
   const handleSubmit = async () => {
-    // e.preventDefault();
     Swal.fire({
       title: "Apakah anda yakin ingin simpan revisi?",
       icon: "warning",
@@ -68,7 +62,7 @@ const RevisiSubmit = ({token}) => {
           
 
         } catch (error) {
-          notify(error.response.data.message);
+          Swal.fire("Gagal", `${error.response.data.message}`, "error")
         }
       }
     });
@@ -77,9 +71,6 @@ const RevisiSubmit = ({token}) => {
 
   const [lengthListCard, setLengthListCard] = useState("")
   const [indexCard, setIndexCard] = useState("")
-  const getLengthListCard = async (id) => {
-    
-  };
 
 
   const handleChange = (e, index) => {
@@ -88,16 +79,6 @@ const RevisiSubmit = ({token}) => {
     setAllCooperation(dataaa);
   };
 
-  const notify = (value) =>
-    toast.info(`${value}`, {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
   useEffect(() => {
     async function setDataSingle(id,version) {
       try {
@@ -117,7 +98,7 @@ const RevisiSubmit = ({token}) => {
       setAllCooperation(data.data.cooperation_category.data_content);
       setNote(data.data.note);
     } catch (error) {
-      notify(error.response.data.message);
+      Swal.fire("Gagal", `${error.response.data.message}`, "error")
     }
     }
 
@@ -133,7 +114,7 @@ const RevisiSubmit = ({token}) => {
       );
       setLengthListCard(data.data.length - 1)
     } catch (error) {
-      notify(error.response.data.message);
+      Swal.fire("Gagal", `${error.response.data.message}`, "error")
     }
       
     }
@@ -145,17 +126,6 @@ const RevisiSubmit = ({token}) => {
 
   return (
     <PageWrapper>
-      <ToastContainer
-          position="bottom-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">

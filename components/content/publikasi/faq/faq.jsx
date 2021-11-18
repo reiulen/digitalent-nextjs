@@ -629,7 +629,7 @@ const Faq = ({ token }) => {
 
                                                             </td>
                                                             <td className='align-middle' style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '11rem' }}>{row.judul}</td>
-                                                            <td className='align-middle'>{row.kategori}</td>
+                                                            <td className='align-middle' style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '11rem' }}>{row.kategori}</td>
                                                             <td className='align-middle'>
                                                                 {row.publish === 1 ? (
                                                                     row.tanggal_publish

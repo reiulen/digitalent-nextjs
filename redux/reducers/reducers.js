@@ -7,6 +7,7 @@ import {
   deleteArtikelReducer,
   detailArtikelReducer,
   updateArtikelReducer,
+  allArtikelsPesertaReducer,
 } from "./publikasi/artikel.reducers";
 import {
   allArtikelPesertaReducer,
@@ -405,6 +406,7 @@ import {
   drowpdownProvinsiToDesaReducers,
   drowpdownKecamatanToDesaReducers,
   drowpdownPenyelenggaraReducers,
+  drowpdownFormBuilderReducers,
 } from "./pelatihan/admin/function.reducers";
 import { allProvinsiReducer, allKotaReducer } from "./utils/utils.reducers";
 import { reducerFunctionals } from "./utils/functionals.reducer";
@@ -491,6 +493,7 @@ import {
 const reducer = combineReducers({
   // PUBLIKASI
   allArtikel: allArtikelReducer,
+  allArtikelsPeserta: allArtikelsPesertaReducer,
   newArtikel: newArtikelReducer,
   deleteArtikel: deleteArtikelReducer,
   detailArtikel: detailArtikelReducer,
@@ -750,7 +753,7 @@ const reducer = combineReducers({
   deleteTraining: deleteTrainingReducer,
   getEditTraining: getEditTrainingReducer,
   getEditTraining2: getEditTraining2Reducer,
-  getEditTraining3: getEditTraining3Reducer,
+  getEditTraining3: getEditTrainingReducer,
   getFormLPJ: getFormLPJReducer,
   newLPJ: newLPJReducer,
   getFormEvidence: getFormEvidenceReducer,
@@ -815,6 +818,7 @@ const reducer = combineReducers({
   drowpdownProvinsiToDesa: drowpdownProvinsiToDesaReducers,
   drowpdownKecamatanToDesa: drowpdownKecamatanToDesaReducers,
   drowpdownPenyelenggara: drowpdownPenyelenggaraReducers,
+  drowpdownFormBuilder: drowpdownFormBuilderReducers,
   updateStatus: updateStatusReducer,
 
   // ========== profile peserta ========

@@ -5,19 +5,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 
 import Pagination from "react-js-pagination";
-import DatePicker from "react-datepicker";
 import LoadingTable from "../../../../LoadingTable";
 import Select from "react-select";
 
 import Swal from "sweetalert2";
 
-import Image from "next/image";
-
 import PageWrapper from "../../../../wrapper/page.wrapper";
 import CardPage from "../../../../CardPage";
-import ButtonAction from "../../../../ButtonAction";
-
-import IconCalender from "../../../../assets/icon/Calender";
 import IconTodoLine from "../../../../assets/icon/TodoLine";
 import axios from "axios";
 import moment from "moment";
@@ -33,7 +27,6 @@ import {
   changeValueStatusCard,
   limitCooporation,
   deleteCooperation,
-  exportFileCSV,
 } from "../../../../../redux/actions/partnership/user/cooperation.actions";
 
 import { RESET_VALUE_SORTIR } from "../../../../../redux/types/partnership/user/cooperation.type";
@@ -46,9 +39,7 @@ import IconAdd from "../../../../assets/icon/Add";
 import IconClose from "../../../../assets/icon/Close";
 import IconFilter from "../../../../assets/icon/Filter";
 import IconEye from "../../../../assets/icon/Eye";
-import IconPencil from "../../../../assets/icon/Pencil";
 import IconDelete from "../../../../assets/icon/Delete";
-import BtnIcon from "../../components/BtnIcon";
 import AlertBar from "../../components/BarAlert";
 
 const Table = ({ token }) => {
@@ -67,10 +58,6 @@ const Table = ({ token }) => {
   const [valueSearch, setValueSearch] = useState("");
   const [valueStatus, setValueStatus] = useState("");
   const [valueKerjaSama, setValueKerjaSama] = useState("");
-
-  // const onNewReset = () => {
-  //   router.replace(`/partnership/user/kerjasama`);
-  // };
 
   const [deleteBar, setDeleteBar] = useState(false);
   const onNewReset = () => {
@@ -132,7 +119,7 @@ const Table = ({ token }) => {
         setIsProfile(true);
       }
     } catch (error) {
-      notify(error.response.data.message);
+      Swal.fire("Gagal", `${error.response.data.message}`, "error")
     }
   };
 
@@ -149,7 +136,7 @@ const Table = ({ token }) => {
       );
       setSumWillExpire(data.data.total);
     } catch (error) {
-      notify(error.response.data.message);
+      Swal.fire("Gagal", `${error.response.data.message}`, "error")
     }
   };
 
@@ -167,8 +154,6 @@ const Table = ({ token }) => {
       if (result.value) {
         dispatch(deleteCooperation(id, token));
         setDeleteBar(true);
-        // setIsStatusBar(false);
-        // router.replace("/partnership/kerjasama");
       } else {
         dispatch(reloadTable());
       }
@@ -298,7 +283,6 @@ const Table = ({ token }) => {
             <div className="table-filter">
               <div className="row align-items-center">
                 <div className="col-lg-12 col-xl-12">
-                  {/* <form onSubmit={handleSubmit}> */}
                   <div className="row">
                     <div className="col-12 col-sm-6">
                       <div className="position-relative overflow-hidden w-100 mt-5">
@@ -455,19 +439,9 @@ const Table = ({ token }) => {
                         </div>
 
                         {/* end modal */}
-
-                        {/* btn export */}
-                        {/* <button
-                            className="btn btn-rounded-full bg-blue-secondary text-white ml-4 mt-2"
-                            type="button"
-                            onClick={() => dispatch(exportFileCSV(token))}
-                          >
-                            Export .xlxs
-                          </button> */}
                       </div>
                     </div>
                   </div>
-                  {/* </form> */}
                 </div>
               </div>
             </div>
@@ -587,7 +561,7 @@ const Table = ({ token }) => {
                                         key={index}
                                       >
                                         <option value="1">
-                                          {items.status.name}
+                                          Aktif
                                         </option>
                                         <option value="2">Tidak Aktif</option>
                                       </select>

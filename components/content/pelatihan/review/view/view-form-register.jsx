@@ -102,7 +102,7 @@ const ReviewFormRegister = ({ token }) => {
     if (successRevisi) {
       dispatch({ type: REVISI_REVIEW_RESET });
       router.push({
-        pathname: `/pelatihan/review`,
+        pathname: `/pelatihan/review-pelatihan`,
         query: { success: true },
       });
     }
@@ -110,7 +110,7 @@ const ReviewFormRegister = ({ token }) => {
     if (successTolak) {
       dispatch({ type: TOLAK_REVIEW_RESET });
       router.push({
-        pathname: `/pelatihan/review`,
+        pathname: `/pelatihan/review-pelatihan`,
         query: { success: true },
       });
     }

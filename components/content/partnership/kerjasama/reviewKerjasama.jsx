@@ -3,8 +3,6 @@ import Link from "next/link";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
 const ReviewKerjasama = ({ token }) => {
@@ -126,9 +124,6 @@ const ReviewKerjasama = ({ token }) => {
             query: { successReject: true },
           });
         } catch (error) {
-
-
-
           Swal.fire("Gagal", `${error.response.data.message}`, "error").then(
             () => {
               router.push({
@@ -136,24 +131,10 @@ const ReviewKerjasama = ({ token }) => {
               });
             }
           );
-
-
-
         }
       }
     });
   };
-
-  const notify = (value) =>
-    toast.info(`${value}`, {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
 
   const [statusInfo, setstatusInfo] = useState("");
   useEffect(() => {
@@ -173,7 +154,7 @@ const ReviewKerjasama = ({ token }) => {
         setPeriod(data.data.period);
         setPeriodUnit(data.data.period_unit);
       } catch (error) {
-        notify(error.response.data.message);
+        Swal.fire("Gagal", `${error.response.data.message}`, "error");
       }
     }
     setDataSingle(router.query.id, token);
@@ -197,7 +178,7 @@ const ReviewKerjasama = ({ token }) => {
         setNoteView(data.data.note);
         setMitra(data.data.mitra);
       } catch (error) {
-        notify(error.response.data.message);
+        Swal.fire("Gagal", `${error.response.data.message}`, "error");
       }
     }
 
@@ -210,22 +191,9 @@ const ReviewKerjasama = ({ token }) => {
   return (
     <PageWrapper>
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
-        <ToastContainer
-          position="bottom-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3
-              className="card-title font-weight-bolder text-dark titles-1"
-            >
+            <h3 className="card-title font-weight-bolder text-dark titles-1">
               Review Kerjasama {mitra && mitra}
             </h3>
           </div>
@@ -349,7 +317,7 @@ const ReviewKerjasama = ({ token }) => {
                       onChange={(e) => setNote(e.target.value)}
                       name="cooperation"
                       id=""
-                      style={{backgroundColor:"transparent"}}
+                      style={{ backgroundColor: "transparent" }}
                       disabled
                       value={noteView && noteView}
                       cols="30"
