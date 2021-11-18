@@ -6,16 +6,11 @@ import { useRouter } from "next/router";
 
 import Swal from "sweetalert2";
 import SimpleReactValidator from "simple-react-validator";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { addTttd } from "../../../../redux/actions/partnership/tandaTangan.actions";
-import { useDispatch, useSelector } from "react-redux";
-import axios from 'axios'
+import axios from "axios";
 
 const TambahTandaTangan = ({ token }) => {
   const signCanvas = useRef({});
   const router = useRouter();
-  const dispatch = useDispatch();
 
   const clear = () => {
     Swal.fire({
@@ -94,9 +89,6 @@ const TambahTandaTangan = ({ token }) => {
           formData.append("position", jabatan);
           formData.append("signature_image", tandaTangan);
 
-          // dispatch add ttd here
-          // dispatch(addTttd(token, formData));
-
           try {
             let { data } = await axios.post(
               `${process.env.END_POINT_API_PARTNERSHIP}api/signatures/create`,
@@ -107,52 +99,22 @@ const TambahTandaTangan = ({ token }) => {
                 },
               }
             );
-            // router.push({
-            //   pathname: "/partnership/tanda-tangan",
-            //   query: { success: true },
-            // });
-            // dispatch({
-            //   type: SUCCESS_ADD_TTD,
-            //   payload: data,
-            // });
 
             router.push({
               pathname: `/partnership/tanda-tangan`,
               query: { success: true },
             });
           } catch (error) {
-            notify(error.response.data.message);
+            Swal.fire("Gagal", `${error.response.data.message}`, "error");
           }
         }
       });
     }
   };
 
-  const notify = (value) =>
-    toast.info(`${value}`, {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-
   return (
     <PageWrapper>
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
-        <ToastContainer
-          position="bottom-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark titles-1">

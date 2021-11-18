@@ -65,7 +65,7 @@ const LoginAdmin = () => {
           className="col-lg-7 d-flex flex-wrap align-content-center"
           style={{ background: "#1A4367" }}
         >
-          <div className="container px-0 px-sm-4">
+          <div className="container px-0 px-sm-4 scroll-form-login">
             <div className="title-login text-center mt-6">
               <Image
                 src="/assets/logo/logo-6.svg"

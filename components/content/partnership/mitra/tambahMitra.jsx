@@ -1,12 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import PageWrapper from "../../../wrapper/page.wrapper";
-
 import { useRouter } from "next/router";
-import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Select from "react-select";
 import IconClose from "../../../assets/icon/Close";
@@ -14,8 +11,6 @@ import Image from "next/image";
 
 const TambahMitra = ({ token }) => {
   const router = useRouter();
-  const dispatch = useDispatch();
-  const allMitra = useSelector((state) => state.allMitra);
   const [institution_name, setInstitution_name] = useState("");
   const [email, setEmail] = useState("");
   const [agency_logo, setAgency_logo] = useState("");
@@ -126,23 +121,14 @@ const TambahMitra = ({ token }) => {
               query: { success: true },
             });
           } catch (error) {
-            notify(error.response.data.message);
+            Swal.fire("Gagal", `${error.response.data.message}`, "error")
           }
         }
       });
     }
   };
 
-  const notify = (value) =>
-    toast.info(`${value}`, {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
+ 
 
   const onChangeProvinces = (e) => {
     setIndonesia_provinces_id(e.id);
@@ -168,10 +154,11 @@ const TambahMitra = ({ token }) => {
           setNamePDF(selectedFile.name);
         };
       } else {
-        notify("gambar harus PNG atau JPG dan max size 2mb");
+        Swal.fire("Gagal", `gambar harus PNG atau JPG dan max size 2mb`, "error")
+     
       }
     } else {
-      notify("upload gambar dulu");
+      Swal.fire("Gagal", `upload gambar dulu`, "error")
     }
   };
 
@@ -197,7 +184,7 @@ const TambahMitra = ({ token }) => {
         // dataNewProvinces.splice(0, 0, { label: "Pilih Provinsi", value: "" });
         setAllProvinces(dataNewProvinces);
       } catch (error) {
-        notify(error.response.data.message);
+        Swal.fire("Gagal", `${error.response.data.message}`, "error")
       }
     }
     getDataProvinces(token);
@@ -222,7 +209,7 @@ const TambahMitra = ({ token }) => {
           // dataNewCitites.splice(0, 0, { label: "Pilih Kab/Kota", value: "" });
           setCitiesAll(dataNewCitites);
         } catch (error) {
-          notify(error.response.data.message);
+          Swal.fire("Gagal", `${error.response.data.message}`, "error")
         }
       }
       fetchAPI();
@@ -232,17 +219,6 @@ const TambahMitra = ({ token }) => {
   return (
     <PageWrapper>
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
-        <ToastContainer
-          position="bottom-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark titles-1">

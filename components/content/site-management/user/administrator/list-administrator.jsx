@@ -27,10 +27,7 @@ const Table = ({ token }) => {
   const router = useRouter();
 
   const allAdminSite = useSelector((state) => state.allAdminSite);
-  console.log("allAdminSite", allAdminSite);
-  const { isDeleted, error: deleteError } = useSelector(
-    (state) => state.deleteAdminSite
-  );
+  const { isDeleted,error: deleteError, } = useSelector((state) => state.deleteAdminSite);
 
   const [valueSearch, setValueSearch] = useState("");
   const handleChangeValueSearch = (value) => {

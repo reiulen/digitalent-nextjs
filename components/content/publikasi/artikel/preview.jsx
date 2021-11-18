@@ -157,7 +157,7 @@ const Preview = () => {
                     {artikel ? (
                         <div className="row mt-10">
                             {/* Left Side */}
-                            <div className="col-12 col-md-8">
+                            <div className="col-12 col-md-12 col-lg-8">
                                 {/* Image */}
                                 <Image
                                     src={
@@ -204,10 +204,10 @@ const Preview = () => {
                             {/* Right Side */}
                             {windowDimensions &&
                                 windowDimensions.width &&
-                                windowDimensions.width > 750 ? (
+                                windowDimensions.width > 770 ? (
                                 <div className="col-12 col-md-4">
                                     {/* Search */}
-                                    <div className="border rounded">
+                                    <div className="border rounded-lg">
                                         <div className="row mt-10 mb-5">
                                             <div className="col-2 my-auto ml-5">
                                                 <Image
@@ -232,7 +232,7 @@ const Preview = () => {
                                                             borderBottomLeftRadius: "150px",
                                                         }}
                                                     >
-                                                        <i className="ri-search-line mr-2"></i>
+                                                        <i className="ri-search-line"></i>
                                                     </div>
                                                 </div>
 
@@ -247,7 +247,7 @@ const Preview = () => {
                                                     <button
                                                         className="btn btn-primary-dashboard"
                                                         onClick={(e) =>
-                                                            handleHighlightWords(e, artikel.isi_artikel)
+                                                            handleHighlightWords(e, detail.isi_artikel)
                                                         }
                                                         style={{
                                                             borderTopRightRadius: "150px",

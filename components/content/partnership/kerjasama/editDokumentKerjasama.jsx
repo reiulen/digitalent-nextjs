@@ -18,8 +18,6 @@ import IconCalender from "../../../assets/icon/Calender";
 import moment from "moment";
 
 import Swal from "sweetalert2";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 const EditDokumentKerjasama = ({ token }) => {
   const dispatch = useDispatch();
@@ -167,7 +165,7 @@ const EditDokumentKerjasama = ({ token }) => {
             query: { update: true },
           });
         } catch (error) {
-          notify(error.response.data.message);
+          Swal.fire("Gagal", `${error.response.data.message}`, "error");
         }
       }
     });
@@ -212,17 +210,6 @@ const EditDokumentKerjasama = ({ token }) => {
     setCooperationID(dataCoopertaion);
   };
 
-  const notify = (value) =>
-    toast.info(`${value}`, {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-
   useEffect(() => {
     async function setDataSingle(id) {
       try {
@@ -251,7 +238,7 @@ const EditDokumentKerjasama = ({ token }) => {
         setDocument(data.data.document_file);
         setEmail(data.data.email);
       } catch (error) {
-        notify(error.response.data.message);
+        Swal.fire("Gagal", `${error.response.data.message}`, "error");
       }
     }
     setDataSingle(router.query.id);
@@ -267,37 +254,26 @@ const EditDokumentKerjasama = ({ token }) => {
 
   useEffect(() => {
     function periodCheck(date) {
-      setPeriodDateStart(moment(date).format("YYYY-MM-DD"));
+      setPeriodDateStart(moment(periodDateStart).format("YYYY-MM-DD"));
       if (periodUnit === "bulan") {
-        let futureMonth = moment(date)
+        let futureMonth = moment(periodDateStart)
           .add(parseInt(period), "M")
           .format("YYYY-MM-DD");
         setPeriodDateEnd(futureMonth);
       }
       // jika tahun
       else {
-        let futureYear = moment(date)
+        let futureYear = moment(periodDateStart)
           .add(parseInt(period), "y")
           .format("YYYY-MM-DD");
         setPeriodDateEnd(futureYear);
       }
     }
     periodCheck();
-  }, [period, date, periodUnit]);
+  }, [period, date, periodUnit, periodDateStart]);
   return (
     <PageWrapper>
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
-        <ToastContainer
-          position="top-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark mb-0 titles-1">
@@ -425,7 +401,6 @@ const EditDokumentKerjasama = ({ token }) => {
                     />
                   </div>
                   <div className="col-12 col-sm-6">
-                    {/* <div className="form-control">Tahun</div> */}
                     <input
                       disabled
                       type="text"

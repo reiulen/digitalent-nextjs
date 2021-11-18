@@ -4,16 +4,11 @@ import Link from "next/link";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import DatePicker from "react-datepicker";
 import { addDays } from "date-fns";
-
-import Style from "../../../../styles/progressbar.module.css";
 import Swal from "sweetalert2";
 import axios from "axios";
 import IconCalender from "../../../assets/icon/Calender";
 import { useRouter } from "next/router";
 import moment from "moment";
-
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 const SubmitKerjasama = ({ token }) => {
   const [startDate, setStartDate] = useState(null);
@@ -31,7 +26,6 @@ const SubmitKerjasama = ({ token }) => {
   });
 
   const router = useRouter();
-  const { id } = router.query.id;
   const [period_date_start, setPeriod_date_start] = useState("");
   const [agreement_number_partner, setAgreement_number_partner] = useState("");
   const [agreement_number_kemkominfo, setAgreement_number_kemkominfo] =
@@ -61,7 +55,7 @@ const SubmitKerjasama = ({ token }) => {
         setPdfFileError("Please selet valid pdf file");
       }
     } else {
-      alert("select your file");
+      Swal.fire("Gagal", `select your file`, "error");
     }
   };
 
@@ -129,18 +123,10 @@ const SubmitKerjasama = ({ token }) => {
               },
             });
           } catch (error) {
-            notify(error.response.data.message);
+            Swal.fire("Gagal", `${error.response.data.message}`, "error");
           }
         }
       });
-    }
-  };
-
-  const showDocument = () => {
-    if (!viewPDF) {
-      setViewPDF(pdfFile);
-    } else {
-      setViewPDF(null);
     }
   };
 
@@ -170,25 +156,6 @@ const SubmitKerjasama = ({ token }) => {
     checkPeriod(moment(date).format("YYYY-MM-DD"));
   };
 
-  const notify = (value) =>
-    toast.info(`${value}`, {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-
-  const [institution_name, setInstituion_name] = useState("");
-  const [date, setDate] = useState("");
-  const [title, setTitle] = useState("");
-  const [period, setPeriod] = useState("");
-  const [periodUnit, setPeriodUnit] = useState("");
-  const [cooperationC_id, setCooperationC_id] = useState("");
-  const [AllCooperation, setAllCooperation] = useState("");
-
   useEffect(() => {
     async function cekProgresStatus(id) {
       try {
@@ -203,7 +170,7 @@ const SubmitKerjasama = ({ token }) => {
 
         setPeriodValue(data.data.period);
       } catch (error) {
-        notify(error.response.data.message);
+        Swal.fire("Gagal", `${error.response.data.message}`, "error");
       }
     }
     cekProgresStatus(router.query.id);
@@ -212,17 +179,6 @@ const SubmitKerjasama = ({ token }) => {
   return (
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">
-        <ToastContainer
-          position="bottom-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title titles-1 fw-500 text-dark">
@@ -454,19 +410,6 @@ const SubmitKerjasama = ({ token }) => {
                     </label>
                   </div>
                 </div>
-                {pdfFile ? (
-                  <div className="mt-3">
-                    <button
-                      className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
-                      type="button"
-                      onClick={() => showDocument()}
-                    >
-                      {viewPDF ? "Tutup Dokumen" : "Tampilkan dokumen"}
-                    </button>
-                  </div>
-                ) : (
-                  ""
-                )}
                 {error.document ? (
                   <p className="error-text">{error.document}</p>
                 ) : (
