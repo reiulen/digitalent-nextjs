@@ -13,4 +13,7 @@
     max-width: 100%;
     z-index: 1;
   }
+  .wrapAccounts {
+    width: 100%;
+  }
 }

@@ -9,6 +9,7 @@ import Swal from "sweetalert2";
 import { Modal } from "react-bootstrap";
 import Select from "react-select";
 import moment from "moment";
+import axios from 'axios'
 
 import {
   deleteTraining,
@@ -16,11 +17,13 @@ import {
   getAllTraining,
   updateStatusPublish,
   updateStatusPelatihan,
+  cloneTrainingAction,
 } from "../../../../redux/actions/pelatihan/training.actions";
 import { getListRevisi } from "../../../../redux/actions/pelatihan/review.actions";
 import {
   DELETE_TRAINING_RESET,
   CLEAR_STATUS,
+  CLONE_TRAINING_RESET,
 } from "../../../../redux/types/pelatihan/training.type";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
@@ -28,6 +31,17 @@ import LoadingTable from "../../../LoadingTable";
 import CardPage from "../../../CardPage";
 
 import { useDispatch, useSelector } from "react-redux";
+
+import {
+  dropdownAkademi,
+  dropdownLevelPelatihan,
+  dropdownMitra,
+  dropdownPenyelenggara,
+  dropdownProvinsi,
+  dropdownTemabyAkademi,
+  dropdownKabupaten,
+} from "../../../../redux/actions/pelatihan/function.actions";
+
 
 const ListTraining = ({ token }) => {
   const dispatch = useDispatch();
@@ -45,6 +59,9 @@ const ListTraining = ({ token }) => {
   } = useSelector((state) => state.allTraining);
   const { error: cardError, training: cardTraining } = useSelector(
     (state) => state.cardTraining
+  );
+  const drowpdownTemabyAkademi = useSelector(
+    (state) => state.drowpdownTemabyAkademi
   );
   const {
     loading: statusLoading,
@@ -66,6 +83,8 @@ const ListTraining = ({ token }) => {
     isDeleted,
   } = useSelector((state) => state.deleteTraining);
 
+  const cloneTraining = useSelector((state) => state.cloneTraining);
+
   let loading = false;
   if (allLoading) {
     loading = allLoading;
@@ -73,6 +92,8 @@ const ListTraining = ({ token }) => {
     loading = deleteLoading;
   } else if (statusLoading) {
     loading = statusLoading;
+  } else if (cloneTraining.loading) {
+    loading = cloneTraining.loading;
   }
 
   let error;
@@ -86,6 +107,8 @@ const ListTraining = ({ token }) => {
     error = cardError;
   } else if (errorRevisi) {
     error = errorRevisi;
+  } else if (cloneTraining.error) {
+    error = cloneTraining.error;
   }
 
   const [note, setNote] = useState("");
@@ -97,6 +120,7 @@ const ListTraining = ({ token }) => {
   const [theme, setTheme] = useState(null);
   const [statusSubstansi, setStatusSubstansi] = useState(null);
   const [statusPelatihan, setStatusPelatihan] = useState(null);
+  const [berjalan, setBerjalan] = useState(null);
 
   const [dateRegister, setDateRegister] = useState([null, null]);
   const [dateRegisterStart, dateRegisterEnd] = dateRegister;
@@ -107,8 +131,8 @@ const ListTraining = ({ token }) => {
   const [showModal, setShowModal] = useState(false);
   const [showModalRevisi, setShowModalRevisi] = useState(false);
 
-  const optionsAkademi = [] || dataAkademi.data;
-  const optionsTema = [] || dataTema.data;
+  const optionsAkademi = dataAkademi.data || [];
+  const optionsTema = dataTema.data || [];
   const optionsPenyelenggara = [];
   if (dataPenyelenggara) {
     for (let index = 0; index < dataPenyelenggara.data.length; index++) {
@@ -138,6 +162,7 @@ const ListTraining = ({ token }) => {
   ];
 
   useEffect(() => {
+    dispatch(dropdownTemabyAkademi(academy?.value, token));
     if (isDeleted) {
       Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
         (result) => {
@@ -162,6 +187,32 @@ const ListTraining = ({ token }) => {
       );
       dispatch({
         type: DELETE_TRAINING_RESET,
+      });
+    }
+    if (cloneTraining.loading) {
+      Swal.fire("Berhasil ", "Data berhasil diclone.", "success").then(
+        (result) => {
+          if (result.isConfirmed) {
+            dispatch(
+              getAllTraining(
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                token
+              )
+            );
+          }
+        }
+      );
+      dispatch({
+        type: CLONE_TRAINING_RESET,
       });
     }
     if (statusSuccess) {
@@ -190,23 +241,38 @@ const ListTraining = ({ token }) => {
         setNote(row.revisi);
       });
     }
-  }, [isDeleted, statusSuccess, dispatch, token, revisi]);
+  }, [
+    isDeleted,
+    statusSuccess,
+    dispatch,
+    token,
+    revisi,
+    cloneTraining.loading,
+    academy?.value
+  ]);
 
   const handlePagination = (pageNumber) => {
     setPage(pageNumber);
+    let register = dateRegister.map((item) => {
+      return moment(item).format("YYYY-MM-DD");
+    });
+    let pelaksanaan = datePelaksanaan.map((item) => {
+      return moment(item).format("YYYY-MM-DD");
+    });
     dispatch(
       getAllTraining(
         pageNumber,
         search,
         limit,
-        null,
-        null,
+        register[0] === "Invalid date" ? "" : register.join(","),
+        pelaksanaan[0] === "Invalid date" ? "" : pelaksanaan.join(","),
         statusSubstansi != null ? statusSubstansi.value : null,
         statusPelatihan != null ? statusPelatihan.value : null,
         penyelenggara != null ? penyelenggara.value : null,
         academy,
         theme,
-        token
+        token,
+        berjalan
       )
     );
   };
@@ -232,20 +298,27 @@ const ListTraining = ({ token }) => {
 
   const handleFilter = () => {
     setShowModal(false);
+    let register = dateRegister.map((item) => {
+      return moment(item).format("YYYY-MM-DD");
+    });
+    let pelaksanaan = datePelaksanaan.map((item) => {
+      return moment(item).format("YYYY-MM-DD");
+    });
     setPage(1);
     dispatch(
       getAllTraining(
         1,
         search,
         limit,
-        null,
-        null,
+        register[0] === "Invalid date" ? "" : register.join(","),
+        pelaksanaan[0] === "Invalid date" ? "" : pelaksanaan.join(","),
         statusSubstansi != null ? statusSubstansi.value : null,
         statusPelatihan != null ? statusPelatihan.value : null,
         penyelenggara != null ? penyelenggara.value : null,
         academy,
         theme,
-        token
+        token,
+        berjalan,
       )
     );
   };
@@ -334,11 +407,38 @@ const ListTraining = ({ token }) => {
     });
   };
 
+  const handleClone = (id) => {
+    Swal.fire({
+      title: "Apakah anda yakin ?",
+      text: "Data ini akan di Clone !",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Ya !",
+      cancelButtonText: "Batal",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(cloneTrainingAction(id, token));
+      }
+    });
+  };
+
   const handlePublish = (val, type) => {
     setPage(1);
     const label = val.charAt(0).toUpperCase() + val.slice(1);
     if (type === "status_pelatihan") {
-      setStatusPelatihan({ label, value: val });
+      setPenyelenggara(null);
+      setAcademy(null);
+      setTheme(null);
+      setStatusSubstansi(null);
+      setBerjalan(null);
+      setStatusPelatihan({label: val, value: val});
+      setDateRegister([null, null]);
+      setDatePelaksanaan([null, null]);
+      setSearch("");
+      setLimit(5);
+      setPage(1);
       dispatch(
         getAllTraining(
           1,
@@ -354,8 +454,18 @@ const ListTraining = ({ token }) => {
           token
         )
       );
-    } else if ("status_substansi") {
-      setStatusSubstansi({ label, value: val });
+    } else if (type === "status_substansi") {
+      setPenyelenggara(null);
+      setAcademy(null);
+      setTheme(null);
+      setBerjalan(null);
+      setStatusSubstansi({label: val, value: val});
+      setStatusPelatihan(null);
+      setDateRegister([null, null]);
+      setDatePelaksanaan([null, null]);
+      setSearch("");
+      setLimit(5);
+      setPage(1);
       dispatch(
         getAllTraining(
           1,
@@ -369,9 +479,47 @@ const ListTraining = ({ token }) => {
           null,
           null,
           token
+        )
+      );
+    } else if (type === "WhereInPelatihan") {
+      setPenyelenggara(null);
+      setAcademy(null);
+      setTheme(null);
+      setBerjalan("1");
+      setStatusSubstansi(null);
+      setStatusPelatihan(null);
+      setDateRegister([null, null]);
+      setDatePelaksanaan([null, null]);
+      setSearch("");
+      setLimit(5);
+      setPage(1);
+      dispatch(
+        getAllTraining(
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          token,
+          val
         )
       );
     } else {
+      setPenyelenggara(null);
+      setAcademy(null);
+      setTheme(null);
+      setStatusSubstansi(null);
+      setStatusPelatihan(null);
+      setDateRegister([null, null]);
+      setDatePelaksanaan([null, null]);
+      setSearch("");
+      setLimit(5);
+      setPage(1);
       dispatch(
         getAllTraining(
           1,
@@ -391,15 +539,36 @@ const ListTraining = ({ token }) => {
     }
   };
 
-  const handleExportReport = async () => {
-    let link = `http://dts-subvit-dev.majapahit.id/api/subtance-question-banks/report/export/${id}`;
-    if (search) link = link.concat(`&keyword=${search}`);
-    if (status) link = link.concat(`&status=${status}`);
-    if (nilai) link = link.concat(`&nilai=${nilai}`);
-    if (pelatihan) link = link.concat(`&pelatihan=${pelatihan}`);
+  const handleExportReport =  () => {
+    let register = dateRegister.map((item) => {
+      return moment(item).format("YYYY-MM-DD");
+    });
+    let pelaksanaan = datePelaksanaan.map((item) => {
+      return moment(item).format("YYYY-MM-DD");
+    });
 
-    await axios.get(link).then((res) => {
-      window.location.href = res.data.data;
+    let config = {
+      params: {
+        cari:search,
+        pendaftaran_mulai: register[0] === "Invalid date" ? "" : register.join(","),
+        pelatihan_mulai: pelaksanaan[0] === "Invalid date" ? "" : pelaksanaan.join(","),
+        status_pelatihan: statusPelatihan != null ? statusPelatihan.label : "",
+        penyelenggara: penyelenggara != null ? penyelenggara.label : "",
+        akademi: academy !== null ?  academy.label : "",
+        tema: theme !== null ? theme.label : "",
+        "WhereInPelatihan": berjalan,
+        status_substansi: statusSubstansi !== null ? statusSubstansi.label : ""
+      },
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    }
+
+    let link = `${process.env.END_POINT_API_PELATIHAN}api/v1/pelatihan/export`;
+   
+
+    axios.get(link, config).then((res) => {
+      window.open(res.data.data, '_blank');
     });
   };
 
@@ -560,6 +729,7 @@ const ListTraining = ({ token }) => {
                     <i className="ri-search-line left-center-absolute ml-2"></i>
                     <input
                       type="text"
+                      value={search}
                       className="form-control pl-10"
                       placeholder="Ketik disini untuk Pencarian..."
                       onChange={(e) => setSearch(e.target.value)}
@@ -785,7 +955,7 @@ const ListTraining = ({ token }) => {
                                 </Link>
                                 {row.status_pelatihan === "pendaftaran" && (
                                   <Link
-                                    href={`/pelatihan/rekap-pendaftaran/detail-rekap-pendaftaran/${row.id}`}
+                                    href={`/pelatihan/pelatihan/view-list-peserta/${row.id}`}
                                   >
                                     <a
                                       className="btn btn-link-action bg-blue-secondary text-white mr-2"
@@ -811,16 +981,15 @@ const ListTraining = ({ token }) => {
                                     </a>
                                   </Link>
                                 )}
-                                <Link href={`/pelatihan/pelatihan/${row.id}`}>
-                                  <a
-                                    className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                                    data-toggle="tooltip"
-                                    data-placement="bottom"
-                                    title="Clone"
-                                  >
-                                    <i className="ri-send-backward p-0 text-white"></i>
-                                  </a>
-                                </Link>
+                                <button
+                                  className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                  data-toggle="tooltip"
+                                  data-placement="bottom"
+                                  onClick={() => handleClone(row.id)}
+                                  title="Clone"
+                                >
+                                  <i className="ri-send-backward p-0 text-white"></i>
+                                </button>
                                 <button
                                   className="btn btn-link-action bg-blue-secondary text-white"
                                   onClick={() => handleDelete(row.id)}
@@ -931,14 +1100,15 @@ const ListTraining = ({ token }) => {
             <Select
               options={optionsAkademi}
               defaultValue={academy}
-              onChange={(e) => setAcademy({ value: e.value, label: e.label })}
+              onChange={(e) => {setAcademy({ value: e.value, label: e.label }); setTheme(null)}}
             />
           </div>
           <div className="form-group mb-5">
             <label className="p-0">Tema</label>
             <Select
-              options={optionsTema}
+              options={drowpdownTemabyAkademi.data.data}
               defaultValue={theme}
+              value={theme}
               onChange={(e) => setTheme({ value: e.value, label: e.label })}
             />
           </div>

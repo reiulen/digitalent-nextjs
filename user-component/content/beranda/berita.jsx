@@ -5,11 +5,17 @@ import Pagination from "react-js-pagination";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
-import { Carousel } from "react-bootstrap";
-// import Carousel from "react-multi-carousel";
+import {
+    Container,
+    Modal
+  } from "react-bootstrap";
+import { Splide, SplideSlide } from "@splidejs/react-splide";
+
 import { getAllBerandaBerita } from "../../../redux/actions/beranda/berita.actions"
 import PulseLoaderRender from "../../components/loader/PulseLoader";
+import SubHeaderComponent from "../../components/template/Subheader.component";
 import style from '../../../styles/peserta/galeri.module.css'
+
 const Berita = () => {
     const dispatch = useDispatch();
     const router = useRouter();
@@ -19,7 +25,8 @@ const Berita = () => {
     const { akademi } = useSelector((state) => state.allAkademi);
     const { tags } = useSelector((state) => state.allTagBerandaBerita)
 
-    const titleToTrim = 25
+    const titleToTrim = 20
+    const categoryToTrim = 9
     const descToTrim = 100
 
     const [ activeTitle, setActiveTitle ] = useState("Ada Apa di Digitalent")
@@ -114,6 +121,19 @@ const Berita = () => {
         return result
     }
 
+    const handleCategoryToTrim = (str) => {
+        let result = null
+        
+        if (str.length > categoryToTrim){
+            result = str.slice(0, categoryToTrim) + "..."
+
+        } else {
+            result = str
+        }
+
+        return result
+    }
+
     const handleDescToTrim = (str) => {
         let result = null
         
@@ -153,7 +173,7 @@ const Berita = () => {
     }
 
     const handleFilterTag = (str) => {
-        setActiveTitle(`#${str}`)
+        setActiveTitle(`#${str.toUpperCase()}`)
         // setTag(str)
         dispatch (getAllBerandaBerita(
             activePage, 
@@ -190,22 +210,12 @@ const Berita = () => {
 
 
     return (
-        <div>
+        <Container fluid className="px-md-30 px-10 py-10 bg-white">
+
             {/* BreadCrumb */}
-            <div className="row my-15 mt-15 mx-1 py-3 px-8 bg-white rounded-pill d-flex align-items-center border">
-                <span className="text-primary">
-                    <Link href="/">
-                        Beranda 
-                    </Link>
-                </span>
-                <span>
-                    <i className="ri-arrow-right-s-line text-primary"></i> 
-                </span>
-                <span>
-                    {/* Insert BreadCrumb Here */}
-                    Berita
-                </span>
-            </div>
+            <SubHeaderComponent 
+                data={[{ link: router.asPath, name: "Berita" }]}
+            />
 
             {/* Header */}
             <div className="col-12 mt-5 pr-15">
@@ -228,15 +238,29 @@ const Berita = () => {
 
             {/* Filter Button */}
             {
-                kategori ? (
+                kategori ?
                     <div
-                        className="my-5 col-md-8 d-flex flex-row col-12"
+                        className="col-md-8 col-12 pl-0 ml-4 mt-10 mb-5 pr-10"
                     >
-                        <div className={`d-flex flex-row pr-15 overflow-scroll ${style.responsive_overflow}`}>
+                        <Splide
+                            options={{
+                                arrows: false,
+                                pagination: false,
+                                gap: "1rem",
+                                drag: "free",
+                                perPage: 4,
+                                breakpoints:{
+                                    830: {
+                                        perPage: 2,
+                                      },
+                                }
+                            }}
+                        >
                             {
                                 kategoriBerita === "" ?
+                                    <SplideSlide>
                                         <div 
-                                            className="d-flex align-items-center rounded-pill bg-primary-dashboard py-1 px-3 mr-7 my-5" 
+                                            className="d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-3 mr-7 my-5" 
                                             style={{ cursor: "pointer", height:"40px" }}
                                             onClick={() => handleFilterKategori("")}
                                         >
@@ -244,9 +268,11 @@ const Berita = () => {
                                                 Semua
                                             </div>
                                         </div>
-                                    :
+                                    </SplideSlide>
+                                :
+                                    <SplideSlide>
                                         <div 
-                                            className="d-flex align-items-center border rounded-pill bg-white py-1 px-3 mr-7 my-5" 
+                                            className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-7 my-5" 
                                             style={{ cursor: "pointer", height:"40px" }}
                                             onClick={() => handleFilterKategori("")}
                                         >
@@ -254,42 +280,52 @@ const Berita = () => {
                                                 Semua
                                             </div>
                                         </div>
+                                    </SplideSlide>
+                                    
                             }
-
                             {
                                 kategori ?
                                     kategori.map((el, i) => {
                                         return (
                                             kategoriBerita == el.nama_kategori ?
-                                                <div 
-                                                    className="d-flex align-items-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-7 my-5" 
-                                                    style={{ cursor: "pointer", height:"40px" }}
-                                                    onClick={() => handleFilterKategori(el.nama_kategori)}
-                                                    key={i}
-                                                >
-                                                    <div className="my-1 mx-3 py-1 px-3 text-white">
-                                                        {el.nama_kategori}
+                                                <SplideSlide>
+                                                    <div 
+                                                        className="d-flex align-items-center justify-content-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-7 my-5" 
+                                                        style={{ cursor: "pointer", height:"40px" }}
+                                                        onClick={() => handleFilterKategori(el.nama_kategori)}
+                                                        key={i}
+                                                    >
+                                                        <div className="my-1 mx-3 py-1 px-3 text-white">
+                                                            {handleCategoryToTrim(el.nama_kategori)}
+                                                        </div>
                                                     </div>
-                                                </div> 
+                                                </SplideSlide>
                                             :
-                                                <div 
-                                                    className="d-flex align-items-center border rounded-pill bg-white py-1 px-3 mr-7 my-5" 
-                                                    style={{ cursor: "pointer", height:"40px" }}
-                                                    onClick={() => handleFilterKategori(el.nama_kategori)}
-                                                    key={i}
-                                                >
-                                                    <div className="my-1 mx-3 py-1 px-3 text-muted">
-                                                        {el.nama_kategori}
-                                                    </div>
-                                                </div> 
+                                                <SplideSlide>
+                                                    <div 
+                                                        className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-7 my-5" 
+                                                        style={{ cursor: "pointer", height:"40px" }}
+                                                        onClick={() => handleFilterKategori(el.nama_kategori)}
+                                                        key={i}
+                                                    >
+                                                        <div className="my-1 mx-3 py-1 px-3 text-muted">
+                                                            {handleCategoryToTrim(el.nama_kategori)}
+                                                        </div>
+                                                    </div> 
+                                                </SplideSlide>
+                                                
                                         )
                                     })
                                 :
                                     null
                             }
-                        </div>
-                    </div> 
-                ) : null}
+
+                        </Splide>
+                    </div>
+                    
+                :
+                    null
+            }
             {/* End Filter Button */}
 
             {/* Content */}
@@ -488,11 +524,11 @@ const Berita = () => {
                             berita && berita.berita && berita.berita.length !== 0 ?
                                 berita.berita.map ((el, i) => {
                                     return (
-                                        <div className="row my-20 ml-5 " key={i}>
+                                        <div className="row my-15 ml-5 " key={i}>
                                             <div className="col col-7">
                                                 <div className="row d-flex justify-content-between align-items-center">
-                                                    <div className=" d-flex align-self-center">
-                                                        <div className="border rounded-circle py-1 px-2">
+                                                    <div className=" d-flex align-self-center mb-2">
+                                                        <div className="border rounded-circle p-2 d-flex justify-content-center align-self-center">
                                                             {/* Insert Logo Image Here */}
                                                             <Image
                                                                 // src="/assets/media/logo-default.png" 
@@ -513,17 +549,22 @@ const Berita = () => {
                                                         </span>
                                                     </div>
 
-                                                    <div className="mr-2">
-                                                        <div className="badge badge-light mr-2">
-                                                            <div className="text-primary">
+                                                    <div className="mr-2 mb-3">
+                                                        <div className="badge badge-pill badge-light mr-2">
+                                                            <div className="text-primary p-1">
                                                                 {/* Insert Kategori Here */}
                                                                 {el.nama_kategori}
                                                             </div>
                                                         </div>
-                                                        <span className="font-weight-bolder">
-                                                            {/* Insert Akademi Here */}
-                                                            | {el.kategori_akademi}
-                                                        </span>
+                                                        {
+                                                            windowDimensions && windowDimensions.width && windowDimensions.width > 500 ?
+                                                                <span className="font-weight-bolder">
+                                                                    {/* Insert Akademi Here */}
+                                                                    | {el.kategori_akademi}
+                                                                </span>
+                                                            :
+                                                                null
+                                                        }
                                                     </div>
                                                 </div>
 
@@ -531,7 +572,7 @@ const Berita = () => {
                                                     {/* Insert Title Here */}
                                                     <Link href={`/berita/detail/${el.slug}`}>
                                                         <a>
-                                                            <h1 className="text-dark">
+                                                            <h1 className="text-dark text-wrap">
                                                                 {handleTitleToTrim(el.judul)}
                                                             </h1>
                                                         </a>
@@ -542,12 +583,12 @@ const Berita = () => {
                                                 {
                                                     windowDimensions && windowDimensions.width && windowDimensions.width > 770 ?
                                                         <div 
-                                                            className="row my-5 d-flex flex-wrap"
+                                                            className="row my-5 d-flex flex-wrap "
                                                         >
                                                             {/* Insert Desc Here */}
                                                             <div 
                                                                 dangerouslySetInnerHTML={{__html: handleDescToTrim(el.isi_berita)}}
-                                                                className="text-wrap d-flex flex-wrap overflow-hidden text-truncate"
+                                                                className="text-wrap d-flex flex-wrap overflow-hidden"
                                                                 style={{maxWidth:"450px"}}
                                                             />
                                                         </div>
@@ -573,7 +614,7 @@ const Berita = () => {
                                                                             style={{cursor:"pointer"}}
                                                                             key={index}
                                                                         >
-                                                                            #{element}
+                                                                            #{element.toUpperCase()}
                                                                         </div>
                                                                     )
                                                                 })
@@ -621,6 +662,33 @@ const Berita = () => {
                                 </div>
                     }
                     {/* End of Card */}
+
+                    {/* Pagination */}
+                    {
+                        berita ?
+                            <div className="row mt-5 mb-10 d-flex justify-content-center">
+                                <div className="table-pagination">
+                                    <Pagination 
+                                        activePage = {activePage}
+                                        itemsCountPerPage={5}
+                                        // itemsCountPerPage={berita.perPage}
+                                        totalItemsCount={berita.total}
+                                        pageRangeDisplayed={windowDimensions.width > 300 ? 3 : 1}
+                                        onChange={handlePagination}
+                                        nextPageText={">"}
+                                        prevPageText={"<"}
+                                        firstPageText={"<<"}
+                                        lastPageText={">>"}
+                                        itemClass="page-item-dashboard"
+                                        linkClass="page-link-dashboard"
+                                    />
+                                </div>
+                                
+                            </div>
+                        :
+                            null
+                    }
+                    {/* End of Pagination */}
                 </div>
                 {/* End of Left Side */}
 
@@ -727,7 +795,7 @@ const Berita = () => {
                                                 {
                                                     akademi.map ((el, i) => {
                                                         return (
-                                                            <option value={el.name} key={i}>{el.slug}</option>
+                                                            <option value={el.slug} key={i}>{el.slug}</option>
                                                         )
                                                     })
                                                 }
@@ -776,7 +844,7 @@ const Berita = () => {
                                                 onClick={() => handleFilterTag(el)}
                                                 style={{cursor:"pointer", height:"38px", fontSize:"14px"}}
                                             >
-                                                #{el}
+                                                #{el.toString().toUpperCase()}
                                             </div>
                                         )
                                     })
@@ -797,35 +865,10 @@ const Berita = () => {
             </div>
             {/* End Content */}
 
-            {/* Pagination */}
-            {
-                berita ?
-                    <div className="row my-5 d-flex justify-content-center">
-                        <div className="table-pagination">
-                            <Pagination 
-                                activePage = {activePage}
-                                itemsCountPerPage={5}
-                                // itemsCountPerPage={berita.perPage}
-                                totalItemsCount={berita.total}
-                                pageRangeDisplayed={windowDimensions.width > 300 ? 3 : 1}
-                                onChange={handlePagination}
-                                nextPageText={">"}
-                                prevPageText={"<"}
-                                firstPageText={"<<"}
-                                lastPageText={">>"}
-                                itemClass="page-item-dashboard"
-                                linkClass="page-link-dashboard"
-                            />
-                        </div>
-                        
-                    </div>
-                :
-                    null
-            }
-            {/* End of Pagination */}
             
             
-        </div>
+            
+        </Container>
     )
 }
 

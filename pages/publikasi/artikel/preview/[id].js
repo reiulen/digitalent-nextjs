@@ -6,7 +6,7 @@ import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMid
 
 import { getDetailArtikel } from "../../../../redux/actions/publikasi/artikel.actions";
 import { wrapper } from "../../../../redux/store";
-// import { getSession } from "next-auth/client";
+import { getTagBerandaArtikel } from "../../../../redux/actions/beranda/artikel.actions"
 
 export default function PreviewArtikel(props) {
   const session = props.session.user.user.data;
@@ -40,16 +40,12 @@ export const getServerSideProps = wrapper.getServerSideProps(
         getDetailArtikel(params.id, session.user.user.data.token)
       );
 
+      await store.dispatch(
+        getTagBerandaArtikel(session.user.user.data.token)
+      )
+
       return {
         props: { session, title: "Preview Artikel - Publikasi", data: "auth" },
       };
     }
 );
-//   await store.dispatch(getDetailArtikel(params.id,  session.user.user.data.token));
-//   return {
-//     props: { session, title: "Pratinjau Artikel - Publikasi", data: "auth", },
-// };
-
-// export const getServerSideProps = wrapper.getServerSideProps(store => async ({ params }) => {
-//     await store.dispatch(getDetailArtikel(params.id))
-// })
