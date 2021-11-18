@@ -52,7 +52,7 @@ export const allArtikelReducer = (state = { artikel: [] }, action) => {
   }
 };
 
-export const allArtikelsPesertaReducer = (state = { artikel: [] }, action) => {
+export const allArtikelsPesertaReducer = (state = {}, action) => {
   switch (action.type) {
     case ARTIKEL_PESERTA_REQUEST:
       return {

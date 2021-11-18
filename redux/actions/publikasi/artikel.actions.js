@@ -71,11 +71,11 @@ export const getAllArtikel =
   (
     token,
     page = 1,
-    keyword = "",
     limit = 5,
-    publish = "",
-    startdate = "",
-    enddate = "",
+    keyword = null,
+    publish = null,
+    startdate = null,
+    enddate = null,
   ) =>
     async dispatch => {
       try {
@@ -85,12 +85,13 @@ export const getAllArtikel =
           
           const config = {
             params:{
+              token,
               page,
               keyword,
               limit,
               publish,
               startdate,
-              enddate
+              enddate,
             },
             headers: {
               Authorization: "Bearer " + token,
@@ -98,7 +99,6 @@ export const getAllArtikel =
           };
           
           const { data } = await axios.get(link, config);
-          console.log("link bos", data)
         dispatch({
           type: ARTIKEL_PESERTA_SUCCESS,
           payload: data,
