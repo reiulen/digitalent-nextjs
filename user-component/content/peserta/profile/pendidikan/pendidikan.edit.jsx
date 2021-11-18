@@ -61,7 +61,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
   );
 
   const [ijazahName, setIjazahName] = useState(
-    pendidikan.ijasah ? pendidikan.ijasah.split("/ijasah/") : "Belum ada file"
+    pendidikan ? pendidikan.ijasah.split("/ijasah/") : "Belum ada file"
   );
   const [ijazah, setIjazah] = useState("");
   const [ijazahPreview, setIjazahPreview] = useState("");

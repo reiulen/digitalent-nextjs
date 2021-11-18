@@ -187,7 +187,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
         nomorHandphone,
         email,
       };
-
+      console.log(data);
       dispatch(updateProfileDataPribadi(data, token));
     } else {
       simpleValidator.current.showMessages();

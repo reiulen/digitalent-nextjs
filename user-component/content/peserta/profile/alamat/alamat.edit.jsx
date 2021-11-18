@@ -151,7 +151,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard }) => {
       return (
         <>
           <Form.Group className="mb-3" controlId="formGridAddress1" key={1}>
-            <Form.Label>Alamat Lengkap (Sesuai KTP)</Form.Label>
+            <Form.Label>Alamat Lengkap </Form.Label>
             <Form.Control
               placeholder="Silahkan Masukkan Alamat Lengkap"
               value={alamatDomisili}
@@ -271,7 +271,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard }) => {
       return (
         <>
           <Form.Group className="mb-3" controlId="formGridAddress2" key={2}>
-            <Form.Label>Alamat Lengkap (Sesuai KTP)</Form.Label>
+            <Form.Label>Alamat Lengkap </Form.Label>
             <Form.Control
               placeholder="Silahkan Masukkan Alamat Lengkap"
               value={alamatDomisili}
@@ -365,7 +365,28 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard }) => {
                 }
               )}
             </Form.Group>
-
+            <Form.Group as={Col} md={6} controlId="formGridNik">
+              <Form.Label>Desa / Kelurahan</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Silahkan Masukkan Kecamatan"
+                value={kecamatanDomisili}
+                onChange={(e) => setKecamatanDomisili(e.target.value)}
+                onBlur={() =>
+                  simpleValidator.current.showMessageFor("kecamatan domisili")
+                }
+              />
+              {simpleValidator.current.message(
+                "kecamatan domisili",
+                kecamatanDomisili,
+                "required",
+                {
+                  className: "text-danger",
+                }
+              )}
+            </Form.Group>
+          </Row>
+          <Row>
             <Form.Group as={Col} md={6} controlId="formGridPassword">
               <Form.Label>Kode Pos</Form.Label>
               <Form.Control
@@ -425,7 +446,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard }) => {
         <div className="informasi-pribadi">
           <h3 className="font-weight-bolder mb-7">Alamat KTP</h3>
           <Form.Group className="mb-3" controlId="formGridAddress1">
-            <Form.Label>Alamat Lengkap (Sesuai KTP)</Form.Label>
+            <Form.Label>Alamat Lengkap </Form.Label>
             <Form.Control
               placeholder="Silahkan Masukkan Alamat Lengkap"
               value={alamatKtp}
@@ -519,7 +540,28 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard }) => {
                 }
               )}
             </Form.Group>
-
+            <Form.Group as={Col} md={6} controlId="formGridNik">
+              <Form.Label>Desa / Kelurahan</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Silahkan Masukkan Kecamatan"
+                value={kecamatanKtp}
+                onChange={(e) => setKecamatanKtp(e.target.value)}
+                onBlur={() =>
+                  simpleValidator.current.showMessageFor("kecamatan ktp")
+                }
+              />
+              {simpleValidator.current.message(
+                "kecamatan ktp",
+                kecamatanKtp,
+                "required",
+                {
+                  className: "text-danger",
+                }
+              )}
+            </Form.Group>
+          </Row>
+          <Row>
             <Form.Group as={Col} md={6} controlId="formGridPassword">
               <Form.Label>Kode Pos</Form.Label>
               <Form.Control
@@ -546,12 +588,12 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard }) => {
 
         <div className="alamat-domisili mt-6">
           <h3 className="font-weight-bolder">Alamat Domisili</h3>
-          <Form.Group className="my-5" id="formGridCheckbox">
+          <Form.Group className="my-6" id="formGridCheckbox">
             <Form.Check
               type="checkbox"
               checked={sesuai}
               value={sesuai}
-              label="Sesuai KTP"
+              label="Alamat sama dengan KTP"
               onClick={() => handleSesuaiKtp(!sesuai)}
             />
           </Form.Group>
