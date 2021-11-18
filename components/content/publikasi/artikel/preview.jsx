@@ -32,7 +32,6 @@ const Preview = () => {
     const dispatch = useDispatch();
     const router = useRouter();
 
-    // const { detail } = useSelector((state) => state.detailBerandaArtikel);
     const { tags } = useSelector((state) => state.allTagBerandaArtikel);
 
     const [keyword, setKeyword] = useState(null);
@@ -40,10 +39,6 @@ const Preview = () => {
     const [resultText, setResultText] = useState(null)
 
     const getWindowDimensions = () => {
-        // if (typeof window === 'undefined') {
-        //     global.window = {}
-        // }
-
         const { innerWidth: width, innerHeight: height } = window;
         return {
             width,
@@ -95,7 +90,6 @@ const Preview = () => {
 
     return (
         <>
-            {/* <PreviewWrapper title="Pratinjau Artikel - Publikasi"> */}
             <Container fluid className="px-md-30 px-10 py-10 bg-white">
                 <div className="">
 
@@ -154,16 +148,6 @@ const Preview = () => {
                                         </div>
                                     </div>
                                 </div>
-
-                                {/* <div className="row">
-                                    <button className="btn btn-outline-light rounded-circle mr-3">
-                                        <i className="ri-share-line p-0"></i>
-                                    </button>
-
-                                    <button className="btn btn-outline-light rounded-circle mr-3">
-                                        <i className="ri-heart-line p-0"></i>
-                                    </button>
-                                </div> */}
                             </div>
                         </div>
                     ) : null}
@@ -212,15 +196,6 @@ const Preview = () => {
                                                 : null}
                                         </div>
 
-                                        {/* <div className="row">
-                                            <button className="btn btn-outline-light rounded-circle mr-3">
-                                                <i className="ri-share-line p-0"></i>
-                                            </button>
-
-                                            <button className="btn btn-outline-light rounded-circle mr-3">
-                                                <i className="ri-heart-line p-0"></i>
-                                            </button>
-                                        </div> */}
                                     </div>
                                 </div>
                             </div>
@@ -265,7 +240,6 @@ const Preview = () => {
                                                     type="text"
                                                     className="form-control border-left-0 border p-0 bg-light"
                                                     placeholder="Cari Artikel"
-                                                    // style={{borderTopLeftRadius:"150px", borderBottomLeftRadius:"150px"}}
                                                     onChange={(e) => setKeyword(e.target.value)}
                                                 />
 
@@ -333,111 +307,10 @@ const Preview = () => {
 
                     {/* End of Content */}
                 </div>
-                </Container>
-            {/* </PreviewWrapper> */}
+            </Container>
         </>
 
     )
 }
 
 export default Preview;
-
-            // <PreviewWrapper title="Pratinjau Artikel - Publikasi">
-
-            //     <div className="col-lg-12 order-1 px-0 my-5 position-relative">
-            //         <div className="" style={{ height: '100%' }}>
-            //             <div className="row flex-column container">
-            //             <div className={`${styles.headBreadcrumb}`}>
-            //                 <nav aria-label="breadcrumb">
-            //                     <ol className="breadcrumb bg-transparent my-5 ps-5" style={{ border: '1px solid gray', borderRadius: '20px' }}>
-            //                         <li className="breadcrumb-item" style={{ color: 'blue' }}>Beranda</li>
-            //                         <li className="breadcrumb-item" style={{ color: 'blue' }}>Artikel</li>
-            //                         <li className="breadcrumb-item" aria-current="page">Detail Artikel</li>
-            //                     </ol>
-            //                 </nav>
-            //             </div>
-
-            //                 <div className="ml-0">
-            //                     <h1 className={`${styles.titlePratinjau} font-weight-bold my-5`}>
-            //                         {judul_artikel}
-            //                     </h1>
-
-            //                     <div className="row mb-4">
-            //                         <div className="rounded mt-1" style={{ marginLeft: '25px' }}>
-            //                             <div className={styles['titleSubMenu-2']}>
-            //                                 <span className={`${styles.titleKategori} label label-inline label-light-success font-weight-bold`}>
-            //                                     {(jenis_kategori).toUpperCase()}
-            //                                 </span>
-            //                             </div>
-            //                         </div>
-            //                         <div className="rounded mt-1" style={{ marginLeft: '25px' }}>
-            //                             <div className={styles['titleSubMenu-2']}>
-            //                                 <i className="flaticon-eye"></i>
-            //                                 <span className="ml-2 mr-5 text-muted">
-            //                                     Dibaca 120
-            //                                 </span>
-            //                             </div>
-            //                         </div>
-            //                     </div>
-
-            //                     <div className="row">
-            //                         <div className="col-sm-8 col-md-10 col-11 mt-4 d-flex align-items-center">
-            //                             <div className={styles['titleSubMenu']}>
-            //                                 <h5 className="font-weight-bold">Admin Pokja</h5>
-            //                                 <span className="text-muted">{moment({ created_at }).format('LL')}</span>
-            //                             </div>
-            //                         </div>
-
-            //                     </div>
-            //                 </div>
-            //             </div>
-
-            //             <div className="container">
-            //                 <div className="row">
-            //                     <div className="pt-0" style={{ height: '100%' }}>
-
-            //                         <div className={`${styles.imgPreview} d-flex justify-content-center my-3`}>
-            //                             <Image
-            //                                 src={process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + gambar}
-            //                                 alt="gambar-artikel"
-            //                                 objectFit="fill"
-            //                                 width="1200vh"
-            //                                 height="500vh"
-            //                                 className="mt-5 pt-5"
-            //                             />
-            //                         </div>
-
-            //                         <div className="text-justify my-5 p-3" style={{ border: '1px solid #d7e1ea', borderRadius: '10px' }}>
-            //                             {/* To render html Tag */}
-            //                             <div dangerouslySetInnerHTML={{ __html: isi_artikel }} className={`${styles.isiArtikel}`}></div>
-            //                             <div className="row">
-            //                                 <div className="col-sm-8 col-md-10 col-11">
-            //                                     <div className="row my-3 ml-0">
-            //                                         <div className={styles['listTag']}>
-            //                                             {
-            //                                                 (tags === null) ? null :
-            //                                                     tags.map((el, i) => {
-            //                                                         return (
-            //                                                             <div style={{ background: "#fff", border: '1px solid #d7e1ea' }}
-            //                                                                 className="mr-5 px-3 py-1 rounded"
-            //                                                                 key={i}>
-            //                                                                 <div className="text-center">
-            //                                                                     #{(el).toUpperCase()}
-            //                                                                 </div>
-            //                                                             </div>
-            //                                                         )
-            //                                                     })
-            //                                             }
-            //                                         </div>
-            //                                     </div>
-            //                                 </div>
-            //                             </div>
-            //                         </div>
-
-            //                     </div>
-            //                 </div>
-            //             </div>
-            //         </div>
-
-            //     </div>
-            // </PreviewWrapper>
