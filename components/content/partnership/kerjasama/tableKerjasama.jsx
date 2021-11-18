@@ -22,7 +22,6 @@ import LoadingTable from "../../../LoadingTable";
 import moment from "moment";
 import Image from "next/image";
 import Select from "react-select";
-import BtnIcon from "../components/BtnIcon";
 import AlertBar from "../components/BarAlert";
 
 import {
@@ -383,7 +382,6 @@ const Table = ({ token }) => {
                                     <IconClose />
                                   </button>
                                 </div>
-
                                 <div
                                   className="modal-body text-left"
                                   style={{ height: "400px" }}
@@ -397,7 +395,6 @@ const Table = ({ token }) => {
                                       className="basic-single"
                                       classNamePrefix="select"
                                       placeholder="Semua"
-                                      // defaultValue={allMK.stateListMitra[0]}
                                       isDisabled={false}
                                       isLoading={false}
                                       isClearable={false}
@@ -417,9 +414,6 @@ const Table = ({ token }) => {
                                       className="basic-single"
                                       classNamePrefix="select"
                                       placeholder="Semua"
-                                      // defaultValue={
-                                      //   allMK.stateListKerjaSama[0]
-                                      // }
                                       isDisabled={false}
                                       isLoading={false}
                                       isClearable={false}
@@ -443,7 +437,6 @@ const Table = ({ token }) => {
                                       className="basic-single"
                                       classNamePrefix="select"
                                       placeholder="Semua"
-                                      // defaultValue={allMK.stateListStatus[0]}
                                       isDisabled={false}
                                       isLoading={false}
                                       isClearable={false}
@@ -471,6 +464,8 @@ const Table = ({ token }) => {
                                     <button
                                       className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
                                       type="button"
+                                      data-dismiss="modal"
+                                      aria-label="Close"
                                       onClick={(e) => handleSubmitSearchMany(e)}
                                     >
                                       Terapkan
@@ -1029,20 +1024,6 @@ const Table = ({ token }) => {
                                           Detail
                                         </div>
                                       </button>
-                                      {/* <button
-                                        className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete"
-                                        onClick={() =>
-                                          router.push(
-                                            `/partnership/kerjasama/edit/${items.id}`
-                                          )
-                                        }
-                                      >
-                                        <IconPencil width="16" height="16" />
-
-                                        <div className="text-hover-show-hapus">
-                                          Ubah
-                                        </div>
-                                      </button> */}
                                       <button
                                         className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
                                         onClick={() =>

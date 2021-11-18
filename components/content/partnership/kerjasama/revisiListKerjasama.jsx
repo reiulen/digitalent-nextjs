@@ -77,24 +77,24 @@ function RevisiList({ token }) {
                               {items.information1}
                             </p>
                             <p style={{ color: "red" }}>
-                              Revisi Versi.{items.version}
+                              Versi.{items.version}
                             </p>
                           </div>
 <div className="col-12 col-sm-6 d-flex justify-content-end">
                           {items.information2 === "Menunggu Mitra" ? (
-                            <Link
-                              href={{
-                                pathname:
-                                  "/partnership/kerjasama/review-kerjasama",
-                                query: {
-                                  id: router.query.id,
-                                  version: items.version,
-                                  statusInfo: items.information2,
-                                },
-                              }}
-                            >
+                            // <Link
+                            //   href={{
+                            //     pathname:
+                            //       "/partnership/kerjasama/review-kerjasama",
+                            //     query: {
+                            //       id: router.query.id,
+                            //       version: items.version,
+                            //       statusInfo: items.information2,
+                            //     },
+                            //   }}
+                            // >
                               <a className="mt-10 mt-sm-0" style={labelStyle}>{items.information2}</a>
-                            </Link>
+                        
                           ) : (
                             <Link
                               href={{
