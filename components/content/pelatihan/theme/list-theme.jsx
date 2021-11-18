@@ -61,7 +61,7 @@ const ListTheme = ({ token }) => {
   const [status, setStatus] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
-  const optionsAkademi = [] || dataAkademi.data;
+  const optionsAkademi = dataAkademi.data || [];
   const optionsStatus = [
     { value: "1", label: "Publish" },
     { value: "0", label: "Unpublish" },

@@ -84,6 +84,36 @@ const Vidio = ({ token }) => {
         router.replace('/publikasi/video', undefined, { shallow: true })
     }
 
+    const getWindowDimensions = () => {
+        // if (typeof window === 'undefined') {
+        //     global.window = {}
+        // }
+
+        const { innerWidth: width, innerHeight: height } = window;
+        return {
+            width,
+            height,
+        };
+    };
+
+    const [windowDimensions, setWindowDimensions] = useState(
+        // getWindowDimensions()
+        {}
+    );
+
+    useEffect(() => {
+        function handleResize() {
+            setWindowDimensions(getWindowDimensions());
+        }
+        setWindowDimensions(getWindowDimensions());
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, [video])
+
+    useEffect(() => {
+
+    }, [windowDimensions])
+
     const handleDelete = (id) => {
         Swal.fire({
             title: "Apakah anda yakin ?",
@@ -718,22 +748,7 @@ const Vidio = ({ token }) => {
                                                 activePage={page}
                                                 itemsCountPerPage={video.perPage}
                                                 totalItemsCount={video.total}
-                                                pageRangeDisplayed={3}
-                                                onChange={handlePagination}
-                                                nextPageText={'>'}
-                                                prevPageText={'<'}
-                                                firstPageText={'<<'}
-                                                lastPageText={'>>'}
-                                                itemClass='page-item'
-                                                linkClass='page-link'
-                                            />
-                                        </div>
-                                        <div className={`${stylesPag.pagination2} table-pagination`}>
-                                            <Pagination
-                                                activePage={page}
-                                                itemsCountPerPage={video.perPage}
-                                                totalItemsCount={video.total}
-                                                pageRangeDisplayed={1}
+                                                pageRangeDisplayed={windowDimensions.width > 320 ? 3 : 1}
                                                 onChange={handlePagination}
                                                 nextPageText={'>'}
                                                 prevPageText={'<'}
