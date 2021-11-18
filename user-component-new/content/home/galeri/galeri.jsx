@@ -212,7 +212,7 @@ const Galeri = () => {
                                             onClick={() => handleFilterKategori("")}
                                         >
                                             <div className="my-1 mx-3 py-1 px-3 text-white">
-                                                Semua
+                                                SEMUA
                                             </div>
                                         </div>
                                     </SplideSlide>
@@ -224,7 +224,7 @@ const Galeri = () => {
                                             onClick={() => handleFilterKategori("")}
                                         >
                                             <div className="my-1 mx-3 py-1 px-3 text-muted">
-                                                Semua
+                                                SEMUA
                                             </div>
                                         </div>
                                     </SplideSlide>
@@ -244,7 +244,7 @@ const Galeri = () => {
                                                     >
                                                         <div className="my-1 mx-3 py-1 px-3 text-white text-truncate">
                                                             {/* {handleCategoryToTrim(el.nama_kategori)} */}
-                                                            {el.nama_kategori}
+                                                            {el.nama_kategori.toString().toUpperCase()}
                                                         </div>
                                                     </div>
                                                 </SplideSlide>
@@ -258,7 +258,7 @@ const Galeri = () => {
                                                     >
                                                         <div className="my-1 mx-3 py-1 px-3 text-muted text-truncate">
                                                             {/* {handleCategoryToTrim(el.nama_kategori)} */}
-                                                            {el.nama_kategori}
+                                                            {el.nama_kategori.toString().toUpperCase()}
                                                         </div>
                                                     </div> 
                                                 </SplideSlide>
@@ -301,15 +301,15 @@ const Galeri = () => {
                                         >
                                             {
                                                 show && show[i] === false ?
-                                                    <div >
+                                                    <div classname="position-relative" style={{objectFit:"cover"}}>
                                                         <Image
                                                             src={
                                                                 process.env.END_POINT_API_IMAGE_PUBLIKASI +
                                                                 "publikasi/images/" + el.gambar
                                                             }
                                                             alt="Card Gallery"
-                                                            width= "400px"
-                                                            height= "400px"
+                                                            width= {400}
+                                                            height= {400}
                                                             className="rounded-lg"
                                                             style={{objectFit:"cover"}}
                                                         />
@@ -325,15 +325,15 @@ const Galeri = () => {
                                                         data-target="#modalGaleri"
                                                         data-toggle="modal"
                                                     >   
-                                                        <div>
+                                                        <div classname="position-relative" style={{objectFit:"cover"}}>
                                                             <Image
                                                                 src={
                                                                     process.env.END_POINT_API_IMAGE_PUBLIKASI +
                                                                     "publikasi/images/" + el.gambar
                                                                 }
                                                                 alt="Card Gallery" 
-                                                                width= "400px"
-                                                                height= "400px"
+                                                                width= {400}
+                                                                height= {400}
                                                                 className="rounded-lg"
                                                                 style={{objectFit:"cover"}}
                                                             />

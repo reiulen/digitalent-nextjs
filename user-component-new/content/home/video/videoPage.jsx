@@ -303,7 +303,7 @@ useEffect(()=> {
                       key={i}
                     >
                       <div className="my-1 mx-5 py-1 px-9 text-white text-center text-truncate">
-                        {row.nama_kategori}
+                        {row.nama_kategori.toString().toUpperCase()}
                       </div>
                     </div>
                   </SplideSlide>
@@ -317,7 +317,7 @@ useEffect(()=> {
                       key={i}
                     >
                       <div className="my-1 mx-5 py-1 px-9 text-muted text-center text-truncate">
-                        {row.nama_kategori}
+                        {row.nama_kategori.toString().toUpperCase()}
                       </div>
                     </div>
                   </SplideSlide>
