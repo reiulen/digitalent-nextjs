@@ -10,6 +10,10 @@ import {
   getKategoriBerandaArtikel,
   getTagBerandaArtikel,
 } from "../../../redux/actions/beranda/artikel.actions";
+import {
+  getAllPelatihanByAkademi,
+  getDetailAkademi,
+} from "../../../redux/actions/beranda/detail-akademi.actions";
 
 const Bookmark = dynamic(
   () => import("../../../user-component/content/peserta/bookmark/index"),
@@ -38,7 +42,7 @@ export default function BookmarkPage(props) {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
-    async ({ query, req }) => {
+    async ({ query, req, params }) => {
       const session = await getSession({ req });
 
       const middleware = middlewareAuthPesertaSession(session);
@@ -66,6 +70,24 @@ export const getServerSideProps = wrapper.getServerSideProps(
         getDashboardPeserta(session?.user.user.data.user.token)
       );
 
+      await store.dispatch(getDataPribadi(session));
+
+      await store.dispatch(getDetailAkademi(4));
+
+      await store.dispatch(
+        getAllPelatihanByAkademi(
+          4,
+          query.tema_id,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1
+        )
+      );
       await store.dispatch(
         getAllBerandaArtikel(
           query.page,
