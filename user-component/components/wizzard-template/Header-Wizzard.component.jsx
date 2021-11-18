@@ -10,7 +10,7 @@ const Header = () => {
   const router = useRouter();
 
   const { error: errorDataPribadi, dataPribadi } = useSelector(
-    (state) => state.getDataPribadi
+    state => state.getDataPribadi
   );
 
   let routerPath;
@@ -81,7 +81,7 @@ const Header = () => {
     }, 1000);
   };
 
-  const set = (e) => {
+  const set = e => {
     e = e < 10 ? "0" + e : e;
     return e;
   };
@@ -127,7 +127,7 @@ const Header = () => {
                       }}
                     ></i>
                   </div>
-                  <div className="p-1">Profile</div>
+                  <div className="p-1">Profil</div>
                 </div>
               </p>
             </Col>

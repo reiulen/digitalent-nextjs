@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from "react";
-import { Row, Col, Form, Button } from "react-bootstrap";
+import React, { useState, useRef, useEffect, useCallback } from "react";
+import { Row, Col, Form, Button, Modal } from "react-bootstrap";
 import Select from "react-select";
 import Swal from "sweetalert2";
 import SimpleReactValidator from "simple-react-validator";
@@ -16,6 +16,9 @@ import {
   helperRegexNumber,
   SweatAlert,
 } from "../../../../../utils/middleware/helper";
+import ReactCrop from "react-image-crop";
+import { getDataPribadi } from "../../../../../redux/actions/pelatihan/function.actions";
+import axios from "axios";
 
 const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
   const dispatch = useDispatch();
@@ -226,6 +229,91 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
     }
   }, [dd, mm]);
 
+  const [showUpdateGambar, setShowUpdateGambar] = useState(false);
+  const [upImg, setUpImg] = useState();
+  const imgRef = useRef(null);
+  const previewCanvasRef = useRef(null);
+  const [crop, setCrop] = useState({ unit: "%", width: 30, aspect: 9 / 9 });
+  const [completedCrop, setCompletedCrop] = useState(null);
+
+  const onSelectFile = e => {
+    if (e.target.files && e.target.files.length > 0) {
+      const reader = new FileReader();
+      reader.addEventListener("load", () => setUpImg(reader.result));
+      reader.readAsDataURL(e.target.files[0]);
+    }
+  };
+
+  const onLoad = useCallback(img => {
+    imgRef.current = img;
+  }, []);
+
+  useEffect(() => {
+    if (!completedCrop || !previewCanvasRef.current || !imgRef.current) {
+      return;
+    }
+
+    const image = imgRef.current;
+    const canvas = previewCanvasRef.current;
+    const crop = completedCrop;
+
+    const scaleX = image.naturalWidth / image.width;
+    const scaleY = image.naturalHeight / image.height;
+    const ctx = canvas.getContext("2d");
+    const pixelRatio = window.devicePixelRatio;
+
+    canvas.width = crop.width * pixelRatio * scaleX;
+    canvas.height = crop.height * pixelRatio * scaleY;
+
+    ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+    ctx.imageSmoothingQuality = "high";
+
+    ctx.drawImage(
+      image,
+      crop.x * scaleX,
+      crop.y * scaleY,
+      crop.width * scaleX,
+      crop.height * scaleY,
+      0,
+      0,
+      crop.width * scaleX,
+      crop.height * scaleY
+    );
+  }, [completedCrop]);
+
+  const generateImage = async (canvas, crop) => {
+    if (!crop || !canvas) {
+      return;
+    }
+
+    const base64Image = canvas.toDataURL("image/jpeg");
+
+    const data = {
+      foto: base64Image,
+    };
+
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    await axios
+      .post(
+        process.env.END_POINT_API_PELATIHAN + "api/v1/auth/update-foto",
+        data,
+        config
+      )
+      .then(res => {
+        setShowUpdateGambar(false);
+        toast.success("Berhasil Update");
+        dispatch(getDataPribadi(token));
+      })
+      .catch(err => {
+        console.log(err);
+        toast.error("gagal");
+      });
+  };
+
   return (
     <>
       <Form onSubmit={handleSubmit}>
@@ -233,7 +321,146 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
           <h3 className="font-weight-bolder mb-5">Informasi Pribadi</h3>
 
           <Row className="mb-3">
-            {/* {wizzard && <div></div>} */}
+            {wizzard && (
+              <>
+                <Form.Group as={Col} md={12}>
+                  <Form.Label className={style.label}>Foto Profil</Form.Label>
+                  <div>
+                    <figure
+                      className="avatar item-rtl position-relative"
+                      data-toggle="modal"
+                      data-target="#exampleModalCenter"
+                      style={{ width: "max-content" }}
+                    >
+                      <img
+                        alt=""
+                        className={`${style.image_profile_wrapper} position-relative`}
+                        src={`${
+                          dataPribadi && dataPribadi.foto
+                            ? dataPribadi.file_path + dataPribadi.foto
+                            : "/assets/media/logos/default.png"
+                        }`}
+                        width={90}
+                        height={90}
+                        // objectFit="cover"
+                      />
+                      <div
+                        className="position-absolute"
+                        style={{ right: "10px" }}
+                        onClick={() => setShowUpdateGambar(true)}
+                      >
+                        <label
+                          className={`circle-bottom ${style.btn_edit_triger}`}
+                        >
+                          <i className="ri-pencil-fill text-white"></i>
+                        </label>
+                      </div>
+                    </figure>
+                  </div>
+                </Form.Group>
+                <Modal
+                  show={showUpdateGambar}
+                  onHide={() => setShowUpdateGambar(false)}
+                  size="lg"
+                  aria-labelledby="contained-modal-title-vcenter"
+                  centered
+                >
+                  <Modal.Header>
+                    <Modal.Title>Ganti Foto Profil</Modal.Title>
+                    <button
+                      type="button"
+                      className="close"
+                      onClick={() => setShowUpdateGambar(false)}
+                    >
+                      <i
+                        className="ri-close-fill"
+                        style={{ fontSize: "25px" }}
+                      ></i>
+                    </button>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <p>Foto</p>
+                    <div>
+                      {!completedCrop?.width || !completedCrop?.height ? (
+                        <Button
+                          className={`${style.button_profile_edit} rounded-xl `}
+                          onClick={() => {
+                            document.getElementById("update-foto").click();
+                          }}
+                        >
+                          <i className="ri-upload-2-fill text-white"></i> Pilih
+                          Foto
+                        </Button>
+                      ) : (
+                        <Button
+                          className={`${style.button_profile_wrapper} rounded-xl `}
+                          onClick={() => {
+                            document.getElementById("update-foto").click();
+                          }}
+                        >
+                          <i className="ri-pencil-fill text-primary"></i> Ubah
+                          Foto
+                        </Button>
+                      )}
+                      <input
+                        type="file"
+                        name="gambar"
+                        className="custom-file-input"
+                        id="update-foto"
+                        accept="image/*"
+                        style={{ display: "none" }}
+                        onChange={onSelectFile}
+                      />
+                    </div>
+
+                    <Row className="mt-5">
+                      <Col md={6}>
+                        <ReactCrop
+                          src={upImg}
+                          onImageLoaded={onLoad}
+                          crop={crop}
+                          onChange={c => setCrop(c)}
+                          onComplete={c => setCompletedCrop(c)}
+                        />
+                      </Col>
+                      <Col md={6}>
+                        {upImg && (
+                          <>
+                            <p>Preview</p>
+                            <canvas
+                              ref={previewCanvasRef}
+                              // Rounding is important so the canvas width and height matches/is a multiple for sharpness.
+                              style={{
+                                width: Math.round(completedCrop?.width ?? 0),
+                                height: Math.round(completedCrop?.height ?? 0),
+                                borderRadius: "50%",
+                              }}
+                            />
+                          </>
+                        )}
+                      </Col>
+                    </Row>
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button
+                      onClick={() => setShowUpdateGambar(false)}
+                      className={`${style.button_profile_batal} rounded-xl mr-3`}
+                    >
+                      Batal
+                    </Button>
+                    <Button
+                      disabled={!completedCrop?.width || !completedCrop?.height}
+                      onClick={() =>
+                        generateImage(previewCanvasRef.current, completedCrop)
+                      }
+                      className={`${style.button_profile_edit} rounded-xl`}
+                    >
+                      Simpan
+                    </Button>
+                  </Modal.Footer>
+                </Modal>
+              </>
+            )}
             <Form.Group as={Col} md={6}>
               <Form.Label className={style.label}>Nama Lengkap</Form.Label>
               <Form.Control
