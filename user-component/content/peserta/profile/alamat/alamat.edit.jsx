@@ -41,7 +41,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
   );
 
   const { error: errorKelurahan, data: dataKelurahan } = useSelector(
-    (state) => state.drowpdownProvinsiToDesa.data
+    (state) => state.drowpdownKecamatanToDesa.data
   );
 
   const { error: errorKabupatenDomisili, data: dataKabupatenDomisili } =
@@ -66,7 +66,10 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
   );
   const [kotaKtp, setKotaKtp] = useState((alamat && alamat.kota_ktp) || null);
   const [kecamatanKtp, setKecamatanKtp] = useState(
-    (alamat && alamat.kecamatan_ktp) || ""
+    (alamat && alamat.kecamatan_ktp) || null
+  );
+  const [kelurahanKtp, setKelurahanKtp] = useState(
+    (alamat && alamat.kelurahan_ktp) || null
   );
   const [kodePosKtp, setKodePosKtp] = useState(
     (alamat && alamat.kode_pos_ktp) || ""
@@ -82,7 +85,10 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
     (alamat && alamat.kota) || null
   );
   const [kecamatanDomisili, setKecamatanDomisili] = useState(
-    (alamat && alamat.kecamatan) || ""
+    (alamat && alamat.kecamatan) || null
+  );
+  const [kelurahanDomisili, setKelurahanDomisili] = useState(
+    (alamat && alamat.kelurahan) || null
   );
   const [kodePosDomisili, setKodePosDomisili] = useState(
     (alamat && alamat.kode_pos) || ""
@@ -125,8 +131,10 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
 
   dataKelurahan &&
     dataKelurahan.map((item) => {
-      return optionsKecamatan.push({ label: item.value, value: item.id });
+      return optionsKelurahan.push({ label: item.value, value: item.id });
     });
+
+  console.log(optionsKelurahan);
 
   const optionsKabupatenDomisili = [];
   if (dataKabupatenDomisili.length !== 0) {
@@ -273,7 +281,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
           <Row className="mb-3">
             <Form.Group as={Col} md={6} controlId="formGridNik">
               <Form.Label>Kecamatan</Form.Label>
-              <Form.Control
+              {/* <Form.Control
                 type="text"
                 placeholder="Silahkan Masukkan Kecamatan"
                 value={kecamatanDomisili}
@@ -281,7 +289,24 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("kecamatan domisili")
                 }
+              /> */}
+              <Select
+                placeholder={
+                  (alamat && alamat.kecamatan) === ""
+                    ? "Silahkan Pilih Kecamatan"
+                    : alamat && alamat.kecamatan
+                }
+                defaultValue={kecamatanDomisili}
+                options={optionsKecamatan}
+                onChange={(e) => {
+                  setKecamatanDomisili({ label: e?.label, value: e?.value });
+                  dispatch(dropdownKecamatanToDesa(token, e.value));
+                }}
+                onBlur={() =>
+                  simpleValidator.current.showMessageFor("kecamatan")
+                }
               />
+
               {simpleValidator.current.message(
                 "kecamatan domisili",
                 kecamatanDomisili,
@@ -291,7 +316,45 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
                 }
               )}
             </Form.Group>
+            <Form.Group as={Col} md={6} controlId="formGridNik">
+              <Form.Label>Desa / Kelurahan</Form.Label>
+              {/* <Form.Control
+                type="text"
+                placeholder="Silahkan Masukkan Kecamatan"
+                value={kecamatanDomisili}
+                onChange={(e) => setKecamatanDomisili(e.target.value)}
+                onBlur={() =>
+                  simpleValidator.current.showMessageFor("kecamatan domisili")
+                }
+              /> */}
+              <Select
+                placeholder={
+                  (alamat && alamat.kelurahan) === ""
+                    ? "Silahkan Pilih Kelurahan"
+                    : alamat && alamat.kelurahan
+                }
+                options={optionsKelurahan}
+                defaultValue={kelurahanDomisili}
+                onChange={(e) => {
+                  setKelurahanDomisili({ label: e?.label, value: e?.value });
+                  dispatch(dropdownKecamatanToDesa(token, e.value));
+                }}
+                onBlur={() =>
+                  simpleValidator.current.showMessageFor("kelurahan domisili")
+                }
+              />
 
+              {simpleValidator.current.message(
+                "kelurahan domisili",
+                kelurahanDomisili,
+                "required",
+                {
+                  className: "text-danger",
+                }
+              )}
+            </Form.Group>
+          </Row>
+          <Row>
             <Form.Group as={Col} md={6} controlId="formGridPassword">
               <Form.Label>Kode Pos</Form.Label>
               <Form.Control
@@ -427,6 +490,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
                   simpleValidator.current.showMessageFor("kecamatan domisili")
                 }
               />
+
               {simpleValidator.current.message(
                 "kecamatan domisili",
                 kecamatanDomisili,
@@ -482,12 +546,14 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
         address_ktp: alamatKtp,
         provinsi_ktp: provinsiKtp.label || provinsiKtp,
         kode_pos_ktp: kodePosKtp,
-        kecamatan_ktp: kecamatanKtp,
+        kecamatan_ktp: kecamatanKtp.label || kecamatanKtp,
+        kelurahan_ktp: kelurahanKtp.label || kelurahanKtp,
         kota_ktp: kotaKtp.label || kotaKtp,
         address: alamatDomisili,
         provinsi: provinsiDomisili.label || provinsiDomisili,
         kota: kotaDomisili.label || kotaDomisili,
-        kecamatan: kecamatanDomisili,
+        kecamatan: kecamatanDomisili.label || kecamatanDomisili,
+        kelurahan: kelurahanDomisili.label || kelurahanDomisili,
         kode_pos: kodePosDomisili,
       };
       dispatch(updateProfileAlamat(data, token));
@@ -632,23 +698,23 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
               /> */}
               <Select
                 placeholder={
-                  (alamat && alamat.kecamatan_ktp) === ""
+                  (alamat && alamat.kelurahan_ktp) === ""
                     ? "Silahkan Pilih Kelurahan"
-                    : alamat && alamat.kecamatan_ktp
+                    : alamat && alamat.kelurahan_ktp
                 }
                 options={optionsKelurahan}
                 onChange={(e) => {
-                  // setKecamatanKtp({ label: e?.label, value: e?.value });
-                  dispatch(dropdownProvinsiToDesa(token, e.value));
+                  setKelurahanKtp({ label: e?.label, value: e?.value });
+                  dispatch(dropdownKecamatanToDesa(token, e.value));
                 }}
                 onBlur={() =>
-                  simpleValidator.current.showMessageFor("kecamatan ktp")
+                  simpleValidator.current.showMessageFor("kelurahan ktp")
                 }
               />
 
               {simpleValidator.current.message(
-                "kecamatan ktp",
-                kecamatanKtp,
+                "kelurahan ktp",
+                kelurahanKtp,
                 "required",
                 {
                   className: "text-danger",

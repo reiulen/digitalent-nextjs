@@ -45,7 +45,7 @@ const Alamat = ({ token }) => {
           </Col>
           <Col md={6}>
             <p className="text-neutral-body my-1">Desa / Kelurahan</p>
-            <p>{(alamat && alamat.kecamatan_ktp) || "-"}</p>
+            <p>{(alamat && alamat.kelurahan_ktp) || "-"}</p>
           </Col>
         </Row>
         <Row>
@@ -81,7 +81,7 @@ const Alamat = ({ token }) => {
           </Col>
           <Col md={6}>
             <p className="text-neutral-body my-1">Desa / Kelurahan</p>
-            <p>{(alamat && alamat.kecamatan_ktp) || "-"}</p>
+            <p>{(alamat && alamat.kelurahan_ktp) || "-"}</p>
           </Col>
         </Row>
         <Row>
