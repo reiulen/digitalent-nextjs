@@ -19,16 +19,16 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
   const [, forceUpdate] = useState();
 
   const { error: errorDataPribadi, dataPribadi } = useSelector(
-    (state) => state.getDataPribadi
+    state => state.getDataPribadi
   );
 
   const {
     error: errorUpdateData,
     loading,
     success,
-  } = useSelector((state) => state.updateDataPribadi);
+  } = useSelector(state => state.updateDataPribadi);
   const { error: errorAgama, data: dataAgama } = useSelector(
-    (state) => state.drowpdownAgama
+    state => state.drowpdownAgama
   );
 
   const [name, setName] = useState((dataPribadi && dataPribadi.name) || "");
@@ -112,7 +112,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
     }
   }, [errorUpdateData, success, dispatch, funcViewEdit]);
 
-  const onChangeKtp = (e) => {
+  const onChangeKtp = e => {
     const type = ["image/jpg", "image/png", "image/jpeg", "application/pdf"];
     if (e.target.files[0]) {
       if (type.includes(e.target.files[0].type)) {
@@ -170,7 +170,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
   //   }
   // };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
       const data = {
@@ -207,6 +207,29 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
     funcViewEdit(false);
   };
 
+  const today = new Date();
+  const [dd, setdd] = useState(today.getDate());
+  const [mm, setmm] = useState(today.getMonth() + 1); //January is 0 so need to add 1 to make it 1!
+  const [yyyy, setyyyy] = useState(today.getFullYear());
+
+  useEffect(() => {
+    if (dd < 10) {
+      setdd((dd = "0" + dd));
+    }
+    if (mm < 10) {
+      setmm((mm = "0" + mm));
+    }
+  }, [dd, mm]);
+
+  useEffect(() => {
+    console.log(nomorUrgent);
+    console.log(typeof nomorUrgent);
+    console.log(nomorUrgent.length);
+    if (nomorUrgent.length > 14) {
+      setNomorUrgent(nomorUrgent);
+    }
+  }, [nomorUrgent]);
+
   return (
     <>
       <Form onSubmit={handleSubmit}>
@@ -220,7 +243,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
                 className={style.formControl}
                 placeholder="Masukan Nama Lengkap"
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={e => setName(e.target.value)}
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("nama lengkap")
                 }
@@ -242,7 +265,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
                 type="email"
                 placeholder="Masukan Email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={e => setEmail(e.target.value)}
                 onBlur={() => simpleValidator.current.showMessageFor("email")}
               />
               {simpleValidator.current.message("email", email, "required", {
@@ -259,7 +282,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
                 type="text"
                 placeholder="Masukan NIK"
                 value={nik}
-                onChange={(e) => setNik(e.target.value)}
+                onChange={e => setNik(e.target.value)}
                 onBlur={() => simpleValidator.current.showMessageFor("nik")}
               />
               {simpleValidator.current.message("nik", nik, "required|integer", {
@@ -275,7 +298,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
                 }`}
                 options={optionsKelamin}
                 defaultValue={{ value: kelamin, label: kelamin }}
-                onChange={(e) => setKelamin({ label: e.label, value: e.value })}
+                onChange={e => setKelamin({ label: e.label, value: e.value })}
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("jenis kelamin")
                 }
@@ -299,7 +322,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
                 type="text"
                 placeholder="Masukan Nomor Handphone"
                 value={nomorHandphone}
-                onChange={(e) => setNomorHandphone(e.target.value)}
+                onChange={e => setNomorHandphone(e.target.value)}
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("nomor handphone")
                 }
@@ -318,11 +341,11 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
               <Select
                 className={style.formControl}
                 placeholder={`${
-                  agama === "" ? "Silahkan Pilih Agama" : dataPribadi.agama
+                  agama === "" ? "Silahkan Pilih Agama" : dataPribadi?.agama
                 }`}
                 options={optionsAgama}
                 defaultValue={{ value: agama, label: agama }}
-                onChange={(e) => setAgama({ label: e.label, value: e.value })}
+                onChange={e => setAgama({ label: e.label, value: e.value })}
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("jenis kelamin")
                 }
@@ -342,7 +365,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
                 type="text"
                 placeholder="Masukan Tempat Lahir"
                 value={tempatLahir}
-                onChange={(e) => setTempatLahir(e.target.value)}
+                onChange={e => setTempatLahir(e.target.value)}
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("tempat lahir")
                 }
@@ -363,10 +386,11 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
                 className={style.formControl}
                 type="date"
                 value={tanggalLahir}
-                onChange={(e) => setTanggalLahir(e.target.value)}
+                onChange={e => setTanggalLahir(e.target.value)}
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("tanggal lahir")
                 }
+                max={yyyy - 1 + "-" + mm + "-" + dd}
               />
               {simpleValidator.current.message(
                 "tanggal lahir",
@@ -388,7 +412,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
               className={style.formControl}
               placeholder="Masukan Nama Lengkap"
               value={nameUrgent}
-              onChange={(e) => setNameUrgent(e.target.value)}
+              onChange={e => setNameUrgent(e.target.value)}
               onBlur={() =>
                 simpleValidator.current.showMessageFor("nama lengkap darurat")
               }
@@ -407,15 +431,17 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
               <Form.Label>Nomor Handphone</Form.Label>
               <Form.Control
                 className={style.formControl}
-                type="number"
+                type="text"
                 placeholder="Masukan Nomor Handphone"
                 value={nomorUrgent}
-                onChange={(e) => setNomorUrgent(e.target.value)}
+                onChange={e => setNomorUrgent(e.target.value)}
                 onBlur={() =>
                   simpleValidator.current.showMessageFor(
                     "nomor handphone darurat"
                   )
                 }
+                onKeyPress={e => console.log(e)}
+                maxlength="4"
               />
               {simpleValidator.current.message(
                 "nomor handphone darurat",
@@ -434,7 +460,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
                 type="text"
                 placeholder="Masukan Hubungan"
                 value={hubunganUrgent}
-                onChange={(e) => setHubunganUrgent(e.target.value)}
+                onChange={e => setHubunganUrgent(e.target.value)}
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("hubungan darurat")
                 }

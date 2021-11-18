@@ -19,23 +19,21 @@ import { UPDATE_ALAMAT_RESET } from "../../../../../redux/types/pelatihan/profil
 const AlamatEdit = ({ funcViewEdit, token, wizzard }) => {
   const dispatch = useDispatch();
 
-  const { error: errorAlamat, alamat } = useSelector(
-    (state) => state.dataAlamat
-  );
+  const { error: errorAlamat, alamat } = useSelector(state => state.dataAlamat);
   const { error: errorProvinsi, data: dataProvinsi } = useSelector(
-    (state) => state.drowpdownProvinsi
+    state => state.drowpdownProvinsi
   );
   const { error: errorKabupaten, data: dataKabupaten } = useSelector(
-    (state) => state.drowpdownKabupaten
+    state => state.drowpdownKabupaten
   );
   const { error: errorKabupatenDomisili, data: dataKabupatenDomisili } =
-    useSelector((state) => state.drowpdownKabupatenDomisili);
+    useSelector(state => state.drowpdownKabupatenDomisili);
 
   const {
     error: errorUpdateData,
     loading,
     success,
-  } = useSelector((state) => state.updateAlamat);
+  } = useSelector(state => state.updateAlamat);
 
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
@@ -123,7 +121,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard }) => {
     }
   }, [errorUpdateData, success, dispatch]);
 
-  const handleSesuaiKtp = (val) => {
+  const handleSesuaiKtp = val => {
     setSesuai(val);
     if (val) {
       setAlamatDomisili(alamatKtp);
@@ -155,7 +153,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard }) => {
             <Form.Control
               placeholder="Silahkan Masukkan Alamat Lengkap"
               value={alamatDomisili}
-              onChange={(e) => setAlamatDomisili(e.target.value)}
+              onChange={e => setAlamatDomisili(e.target.value)}
               onBlur={() =>
                 simpleValidator.current.showMessageFor("alamat domisili")
               }
@@ -179,7 +177,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard }) => {
                 }
                 options={optionsProvinsi}
                 defaultValue={provinsiDomisili}
-                onChange={(e) => {
+                onChange={e => {
                   selectRefKabupatenDomisili.select.clearValue();
                   setProvinsiDomisili({ label: e?.label, value: e?.value });
                   dispatch(dropdownKabupatenDomisili(token, e.value));
@@ -201,11 +199,11 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard }) => {
               <Form.Label>Kota / Kabupaten</Form.Label>
               <Select
                 key={1}
-                ref={(ref) => (selectRefKabupatenDomisili = ref)}
+                ref={ref => (selectRefKabupatenDomisili = ref)}
                 placeholder={(alamat && alamat.kota) || "Silahkan Pilih Kota"}
                 options={optionsKabupatenDomisili}
                 defaultValue={kotaDomisili}
-                onChange={(e) =>
+                onChange={e =>
                   setKotaDomisili({ label: e?.label, value: e?.value })
                 }
                 onBlur={() =>
@@ -229,7 +227,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard }) => {
                 type="text"
                 placeholder="Silahkan Masukkan Kecamatan"
                 value={kecamatanDomisili}
-                onChange={(e) => setKecamatanDomisili(e.target.value)}
+                onChange={e => setKecamatanDomisili(e.target.value)}
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("kecamatan domisili")
                 }
@@ -249,11 +247,12 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard }) => {
               <Form.Control
                 type="text"
                 placeholder="Silahkan Masukkan Kode Pos"
-                value={kodePosDomisili}
-                onChange={(e) => setKodePosDomisili(e.target.value)}
+                value={kodePosKtp}
+                onChange={e => setKodePosDomisili(e.target.value)}
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("kode pos domisili")
                 }
+                maxLength={5}
               />
               {simpleValidator.current.message(
                 "kode pos domisili",
@@ -275,7 +274,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard }) => {
             <Form.Control
               placeholder="Silahkan Masukkan Alamat Lengkap"
               value={alamatDomisili}
-              onChange={(e) => setAlamatDomisili(e.target.value)}
+              onChange={e => setAlamatDomisili(e.target.value)}
               onBlur={() =>
                 simpleValidator.current.showMessageFor("alamat domisili")
               }
@@ -300,7 +299,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard }) => {
                     : "Silahkan Pilih Provinsi"
                 }
                 options={optionsProvinsi}
-                onChange={(e) => {
+                onChange={e => {
                   selectRefKabupatenDomisili.select.clearValue();
                   setProvinsiDomisili({ label: e?.label, value: e?.value });
                   dispatch(dropdownKabupatenDomisili(token, e.value));
@@ -322,12 +321,12 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard }) => {
               <Form.Label>Kota / Kabupaten</Form.Label>
               <Select
                 key={2}
-                ref={(ref) => (selectRefKabupatenDomisili = ref)}
+                ref={ref => (selectRefKabupatenDomisili = ref)}
                 placeholder={
                   alamat && alamat.kota ? alamat.kota : "Silahkan Pilih Kota"
                 }
                 options={optionsKabupatenDomisili}
-                onChange={(e) =>
+                onChange={e =>
                   setKotaDomisili({ label: e?.label, value: e?.value })
                 }
                 onBlur={() =>
@@ -351,7 +350,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard }) => {
                 type="text"
                 placeholder="Silahkan Masukkan Kecamatan"
                 value={kecamatanDomisili}
-                onChange={(e) => setKecamatanDomisili(e.target.value)}
+                onChange={e => setKecamatanDomisili(e.target.value)}
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("kecamatan domisili")
                 }
@@ -372,10 +371,11 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard }) => {
                 type="text"
                 placeholder="Silahkan Masukkan Kode Pos"
                 value={kodePosDomisili}
-                onChange={(e) => setKodePosDomisili(e.target.value)}
+                onChange={e => setKodePosDomisili(e.target.value)}
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("kode pos domisili")
                 }
+                maxLength={5}
               />
               {simpleValidator.current.message(
                 "kode pos domisili",
@@ -392,7 +392,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard }) => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
       const data = {
@@ -429,7 +429,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard }) => {
             <Form.Control
               placeholder="Silahkan Masukkan Alamat Lengkap"
               value={alamatKtp}
-              onChange={(e) => setAlamatKtp(e.target.value)}
+              onChange={e => setAlamatKtp(e.target.value)}
               onBlur={() =>
                 simpleValidator.current.showMessageFor("alamat lengkap ktp")
               }
@@ -453,8 +453,9 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard }) => {
                     : "Silahkan Pilih Provinsi"
                 }
                 options={optionsProvinsi}
-                onChange={(e) => {
-                  selectRefKabupaten.select.clearValue();
+                onChange={e => {
+                  setKotaKtp(null);
+                  // selectRefKabupaten.select.clearValue();
                   setProvinsiKtp({ label: e?.label, value: e?.value });
                   dispatch(dropdownKabupaten(token, e.value));
                 }}
@@ -474,19 +475,18 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard }) => {
             <Form.Group as={Col} md={6} controlId="formGridKelamin">
               <Form.Label>Kota / Kabupaten</Form.Label>
               <Select
-                ref={(ref) => (selectRefKabupaten = ref)}
+                ref={ref => (selectRefKabupaten = ref)}
                 placeholder={
                   (alamat && alamat.kota_ktp) === ""
                     ? "Silahkan Pilih Kota"
                     : alamat && alamat.kota_ktp
                 }
                 options={optionsKabupaten}
-                onChange={(e) =>
-                  setKotaKtp({ label: e?.label, value: e?.value })
-                }
+                onChange={e => setKotaKtp({ label: e?.label, value: e?.value })}
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("kota ktp")
                 }
+                value={kotaKtp}
               />
               {simpleValidator.current.message(
                 "kota ktp",
@@ -505,7 +505,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard }) => {
                 type="text"
                 placeholder="Silahkan Masukkan Kecamatan"
                 value={kecamatanKtp}
-                onChange={(e) => setKecamatanKtp(e.target.value)}
+                onChange={e => setKecamatanKtp(e.target.value)}
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("kecamatan ktp")
                 }
@@ -526,10 +526,11 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard }) => {
                 type="text"
                 placeholder="Silahkan Masukkan Kode Pos"
                 value={kodePosKtp}
-                onChange={(e) => setKodePosKtp(e.target.value)}
+                onChange={e => setKodePosKtp(e.target.value)}
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("kode pos ktp")
                 }
+                maxLength={5}
               />
               {simpleValidator.current.message(
                 "kode pos ktp",
