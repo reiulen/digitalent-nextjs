@@ -9,7 +9,7 @@ import {
     Container,
     Modal
   } from "react-bootstrap";
-import SubHeaderComponent from "../../components/template/Subheader.component";
+import SubHeaderComponent from "../../../components/global/Breadcrumb.component";
 
 const DetailBerita = () => {
     const dispatch = useDispatch();
@@ -153,11 +153,11 @@ const DetailBerita = () => {
                                     </button>
                                 </div>
                                 
-                                <div className="mr-3">
+                                {/* <div className="mr-3">
                                     <button className="btn btn-sm btn-outline-light rounded-circle">
                                         <i className="ri-heart-line px-0 py-1"></i>
                                     </button>
-                                </div>
+                                </div> */}
                                 
                             </div>
                         </div>
@@ -223,11 +223,11 @@ const DetailBerita = () => {
                                             </button>
                                         </div>
                                         
-                                        <div className="mr-3">
+                                        {/* <div className="mr-3">
                                             <button className="btn btn-sm btn-outline-light rounded-circle">
                                                 <i className="ri-heart-line px-0 py-1"></i>
                                             </button>
-                                        </div>
+                                        </div> */}
                                         
                                     </div>
                                 </div>

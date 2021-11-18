@@ -3,8 +3,9 @@ import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../../../components/LoadingSkeleton";
 import { wrapper } from "../../../../../redux/store";
 import { getSession } from "next-auth/client";
+import { getDetailAdminSite } from "../../../../../redux/actions/site-management/user/admin-site.action";
 
-const ListUser = dynamic(
+const DetailUser = dynamic(
   () =>
     import(
       "../../../../../components/content/site-management/user/administrator/detail-administrator"
@@ -22,7 +23,7 @@ export default function UserList(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <ListUser token={session.token} />
+        <DetailUser token={session.token} />
       </div>
     </>
   );
@@ -41,14 +42,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
-      // await store.dispatch(
-      //   getAllRoles(
-      //     query.page,
-      //     query.keyword,
-      //     query.limit,
-      //     session.user.user.data.token
-      //   )
-      // );
+      await store.dispatch(
+        getDetailAdminSite(query.id, session.user.user.data.token)
+      );
 
       return {
         props: {
