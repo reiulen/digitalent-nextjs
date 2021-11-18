@@ -182,7 +182,8 @@ const DetailSummary = ({ token }) => {
                   1,
                   null,
                   statusPeserta === null ? "" : statusPeserta.value,
-                  "lulus tes"
+         
+         "lulus tes"
                 )
               );
             }}

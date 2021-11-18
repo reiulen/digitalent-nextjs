@@ -39,6 +39,8 @@ const Dashboard = ({ session, success }) => {
     loading = allArtikelsPeserta.loading;
   }
 
+  console.log(allArtikelsPeserta)
+
   const listArtikel =
     allArtikelsPeserta.artikel?.artikel.length > 0 ? (
       allArtikelsPeserta.artikel.artikel.map((item, index) => {
@@ -168,6 +170,17 @@ const Dashboard = ({ session, success }) => {
             color="#FFFFFF"
             value={allArtikelsPeserta.artikel?.total}
             title="Artikel Saya"
+            search={() => {
+              dispatch(getAllArtikelsPeserta(
+                session.token,
+                1,
+                5,
+                null,
+                null,
+                null,
+                null
+              ));
+            }}
           />
           <CardPill
             background="bg-success"
@@ -176,6 +189,17 @@ const Dashboard = ({ session, success }) => {
             color="#FFFFFF"
             value={allArtikelsPeserta.artikel?.publish}
             title="Sudah Publish"
+            search={() => {
+              dispatch(getAllArtikelsPeserta(
+                session.token,
+                1,
+                5,
+                null,
+                "1",
+                null,
+                null
+              ));
+            }}
           />
           <CardPill
             background="bg-danger"
@@ -184,6 +208,17 @@ const Dashboard = ({ session, success }) => {
             color="#FFFFFF"
             value={allArtikelsPeserta.artikel?.unpublish}
             title="Belum Publish"
+            search={() => {
+              dispatch(getAllArtikelsPeserta(
+                session.token,
+                1,
+                5,
+                null,
+                "0",
+                null,
+                null
+              ));
+            }}
           />
         </Row>
         <div
