@@ -21,12 +21,18 @@ import ModalPreview from "../components/modal-preview-form.component";
 import FormManual from "./step-registration/form-manual";
 import FormCopy from "./step-registration/form-copy";
 import FormCopyEdit from "./step-registration/form-copy-edit";
+import { getDetailMasterPelatihan } from "../../../../../redux/actions/pelatihan/master-pendaftaran.action";
 
-const AddRegistrationStep2 = ({ propsStep }) => {
+const AddRegistrationStep2 = ({ propsStep, token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
   const { registrationData } = useSelector((state) => state.registrationStep2);
+  const { data: dataForm, error: errorDropdownForm } = useSelector(
+    (state) => state.drowpdownFormBuilder
+  );
+  const { loading: loadingFormPendaftaran, form: formPendaftaran } =
+    useSelector((state) => state.getDetailMasterPelatihan);
 
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
@@ -119,11 +125,7 @@ const AddRegistrationStep2 = ({ propsStep }) => {
     },
   ]);
 
-  const optionsForm = [
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
-  ];
+  const optionsForm = dataForm.data || [];
 
   const [title, setTitle] = useState(registrationData.judul_form);
   const [formBuilder, setFormBuilder] = useState(registrationData.formBuilder);
@@ -358,7 +360,10 @@ const AddRegistrationStep2 = ({ propsStep }) => {
                   <Select
                     options={optionsForm}
                     placeholder="Silahkan Pilih Nama Form Pendaftaran"
-                    onChange={(e) => setTitle(e.label)}
+                    onChange={(e) => {
+                      setTitle(e.label);
+                      dispatch(getDetailMasterPelatihan(e.value, token));
+                    }}
                   />
                   {viewForm === "1" && (
                     <small className="form-text text-danger">
