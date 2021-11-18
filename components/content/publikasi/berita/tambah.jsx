@@ -125,13 +125,33 @@ const TambahBerita = ({ token, id }) => {
         return s.indexOf(' ') >= 0;
     }
 
+    function filterTag(e) {
+        return tag.indexOf(e) !== -1;
+    }
+
     const handleTag = (data) => {
+        // for (let i = 0; i < data.length; i++) {
+        //     if (hasWhiteSpace(data[i])) {
+        //         data.splice([i], 1);
+        //     }
+        // }
+        // tag.map((el,idx)=>{
+        //     return (
+        //         data.length === el && Swal.fire("Oops !", "Tag tidak boleh sama", "error")
+        //     )
+        // })
+
+        // // if (tag.includes(data)) {
+        // //     Swal.fire("Oops !", "Tag tidak boleh sama", "error")
+        // // }
+        // setTag(data);
+
         for (let i = 0; i < data.length; i++) {
             if (hasWhiteSpace(data[i])) {
                 data.splice([i], 1);
             }
         }
-        if ((data).includes(data) !== true) {
+        if ((tag).includes(data) !== true) {
             setTag(data);
         }
     }
@@ -257,7 +277,7 @@ const TambahBerita = ({ token, id }) => {
                         <h3 className="card-title font-weight-bolder text-dark">Tambah Berita</h3>
                     </div>
                     <div className="card-body">
-                        <form onSubmit={onSubmit}>
+                        <div>
                             <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Judul</label>
                                 <div className={`${styles.judulTambah} col-sm-12`}>
@@ -304,7 +324,7 @@ const TambahBerita = ({ token, id }) => {
                                 </div>
                             </div>
 
-                            <div className="form-group">
+                            <div className={`${styles.selectKategori} form-group`}>
                                 <label
                                     htmlFor="staticEmail"
                                     className="col-sm-4 col-form-label font-weight-bolder"
@@ -502,10 +522,10 @@ const TambahBerita = ({ token, id }) => {
                                     <Link href='/publikasi/berita'>
                                         <a className={`${styles.btnKembali} btn btn-white-ghost-rounded-full rounded-pill mr-2 btn-sm`}>Kembali</a>
                                     </Link>
-                                    <button className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill btn-sm`}>Simpan</button>
+                                    <button onClick={onSubmit} className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill btn-sm`}>Simpan</button>
                                 </div>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>

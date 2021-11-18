@@ -243,7 +243,7 @@ export const getAllPublikasi = () => async (dispatch) => {
 
 // GET PENYELENGGARA PAGE
 export const getAllPenyeleggaraPage =
-  (page = 1, limit = 24, keyword, order = "asc") =>
+  (page = 1, limit = 24, keyword, order = "") =>
   async (dispatch) => {
     try {
       dispatch({ type: BERANDA_PENYELENGGARA_PAGE_REQUEST });
