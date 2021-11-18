@@ -12,6 +12,7 @@ import {
   clearErrors,
 } from "../../../../../redux/actions/pelatihan/profile.actions";
 import { UPDATE_DATA_PRIBADI_RESET } from "../../../../../redux/types/pelatihan/profile.type";
+import { helperRegexNumber } from "../../../../../utils/middleware/helper";
 
 const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
   const dispatch = useDispatch();
@@ -221,15 +222,6 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
     }
   }, [dd, mm]);
 
-  useEffect(() => {
-    console.log(nomorUrgent);
-    console.log(typeof nomorUrgent);
-    console.log(nomorUrgent.length);
-    if (nomorUrgent.length > 14) {
-      setNomorUrgent(nomorUrgent);
-    }
-  }, [nomorUrgent]);
-
   return (
     <>
       <Form onSubmit={handleSubmit}>
@@ -428,20 +420,34 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
           </Form.Group>
           <Row className="mb-3">
             <Form.Group as={Col} md={6}>
-              <Form.Label>Nomor Handphone</Form.Label>
+              <Form.Label>Nomor Handphoness</Form.Label>
               <Form.Control
                 className={style.formControl}
                 type="text"
                 placeholder="Masukan Nomor Handphone"
                 value={nomorUrgent}
-                onChange={e => setNomorUrgent(e.target.value)}
+                onChange={e => {
+                  if (
+                    e.target.value === "" ||
+                    helperRegexNumber.test(e.target.value)
+                  ) {
+                    setNomorUrgent(e.target.value);
+                  }
+                }}
                 onBlur={() =>
                   simpleValidator.current.showMessageFor(
                     "nomor handphone darurat"
                   )
                 }
-                onKeyPress={e => console.log(e)}
-                maxlength="4"
+                pattern="[0-9]*"
+                // onKeyPress={e => {
+                //   console.log(e);
+                //   console.log(e.charCode, "ini charcode");
+                //   if (e.charCode < 48 && e.charCode > 58) {
+                //     return false;
+                //   }
+                // }}
+                maxlength="14"
               />
               {simpleValidator.current.message(
                 "nomor handphone darurat",

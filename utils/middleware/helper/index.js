@@ -1,6 +1,6 @@
 import Swal from "sweetalert2";
 
-export const disablePlusMinusPeriod = (e) => {
+export const disablePlusMinusPeriod = e => {
   if (e.code == "Minus") {
     return false;
   }
@@ -26,3 +26,12 @@ export const SweatAlert = (title, message, status) => {
     confirmButtonText: "Tutup",
   });
 };
+
+export const helperRegexNumber = /^[0-9\b]+$/;
+// CARA PAKAI REGEX
+// if (
+//   e.target.value === "" ||
+//   regexNumber.test(e.target.value)
+// ) {
+//   setState(e.target.value);
+// }
