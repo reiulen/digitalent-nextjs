@@ -67,7 +67,7 @@
 
   color: #1f1f1f;
   cursor: pointer;
-  padding: 10px 0px;
+  padding: 10px 20px;
 }
 .menuItem {
   font-family: Poppins;
@@ -82,7 +82,7 @@
   /* Neutral/Body */
 
   color: #6c6c6c;
-  padding: 0px 40px !important ;
+  padding: 8px 40px !important ;
   cursor: pointer;
 }
 
@@ -117,7 +117,7 @@
   background-color: #e6f2ff !important;
   border-radius: 8px;
   color: #007cff;
-  padding: 0px 40px !important ;
+  padding: 8px 40px !important ;
   cursor: pointer;
 }
 .proSidebar {
@@ -167,7 +167,7 @@
   padding: 10px 0px;
 }
 
-.headBreadcrumb{
+.headBreadcrumb {
   margin: 50px 0 55px 0;
 }
 
@@ -325,14 +325,14 @@
   }
 }
 
-@media only screen and (max-width: 556px){
-  .headBreadcrumb{
+@media only screen and (max-width: 556px) {
+  .headBreadcrumb {
     font-size: 10px;
   }
 }
 
-@media only screen and (max-width: 280px){
-  .headBreadcrumb{
+@media only screen and (max-width: 280px) {
+  .headBreadcrumb {
     font-size: 9.5px;
   }
 }

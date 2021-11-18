@@ -7,13 +7,13 @@ import { getDetailBerandaBerita, getKategoriBerandaBerita,  getTagBerandaBerita}
 
 const DetailBerita = dynamic (() => 
     import (
-        "../../../user-component/content/beranda/detail-berita"
+        "../../../user-component-new/content/home/detail-berita/detail-berita"
     )
 )
 
 const Layout = dynamic (() =>
     import (
-        "../../../user-component/content/wrapper/layout.wrapper"
+        "../../../user-component-new/components/template/Layout.component"
     )
 )
 

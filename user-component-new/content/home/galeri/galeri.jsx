@@ -7,9 +7,8 @@ import { Carousel } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { Card } from "react-bootstrap";
-import { getAllBerandaGaleri, getDetailBerandaGaleri } from "../../../redux/actions/beranda/galeri.actions"
-import PulseLoaderRender from "../../components/loader/PulseLoader";
-import style from "../../../styles/peserta/galeri.module.css"
+import { getAllBerandaGaleri, getDetailBerandaGaleri } from "../../../../redux/actions/beranda/galeri.actions"
+import PulseLoaderRender from "../../../components/loader/PulseLoader";
 
 const Galeri = () => {
     const dispatch = useDispatch();

@@ -25,21 +25,16 @@ const Preview = () => {
     const [nama, setNamaKategori] = useState(berita.nama)
     const [gambar, setGambar] = useState(berita.gambar)
     const [isi_berita, setIsiBerita] = useState(berita.isi_berita)
-    const [tags, setTags] = useState(berita.tag)
+    const [tag, setTag] = useState(berita.tag)
 
 
-    // const { detail } = useSelector((state) => state.detailBerandaBerita)
-    // const { tags } = useSelector((state) => state.allTagBerandaBerita)
+    const { tags } = useSelector((state) => state.allTagBerandaBerita)
 
     const [keyword, setKeyword] = useState(null)
     const [searchWords, setSearchWords] = useState(null)
     const [resultText, setResultText] = useState(null)
 
     const getWindowDimensions = () => {
-        // if (typeof window === 'undefined') {
-        //     global.window = {}
-        // }
-
         const { innerWidth: width, innerHeight: height } = window;
         return {
             width,
@@ -94,16 +89,15 @@ const Preview = () => {
 
     return (
         <>
-            {/* <PreviewWrapper title="Pratinjau Berita - Publikasi"> */}
-            <Container fluid className="px-md-20 px-10 pb-10">
+            <Container fluid className="px-md-30 px-10 pb-10 bg-white">
                 <div className="">
 
                     {/* Header */}
                     {berita ? (
-                        <div className="row my-5 d-flex flex-column">
-                            <div className="col-2">
+                        <div className="row my-5 flex-column">
+                            <div className="ml-2">
                                 <div className="badge badge-light mr-2">
-                                    <div className="text-primary">{berita.nama}</div>
+                                    <div className="text-primary">{(berita.nama).toUpperCase()}</div>
                                 </div>
                             </div>
                             <div className="mt-5 ml-3">
@@ -129,7 +123,7 @@ const Preview = () => {
 
                             <div className="mt-5 ml-5 d-flex flex-row align-items-center justify-content-between mx-3">
                                 <div className="row">
-                                    <div className="">
+                                    <div className="ml-2">
                                         {/* Insert Logo Image Here */}
                                         <Image
                                             src={
@@ -153,16 +147,7 @@ const Preview = () => {
                                         </div>
                                     </div>
                                 </div>
-
-                                <div className="row">
-                                    <button className="btn btn-outline-light rounded-circle mr-3">
-                                        <i className="ri-share-line p-0"></i>
-                                    </button>
-
-                                    <button className="btn btn-outline-light rounded-circle mr-3">
-                                        <i className="ri-heart-line p-0"></i>
-                                    </button>
-                                </div>
+                                
                             </div>
                         </div>
                     ) : null}
@@ -204,21 +189,11 @@ const Preview = () => {
                                                 ? berita.tag.map((el, i) => {
                                                     return (
                                                         <div className="mr-3 border p-3 rounded" key={i}>
-                                                            #{el}
+                                                            #{(el).toUpperCase()}
                                                         </div>
                                                     );
                                                 })
                                                 : null}
-                                        </div>
-
-                                        <div className="row">
-                                            <button className="btn btn-outline-light rounded-circle mr-3">
-                                                <i className="ri-share-line p-0"></i>
-                                            </button>
-
-                                            <button className="btn btn-outline-light rounded-circle mr-3">
-                                                <i className="ri-heart-line p-0"></i>
-                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -256,7 +231,7 @@ const Preview = () => {
                                                             borderBottomLeftRadius: "150px",
                                                         }}
                                                     >
-                                                        <i className="ri-search-line"></i>
+                                                        <i className="ri-search-line mr-2"></i>
                                                     </div>
                                                 </div>
 
@@ -264,7 +239,6 @@ const Preview = () => {
                                                     type="text"
                                                     className="form-control border-left-0 border p-0 bg-light"
                                                     placeholder="Cari Artikel"
-                                                    // style={{borderTopLeftRadius:"150px", borderBottomLeftRadius:"150px"}}
                                                     onChange={(e) => setKeyword(e.target.value)}
                                                 />
 
@@ -293,9 +267,8 @@ const Preview = () => {
                                             Temukan Lebih Banyak Artikel Yang Sesuai:
                                         </h3>
                                         <div className=" d-flex flex-wrap flex-row">
-                                            {/* {tags && tags.tag && tags.tag.length !== 0 ? ( */}
-                                            {tags && tags.length !== 0 ? (
-                                                tags.map((el, i) => {
+                                            {tags && tags.tag && tags.tag.length !== 0 ? (
+                                                tags.tag.map((el, i) => {
                                                     return (
                                                         <div
                                                             className="border px-2 py-1 rounded my-3 mr-3 text-center d-flex align-items-center justify-content-center"
@@ -334,107 +307,9 @@ const Preview = () => {
                     {/* End of Content */}
                 </div>
             </Container>
-            {/* </PreviewWrapper> */}
         </>
 
     )
 }
 
 export default Preview;
-
-            // <PreviewWrapper title="Pratinjau Berita - Publikasi">
-            //     <div className="col-lg-12 order-1 px-0 my-5 position-relative">
-            //         <div className="" style={{ height: '100%' }}>
-            //             <div className="row flex-column container">
-            //                 <div className={`${styles.headBreadcrumb}`}>
-            //                     <nav aria-label="breadcrumb">
-            //                         <ol className="breadcrumb bg-transparent my-5 ps-5" style={{ border: '1px solid gray', borderRadius: '20px' }}>
-            //                             <li className="breadcrumb-item" style={{ color: 'blue' }}>Beranda</li>
-            //                             <li className="breadcrumb-item" style={{ color: 'blue' }}>Berita</li>
-            //                             <li className="breadcrumb-item" aria-current="page">Detail Berita</li>
-            //                         </ol>
-            //                     </nav>
-            //                 </div>
-
-            //                 <div className="ml-0">
-            //                     <h1 className={`${styles.titlePratinjau} font-weight-bold my-5`}>
-            //                         {judul_berita}
-            //                     </h1>
-
-            //                     <div className="row mb-4">
-            //                         <div className="rounded mt-1" style={{ marginLeft: '25px' }}>
-            //                             <div className={styles['titleSubMenu-2']}>
-            //                                 {/* <i className="ri-dashboard-line"></i> */}
-            //                                 <span className={`${styles.titleKategori} label label-inline label-light-success font-weight-bold`}>
-            //                                     {(jenis_kategori).toUpperCase()}
-            //                                 </span>
-            //                             </div>
-            //                         </div>
-            //                         <div className="rounded mt-1" style={{ marginLeft: '25px' }}>
-            //                             <div className={styles['titleSubMenu-2']}>
-            //                                 <i className="flaticon-eye"></i>
-            //                                 <span className="ml-2 mr-5 text-muted">
-            //                                     Dibaca 120
-            //                                 </span>
-            //                             </div>
-            //                         </div>
-            //                     </div>
-
-            //                     <div className="row">
-            //                         <div className="col-sm-8 col-md-10 col-11 mt-4 d-flex align-items-center">
-            //                             <div className={styles['titleSubMenu']}>
-            //                                 <h5 className="font-weight-bold">Admin Pokja</h5>
-            //                                 <span className="text-muted">{moment({ created_at }).format('LL')}</span>
-            //                             </div>
-            //                         </div>
-            //                     </div>
-            //                 </div>
-            //             </div>
-            //             <div className="container">
-            //                 <div className="row">
-            //                     <div className="pt-0" style={{ height: '100%' }}>
-
-            //                         <div className={`${styles.imgPreview} d-flex justify-content-center my-3`}>
-            //                             <Image
-            //                                 src={process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + gambar}
-            //                                 alt="gambar-artikel"
-            //                                 objectFit="fill"
-            //                                 width="1200vh"
-            //                                 height="500vh"
-            //                                 className="mt-5 pt-5"
-            //                             />
-            //                         </div>
-
-            //                         <div className="text-justify my-5 p-3" style={{ border: '1px solid #d7e1ea', borderRadius: '10px' }}>
-            //                             {/* To render html Tag */}
-            //                             <div dangerouslySetInnerHTML={{ __html: isi_berita }} className={`${styles.isiArtikel}`} style={{ overflowWrap: 'break-word' }}></div>
-            //                             <div className="row">
-            //                                 <div className="col-sm-8 col-md-10 col-11">
-            //                                     <div className="row my-3 ml-0">
-            //                                         <div className={styles['listTag']}>
-            //                                             {
-            //                                                 (tags === null) ? null :
-            //                                                     tags.map((el, i) => {
-            //                                                         return (
-            //                                                             <div style={{ background: "#fff", border: '1px solid #d7e1ea' }}
-            //                                                                 className="mr-5 px-3 py-1 rounded"
-            //                                                                 key={i}>
-            //                                                                 <div className="text-center">
-            //                                                                     #{(el).toUpperCase()}
-            //                                                                 </div>
-            //                                                             </div>
-            //                                                         )
-            //                                                     })
-            //                                             }
-            //                                         </div>
-            //                                     </div>
-            //                                 </div>
-            //                             </div>
-            //                         </div>
-            //                     </div>
-            //                 </div>
-            //             </div>
-            //         </div>
-
-            //     </div>
-            // </PreviewWrapper>
