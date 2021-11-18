@@ -51,11 +51,7 @@ const Navigationbar = ({ session }) => {
   );
 
   useEffect(() => {
-    // dispatch(getDataPribadi(session?.token));
-    // router.push("/peserta/wizzard");
-
     if (session) {
-      dispatch(getDataPribadi(session?.token));
       if (
         dataPribadi &&
         Object.keys(dataPribadi).length !== 0 &&
@@ -64,7 +60,7 @@ const Navigationbar = ({ session }) => {
         router.push("/peserta/wizzard");
       }
     }
-  }, [dispatch, router]);
+  }, []);
 
   const [akademi, setAkademi] = useState([]);
   const getAkademi = async () => {
