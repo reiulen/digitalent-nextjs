@@ -9,7 +9,7 @@ import LoadingDetailPelatihan from "../../../user-component/components/loader/De
 const DetailPelatihan = dynamic(
   () =>
     import(
-      "../../../user-component/content/detail/kategori/pelatihan/detail-pelatihan-new"
+      "../../../user-component-new/content/home/detail-pelatihan/DetailPelatihan.component"
     ),
   {
     loading: function loadingNow() {
@@ -19,7 +19,8 @@ const DetailPelatihan = dynamic(
   }
 );
 const Layout = dynamic(
-  () => import("../../../components/wrapper/beranda.wrapper"),
+  () =>
+    import("../../../user-component-new/components/template/Layout.component"),
   { ssr: false }
 );
 

@@ -209,6 +209,7 @@ const ProfileUser = ({ profile }) => {
             objectFit="cover"
             height={200}
             width={400}
+            alt="ktp-modal"
           />
         </Modal.Body>
         <Modal.Footer>
