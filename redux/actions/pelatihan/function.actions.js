@@ -30,6 +30,10 @@ import {
   ERROR_DROPDOWN_KABUPATEN,
   GET_DROPDOWN_KABUPATEN_DOMISILI,
   ERROR_DROPDOWN_KABUPATEN_DOMISILI,
+  GET_DROPDOWN_PROVINSI_TO_DESA,
+  ERROR_DROPDOWN_PROVINSI_TO_DESA,
+  GET_DROPDOWN_KECAMATAN_TO_DESA,
+  ERROR_DROPDOWN_KECAMATAN_TO_DESA,
   GET_DROPDOWN_PENYELENGGARA,
   ERROR_DROPDOWN_PENYELENGGARA,
   GET_DATA_PRIBADI_SUCCESS,
@@ -465,6 +469,7 @@ export const dropdownKabupaten = (token, id) => async (dispatch) => {
         `api/option/provinsi-choose/${id}`,
       config
     );
+    console.log(data);
     dispatch({
       type: GET_DROPDOWN_KABUPATEN,
       payload: data,
@@ -496,6 +501,56 @@ export const dropdownKabupatenDomisili = (token, id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ERROR_DROPDOWN_KABUPATEN_DOMISILI,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const dropdownProvinsiToDesa = (token, id) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    const { data } = await axios.get(
+      process.env.END_POINT_API_SITE_MANAGEMENT +
+        `api/option/provincial-descent/${id}`,
+      config
+    );
+    console.log(data);
+    dispatch({
+      type: GET_DROPDOWN_PROVINSI_TO_DESA,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ERROR_DROPDOWN_PROVINSI_TO_DESA,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const dropdownKecamatanToDesa = (token, id) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    const { data } = await axios.get(
+      process.env.END_POINT_API_SITE_MANAGEMENT +
+        `api/option/provincial-descent/${id}`,
+      config
+    );
+
+    dispatch({
+      type: GET_DROPDOWN_KECAMATAN_TO_DESA,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ERROR_DROPDOWN_KECAMATAN_TO_DESA,
       payload: error.response.data.message,
     });
   }
