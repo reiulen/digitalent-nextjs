@@ -440,17 +440,7 @@ const EditGaleri = ({ token }) => {
 
                             <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-4 col-form-label font-weight-bolder">Upload Gambar</label>
-                                {/* <div className="col-sm-12">
-                                    <div {...getRootProps({ className: 'dropzone' })} style={{ background: '#f3f6f9', border: ' 1px dashed #3699FF', height: '100px' }}>
-                                        <input {...getInputProps()} />
-                                        <p className='text-center my-auto'>Seret gambar ke sini atau klik untuk memilih.</p>
-                                        <p className='text-center my-auto'>Untuk memilih banyak gambar klik dengan menekan tombol CTRL atau seret gambar dengan menekan Shift</p>
-                                    </div>
-                                    <aside style={thumbsContainer}>
-                                        {thumbs}
-                                    </aside>
-                                </div> */}
-
+                               
                                 {
                                     image ?
                                         <div className="form-group mb-4">
@@ -504,15 +494,6 @@ const EditGaleri = ({ token }) => {
                                                                 >
                                                                     <i className="ri-delete-bin-fill text-dark"></i>
                                                                 </label>
-                                                                {/* <input
-                                                                type="file"
-                                                                name="gambar"
-                                                                className="custom-file-input"
-                                                                id={`inputGroupFile${i}`}
-                                                                accept="image/*"
-                                                                style={{ display: "none" }}
-                                                                onChange={(e) => onChangeImage(e, i)}
-                                                            /> */}
                                                             </div>
 
                                                             {
@@ -611,7 +592,6 @@ const EditGaleri = ({ token }) => {
                                                 className="checkbox"
                                                 checked={publish}
                                                 type="checkbox"
-                                                // onChange={(checked) => setPublish(checked)}
                                                 onChange={(e) => handleChangePublish(e)}
                                             />
                                             <span
