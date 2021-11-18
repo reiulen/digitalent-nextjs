@@ -36,7 +36,13 @@ export default function MasterPelatihan({ token }) {
     state => state.getAllMasterPelatihan
   );
 
-  const AllMasterPelatihan = useSelector(state => state.getAllMasterPelatihan);
+  const { success, status: statusUpdate } = useSelector(
+    state => state.updateStatusMaster
+  );
+
+  const AllMasterPendaftaran = useSelector(
+    state => state.getAllMasterPelatihan
+  );
 
   const deleted = useSelector(state => state.deleteMasterPelatihan);
 
@@ -63,7 +69,7 @@ export default function MasterPelatihan({ token }) {
 
   const resetValueSort = e => {
     e.preventDefault();
-    selectRefAkademi.select.clearValue();
+    setStatus(null);
     dispatch({ type: RESET_STATUS_FILTER });
   };
 
@@ -71,7 +77,9 @@ export default function MasterPelatihan({ token }) {
     e.preventDefault();
     dispatch(searchKeyword(search));
   };
+
   const [status, setStatus] = useState();
+
   const handleSelectStatus = e => {
     setStatus(e);
   };
@@ -92,11 +100,13 @@ export default function MasterPelatihan({ token }) {
   }, [
     dispatch,
     token,
-    AllMasterPelatihan.keyword,
-    AllMasterPelatihan.page,
-    AllMasterPelatihan.theme,
-    AllMasterPelatihan.status,
-    AllMasterPelatihan.limit,
+    AllMasterPendaftaran.keyword,
+    AllMasterPendaftaran.page,
+    AllMasterPendaftaran.theme,
+    AllMasterPendaftaran.status,
+    AllMasterPendaftaran.limit,
+    AllMasterPendaftaran.cari,
+    success,
   ]);
 
   const handleDelete = id => {
@@ -274,6 +284,7 @@ export default function MasterPelatihan({ token }) {
                                   isRtl={false}
                                   isSearchable={true}
                                   name="color"
+                                  value={status || "-"}
                                   onChange={e => {
                                     handleSelectStatus(e);
                                   }}
@@ -326,7 +337,7 @@ export default function MasterPelatihan({ token }) {
                       </tr>
                     </thead>
                     <tbody>
-                      {!list || (list && list.list.length === 0) ? (
+                      {!list || (list && list?.list?.length === 0) ? (
                         <tr>
                           <td className="text-center" colSpan={6}>
                             Data Tidak Ditemukan
@@ -334,14 +345,14 @@ export default function MasterPelatihan({ token }) {
                         </tr>
                       ) : (
                         list &&
-                        list.list.map((item, i) => {
+                        list?.list?.map((item, i) => {
                           return (
                             <tr key={list.id}>
                               <td className="align-middle text-center">
-                                {AllMasterPelatihan.page === 1
+                                {AllMasterPendaftaran?.page === 1
                                   ? i + 1
-                                  : (AllMasterPelatihan.page - 1) *
-                                      AllMasterPelatihan.limit +
+                                  : (AllMasterPendaftaran?.page - 1) *
+                                      AllMasterPendaftaran?.limit +
                                     (i + 1)}
                               </td>
                               {/* START TABLE DATA */}
@@ -428,9 +439,9 @@ export default function MasterPelatihan({ token }) {
                 {list && (
                   <div className="table-pagination my-auto">
                     <Pagination
-                      activePage={list.page}
-                      itemsCountPerPage={list.perPage}
-                      totalItemsCount={list.total}
+                      activePage={AllMasterPendaftaran?.page}
+                      itemsCountPerPage={list?.perPage}
+                      totalItemsCount={list?.total}
                       pageRangeDisplayed={3}
                       onChange={page => dispatch(setValuePage(page))}
                       nextPageText={">"}
@@ -468,7 +479,7 @@ export default function MasterPelatihan({ token }) {
                         className="align-middle my-auto"
                         style={{ color: "#B5B5C3" }}
                       >
-                        Total Data {list.total}
+                        Total Data {list?.total}
                       </p>
                     </div>
                   </div>
