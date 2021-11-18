@@ -113,7 +113,7 @@ const Table = ({ token }) => {
                     <tbody>
                       {allMitraSite.data.list_mitras.length === 0 ? (
                         <td className="align-middle text-center" colSpan="6">
-                          Data Masih Kosong
+                          Data Kosong
                         </td>
                       ) : (
                         allMitraSite.data.list_mitras.map((items, index) => {
@@ -177,19 +177,19 @@ const Table = ({ token }) => {
 
               <div className="row px-4">
                 <div className="table-pagination">
-                    <Pagination
-                      activePage={allMitraSite.page}
-                      itemsCountPerPage={allMitraSite.data.perPage}
-                      totalItemsCount={allMitraSite.data.total}
-                      pageRangeDisplayed={3}
-                      onChange={(page) => dispatch(setPage(page))}
-                      nextPageText={">"}
-                      prevPageText={"<"}
-                      firstPageText={"<<"}
-                      lastPageText={">>"}
-                      itemClass="page-item"
-                      linkClass="page-link"
-                    />
+                  <Pagination
+                    activePage={allMitraSite.page}
+                    itemsCountPerPage={allMitraSite.data.perPage}
+                    totalItemsCount={allMitraSite.data.total}
+                    pageRangeDisplayed={3}
+                    onChange={(page) => dispatch(setPage(page))}
+                    nextPageText={">"}
+                    prevPageText={"<"}
+                    firstPageText={"<<"}
+                    lastPageText={">>"}
+                    itemClass="page-item"
+                    linkClass="page-link"
+                  />
                 </div>
 
                 <div className="table-total ml-auto mr-4">

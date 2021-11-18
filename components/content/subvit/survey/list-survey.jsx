@@ -56,13 +56,12 @@ const ListSurvey = ({ token }) => {
   const handlePagination = (pageNumber) => {
     if (limit != null) {
       router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}`);
-
     } else if (search != "" && limit != null) {
-      router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&keyword=${search}`);
-    
+      router.push(
+        `${router.pathname}?page=${pageNumber}&limit=${limit}&keyword=${search}`
+      );
     } else if (search != "") {
       router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}`);
-    
     } else {
       router.push(`${router.pathname}?page=${pageNumber}`);
     }
@@ -234,13 +233,17 @@ const ListSurvey = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header row border-0 mt-3">
             {/* <h1 className="card-title text-dark mt-2" style={{ fontSize: "24px" }}> */}
-            <h1 className={`${styles.headTitle} col-sm-12 col-md-8 col-lg-8 col-xl-9`}>
+            <h1
+              className={`${styles.headTitle} col-sm-12 col-md-8 col-lg-8 col-xl-9`}
+            >
               List Survey
             </h1>
             <div className="col-sm-12 col-md-4 col-lg-4 col-xl-3 card-toolbar">
               <Link href="/subvit/survey/tambah">
                 {/* <a className="text-white btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2 mr-2"> */}
-                <a className={`${styles.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bolder btn-block`}>
+                <a
+                  className={`${styles.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bolder btn-block`}
+                >
                   <i className="ri-add-fill"></i>
                   Tambah Survey
                 </a>
@@ -291,14 +294,14 @@ const ListSurvey = ({ token }) => {
                         <th>Pelaksanaan</th>
                         <th>Bank Soal</th>
                         <th>Status</th>
-                        <th style={{width:'10px'}}>Aksi</th>
+                        <th style={{ width: "10px" }}>Aksi</th>
                       </tr>
                     </thead>
                     <tbody>
                       {!survey ||
-                        (survey && survey.list_survey.length === 0) ? (
+                      (survey && survey.list_survey.length === 0) ? (
                         <td className="align-middle text-center" colSpan={8}>
-                          Data Masih Kosong
+                          Data Kosong
                         </td>
                       ) : (
                         survey &&
@@ -309,16 +312,13 @@ const ListSurvey = ({ token }) => {
                             <tr key={row.id}>
                               <td className="align-middle text-center">
                                 {/* <span className="">{paginate - dividers}</span> */}
-                                {
-                                  limit === null ?
-                                    <span>
-                                      {i + 1 * (page * 5) - (5 - 1)}
-                                    </span>
-                                    :
-                                    <span>
-                                      {i + 1 * (page * limit) - (limit - 1)}
-                                    </span>
-                                }
+                                {limit === null ? (
+                                  <span>{i + 1 * (page * 5) - (5 - 1)}</span>
+                                ) : (
+                                  <span>
+                                    {i + 1 * (page * limit) - (limit - 1)}
+                                  </span>
+                                )}
                               </td>
                               <td className="align-middle">
                                 <b>
@@ -442,11 +442,36 @@ const ListSurvey = ({ token }) => {
                           onChange={(e) => handleLimit(e.target.value)}
                           onBlur={(e) => handleLimit(e.target.value)}
                         >
-                          <option value='5' selected={limit == "5" ? true : false}>5</option>
-                          <option value='10' selected={limit == "10" ? true : false}>10</option>
-                          <option value='30' selected={limit == "30" ? true : false}>30</option>
-                          <option value='40' selected={limit == "40" ? true : false}>40</option>
-                          <option value='50' selected={limit == "50" ? true : false}>50</option>
+                          <option
+                            value="5"
+                            selected={limit == "5" ? true : false}
+                          >
+                            5
+                          </option>
+                          <option
+                            value="10"
+                            selected={limit == "10" ? true : false}
+                          >
+                            10
+                          </option>
+                          <option
+                            value="30"
+                            selected={limit == "30" ? true : false}
+                          >
+                            30
+                          </option>
+                          <option
+                            value="40"
+                            selected={limit == "40" ? true : false}
+                          >
+                            40
+                          </option>
+                          <option
+                            value="50"
+                            selected={limit == "50" ? true : false}
+                          >
+                            50
+                          </option>
                           {/* <option value="5">5</option>
                           <option value="10">10</option>
                           <option value="15">15</option>
