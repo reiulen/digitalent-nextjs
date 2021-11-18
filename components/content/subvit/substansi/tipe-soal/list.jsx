@@ -292,7 +292,7 @@ const ListTipeSoal = ({ token }) => {
                       subtance_question_type.list_types.length === 0 ? (
                         <tr>
                           <td className="text-center" colSpan={6}>
-                            Data Masih Kosong
+                            Data Kosong
                           </td>
                         </tr>
                       ) : (

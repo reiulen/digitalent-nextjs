@@ -255,7 +255,7 @@ const ListAcademy = ({ token }) => {
                       (academy && academy.list === null) ||
                       academy.list.length === 0 ? (
                         <td className="align-middle text-center" colSpan={8}>
-                          Data Masih Kosong
+                          Data Kosong
                         </td>
                       ) : (
                         academy.list.map((row, i) => (
@@ -278,7 +278,16 @@ const ListAcademy = ({ token }) => {
                               <p className="font-weight-bolder my-0 h6">
                                 {row.slug}
                               </p>
-                              <p style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '13rem' }}>{row.name}</p>
+                              <p
+                                style={{
+                                  overflow: "hidden",
+                                  textOverflow: "ellipsis",
+                                  whiteSpace: "nowrap",
+                                  maxWidth: "13rem",
+                                }}
+                              >
+                                {row.name}
+                              </p>
                             </td>
                             <td className="align-middle">{row.tema}</td>
                             <td className="align-middle">{row.pelatihan}</td>

@@ -452,7 +452,7 @@ const StepTwo = ({ token }) => {
                         survey_question_detail.list_questions &&
                         survey_question_detail.list_questions.length === 0 ? (
                           <td className="align-middle text-center" colSpan={5}>
-                            Data Masih Kosong
+                            Data Kosong
                           </td>
                         ) : (
                           survey_question_detail &&

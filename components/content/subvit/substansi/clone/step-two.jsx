@@ -297,7 +297,7 @@ const StepTwo = ({ token }) => {
                       subtance_question_detail.list_questions &&
                       subtance_question_detail.list_questions.length === 0 ? (
                         <td className="align-middle text-center" colSpan={8}>
-                          Data Masih Kosong
+                          Data Kosong
                         </td>
                       ) : (
                         subtance_question_detail &&
