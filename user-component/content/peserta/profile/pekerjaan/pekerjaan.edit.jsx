@@ -15,7 +15,7 @@ import { UPDATE_PEKERJAAN_RESET } from "../../../../../redux/types/pelatihan/pro
 import router from "next/router";
 import {
   helperRegexNumber,
-  yyyy,
+  SweatAlert,
 } from "../../../../../utils/middleware/helper";
 
 const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
@@ -24,7 +24,6 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
   const { error: errorPekerjaan, pekerjaan } = useSelector(
     state => state.dataPekerjaan
   );
-
   const { data: dataAsalSekolah } = useSelector(state => state.getAsalSekolah);
 
   const { error: errorStatusPekerjaan, data: dataStatusPekerjaan } =
@@ -79,12 +78,12 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
     dispatch(getDataAsalSekolah(token, 1, 100, sekolah));
 
     if (errorUpdateData) {
-      toast.error(errorUpdateData);
+      SweatAlert("Gagal", errorUpdateData, "error");
       dispatch(clearErrors());
     }
 
     if (success) {
-      toast.success("Berhasil Update Data");
+      SweatAlert("Berhasil", "Berhasil Update Data", "success");
       dispatch({ type: UPDATE_PEKERJAAN_RESET });
       if (wizzard) {
         router.push("/peserta");
@@ -168,12 +167,18 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
     rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
     return prefix == undefined ? rupiah : rupiah ? "Rp. " + rupiah : "";
   }
+  const [year, setYear] = useState();
 
   useEffect(() => {
-    if (tahunMasuk > yyyy) {
-      setTahunMasuk(yyyy);
+    const today = new Date();
+    setYear(today.getFullYear());
+  }, []);
+
+  useEffect(() => {
+    if (tahunMasuk > year) {
+      setTahunMasuk(year);
     }
-  }, [tahunMasuk]);
+  }, [tahunMasuk, year]);
 
   return (
     <>
