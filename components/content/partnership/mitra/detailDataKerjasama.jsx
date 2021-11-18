@@ -2,19 +2,15 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Pagination from "react-js-pagination";
 import PageWrapper from "../../../wrapper/page.wrapper";
-import CardPage from "../../../CardPage";
-import ButtonAction from "../../../ButtonAction";
 import Tables from "../../../Table/Table";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
 import Image from "next/image";
 import IconSearch from "../../../assets/icon/Search";
 import Swal from "sweetalert2";
 import IconEye from "../../../assets/icon/Eye";
 import IconDelete from "../../../assets/icon/Delete";
 import IconPencil from "../../../assets/icon/Pencil";
-import IconAdd from "../../../assets/icon/Add";
 import IconClose from "../../../assets/icon/Close";
 import IconFilter from "../../../assets/icon/Filter";
 import Select from "react-select";
@@ -32,19 +28,15 @@ import {
   changeValueKerjaSama,
   deleteCooperation,
   reloadTable,
-  changeStatusList,
   changeStatusListCooperation,
 } from "../../../../redux/actions/partnership/mitra.actions";
 
 import {
-  // reloadTable,
   rejectCooperation,
 } from "../../../../redux/actions/partnership/managementCooporation.actions";
 
 import IconArrow from "../../../assets/icon/Arrow";
-import IconCalender from "../../../assets/icon/Calender";
 import LoadingTable from "../../../LoadingTable";
-import BtnIcon from "../components/BtnIcon";
 import AlertBar from "../components/BarAlert";
 import { RESET_VALUE_SORTIR } from "../../../../redux/types/partnership/mitra.type";
 import moment from "moment";

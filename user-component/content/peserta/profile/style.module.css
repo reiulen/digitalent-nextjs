@@ -33,9 +33,20 @@ INFORMASI PRIBADI
   color: #1f1f1f;
   margin-top: 5px;
 }
+
 .formControl {
   margin-bottom: 10px;
 }
+
 .hr {
   border: 0.05px solid #d7e1ea;
+}
+
+.image_profile_wrapper {
+  border-radius: 50%;
+}
+
+.btn_edit_triger {
+  background: #007cff;
+  color: #ffffff;
 }

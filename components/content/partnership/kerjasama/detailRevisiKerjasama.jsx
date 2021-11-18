@@ -4,6 +4,7 @@ import Link from "next/link";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import axios from "axios";
 import { useRouter } from "next/router";
+import Swal from "sweetalert2";
 
 const DetailRevisiKerjasama = ({ token }) => {
   const router = useRouter();
@@ -58,7 +59,7 @@ const DetailRevisiKerjasama = ({ token }) => {
             query: { id: router.query.id },
           });
         } catch (error) {
-          notify(error.response.data.message);
+          Swal.fire("Gagal", `${error.response.data.message}`, "error")
         }
       }
     });
@@ -89,7 +90,7 @@ const DetailRevisiKerjasama = ({ token }) => {
       setPeriodUnit(data.data.period_unit);
       setNote(data.data.note);
     } catch (error) {
-      notify(error.response.data.message);
+      Swal.fire("Gagal", `${error.response.data.message}`, "error")
     }
 
     }

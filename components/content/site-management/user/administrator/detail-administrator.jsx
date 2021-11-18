@@ -1,15 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import PageWrapper from "../../../../wrapper/page.wrapper";
-import { useDispatch, useSelector } from "react-redux";
 import IconSearch from "../../../../assets/icon/Search";
 
 const DetailRole = ({ token }) => {
-  let dispatch = useDispatch();
-  const router = useRouter();
   const detailAdminSite = useSelector((state) => state.detailAdminSite);
-  console.log("detailAdminSite", detailAdminSite);
 
   return (
     <PageWrapper>

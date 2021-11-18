@@ -6,8 +6,6 @@ import { useRouter } from "next/router";
 import Swal from "sweetalert2";
 import SimpleReactValidator from "simple-react-validator";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import Image from "next/image";
 
@@ -71,12 +69,8 @@ const EditTandaTangan = ({ token }) => {
           formData.append("_method", "PUT");
           formData.append("name", nama);
           formData.append("position", jabatan);
-          formData.append(
-            "signature_image",
-            signature !== "" ? signature : ""
-          );
+          formData.append("signature_image", signature !== "" ? signature : "");
           try {
-
             let { data } = await axios.post(
               `${process.env.END_POINT_API_PARTNERSHIP}api/signatures/${router.query.id}`,
               formData,
@@ -92,7 +86,7 @@ const EditTandaTangan = ({ token }) => {
               query: { update: true },
             });
           } catch (error) {
-            notify(error.response.data.message);
+            Swal.fire("Gagal", `${error.response.data.message}`, "error");
           }
         }
       });
@@ -110,13 +104,13 @@ const EditTandaTangan = ({ token }) => {
         }).then(async (result) => {
           if (result.value) {
             let formData = new FormData();
-          formData.append("_method", "PUT");
-          formData.append("name", nama);
-          formData.append("position", jabatan);
-          formData.append(
-            "signature_image",
-            signature !== "" ? signature : ""
-          );
+            formData.append("_method", "PUT");
+            formData.append("name", nama);
+            formData.append("position", jabatan);
+            formData.append(
+              "signature_image",
+              signature !== "" ? signature : ""
+            );
             try {
               let { data } = await axios.post(
                 `${process.env.END_POINT_API_PARTNERSHIP}api/signatures/${router.query.id}`,
@@ -133,7 +127,7 @@ const EditTandaTangan = ({ token }) => {
                 query: { update: true },
               });
             } catch (error) {
-              notify(error.response.data.message);
+              Swal.fire("Gagal", `${error.response.data.message}`, "error");
             }
           }
         });
@@ -146,8 +140,6 @@ const EditTandaTangan = ({ token }) => {
       }
     }
   };
-
-  
 
   const [nama, setNama] = useState("");
   const [jabatan, setJabatan] = useState("");
@@ -168,7 +160,7 @@ const EditTandaTangan = ({ token }) => {
       setJabatan(data.data.position);
       setTandaTangan(data.data.signature_image);
     } catch (error) {
-      notify(error.response.data.message);
+      Swal.fire("Gagal", `${error.response.data.message}`, "error");
     }
   };
 
@@ -179,22 +171,9 @@ const EditTandaTangan = ({ token }) => {
   return (
     <PageWrapper>
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
-        <ToastContainer
-          position="bottom-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3
-              className="card-title font-weight-bolder text-dark titles-1"
-            >
+            <h3 className="card-title font-weight-bolder text-dark titles-1">
               Ubah Tanda Tangan Digital
             </h3>
           </div>
@@ -214,11 +193,7 @@ const EditTandaTangan = ({ token }) => {
                 />
               </div>
               <div className="form-group">
-                <label
-                  className="col-sm-2 col-form-label"
-                >
-                  Jabatan
-                </label>
+                <label className="col-sm-2 col-form-label">Jabatan</label>
                 <input
                   required
                   type="text"
@@ -229,24 +204,24 @@ const EditTandaTangan = ({ token }) => {
                 />
               </div>
               <div className="form-group">
-                <label className="col-form-label">
-                  Buat Tanda Tangan
-                </label>
+                <label className="col-form-label">Buat Tanda Tangan</label>
                 <div className="row">
                   <div className="col-sm-2 ">
                     <div className="border my-3">
-                      {!tandaTangan ? "":
-                      <Image
-                        unoptimized={process.env.ENVIRONMENT !== "PRODUCTION"}
-                        src={
-                          process.env.END_POINT_API_IMAGE_PARTNERSHIP +
-                          tandaTangan
-                        }
-                        width={400}
-                        height={400}
-                        alt="logo"
-                      />
-                      }
+                      {!tandaTangan ? (
+                        ""
+                      ) : (
+                        <Image
+                          unoptimized={process.env.ENVIRONMENT !== "PRODUCTION"}
+                          src={
+                            process.env.END_POINT_API_IMAGE_PARTNERSHIP +
+                            tandaTangan
+                          }
+                          width={400}
+                          height={400}
+                          alt="logo"
+                        />
+                      )}
                     </div>
                   </div>
                   <div className="col-sm-12">

@@ -242,7 +242,6 @@ const Table = ({ token }) => {
                     <div className="col-4 mr-0 p-0">
                       <select
                         className="form-control cursor-pointer pr-2"
-                        id="exampleFormControlSelect2"
                         defaultValue=""
                         style={{
                           width: "63px",

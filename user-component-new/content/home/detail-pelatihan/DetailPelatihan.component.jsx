@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import { Row, Col } from "react-bootstrap";
 import moment from "moment";
@@ -23,6 +23,10 @@ const DetailPelatihan = ({ session }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { pelatihan } = useSelector((state) => state.detailPelatihan);
+
+  useEffect(() => {
+    console.log(pelatihan.Status);
+  }, []);
 
   const handleCheckPelatihanReg = async (id, session) => {
     if (session) {

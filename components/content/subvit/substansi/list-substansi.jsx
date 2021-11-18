@@ -314,7 +314,7 @@ const ListSubstansi = ({ token }) => {
                       {!subtance ||
                       (subtance && subtance.list_substance.length === 0) ? (
                         <td className="align-middle text-center" colSpan={8}>
-                          Data Masih Kosong
+                          Data Kosong
                         </td>
                       ) : (
                         subtance &&
@@ -436,7 +436,9 @@ const ListSubstansi = ({ token }) => {
               <div className={`${styles.rowPagination} row`}>
                 {subtance && subtance.perPage < subtance.total && (
                   // <div className="table-pagination table-pagination pagination-custom col-12 col-md-6">
-                  <div className={`${stylesPag.pagination} table-pagination pagination-custom col-12 col-md-6`}>
+                  <div
+                    className={`${stylesPag.pagination} table-pagination pagination-custom col-12 col-md-6`}
+                  >
                     <Pagination
                       activePage={page}
                       itemsCountPerPage={subtance.perPage}

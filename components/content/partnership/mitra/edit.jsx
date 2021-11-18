@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import Image from "next/image";
@@ -8,12 +8,12 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import IconClose from "../../../assets/icon/Close";
 
+import Swal from "sweetalert2";
 import {
   getProvinces,
   cancelChangeProvinces,
 } from "../../../../redux/actions/partnership/mitra.actions";
 
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Select from "react-select";
 
@@ -103,10 +103,10 @@ const EditMitra = ({ token }) => {
           setNamePDF(selectedFile.name);
         };
       } else {
-        notify("gambar harus PNG dan max size 2mb");
+        Swal.fire("Gagal", `gambar harus PNG dan max size 2mb`, "error")
       }
     } else {
-      notify("upload gambar dulu");
+      Swal.fire("Gagal", `upload gambar dulu`, "error")
     }
   };
 
@@ -117,7 +117,7 @@ const EditMitra = ({ token }) => {
     } else if (!email) {
       setError({ ...error, email: "Harus isi email" });
     } else if (!website) {
-      setError({ ...error, website: "Harus isi nama website" });
+      setError({ ...error, website: "Harus isi alamat website" });
     } else if (!address) {
       setError({ ...error, address: "Harus isi alamat" });
     } else if (!indonesia_provinces_id) {
@@ -125,7 +125,7 @@ const EditMitra = ({ token }) => {
         ...error,
         indonesia_provinces_id: "Harus isi pilih provinsi",
       });
-      notify("Harus isi pilih provinsi");
+      Swal.fire("Gagal", `Harus isi pilih provinsi`, "error")
     } else if (indonesia_cities_id === "") {
       setError({ ...error, indonesia_cities_id: "Harus isi pilih kota/kab" });
     } else if (
@@ -201,28 +201,14 @@ const EditMitra = ({ token }) => {
               { shallow: true }
             );
           } catch (error) {
-            notify(error.response.data.message);
+            Swal.fire("Gagal", `${error.response.data.message}`, "error")
           }
         }
       });
     }
   };
 
-  const notify = (value) =>
-    toast.info(`${value}`, {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-
-  const cancelChangeImage = () => {
-    setAgency_logo("");
-    setNamePDF(null);
-  };
+ 
 
   useEffect(() => {
     async function setDataSingle (id,token){
@@ -256,7 +242,6 @@ const EditMitra = ({ token }) => {
       setPic_contact_number(data.data.pic_contact_number);
       setPic_email(data.data.pic_email);
     } catch (error) {
-      // notify(error.response.data.message)
       return;
     }
 
@@ -282,7 +267,6 @@ const EditMitra = ({ token }) => {
           dataNewCitites.splice(0, 0, { label: "Pilih Kab/Kota", value: "" });
           setCitiesAll(dataNewCitites);
         } catch (error) {
-          // notify(error.response.data.message)
           return;
         }
       }
@@ -292,19 +276,7 @@ const EditMitra = ({ token }) => {
 
   return (
     <PageWrapper>
-      <ToastContainer
-        position="bottom-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
-        {/* {loading ? <LoadingPage loading={loading} /> : ""fq} */}
 
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">

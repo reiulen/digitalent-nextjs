@@ -127,7 +127,7 @@ const AddRegistrationStep2 = ({ propsStep }) => {
 
   const [title, setTitle] = useState(registrationData.judul_form);
   const [formBuilder, setFormBuilder] = useState(registrationData.formBuilder);
-  const [viewForm, setViewForm] = useState("buat-manual");
+  const [viewForm, setViewForm] = useState("0");
 
   useEffect(() => {
     dispatch(getRegistrationStep2());
@@ -214,6 +214,7 @@ const AddRegistrationStep2 = ({ propsStep }) => {
     if (simpleValidator.current.allValid()) {
       const data = {
         judul_form: title,
+        type_form: viewForm,
         formBuilder,
       };
       dispatch(storeRegistrationStep2(data));
@@ -231,7 +232,7 @@ const AddRegistrationStep2 = ({ propsStep }) => {
 
   const viewRegistrationHandler = () => {
     switch (viewForm) {
-      case "buat-manual":
+      case "0":
         return (
           <FormManual
             formBuilder={formBuilder}
@@ -243,10 +244,10 @@ const AddRegistrationStep2 = ({ propsStep }) => {
           />
         );
         break;
-      case "copy-form":
+      case "1":
         return <FormCopy />;
         break;
-      case "copy-edit":
+      case "2":
         return (
           <FormCopyEdit
             formBuilder={formBuilder}
@@ -297,12 +298,12 @@ const AddRegistrationStep2 = ({ propsStep }) => {
                     className="form-check-input"
                     type="radio"
                     name="inlineRadioOptions"
-                    id="buat-manual-1"
-                    value="buat-manual"
-                    checked={viewForm === "buat-manual" && true}
+                    id="0-1"
+                    value="0"
+                    checked={viewForm === "0" && true}
                     onChange={(e) => setViewForm(e.target.value)}
                   />
-                  <label className="form-check-label" htmlFor="buat-manual-1">
+                  <label className="form-check-label" htmlFor="0-1">
                     Buat Manual
                   </label>
                 </div>
@@ -311,12 +312,12 @@ const AddRegistrationStep2 = ({ propsStep }) => {
                     className="form-check-input"
                     type="radio"
                     name="inlineRadioOptions"
-                    id="copy-form-2"
-                    value="copy-form"
-                    checked={viewForm === "copy-form" && true}
+                    id="1-2"
+                    value="1"
+                    checked={viewForm === "1" && true}
                     onChange={(e) => setViewForm(e.target.value)}
                   />
-                  <label className="form-check-label" htmlFor="copy-form-2">
+                  <label className="form-check-label" htmlFor="1-2">
                     Copy Form
                   </label>
                 </div>
@@ -326,8 +327,8 @@ const AddRegistrationStep2 = ({ propsStep }) => {
                     type="radio"
                     name="inlineRadioOptions"
                     id="copy-edit-3"
-                    value="copy-edit"
-                    checked={viewForm === "copy-edit" && true}
+                    value="2"
+                    checked={viewForm === "2" && true}
                     onChange={(e) => setViewForm(e.target.value)}
                   />
                   <label className="form-check-label" htmlFor="copy-edit-3">
@@ -340,7 +341,7 @@ const AddRegistrationStep2 = ({ propsStep }) => {
               <label className="col-form-label font-weight-bold">
                 Judul Form
               </label>
-              {viewForm === "buat-manual" ? (
+              {viewForm === "0" ? (
                 <input
                   type="text"
                   placeholder="Silahkan Masukan Judul Form"
@@ -356,10 +357,10 @@ const AddRegistrationStep2 = ({ propsStep }) => {
                 <>
                   <Select
                     options={optionsForm}
-                    placeholder="Silahkan Masukkan Nama Form Pendaftaran"
+                    placeholder="Silahkan Pilih Nama Form Pendaftaran"
                     onChange={(e) => setTitle(e.label)}
                   />
-                  {viewForm === "copy-form" && (
+                  {viewForm === "1" && (
                     <small className="form-text text-danger">
                       *Form pendaftaran akan terhubung dengan master form
                       pendaftaran. Apabila master form pendaftaran diubah maka
@@ -388,7 +389,7 @@ const AddRegistrationStep2 = ({ propsStep }) => {
                 >
                   Review
                 </button>
-                {viewForm !== "copy-form" && (
+                {viewForm !== "1" && (
                   <button
                     className="btn btn-primary-rounded-full"
                     type="button"
