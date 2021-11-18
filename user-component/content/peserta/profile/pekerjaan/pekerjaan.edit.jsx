@@ -90,6 +90,7 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
         funcViewEdit(false);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [errorUpdateData, success, dispatch, sekolah, funcViewEdit, token]);
 
   const handleSubmit = (e) => {
@@ -185,6 +186,7 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
               onBlur={() =>
                 simpleValidator.current.showMessageFor("status pekerjaan")
               }
+              // eslint-disable-next-line react/jsx-no-duplicate-props
               placeholder={`${
                 pekerjaan && pekerjaan.status_pekerjaan
                   ? pekerjaan.status_pekerjaan
@@ -286,7 +288,6 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
         {statusPekerjaan !== "-" &&
           statusPekerjaan.label === "Pelajar/Mahasiswa" && (
             <div className="unggah-berkas-pribadi mt-6">
-              <h3 className="font-weight-bolder">Status Pelajar Mahasiswa</h3>
               <Row>
                 <Col md={6}>
                   <Form.Group className="mb-3" controlId="formGridAddress1">

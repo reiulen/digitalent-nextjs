@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React, { useRef, useState, useEffect } from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
 import Select from "react-select";
@@ -64,6 +65,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
   );
   const [ijazah, setIjazah] = useState("");
   const [ijazahPreview, setIjazahPreview] = useState("");
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [optionsAsalSekolah, setOptionsAsalSekolah] = useState(
     dataAsalSekolah ? dataAsalSekolah : []
   );
@@ -97,6 +99,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
         funcViewEdit(false);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     success,
     errorUpdateData,

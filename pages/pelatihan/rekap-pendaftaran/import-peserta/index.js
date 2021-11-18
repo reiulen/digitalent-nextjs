@@ -20,11 +20,12 @@ const ImportSummary = dynamic(
   }
 );
 
-export default function ImportSummaryPage() {
+export default function ImportSummaryPage(props) {
+  const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <ImportSummary />
+        <ImportSummary token={session.token} />
       </div>
     </>
   );

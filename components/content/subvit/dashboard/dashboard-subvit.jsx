@@ -21,12 +21,18 @@ import { useRouter } from "next/dist/client/router";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { getDashboardSubvit } from "../../../../redux/actions/subvit/subtance-question-detail.action";
+import LoadingTable from "../../../LoadingTable";
+import { Row } from "react-bootstrap";
 
 const DashbardSubvit = ({ token }) => {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const { dashboard_subvit } = useSelector((state) => state.dashboardSubvit);
+  const { dashboard_subvit, loading } = useSelector(
+    (state) => state.dashboardSubvit
+  );
+
+  // console.log(loading);
 
   const data = [];
   dashboard_subvit &&
@@ -267,103 +273,120 @@ const DashbardSubvit = ({ token }) => {
                 <p className={`${styles.subHeadPeserta}`}>
                   Total Peserta dari Test Substansi, Survey dan TRIVIA
                 </p>
-                <ResponsiveContainer height={300}>
-                  <PieChart width={500} height={300}>
-                    <Tooltip />
-                    <Pie
-                      data={dataItem.slice(0, 3)}
-                      cx={250}
-                      cy={150}
-                      innerRadius={60}
-                      outerRadius={80}
-                      fill="#8884d8"
-                      dataKey="value"
-                    >
-                      {dataItem.map((entry, index) => (
-                        <>
-                          <Cell
-                            key={`cell-${index}`}
-                            fill={COLORS[index % COLORS.length]}
-                          ></Cell>
-                        </>
-                      ))}
-
-                      <Label
-                        width={30}
-                        position="center"
-                        className={styles.labelChart}
+                {loading ? (
+                  <LoadingTable loading={loading} />
+                ) : (
+                  <>
+                    <center>
+                      <div
+                        style={{
+                          width: "100%",
+                          height: 300,
+                        }}
+                        className={styles.pieChart}
                       >
-                        {dashboard_subvit &&
-                          dashboard_subvit.chart &&
-                          dashboard_subvit.chart[3].total}
-                      </Label>
-                    </Pie>
-                  </PieChart>
-                </ResponsiveContainer>
+                        <ResponsiveContainer>
+                          <PieChart>
+                            <Tooltip />
+                            <Pie
+                              data={dataItem.slice(0, 3)}
+                              cx={250}
+                              cy={150}
+                              innerRadius={60}
+                              outerRadius={80}
+                              fill="#8884d8"
+                              dataKey="value"
+                            >
+                              {dataItem.map((entry, index) => (
+                                <>
+                                  <Cell
+                                    key={`cell-${index}`}
+                                    fill={COLORS[index % COLORS.length]}
+                                  ></Cell>
+                                </>
+                              ))}
 
-                <div
-                  className="d-flex flex-row "
-                  style={{ padding: "0px 20px" }}
-                >
-                  <div className="p-5">
-                    <div className="d-flex flex-row">
-                      <div className="p-2" style={{ padding: "0px" }}>
-                        <Image
-                          src={imageSubstansi}
-                          alt=""
-                          width={60}
-                          height={50}
-                        />
+                              <Label
+                                width={30}
+                                position="center"
+                                className={styles.labelChart}
+                              >
+                                {dashboard_subvit &&
+                                  dashboard_subvit.chart &&
+                                  dashboard_subvit.chart[3].total}
+                              </Label>
+                            </Pie>
+                          </PieChart>
+                        </ResponsiveContainer>
                       </div>
-                      <div className={`${styles.substansi} p-2`}>
-                        {dashboard_subvit &&
-                          dashboard_subvit.chart &&
-                          dashboard_subvit.chart[0].total_substansi}
-                        <br />
-                        <span className={styles.subTextTotal}>Substansi</span>
+                    </center>
+                    <div
+                      className={`${styles.cardBottom} d-flex flex-row `}
+                      style={{ padding: "0px 20px" }}
+                    >
+                      <div className="p-5">
+                        <div className="d-flex flex-row">
+                          <div className="p-2" style={{ padding: "0px" }}>
+                            <Image
+                              src={imageSubstansi}
+                              alt=""
+                              width={60}
+                              height={50}
+                            />
+                          </div>
+                          <div className={`${styles.substansi} p-2`}>
+                            {dashboard_subvit &&
+                              dashboard_subvit.chart &&
+                              dashboard_subvit.chart[0].total_substansi}
+                            <br />
+                            <span className={styles.subTextTotal}>
+                              Substansi
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="p-5">
+                        <div className="d-flex flex-row">
+                          <div className="p-2" style={{ padding: "0px" }}>
+                            {" "}
+                            <Image
+                              src={imageSurvey}
+                              alt=""
+                              width={60}
+                              height={50}
+                            />
+                          </div>
+                          <div className={`${styles.survey} p-2`}>
+                            {dashboard_subvit &&
+                              dashboard_subvit.chart &&
+                              dashboard_subvit.chart[1].total_survey}
+                            <br />
+                            <span className={styles.subTextTotal}>Survey</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="p-5">
+                        <div className="d-flex flex-row">
+                          <div className="p-2" style={{ padding: "0px" }}>
+                            <Image
+                              src={imageTrivia}
+                              alt=""
+                              width={60}
+                              height={50}
+                            />
+                          </div>
+                          <div className={`${styles.trivia} p-2`}>
+                            {dashboard_subvit &&
+                              dashboard_subvit.chart &&
+                              dashboard_subvit.chart[2].total_trivia}
+                            <br />
+                            <span className={styles.subTextTotal}>Trivia</span>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="p-5">
-                    <div className="d-flex flex-row">
-                      <div className="p-2" style={{ padding: "0px" }}>
-                        {" "}
-                        <Image
-                          src={imageSurvey}
-                          alt=""
-                          width={60}
-                          height={50}
-                        />
-                      </div>
-                      <div className={`${styles.survey} p-2`}>
-                        {dashboard_subvit &&
-                          dashboard_subvit.chart &&
-                          dashboard_subvit.chart[1].total_survey}
-                        <br />
-                        <span className={styles.subTextTotal}>Survey</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="p-5">
-                    <div className="d-flex flex-row">
-                      <div className="p-2" style={{ padding: "0px" }}>
-                        <Image
-                          src={imageTrivia}
-                          alt=""
-                          width={60}
-                          height={50}
-                        />
-                      </div>
-                      <div className={`${styles.trivia} p-2`}>
-                        {dashboard_subvit &&
-                          dashboard_subvit.chart &&
-                          dashboard_subvit.chart[2].total_trivia}
-                        <br />
-                        <span className={styles.subTextTotal}>Trivia</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                  </>
+                )}
               </div>
             </div>
           </div>
@@ -372,8 +395,10 @@ const DashbardSubvit = ({ token }) => {
               <div className={`${styles.cardPesertaBody} card-body`}>
                 <h1 className={`${styles.headPeserta}`}>Test Substansi</h1>
                 <p className={`${styles.subHeadPeserta}`}>yang sudah publish</p>
-
-                {dashboard_subvit &&
+                {loading ? (
+                  <LoadingTable loading={loading} />
+                ) : (
+                  dashboard_subvit &&
                   dashboard_subvit.substansi &&
                   dashboard_subvit.substansi.list.map((item, index) => {
                     return (
@@ -423,7 +448,8 @@ const DashbardSubvit = ({ token }) => {
                         </div>
                       </>
                     );
-                  })}
+                  })
+                )}
                 <div className={`${styles.rowBottom} row`}>
                   <div className={`${styles.total} col-sm-6 mt-5`}>
                     Total:{" "}
@@ -466,7 +492,10 @@ const DashbardSubvit = ({ token }) => {
                 <p className={`${styles.subHeadPeserta}`}>
                   yang sedang berlangsung
                 </p>
-                {dashboard_subvit &&
+                {loading ? (
+                  <LoadingTable loading={loading} />
+                ) : (
+                  dashboard_subvit &&
                   dashboard_subvit.trivia &&
                   dashboard_subvit.trivia.list.map((item, index) => {
                     return (
@@ -512,7 +541,8 @@ const DashbardSubvit = ({ token }) => {
                         </div>
                       </>
                     );
-                  })}
+                  })
+                )}
                 <div className={`${styles.rowBottom} row`}>
                   <div className={`${styles.total} col-sm-6 mt-5`}>
                     Total:{" "}
@@ -561,7 +591,10 @@ const DashbardSubvit = ({ token }) => {
                 <p className={`${styles.subHeadPeserta}`}>
                   yang sedang berlangsung
                 </p>
-                {dashboard_subvit &&
+                {loading ? (
+                  <LoadingTable loading={loading} />
+                ) : (
+                  dashboard_subvit &&
                   dashboard_subvit.survey &&
                   dashboard_subvit.survey.list.map((item, index) => {
                     return (
@@ -607,7 +640,8 @@ const DashbardSubvit = ({ token }) => {
                         </div>
                       </>
                     );
-                  })}
+                  })
+                )}
                 <div className={`${styles.rowBottom} row`}>
                   <div className={`${styles.total} col-sm-6 mt-5`}>
                     Total:{" "}

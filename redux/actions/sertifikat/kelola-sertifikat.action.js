@@ -67,7 +67,10 @@ export const getAllSertifikat = (token) => async (dispatch, getState) => {
       dispatch({ type: SERTIFIKAT_SUCCESS, payload: data });
     }
   } catch (error) {
-    dispatch({ type: SERTIFIKAT_FAIL, payload: error.response.data.message });
+    dispatch({
+      type: SERTIFIKAT_FAIL,
+      payload: error.response.data.message || error,
+    });
   }
 };
 
@@ -122,16 +125,14 @@ export const getDetailSertifikat =
           Authorization: `Bearer ${token}`,
         },
       };
-
       const { data } = await axios.get(link, config);
-
       if (data) {
         dispatch({ type: DETAIL_SERTIFIKAT_SUCCESS, payload: data });
       }
     } catch (error) {
       dispatch({
         type: DETAIL_SERTIFIKAT_FAIL,
-        payload: error.response.data.message,
+        payload: error.response.data.message || error,
       });
     }
   };
@@ -141,7 +142,7 @@ export const newSertifikat = (id, formData, token) => async (dispatch) => {
     dispatch({ type: NEW_SERTIFIKAT_REQUEST });
     let link =
       process.env.END_POINT_API_SERTIFIKAT +
-      `api/manage_certificates/store/${id}`;
+      `api/manage_certificates/store/${id.academy_id}/${id.theme_id}/${id.training_id}`;
 
     const config = {
       headers: {
@@ -157,7 +158,7 @@ export const newSertifikat = (id, formData, token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: NEW_SERTIFIKAT_FAIL,
-      payload: error.response.data.message,
+      payload: error.response.data.message || error,
     });
   }
 };
@@ -185,11 +186,12 @@ export const getSingleSertifikat = (id, token) => async (dispatch) => {
     if (data) {
       dispatch({ type: SINGLE_SERTIFIKAT_SUCCESS, payload: data });
     }
+    return data;
   } catch (error) {
     dispatch({
       type: SINGLE_SERTIFIKAT_FAIL,
       // payload: error.message
-      payload: error.response.data.message,
+      payload: error.response.data.message || error,
     });
   }
 };
@@ -199,8 +201,7 @@ export const getPublishedSertifikat = (id, token) => async (dispatch) => {
     dispatch({ type: PUBLISHED_SERTIFIKAT_REQUEST });
 
     let link =
-      process.env.END_POINT_API_SERTIFIKAT +
-      `api/manage_certificates/image/${id}`;
+      process.env.END_POINT_API_SERTIFIKAT + `api/manage_certificates/${id}`;
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -208,7 +209,7 @@ export const getPublishedSertifikat = (id, token) => async (dispatch) => {
     };
 
     const { data } = await axios.get(link, config);
-
+    console.log(data, "ini data");
     if (data) {
       dispatch({
         type: PUBLISHED_SERTIFIKAT_SUCCESS,
@@ -218,7 +219,7 @@ export const getPublishedSertifikat = (id, token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: PUBLISHED_SERTIFIKAT_FAIL,
-      payload: error.response.data.message,
+      payload: error.response.data.message || error,
     });
   }
 };
@@ -245,7 +246,7 @@ export const updateSertifikat = (id, formData, token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: UPDATE_SERTIFIKAT_FAIL,
-      payload: error.response.data.message,
+      payload: error.response.data.message || error,
     });
   }
 };
@@ -269,7 +270,7 @@ export const getOptionsAcademy = (token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: OPTIONS_ACADEMY_FAIL,
-      payload: error.response.data.message,
+      payload: error.response.data.message || error,
     });
   }
 };
@@ -293,7 +294,7 @@ export const getOptionsTheme = (token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: OPTIONS_THEME_FAIL,
-      payload: error.response.data.message,
+      payload: error.response.data.message || error,
     });
   }
 };

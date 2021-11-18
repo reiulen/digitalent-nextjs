@@ -68,12 +68,12 @@ import {
   updateSettingPublikasiReducer,
 } from "./publikasi/setting.reducers";
 
-import {
-  allVideoContentReducer,
-  allTagReducer,
-  playVideoContentReducer,
-  kategoriVideoContentReducer,
-} from "./beranda/video-content.reducer";
+// import {
+//   allVideoContentReducer,
+//   allTagReducer,
+//   playVideoContentReducer,
+//   kategoriVideoContentReducer,
+// } from "./beranda/video-content.reducer";
 
 import { allDashboardPublikasiReducer } from "./publikasi/dashboard-publikasi.reducers";
 
@@ -233,6 +233,10 @@ import {
   updateAdminSiteReducer,
   detailAdminSiteReducer,
   deleteAdminSiteReducer,
+  allUnitWorkListReducer,
+  allRolesListReducer,
+  allAcademyListReducer,
+  allListPelatihanReducer,
 } from "./site-management/user/admin-site.reducers";
 // ============== data reference ===============
 import {
@@ -317,6 +321,7 @@ import {
   getEditTraining3Reducer,
   getFormLPJReducer,
   getFormEvidenceReducer,
+  cloneTrainingReducer,
 } from "./pelatihan/admin/training.reducers";
 // =================== review pelatihan ==================
 import {
@@ -357,6 +362,7 @@ import {
   getBerkasPendaftaranReducer,
   getFormKomitmenReducer,
   getFormLpjReducer,
+  newLPJReducer,
 } from "./pelatihan/admin/summary.reducers";
 
 // ================ profile peserta ===============
@@ -407,6 +413,7 @@ import {
   allAkademiReducer,
   allKotaPesertaReducer,
   allPenyelenggaraPesertaReducer,
+  allPenyelenggaraPageReducer,
   temaByAkademiReducer,
   pelatihanByTemaReducer,
   allPublikasiBerandaReducer,
@@ -440,7 +447,7 @@ import {
   allBerandaGaleriReducer,
   detailBerandaGaleriReducer,
   kategoriBerandaGaleriReducer,
-  allTagBerandaGaleriReducer
+  allTagBerandaGaleriReducer,
 } from "../reducers/beranda/galeri.reducer";
 
 // ========== berita ========
@@ -450,6 +457,14 @@ import {
   kategoriBerandaBeritaReducer,
   allTagBerandaBeritaReducer,
 } from "../reducers/beranda/berita.reducers";
+
+// ========== video ========
+import {
+  allVideoContentReducer,
+  kategoriVideoContentReducer,
+  allTagVideoContentReducer,
+  playVideoContentReducer,
+} from"../reducers/beranda/video-content.reducer"
 
 //END BERANDA
 
@@ -461,6 +476,15 @@ import {
   allBeasiswaReducer,
   allSimonasReducer,
 } from "./beranda/simonasAndBeasiswa";
+
+import {
+  allMasterPelatihanListReducer,
+  deleteMasterPelatihanReducer,
+  detailMasterPelatihanReducer,
+  newMasterTrainingReducer,
+  updateMasterPelatihanReducer,
+  updateStatusMasterReducer,
+} from "./pelatihan/admin/master-pendaftaran.reducer";
 
 const reducer = combineReducers({
   // PUBLIKASI
@@ -522,9 +546,9 @@ const reducer = combineReducers({
 
   allDashboardPublikasi: allDashboardPublikasiReducer,
 
-  allKategoriContent: kategoriVideoContentReducer,
-  allTagContent: allTagReducer,
-  playVideo: playVideoContentReducer,
+  // allKategoriContent: kategoriVideoContentReducer,
+  // allTagContent: allTagReducer,
+  // playVideo: playVideoContentReducer,
 
   // Subvit
   // =============== substansi ==================
@@ -650,12 +674,16 @@ const reducer = combineReducers({
   newMitraSite: newMitraSiteReducer,
   detailMitraSite: detailMitraSiteReducer,
   updateMitraSite: updateMitraSiteReducer,
-  // ============ MITRA SITE =======
+  // ============ ADMIN SITE =======
   allAdminSite: allAdminSiteReducer,
   newAdminSite: newAdminSiteReducer,
   updateAdminSite: updateAdminSiteReducer,
   detailAdminSite: detailAdminSiteReducer,
   deleteAdminSite: deleteAdminSiteReducer,
+  allUnitWorkList: allUnitWorkListReducer,
+  allRolesList: allRolesListReducer,
+  allAcademyList: allAcademyListReducer,
+  allListPelatihan: allListPelatihanReducer,
 
   // ============ DATA REFERENCE =======
   allDataReference: allDataReferenceReducer,
@@ -722,7 +750,9 @@ const reducer = combineReducers({
   getEditTraining2: getEditTraining2Reducer,
   getEditTraining3: getEditTraining3Reducer,
   getFormLPJ: getFormLPJReducer,
+  newLPJ: newLPJReducer,
   getFormEvidence: getFormEvidenceReducer,
+  cloneTraining: cloneTrainingReducer,  
   // ========== review pelatihan ========
   allListReview: allListReviewReducer,
   cardReview: cardReviewReducer,
@@ -801,6 +831,7 @@ const reducer = combineReducers({
   addNotifTema: addNotifTemaReducer,
   allAkademi: allAkademiReducer,
   allPenyelenggaraPeserta: allPenyelenggaraPesertaReducer,
+  allPenyelenggaraPage: allPenyelenggaraPageReducer,
   allKotaPeserta: allKotaPesertaReducer,
   temaByAkademi: temaByAkademiReducer,
   pelatihanByTema: pelatihanByTemaReducer,
@@ -833,6 +864,12 @@ const reducer = combineReducers({
   detailBerandaBerita: detailBerandaBeritaReducer,
   kategoriBerandaBerita: kategoriBerandaBeritaReducer,
   allTagBerandaBerita: allTagBerandaBeritaReducer,
+
+  // ========== video ========
+  allVideoContent: allVideoContentReducer,
+  kategoriVideoContent: kategoriVideoContentReducer,
+  allTagVideoContent: allTagVideoContentReducer,
+  playVideoContent: playVideoContentReducer,
   //END BERANDA
 
   // ========== Riwayat Pelatihan ========
@@ -840,6 +877,14 @@ const reducer = combineReducers({
   getDetailRiwayatPelatihanPeserta: getDetailRiwayatPelatihanReducer,
   allBeasiswa: allBeasiswaReducer,
   allSimonas: allSimonasReducer,
+
+  // ========== Master Pelatihan ========
+  getAllMasterPelatihan: allMasterPelatihanListReducer,
+  deleteMasterPelatihan: deleteMasterPelatihanReducer,
+  getDetailMasterPelatihan: detailMasterPelatihanReducer,
+  newMasterPelatihan: newMasterTrainingReducer,
+  updateMasterPelatihan: updateMasterPelatihanReducer,
+  updateStatusMaster: updateStatusMasterReducer,
 });
 
 export default reducer;

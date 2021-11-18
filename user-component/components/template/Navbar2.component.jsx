@@ -18,6 +18,8 @@ import {
   Dropdown,
   Col,
   Row,
+  Container,
+  Button,
 } from "react-bootstrap";
 import IconSearch from "../../../components/assets/icon/Search";
 import IconLogin from "../../../components/assets/icon-dashboard-peserta/Login";
@@ -49,18 +51,19 @@ const Navigationbar = ({ session }) => {
   );
 
   useEffect(() => {
-    dispatch(getDataPribadi(session?.token));
-    if (
-      dataPribadi &&
-      Object.keys(dataPribadi).length !== 0 &&
-      !dataPribadi.status
-    ) {
-      router.push("/peserta/wizzard");
+    // dispatch(getDataPribadi(session?.token));
+    if (session) {
+      dispatch(getDataPribadi(session?.token));
+      if (
+        dataPribadi &&
+        Object.keys(dataPribadi).length !== 0 &&
+        !dataPribadi.status
+      ) {
+        router.push("/peserta/wizzard");
+      }
     }
-  }, [dataPribadi]);
-  // const { error: errorAkademi, akademi } = useSelector(
-  //   (state) => state.allAkademi
-  // );
+  }, [dispatch, router]);
+
   const [akademi, setAkademi] = useState([]);
   const getAkademi = async () => {
     let link =
@@ -72,14 +75,9 @@ const Navigationbar = ({ session }) => {
 
   useEffect(() => {
     getAkademi();
-    getSimonas();
-    getBeasiswa();
+    //   getSimonas();
+    //   getBeasiswa();
   }, []);
-
-  useEffect(() => {
-    // console.log(simonas, "ini useeffect simonas");
-    // console.log(beasiswa, "ini useeffect beasiswa");
-  }, [simonas, beasiswa]);
 
   const getSimonas = async () => {
     const link = "http://simonas-dev.majapahit.id/api/job";
@@ -123,7 +121,7 @@ const Navigationbar = ({ session }) => {
       <Navbar
         bg="white"
         expand="lg"
-        className="shadow header-dashboard d-flex pr-0 pl-3"
+        className="shadow header-dashboard d-flex pr-0 px-md-25 px-10"
         sticky="top"
       >
         <Col
@@ -167,9 +165,9 @@ const Navigationbar = ({ session }) => {
               className="p-3"
             >
               {isNavOpen ? (
-                <i class="ri-close-line"></i>
+                <i className="ri-close-line"></i>
               ) : (
-                <i class="ri-menu-line"></i>
+                <i className="ri-menu-line"></i>
               )}
             </Navbar.Toggle>
           </div>
@@ -203,24 +201,21 @@ const Navigationbar = ({ session }) => {
                 id="basic-nav-dropdown"
                 className="navdropdown-child position-relative w-100 text-menu"
               >
-                <NavDropdown.Item href="/" className="navdropdown-child">
-                  Beranda
-                </NavDropdown.Item>
-                <div className="btn-group dropright">
-                  <button
+                <Link href="/" passHref>
+                  <NavDropdown.Item className="navdropdown-child">
+                    Beranda
+                  </NavDropdown.Item>
+                </Link>
+                <div className="btn-group dropright w-100">
+                  <a
                     type="button"
-                    className="btn btn-white-navbar"
+                    className="btn rounded-0 btn-white-navbar btn-block dropdown-toggle d-flex justify-content-between align-items-center w-100"
                     data-toggle="dropdown"
                     aria-haspopup="true"
                     aria-expanded="false"
                   >
-                    <div className="row">
-                      <div className={`col-9 text-left `}>Pelatihan</div>
-                      <div className="col-1 text-right">
-                        <i className="ri-arrow-right-s-line text-dark"> </i>
-                      </div>
-                    </div>
-                  </button>
+                    Pelatihan
+                  </a>
                   <div className="dropdown-menu ml-3">
                     {akademi.map((item, i) => {
                       return (
@@ -233,52 +228,49 @@ const Navigationbar = ({ session }) => {
                     })}
                   </div>
                 </div>
-                <div className="btn-group dropright">
-                  <button
+                <div className="btn-group dropright w-100">
+                  <a
                     type="button"
-                    className="btn btn-white-navbar dropdown-toggle"
+                    className="btn rounded-0 btn-white-navbar btn-block dropdown-toggle d-flex justify-content-between align-items-center w-100"
                     data-toggle="dropdown"
                     aria-haspopup="true"
                     aria-expanded="false"
                   >
                     Pusat Informasi
-                  </button>
+                  </a>
                   <div className="dropdown-menu ml-3">
-                    <a className="dropdown-item navdropdown-child" href="#">
-                      Panduan Test Substansi
-                    </a>
-                    <a className="dropdown-item navdropdown-child" href="#">
-                      Hak dan Kewajiban
-                    </a>
+                    <Link href="/pusat-informasi" passHref>
+                      <a className="dropdown-item navdropdown-child">
+                        Panduan Test Substansi
+                      </a>
+                    </Link>
+                    <Link href="/pusat-informasi" passHref>
+                      <a className="dropdown-item navdropdown-child">
+                        Hak dan Kewajiban
+                      </a>
+                    </Link>
                   </div>
                 </div>
-                <NavDropdown.Item
-                  href="#action/3.4"
-                  className="navdropdown-child"
-                >
-                  Tentang Kami
-                </NavDropdown.Item>
-                <NavDropdown.Item
-                  href="#action/3.4"
-                  className="navdropdown-child"
-                >
-                  Penyelenggara
-                </NavDropdown.Item>
-                <div className="btn-group dropright">
-                  <button
+                <Link href="/tentang-kami" passHref>
+                  <NavDropdown.Item className="navdropdown-child">
+                    Tentang Kami
+                  </NavDropdown.Item>
+                </Link>
+                <Link href="/penyelenggara" passHref>
+                  <NavDropdown.Item className="navdropdown-child">
+                    Penyelenggara
+                  </NavDropdown.Item>
+                </Link>
+                <div className="btn-group dropright w-100">
+                  <a
                     type="button"
-                    className="btn btn-white-navbar"
+                    className="btn rounded-0 btn-white-navbar btn-block dropdown-toggle d-flex justify-content-between align-items-center w-100"
                     data-toggle="dropdown"
                     aria-haspopup="true"
                     aria-expanded="false"
                   >
-                    <div className="row">
-                      <div className="col-9 text-left">Rilis Media</div>
-                      <div className="col-1 text-right">
-                        <i className="ri-arrow-right-s-line text-dark"> </i>
-                      </div>
-                    </div>
-                  </button>
+                    Rilis Media
+                  </a>
                   <div className="dropdown-menu ml-3">
                     <Link href="/berita">
                       <a className="dropdown-item navdropdown-child" href="#">
@@ -295,28 +287,29 @@ const Navigationbar = ({ session }) => {
                         Galeri
                       </a>
                     </Link>
-                    <Link href="video">
+                    <Link href="/video">
                       <a className="dropdown-item navdropdown-child" href="#">
                         Video
                       </a>
                     </Link>
                   </div>
                 </div>
-                <NavDropdown.Item href="/faq" className="navdropdown-child">
-                  FAQ
-                </NavDropdown.Item>
-                <NavDropdown.Item
-                  href="#action/3.4"
-                  className="navdropdown-child"
-                >
-                  Kontak
-                </NavDropdown.Item>
+                <Link href="/faq" passHref>
+                  <NavDropdown.Item className="navdropdown-child">
+                    FAQ
+                  </NavDropdown.Item>
+                </Link>
+                <Link href="/kontak" passHref>
+                  <NavDropdown.Item className="navdropdown-child">
+                    Kontak
+                  </NavDropdown.Item>
+                </Link>
               </NavDropdown>
             </div>
             {/* END MENU */}
           </Nav>
           {/* Search Bar */}
-          <Form className="w-100 my-2 mx-1 row ">
+          <Form className="w-100 my-2 mx-5 row ">
             <div className="position-relative w-100 d-none d-lg-block">
               <FormControl
                 type="search"
@@ -334,101 +327,133 @@ const Navigationbar = ({ session }) => {
               />
             </div>
           </Form>
+
           {/* Icon */}
           {session && session.roles[0] === "user" && (
-            <div className="row m-3 d-lg-block d-none">
+            <div className="row mr-3 d-lg-block d-none">
               <a
                 href="#"
                 className="col-4 col-sm-4 col-md-4 col-xl-4 text-center"
               >
-                <i className="ri-customer-service-2-line ri-2x mx-3 text-gray"></i>
+                <i className="ri-customer-service-2-line ri-2x  text-gray"></i>
               </a>
               <a
                 href="#"
                 className="col-4 col-sm-4 col-md-4 col-xl-4 text-center"
               >
-                <i className="ri-heart-line ri-2x mx-3 text-gray"></i>
+                <i className="ri-heart-line ri-2x  text-gray"></i>
               </a>
               <a
                 href="#"
                 className="col-4 col-sm-4 col-md-4 col-xl-4 text-center"
               >
-                <i className="ri-notification-4-line ri-2x mx-3 text-gray"></i>
+                <i className="ri-notification-4-line ri-2x  text-gray"></i>
               </a>
             </div>
           )}
           <hr />
           <Nav>
             {session && session.roles[0] === "user" ? (
-              <div className="position-relative w-100 h-100 p-5">
-                <div
-                  className="wrap-accouts w-100 h-lg-40px"
-                  style={{ borderRadius: "20px" }}
-                  onClick={() => {
-                    setIsShowDropdown(isShowDropdown ? false : true);
-                    if (!isNavOpen) {
-                      return;
-                    } else {
-                      router.push("/peserta/profile");
-                    }
-                  }}
-                >
-                  <Image
-                    className="rounded-circle "
-                    src={`${
-                      dataPribadi && dataPribadi.foto
-                        ? dataPribadi.file_path + dataPribadi.foto
-                        : "/assets/media/logos/default.png"
-                    }`}
-                    width={32}
-                    height={32}
-                    alt="brand-navbar"
-                  />
-                  <div className="titles-accounts w-100 d-flex justify-content-between align-items-center">
-                    {dataPribadi?.name || "-"}
-                    <div className="position-absolute right-0 ">
-                      <i className="ri-arrow-down-s-line mr-lg-2 mr-5 d-lg-block d-none"></i>
-                    </div>
+              <div>
+                <div className="d-lg-none d-block">
+                  <div
+                    className={`wrap-accouts ${style.wrapAccounts}`}
+                    style={{ borderRadius: "20px" }}
+                    onClick={() => router.push("/peserta/profile")}
+                  >
+                    {/* <div className="dot-accouts"></div> */}
+                    <Image
+                      className="rounded-circle"
+                      src={`${
+                        dataPribadi && dataPribadi.foto
+                          ? dataPribadi.file_path + dataPribadi.foto
+                          : "/assets/media/logos/default.png"
+                      }`}
+                      width={32}
+                      height={32}
+                      alt="brand-navbar"
+                    />
+                    <span className="titles-accounts">
+                      {dataPribadi?.name || "-"}
+                    </span>
+                    <IconArrow
+                      fill="#6c6c6c"
+                      width="14"
+                      height="11"
+                      className="d-lg-block d-none"
+                      style={{ transform: "rotate(90deg)" }}
+                    />
                   </div>
                 </div>
-                {isShowDropdown ? (
-                  <ul className="list-wrap-accounts d-none d-lg-block">
-                    <Link href="/peserta" passHref>
+                <div className="position-relative d-none d-lg-block">
+                  <div
+                    className={`wrap-accouts ${style.wrapAccounts}`}
+                    style={!isShowDropdown ? { borderRadius: "20px" } : {}}
+                    onClick={() =>
+                      setIsShowDropdown(isShowDropdown ? false : true)
+                    }
+                  >
+                    {/* <div className="dot-accouts"></div> */}
+                    <Image
+                      className="rounded-circle"
+                      src={`${
+                        dataPribadi && dataPribadi.foto
+                          ? dataPribadi.file_path + dataPribadi.foto
+                          : "/assets/media/logos/default.png"
+                      }`}
+                      width={32}
+                      height={32}
+                      alt="brand-navbar"
+                    />
+                    <span className="titles-accounts">
+                      {dataPribadi?.name || "-"}
+                    </span>
+                    <IconArrow
+                      fill="#6c6c6c"
+                      width="14"
+                      height="11"
+                      className="d-lg-block d-none"
+                      style={{ transform: "rotate(90deg)" }}
+                    />
+                  </div>
+
+                  {isShowDropdown && (
+                    <ul className="list-wrap-accounts d-none d-lg-block p-0 py-3">
+                      <Link href="/peserta" passHref>
+                        <li className="items-lists">
+                          <i className="ri-time-line mr-2"></i>DASHBOARD
+                        </li>
+                      </Link>
+                      <Link href="/peserta/profile" passHref>
+                        <li className="items-lists">
+                          <i className="ri-user-line mr-2"></i>PROFILE
+                        </li>
+                      </Link>
+                      <Link href="/peserta/riwayat-pelatihan" passHref>
+                        <li className="items-lists">
+                          <i className="ri-book-read-line mr-2"></i>PELATIHAN
+                        </li>
+                      </Link>{" "}
                       <li className="items-lists">
-                        <i className="ri-time-line mr-2"></i>DASHBOARD
-                      </li>
-                    </Link>
-                    <Link href="/peserta/profile" passHref>
+                        <i className="ri-bar-chart-horizontal-line mr-2"></i>
+                        ARTIKEL
+                      </li>{" "}
                       <li className="items-lists">
-                        <i className="ri-user-line mr-2"></i>PROFILE
+                        <i className="ri-settings-4-line mr-2"></i>
+                        PENGATURAN
                       </li>
-                    </Link>
-                    <Link href="/peserta/riwayat-pelatihan" passHref>
-                      <li className="items-lists">
-                        <i className="ri-book-read-line mr-2"></i>PELATIHAN
+                      <li className={`items-lists `}>
+                        <button
+                          className="btn btn-sm btn-login-peserta w-100 d-flex align-items-center justify-content-center"
+                          onClick={() => handlerLogout()}
+                        >
+                          <IconLogin className="mr-2" />
+                          KELUAR
+                        </button>
                       </li>
-                    </Link>{" "}
-                    <li className="items-lists">
-                      <i className="ri-bar-chart-horizontal-line mr-2"></i>
-                      ARTIKEL
-                    </li>{" "}
-                    <li className="items-lists">
-                      <i className="ri-settings-4-line mr-2"></i>
-                      PENGATURAN
-                    </li>
-                    <li className="items-lists">
-                      <button
-                        className="btn btn-sm btn-login-peserta w-100 d-flex align-items-center justify-content-center"
-                        onClick={() => handlerLogout()}
-                      >
-                        <IconLogin className="mr-2" />
-                        KELUAR
-                      </button>
-                    </li>
-                  </ul>
-                ) : (
-                  ""
-                )}
+                    </ul>
+                  )}
+                </div>
               </div>
             ) : (
               <>
@@ -453,7 +478,8 @@ const Navigationbar = ({ session }) => {
             )}
           </Nav>
           <hr />
-          <div style={{ fontSize: "14px", color: "#6C6C6C" }}>
+
+          <Nav style={{ fontSize: "14px", color: "#6C6C6C" }}>
             <Row className="d-lg-none">
               <Col sm={12} className="font-weight-bold mb-8">
                 Menu
@@ -526,7 +552,7 @@ const Navigationbar = ({ session }) => {
                 Tentang Kami
               </Col>
               <Col className="mb-8" sm={12}>
-                Penyelenggara
+                <Link href="/penyelenggara">Penyelenggara</Link>
               </Col>
               <Col sm={12}>
                 <Dropdown color="white">
@@ -570,7 +596,7 @@ const Navigationbar = ({ session }) => {
               />
             )}
             {/* End side bar */}
-          </div>
+          </Nav>
         </Navbar.Collapse>
       </Navbar>
     </>

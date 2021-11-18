@@ -19,9 +19,11 @@ import Cookies from "js-cookie";
 export default function NamaPelatihanID({ token }) {
   const router = useRouter();
   const { query } = router;
-  const { loading, error, certificate } = useSelector(
-    (state) => state.detailCertificates
-  );
+  const {
+    loading,
+    error,
+    certificate: certificates,
+  } = useSelector((state) => state.detailCertificates);
   // #Pagination
   const [limit, setLimit] = useState(null);
   const [search, setSearch] = useState("");
@@ -197,7 +199,7 @@ export default function NamaPelatihanID({ token }) {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark">
-              {certificate?.theme}
+              {certificates?.theme}
             </h3>
           </div>
 
@@ -349,17 +351,17 @@ export default function NamaPelatihanID({ token }) {
                       </tr>
                     </thead>
                     <tbody>
-                      {!certificate ||
-                      (certificate &&
-                        certificate.data.list_certificate.length === 0) ? (
+                      {!certificates ||
+                      (certificates &&
+                        certificates.data.pelatihan.list.length === 0) ? (
                         <tr>
                           <td className="text-center" colSpan={6}>
                             Data Tidak Ditemukan
                           </td>
                         </tr>
                       ) : (
-                        certificate &&
-                        certificate.data.list_certificate.map(
+                        certificates &&
+                        certificates.data.pelatihan.list.map(
                           (certificate, i) => {
                             return (
                               <tr key={certificate.id}>
@@ -376,39 +378,39 @@ export default function NamaPelatihanID({ token }) {
                                 </td>
                                 {/* START TABLE DATA */}
                                 <td className="align-middle">
-                                  {certificate.academy.name}
+                                  {certificate.academy}
                                 </td>
                                 <td className="align-middle">
-                                  {certificate.theme.name}
+                                  {certificate.theme}
                                 </td>
                                 <td className="align-middle">
-                                  {certificate.name}
+                                  {certificate.name || "-"}
                                 </td>
                                 <td className="align-middle">
-                                  {certificate.certificate_type}
+                                  {certificate.certificate_type || "-"}
                                 </td>
 
                                 <td className="align-middle text-capitalize">
-                                  {certificate.status.name == "publish" ? (
+                                  {certificate.status_migrate_id == "1" ? (
                                     <span className="label label-inline label-light-success font-weight-bold">
-                                      publish
+                                      tersedia
                                     </span>
-                                  ) : certificate.status.name == "draft" ? (
+                                  ) : certificate.status_migrate_id == "2" ? (
                                     <span className="label label-inline label-light-warning font-weight-bold">
                                       draft
                                     </span>
                                   ) : (
                                     <span className="label label-inline label-light-danger font-weight-bold">
-                                      belum tersedia
+                                      tidak tersedia
                                     </span>
                                   )}
                                 </td>
                                 {/* START AKSI sertifikat */}
                                 <td className="align-middle d-flex">
-                                  {certificate.status.name == "draft" ? (
+                                  {certificate.status_migrate_id == "2" ? (
                                     <>
                                       <Link
-                                        href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.name}?id=${certificate.id}&theme_id=${certificate.theme.id}&status=view`}
+                                        href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.name}?id=${certificate.id}&theme_id=${certificate.theme_id}&status=view`}
                                         passHref
                                       >
                                         <a
@@ -421,7 +423,7 @@ export default function NamaPelatihanID({ token }) {
                                         </a>
                                       </Link>
                                       <Link
-                                        href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.name}?id=${certificate.id}&theme_id=${certificate.theme.id}&status=edit`}
+                                        href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.name}?id=${certificate.id}&theme_id=${certificate.theme_id}&status=edit`}
                                         passHref
                                       >
                                         <a
@@ -434,11 +436,11 @@ export default function NamaPelatihanID({ token }) {
                                         </a>
                                       </Link>
                                     </>
-                                  ) : certificate.status.name == "publish" ? (
+                                  ) : certificate.status_migrate_id == "1" ? (
                                     <>
                                       <Link
                                         passHref
-                                        href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.name}?status=${certificate.status.name}&id=${certificate.id}&theme_id=${certificate.theme.id}`}
+                                        href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.name}?status=${certificate.status_migrate_id}&id=${certificate.id}&theme_id=${certificate.theme_id}`}
                                       >
                                         <a
                                           className="btn btn-link-action bg-blue-secondary text-white mr-2"
@@ -465,7 +467,7 @@ export default function NamaPelatihanID({ token }) {
                                     </>
                                   ) : (
                                     <Link
-                                      href={`/sertifikat/kelola-sertifikat/certificate-builder?id=${certificate.id}&theme_id=${certificate.theme.id}&theme_name=${certificate.theme.name}`}
+                                      href={`/sertifikat/kelola-sertifikat/certificate-builder?id=${certificate.id}&theme_id=${certificates.data.tema.id}&theme_name=${certificates.data.tema.name}`}
                                       passHref
                                     >
                                       <a
@@ -493,12 +495,12 @@ export default function NamaPelatihanID({ token }) {
               </div>
               {/* START Pagination */}
               <div className="row">
-                {certificate && (
+                {certificates && (
                   <div className="table-pagination">
                     <Pagination
                       activePage={+page}
-                      itemsCountPerPage={certificate.data.perPage}
-                      totalItemsCount={certificate.data.total}
+                      itemsCountPerPage={certificates.data.perPage}
+                      totalItemsCount={certificates.data.total}
                       pageRangeDisplayed={3}
                       onChange={handlePagination}
                       nextPageText={">"}
@@ -510,8 +512,8 @@ export default function NamaPelatihanID({ token }) {
                     />
                   </div>
                 )}
-                {certificate && certificate.data.total ? (
-                  <div className="table-total ml-auto">
+                {certificates && certificates.data.total ? (
+                  <div className="table-total ml-au qto">
                     <div className="row mt-3">
                       <div className="col-4 mr-0 p-0 my-auto">
                         <select
@@ -537,7 +539,7 @@ export default function NamaPelatihanID({ token }) {
                           className="align-middle my-auto"
                           style={{ color: "#B5B5C3" }}
                         >
-                          Total Data {certificate.data.total}
+                          Total Data {certificates.data.total}
                         </p>
                       </div>
                     </div>

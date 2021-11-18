@@ -28,7 +28,6 @@ const Table = ({ token }) => {
   const router = useRouter();
 
   const allRoles = useSelector((state) => state.allRoles);
-  console.log("allRoles",allRoles)
 
   const { isDeleted } = useSelector((state) => state.deleteRoles);
 

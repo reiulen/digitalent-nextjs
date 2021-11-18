@@ -85,7 +85,7 @@ import {
   GET_EDIT_DATA_TRAINING2,
   GET_EDIT_DATA_TRAINING3,
   GET_FORM_LPJ,
-  GET_FORM_EVIDENCE
+  GET_FORM_EVIDENCE,
 } from "../../types/pelatihan/training.type";
 
 import axios from "axios";
@@ -112,7 +112,7 @@ export const getAllTraining =
 
       let link =
         process.env.END_POINT_API_PELATIHAN +
-        `/api/v1/pelatihan/find?page=${page}`;
+        `api/v1/pelatihan/find?page=${page}`;
       if (keyword) link = link.concat(`&cari=${keyword}`);
       if (limit) link = link.concat(`&limit=${limit}`);
       if (pendaftaran_mulai)
@@ -153,7 +153,7 @@ export const getAllTraining =
 export const getCardTraining = (token) => async (dispatch) => {
   try {
     let link =
-      process.env.END_POINT_API_PELATIHAN + `/api/v1/pelatihan/list-count`;
+      process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/list-count`;
 
     const config = {
       headers: {
@@ -499,6 +499,8 @@ export const deleteTraining = (id, token) => async (dispatch) => {
 };
 //END DELETE TRAINING
 
+
+
 //DETAIL LPJ
 export const getDetailLpj = (id, token) => async (dispatch) => {
   try {
@@ -620,7 +622,7 @@ export const addEvidence = (dataEvidence, token) => async (dispatch) => {
 //END ADD EVIDENCE
 
 //CLONE TRAINING
-export const cloneTraining = (id, token) => async (dispatch) => {
+export const cloneTrainingAction = (id, token) => async (dispatch) => {
   try {
     dispatch({ type: CLONE_TRAINING_REQUEST });
 
@@ -631,7 +633,9 @@ export const cloneTraining = (id, token) => async (dispatch) => {
     };
 
     const { data } = await axios.post(
-      process.env.END_POINT_API_PELATIHAN + `api/pelatihan/${id}`,
+      process.env.END_POINT_API_PELATIHAN + `/api/v1/pelatihan/clone-pelatihan`,{
+        pelatian_id: parseInt(id)
+      },
       config
     );
 
@@ -721,12 +725,12 @@ export const clearErrors = () => async (dispatch) => {
 
 export const getEditTrainingStep1 = (id, token) => async (dispatch) => {
   try {
-
-    let link = process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/get-step-satu`;
+    let link =
+      process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/get-step-satu`;
 
     const config = {
       params: {
-        pelatian_id: id
+        pelatian_id: id,
       },
       headers: {
         Authorization: "Bearer " + token,
@@ -736,22 +740,21 @@ export const getEditTrainingStep1 = (id, token) => async (dispatch) => {
     const { data } = await axios.get(link, config);
     dispatch({
       type: GET_EDIT_DATA_TRAINING,
-      payload: data
-    })
-
+      payload: data,
+    });
   } catch (error) {
-    throw(error)
+    throw error;
   }
 };
 
 export const getEditTrainingStep2 = (id, token) => async (dispatch) => {
   try {
-
-    let link = process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/get-step-dua`;
+    let link =
+      process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/get-step-dua`;
 
     const config = {
       params: {
-        pelatian_id: id
+        pelatian_id: id,
       },
       headers: {
         Authorization: "Bearer " + token,
@@ -761,22 +764,21 @@ export const getEditTrainingStep2 = (id, token) => async (dispatch) => {
     const { data } = await axios.get(link, config);
     dispatch({
       type: GET_EDIT_DATA_TRAINING2,
-      payload: data
-    })
-
+      payload: data,
+    });
   } catch (error) {
-    throw(error)
+    throw error;
   }
 };
 
 export const getEditTrainingStep3 = (id, token) => async (dispatch) => {
   try {
-
-    let link = process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/get-step-tiga`;
+    let link =
+      process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/get-step-tiga`;
 
     const config = {
       params: {
-        pelatian_id: id
+        pelatian_id: id,
       },
       headers: {
         Authorization: "Bearer " + token,
@@ -786,17 +788,17 @@ export const getEditTrainingStep3 = (id, token) => async (dispatch) => {
     const { data } = await axios.get(link, config);
     dispatch({
       type: GET_EDIT_DATA_TRAINING3,
-      payload: data
-    })
-
+      payload: data,
+    });
   } catch (error) {
-    throw(error)
+    throw error;
   }
 };
 
 export const putTrainingStep1 = (token, datas) => async (dispatch) => {
   try {
-    let link = process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/step-satu`;   
+    let link =
+      process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/step-satu`;
 
     const config = {
       headers: {
@@ -804,16 +806,16 @@ export const putTrainingStep1 = (token, datas) => async (dispatch) => {
       },
     };
 
-    await axios.post(link,datas, config);
-
+    await axios.post(link, datas, config);
   } catch (error) {
-    throw(error)
+    throw error;
   }
 };
 
 export const putTrainingStep2 = (token, datas) => async (dispatch) => {
   try {
-    let link = process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/step-dua`;   
+    let link =
+      process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/step-dua`;
 
     const config = {
       headers: {
@@ -821,16 +823,16 @@ export const putTrainingStep2 = (token, datas) => async (dispatch) => {
       },
     };
 
-    await axios.post(link,datas, config);
-
+    await axios.post(link, datas, config);
   } catch (error) {
-    throw(error)
+    throw error;
   }
 };
 
 export const putTrainingStep3 = (token, datas) => async (dispatch) => {
   try {
-    let link = process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/step-tiga`;   
+    let link =
+      process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/step-tiga`;
 
     const config = {
       headers: {
@@ -838,18 +840,16 @@ export const putTrainingStep3 = (token, datas) => async (dispatch) => {
       },
     };
 
-    await axios.post(link,datas, config);
-
- 
-
+    await axios.post(link, datas, config);
   } catch (error) {
-    throw(error)
+    throw error;
   }
 };
 
 export const postEvidence = (token, datas) => async (dispatch) => {
   try {
-    let link = process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/upload-evidence`;   
+    let link =
+      process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/upload-evidence`;
 
     const config = {
       headers: {
@@ -857,67 +857,67 @@ export const postEvidence = (token, datas) => async (dispatch) => {
       },
     };
 
-    await axios.post(link,datas, config);
+    await axios.post(link, datas, config);
     Swal.fire("Berhasil", "Evidence berhasil di Upload", "success").then(() => {
-      window.location = "/pelatihan/pelatihan"
+      window.location = "/pelatihan/pelatihan";
     });
-
   } catch (error) {
-    throw(error)
+    throw error;
   }
 };
 
 export const getFormEvidence = (token, pelatian_id) => async (dispatch) => {
   try {
-    let link = process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/get-evidence`;   
+    let link =
+      process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/get-evidence`;
 
     const config = {
-      params:{
-        pelatian_id
+      params: {
+        pelatian_id,
       },
       headers: {
         Authorization: "Bearer " + token,
       },
     };
 
-   const {data} = await axios.get(link, config);
-   dispatch({
-    type: GET_FORM_EVIDENCE,
-    payload: data
-  })
-
+    const { data } = await axios.get(link, config);
+    dispatch({
+      type: GET_FORM_EVIDENCE,
+      payload: data,
+    });
   } catch (error) {
-    throw(error)
+    throw error;
   }
 };
 
 export const getFormLPJ = (token, pelatian_id) => async (dispatch) => {
   try {
-    let link = process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/get-lpj`;   
+    let link = process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/get-lpj`;
 
     const config = {
-      params:{
-        pelatian_id
+      params: {
+        pelatian_id,
       },
       headers: {
         Authorization: "Bearer " + token,
       },
     };
 
-   const {data} = await axios.get(link, config);
-   dispatch({
-    type: GET_FORM_LPJ,
-    payload: data
-  })
+    const { data } = await axios.get(link, config);
 
+    dispatch({
+      type: GET_FORM_LPJ,
+      payload: data,
+    });
   } catch (error) {
-    throw(error)
+    throw error;
   }
 };
 
 export const postLpj = (token, datas) => async (dispatch) => {
   try {
-    let link = process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/upload-lpj`;   
+    let link =
+      process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/upload-lpj`;
 
     const config = {
       headers: {
@@ -925,12 +925,11 @@ export const postLpj = (token, datas) => async (dispatch) => {
       },
     };
 
-    await axios.post(link,datas, config);
+    await axios.post(link, datas, config);
     Swal.fire("Berhasil", "LPJ berhasil di Upload", "success").then(() => {
-      window.location = "/pelatihan/pelatihan"
+      window.location = "/pelatihan/pelatihan";
     });
-
   } catch (error) {
-    throw(error)
+    throw error;
   }
 };

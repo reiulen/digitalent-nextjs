@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import PageWrapper from "../../../../wrapper/page.wrapper";
@@ -7,11 +7,15 @@ import DatePicker from "react-datepicker";
 import axios from "axios";
 import IconCalender from "../../../../assets/icon/Calender";
 import Select from "react-select";
+import SimpleReactValidator from "simple-react-validator";
 
 const UbahApi = ({ token }) => {
+  const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
+  const [, forceUpdate] = useState();
   const router = useRouter();
   let selectRefListApi = null;
-  let selectRefListField = null;
+
+  const [isFrom, setIsFrom] = useState(false)
 
   const detailApi = useSelector((state) => state.detailApi);
 
@@ -48,6 +52,7 @@ const UbahApi = ({ token }) => {
 
   const onChangePeriodeDateStart = (date) => {
     setFrom(moment(date).format("YYYY-MM-DD"));
+    setIsFrom(true)
   };
   const onChangePeriodeDateEnd = (date) => {
     setTo(moment(date).format("YYYY-MM-DD"));
@@ -99,19 +104,10 @@ const UbahApi = ({ token }) => {
   const submit = (e) => {
     e.preventDefault();
 
-    if (nameApi === "") {
-      Swal.fire("Gagal simpan", "Nama api tidak boleh kosong", "error");
-    } else if (nameUser === "") {
-      Swal.fire("Gagal simpan", "Status tidak boleh kosong", "error");
-    } else if (apiChoice === "") {
-      Swal.fire("Gagal simpan", "Api tidak boleh kosong", "error");
-    } else if (!defaultValueListField.length) {
-      Swal.fire("Gagal simpan", "Field tidak boleh kosong", "error");
-    } else if (!from) {
-      Swal.fire("Gagal simpan", "Field From tidak boleh kosong", "error");
-    } else if (!to) {
-      Swal.fire("Gagal simpan", "Field To tidak boleh kosong", "error");
-    } else {
+    
+    
+    
+  
       Swal.fire({
         title: "Apakah anda yakin simpan ?",
         // text: "Data ini tidak bisa dikembalikan !",
@@ -133,7 +129,6 @@ const UbahApi = ({ token }) => {
             status: status,
             fields: valueField.length === 0 ? field : valueField,
           };
-          console.log("sendData", sendData);
 
           try {
             let { data } = await axios.post(
@@ -152,15 +147,20 @@ const UbahApi = ({ token }) => {
               }
             );
           } catch (error) {
-            Swal.fire(
-              "Gagal simpan",
-              `${error.response.data.message}`,
-              "error"
-            );
+            simpleValidator.current.showMessages();
+          forceUpdate(1);
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Isi data dengan benar !",
+          });
           }
         }
       });
-    }
+
+
+
+
   };
 
   return (
@@ -181,8 +181,17 @@ const UbahApi = ({ token }) => {
                   onChange={(e) => setNameApi(e.target.value)}
                   type="text"
                   className="form-control"
-                  placeholder="Masukan nama api"
+                  placeholder="Masukkan nama api"
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("nameApi")
+                  }
                 />
+                {simpleValidator.current.message(
+                  "nameApi",
+                  nameApi,
+                  "required",
+                  { className: "text-danger" }
+                )}
               </div>
               <div className="form-group">
                 <label>Nama Pengguna</label>
@@ -191,20 +200,35 @@ const UbahApi = ({ token }) => {
                   onChange={(e) => setNameUser(e.target.value)}
                   type="text"
                   className="form-control"
-                  placeholder="Masukan nama user"
+                  placeholder="Masukkan nama user"
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("nameUser")
+                  }
                 />
+                {simpleValidator.current.message(
+                  "nameUser",
+                  nameUser,
+                  "required",
+                  { className: "text-danger" }
+                )}
               </div>
 
-              {status == "1" ? (
+              {detailApi.apies.data.status == "1" ? (
                 <div className="form-group">
                   <label>Status</label>
                   <select
                     onChange={(e) => setStatus(e.target.value)}
                     className="form-control"
+                    onBlur={() =>
+                    simpleValidator.current.showMessageFor("status")
+                  }
                   >
                     <option value="1">Aktif</option>
                     <option value="0">Nonaktif</option>
                   </select>
+                  {simpleValidator.current.message("status", status, "required", {
+                  className: "text-danger",
+                })}
                 </div>
               ) : (
                 <div className="form-group">
@@ -212,16 +236,25 @@ const UbahApi = ({ token }) => {
                   <select
                     onChange={(e) => setStatus(e.target.value)}
                     className="form-control"
+                    onBlur={() =>
+                    simpleValidator.current.showMessageFor("status")
+                  }
                   >
                     <option value="0">Nonaktif</option>
                     <option value="1">Aktif</option>
                   </select>
+                  {simpleValidator.current.message("status", status, "required", {
+                  className: "text-danger",
+                })}
                 </div>
               )}
 
               <div className="form-group">
                 <label>Pilih API</label>
                 <Select
+                onBlur={() =>
+                    simpleValidator.current.showMessageFor("apiChoice")
+                  }
                   ref={(ref) => (selectRefListApi = ref)}
                   className="basic-single"
                   classNamePrefix="select"
@@ -236,6 +269,12 @@ const UbahApi = ({ token }) => {
                   name="color"
                   options={optionListApi}
                 />
+                {simpleValidator.current.message(
+                  "apiChoice",
+                  apiChoice,
+                  "required",
+                  { className: "text-danger" }
+                )}
               </div>
 
               <div className="form-group">
@@ -245,7 +284,7 @@ const UbahApi = ({ token }) => {
                   isMulti
                   className="basic-single"
                   classNamePrefix="select"
-                  placeholder="Pilih provinsi"
+                  placeholder="Pilih field"
                   defaultValue={defaultValueListField}
                   isDisabled={false}
                   isLoading={false}
@@ -255,7 +294,16 @@ const UbahApi = ({ token }) => {
                   name="color"
                   onChange={(e) => changeListField(e)}
                   options={optionListField}
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("valueField")
+                  }
                 />
+                {defaultValueListField ?"":simpleValidator.current.message(
+                  "valueField",
+                  valueField,
+                  "required",
+                  { className: "text-danger" }
+                )}
               </div>
               <div className="form-group row">
                 <div className="col-12 col-sm-6">
@@ -268,12 +316,18 @@ const UbahApi = ({ token }) => {
                       dateFormat="YYYY-MM-DD"
                       placeholderText="From"
                       minDate={moment().toDate()}
+                      onBlur={() =>
+                        simpleValidator.current.showMessageFor("from")
+                      }
                     />
                     <IconCalender
                       className="right-center-absolute"
                       style={{ right: "10px" }}
                     />
                   </div>
+                  {simpleValidator.current.message("from", from, "required", {
+                    className: "text-danger",
+                  })}
                 </div>
                 <div className="col-lg-6">
                   <label>To</label>
@@ -282,16 +336,22 @@ const UbahApi = ({ token }) => {
                       className="form-search-date form-control cursor-pointer"
                       onChange={(date) => onChangePeriodeDateEnd(date)}
                       value={to}
-                      disabled={!from}
+                      disabled={!isFrom}
                       dateFormat="YYYY-MM-DD"
                       placeholderText="To"
                       minDate={moment(from).toDate()}
+                      onBlur={() =>
+                        simpleValidator.current.showMessageFor("to")
+                      }
                     />
                     <IconCalender
                       className="right-center-absolute"
                       style={{ right: "10px" }}
                     />
                   </div>
+                  {simpleValidator.current.message("to", to, "required", {
+                    className: "text-danger",
+                  })}
                 </div>
               </div>
             </form>

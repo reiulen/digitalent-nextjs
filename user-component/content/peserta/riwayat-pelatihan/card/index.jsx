@@ -1,28 +1,10 @@
-// import React, { Fragment, useState, useEffect } from "react";
-// import { Card, Col, Row, Badge, Button } from "react-bootstrap";
-// import Link from "next/link";
-import Image from "next/image";
-import AdministrasiMenungguJadwal from "./substansi-menunggu-jadwal";
-import TestSubstansi from "./substansi-test-substansi";
-import LolosSubstansi from "./substansi-lolos-substansi";
-import TidakLulus from "./tidak-lulus";
-import SeleksiAdministrasi from "./administrasi-seleksi-administrasi";
-import LolosAdministrasi from "./administrasi-lolos-administrasi";
-import IkutiPelatihan from "./pelatihan-ikuti-pelatihan";
-import MidTest from "./pelatihan-kerjakan-mid-test";
-import Trivia from "./pelatihan-kerjakan-trivia";
-import LulusPelatihan from "./pelatihan-lulus-pelatihan";
-import IsiSurvey from "./survey-isi-survey";
-import IsiLpj from "./survey-isi-lpj";
 import style from "../style.module.css";
-import TestCardTemplate from "./testCardTemplate";
 
 import CustomButton from "./Buttons/CustomButton.jsx";
 
 import React, { useState, useEffect, Fragment } from "react";
-import { Col, Row, Card, Button, Container, Modal } from "react-bootstrap";
-import Link from "next/link";
-// import style from "../style.module.css";
+import { Col, Row, Card, Button, Modal } from "react-bootstrap";
+
 import moment from "moment";
 import axios from "axios";
 import { useRouter } from "next/router";
@@ -88,7 +70,7 @@ export default function CardTemplateOriginal({ data }) {
     try {
       const data = await axios.post(link, body, config);
     } catch (error) {
-      console.log(error, "masuk sini errornya");
+      Swal.fire("Gagal", `${error.response.data.message}`, "error");
     }
   };
 
@@ -118,9 +100,9 @@ export default function CardTemplateOriginal({ data }) {
       }
     }
   };
+
   return (
     <Fragment>
-      {console.log(data)}
       <Card className="position-relative">
         <Button
           variant="white"
@@ -134,7 +116,6 @@ export default function CardTemplateOriginal({ data }) {
         >
           <Card.Body
             onClick={() => {
-              console.log(data.status, "ini status dari mana tau");
               switch (data.status) {
                 case "menunggu":
                   Cookies.set("id_pelatihan", data.id);
@@ -394,9 +375,6 @@ export default function CardTemplateOriginal({ data }) {
               <Button
                 className={`btn-rounded-full font-weight-bold btn-block justify-content-center mt-5 `}
                 style={{ height: "40px", fontSize: "14px" }}
-                onClick={() => {
-                  console.log("ini click button 2 ");
-                }}
               >
                 <i className="ri-download-2-fill mr-2"></i>
                 Bukti Pendaftaran
@@ -421,9 +399,6 @@ export default function CardTemplateOriginal({ data }) {
                 <Button
                   className={`btn-rounded-full font-weight-bold btn-block justify-content-center mt-5 `}
                   style={{ height: "40px", fontSize: "14px" }}
-                  onClick={() => {
-                    console.log("ini click button 2 ");
-                  }}
                 >
                   <i className="ri-download-2-fill mr-2"></i>
                   Bukti Pendaftaran
@@ -436,15 +411,12 @@ export default function CardTemplateOriginal({ data }) {
                 <Button
                   className={`btn-rounded-full font-weight-bold btn-block justify-content-center mt-5 `}
                   style={{ height: "40px", fontSize: "14px" }}
-                  onClick={() => {
-                    console.log("ini click button 2 ");
-                  }}
                 >
                   <i className="ri-download-2-fill mr-2"></i>
                   Bukti Pendaftaran
                 </Button>
               </Col>
-              <CustomButton />
+              <CustomButton click={() => handleClick("download")} />
             </Fragment>
           ) : data.status == "menunggu tes substansi" ? (
             <Fragment>
@@ -452,9 +424,6 @@ export default function CardTemplateOriginal({ data }) {
                 <Button
                   className={`btn-rounded-full font-weight-bold btn-block justify-content-center mt-5 `}
                   style={{ height: "40px", fontSize: "14px" }}
-                  onClick={() => {
-                    console.log("ini click button 2 ");
-                  }}
                 >
                   <i className="ri-download-2-fill mr-2"></i>
                   Bukti Pendaftaran
@@ -480,9 +449,6 @@ export default function CardTemplateOriginal({ data }) {
                 <Button
                   className={`btn-rounded-full font-weight-bold btn-block justify-content-center mt-5 ${style.background_outline_primary}`}
                   style={{ height: "40px", fontSize: "14px" }}
-                  onClick={() => {
-                    console.log("ini click button 2 ");
-                  }}
                 >
                   <i className="ri-download-2-fill mr-2"></i>
                   Bukti Pendaftaran
@@ -509,9 +475,6 @@ export default function CardTemplateOriginal({ data }) {
                 <Button
                   className={`btn-rounded-full font-weight-bold btn-block justify-content-center mt-5 `}
                   style={{ height: "40px", fontSize: "14px" }}
-                  onClick={() => {
-                    console.log("ini click button 2 ");
-                  }}
                 >
                   <i className="ri-download-2-fill mr-2"></i>
                   Bukti Pendaftaran
@@ -537,9 +500,6 @@ export default function CardTemplateOriginal({ data }) {
                 <Button
                   className={`btn-rounded-full font-weight-bold btn-block justify-content-center mt-5 `}
                   style={{ height: "40px", fontSize: "14px" }}
-                  onClick={() => {
-                    console.log("ini click button 2 ");
-                  }}
                 >
                   <i className="ri-download-2-fill mr-2"></i>
                   Bukti Pendaftaran

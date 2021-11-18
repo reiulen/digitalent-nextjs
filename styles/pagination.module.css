@@ -14,6 +14,14 @@
     top: -10px;
 }
 
+/* .barChart{
+    width: 70%;
+} */
+
+.totalView{
+    text-align: right;
+}
+
 .kontenPublish{
     margin: 35px 0 10px 0;
 }
@@ -28,6 +36,13 @@
 
 .topBerita{
     margin: 0 0 10px 0;
+}
+
+@media only screen and (max-width: 1600px){
+    .pagination2{
+        /* display: none; */
+        visibility: hidden;
+    }
 }
 
 @media only screen and (max-width: 1024px) {
@@ -58,11 +73,12 @@
 
 @media only screen and (max-width: 576px) {
     .rightPag {
-        display: none;
+        margin: auto;
     }
 
     .pagination {
         margin-left: 28px;
+        width: 280px;
       }
 
     /* Dashboard Publikasi */
@@ -78,22 +94,29 @@
     .topVideo{
         margin: 10px 0 0 0;
     }
+    
+    .totalView{
+        margin-top: 10px;
+        text-align: left;
+    }
 }
 
 @media only screen and (max-width: 320px){
     .pagination {
-        /* border: 1px solid black; */
-        margin-left: 23px;
-        /* width: 5px; */
-        /* font-size: 10px; */
+        margin-left: 22px;
+    }
+    .rightPag {
+        margin-right: 13px;
     }
 }
 
-@media only screen and (max-width: 300px){
+@media only screen and (max-width: 280px){
     .pagination {
-        border: 1px solid black;
-        margin-left: 12px;
-        width: 100%;
-        /* font-size: 10px; */
+        margin-left: 10px;
+        width: 210px;
+    }
+    .rightPag {
+        /* margin-right: 0px; */
+        width: 190px;
     }
 }

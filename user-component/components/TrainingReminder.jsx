@@ -17,16 +17,20 @@ const TrainingReminder = ({ session }) => {
   const { notifikasiTema, loading, error, success } = useSelector(
     (state) => state.addNotifTema
   );
+  const { loading: loadingTemaOriginal, tema: allTamaOriginal } = useSelector(
+    (state) => state.allTemaOriginal
+  );
 
   const [temaId, setTemaId] = useState(null);
-  const optionsTema = [];
 
-  if (true) {
-    for (let index = 0; index < 5; index++) {
+  const optionsTema = [];
+  if (allTamaOriginal) {
+    for (let index = 0; index < allTamaOriginal.length; index++) {
       let val = {
-        value: index,
-        label: "Tema " + index,
+        value: allTamaOriginal[index].value,
+        label: allTamaOriginal[index].label,
       };
+
       optionsTema.push(val);
     }
   }
@@ -56,13 +60,8 @@ const TrainingReminder = ({ session }) => {
   };
 
   const handleTemaNotif = () => {
-    let temaArr = [];
-    temaId !== null &&
-      temaId.forEach((row, i) => {
-        temaArr.push(row.value);
-      });
     const data = {
-      tema_id: temaArr.join(","),
+      tema_id: (temaId && temaId.value) || null,
     };
 
     if (session) {
@@ -93,8 +92,8 @@ const TrainingReminder = ({ session }) => {
             options={optionsTema}
             styles={customStyles}
             placeholder="Cari Tema"
-            isMulti
             onChange={(e) => setTemaId(e)}
+            isClearable
           />
         </div>
         <button

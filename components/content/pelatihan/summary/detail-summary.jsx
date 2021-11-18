@@ -7,7 +7,7 @@ import Pagination from "react-js-pagination";
 import { Modal } from "react-bootstrap";
 import moment from "moment";
 import Select from "react-select";
-import axios from 'axios'
+import axios from "axios";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingTable from "../../../LoadingTable";
@@ -74,12 +74,12 @@ const DetailSummary = ({ token }) => {
   };
 
   function capitalize(s) {
-    let a = s.split(" ")
-    let result = []
+    let a = s.split(" ");
+    let result = [];
     for (let i = 0; i < a.length; i++) {
-       result.push(a[i].charAt(0).toUpperCase() + a[i].slice(1, a[i].length))
+      result.push(a[i].charAt(0).toUpperCase() + a[i].slice(1, a[i].length));
     }
-    return result.join(" ")
+    return result.join(" ");
   }
 
   const handleSearch = () => {
@@ -104,14 +104,12 @@ const DetailSummary = ({ token }) => {
         statusBerkas === null ? "" : statusBerkas.value,
         statusPeserta === null ? "" : statusPeserta.value,
         statusTesSubstansi === null ? "" : statusTesSubstansi.value
-        )
-        );
-        setShowModal(false);
+      )
+    );
+    setShowModal(false);
   };
 
-  const handleExportReport = async () => {
-
-  };
+  const handleExportReport = async () => {};
 
   const handleSecondsToTime = (secs) => {
     let hours = Math.floor(secs / (60 * 60));
@@ -123,9 +121,9 @@ const DetailSummary = ({ token }) => {
   };
 
   const handleReset = () => {
-    setStatusPeserta(null)
-    setStatusTesSubstansi(null)
-    setStatusBerkas(null)
+    setStatusPeserta(null);
+    setStatusTesSubstansi(null);
+    setStatusBerkas(null);
   };
 
   return (
@@ -140,7 +138,7 @@ const DetailSummary = ({ token }) => {
             titleValue=""
             title="Pendaftar"
             publishedVal=""
-            routePublish={() => handlePublish("")}
+            routePublish={() => {}}
           />
           <CardPage
             background="bg-secondary"
@@ -150,19 +148,21 @@ const DetailSummary = ({ token }) => {
             titleValue=""
             title="Verivied Administrasi"
             publishedVal="verified"
-            routePublish={(e) => { }}
-            search={(e) => { dispatch(
-              getPendaftaranPeserta(
-                token,
-                id,
-                null,
-                5,
-                1,
-                "verified",
-                statusPeserta === null ? "" : statusPeserta.value,
-                statusTesSubstansi === null ? "" : statusTesSubstansi.value
-              )
-            );}}
+            routePublish={(e) => {}}
+            search={(e) => {
+              dispatch(
+                getPendaftaranPeserta(
+                  token,
+                  id,
+                  null,
+                  5,
+                  1,
+                  "verified",
+                  statusPeserta === null ? "" : statusPeserta.value,
+                  statusTesSubstansi === null ? "" : statusTesSubstansi.value
+                )
+              );
+            }}
           />
           <CardPage
             background="bg-success"
@@ -184,11 +184,9 @@ const DetailSummary = ({ token }) => {
                   statusPeserta === null ? "" : statusPeserta.value,
                   "lulus tes"
                 )
-              )
+              );
             }}
-            routePublish={() => {
-
-            }}
+            routePublish={() => {}}
           />
           <CardPage
             background="bg-warning"
@@ -198,18 +196,20 @@ const DetailSummary = ({ token }) => {
             titleValue=""
             title="Verified Administrasi Lulus Tes Substansi"
             publishedVal="belum-mengerjakan"
-            routePublish={() => dispatch(
-              getPendaftaranPeserta(
-                token,
-                id,
-                null,
-                5,
-                1,
-                "verified",
-                statusPeserta === null ? "" : statusPeserta.value,
-                "lulus tes"
+            routePublish={() =>
+              dispatch(
+                getPendaftaranPeserta(
+                  token,
+                  id,
+                  null,
+                  5,
+                  1,
+                  "verified",
+                  statusPeserta === null ? "" : statusPeserta.value,
+                  "lulus tes"
+                )
               )
-            )}
+            }
           />
           <CardPage
             background="bg-extras"
@@ -219,18 +219,20 @@ const DetailSummary = ({ token }) => {
             titleValue=""
             title="Diterima"
             publishedVal="gagal-test"
-            routePublish={() => dispatch(
-              getPendaftaranPeserta(
-                token,
-                id,
-                null,
-                5,
-                1,
-                null,
-                "diterima",
-                null
+            routePublish={() =>
+              dispatch(
+                getPendaftaranPeserta(
+                  token,
+                  id,
+                  null,
+                  5,
+                  1,
+                  null,
+                  "diterima",
+                  null
+                )
               )
-            )}
+            }
           />
         </div>
       </div>
@@ -351,9 +353,17 @@ const DetailSummary = ({ token }) => {
                   </button>
                 </div>
 
-                <div className="col-md-2 mt-3" >
-                  <Link href="/pelatihan/rekap-pendaftaran/import-peserta">
-                    <a className="btn w-100 btn-rounded-full bg-success text-white mt-2" style={{width: "max-content"}}>
+                <div className="col-md-2 mt-3">
+                  <Link
+                    href={{
+                      pathname: "/pelatihan/rekap-pendaftaran/import-peserta",
+                      query: { pelatihan: dataPelatihan.name, id },
+                    }}
+                  >
+                    <a
+                      className="btn w-100 btn-rounded-full bg-success text-white mt-2"
+                      style={{ width: "max-content" }}
+                    >
                       <i className="ri-download-2-line mr-2 mt-1 text-white"></i>
                       Import
                     </a>
@@ -361,7 +371,9 @@ const DetailSummary = ({ token }) => {
                 </div>
                 <div className="col-md-2 mt-3">
                   <select className="btn w-100 btn-rounded-full bg-blue-secondary text-white mt-2">
-                    <option value="" disabled selected>Export</option>
+                    <option value="" disabled selected>
+                      Export
+                    </option>
                     <option value="LMS">LMS</option>
                     <option value="CSV">CSV</option>
                   </select>
@@ -416,7 +428,7 @@ const DetailSummary = ({ token }) => {
                                     : "text-success"
                                 } `}
                               >
-                                {capitalize(row.subtansi_status)  || "-"}
+                                {capitalize(row.subtansi_status) || "-"}
                               </p>
                               <p className="my-0">
                                 {Math.round(row.nilai) || "-"}
@@ -427,12 +439,12 @@ const DetailSummary = ({ token }) => {
                             </td>
                             <td>
                               <span className="label label-inline label-light-success font-weight-bold">
-                                {capitalize(row.administrasi) }
+                                {capitalize(row.administrasi)}
                               </span>
                             </td>
                             <td>
                               <span className="label label-inline label-light-success font-weight-bold">
-                                { capitalize(row.status) }
+                                {capitalize(row.status)}
                               </span>
                             </td>
                             <td>
@@ -587,7 +599,7 @@ const DetailSummary = ({ token }) => {
             className="btn btn-light-ghost-rounded-full mr-2"
             type="button"
             onClick={() => {
-              handleReset( )
+              handleReset();
             }}
           >
             Reset

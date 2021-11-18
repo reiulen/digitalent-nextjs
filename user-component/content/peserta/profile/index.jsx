@@ -149,12 +149,12 @@ const Profile = ({ session }) => {
     }
   };
   const condition = localStorage.getItem("viewEdit");
-  console.log(condition);
+  // console.log(condition);
   useEffect(() => {
     if (condition === "false") {
       setViewEdit(false);
     }
-    console.log(condition);
+    // console.log(condition);
   }, [viewEdit, condition]);
 
   return (

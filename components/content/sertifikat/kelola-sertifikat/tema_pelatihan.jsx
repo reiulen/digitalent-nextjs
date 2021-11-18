@@ -31,9 +31,13 @@ export default function NamaPelatihan({ token }) {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const { loading, error, certificate, academyOptions, themeOptions } =
-    useSelector((state) => state.allCertificates);
-
+  const {
+    loading,
+    error,
+    certificate,
+    academyOptions = {},
+    themeOptions = {},
+  } = useSelector((state) => state.allCertificates);
   const allCertificates = useSelector((state) => state.allCertificates);
   const [academy, setAcademy] = useState("");
   const [temaPelatihan, setTemaPelatihan] = useState("");
@@ -326,8 +330,8 @@ export default function NamaPelatihan({ token }) {
                     </thead>
                     <tbody>
                       {!certificate ||
-                      (certificate &&
-                        certificate.list_certificate.length === 0) ? (
+                      certificate.length == 0 ||
+                      (certificate && certificate?.list?.length === 0) ? (
                         <tr>
                           <td className="text-center" colSpan={6}>
                             Data Tidak Ditemukan
@@ -335,7 +339,7 @@ export default function NamaPelatihan({ token }) {
                         </tr>
                       ) : (
                         certificate &&
-                        certificate.list_certificate.map((certificate, i) => {
+                        certificate?.list?.map((certificate, i) => {
                           return (
                             <tr key={certificate.id}>
                               <td className="align-middle text-center">
@@ -347,17 +351,17 @@ export default function NamaPelatihan({ token }) {
                               </td>
                               {/* START TABLE DATA */}
                               <td className="align-middle">
-                                {certificate.theme.academy.name}
+                                {certificate.academy}
                               </td>
                               <td className="align-middle">
-                                {certificate.theme.name}
+                                {certificate.name}
                               </td>
                               <td className="align-middle">
-                                {certificate.theme.count_certificate_count}
+                                {certificate.count_certificate}
                               </td>
                               <td className="align-middle d-flex">
                                 <Link
-                                  href={`/sertifikat/kelola-sertifikat/${certificate.theme.name
+                                  href={`/sertifikat/kelola-sertifikat/${certificate.name
                                     .split(" ")
                                     .join("-")
                                     .toLowerCase()}?id=${certificate.id}`}

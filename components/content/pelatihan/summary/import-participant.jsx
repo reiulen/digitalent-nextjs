@@ -1,34 +1,78 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
-import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/router";
 
-import Swal from "sweetalert2";
-import Select from "react-select";
-
+import { SweatAlert } from "../../../../utils/middleware/helper/index";
 import PageWrapper from "../../../wrapper/page.wrapper";
-import CardPage from "../../../CardPage";
+import axios from "axios";
+import LoadingTable from "../../../LoadingTable";
 
-import { useDispatch, useSelector } from "react-redux";
-
-const ImportParticipant = () => {
-  const dispatch = useDispatch();
+const ImportParticipant = ({ token }) => {
   const router = useRouter();
 
-  let { page = 1, success } = router.query;
-  page = Number(page);
+  const { pelatihan, id } = router.query;
 
-  const options = [
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
-  ];
+  const [file, setFile] = useState("");
+  const [fileName, setFileName] = useState("Belum ada File");
+  const [loading, setLoading] = useState(false);
 
-  const handleResetError = () => {
-    if (error) {
-      dispatch(clearErrors());
+  const handleDownloadTemplate = () => {
+    window.location.href =
+      process.env.END_POINT_API_PELATIHAN + "storage/csv/import.csv";
+  };
+
+  const handleSelectFile = (e) => {
+    const type = ["application/vnd.ms-excel"];
+    if (e.target.files[0]) {
+      if (type.includes(e.target.files[0].type)) {
+        setFile(e.target.files[0]);
+        setFileName(e.target.files[0].name);
+      } else {
+        SweatAlert("Oops...", "File hanya boleh CSV", "error");
+      }
     }
+  };
+
+  const handleCloseFile = () => {
+    setFileName("");
+    setFile("");
+  };
+
+  const handleUploadFile = async () => {
+    const formdata = new FormData();
+    formdata.append("pelatihan_id", id);
+    formdata.append("file", file);
+
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    setLoading(true);
+
+    await axios
+      .post(
+        process.env.END_POINT_API_PELATIHAN +
+          "api/v1/pelatihan/import-pelatihan",
+        formdata,
+        config
+      )
+      .then((res) => {
+        setLoading(false);
+        Swal.fire({
+          icon: "success",
+          title: res.data.message,
+          text: res.data.data,
+          confirmButtonText: "Tutup",
+        }).then((result) => {
+          router.back();
+        });
+      })
+      .catch((err) => {
+        setLoading(false);
+        SweatAlert("Gagal", err.response.data.message, "error");
+      });
   };
 
   return (
@@ -40,48 +84,91 @@ const ImportParticipant = () => {
               className="card-title text-dark mt-2"
               style={{ fontSize: "24px" }}
             >
-              Import Peserta Pelatihan / _nama pelatihan_
+              Import Peserta Pelatihan / {pelatihan}
             </h1>
           </div>
 
           <div className="card-body pb-0">
             <div className="form-group row mb-2">
-              <div className="col-sm-6 col-md-6">
+              <div className="col-sm-6 col-md-4">
                 <label className="col-form-label">
-                  Untuh Template Form Peserta
+                  Unduh Template Form Peserta
                 </label>
                 <button
                   className="btn btn-rounded-full bg-blue-secondary text-white"
                   type="button"
+                  onClick={() => handleDownloadTemplate()}
                 >
+                  <i className="ri-download-2-line mr-2 text-white"></i>
                   Unduh
-                  <i className="ri-arrow-down-s-line ml-3 mt-1 text-white"></i>
                 </button>
               </div>
-              <div className="col-sm-6 col-md-6">
+              <div className="col-sm-6 col-md-8">
                 <label className="col-form-label">Upload Data Peserta</label>
                 <button
                   className="btn btn-rounded-full bg-success text-white"
                   type="button"
+                  onClick={() => {
+                    document.getElementById("upload-file").click();
+                  }}
                 >
-                  <i className="ri-download-2-line mr-2 mt-1 text-white"></i>
+                  <i className="ri-upload-2-line mr-2 mt-1 text-white"></i>
                   Upload
                 </button>
+                {fileName && (
+                  <div
+                    className="alert alert-light alert-dismissible mt-3 w-50"
+                    role="alert"
+                  >
+                    <strong> {fileName}</strong>
+                    <button
+                      type="button"
+                      className="close"
+                      data-dismiss="alert"
+                      aria-label="Close"
+                      onClick={() => handleCloseFile()}
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                )}
+                <p className="mt-3 text-muted">
+                  Format Image(.csv) & Maximal 1MB
+                </p>
+                <input
+                  type="file"
+                  name="gambar"
+                  className="custom-file-input"
+                  id="upload-file"
+                  accept=".csv"
+                  style={{ display: "none" }}
+                  onChange={(e) => handleSelectFile(e)}
+                />
               </div>
             </div>
 
             <div className="form-group mt-7">
               <div className="text-right">
-                <button
-                  className="btn btn-light-ghost-rounded-full mr-2"
-                  type="button"
-                  onClick={() => router.back()}
-                >
-                  Batal
-                </button>
-                <button className="btn btn-primary-rounded-full" type="button">
-                  Tambahkan
-                </button>
+                {loading ? (
+                  <LoadingTable />
+                ) : (
+                  <>
+                    <button
+                      className="btn btn-light-ghost-rounded-full mr-2"
+                      type="button"
+                      onClick={() => router.back()}
+                    >
+                      Batal
+                    </button>
+                    <button
+                      className="btn btn-primary-rounded-full"
+                      type="button"
+                      onClick={() => handleUploadFile()}
+                    >
+                      Tambahkan
+                    </button>
+                  </>
+                )}
               </div>
             </div>
           </div>

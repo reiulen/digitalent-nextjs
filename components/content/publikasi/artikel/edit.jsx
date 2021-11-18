@@ -10,6 +10,8 @@ import Swal from "sweetalert2";
 import SimpleReactValidator from "simple-react-validator";
 import DatePicker from "react-datepicker";
 
+import styles from "../../../../styles/previewGaleri.module.css";
+
 import {
   updateArtikel,
   clearErrors,
@@ -46,7 +48,8 @@ const EditArtikel = ({ token, idUser }) => {
     kategori,
   } = useSelector(state => state.allKategori);
   const { setting } = useSelector(state => state.allSettingPublikasi)
-  const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(state => state.drowpdownAkademi);
+  const { akademi } = useSelector(state => state.allAkademi);
+  // const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(state => state.drowpdownAkademi);
 
   useEffect(() => {
 
@@ -367,10 +370,10 @@ const EditArtikel = ({ token, idUser }) => {
                   >
                     Judul
                   </label>
-                  <div className="col-sm-12">
+                  <div className={`${styles.judulTambah} col-sm-12`}>
                     <input
                       type="text"
-                      className="form-control"
+                      className={`${styles.judulTambah} form-control`}
                       placeholder="Isi Judul disini"
                       value={judul_artikel}
                       onChange={e => setJudulArtikel(e.target.value)}
@@ -394,7 +397,7 @@ const EditArtikel = ({ token, idUser }) => {
                   >
                     Isi Artikel
                   </label>
-                  <div className="col-sm-12">
+                  <div className={`${styles.deskripsiTambah} col-sm-12`}>
                     <div className="ckeditor">
                       {editorLoaded ? (
                         <CKEditor
@@ -433,7 +436,7 @@ const EditArtikel = ({ token, idUser }) => {
                   >
                     Upload Thumbnail
                   </label>
-                  <div className="ml-3 row">
+                  <div className="ml-4 row">
                     <figure
                       className="avatar item-rtl position-relative"
                       data-toggle="modal"
@@ -466,7 +469,7 @@ const EditArtikel = ({ token, idUser }) => {
                     </div>
                   </div>
 
-                  <div className="ml-3">
+                  <div className="ml-4">
                     {simpleValidator.current.message(
                       "gambar",
                       gambar,
@@ -478,7 +481,7 @@ const EditArtikel = ({ token, idUser }) => {
                     ) : null}
                   </div>
 
-                  <div className="mt-3 col-sm-6 col-md-6 col-lg-7 col-xl-3 text-muted">
+                  <div className={`${styles.resolusiTambah} mt-3 col-sm-6 col-md-6 col-lg-7 col-xl-3 text-muted`}>
                     <p>
                       Resolusi yang direkomendasikan adalah 1024 * 512. Fokus
                       visual pada bagian tengah gambar
@@ -493,11 +496,11 @@ const EditArtikel = ({ token, idUser }) => {
                   >
                     Akademi
                   </label>
-                  <div className="col-sm-12">
+                  <div className={`${styles.selectKategori} col-sm-12`}>
                     <select
                       name=""
                       id=""
-                      className="form-control"
+                      className={`${styles.selectKategori} form-control`}
                       value={kategori_akademi}
                       onChange={e => setKategoriAkademi(e.target.value)}
                       onBlur={e => {
@@ -508,19 +511,18 @@ const EditArtikel = ({ token, idUser }) => {
                       <option selected disabled value="">
                         -- Akademi --
                       </option>
-                      {!dataAkademi || (dataAkademi && dataAkademi.length === 0) ? (
+                      {!akademi || (akademi && akademi.length === 0) ? (
                         <option value="">Data Kosong</option>
                       ) : (
-                        dataAkademi &&
-                        dataAkademi.data &&
-                        dataAkademi.data.map(row => {
+                        akademi &&
+                        akademi.map(row => {
                           return (
                             <option
-                              key={row.value}
-                              value={row.label}
-                              selected={kategori_akademi === row.label ? true : false}
+                              key={row.id}
+                              value={row.slug}
+                              selected={kategori_akademi === row.slug ? true : false}
                             >
-                              {row.label}
+                              {row.slug}
                             </option>
                           )
                         })
@@ -542,16 +544,16 @@ const EditArtikel = ({ token, idUser }) => {
                   >
                     Kategori
                   </label>
-                  <div className="col-sm-12">
+                  <div className={`${styles.selectKategori} col-sm-12`}>
                     <select
                       name=""
                       id=""
-                      className="form-control"
+                      className={`${styles.selectKategori} form-control`}
                       value={kategori_id}
                       onChange={e => setKategoriId(e.target.value)}
                       onBlur={e => {
                         setKategoriId(e.target.value);
-                        simpleValidator.current.showMessageFor("kategori_id");
+                        simpleValidator.current.showMessageFor("kategori");
                       }}
                     >
                       <option selected disabled value="">
@@ -576,7 +578,7 @@ const EditArtikel = ({ token, idUser }) => {
                       )}
                     </select>
                     {simpleValidator.current.message(
-                      "kategori_id",
+                      "kategori",
                       kategori_id,
                       "required",
                       { className: "text-danger" }
@@ -591,7 +593,7 @@ const EditArtikel = ({ token, idUser }) => {
                   >
                     Tag
                   </label>
-                  <div className="col-sm-12" style={{ wordBreak: 'break-word' }}>
+                  <div className={`${styles.tagStyle} col-sm-12`} style={{ wordBreak: 'break-word' }}>
                     <TagsInput
                       value={tag}
                       onChange={(data) => handleTag(data)}
@@ -645,7 +647,7 @@ const EditArtikel = ({ token, idUser }) => {
                     <div className="col-sm-12">
                       <div className="input-group">
                         <DatePicker
-                          className="form-search-date form-control-sm form-control"
+                          className={`${styles.setPublish} form-search-date form-control-sm form-control`}
                           selected={publishDate}
                           onChange={date => handlePublishDate(date)}
                           selectsStart
@@ -663,15 +665,15 @@ const EditArtikel = ({ token, idUser }) => {
                   </div>
                 ) : null}
 
-                <div className="form-group row">
+                <div className="form-group row mr-0">
                   <div className="col-sm-2"></div>
                   <div className="col-sm-10 text-right">
                     <Link href="/publikasi/artikel">
-                      <a className="btn btn-white-ghost-rounded-full rounded-pill mr-2 btn-sm">
+                      <a className={`${styles.btnKembali} btn btn-white-ghost-rounded-full rounded-pill mr-2 btn-sm`}>
                         Kembali
                       </a>
                     </Link>
-                    <button className="btn btn-primary-rounded-full rounded-pill btn-sm">
+                    <button className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill btn-sm`}>
                       Simpan
                     </button>
                   </div>
@@ -705,8 +707,7 @@ const EditArtikel = ({ token, idUser }) => {
                 </button>
               </div>
               <div
-                className="modal-body text-center"
-                style={{ height: "400px" }}
+                className={`${styles.modalsPrevImage} modal-body text-center`}
               >
                 <Image
                   src={gambarPreview}

@@ -29,8 +29,7 @@ const Table = ({ token }) => {
 
   const allExportData = useSelector(state => state.allExportData)
   const deleteExportData = useSelector(state => state.deleteExportData)
-  console.log("allExportData",allExportData)
-  console.log("deleteExportData",deleteExportData)
+ 
 
   const [valueSearch, setValueSearch] = useState("");
   const handleChangeValueSearch = (value) => {

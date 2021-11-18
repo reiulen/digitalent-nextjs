@@ -3,18 +3,24 @@ import Link from "next/link";
 import Image from "next/image";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
-import Highlighter from "react-highlight-words";
+// import Highlighter from "react-highlight-words";
 import { useRouter } from "next/router";
+import {
+    Container,
+    Modal
+  } from "react-bootstrap";
+import SubHeaderComponent from "../../components/template/Subheader.component";
 
 const DetailBerita = () => {
     const dispatch = useDispatch();
     const router = useRouter();
 
-    const { detail } = useSelector((state) => state.detailBerandaBerita)
+    const { detail, loading: loadingDetail } = useSelector((state) => state.detailBerandaBerita)
     const { tags } = useSelector((state) => state.allTagBerandaBerita)
 
     const [ keyword, setKeyword ] = useState (null)
     const [ searchWords, setSearchWords ] = useState (null)
+    const [ resultText, setResultText ] = useState(null)
 
     const getWindowDimensions = () => {
         // if (typeof window === 'undefined') {
@@ -50,104 +56,115 @@ const DetailBerita = () => {
         router.push (`/berita?tag=${str}`)
     }
 
-    const handleHighlightWords = (e) => {
+    const handleHighlightWords = (e, text) => {
         e.preventDefault();
-        let result = keyword.split (" ")
-        
-        setSearchWords(result)
+
+        let result = ""
+        let splitWords = keyword.split (" ")
+        let splitText = text.split(" ")
+        // let splitWords = keyword
+        // setSearchWords(splitWords)
+
+        for (let i = 0; i < splitWords.length; i++){
+            for (let j = 0; j < splitText.length; j++){
+                if (splitWords[i].toLowerCase() === splitText[j].toLowerCase()){
+                    result += `<mark>`+splitText[j]+`</mark>`+" "
+
+                } else {
+                    result += `<span>`+splitText[j]+`</span>`+" "
+                }
+            }
+        }
+
+        setResultText(result)
     }
     
     return (
-        <div className="mx-35">
+        <Container fluid className="px-md-30 px-10 py-10 bg-white">
             {/* BreadCrumb */}
-            <div className="row my-7 mx-1 py-3 px-8 bg-white rounded-pill d-flex align-items-center border">
-                <span className="text-primary">
-                    <Link href="/">
-                        Beranda 
-                    </Link>
-                </span>
-                <span>
-                    <i className="ri-arrow-right-s-line text-primary"></i> 
-                </span>
-                <span className="text-primary">
-                    <Link href="/berita">
-                        Berita
-                    </Link>
-                </span>
-                <span>
-                    <i className="ri-arrow-right-s-line text-primary"></i> 
-                </span>
-                <span>
-                    Detail Berita
-                </span>
-            </div>
+            <SubHeaderComponent 
+                data={[{ link: "/berita", name: "Berita" }, { link: router.asPath, name: "Detail Berita" }]}
+            />
 
             {/* Header */}
-            <div className="row my-5 d-flex flex-column ml-3">
-                <div className="badge badge-light mr-2 col-1">
-                    <div className="text-primary" style={{overflowX:"hidden"}}>
-                        {/* Insert Kategori Here */}
-                        {detail.nama_kategori}
-                    </div>
-                </div>
-                <div className="mt-5">
-                    <h1 className="font-weight-bolder">
-                        {/* Insert Title Here */}
-                        {detail.judul}
-                    </h1>
-                </div>
-
-                <div className="mt-5 d-flex flex-row align-items-center">
-                    <span className="font-weight-bolder">
-                        {/* Insert Akademi Here */}
-                        {detail.kategori_akademi}
-                    </span>
-                    <span className="mr-1 ml-3">
-                        <i className="ri-eye-line"></i> 
-                    </span>
-                    <span className="text-muted">
-                        {/* Insert Views Here */}
-                        Dibaca {detail.dibaca}
-                    </span>
-                </div>
-
-                <div className="mt-5 d-flex flex-row align-items-center justify-content-between mx-3">
-                    <div className="row">
-                        <div className="">
-                            {/* Insert Logo Image Here */}
-                            <Image
-                                src={
-                                    process.env.END_POINT_API_IMAGE_PUBLIKASI +
-                                    "publikasi/images/" + detail.foto
-                                }
-                                width={30}
-                                height={30}
-                                alt="Logo Image"
-                                className="border rounded-circle"
-                            />
-                        </div>
-                        <div className="d-flex flex-column ml-3">
-                            <div className="font-weight-bolder">
-                                {/* Insert Admin Here */}
-                                {detail.dibuat}
-                            </div>
-                            <div className="text-muted">
-                                {moment(detail.tanggal_publish).format("DD MMMM YYYY")}
+            {
+                detail ?
+                    <div className="row my-5 d-flex flex-column ml-1">
+                        <div>
+                            <div className="badge badge-light mr-2">
+                                <div className="text-primary">
+                                
+                                    {detail.nama_kategori}
+                                </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div className="row">
-                        <button className="btn btn-outline-light rounded-circle mr-3">
-                            <i className="ri-share-line p-0"></i>
-                        </button>
                         
-                        <button className="btn btn-outline-light rounded-circle mr-3">
-                            <i className="ri-heart-line p-0"></i>
-                        </button>
+                        <div className="mt-5">
+                            <h1 className="font-weight-bolder">
+                                {/* Insert Title Here */}
+                                {detail.judul}
+                            </h1>
+                        </div>
+
+                        <div className="mt-5 d-flex flex-row align-items-center">
+                            <span className="font-weight-bolder">
+                                {/* Insert Akademi Here */}
+                                {detail.kategori_akademi}
+                            </span>
+                            <span className="mr-1 ml-3">
+                                <i className="ri-eye-line"></i> 
+                            </span>
+                            <span className="text-muted">
+                                {/* Insert Views Here */}
+                                Dibaca {detail.dibaca}
+                            </span>
+                        </div>
+
+                        <div className="mt-5 d-flex flex-row align-items-center justify-content-between col-11 col-md-12">
+                            <div className="row">
+                                <div className="">
+                                    {/* Insert Logo Image Here */}
+                                    <Image
+                                        src={
+                                            process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                            "publikasi/images/" + detail.foto
+                                        }
+                                        width={40}
+                                        height={40}
+                                        alt="Logo Image"
+                                        className="border rounded-circle"
+                                    />
+                                </div>
+                                <div className="d-flex flex-column ml-3">
+                                    <div className="font-weight-bolder mb-2">
+                                        {/* Insert Admin Here */}
+                                        {detail.dibuat}
+                                    </div>
+                                    <div className="text-muted">
+                                        {moment(detail.tanggal_publish).format("DD MMMM YYYY")}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="row ml-1">
+                                <div className="mr-3">
+                                    <button className="btn btn-sm btn-outline-light rounded-circle">
+                                        <i className="ri-share-line px-0 py-1"></i>
+                                    </button>
+                                </div>
+                                
+                                <div className="mr-3">
+                                    <button className="btn btn-sm btn-outline-light rounded-circle">
+                                        <i className="ri-heart-line px-0 py-1"></i>
+                                    </button>
+                                </div>
+                                
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
+                :
+                    null
+            }
             {/* End of Header */}
 
             {/* Content */}
@@ -156,7 +173,7 @@ const DetailBerita = () => {
                     <div className="row mt-10">
 
                         {/* Left Side */}
-                        <div className="col-12 col-md-8">
+                        <div className="col-12 col-md-8 pr-20">
                             {/* Image */}
                             <Image
                                 // src="/assets/media/default-detail-image.png"
@@ -176,27 +193,21 @@ const DetailBerita = () => {
                             <div className="border rounded-lg mb-5 mt-15">
                                 <div className="row my-5 mx-5 text-justify" style={{overflowX:"hidden"}}>
                                     {
-                                        searchWords ?
-                                            <Highlighter 
-                                                highlightClassName="YourHighlightClass"
-                                                searchWords={searchWords}
-                                                autoEscape={true}
-                                                textToHighlight={detail.isi_berita}
-                                                // textToHighlight={<div dangerouslySetInnerHTML={{__html: detail.isi_artikel}}/>}
-                                            />
+                                        resultText ?
+                                            <div dangerouslySetInnerHTML={{__html: resultText}}></div>
                                         :
                                             <div dangerouslySetInnerHTML={{__html: detail.isi_berita}}/>
                                     }
                                 </div>
 
                                 <div className="row m-3 d-flex justify-content-between pb-5">
-                                    <div className="row d-flex justify-content-between ml-3">
+                                    <div className="row d-flex justify-content-between ml-1">
                                         {
                                             detail && detail.tag && detail.tag.length !== 0 ?
                                                 detail.tag.map ((el, i) => {
                                                     return (
-                                                        <div className="mr-3 border p-3 rounded" key={i}>
-                                                        #{el}
+                                                        <div className="mr-3 border p-3 rounded mb-3" key={i} style={{height:"38px"}}>
+                                                            #{el.toString().toUpperCase()}
                                                         </div>
                                                     )
                                                 })
@@ -205,14 +216,19 @@ const DetailBerita = () => {
                                         }
                                     </div>
 
-                                    <div className="row">
-                                        <button className="btn btn-outline-light rounded-circle mr-3">
-                                            <i className="ri-share-line p-0"></i>
-                                        </button>
+                                    <div className="row ml-1">
+                                        <div className="mr-3">
+                                            <button className="btn btn-sm btn-outline-light rounded-circle">
+                                                <i className="ri-share-line px-0 py-1"></i>
+                                            </button>
+                                        </div>
                                         
-                                        <button className="btn btn-outline-light rounded-circle mr-3">
-                                            <i className="ri-heart-line p-0"></i>
-                                        </button>
+                                        <div className="mr-3">
+                                            <button className="btn btn-sm btn-outline-light rounded-circle">
+                                                <i className="ri-heart-line px-0 py-1"></i>
+                                            </button>
+                                        </div>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -221,11 +237,11 @@ const DetailBerita = () => {
 
                         {/* Right Side */}
                         {
-                            windowDimensions && windowDimensions.width && windowDimensions.width > 750 ?
+                            windowDimensions && windowDimensions.width && windowDimensions.width > 770 ?
                                 <div className="col-12 col-md-4">
 
                                     {/* Search */}
-                                    <div className="border rounded">
+                                    <div className="border rounded-lg">
                                         <div className="row mt-10 mb-5"> 
                                             <div className="col-2 my-auto ml-5">
                                                 <Image 
@@ -280,7 +296,7 @@ const DetailBerita = () => {
                                     {/* Tag */}
                                     <div className="row mt-10 d-flex flex-column mx-10">
                                         <h3 className="font-weight-bolder"> 
-                                            Temukan Lebih Banyak Berita Yang Sesuai:
+                                            TEMUKAN LEBIH BANYAK APA YANG PENTING BAGI ANDA
                                         </h3>
                                         <div className=" d-flex flex-wrap flex-row">
                                             {
@@ -291,9 +307,9 @@ const DetailBerita = () => {
                                                             className="border px-2 py-1 rounded my-3 mr-3 text-center d-flex align-items-center justify-content-center" 
                                                             key={i}
                                                             onClick={() => handleFilterTag(el)}
-                                                            style={{cursor:"pointer", height:"38px", width:"83px", fontSize:"14px"}}
+                                                            style={{cursor:"pointer", height:"38px", fontSize:"14px"}}
                                                         >
-                                                            #{el}
+                                                            #{el.toString().toUpperCase()}
                                                         </div>
                                                         )
                                                     })
@@ -324,7 +340,7 @@ const DetailBerita = () => {
             }
             
             {/* End of Content */}
-        </div>
+        </Container>
     )
 }
 

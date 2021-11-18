@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
 import Cookies from "js-cookie";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const Dashboard = ({ session, success }) => {
   const router = useRouter();
@@ -66,6 +67,7 @@ const Dashboard = ({ session, success }) => {
   }, [errorDashboard, totalSubvit]);
 
   const [simonasData, setSimonasData] = useState([]);
+
   useEffect(() => {
     const getSimonasData = async () => {
       try {
@@ -82,16 +84,12 @@ const Dashboard = ({ session, success }) => {
         } else {
           return;
         }
-      } catch (e) {
-        console.log(e, "ini errornya");
+      } catch (error) {
+        Swal.fire("Gagal", `${error.response.data.message}`, "error");
       }
     };
     getSimonasData();
   }, []);
-
-  useEffect(() => {
-    console.log(simonasData, "ini data simonas");
-  }, [simonasData]);
 
   const handleHoverCard = (index, status) => {
     let list = [...cardPelatihan];
@@ -120,7 +118,7 @@ const Dashboard = ({ session, success }) => {
 
   return (
     <>
-      <PesertaWrapper>
+      <PesertaWrapper padding={"10"}>
         <Row className="mx-1">
           <CardPill
             background="bg-extras"
@@ -266,7 +264,7 @@ const Dashboard = ({ session, success }) => {
                     <p className={style.card_title}>Pelatihan Terkini</p>
                   </Card.Title>
 
-                  <Card className="shadow rounded-md">
+                  <Card className=" shadow rounded-md">
                     <Image
                       className={`${style.image_dashboard}`}
                       src={
@@ -280,7 +278,10 @@ const Dashboard = ({ session, success }) => {
                       objectFit="cover"
                     />
                     <Card.ImgOverlay>
-                      <Badge bg={` rounded-xl py-3 px-4 ${style.badge_card}`}>
+                      <Badge
+                        bg={`rounded-xl py-3 px-4 ${style.badge_card}`}
+                        className="d-none d-lg-inline-block"
+                      >
                         Pelatihan{" "}
                         {pelatihan.pelatihan_berjalan.metode_pelatihan}
                       </Badge>

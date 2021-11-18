@@ -6,6 +6,7 @@ import { useRouter } from 'next/router'
 import styles from '../../../../styles/preview.module.css'
 import stylesPag from "../../../../styles/pagination.module.css";
 
+import { Modal, ModalBody, ModalTitle } from "react-bootstrap"
 import Pagination from 'react-js-pagination';
 import DatePicker from 'react-datepicker'
 import { addDays } from 'date-fns'
@@ -50,6 +51,7 @@ const Vidio = ({ token }) => {
     const [kategori, setKategori] = useState(null)
     const [isiVideo, setIsiVideo] = useState(null)
     const [tag, setTag] = useState([])
+    const [show, setShow] = useState(false)
 
     let loading = false
     let { page = 1, keyword, success } = router.query
@@ -81,6 +83,36 @@ const Vidio = ({ token }) => {
     const onNewReset = () => {
         router.replace('/publikasi/video', undefined, { shallow: true })
     }
+
+    const getWindowDimensions = () => {
+        // if (typeof window === 'undefined') {
+        //     global.window = {}
+        // }
+
+        const { innerWidth: width, innerHeight: height } = window;
+        return {
+            width,
+            height,
+        };
+    };
+
+    const [windowDimensions, setWindowDimensions] = useState(
+        // getWindowDimensions()
+        {}
+    );
+
+    useEffect(() => {
+        function handleResize() {
+            setWindowDimensions(getWindowDimensions());
+        }
+        setWindowDimensions(getWindowDimensions());
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, [video])
+
+    useEffect(() => {
+
+    }, [windowDimensions])
 
     const handleDelete = (id) => {
         Swal.fire({
@@ -284,6 +316,7 @@ const Vidio = ({ token }) => {
         setKategori(kategori)
         setIsiVideo(isi_video)
         setTag(tag)
+        setShow(true)
     }
 
     const handleIsPlayed = () => {
@@ -293,6 +326,11 @@ const Vidio = ({ token }) => {
             isplay: "1"
         }
         dispatch(playVideo(data, token))
+    }
+
+    const handleToggleModal = () => {
+        setShow(false)
+        setVideoPlaying(false)
     }
 
     const resetValueSort = () => {
@@ -397,9 +435,9 @@ const Vidio = ({ token }) => {
 
             <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
                 <div className="card card-custom card-stretch gutter-b">
-                    <div className="card-header border-0">
-                        <h3 className={`${styles2.headTitle}`}>Video</h3>
-                        <div className="card-toolbar">
+                    <div className="card-header row border-0">
+                        <h3 className={`${styles2.headTitle} col-12 col-sm-8 col-md-8 col-lg-8 col-xl-9`}>Video</h3>
+                        <div className="card-toolbar col-12 col-sm-4 col-md-4 col-lg-4 col-xl-3">
                             <Link href='/publikasi/video/tambah'>
                                 <a className={`${styles2.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bold btn-block`}>
                                     <i className="ri-add-fill pb-1 text-white mr-2 "></i>
@@ -421,13 +459,13 @@ const Vidio = ({ token }) => {
                                         <i className="ri-search-line left-center-absolute ml-2"></i>
                                         <input
                                             type="text"
-                                            className="form-control pl-10"
+                                            className={`${styles2.cari} form-control pl-10`}
                                             placeholder="Ketik disini untuk Pencarian..."
                                             value={search}
                                             onChange={(e) => setSearch(e.target.value)}
                                         />
                                         <button
-                                            className="btn bg-blue-primary text-white right-center-absolute"
+                                            className={`${styles2.fontCari} btn bg-blue-primary text-white right-center-absolute`}
                                             style={{
                                                 borderTopLeftRadius: "0",
                                                 borderBottomLeftRadius: "0",
@@ -438,16 +476,16 @@ const Vidio = ({ token }) => {
                                         </button>
                                     </div>
                                 </div>
-                                <div className="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                <div className={`${styles2.filterDate} col-sm-6 col-md-6 col-lg-6 col-xl-6`}>
                                     <div className="d-flex flex-wrap align-items-center justify-content-end mt-2">
                                         {/* sortir by modal */}
                                         <button
                                             className="col-sm-12 col-md-6 avatar item-rtl btn border d-flex align-items-center justify-content-between mt-2"
                                             data-toggle="modal"
                                             data-target="#exampleModalCenter"
-                                            style={{ color: "#464646", minWidth: "230px" }}
+                                            style={{ color: "#464646" }}
                                         >
-                                            <div className="d-flex align-items-center">
+                                            <div className={`${styles2.filter} d-flex align-items-center`}>
                                                 <IconFilter className="mr-3" />
                                                 Pilih Filter
                                             </div>
@@ -704,21 +742,23 @@ const Vidio = ({ token }) => {
 
                             <div className="row">
                                 {video && video.perPage < video.total &&
-                                    <div className={`${stylesPag.pagination} table-pagination`}>
-                                        <Pagination
-                                            activePage={page}
-                                            itemsCountPerPage={video.perPage}
-                                            totalItemsCount={video.total}
-                                            pageRangeDisplayed={3}
-                                            onChange={handlePagination}
-                                            nextPageText={'>'}
-                                            prevPageText={'<'}
-                                            firstPageText={'<<'}
-                                            lastPageText={'>>'}
-                                            itemClass='page-item'
-                                            linkClass='page-link'
-                                        />
-                                    </div>
+                                    <>
+                                        <div className={`${stylesPag.pagination} table-pagination`}>
+                                            <Pagination
+                                                activePage={page}
+                                                itemsCountPerPage={video.perPage}
+                                                totalItemsCount={video.total}
+                                                pageRangeDisplayed={windowDimensions.width > 320 ? 3 : 1}
+                                                onChange={handlePagination}
+                                                nextPageText={'>'}
+                                                prevPageText={'<'}
+                                                firstPageText={'<<'}
+                                                lastPageText={'>>'}
+                                                itemClass='page-item'
+                                                linkClass='page-link'
+                                            />
+                                        </div>
+                                    </>
                                 }
                                 {video ?
                                     <div className={`${stylesPag.rightPag} table-total ml-auto`}>
@@ -751,85 +791,83 @@ const Vidio = ({ token }) => {
             </div>
 
             {/* Modal */}
-            <div className="modal fade" id="videoPlayerModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" >
-                <div className="modal-dialog modal-dialog-centered" role="document">
-                    <div className="modal-content" style={{ width: '700px', height: '490px' }}>
-                        {/* <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLongTitle">Pratinjau Video</h5>
-                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div> */}
-                        <div className={styles['modal-body']}>
-                            {/* <div className={styles['title-preview-video']}> */}
-                            {/* <div className="mb-2" style={{ textAlign: 'right' }}> */}
-                            <div className={styles['playVideo']}>
-                                <button type="button" className="col-1 flaticon2-delete mb-2" data-dismiss="modal" aria-label="Close" style={{ border: 'none', background: 'none' }}></button>
-                                {/* </div> */}
-                                <ReactPlayer url={url_video} controls width="100%" height="100%" playing={video_playing} onPlay={handleIsPlayed} />
+            <Modal
+                size="lg"
+                onHide={() => handleToggleModal()}
+                show={show}
+                centered
+            >
+                <Modal.Header>
+                    <div
+                        className="col-12 d-flex justify-content-end"
+                    >
+                        <i
+                            className="ri-close-line text-dark"
+                            style={{ cursor: "pointer" }}
+                            onClick={() => handleToggleModal()}
+                        />
+                    </div>
+                </Modal.Header>
+                <Modal.Body className="p-0">
+                    <ReactPlayer
+                        url={url_video}
+                        controls
+                        width="100%"
+                        height="50vh"
+                        playing={video_playing}
+                        onPlay={handleIsPlayed}
+                    />
+                </Modal.Body>
+                <Modal.Footer>
+                    <div className="col-12">
+                        <h2 className="font-weight-bolder">
+                            {judul_video}
+                        </h2>
+
+                        <div className="mt-10 mb-5 row align-items-center justify-content-between">
+                            <div className="col-12 col-md-4 col-lg-4">
+                                {
+                                    tanggal_publish !== null ?
+                                        `${moment(tanggal_publish).format("MMMM DD")} | 120 Ditonton`
+                                        :
+                                        ""
+                                }
                             </div>
-                            {/* </div> */}
-                            <div className="ml-3" style={{ marginTop: '30px' }}>
-                                <h3 className="font-weight-bolder">
-                                    {judul_video}
-                                </h3>
-                            </div>
-                            <div className="row align-items-center" style={{ marginLeft: '0' }}>
-                                <div className="col-3">
-                                    <span className="text-muted" style={{ fontSize: '11px' }}>
-                                        {
-                                            tanggal_publish !== null ? `${tanggal_publish}  | 120 Ditonton`
-                                        : ""
-                                        }
-                                        {/* {tanggal_publish} | 120 Ditonton */}
-                                    </span>
-                                </div>
-                                <div className="col-6">
-                                    <div className={styles['listTag']}>
-                                        {
-                                            (tag === null) ? null :
-                                                tag.map((el, i) => {
-                                                    return (
-                                                        <div style={{ background: "#fff", border: '1px solid #d7e1ea' }}
-                                                            className="mr-2 px-3 py-1 rounded"
-                                                            key={i}>
-                                                            <div className="text-center" style={{ fontSize: '10px' }}>
-                                                                #{el.toUpperCase()}
-                                                            </div>
-                                                        </div>
-                                                    )
-                                                })
-                                        }
-                                    </div>
-                                </div>
-                                <div className="col-3" style={{ textAlign: 'center' }}>
-                                    <span className="p-2 label label-inline label-light-success font-weight-bold">
-                                        {kategori}
-                                    </span>
-                                </div>
-                                {/* <div
-                                    className="mr-5 px-3 py-1 rounded mb-1 ml-4 d-flex align-items-center">
-                                    <i className="flaticon2-calendar-4 "></i>
+                            <div className="col-12 col-md-5 col-lg-6 my-2">
+                                <div className="d-flex flex-row">
                                     {
-                                        tanggal_publish ?
-                                            <span className="ml-2">
-                                                Publish : {moment({ tanggal_publish }).format('LL')}
-                                            </span>
-                                            :
-                                            <span className="ml-2">
-                                                Belum dipublish
-                                            </span>
+                                        tag === null ?
+                                            null
+                                            : tag.map((el, i) => {
+                                                return (
+                                                    <div
+                                                        style={{
+                                                            background: "#fff",
+                                                            border: "1px solid #d7e1ea",
+                                                        }}
+                                                        className="mr-2 px-3 py-1 rounded"
+                                                        key={i}
+                                                    >
+                                                        <div
+                                                            className="text-center"
+                                                            style={{ fontSize: "10px" }}
+                                                        >
+                                                            #{el.toUpperCase()}
+                                                        </div>
+                                                    </div>
+                                                );
+                                            })
                                     }
                                 </div>
-
-                                <div
-                                    className=" rounded px-3 d-flex align-items-center">
-                                    <i className="ri-dashboard-line"></i>
-                                    <span className="ml-2 py-1">
-                                        Kategori: {kategori}
-                                    </span>
-                                </div> */}
                             </div>
+                            <div className="col-12 col-md-3 col-lg-2 text-sm-right text-md-right text-lg-right">
+                                {kategori === null ? null : (
+                                    <span className="p-2 badge  badge-light font-weight-bold text-primary">
+                                        {kategori}
+                                    </span>
+                                )}
+                            </div>
+
                             <div className={`${styles.descriptionVideo} text-break m-4`}>
                                 <span>
                                     {isiVideo}
@@ -837,10 +875,11 @@ const Vidio = ({ token }) => {
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                </Modal.Footer>
+            </Modal>
+
         </PageWrapper>
     )
 }
 
-export default Vidio
+export default Vidio;

@@ -40,6 +40,7 @@ const Table = ({ token }) => {
 
   const onChangePeriodeDateStart = (date) => {
     setFroms(moment(date).format("YYYY-MM-DD"));
+    setTos("")
   };
   const onChangePeriodeDateEnd = (date) => {
     setTos(moment(date).format("YYYY-MM-DD"));
@@ -267,7 +268,7 @@ const Table = ({ token }) => {
                     </thead>
                     <tbody>
                       {listLog?.data?.length === 0 ? (
-                        <td className="align-middle text-center" colSpan="8">Data Masih Kosong</td>
+                        <td className="align-middle text-center" colSpan="8">Data kosong</td>
                       ) : (
                         listLog?.data?.map((items, index) => {
                           return (

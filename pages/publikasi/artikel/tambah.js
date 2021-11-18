@@ -10,7 +10,8 @@ import { wrapper } from "../../../redux/store";
 
 import LoadingPage from "../../../components/LoadingPage";
 import { getSettingPublikasi } from "../../../redux/actions/publikasi/setting.actions";
-import { dropdownAkademi } from "../../../redux/actions/pelatihan/function.actions";
+import { getAllAkademi } from "../../../redux/actions/beranda/beranda.actions";
+// import { dropdownAkademi } from "../../../redux/actions/pelatihan/function.actions";
 
 const Tambah = dynamic(
   () => import("../../../components/content/publikasi/artikel/tambah"),
@@ -49,7 +50,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
       await store.dispatch(getAllKategori(session.user.user.data.token));
       await store.dispatch(getSettingPublikasi(session.user.user.data.token));
-      await store.dispatch(dropdownAkademi(session.user.user.data.token));
+      await store.dispatch(getAllAkademi(session.user.user.data.token));
 
       return {
         props: { session, title: "Tambah Artikel - Publikasi" },

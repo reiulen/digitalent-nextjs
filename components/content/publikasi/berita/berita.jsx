@@ -9,6 +9,7 @@ import DatePicker from 'react-datepicker'
 import { addDays } from 'date-fns'
 import Swal from 'sweetalert2'
 import moment from "moment";
+
 import styles from "../../../../styles/previewGaleri.module.css";
 import stylesPag from "../../../../styles/pagination.module.css";
 
@@ -77,6 +78,36 @@ const Berita = ({ token }) => {
     const onNewReset = () => {
         router.replace("/publikasi/berita", undefined, { shallow: true });
     };
+
+    const getWindowDimensions = () => {
+        // if (typeof window === 'undefined') {
+        //     global.window = {}
+        // }
+
+        const { innerWidth: width, innerHeight: height } = window;
+        return {
+            width,
+            height,
+        };
+    };
+
+    const [windowDimensions, setWindowDimensions] = useState(
+        // getWindowDimensions()
+        {}
+    );
+
+    useEffect(() => {
+        function handleResize() {
+            setWindowDimensions(getWindowDimensions());
+        }
+        setWindowDimensions(getWindowDimensions());
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, [berita])
+
+    useEffect(() => {
+
+    }, [windowDimensions])
 
     const handleDelete = (id) => {
         Swal.fire({
@@ -374,9 +405,9 @@ const Berita = ({ token }) => {
 
             <div className="col-lg-12 order-1 px-0">
                 <div className="card card-custom card-stretch gutter-b">
-                    <div className="card-header border-0">
-                        <h3 className={`${styles.headTitle}`}>Berita</h3>
-                        <div className="card-toolbar">
+                    <div className="card-header row border-0">
+                        <h3 className={`${styles.headTitle} col-12 col-sm-8 col-md-8 col-lg-8 col-xl-9`}>Berita</h3>
+                        <div className="card-toolbar col-12 col-sm-4 col-md-4 col-lg-4 col-xl-3">
                             <Link href='/publikasi/berita/tambah'>
                                 <a className={`${styles.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bold btn-block`}>
                                     <i className="ri-add-line pb-1 text-white mr-2 "></i>
@@ -397,13 +428,13 @@ const Berita = ({ token }) => {
                                         <i className="ri-search-line left-center-absolute ml-2"></i>
                                         <input
                                             type="text"
-                                            className="form-control pl-10"
+                                            className={`${styles.cari} form-control pl-10`}
                                             placeholder="Ketik disini untuk Pencarian..."
                                             value={search}
                                             onChange={(e) => setSearch(e.target.value)}
                                         />
                                         <button
-                                            className="btn bg-blue-primary text-white right-center-absolute"
+                                            className={`${styles.fontCari} btn bg-blue-primary text-white right-center-absolute`}
                                             style={{
                                                 borderTopLeftRadius: "0",
                                                 borderBottomLeftRadius: "0",
@@ -414,16 +445,16 @@ const Berita = ({ token }) => {
                                         </button>
                                     </div>
                                 </div>
-                                <div className="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                <div className={`${styles.filterDate} col-sm-6 col-md-6 col-lg-6 col-xl-6`}>
                                     <div className="d-flex flex-wrap align-items-center justify-content-end mt-2">
                                         {/* sortir by modal */}
                                         <button
                                             className="col-sm-12 col-md-6 avatar item-rtl btn border d-flex align-items-center justify-content-between mt-2"
                                             data-toggle="modal"
                                             data-target="#exampleModalCenter"
-                                            style={{ color: "#464646", minWidth: "230px" }}
+                                            style={{ color: "#464646" }}
                                         >
-                                            <div className="d-flex align-items-center">
+                                            <div className={`${styles.filter} d-flex align-items-center`}>
                                                 <IconFilter className="mr-3" />
                                                 Pilih Filter
                                             </div>
@@ -432,11 +463,7 @@ const Berita = ({ token }) => {
 
                                         {/* modal */}
                                         <form
-                                            // id="kt_docs_formvalidation_text"
                                             className="form text-left"
-                                        // action="#"
-                                        // autoComplete="off"
-                                        // onSubmit={handleSubmitSearchMany}
                                         >
                                             <div
                                                 className="modal fade"
@@ -489,8 +516,6 @@ const Berita = ({ token }) => {
                                                                         dateFormat="dd/MM/yyyy"
                                                                         placeholderText="Silahkan Isi Tanggal Dari"
                                                                         wrapperClassName="col-12 col-lg-12 col-xl-12"
-                                                                    // minDate={moment().toDate()}
-                                                                    // minDate={addDays(new Date(), 20)}
                                                                     />
                                                                 </div>
                                                             </div>
@@ -510,12 +535,10 @@ const Berita = ({ token }) => {
                                                                         endDate={endDate}
                                                                         dateFormat="dd/MM/yyyy"
                                                                         minDate={startDate}
-                                                                        // minDate={moment().toDate()}
                                                                         maxDate={addDays(startDate, 20)}
                                                                         placeholderText="Silahkan Isi Tanggal Sampai"
                                                                         wrapperClassName="col-12 col-lg-12 col-xl-12"
                                                                         disabled={disableEndDate === true || disableEndDate === null}
-                                                                    // minDate={addDays(new Date(), 20)}
                                                                     />
                                                                 </div>
                                                                 {
@@ -556,48 +579,6 @@ const Berita = ({ token }) => {
                                     </div>
                                 </div>
                             </div>
-                            {/* <div className="row align-items-right">
-                                <div className="col-lg-2 col-xl-2">
-                                    <small className="form-text text-muted">
-                                        Dari Tanggal
-                                    </small>
-                                    <DatePicker
-                                        className="form-search-date form-control-sm form-control"
-                                        selected={startDate}
-                                        onChange={(date) => setStartDate(date)}
-                                        selectsStart
-                                        startDate={startDate}
-                                        endDate={endDate}
-                                        dateFormat="dd/MM/yyyy"
-                                    // minDate={addDays(new Date(), 20)}
-                                    />
-                                </div>
-                                <div className="col-lg-2 col-xl-2">
-                                    <small className="form-text text-muted">
-                                        Sampai Tanggal
-                                    </small>
-                                    <DatePicker
-                                        className="form-search-date form-control-sm form-control"
-                                        selected={endDate}
-                                        onChange={(date) => setEndDate(date)}
-                                        selectsEnd
-                                        startDate={startDate}
-                                        endDate={endDate}
-                                        minDate={startDate}
-                                        maxDate={addDays(startDate, 20)}
-                                        dateFormat="dd/MM/yyyy"
-                                    />
-                                </div>
-                                <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
-                                <button
-                                    type='button'
-                                    className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block"
-                                    onClick={handleSearchDate}
-                                >
-                                    Cari
-                                </button>
-                                </div>
-                            </div> */}
                         </div>
                         <div className="table-page mt-5">
                             <div className="table-responsive">
@@ -678,11 +659,6 @@ const Berita = ({ token }) => {
                                                             </td>
                                                             <td className='align-middle'>
                                                                 {row.role[0].name}
-                                                                {/* {
-                                                                    typeof row.role === "string" ?
-                                                                        row.role
-                                                                        : row.role[0].name
-                                                                } */}
                                                             </td>
                                                             <td className="align-middle d-flex">
 
@@ -718,29 +694,6 @@ const Berita = ({ token }) => {
                                                                     </div>
                                                                 </button>
                                                             </td>
-
-                                                            {/* <td className='align-middle'>
-                                                                <ButtonNewTab icon='setting.svg' link={`/publikasi/berita/preview/${row.id}`} title="Preview"/>
-                                                                <ButtonAction icon='write.svg' link={`/publikasi/berita/${row.id}`} title="Edit"/>
-                                                                <button 
-                                                                    onClick={() => handleDelete(row.id)} 
-                                                                    className='btn mr-1' 
-                                                                    style={{ 
-                                                                        background: '#F3F6F9', 
-                                                                        borderRadius: '6px' 
-                                                                    }}
-                                                                    data-toggle="tooltip" 
-                                                                    data-placement="bottom" 
-                                                                    title="Hapus"
-                                                                    >
-                                                                    <Image 
-                                                                        alt='button-action' 
-                                                                        src={`/assets/icon/trash.svg`} 
-                                                                        width={18} 
-                                                                        height={18} 
-                                                                    />
-                                                                </button>
-                                                            </td> */}
                                                         </tr>
 
                                                     })
@@ -752,21 +705,23 @@ const Berita = ({ token }) => {
 
                             <div className="row">
                                 {berita && berita.perPage < berita.total &&
-                                    <div className={`${stylesPag.pagination} table-pagination`}>
-                                        <Pagination
-                                            activePage={page}
-                                            itemsCountPerPage={berita.perPage}
-                                            totalItemsCount={berita.total}
-                                            pageRangeDisplayed={3}
-                                            onChange={handlePagination}
-                                            nextPageText={'>'}
-                                            prevPageText={'<'}
-                                            firstPageText={'<<'}
-                                            lastPageText={'>>'}
-                                            itemClass='page-item'
-                                            linkClass='page-link'
-                                        />
-                                    </div>
+                                    <>
+                                        <div className={`${stylesPag.pagination} table-pagination`}>
+                                            <Pagination
+                                                activePage={page}
+                                                itemsCountPerPage={berita.perPage}
+                                                totalItemsCount={berita.total}
+                                                pageRangeDisplayed={windowDimensions.width > 320 ? 3 : 1}
+                                                onChange={handlePagination}
+                                                nextPageText={'>'}
+                                                prevPageText={'<'}
+                                                firstPageText={'<<'}
+                                                lastPageText={'>>'}
+                                                itemClass='page-item'
+                                                linkClass='page-link'
+                                            />
+                                        </div>
+                                    </>
                                 }
                                 {berita ?
                                     <div className={`${stylesPag.rightPag} table-total ml-auto`}>

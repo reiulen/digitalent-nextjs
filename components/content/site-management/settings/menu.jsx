@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from "react";
-import Link from "next/link";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import IconDelete from "../../../assets/icon/Delete";
 import IconAdd from "../../../assets/icon/Add";
 import Image from "next/image";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Swal from "sweetalert2";
+import Modal from "../../site-management/modal";
 const Table = ({ token }) => {
   const [array, setArray] = useState([]);
-  const [array2, setArray233333333333333333] = useState([]);
 
   const firstPush = () => {
     let _temp = [...array];
@@ -34,7 +32,6 @@ const Table = ({ token }) => {
         });
       }
     });
-
     setArray(_temp);
   };
 
@@ -83,8 +80,10 @@ const Table = ({ token }) => {
     let _temp = [...array];
     if (e.target.name === "inputName") {
       _temp[i].name = e.target.value;
+      _temp[i].error = "";
     } else {
       _temp[i].link = e.target.value;
+      _temp[i].error = "";
     }
     setArray(_temp);
   };
@@ -93,7 +92,9 @@ const Table = ({ token }) => {
     let _temp = [...array];
     if (e.target.name === "inputName") {
       _temp[i].child[j].name = e.target.value;
+      _temp[i].child[j].error = "";
     } else {
+      _temp[i].child[j].error = "";
       _temp[i].child[j].link = e.target.value;
     }
     setArray(_temp);
@@ -103,7 +104,9 @@ const Table = ({ token }) => {
     let _temp = [...array];
     if (e.target.name === "inputName") {
       _temp[i].child[j].child[k].name = e.target.value;
+      _temp[i].child[j].child[k].error = "";
     } else {
+      _temp[i].child[j].child[k].error = "";
       _temp[i].child[j].child[k].link = e.target.value;
     }
     setArray(_temp);
@@ -111,6 +114,83 @@ const Table = ({ token }) => {
 
   const submit = async (e) => {
     e.preventDefault();
+    let datar = [...array]
+
+    datar.forEach((items, index) => {
+      if (!items.name && !items.link) {
+        datar[index] = {
+          ...items,
+          error: "field name dan link tidak boleh kosong",
+        };
+        setArray(datar)
+      }
+      if (items.name && !items.link) {
+        datar[index] = { ...items, error: "field link tidak boleh kosong" };
+        setArray(datar)
+      }
+      if (!items.name && items.link) {
+        datar[index] = { ...items, error: "field name tidak boleh kosong" };
+        setArray(datar)
+      }
+      if (items.child.length) {
+        items.child.forEach((itm, idx) => {
+          if (!itm.name && itm.link === "") {
+            datar[index].child[idx] = {
+              ...itm,
+              error: "field name dan link submenu tidak boleh kosong",
+            };
+            setArray(datar)
+          }
+          if (itm.name && itm.link === "") {
+            datar[index].child[idx] = {
+              ...itm,
+              error: "field link submenu tidak boleh kosong",
+            };
+            setArray(datar)
+          }
+          if (!itm.name && itm.link !== "") {
+            datar[index].child[idx] = {
+              ...itm,
+              error: "field link submenu tidak boleh kosong",
+            };
+            setArray(datar)
+          }
+          if (!itm.name && itm.link === undefined) {
+            datar[index].child[idx] = {
+              ...itm,
+              error: "field name submenu tidak boleh kosong",
+            };
+            setArray(datar)
+          }
+          if (itm.child.length) {
+            itm.child.forEach((itz, idz) => {
+              if (!itz.name && !itz.link) {
+                datar[index].child[idx].child[idz] = {
+                  ...itz,
+                  error: "field name dan link submenu tidak boleh kosong",
+                };
+                setArray(datar)
+              }
+              if (itz.name && !itz.link) {
+                datar[index].child[idx].child[idz] = {
+                  ...itz,
+                  error: "field link submenu tidak boleh kosong",
+                };
+                setArray(datar)
+              }
+              if (!itz.name && itz.link) {
+                datar[index].child[idx].child[idz] = {
+                  ...itz,
+                  error: "field name submenu tidak boleh kosong",
+                };
+                setArray(datar)
+              }
+            });
+          }
+        });
+      }
+    });
+    
     const sendData = { menu: array };
     try {
       let { data } = await axios.post(
@@ -122,28 +202,17 @@ const Table = ({ token }) => {
           },
         }
       );
-      Swal.fire("Berhasil Simpan data", "", "success");
+      Swal.fire("Berhasil", "Data berhasil disimpan", "success");
     } catch (error) {
-      notify(error.response.data.message);
+      Swal.fire("Gagal", `${error.response.data.message}`, "error")
     }
   };
 
-  const notify = (value) =>
-    toast.info(`${value}`, {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-
- 
+  
 
   const cancel = () => {
     Swal.fire({
-      title: "Apakah anda yakin ingin reset tanda tangan ?",
+      title: "Apakah anda yakin ingin batal ?",
       // text: "Data ini tidak bisa dikembalikan !",
       icon: "warning",
       showCancelButton: true,
@@ -154,7 +223,8 @@ const Table = ({ token }) => {
       dismissOnDestroy: false,
     }).then((result) => {
       if (result.isConfirmed) {
-        setArray(array2);
+        let arrayStorage = JSON.parse(sessionStorage.getItem("array2"));
+        setArray(arrayStorage);
       }
     });
   };
@@ -171,27 +241,16 @@ const Table = ({ token }) => {
           }
         );
         setArray(data.data);
-        setArray233333333333333333(data.data);
+        sessionStorage.setItem("array2", JSON.stringify(data.data));
+        localStorage.setItem("array2", data.data);
       } catch (error) {
-        notify(error.response.data.message);
+        Swal.fire("Gagal", `${error.response.data.message}`, "error");
       }
     }
-
     getDataMenu(token);
   }, [token]);
   return (
     <PageWrapper>
-      <ToastContainer
-        position="bottom-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-b">
@@ -224,9 +283,10 @@ const Table = ({ token }) => {
                               onChange={(e) => handleChangeInput(e, i)}
                               type="text"
                               className="form-control"
-                              placeholder="Masukan Menu"
+                              placeholder="Masukkan Menu"
                             />
                           </div>
+                          <p className="error-text mb-4">{parrent?.error}</p>
                         </div>
                         <div className="col-md-12 col-xl-5">
                           <div className="form-group">
@@ -237,7 +297,7 @@ const Table = ({ token }) => {
                               onChange={(e) => handleChangeInput(e, i)}
                               type="text"
                               className="form-control"
-                              placeholder="Masukan link"
+                              placeholder={`Masukkan link ${i+1}`}
                             />
                           </div>
                         </div>
@@ -272,6 +332,7 @@ const Table = ({ token }) => {
                             >
                               <IconDelete />
                             </button>
+                            <Modal />
                           </div>
                         </div>
                       </div>
@@ -284,7 +345,7 @@ const Table = ({ token }) => {
                             <div className="row pl-10">
                               <div className="col-md-12 col-xl-5">
                                 <div className="form-group">
-                                  <label>Sub Menu{j + 1}</label>
+                                  <label>Sub Menu {j + 1}</label>
                                   <input
                                     onChange={(e) =>
                                       handleChangeInput1(e, i, j)
@@ -293,9 +354,10 @@ const Table = ({ token }) => {
                                     type="text"
                                     value={child1.name}
                                     className="form-control"
-                                    placeholder="Masukan sub menu"
+                                    placeholder={`Masukkan sub menu ${j+1}`}
                                   />
                                 </div>
+                                <p className="error-text mb-4">{child1?.error}</p>
                               </div>
                               <div className="col-md-12 col-xl-5">
                                 <div className="form-group">
@@ -308,7 +370,7 @@ const Table = ({ token }) => {
                                     name="inputLink"
                                     type="text"
                                     className="form-control"
-                                    placeholder="Masukan sub link"
+                                    placeholder={`Masukkan sub link ${j+1}`}
                                   />
                                 </div>
                               </div>
@@ -342,7 +404,7 @@ const Table = ({ token }) => {
                             <div className="row pl-10">
                               <div className="col-md-12 col-xl-10">
                                 <div className="form-group">
-                                  <label>Sub Menu{j + 1}</label>
+                                  <label>Sub Menu {j + 1}</label>
                                   <input
                                     onChange={(e) =>
                                       handleChangeInput1(e, i, j)
@@ -351,9 +413,10 @@ const Table = ({ token }) => {
                                     type="text"
                                     value={child1.name}
                                     className="form-control"
-                                    placeholder="Masukan sub menu"
+                                    placeholder={`Masukkan sub menu ${j+1}`}
                                   />
                                 </div>
+                                <p className="error-text mb-4">{child1?.error}</p>
                               </div>
                               <div className="col-md-12 col-xl-2">
                                 <div className="d-flex align-items-center h-100">
@@ -397,9 +460,10 @@ const Table = ({ token }) => {
                                       name="inputName"
                                       type="text"
                                       className="form-control"
-                                      placeholder="Masukan sub sub menu"
+                                      placeholder={`Masukkan sub sub menu ${k+1}`}
                                     />
                                   </div>
+                                  <p className="error-text mb-4">{child3?.error}</p>
                                 </div>
                                 <div className="col-md-12 col-xl-5">
                                   <div className="form-group">
@@ -412,8 +476,9 @@ const Table = ({ token }) => {
                                       name="inputLink"
                                       type="text"
                                       className="form-control"
-                                      placeholder="Masukan sub sub link"
+                                      placeholder={`Masukkan sub sub link ${k + 1}`}
                                     />
+                                    
                                   </div>
                                 </div>
                                 <div className="col-md-12 col-xl-2">
@@ -437,6 +502,8 @@ const Table = ({ token }) => {
                   </div>
                 );
               })}
+
+              {!array.length ? <div className="d-flex justify-content-center py-5">Data kosong</div>:""}
 
               <div className="form-group row mt-10 mt-sm-5">
                 <div className="col-sm-12 d-flex justify-content-end">
