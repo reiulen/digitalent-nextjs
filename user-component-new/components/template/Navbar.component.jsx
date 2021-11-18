@@ -94,6 +94,23 @@ const Navigationbar = ({ session }) => {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
 
+  let routerPath;
+  if (router.pathname.includes("form-pendaftaran"))
+    routerPath = "form-pendaftaran";
+  if (router.pathname === "/peserta/subvit/substansi/[id]")
+    routerPath = "/peserta/subvit/substansi/[id]";
+  if (router.pathname === "/peserta/subvit/survey/[id]")
+    routerPath = "/peserta/subvit/survey/[id]";
+  if (router.pathname === "/peserta/subvit/trivia/[id]")
+    routerPath = "/peserta/subvit/trivia/[id]";
+  if (router.pathname === "/peserta/subvit/mid-test/[id]")
+    routerPath = "/peserta/subvit/mid-test/[id]";
+  if (router.pathname === "/peserta/subvit/survey/[id]")
+    routerPath = "/peserta/subvit/survey/[id]";
+  if (router.pathname === "/peserta/form-lpj") routerPath = "/peserta/form-lpj";
+  if (router.pathname == "/peserta/wizzard") routerPath = "/peserta/wizzard";
+  if (router.pathname == "/") routerPath = "/";
+
   return (
     <>
       <Navbar
@@ -566,7 +583,7 @@ const Navigationbar = ({ session }) => {
             </Row>
             <hr />
             {/* Start side bar */}
-            {session && (
+            {session && !router.pathname.includes(routerPath) && (
               <Sidebar
                 screenClass={"d-block d-lg-none"}
                 accountFalse={`d-none d-lg-block`}
