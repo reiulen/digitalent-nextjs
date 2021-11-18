@@ -11,10 +11,9 @@ import {
   } from "react-bootstrap";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 
-import { getAllBerandaBerita } from "../../../redux/actions/beranda/berita.actions"
-import PulseLoaderRender from "../../components/loader/PulseLoader";
-import SubHeaderComponent from "../../components/template/Subheader.component";
-import style from '../../../styles/peserta/galeri.module.css'
+import { getAllBerandaBerita } from "../../../../redux/actions/beranda/beranda.actions"
+import PulseLoaderRender from "../../../components/loader/PulseLoader";
+import SubHeaderComponent from "../../../components/global/Breadcrumb.component";
 
 const Berita = () => {
     const dispatch = useDispatch();
@@ -148,12 +147,13 @@ const Berita = () => {
 
     const handleFilterPublish = (publish) => {
         setFilterPublish(publish)
+        setSort("")
     }
 
     const handleSort = (sort) => {
         setSort(sort)
+        setFilterPublish("")
     }
-
     const handleCategoryAcademy = (slug) => {
         setCategoryAcademy (slug)
     }
@@ -338,7 +338,7 @@ const Berita = () => {
                     {
                         
                         windowDimensions && windowDimensions.width && windowDimensions.width <= 770 ?
-                            <div className="border rounded-lg p-2 order-1 mb-5">
+                            <div className="border rounded-lg p-2 order-1 mb-5 ml-3">
                                 <div className="row "> 
                                     <div className="col-2 my-auto ml-3">
                                         <Image 
@@ -380,7 +380,7 @@ const Berita = () => {
                                             <div className="row mx-3 mb-3 d-flex justify-content-between">
                                                 <div className=" col-6">
                                                     {
-                                                        filterPublish === "desc" ?
+                                                        filterPublish === "desc" && sort === "" ?
                                                             <button className="btn btn-primary rounded-pill btn-block" onClick={() => handleFilterPublish("")}>
                                                                 Terbaru
                                                             </button>
@@ -393,7 +393,7 @@ const Berita = () => {
 
                                                 <div className="col-6">
                                                     {
-                                                        filterPublish === "asc" ?
+                                                        filterPublish === "asc"  && sort === "" ?
                                                             <button className="btn btn-primary rounded-pill btn-block" onClick={() => handleFilterPublish("")}>
                                                                 Terlama
                                                             </button>
@@ -408,7 +408,7 @@ const Berita = () => {
                                             <div className="row mx-3 mb-3 d-flex justify-content-between">
                                                 <div className="col-6">
                                                     {
-                                                        sort === "asc" ?
+                                                        sort === "asc" && filterPublish === ""  ?
                                                             <button className="btn btn-primary rounded-pill btn-block" onClick={() => handleSort("")}>
                                                                 A-Z
                                                             </button>
@@ -421,7 +421,7 @@ const Berita = () => {
 
                                                 <div className="col-6">
                                                     {
-                                                        sort === "desc" ?
+                                                        sort === "desc" && filterPublish === ""  ?
                                                             <button className="btn btn-primary rounded-pill btn-block" onClick={() => handleSort("")}>
                                                                 Z-A
                                                             </button>
@@ -609,7 +609,7 @@ const Berita = () => {
                                                                 el.tag.map ((element, index) => {
                                                                     return (
                                                                         <div 
-                                                                            className=" border px-2 py-1 my-1 mr-3"
+                                                                            className=" border px-2 py-1 my-1 ml-3"
                                                                             onClick={() => handleFilterTag(element)}
                                                                             style={{cursor:"pointer"}}
                                                                             key={index}
@@ -724,7 +724,7 @@ const Berita = () => {
                                 <div className="row mx-3 mb-3 d-flex justify-content-between">
                                     <div className="col-md-6 col-12">
                                         {
-                                            filterPublish === "desc" ?
+                                            filterPublish === "desc" && sort === "" ?
                                                 <button className="btn btn-primary rounded-pill btn-block" onClick={() => handleFilterPublish("")}>
                                                     Terbaru
                                                 </button>
@@ -737,7 +737,7 @@ const Berita = () => {
 
                                     <div className="col-md-6 col-12">
                                         {
-                                            filterPublish === "asc" ?
+                                            filterPublish === "asc" && sort === "" ?
                                                 <button className="btn btn-primary rounded-pill btn-block" onClick={() => handleFilterPublish("")}>
                                                     Terlama
                                                 </button>
@@ -752,7 +752,7 @@ const Berita = () => {
                                 <div className="row mx-3 mb-3 d-flex justify-content-between">
                                     <div className="col-md-6 col-12">
                                         {
-                                            sort === "asc" ?
+                                            sort === "asc" && filterPublish === "" ?
                                                 <button className="btn btn-primary rounded-pill btn-block" onClick={() => handleSort("")}>
                                                     A-Z
                                                 </button>
@@ -765,7 +765,7 @@ const Berita = () => {
 
                                     <div className="col-md-6 col-12">
                                         {
-                                            sort === "desc" ?
+                                            sort === "desc" && filterPublish === ""  ?
                                                 <button className="btn btn-primary rounded-pill btn-block" onClick={() => handleSort("")}>
                                                     Z-A
                                                 </button>
@@ -829,7 +829,7 @@ const Berita = () => {
                     {/* End of Filter */}
 
                     {/* Tag */}
-                    <div className="row d-flex flex-column mx-10 d-flex justify-content-center order-3">
+                    <div className="row d-flex flex-column mx-10 my-10 d-flex justify-content-center order-3">
                         <h3 className="font-weight-bolder"> 
                             Temukan lebih banyak berita yang sesuai:
                         </h3>

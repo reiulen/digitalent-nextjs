@@ -5,6 +5,10 @@ import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 // import Highlighter from "react-highlight-words";
 import { useRouter } from "next/router";
+import {
+  Container,
+  Modal
+} from "react-bootstrap";
 
 const DetailArtikel = () => {
   const dispatch = useDispatch();
@@ -72,7 +76,7 @@ const DetailArtikel = () => {
   };
 
   return (
-    <div className="mx-35">
+    <Container fluid className="px-md-30 px-10 py-10 bg-white">
       {/* BreadCrumb */}
       <div className="row my-7 mx-1 py-3 px-8 bg-white rounded-pill d-flex align-items-center border">
         <span className="text-primary">
@@ -151,9 +155,9 @@ const DetailArtikel = () => {
                 <i className="ri-share-line p-0"></i>
               </button>
 
-              <button className="btn btn-outline-light rounded-circle mr-3">
+              {/* <button className="btn btn-outline-light rounded-circle mr-3">
                 <i className="ri-heart-line p-0"></i>
-              </button>
+              </button> */}
             </div>
           </div>
         </div>
@@ -186,7 +190,7 @@ const DetailArtikel = () => {
                         resultText ?
                             <div dangerouslySetInnerHTML={{__html: resultText}}></div>
                         :
-                            <div dangerouslySetInnerHTML={{__html: detail.isi_berita}}/>
+                            <div dangerouslySetInnerHTML={{__html: detail.isi_artikel}}/>
                     }
                 </div>
 
@@ -208,9 +212,9 @@ const DetailArtikel = () => {
                     <i className="ri-share-line p-0"></i>
                   </button>
 
-                  <button className="btn btn-outline-light rounded-circle mr-3">
+                  {/* <button className="btn btn-outline-light rounded-circle mr-3">
                     <i className="ri-heart-line p-0"></i>
-                  </button>
+                  </button> */}
                 </div>
               </div>
             </div>
@@ -323,7 +327,7 @@ const DetailArtikel = () => {
       )}
 
       {/* End of Content */}
-    </div>
+    </Container>
   );
 };
 

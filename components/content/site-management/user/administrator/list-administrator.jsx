@@ -27,7 +27,10 @@ const Table = ({ token }) => {
   const router = useRouter();
 
   const allAdminSite = useSelector((state) => state.allAdminSite);
-  const { isDeleted } = useSelector((state) => state.deleteAdminSite);
+  console.log("allAdminSite", allAdminSite);
+  const { isDeleted, error: deleteError } = useSelector(
+    (state) => state.deleteAdminSite
+  );
 
   const [valueSearch, setValueSearch] = useState("");
   const handleChangeValueSearch = (value) => {
@@ -39,7 +42,7 @@ const Table = ({ token }) => {
     dispatch(searchCooporation(valueSearch));
   };
 
-  const handleDelete = (id, token) => {
+  const handleDelete = (id) => {
     Swal.fire({
       title: "Apakah anda yakin menghapus data ?",
       text: "Data ini tidak bisa dikembalikan !",
@@ -58,12 +61,29 @@ const Table = ({ token }) => {
 
   useEffect(() => {
     dispatch(getAllAdminSite(token));
+    if (isDeleted) {
+      Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
+        (result) => {
+          if (result.isConfirmed) {
+            dispatch(getAllAdminSite(token));
+          }
+        }
+      );
+    }
+    if (deleteError) {
+      Swal.fire("Gagal", "Data gagal dihapus.", "error");
+    }
+    dispatch({
+      type: DETAIL_ADMIN_SITE_RESET,
+    });
   }, [
     dispatch,
     allAdminSite.cari,
     allAdminSite.page,
     allAdminSite.limit,
     token,
+    isDeleted,
+    deleteError,
   ]);
 
   useEffect(() => {
@@ -174,7 +194,7 @@ const Table = ({ token }) => {
                                 {items.name}
                               </td>
                               <td className="align-middle text-left">
-                                Data masih null
+                                {items.email ? items.email : "-"}
                               </td>
                               <td className="align-middle text-left">role</td>
                               <td className="align-middle text-left">
@@ -208,26 +228,13 @@ const Table = ({ token }) => {
                               </td>
                               <td className="align-middle text-left">
                                 <div className="d-flex align-items-center">
-                                  {/* <Link href={`/site-management/user/administrator/edit-data-administrator/${items.id}`} passHref>
-                                  
-                                  
-                                  <a
-                                    className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                                  >
-                                    <IconPencil width="16" height="16" />
-                                    <div className="text-hover-show-hapus">
-                                      Ubah
-                                    </div>
-                                  </a>
-
-                                  </Link> */}
-
                                   <Link
                                     href={{
                                       pathname:
                                         "/site-management/user/administrator/edit-data-administrator",
                                       query: { id: items.id },
                                     }}
+                                    passHref
                                   >
                                     <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
                                       <IconPencil width="16" height="16" />
@@ -236,26 +243,25 @@ const Table = ({ token }) => {
                                       </div>
                                     </a>
                                   </Link>
-
-                                  <button
-                                    className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete"
-                                    onClick={() =>
-                                      router.push(
-                                        `/site-management/user/administrator/detail-administrator`
-                                      )
-                                    }
+                                  <Link
+                                    href={{
+                                      pathname:
+                                        "/site-management/user/administrator/detail-administrator",
+                                      query: { id: items.id },
+                                    }}
+                                    passHref
                                   >
-                                    <IconEye width="16" height="16" />
-                                    <div className="text-hover-show-hapus">
-                                      Detail
-                                    </div>
-                                  </button>
+                                    <a className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete">
+                                      <IconEye width="16" height="16" />
+                                      <div className="text-hover-show-hapus">
+                                        Detail
+                                      </div>
+                                    </a>
+                                  </Link>
 
                                   <button
                                     className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                                    // onClick={() =>
-                                    //   roleDelete(items.id)
-                                    // }
+                                    onClick={() => handleDelete(items.id)}
                                   >
                                     <IconDelete width="16" height="16" />
                                     <div className="text-hover-show-hapus">
