@@ -9,9 +9,11 @@ import {
     Container,
     Modal
   } from "react-bootstrap";
-import { getAllBerandaArtikel } from "../../../redux/actions/beranda/artikel.actions"
-import PulseLoaderRender from "../../components/loader/PulseLoader";
-import style from '../../../styles/peserta/galeri.module.css'
+import { Splide, SplideSlide } from "@splidejs/react-splide";
+
+import { getAllBerandaArtikel } from "../../../../redux/actions/beranda/artikel.actions"
+import PulseLoaderRender from "../../../components/loader/PulseLoader";
+import SubHeaderComponent from "../../../components/global/Breadcrumb.component";
 
 const Artikel = () => {
     const dispatch = useDispatch();
@@ -23,6 +25,7 @@ const Artikel = () => {
     const { tags } = useSelector((state) => state.allTagBerandaArtikel)
 
     const titleToTrim = 25
+    const categoryToTrim = 9
     const descToTrim = 100
 
     const [ activeTitle, setActiveTitle ] = useState("Ada Apa di Digitalent")
@@ -117,6 +120,19 @@ const Artikel = () => {
         return result
     }
 
+    const handleCategoryToTrim = (str) => {
+        let result = null
+        
+        if (str.length > categoryToTrim){
+            result = str.slice(0, categoryToTrim) + "..."
+
+        } else {
+            result = str
+        }
+
+        return result
+    }
+
     const handleDescToTrim = (str) => {
         let result = null
         
@@ -131,10 +147,12 @@ const Artikel = () => {
 
     const handleFilterPublish = (publish) => {
         setFilterPublish(publish)
+        setSort("")
     }
 
     const handleSort = (sort) => {
         setSort(sort)
+        setFilterPublish("")
     }
 
     const handleCategoryAcademy = (slug) => {
@@ -156,7 +174,7 @@ const Artikel = () => {
     }
 
     const handleFilterTag = (str) => {
-        setActiveTitle(`#${str}`)
+        setActiveTitle(`#${str.toUpperCase()}`)
         // setTag(str)
         dispatch (getAllBerandaArtikel(
             activePage, 
@@ -189,22 +207,11 @@ const Artikel = () => {
 
 
     return (
-        <div>
+        <Container fluid className="px-md-30 px-10 py-10 bg-white">
             {/* BreadCrumb */}
-            <div className="row my-15 mt-15 mx-1 py-3 px-8 bg-white rounded-pill d-flex align-items-center border">
-                <span className="text-primary">
-                    <Link href="/">
-                        Beranda 
-                    </Link>
-                </span>
-                <span>
-                    <i className="ri-arrow-right-s-line text-primary"></i> 
-                </span>
-                <span>
-                    {/* Insert BreadCrumb Here */}
-                    Artikel
-                </span>
-            </div>
+            <SubHeaderComponent 
+                data={[{ link: router.asPath, name: "Artikel" }]}
+            />
 
             {/* Header */}
             <div className="col-12 mt-5">
@@ -229,13 +236,27 @@ const Artikel = () => {
             {
                 kategori ? (
                     <div
-                        className="my-5 col-md-8 d-flex flex-row col-12"
+                        className="col-md-8 col-12 pl-0 ml-4 mt-10 mb-5 pr-10"
                     >
-                        <div className={`d-flex flex-row pr-15 overflow-scroll ${style.responsive_overflow}`}>
+                        <Splide
+                            options={{
+                                arrows: false,
+                                pagination: false,
+                                gap: "1rem",
+                                drag: "free",
+                                perPage: 4,
+                                breakpoints:{
+                                    830: {
+                                        perPage: 2,
+                                      },
+                                }
+                            }}
+                        >
                             {
                                 kategoriArtikel === "" ?
+                                    <SplideSlide>
                                         <div 
-                                            className="d-flex align-items-center rounded-pill bg-primary-dashboard py-1 px-3 mr-7 my-5" 
+                                            className="d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-3 mr-7 my-5" 
                                             style={{ cursor: "pointer", height:"40px" }}
                                             onClick={() => handleFilterKategori("")}
                                         >
@@ -243,9 +264,11 @@ const Artikel = () => {
                                                 Semua
                                             </div>
                                         </div>
-                                    :
+                                    </SplideSlide>
+                                :
+                                    <SplideSlide>
                                         <div 
-                                            className="d-flex align-items-center border rounded-pill bg-white py-1 px-3 mr-7 my-5" 
+                                            className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-7 my-5" 
                                             style={{ cursor: "pointer", height:"40px" }}
                                             onClick={() => handleFilterKategori("")}
                                         >
@@ -253,6 +276,8 @@ const Artikel = () => {
                                                 Semua
                                             </div>
                                         </div>
+                                    </SplideSlide>
+                                    
                             }
 
                             {
@@ -260,33 +285,38 @@ const Artikel = () => {
                                     kategori.map((el, i) => {
                                         return (
                                             kategoriArtikel == el.nama_kategori ?
-                                                <div 
-                                                    className="d-flex align-items-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-7 my-5" 
-                                                    style={{ cursor: "pointer", height:"40px" }}
-                                                    onClick={() => handleFilterKategori(el.nama_kategori)}
-                                                    key={i}
-                                                >
-                                                    <div className="my-1 mx-3 py-1 px-3 text-white">
-                                                        {el.nama_kategori}
+                                                <SplideSlide>
+                                                    <div 
+                                                        className="d-flex align-items-center justify-content-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-7 my-5" 
+                                                        style={{ cursor: "pointer", height:"40px" }}
+                                                        onClick={() => handleFilterKategori(el.nama_kategori)}
+                                                        key={i}
+                                                    >
+                                                        <div className="my-1 mx-3 py-1 px-3 text-white">
+                                                            {handleCategoryToTrim(el.nama_kategori)}
+                                                        </div>
                                                     </div>
-                                                </div> 
+                                                </SplideSlide>
                                             :
-                                                <div 
-                                                    className="d-flex align-items-center border rounded-pill bg-white py-1 px-3 mr-7 my-5" 
-                                                    style={{ cursor: "pointer", height:"40px" }}
-                                                    onClick={() => handleFilterKategori(el.nama_kategori)}
-                                                    key={i}
-                                                >
-                                                    <div className="my-1 mx-3 py-1 px-3 text-muted">
-                                                        {el.nama_kategori}
-                                                    </div>
-                                                </div> 
+                                                <SplideSlide>
+                                                    <div 
+                                                        className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-7 my-5" 
+                                                        style={{ cursor: "pointer", height:"40px" }}
+                                                        onClick={() => handleFilterKategori(el.nama_kategori)}
+                                                        key={i}
+                                                    >
+                                                        <div className="my-1 mx-3 py-1 px-3 text-muted">
+                                                            {handleCategoryToTrim(el.nama_kategori)}
+                                                        </div>
+                                                    </div> 
+                                                </SplideSlide>
+                                                
                                         )
                                     })
                                 :
                                     null
                             }
-                        </div>
+                        </Splide>
                     </div> 
                 ) : null}
             {/* End Filter Button */}
@@ -301,7 +331,7 @@ const Artikel = () => {
                     {
                         
                         windowDimensions && windowDimensions.width && windowDimensions.width <= 770 ?
-                            <div className="border rounded-lg p-2 order-1 mb-10">
+                            <div className="border rounded-lg p-2 order-1 mb-5 ml-3">
                                 <div className="row"> 
                                     <div className="col-2 my-auto ml-3">
                                         <Image 
@@ -343,7 +373,7 @@ const Artikel = () => {
                                             <div className="row mx-3 mb-3 d-flex justify-content-between">
                                                 <div className=" col-6">
                                                     {
-                                                        filterPublish === "desc" ?
+                                                        filterPublish === "desc" && sort === "" ?
                                                             <button className="btn btn-primary rounded-pill btn-block" onClick={() => handleFilterPublish("")}>
                                                                 Terbaru
                                                             </button>
@@ -356,7 +386,7 @@ const Artikel = () => {
 
                                                 <div className="col-6">
                                                     {
-                                                        filterPublish === "asc" ?
+                                                        filterPublish === "asc" && sort === "" ?
                                                             <button className="btn btn-primary rounded-pill btn-block" onClick={() => handleFilterPublish("")}>
                                                                 Terlama
                                                             </button>
@@ -371,7 +401,7 @@ const Artikel = () => {
                                             <div className="row mx-3 mb-3 d-flex justify-content-between">
                                                 <div className="col-6">
                                                     {
-                                                        sort === "asc" ?
+                                                        sort === "asc" && filterPublish === "" ?
                                                             <button className="btn btn-primary rounded-pill btn-block" onClick={() => handleSort("")}>
                                                                 A-Z
                                                             </button>
@@ -384,7 +414,7 @@ const Artikel = () => {
 
                                                 <div className="col-6">
                                                     {
-                                                        sort === "desc" ?
+                                                        sort === "desc" && filterPublish === ""  ?
                                                             <button className="btn btn-primary rounded-pill btn-block" onClick={() => handleSort("")}>
                                                                 Z-A
                                                             </button>
@@ -487,11 +517,11 @@ const Artikel = () => {
                             artikel && artikel.artikel && artikel.artikel.length !== 0 ?
                                 artikel.artikel.map ((el, i) => {
                                     return (
-                                        <div className="row my-20 ml-5" key={i}>
+                                        <div className="row my-15 ml-5" key={i}>
                                             <div className="col col-7">
                                                 <div className="row d-flex justify-content-between align-items-center">
-                                                    <div className="d-flex align-self-center">
-                                                        <div className="border rounded-circle py-1 px-2">
+                                                    <div className="d-flex align-self-center mb-2">
+                                                        <div className="border rounded-circle p-2 d-flex justify-content-center align-self-center">
                                                             {/* Insert Logo Image Here */}
                                                             <Image
                                                                 // src="/assets/media/logo-default.png" 
@@ -512,17 +542,22 @@ const Artikel = () => {
                                                         </span>
                                                     </div>
 
-                                                    <div className="mr-2">
-                                                        <div className="badge badge-light mr-2">
-                                                            <div className="text-primary">
+                                                    <div className="mr-2 mb-3">
+                                                        <div className="badge badge-pill badge-light mr-2">
+                                                            <div className="text-primary p-1">
                                                                 {/* Insert Kategori Here */}
                                                                 {el.nama_kategori}
                                                             </div>
                                                         </div>
-                                                        <span className="font-weight-bolder">
-                                                            {/* Insert Akademi Here */}
-                                                            | {el.kategori_akademi}
-                                                        </span>
+                                                        {
+                                                            windowDimensions && windowDimensions.width && windowDimensions.width > 500 ?
+                                                                <span className="font-weight-bolder">
+                                                                    {/* Insert Akademi Here */}
+                                                                    | {el.kategori_akademi}
+                                                                </span>
+                                                            :
+                                                                null
+                                                        }
                                                     </div>
                                                 </div>
 
@@ -530,7 +565,7 @@ const Artikel = () => {
                                                     {/* Insert Title Here */}
                                                     <Link href={`/artikel/detail/${el.slug}`}>
                                                         <a>
-                                                            <h1 className="text-dark">
+                                                            <h1 className="text-dark text-wrap">
                                                                 {handleTitleToTrim(el.judul)}
                                                             </h1>
                                                         </a>
@@ -542,7 +577,11 @@ const Artikel = () => {
                                                     windowDimensions && windowDimensions.width && windowDimensions.width > 770 ?
                                                         <div className="row my-5 d-flex flex-wrap">
                                                             {/* Insert Desc Here */}
-                                                            <div dangerouslySetInnerHTML={{__html: handleDescToTrim(el.isi_artikel)}} />
+                                                            <div 
+                                                                dangerouslySetInnerHTML={{__html: handleDescToTrim(el.isi_artikel)}} 
+                                                                className="text-wrap d-flex flex-wrap overflow-hidden"
+                                                                style={{maxWidth:"450px"}}
+                                                            />
                                                         </div>
                                                     :
                                                         null
@@ -566,7 +605,7 @@ const Artikel = () => {
                                                                             style={{cursor:"pointer"}}
                                                                             key={index}
                                                                         >
-                                                                            #{element}
+                                                                            #{element.toUpperCase()}
                                                                         </div>
                                                                     )
                                                                 })
@@ -582,12 +621,13 @@ const Artikel = () => {
 
                                             <div 
                                                 className="col col-5 position-relative d-flex align-self-center" 
+                                                // style={{objectFit:"contain"}}
                                                 style={{objectFit:"cover"}}
                                             >
                                                 {/* Insert Card Image Here */}
                                                 <Link href={`/artikel/detail/${el.slug}`}>
                                                     <a>
-                                                        <img 
+                                                        <Image
                                                             src={
                                                                 process.env.END_POINT_API_IMAGE_PUBLIKASI +
                                                                 "publikasi/images/" + el.gambar
@@ -616,6 +656,34 @@ const Artikel = () => {
                     }
                     
                     {/* End of Card */}
+
+                    {/* Pagination */}
+                    {
+                        artikel ?
+                            <div className="row mt-5 mb-10 d-flex justify-content-center">
+                                <div className="table-pagination">
+                                    <Pagination 
+                                        activePage = {activePage}
+                                        itemsCountPerPage={5}
+                                        // itemsCountPerPage={artikel.perPage}
+                                        // totalItemsCount={5}
+                                        totalItemsCount={artikel.total}
+                                        pageRangeDisplayed={windowDimensions.width > 300 ? 3 : 1}
+                                        onChange={handlePagination}
+                                        nextPageText={">"}
+                                        prevPageText={"<"}
+                                        firstPageText={"<<"}
+                                        lastPageText={">>"}
+                                        itemClass="page-item-dashboard"
+                                        linkClass="page-link-dashboard"
+                                    />
+                                </div>
+                                
+                            </div>
+                        :
+                            null
+                    }
+                    {/* End of Pagination */}
 
                 </div>
                 {/* End of Left Side */}
@@ -651,7 +719,7 @@ const Artikel = () => {
                                 <div className="row mx-3 mb-3 d-flex justify-content-between">
                                     <div className="col-md-6 col-12">
                                         {
-                                            filterPublish === "desc" ?
+                                            filterPublish === "desc" && sort === "" ?
                                                 <button className="btn btn-primary rounded-pill btn-block" onClick={() => handleFilterPublish("")}>
                                                     Terbaru
                                                 </button>
@@ -664,7 +732,7 @@ const Artikel = () => {
 
                                     <div className="col-md-6 col-12">
                                         {
-                                            filterPublish === "asc" ?
+                                            filterPublish === "asc" && sort === "" ?
                                                 <button className="btn btn-primary rounded-pill btn-block" onClick={() => handleFilterPublish("")}>
                                                     Terlama
                                                 </button>
@@ -679,7 +747,7 @@ const Artikel = () => {
                                 <div className="row mx-3 mb-3 d-flex justify-content-between">
                                     <div className="col-md-6 col-12">
                                         {
-                                            sort === "asc" ?
+                                            sort === "asc" && filterPublish === "" ?
                                                 <button className="btn btn-primary rounded-pill btn-block" onClick={() => handleSort("")}>
                                                     A-Z
                                                 </button>
@@ -692,7 +760,7 @@ const Artikel = () => {
 
                                     <div className="col-md-6 col-12">
                                         {
-                                            sort === "desc" ?
+                                            sort === "desc" && filterPublish === "" ?
                                                 <button className="btn btn-primary rounded-pill btn-block" onClick={() => handleSort("")}>
                                                     Z-A
                                                 </button>
@@ -722,7 +790,7 @@ const Artikel = () => {
                                                 {
                                                     akademi.map ((el, i) => {
                                                         return (
-                                                            <option value={el.name} key={i}>{el.slug}</option>
+                                                            <option value={el.slug} key={i}>{el.slug}</option>
                                                         )
                                                     })
                                                 }
@@ -756,7 +824,7 @@ const Artikel = () => {
                     {/* End of Filter */}
 
                     {/* Tag */}
-                    <div className="row d-flex flex-column mx-10 d-flex justify-content-center order-3">
+                    <div className="row d-flex flex-column mx-10 my-10 d-flex justify-content-center order-3">
                         <h3 className="font-weight-bolder"> 
                             Temukan lebih banyak artikel yang sesuai:
                         </h3>
@@ -771,7 +839,7 @@ const Artikel = () => {
                                                 onClick={() => handleFilterTag(el)}
                                                 style={{cursor:"pointer", height:"38px", fontSize:"14px"}}
                                             >
-                                                #{el}
+                                                #{el.toString().toUpperCase()}
                                             </div>
                                         )
                                     })
@@ -793,36 +861,10 @@ const Artikel = () => {
             </div>
             {/* End Content */}
             
-            {/* Pagination */}
-            {
-                artikel ?
-                    <div className="row my-5 d-flex justify-content-center">
-                        <div className="table-pagination">
-                            <Pagination 
-                                activePage = {activePage}
-                                itemsCountPerPage={5}
-                                // itemsCountPerPage={artikel.perPage}
-                                // totalItemsCount={5}
-                                totalItemsCount={artikel.total}
-                                pageRangeDisplayed={windowDimensions.width > 300 ? 3 : 1}
-                                onChange={handlePagination}
-                                nextPageText={">"}
-                                prevPageText={"<"}
-                                firstPageText={"<<"}
-                                lastPageText={">>"}
-                                itemClass="page-item-dashboard"
-                                linkClass="page-link-dashboard"
-                            />
-                        </div>
-                        
-                    </div>
-                :
-                    null
-            }
-            {/* End of Pagination */}
             
             
-        </div>
+            
+        </Container>
     )
 } 
 

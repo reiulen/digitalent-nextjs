@@ -8,13 +8,13 @@ import { getAllAkademi } from "../../redux/actions/beranda/beranda.actions";
 
 const Artikel  =  dynamic (() => 
     import (
-        "../../user-component/content/beranda/artikel"
+        "../../user-component-new/content/home/artikel/artikel"
     )
 )
 
 const Layout = dynamic (() => 
     import (
-        "../../components/wrapper/beranda.wrapper"
+        "../../user-component-new/components/template/Layout.component"
     )
 )
 
