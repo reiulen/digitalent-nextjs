@@ -43,6 +43,15 @@ const Footer = dynamic(() => import("../beranda/footer"), {
   ssr: false,
 });
 
+const HeaderWizzard = dynamic(
+  () => import("../wizzard-template/Header-Wizzard.component"),
+  {
+    loading: function loadingNow() {
+      return <LoadingHeader />;
+    },
+    ssr: false,
+  }
+);
 const Layout = ({ title = "Peserta - Pelatihan", session, children }) => {
   const router = useRouter();
   let routerPath;
@@ -59,6 +68,8 @@ const Layout = ({ title = "Peserta - Pelatihan", session, children }) => {
   if (router.pathname === "/peserta/subvit/survey/[id]")
     routerPath = "/peserta/subvit/survey/[id]";
   if (router.pathname === "/peserta/form-lpj") routerPath = "/peserta/form-lpj";
+  if (router.pathname == "/peserta/wizzard") routerPath = "/peserta/wizzard";
+
   return (
     <>
       <Head>
@@ -67,7 +78,12 @@ const Layout = ({ title = "Peserta - Pelatihan", session, children }) => {
         <meta name="viewport" content="initial-scale=1.0,width=device-width" />
       </Head>
       <Navbar session={session} />
-      <Header session={session} />
+
+      {routerPath == "/peserta/wizzard" ? (
+        <HeaderWizzard session={session} />
+      ) : (
+        <Header session={session} />
+      )}
       <ToastContainer position="top-right" />
       <div className="container-fluid py-5">
         <Row>
