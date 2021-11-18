@@ -461,15 +461,23 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
           <Row className="mb-3">
             <Form.Group as={Col} md={6} controlId="formGridNik">
               <Form.Label>Kecamatan</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Silahkan Masukkan Kecamatan"
-                value={kecamatanDomisili}
-                onChange={(e) => setKecamatanDomisili(e.target.value)}
+              <Select
+                placeholder={
+                  (alamat && alamat.kecamatan) === ""
+                    ? "Silahkan Pilih Kecamatan"
+                    : alamat && alamat.kecamatan
+                }
+                defaultValue={kecamatanDomisili}
+                options={optionsKecamatan}
+                onChange={(e) => {
+                  setKecamatanDomisili({ label: e?.label, value: e?.value });
+                  dispatch(dropdownKecamatanToDesa(token, e.value));
+                }}
                 onBlur={() =>
-                  simpleValidator.current.showMessageFor("kecamatan domisili")
+                  simpleValidator.current.showMessageFor("kecamatan")
                 }
               />
+
               {simpleValidator.current.message(
                 "kecamatan domisili",
                 kecamatanDomisili,
@@ -481,7 +489,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
             </Form.Group>
             <Form.Group as={Col} md={6} controlId="formGridNik">
               <Form.Label>Desa / Kelurahan</Form.Label>
-              <Form.Control
+              {/* <Form.Control
                 type="text"
                 placeholder="Silahkan Masukkan Kecamatan"
                 value={kecamatanDomisili}
@@ -489,11 +497,27 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("kecamatan domisili")
                 }
+              /> */}
+              <Select
+                placeholder={
+                  (alamat && alamat.kelurahan) === ""
+                    ? "Silahkan Pilih Kelurahan"
+                    : alamat && alamat.kelurahan
+                }
+                options={optionsKelurahan}
+                defaultValue={kelurahanDomisili}
+                onChange={(e) => {
+                  setKelurahanDomisili({ label: e?.label, value: e?.value });
+                  dispatch(dropdownKecamatanToDesa(token, e.value));
+                }}
+                onBlur={() =>
+                  simpleValidator.current.showMessageFor("kelurahan domisili")
+                }
               />
 
               {simpleValidator.current.message(
-                "kecamatan domisili",
-                kecamatanDomisili,
+                "kelurahan domisili",
+                kelurahanDomisili,
                 "required",
                 {
                   className: "text-danger",
