@@ -357,7 +357,7 @@ const AddRegistrationStep2 = ({ propsStep }) => {
                 <>
                   <Select
                     options={optionsForm}
-                    placeholder="Silahkan Masukkan Nama Form Pendaftaran"
+                    placeholder="Silahkan Pilih Nama Form Pendaftaran"
                     onChange={(e) => setTitle(e.label)}
                   />
                   {viewForm === "1" && (
