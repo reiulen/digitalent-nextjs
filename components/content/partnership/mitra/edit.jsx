@@ -117,7 +117,7 @@ const EditMitra = ({ token }) => {
     } else if (!email) {
       setError({ ...error, email: "Harus isi email" });
     } else if (!website) {
-      setError({ ...error, website: "Harus isi nama website" });
+      setError({ ...error, website: "Harus isi alamat website" });
     } else if (!address) {
       setError({ ...error, address: "Harus isi alamat" });
     } else if (!indonesia_provinces_id) {

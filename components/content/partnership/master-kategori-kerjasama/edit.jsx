@@ -70,7 +70,7 @@ const Edit = ({ token }) => {
 
     if (categoryCooporation === "") {
       // notify("Kategory kerjasama tidak boleh kosong")
-      Swal.fire("Gagal", `Kategory kerjasama tidak boleh kosong`, "error");
+      Swal.fire("Gagal", `Kategori kerjasama tidak boleh kosong`, "error");
     } else if (stateDataSingle[0].name === "") {
       // notify("Form kerjasama tidak boleh kosong")
       Swal.fire("Gagal", `Form kerjasama tidak boleh kosong`, "error");

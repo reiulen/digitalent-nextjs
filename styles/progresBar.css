@@ -469,3 +469,7 @@ justify-content: center;
 .scroll-form-login::-webkit-scrollbar {
   display: none;
 }
+
+.css-yk16xz-control{
+    border-color: hsl(229deg 26% 92%) !important;
+}

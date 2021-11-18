@@ -347,7 +347,7 @@ const SubmitKerjasama = ({ token }) => {
 
               <div className="form-group">
                 <label htmlFor="staticEmail" className="col-form-label">
-                  Tanggal Penandatangan
+                  Tanggal Penandatanganan
                 </label>
                 <div className="d-flex align-items-center position-relative datepicker-w w-100">
                   <DatePicker
@@ -365,7 +365,7 @@ const SubmitKerjasama = ({ token }) => {
                     minDate={moment().toDate()}
                     maxDate={addDays(startDate, 20)}
                     dateFormat="dd/MM/yyyy"
-                    placeholderText="Sampai Tanggal"
+                    placeholderText="Tanggal"
                   />
                   <IconCalender
                     className="right-center-absolute"

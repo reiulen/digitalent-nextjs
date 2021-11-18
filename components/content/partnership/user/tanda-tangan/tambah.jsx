@@ -70,9 +70,11 @@ const TambahTandaTangan = ({token}) => {
     e.preventDefault();
     if (nama === "") {
       setError({ ...error, nama: "Harus isi nama" });
+      Swal.fire("Gagal", "Harus isi nama", "error");
    
     } else if (jabatan === "") {
       setError({ ...error, jabatan: "Harus isi jabatan" });
+      Swal.fire("Gagal", "Harus isi jabatan", "error");
   
     } else if (tandaTangan === "") {
       setError({
@@ -113,7 +115,7 @@ const TambahTandaTangan = ({token}) => {
               query: { success: true },
             });
           } catch (error) {
-            notify(error.response.data.message);
+            Swal.fire("Gagal", `${error.response.data.message}`, "error");
           }
         }
       });

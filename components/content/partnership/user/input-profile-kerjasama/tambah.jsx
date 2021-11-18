@@ -366,7 +366,7 @@ const Tambah = ({ token }) => {
                       type="text"
                       name="text_input"
                       className="form-control"
-                      placeholder="Masukan Alamat Website"
+                      placeholder="Masukkan Alamat Website"
                       onChange={(e) => setWesite(e.target.value)}
                       value={wesite && wesite}
                     />
@@ -540,7 +540,7 @@ const Tambah = ({ token }) => {
 
               <div className="form-group mb-0 mb-sm-4">
                 <label htmlFor="staticEmail" className="col-form-label">
-                  Masukan Alamat Lengkap
+                  Masukkan Alamat Lengkap
                 </label>
                 <input
                   onFocus={() => setError({ ...error, address: "" })}

@@ -35,6 +35,7 @@ const EditDokumentKerjasama = ({ token }) => {
   const [period, setPeriod] = useState("");
   const [periodUnit, setPeriodUnit] = useState("tahun");
   const [periodDateStart, setPeriodDateStart] = useState("");
+  console.log("periodDateStart",periodDateStart)
   const [periodDateEnd, setPeriodDateEnd] = useState("");
   const [aggrementNumber, setAggrementNumber] = useState("");
   const [aggrementNumberInfo, setAggrementNumberInfo] = useState("");
@@ -267,23 +268,23 @@ const EditDokumentKerjasama = ({ token }) => {
 
   useEffect(() => {
     function periodCheck(date) {
-      setPeriodDateStart(moment(date).format("YYYY-MM-DD"));
+      setPeriodDateStart(moment(periodDateStart).format("YYYY-MM-DD"));
       if (periodUnit === "bulan") {
-        let futureMonth = moment(date)
+        let futureMonth = moment(periodDateStart)
           .add(parseInt(period), "M")
           .format("YYYY-MM-DD");
         setPeriodDateEnd(futureMonth);
       }
       // jika tahun
       else {
-        let futureYear = moment(date)
+        let futureYear = moment(periodDateStart)
           .add(parseInt(period), "y")
           .format("YYYY-MM-DD");
         setPeriodDateEnd(futureYear);
       }
     }
     periodCheck();
-  }, [period, date, periodUnit]);
+  }, [period, date, periodUnit,periodDateStart]);
   return (
     <PageWrapper>
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">

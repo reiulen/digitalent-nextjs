@@ -114,7 +114,7 @@ const RecoveryMitra = () => {
           style={{ background: "#1A4367" }}
         >
           {/* Email pemulihan */}
-          <div className="container ">
+          <div className="container scroll-form-login">
             <div className="title-login text-center mt-6">
               <Image
                 src="/assets/logo/logo-6.svg"

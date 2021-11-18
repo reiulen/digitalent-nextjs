@@ -145,6 +145,7 @@ const Tambah = ({ token }) => {
     }
   };
   const onChangePeriod = (e) => {
+    setError({ ...error, period: "" })
     const regex = new RegExp(/[^0-9]/, "g");
     const val = e.target.value;
     if (val.match(regex)) {

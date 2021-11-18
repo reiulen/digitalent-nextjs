@@ -156,8 +156,8 @@ const DetailDokumenKerjasama = ({ token }) => {
     const regex = new RegExp(/[^0-9]/, "g");
     const val = e.target.value;
     if (val.match(regex)) {
-      setError({ ...error, period: "Masukan angka" });
-      // notify("Masukan angka");
+      setError({ ...error, period: "Masukkan angka" });
+      // notify("Masukkan angka");
       setPeriod("");
     } else {
       setPeriod(e.target.value);
@@ -304,7 +304,7 @@ const DetailDokumenKerjasama = ({ token }) => {
                       onFocus={() => setError({ ...error, title: "" })}
                       type="text"
                       className="form-control mb-3 mb-lg-0"
-                      placeholder="Masukan Judul Kerjasama"
+                      placeholder="Masukkan Judul Kerjasama"
                       onChange={(e) => setTitle(e.target.value)}
                     />
                     {error.title ? (
@@ -397,7 +397,7 @@ const DetailDokumenKerjasama = ({ token }) => {
                               cols="30"
                               rows="5"
                               className="form-control"
-                              placeholder={`Masukan ${items.cooperation_form}`}
+                              placeholder={`Masukkan ${items.cooperation_form}`}
                             ></textarea>
                             {AllCooperation[index]?.error ? <p className="error-text">{AllCooperation[index]?.error}</p> :""}
                           </div>
