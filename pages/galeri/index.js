@@ -47,6 +47,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
                 getAllBerandaGaleri(
                     query.page,
                     query.category_name,
+                    query.tag
                 )
             )
 

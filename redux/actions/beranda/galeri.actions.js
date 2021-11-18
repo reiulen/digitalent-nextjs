@@ -21,7 +21,8 @@ import axios from "axios";
 export const getAllBerandaGaleri = 
 (
     page = 1,
-    category_name=""
+    category_name="",
+    tag = ""
 ) => 
     async dispatch => {
         try {
@@ -30,6 +31,7 @@ export const getAllBerandaGaleri =
             let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/home/gallery?page=${page}`
 
             if (category_name) link = link.concat(`&category_name=${category_name}`);
+            if (tag) link = link.concat(`&tag=${tag}`);
 
             const { data } = await axios.get(link);
 
