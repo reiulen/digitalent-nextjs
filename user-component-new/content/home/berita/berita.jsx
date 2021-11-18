@@ -11,7 +11,7 @@ import {
   } from "react-bootstrap";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 
-import { getAllBerandaBerita } from "../../../../redux/actions/beranda/beranda.actions"
+import { getAllBerandaBerita } from "../../../../redux/actions/beranda/berita.actions"
 import PulseLoaderRender from "../../../components/loader/PulseLoader";
 import SubHeaderComponent from "../../../components/global/Breadcrumb.component";
 
