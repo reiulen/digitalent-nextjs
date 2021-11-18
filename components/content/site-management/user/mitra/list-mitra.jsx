@@ -132,7 +132,7 @@ const Table = ({ token }) => {
                     <tbody>
                       {allMitraSite.data.list_mitras.length === 0 ? (
                         <td className="align-middle text-center" colSpan="6">
-                          Data Masih Kosong
+                          Data Kosong
                         </td>
                       ) : (
                         allMitraSite.data.list_mitras.map((items, index) => {

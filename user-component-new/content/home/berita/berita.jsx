@@ -11,7 +11,7 @@ import {
   } from "react-bootstrap";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 
-import { getAllBerandaBerita } from "../../../../redux/actions/beranda/beranda.actions"
+import { getAllBerandaBerita } from "../../../../redux/actions/beranda/berita.actions"
 import PulseLoaderRender from "../../../components/loader/PulseLoader";
 import SubHeaderComponent from "../../../components/global/Breadcrumb.component";
 
@@ -665,7 +665,7 @@ const Berita = () => {
 
                     {/* Pagination */}
                     {
-                        berita ?
+                        berita && berita.total !== 0 ?
                             <div className="row mt-5 mb-10 d-flex justify-content-center">
                                 <div className="table-pagination">
                                     <Pagination 
