@@ -17,7 +17,7 @@ const Dashboard = ({ session, success }) => {
   const router = useRouter();
 
   const { error: errorDashboard, dataDashboard } = useSelector(
-    (state) => state.dashboardPeserta
+    state => state.dashboardPeserta
   );
   const { count, pelatihan, subvit } = dataDashboard;
 
@@ -90,6 +90,20 @@ const Dashboard = ({ session, success }) => {
     };
     getSimonasData();
   }, []);
+
+  const getBeasiswa = async () => {
+    const link = "https://beasiswa-dev.majapahit.id/api/get-scholarship-data";
+    try {
+      const data = await axios.get(
+        "https://beasiswa-dev.majapahit.id/api/get-scholarship-data"
+      );
+      if (data) {
+        setBeasiswa(data);
+      }
+    } catch (error) {
+      notify(error);
+    }
+  };
 
   const handleHoverCard = (index, status) => {
     let list = [...cardPelatihan];
