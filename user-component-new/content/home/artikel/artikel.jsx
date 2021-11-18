@@ -292,8 +292,9 @@ const Artikel = () => {
                                                         onClick={() => handleFilterKategori(el.nama_kategori)}
                                                         key={i}
                                                     >
-                                                        <div className="my-1 mx-3 py-1 px-3 text-white">
-                                                            {handleCategoryToTrim(el.nama_kategori)}
+                                                        <div className="my-1 mx-3 py-1 px-3 text-white text-truncate">
+                                                            {/* {handleCategoryToTrim(el.nama_kategori)} */}
+                                                            {el.nama_kategori}
                                                         </div>
                                                     </div>
                                                 </SplideSlide>
@@ -305,8 +306,9 @@ const Artikel = () => {
                                                         onClick={() => handleFilterKategori(el.nama_kategori)}
                                                         key={i}
                                                     >
-                                                        <div className="my-1 mx-3 py-1 px-3 text-muted">
-                                                            {handleCategoryToTrim(el.nama_kategori)}
+                                                        <div className="my-1 mx-3 py-1 px-3 text-muted text-truncate">
+                                                            {/* {handleCategoryToTrim(el.nama_kategori)} */}
+                                                            {el.nama_kategori}
                                                         </div>
                                                     </div> 
                                                 </SplideSlide>

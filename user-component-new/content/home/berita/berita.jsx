@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import {
     Container,
-    Modal
+    Card
   } from "react-bootstrap";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 
@@ -295,8 +295,9 @@ const Berita = () => {
                                                         onClick={() => handleFilterKategori(el.nama_kategori)}
                                                         key={i}
                                                     >
-                                                        <div className="my-1 mx-3 py-1 px-3 text-white">
-                                                            {handleCategoryToTrim(el.nama_kategori)}
+                                                        <div className="my-1 mx-3 py-1 px-3 text-white text-truncate">
+                                                            {/* {handleCategoryToTrim(el.nama_kategori)} */}
+                                                            {el.nama_kategori}
                                                         </div>
                                                     </div>
                                                 </SplideSlide>
@@ -308,8 +309,9 @@ const Berita = () => {
                                                         onClick={() => handleFilterKategori(el.nama_kategori)}
                                                         key={i}
                                                     >
-                                                        <div className="my-1 mx-3 py-1 px-3 text-muted">
-                                                            {handleCategoryToTrim(el.nama_kategori)}
+                                                        <div className="my-1 mx-3 py-1 px-3 text-muted text-truncate">
+                                                            {/* {handleCategoryToTrim(el.nama_kategori)} */}
+                                                            {el.nama_kategori}
                                                         </div>
                                                     </div> 
                                                 </SplideSlide>
@@ -524,131 +526,258 @@ const Berita = () => {
                             berita && berita.berita && berita.berita.length !== 0 ?
                                 berita.berita.map ((el, i) => {
                                     return (
-                                        <div className="row my-15 ml-5 " key={i}>
-                                            <div className="col col-7">
-                                                <div className="row d-flex justify-content-between align-items-center">
-                                                    <div className=" d-flex align-self-center mb-2">
-                                                        <div className="border rounded-circle p-2 d-flex justify-content-center align-self-center">
-                                                            {/* Insert Logo Image Here */}
-                                                            <Image
-                                                                // src="/assets/media/logo-default.png" 
+                                        <div className="card border-0 my-15 ml-5" key={i}>
+                                            <div className="row">
+                                                <div className="col-7">
+                                                    <div className="d-flex flex-row justify-content-between align-items-center">
+                                                        <div className=" d-flex align-self-center mb-2">
+                                                            <div className="border rounded-circle p-2 d-flex justify-content-center align-self-center">
+                                                                {/* Insert Logo Image Here */}
+                                                                <Image
+                                                                    // src="/assets/media/logo-default.png" 
+                                                                    src={
+                                                                        process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                                                        "publikasi/images/" + el.foto
+                                                                    }
+                                                                    width={20}
+                                                                    height={20}
+                                                                    alt="Logo Image"
+                                                                    className="rounded-circle"
+                                                                />
+                                                            </div>
+                                                            
+                                                            <span className="font-weight-bolder ml-2 my-auto">
+                                                                {/* Insert Admin Here */}
+                                                                {el.dibuat}
+                                                            </span>
+                                                        </div>
+
+                                                        <div className="mr-2 mb-3">
+                                                            <div className="badge badge-pill badge-light mr-2">
+                                                                <div className="text-primary p-1">
+                                                                    {/* Insert Kategori Here */}
+                                                                    {el.nama_kategori}
+                                                                </div>
+                                                            </div>
+                                                            {
+                                                                windowDimensions && windowDimensions.width && windowDimensions.width > 500 ?
+                                                                    <span className="font-weight-bolder">
+                                                                        {/* Insert Akademi Here */}
+                                                                        | {el.kategori_akademi}
+                                                                    </span>
+                                                                :
+                                                                    null
+                                                            }
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="my-5">
+                                                        {/* Insert Title Here */}
+                                                        <Link href={`/berita/detail/${el.slug}`}>
+                                                            <a>
+                                                                <h1 className="text-dark text-truncate">
+                                                                    {/* {handleTitleToTrim(el.judul)} */}
+                                                                    {el.judul}
+                                                                </h1>
+                                                            </a>
+                                                        </Link>
+                                                        
+                                                    </div>
+                                                    
+                                                    {
+                                                        windowDimensions && windowDimensions.width && windowDimensions.width > 770 ?
+                                                            <div 
+                                                                className="my-5 d-flex flex-wrap "
+                                                            >
+                                                                {/* Insert Desc Here */}
+                                                                <div 
+                                                                    dangerouslySetInnerHTML={{__html: handleDescToTrim(el.isi_berita)}}
+                                                                    className="text-wrap d-flex flex-wrap overflow-hidden text-truncate"
+                                                                    style={{maxWidth:"450px"}}
+                                                                />
+                                                            </div>
+                                                        :
+                                                            null
+                                                    }
+                                                    
+                                                    <div className="mb-3 d-flex flex-row align-items-center">
+                                                        {/* Insert Date and View Here */}
+                                                        <div className="text-muted col-xl-5 col-12 pl-0">
+                                                            {moment(el.tanggal_publish).format("DD MMMM")} | {el.dibaca} dibaca
+                                                        </div>
+
+                                                        {/* Insert Tag(s) here */}
+                                                        <div className="col-xl-7 col-12 d-flex flex-row flex-wrap my-3 pl-0 ">
+                                                            {
+                                                                el.tag && el.tag.length !== 0 ?
+                                                                    el.tag.map ((element, index) => {
+                                                                        return (
+                                                                            <div 
+                                                                                className=" border px-2 py-1 my-1 mr-3"
+                                                                                onClick={() => handleFilterTag(element)}
+                                                                                style={{cursor:"pointer"}}
+                                                                                key={index}
+                                                                            >
+                                                                                #{element.toUpperCase()}
+                                                                            </div>
+                                                                        )
+                                                                    })
+                                                                    
+                                                                :
+                                                                    null
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div 
+                                                    className="col-5 position-relative"
+                                                    style={{objectFit:"cover"}}
+                                                >
+                                                    {/* Insert Card Image Here */}
+                                                    <Link href={`/berita/detail/${el.slug}`}>
+                                                            <a>
+                                                                <Image
                                                                 src={
                                                                     process.env.END_POINT_API_IMAGE_PUBLIKASI +
-                                                                    "publikasi/images/" + el.foto
+                                                                    "publikasi/images/" + el.gambar
                                                                 }
-                                                                width={20}
-                                                                height={20}
-                                                                alt="Logo Image"
-                                                                className="rounded-circle"
+                                                                width={350}
+                                                                height={250}
+                                                                alt="Card Image"
+                                                                className="rounded-lg"
                                                             />
-                                                        </div>
-                                                        
-                                                        <span className="font-weight-bolder ml-2 my-auto">
-                                                            {/* Insert Admin Here */}
-                                                            {el.dibuat}
-                                                        </span>
-                                                    </div>
-
-                                                    <div className="mr-2 mb-3">
-                                                        <div className="badge badge-pill badge-light mr-2">
-                                                            <div className="text-primary p-1">
-                                                                {/* Insert Kategori Here */}
-                                                                {el.nama_kategori}
-                                                            </div>
-                                                        </div>
-                                                        {
-                                                            windowDimensions && windowDimensions.width && windowDimensions.width > 500 ?
-                                                                <span className="font-weight-bolder">
-                                                                    {/* Insert Akademi Here */}
-                                                                    | {el.kategori_akademi}
-                                                                </span>
-                                                            :
-                                                                null
-                                                        }
-                                                    </div>
-                                                </div>
-
-                                                <div className="row my-5">
-                                                    {/* Insert Title Here */}
-                                                    <Link href={`/berita/detail/${el.slug}`}>
-                                                        <a>
-                                                            <h1 className="text-dark text-wrap">
-                                                                {handleTitleToTrim(el.judul)}
-                                                            </h1>
                                                         </a>
                                                     </Link>
-                                                    
                                                 </div>
-                                                
-                                                {
-                                                    windowDimensions && windowDimensions.width && windowDimensions.width > 770 ?
-                                                        <div 
-                                                            className="row my-5 d-flex flex-wrap "
-                                                        >
-                                                            {/* Insert Desc Here */}
-                                                            <div 
-                                                                dangerouslySetInnerHTML={{__html: handleDescToTrim(el.isi_berita)}}
-                                                                className="text-wrap d-flex flex-wrap overflow-hidden"
-                                                                style={{maxWidth:"450px"}}
-                                                            />
-                                                        </div>
-                                                    :
-                                                        null
-                                                }
-                                                
-                                                <div className="row mb-3 d-flex align-items-center">
-                                                    {/* Insert Date and View Here */}
-                                                    <div className="text-muted col-xl-5 col-12 pl-0">
-                                                        {moment(el.tanggal_publish).format("DD MMMM")} | {el.dibaca} dibaca
-                                                    </div>
-
-                                                    {/* Insert Tag(s) here */}
-                                                    <div className="col-xl-7 col-12 d-flex flex-row flex-wrap my-3 pl-0 ">
-                                                        {
-                                                            el.tag && el.tag.length !== 0 ?
-                                                                el.tag.map ((element, index) => {
-                                                                    return (
-                                                                        <div 
-                                                                            className=" border px-2 py-1 my-1 ml-3"
-                                                                            onClick={() => handleFilterTag(element)}
-                                                                            style={{cursor:"pointer"}}
-                                                                            key={index}
-                                                                        >
-                                                                            #{element.toUpperCase()}
-                                                                        </div>
-                                                                    )
-                                                                })
-                                                                
-                                                            :
-                                                                null
-                                                        }
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div 
-                                                className="col col-5 position-relative d-flex align-self-center" 
-                                                // style={{objectFit:"contain"}}
-                                                style={{objectFit:"cover"}}
-                                            >
-                                                {/* Insert Card Image Here */}
-                                                <Link href={`/berita/detail/${el.slug}`}>
-                                                    <a>
-                                                        <Image
-                                                            src={
-                                                                process.env.END_POINT_API_IMAGE_PUBLIKASI +
-                                                                "publikasi/images/" + el.gambar
-                                                            }
-                                                            width={350}
-                                                            height={250}
-                                                            alt="Card Image"
-                                                            className="rounded-lg"
-                                                        />
-                                                    </a>
-                                                </Link>
-                                                
                                             </div>
                                         </div>
+
+                                        // <div className="row my-15 ml-5 " key={i}>
+                                        //     <div className="col col-7">
+                                        //         <div className="row d-flex justify-content-between align-items-center">
+                                        //             <div className=" d-flex align-self-center mb-2">
+                                        //                 <div className="border rounded-circle p-2 d-flex justify-content-center align-self-center">
+                                        //                     {/* Insert Logo Image Here */}
+                                        //                     <Image
+                                        //                         // src="/assets/media/logo-default.png" 
+                                        //                         src={
+                                        //                             process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                        //                             "publikasi/images/" + el.foto
+                                        //                         }
+                                        //                         width={20}
+                                        //                         height={20}
+                                        //                         alt="Logo Image"
+                                        //                         className="rounded-circle"
+                                        //                     />
+                                        //                 </div>
+                                                        
+                                        //                 <span className="font-weight-bolder ml-2 my-auto">
+                                        //                     {/* Insert Admin Here */}
+                                        //                     {el.dibuat}
+                                        //                 </span>
+                                        //             </div>
+
+                                        //             <div className="mr-2 mb-3">
+                                        //                 <div className="badge badge-pill badge-light mr-2">
+                                        //                     <div className="text-primary p-1">
+                                        //                         {/* Insert Kategori Here */}
+                                        //                         {el.nama_kategori}
+                                        //                     </div>
+                                        //                 </div>
+                                        //                 {
+                                        //                     windowDimensions && windowDimensions.width && windowDimensions.width > 500 ?
+                                        //                         <span className="font-weight-bolder">
+                                        //                             {/* Insert Akademi Here */}
+                                        //                             | {el.kategori_akademi}
+                                        //                         </span>
+                                        //                     :
+                                        //                         null
+                                        //                 }
+                                        //             </div>
+                                        //         </div>
+
+                                        //         <div className="row my-5">
+                                        //             {/* Insert Title Here */}
+                                        //             <Link href={`/berita/detail/${el.slug}`}>
+                                        //                 <a>
+                                        //                     <h1 className="text-dark text-wrap">
+                                        //                         {handleTitleToTrim(el.judul)}
+                                        //                     </h1>
+                                        //                 </a>
+                                        //             </Link>
+                                                    
+                                        //         </div>
+                                                
+                                        //         {
+                                        //             windowDimensions && windowDimensions.width && windowDimensions.width > 770 ?
+                                        //                 <div 
+                                        //                     className="row my-5 d-flex flex-wrap "
+                                        //                 >
+                                        //                     {/* Insert Desc Here */}
+                                        //                     <div 
+                                        //                         dangerouslySetInnerHTML={{__html: handleDescToTrim(el.isi_berita)}}
+                                        //                         className="text-wrap d-flex flex-wrap overflow-hidden"
+                                        //                         style={{maxWidth:"450px"}}
+                                        //                     />
+                                        //                 </div>
+                                        //             :
+                                        //                 null
+                                        //         }
+                                                
+                                        //         <div className="row mb-3 d-flex align-items-center">
+                                        //             {/* Insert Date and View Here */}
+                                        //             <div className="text-muted col-xl-5 col-12 pl-0">
+                                        //                 {moment(el.tanggal_publish).format("DD MMMM")} | {el.dibaca} dibaca
+                                        //             </div>
+
+                                        //             {/* Insert Tag(s) here */}
+                                        //             <div className="col-xl-7 col-12 d-flex flex-row flex-wrap my-3 pl-0 ">
+                                        //                 {
+                                        //                     el.tag && el.tag.length !== 0 ?
+                                        //                         el.tag.map ((element, index) => {
+                                        //                             return (
+                                        //                                 <div 
+                                        //                                     className=" border px-2 py-1 my-1 mr-3"
+                                        //                                     onClick={() => handleFilterTag(element)}
+                                        //                                     style={{cursor:"pointer"}}
+                                        //                                     key={index}
+                                        //                                 >
+                                        //                                     #{element.toUpperCase()}
+                                        //                                 </div>
+                                        //                             )
+                                        //                         })
+                                                                
+                                        //                     :
+                                        //                         null
+                                        //                 }
+                                        //             </div>
+                                        //         </div>
+                                        //     </div>
+
+                                        //     <div 
+                                        //         className="col col-5 position-relative d-flex align-self-center" 
+                                        //         // style={{objectFit:"contain"}}
+                                        //         style={{objectFit:"cover"}}
+                                        //     >
+                                        //         {/* Insert Card Image Here */}
+                                        //         <Link href={`/berita/detail/${el.slug}`}>
+                                        //             <a>
+                                        //                 <Image
+                                        //                     src={
+                                        //                         process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                        //                         "publikasi/images/" + el.gambar
+                                        //                     }
+                                        //                     width={350}
+                                        //                     height={250}
+                                        //                     alt="Card Image"
+                                        //                     className="rounded-lg"
+                                        //                 />
+                                        //             </a>
+                                        //         </Link>
+                                                
+                                        //     </div>
+                                        // </div>
                                     )
                                 })
                                 
