@@ -75,6 +75,36 @@ const Faq = ({ token }) => {
 
     }, [dispatch, isDeleted, isUpdated])
 
+    const getWindowDimensions = () => {
+        // if (typeof window === 'undefined') {
+        //     global.window = {}
+        // }
+
+        const { innerWidth: width, innerHeight: height } = window;
+        return {
+            width,
+            height,
+        };
+    };
+
+    const [windowDimensions, setWindowDimensions] = useState(
+        // getWindowDimensions()
+        {}
+    );
+
+    useEffect(() => {
+        function handleResize() {
+            setWindowDimensions(getWindowDimensions());
+        }
+        setWindowDimensions(getWindowDimensions());
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, [faq])
+
+    useEffect(() => {
+
+    }, [windowDimensions])
+
     const onSetPin = (e, data) => {
         const dataToSend = {
             pinned: e.target.checked === true ? 1 : 0,
@@ -689,22 +719,7 @@ const Faq = ({ token }) => {
                                                 activePage={page}
                                                 itemsCountPerPage={faq.perPage}
                                                 totalItemsCount={faq.total}
-                                                pageRangeDisplayed={3}
-                                                onChange={handlePagination}
-                                                nextPageText={'>'}
-                                                prevPageText={'<'}
-                                                firstPageText={'<<'}
-                                                lastPageText={'>>'}
-                                                itemClass='page-item'
-                                                linkClass='page-link'
-                                            />
-                                        </div>
-                                        <div className={`${stylesPag.pagination2} table-pagination`}>
-                                            <Pagination
-                                                activePage={page}
-                                                itemsCountPerPage={faq.perPage}
-                                                totalItemsCount={faq.total}
-                                                pageRangeDisplayed={1}
+                                                pageRangeDisplayed={windowDimensions.width > 320 ? 3 : 1}
                                                 onChange={handlePagination}
                                                 nextPageText={'>'}
                                                 prevPageText={'<'}
