@@ -113,7 +113,7 @@ const Table = ({ token }) => {
                     <tbody>
                       {allUnitWork.data.unit_work.length === 0 ? (
                         <td className="align-middle text-center" colSpan="4">
-                          Data Masih Kosong
+                          Data Kosong
                         </td>
                       ) : (
                         allUnitWork.data.unit_work.map((items, index) => {
