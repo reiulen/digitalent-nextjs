@@ -11,11 +11,11 @@ import {
 import { getAllAkademi } from "../../redux/actions/beranda/beranda.actions";
 
 const Berita = dynamic(() =>
-  import("../../user-component/content/beranda/berita")
+  import("../../user-component-new/content/home/berita/berita")
 );
 
 const Layout = dynamic(() =>
-  import("../../components/wrapper/beranda.wrapper")
+  import("../../user-component-new/components/template/Layout.component")
 );
 
 export default function BerandaBerita(props) {

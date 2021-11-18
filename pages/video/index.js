@@ -6,10 +6,10 @@ import { getAllVideoContent, getTagVideo,getKategoriVideoContent } from "../../r
 import { getDataPribadi } from "../../redux/actions/pelatihan/function.actions"
 
 const VideoPage = dynamic(
-    () => import("../../user-component/content/beranda/videoPage")
+    () => import("../../user-component-new/content/home/video/videoPage")
 )
 const Layout = dynamic(
-    () => import("../../components/wrapper/beranda.wrapper")
+    () => import("../../user-component-new/components/template/Layout.component")
 )
 
 export default function VideoDetail(props) {
