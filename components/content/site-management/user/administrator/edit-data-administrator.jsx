@@ -19,19 +19,14 @@ const TambahApi = ({ token }) => {
   const router = useRouter();
   
   const allUnitWorkList = useSelector((state) => state.allUnitWorkList);
-  // console.log("allUnitWorkList",allUnitWorkList)
   
   const allRolesList = useSelector((state) => state.allRolesList);
-  // console.log("allRolesList",allRolesList)
   
   const allAcademyList = useSelector((state) => state.allAcademyList);
-  // console.log("allAcademyList",allAcademyList)
   
   const allListPelatihan = useSelector((state) => state.allListPelatihan);
-  // console.log("allListPelatihan",allListPelatihan)
   
   const detailAdminSite = useSelector((state) => state.detailAdminSite);
-  console.log("detailAdminSite",detailAdminSite)
 
   const [formData, setFormData] = useState({
     name:detailAdminSite?.adminSite?.data?.name,
@@ -53,7 +48,6 @@ const TambahApi = ({ token }) => {
     trainingAccess:detailAdminSite?.adminSite?.data?.training_access,
     academyIds:detailAdminSite?.adminSite?.data?.academy_ids
   })
-  // console.log("formData",formData)
 
   const handleChangeRole = (e) => {
     let data = e.map((items) => {

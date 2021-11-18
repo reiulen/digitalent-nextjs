@@ -6,8 +6,6 @@ import PageWrapper from "../../../wrapper/page.wrapper";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
 import moment from "moment";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
 import IconCalender from "../../../assets/icon/Calender";
@@ -27,16 +25,6 @@ const RevisiKerjasama = ({ token }) => {
   const [error, setError] = useState({
     catatanREvisi: "",
   });
-  const notify = (value) =>
-    toast.info(`${value}`, {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
 
   const acceptDokument = (e) => {
     e.preventDefault();
@@ -118,7 +106,6 @@ const RevisiKerjasama = ({ token }) => {
     e.preventDefault();
     if (catatanREvisi === "") {
       setError({ ...error, catatanREvisi: "Catatan Revisi harus diisi" });
-      // notify("Catatan Revisi harus diisi");
     } else {
       Swal.fire({
         title: "Apakah anda yakin ingin ajukan revisi ?",
@@ -175,7 +162,7 @@ const RevisiKerjasama = ({ token }) => {
         setTgl_ttd(data.data.signing_date);
         setDokument(data.data.document);
       } catch (error) {
-        notify(error.response.data.message);
+        Swal.fire("Gagal", `${error.response.data.message}`, "error");
       }
     }
     setDataSingle(router.query.id, token);
@@ -184,22 +171,9 @@ const RevisiKerjasama = ({ token }) => {
   return (
     <PageWrapper>
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
-        <ToastContainer
-          position="bottom-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3
-              className="card-title font-weight-bolder text-dark titles-1"
-            >
+            <h3 className="card-title font-weight-bolder text-dark titles-1">
               Submit Dokumen Kerjasama Revisi
             </h3>
           </div>
@@ -270,7 +244,7 @@ const RevisiKerjasama = ({ token }) => {
                   Nomor Perjanjian Kemkominfo
                 </label>
                 <input
-                readOnly
+                  readOnly
                   type="text"
                   name="text_input"
                   className="form-control mb-3 mb-lg-0 border-0"
