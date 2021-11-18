@@ -10,9 +10,6 @@ import IconCalender from "../../../assets/icon/Calender";
 
 import moment from "moment";
 
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-
 const SubmitKerjasama = ({ token }) => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
@@ -61,7 +58,7 @@ const SubmitKerjasama = ({ token }) => {
         setPdfFileError("Please selet valid pdf file");
       }
     } else {
-      alert("select your file");
+      Swal.fire("Gagal", `select your file`, "error");
     }
   };
 
@@ -137,21 +134,13 @@ const SubmitKerjasama = ({ token }) => {
             sessionStorage.removeItem("dataBefore");
             router.push({
               pathname: `/partnership/kerjasama/detail-kerjasama`,
-              query: { id:data.data.id,success: true },
+              query: { id: data.data.id, success: true },
             });
           } catch (error) {
-            notify(error.response.data.message);
+            Swal.fire("Gagal", `${error.response.data.message}`, "error");
           }
         }
       });
-    }
-  };
-
-  const showDocument = () => {
-    if (!viewPDF) {
-      setViewPDF(pdfFile);
-    } else {
-      setViewPDF(null);
     }
   };
 
@@ -183,17 +172,6 @@ const SubmitKerjasama = ({ token }) => {
     checkPeriod(moment(date).format("YYYY-MM-DD"));
   };
 
-  const notify = (value) =>
-    toast.info(`${value}`, {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-
   const [institution_name, setInstituion_name] = useState("");
   const [date, setDate] = useState("");
   const [title, setTitle] = useState("");
@@ -219,23 +197,9 @@ const SubmitKerjasama = ({ token }) => {
   return (
     <PageWrapper>
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
-        <ToastContainer
-          position="bottom-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3
-              className="card-title font-weight-bolder text-dark titles-1"
-            
-            >
+            <h3 className="card-title font-weight-bolder text-dark titles-1">
               Dokumen Kerjasama
             </h3>
           </div>
@@ -285,8 +249,6 @@ const SubmitKerjasama = ({ token }) => {
                         value={newDate}
                         startDate={startDate}
                         endDate={endDate}
-                        
-                        // minDate={startDate}
                         minDate={moment().toDate()}
                         maxDate={addDays(startDate, 20)}
                         dateFormat="dd/MM/yyyy"
@@ -361,7 +323,6 @@ const SubmitKerjasama = ({ token }) => {
                     selectsEnd
                     startDate={startDate}
                     endDate={endDate}
-                    // minDate={startDate}
                     minDate={moment().toDate()}
                     maxDate={addDays(startDate, 20)}
                     dateFormat="dd/MM/yyyy"
@@ -402,19 +363,6 @@ const SubmitKerjasama = ({ token }) => {
                     </label>
                   </div>
                 </div>
-                {pdfFile ? (
-                  <div className="mt-3">
-                    <button
-                      className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
-                      type="button"
-                      onClick={() => showDocument()}
-                    >
-                      {viewPDF ? "Tutup Dokumen" : "Tampilkan dokumen"}
-                    </button>
-                  </div>
-                ) : (
-                  ""
-                )}
                 {error.document ? (
                   <p className="error-text">{error.document}</p>
                 ) : (

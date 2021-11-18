@@ -5,7 +5,6 @@ import IconDoc from "../../../assets/icon/Doc";
 import ImageHero from "../../../../public/assets/media/logos/hero1.png";
 import ImagePlants from "../../../../public//assets/media/logos/Plants1.png";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchDashboard } from "../../../../redux/actions/partnership/dashboard.action";
 import IconCompalation from "../../../../public/assets/icon/Compilation.svg";
 import IconFoldercheck from "../../../../public/assets/icon/Foldercheck.svg";
 import IconWarningCircle from "../../../../public/assets/icon/Warningcircle.svg";
@@ -66,15 +65,12 @@ export default function DashboardPage({ token }) {
       }
     }
     fetchDashboards();
-    // dispatch(fetchDashboard(token));
     getSession().then((session) => {
       setUser(session.user.user.data.user);
     });
   }, [dispatch, token]);
   return (
     <PageWrapper>
-      {/* head content */}
-
       <div
         className="position-relative br-12 bg-white py-10 px-6 overflow-hidden"
         style={{ height: "197px", maxHeight: "197px" }}

@@ -4,14 +4,10 @@ import PageWrapper from "../../../wrapper/page.wrapper";
 import Swal from "sweetalert2";
 import { useRouter } from "next/router";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { updateMasterCategory } from "../../../../redux/actions/partnership/mk_cooporation.actions";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 const Edit = ({ token }) => {
   const router = useRouter();
-  let dispatch = useDispatch();
   const allMKCooporation = useSelector((state) => state.allMKCooporation);
   const [categoryCooporation, setCategoryCooporation] = useState("");
   const [stateDataSingleOld, setStateDataSingleOld] = useState([]);
@@ -69,10 +65,8 @@ const Edit = ({ token }) => {
     e.preventDefault();
 
     if (categoryCooporation === "") {
-      // notify("Kategory kerjasama tidak boleh kosong")
       Swal.fire("Gagal", `Kategori kerjasama tidak boleh kosong`, "error");
     } else if (stateDataSingle[0].name === "") {
-      // notify("Form kerjasama tidak boleh kosong")
       Swal.fire("Gagal", `Form kerjasama tidak boleh kosong`, "error");
     } else {
       Swal.fire({
@@ -117,7 +111,6 @@ const Edit = ({ token }) => {
             }
           }
 
-          // dispatch(updateMasterCategory(token, formData, router.query.id));
           try {
             let { data } = await axios.post(
               `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/${router.query.id}`,
@@ -145,16 +138,7 @@ const Edit = ({ token }) => {
     }
   };
 
-  const notify = (value) =>
-    toast.info(`${value}`, {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
+
 
   useEffect(() => {
     async function getSingleData(id, token) {
@@ -184,7 +168,7 @@ const Edit = ({ token }) => {
         setCategoryCooporation(data.data.cooperation_categories);
         setStatus(data.data.status);
       } catch (error) {
-        notify(error.response.data.message);
+        Swal.fire("Gagal", `${error.response.data.message}`, "error")
       }
     }
     getSingleData(router.query.id, token);
@@ -197,17 +181,6 @@ const Edit = ({ token }) => {
   }, [router.query.id, allMKCooporation.status, router, token]);
   return (
     <PageWrapper>
-      <ToastContainer
-        position="bottom-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">

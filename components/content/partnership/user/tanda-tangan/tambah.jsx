@@ -3,16 +3,12 @@ import Link from "next/link";
 import PageWrapper from "../../../../wrapper/page.wrapper";
 import SignaturePad from "react-signature-pad-wrapper";
 import { useRouter } from "next/router";
-import { useDispatch } from "react-redux";
-
 import Swal from "sweetalert2";
 import SimpleReactValidator from "simple-react-validator";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 import axios from "axios";
 
-const TambahTandaTangan = ({token}) => {
+const TambahTandaTangan = ({ token }) => {
   const signCanvas = useRef({});
   const router = useRouter();
 
@@ -53,7 +49,6 @@ const TambahTandaTangan = ({token}) => {
       Swal.fire({
         icon: "success",
         title: "Tanda Tangan Berhasil di Buat",
-        // text: "Berhasil",
       });
       setTandaTangan(data);
     }
@@ -61,7 +56,6 @@ const TambahTandaTangan = ({token}) => {
       Swal.fire({
         icon: "error",
         title: "Tanda Tangan Sudah dibuat",
-        // text: "Berhasil",
       });
     }
   };
@@ -71,11 +65,9 @@ const TambahTandaTangan = ({token}) => {
     if (nama === "") {
       setError({ ...error, nama: "Harus isi nama" });
       Swal.fire("Gagal", "Harus isi nama", "error");
-   
     } else if (jabatan === "") {
       setError({ ...error, jabatan: "Harus isi jabatan" });
       Swal.fire("Gagal", "Harus isi jabatan", "error");
-  
     } else if (tandaTangan === "") {
       setError({
         ...error,
@@ -85,7 +77,6 @@ const TambahTandaTangan = ({token}) => {
     } else {
       Swal.fire({
         title: "Apakah anda yakin ingin simpan ?",
-        // text: "Data ini tidak bisa dikembalikan !",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -122,40 +113,12 @@ const TambahTandaTangan = ({token}) => {
     }
   };
 
-  const notify = (value) =>
-    toast.info(` ${value}`, {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-
-  const onNewReset = () => {
-    router.replace("/partnership/user/tanda-tangan-digital", undefined, { shallow: true });
-  };
-
   return (
     <PageWrapper>
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
-        <ToastContainer
-          position="bottom-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3
-              className="card-title font-weight-bolder text-dark titles-1"
-            >
+            <h3 className="card-title font-weight-bolder text-dark titles-1">
               Tambah Tanda Tangan Digital
             </h3>
           </div>
@@ -215,13 +178,12 @@ const TambahTandaTangan = ({token}) => {
                         simpleValidator.current.showMessageFor("tandaTangan")
                       }
                     />
-                   
                   </div>
                   {error.tandaTangan ? (
-                  <p className="error-text">{error.tandaTangan}</p>
-                ) : (
-                  ""
-                )}
+                    <p className="error-text">{error.tandaTangan}</p>
+                  ) : (
+                    ""
+                  )}
                   <div className="d-flex flex-wrap align-items-center">
                     <a
                       className="btn btn-sm btn-rounded-full text-blue-primary border-primary mr-5 mt-3"

@@ -1,19 +1,18 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import Style from "../../../../styles/progressbar.module.css";
-
+import Swal from "sweetalert2";
 import {
   rejectCooperation,
   reloadTable,
 } from "../../../../redux/actions/partnership/user/cooperation.actions";
 
 import axios from "axios";
-import BtnIcon from "../components/BtnIcon";
 import AlertBar from "../components/BarAlert";
 
 function ReviewKerjasama({ token }) {
@@ -23,16 +22,12 @@ function ReviewKerjasama({ token }) {
   const { successSubmitKerjasama } = router.query;
 
   const onNewReset = () => {
-    router.replace(
-      "/partnership/user/kerjasama/review-kerjasama",
-      undefined,
-      { shallow: true }
-    );
+    router.replace("/partnership/user/kerjasama/review-kerjasama", undefined, {
+      shallow: true,
+    });
   };
 
   const cooperationRejection = () => {
-    // e.preventDefault()
-
     Swal.fire({
       title: "Apakah anda yakin ingin batalkan kerjasama ?",
       icon: "warning",
@@ -45,13 +40,10 @@ function ReviewKerjasama({ token }) {
     }).then(async (result) => {
       if (result.value) {
         dispatch(rejectCooperation(router.query.id, token));
-        // setDeleteBar(true);
-        // setIsStatusBar(true);
         router.push({
           pathname: `/partnership/user/kerjasama/`,
           query: { successUpdateStatus: true },
         });
-        // router.push("/partnership/user/kerjasama");
       } else {
         dispatch(reloadTable());
       }
@@ -98,19 +90,21 @@ function ReviewKerjasama({ token }) {
         }
         setStatus(data.data.status_migrates_id.status);
       } catch (error) {
-        notify(error.response.data.message);
+        Swal.fire("Gagal", `${error.response.data.message}`, "error")
       }
     }
 
     cekProgresStatus(router.query.id, token);
   }, [router.query.id, router, token]);
 
-  
-
   return (
     <PageWrapper>
       {successSubmitKerjasama ? (
-        <AlertBar text="Berhasil menyimpan data" className="alert-light-success" onClick={() => onNewReset()}/>
+        <AlertBar
+          text="Berhasil menyimpan data"
+          className="alert-light-success"
+          onClick={() => onNewReset()}
+        />
       ) : (
         ""
       )}
@@ -125,7 +119,6 @@ function ReviewKerjasama({ token }) {
             <div className="row mt-8 mb-10 position-relative">
               <div className="col-2 p-0 relative-progress">
                 <div className="progress-items">
-                  {/* <div className="line-progress"></div> */}
                   <div className="circle-progress active-circle">
                     <span className="title-progress active">
                       Submit Kerjasama

@@ -1,20 +1,17 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import Link from "next/link";
 import PageWrapper from "../../../../wrapper/page.wrapper";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import Select from "react-select";
+
 import {
   fetchListCooperationSelect,
   changeCooperationSelectByID,
   fetchListCooperationSelectById,
 } from "../../../../../redux/actions/partnership/user/cooperation.actions";
 import axios from "axios";
-import BtnIcon from "../../components/BtnIcon";
 import AlertBar from "../../components/BarAlert";
 const DetailDokumenKerjasama = ({ token }) => {
   const dispatch = useDispatch();
@@ -138,7 +135,7 @@ const DetailDokumenKerjasama = ({ token }) => {
               query: { successSubmitKerjasama: true, id: data.data.id },
             });
           } catch (error) {
-            notify(error.response.data.message);
+            Swal.fire("Gagal", `${error.response.data.message}`, "error")
           }
         }
       });
@@ -157,22 +154,12 @@ const DetailDokumenKerjasama = ({ token }) => {
     const val = e.target.value;
     if (val.match(regex)) {
       setError({ ...error, period: "Masukkan angka" });
-      // notify("Masukkan angka");
       setPeriod("");
     } else {
       setPeriod(e.target.value);
     }
   };
-  const notify = (value) =>
-    toast.info(`${value}`, {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
+
 
   const [isProfile, setIsProfile] = useState(false);
   useEffect(() => {
@@ -191,17 +178,6 @@ const DetailDokumenKerjasama = ({ token }) => {
         ""
       )}
       <div className="col-lg-12 order-1 px-0">
-        <ToastContainer
-          position="bottom-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title fw-500 text-dark titles-1 ">
@@ -213,7 +189,6 @@ const DetailDokumenKerjasama = ({ token }) => {
             <div className="row mt-8 mb-10 position-relative">
               <div className="col-2 p-0 relative-progress">
                 <div className="progress-items">
-                  {/* <div className="line-progress"></div> */}
                   <div className="circle-progress active-circle">
                     <span className="title-progress active">
                       Submit Kerjasama
@@ -291,7 +266,6 @@ const DetailDokumenKerjasama = ({ token }) => {
                     style={{ backgroundColor: "transparent" }}
                   />
                   <div className="box-hide-arrow"></div>
-                  {/* icon calender */}
                 </div>
                 {error.date ? <p className="error-text">{error.date}</p> : ""}
               </div>

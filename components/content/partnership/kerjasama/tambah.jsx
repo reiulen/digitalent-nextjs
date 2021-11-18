@@ -14,15 +14,13 @@ import {
   fetchListSelectMitra,
 } from "../../../../redux/actions/partnership/managementCooporation.actions";
 import moment from "moment";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import Select from "react-select";
-import FormSubmit from './submitKerjasama'
+import FormSubmit from "./submitKerjasama";
 
 const Tambah = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const {formSubmit} = router.query
+  const { formSubmit } = router.query;
   const allMK = useSelector((state) => state.allMK);
   // state form data 1
   const [institution_name, setInstitution_name] = useState("");
@@ -54,34 +52,30 @@ const Tambah = ({ token }) => {
   const submit = (e) => {
     e.preventDefault();
 
-    let isError = false
+    let isError = false;
 
-    if(AllCooperation === ""){
+    if (AllCooperation === "") {
       setError({
         ...error,
         AllCooperation: "Kerjasama form tidak boleh kosong",
       });
-    }else{
-      let errorAllCooperation = AllCooperation.map((items)=>{
-        if(!items.cooperation){
-          isError = true
-          return {...items,error:`Harus isi ${items.cooperation_form}`}
-        }else{
-          return {...items}
+    } else {
+      let errorAllCooperation = AllCooperation.map((items) => {
+        if (!items.cooperation) {
+          isError = true;
+          return { ...items, error: `Harus isi ${items.cooperation_form}` };
+        } else {
+          return { ...items };
         }
-      })
-      setAllCooperation(errorAllCooperation)
+      });
+      setAllCooperation(errorAllCooperation);
     }
-
 
     if (institution_name === "") {
       setError({ ...error, institution_name: "Harus pilih nama lembaga" });
-    } 
-    else if (period === "") {
+    } else if (period === "") {
       setError({ ...error, period: "Field periode tidak boleh kosong" });
-    } 
-    
-    else if (date === "") {
+    } else if (date === "") {
       setError({ ...error, date: "Field tanggal tidak boleh kosong" });
     } else if (title === "") {
       setError({ ...error, title: "Field judul kerjasama tidak boleh kosong" });
@@ -90,27 +84,19 @@ const Tambah = ({ token }) => {
         ...error,
         cooperationC_id: "Field kategori kerjasama tidak boleh kosong",
       });
-    } 
-    
-    else if (periodUnit === "") {
+    } else if (periodUnit === "") {
       setError({
         ...error,
         periodUnit: "Field period unit tidak boleh kosong",
-      });;
-    } 
-    else if (AllCooperation === "") {
+      });
+    } else if (AllCooperation === "") {
       setError({
         ...error,
         AllCooperation: "Field kerjasama form tidak boleh kosong",
       });
-    }
-    else if (isError) {
+    } else if (isError) {
       return;
-    } 
-    
-    
-    
-    else {
+    } else {
       Swal.fire({
         title: "Apakah anda yakin ?",
         // text: "Data ini tidak bisa dikembalikan !",
@@ -138,14 +124,14 @@ const Tambah = ({ token }) => {
           sessionStorage.setItem("dataBefore", JSON.stringify(allDataPart));
           router.push({
             pathname: "/partnership/kerjasama/tambah",
-            query:{formSubmit:true}
+            query: { formSubmit: true },
           });
         }
       });
     }
   };
   const onChangePeriod = (e) => {
-    setError({ ...error, period: "" })
+    setError({ ...error, period: "" });
     const regex = new RegExp(/[^0-9]/, "g");
     const val = e.target.value;
     if (val.match(regex)) {
@@ -155,17 +141,6 @@ const Tambah = ({ token }) => {
       setPeriod(e.target.value);
     }
   };
-
-  const notify = (value) =>
-    toast.info(`${value}`, {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
 
   const [cooperationC_id, setCooperationC_id] = useState("");
   const changeSetCooperationC_id = (value) => {
@@ -190,240 +165,236 @@ const Tambah = ({ token }) => {
 
   return (
     <PageWrapper>
-      {!formSubmit ?
-      <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
-        <ToastContainer
-          position="bottom-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
-        <div className="card card-custom card-stretch gutter-b">
-          <div className="card-header border-0">
-            <h3
-              className="card-title font-weight-bolder text-dark titles-1"
-            >
-              Tambah Kerjasama
-            </h3>
-          </div>
-          <div className="card-body pt-0">
-            <form onSubmit={submit}>
-              <div className="fv-row mb-10">
-                <label className="required fw-bold fs-6 mb-2">Tanggal</label>
-                <div className="position-relative">
-                <input
-                  disabled
-                  type="text"
-                  value={date}
-                  name="text_input"
-                  className="form-control mb-3 mb-lg-0 border-0"
-                  style={{backgroundColor:"transparent"}}
-                />
-                <div className="box-hide-arrow"></div>
-                  {/* icon calender */}
-                </div>
-
-                {error.date ? <p className="error-text">{error.date}</p> : ""}
-              </div>
-              <div className="row">
-                <div className="col-12 col-sm-6">
-                  <div className="fv-row mb-6 position-relative" style={{zIndex:"4"}}>
-                    <label className="required fw-bold fs-6 mb-2">
-                      Lembaga
-                    </label>
-                    <Select
-                      onFocus={() =>
-                        setError({ ...error, institution_name: "" })
-                      }
-                      className="basic-single"
-                      classNamePrefix="select"
-                      placeholder="Pilih Lembaga"
-                      defaultValue={allMK?.stateListMitra[0]}
-                      isDisabled={false}
-                      isLoading={false}
-                      isClearable={false}
-                      isRtl={false}
-                      isSearchable={true}
-                      name="color"
-                      onChange={(e) => changeInstitusi(e.label)}
-                      options={allMK?.stateListMitra}
-                    />
-                    {error.institution_name ? (
-                      <p className="error-text">{error.institution_name}</p>
-                    ) : (
-                      ""
-                    )}
-                  </div>
-                </div>
-                <div className="col-12 col-sm-6">
-                  <div className="fv-row mb-6">
-                    <label className="required fw-bold fs-6 mb-2">Email</label>
+      {!formSubmit ? (
+        <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
+          <div className="card card-custom card-stretch gutter-b">
+            <div className="card-header border-0">
+              <h3 className="card-title font-weight-bolder text-dark titles-1">
+                Tambah Kerjasama
+              </h3>
+            </div>
+            <div className="card-body pt-0">
+              <form onSubmit={submit}>
+                <div className="fv-row mb-10">
+                  <label className="required fw-bold fs-6 mb-2">Tanggal</label>
+                  <div className="position-relative">
                     <input
                       disabled
                       type="text"
-                      value={allMK.email}
+                      value={date}
                       name="text_input"
                       className="form-control mb-3 mb-lg-0 border-0"
-                      style={{backgroundColor:"transparent"}}
+                      style={{ backgroundColor: "transparent" }}
                     />
+                    <div className="box-hide-arrow"></div>
+                    {/* icon calender */}
                   </div>
+
+                  {error.date ? <p className="error-text">{error.date}</p> : ""}
                 </div>
-              </div>
-
-            
-
-              <div className="row mb-4">
-                <div className="col-12 col-sm-6">
-                  <div className="form-group mb-4">
-                    <label>Periode Kerjasama</label>
-                    <div className="input-group">
-                      <input
-                        onFocus={() => setError({ ...error, period: "" })}
-                        type="text"
-                        value={period}
-                        className="form-control mb-lg-0"
-                        placeholder="Masukkan Lama Kerjasama"
-                        onChange={(e) => onChangePeriod(e)}
+                <div className="row">
+                  <div className="col-12 col-sm-6">
+                    <div
+                      className="fv-row mb-6 position-relative"
+                      style={{ zIndex: "4" }}
+                    >
+                      <label className="required fw-bold fs-6 mb-2">
+                        Lembaga
+                      </label>
+                      <Select
+                        onFocus={() =>
+                          setError({ ...error, institution_name: "" })
+                        }
+                        className="basic-single"
+                        classNamePrefix="select"
+                        placeholder="Pilih Lembaga"
+                        defaultValue={allMK?.stateListMitra[0]}
+                        isDisabled={false}
+                        isLoading={false}
+                        isClearable={false}
+                        isRtl={false}
+                        isSearchable={true}
+                        name="color"
+                        onChange={(e) => changeInstitusi(e.label)}
+                        options={allMK?.stateListMitra}
                       />
-                      
-                      <div className="input-group-append">
-                        <button
-                          className="btn btn-secondary"
-                          type="button"
-                          disabled
-                        >
-                          Tahun
-                        </button>
-                      </div>
-                      
+                      {error.institution_name ? (
+                        <p className="error-text">{error.institution_name}</p>
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                  </div>
+                  <div className="col-12 col-sm-6">
+                    <div className="fv-row mb-6">
+                      <label className="required fw-bold fs-6 mb-2">
+                        Email
+                      </label>
+                      <input
+                        disabled
+                        type="text"
+                        value={allMK.email}
+                        name="text_input"
+                        className="form-control mb-3 mb-lg-0 border-0"
+                        style={{ backgroundColor: "transparent" }}
+                      />
                     </div>
                   </div>
                 </div>
-              </div>
-              {error.period ? (
-                      <p className="error-text mb-4 mt-0">{error.period}</p>
-                    ) : (
-                      ""
-                    )}
 
-              <div className="fv-row mb-6">
-                <label className="required fw-bold fs-6 mb-2">
-                  Judul Kerjasama
-                </label>
-                <input
-                  onFocus={() => setError({ ...error, title: "" })}
-                  type="text"
-                  name="text_input"
-                  className="form-control mb-3 mb-lg-0"
-                  placeholder="Masukkan judul kerjasama"
-                  onChange={(e) => setTitle(e.target.value)}
-                />
-                {error.title ? <p className="error-text">{error.title}</p> : ""}
-              </div>
+                <div className="row mb-4">
+                  <div className="col-12 col-sm-6">
+                    <div className="form-group mb-4">
+                      <label>Periode Kerjasama</label>
+                      <div className="input-group">
+                        <input
+                          onFocus={() => setError({ ...error, period: "" })}
+                          type="text"
+                          value={period}
+                          className="form-control mb-lg-0"
+                          placeholder="Masukkan Lama Kerjasama"
+                          onChange={(e) => onChangePeriod(e)}
+                        />
 
-              <div className="form-group">
-                <label htmlFor="staticEmail" className="col-form-label">
-                  Kategori kerjasama
-                </label>
-                <div>
-                  <select
-                    onFocus={() => setError({ ...error, cooperationC_id: "" })}
-                    onChange={(e) => changeSetCooperationC_id(e.target.value)}
-                    className="form-control"
-                  >
-                    <option value="">Pilih Kategory Kerjasama</option>
-                    {allMK.cooperationActiveSelect.length === 0
-                      ? ""
-                      : allMK.cooperationActiveSelect.data.map(
-                          (items, index) => {
-                            return (
-                              <option key={index} value={items.id}>
-                                {items.cooperation_categories}
-                              </option>
-                            );
-                          }
-                        )}
-                  </select>
-                  {error.cooperationC_id ? (
-                    <p className="error-text">{error.cooperationC_id}</p>
+                        <div className="input-group-append">
+                          <button
+                            className="btn btn-secondary"
+                            type="button"
+                            disabled
+                          >
+                            Tahun
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {error.period ? (
+                  <p className="error-text mb-4 mt-0">{error.period}</p>
+                ) : (
+                  ""
+                )}
+
+                <div className="fv-row mb-6">
+                  <label className="required fw-bold fs-6 mb-2">
+                    Judul Kerjasama
+                  </label>
+                  <input
+                    onFocus={() => setError({ ...error, title: "" })}
+                    type="text"
+                    name="text_input"
+                    className="form-control mb-3 mb-lg-0"
+                    placeholder="Masukkan judul kerjasama"
+                    onChange={(e) => setTitle(e.target.value)}
+                  />
+                  {error.title ? (
+                    <p className="error-text">{error.title}</p>
                   ) : (
                     ""
                   )}
                 </div>
-              </div>
 
-              {/* looping */}
-              {allMK.singleCooporationSelect.length === 0
-                ? ""
-                : allMK.singleCooporationSelect.data.option.map(
-                    (items, index) => {
-                      return (
-                        <div className="form-group" key={index}>
-                          <label
-                            htmlFor="staticEmail"
-                            className="col-form-label"
-                          >
-                            {items.cooperation_form}
-                          </label>
-                          <div>
-                            <textarea
-                              onFocus={() =>
-                                setError({ ...error, AllCooperation: "" })
-                              }
-                              onChange={(e) => changeFormCooporation(index, e)}
-                              name="cooperation"
-                              id=""
-                              cols="30"
-                              rows="5"
-                              className="form-control"
-                              placeholder={`Masukan ${items.cooperation_form}`}
-                            ></textarea>
-                            {/* {error.AllCooperation ? (
-                              <p className="error-text">
-                                {error.AllCooperation}
-                              </p>
-                            ) : (
-                              ""
-                            )} */}
-                            {AllCooperation[index]?.error ? <p className="error-text">{AllCooperation[index]?.error}</p> :""}
-                          </div>
-                        </div>
-                      );
-                    }
-                  )}
-              {/* end loopingg */}
-              {error.AllCooperation ? (
-                      <p className="error-text">
-                        {error.AllCooperation}
-                      </p>
+                <div className="form-group">
+                  <label htmlFor="staticEmail" className="col-form-label">
+                    Kategori kerjasama
+                  </label>
+                  <div>
+                    <select
+                      onFocus={() =>
+                        setError({ ...error, cooperationC_id: "" })
+                      }
+                      onChange={(e) => changeSetCooperationC_id(e.target.value)}
+                      className="form-control"
+                    >
+                      <option value="">Pilih Kategory Kerjasama</option>
+                      {allMK.cooperationActiveSelect.length === 0
+                        ? ""
+                        : allMK.cooperationActiveSelect.data.map(
+                            (items, index) => {
+                              return (
+                                <option key={index} value={items.id}>
+                                  {items.cooperation_categories}
+                                </option>
+                              );
+                            }
+                          )}
+                    </select>
+                    {error.cooperationC_id ? (
+                      <p className="error-text">{error.cooperationC_id}</p>
                     ) : (
                       ""
                     )}
-              <div className="form-group row">
-                <div className="col-sm-12 d-flex justify-content-end">
-                  <Link href="/partnership/kerjasama">
-                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
-                      Kembali
-                    </a>
-                  </Link>
-                  <button
-                    type="submit"
-                    className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
-                  >
-                    Lanjut
-                  </button>
+                  </div>
                 </div>
-              </div>
-            </form>
+
+                {/* looping */}
+                {allMK.singleCooporationSelect.length === 0
+                  ? ""
+                  : allMK.singleCooporationSelect.data.option.map(
+                      (items, index) => {
+                        return (
+                          <div className="form-group" key={index}>
+                            <label
+                              htmlFor="staticEmail"
+                              className="col-form-label"
+                            >
+                              {items.cooperation_form}
+                            </label>
+                            <div>
+                              <textarea
+                                onFocus={() =>
+                                  setError({ ...error, AllCooperation: "" })
+                                }
+                                onChange={(e) =>
+                                  changeFormCooporation(index, e)
+                                }
+                                name="cooperation"
+                                id=""
+                                cols="30"
+                                rows="5"
+                                className="form-control"
+                                placeholder={`Masukan ${items.cooperation_form}`}
+                              ></textarea>
+                              {AllCooperation[index]?.error ? (
+                                <p className="error-text">
+                                  {AllCooperation[index]?.error}
+                                </p>
+                              ) : (
+                                ""
+                              )}
+                            </div>
+                          </div>
+                        );
+                      }
+                    )}
+                {/* end loopingg */}
+                {error.AllCooperation ? (
+                  <p className="error-text">{error.AllCooperation}</p>
+                ) : (
+                  ""
+                )}
+                <div className="form-group row">
+                  <div className="col-sm-12 d-flex justify-content-end">
+                    <Link href="/partnership/kerjasama">
+                      <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
+                        Kembali
+                      </a>
+                    </Link>
+                    <button
+                      type="submit"
+                      className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
+                    >
+                      Lanjut
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
-      </div>
-       : <FormSubmit token={token} /> }
+      ) : (
+        <FormSubmit token={token} />
+      )}
     </PageWrapper>
   );
 };

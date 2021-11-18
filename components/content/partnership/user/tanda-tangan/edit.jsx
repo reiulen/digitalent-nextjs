@@ -2,17 +2,15 @@ import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import SignaturePad from "react-signature-pad-wrapper";
 import { useRouter } from "next/router";
-import { useDispatch, useSelector } from "react-redux";
 
 import Swal from "sweetalert2";
 import SimpleReactValidator from "simple-react-validator";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import PageWrapper from "../../../../wrapper/page.wrapper";
-import Image from 'next/image'
+import Image from "next/image";
 
-const EditTandaTangan = ({token}) => {
+const EditTandaTangan = ({ token }) => {
   const signCanvas = useRef({});
 
   const [nama, setNama] = useState("");
@@ -52,7 +50,6 @@ const EditTandaTangan = ({token}) => {
       Swal.fire({
         icon: "success",
         title: "Tanda Tangan Berhasil di Buat",
-        // text: "Berhasil",
       });
       setSignature(data);
     }
@@ -60,27 +57,21 @@ const EditTandaTangan = ({token}) => {
       Swal.fire({
         icon: "error",
         title: "Tanda Tangan Sudah dibuat",
-        // text: "Berhasil",
       });
     }
   };
 
-  const submit =  (e) => {
+  const submit = (e) => {
     e.preventDefault();
 
     if (nama === "") {
       setError({ ...error, nama: "Harus isi nama" });
       Swal.fire("Gagal", "Harus isi nama", "error");
-   
     } else if (jabatan === "") {
       setError({ ...error, jabatan: "Harus isi jabatan" });
       Swal.fire("Gagal", "Harus isi jabatan", "error");
-    } 
-   
-    
-    else if (signCanvas.current.isEmpty()){
-
-       Swal.fire({
+    } else if (signCanvas.current.isEmpty()) {
+      Swal.fire({
         title: "Apakah anda yakin ingin simpan ?",
         // text: "Data ini tidak bisa dikembalikan !",
         icon: "warning",
@@ -94,7 +85,7 @@ const EditTandaTangan = ({token}) => {
         if (result.value) {
           try {
             let sendData = {
-              _method:"PUT",
+              _method: "PUT",
               name: nama,
               position: jabatan,
               signature_image: signature !== "" ? signature : "",
@@ -118,15 +109,10 @@ const EditTandaTangan = ({token}) => {
           }
         }
       });
-
-
-    }
-
-     else {
+    } else {
       if (signature !== "") {
         Swal.fire({
           title: "Apakah anda yakin ingin simpan ?",
-          // text: "Data ini tidak bisa dikembalikan !",
           icon: "warning",
           showCancelButton: true,
           confirmButtonColor: "#3085d6",
@@ -138,7 +124,7 @@ const EditTandaTangan = ({token}) => {
           if (result.value) {
             try {
               let sendData = {
-                _method:"PUT",
+                _method: "PUT",
                 name: nama,
                 position: jabatan,
                 signature_image: signature !== "" ? signature : "",
@@ -147,10 +133,10 @@ const EditTandaTangan = ({token}) => {
                 `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/signatures/${router.query.id}`,
                 sendData,
                 {
-                headers: {
-                  authorization: `Bearer ${token}`,
-                },
-              }
+                  headers: {
+                    authorization: `Bearer ${token}`,
+                  },
+                }
               );
 
               router.push({
@@ -158,7 +144,6 @@ const EditTandaTangan = ({token}) => {
                 query: { update: true },
               });
             } catch (error) {
-              
               Swal.fire("Gagal", `${error.response.data.message}`, "error");
             }
           }
@@ -171,53 +156,33 @@ const EditTandaTangan = ({token}) => {
         });
       }
     }
-
-
-
-
-
   };
-
- 
-
-  
 
   useEffect(() => {
     async function setDataSingle(id) {
       try {
-      let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/signatures/${id}`,{
-                headers: {
-                  authorization: `Bearer ${token}`,
-                },
-              }
-      );
+        let { data } = await axios.get(
+          `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/signatures/${id}`,
+          {
+            headers: {
+              authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
-      setNama(data.data.name);
-      setJabatan(data.data.position);
-      setTandaTangan(data.data.signature_image);
-    } catch (error) {
-      notify(error.response.data.message);
-    }
-      
+        setNama(data.data.name);
+        setJabatan(data.data.position);
+        setTandaTangan(data.data.signature_image);
+      } catch (error) {
+        Swal.fire("Gagal", `${error.response.data.message}`, "error");
+      }
     }
     setDataSingle(router.query.id);
-  }, [router.query.id,token]);
+  }, [router.query.id, token]);
 
   return (
     <PageWrapper>
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
-        <ToastContainer
-          position="bottom-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3
@@ -258,10 +223,9 @@ const EditTandaTangan = ({token}) => {
                   className="form-control"
                   placeholder="Masukkan Jabatan"
                   value={jabatan}
-                  
                   onChange={(e) => setJabatan(e.target.value)}
                 />
-                 {error.jabatan ? (
+                {error.jabatan ? (
                   <p className="error-text">{error.jabatan}</p>
                 ) : (
                   ""
@@ -274,18 +238,21 @@ const EditTandaTangan = ({token}) => {
                 <div className="row">
                   <div className="col-sm-2 ">
                     <div className="border my-3">
-                  {!tandaTangan ? "":
-                      <Image
-                        unoptimized={process.env.ENVIRONMENT !== "PRODUCTION"}
-                        src={
-                          process.env.END_POINT_API_IMAGE_PARTNERSHIP +
-                          tandaTangan
-                        }
-                        width={400}
-                        height={400}
-                        alt="logo"
-                      />
-                      }</div>
+                      {!tandaTangan ? (
+                        ""
+                      ) : (
+                        <Image
+                          unoptimized={process.env.ENVIRONMENT !== "PRODUCTION"}
+                          src={
+                            process.env.END_POINT_API_IMAGE_PARTNERSHIP +
+                            tandaTangan
+                          }
+                          width={400}
+                          height={400}
+                          alt="logo"
+                        />
+                      )}
+                    </div>
                   </div>
                   <div className="col-sm-12">
                     <div

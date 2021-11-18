@@ -3,11 +3,10 @@ import PageWrapper from "../../../wrapper/page.wrapper";
 import { useRouter } from "next/router";
 import axios from "axios";
 import Link from "next/link";
-import DetailRevisiKerjasama from './detailRevisiKerjasama'
-
+import Swal from "sweetalert2";
 function RevisiList({ token }) {
   const router = useRouter();
-  
+
   const labelStyle = {
     color: "#E69700",
     fontSize: "14px",
@@ -15,7 +14,7 @@ function RevisiList({ token }) {
     background: "#FFF6E6",
     borderRadius: "4px",
     padding: "4px 10px",
-    width:"max-content"
+    width: "max-content",
   };
 
   const styleList = {
@@ -27,24 +26,24 @@ function RevisiList({ token }) {
   const [listCardREvisi, setListCardREvisi] = useState([]);
 
   useEffect(() => {
-    async function getCardREviewList (id,token){
+    async function getCardREviewList(id, token) {
       try {
-      let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/card-review/${id}`,{
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-        }
-      );
+        let { data } = await axios.get(
+          `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/card-review/${id}`,
+          {
+            headers: {
+              authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
-      setListCardREvisi(data.data);
-    } catch (error) {
-      notify(error.response.data.message);
+        setListCardREvisi(data.data);
+      } catch (error) {
+        Swal.fire("Gagal", `${error.response.data.message}`, "error");
+      }
     }
-
-    }
-    getCardREviewList(router.query.id,token);
-  }, [router.query.id,token]);
+    getCardREviewList(router.query.id, token);
+  }, [router.query.id, token]);
 
   return (
     <PageWrapper>
@@ -63,9 +62,7 @@ function RevisiList({ token }) {
                 : listCardREvisi.map((items, index) => {
                     return (
                       <li key={index} className="mt-5">
-                        <div
-                          className="row  cardContainer"
-                        >
+                        <div className="row  cardContainer">
                           <div className="col-12 col-sm-6">
                             <h1
                               className="fw-500 titles-1"
@@ -80,39 +77,29 @@ function RevisiList({ token }) {
                               Versi.{items.version}
                             </p>
                           </div>
-<div className="col-12 col-sm-6 d-flex justify-content-end">
-                          {items.information2 === "Menunggu Mitra" ? (
-                            // <Link
-                            //   href={{
-                            //     pathname:
-                            //       "/partnership/kerjasama/review-kerjasama",
-                            //     query: {
-                            //       id: router.query.id,
-                            //       version: items.version,
-                            //       statusInfo: items.information2,
-                            //     },
-                            //   }}
-                            // >
-                              <a className="mt-10 mt-sm-0" style={labelStyle}>{items.information2}</a>
-                        
-                          ) : (
-                            <Link
-                              href={{
-                                pathname:
-                                  "/partnership/kerjasama/review-kerjasama",
-                                query: {
-                                  id: router.query.id,
-                                  version: items.version,
-                                  statusInfo: items.information2,
-                                },
-                              }}
-                            >
-                              <a className="btn btn-sm btn-rounded-full bg-blue-primary text-white mt-10 mt-sm-0">
+                          <div className="col-12 col-sm-6 d-flex justify-content-end">
+                            {items.information2 === "Menunggu Mitra" ? (
+                              <a className="mt-10 mt-sm-0" style={labelStyle}>
                                 {items.information2}
                               </a>
-                            </Link>
-                          )}
-                        </div>
+                            ) : (
+                              <Link
+                                href={{
+                                  pathname:
+                                    "/partnership/kerjasama/review-kerjasama",
+                                  query: {
+                                    id: router.query.id,
+                                    version: items.version,
+                                    statusInfo: items.information2,
+                                  },
+                                }}
+                              >
+                                <a className="btn btn-sm btn-rounded-full bg-blue-primary text-white mt-10 mt-sm-0">
+                                  {items.information2}
+                                </a>
+                              </Link>
+                            )}
+                          </div>
                         </div>
                       </li>
                     );
@@ -120,23 +107,20 @@ function RevisiList({ token }) {
             </ul>
 
             <div className="form-group row mt-10">
-                <div className="col-sm-12 d-flex justify-content-end">
-                  <Link
-                    href={{
-                      pathname: `/partnership/kerjasama`
-                    }}
-                  >
-                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
-                      Kembali
-                    </a>
-                  </Link>
-                </div>
+              <div className="col-sm-12 d-flex justify-content-end">
+                <Link
+                  href={{
+                    pathname: `/partnership/kerjasama`,
+                  }}
+                >
+                  <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
+                    Kembali
+                  </a>
+                </Link>
               </div>
+            </div>
           </div>
         </div>
-
-        
-
       </div>
     </PageWrapper>
   );

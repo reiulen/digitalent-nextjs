@@ -44,7 +44,7 @@ import { RESET_VALUE_SORTIR } from "../../../../redux/types/partnership/manageme
 
 const Table = ({ token }) => {
   const router = useRouter();
-  let { update, success, successTerima, successReject, successMakeREvisi } =
+  let { update, successTerima, successReject, successMakeREvisi } =
     router.query;
   let selectRefKerjasama = null;
   let selectRefStatus = null;
@@ -187,7 +187,7 @@ const Table = ({ token }) => {
         );
         setSumWillExpire(data.data.total);
       } catch (error) {
-        notify(error.response.data.message);
+        Swal.fire("Gagal", `${error.response.data.message}`, "error");
       }
     }
     getWillExpire(token);
@@ -533,7 +533,13 @@ const Table = ({ token }) => {
                         allMK.m_cooporation.data.list_cooperations.map(
                           (items, index) => {
                             return (
-                              <tr key={index} style={{backgroundColor:items.visit == 0 ?"#f8f8ff":"inherit"}}>
+                              <tr
+                                key={index}
+                                style={{
+                                  backgroundColor:
+                                    items.visit == 0 ? "#f8f8ff" : "inherit",
+                                }}
+                              >
                                 <td className="text-left align-middle">
                                   {allMK.page === 1
                                     ? index + 1

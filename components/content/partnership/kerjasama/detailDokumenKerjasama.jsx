@@ -1,21 +1,18 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 import Link from "next/link";
 import PageWrapper from "../../../wrapper/page.wrapper";
-import DatePicker from "react-datepicker";
-import { addDays } from "date-fns";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { getSingleCooperation } from "../../../../redux/actions/partnership/managementCooporation.actions";
-import Image from 'next/image'
+import Image from "next/image";
+import Swal from "sweetalert2";
 
 const DetailDokumenKerjasama = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   let { success } = router.query;
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
   const allMK = useSelector((state) => state.allMK);
 
   const [pdfFIle, setPdfFIle] = useState("");
@@ -33,7 +30,7 @@ const DetailDokumenKerjasama = ({ token }) => {
         );
         setPdfFIle(data.data.document_file);
       } catch (error) {
-        notify(error.response.data.message);
+        Swal.fire("Gagal", `${error.response.data.message}`, "error");
       }
     }
 
@@ -70,17 +67,13 @@ const DetailDokumenKerjasama = ({ token }) => {
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3
-              className="card-title font-weight-bolder text-dark mb-0 titles-1"
-     
-            >
+            <h3 className="card-title font-weight-bolder text-dark mb-0 titles-1">
               Detail Kerjasama
             </h3>
           </div>
 
           <div className="card-body pt-0">
             <form>
-
               <label
                 htmlFor="staticEmail"
                 className="col-form-label fz-14"
@@ -176,8 +169,6 @@ const DetailDokumenKerjasama = ({ token }) => {
                 </div>
               </div>
 
-              
-
               <label
                 htmlFor="staticEmail"
                 className="col-form-label fz-14"
@@ -200,20 +191,23 @@ const DetailDokumenKerjasama = ({ token }) => {
               </label>
 
               <div className="border-bottom pb-6">
-              <button type="button" className="btn bg-blue-secondary text-white rounded-full d-flex align-items-center" onClick={() =>
-                      window.open(
-                        `https://dts-partnership-dev.s3.ap-southeast-1.amazonaws.com${pdfFIle}`
-                      )
-                    }>
-                
-                <Image
-                  src="/assets/icon/download-2-fill.svg"
-                  width={16}
-                  height={16}
-                  alt="imagess"
-                />{" "}
-                <p className="mb-0 ml-2">Unduh</p>
-              </button>
+                <button
+                  type="button"
+                  className="btn bg-blue-secondary text-white rounded-full d-flex align-items-center"
+                  onClick={() =>
+                    window.open(
+                      `https://dts-partnership-dev.s3.ap-southeast-1.amazonaws.com${pdfFIle}`
+                    )
+                  }
+                >
+                  <Image
+                    src="/assets/icon/download-2-fill.svg"
+                    width={16}
+                    height={16}
+                    alt="imagess"
+                  />{" "}
+                  <p className="mb-0 ml-2">Unduh</p>
+                </button>
               </div>
 
               {allMK.cooperationById.length === 0 ? (
@@ -226,19 +220,14 @@ const DetailDokumenKerjasama = ({ token }) => {
                   (items, i) => {
                     return (
                       <div className="form-group" key={i}>
-                       
                         <label
-                htmlFor="staticEmail"
-                className="col-form-label fz-14"
-                style={{ color: "#6C6C6C" }}
-              >
-                {items.cooperation_form}
-              </label>
-              <p className="fz-16">
-                {items.form_content}
-              </p>
-
-
+                          htmlFor="staticEmail"
+                          className="col-form-label fz-14"
+                          style={{ color: "#6C6C6C" }}
+                        >
+                          {items.cooperation_form}
+                        </label>
+                        <p className="fz-16">{items.form_content}</p>
                       </div>
                     );
                   }
