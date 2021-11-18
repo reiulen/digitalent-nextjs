@@ -40,11 +40,6 @@ export default function MasterPelatihan({ token }) {
     state => state.updateStatusMaster
   );
 
-  // useEffect(() => {
-  //   console.log(success, "ini success");
-  //   console.log(status);
-  // }, [success, status]);
-
   const AllMasterPendaftaran = useSelector(
     state => state.getAllMasterPelatihan
   );
