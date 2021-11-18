@@ -9,7 +9,7 @@ const FaqPage = dynamic(
 )
 
 const Layout = dynamic(
-    () => import("../../user-component/content/wrapper/layout.wrapper")
+    () => import("../../user-component-new/components/template/Layout.component")
 )
 
 export default function FaqDetail(props) {

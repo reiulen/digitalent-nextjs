@@ -499,6 +499,8 @@ export const deleteTraining = (id, token) => async (dispatch) => {
 };
 //END DELETE TRAINING
 
+
+
 //DETAIL LPJ
 export const getDetailLpj = (id, token) => async (dispatch) => {
   try {
@@ -620,7 +622,7 @@ export const addEvidence = (dataEvidence, token) => async (dispatch) => {
 //END ADD EVIDENCE
 
 //CLONE TRAINING
-export const cloneTraining = (id, token) => async (dispatch) => {
+export const cloneTrainingAction = (id, token) => async (dispatch) => {
   try {
     dispatch({ type: CLONE_TRAINING_REQUEST });
 
@@ -631,7 +633,9 @@ export const cloneTraining = (id, token) => async (dispatch) => {
     };
 
     const { data } = await axios.post(
-      process.env.END_POINT_API_PELATIHAN + `api/pelatihan/${id}`,
+      process.env.END_POINT_API_PELATIHAN + `/api/v1/pelatihan/clone-pelatihan`,{
+        pelatian_id: parseInt(id)
+      },
       config
     );
 

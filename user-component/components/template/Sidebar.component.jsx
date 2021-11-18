@@ -96,13 +96,13 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse }) => {
               } d-flex flex-row`}
             >
               <div className="p-2">
-                <i
+                <div
                   className={`${
                     router.pathname === "/peserta"
                       ? styles.activeIconMenu
                       : styles.iconMenu
                   } ri-pie-chart-line`}
-                ></i>
+                ></div>
               </div>
               <div className="p-2">
                 <td>Dashboard</td>
@@ -114,7 +114,7 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse }) => {
           <Link href="/peserta/administrasi" passHref>
             <div className={`${styles.menuItem} d-flex flex-row`}>
               <div className="p-2">
-                <i className={`${styles.iconMenu} ri-survey-line`}></i>
+                <div className={`${styles.iconMenu} ri-survey-line`}></div>
               </div>
               <div className="p-2">
                 <td>Administrasi</td>
@@ -138,7 +138,7 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse }) => {
               } d-flex flex-row`}
             >
               <div className="p-2">
-                <i
+                <div
                   className={`${
                     router.pathname === "/peserta/test-substansi" ||
                     router.pathname ===
@@ -150,7 +150,7 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse }) => {
                       ? styles.activeIconMenu
                       : styles.iconMenu
                   } ri-article-line`}
-                ></i>
+                ></div>
               </div>
               <div className="p-2">
                 <td>Test Substansi</td>
@@ -168,13 +168,13 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse }) => {
               } d-flex flex-row`}
             >
               <div className="p-2">
-                <i
+                <div
                   className={`${
                     router.pathname === "/peserta/survey"
                       ? styles.activeIconMenu
                       : styles.iconMenu
                   } ri-chat-smile-line`}
-                ></i>
+                ></div>
               </div>
               <div className="p-2">
                 <td>Survey</td>
@@ -192,13 +192,13 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse }) => {
               } d-flex flex-row`}
             >
               <div className="p-2">
-                <i
+                <div
                   className={`${
                     router.pathname === "/peserta/trivia"
                       ? styles.activeIconMenu
                       : styles.iconMenu
                   } ri-lightbulb-line`}
-                ></i>
+                ></div>
               </div>
               <div className="p-2">
                 <td>TRIVIA</td>
@@ -216,13 +216,13 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse }) => {
               } d-flex flex-row`}
             >
               <div className="p-2">
-                <i
+                <div
                   className={`${
                     router.pathname === "/peserta/riwayat-pelatihan"
                       ? styles.activeIconMenu
                       : styles.iconMenu
                   } ri-history-line`}
-                ></i>
+                ></div>
               </div>
               <div className="p-2">
                 <td>Riwayat Pelatihan</td>
@@ -239,13 +239,13 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse }) => {
             } d-flex flex-row`}
           >
             <div className="p-2">
-              <i
+              <div
                 className={`${
                   router.pathname === "/peserta/bookmark"
                     ? styles.activeIconMenu
                     : styles.iconMenu
                 } ri-heart-3-line`}
-              ></i>
+              ></div>
             </div>
             <div className="p-2">
               <td>Bookmark</td>
@@ -255,17 +255,21 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse }) => {
 
         <div>
           <Link href="/peserta/artikel" passHref>
-            <div className={`${
+            <div
+              className={`${
                 router.pathname === "/peserta/artikel"
                   ? styles.activeMenuItem
                   : styles.menuItem
-              } d-flex flex-row`}>
+              } d-flex flex-row`}
+            >
               <div className="p-2">
-                <i className={`${
+                <div
+                  className={`${
                     router.pathname === "/peserta/artikel"
                       ? styles.activeIconMenu
                       : styles.iconMenu
-                  } ri-bar-chart-horizontal-line`}></i>
+                  } ri-bar-chart-horizontal-line`}
+                ></div>
               </div>
               <div className="p-2">
                 <td>Artikel</td>

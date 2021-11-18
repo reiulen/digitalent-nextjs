@@ -138,7 +138,7 @@ const DetailSummary = ({ token }) => {
             titleValue=""
             title="Pendaftar"
             publishedVal=""
-            routePublish={() => handlePublish("")}
+            routePublish={() => {}}
           />
           <CardPage
             background="bg-secondary"

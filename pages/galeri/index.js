@@ -8,13 +8,13 @@ import { getAllBerandaGaleri, getKategoriBerandaGaleri } from "../../redux/actio
 
 const Galeri  =  dynamic (() => 
     import (
-        "../../user-component/content/beranda/galeri"
+        "../../user-component-new/content/home/galeri/galeri"
     )
 )
 
 const Layout = dynamic (() => 
     import (
-        "../../user-component/content/wrapper/layout.wrapper"
+        "../../user-component-new/components/template/Layout.component"
     )
 )
 

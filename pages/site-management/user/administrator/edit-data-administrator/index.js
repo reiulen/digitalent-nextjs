@@ -36,7 +36,7 @@ export default function UserList(props) {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
-    async ({ params, req }) => {
+    async ({ params, req, query }) => {
       const session = await getSession({ req });
       if (!session) {
         return {
@@ -51,9 +51,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
       // await store.dispatch(getAllListPelatihan(session.user.user.data.token));
       // await store.dispatch(getListUnitWorks(session.user.user.data.token));
       // await store.dispatch(getListAcademy(session.user.user.data.token));
-      // await store.dispatch(
-      //   getDetailAdminSite(params.id, session.user.user.data.token)
-      // );
+      await store.dispatch(
+        getDetailAdminSite(query.id, session.user.user.data.token)
+      );
 
       return {
         props: {
