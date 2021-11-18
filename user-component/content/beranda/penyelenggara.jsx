@@ -32,7 +32,8 @@ const Penyelenggara = () => {
     dispatch(getAllPenyeleggaraPage(pageNumber, 24, search, order));
   };
 
-  const handleSearch = () => {
+  const handleSearch = (e) => {
+    e.preventDefault();
     setPage(1);
     dispatch(getAllPenyeleggaraPage(1, 24, search, order));
   };
@@ -63,7 +64,7 @@ const Penyelenggara = () => {
           <div className="filter my-15">
             <Row>
               <Col md={7} className="my-auto">
-                <form className="mb-3">
+                <form className="mb-3" onSubmit={handleSearch}>
                   <div className="input-group">
                     <div className="input-group-prepend">
                       <div
@@ -92,8 +93,7 @@ const Penyelenggara = () => {
                           borderBottomRightRadius: "150px",
                           height: "46px",
                         }}
-                        type="button"
-                        onClick={() => handleSearch()}
+                        type="submit"
                       >
                         Cari
                       </button>
@@ -158,13 +158,20 @@ const Penyelenggara = () => {
                     <div className="penyelenggara-mitra">
                       <div className="penyelenggara-wrapper mx-auto d-flex align-items-center justify-content-center">
                         <Image
-                          src="/assets/media/image-404.png"
+                          src={
+                            (row.agency_logo &&
+                              process.env.END_POINT_API_IMAGE_LOGO_MITRA +
+                                row.agency_logo) ||
+                            `/assets/media/image-404.png`
+                          }
                           width={90}
                           height={90}
                           objectFit="contain"
                         />
                       </div>
-                      <p className="my-5 ">{row.name}</p>
+                      <p className="my-5 d-flex mx-auto justify-content-center">
+                        {row.name.substring(0, 10)}
+                      </p>
                     </div>
                   </Col>
                 ))
