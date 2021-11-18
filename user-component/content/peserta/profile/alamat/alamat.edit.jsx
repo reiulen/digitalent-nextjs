@@ -88,8 +88,9 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
 
   let selectRefKabupatenDomisili = null;
   let selectRefKabupaten = null;
+
   const optionsKabupaten = [];
-  if (dataKabupaten.length !== 0) {
+  if (dataKabupaten?.length !== 0) {
     for (let index = 0; index < dataKabupaten.data.length; index++) {
       let val = {
         value: dataKabupaten.data[index].id,
@@ -99,7 +100,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
     }
   }
   const optionsKabupatenDomisili = [];
-  if (dataKabupatenDomisili.length !== 0) {
+  if (dataKabupatenDomisili?.length !== 0) {
     for (let index = 0; index < dataKabupatenDomisili.data.length; index++) {
       let val = {
         value: dataKabupatenDomisili.data[index].id,

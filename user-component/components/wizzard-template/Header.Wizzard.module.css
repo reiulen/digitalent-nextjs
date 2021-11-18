@@ -1,18 +1,18 @@
 .back {
   background: rgb(67, 158, 255);
-  background: linear-gradient(
-    0deg,
-    rgba(67, 158, 255, 1) 0%,
-    rgba(0, 124, 255, 1) 35%
-  );
+  background: linear-gradient(0deg,
+      rgba(67, 158, 255, 1) 0%,
+      rgba(0, 124, 255, 1) 35%);
 }
 
 .body {
   padding: 40px 0px 45px 0px;
 }
+
 .testBody {
   padding: 40px 0px 50px 0px;
 }
+
 .cardBody {
   background-color: white;
   border: 1px solid #d7e1ea;
@@ -20,6 +20,7 @@
   border-radius: 36px;
   padding: 10px 30px;
 }
+
 .cardBodyTest {
   background-color: transparent;
   border: 1px solid #d7e1ea;
@@ -30,6 +31,7 @@
   float: right;
   margin: 20px 0px;
 }
+
 .textCardLeft {
   font-family: Poppins;
   font-style: normal;
@@ -44,6 +46,7 @@
 
   color: #ffffff;
 }
+
 .textCardRight {
   font-family: Poppins;
   font-style: normal;
@@ -59,6 +62,7 @@
   color: #ffffff;
   float: right;
 }
+
 .mainText {
   font-family: Poppins;
   font-style: normal;
@@ -74,6 +78,7 @@
 
   color: #ffffff;
 }
+
 .subText {
   font-family: Poppins;
   font-style: normal;
@@ -89,6 +94,7 @@
 
   color: #ffffff;
 }
+
 .name {
   font-family: Poppins;
   font-style: normal;
@@ -103,6 +109,7 @@
 
   color: #ffffff;
 }
+
 .nik {
   font-family: Poppins;
   font-style: normal;
@@ -115,6 +122,7 @@
 
   color: #ffffff;
 }
+
 .imageProfile {
   border-radius: 50%;
 }
