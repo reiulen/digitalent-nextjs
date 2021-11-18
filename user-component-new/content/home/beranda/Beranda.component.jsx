@@ -131,6 +131,7 @@ const Beranda = ({ session }) => {
     let obj = [...pelatihan];
     for (let i = 0; i < obj.length; i++) {
       for (let j = 0; j < obj[i].pelatihan.length; j++) {
+        obj[i].pelatihan[j].hover = false;
         if (i === indexTema && j === indexPelatihan) {
           obj[i].pelatihan[j].hover = true;
         }

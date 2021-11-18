@@ -17,15 +17,14 @@ import {
   Form,
   Badge,
 } from "react-bootstrap";
-import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 
-import FilterBar from "../../../../components/FilterBar";
+import FilterBar from "./section/FilterBar.component";
 import BreadcrumbComponent from "../../../components/global/Breadcrumb.component";
 import TrainingReminder from "../../../components/global/TrainingReminder.component";
 import HomeWrapper from "../../../components/wrapper/Home.wrapper";
 
-import style from "../../../../../styles/peserta/dashboard.module.css";
+import style from "../../../../styles/peserta/dashboard.module.css";
 
 import IconClose from "../../../../components/assets/icon/Close";
 import IconLove from "../../../../components/assets/icon/Love";
@@ -34,7 +33,7 @@ import IconTime from "../../../../components/assets/icon-dashboard-peserta/Time"
 import IconPeserta from "../../../../components/assets/icon-dashboard-peserta/Peserta";
 import { SweatAlert } from "../../../../utils/middleware/helper";
 
-import PulseLoaderRender from "../../../../components/loader/PulseLoader";
+import PulseLoaderRender from "../../../components/loader/PulseLoader";
 import { checkRegisterPelatihan } from "../../../../redux/actions/beranda/detail-pelatihan.actions";
 import { getAllPelatihanByAkademi } from "../../../../redux/actions/beranda/detail-akademi.actions";
 
@@ -119,7 +118,6 @@ const DetailAkademi = ({ session }) => {
 
   const handleHoverCard = () => {
     let arr = [...show];
-
     if (
       pelatihan !== undefined &&
       pelatihan.list &&
@@ -136,8 +134,8 @@ const DetailAkademi = ({ session }) => {
 
   const handleMouseEnter = (index) => {
     let arr = [...show];
-
     for (let i = 0; i < arr.length; i++) {
+      arr.splice(i, i, false);
       if (i === index) {
         arr.splice(i, 1, true);
       }
@@ -148,7 +146,6 @@ const DetailAkademi = ({ session }) => {
 
   const handleMouseLeave = (index) => {
     let arr = [...show];
-
     for (let i = 0; i < arr.length; i++) {
       if (i === index) {
         arr.splice(i, 1, false);
@@ -289,7 +286,9 @@ const DetailAkademi = ({ session }) => {
     <>
       <HomeWrapper>
         <BreadcrumbComponent
-          data={[{ link: router.asPath, name: akademi.name }]}
+          data={[
+            { link: router.asPath, name: (akademi && akademi.name) || "-" },
+          ]}
         />
         <section className={`card-akademi`}>
           <Card className="rounded-xl">
@@ -313,7 +312,8 @@ const DetailAkademi = ({ session }) => {
                 <Col md={10}>
                   <Card.Title className="mb-5">
                     <h2>
-                      {akademi.name} ({akademi.slug})
+                      {(akademi && akademi.name) || "-"} (
+                      {(akademi && akademi.slug) || "-"})
                     </h2>
                   </Card.Title>
                   <Card.Text>
