@@ -31,7 +31,13 @@ export const helperRegexNumber = /^[0-9\b]+$/;
 // CARA PAKAI REGEX
 // if (
 //   e.target.value === "" ||
-//   regexNumber.test(e.target.value)
+//   helperRegexNumber.test(e.target.value)
 // ) {
-//   setState(e.target.value);
+//   setKodePosKtp(e.target.value);
 // }
+export const helperRegexGPA = /^[0-4]\.\d\d$/;
+
+export const today = new Date();
+export const dd = today.getDate();
+export const mm = today.getMonth() + 1; //January is 0 so need to add 1 to make it 1!
+export const yyyy = today.getFullYear();

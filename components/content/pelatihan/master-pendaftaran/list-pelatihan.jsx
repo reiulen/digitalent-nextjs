@@ -33,14 +33,12 @@ export default function MasterPelatihan({ token }) {
   const dispatch = useDispatch();
 
   const { loading, error, list } = useSelector(
-    (state) => state.getAllMasterPelatihan
+    state => state.getAllMasterPelatihan
   );
 
-  const AllMasterPelatihan = useSelector(
-    (state) => state.getAllMasterPelatihan
-  );
+  const AllMasterPelatihan = useSelector(state => state.getAllMasterPelatihan);
 
-  const deleted = useSelector((state) => state.deleteMasterPelatihan);
+  const deleted = useSelector(state => state.deleteMasterPelatihan);
 
   useEffect(() => {
     if (
@@ -63,22 +61,22 @@ export default function MasterPelatihan({ token }) {
 
   let selectRefAkademi = null;
 
-  const resetValueSort = (e) => {
+  const resetValueSort = e => {
     e.preventDefault();
     selectRefAkademi.select.clearValue();
     dispatch({ type: RESET_STATUS_FILTER });
   };
 
-  const handleSearch = (e) => {
+  const handleSearch = e => {
     e.preventDefault();
     dispatch(searchKeyword(search));
   };
   const [status, setStatus] = useState();
-  const handleSelectStatus = (e) => {
+  const handleSelectStatus = e => {
     setStatus(e);
   };
 
-  const handleFilter = (e) => {
+  const handleFilter = e => {
     e.preventDefault();
     dispatch(setValueStatus(status.value));
   };
@@ -101,7 +99,7 @@ export default function MasterPelatihan({ token }) {
     AllMasterPelatihan.limit,
   ]);
 
-  const handleDelete = (id) => {
+  const handleDelete = id => {
     Swal.fire({
       title: "Apakah anda yakin ?",
       text: "Data ini tidak bisa dikembalikan !",
@@ -111,7 +109,7 @@ export default function MasterPelatihan({ token }) {
       cancelButtonColor: "#d33",
       confirmButtonText: "Ya !",
       cancelButtonText: "Batal",
-    }).then((result) => {
+    }).then(result => {
       if (result.isConfirmed) {
         dispatch(deleteMasterTraining(id, token));
       }
@@ -159,9 +157,12 @@ export default function MasterPelatihan({ token }) {
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3 className="card-title font-weight-bolder text-dark">
+            <h1
+              className="card-title text-dark mt-2"
+              style={{ fontSize: "24px" }}
+            >
               List Master Pendaftaran
-            </h3>
+            </h1>
             <div className="card-toolbar">
               <Link
                 href="/pelatihan/master-pendaftaran/tambah-form-pendaftaran"
@@ -191,7 +192,7 @@ export default function MasterPelatihan({ token }) {
                       type="text"
                       className="form-control pl-10"
                       placeholder="Ketik disini untuk Pencarian..."
-                      onChange={(e) => setSearch(e.target.value)}
+                      onChange={e => setSearch(e.target.value)}
                     />
                     <button
                       className="btn bg-blue-primary text-white right-center-absolute"
@@ -199,7 +200,7 @@ export default function MasterPelatihan({ token }) {
                         borderTopLeftRadius: "0",
                         borderBottomLeftRadius: "0",
                       }}
-                      onClick={(e) => {
+                      onClick={e => {
                         handleSearch(e);
                       }}
                     >
@@ -263,7 +264,7 @@ export default function MasterPelatihan({ token }) {
                                   Status
                                 </label>
                                 <Select
-                                  ref={(ref) => (selectRefAkademi = ref)}
+                                  ref={ref => (selectRefAkademi = ref)}
                                   className="basic-single"
                                   classNamePrefix="select"
                                   placeholder="Semua"
@@ -273,7 +274,7 @@ export default function MasterPelatihan({ token }) {
                                   isRtl={false}
                                   isSearchable={true}
                                   name="color"
-                                  onChange={(e) => {
+                                  onChange={e => {
                                     handleSelectStatus(e);
                                   }}
                                   options={dataStatus}
@@ -287,14 +288,14 @@ export default function MasterPelatihan({ token }) {
                                   type="button"
                                   data-dismiss="modal"
                                   aria-label="Close"
-                                  onClick={(e) => resetValueSort(e)}
+                                  onClick={e => resetValueSort(e)}
                                 >
                                   Reset
                                 </button>
                                 <button
                                   className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
                                   type="button"
-                                  onClick={(e) => handleFilter(e)}
+                                  onClick={e => handleFilter(e)}
                                 >
                                   Terapkan
                                 </button>
@@ -358,7 +359,7 @@ export default function MasterPelatihan({ token }) {
                                     }`}
                                     key={i}
                                     value={item.status}
-                                    onChange={(e) =>
+                                    onChange={e =>
                                       handleStatusPublish(
                                         e,
                                         item.id,
@@ -431,7 +432,7 @@ export default function MasterPelatihan({ token }) {
                       itemsCountPerPage={list.perPage}
                       totalItemsCount={list.total}
                       pageRangeDisplayed={3}
-                      onChange={(page) => dispatch(setValuePage(page))}
+                      onChange={page => dispatch(setValuePage(page))}
                       nextPageText={">"}
                       prevPageText={"<"}
                       firstPageText={"<<"}
@@ -453,9 +454,7 @@ export default function MasterPelatihan({ token }) {
                           borderColor: "#F3F6F9",
                           color: "#9E9E9E",
                         }}
-                        onChange={(e) =>
-                          dispatch(setValueLimit(e.target.value))
-                        }
+                        onChange={e => dispatch(setValueLimit(e.target.value))}
                       >
                         <option>5</option>
                         <option>10</option>

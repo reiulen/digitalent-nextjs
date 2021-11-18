@@ -12,7 +12,10 @@ import {
   clearErrors,
 } from "../../../../../redux/actions/pelatihan/profile.actions";
 import { UPDATE_DATA_PRIBADI_RESET } from "../../../../../redux/types/pelatihan/profile.type";
-import { helperRegexNumber } from "../../../../../utils/middleware/helper";
+import {
+  helperRegexNumber,
+  SweatAlert,
+} from "../../../../../utils/middleware/helper";
 
 const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
   const dispatch = useDispatch();
@@ -98,12 +101,14 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
 
   useEffect(() => {
     if (errorUpdateData) {
-      toast.error(errorUpdateData);
+      // toast.error(errorUpdateData);
+      SweatAlert("Gagal", errorUpdateData, "error");
       dispatch(clearErrors());
     }
 
     if (success) {
-      toast.success("Berhasil Update Data");
+      SweatAlert("Berhasil", "Berhasil Update Data", "success");
+      // toast.success("Berhasil Update Data");
       dispatch({ type: UPDATE_DATA_PRIBADI_RESET });
       if (wizzard) {
         funcViewEdit(2);
@@ -170,7 +175,6 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
   //     }
   //   }
   // };
-
   const handleSubmit = e => {
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
@@ -362,6 +366,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
                   simpleValidator.current.showMessageFor("tempat lahir")
                 }
               />
+
               {simpleValidator.current.message(
                 "templat lahir",
                 tempatLahir,
@@ -420,7 +425,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
           </Form.Group>
           <Row className="mb-3">
             <Form.Group as={Col} md={6}>
-              <Form.Label>Nomor Handphoness</Form.Label>
+              <Form.Label>Nomor Handphone</Form.Label>
               <Form.Control
                 className={style.formControl}
                 type="text"
@@ -439,15 +444,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
                     "nomor handphone darurat"
                   )
                 }
-                pattern="[0-9]*"
-                // onKeyPress={e => {
-                //   console.log(e);
-                //   console.log(e.charCode, "ini charcode");
-                //   if (e.charCode < 48 && e.charCode > 58) {
-                //     return false;
-                //   }
-                // }}
-                maxlength="14"
+                maxLength="14"
               />
               {simpleValidator.current.message(
                 "nomor handphone darurat",
