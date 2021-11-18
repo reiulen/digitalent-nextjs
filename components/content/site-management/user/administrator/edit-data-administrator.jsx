@@ -1,19 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import Pagination from "react-js-pagination";
 import PageWrapper from "../../../../wrapper/page.wrapper";
 import { useDispatch, useSelector } from "react-redux";
-import LoadingTable from "../../../../LoadingTable";
-import IconEye from "../../../../assets/icon/Eye";
-import IconPencil from "../../../../assets/icon/Pencil";
-import IconDelete from "../../../../assets/icon/Delete";
-import IconAdd from "../../../../assets/icon/Add";
 import IconSearch from "../../../../assets/icon/Search";
-import Image from "next/image";
-import IconPlus from "../../../../../public/assets/icon/Plus.svg";
-import IconMinus from "../../../../../public/assets/icon/Minus.svg";
-
+import Select from "react-select";
+import axios from "axios";
 import {
   getDetailAdminSite,
   getListRoles,
@@ -25,18 +17,59 @@ import {
 const TambahApi = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
+  
   const allUnitWorkList = useSelector((state) => state.allUnitWorkList);
-
+  // console.log("allUnitWorkList",allUnitWorkList)
+  
   const allRolesList = useSelector((state) => state.allRolesList);
-
+  // console.log("allRolesList",allRolesList)
+  
   const allAcademyList = useSelector((state) => state.allAcademyList);
-
+  // console.log("allAcademyList",allAcademyList)
+  
   const allListPelatihan = useSelector((state) => state.allListPelatihan);
-
+  // console.log("allListPelatihan",allListPelatihan)
+  
   const detailAdminSite = useSelector((state) => state.detailAdminSite);
+  console.log("detailAdminSite",detailAdminSite)
+
+  const [formData, setFormData] = useState({
+    name:detailAdminSite?.adminSite?.data?.name,
+    email:detailAdminSite?.adminSite?.data?.email,
+    status:detailAdminSite?.adminSite?.data?.status,
+    password:"",
+    confirmPassword:"",
+    roleOption:allRolesList?.data?.list_role?.map((items) => {
+                    return { ...items, label: items.name, value: items.name };
+                  }),
+    role:detailAdminSite?.adminSite?.data?.roles?.map((items)=>{
+      return {...items,value:items.name,label:items.name}
+    }),
+    unitWorkOption:allUnitWorkList?.data?.unit_work?.map((items) => {
+                    return { ...items, label: items.name, value: items.name };
+                  }),
+    unitWorksIds:detailAdminSite?.adminSite?.data?.unit_work_ids,
+    typeAcces:detailAdminSite?.adminSite?.data?.type_access,
+    trainingAccess:detailAdminSite?.adminSite?.data?.training_access,
+    academyIds:detailAdminSite?.adminSite?.data?.academy_ids
+  })
+  // console.log("formData",formData)
+
+  const handleChangeRole = (e) => {
+    let data = e.map((items) => {
+      return items.id;
+    });
+    setFormData({...formData,role:data,roleOption:e})
+  };
+  const handleChangeUnitWork = (e) => {
+    let data = e.map((items) => {
+      return items.id;
+    });
+    setFormData({...formData,unitWorksIds:data,unitWorkOption:e})
+  };
 
   useEffect(() => {
-    dispatch(getDetailAdminSite(router.query.id, token));
+    // dispatch(getDetailAdminSite(router.query.id, token));
     dispatch(getListRoles(token));
     dispatch(getListUnitWorks(token));
     dispatch(getListAcademy(token));
@@ -56,52 +89,92 @@ const TambahApi = ({ token }) => {
               <div className="form-group">
                 <label>Nama Lengkap</label>
                 <input
+                value={formData.name}
                   type="text"
                   className="form-control"
-                  placeholder="Placeholder"
+                  placeholder="Masukkan nama lengkap"
                 />
               </div>
               <div className="form-group">
                 <label>Email</label>
                 <input
+                value={formData.email}
                   type="email"
                   className="form-control"
-                  placeholder="Placeholder"
+                  placeholder="Masukkan email"
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="exampleSelect1">Status</label>
-                <select className="form-control" id="exampleSelect1">
-                  <option>Placeholder</option>
+                <label>Status</label>
+                {detailAdminSite?.adminSite?.data?.status == 1 ?
+                
+                <select className="form-control">
+                  <option value="1">Aktif</option>
+                  <option value="0">Tidak Aktif</option>
                 </select>
+                :
+                <select className="form-control">
+                  <option value="0">Tidak Aktif</option>
+                  <option value="1">Aktif</option>
+                </select>
+                
+              }
               </div>
               <div className="form-group">
                 <label>Password</label>
                 <input
+                value={formData.password}
                   type="password"
                   className="form-control"
-                  placeholder="Placeholder"
+                  placeholder="Masukkan password"
                 />
               </div>
               <div className="form-group">
                 <label>Konfirmasi Password</label>
                 <input
+                value={formData.confirmPassword}
                   type="password"
                   className="form-control"
-                  placeholder="Placeholder"
+                  placeholder="Masukkan konfirmasi password"
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="exampleSelect1">Role</label>
-                <select className="form-control" id="exampleSelect1">
-                  <option>Placeholder</option>
-                </select>
+                <label>Role</label>
+                <Select
+                  value={formData.role}
+                  className="basic-single"
+                  classNamePrefix="select"
+                  placeholder="Pilih data role"
+                  isDisabled={false}
+                  isLoading={false}
+                  isMulti
+                  // defaultInputValue={}
+                  isClearable={false}
+                  isRtl={false}
+                  isSearchable={true}
+                  name="color"
+                  onChange={(e) => handleChangeRole(e)}
+                  options={formData.roleOption}
+                />
               </div>
               <div className="form-group">
                 <label htmlFor="exampleSelect1">Satuan Kerja</label>
-                <select className="form-control" id="exampleSelect1">
-                  <option>Placeholder</option>
-                </select>
+                <Select
+                  value={formData.unitWorksIds}
+                  className="basic-single"
+                  classNamePrefix="select"
+                  placeholder="Pilih data satuan kerja"
+                  isDisabled={false}
+                  isLoading={false}
+                  isMulti
+                  // defaultInputValue={}
+                  isClearable={false}
+                  isRtl={false}
+                  isSearchable={true}
+                  name="color"
+                  onChange={(e) => handleChangeUnitWork(e)}
+                  options={formData.unitWorkOption}
+                />
               </div>{" "}
               {/* hak akses disini */}
               <h3 className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 mb-5 mt-5 titles-1">

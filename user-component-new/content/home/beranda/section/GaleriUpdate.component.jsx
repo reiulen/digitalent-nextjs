@@ -38,9 +38,11 @@ export default function GaleriUpdate({ gambar }) {
                         <div className="w-100 position-relative sm-mt-0 text-center">
                           <Image
                             src={
-                              process.env.END_POINT_API_IMAGE_PUBLIKASI +
-                              "publikasi/images/" +
-                              row.gambar
+                              (row.gambar &&
+                                process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                  "publikasi/images/" +
+                                  row.gambar) ||
+                              "/assets/media/image-20.png"
                             }
                             alt="Picture of the author"
                             objectFit="cover"
