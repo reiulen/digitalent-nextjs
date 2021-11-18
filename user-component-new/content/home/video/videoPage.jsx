@@ -35,7 +35,7 @@ const VideoPage = () => {
   const { dataTag } = useSelector((state) => state.allTagVideoContent);
   const { kategori } = useSelector((state) => state.kategoriVideoContent);
 
-  const titleToTrim = 10;
+  const titleToTrim = 30;
   const descToTrim = 100;
   
   const [url_video, setUrlVideo] = useState("");
@@ -168,10 +168,12 @@ useEffect(()=> {
 
   const handleFilterPublish = (publish) => {
     setFilterPublish(publish);
+    setSort("")
   };
 
   const handleSort = (sort) => {
     setSort(sort);
+    setFilterPublish("")
   };
 
   const handleFilterKategori = (str) => {
@@ -248,7 +250,7 @@ useEffect(()=> {
 
         {/* Filter Button */}
         <div 
-          className="col-lg-8 col-12 pl-0 ml-0 mt-10 mb-5 pr-15" 
+          className="col-lg-8 col-12 pl-0 ml-0 mt-10 mb-5 pr-12" 
         >
           <Splide
             // hasSliderWrapper
@@ -258,7 +260,12 @@ useEffect(()=> {
               gap: "1rem",
               drag: "free",
               perPage: 4,
-            }}
+              breakpoints:{
+                  830: {
+                      perPage: 2,
+                    },
+              }
+          }}
           >
            
               {kategoriVideo === "" ? (
@@ -295,8 +302,8 @@ useEffect(()=> {
                       onClick={() => handleFilterKategori(row.nama_kategori)}
                       key={i}
                     >
-                      <div className="my-1 mx-5 py-1 px-9 text-white text-center">
-                        {row.nama_kategori}
+                      <div className="my-1 mx-5 py-1 px-9 text-white text-center text-truncate">
+                        {row.nama_kategori.toString().toUpperCase()}
                       </div>
                     </div>
                   </SplideSlide>
@@ -309,8 +316,8 @@ useEffect(()=> {
                       onClick={() => handleFilterKategori(row.nama_kategori)}
                       key={i}
                     >
-                      <div className="my-1 mx-5 py-1 px-9 text-muted text-center">
-                        {row.nama_kategori}
+                      <div className="my-1 mx-5 py-1 px-9 text-muted text-center text-truncate">
+                        {row.nama_kategori.toString().toUpperCase()}
                       </div>
                     </div>
                   </SplideSlide>
@@ -367,7 +374,7 @@ useEffect(()=> {
                             <h5 style={{ marginLeft: "-10px" }}>Urutkan Berdasarkan</h5>
                             <div className="row justify-content-between">
                               <div className="col-6">
-                                {filterPublish === "asc" ? (
+                                {filterPublish === "desc" && sort === "" ? (
                                   <button
                                     className="btn btn-primary rounded-pill btn-block"
                                     onClick={() => handleFilterPublish("")}
@@ -377,7 +384,7 @@ useEffect(()=> {
                                 ) : (
                                   <button
                                     className="btn btn-outline-light rounded-pill btn-block"
-                                    onClick={() => handleFilterPublish("asc")}
+                                    onClick={() => handleFilterPublish("desc")}
                                   >
                                     Terbaru
                                   </button>
@@ -385,7 +392,7 @@ useEffect(()=> {
                               </div>
 
                               <div className="col-6">
-                                {filterPublish === "desc" ? (
+                                {filterPublish === "asc" && sort === "" ? (
                                   <button
                                     className="btn btn-primary rounded-pill btn-block"
                                     onClick={() => handleFilterPublish("")}
@@ -395,7 +402,7 @@ useEffect(()=> {
                                 ) : (
                                   <button
                                     className="btn btn-outline-light rounded-pill btn-block"
-                                    onClick={() => handleFilterPublish("desc")}
+                                    onClick={() => handleFilterPublish("asc")}
                                   >
                                     Terlama
                                   </button>
@@ -404,7 +411,7 @@ useEffect(()=> {
                             </div>
                             <div className="row justify-content-between mt-3">
                               <div className="col-6">
-                                {sort === "asc" ? (
+                                {sort === "asc" && filterPublish === "" ? (
                                   <button
                                     className="btn btn-primary rounded-pill btn-block"
                                     onClick={() => handleSort("")}
@@ -422,7 +429,7 @@ useEffect(()=> {
                               </div>
 
                               <div className="col-6">
-                                {sort === "desc" ? (
+                                {sort === "desc" && filterPublish === "" ? (
                                   <button
                                     className="btn btn-primary rounded-pill btn-block"
                                     onClick={() => handleSort("")}
@@ -458,7 +465,7 @@ useEffect(()=> {
             }
 
             {/* Search Field */}
-            <form className="mb-10 mr-4">
+            <form className="mb-10">
               <div className="input-group">
                   <div className="input-group-prepend">
                       <div 
@@ -535,6 +542,7 @@ useEffect(()=> {
                                 }
                                 width={70}
                                 height={180}
+                                objectFit="cover"
                                 className="rounded"
                                 data-target="#videoPlayerModal"
                                 data-toggle="modal"
@@ -553,11 +561,11 @@ useEffect(()=> {
                               />
                               <div className="card-body">
                                 <div style={{ width: "126%", marginLeft: "-30px" }}>
-                                  <h5 className="card-title" style={{ width: "96%" }}>
-                                    {handleTitleToTrim(row.judul)}
+                                  <h5 className="card-title text-truncate" style={{ width: "96%" }}>
+                                    {row.judul}
                                   </h5>
                                   <div className="d-flex justify-content-between align-items-center">
-                                    <div className="row align-items-center ml-2">
+                                    <div className="row align-items-center">
                                       <div className="border rounded-circle py-1 px-2">
                                         {/* Insert Logo Image Here */}
                                         <Image
@@ -590,7 +598,7 @@ useEffect(()=> {
 
             {/* PAGINATION */}
             <div>
-              {video ? (
+              {video && video.total !== 0? (
                 <div className="table-pagination mb-10" style={{ marginLeft: "35%" }}>
                   <Pagination
                     activePage={activePage}
@@ -636,7 +644,7 @@ useEffect(()=> {
                     <h5 style={{ marginLeft: "-10px" }}>Urutkan Berdasarkan</h5>
                     <div className="row justify-content-between">
                       <div className="col-md-6 col-12">
-                        {filterPublish === "asc" ? (
+                        {filterPublish === "desc" && sort === "" ? (
                           <button
                             className="btn btn-primary rounded-pill btn-block"
                             onClick={() => handleFilterPublish("")}
@@ -646,7 +654,7 @@ useEffect(()=> {
                         ) : (
                           <button
                             className="btn btn-outline-light rounded-pill btn-block"
-                            onClick={() => handleFilterPublish("asc")}
+                            onClick={() => handleFilterPublish("desc")}
                           >
                             Terbaru
                           </button>
@@ -654,7 +662,7 @@ useEffect(()=> {
                       </div>
 
                       <div className="col-md-6 col-12">
-                        {filterPublish === "desc" ? (
+                        {filterPublish === "asc" && sort === ""  ? (
                           <button
                             className="btn btn-primary rounded-pill btn-block"
                             onClick={() => handleFilterPublish("")}
@@ -664,7 +672,7 @@ useEffect(()=> {
                         ) : (
                           <button
                             className="btn btn-outline-light rounded-pill btn-block"
-                            onClick={() => handleFilterPublish("desc")}
+                            onClick={() => handleFilterPublish("asc")}
                           >
                             Terlama
                           </button>
@@ -673,7 +681,7 @@ useEffect(()=> {
                     </div>
                     <div className="row justify-content-between mt-3">
                       <div className="col-md-6 col-12">
-                        {sort === "asc" ? (
+                        {sort === "asc" && filterPublish === "" ? (
                           <button
                             className="btn btn-primary rounded-pill btn-block"
                             onClick={() => handleSort("")}
@@ -691,7 +699,7 @@ useEffect(()=> {
                       </div>
 
                       <div className="col-md-6 col-12">
-                        {sort === "desc" ? (
+                        {sort === "desc" && filterPublish === "" ? (
                           <button
                             className="btn btn-primary rounded-pill btn-block"
                             onClick={() => handleSort("")}

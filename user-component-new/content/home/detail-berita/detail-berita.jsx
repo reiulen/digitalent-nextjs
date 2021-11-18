@@ -260,7 +260,6 @@ const DetailBerita = () => {
 
                                         <form className="mb-10 mx-5">
                                             <div className="input-group">
-                                                {/* <i className="ri-search-line position-absolute my-5 ml-3" style={{zIndex:"10"}} ></i> */}
 
                                                 <div className="input-group-prepend">
                                                     <div 
@@ -275,7 +274,6 @@ const DetailBerita = () => {
                                                     type="text" 
                                                     className="form-control border-left-0 border p-0 bg-light"  
                                                     placeholder="Cari Berita"
-                                                    // style={{borderTopLeftRadius:"150px", borderBottomLeftRadius:"150px"}}
                                                     onChange={(e) => setKeyword(e.target.value)}
                                                 />
                                 

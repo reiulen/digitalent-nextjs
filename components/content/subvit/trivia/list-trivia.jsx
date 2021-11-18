@@ -221,14 +221,21 @@ const ListTrivia = ({ token }) => {
 
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
-          <div className="card-header row border-0 mt-3" style={{ border: '1px solid black' }}>
-            <h1 className={`${styles.headTitle} col-sm-12 col-md-8 col-lg-8 col-xl-9`}>
+          <div
+            className="card-header row border-0 mt-3"
+            style={{ border: "1px solid black" }}
+          >
+            <h1
+              className={`${styles.headTitle} col-sm-12 col-md-8 col-lg-8 col-xl-9`}
+            >
               List TRIVIA
             </h1>
             <div className="col-sm-12 col-md-4 col-lg-4 col-xl-3 card-toolbar">
               <Link href="/subvit/trivia/tambah">
                 {/* <a className="text-white btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2 mr-2"> */}
-                <a className={`${styles.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bolder btn-block`}>
+                <a
+                  className={`${styles.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bolder btn-block`}
+                >
                   <i className="ri-add-fill"></i>
                   Tambah TRIVIA
                 </a>
@@ -258,7 +265,7 @@ const ListTrivia = ({ token }) => {
                         borderBottomLeftRadius: "0",
                       }}
                       onClick={handleSearch}
-                    // UNFINISH
+                      // UNFINISH
                     >
                       Cari
                     </button>
@@ -282,14 +289,14 @@ const ListTrivia = ({ token }) => {
                         <th>Pelaksanaan</th>
                         <th>Bank Soal</th>
                         <th>Status</th>
-                        <th style={{ width: '10px' }}>Aksi</th>
+                        <th style={{ width: "10px" }}>Aksi</th>
                       </tr>
                     </thead>
                     <tbody>
                       {!trivia ||
-                        (trivia && trivia.list_trivia.length === 0) ? (
+                      (trivia && trivia.list_trivia.length === 0) ? (
                         <td className="align-middle text-center" colSpan={6}>
-                          Data Masih Kosong
+                          Data Kosong
                         </td>
                       ) : (
                         trivia &&
@@ -300,16 +307,13 @@ const ListTrivia = ({ token }) => {
                             <tr key={row.id}>
                               <td className="align-middle text-center">
                                 {/* <span className="">{paginate - dividers}</span> */}
-                                {
-                                  limit === null ?
-                                    <span>
-                                      {i + 1 * (page * 5) - (5 - 1)}
-                                    </span>
-                                    :
-                                    <span>
-                                      {i + 1 * (page * limit) - (limit - 1)}
-                                    </span>
-                                }
+                                {limit === null ? (
+                                  <span>{i + 1 * (page * 5) - (5 - 1)}</span>
+                                ) : (
+                                  <span>
+                                    {i + 1 * (page * limit) - (limit - 1)}
+                                  </span>
+                                )}
                               </td>
                               <td className="align-middle">
                                 <b>
@@ -436,11 +440,36 @@ const ListTrivia = ({ token }) => {
                           onBlur={(event) => handleLimit(event)}
                           value={limit}
                         >
-                          <option value='5' selected={limit == "5" ? true : false}>5</option>
-                          <option value='10' selected={limit == "10" ? true : false}>10</option>
-                          <option value='30' selected={limit == "30" ? true : false}>30</option>
-                          <option value='40' selected={limit == "40" ? true : false}>40</option>
-                          <option value='50' selected={limit == "50" ? true : false}>50</option>
+                          <option
+                            value="5"
+                            selected={limit == "5" ? true : false}
+                          >
+                            5
+                          </option>
+                          <option
+                            value="10"
+                            selected={limit == "10" ? true : false}
+                          >
+                            10
+                          </option>
+                          <option
+                            value="30"
+                            selected={limit == "30" ? true : false}
+                          >
+                            30
+                          </option>
+                          <option
+                            value="40"
+                            selected={limit == "40" ? true : false}
+                          >
+                            40
+                          </option>
+                          <option
+                            value="50"
+                            selected={limit == "50" ? true : false}
+                          >
+                            50
+                          </option>
                           {/* <option>5</option>
                           <option>10</option>
                           <option>30</option>

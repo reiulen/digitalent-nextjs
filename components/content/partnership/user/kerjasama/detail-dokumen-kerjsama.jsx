@@ -1,26 +1,22 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 import Link from "next/link";
 import PageWrapper from "../../../../wrapper/page.wrapper";
-import DatePicker from "react-datepicker";
-import { addDays } from "date-fns";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { getSingleCooperation } from "../../../../../redux/actions/partnership/user/cooperation.actions";
 import moment from "moment";
-import Image from 'next/image'
+import Image from "next/image";
+import Swal from "sweetalert2";
 
 const DetailDokumenKerjasama = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   let { success } = router.query;
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
   const allCooperationUser = useSelector((state) => state.allCooperationUser);
 
   const [pdfFIle, setPdfFIle] = useState("");
-  const [showPdf, setShowPdf] = useState(false);
 
   useEffect(() => {
     async function getSingleValue(id) {
@@ -35,7 +31,7 @@ const DetailDokumenKerjasama = ({ token }) => {
         );
         setPdfFIle(data.data.document_file);
       } catch (error) {
-        notify(error.response.data.message);
+        Swal.fire("Gagal", `${error.response.data.message}`, "error")
       }
     }
 
@@ -60,7 +56,6 @@ const DetailDokumenKerjasama = ({ token }) => {
               className="close"
               data-dismiss="alert"
               aria-label="Close"
-              // onClick={onNewReset}
             >
               <span aria-hidden="true">
                 <i className="ki ki-close"></i>
@@ -85,20 +80,6 @@ const DetailDokumenKerjasama = ({ token }) => {
 
           <div className="card-body">
             <form>
-
-
-              {/* <div className="form-group">
-                <label htmlFor="staticEmail" className="col-form-label">
-                  Tanggal
-                </label>
-                <input
-                  readOnly
-                  value=
-                  type="date"
-                  className="form-control"
-                />
-              </div> */}
-
               <label
                 htmlFor="staticEmail"
                 className="col-form-label fz-14"
@@ -107,31 +88,10 @@ const DetailDokumenKerjasama = ({ token }) => {
                 Tanggal
               </label>
               <p className="fz-16">
-                {
-                    allCooperationUser.cooperationById.length === 0
-                      ? ""
-                      : allCooperationUser.cooperationById.data.submission_date
-                  }
+                {allCooperationUser.cooperationById.length === 0
+                  ? ""
+                  : allCooperationUser.cooperationById.data.submission_date}
               </p>
-
-
-
-              {/* <div className="form-group">
-                <label htmlFor="staticEmail" className="col-form-label">
-                  Judul kerjasama
-                </label>
-                <input
-                  readOnly
-                  value={
-                    allCooperationUser.cooperationById.length === 0
-                      ? ""
-                      : allCooperationUser.cooperationById.data.title
-                  }
-                  type="text"
-                  className="form-control"
-                  placeholder="Judul Kerjasama"
-                />
-              </div> */}
 
               <label
                 htmlFor="staticEmail"
@@ -141,26 +101,10 @@ const DetailDokumenKerjasama = ({ token }) => {
                 Judul kerjasama
               </label>
               <p className="fz-16">
-                {
-                    allCooperationUser.cooperationById.length === 0
-                      ? ""
-                      : allCooperationUser.cooperationById.data.title
-                  }
+                {allCooperationUser.cooperationById.length === 0
+                  ? ""
+                  : allCooperationUser.cooperationById.data.title}
               </p>
-
-              {/* <div className="form-group">
-                <label htmlFor="staticEmail" className="col-form-label">
-                  Kategori kerjasama
-                </label>
-                <select name="" id="" className="form-control" disabled>
-                  <option value="Kategori" selected>
-                    {allCooperationUser.cooperationById.length === 0
-                      ? ""
-                      : allCooperationUser.cooperationById.data
-                          .cooperation_category.name}
-                  </option>
-                </select>
-              </div> */}
 
               <label
                 htmlFor="staticEmail"
@@ -171,54 +115,10 @@ const DetailDokumenKerjasama = ({ token }) => {
               </label>
               <p className="fz-16">
                 {allCooperationUser.cooperationById.length === 0
-                      ? ""
-                      : allCooperationUser.cooperationById.data
-                          .cooperation_category.name}
+                  ? ""
+                  : allCooperationUser.cooperationById.data.cooperation_category
+                      .name}
               </p>
-
-              {/* <div className="form-group">
-                <label htmlFor="staticEmail" className="col-form-label">
-                  Periode
-                </label>
-                <div className="row">
-                  <div className="col-12 col-sm-6 form-date-picker">
-                    <DatePicker
-                      className="form-control w-100"
-                      selected={startDate}
-                      onChange={(date) => setStartDate(date)}
-                      selectsStart
-                      readOnly
-                      value={
-                        allCooperationUser.cooperationById.length === 0
-                          ? ""
-                          : allCooperationUser.cooperationById.data
-                              .period_date_start
-                      }
-                      dateFormat="dd/MM/yyyy"
-                      placeholderText="Dari Tanggal"
-                    />
-                  </div>
-                  <div className="col-12 col-sm-6 form-date-picker">
-                    <DatePicker
-                      className="form-control"
-                      selected={endDate}
-                      onChange={(date) => setEndDate(date)}
-                      selectsEnd
-                      value={
-                        allCooperationUser.cooperationById.length === 0
-                          ? ""
-                          : allCooperationUser.cooperationById.data
-                              .period_date_end
-                      }
-                      minDate={startDate}
-                      readOnly
-                      maxDate={addDays(startDate, 20)}
-                      dateFormat="dd/MM/yyyy"
-                      placeholderText="Sampai Tanggal"
-                    />
-                  </div>
-                </div>
-              </div> */}
 
               <label
                 htmlFor="staticEmail"
@@ -228,129 +128,23 @@ const DetailDokumenKerjasama = ({ token }) => {
                 Periode Kerjasama
               </label>
               <p className="fz-16">
-                {
-                        allCooperationUser.cooperationById.length === 0
-                          ? ""
-                          : allCooperationUser.cooperationById.data.period
-                      }
+                {allCooperationUser.cooperationById.length === 0
+                  ? ""
+                  : allCooperationUser.cooperationById.data.period}
                 &nbsp; Tahun (
                 {allCooperationUser.cooperationById.length === 0
                   ? ""
-                  : moment(allCooperationUser.cooperationById.data
-                              .period_date_start).format(
-                      "DD MMMM YYYY"
-                    )}
+                  : moment(
+                      allCooperationUser.cooperationById.data.period_date_start
+                    ).format("DD MMMM YYYY")}
                 &nbsp;-&nbsp;
-                {
-                        allCooperationUser.cooperationById.length === 0
-                          ? ""
-                          : moment(allCooperationUser.cooperationById.data
-                              .period_date_end).format(
-                      "DD MMMM YYYY") 
-                      })
+                {allCooperationUser.cooperationById.length === 0
+                  ? ""
+                  : moment(
+                      allCooperationUser.cooperationById.data.period_date_end
+                    ).format("DD MMMM YYYY")}
+                )
               </p>
-
-
-              {/* <div className="form-group">
-                <label htmlFor="staticEmail" className="col-form-label">
-                  Periode Kerjasama
-                </label>
-                <div className="row">
-                  <div className="col-12 col-sm-6">
-                    <input
-                      type="text"
-                      value={
-                        allCooperationUser.cooperationById.length === 0
-                          ? ""
-                          : allCooperationUser.cooperationById.data.period
-                      }
-                      readOnly
-                      className="form-control"
-                    />
-                  </div>
-                  <div className="col-12 col-sm-6">
-                    <input
-                      type="text"
-                      value={
-                        allCooperationUser.cooperationById.length === 0
-                          ? ""
-                          : allCooperationUser.cooperationById.data.period_unit
-                      }
-                      readOnly
-                      className="form-control"
-                    />
-                  </div>
-                </div>
-              </div> */}
-
-
-
-
-              {/* <div className="form-group">
-                <label htmlFor="staticEmail" className="col-form-label">
-                  Nama Lembaga
-                </label>
-                <input
-                  type="text"
-                  value={
-                    allCooperationUser.cooperationById.length === 0
-                      ? ""
-                      : allCooperationUser.cooperationById.data.institution_name
-                  }
-                  readOnly
-                  className="form-control"
-                />
-              </div> */}
-
-              {/* <div className="form-group">
-                <label htmlFor="staticEmail" className="col-form-label">
-                  Email
-                </label>
-                <input
-                  type="text"
-                  value={
-                    allCooperationUser.cooperationById.length === 0
-                      ? ""
-                      : allCooperationUser.cooperationById.data.email
-                  }
-                  readOnly
-                  className="form-control"
-                />
-              </div> */}
-
-              {/* <div className="form-group">
-                <label htmlFor="staticEmail" className="col-form-label">
-                  Nomor Perjanjian Lembaga
-                </label>
-                <input
-                  type="text"
-                  value={
-                    allCooperationUser.cooperationById.length === 0
-                      ? ""
-                      : allCooperationUser.cooperationById.data
-                          .agreement_number_partner
-                  }
-                  readOnly
-                  className="form-control"
-                />
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="staticEmail" className="col-form-label">
-                  Nomor Perjanjian KemKominfo
-                </label>
-                <input
-                  type="text"
-                  value={
-                    allCooperationUser.cooperationById.length === 0
-                      ? ""
-                      : allCooperationUser.cooperationById.data
-                          .agreement_number_kemkominfo
-                  }
-                  readOnly
-                  className="form-control"
-                />
-              </div> */}
 
               <div className="row">
                 <div className="col-12 col-sm-6">
@@ -394,63 +188,11 @@ const DetailDokumenKerjasama = ({ token }) => {
               </label>
               <p className="fz-16">
                 {allCooperationUser.cooperationById.length === 0
-                          ? ""
-                          : allCooperationUser.cooperationById.data.signing_date}
+                  ? ""
+                  : allCooperationUser.cooperationById.data.signing_date}
               </p>
 
-              {/* <div className="row">
-                <div className="col-12 col-sm-6">
-                  <div className="form-group">
-                    <label htmlFor="staticEmail" className="col-form-label">
-                      Tanggal Penandatanganan
-                    </label>
-                    <input
-                      readOnly
-                      value={
-                        allCooperationUser.cooperationById.length === 0
-                          ? ""
-                          : allCooperationUser.cooperationById.data.signing_date
-                      }
-                      type="date"
-                      className="form-control"
-                    />
-                  </div>
-                </div>
-                <div className="col-12 col-sm-6">
-                  <div className="form-group">
-                    <label htmlFor="staticEmail" className="col-form-label">
-                      Dokumen Kerjasama
-                    </label>
-                    <div className="position-relative overflow-hidden w-100 ">
-                      <input
-                        disabled
-                        type="text"
-                        className="form-control"
-                        placeholder={`${pdfFIle}`}
-                      />
-                      <button
-                        type="button"
-                        className="btn right-center-absolute"
-                        style={{
-                          borderTopLeftRadius: "0",
-                          borderBottomLeftRadius: "0",
-                          backgroundColor: "#D7E1EA",
-                          color: "#6C6C6C",
-                        }}
-                        onClick={() =>
-                          window.open(
-                            `https://dts-partnership-dev.s3.ap-southeast-1.amazonaws.com/partnership/files/document_cooperations/${pdfFIle}`
-                          )
-                        }
-                      >
-                        Buka File
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div> */}
-
-                <label
+              <label
                 htmlFor="staticEmail"
                 className="col-form-label fz-14"
                 style={{ color: "#6C6C6C" }}
@@ -459,53 +201,24 @@ const DetailDokumenKerjasama = ({ token }) => {
               </label>
 
               <div className="border-bottom pb-6">
-              <button type="button" className="btn bg-blue-secondary text-white rounded-full d-flex align-items-center" onClick={() =>
-                      window.open(
-                        `https://dts-partnership-dev.s3.ap-southeast-1.amazonaws.com${pdfFIle}`
-                      )
-                    }>
-                
-                <Image
-                  src="/assets/icon/download-2-fill.svg"
-                  width={16}
-                  height={16}
-                  alt="imagess"
-                />{" "}
-                <p className="mb-0 ml-2">Unduh</p>
-              </button>
+                <button
+                  type="button"
+                  className="btn bg-blue-secondary text-white rounded-full d-flex align-items-center"
+                  onClick={() =>
+                    window.open(
+                      `https://dts-partnership-dev.s3.ap-southeast-1.amazonaws.com${pdfFIle}`
+                    )
+                  }
+                >
+                  <Image
+                    src="/assets/icon/download-2-fill.svg"
+                    width={16}
+                    height={16}
+                    alt="imagess"
+                  />{" "}
+                  <p className="mb-0 ml-2">Unduh</p>
+                </button>
               </div>
-
-              {/* ------------- jangan dihapus !! */}
-
-              {/* <div className="form-group">
-                <label htmlFor="staticEmail" className="col-form-label">
-                  Dokumen Kerjasama
-                </label>
-                <div className="row">
-                  <div className="col-12 col-sm-3">
-                    <button
-                      type="button"
-                      onClick={() => setShowPdf(showPdf ? false : true)}
-                      className="btn btn-primary btn-sm"
-                    >
-                      {showPdf ? "Tutup dokument" : "Lihat Dokumen"}
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              {showPdf ? (
-                <iframe
-                  className="mb-4 border"
-                  src={`https://dts-partnership-dev.s3.ap-southeast-1.amazonaws.com/partnership/files/document_cooperations/${pdfFIle}`}
-                  frameBorder="0"
-                  scrolling="auto"
-                  height={"500px"}
-                  width="100%"
-                ></iframe>
-              ) : (
-                ""
-              )} */}
 
               {/* start loop */}
 
@@ -519,32 +232,14 @@ const DetailDokumenKerjasama = ({ token }) => {
                   (items, i) => {
                     return (
                       <div className="form-group" key={i}>
-                        {/* <label htmlFor="staticEmail" className="col-form-label">
+                        <label
+                          htmlFor="staticEmail"
+                          className="col-form-label fz-14"
+                          style={{ color: "#6C6C6C" }}
+                        >
                           {items.cooperation_form}
                         </label>
-                        <textarea
-                          readOnly
-                          value={items.form_content}
-                          name=""
-                          id=""
-                          cols="30"
-                          rows="5"
-                          className="form-control"
-                          placeholder="Masukkan Tujuan Kerjasama disini"
-                        ></textarea> */}
-
-                        <label
-                htmlFor="staticEmail"
-                className="col-form-label fz-14"
-                style={{ color: "#6C6C6C" }}
-              >
-                {items.cooperation_form}
-              </label>
-              <p className="fz-16">
-                {items.form_content}
-              </p>
-
-              
+                        <p className="fz-16">{items.form_content}</p>
                       </div>
                     );
                   }

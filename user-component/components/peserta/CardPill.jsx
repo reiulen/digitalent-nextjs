@@ -2,10 +2,17 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { Col, Card } from "react-bootstrap";
 
-const CardPill = ({ background, backgroundImg, icon, color, value, title }) => {
+const CardPill = ({ background, backgroundImg, icon, color, value, title, search }) => {
   return (
-    <Col className="px-2">
+    <Col className="px-2" style={{
+      cursor: search ? "pointer" : "default"
+    }}>
       <Card
+      onClick={() => {
+        if(search){
+          search()
+        }
+      }}
         border="transparent"
         className={`${background} px-6 py-8 rounded-xl mb-4`}
         style={{

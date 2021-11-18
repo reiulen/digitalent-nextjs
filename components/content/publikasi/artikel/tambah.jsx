@@ -38,7 +38,6 @@ const TambahArtikel = ({ token, id }) => {
 
   const { loading, error, success } = useSelector((state) => state.newArtikel);
   const { setting } = useSelector(state => state.allSettingPublikasi)
-  // const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(state => state.drowpdownAkademi);
   const { akademi } = useSelector(state => state.allAkademi);
   const {
     loading: allLoading,
@@ -138,7 +137,7 @@ const TambahArtikel = ({ token, id }) => {
         data.splice([i], 1);
       }
     }
-    if ((data).includes(data) !== true) {
+    if ((tag).includes(data) !== true) {
       setTag(data);
     }
   }
@@ -277,7 +276,7 @@ const TambahArtikel = ({ token, id }) => {
               </h3>
             </div>
             <div className="card-body">
-              <form onSubmit={onSubmit}>
+              <div>
                 <div className="form-group">
                   <label
                     htmlFor="staticEmail"
@@ -345,7 +344,7 @@ const TambahArtikel = ({ token, id }) => {
                   </div>
                 </div>
 
-                <div className="form-group">
+                <div className={`${styles.selectKategori} form-group`}>
                   <label
                     htmlFor="staticEmail"
                     className="col-sm-4 col-form-label font-weight-bolder"
@@ -587,10 +586,10 @@ const TambahArtikel = ({ token, id }) => {
                         Kembali
                       </a>
                     </Link>
-                    <button className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill btn-sm`}>Simpan</button>
+                    <button onClick={onSubmit} className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill btn-sm`}>Simpan</button>
                   </div>
                 </div>
-              </form>
+              </div>
             </div>
           </div>
         </div>

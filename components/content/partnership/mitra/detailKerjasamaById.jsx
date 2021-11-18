@@ -1,37 +1,30 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 import Link from "next/link";
 import PageWrapper from "../../../wrapper/page.wrapper";
-import DatePicker from "react-datepicker";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import {
   cancelChangeCategory,
   cancelChangeNamaLembaga,
-  changeCooperationSelectByID,
   fetchListCooperationSelectById,
   fetchDataEmail,
 } from "../../../../redux/actions/partnership/managementCooporation.actions";
-import IconCalender from "../../../assets/icon/Calender";
 import moment from "moment";
 
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import Swal from "sweetalert2";
+
 import Image from "next/image";
 
 const EditDokumentKerjasamaById = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
-  let { idDetail } = router.query;
 
   const allMK = useSelector((state) => state.allMK);
   //
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
   //
   // state onchange form data
-  let singleproduct = useSelector((state) => state.allMK);
   const [isntitusiName, setIsntitusiName] = useState("");
   const [title, setTitle] = useState("");
   const [date, setDate] = useState("");
@@ -48,64 +41,12 @@ const EditDokumentKerjasamaById = ({ token }) => {
 
   // pdf from api
   const [document, setDocument] = useState("");
-  const [showDokument, setShowDokument] = useState(null);
-  // pdf from local upload
-  const [viewPDF, setViewPDF] = useState(null);
-  const [documentLocal, setDocumentLocal] = useState("");
-  const [pdfFile, setPdfFile] = useState(null);
-  const [pdfFileError, setPdfFileError] = useState("");
-  const [NamePDF, setNamePDF] = useState(null);
-  // change state
-  const [changeDokumen, setChangeDokumen] = useState(false);
-
-  // onchange pdf
-  const fileType = ["application/pdf"];
-  const handlePdfFileChange = (e) => {
-    let selectedFile = e.target.files[0];
-    setDocumentLocal(selectedFile);
-    setViewPDF("");
-    if (selectedFile) {
-      if (selectedFile && fileType.includes(selectedFile.type)) {
-        let reader = new FileReader();
-        reader.readAsDataURL(selectedFile);
-        reader.onloadend = (e) => {
-          setPdfFile(e.target.result);
-          setNamePDF(selectedFile.name);
-          setPdfFileError("");
-        };
-      } else {
-        setNamePDF(null);
-        setPdfFile(null);
-        setPdfFileError("Please selet valid pdf file !!");
-      }
-    }
-  };
-
-  // show document
-  const showDocument = () => {
-    if (changeDokumen) {
-      if (!viewPDF) {
-        setViewPDF(pdfFile);
-      } else {
-        setViewPDF(null);
-      }
-    } else {
-      setShowDokument(showDokument ? false : true);
-    }
-  };
 
   const [AllCooperation, setAllCooperation] = useState("");
   const changeFormCooporation = (index, e) => {
     let dataaa = [...allMK.singleCooporationSelect.data.option];
     dataaa[index].cooperation = e.target.value;
     setAllCooperation(dataaa);
-  };
-
-  // onchange textarea default cooperationID
-  const changeDataContentDefault = (event, i) => {
-    let dataCoopertaion = { ...cooperationID };
-    dataCoopertaion.data_content[i].form_content = event.target.value;
-    setCooperationID(dataCoopertaion);
   };
 
   useEffect(() => {
@@ -133,7 +74,7 @@ const EditDokumentKerjasamaById = ({ token }) => {
         setDocument(data.data.document_file);
         setEmail(data.data.email);
       } catch (error) {
-        notify(error.response.data.message);
+        Swal.fire("Gagal", `${error.response.data.message}`, "error");
       }
     }
     setDataSingle(router.query.id, token);
@@ -149,22 +90,9 @@ const EditDokumentKerjasamaById = ({ token }) => {
   return (
     <PageWrapper>
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
-        <ToastContainer
-          position="top-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3
-              className="card-title font-weight-bolder text-dark titles-1"
-            >
+            <h3 className="card-title font-weight-bolder text-dark titles-1">
               Detail Kerjasama
             </h3>
           </div>

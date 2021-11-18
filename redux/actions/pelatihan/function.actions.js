@@ -39,6 +39,8 @@ import {
   ERROR_DROPDOWN_TEMA_BY_AKADEMI,
   GET_DROPDOWN_PELATIHAN_BY_TEMA,
   ERROR_DROPDOWN_PELATIHAN_BY_TEMA,
+  GET_DROPDOWN_FORM_BUILDER,
+  ERROR_DROPDOWN_FORM_BUILDER,
 } from "../../types/pelatihan/function.type";
 
 import axios from "axios";
@@ -129,6 +131,7 @@ export const storeTrainingStep1 = (data) => async (dispatch) => {
 export const getRegistrationStep2 = () => async (dispatch) => {
   const data = {
     judul_form: "",
+    type_form: "",
     formBuilder: [
       {
         key: 1,
@@ -191,6 +194,29 @@ export const dropdownAkademi = (token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ERROR_DROPDOWN_AKADEMI,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const drowpdownFormBuilder = (token) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    const { data } = await axios.get(
+      process.env.END_POINT_API_PELATIHAN + `api/v1/formBuilder/dropdown`,
+      config
+    );
+    dispatch({
+      type: GET_DROPDOWN_FORM_BUILDER,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ERROR_DROPDOWN_FORM_BUILDER,
       payload: error.response.data.message,
     });
   }

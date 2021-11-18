@@ -669,7 +669,7 @@ const Vidio = ({ token }) => {
                                                                     height={50}
                                                                 />
                                                             </td>
-                                                            <td className='align-middle'>{row.kategori}</td>
+                                                            <td className='align-middle' style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '11rem' }}>{row.kategori}</td>
                                                             <td className='align-middle' style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '11rem' }}>{row.judul_video}</td>
                                                             <td className='align-middle'>
                                                                 {
@@ -824,7 +824,7 @@ const Vidio = ({ token }) => {
                             {judul_video}
                         </h2>
 
-                        <div className="mt-10 mb-5 row align-items-center justify-content-between">
+                        <div className="mt-10 mb-5 row justify-content-between">
                             <div className="col-12 col-md-4 col-lg-4">
                                 {
                                     tanggal_publish !== null ?
@@ -833,8 +833,8 @@ const Vidio = ({ token }) => {
                                         ""
                                 }
                             </div>
-                            <div className="col-12 col-md-5 col-lg-6 my-2">
-                                <div className="d-flex flex-row">
+                            <div className="col-12 col-md-5 col-lg-4 my-2">
+                                <div className="d-flex flex-wrap flex-row">
                                     {
                                         tag === null ?
                                             null
@@ -845,7 +845,7 @@ const Vidio = ({ token }) => {
                                                             background: "#fff",
                                                             border: "1px solid #d7e1ea",
                                                         }}
-                                                        className="mr-2 px-3 py-1 rounded"
+                                                        className="mr-2 px-3 py-1 mb-2 rounded"
                                                         key={i}
                                                     >
                                                         <div
@@ -860,7 +860,7 @@ const Vidio = ({ token }) => {
                                     }
                                 </div>
                             </div>
-                            <div className="col-12 col-md-3 col-lg-2 text-sm-right text-md-right text-lg-right">
+                            <div className="col-12 col-md-3 col-lg-4 text-sm-right text-md-right text-lg-right">
                                 {kategori === null ? null : (
                                     <span className="p-2 badge  badge-light font-weight-bold text-primary">
                                         {kategori}
@@ -868,7 +868,7 @@ const Vidio = ({ token }) => {
                                 )}
                             </div>
 
-                            <div className={`${styles.descriptionVideo} text-break m-4`}>
+                            <div className={`${styles.descriptionVideo} text-break text-justify m-4`}>
                                 <span>
                                     {isiVideo}
                                 </span>

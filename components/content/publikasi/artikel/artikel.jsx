@@ -655,7 +655,7 @@ const Artikel = ({ token }) => {
                                   height={50}
                                 />
                               </td>
-                              <td className="align-middle">
+                              <td className="align-middle" style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '11rem' }}>
                                 {artikel.nama_kategori}
                               </td>
                               <td className="align-middle" style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '11rem' }}>

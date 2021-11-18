@@ -147,6 +147,9 @@
   .isiBerita {
     font-size: 8px;
   }
+  .kolomCari{
+    font-size: 8px;
+  }
 }
 
 @media only screen and (max-width: 556px) {

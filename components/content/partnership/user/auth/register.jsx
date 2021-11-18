@@ -3,12 +3,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import AuthWrapper from "../../../../wrapper/auth.wrapper";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import Swal from "sweetalert2";
 import { useSelector, useDispatch } from "react-redux";
 import { mitraRegister } from "../../../../../redux/actions/partnership/user/authentication.actions";
-import {RESET_STATUS} from '../../../../../redux/types/partnership/user/authentication.type'
+import { RESET_STATUS } from "../../../../../redux/types/partnership/user/authentication.type";
 const RegisterMitra = () => {
   const router = useRouter();
   let dispatch = useDispatch();
@@ -47,17 +45,6 @@ const RegisterMitra = () => {
     }
   };
 
-  const notify = (value) =>
-    toast.info(`${value}`, {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-
   const submit = (e) => {
     e.preventDefault();
     if (lembaga === "") {
@@ -65,19 +52,19 @@ const RegisterMitra = () => {
         ...error,
         institution_name: "Nama lembaga tidak boleh kosong",
       });
-      notify("Nama lembaga tidak boleh kosong");
+      Swal.fire("Gagal", `Nama lembaga tidak boleh kosong`, "error");
     } else if (email === "") {
       setError({ ...error, email: "Email tidak boleh kosong" });
-      notify("Email tidak boleh kosong");
+      Swal.fire("Gagal", `Email tidak boleh kosong`, "error");
     } else if (password === "") {
       setError({ ...error, password: "Password tidak boleh kosong" });
-      notify("Password tidak boleh kosong");
+      Swal.fire("Gagal", `Password tidak boleh kosong`, "error");
     } else if (confirmPassword === "") {
       setError({
         ...error,
         confirmPassword: "Konfirmasi password tidak boleh kosong",
       });
-      notify("Konfirmasi password tidak boleh kosong");
+      Swal.fire("Gagal", `Konfirmasi password tidak boleh kosong`, "error");
     } else {
       Swal.fire({
         title: "Apakah anda yakin daftar ?",
@@ -104,46 +91,41 @@ const RegisterMitra = () => {
 
   useEffect(() => {
     if (allAuthentication.status === "error") {
-      notify(allAuthentication.errorRegister);
-    } else if (allAuthentication.status === "success"){
+      Swal.fire("Gagal", `${allAuthentication.errorRegister}`, "error");
+    } else if (allAuthentication.status === "success") {
       // jika sukses
-      Swal.fire("Berhasil Daftar", "Silakan tunggu aktivasi dari admin dan mohon cek email anda secara berkala", "success").then(() => {
+      Swal.fire(
+        "Berhasil Daftar",
+        "Silakan tunggu aktivasi dari admin dan mohon cek email anda secara berkala",
+        "success"
+      ).then(() => {
         // router.push("/partnership/user/auth/login")
-        router.push("/login/mitra")
+        router.push("/login/mitra");
       });
-    }else{
-      ""
+    } else {
+      ("");
     }
 
     return () => {
       dispatch({
-        type:RESET_STATUS
-      })
-    }
-    
-  }, [allAuthentication.status, allAuthentication.errorRegister,dispatch,router]);
+        type: RESET_STATUS,
+      });
+    };
+  }, [
+    allAuthentication.status,
+    allAuthentication.errorRegister,
+    dispatch,
+    router,
+  ]);
 
-
-  
   return (
     <>
       <AuthWrapper image="multiethnic-businesswoman.svg" title="Register">
-        <ToastContainer
-          position="bottom-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
         <div
           className="col-lg-7 d-flex flex-wrap align-content-center"
           style={{ background: "#1A4367" }}
         >
-          <div className="container ">
+          <div className="container scroll-form-login">
             <div className="title-login text-center mt-6">
               <Image
                 src="/assets/logo/logo-6.svg"
@@ -203,8 +185,6 @@ const RegisterMitra = () => {
                       placeholder="Masukkan Password Anda"
                     />
 
-                    
-                    
                     {hidePassword === true ? (
                       <i
                         className="ri-eye-fill right-center-absolute cursor-pointer"
@@ -219,7 +199,10 @@ const RegisterMitra = () => {
                       />
                     )}
                   </div>
-                  <span className="text-white">Minimal 8 Karakter yang berisi kombinasi huruf besar, huruf kecil, angka, dan simbol.</span>
+                  <span className="text-white">
+                    Minimal 8 Karakter yang berisi kombinasi huruf besar, huruf
+                    kecil, angka, dan simbol.
+                  </span>
                 </div>
                 <div className="form-group mb-6">
                   <label className="form-auth-label">Konfirmasi Password</label>
@@ -258,9 +241,6 @@ const RegisterMitra = () => {
               <div className="bottom mt-9 text-center">
                 <p style={{ fontSize: "12px", color: "#ffffff" }}>
                   Sudah punya akun?
-                  {/* <Link href="/partnership/user/auth/login" passHref>
-                    <a className="text-primary ml-2">Masuk</a>
-                  </Link> */}
                   <Link href="/login/mitra" passHref>
                     <a className="text-primary ml-2">Masuk</a>
                   </Link>

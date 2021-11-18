@@ -12,7 +12,6 @@ import IconDelete from "../../../assets/icon/Delete";
 import IconPencil from "../../../assets/icon/Pencil";
 import IconAdd from "../../../assets/icon/Add";
 import IconArrow from "../../../assets/icon/Arrow";
-import BtnIcon from "../components/BtnIcon";
 import AlertBar from "../components/BarAlert";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import {

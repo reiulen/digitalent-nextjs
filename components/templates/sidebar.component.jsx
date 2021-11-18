@@ -434,13 +434,6 @@ const Sidebar = ({ session }) => {
             },
             {
               id: 2,
-              name: "CSS",
-              href: "/site-management/setting/css-editor",
-              selected: false,
-              child: [],
-            },
-            {
-              id: 2,
               name: "Pelatihan",
               href: "/site-management/setting/pelatihan",
               selected: false,
