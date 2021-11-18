@@ -141,19 +141,23 @@ const EditBerita = ({ token, idUser }) => {
     }
 
     const handleTag = (data) => {
-        if ((tag).includes(data)) {
-            // Swal.fire("Oops !", "Tag tidak boleh sama", "error");
-            // setTag(data);
-            // data.splice(0, data.length - 1)
-            return
-        } else {
-            for (let i = 0; i < data.length; i++) {
-                if (hasWhiteSpace(data[i])) {
-                    data.splice([i], 1);
-                }
+        for (let i = 0; i < data.length; i++) {
+            if (hasWhiteSpace(data[i])) {
+                data.splice([i], 1);
             }
-            setTag(data);
+            // else if ((tag[i]).includes(data)) {
+            //     Swal.fire("Oops !", "Tag tidak boleh sama", "error");
+            //     data.splice([i], 1);
+            // }
+            tag.forEach((el, idx) => {
+                return (
+                    el.length === data.length && Swal.fire("Oops !", "Tag tidak boleh sama", "error")
+                )
+            })
         }
+
+        setTag(data);
+        // }
     }
 
     const onSubmit = (e) => {
@@ -405,7 +409,7 @@ const EditBerita = ({ token, idUser }) => {
                                     </div>
                                 </div>
 
-                                <div className="form-group">
+                                <div className={`${styles.selectKategori} form-group`}>
                                     <label
                                         htmlFor="staticEmail"
                                         className="col-sm-4 col-form-label font-weight-bolder"
@@ -530,7 +534,7 @@ const EditBerita = ({ token, idUser }) => {
                                         <TagsInput
                                             value={tag}
                                             onChange={(data) => (handleTag(data)
-                                                )}
+                                            )}
                                             name="tag"
                                             placeHolder="Isi Tag disini dan Enter"
                                             seprators={["Enter", "Tab"]}

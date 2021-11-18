@@ -141,7 +141,7 @@ const Preview = () => {
                                     <div className="d-flex flex-column ml-3">
                                         <div className="font-weight-bolder mb-2">
                                             {/* Insert Admin Here */}
-                                            {artikel.dibuat}
+                                            {artikel.name}
                                         </div>
                                         <div className="text-muted">
                                             {moment(artikel.tanggal_publish).format("DD MMMM YYYY")}

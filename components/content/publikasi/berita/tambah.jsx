@@ -125,15 +125,38 @@ const TambahBerita = ({ token, id }) => {
         return s.indexOf(' ') >= 0;
     }
 
+    function filterTag(e) {
+        return tag.map((el, idx) => {
+            return e.indexOf(el) >= 0
+        })
+    }
+
     const handleTag = (data) => {
         for (let i = 0; i < data.length; i++) {
             if (hasWhiteSpace(data[i])) {
                 data.splice([i], 1);
+            } else if (filterTag(data[i])) {
+                // data.splice([i], 1);
+                setTag(data);
+            } else {
+                Swal.fire("Oops !", "Tag tidak boleh sama", "error")
             }
+            // tag.forEach((el, idx) => {
+            //     return (
+            //         el === data && data.splice([idx], 1)
+            //     )
+            // })
         }
-        if ((data).includes(data) !== true) {
-            setTag(data);
-        }
+        // setTag(data);
+
+        // for (let i = 0; i < data.length; i++) {
+        //     if (hasWhiteSpace(data[i])) {
+        //         data.splice([i], 1);
+        //     }
+        // }
+        // if ((data).includes(data) !== true) {
+        //     setTag(data);
+        // }
     }
 
     const onSubmit = (e) => {
@@ -304,7 +327,7 @@ const TambahBerita = ({ token, id }) => {
                                 </div>
                             </div>
 
-                            <div className="form-group">
+                            <div className={`${styles.selectKategori} form-group`}>
                                 <label
                                     htmlFor="staticEmail"
                                     className="col-sm-4 col-form-label font-weight-bolder"

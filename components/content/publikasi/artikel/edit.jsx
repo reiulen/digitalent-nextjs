@@ -49,7 +49,6 @@ const EditArtikel = ({ token, idUser }) => {
   } = useSelector(state => state.allKategori);
   const { setting } = useSelector(state => state.allSettingPublikasi)
   const { akademi } = useSelector(state => state.allAkademi);
-  // const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(state => state.drowpdownAkademi);
 
   useEffect(() => {
 
@@ -429,7 +428,7 @@ const EditArtikel = ({ token, idUser }) => {
                   </div>
                 </div>
 
-                <div className="form-group">
+                <div className={`${styles.selectKategori} form-group`}>
                   <label
                     htmlFor="staticEmail"
                     className="col-sm-4 col-form-label font-weight-bolder"

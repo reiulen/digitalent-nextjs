@@ -265,7 +265,7 @@ const TambahVidio = ({ token, id }) => {
                                 </div>
                             </div>
 
-                            <div className="form-group">
+                            <div className={`${styles.selectKategori} form-group`}>
                                 <label
                                     htmlFor="staticEmail"
                                     className="col-sm-4 col-form-label font-weight-bolder"

@@ -38,7 +38,6 @@ const TambahArtikel = ({ token, id }) => {
 
   const { loading, error, success } = useSelector((state) => state.newArtikel);
   const { setting } = useSelector(state => state.allSettingPublikasi)
-  // const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(state => state.drowpdownAkademi);
   const { akademi } = useSelector(state => state.allAkademi);
   const {
     loading: allLoading,
@@ -345,7 +344,7 @@ const TambahArtikel = ({ token, id }) => {
                   </div>
                 </div>
 
-                <div className="form-group">
+                <div className={`${styles.selectKategori} form-group`}>
                   <label
                     htmlFor="staticEmail"
                     className="col-sm-4 col-form-label font-weight-bolder"
