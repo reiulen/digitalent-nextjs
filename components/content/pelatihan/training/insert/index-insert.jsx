@@ -58,7 +58,12 @@ const IndexInsert = ({ token }) => {
         );
         break;
       case 2:
-        return <AddRegistrationStep2 propsStep={(value) => setView(value)} />;
+        return (
+          <AddRegistrationStep2
+            propsStep={(value) => setView(value)}
+            token={token}
+          />
+        );
         break;
       case 3:
         return (

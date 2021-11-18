@@ -404,6 +404,7 @@ import {
   drowpdownKabupatenReducers,
   drowpdownKabupatenDomisiliReducers,
   drowpdownPenyelenggaraReducers,
+  drowpdownFormBuilderReducers,
 } from "./pelatihan/admin/function.reducers";
 import { allProvinsiReducer, allKotaReducer } from "./utils/utils.reducers";
 import { reducerFunctionals } from "./utils/functionals.reducer";
@@ -465,7 +466,7 @@ import {
   kategoriVideoContentReducer,
   allTagVideoContentReducer,
   playVideoContentReducer,
-} from"../reducers/beranda/video-content.reducer"
+} from "../reducers/beranda/video-content.reducer";
 
 //END BERANDA
 
@@ -754,7 +755,7 @@ const reducer = combineReducers({
   getFormLPJ: getFormLPJReducer,
   newLPJ: newLPJReducer,
   getFormEvidence: getFormEvidenceReducer,
-  cloneTraining: cloneTrainingReducer,  
+  cloneTraining: cloneTrainingReducer,
   // ========== review pelatihan ========
   allListReview: allListReviewReducer,
   cardReview: cardReviewReducer,
@@ -813,6 +814,7 @@ const reducer = combineReducers({
   drowpdownKabupaten: drowpdownKabupatenReducers,
   drowpdownKabupatenDomisili: drowpdownKabupatenDomisiliReducers,
   drowpdownPenyelenggara: drowpdownPenyelenggaraReducers,
+  drowpdownFormBuilder: drowpdownFormBuilderReducers,
   updateStatus: updateStatusReducer,
 
   // ========== profile peserta ========

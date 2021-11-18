@@ -5,7 +5,7 @@ import Link from "next/link";
 import moment from "moment";
 import { Card, Badge, Button, Container, Row, Col } from "react-bootstrap";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
-import { SweetAlert } from "../../../../utils/middleware/helper";
+import { SweatAlert } from "../../../../utils/middleware/helper";
 import { useRouter } from "next/router";
 
 import IconClose from "../../../../components/assets/icon/Close";
@@ -256,7 +256,7 @@ const Beranda = ({ session }) => {
         router.push(`${router.pathname}/peserta/form-pendaftaran?id=${id}`);
       } else if (data.status === false) {
         let errMessage = data.message;
-        SweetAlert("Gagal", errMessage, "error");
+        SweatAlert("Gagal", errMessage, "error");
       }
     } else {
       router.push(`${router.pathname}/login`);
