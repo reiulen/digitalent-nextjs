@@ -26,7 +26,7 @@ const Artikel = () => {
 
     const titleToTrim = 25
     const categoryToTrim = 9
-    const descToTrim = 100
+    const descToTrim = 120
 
     const [ activeTitle, setActiveTitle ] = useState("Ada Apa di Digitalent")
     const [ kategoriArtikel, setKategoriArtikel ] = useState ("")
@@ -261,7 +261,7 @@ const Artikel = () => {
                                             onClick={() => handleFilterKategori("")}
                                         >
                                             <div className="my-1 mx-3 py-1 px-3 text-white">
-                                                Semua
+                                                SEMUA
                                             </div>
                                         </div>
                                     </SplideSlide>
@@ -273,7 +273,7 @@ const Artikel = () => {
                                             onClick={() => handleFilterKategori("")}
                                         >
                                             <div className="my-1 mx-3 py-1 px-3 text-muted">
-                                                Semua
+                                                SEMUA
                                             </div>
                                         </div>
                                     </SplideSlide>
@@ -292,8 +292,9 @@ const Artikel = () => {
                                                         onClick={() => handleFilterKategori(el.nama_kategori)}
                                                         key={i}
                                                     >
-                                                        <div className="my-1 mx-3 py-1 px-3 text-white">
-                                                            {handleCategoryToTrim(el.nama_kategori)}
+                                                        <div className="my-1 mx-3 py-1 px-3 text-white text-truncate">
+                                                            {/* {handleCategoryToTrim(el.nama_kategori)} */}
+                                                            {el.nama_kategori.toString().toUpperCase()}
                                                         </div>
                                                     </div>
                                                 </SplideSlide>
@@ -305,8 +306,9 @@ const Artikel = () => {
                                                         onClick={() => handleFilterKategori(el.nama_kategori)}
                                                         key={i}
                                                     >
-                                                        <div className="my-1 mx-3 py-1 px-3 text-muted">
-                                                            {handleCategoryToTrim(el.nama_kategori)}
+                                                        <div className="my-1 mx-3 py-1 px-3 text-muted text-truncate">
+                                                            {/* {handleCategoryToTrim(el.nama_kategori)} */}
+                                                            {el.nama_kategori.toString().toUpperCase()}
                                                         </div>
                                                     </div> 
                                                 </SplideSlide>
@@ -517,10 +519,10 @@ const Artikel = () => {
                             artikel && artikel.artikel && artikel.artikel.length !== 0 ?
                                 artikel.artikel.map ((el, i) => {
                                     return (
-                                        <div className="row my-15 ml-5" key={i}>
+                                        <div className="row my-15 ml-1 " key={i}>
                                             <div className="col col-7">
-                                                <div className="row d-flex justify-content-between align-items-center">
-                                                    <div className="d-flex align-self-center mb-2">
+                                                <div className="row col-12 justify-content-between align-items-center">
+                                                    <div className=" d-flex align-self-center mb-2">
                                                         <div className="border rounded-circle p-2 d-flex justify-content-center align-self-center">
                                                             {/* Insert Logo Image Here */}
                                                             <Image
@@ -561,24 +563,27 @@ const Artikel = () => {
                                                     </div>
                                                 </div>
 
-                                                <div className="row my-5">
+                                                <div className="my-5">
                                                     {/* Insert Title Here */}
                                                     <Link href={`/artikel/detail/${el.slug}`}>
                                                         <a>
-                                                            <h1 className="text-dark text-wrap">
-                                                                {handleTitleToTrim(el.judul)}
+                                                            <h1 className="text-dark text-truncate">
+                                                                {/* {handleTitleToTrim(el.judul)} */}
+                                                                {el.judul}
                                                             </h1>
                                                         </a>
                                                     </Link>
                                                     
                                                 </div>
-
+                                                
                                                 {
                                                     windowDimensions && windowDimensions.width && windowDimensions.width > 770 ?
-                                                        <div className="row my-5 d-flex flex-wrap">
+                                                        <div 
+                                                            className="my-5 d-flex flex-wrap "
+                                                        >
                                                             {/* Insert Desc Here */}
                                                             <div 
-                                                                dangerouslySetInnerHTML={{__html: handleDescToTrim(el.isi_artikel)}} 
+                                                                dangerouslySetInnerHTML={{__html: handleDescToTrim(el.isi_artikel)}}
                                                                 className="text-wrap d-flex flex-wrap overflow-hidden"
                                                                 style={{maxWidth:"450px"}}
                                                             />
@@ -586,15 +591,15 @@ const Artikel = () => {
                                                     :
                                                         null
                                                 }
-
+                                                
                                                 <div className="row mb-3 d-flex align-items-center">
                                                     {/* Insert Date and View Here */}
-                                                    <div className="text-muted col-xl-5 col-12 pl-0">
+                                                    <div className="text-muted col-xl-5 col-12 pl-3">
                                                         {moment(el.tanggal_publish).format("DD MMMM")} | {el.dibaca} dibaca
                                                     </div>
 
                                                     {/* Insert Tag(s) here */}
-                                                    <div className="col-xl-7 col-12 d-flex flex-row flex-wrap my-3 pl-0 ">
+                                                    <div className="col-xl-7 col-12 d-flex flex-row flex-wrap my-3 pl-2 ">
                                                         {
                                                             el.tag && el.tag.length !== 0 ?
                                                                 el.tag.map ((element, index) => {
@@ -614,8 +619,6 @@ const Artikel = () => {
                                                                 null
                                                         }
                                                     </div>
-                                                    
-                                                    
                                                 </div>
                                             </div>
 
