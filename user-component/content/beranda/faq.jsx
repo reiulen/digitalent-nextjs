@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from "react";
+
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
+import { Container } from "react-bootstrap"
 
 import styles from "../../components/template/Sidebar.module.css";
 
 import { getAllFaq } from "../../../redux/actions/beranda/faq-content.actions";
 import { set } from "js-cookie";
 import PulseLoaderRender from "../../components/loader/PulseLoader";
+import SubHeaderComponent from "../../components/template/Subheader.component";
 
 const FaqPage = () => {
     const dispatch = useDispatch();
+    const router = useRouter();
 
     const {
         loading: loadingFaq,
@@ -55,20 +59,12 @@ const FaqPage = () => {
 
 
     return (
-        <>
-            <div
-                className={`${styles.headBreadcrumb} row mx-1 py-3 px-8 bg-white rounded-pill d-flex align-items-center border`}
-            >
-                <span className="text-primary">
-                    <Link href="/">Beranda</Link>
-                </span>
-                <span>
-                    <i className="ri-arrow-right-s-line text-primary"></i>
-                </span>
-                <span>Frequently Asked Questions</span>
-            </div>
+        <Container fluid className="px-md-30 px-10 py-10 bg-white">
+            <SubHeaderComponent
+                data={[{ link: router.asPath, name: "Frequently Asked Questions" }]}
+            />
             <div>
-                <h1 style={{ fontWeight: "800", marginTop: "40px" }}>
+                <h1 style={{ fontWeight: "800" }}>
                     Frequently Asked Questions
                 </h1>
                 <p className="my-5 text-muted">Ada yang bisa Kami Bantu ?</p>
@@ -238,7 +234,7 @@ const FaqPage = () => {
                     </div>
                 </div>
             </div>
-        </>
+        </Container>
     );
 };
 

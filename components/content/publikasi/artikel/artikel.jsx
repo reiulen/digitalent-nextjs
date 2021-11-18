@@ -77,6 +77,36 @@ const Artikel = ({ token }) => {
 
   }, [limit, isDeleted, publishValue, dispatch, search]);
 
+  const getWindowDimensions = () => {
+    // if (typeof window === 'undefined') {
+    //     global.window = {}
+    // }
+
+    const { innerWidth: width, innerHeight: height } = window;
+    return {
+      width,
+      height,
+    };
+  };
+
+  const [windowDimensions, setWindowDimensions] = useState(
+    // getWindowDimensions()
+    {}
+  );
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowDimensions(getWindowDimensions());
+    }
+    setWindowDimensions(getWindowDimensions());
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [artikel])
+
+  useEffect(() => {
+
+  }, [windowDimensions])
+
   const onNewReset = () => {
     router.replace("/publikasi/artikel", undefined, { shallow: true });
   };
@@ -279,6 +309,7 @@ const Artikel = ({ token }) => {
     setStartDate(null)
     setEndDate(null)
     setDisableEndDate(true)
+    setLimit(null)
     router.push('/publikasi/artikel', undefined, { shallow: false })
   }
 
@@ -708,22 +739,7 @@ const Artikel = ({ token }) => {
                         activePage={page}
                         itemsCountPerPage={artikel.perPage}
                         totalItemsCount={artikel.total}
-                        pageRangeDisplayed={3}
-                        onChange={handlePagination}
-                        nextPageText={">"}
-                        prevPageText={"<"}
-                        firstPageText={"<<"}
-                        lastPageText={">>"}
-                        itemClass="page-item"
-                        linkClass="page-link"
-                      />
-                    </div>
-                    <div className={`${stylesPag.pagination2} table-pagination`}>
-                      <Pagination
-                        activePage={page}
-                        itemsCountPerPage={artikel.perPage}
-                        totalItemsCount={artikel.total}
-                        pageRangeDisplayed={1}
+                        pageRangeDisplayed={windowDimensions.width > 320 ? 3 : 1}
                         onChange={handlePagination}
                         nextPageText={">"}
                         prevPageText={"<"}
