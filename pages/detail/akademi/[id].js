@@ -12,12 +12,12 @@ import {
   getAllTemaOriginal,
 } from "../../../redux/actions/beranda/beranda.actions";
 
-import LoadingDetailAkademi from "../../../user-component/components/loader/DetailAkademiLoader";
+import LoadingDetailAkademi from "../../../user-component-new/components/loader/LoadingDetailAkademi";
 
 const DetailAkademi = dynamic(
   () =>
     import(
-      "../../../user-component/content/detail/kategori/akademi/detail-akademi-new"
+      "../../../user-component-new/content/home/detail-akademi/DetailAkademi.component"
     ),
   {
     loading: function loadingNow() {
@@ -27,7 +27,8 @@ const DetailAkademi = dynamic(
   }
 );
 const Layout = dynamic(
-  () => import("../../../components/wrapper/beranda.wrapper"),
+  () =>
+    import("../../../user-component-new/components/template/Layout.component"),
   { ssr: false }
 );
 

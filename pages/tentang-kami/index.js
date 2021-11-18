@@ -6,7 +6,10 @@ import { getDataPribadi } from "../../redux/actions/pelatihan/function.actions";
 import LoadingDetailAkademi from "../../user-component/components/loader/DetailAkademiLoader";
 
 const TentangKami = dynamic(
-  () => import("../../user-component/content/beranda/tentang-kami"),
+  () =>
+    import(
+      "../../user-component-new/content/home/tentang-kami/TentangKami.component"
+    ),
   {
     loading: function loadingNow() {
       return <LoadingDetailAkademi />;
@@ -15,7 +18,7 @@ const TentangKami = dynamic(
   }
 );
 const Layout = dynamic(
-  () => import("../../components/wrapper/beranda.wrapper"),
+  () => import("../../user-component-new/components/template/Layout.component"),
   { ssr: false }
 );
 
