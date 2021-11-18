@@ -170,7 +170,7 @@ const DashbardPublikasi = ({ token }) => {
                                 <div className="mb-10 flex-column">
                                     <h3 className="card-title font-weight-bolder text-muted">Total Konten</h3>
                                     <div className="row">
-                                        <div className="col-6 d-flex flex-row">
+                                        <div className="col-12 col-sm-12 col-md-6 col-lg-6 d-flex flex-row">
                                             <div style={{ backgroundColor: "#4299E1", width: "50px", height: "50px", borderRadius: "6px" }}>
 
                                             </div>
@@ -184,7 +184,7 @@ const DashbardPublikasi = ({ token }) => {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="col-6 d-flex flex-row">
+                                        <div className="col-12 col-sm-12 col-md-6 col-lg-6 d-flex flex-row">
                                             <div style={{ backgroundColor: "#4CBDE2", width: "50px", height: "50px", borderRadius: "6px" }}>
 
                                             </div>
@@ -247,11 +247,11 @@ const DashbardPublikasi = ({ token }) => {
                                 </div>
 
                             </div>
-                            <div className="card-body" style={{ marginTop: "20vh" }}>
+                            <div className="card-body" style={{ marginTop: "18.5vh" }}>
                                 <div className="mb-10 flex-column">
                                     <div className="row">
-                                        <div className="col-6 d-flex flex-row d-flex justify-content-center">
-                                            <Image src="/assets/icon/new/mail-purple.svg" width={50} height={50} alt="publish-pict" />
+                                        <div className="col-12 col-sm-12 col-md-6 col-lg-6 d-flex flex-row">
+                                            <Image src="/assets/icon/new/mail-purple.svg" width={53} height={50} alt="publish-pict" />
                                             <div className=" ml-3 my-2">
                                                 <h3 className="font-weight-bold">
                                                     200
@@ -262,8 +262,8 @@ const DashbardPublikasi = ({ token }) => {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="col-6 d-flex flex-row d-flex justify-content-center">
-                                            <Image src="/assets/icon/new/blue-bars.svg" width={50} height={50} alt="publish-pict" />
+                                        <div className="col-12 col-sm-12 col-md-6 col-lg-6 d-flex flex-row mt-1">
+                                            <Image src="/assets/icon/new/blue-bars.svg" width={53} height={50} alt="publish-pict" />
                                             <div className=" ml-3 my-2">
                                                 <h3 className="font-weight-bold">
                                                     200
