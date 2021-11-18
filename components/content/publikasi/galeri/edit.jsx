@@ -263,7 +263,7 @@ const EditGaleri = ({ token }) => {
                 data.splice([i], 1);
             }
         }
-        if ((data).includes(data) !== true) {
+        if ((tag).includes(data) !== true) {
             setTag(data);
         }
     }
@@ -416,7 +416,7 @@ const EditGaleri = ({ token }) => {
                         <h3 className="card-title font-weight-bolder text-dark">Ubah Galeri</h3>
                     </div>
                     <div className="card-body">
-                        <form onSubmit={onSubmit}>
+                        <div>
                             <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Judul</label>
                                 <div className={`${styles.judulTambah} col-sm-12`}>
@@ -658,10 +658,10 @@ const EditGaleri = ({ token }) => {
                                     <Link href='/publikasi/galeri'>
                                         <a className={`${styles.btnKembali} btn btn-white-ghost-rounded-full rounded-pill mr-2 btn-sm`}>Kembali</a>
                                     </Link>
-                                    <button className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill btn-sm`}>Simpan</button>
+                                    <button onClick={onSubmit} className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill btn-sm`}>Simpan</button>
                                 </div>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>

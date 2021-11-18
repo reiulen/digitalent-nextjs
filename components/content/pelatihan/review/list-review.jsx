@@ -214,7 +214,7 @@ const ListReview = ({ token }) => {
   const handlePublish = (val, type) => {
     setPage(1);
     const label = val.charAt(0).toUpperCase() + val.slice(1);
-    
+
     if (type === "pelatihan") {
       setStatusPelatihan({ label, value: val });
       dispatch(
@@ -440,7 +440,7 @@ const ListReview = ({ token }) => {
                       (review && review.list === null) ||
                       review.list.length === 0 ? (
                         <td className="align-middle text-center" colSpan={8}>
-                          Data Masih Kosong
+                          Data Kosong
                         </td>
                       ) : (
                         review.list.map((row, i) => (
@@ -450,7 +450,10 @@ const ListReview = ({ token }) => {
                                 ? i + 1 * (page * 5) - (5 - 1)
                                 : i + 1 * (page * limit) - (limit - 1)}
                             </td>
-                            <td className="align-middle">{row.slug}{row.id}</td>
+                            <td className="align-middle">
+                              {row.slug}
+                              {row.id}
+                            </td>
                             <td>
                               <p className="font-weight-bolder my-0">
                                 {row.name}

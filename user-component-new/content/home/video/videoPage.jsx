@@ -590,7 +590,7 @@ useEffect(()=> {
 
             {/* PAGINATION */}
             <div>
-              {video ? (
+              {video && video.total !== 0? (
                 <div className="table-pagination mb-10" style={{ marginLeft: "35%" }}>
                   <Pagination
                     activePage={activePage}

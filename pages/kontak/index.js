@@ -3,19 +3,15 @@ import { getSession } from "next-auth/client";
 
 import { wrapper } from "../../redux/store";
 import { getDataPribadi } from "../../redux/actions/pelatihan/function.actions";
-import {
-  getAllBerandaBerita,
-  getKategoriBerandaBerita,
-  getTagBerandaBerita,
-} from "../../redux/actions/beranda/berita.actions";
+import { getTagBerandaBerita } from "../../redux/actions/beranda/berita.actions";
 import { getAllAkademi } from "../../redux/actions/beranda/beranda.actions";
 
 const Kontak = dynamic(() =>
-  import("../../user-component/content/beranda/kontak")
+  import("../../user-component-new/content/home/kontak/Kontak.component")
 );
 
 const Layout = dynamic(
-  () => import("../../components/wrapper/beranda.wrapper"),
+  () => import("../../user-component-new/components/template/Layout.component"),
   { ssr: false }
 );
 

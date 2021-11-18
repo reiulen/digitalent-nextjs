@@ -42,7 +42,7 @@ const Penyelenggara = () => {
   const handleOrder = (value) => {
     setPage(1);
     setOrder(value);
-    dispatch(getAllPenyeleggaraPage(1, 24, search, order));
+    dispatch(getAllPenyeleggaraPage(1, 24, search, value));
   };
 
   return (

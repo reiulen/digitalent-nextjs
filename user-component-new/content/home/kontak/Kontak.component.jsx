@@ -1,14 +1,15 @@
 import React from "react";
-import Subheader from "../../components/template/Subheader.component";
+import BreadcrumbComponent from "../../../components/global/Breadcrumb.component";
+
 import { Container, Card, Row, Col } from "react-bootstrap";
 import { useRouter } from "next/router";
-import style from "./kontak.module.css";
+
 export default function Kontak() {
   const router = useRouter();
   return (
     <>
       <Container fluid className="px-md-30 px-10 py-10">
-        <Subheader data={[{ link: router.asPath, name: "kontak" }]} />
+        <BreadcrumbComponent data={[{ link: router.asPath, name: "kontak" }]} />
         <div className="col-12 mt-5">
           <h1 className="fw-700 fz-36">Kontak</h1>
           <p className="mr-6 fz-18 text-muted fw-500">
