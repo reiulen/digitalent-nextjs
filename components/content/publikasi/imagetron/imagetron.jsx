@@ -677,7 +677,7 @@ const Imagetron = ({ token }) => {
                                                                 />
                                                                 {/* <Image alt='name_image' src='https://statik.tempo.co/data/2018/11/29/id_800478/800478_720.jpg' width={80} height={50} /> */}
                                                             </td>
-                                                            <td className='align-middle'>{row.nama_kategori}</td>
+                                                            <td className='align-middle' style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '11rem' }}>{row.nama_kategori}</td>
                                                             <td className='align-middle' style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '11rem' }}>{row.judul}</td>
                                                             <td className="align-middle">
                                                                 {row.publish === 1 ? (

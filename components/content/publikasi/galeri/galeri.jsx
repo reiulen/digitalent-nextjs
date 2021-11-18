@@ -513,43 +513,17 @@ const Galeri = ({ token }) => {
                     id="carouselExampleIndicators"
                     className="carousel slide"
                     data-ride="carousel"
-                // style={{ position: "relative" }}
                 >
                     <div
                         className="carousel-inner"
-                    // style={{ position: "absolute", left: "-12px" }}
                     >
                         {isViewed && isViewed.length !== 0
                             ? isViewed.gambar.map((row, i) => {
                                 return (
                                     <div className={i === 0 ? "carousel-item active" : "carousel-item"} key={i}>
-                                        {/* <div className={styles["img-prevModal"]}>
-                                            <Image
-                                                unoptimized={process.env.ENVIRONMENT !== "PRODUCTION"}
-                                                loader={() =>
-                                                    process.env.END_POINT_API_IMAGE_PUBLIKASI +
-                                                    "publikasi/images/" +
-                                                    row.gambar
-                                                }
-                                                src={
-                                                    process.env.END_POINT_API_IMAGE_PUBLIKASI +
-                                                    "publikasi/images/" +
-                                                    row.gambar
-                                                }
-                                                alt="image"
-                                                layout="fill"
-                                                objectFit="fill"
-                                                // width={400}
-                                                // height={511}
-                                            />
-                                        </div> */}
 
                                         <div
                                             className={`${styles.modals} position-relative`}
-                                        // style={{
-                                        //     height: "460px",
-                                        //     width: "auto"
-                                        // }}
                                         >
                                             <Image
                                                 src={
@@ -781,11 +755,7 @@ const Galeri = ({ token }) => {
 
                                         {/* modal */}
                                         <form
-                                            // id="kt_docs_formvalidation_text"
                                             lassName="form text-left"
-                                        // action="#"
-                                        // autoComplete="off"
-                                        // onSubmit={handleSubmitSearchMany}
                                         >
                                             <div
                                                 className="modal fade"
@@ -838,8 +808,6 @@ const Galeri = ({ token }) => {
                                                                         dateFormat="dd/MM/yyyy"
                                                                         placeholderText="Silahkan Isi Tanggal Dari"
                                                                         wrapperClassName="col-12 col-lg-12 col-xl-12"
-                                                                    // minDate={moment().toDate()}
-                                                                    // minDate={addDays(new Date(), 20)}
                                                                     />
                                                                 </div>
                                                             </div>
@@ -859,7 +827,6 @@ const Galeri = ({ token }) => {
                                                                         endDate={endDate}
                                                                         dateFormat="dd/MM/yyyy"
                                                                         minDate={startDate}
-                                                                        // minDate={moment().toDate()}
                                                                         maxDate={addDays(startDate, 20)}
                                                                         placeholderText="Silahkan Isi Tanggal Sampai"
                                                                         wrapperClassName="col-12 col-lg-12 col-xl-12"
@@ -867,7 +834,6 @@ const Galeri = ({ token }) => {
                                                                             disableEndDate === true ||
                                                                             disableEndDate === null
                                                                         }
-                                                                    // minDate={addDays(new Date(), 20)}
                                                                     />
                                                                 </div>
                                                                 {disableEndDate === true ||
@@ -1032,45 +998,6 @@ const Galeri = ({ token }) => {
                                                                     </div>
                                                                 </button>
                                                             </td>
-                                                            {/* <td className='align-middle'>
-                    
-                                                                <button
-                                                                    className='btn mr-1' 
-                                                                    style={{ background: '#F3F6F9', borderRadius: '6px' }} 
-                                                                    data-target="#exampleModalCenter" 
-                                                                    data-toggle="modal"
-                                                                    onClick={() => handleIndexGallery(i)}
-                                                                    
-                                                                >
-                                                                    <Image
-                                                                        alt="button-action"
-                                                                        src={`/assets/icon/setting.svg`}
-                                                                        width={18}
-                                                                        height={18}
-                                                                    />
-                                                                </button>
-
-                                                                <ButtonAction icon='write.svg' link={`/publikasi/galeri/${row.id_gallery}`} title="Edit"/>
-                                                                
-                                                                <button
-                                                                    onClick={() => handleDelete(row.id_gallery)}
-                                                                    className="btn mr-1"
-                                                                    style={{
-                                                                        background: "#F3F6F9",
-                                                                        borderRadius: "6px",
-                                                                    }}
-                                                                    data-toggle="tooltip" 
-                                                                    data-placement="bottom" 
-                                                                    title="Hapus"
-                                                                    >
-                                                                    <Image
-                                                                        alt="button-action"
-                                                                        src={`/assets/icon/trash.svg`}
-                                                                        width={18}
-                                                                        height={18}
-                                                                    />
-                                                                </button>
-                                                            </td> */}
                                                         </tr>
                                                     );
                                                 })
@@ -1179,26 +1106,16 @@ const Galeri = ({ token }) => {
                 aria-hidden="true"
             >
                 <div className="modal-dialog modal-xl modal-dialog-centered" role="document">
-                    {/* <div className={`${styles.rightSideBar} modal-content`}> */}
                     <div className="modal-content">
-                        {/* <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLongTitle">Pratinjau Gambar</h5>
-                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div> */}
                         <div className="">
-                            {/* <div className={`${styles.fullBar} row`}> */}
                             <div className="row">
                                 <div className="col-sm-12 col-md-6 col-lg-6">
-                                    {/* <div className={styles["img-left"]}> */}
                                     {
                                         isViewed &&
                                         <>
                                             {printImage()}
                                         </>
                                     }
-                                    {/* </div> */}
                                 </div>
                                 <div className={`${styles.modalsRight} col-sm-12 col-md-6 col-lg-6`}>
                                     <div className={`${styles.rightSide}`}>
@@ -1220,13 +1137,6 @@ const Galeri = ({ token }) => {
                                                     >
                                                         {galeri.gallery[index_galleri].judul}
                                                     </h3>
-                                                    {/* <button
-                                                    type="button"
-                                                    className="col-1 flaticon2-delete"
-                                                    data-dismiss="modal"
-                                                    aria-label="Close"
-                                                    style={{ border: "none", background: "none" }}
-                                                ></button> */}
                                                 </div>
                                                 <div className="row justify-content-between mb-4 p-1">
                                                     <div className="">
@@ -1244,12 +1154,6 @@ const Galeri = ({ token }) => {
                                                                     </div>
                                                             }
 
-                                                            {/* <div className="mb-1 p-0 d-flex align-items-center">
-                                                            <i className="flaticon2-user"></i>
-                                                            <span className="ml-2">
-                                                                Author : {galeri.gallery[index_galleri].role}
-                                                            </span>
-                                                        </div> */}
                                                         </div>
                                                     </div>
 
@@ -1257,15 +1161,6 @@ const Galeri = ({ token }) => {
                                                         <span className="label label-inline label-light-success font-weight-bold p-2">
                                                             {(galeri.gallery[index_galleri].nama_kategori).toUpperCase()}
                                                         </span>
-                                                        {/* <div className={styles["subMenuPreview"]}>
-                                                        <div className="mb-1 p-0 d-flex align-items-center">
-                                                            <i className="ri-dashboard-line"></i>
-                                                            <span className="ml-2">
-                                                                Kategori :{" "}
-                                                                {galeri.gallery[index_galleri].nama_kategori}
-                                                            </span>
-                                                        </div>
-                                                    </div> */}
                                                     </div>
                                                 </div>
                                                 <hr className={styles["strip"]} />
@@ -1293,27 +1188,7 @@ const Galeri = ({ token }) => {
                                                                     );
                                                                 })
                                                                 : null}
-                                                            {/* (tags === null) ? null :
-                                                                tags.map((el, i) => {
-                                                                    return (
-                                                                        <div style={{ background: "#fff", border: '1px solid #d7e1ea' }}
-                                                                            className="mr-5 px-3 py-1 rounded"
-                                                                            key={i}>
-                                                                            <div className="text-center">
-                                                                                #{(el).toUpperCase()}
-                                                                            </div>
-                                                                        </div>
-                                                                    )
-                                                                }) */}
                                                         </div>
-                                                        {/* <div className="col-sm-4 col-md-3 col-3 d-flex align-items-center justify-content-end">
-                                                            <div className={styles['iconBorderGaleri']}>
-                                                                <i className="socicon-sharethis" style={{ color: '#fff' }}></i>
-                                                            </div>
-                                                            <div className={styles['iconBorderGaleri']}>
-                                                                <i className="flaticon-black" style={{ color: '#fff' }}></i>
-                                                            </div>
-                                                        </div> */}
                                                     </div>
                                                 </div>
                                             </>
