@@ -1,37 +1,34 @@
-import React, { useEffect, useState } from "react";
+import React, { useState,useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import Pagination from "react-js-pagination";
 import PageWrapper from "../../../../wrapper/page.wrapper";
-import { useDispatch, useSelector } from "react-redux";
-import LoadingTable from "../../../../LoadingTable";
-import IconEye from "../../../../assets/icon/Eye";
-import IconPencil from "../../../../assets/icon/Pencil";
-import IconDelete from "../../../../assets/icon/Delete";
-import IconAdd from "../../../../assets/icon/Add";
+import { useSelector } from "react-redux";
 import IconSearch from "../../../../assets/icon/Search";
-import Image from "next/image";
-import IconPlus from "../../../../../public/assets/icon/Plus.svg";
-import IconMinus from "../../../../../public/assets/icon/Minus.svg";
 import Select from "react-select";
 import axios from "axios";
 
 const TambahApi = ({ token }) => {
-  let dispatch = useDispatch();
   const router = useRouter();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [role, setRole] = useState("");
-  const [unitWork, setUnitWork] = useState("");
+  const [roleOption, setRoleOption] = useState([]);
+  const [role, setRole] = useState([]);
+  // console.log("role", role);
+  const [unitWork, setUnitWork] = useState([]);
+  const [unitWorkOption, setUnitWorkOption] = useState([]);
+  // console.log("unitWork", unitWork);
   const [statusAcademy, setStatusAcademy] = useState([]);
+  console.log("statusAcademy",statusAcademy)
   const [typeAccess, setTypeAccess] = useState("akademi");
 
   const [pelatihan, setPelatihan] = useState([]);
   const allUnitWorkList = useSelector((state) => state.allUnitWorkList);
+  // console.log("allUnitWorkList", allUnitWorkList);
   const allRolesList = useSelector((state) => state.allRolesList);
+  // console.log("allRolesList", allRolesList);
   const allAcademyList = useSelector((state) => state.allAcademyList);
 
   const allListPelatihan = useSelector((state) => state.allListPelatihan);
@@ -108,13 +105,9 @@ const TambahApi = ({ token }) => {
   };
 
   const handleSubmit = async () => {
-
-    let newData = sortListPelatihan?.map((items)=>{
-      return {...items,training_id:items.value}
-    })
-
-
-
+    let newData = sortListPelatihan?.map((items) => {
+      return { ...items, training_id: items.value };
+    });
 
     if (name === "") {
       Swal.fire("Gagal simpan", "Nama lengkap tidak boleh kosong", "error");
@@ -138,18 +131,16 @@ const TambahApi = ({ token }) => {
         "Password dan konfirmasi password harus sama",
         "error"
       );
-    } else if (role === "") {
+    } else if (!role.length) {
       Swal.fire("Gagal simpan", "Role  tidak boleh kosong", "error");
-    } else if (unitWork === "") {
+    } else if (!unitWork.length) {
       Swal.fire("Gagal simpan", "Satuan kerja tidak boleh kosong", "error");
-    } 
-    
-    else if (typeAccess === "akademi" && statusAcademy.length === 0) {
+    } else if (typeAccess === "akademi" && statusAcademy.length === 0) {
       Swal.fire("Gagal simpan", "Status akademy tidak boleh kosong", "error");
-    } 
+    }
     // else if (typeAccess === "pelatihan" && pelatihan.length === 0) {
     //   Swal.fire("Gagal simpan", "Data pelatihan tidak boleh kosong", "error");
-    // } 
+    // }
     else {
       Swal.fire({
         title: "Apakah anda yakin simpan ?",
@@ -163,20 +154,19 @@ const TambahApi = ({ token }) => {
         dismissOnDestroy: false,
       }).then(async (result) => {
         if (result.value) {
-
-          if(typeAccess === "akademi"){
+          if (typeAccess === "akademi") {
             const sendData = {
               name: name,
               email: email,
               password: password,
               role: role,
-              unit_work_id: unitWork,
+              unit_work_ids: unitWork,
               type_access: typeAccess,
-              
+
               academy_ids: statusAcademy.map((items) => {
                 return items.value;
               }),
-              status: 1,
+              status: status,
             };
             try {
               let { data } = await axios.post(
@@ -188,14 +178,10 @@ const TambahApi = ({ token }) => {
                   },
                 }
               );
-  
-             
-  
+
               Swal.fire("Berhasil", "Data berhasil disimpan", "success").then(
                 () => {
-                  router.push(
-                    `/site-management/user/administrator`
-                  );
+                  router.push(`/site-management/user/administrator`);
                 }
               );
             } catch (error) {
@@ -205,8 +191,8 @@ const TambahApi = ({ token }) => {
                 "error"
               );
             }
-          }else{
-             const sendData = {
+          } else {
+            const sendData = {
               name: name,
               email: email,
               password: password,
@@ -226,12 +212,10 @@ const TambahApi = ({ token }) => {
                   },
                 }
               );
-  
+
               Swal.fire("Berhasil", "Data berhasil disimpan", "success").then(
                 () => {
-                  router.push(
-                    `/site-management/user/administrator`
-                  );
+                  router.push(`/site-management/user/administrator`);
                 }
               );
             } catch (error) {
@@ -242,10 +226,24 @@ const TambahApi = ({ token }) => {
               );
             }
           }
-          
         }
       });
     }
+  };
+
+  const handleChangeRole = (e) => {
+    let data = e.map((items) => {
+      return items.id;
+    });
+    setRole(data);
+    setRoleOption(e);
+  };
+  const handleChangeUnitWork = (e) => {
+    let data = e.map((items) => {
+      return items.id;
+    });
+    setUnitWork(data);
+    setUnitWorkOption(e);
   };
 
   return (
@@ -286,7 +284,7 @@ const TambahApi = ({ token }) => {
                   className="form-control"
                   onChange={(e) => setStatus(e.target.value)}
                 >
-                  <option value="">Piliha status</option>
+                  <option value="">Pilih status</option>
                   <option value="1">Aktif</option>
                   <option value="0">Tidak Aktif</option>
                 </select>
@@ -352,37 +350,43 @@ const TambahApi = ({ token }) => {
               </p>
               <div className="form-group">
                 <label>Role</label>
-                <select
-                  value={role}
-                  onChange={(e) => setRole(e.target.value)}
-                  className="form-control"
-                >
-                  <option value="">Pilih Roles</option>
-                  {allRolesList.data.list_role.map((items, index) => {
-                    return (
-                      <option key={index} value={items.id}>
-                        {items.name}
-                      </option>
-                    );
+                <Select
+                  value={roleOption}
+                  className="basic-single"
+                  classNamePrefix="select"
+                  placeholder="Pilih data role"
+                  isDisabled={false}
+                  isLoading={false}
+                  isMulti
+                  isClearable={false}
+                  isRtl={false}
+                  isSearchable={true}
+                  name="color"
+                  onChange={(e) => handleChangeRole(e)}
+                  options={allRolesList?.data?.list_role?.map((items) => {
+                    return { ...items, label: items.name, value: items.name };
                   })}
-                </select>
+                />
               </div>
               <div className="form-group">
                 <label>Satuan Kerja</label>
-                <select
-                  value={unitWork}
-                  onChange={(e) => setUnitWork(e.target.value)}
-                  className="form-control"
-                >
-                  <option value="">Pilih Satuan Kerja</option>
-                  {allUnitWorkList.data.unit_work.map((items, index) => {
-                    return (
-                      <option key={index} value={items.id}>
-                        {items.name}
-                      </option>
-                    );
+                <Select
+                  value={unitWorkOption}
+                  className="basic-single"
+                  classNamePrefix="select"
+                  placeholder="Pilih data satuan kerja"
+                  isDisabled={false}
+                  isLoading={false}
+                  isMulti
+                  isClearable={false}
+                  isRtl={false}
+                  isSearchable={true}
+                  name="color"
+                  onChange={(e) => handleChangeUnitWork(e)}
+                  options={allUnitWorkList?.data?.unit_work?.map((items) => {
+                    return { ...items, label: items.name, value: items.name };
                   })}
-                </select>
+                />
               </div>{" "}
               {/* hak akses disini */}
               <h3 className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 mb-5 mt-5 titles-1">
@@ -450,7 +454,7 @@ const TambahApi = ({ token }) => {
                   aria-labelledby="home-tab"
                 >
                   <div className="form-group mt-6">
-                    <label>Status</label>
+                    <label>Akademi</label>
                     <Select
                       value={statusAcademy}
                       className="basic-single"
@@ -515,45 +519,50 @@ const TambahApi = ({ token }) => {
                       </div>
 
                       <table className="table table-separate table-head-custom table-checkable mt-5">
-                        <thead style={{ background: "#F3F6F9" }}>
-                          <tr>
-                            <th
-                              colSpan="6"
-                              className="text-left permision"
-                              style={{ textAlignLast: "right" }}
-                            >
-                              Permission
-                            </th>
-                          </tr>
-                          <tr>
-                            <th className="text-left">No</th>
-                            <th className="text-left">ID Pelatihan</th>
-                            <th className="text-left">Nama Pelatihan</th>
-                            <th className="text-left">Accsess</th>
-                            <th
-                              className="text-right child-permission align-middle"
-                              style={{ width: "10rem" }}
-                            >
-                              Manage
-                            </th>
-                            <th
-                              className="text-right child-permission align-middle"
-                              style={{ width: "0" }}
-                            >
-                              View
-                            </th>
-                          </tr>
-                        </thead>
+                        <thead style={{ backgroundColor: "#F2F7FC" }}>
+                        <tr>
+                          <th rowSpan="2" className="align-middle fz-16 fw-600">
+                            No
+                          </th>
+                          <th rowSpan="2" className="align-middle fz-16 fw-600">
+                            ID Pelatihan
+                          </th>
+                          <th rowSpan="2" className="align-middle fz-16 fw-600">
+                            Nama Pelatihan
+                          </th>
+                          <th
+                            rowSpan="2"
+                            className="align-middle text-center fz-16 fw-600"
+                          >
+                            Access
+                          </th>
+                          <th
+                            colSpan="2"
+                            className="text-center border-0 fz-16 fw-600"
+                          >
+                            Permission
+                          </th>
+                        </tr>
+                        <tr>
+                          <th className="text-center fz-16 fw-600">Manage</th>
+                          <th className="text-center fz-16 fw-600">View</th>
+                        </tr>
+                      </thead>
                         <tbody>
                           {sortListPelatihan.map((items, index) => {
                             return (
                               <tr key={index}>
-                                <td className="text-left">{index + 1}</td>
+                                <td className="py-8 border-bottom">
+                                  {index + 1}</td>
 
-                                <td>{items.value}</td>
-                                <td>{items.label}</td>
-                                <td>
-                                  <label className="checkbox">
+                                <td className="py-8 border-bottom">
+                                  {items.value}
+                                  </td>
+                                <td className="py-8 border-bottom">
+                                  {items.label}
+                                  </td>
+                                <td className="text-center py-8 border-bottom">
+                                  <label className="checkbox d-flex justify-content-center">
                                     <input
                                       type="checkbox"
                                       checked={items.allSelect}
@@ -565,11 +574,8 @@ const TambahApi = ({ token }) => {
                                     <span></span>
                                   </label>
                                 </td>
-                                <td
-                                  className="text-right child-permission align-middle"
-                                  style={{ width: "10rem" }}
-                                >
-                                  <label className="checkbox">
+                                <td className="text-center py-8 border-bottom">
+                                <label className="checkbox d-flex justify-content-center">
                                     <input
                                       type="checkbox"
                                       checked={items.manage}
@@ -581,11 +587,8 @@ const TambahApi = ({ token }) => {
                                     <span></span>
                                   </label>
                                 </td>
-                                <td
-                                  className="text-right child-permission align-middle"
-                                  style={{ width: "0" }}
-                                >
-                                  <label className="checkbox">
+                                <td className="text-center py-8 border-bottom">
+                                <label className="checkbox d-flex justify-content-center">
                                     <input
                                       type="checkbox"
                                       checked={items.view}
