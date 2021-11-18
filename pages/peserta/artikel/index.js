@@ -10,6 +10,7 @@ import LoadingContent from "../../../user-component/content/peserta/components/l
 import { middlewareAuthPesertaSession } from "../../../utils/middleware/authMiddleware";
 import { useRouter } from "next/router";
 import { getAllAkademi } from "../../../redux/actions/beranda/beranda.actions";
+import { getAllArtikelsPeserta } from '../../../redux/actions/publikasi/artikel.actions'
 
 const Dashboard = dynamic(
   () => import("../../../user-component/content/peserta/artikel"),
@@ -62,6 +63,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
           success = true;
         }
       }
+      await store.dispatch(
+        getAllArtikelsPeserta(session?.user.user.data.user.token)
+      );
       await store.dispatch(
         getDashboardPeserta(session?.user.user.data.user.token)
       );
