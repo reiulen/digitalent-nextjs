@@ -8,6 +8,7 @@ import {
   detailArtikelReducer,
   updateArtikelReducer,
   allArtikelsPesertaReducer,
+  detailArtikelsPesertaReducer,
 } from "./publikasi/artikel.reducers";
 import {
   allArtikelPesertaReducer,
@@ -492,6 +493,7 @@ const reducer = combineReducers({
   // PUBLIKASI
   allArtikel: allArtikelReducer,
   allArtikelsPeserta: allArtikelsPesertaReducer,
+  detailArtikelsPeserta: detailArtikelsPesertaReducer,
   newArtikel: newArtikelReducer,
   deleteArtikel: deleteArtikelReducer,
   detailArtikel: detailArtikelReducer,
