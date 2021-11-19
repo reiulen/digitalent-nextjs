@@ -129,28 +129,13 @@ const SubtansiUser = ({ token }) => {
     },
   ];
   let multi = [];
+
   console.log(multi);
-
-  const handleMultiple = (item, index) => {
-    if (item.key.includes(localStorage.getItem(router.query.id + index))) {
-      // multi.splice(multi.indexOf(item.key), 1);
-      localStorage.removeItem(router.query.id + index, item.key);
-    } else {
-      // multi.push(item.key);
-      localStorage.setItem(router.query.id + index, item.key);
-    }
-    for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i);
-
-      console.log(key);
-    }
-
-    console.log(localStorage.getItem(router.query.id + index));
-  };
+  // console.log(localStorage.getItem(router.query.id + index));
 
   const [data, setData] = useState(initialData);
   const [answer, setAnswer] = useState("");
-  const [d, setD] = useState(localStorage.getItem(router.query.id));
+  const [d, setD] = useState("");
   console.log(d);
   const [listAnswer, setListAnswer] = useState([]);
   const [numberPage, setNumberPage] = useState("");
@@ -169,6 +154,23 @@ const SubtansiUser = ({ token }) => {
   const [timeLeft, setTimeLeft] = useState(
     sessionStorage.getItem("targetDate")
   );
+  let keyMap = [];
+  const handleMultiple = (item, index) => {
+    setD(index);
+    if (item.key.includes(localStorage.getItem(index))) {
+      // multi.splice(multi.indexOf(item.key), 1);
+      localStorage.removeItem(index, item.key);
+    } else {
+      // multi.push(item.key);
+      localStorage.setItem(index, item.key);
+    }
+
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      keyMap.push(key);
+    }
+  };
+  console.log(keyMap);
 
   const handleModalSoal = () => {
     setModalSoal(true);
@@ -678,9 +680,7 @@ const SubtansiUser = ({ token }) => {
                     data[parseInt(router.query.id) - 1]?.answer !== null &&
                     data[parseInt(router.query.id) - 1]?.answer.map(
                       (item, index) => {
-                        console.log(
-                          localStorage.getItem(router.query.id + index)
-                        );
+                        console.log(localStorage.getItem(router.query.id + d));
                         return (
                           <>
                             {item.image !== null && item.image !== "" ? (
@@ -702,9 +702,7 @@ const SubtansiUser = ({ token }) => {
                                 >
                                   <Card
                                     className={
-                                      localStorage.getItem(
-                                        router.query.id + index
-                                      ) === item.key
+                                      localStorage.getItem(index) === item.key
                                         ? styles.answer
                                         : styles.boxAnswer
                                     }
@@ -728,9 +726,7 @@ const SubtansiUser = ({ token }) => {
                             ) : (
                               <Card
                                 className={
-                                  localStorage.getItem(
-                                    router.query.id + index
-                                  ) === item.key
+                                  localStorage.getItem(index) === item.key
                                     ? styles.answer
                                     : styles.boxAnswer
                                 }
