@@ -12,6 +12,7 @@ export default function SeleksiAdministrasi() {
   const { state: data, error } = useSelector(
     (state) => state.getDetailRiwayatPelatihanPeserta
   );
+
   const router = useRouter();
   const [description, setDescription] = useState(data.deskripsi);
   const [finalDescription, setFinalDescription] = useState();
@@ -36,21 +37,11 @@ export default function SeleksiAdministrasi() {
   const [label, setLabel] = useState();
 
   useEffect(() => {
-    if (!error) {
-      if (data.status.includes("menunggu")) {
-        setLabel("warning");
-      } else if (data.status == "tes substansi") {
-        setLabel("primary");
-      } else if (data.status == "tes substansi") {
-        setLabel("primary");
-      } else if (data.status.includes("tidak")) {
-        setLabel("danger");
-      } else {
-        setLabel("success");
-      }
-    } else {
-      toast.error(error);
-    }
+    const status = data.status;
+    if (status.includes("tidak" || "gagal")) return setLabel("danger");
+    if (status.includes("lulus")) return setLabel("success");
+    if (status.includes("menunggu")) return setLabel("warning");
+    if (status.includes("tes substansi")) return setLabel("primary");
   }, []);
 
   return (
@@ -68,7 +59,7 @@ export default function SeleksiAdministrasi() {
             </Col>
             <Col className=" d-flex justify-content-end">
               <span
-                className={`label label-inline label-light-${label} font-weight-bold text-capitalize`}
+                className={`label label-inline label-light-${label} font-weight-bolder text-capitalize`}
                 style={{ borderRadius: "25px" }}
               >
                 {data.status}
@@ -156,7 +147,7 @@ export default function SeleksiAdministrasi() {
                   {truncate ? (
                     <div className="mt-5">
                       <a
-                        style={{ color: "#0063CC" }}
+                        style={{ color: "#0063CC", cursor: "pointer" }}
                         onClick={() => {
                           setFinalDescription(description);
                           setTruncate(false);

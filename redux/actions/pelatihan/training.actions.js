@@ -499,8 +499,6 @@ export const deleteTraining = (id, token) => async (dispatch) => {
 };
 //END DELETE TRAINING
 
-
-
 //DETAIL LPJ
 export const getDetailLpj = (id, token) => async (dispatch) => {
   try {
@@ -633,8 +631,9 @@ export const cloneTrainingAction = (id, token) => async (dispatch) => {
     };
 
     const { data } = await axios.post(
-      process.env.END_POINT_API_PELATIHAN + `/api/v1/pelatihan/clone-pelatihan`,{
-        pelatian_id: parseInt(id)
+      process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/clone-pelatihan`,
+      {
+        pelatian_id: parseInt(id),
       },
       config
     );

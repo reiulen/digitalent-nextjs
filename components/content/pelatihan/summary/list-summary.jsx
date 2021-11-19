@@ -9,7 +9,7 @@ import { Modal } from "react-bootstrap";
 import Select from "react-select";
 import moment from "moment";
 import DatePicker from "react-datepicker";
-import axios from 'axios'
+import axios from "axios";
 
 import {
   clearErrors,
@@ -152,7 +152,7 @@ const ListSummary = ({ token }) => {
         statusSubstansi != null ? statusSubstansi.label : null,
         statusPelatihan != null ? statusPelatihan.label : null,
         penyelenggara != null ? penyelenggara.label : null,
-        academy !== null ?  academy.label : null,
+        academy !== null ? academy.label : null,
         theme !== null ? theme.label : null,
         token
       )
@@ -211,32 +211,36 @@ const ListSummary = ({ token }) => {
   };
 
   const handleExportReport = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     let register = dateRegister.map((item) => {
       return moment(item).format("YYYY-MM-DD");
     });
     let pelaksanaan = datePelaksanaan.map((item) => {
       return moment(item).format("YYYY-MM-DD");
     });
-    let link = process.env.END_POINT_API_PELATIHAN + "/api/v1/pelatihan/export-rekap-pendaftaran";
+    let link =
+      process.env.END_POINT_API_PELATIHAN +
+      "api/v1/pelatihan/export-rekap-pendaftaran";
 
     let config = {
       params: {
-        cari:search,
-        pendaftaran_mulai: register[0] === "Invalid date" ? "" : register.join(","),
-        pelatihan_mulai: pelaksanaan[0] === "Invalid date" ? "" : pelaksanaan.join(","),
+        cari: search,
+        pendaftaran_mulai:
+          register[0] === "Invalid date" ? "" : register.join(","),
+        pelatihan_mulai:
+          pelaksanaan[0] === "Invalid date" ? "" : pelaksanaan.join(","),
         status_pelatihan: statusPelatihan != null ? statusPelatihan.label : "",
         penyelenggara: penyelenggara != null ? penyelenggara.label : "",
-        akademi: academy !== null ?  academy.label : "",
+        akademi: academy !== null ? academy.label : "",
         tema: theme !== null ? theme.label : "",
       },
       headers: {
         Authorization: "Bearer " + token,
       },
-    }
+    };
 
-     axios.get(link, config).then((res) => {
-      window.open(res.data.data, '_blank');
+    axios.get(link, config).then((res) => {
+      window.open(res.data.data, "_blank");
     });
   };
 
@@ -397,7 +401,10 @@ const ListSummary = ({ token }) => {
                                 ? i + 1 * (page * 5) - (5 - 1)
                                 : i + 1 * (page * limit) - (limit - 1)}
                             </td>
-                            <td className="align-middle">{row.slug}{row.id}</td>
+                            <td className="align-middle">
+                              {row.slug}
+                              {row.id}
+                            </td>
                             <td className="align-middle">
                               <p className="font-weight-bolder my-0">
                                 {row.name}

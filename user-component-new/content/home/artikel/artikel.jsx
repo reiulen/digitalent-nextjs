@@ -236,7 +236,12 @@ const Artikel = () => {
             {
                 kategori ? (
                     <div
-                        className="col-md-8 col-12 pl-0 ml-4 mt-10 mb-5 pr-10"
+                        className={
+                            windowDimensions && windowDimensions.width && windowDimensions.width <= 770 ?
+                                "col-12 pl-0 ml-4 mt-10 mb-5"
+                            :
+                                "col-lg-8 col-12 pl-0 ml-4 mt-10 mb-5 pr-10"
+                        }
                     >
                         <Splide
                             options={{
@@ -327,13 +332,19 @@ const Artikel = () => {
             <div className="row">
 
                 {/* Left Side */}
-                <div className="col-md-8 col-12 pr-15">
+                <div 
+                    className={
+                        windowDimensions && windowDimensions.width && windowDimensions.width <= 770 ?
+                            "col-lg-8 col-12"
+                        :
+                            "col-lg-8 col-12 pr-15"
+                    }
+                >
 
                     {/* Filter at mobile screen */}
                     {
-                        
                         windowDimensions && windowDimensions.width && windowDimensions.width <= 770 ?
-                            <div className="border rounded-lg p-2 order-1 mb-5 ml-3">
+                            <div className="border rounded-lg p-2 order-1 mb-10 ml-3">
                                 <div className="row"> 
                                     <div className="col-2 my-auto ml-3">
                                         <Image 
@@ -519,7 +530,7 @@ const Artikel = () => {
                             artikel && artikel.artikel && artikel.artikel.length !== 0 ?
                                 artikel.artikel.map ((el, i) => {
                                     return (
-                                        <div className="row my-15 ml-1 " key={i}>
+                                        <div className="row mt-5 ml-1 " key={i}>
                                             <div className="col col-7">
                                                 <div className="row col-12 justify-content-between align-items-center">
                                                     <div className=" d-flex align-self-center mb-2">
@@ -692,7 +703,7 @@ const Artikel = () => {
                 {/* End of Left Side */}
 
                 {/* Right Side */}
-                <div className="col-md-4 col-12">
+                <div className="col-lg-4 col-12">
                     {/* Filter */}
                     {
                         windowDimensions && windowDimensions.width && windowDimensions.width > 770 ?
@@ -827,7 +838,13 @@ const Artikel = () => {
                     {/* End of Filter */}
 
                     {/* Tag */}
-                    <div className="row d-flex flex-column mx-10 my-10 d-flex justify-content-center order-3">
+                    <div 
+                        className={windowDimensions && windowDimensions.width && windowDimensions.width > 770 ?
+                                "row d-flex flex-column mx-auto px-10 my-5 d-flex justify-content-center order-3"
+                            :
+                                "row d-flex flex-column ml-5 mb-5 d-flex justify-content-center order-3"
+                        }
+                    >
                         <h3 className="font-weight-bolder"> 
                             Temukan lebih banyak artikel yang sesuai:
                         </h3>
