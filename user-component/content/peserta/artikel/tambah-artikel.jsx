@@ -9,6 +9,7 @@ import SimpleReactValidator from "simple-react-validator";
 import Swal from "sweetalert2";
 import { TagsInput } from "react-tag-input-component";
 import DatePicker from "react-datepicker";
+import { newArtikelPeserta } from '../../../../redux/actions/publikasi/artikel.actions'
 
 import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
 import { Container } from "react-bootstrap";
@@ -16,7 +17,7 @@ import { Container } from "react-bootstrap";
 import styles from "../../../../styles/previewGaleri.module.css";
 import gambarImage from "../../../../public/assets/media/default.jpg";
 
-const TambahArtikelPeserta = () => {
+const TambahArtikelPeserta = ({session}) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -47,6 +48,7 @@ const TambahArtikelPeserta = () => {
   const [akademi, setAkademi] = useState(null);
   const [kategori, setKategori] = useState(null);
   const [tag, setTag] = useState([]);
+  const [checkTag, setCheckTag] = useState(false);
 
   let optionAkademi = allAkademi.akademi.map((item) => {
     return {
@@ -56,18 +58,16 @@ const TambahArtikelPeserta = () => {
   });
 
   function hasWhiteSpace(s) {
-    return s.indexOf(' ') >= 0;
+    return s.indexOf(" ") >= 0;
   }
 
-  const handleTag = (data) => {
+  const handleTag = (data, type) => {
     for (let i = 0; i < data.length; i++) {
       if (hasWhiteSpace(data[i])) {
         data.splice([i], 1);
       }
     }
-    if (tag.includes(data) !== true) {
-      setTag(data);
-    }
+    setTag(data);
   };
 
   const onChangeGambar = (e) => {
@@ -96,7 +96,15 @@ const TambahArtikelPeserta = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(judul, deskripsi, akademi, kategori, tag);
+    const data = {
+      isi_artikel: deskripsi,
+      judul_artikel: judul,
+      gambar: gambar,
+      kategori_akademi: akademi,
+      kategori_id: kategori,
+      tag: tag
+    }
+    dispatch(newArtikelPeserta(data, session.token))
   };
 
   useEffect(() => {
@@ -153,6 +161,7 @@ const TambahArtikelPeserta = () => {
                         accept="image/*"
                         style={{ display: "none" }}
                         onChange={onChangeGambar}
+                        required
                       />
                     </div>
                   </div>
@@ -182,6 +191,7 @@ const TambahArtikelPeserta = () => {
                       onChange={(e) => {
                         setJudul(e.target.value);
                       }}
+                      required
                     />
                   </div>
                 </div>
@@ -197,6 +207,7 @@ const TambahArtikelPeserta = () => {
                     <div className="ckeditor">
                       {editorLoaded ? (
                         <CKEditor
+                      
                           editor={ClassicEditor}
                           config={{
                             placeholder: "Tulis Deskripsi",
@@ -228,6 +239,7 @@ const TambahArtikelPeserta = () => {
                       }}
                       value={akademi}
                       className={`${styles.selectKategori} form-control dropdownArt`}
+                      required
                     >
                       <option value="" selected disabled>
                         -------------------PILIH AKADEMI-------------------
@@ -257,6 +269,7 @@ const TambahArtikelPeserta = () => {
                       }}
                       value={kategori}
                       className={`${styles.selectKategori} form-control dropdownArt`}
+                      required
                     >
                       <option value="" selected disabled>
                         -------------------PILIH KATEGORI-------------------
@@ -264,7 +277,7 @@ const TambahArtikelPeserta = () => {
                       {allKategori.kategori.kategori.map((item) => {
                         if (item.jenis_kategori === "Artikel")
                           return (
-                            <option value={item.nama_kategori} key={item.id}>
+                            <option value={item.id} key={item.id}>
                               {item.nama_kategori}
                             </option>
                           );
@@ -286,15 +299,21 @@ const TambahArtikelPeserta = () => {
                   >
                     <TagsInput
                       value={tag}
-                      onChange={(data) =>{handleTag(data); console.log(data) }}
+                      onExisting={(data) => {
+                        setCheckTag(true);
+                      }}
+                      onChange={(data) => {
+                        setCheckTag(false);
+                        handleTag(data);
+                      }}
                       name="fruits"
                       placeHolder="Isi Tag disini"
-                      seprators={["Enter", "Tab"]}
-                      onBlur={(e) => {
-                        simpleValidator.current.showMessageFor("tag");
-                      }}
+                      seprators={["Enter", "Tab", "Space"]}
+                      
                     />
-                    
+                    {checkTag && (
+                      <span className="text-danger">Tag tidak boleh sama</span>
+                    )}
                   </div>
                 </div>
 

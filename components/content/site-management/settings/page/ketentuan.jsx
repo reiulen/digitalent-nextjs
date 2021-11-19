@@ -56,7 +56,7 @@ export default function Ketentuan(props) {
             <option value="8">8 Pelatihan</option>
             <option value="9">9 Pelatihan</option>
             <option value="10" {...totalPelatihan === "10" ? " selected" : ""}>10 Pelatihan</option>
-            <option value=">10">Lebih dari 10 Pelatihan</option>
+            <option value="-">Lebih dari 10 Pelatihan</option>
           </select>
         </div>
         <div className="mt-3">
