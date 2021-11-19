@@ -157,12 +157,12 @@ const SubtansiUser = ({ token }) => {
   let keyMap = [];
   const handleMultiple = (item, index) => {
     setD(index);
-    if (item.key.includes(localStorage.getItem(index))) {
+    if (item.key.includes(localStorage.getItem(index + "a"))) {
       // multi.splice(multi.indexOf(item.key), 1);
-      localStorage.removeItem(index, item.key);
+      localStorage.removeItem(index + "a", item.key);
     } else {
       // multi.push(item.key);
-      localStorage.setItem(index, item.key);
+      localStorage.setItem(index + "a", item.key);
     }
 
     for (let i = 0; i < localStorage.length; i++) {
@@ -702,7 +702,8 @@ const SubtansiUser = ({ token }) => {
                                 >
                                   <Card
                                     className={
-                                      localStorage.getItem(index) === item.key
+                                      localStorage.getItem(index + "a") ===
+                                      item.key
                                         ? styles.answer
                                         : styles.boxAnswer
                                     }
@@ -726,7 +727,7 @@ const SubtansiUser = ({ token }) => {
                             ) : (
                               <Card
                                 className={
-                                  localStorage.getItem(index) === item.key
+                                  localStorage.getItem(index + "a") === item.key
                                     ? styles.answer
                                     : styles.boxAnswer
                                 }
@@ -1189,7 +1190,8 @@ const SubtansiUser = ({ token }) => {
                     const key = localStorage.key(i);
                     list.push(key);
                   }
-
+                  console.log(JSON.stringify(`${item}a`));
+                  console.log(list.includes(JSON.stringify(`${item}`)));
                   return (
                     <>
                       {list.includes(JSON.stringify(item + 1)) ? (
