@@ -84,9 +84,7 @@ const EditVideo = ({ token }) => {
                 data.splice([i], 1);
             }
         }
-        if ((tag).includes(data) !== true) {
-          setTag(data);
-        }
+        setTag(data)
     }
 
     const onChangeGambar = (e) => {
@@ -478,15 +476,19 @@ const EditVideo = ({ token }) => {
                                     <div className={`${styles.tagStyle} col-sm-12`} style={{ wordBreak: 'break-word' }}>
                                         <TagsInput
                                             value={tag}
-                                            onChange={(data) => handleTag(data)}
-                                            name="fruits"
-                                            placeHolder="Isi Tag disini"
+                                            onChange={(data) => {
+                                                handleTag(data)
+                                                setDisableTag(false)
+                                            }}
+                                            onExisting={(data) => setDisableTag(true)}
+                                            name="tag"
+                                            placeHolder="Isi Tag disini dan Enter"
                                         // onBlur={() => simpleValidator.current.showMessageFor('tag')}
                                         />
                                         {
                                             disableTag === true ?
                                                 <p className="text-danger">
-                                                    Tag tidak bisa terdiri dari "SPACE" character saja
+                                                    Tag tidak boleh sama
                                                 </p>
                                                 :
                                                 null

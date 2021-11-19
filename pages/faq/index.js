@@ -5,7 +5,7 @@ import { wrapper } from "../../redux/store";
 import { getAllFaq } from "../../redux/actions/beranda/faq-content.actions"
 
 const FaqPage = dynamic(
-    () => import("../../user-component/content/beranda/faq")
+    () => import("../../user-component-new/content/home/faq/faq")
 )
 
 const Layout = dynamic(

@@ -53,7 +53,7 @@ const EditArtikel = ({ token, idUser }) => {
   useEffect(() => {
 
     editorRef.current = {
-      CKEditor: require('@ckeditor/ckeditor5-react').CKEditor, 
+      CKEditor: require('@ckeditor/ckeditor5-react').CKEditor,
       ClassicEditor: require('@ckeditor/ckeditor5-build-classic'),
     }
 
@@ -86,7 +86,7 @@ const EditArtikel = ({ token, idUser }) => {
     artikel.gambar
   );
   const [gambarName, setGambarName] = useState(artikel.gambar);
-  const [kategori_id, setKategoriId] = useState(artikel.kategori_id); 
+  const [kategori_id, setKategoriId] = useState(artikel.kategori_id);
   const [kategori_akademi, setKategoriAkademi] = useState(artikel.kategori_akademi);
   const [users_id, setUserId] = useState(artikel.users_id);
   const [tag, setTag] = useState(artikel.tag);
@@ -156,9 +156,8 @@ const EditArtikel = ({ token, idUser }) => {
         data.splice([i], 1);
       }
     }
-    if ((tag).includes(data) !== true) {
-      setTag(data);
-    }
+    setTag(data)
+
   }
 
   const onSubmit = e => {
@@ -595,16 +594,21 @@ const EditArtikel = ({ token, idUser }) => {
                   <div className={`${styles.tagStyle} col-sm-12`} style={{ wordBreak: 'break-word' }}>
                     <TagsInput
                       value={tag}
-                      onChange={(data) => handleTag(data)}
-                      name="fruits"
+                      onChange={(data) => {
+                        handleTag(data);
+                        setDisableTag(false)
+                      }}
+                      onExisting={(data) => setDisableTag(true)}
+                      name="tag"
                       placeHolder="Isi Tag disini dan Enter"
                       seprators={["Enter", "Tab"]}
                     // onBlur={() => simpleValidator.current.showMessageFor('tag')}
                     />
+
                     {
                       disableTag === true ?
                         <p className="text-danger">
-                          Tag tidak bisa terdiri dari "SPACE" character saja
+                          Tag tidak boleh sama
                         </p>
                         :
                         null

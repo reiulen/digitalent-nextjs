@@ -130,30 +130,12 @@ const TambahBerita = ({ token, id }) => {
     }
 
     const handleTag = (data) => {
-        // for (let i = 0; i < data.length; i++) {
-        //     if (hasWhiteSpace(data[i])) {
-        //         data.splice([i], 1);
-        //     }
-        // }
-        // tag.map((el,idx)=>{
-        //     return (
-        //         data.length === el && Swal.fire("Oops !", "Tag tidak boleh sama", "error")
-        //     )
-        // })
-
-        // // if (tag.includes(data)) {
-        // //     Swal.fire("Oops !", "Tag tidak boleh sama", "error")
-        // // }
-        // setTag(data);
-
         for (let i = 0; i < data.length; i++) {
             if (hasWhiteSpace(data[i])) {
                 data.splice([i], 1);
             }
         }
-        if ((tag).includes(data) !== true) {
-            setTag(data);
-        }
+        setTag(data);
     }
 
     const onSubmit = (e) => {
@@ -446,7 +428,11 @@ const TambahBerita = ({ token, id }) => {
                                 <div className={`${styles.tagStyle} col-sm-12`} style={{ wordBreak: 'break-word' }}>
                                     <TagsInput
                                         value={tag}
-                                        onChange={(data) => handleTag(data)}
+                                        onChange={(data) => {
+                                            handleTag(data)
+                                            setDisableTag(false)
+                                        }}
+                                        onExisting={(data) => setDisableTag(true)}
                                         name="tag"
                                         placeHolder="Isi Tag disini dan Enter"
                                         seprators={["Enter", "Tab"]}
@@ -454,7 +440,7 @@ const TambahBerita = ({ token, id }) => {
                                     {
                                         disableTag === true ?
                                             <p className="text-danger">
-                                                Tag tidak bisa terdiri dari "SPACE" character saja
+                                                Tag tidak boleh sama
                                             </p>
                                             :
                                             null
