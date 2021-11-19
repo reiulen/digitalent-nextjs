@@ -333,7 +333,7 @@ export const newLPJ = (setData, token) => async (dispatch) => {
     };
 
     const { data } = await axios.post(link, setData, config);
-    console.log(data);
+
     if (data) {
       dispatch({ type: NEW_LPJ_SUCCESS, payload: data });
     }
