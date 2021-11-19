@@ -34,10 +34,10 @@ export default function FileSize(props) {
   return (
     <div className="col-xl-8 styling-content-pelatihan">
       <form onSubmit={handleSubmit}>
-        <div className="notification-title">
+        <div className="notification-title border-resnponsive mr-4">
           <h1>File Size</h1>
         </div>
-        <div className="form-group">
+        <div className="form-group mr-4">
           <h3 className="judul">Image</h3>
           <div className="input-group mb-3">
             <input
@@ -56,9 +56,9 @@ export default function FileSize(props) {
             </span>
           </div>
         </div>
-        <div classNameName="form-group">
+        <div classNameName="form-group mr-4">
           <h3 classNameName="judul">Document</h3>
-          <div className="input-group mb-3">
+          <div className="input-group mb-3 mr-4">
             <input
               type="number"
               value={document}
@@ -70,12 +70,12 @@ export default function FileSize(props) {
               }}
               required
             />
-            <span className="input-group-text" id="basic-addon2">
+            <span className="input-group-text mr-4" id="basic-addon2">
               MB
             </span>
           </div>
         </div>
-        <div className="d-flex justify-content-end my-5">
+        <div className="d-flex justify-content-end my-5 mr-4">
           <button type="reset" className="btn btn-reset" onClick={() => {
             setImage("");
             setDocument("")

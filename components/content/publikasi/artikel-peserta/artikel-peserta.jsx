@@ -271,6 +271,9 @@ const ArtikelPeserta = ({ token }) => {
         setStartDate(null)
         setEndDate(null)
         setDisableEndDate(true)
+        setPublishValue(null)
+        setSearch("")
+        setLimit(null)
         router.replace("/publikasi/artikel-peserta", undefined, { shallow: false });
     }
 
@@ -393,7 +396,7 @@ const ArtikelPeserta = ({ token }) => {
                                             className="col-sm-12 col-md-6 avatar item-rtl btn border d-flex align-items-center justify-content-between mt-2"
                                             data-toggle="modal"
                                             data-target="#exampleModalCenter"
-                                            style={{ color: "#464646"}}
+                                            style={{ color: "#464646" }}
                                         >
                                             <div className={`${styles.filter} d-flex align-items-center`}>
                                                 <IconFilter className="mr-3" />
@@ -544,8 +547,8 @@ const ArtikelPeserta = ({ token }) => {
                                         <tbody>
                                             {
                                                 !artikel_peserta || artikel_peserta && artikel_peserta.artikel.length === 0 ?
-                                                <td className='align-middle text-center' colSpan={9}>Data Kosong</td> :
-                                                <td className='align-middle text-center' colSpan={9}>Data Kosong</td>
+                                                    <td className='align-middle text-center' colSpan={9}>Data Kosong</td> :
+                                                    <td className='align-middle text-center' colSpan={9}>Data Kosong</td>
                                             }
                                         </tbody>
                                     </table> : ''
@@ -554,7 +557,7 @@ const ArtikelPeserta = ({ token }) => {
 
                             <div className="row">
                                 {artikel_peserta && artikel_peserta.perPage < artikel_peserta.total &&
-                                null
+                                    null
                                 }
                                 {artikel_peserta ?
                                     <div className={`${stylesPag.rightPag} table-total ml-auto`}>

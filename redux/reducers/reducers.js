@@ -8,6 +8,7 @@ import {
   detailArtikelReducer,
   updateArtikelReducer,
   allArtikelsPesertaReducer,
+  detailArtikelsPesertaReducer,
 } from "./publikasi/artikel.reducers";
 import {
   allArtikelPesertaReducer,
@@ -403,8 +404,11 @@ import {
   drowpdownProvinsiReducers,
   drowpdownKabupatenReducers,
   drowpdownKabupatenDomisiliReducers,
+  drowpdownProvinsiToDesaReducers,
+  drowpdownKecamatanToDesaReducers,
   drowpdownPenyelenggaraReducers,
   drowpdownFormBuilderReducers,
+  drowpdownTempatLahirReducers,
 } from "./pelatihan/admin/function.reducers";
 import { allProvinsiReducer, allKotaReducer } from "./utils/utils.reducers";
 import { reducerFunctionals } from "./utils/functionals.reducer";
@@ -492,6 +496,7 @@ const reducer = combineReducers({
   // PUBLIKASI
   allArtikel: allArtikelReducer,
   allArtikelsPeserta: allArtikelsPesertaReducer,
+  detailArtikelsPeserta: detailArtikelsPesertaReducer,
   newArtikel: newArtikelReducer,
   deleteArtikel: deleteArtikelReducer,
   detailArtikel: detailArtikelReducer,
@@ -812,7 +817,10 @@ const reducer = combineReducers({
   drowpdownZonasi: drowpdownZonasiReducers,
   drowpdownProvinsi: drowpdownProvinsiReducers,
   drowpdownKabupaten: drowpdownKabupatenReducers,
+  drowpdownTempatLahir: drowpdownTempatLahirReducers,
   drowpdownKabupatenDomisili: drowpdownKabupatenDomisiliReducers,
+  drowpdownProvinsiToDesa: drowpdownProvinsiToDesaReducers,
+  drowpdownKecamatanToDesa: drowpdownKecamatanToDesaReducers,
   drowpdownPenyelenggara: drowpdownPenyelenggaraReducers,
   drowpdownFormBuilder: drowpdownFormBuilderReducers,
   updateStatus: updateStatusReducer,

@@ -21,8 +21,8 @@ import {
 import { set } from "js-cookie";
 
 const DashboardSiteManagement = ({ token, user }) => {
-  const [participant, setParticipant] = useState("0");
-  const [administrator, setAdministrator] = useState("0");
+  const [participant, setParticipant] = useState(0);
+  const [administrator, setAdministrator] = useState(0);
   const [mitra, setMitra] = useState(0);
   const [pageZonasi, setPageZonasi] = useState(1);
   const [pagePeserta, setPagePeserta] = useState(1);
@@ -39,9 +39,9 @@ const DashboardSiteManagement = ({ token, user }) => {
         },
       })
       .then((items) => {
-        setParticipant(formatNumber(items.data.data.participant));
-        setAdministrator(formatNumber(items.data.data.administrator));
-        setMitra(formatNumber(items.data.data.mitra));
+        setParticipant(items.data.data.participant);
+        setAdministrator(items.data.data.administrator);
+        setMitra(items.data.data.mitra);
       });
 
     dispatch(loadDataZonasi(token, type, pageZonasi));
@@ -67,6 +67,7 @@ const DashboardSiteManagement = ({ token, user }) => {
 
   function formatNumber(num) {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    return 1;
   }
 
   const tableZonasi = allDataZonasi.map((item, index) => {
@@ -74,34 +75,34 @@ const DashboardSiteManagement = ({ token, user }) => {
       <tr key={index}>
         <td className="data-daerah py-4">
           <span className="nomor mr-4">{item.nomor}</span>
-          {capitalize(item.provinsi)}
+          {item.provinsi}
         </td>
-        <td className="total-peserta">{formatNumber(item.total)} Zonasi</td>
+        <td className="total-peserta">{item?.total} Zonasi</td>
       </tr>
     );
   });
 
-  const tablePeserta =
-    allDataPeserta &&
-    allDataPeserta.length > 0 &&
-    allDataPeserta.map((item, index) => {
-      return (
-        <tr key={index}>
-          <td className="data-daerah py-4">
-            <span className="nomor mr-4">{item.nomor}</span>
-            {capitalize(item.provinsi)}
-          </td>
-          <td className="total-peserta">{formatNumber(item.total)} Peserta</td>
-        </tr>
-      );
-    });
+  const tablePeserta = allDataPeserta.map((item, index) => {
+    return (
+      <tr key={index}>
+        <td className="data-daerah py-4">
+          <span className="nomor mr-4">{item.nomor}</span>
+          {item.provinsi}
+        </td>
+        <td className="total-peserta">{item.total} Peserta</td>
+      </tr>
+    );
+  });
+
+  const emptyData = (
+    <td className="align-middle text-center" colSpan={8}>
+      Data Kosong
+    </td>
+  );
 
   return (
     <>
       <PageWrapper>
-        {console.log(
-          allDataPeserta && allDataPeserta.length > 0 && allDataPeserta
-        )}
         <div className="container">
           <div className="col-lg-12 col-md-12">
             <div className="row">
@@ -151,10 +152,10 @@ const DashboardSiteManagement = ({ token, user }) => {
                   <Image src={ImagePlants} alt="imagehero" />
                 </div>
 
-                <h5 className="text-blue-secondary fw-600 fz-24">
+                <h5 className="text-blue-primary fw-600 fz-24">
                   Hallo {user.name} !
                 </h5>
-                <p className="text-gray-primary fw-600 fz-16">
+                <p className="text-muted fw-600 fz-16">
                   Selamat Datang di Dashboard <br /> Site Management
                 </p>
               </div>
@@ -236,11 +237,14 @@ const DashboardSiteManagement = ({ token, user }) => {
                     </th>
                   </tr>
 
-                  {tablePeserta}
+                  {tablePeserta.length > 0 ? tablePeserta : emptyData}
                 </table>
                 <div className="d-flex mx-6">
                   <p className="pt-6">
-                    {/* Total: {formatNumber(allDataPeserta && allDataPeserta.length > 0 && allDataPeserta[0].totalPeserta)}{" "} */}
+                    Total:{" "}
+                    {allDataPeserta &&
+                      allDataPeserta.length > 0 &&
+                      allDataPeserta[0].totalPeserta}{" "}
                     Peserta
                   </p>
                   <div className="ml-auto mx-10 my-4">
@@ -347,11 +351,11 @@ const DashboardSiteManagement = ({ token, user }) => {
                     </th>
                   </tr>
 
-                  {tableZonasi}
+                  {tableZonasi.length > 0 ? tableZonasi : emptyData}
                 </table>
                 <div className="d-flex mx-6">
                   <p className="pt-6">
-                    Total: {formatNumber(allDataZonasi[0].totalZonasi)} Zonasi
+                    Total: {allDataZonasi[0]?.totalZonasi} Zonasi
                   </p>
                   <div className="ml-auto mx-10 my-4">
                     <button
@@ -374,7 +378,7 @@ const DashboardSiteManagement = ({ token, user }) => {
                     <button
                       type="button"
                       className={
-                        pageZonasi >= Math.ceil(allDataZonasi[0].totalPage / 5)
+                        pageZonasi >= Math.ceil(allDataZonasi[0]?.totalPage / 5)
                           ? "btn btn-primary disabled"
                           : "btn btn-primary"
                       }
@@ -382,7 +386,7 @@ const DashboardSiteManagement = ({ token, user }) => {
                         e.preventDefault();
                         if (
                           pageZonasi >=
-                          Math.ceil(allDataZonasi[0].totalPage / 5)
+                          Math.ceil(allDataZonasi[0]?.totalPage / 5)
                         ) {
                           setPageZonasi(pageZonasi);
                         } else {
