@@ -286,105 +286,179 @@ const Galeri = () => {
                         </div>
                     </div>
                 :
-                    <div className="col-12 row d-flex flex-wrap justify-content-between">
+                    // <div className="col-12 d-flex flex-wrap justify-content-between">
                         
-                        {   
-                            galeri && galeri.gallery && galeri.gallery.length !== 0 ?
+                    //     {   
+                    //         galeri && galeri.gallery && galeri.gallery.length !== 0 ?
 
-                                galeri.gallery.map ((el, i) => {
-                                    return (
-                                        <div 
-                                            key={i} 
-                                            className={`position-relative my-5 col-4`}
-                                            onMouseEnter={() => handleMouseEnter(i)}
-                                            onMouseLeave={() => handleMouseLeave(i)}
-                                        >
-                                            {
-                                                show && show[i] === false ?
-                                                    <div classname="position-relative" style={{objectFit:"cover"}}>
-                                                        <Image
-                                                            src={
-                                                                process.env.END_POINT_API_IMAGE_PUBLIKASI +
-                                                                "publikasi/images/" + el.gambar
-                                                            }
-                                                            alt="Card Gallery"
-                                                            width= {400}
-                                                            height= {400}
-                                                            className="rounded-lg"
+                    //             galeri.gallery.map ((el, i) => {
+                    //                 return (
+                    //                     <div 
+                    //                         key={i} 
+                    //                         className={`position-relative my-5 col-6 col-md-4`}
+                    //                         onMouseOver={() => handleMouseEnter(i)}
+                    //                         onMouseOut={() => handleMouseLeave(i)}
+                    //                     >
+                    //                         {
+                    //                             show && show[i] === false ?
+                    //                                 <div classname="card position-relative" style={{objectFit:"cover"}}>
+                    //                                     <Image
+                    //                                         src={
+                    //                                             process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                    //                                             "publikasi/images/" + el.gambar
+                    //                                         }
+                    //                                         alt="Card Gallery"
+                    //                                         width= {400}
+                    //                                         height= {400}
+                    //                                         className="rounded-lg"
+                    //                                         style={{objectFit:"cover"}}
+                    //                                     />
+                    //                                 </div>
+                    //                             :
+                    //                                 <div 
+                    //                                     style={{
+                    //                                         width: "400px",
+                    //                                         height: "400px"
+                    //                                     }}
+
+                    //                                     onClick={() => handleDataModal(el.id_gallery)}
+                    //                                     data-target="#modalGaleri"
+                    //                                     data-toggle="modal"
+                    //                                 >   
+                    //                                     <div classname="position-relative" style={{objectFit:"cover"}}>
+                    //                                         <Image
+                    //                                             src={
+                    //                                                 process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                    //                                                 "publikasi/images/" + el.gambar
+                    //                                             }
+                    //                                             alt="Card Gallery" 
+                    //                                             width= {400}
+                    //                                             height= {400}
+                    //                                             className="rounded-lg"
+                    //                                             style={{objectFit:"cover"}}
+                    //                                         />
+                    //                                     </div>
+                                                        
+                    //                                     <Card.ImgOverlay className="ml-4 p-0">
+                    //                                         <div 
+                    //                                             className="col-12 d-flex align-items-end m-0 p-0"
+                    //                                             style={{ 
+                    //                                                 width: "400px",
+                    //                                                 height: "400px",
+                    //                                                 cursor: "pointer",
+                    //                                                 transition: "height 0.5s ease-out",
+                    //                                                 background: "linear-gradient(to bottom, transparent 0%, black 100%)",
+                    //                                                 borderRadius:"10px"
+                    //                                             }}
+                    //                                         >
+                    //                                             <div className="d-flex flex-column">
+                    //                                                 <div>
+                    //                                                     <h5 className="font-weight-bolder text-white mb-5 mx-5">
+                    //                                                         {el.judul}
+                    //                                                     </h5>
+                    //                                                 </div>
+                                                                
+                    //                                                 <div>
+                    //                                                     <div className="badge badge-light mx-5 mb-5">
+                    //                                                         <div className="text-primary">
+                    //                                                             {/* Insert Kategori Here */}
+                    //                                                             {el.nama_kategori}
+                    //                                                         </div>
+                    //                                                     </div>
+                    //                                                 </div>
+                    //                                             </div>
+                                                                
+                                                                
+                    //                                         </div>
+                    //                                     </Card.ImgOverlay> 
+                    //                                 </div>
+
+                    //                         }
+                                            
+                    //                     </div>
+                    //                 )
+                    //             })
+                    //         :
+                    //             <div className="col-12 d-flex justify-content-center my-5">
+                    //                 <h1 className="font-weight-bolder">
+                    //                     Galeri Tidak Tersedia
+                    //                 </h1>
+                    //             </div>
+                    //     }
+                    // </div>
+                    <div className="mt-5">
+                        <div className="row d-flex justify-content-between flex-wrap">
+                            {
+                               galeri && galeri.gallery && galeri.gallery.length === 0 ? 
+                                    <div className="col-12 d-flex justify-content-center my-5">
+                                        <h1 className="font-weight-bolder">
+                                            Galeri Tidak Tersedia
+                                        </h1>
+                                    </div>
+                                :
+                                    galeri.gallery.map((el, i) => {
+                                        return (
+                                            <div 
+                                                className="col-6 col-md-4 position-relative my-5"
+                                                key={i}
+                                                onMouseEnterr={() => handleMouseEnter(i)}
+                                                onMouseLeave={() => handleMouseLeave(i)}
+                                            >
+                                                {
+                                                    
+                                                    show && show[i] === false ?
+                                                        <div 
+                                                            classname="card position-relative" 
                                                             style={{objectFit:"cover"}}
-                                                        />
-                                                    </div>
-                                                :
-                                                    <div 
-                                                        style={{
-                                                            width: "400px",
-                                                            height: "400px"
-                                                        }}
-
-                                                        onClick={() => handleDataModal(el.id_gallery)}
-                                                        data-target="#modalGaleri"
-                                                        data-toggle="modal"
-                                                    >   
-                                                        <div classname="position-relative" style={{objectFit:"cover"}}>
+                                                        >
                                                             <Image
                                                                 src={
                                                                     process.env.END_POINT_API_IMAGE_PUBLIKASI +
                                                                     "publikasi/images/" + el.gambar
                                                                 }
-                                                                alt="Card Gallery" 
+                                                                alt="Card Gallery"
                                                                 width= {400}
                                                                 height= {400}
                                                                 className="rounded-lg"
                                                                 style={{objectFit:"cover"}}
                                                             />
                                                         </div>
-                                                        
-                                                        <Card.ImgOverlay className="ml-4 p-0">
-                                                            <div 
-                                                                className="col-12 d-flex align-items-end m-0 p-0"
+                                                    :
+                                                        <div    
+                                                            onClick={() => handleDataModal(el.id_gallery)}
+                                                            data-target="#modalGaleri"
+                                                            data-toggle="modal"
+                                                        >
+                                                            <Image
+                                                                src={
+                                                                    process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                                                    "publikasi/images/" + el.gambar
+                                                                }
+                                                                alt="Card Gallery"
+                                                                width= {400}
+                                                                height= {400}
+                                                                className="rounded-lg"
+                                                                style={{objectFit:"cover"}}
+                                                            />
+
+                                                            <Card.ImgOverlay
                                                                 style={{ 
-                                                                    width: "400px",
-                                                                    height: "400px",
                                                                     cursor: "pointer",
                                                                     transition: "height 0.5s ease-out",
                                                                     background: "linear-gradient(to bottom, transparent 0%, black 100%)",
                                                                     borderRadius:"10px"
                                                                 }}
                                                             >
-                                                                <div className="d-flex flex-column">
-                                                                    <div>
-                                                                        <h5 className="font-weight-bolder text-white mb-5 mx-5">
-                                                                            {el.judul}
-                                                                        </h5>
-                                                                    </div>
-                                                                
-                                                                    <div>
-                                                                        <div className="badge badge-light mx-5 mb-5">
-                                                                            <div className="text-primary">
-                                                                                {/* Insert Kategori Here */}
-                                                                                {el.nama_kategori}
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                
-                                                                
-                                                            </div>
-                                                        </Card.ImgOverlay> 
-                                                    </div>
 
-                                            }
-                                            
-                                        </div>
-                                    )
-                                })
-                            :
-                                <div className="col-12 d-flex justify-content-center my-5">
-                                    <h1 className="font-weight-bolder">
-                                        Galeri Tidak Tersedia
-                                    </h1>
-                                </div>
-                        }
+                                                            </Card.ImgOverlay>
+
+                                                        </div>
+                                                }
+                                            </div>
+                                        )
+                                    })
+                            }
+                        </div>
                     </div>
             }
             {/* End of Content */}
