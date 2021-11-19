@@ -17,7 +17,7 @@ const Dashboard = ({ session, success }) => {
   const router = useRouter();
 
   const { error: errorDashboard, dataDashboard } = useSelector(
-    state => state.dashboardPeserta
+    (state) => state.dashboardPeserta
   );
   const { count, pelatihan, subvit } = dataDashboard;
 
@@ -277,8 +277,7 @@ const Dashboard = ({ session, success }) => {
                   <Card.Title>
                     <p className={style.card_title}>Pelatihan Terkini</p>
                   </Card.Title>
-
-                  <Card className=" shadow rounded-md">
+                  <Card className="shadow rounded-md mt-20">
                     <Image
                       className={`${style.image_dashboard}`}
                       src={
@@ -347,13 +346,7 @@ const Dashboard = ({ session, success }) => {
                             ).format("DD MMM YYYY")}{" "}
                           </span>
                         </div>
-                        <div className="date d-flex align-items-center align-middle">
-                          <i className="ri-group-line"></i>
-                          <span className={`${style.text_date_register} pl-2`}>
-                            Kuota : {pelatihan.pelatihan_berjalan.kuota_peserta}{" "}
-                            Peserta
-                          </span>
-                        </div>
+
                         <div className="date d-flex align-items-center align-middle">
                           <i className="ri-history-fill"></i>
                           <span className={`${style.text_date_register} pl-2`}>
@@ -468,13 +461,7 @@ const Dashboard = ({ session, success }) => {
                             ).format("DD MMM YYYY")}{" "}
                           </span>
                         </div>
-                        <div className="date d-flex align-items-center align-middle">
-                          <i className="ri-group-line"></i>
-                          <span className={`${style.text_date_register} pl-2`}>
-                            Kuota : {pelatihan.pelatihan_selesi.kuota_peserta}{" "}
-                            Peserta
-                          </span>
-                        </div>
+
                         <div className="date d-flex align-items-center align-middle">
                           <i className="ri-history-fill"></i>
                           <span className={`${style.text_date_register} pl-2`}>
