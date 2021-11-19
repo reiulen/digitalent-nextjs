@@ -9,6 +9,7 @@ import moment from "moment";
 import axios from "axios";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
+
 export default function CardTemplateOriginal({ data }) {
   const router = useRouter();
   const dateFrom = moment(data.pendaftaran_mulai).format("LL");
@@ -16,15 +17,15 @@ export default function CardTemplateOriginal({ data }) {
   const [showModalSertifikasi, setShowModalSertifikasi] = useState(false);
   const [label, setLabel] = useState();
 
-  console.log(data);
+  console.log(data); // ID 305 fajar
 
   useEffect(() => {
+    if (data.status.includes("tidak")) return setLabel("danger");
+    if (data.status.includes("menunggu") || data.status.includes("seleksi"))
+      return setLabel("warning");
     if (data.status == "survey belum tersedia") return setLabel("primary");
     if (data.status == "LPJ belum tersedia") return setLabel("primary");
-
-    if (data.status.includes("tidak")) return setLabel("danger");
-    if (data.status.includes("menunggu" || "seleksi"))
-      return setLabel("warning");
+    if (data.status.includes("tes substansi")) return setLabel("primary");
     if (data.status.includes("seleksi administrasi"))
       return setLabel("warning");
     if (data.status.includes("lulus")) return setLabel("success");
@@ -66,6 +67,10 @@ export default function CardTemplateOriginal({ data }) {
     } catch (error) {
       Swal.fire("Gagal", `${error.response.data.message}`, "error");
     }
+  };
+
+  const handleClick = () => {
+    console.log("test");
   };
 
   const [fileName, setFileName] = useState();
@@ -224,12 +229,16 @@ export default function CardTemplateOriginal({ data }) {
                         data.survei ? "primary" : label
                       } font-weight-bolder p-0 px-4 text-capitalize`}
                     >
-                      {data.status == "survey belum tersedia"
+                      {data.lpj
+                        ? "Kerjakan LPJ"
+                        : data.survei
+                        ? "Kerjakan Survei"
+                        : data.status == "pelatihan" && data.trivia
+                        ? "kerjakan trivia"
+                        : data.status == "survey belum tersedia"
                         ? "Isi survey"
                         : data.status == "LPJ belum tersedia"
                         ? "Isi LPJ"
-                        : data.status.includes("belum tersedia")
-                        ? "menunggu jadwal test substansi"
                         : data.status}
                       {/* {data.lpj
                         ? "Kerjakan LPJ"
@@ -278,20 +287,16 @@ export default function CardTemplateOriginal({ data }) {
           <Col lg={3} />
           {data.lpj ? (
             <Fragment>
-              <Col className="d-flex justify-content-center ">
-                <Button
-                  className="btn-rounded-full font-weight-bold btn-block justify-content-center mt-5"
-                  style={{ height: "40px", fontSize: "14px" }}
-                  onClick={() => {
-                    router.push(
-                      `/peserta/subvit/substansi/panduan-test-substansi`
-                    );
-                  }}
-                >
-                  <i className="ri-file-text-line mr-2"></i>
-                  Isi Laporan Pertangungjawaban
-                </Button>
-              </Col>
+              <CustomButton
+                click={() =>
+                  router.push(
+                    `/peserta/subvit/substansi/panduan-test-substansi`
+                  )
+                }
+              >
+                <i className="ri-file-text-line mr-2"></i>
+                Isi Laporan Pertangungjawaban
+              </CustomButton>
             </Fragment>
           ) : data.survei || data.status == "survey belum tersedia" ? (
             <Fragment>
@@ -323,202 +328,91 @@ export default function CardTemplateOriginal({ data }) {
             </Fragment>
           ) : data.status == "pelatihan" && data.trivia && data.midtest ? (
             <Fragment>
-              <Col className="d-flex justify-content-center ">
-                <Button
-                  className="btn-rounded-full font-weight-bold btn-block justify-content-center mt-5"
-                  style={{ height: "40px", fontSize: "14px" }}
-                  onClick={() => {
-                    router.push(
-                      `/peserta/subvit/substansi/panduan-test-substansi`
-                    );
-                  }}
-                >
-                  Kerjakan Mid Test
-                  <i className="ri-arrow-right-s-line mr-2"></i>
-                </Button>
-              </Col>
-              <Col className="d-flex justify-content-center ">
-                <Button
-                  className="btn-rounded-full font-weight-bold btn-block justify-content-center mt-5"
-                  style={{ height: "40px", fontSize: "14px" }}
-                  onClick={() => {
-                    router.push(
-                      `/peserta/subvit/substansi/panduan-test-substansi`
-                    );
-                  }}
-                >
-                  Kerjakan Trivia
-                </Button>
-              </Col>
-            </Fragment>
-          ) : data.status == "pelatihan" && data.trivia ? (
-            <Col className="d-flex justify-content-center ">
-              <Button
-                className="btn-rounded-full font-weight-bold btn-block justify-content-center mt-5"
-                style={{ height: "40px", fontSize: "14px" }}
-                onClick={() => {
+              <CustomButton
+                click={() =>
                   router.push(
                     `/peserta/subvit/substansi/panduan-test-substansi`
-                  );
-                }}
+                  )
+                }
+              >
+                Kerjakan Mid Test
+                <i className="ri-arrow-right-s-line mr-2"></i>
+              </CustomButton>
+              <CustomButton
+                click={() =>
+                  router.push(
+                    `/peserta/subvit/substansi/panduan-test-substansi`
+                  )
+                }
               >
                 Kerjakan Trivia <i className="ri-arrow-right-s-line mr-2"></i>
-              </Button>
-            </Col>
+              </CustomButton>
+            </Fragment>
+          ) : data.status == "pelatihan" && data.trivia ? (
+            <Fragment>
+              <CustomButton
+                click={() =>
+                  router.push(
+                    `/peserta/subvit/substansi/panduan-test-substansi`
+                  )
+                }
+              >
+                Kerjakan Trivia <i className="ri-arrow-right-s-line mr-2"></i>
+              </CustomButton>
+            </Fragment>
           ) : data.status == "pelatihan" ? (
             <Fragment>
-              <Col className="d-flex justify-content-center ">
-                <Button
-                  className={`btn-rounded-full font-weight-bold btn-block justify-content-center mt-5 ${style.background_outline_primary}`}
-                  style={{ height: "40px", fontSize: "14px" }}
-                  onClick={() => {
-                    router.push(
-                      `/peserta/subvit/substansi/panduan-test-substansi`
-                    );
-                  }}
-                >
-                  <i className="ri-download-2-fill mr-2"></i>
-                  Bukti Pendaftaran
-                </Button>
-              </Col>
-            </Fragment>
-          ) : data.status == "menunggu" ? (
-            <Col className="d-flex justify-content-center ">
-              <Button
-                className={`btn-rounded-full font-weight-bold btn-block justify-content-center mt-5 `}
-                style={{ height: "40px", fontSize: "14px" }}
-              >
+              <CustomButton outline click={() => handleClick("download")}>
                 <i className="ri-download-2-fill mr-2"></i>
                 Bukti Pendaftaran
-              </Button>
-            </Col>
+              </CustomButton>
+            </Fragment>
+          ) : data.status == "menunggu" ? (
+            <Fragment>
+              <CustomButton click={() => handleClick("download")}>
+                <i className="ri-download-2-fill mr-2"></i>
+                Bukti Pendaftaran
+              </CustomButton>
+            </Fragment>
           ) : data.status == "lulus pelatihan" ? (
             <Fragment>
-              <Col className="d-flex justify-content-center ">
-                <Button
-                  className={`btn-rounded-full font-weight-bold btn-block justify-content-center mt-5 ${style.background_outline_primary}`}
-                  style={{ height: "40px", fontSize: "14px" }}
-                  onClick={() => {
-                    setShowModalSertifikasi(true);
-                  }}
-                  type=""
-                >
-                  <i className="ri-upload-2-fill mr-2"></i>
-                  Upload Sertifikasi
-                </Button>
-              </Col>
-              <Col className="d-flex justify-content-center ">
-                <Button
-                  className={`btn-rounded-full font-weight-bold btn-block justify-content-center mt-5 `}
-                  style={{ height: "40px", fontSize: "14px" }}
-                >
-                  <i className="ri-download-2-fill mr-2"></i>
-                  Bukti Pendaftaran
-                </Button>
-              </Col>
-            </Fragment>
-          ) : data.status == "menunggu administrasi" ? (
-            <Fragment>
-              <Col className="d-flex justify-content-center ">
-                <Button
-                  className={`btn-rounded-full font-weight-bold btn-block justify-content-center mt-5 `}
-                  style={{ height: "40px", fontSize: "14px" }}
-                >
-                  <i className="ri-download-2-fill mr-2"></i>
-                  Bukti Pendaftaran
-                </Button>
-              </Col>
-              <CustomButton click={() => handleClick("download")} />
-            </Fragment>
-          ) : data.status == "menunggu tes substansi" ? (
-            <Fragment>
-              <Col className="d-flex justify-content-center ">
-                <Button
-                  className={`btn-rounded-full font-weight-bold btn-block justify-content-center mt-5 `}
-                  style={{ height: "40px", fontSize: "14px" }}
-                >
-                  <i className="ri-download-2-fill mr-2"></i>
-                  Bukti Pendaftaran
-                </Button>
-              </Col>
-              <Col className="d-flex justify-content-center">
-                <Button
-                  className="btn-rounded-full font-weight-bold btn-block justify-content-center mt-5"
-                  style={{ height: "40px", fontSize: "14px" }}
-                  onClick={() => {
-                    router.push(
-                      `/peserta/subvit/substansi/panduan-test-substansi`
-                    );
-                  }}
-                >
-                  Test Substansi <i className="ri-arrow-right-s-line mr-2"></i>
-                </Button>
-              </Col>
+              <CustomButton outline click={() => setShowModalSertifikasi(true)}>
+                <i className="ri-download-2-fill mr-2"></i>
+                Bukti Pendaftaran
+              </CustomButton>
+              <CustomButton click={() => handleClick("download")}>
+                <i className="ri-download-2-fill mr-2"></i>
+                Bukti Pendaftaran
+              </CustomButton>
             </Fragment>
           ) : data.status == "tes substansi" ? (
             <Fragment>
-              <Col className="d-flex justify-content-center ">
-                <Button
-                  className={`btn-rounded-full font-weight-bold btn-block justify-content-center mt-5 ${style.background_outline_primary}`}
-                  style={{ height: "40px", fontSize: "14px" }}
-                >
-                  <i className="ri-download-2-fill mr-2"></i>
-                  Bukti Pendaftaran
-                </Button>
-              </Col>
-              <Col className="d-flex justify-content-center">
-                <Button
-                  className="btn-rounded-full font-weight-bold btn-block justify-content-center mt-5"
-                  style={{ height: "40px", fontSize: "14px" }}
-                  onClick={() => {
-                    Cookies.set("id_tema", data.tema_id);
-                    Cookies.set("id_pelatihan", data.id);
-                    router.push(`/peserta/test-substansi/panduan-substansi`);
-                  }}
-                  disabled={data.tes_substansi === true ? true : false}
-                >
-                  Test Substansi <i className="ri-arrow-right-s-line mr-2"></i>
-                </Button>
-              </Col>
-            </Fragment>
-          ) : data.status == "lulus tes substansi" ? (
-            <Fragment>
-              <Col className="d-flex justify-content-center ">
-                <Button
-                  className={`btn-rounded-full font-weight-bold btn-block justify-content-center mt-5 `}
-                  style={{ height: "40px", fontSize: "14px" }}
-                >
-                  <i className="ri-download-2-fill mr-2"></i>
-                  Bukti Pendaftaran
-                </Button>
-              </Col>
+              <CustomButton outline click={() => handleClick("download")}>
+                <i className="ri-download-2-fill mr-2"></i>
+                Bukti Pendaftaran
+              </CustomButton>
+              <CustomButton
+                click={() => {
+                  router.push(`/peserta/test-substansi/panduan-substansi`);
+                }}
+                disabled={!data.tes_substansi}
+              >
+                Test Substansi <i className="ri-arrow-right-s-line mr-2"></i>
+              </CustomButton>
             </Fragment>
           ) : data.status == "diterima" ? (
             <Fragment>
-              <Col className="d-flex justify-content-center ">
-                <Button
-                  className={`btn-rounded-full font-weight-bold btn-block justify-content-center mt-5 ${style.background_outline_primary}`}
-                  style={{ height: "40px", fontSize: "14px" }}
-                  onClick={() => {
-                    setShowModalSertifikasi(true);
-                  }}
-                  type=""
-                >
-                  <i className="ri-upload-2-fill mr-2"></i>
-                  Upload Sertifikasi
-                </Button>
-              </Col>
-              <Col className="d-flex justify-content-center ">
-                <Button
-                  className={`btn-rounded-full font-weight-bold btn-block justify-content-center mt-5 `}
-                  style={{ height: "40px", fontSize: "14px" }}
-                >
-                  <i className="ri-download-2-fill mr-2"></i>
-                  Bukti Pendaftaran
-                </Button>
-              </Col>
+              <CustomButton outline click={() => setShowModalSertifikasi(true)}>
+                <i className="ri-upload-2-fill mr-2"></i>
+                Upload Sertifikasi
+              </CustomButton>
+              <CustomButton click={() => handleClick("download")}>
+                <i className="ri-download-2-fill mr-2"></i>
+                Bukti Pendaftaran
+              </CustomButton>
             </Fragment>
-          ) : data.status.includes("seleksi administrasi") ? (
+          ) : data.status.includes("seleksi administrasi") ||
+            data.status.includes("seleksi") ? (
             <Fragment>
               <CustomButton outline click={() => handleClick("download")}>
                 <i className="ri-download-2-fill mr-2"></i>
@@ -639,115 +533,3 @@ export default function CardTemplateOriginal({ data }) {
     </Fragment>
   );
 }
-
-// const status = [
-//   "menunggu jadwal",
-//   "tes substansi",
-//   "lolos substansi",
-//   "seleksi administrasi",
-//   "lolos administrasi",
-//   "ikuti pelatihan",
-//   "kerjakan mid test",
-//   "kerjakan trivia",
-//   "lulus pelatihan",
-//   "isi survey",
-//   "isi lpj",
-//   "lulus pelatihan",
-//   "tidak lulus",
-// ];
-// const CardTemplate = (props) => {
-// switch (props.status) {
-//   case "menunggu jadwal":
-//     return (
-//       <Fragment>
-//         <AdministrasiMenungguJadwal />
-//       </Fragment>
-//     );
-//   case "tes substansi":
-//     return (
-//       <Fragment>
-//         <TestSubstansi props={props} />
-//       </Fragment>
-//     );
-//   case "lolos substansi":
-//     return (
-//       <Fragment>
-//         <LolosSubstansi />
-//       </Fragment>
-//     );
-//   case "seleksi administrasi":
-//     return (
-//       <Fragment>
-//         <SeleksiAdministrasi props={props} />
-//       </Fragment>
-//     );
-//   case "lolos administrasi":
-//     return (
-//       <Fragment>
-//         <LolosAdministrasi props={props} />
-//       </Fragment>
-//     );
-//   case "ikuti pelatihan":
-//     return (
-//       <Fragment>
-//         <IkutiPelatihan />
-//       </Fragment>
-//     );
-//   case "kerjakan mid test":
-//     return (
-//       <Fragment>
-//         <MidTest props={props} />
-//       </Fragment>
-//     );
-//   case "kerjakan trivia":
-//     return (
-//       <Fragment>
-//         <Trivia />
-//       </Fragment>
-//     );
-//   case "lulus pelatihan":
-//     return (
-//       <Fragment>
-//         <LulusPelatihan />
-//       </Fragment>
-//     );
-//   case "isi survey":
-//     return (
-//       <Fragment>
-//         <IsiSurvey props={props} />
-//       </Fragment>
-//     );
-//   case "isi lpj":
-//     return (
-//       <Fragment>
-//         <IsiLpj props={props} />
-//       </Fragment>
-//     );
-//   case "test":
-//     return (
-//       <Fragment>
-//         <TestCardTemplate props={props} />
-//       </Fragment>
-//     );
-//   default:
-//     return (
-//       <Fragment>
-//         <TidakLulus />
-//       </Fragment>
-//     );
-// }
-// };
-
-// export default CardTemplateOriginal;
-
-// {data.survei && data.lpj ? (
-//   <IsiLpj data={data} />
-// ) : data.survei && data.lpj == false ? (
-//   <IsiSurvey data={data} />
-// ) : (
-//   <IsiLpj data={data} />
-// )}
-
-// {data.midtest && <MidTest data={data} />}
-// {data.tes_substansi && <TestSubstansi data={data} />}
-// {data.trivia && <Trivia data={data} />}

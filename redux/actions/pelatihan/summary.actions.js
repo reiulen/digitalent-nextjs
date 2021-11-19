@@ -56,7 +56,7 @@ export const getAllSummary =
 
       let link =
         process.env.END_POINT_API_PELATIHAN +
-        `/api/v1/pelatihan/find-revisi?page=${page}`;
+        `api/v1/pelatihan/find-revisi?page=${page}`;
       if (keyword) link = link.concat(`&cari=${keyword}`);
       if (limit) link = link.concat(`&limit=${limit}`);
       if (pendaftaran_mulai)
@@ -96,7 +96,7 @@ export const getAkademiByPelatihan = (token, id) => async (dispatch) => {
   try {
     let link =
       process.env.END_POINT_API_PELATIHAN +
-      `/api/v1/akademi/akademi-by-pelatihan?pelatian_id=${id}`;
+      `api/v1/akademi/akademi-by-pelatihan?pelatian_id=${id}`;
 
     const config = {
       headers: {
@@ -135,7 +135,7 @@ export const getPendaftaranPeserta =
 
       let link =
         process.env.END_POINT_API_PELATIHAN +
-        `/api/v1/formPendaftaran/list-detail-rekap-pendaftaran?pelatian_id=${pelatihanId}`;
+        `api/v1/formPendaftaran/list-detail-rekap-pendaftaran?pelatian_id=${pelatihanId}`;
       if (keyword) link = link.concat(`&cari=${keyword}`);
       if (limit) link = link.concat(`&limit=${limit}`);
       if (page) link = link.concat(`&page=${page}`);
@@ -167,7 +167,7 @@ export const getStatusPendaftar = (token, id) => async (dispatch) => {
   try {
     let link =
       process.env.END_POINT_API_PELATIHAN +
-      `/api/v1/formPendaftaran/jumlah-pendaftar?pelatian_id=${id}`;
+      `api/v1/formPendaftaran/jumlah-pendaftar?pelatian_id=${id}`;
 
     const config = {
       headers: {
@@ -193,7 +193,7 @@ export const getReminderBerkas = (token, index) => async (dispatch) => {
   try {
     let link =
       process.env.END_POINT_API_PELATIHAN +
-      `/api/v1/formPendaftaran/get-reminder?id=${index}`;
+      `api/v1/formPendaftaran/get-reminder?id=${index}`;
 
     const config = {
       headers: {
@@ -219,7 +219,7 @@ export const getDataPribadi = (token, index) => async (dispatch) => {
   try {
     let link =
       process.env.END_POINT_API_PELATIHAN +
-      `/api/v1/formPendaftaran/get-data-pribadi?id=${index}`;
+      `api/v1/formPendaftaran/get-data-pribadi?id=${index}`;
 
     const config = {
       headers: {
@@ -245,7 +245,7 @@ export const getRiwayatPelatihan = (token, index) => async (dispatch) => {
   try {
     let link =
       process.env.END_POINT_API_PELATIHAN +
-      `/api/v1/formPendaftaran/list-pelatihan-user?id=${index}`;
+      `api/v1/formPendaftaran/list-pelatihan-user?id=${index}`;
 
     const config = {
       headers: {
@@ -271,7 +271,7 @@ export const getBerkasPendaftaran = (token, index) => async (dispatch) => {
   try {
     let link =
       process.env.END_POINT_API_PELATIHAN +
-      `/api/v1/formPendaftaran/list-form-Pendaftran?id=${index}`;
+      `api/v1/formPendaftaran/list-form-Pendaftran?id=${index}`;
 
     const config = {
       headers: {
@@ -297,7 +297,7 @@ export const getFormKomitmen = (token, index) => async (dispatch) => {
   try {
     let link =
       process.env.END_POINT_API_PELATIHAN +
-      `/api/v1/formPendaftaran/data-form-komitmen?id=${index}`;
+      `api/v1/formPendaftaran/data-form-komitmen?id=${index}`;
 
     const config = {
       headers: {
@@ -349,7 +349,7 @@ export const getFormLpj = (token, index) => async (dispatch) => {
   try {
     let link =
       process.env.END_POINT_API_PELATIHAN +
-      `/api/v1/formPendaftaran/list-form-lpj?id=${index}`;
+      `api/v1/formPendaftaran/list-form-lpj?id=${index}`;
 
     const config = {
       headers: {

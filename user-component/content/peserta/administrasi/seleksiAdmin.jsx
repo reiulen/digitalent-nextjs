@@ -37,7 +37,12 @@ export default function SeleksiAdministrasi() {
 
   const [label, setLabel] = useState();
   useEffect(() => {
+    if (data.status.includes("seleksi")) {
+      // seleksi administrasi
+      return setLabel("warning");
+    }
     if (data.status.includes("tidak")) {
+      // tidak lulus
       return setLabel("danger");
     }
     if (data.status.includes("lulus")) {
