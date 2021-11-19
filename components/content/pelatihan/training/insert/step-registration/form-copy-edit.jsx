@@ -1,13 +1,55 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
+import SimpleReactValidator from "simple-react-validator";
+import Select from "react-select";
+import { useSelector, useDispatch } from "react-redux";
+import { getDetailMasterPelatihan } from "../../../../../../redux/actions/pelatihan/master-pendaftaran.action";
 
 const FormCopyEdit = ({
+  optionsForm,
+  title,
   formBuilder,
+  funcTitle,
   funcFormBuilder,
   element,
   size,
   options,
   dataOptions,
+  funcModalShow,
+  token,
 }) => {
+  const {
+    loading: loadingFormPendaftaran,
+    form: formPendaftaran,
+    error: errorForm,
+  } = useSelector((state) => state.getDetailMasterPelatihan);
+
+  const dispatch = useDispatch();
+  const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
+  const [, forceUpdate] = useState();
+
+  useEffect(() => {
+    dispatch(getDetailMasterPelatihan(99999, token));
+    if (
+      formPendaftaran &&
+      Object.keys(formPendaftaran).length !== 0 &&
+      Object.getPrototypeOf(formPendaftaran) === Object.prototype
+    ) {
+      funcFormBuilder(formPendaftaran.data.formBuilder);
+    }
+  }, [dispatch, formPendaftaran]);
+
+  const showPreviewHandler = () => {
+    let list = [...formBuilder];
+    list.forEach((row, i) => {
+      if (row.option === "manual") {
+        let dataOption = row.dataOption.split(";");
+        row.dataOption = dataOption;
+      }
+    });
+    funcFormBuilder(list);
+    funcModalShow(true);
+  };
+
   const inputChangeHandler = (e, index) => {
     const { value, name, checked } = e.target;
     const list = [...formBuilder];
@@ -27,6 +69,22 @@ const FormCopyEdit = ({
       list[i]["key"] = key;
     });
     funcFormBuilder(list);
+  };
+
+  const addFieldHandler = () => {
+    const newKey = formBuilder[formBuilder.length - 1].key + 1;
+    funcFormBuilder([
+      ...formBuilder,
+      {
+        key: newKey,
+        name: "",
+        element: "",
+        size: "",
+        option: "",
+        dataOption: "",
+        required: "0",
+      },
+    ]);
   };
 
   const renderDataOptionHandler = (row, i) => {
@@ -162,6 +220,25 @@ const FormCopyEdit = ({
 
   return (
     <>
+      <div className="form-group mb-4">
+        <label className="col-form-label font-weight-bold">Judul Form</label>
+
+        <Select
+          options={optionsForm}
+          placeholder={
+            title !== "" ? title : `Silahkan Pilih Nama Form Pendaftaran`
+          }
+          onChange={(e) => {
+            funcTitle(e.label);
+            dispatch(getDetailMasterPelatihan(e.value, token));
+          }}
+        />
+
+        {simpleValidator.current.message("judul form", title, "required", {
+          className: "text-danger",
+        })}
+      </div>
+
       {formBuilder.map((row, i) => (
         <div className="builder row" key={i}>
           <div className="col-sm-12 col-md-2">
@@ -260,6 +337,26 @@ const FormCopyEdit = ({
           </div>
         </div>
       ))}
+
+      <div className="form-group mb-9 mt-4">
+        <div className="text-right">
+          <button
+            className="btn btn-light-success mr-2"
+            type="button"
+            style={{ borderRadius: "30px", fontWeight: "600" }}
+            onClick={showPreviewHandler}
+          >
+            Review
+          </button>
+          <button
+            className="btn btn-primary-rounded-full"
+            type="button"
+            onClick={addFieldHandler}
+          >
+            <i className="ri-pencil-fill"></i> Tambah Field
+          </button>
+        </div>
+      </div>
     </>
   );
 };
