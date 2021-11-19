@@ -62,10 +62,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
           success = true;
         }
       }
-      await store.dispatch(
+      const data = await store.dispatch(
         getDashboardPeserta(session?.user.user.data.user.token)
       );
 
+      console.log(data, "ini daata");
       return {
         props: { data: "auth", session, title: "Dashboard - Peserta", success },
       };

@@ -8,7 +8,7 @@ export const getDashboardPeserta = (token) => async (dispatch) => {
   try {
     let link =
       process.env.END_POINT_API_PELATIHAN +
-      `/api/v1/formPendaftaran/dasboard-peserta`;
+      `api/v1/formPendaftaran/dasboard-peserta`;
 
     const config = {
       headers: {
@@ -22,6 +22,7 @@ export const getDashboardPeserta = (token) => async (dispatch) => {
       type: GET_DASHBOARD_PESERTA_SUCCESS,
       payload: data,
     });
+    return data;
   } catch (error) {
     dispatch({
       type: GET_DASHBOARD_PESERTA_FAIL,

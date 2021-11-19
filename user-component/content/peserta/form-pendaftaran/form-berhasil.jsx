@@ -18,9 +18,7 @@ const FormBerhasil = () => {
 
   const [dataPelatihan] = useState(dataTraining || null);
 
-  const handleDownloadBukti = () => {
-    console.log("Berhasil Download");
-  };
+  const handleDownloadBukti = () => {};
   return (
     <>
       <div className="p-6">
@@ -34,7 +32,7 @@ const FormBerhasil = () => {
                 <img
                   className="img-fluid rounded-xl w-100 h-80 mb-3"
                   src={`${
-                    dataPelatihan
+                    dataPelatihan.thumbnail !== "" && dataPelatihan
                       ? process.env.END_POINT_API_IMAGE_BEASISWA +
                         dataPelatihan.thumbnail
                       : "/assets/media/default-card.png"
@@ -45,7 +43,7 @@ const FormBerhasil = () => {
                 <div className="d-flex flex-row">
                   <img
                     src={`${
-                      dataPelatihan
+                      dataPelatihan.logo !== "" && dataPelatihan
                         ? process.env.END_POINT_API_IMAGE_BEASISWA +
                           dataPelatihan.logo
                         : "/assets/media/default-card.png"

@@ -16,38 +16,32 @@ export default function CardTemplateOriginal({ data }) {
   const [showModalSertifikasi, setShowModalSertifikasi] = useState(false);
   const [label, setLabel] = useState();
 
+  console.log(data);
+
   useEffect(() => {
-    if (data.status.includes("menunggu")) {
+    if (data.status == "survey belum tersedia") return setLabel("primary");
+    if (data.status == "LPJ belum tersedia") return setLabel("primary");
+
+    if (data.status.includes("tidak")) return setLabel("danger");
+    if (data.status.includes("menunggu" || "seleksi"))
       return setLabel("warning");
-    }
-    if (data.status.includes("tidak" || "ditolak")) {
-      return setLabel("danger");
-    }
-    if (data.status.includes("lulus") || data.status.includes("diterima")) {
-      return setLabel("success");
-    }
-    if (data.status.includes("tes")) return setLabel("primary");
+    if (data.status.includes("seleksi administrasi"))
+      return setLabel("warning");
+    if (data.status.includes("lulus")) return setLabel("success");
+    if (data.status.includes("belum tersedia")) return setLabel("warning");
     if (data.status.includes("pelatihan")) return setLabel("primary");
-    // switch (data.status) {
-    //   case "menunggu":
-    //     return setLabel("warning");
-    //   case "lulus pelatihan":
-    //     return setLabel("success");
-    //   case "menunggu administrasi":
-    //     return setLabel("warning");
-    //   case "menunggu tes substansi":
-    //     return setLabel("warning");
-    //   case "pelatihan":
-    //     return setLabel("primary");
-    //   case "tes substansi":
-    //     return setLabel("primary");
-    //   case "lulus tes substansi":
-    //     return setLabel("success");
-    //   case "diterima":
-    //     return setLabel("success");
-    //   default:
-    //     return setLabel("danger");
+
+    // if (data.status.includes("menunggu")) {
+    //   return setLabel("warning");
     // }
+    // if (data.status.includes("tidak" || "ditolak")) {
+    //   return setLabel("danger");
+    // }
+    // if (data.status.includes("lulus") || data.status.includes("diterima")) {
+    //   return setLabel("success");
+    // }
+    // if (data.status.includes("tes")) return setLabel("primary");
+    // if (data.status.includes("pelatihan")) return setLabel("primary");
   }, []);
 
   const [imageSertifikasi, setImageSertifikasi] = useState();
@@ -230,7 +224,14 @@ export default function CardTemplateOriginal({ data }) {
                         data.survei ? "primary" : label
                       } font-weight-bolder p-0 px-4 text-capitalize`}
                     >
-                      {data.lpj
+                      {data.status == "survey belum tersedia"
+                        ? "Isi survey"
+                        : data.status == "LPJ belum tersedia"
+                        ? "Isi LPJ"
+                        : data.status.includes("belum tersedia")
+                        ? "menunggu jadwal test substansi"
+                        : data.status}
+                      {/* {data.lpj
                         ? "Kerjakan LPJ"
                         : data.survei
                         ? "Kerjakan Survei"
@@ -244,7 +245,7 @@ export default function CardTemplateOriginal({ data }) {
                         ? "lolos substansi"
                         : data.status == "ditolak"
                         ? "tidak lulus"
-                        : data.status}
+                        : data.status} */}
                     </p>
                   </Col>
                   <Col md={12} className="my-auto order-4">
@@ -292,22 +293,33 @@ export default function CardTemplateOriginal({ data }) {
                 </Button>
               </Col>
             </Fragment>
-          ) : data.survei ? (
+          ) : data.survei || data.status == "survey belum tersedia" ? (
             <Fragment>
-              <Col className="d-flex justify-content-center ">
-                <Button
-                  className="btn-rounded-full font-weight-bold btn-block justify-content-center mt-5"
-                  style={{ height: "40px", fontSize: "14px" }}
-                  onClick={() => {
-                    router.push(
-                      `/peserta/subvit/substansi/panduan-test-substansi`
-                    );
-                  }}
-                >
-                  <i className="ri-pencil-fill mr-2"></i>
-                  Isi Survei
-                </Button>
-              </Col>
+              <CustomButton outline click={() => handleClick("download")}>
+                <i className="ri-download-2-fill mr-2"></i>
+                Bukti Pendaftaran
+              </CustomButton>
+              <CustomButton
+                disabled={!data.survei}
+                click={() => handleClick("download")}
+              >
+                Isi Survei
+                <i className="ri-arrow-right-s-line mr-2"></i>
+              </CustomButton>
+            </Fragment>
+          ) : data.lpj || data.status == "LPJ belum tersedia" ? (
+            <Fragment>
+              <CustomButton outline click={() => handleClick("download")}>
+                <i className="ri-download-2-fill mr-2"></i>
+                Bukti Pendaftaran
+              </CustomButton>
+              <CustomButton
+                disabled={!data.lpj}
+                click={() => handleClick("download")}
+              >
+                Isi Laporan Pertangung Jawaban
+                <i className="ri-arrow-right-s-line mr-2"></i>
+              </CustomButton>
             </Fragment>
           ) : data.status == "pelatihan" && data.trivia && data.midtest ? (
             <Fragment>
@@ -335,7 +347,7 @@ export default function CardTemplateOriginal({ data }) {
                     );
                   }}
                 >
-                  Kerjakan Trivia <i className="ri-arrow-right-s-line mr-2"></i>
+                  Kerjakan Trivia
                 </Button>
               </Col>
             </Fragment>
@@ -505,6 +517,27 @@ export default function CardTemplateOriginal({ data }) {
                   Bukti Pendaftaran
                 </Button>
               </Col>
+            </Fragment>
+          ) : data.status.includes("seleksi administrasi") ? (
+            <Fragment>
+              <CustomButton outline click={() => handleClick("download")}>
+                <i className="ri-download-2-fill mr-2"></i>
+                Bukti Pendaftaran
+              </CustomButton>
+            </Fragment>
+          ) : data.status.includes("menunggu") ? (
+            <Fragment>
+              <CustomButton outline click={() => handleClick("download")}>
+                <i className="ri-download-2-fill mr-2"></i>
+                Bukti Pendaftaran
+              </CustomButton>
+            </Fragment>
+          ) : data.status.includes("belum tersedia") ? (
+            <Fragment>
+              <CustomButton outline click={() => handleClick("download")}>
+                <i className="ri-download-2-fill mr-2"></i>
+                Bukti Pendaftaran
+              </CustomButton>
             </Fragment>
           ) : (
             ""

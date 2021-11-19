@@ -46,7 +46,8 @@ module.exports = {
       "https://dts-publikasi-dev.s3.ap-southeast-1.amazonaws.com/",
 
     // pelatihan
-    END_POINT_API_PELATIHAN: "http://api-dts-dev.majapahit.id/pelatihan/",
+    END_POINT_API_PELATIHAN: "http://192.168.1.96:83/",
+    // END_POINT_API_PELATIHAN: "http://api-dts-dev.majapahit.id/pelatihan/",
 
     //sertifikat
     END_POINT_API_SERTIFIKAT: "http://dts-sertifikat-dev.majapahit.id/",
