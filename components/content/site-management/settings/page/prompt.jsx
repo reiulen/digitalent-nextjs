@@ -8,8 +8,8 @@ export default function Prompt(props) {
 
   const allPrompt = useSelector(state => state.allPrompt)
 
-      const [notification, setNotification] = useState(allPrompt.notification.training_rules.notification[0].status);
-      const [email, setEmail] = useState(allPrompt.notification.training_rules.email[0].status);
+      const [notification, setNotification] = useState(allPrompt.notification.training_rules.notification[0]?.status);
+      const [email, setEmail] = useState(allPrompt.notification.training_rules.email[0]?.status);
     
       let dispatch = useDispatch()
 
@@ -21,7 +21,7 @@ export default function Prompt(props) {
   return (
     <div className="col-xl-8 styling-content-pelatihan">
       <form onSubmit={handleSubmit}>
-        <div className="notification-title">
+        <div className="notification-title border-resnponsive mr-4">
           <h1>Prompt Update Notification</h1>
         </div>
         <div className="notification">

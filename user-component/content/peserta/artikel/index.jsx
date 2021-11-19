@@ -39,7 +39,6 @@ const Dashboard = ({ session, success }) => {
     loading = allArtikelsPeserta.loading;
   }
 
-  console.log(allArtikelsPeserta)
 
   const listArtikel =
     allArtikelsPeserta.artikel?.artikel.length > 0 ? (
@@ -93,7 +92,7 @@ const Dashboard = ({ session, success }) => {
             </td>
             <td className="align-middle">
               <div className="d-flex">
-                <Link href={`/peserta/artikel/preview/1`}>
+                <Link href={`/peserta/artikel/preview/${item.id}`}>
                   <a
                     className="btn btn-link-action btn-primary text-white mr-2"
                     data-toggle="tooltip"
@@ -103,7 +102,7 @@ const Dashboard = ({ session, success }) => {
                     <i className="ri-search-eye-fill text-white p-0"></i>
                   </a>
                 </Link>
-                <Link href={`/peserta/artikel/edit`}>
+                <Link href={`/peserta/artikel/edit/${item.id}`}>
                   <a
                     className="btn btn-link-action btn-warning text-white mr-2"
                     data-toggle="tooltip"
@@ -241,7 +240,7 @@ const Dashboard = ({ session, success }) => {
           </Row>
           <div className="table-filter">
             <div className="row align-items-center d-flex">
-              <div className="col-lg-4 col-xl-4 mb-4 px-10 ">
+              <div className="col-lg-5 col-xl-5 mb-4 px-10 ">
                 <div className="position-relative overflow-hidden mb-2 mt-3">
                   <i className="ri-search-line left-center-absolute ml-2"></i>
                   <input
@@ -352,13 +351,14 @@ const Dashboard = ({ session, success }) => {
                 </tbody>
               </table>
             </div>
-            {allArtikelsPeserta.artikel?.artikel.length > 5 && (
+            {console.log(allArtikelsPeserta)}
+            {allArtikelsPeserta?.artikel?.total > 5 && (
               <div className="row">
                 <div className="table-pagination table-pagination pagination-custom col-12 col-md-6">
                   <Pagination
                     activePage={page}
-                    itemsCountPerPage={allArtikelsPeserta.perPage}
-                    totalItemsCount={allArtikelsPeserta.total}
+                    itemsCountPerPage={allArtikelsPeserta.artikel.perPage}
+                    totalItemsCount={allArtikelsPeserta.artikel.total}
                     pageRangeDisplayed={3}
                     onChange={handlePagination}
                     nextPageText={">"}

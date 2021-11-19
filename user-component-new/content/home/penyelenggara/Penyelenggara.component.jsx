@@ -54,7 +54,7 @@ const Penyelenggara = () => {
 
         <section className="penyelenggara-title-filter">
           <h1 className="mb-4">Penyelenggara Pelatihan</h1>
-          <p>
+          <p className="mr-6 fz-18 text-muted fw-400">
             Memiliki Lembaga Pelatihan dan ingin menjadi bagian dari Program
             Digitalent? tanya saja{" "}
             <span className="text-primary fw-500" style={{ cursor: "pointer" }}>

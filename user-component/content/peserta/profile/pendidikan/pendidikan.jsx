@@ -311,16 +311,18 @@ const Pendidikan = ({ token }) => {
             </Row>
           )}
           <Row>
-            <Col md={12}>
-              <p className="text-neutral-body my-1">Unggah Ijazah</p>
-              <p>
-                {(pendidikan !== undefined &&
-                  pendidikan &&
-                  pendidikan !== undefined &&
-                  pendidikan.ijasah.split("/ijasah/")) ||
-                  "-"}
-              </p>
-            </Col>
+            {pendidikan.jenjang !== "TK" &&
+              pendidikan.jenjang !== "Tidak Sekolah" && (
+                <Col md={12}>
+                  <p className="text-neutral-body my-1">Unggah Ijazah</p>
+                  <p>
+                    {(pendidikan !== undefined &&
+                      pendidikan &&
+                      pendidikan.ijasah.split("/ijasah/")) ||
+                      "-"}
+                  </p>
+                </Col>
+              )}
           </Row>
         </div>
       </>
