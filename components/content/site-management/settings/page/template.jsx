@@ -48,7 +48,7 @@ export default function Template(props) {
     <div className="col-xl-8 styling-content-pelatihan ">
       <form onSubmit={handleSubmit}>
         <div className="notification-title border-resnponsive mr-4">
-          <h1>Template Email</h1>
+          <h1>Email</h1>
         </div>
         <div className="form-group mr-4">
           <label>Status</label>
