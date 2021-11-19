@@ -855,6 +855,12 @@ const ListTraining = ({ token }) => {
                                   onChange={(e) =>
                                     handleStatusPublish(row.id, e.target.value)
                                   }
+                                  disabled={
+                                    row.status_substansi === "revisi" ||
+                                    row.status_pelatihan ===
+                                      "review substansi" ||
+                                    (row.status_substansi === "ditolak" && true)
+                                  }
                                 >
                                   <option value="1">Publish</option>
                                   <option value="0">Unpublish</option>
@@ -887,37 +893,69 @@ const ListTraining = ({ token }) => {
                                       e.target.value
                                     )
                                   }
+                                  disabled={
+                                    row.status_pelatihan ===
+                                      "review substansi" ||
+                                    row.status_pelatihan === "selesai" ||
+                                    (row.status_substansi === "ditolak" && true)
+                                  }
                                 >
-                                  <option value="review substansi">
-                                    Review Substansi
-                                  </option>
-                                  <option value="menunggu">Menunggu</option>
-                                  <option value="pendaftaran">
-                                    Pendaftaran
-                                  </option>
-                                  <option value="seleksi administrasi">
-                                    Seleksi Administrasi
-                                  </option>
-                                  <option value="pelatihan">Pelatihan</option>
-                                  <option value="selesai">Selesai</option>
+                                  {row.status_pelatihan ===
+                                    "menunggu pendaftaran" && (
+                                    <>
+                                      <option value="menunggu pendaftaran">
+                                        Menunggu Pendaftaran
+                                      </option>
+                                    </>
+                                  )}
+                                  {row.status_pelatihan === "pendaftaran" && (
+                                    <option value="pendaftaran">
+                                      Pendaftaran
+                                    </option>
+                                  )}
+                                  {row.status_pelatihan === "seleksi" && (
+                                    <option value="seleksi">Seleksi</option>
+                                  )}
+                                  {row.status_pelatihan === "pelatihan" && (
+                                    <>
+                                      <option value="pelatihan">
+                                        Pelatihan
+                                      </option>
+                                      <option value="selesai">Selesai</option>
+                                    </>
+                                  )}
+                                  {row.status_pelatihan ===
+                                    "review substansi" && (
+                                    <option value="review substansi">
+                                      Review Substansi
+                                    </option>
+                                  )}
+                                  {row.status_pelatihan ===
+                                    "menunggu pendaftaran" && (
+                                    <option value="menunggu pendaftaran">
+                                      Menunggu Pendaftaran
+                                    </option>
+                                  )}
                                   <option value="dibatalkan">Dibatalkan</option>
                                 </select>
                               </div>
                             </td>
                             <td className="align-middle">
                               <div className="d-flex flex-row">
-                                <Link
-                                  href={`/pelatihan/pelatihan/edit-pelatihan/${row.id}`}
-                                >
-                                  <a
-                                    className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                                    data-toggle="tooltip"
-                                    data-placement="bottom"
-                                    title="Edit"
+                                {row.status_pelatihan !== "pelatihan" && (
+                                  <Link
+                                    href={`/pelatihan/pelatihan/edit-pelatihan/${row.id}`}
                                   >
-                                    <i className="ri-pencil-fill p-0 text-white"></i>
-                                  </a>
-                                </Link>
+                                    <a
+                                      className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                      data-toggle="tooltip"
+                                      data-placement="bottom"
+                                      title="Edit"
+                                    >
+                                      <i className="ri-pencil-fill p-0 text-white"></i>
+                                    </a>
+                                  </Link>
+                                )}
                                 <Link
                                   href={`/pelatihan/pelatihan/view-pelatihan/${row.id}`}
                                 >
@@ -941,19 +979,23 @@ const ListTraining = ({ token }) => {
                                     <i className="ri-draft-line p-0 text-white"></i>
                                   </button>
                                 )}
-                                <Link
-                                  href={`/pelatihan/pelatihan/tambah-form-lpj/${row.id}`}
-                                >
-                                  <a
-                                    className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                                    data-toggle="tooltip"
-                                    data-placement="bottom"
-                                    title="Upload LPJ"
-                                  >
-                                    <i className="ri-file-text-fill p-0 text-white"></i>
-                                  </a>
-                                </Link>
-                                {row.status_pelatihan === "pendaftaran" && (
+                                {row.program_dts === "1" &&
+                                  row.status_pelatihan !== "review substansi" &&
+                                  row.status_publish !== "0" && (
+                                    <Link
+                                      href={`/pelatihan/pelatihan/tambah-form-lpj/${row.id}`}
+                                    >
+                                      <a
+                                        className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                        data-toggle="tooltip"
+                                        data-placement="bottom"
+                                        title="Upload LPJ"
+                                      >
+                                        <i className="ri-file-text-fill p-0 text-white"></i>
+                                      </a>
+                                    </Link>
+                                  )}
+                                {row.status_pelatihan !== "ditolak" && (
                                   <Link
                                     href={`/pelatihan/pelatihan/view-list-peserta/${row.id}`}
                                   >
