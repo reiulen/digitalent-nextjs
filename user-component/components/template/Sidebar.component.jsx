@@ -257,7 +257,9 @@ const Sidebar = ({ screenClass, titleAkun, accountFalse }) => {
           <Link href="/peserta/artikel" passHref>
             <div
               className={`${
-                router.pathname === "/peserta/artikel"
+                router.pathname.includes("/peserta/artikel/edit") ||
+                router.pathname === "/peserta/artikel" ||
+                router.pathname === "/peserta/artikel/tambah"
                   ? styles.activeMenuItem
                   : styles.menuItem
               } d-flex flex-row`}

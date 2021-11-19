@@ -36,6 +36,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
   const { error: errorPendidikanData, pendidikan } = useSelector(
     state => state.dataPendidikan
   );
+
   const {
     error: errorUpdateData,
     loading,
@@ -64,7 +65,9 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
     (pendidikan && pendidikan.tahun_masuk) || ""
   );
 
-  const [ijazahName, setIjazahName] = useState("Belum ada file");
+  const [ijazahName, setIjazahName] = useState(
+    pendidikan ? pendidikan.ijasah.split("/ijasah/") : "Belum ada file"
+  );
   const [ijazah, setIjazah] = useState("");
   const [ijazahPreview, setIjazahPreview] = useState("");
   // eslint-disable-next-line react-hooks/rules-of-hooks

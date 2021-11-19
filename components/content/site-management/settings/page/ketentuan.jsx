@@ -38,7 +38,7 @@ export default function Ketentuan(props) {
   return (
     <div className="col-xl-8 styling-content-pelatihan">
       <form onSubmit={handleSubmit}>
-        <div className="notification-title">
+        <div className="notification-title border-resnponsive mr-4">
           <h1>Ketentuan Pelatihan</h1>
         </div>
         <div className="form-group">
@@ -56,6 +56,7 @@ export default function Ketentuan(props) {
             <option value="8">8 Pelatihan</option>
             <option value="9">9 Pelatihan</option>
             <option value="10" {...totalPelatihan === "10" ? " selected" : ""}>10 Pelatihan</option>
+            <option value=">10">Lebih dari 10 Pelatihan</option>
           </select>
         </div>
         <div className="mt-3">
@@ -73,13 +74,6 @@ export default function Ketentuan(props) {
                 />
                 <span className="checkbox-ketentuan"></span>
                 Status Lulus Pelatihan
-              </label>
-              <label className="checkbox">
-                <input type="checkbox" className="checkbox-ketentuan" name="Checkboxes4" checked={statusAdmin} onChange={(e) => {
-                    setStatusAdmin(e.target.checked);
-                  }}  />
-                <span className="checkbox-ketentuan"></span>
-                Status Administrasi Akhir Lengkap
               </label>
               <label className="checkbox">
                 <input type="checkbox" name="Checkboxes4" checked={statusTidakLulus} onChange={(e) => {

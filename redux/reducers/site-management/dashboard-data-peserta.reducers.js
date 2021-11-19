@@ -15,8 +15,8 @@ export const allDataPesertaReducer = (state = initialstate, action) => {
               return {
                   ...state,
                   nomor: index + 5 * (action.page - 1) + 1,
-                  provinsi: item.province,
-                  total: item.count,
+                  provinsi: item.provinsi,
+                  total: item.total,
                   totalPage: action.payload.data.total,
                   totalPeserta: action.payload.totalAll
               }
@@ -27,8 +27,8 @@ export const allDataPesertaReducer = (state = initialstate, action) => {
             return {
                 ...state,
                 nomor: index + 5 * (action.page - 1) + 1,
-                provinsi: item.city,
-                total: item.count,
+                provinsi: item.kabupaten,
+                total: item.total,
                 totalPage: action.payload.data.total,
                 totalPeserta: action.payload.totalAll
             }
