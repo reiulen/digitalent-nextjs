@@ -66,7 +66,7 @@ const DashboardSiteManagement = ({ token, user }) => {
   }
 
   function formatNumber(num) {
-    // return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     return 1;
   }
 
@@ -75,21 +75,23 @@ const DashboardSiteManagement = ({ token, user }) => {
       <tr key={index}>
         <td className="data-daerah py-4">
           <span className="nomor mr-4">{item.nomor}</span>
-          {capitalize(item.provinsi)}
+          {item.provinsi}
         </td>
         <td className="total-peserta">{item?.total} Zonasi</td>
       </tr>
     );
   });
 
+  console.log(allDataPeserta);
+
   const tablePeserta = allDataPeserta.map((item, index) => {
     return (
       <tr key={index}>
         <td className="data-daerah py-4">
           <span className="nomor mr-4">{item.nomor}</span>
-          {capitalize(item.provinsi)}
+          {item.provinsi}
         </td>
-        <td className="total-peserta">{item?.total} Peserta</td>
+        <td className="total-peserta">{item.total} Peserta</td>
       </tr>
     );
   });
@@ -241,7 +243,11 @@ const DashboardSiteManagement = ({ token, user }) => {
                 </table>
                 <div className="d-flex mx-6">
                   <p className="pt-6">
-                    Total: {allDataPeserta[0]?.totalPeserta} Peserta
+                    Total:{" "}
+                    {allDataPeserta &&
+                      allDataPeserta.length > 0 &&
+                      allDataPeserta[0].totalPeserta}{" "}
+                    Peserta
                   </p>
                   <div className="ml-auto mx-10 my-4">
                     <button
@@ -265,7 +271,11 @@ const DashboardSiteManagement = ({ token, user }) => {
                       type="button"
                       className={
                         pagePeserta >=
-                        Math.ceil(allDataPeserta[0]?.totalPage / 5)
+                        Math.ceil(
+                          allDataPeserta &&
+                            allDataPeserta.length > 0 &&
+                            allDataPeserta[0].totalPage / 5
+                        )
                           ? "btn btn-primary disabled"
                           : "btn btn-primary"
                       }
@@ -273,7 +283,11 @@ const DashboardSiteManagement = ({ token, user }) => {
                         e.preventDefault();
                         if (
                           pagePeserta >=
-                          Math.ceil(allDataPeserta[0]?.totalPage / 5)
+                          Math.ceil(
+                            allDataPeserta &&
+                              allDataPeserta.length > 0 &&
+                              allDataPeserta[0].totalPage / 5
+                          )
                         ) {
                           setPagePeserta(pagePeserta);
                         } else {

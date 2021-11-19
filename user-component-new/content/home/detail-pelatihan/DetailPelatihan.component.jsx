@@ -25,8 +25,10 @@ const DetailPelatihan = ({ session }) => {
   const { pelatihan } = useSelector((state) => state.detailPelatihan);
 
   useEffect(() => {
-    console.log(pelatihan.Status);
-  }, []);
+    if (pelatihan.Status === "Close") {
+      router.back();
+    }
+  }, [pelatihan, router]);
 
   const handleCheckPelatihanReg = async (id, session) => {
     if (session) {
