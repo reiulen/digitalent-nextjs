@@ -33,11 +33,11 @@ export default function Pelatihan({ token }) {
 
   return (
     <PageWrapper>
-      <div className="order-1 px-0 sub-menu-pelatihan">
-        <div className="card">
+      <div className="order-1 px-0 sub-menu-pelatihan ">
+        <div className="card ">
           <div className="card-body py-0">
             <div className="row">
-              <div className="border-right">
+              <div className="responsive-side-bar">
                 <div
                   className="col-xl-12 align-items-center"
                   style={{ marginTop: "32px" }}

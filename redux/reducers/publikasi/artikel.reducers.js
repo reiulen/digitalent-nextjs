@@ -16,6 +16,9 @@ import {
   DETAIL_ARTIKEL_REQUEST,
   DETAIL_ARTIKEL_SUCCESS,
   DETAIL_ARTIKEL_FAIL,
+  DETAIL_ARTIKEL_PESERTA_REQUEST,
+  DETAIL_ARTIKEL_PESERTA_SUCCESS,
+  DETAIL_ARTIKEL_PESERTA_FAIL,
   UPDATE_ARTIKEL_REQUEST,
   UPDATE_ARTIKEL_SUCCESS,
   UPDATE_ARTIKEL_RESET,
@@ -124,6 +127,28 @@ export const detailArtikelReducer = (state = { artikel: {} }, action) => {
       };
 
     case DETAIL_ARTIKEL_FAIL:
+      return {
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const detailArtikelsPesertaReducer = (state = {}, action) => {
+  switch (action.type) {
+    case DETAIL_ARTIKEL_PESERTA_SUCCESS:
+      return {
+        artikel: action.payload,
+      };
+
+    case DETAIL_ARTIKEL_PESERTA_FAIL:
       return {
         error: action.payload,
       };

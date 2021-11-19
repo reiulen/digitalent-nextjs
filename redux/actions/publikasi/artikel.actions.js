@@ -16,6 +16,9 @@ import {
   DETAIL_ARTIKEL_REQUEST,
   DETAIL_ARTIKEL_SUCCESS,
   DETAIL_ARTIKEL_FAIL,
+  DETAIL_ARTIKEL_PESERTA_REQUEST,
+  DETAIL_ARTIKEL_PESERTA_SUCCESS,
+  DETAIL_ARTIKEL_PESERTA_FAIL,
   UPDATE_ARTIKEL_REQUEST,
   UPDATE_ARTIKEL_SUCCESS,
   UPDATE_ARTIKEL_RESET,
@@ -129,6 +132,30 @@ export const getDetailArtikel = (id, token) => async dispatch => {
   } catch (error) {
     dispatch({
       type: DETAIL_ARTIKEL_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const getDetailArtikelsPeserta = (id, token) => async dispatch => {
+  try {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    let link = process.env.END_POINT_API_PUBLIKASI + `api/artikel/${id}`;
+
+    const { data } = await axios.get(link, config);
+
+    dispatch({
+      type: DETAIL_ARTIKEL_PESERTA_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: DETAIL_ARTIKEL_PESERTA_FAIL,
       payload: error.response.data.message,
     });
   }
