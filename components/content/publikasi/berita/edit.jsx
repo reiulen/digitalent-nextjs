@@ -146,9 +146,7 @@ const EditBerita = ({ token, idUser }) => {
                 data.splice([i], 1);
             }
         }
-        if ((tag).includes(data) !== true) {
-            setTag(data);
-        }
+        setTag(data);
     }
 
     const onSubmit = (e) => {
@@ -524,8 +522,11 @@ const EditBerita = ({ token, idUser }) => {
                                     <div className={`${styles.tagStyle} col-sm-12`} style={{ wordBreak: 'break-word' }}>
                                         <TagsInput
                                             value={tag}
-                                            onChange={(data) => (handleTag(data)
-                                            )}
+                                            onChange={(data) => {
+                                                handleTag(data)
+                                                setDisableTag(false)
+                                            }}
+                                            onExisting={(data) => setDisableTag(true)}
                                             name="tag"
                                             placeHolder="Isi Tag disini dan Enter"
                                             seprators={["Enter", "Tab"]}
@@ -533,7 +534,7 @@ const EditBerita = ({ token, idUser }) => {
                                         {
                                             disableTag === true ?
                                                 <p className="text-danger">
-                                                    Tag tidak bisa terdiri dari "SPACE" character saja
+                                                    Tag tidak boleh sama
                                                 </p>
                                                 :
                                                 null
