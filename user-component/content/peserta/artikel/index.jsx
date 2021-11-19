@@ -18,29 +18,19 @@ import { InvalidPDFException } from "pdfjs-dist";
 import moment from "moment";
 import PulseLoaderRender from "../../../components/loader/PulseLoader";
 
-import { getAllArtikelsPeserta } from "../../../../redux/actions/publikasi/artikel.actions";
+import {
+  deleteArtikelPeserta,
+  getAllArtikelsPeserta,
+} from "../../../../redux/actions/publikasi/artikel.actions";
 
 const Dashboard = ({ session, success }) => {
   const router = useRouter();
   const dispatch = useDispatch();
 
   const allArtikelsPeserta = useSelector((state) => state.allArtikelsPeserta);
+  const deleteArtikel = useSelector((state) => state.deleteArtikel);
 
-  const [keyword, setKeyword] = useState(null);
-  const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(5);
-  const [dateRegister, setDateRegister] = useState([null, null]);
-  const [dateRegisterStart, dateRegisterEnd] = dateRegister;
-  const [showModal, setShowModal] = useState(false);
-
-  let loading = false;
-
-  if (allArtikelsPeserta.loading) {
-    loading = allArtikelsPeserta.loading;
-  }
-
-
-  const listArtikel =
+  const [listPeserta, setPeserta] = useState(
     allArtikelsPeserta.artikel?.artikel.length > 0 ? (
       allArtikelsPeserta.artikel.artikel.map((item, index) => {
         return (
@@ -75,7 +65,7 @@ const Dashboard = ({ session, success }) => {
                 maxWidth: "11rem",
               }}
             >
-              {item.judul_artikel}
+              {item.judul}
             </td>
             <td className="align-middle">
               {moment(item.created_at).format("DD MMMM YYYY")}
@@ -112,16 +102,31 @@ const Dashboard = ({ session, success }) => {
                     <i className="ri-pencil-fill text-white p-0"></i>
                   </a>
                 </Link>
-                <Link href={`/peserta/artikel`}>
-                  <a
-                    className="btn btn-link-action btn-danger text-white"
-                    data-toggle="tooltip"
-                    data-placement="bottom"
-                    title="Delete"
-                  >
-                    <i className="ri-delete-bin-6-fill text-white p-0"></i>
-                  </a>
-                </Link>
+                <button
+                  className="btn btn-link-action btn-danger text-white"
+                  data-toggle="tooltip"
+                  data-placement="bottom"
+                  title="Delete"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    Swal.fire({
+                      title: "Apakah anda yakin ?",
+                      text: "Data ini tidak bisa dikembalikan !",
+                      icon: "warning",
+                      showCancelButton: true,
+                      confirmButtonColor: "#3085d6",
+                      cancelButtonColor: "#d33",
+                      confirmButtonText: "Ya !",
+                      cancelButtonText: "Batal",
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        dispatch(deleteArtikelPeserta(item.id, session.token));
+                      }
+                    });
+                  }}
+                >
+                  <i className="ri-delete-bin-6-fill text-white p-0"></i>
+                </button>
               </div>
             </td>
           </tr>
@@ -131,7 +136,33 @@ const Dashboard = ({ session, success }) => {
       <td className="align-middle text-center" colSpan={8}>
         Data Kosong
       </td>
-    );
+    )
+  );
+
+  const [keyword, setKeyword] = useState(null);
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(5);
+  const [dateRegister, setDateRegister] = useState([null, null]);
+  const [dateRegisterStart, dateRegisterEnd] = dateRegister;
+  const [showModal, setShowModal] = useState(false);
+
+  useEffect(() => {
+    if (deleteArtikel.loading) {
+      Swal.fire("Berhasil", "Data berhasil di hapus", "success").then(() => {
+        window.location.reload();
+      });
+    }
+  }, [deleteArtikel.loading]);
+
+  let loading = false;
+
+  if (allArtikelsPeserta.loading) {
+    loading = allArtikelsPeserta.loading;
+  }
+
+  if (deleteArtikel.loading) {
+    loading = deleteArtikel.loading;
+  }
 
   const loader = (
     <td className="align-middle text-center" colSpan={8}>
@@ -147,15 +178,17 @@ const Dashboard = ({ session, success }) => {
 
   const handlePagination = (pageNumber) => {
     setPage(pageNumber);
-    dispatch(getAllArtikelsPeserta(
-      session.token,
-      pageNumber,
-      limit,
-      keyword,
-      null,
-      null,
-      null
-    ));
+    dispatch(
+      getAllArtikelsPeserta(
+        session.token,
+        pageNumber,
+        limit,
+        keyword,
+        null,
+        null,
+        null
+      )
+    );
   };
 
   return (
@@ -170,15 +203,17 @@ const Dashboard = ({ session, success }) => {
             value={allArtikelsPeserta.artikel?.total}
             title="Artikel Saya"
             search={() => {
-              dispatch(getAllArtikelsPeserta(
-                session.token,
-                1,
-                5,
-                null,
-                null,
-                null,
-                null
-              ));
+              dispatch(
+                getAllArtikelsPeserta(
+                  session.token,
+                  1,
+                  5,
+                  null,
+                  null,
+                  null,
+                  null
+                )
+              );
             }}
           />
           <CardPill
@@ -189,15 +224,17 @@ const Dashboard = ({ session, success }) => {
             value={allArtikelsPeserta.artikel?.publish}
             title="Sudah Publish"
             search={() => {
-              dispatch(getAllArtikelsPeserta(
-                session.token,
-                1,
-                5,
-                null,
-                "1",
-                null,
-                null
-              ));
+              dispatch(
+                getAllArtikelsPeserta(
+                  session.token,
+                  1,
+                  5,
+                  null,
+                  "1",
+                  null,
+                  null
+                )
+              );
             }}
           />
           <CardPill
@@ -208,15 +245,17 @@ const Dashboard = ({ session, success }) => {
             value={allArtikelsPeserta.artikel?.unpublish}
             title="Belum Publish"
             search={() => {
-              dispatch(getAllArtikelsPeserta(
-                session.token,
-                1,
-                5,
-                null,
-                "0",
-                null,
-                null
-              ));
+              dispatch(
+                getAllArtikelsPeserta(
+                  session.token,
+                  1,
+                  5,
+                  null,
+                  "0",
+                  null,
+                  null
+                )
+              );
             }}
           />
         </Row>
@@ -347,11 +386,10 @@ const Dashboard = ({ session, success }) => {
                   </tr>
                 </thead>
                 <tbody className="w-100">
-                  {loading ? loader : listArtikel}
+                  {loading ? loader : listPeserta}
                 </tbody>
               </table>
             </div>
-            {console.log(allArtikelsPeserta)}
             {allArtikelsPeserta?.artikel?.total > 5 && (
               <div className="row">
                 <div className="table-pagination table-pagination pagination-custom col-12 col-md-6">
@@ -375,17 +413,19 @@ const Dashboard = ({ session, success }) => {
                       <select
                         className="form-control"
                         id="exampleFormControlSelect2"
-                        onChange={e => {
-                          setLimit(e.target.value)
-                          dispatch(getAllArtikelsPeserta(
-                            session.token,
-                            page,
-                            e.target.value,
-                            keyword,
-                            null,
-                            null,
-                            null
-                          ));
+                        onChange={(e) => {
+                          setLimit(e.target.value);
+                          dispatch(
+                            getAllArtikelsPeserta(
+                              session.token,
+                              page,
+                              e.target.value,
+                              keyword,
+                              null,
+                              null,
+                              null
+                            )
+                          );
                         }}
                         style={{
                           width: "65px",
@@ -437,24 +477,24 @@ const Dashboard = ({ session, success }) => {
               <div className="form-group mb-5">
                 <label className="p-0">Tanggal di Buat</label>
                 <DatePicker
-                wrapperClassName="datepicker"
-                className="form-control"
-                name="start_date"
-                selectsRange={true}
-                onChange={(date) => setDateRegister(date)}
-                startDate={dateRegisterStart}
-                endDate={dateRegisterEnd}
-                dateFormat="dd/MM/yyyy"
-                autoComplete="off"
-              />
+                  wrapperClassName="datepicker"
+                  className="form-control"
+                  name="start_date"
+                  selectsRange={true}
+                  onChange={(date) => setDateRegister(date)}
+                  startDate={dateRegisterStart}
+                  endDate={dateRegisterEnd}
+                  dateFormat="dd/MM/yyyy"
+                  autoComplete="off"
+                />
               </div>
             </Modal.Body>
             <Modal.Footer>
               <button
                 className="btn btn-light-ghost-rounded-full mr-2"
                 type="button"
-                onClick={e => {
-                  setDateRegister([null, null])
+                onClick={(e) => {
+                  setDateRegister([null, null]);
                 }}
               >
                 Reset
@@ -463,18 +503,20 @@ const Dashboard = ({ session, success }) => {
                 className="btn btn-primary-rounded-full"
                 type="button"
                 onClick={() => {
-                  setPage(1)
-                  setDateRegister([null, null])
-                  setShowModal(false)
-                  dispatch(getAllArtikelsPeserta(
-                    session.token,
-                    1,
-                    limit,
-                    keyword,
-                    null,
-                    moment(dateRegister[0]).format("YYYY-MM-DD"),
-                    moment(dateRegister[1]).format("YYYY-MM-DD")
-                  ));
+                  setPage(1);
+                  setDateRegister([null, null]);
+                  setShowModal(false);
+                  dispatch(
+                    getAllArtikelsPeserta(
+                      session.token,
+                      1,
+                      limit,
+                      keyword,
+                      null,
+                      moment(dateRegister[0]).format("YYYY-MM-DD"),
+                      moment(dateRegister[1]).format("YYYY-MM-DD")
+                    )
+                  );
                 }}
               >
                 Terapkan

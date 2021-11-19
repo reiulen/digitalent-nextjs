@@ -26,6 +26,8 @@ import {
   CLEAR_ERRORS,
 } from "../../types/publikasi/artikel.type";
 
+import Swal from "sweetalert2";
+
 import axios from "axios";
 
 // get all data
@@ -39,38 +41,38 @@ export const getAllArtikel =
     enddate = null,
     token
   ) =>
-    async dispatch => {
-      try {
-        dispatch({ type: ARTIKEL_REQUEST });
-        let link =
-          process.env.END_POINT_API_PUBLIKASI + `api/artikel?page=${page}`;
-        if (keyword) link = link.concat(`&keyword=${keyword}`);
-        if (limit) link = link.concat(`&limit=${limit}`);
-        if (publish) link = link.concat(`&publish=${publish}`);
-        if (startdate) link = link.concat(`&startdate=${startdate}`);
-        if (enddate) link = link.concat(`&enddate=${enddate}`);
+  async (dispatch) => {
+    try {
+      dispatch({ type: ARTIKEL_REQUEST });
+      let link =
+        process.env.END_POINT_API_PUBLIKASI + `api/artikel?page=${page}`;
+      if (keyword) link = link.concat(`&keyword=${keyword}`);
+      if (limit) link = link.concat(`&limit=${limit}`);
+      if (publish) link = link.concat(`&publish=${publish}`);
+      if (startdate) link = link.concat(`&startdate=${startdate}`);
+      if (enddate) link = link.concat(`&enddate=${enddate}`);
 
-        const config = {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        };
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      };
 
-        const { data } = await axios.get(link, config);
+      const { data } = await axios.get(link, config);
 
-        dispatch({
-          type: ARTIKEL_SUCCESS,
-          payload: data,
-        });
-      } catch (error) {
-        dispatch({
-          type: ARTIKEL_FAIL,
-          payload: error.response.data.message,
-        });
-      }
-    };
+      dispatch({
+        type: ARTIKEL_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: ARTIKEL_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
-    export const getAllArtikelsPeserta =
+export const getAllArtikelsPeserta =
   (
     token,
     page = 1,
@@ -78,42 +80,41 @@ export const getAllArtikel =
     keyword = null,
     publish = null,
     startdate = null,
-    enddate = null,
+    enddate = null
   ) =>
-    async dispatch => {
-      try {
-        dispatch({ type: ARTIKEL_PESERTA_REQUEST });
-        let link =
-          process.env.END_POINT_API_PUBLIKASI + `api/artikel`;
-          
-          const config = {
-            params:{
-              page,
-              keyword,
-              limit,
-              publish,
-              startdate,
-              enddate,
-            },
-            headers: {
-              Authorization: "Bearer " + token,
-            },
-          };
-          
-          const { data } = await axios.get(link, config);
-        dispatch({
-          type: ARTIKEL_PESERTA_SUCCESS,
-          payload: data,
-        });
-      } catch (error) {
-        dispatch({
-          type: ARTIKEL_PESERTA_FAIL,
-          payload: error.response.data.message,
-        });
-      }
-    };
+  async (dispatch) => {
+    try {
+      dispatch({ type: ARTIKEL_PESERTA_REQUEST });
+      let link = process.env.END_POINT_API_PUBLIKASI + `api/artikel/auth/peserta`;
 
-export const getDetailArtikel = (id, token) => async dispatch => {
+      const config = {
+        params: {
+          page,
+          keyword,
+          limit,
+          publish,
+          startdate,
+          enddate,
+        },
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      };
+
+      const { data } = await axios.get(link, config);
+      dispatch({
+        type: ARTIKEL_PESERTA_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: ARTIKEL_PESERTA_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
+
+export const getDetailArtikel = (id, token) => async (dispatch) => {
   try {
     const config = {
       headers: {
@@ -137,7 +138,7 @@ export const getDetailArtikel = (id, token) => async dispatch => {
   }
 };
 
-export const getDetailArtikelsPeserta = (id, token) => async dispatch => {
+export const getDetailArtikelsPeserta = (id, token) => async (dispatch) => {
   try {
     const config = {
       headers: {
@@ -145,7 +146,7 @@ export const getDetailArtikelsPeserta = (id, token) => async dispatch => {
       },
     };
 
-    let link = process.env.END_POINT_API_PUBLIKASI + `api/artikel/${id}`;
+    let link = process.env.END_POINT_API_PUBLIKASI + `api/artikel/auth/peserta/${id}`;
 
     const { data } = await axios.get(link, config);
 
@@ -161,7 +162,7 @@ export const getDetailArtikelsPeserta = (id, token) => async dispatch => {
   }
 };
 
-export const newArtikel = (artikelData, token) => async dispatch => {
+export const newArtikel = (artikelData, token) => async (dispatch) => {
   try {
     dispatch({
       type: NEW_ARTIKEL_REQUEST,
@@ -190,7 +191,29 @@ export const newArtikel = (artikelData, token) => async dispatch => {
   }
 };
 
-export const updateArtikel = (artikelData, token) => async dispatch => {
+export const newArtikelPeserta = (artikelData, token) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    const { data } = await axios.post(
+      process.env.END_POINT_API_PUBLIKASI + "api/artikel/auth/peserta",
+      artikelData,
+      config
+    );
+
+    Swal.fire("Berhasil", data.message, "success").then(() => {
+      window.location = "/peserta/artikel";
+    });
+  } catch (error) {
+    Swal.fire("Gagal", data.message, "error").then(() => {});
+  }
+};
+
+export const updateArtikel = (artikelData, token) => async (dispatch) => {
   try {
     dispatch({ type: UPDATE_ARTIKEL_REQUEST });
 
@@ -218,7 +241,57 @@ export const updateArtikel = (artikelData, token) => async dispatch => {
   }
 };
 
-export const deleteArtikel = (id, token) => async dispatch => {
+export const updateArtikelPeserta = (artikelData, token, id) => async (dispatch) => {
+  try {
+    dispatch({ type: UPDATE_ARTIKEL_REQUEST });
+
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    const { data } = await axios.post(
+      process.env.END_POINT_API_PUBLIKASI + "api/artikel/auth/peserta/" + id,
+      artikelData,
+      config
+    );
+
+    Swal.fire("Berhasil", data.message, "success").then(() => {
+      window.location = "/peserta/artikel";
+    });
+  } catch (error) {
+    Swal.fire("Gagal", data.message, "error").then(() => {});
+  }
+};
+
+export const deleteArtikelPeserta = (id, token) => async (dispatch) => {
+  try {
+    dispatch({ type: DELETE_ARTIKEL_REQUEST });
+
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    const { data } = await axios.delete(
+      process.env.END_POINT_API_PUBLIKASI + "api/artikel/auth/peserta/" + id,
+      config
+    );
+
+    dispatch({
+      type: DELETE_ARTIKEL_SUCCESS,
+      payload: data.status,
+    });
+  } catch (error) {
+    dispatch({
+      type: DELETE_ARTIKEL_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const deleteArtikel = (id, token) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_ARTIKEL_REQUEST });
 
@@ -245,7 +318,7 @@ export const deleteArtikel = (id, token) => async dispatch => {
 };
 
 // Clear Error
-export const clearErrors = () => async dispatch => {
+export const clearErrors = () => async (dispatch) => {
   dispatch({
     type: CLEAR_ERRORS,
   });
