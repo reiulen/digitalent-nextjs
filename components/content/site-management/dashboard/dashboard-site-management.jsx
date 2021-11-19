@@ -57,12 +57,12 @@ const DashboardSiteManagement = ({ token, user }) => {
   );
 
   function capitalize(s) {
-    let a = s.split(" ")
-    let result = []
+    let a = s.split(" ");
+    let result = [];
     for (let i = 0; i < a.length; i++) {
-       result.push(a[i].charAt(0).toUpperCase() + a[i].slice(1, a[i].length))
+      result.push(a[i].charAt(0).toUpperCase() + a[i].slice(1, a[i].length));
     }
-    return result.join(" ")
+    return result.join(" ");
   }
 
   function formatNumber(num) {
@@ -81,23 +81,27 @@ const DashboardSiteManagement = ({ token, user }) => {
     );
   });
 
-  const tablePeserta = allDataPeserta.map((item, index) => {
-    return (
-      <tr key={index}>
-        <td className="data-daerah py-4">
-          <span className="nomor mr-4">{item.nomor}</span>
-          {capitalize(item.provinsi)}
-        </td>
-        <td className="total-peserta">{formatNumber(item.total)} Peserta</td>
-      </tr>
-    );
-  });
-
-  
+  const tablePeserta =
+    allDataPeserta &&
+    allDataPeserta.length > 0 &&
+    allDataPeserta.map((item, index) => {
+      return (
+        <tr key={index}>
+          <td className="data-daerah py-4">
+            <span className="nomor mr-4">{item.nomor}</span>
+            {capitalize(item.provinsi)}
+          </td>
+          <td className="total-peserta">{formatNumber(item.total)} Peserta</td>
+        </tr>
+      );
+    });
 
   return (
     <>
       <PageWrapper>
+        {console.log(
+          allDataPeserta && allDataPeserta.length > 0 && allDataPeserta
+        )}
         <div className="container">
           <div className="col-lg-12 col-md-12">
             <div className="row">
@@ -185,7 +189,10 @@ const DashboardSiteManagement = ({ token, user }) => {
                   <tr>
                     <th>
                       <div className="data-peserta">Data Peserta</div>
-                      <div className="berdasarkan">Berdasarkan {typePeserta === "city" ? "Daerah" : "Provinsi"}</div>
+                      <div className="berdasarkan">
+                        Berdasarkan{" "}
+                        {typePeserta === "city" ? "Daerah" : "Provinsi"}
+                      </div>
                     </th>
                     <th>
                       <div
@@ -230,11 +237,11 @@ const DashboardSiteManagement = ({ token, user }) => {
                   </tr>
 
                   {tablePeserta}
-
                 </table>
                 <div className="d-flex mx-6">
                   <p className="pt-6">
-                    Total: {formatNumber(allDataPeserta[0].totalPeserta)} Peserta
+                    {/* Total: {formatNumber(allDataPeserta && allDataPeserta.length > 0 && allDataPeserta[0].totalPeserta)}{" "} */}
+                    Peserta
                   </p>
                   <div className="ml-auto mx-10 my-4">
                     <button
@@ -257,7 +264,12 @@ const DashboardSiteManagement = ({ token, user }) => {
                     <button
                       type="button"
                       className={
-                        pagePeserta >= Math.ceil(allDataPeserta[0].totalPage / 5)
+                        pagePeserta >=
+                        Math.ceil(
+                          allDataPeserta &&
+                            allDataPeserta.length > 0 &&
+                            allDataPeserta[0].totalPage / 5
+                        )
                           ? "btn btn-primary disabled"
                           : "btn btn-primary"
                       }
@@ -265,7 +277,11 @@ const DashboardSiteManagement = ({ token, user }) => {
                         e.preventDefault();
                         if (
                           pagePeserta >=
-                          Math.ceil(allDataPeserta[0].totalPage / 5)
+                          Math.ceil(
+                            allDataPeserta &&
+                              allDataPeserta.length > 0 &&
+                              allDataPeserta[0].totalPage / 5
+                          )
                         ) {
                           setPagePeserta(pagePeserta);
                         } else {
@@ -285,7 +301,9 @@ const DashboardSiteManagement = ({ token, user }) => {
                   <tr>
                     <th>
                       <div className="data-peserta">Data Zonasi</div>
-                      <div className="berdasarkan">Berdasarkan {type === "city" ? "Daerah" : "Provinsi"}</div>
+                      <div className="berdasarkan">
+                        Berdasarkan {type === "city" ? "Daerah" : "Provinsi"}
+                      </div>
                     </th>
                     <th>
                       <div

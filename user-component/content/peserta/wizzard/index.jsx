@@ -43,15 +43,7 @@ const PendidikanEdit = dynamic(
     ssr: false,
   }
 );
-const KeterampilanEdit = dynamic(
-  () => import("../profile/keterampilan/keterampilan.edit"),
-  {
-    loading: function loadingNow() {
-      return <LoadingSkeleton />;
-    },
-    ssr: false,
-  }
-);
+
 const PekerjaanEdit = dynamic(
   () => import("../profile/pekerjaan/pekerjaan.edit"),
   {
