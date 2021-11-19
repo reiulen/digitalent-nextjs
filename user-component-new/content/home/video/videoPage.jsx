@@ -846,6 +846,12 @@ useEffect(()=> {
                 </div>
               </div>
             </div>
+            <div 
+              className="overflow-auto my-3" 
+              style={{maxHeight:"40vh"}}
+            >
+              {isiVideo}
+            </div>
           </Modal.Footer>
         </Modal>
         {/* End of Modal */}
@@ -853,5 +859,6 @@ useEffect(()=> {
     </>
   );
 };
+
 
 export default VideoPage;
