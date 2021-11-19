@@ -16,19 +16,14 @@ const TambahApi = ({ token }) => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [roleOption, setRoleOption] = useState([]);
   const [role, setRole] = useState([]);
-  // console.log("role", role);
   const [unitWork, setUnitWork] = useState([]);
   const [unitWorkOption, setUnitWorkOption] = useState([]);
-  // console.log("unitWork", unitWork);
   const [statusAcademy, setStatusAcademy] = useState([]);
-  console.log("statusAcademy",statusAcademy)
   const [typeAccess, setTypeAccess] = useState("akademi");
 
   const [pelatihan, setPelatihan] = useState([]);
   const allUnitWorkList = useSelector((state) => state.allUnitWorkList);
-  // console.log("allUnitWorkList", allUnitWorkList);
   const allRolesList = useSelector((state) => state.allRolesList);
-  // console.log("allRolesList", allRolesList);
   const allAcademyList = useSelector((state) => state.allAcademyList);
 
   const allListPelatihan = useSelector((state) => state.allListPelatihan);

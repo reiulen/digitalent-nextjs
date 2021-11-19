@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from "react";
-import { Row, Col, Form, Button } from "react-bootstrap";
+import React, { useState, useRef, useEffect, useCallback } from "react";
+import { Row, Col, Form, Button, Modal } from "react-bootstrap";
 import Select from "react-select";
 import Swal from "sweetalert2";
 import SimpleReactValidator from "simple-react-validator";
@@ -12,6 +12,13 @@ import {
   clearErrors,
 } from "../../../../../redux/actions/pelatihan/profile.actions";
 import { UPDATE_DATA_PRIBADI_RESET } from "../../../../../redux/types/pelatihan/profile.type";
+import {
+  helperRegexNumber,
+  SweatAlert,
+} from "../../../../../utils/middleware/helper";
+import ReactCrop from "react-image-crop";
+import { getDataPribadi } from "../../../../../redux/actions/pelatihan/function.actions";
+import axios from "axios";
 
 const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
   const dispatch = useDispatch();
@@ -19,16 +26,16 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
   const [, forceUpdate] = useState();
 
   const { error: errorDataPribadi, dataPribadi } = useSelector(
-    (state) => state.getDataPribadi
+    state => state.getDataPribadi
   );
 
   const {
     error: errorUpdateData,
     loading,
     success,
-  } = useSelector((state) => state.updateDataPribadi);
+  } = useSelector(state => state.updateDataPribadi);
   const { error: errorAgama, data: dataAgama } = useSelector(
-    (state) => state.drowpdownAgama
+    state => state.drowpdownAgama
   );
 
   const [name, setName] = useState((dataPribadi && dataPribadi.name) || "");
@@ -69,16 +76,6 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
     (dataPribadi && dataPribadi.file_path + dataPribadi.File_ktp) || ""
   );
 
-  // const [cvName, setCvName] = useState(
-  //   (dataPribadi && dataPribadi.cv) || "Belum ada file"
-  // );
-  // const [cv, setCv] = useState("");
-  // const [cvPreview, setCvPreview] = useState(
-  //   (dataPribadi && dataPribadi.file_path + dataPribadi.cv) || ""
-  // );
-
-  // const [link, setLink] = useState((dataPribadi && dataPribadi.link) || "");
-
   const optionsKelamin = [
     { value: "0", label: "Laki - Laki" },
     { value: "1", label: "Perempuan" },
@@ -97,12 +94,14 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
 
   useEffect(() => {
     if (errorUpdateData) {
-      toast.error(errorUpdateData);
+      // toast.error(errorUpdateData);
+      SweatAlert("Gagal", errorUpdateData, "error");
       dispatch(clearErrors());
     }
 
     if (success) {
-      toast.success("Berhasil Update Data");
+      SweatAlert("Berhasil", "Berhasil Update Data", "success");
+      // toast.success("Berhasil Update Data");
       dispatch({ type: UPDATE_DATA_PRIBADI_RESET });
       if (wizzard) {
         funcViewEdit(2);
@@ -112,7 +111,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
     }
   }, [errorUpdateData, success, dispatch, funcViewEdit]);
 
-  const onChangeKtp = (e) => {
+  const onChangeKtp = e => {
     const type = ["image/jpg", "image/png", "image/jpeg", "application/pdf"];
     if (e.target.files[0]) {
       if (type.includes(e.target.files[0].type)) {
@@ -169,8 +168,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
   //     }
   //   }
   // };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
       const data = {
@@ -207,6 +205,90 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
     funcViewEdit(false);
   };
 
+  const [showUpdateGambar, setShowUpdateGambar] = useState(false);
+  const [upImg, setUpImg] = useState();
+  const imgRef = useRef(null);
+  const previewCanvasRef = useRef(null);
+  const [crop, setCrop] = useState({ unit: "%", width: 30, aspect: 9 / 9 });
+  const [completedCrop, setCompletedCrop] = useState(null);
+
+  const onSelectFile = e => {
+    if (e.target.files && e.target.files.length > 0) {
+      const reader = new FileReader();
+      reader.addEventListener("load", () => setUpImg(reader.result));
+      reader.readAsDataURL(e.target.files[0]);
+    }
+  };
+
+  const onLoad = useCallback(img => {
+    imgRef.current = img;
+  }, []);
+
+  useEffect(() => {
+    if (!completedCrop || !previewCanvasRef.current || !imgRef.current) {
+      return;
+    }
+
+    const image = imgRef.current;
+    const canvas = previewCanvasRef.current;
+    const crop = completedCrop;
+
+    const scaleX = image.naturalWidth / image.width;
+    const scaleY = image.naturalHeight / image.height;
+    const ctx = canvas.getContext("2d");
+    const pixelRatio = window.devicePixelRatio;
+
+    canvas.width = crop.width * pixelRatio * scaleX;
+    canvas.height = crop.height * pixelRatio * scaleY;
+
+    ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+    ctx.imageSmoothingQuality = "high";
+
+    ctx.drawImage(
+      image,
+      crop.x * scaleX,
+      crop.y * scaleY,
+      crop.width * scaleX,
+      crop.height * scaleY,
+      0,
+      0,
+      crop.width * scaleX,
+      crop.height * scaleY
+    );
+  }, [completedCrop]);
+
+  const generateImage = async (canvas, crop) => {
+    if (!crop || !canvas) {
+      return;
+    }
+
+    const base64Image = canvas.toDataURL("image/jpeg");
+
+    const data = {
+      foto: base64Image,
+    };
+
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    await axios
+      .post(
+        process.env.END_POINT_API_PELATIHAN + "api/v1/auth/update-foto",
+        data,
+        config
+      )
+      .then(res => {
+        setShowUpdateGambar(false);
+        toast.success("Berhasil Update");
+        dispatch(getDataPribadi(token));
+      })
+      .catch(err => {
+        toast.error("gagal");
+      });
+  };
+
   return (
     <>
       <Form onSubmit={handleSubmit}>
@@ -214,13 +296,153 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
           <h3 className="font-weight-bolder mb-5">Informasi Pribadi</h3>
 
           <Row className="mb-3">
+            {wizzard && (
+              <>
+                <Form.Group as={Col} md={12}>
+                  <Form.Label className={style.label}>Foto Profil</Form.Label>
+                  <div>
+                    <figure
+                      className="avatar item-rtl position-relative"
+                      data-toggle="modal"
+                      data-target="#exampleModalCenter"
+                      style={{ width: "max-content" }}
+                    >
+                      <img
+                        alt=""
+                        className={`${style.image_profile_wrapper} position-relative`}
+                        src={`${
+                          dataPribadi && dataPribadi.foto
+                            ? dataPribadi.file_path + dataPribadi.foto
+                            : "/assets/media/logos/default.png"
+                        }`}
+                        width={90}
+                        height={90}
+                        // objectFit="cover"
+                      />
+                      <div
+                        className="position-absolute"
+                        style={{ right: "10px" }}
+                        onClick={() => setShowUpdateGambar(true)}
+                      >
+                        <label
+                          className={`circle-bottom ${style.btn_edit_triger}`}
+                        >
+                          <i className="ri-pencil-fill text-white"></i>
+                        </label>
+                      </div>
+                    </figure>
+                  </div>
+                </Form.Group>
+                <Modal
+                  show={showUpdateGambar}
+                  onHide={() => setShowUpdateGambar(false)}
+                  size="lg"
+                  aria-labelledby="contained-modal-title-vcenter"
+                  centered
+                >
+                  <Modal.Header>
+                    <Modal.Title>Ganti Foto Profil</Modal.Title>
+                    <button
+                      type="button"
+                      className="close"
+                      onClick={() => setShowUpdateGambar(false)}
+                    >
+                      <i
+                        className="ri-close-fill"
+                        style={{ fontSize: "25px" }}
+                      ></i>
+                    </button>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <p>Foto</p>
+                    <div>
+                      {!completedCrop?.width || !completedCrop?.height ? (
+                        <Button
+                          className={`${style.button_profile_edit} rounded-xl `}
+                          onClick={() => {
+                            document.getElementById("update-foto").click();
+                          }}
+                        >
+                          <i className="ri-upload-2-fill text-white"></i> Pilih
+                          Foto
+                        </Button>
+                      ) : (
+                        <Button
+                          className={`${style.button_profile_wrapper} rounded-xl `}
+                          onClick={() => {
+                            document.getElementById("update-foto").click();
+                          }}
+                        >
+                          <i className="ri-pencil-fill text-primary"></i> Ubah
+                          Foto
+                        </Button>
+                      )}
+                      <input
+                        type="file"
+                        name="gambar"
+                        className="custom-file-input"
+                        id="update-foto"
+                        accept="image/*"
+                        style={{ display: "none" }}
+                        onChange={onSelectFile}
+                      />
+                    </div>
+
+                    <Row className="mt-5">
+                      <Col md={6}>
+                        <ReactCrop
+                          src={upImg}
+                          onImageLoaded={onLoad}
+                          crop={crop}
+                          onChange={c => setCrop(c)}
+                          onComplete={c => setCompletedCrop(c)}
+                        />
+                      </Col>
+                      <Col md={6}>
+                        {upImg && (
+                          <>
+                            <p>Preview</p>
+                            <canvas
+                              ref={previewCanvasRef}
+                              // Rounding is important so the canvas width and height matches/is a multiple for sharpness.
+                              style={{
+                                width: Math.round(completedCrop?.width ?? 0),
+                                height: Math.round(completedCrop?.height ?? 0),
+                                borderRadius: "50%",
+                              }}
+                            />
+                          </>
+                        )}
+                      </Col>
+                    </Row>
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button
+                      onClick={() => setShowUpdateGambar(false)}
+                      className={`${style.button_profile_batal} rounded-xl mr-3`}
+                    >
+                      Batal
+                    </Button>
+                    <Button
+                      disabled={!completedCrop?.width || !completedCrop?.height}
+                      onClick={() =>
+                        generateImage(previewCanvasRef.current, completedCrop)
+                      }
+                      className={`${style.button_profile_edit} rounded-xl`}
+                    >
+                      Simpan
+                    </Button>
+                  </Modal.Footer>
+                </Modal>
+              </>
+            )}
             <Form.Group as={Col} md={6}>
               <Form.Label className={style.label}>Nama Lengkap</Form.Label>
               <Form.Control
                 className={style.formControl}
                 placeholder="Masukan Nama Lengkap"
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={e => setName(e.target.value)}
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("nama lengkap")
                 }
@@ -242,7 +464,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
                 type="email"
                 placeholder="Masukan Email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={e => setEmail(e.target.value)}
                 onBlur={() => simpleValidator.current.showMessageFor("email")}
               />
               {simpleValidator.current.message("email", email, "required", {
@@ -259,7 +481,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
                 type="text"
                 placeholder="Masukan NIK"
                 value={nik}
-                onChange={(e) => setNik(e.target.value)}
+                onChange={e => setNik(e.target.value)}
                 onBlur={() => simpleValidator.current.showMessageFor("nik")}
               />
               {simpleValidator.current.message("nik", nik, "required|integer", {
@@ -275,7 +497,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
                 }`}
                 options={optionsKelamin}
                 defaultValue={{ value: kelamin, label: kelamin }}
-                onChange={(e) => setKelamin({ label: e.label, value: e.value })}
+                onChange={e => setKelamin({ label: e.label, value: e.value })}
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("jenis kelamin")
                 }
@@ -299,7 +521,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
                 type="text"
                 placeholder="Masukan Nomor Handphone"
                 value={nomorHandphone}
-                onChange={(e) => setNomorHandphone(e.target.value)}
+                onChange={e => setNomorHandphone(e.target.value)}
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("nomor handphone")
                 }
@@ -318,11 +540,11 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
               <Select
                 className={style.formControl}
                 placeholder={`${
-                  agama === "" ? "Silahkan Pilih Agama" : dataPribadi.agama
+                  agama === "" ? "Silahkan Pilih Agama" : dataPribadi?.agama
                 }`}
                 options={optionsAgama}
                 defaultValue={{ value: agama, label: agama }}
-                onChange={(e) => setAgama({ label: e.label, value: e.value })}
+                onChange={e => setAgama({ label: e.label, value: e.value })}
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("jenis kelamin")
                 }
@@ -342,11 +564,12 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
                 type="text"
                 placeholder="Masukan Tempat Lahir"
                 value={tempatLahir}
-                onChange={(e) => setTempatLahir(e.target.value)}
+                onChange={e => setTempatLahir(e.target.value)}
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("tempat lahir")
                 }
               />
+
               {simpleValidator.current.message(
                 "templat lahir",
                 tempatLahir,
@@ -363,10 +586,11 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
                 className={style.formControl}
                 type="date"
                 value={tanggalLahir}
-                onChange={(e) => setTanggalLahir(e.target.value)}
+                onChange={e => setTanggalLahir(e.target.value)}
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("tanggal lahir")
                 }
+                max={moment().subtract(1, "year").format("YYYY-MM-DD")}
               />
               {simpleValidator.current.message(
                 "tanggal lahir",
@@ -388,7 +612,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
               className={style.formControl}
               placeholder="Masukan Nama Lengkap"
               value={nameUrgent}
-              onChange={(e) => setNameUrgent(e.target.value)}
+              onChange={e => setNameUrgent(e.target.value)}
               onBlur={() =>
                 simpleValidator.current.showMessageFor("nama lengkap darurat")
               }
@@ -407,15 +631,23 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
               <Form.Label>Nomor Handphone</Form.Label>
               <Form.Control
                 className={style.formControl}
-                type="number"
+                type="text"
                 placeholder="Masukan Nomor Handphone"
                 value={nomorUrgent}
-                onChange={(e) => setNomorUrgent(e.target.value)}
+                onChange={e => {
+                  if (
+                    e.target.value === "" ||
+                    helperRegexNumber.test(e.target.value)
+                  ) {
+                    setNomorUrgent(e.target.value);
+                  }
+                }}
                 onBlur={() =>
                   simpleValidator.current.showMessageFor(
                     "nomor handphone darurat"
                   )
                 }
+                maxLength="14"
               />
               {simpleValidator.current.message(
                 "nomor handphone darurat",
@@ -434,7 +666,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
                 type="text"
                 placeholder="Masukan Hubungan"
                 value={hubunganUrgent}
-                onChange={(e) => setHubunganUrgent(e.target.value)}
+                onChange={e => setHubunganUrgent(e.target.value)}
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("hubungan darurat")
                 }

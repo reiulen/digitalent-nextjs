@@ -1,13 +1,20 @@
-import React from "react";
+import React, { useRef, useState } from "react";
+import SimpleReactValidator from "simple-react-validator";
 
 const FormManual = ({
+  title,
   formBuilder,
+  funcTitle,
   funcFormBuilder,
+  funcModalShow,
   element,
   size,
   options,
   dataOptions,
 }) => {
+  const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
+  const [, forceUpdate] = useState();
+
   const inputChangeHandler = (e, index) => {
     const { value, name, checked } = e.target;
     const list = [...formBuilder];
@@ -160,8 +167,53 @@ const FormManual = ({
     }
   };
 
+  const showPreviewHandler = () => {
+    let list = [...formBuilder];
+    list.forEach((row, i) => {
+      if (row.option === "manual") {
+        let dataOption = row.dataOption.split(";");
+        row.dataOption = dataOption;
+      }
+    });
+    funcFormBuilder(list);
+    funcModalShow(true);
+  };
+
+  const addFieldHandler = () => {
+    const newKey = formBuilder[formBuilder.length - 1].key + 1;
+    funcFormBuilder([
+      ...formBuilder,
+      {
+        key: newKey,
+        name: "",
+        element: "",
+        size: "",
+        option: "",
+        dataOption: "",
+        required: "0",
+      },
+    ]);
+  };
+
   return (
     <>
+      <div className="form-group mb-4">
+        <label className="col-form-label font-weight-bold">Judul Form</label>
+        <input
+          type="text"
+          placeholder="Silahkan Masukan Judul Form"
+          className="form-control"
+          value={title}
+          onChange={(e) => funcTitle(e.target.value)}
+          onBlur={() => simpleValidator.current.showMessageFor("judul form")}
+          autoComplete="off"
+        />
+
+        {simpleValidator.current.message("judul form", title, "required", {
+          className: "text-danger",
+        })}
+      </div>
+
       {formBuilder.map((row, i) => (
         <div className="builder row" key={i}>
           <div className="col-sm-12 col-md-2">
@@ -261,6 +313,26 @@ const FormManual = ({
           </div>
         </div>
       ))}
+
+      <div className="form-group mb-9 mt-4">
+        <div className="text-right">
+          <button
+            className="btn btn-light-success mr-2"
+            type="button"
+            style={{ borderRadius: "30px", fontWeight: "600" }}
+            onClick={showPreviewHandler}
+          >
+            Review
+          </button>
+          <button
+            className="btn btn-primary-rounded-full"
+            type="button"
+            onClick={addFieldHandler}
+          >
+            <i className="ri-pencil-fill"></i> Tambah Field
+          </button>
+        </div>
+      </div>
     </>
   );
 };

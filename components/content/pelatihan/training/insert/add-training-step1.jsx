@@ -195,7 +195,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
 
   let selectRefKabupaten = null;
   const optionsKabupaten = [];
-  if (dataKabupaten.length !== 0) {
+  if (dataKabupaten && dataKabupaten.length !== 0) {
     for (let index = 0; index < dataKabupaten.data.length; index++) {
       let val = {
         value: dataKabupaten.data[index].id,

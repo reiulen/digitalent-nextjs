@@ -4,6 +4,8 @@ import { useRouter } from "next/router";
 import Pagination from "react-js-pagination";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import { useDispatch, useSelector } from "react-redux";
+
+import Swal from "sweetalert2";
 import {
   fetchSignature,
   setPage,

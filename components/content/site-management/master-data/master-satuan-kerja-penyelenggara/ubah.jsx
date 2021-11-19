@@ -1,15 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import Pagination from "react-js-pagination";
 import PageWrapper from "../../../../wrapper/page.wrapper";
-import { useDispatch, useSelector } from "react-redux";
-import LoadingTable from "../../../../LoadingTable";
-import IconEye from "../../../../assets/icon/Eye";
-import IconPencil from "../../../../assets/icon/Pencil";
-import IconDelete from "../../../../assets/icon/Delete";
-import IconAdd from "../../../../assets/icon/Add";
-import IconSearch from "../../../../assets/icon/Search";
+import { useSelector } from "react-redux";
 import Select from "react-select";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -134,13 +127,25 @@ let sortirOptionTempProvList = allProvincesSite?.data
                   value={nameUnitWork}
                   type="text"
                   className="form-control"
-                  placeholder="Placeholder"
+                  placeholder="Masukkan nama satuan kerja"
                 />
               </div>
               <div className="form-group">
                 <label>Status</label>
-                {detailUnitWork.unitWork.status == "0" ? (
+
+                <select
+                  
+                    className="form-control"
+                    onChange={(e) => setStatus(e.target.value)}
+                    value={status}
+                  >
+                    <option value="1">Aktif</option>
+                    <option value="0">Tidak Aktif</option>
+                  </select>
+
+                {/* {detailUnitWork.unitWork.status == "0" ? (
                   <select
+                  
                     className="form-control"
                     onChange={(e) => setStatus(e.target.value)}
                   >
@@ -155,7 +160,7 @@ let sortirOptionTempProvList = allProvincesSite?.data
                     <option value="1">Aktif</option>
                     <option value="0">Tidak Aktif</option>
                   </select>
-                )}
+                )} */}
               </div>
 
               <div className="form-group">

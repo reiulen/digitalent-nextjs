@@ -47,13 +47,11 @@ const Navigationbar = ({ session }) => {
   const router = useRouter();
   const [isShowDropdown, setIsShowDropdown] = useState(false);
   const { error: errorDataPribadi, dataPribadi } = useSelector(
-    (state) => state.getDataPribadi
+    state => state.getDataPribadi
   );
 
   useEffect(() => {
-    // dispatch(getDataPribadi(session?.token));
     if (session) {
-      dispatch(getDataPribadi(session?.token));
       if (
         dataPribadi &&
         Object.keys(dataPribadi).length !== 0 &&
@@ -62,7 +60,7 @@ const Navigationbar = ({ session }) => {
         router.push("/peserta/wizzard");
       }
     }
-  }, [dispatch, router]);
+  }, []);
 
   const [akademi, setAkademi] = useState([]);
   const getAkademi = async () => {
@@ -159,7 +157,7 @@ const Navigationbar = ({ session }) => {
             )}
             <Navbar.Toggle
               aria-controls="basic-navbar-nav"
-              onClick={(e) => {
+              onClick={e => {
                 setIsNavOpen(!isNavOpen);
               }}
               className="p-3"

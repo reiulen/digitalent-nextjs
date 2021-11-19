@@ -126,9 +126,9 @@ const Layout = ({ children, title = "Dashboard" }) => {
               <div className="navi mt-2">
                 <a href="#" className="navi-item">
                   <span className="navi-link p-0 pb-2">
-                    <span className="navi-icon mr-1">
+                    {/* <span className="navi-icon mr-1">
                       <span className="svg-icon svg-icon-lg svg-icon-primary"></span>
-                    </span>
+                    </span> */}
                     <span className="navi-text text-muted text-hover-primary">
                       {(user && user.email) || ""}
                     </span>

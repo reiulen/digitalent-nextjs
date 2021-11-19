@@ -21,12 +21,16 @@ import ModalPreview from "../components/modal-preview-form.component";
 import FormManual from "./step-registration/form-manual";
 import FormCopy from "./step-registration/form-copy";
 import FormCopyEdit from "./step-registration/form-copy-edit";
+import { getDetailMasterPelatihan } from "../../../../../redux/actions/pelatihan/master-pendaftaran.action";
 
-const AddRegistrationStep2 = ({ propsStep }) => {
+const AddRegistrationStep2 = ({ propsStep, token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
   const { registrationData } = useSelector((state) => state.registrationStep2);
+  const { data: dataForm, error: errorDropdownForm } = useSelector(
+    (state) => state.drowpdownFormBuilder
+  );
 
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
@@ -119,91 +123,124 @@ const AddRegistrationStep2 = ({ propsStep }) => {
     },
   ]);
 
-  const optionsForm = [
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
-  ];
+  const optionsForm = dataForm.data || [];
 
-  const [title, setTitle] = useState(registrationData.judul_form);
-  const [formBuilder, setFormBuilder] = useState(registrationData.formBuilder);
-  const [viewForm, setViewForm] = useState("0");
+  // TITLE FORM
+  const [titleManual, setTitleManual] = useState(registrationData.judul_form);
+  const [titleCopy, setTitleCopy] = useState(registrationData.judul_form);
+  const [titleCopyEdit, setTitleCopyEdit] = useState(
+    registrationData.judul_form
+  );
+  // END TITLE FORM
+
+  //  FORM BUILDER
+  const [formBuilderManual, setFormBuilderManual] = useState(
+    registrationData.formBuilder
+  );
+  const [formBuilderCopy, setFormBuilderCopy] = useState(
+    registrationData.formBuilder
+  );
+  const [formBuilderCopyEdit, setFormBuilderCopyEdit] = useState(
+    registrationData.formBuilder
+  );
+  // END FORM BUILDER
+
+  const [viewForm, setViewForm] = useState(registrationData.type_form);
 
   useEffect(() => {
-    dispatch(getRegistrationStep2());
+    if (registrationData.type_form === "0") {
+      setTitleCopy("");
+      setFormBuilderCopy([]);
+      dispatch(getDetailMasterPelatihan(99999, token));
+      setTitleCopyEdit("");
+      setFormBuilderCopyEdit([]);
+    } else if (registrationData.type_form === "1") {
+      setTitleManual("");
+      setFormBuilderManual([
+        {
+          key: 1,
+          name: "",
+          element: "",
+          size: "",
+          option: "",
+          dataOption: "",
+          required: "0",
+        },
+      ]);
+      setTitleCopyEdit("");
+      setFormBuilderCopyEdit([]);
+    } else if (registrationData.type_form === "2") {
+      setTitleManual("");
+      setFormBuilderManual([
+        {
+          key: 1,
+          name: "",
+          element: "",
+          size: "",
+          option: "",
+          dataOption: "",
+          required: "0",
+        },
+      ]);
+      setTitleCopy("");
+      setFormBuilderCopy([]);
+    }
   }, [dispatch]);
 
-  const handleResetError = () => {
-    if (error) {
-      dispatch(clearErrors());
-    }
-  };
-
-  // const inputChangeHandler = (e, index) => {
-  //   const { value, name, checked } = e.target;
-  //   const list = [...formBuilder];
-  //   list[index][name] = value;
-  //   if (name === "required") {
-  //     let check = checked === true ? "1" : "0";
-  //     list[index]["required"] = check;
-  //   }
-  //   setFormBuilder(list);
-  // };
-
-  const addFieldHandler = () => {
-    const newKey = formBuilder[formBuilder.length - 1].key + 1;
-    setFormBuilder([
-      ...formBuilder,
-      {
-        key: newKey,
-        name: "",
-        element: "",
-        size: "",
-        option: "",
-        dataOption: "",
-        required: "0",
-      },
-    ]);
-  };
-
-  // const removeFieldHandler = (index) => {
-  //   const list = [...formBuilder];
-  //   list.splice(index, 1);
-  //   list.forEach((row, i) => {
-  //     let key = i + 1;
-  //     list[i]["key"] = key;
-  //   });
-  //   setFormBuilder(list);
-  // };
-
-  const showPreviewHandler = () => {
-    let list = [...formBuilder];
-    list.forEach((row, i) => {
-      if (row.option === "manual") {
-        let dataOption = row.dataOption.split(";");
-        row.dataOption = dataOption;
-      }
-    });
-    setFormBuilder(list);
-    setModalShow(true);
-  };
-
   const closePreviewHandler = () => {
-    let list = [...formBuilder];
+    let list;
+    if (viewForm === "0") {
+      list = [...formBuilderManual];
+    } else if (viewForm === "1") {
+      list = [...formBuilderCopy];
+    } else if (viewForm === "2") {
+      list = [...formBuilderCopyEdit];
+    }
+
     list.forEach((row, i) => {
       if (row.option === "manual") {
         let dataOption = row.dataOption.join(";");
         row.dataOption = dataOption;
       }
     });
-    setFormBuilder(list);
+
+    if (viewForm === "0") {
+      setFormBuilderManual(list);
+    } else if (viewForm === "1") {
+      setFormBuilderCopy(list);
+    } else if (viewForm === "2") {
+      setFormBuilderCopyEdit(list);
+    }
+
     setModalShow(false);
   };
 
   const backHandler = () => {
+    let formBuilderStore;
+    if (viewForm === "0") {
+      formBuilderStore = formBuilderManual;
+    } else if (viewForm === "1") {
+      formBuilderStore = formBuilderCopy;
+    } else if (viewForm === "2") {
+      formBuilderStore = formBuilderCopyEdit;
+    } else {
+      formBuilderStore;
+    }
+
+    let titleStore;
+    if (viewForm === "0") {
+      titleStore = titleManual;
+    } else if (viewForm === "1") {
+      titleStore = titleCopy;
+    } else if (viewForm === "2") {
+      titleStore = titleCopyEdit;
+    } else {
+      titleStore;
+    }
+
     const data = {
-      judul_form: title,
-      formBuilder,
+      judul_form: titleStore,
+      formBuilder: formBuilderStore,
     };
     dispatch(storeRegistrationStep2(data));
     propsStep(1);
@@ -211,11 +248,33 @@ const AddRegistrationStep2 = ({ propsStep }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
+    let formBuilderStore;
+    if (viewForm === "0") {
+      formBuilderStore = formBuilderManual;
+    } else if (viewForm === "1") {
+      formBuilderStore = formBuilderCopy;
+    } else if (viewForm === "2") {
+      formBuilderStore = formBuilderCopyEdit;
+    } else {
+      formBuilderStore;
+    }
+
+    let titleStore;
+    if (viewForm === "0") {
+      titleStore = titleManual;
+    } else if (viewForm === "1") {
+      titleStore = titleCopy;
+    } else if (viewForm === "2") {
+      titleStore = titleCopyEdit;
+    } else {
+      titleStore;
+    }
+
     if (simpleValidator.current.allValid()) {
       const data = {
-        judul_form: title,
+        judul_form: titleStore,
         type_form: viewForm,
-        formBuilder,
+        formBuilder: formBuilderStore,
       };
       dispatch(storeRegistrationStep2(data));
       propsStep(3);
@@ -235,8 +294,11 @@ const AddRegistrationStep2 = ({ propsStep }) => {
       case "0":
         return (
           <FormManual
-            formBuilder={formBuilder}
-            funcFormBuilder={(value) => setFormBuilder(value)}
+            title={titleManual}
+            formBuilder={formBuilderManual}
+            funcTitle={(value) => setTitleManual(value)}
+            funcFormBuilder={(value) => setFormBuilderManual(value)}
+            funcModalShow={(value) => setModalShow(value)}
             element={element}
             size={size}
             options={options}
@@ -245,25 +307,42 @@ const AddRegistrationStep2 = ({ propsStep }) => {
         );
         break;
       case "1":
-        return <FormCopy />;
+        return (
+          <FormCopy
+            optionsForm={optionsForm}
+            title={titleCopy}
+            funcTitle={(value) => setTitleCopy(value)}
+            funcFormBuilder={(value) => setFormBuilderCopy(value)}
+            funcModalShow={(value) => setModalShow(value)}
+            token={token}
+          />
+        );
         break;
       case "2":
         return (
           <FormCopyEdit
-            formBuilder={formBuilder}
-            funcFormBuilder={(value) => setFormBuilder(value)}
+            optionsForm={optionsForm}
+            title={titleCopyEdit}
+            formBuilder={formBuilderCopyEdit}
+            funcTitle={(value) => setTitleCopyEdit(value)}
+            funcFormBuilder={(value) => setFormBuilderCopyEdit(value)}
             element={element}
             size={size}
             options={options}
             dataOptions={dataOptions}
+            token={token}
+            funcModalShow={(value) => setModalShow(value)}
           />
         );
         break;
       default:
         return (
           <FormManual
-            formBuilder={formBuilder}
-            funcFormBuilder={(value) => setFormBuilder(value)}
+            title={titleManual}
+            formBuilder={formBuilderManual}
+            funcTitle={(value) => setTitleManual(value)}
+            funcFormBuilder={(value) => setFormBuilderManual(value)}
+            funcModalShow={(value) => setModalShow(value)}
             element={element}
             size={size}
             options={options}
@@ -337,69 +416,9 @@ const AddRegistrationStep2 = ({ propsStep }) => {
                 </div>
               </div>
             </div>
-            <div className="form-group mb-4">
-              <label className="col-form-label font-weight-bold">
-                Judul Form
-              </label>
-              {viewForm === "0" ? (
-                <input
-                  type="text"
-                  placeholder="Silahkan Masukan Judul Form"
-                  className="form-control"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                  onBlur={() =>
-                    simpleValidator.current.showMessageFor("judul form")
-                  }
-                  autoComplete="off"
-                />
-              ) : (
-                <>
-                  <Select
-                    options={optionsForm}
-                    placeholder="Silahkan Pilih Nama Form Pendaftaran"
-                    onChange={(e) => setTitle(e.label)}
-                  />
-                  {viewForm === "1" && (
-                    <small className="form-text text-danger">
-                      *Form pendaftaran akan terhubung dengan master form
-                      pendaftaran. Apabila master form pendaftaran diubah maka
-                      form pendaftaran pelatihan ini akan ikut berubah.
-                    </small>
-                  )}
-                </>
-              )}
-              {simpleValidator.current.message(
-                "judul form",
-                title,
-                "required",
-                { className: "text-danger" }
-              )}
-            </div>
 
             {viewRegistrationHandler()}
 
-            <div className="form-group mb-9 mt-4">
-              <div className="text-right">
-                <button
-                  className="btn btn-light-success mr-2"
-                  type="button"
-                  style={{ borderRadius: "30px", fontWeight: "600" }}
-                  onClick={showPreviewHandler}
-                >
-                  Review
-                </button>
-                {viewForm !== "1" && (
-                  <button
-                    className="btn btn-primary-rounded-full"
-                    type="button"
-                    onClick={addFieldHandler}
-                  >
-                    <i className="ri-pencil-fill"></i> Tambah Field
-                  </button>
-                )}
-              </div>
-            </div>
             <div className="form-group mt-9">
               <div className="text-right">
                 <button
@@ -424,10 +443,28 @@ const AddRegistrationStep2 = ({ propsStep }) => {
           centered
         >
           <ModalPreview
-            propsTitle={title}
-            propsForm={formBuilder}
+            propsTitle={
+              viewForm === "0"
+                ? titleManual
+                : viewForm === "1"
+                ? titleCopy
+                : viewForm === "2" && titleCopyEdit
+            }
+            propsForm={
+              viewForm === "0"
+                ? formBuilderManual
+                : viewForm === "1"
+                ? formBuilderCopy
+                : viewForm === "2" && formBuilderCopyEdit
+            }
             propsModalShow={modalShow}
-            sendPropsFormBuilder={(form) => setFormBuilder(form)}
+            sendPropsFormBuilder={(form) => {
+              viewForm === "0"
+                ? setFormBuilderManual(form)
+                : viewForm === "1"
+                ? setFormBuilderCopy(form)
+                : viewForm === "2" && setFormBuilderCopyEdit(form);
+            }}
             sendPropsModalShow={(value) => setModalShow(value)}
           />
         </Modal>

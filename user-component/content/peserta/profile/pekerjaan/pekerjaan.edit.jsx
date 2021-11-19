@@ -13,25 +13,26 @@ import {
 } from "../../../../../redux/actions/pelatihan/profile.actions";
 import { UPDATE_PEKERJAAN_RESET } from "../../../../../redux/types/pelatihan/profile.type";
 import router from "next/router";
+import {
+  helperRegexNumber,
+  SweatAlert,
+} from "../../../../../utils/middleware/helper";
 
 const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
   const dispatch = useDispatch();
 
   const { error: errorPekerjaan, pekerjaan } = useSelector(
-    (state) => state.dataPekerjaan
+    state => state.dataPekerjaan
   );
-
-  const { data: dataAsalSekolah } = useSelector(
-    (state) => state.getAsalSekolah
-  );
+  const { data: dataAsalSekolah } = useSelector(state => state.getAsalSekolah);
 
   const { error: errorStatusPekerjaan, data: dataStatusPekerjaan } =
-    useSelector((state) => state.drowpdownStatusPekerjaan);
+    useSelector(state => state.drowpdownStatusPekerjaan);
   const {
     error: errorUpdateData,
     loading,
     success,
-  } = useSelector((state) => state.updatePekerjaan);
+  } = useSelector(state => state.updatePekerjaan);
 
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
@@ -77,12 +78,12 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
     dispatch(getDataAsalSekolah(token, 1, 100, sekolah));
 
     if (errorUpdateData) {
-      toast.error(errorUpdateData);
+      SweatAlert("Gagal", errorUpdateData, "error");
       dispatch(clearErrors());
     }
 
     if (success) {
-      toast.success("Berhasil Update Data");
+      SweatAlert("Berhasil", "Berhasil Update Data", "success");
       dispatch({ type: UPDATE_PEKERJAAN_RESET });
       if (wizzard) {
         router.push("/peserta");
@@ -93,7 +94,7 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [errorUpdateData, success, dispatch, sekolah, funcViewEdit, token]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
       let data = {};
@@ -166,6 +167,18 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
     rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
     return prefix == undefined ? rupiah : rupiah ? "Rp. " + rupiah : "";
   }
+  const [year, setYear] = useState();
+
+  useEffect(() => {
+    const today = new Date();
+    setYear(today.getFullYear());
+  }, []);
+
+  useEffect(() => {
+    if (tahunMasuk > year) {
+      setTahunMasuk(year);
+    }
+  }, [tahunMasuk, year]);
 
   return (
     <>
@@ -180,7 +193,7 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
                 "Silahkan Pilih Status Pekerjaan"
               }
               options={optionsStatusPekerjaan}
-              onChange={(e) =>
+              onChange={e =>
                 setStatusPekerjaan({ label: e.label, value: e.value })
               }
               onBlur={() =>
@@ -214,7 +227,7 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
                   <Form.Control
                     placeholder="Silahkan Masukan Pekerjaan"
                     value={pekerjaanNama}
-                    onChange={(e) => setPekerjaan(e.target.value)}
+                    onChange={e => setPekerjaan(e.target.value)}
                     onBlur={() =>
                       simpleValidator.current.showMessageFor("pekerjaan")
                     }
@@ -238,7 +251,7 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
                   <Form.Control
                     placeholder="Silahkan Masukan Perusahaan"
                     value={perusahaan}
-                    onChange={(e) => setPerusahaan(e.target.value)}
+                    onChange={e => setPerusahaan(e.target.value)}
                     onBlur={() =>
                       simpleValidator.current.showMessageFor("perusahaan")
                     }
@@ -263,7 +276,7 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
               <Form.Control
                 placeholder="Silahkan Masukan Penghasilan"
                 value={formatRupiah(penghasilan)}
-                onChange={(e) => {
+                onChange={e => {
                   setPenghasilan(formatRupiah(e.target.value));
                 }}
                 onBlur={() =>
@@ -297,7 +310,7 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
                       type="text" /*  */
                       className="form-control"
                       value={sekolah}
-                      onChange={(e) => {
+                      onChange={e => {
                         setSekolah(e.target.value);
                       }}
                     />
@@ -327,10 +340,18 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
                     <Form.Control
                       placeholder="Silahkan Masukan Tahun Masuk"
                       value={tahunMasuk}
-                      onChange={(e) => setTahunMasuk(e.target.value)}
+                      onChange={e => {
+                        if (
+                          e.target.value === "" ||
+                          helperRegexNumber.test(e.target.value)
+                        ) {
+                          setTahunMasuk(e.target.value);
+                        }
+                      }}
                       onBlur={() =>
                         simpleValidator.current.showMessageFor("tahun masuk")
                       }
+                      type="text"
                     />
                     {simpleValidator.current.message(
                       "tahun masuk",

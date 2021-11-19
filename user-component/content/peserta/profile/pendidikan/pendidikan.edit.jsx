@@ -15,27 +15,32 @@ import {
   getDataAsalSekolah,
 } from "../../../../../redux/actions/pelatihan/profile.actions";
 import { UPDATE_PENDIDIKAN_RESET } from "../../../../../redux/types/pelatihan/profile.type";
+import {
+  helperRegexGPA,
+  helperRegexNumber,
+  SweatAlert,
+  yyyy,
+} from "../../../../../utils/middleware/helper";
+import moment from "moment";
 
 const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
   const dispatch = useDispatch();
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
 
-  const { data: dataAsalSekolah } = useSelector(
-    (state) => state.getAsalSekolah
-  );
+  const { data: dataAsalSekolah } = useSelector(state => state.getAsalSekolah);
 
   const { error: errorPendidikan, data: dataPendidikan } = useSelector(
-    (state) => state.drowpdownPendidikan
+    state => state.drowpdownPendidikan
   );
   const { error: errorPendidikanData, pendidikan } = useSelector(
-    (state) => state.dataPendidikan
+    state => state.dataPendidikan
   );
   const {
     error: errorUpdateData,
     loading,
     success,
-  } = useSelector((state) => state.updatePendidikan);
+  } = useSelector(state => state.updatePendidikan);
 
   const [jengjangPendidikan, setJenjangPendidikan] = useState(
     (pendidikan && {
@@ -56,7 +61,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
   );
   const [ipk, setIpk] = useState((pendidikan && pendidikan.ipk) || "");
   const [tahunMasuk, setTahunMasuk] = useState(
-    (pendidikan && pendidikan.tahun_masuk) || "0"
+    (pendidikan && pendidikan.tahun_masuk) || ""
   );
 
   const [ijazahName, setIjazahName] = useState("Belum ada file");
@@ -83,12 +88,12 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
     dispatch(getDataAsalSekolah(token, 1, 100, asalSekolah));
 
     if (errorUpdateData) {
-      toast.error(errorUpdateData);
+      SweatAlert("Gagal", errorUpdateData, "error");
       dispatch(clearErrors());
     }
 
     if (success) {
-      toast.success("Berhasil Update Data");
+      SweatAlert("Berhasil", "Berhasil Update Data", "success");
       dispatch({ type: UPDATE_PENDIDIKAN_RESET });
       if (wizzard) {
         funcViewEdit(4);
@@ -107,7 +112,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
     asalSekolah,
   ]);
 
-  const searchAsal = (word) => {
+  const searchAsal = word => {
     let array = [];
     const searchData = getAsalSekolah;
     searchData.filter((data, index) => {
@@ -118,7 +123,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
     setDataSearch(array);
   };
 
-  const onChangeIjazah = (e) => {
+  const onChangeIjazah = e => {
     const type = ["image/jpeg", "image/jpg", "application/pdf"];
     if (e.target.files[0]) {
       if (type.includes(e.target.files[0].type)) {
@@ -147,7 +152,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
     let data = {};
     if (simpleValidator.current.allValid()) {
@@ -196,7 +201,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
           asal_pendidikan: asalSekolah,
           lainya: "-",
           program_studi: programStudi,
-          ipk,
+          ipk: `${ipk}`,
           tahun_masuk: parseInt(tahunMasuk),
           ijasah: ijazah,
         };
@@ -213,6 +218,39 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
     }
   };
 
+  useEffect(() => {
+    if (tahunMasuk > moment().year()) {
+      setTahunMasuk(moment().year());
+    }
+  }, [tahunMasuk]);
+
+  useEffect(() => {
+    const validateIpk = /^[0-9]+\.[0-9][0-9][0-9][0-9]$/;
+    if (ipk >= 4) {
+      setIpk(4);
+    }
+    if (validateIpk.test(ipk)) {
+      setIpk(Math.round(ipk));
+    }
+    const target = document.getElementById("formGridIpk");
+    if (target) {
+      target.onkeydown = e => {
+        if (e.code == "Minus") {
+          return false;
+        }
+        if (e.code == "NumpadAdd") {
+          return false;
+        }
+        if (e.code == "NumpadSubtract") {
+          return false;
+        }
+        if (e.code == "Equal") {
+          return false;
+        }
+      };
+    }
+  }, [ipk]);
+
   return (
     <>
       <Form onSubmit={handleSubmit}>
@@ -228,7 +266,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 }
                 options={optionsJenjangPendidikan}
                 defaultValue={jengjangPendidikan}
-                onChange={(e) =>
+                onChange={e =>
                   setJenjangPendidikan({ label: e.label, value: e.value })
                 }
                 onBlur={() =>
@@ -257,7 +295,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   type="text"
                   className="form-control"
                   value={asalSekolah}
-                  onChange={(e) => {
+                  onChange={e => {
                     setAsalSekolah(e.target.value);
                   }}
                 />
@@ -329,7 +367,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     type="text"
                     className="form-control"
                     value={asalSekolah}
-                    onChange={(e) => {
+                    onChange={e => {
                       setAsalSekolah(e.target.value);
                     }}
                   />
@@ -394,7 +432,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 <Form.Control
                   placeholder="Silahkan Masukan Program Studi"
                   value={programStudi}
-                  onChange={(e) => setProgramStudi(e.target.value)}
+                  onChange={e => setProgramStudi(e.target.value)}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("program studi")
                   }
@@ -426,7 +464,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     type="text"
                     className="form-control"
                     value={asalSekolah}
-                    onChange={(e) => {
+                    onChange={e => {
                       setAsalSekolah(e.target.value);
                     }}
                   />
@@ -491,7 +529,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 <Form.Control
                   placeholder="Silahkan Masukan Program Studi"
                   value={programStudi}
-                  onChange={(e) => setProgramStudi(e.target.value)}
+                  onChange={e => setProgramStudi(e.target.value)}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("program studi")
                   }
@@ -522,7 +560,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     type="text"
                     className="form-control"
                     value={asalSekolah}
-                    onChange={(e) => {
+                    onChange={e => {
                       setAsalSekolah(e.target.value);
                     }}
                   />
@@ -587,7 +625,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 <Form.Control
                   placeholder="Silahkan Masukan Program Studi"
                   value={programStudi}
-                  onChange={(e) => setProgramStudi(e.target.value)}
+                  onChange={e => setProgramStudi(e.target.value)}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("program studi")
                   }
@@ -618,7 +656,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     type="text"
                     className="form-control"
                     value={asalSekolah}
-                    onChange={(e) => {
+                    onChange={e => {
                       setAsalSekolah(e.target.value);
                     }}
                   />
@@ -683,7 +721,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 <Form.Control
                   placeholder="Silahkan Masukan Program Studi"
                   value={programStudi}
-                  onChange={(e) => setProgramStudi(e.target.value)}
+                  onChange={e => setProgramStudi(e.target.value)}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("program studi")
                   }
@@ -706,7 +744,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
               <Form.Control
                 placeholder="Silahkan Masukan Lainnya ( Sekolah / PT)"
                 value={lainya}
-                onChange={(e) => setLainya(e.target.value)}
+                onChange={e => setLainya(e.target.value)}
                 onBlur={() =>
                   simpleValidator.current.showMessageFor(
                     "lainya ( sekolah/ pt )"
@@ -729,7 +767,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
               <Form.Control
                 placeholder="Silahkan Masukan Lainnya ( Sekolah / PT)"
                 value={lainya}
-                onChange={(e) => setLainya(e.target.value)}
+                onChange={e => setLainya(e.target.value)}
                 onBlur={() =>
                   simpleValidator.current.showMessageFor(
                     "lainya ( sekolah/ pt )"
@@ -752,7 +790,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
               <Form.Control
                 placeholder="Silahkan Masukan Lainnya ( Sekolah / PT)"
                 value={lainya}
-                onChange={(e) => setLainya(e.target.value)}
+                onChange={e => setLainya(e.target.value)}
                 onBlur={() =>
                   simpleValidator.current.showMessageFor(
                     "lainya ( sekolah/ pt )"
@@ -778,7 +816,15 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   type="text"
                   placeholder="Silahkan Masukan Tahun Masuk"
                   value={tahunMasuk}
-                  onChange={(e) => setTahunMasuk(e.target.value)}
+                  onChange={e => {
+                    if (
+                      e.target.value === "" ||
+                      helperRegexNumber.test(e.target.value)
+                    ) {
+                      setTahunMasuk(e.target.value);
+                    }
+                  }}
+                  maxLength={4}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("tahun masuk")
                   }
@@ -802,7 +848,15 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   type="text"
                   placeholder="Silahkan Masukan Tahun Masuk"
                   value={tahunMasuk}
-                  onChange={(e) => setTahunMasuk(e.target.value)}
+                  onChange={e => {
+                    if (
+                      e.target.value === "" ||
+                      helperRegexNumber.test(e.target.value)
+                    ) {
+                      setTahunMasuk(e.target.value);
+                    }
+                  }}
+                  maxLength={4}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("tahun masuk")
                   }
@@ -826,7 +880,15 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   type="text"
                   placeholder="Silahkan Masukan Tahun Masuk"
                   value={tahunMasuk}
-                  onChange={(e) => setTahunMasuk(e.target.value)}
+                  onChange={e => {
+                    if (
+                      e.target.value === "" ||
+                      helperRegexNumber.test(e.target.value)
+                    ) {
+                      setTahunMasuk(e.target.value);
+                    }
+                  }}
+                  maxLength={4}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("tahun masuk")
                   }
@@ -850,7 +912,15 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   type="text"
                   placeholder="Silahkan Masukan Tahun Masuk"
                   value={tahunMasuk}
-                  onChange={(e) => setTahunMasuk(e.target.value)}
+                  onChange={e => {
+                    if (
+                      e.target.value === "" ||
+                      helperRegexNumber.test(e.target.value)
+                    ) {
+                      setTahunMasuk(e.target.value);
+                    }
+                  }}
+                  maxLength={4}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("tahun masuk")
                   }
@@ -1073,7 +1143,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   type="number"
                   placeholder="Silahkan Masukan IPK"
                   value={ipk}
-                  onChange={(e) => {
+                  onChange={e => {
                     setIpk(e.target.value);
                   }}
                   onBlur={() => simpleValidator.current.showMessageFor("ipk")}
@@ -1093,7 +1163,15 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   type="text"
                   placeholder="Silahkan Masukan Tahun Masuk"
                   value={tahunMasuk}
-                  onChange={(e) => setTahunMasuk(e.target.value)}
+                  onChange={e => {
+                    if (
+                      e.target.value === "" ||
+                      helperRegexNumber.test(e.target.value)
+                    ) {
+                      setTahunMasuk(e.target.value);
+                    }
+                  }}
+                  maxLength={4}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("tahun masuk")
                   }
@@ -1117,9 +1195,10 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   type="number"
                   placeholder="Silahkan Masukan IPK"
                   value={ipk}
-                  onChange={(e) => {
+                  onChange={e => {
                     setIpk(e.target.value);
                   }}
+                  max={4}
                   onBlur={() => simpleValidator.current.showMessageFor("ipk")}
                 />
                 {simpleValidator.current.message(
@@ -1137,7 +1216,15 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   type="text"
                   placeholder="Silahkan Masukan Tahun Masuk"
                   value={tahunMasuk}
-                  onChange={(e) => setTahunMasuk(e.target.value)}
+                  onChange={e => {
+                    if (
+                      e.target.value === "" ||
+                      helperRegexNumber.test(e.target.value)
+                    ) {
+                      setTahunMasuk(e.target.value);
+                    }
+                  }}
+                  maxLength={4}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("tahun masuk")
                   }
@@ -1161,9 +1248,10 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   type="number"
                   placeholder="Silahkan Masukan IPK"
                   value={ipk}
-                  onChange={(e) => {
+                  onChange={e => {
                     setIpk(e.target.value);
                   }}
+                  max={4}
                   onBlur={() => simpleValidator.current.showMessageFor("ipk")}
                 />
                 {simpleValidator.current.message(
@@ -1181,7 +1269,15 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   type="text"
                   placeholder="Silahkan Masukan Tahun Masuk"
                   value={tahunMasuk}
-                  onChange={(e) => setTahunMasuk(e.target.value)}
+                  onChange={e => {
+                    if (
+                      e.target.value === "" ||
+                      helperRegexNumber.test(e.target.value)
+                    ) {
+                      setTahunMasuk(e.target.value);
+                    }
+                  }}
+                  maxLength={4}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("tahun masuk")
                   }
@@ -1205,7 +1301,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   type="number"
                   placeholder="Silahkan Masukan IPK"
                   value={ipk}
-                  onChange={(e) => {
+                  max={4}
+                  onChange={e => {
                     setIpk(e.target.value);
                   }}
                   onBlur={() => simpleValidator.current.showMessageFor("ipk")}
@@ -1225,7 +1322,15 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   type="text"
                   placeholder="Silahkan Masukan Tahun Masuk"
                   value={tahunMasuk}
-                  onChange={(e) => setTahunMasuk(e.target.value)}
+                  onChange={e => {
+                    if (
+                      e.target.value === "" ||
+                      helperRegexNumber.test(e.target.value)
+                    ) {
+                      setTahunMasuk(e.target.value);
+                    }
+                  }}
+                  maxLength={4}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("tahun masuk")
                   }

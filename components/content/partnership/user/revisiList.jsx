@@ -1,11 +1,9 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import PageWrapper from "../../../wrapper/page.wrapper";
-import Image from "next/image";
 import { useRouter } from "next/router";
 import axios from "axios";
 import Link from "next/link";
-
-import Style from "../../../../styles/progressbar.module.css";
+import Swal from "sweetalert2";
 
 function RevisiList({ token }) {
   const router = useRouter();
@@ -23,7 +21,7 @@ function RevisiList({ token }) {
     background: "#E6F7F1",
     borderRadius: "4px",
     padding: "4px 10px",
-    width:"max-content"
+    width: "max-content",
   };
 
   const styleList = {
@@ -33,10 +31,6 @@ function RevisiList({ token }) {
   };
 
   const [listCardREvisi, setListCardREvisi] = useState([]);
-
-  // const getCardREviewList = async (id) => {
-
-  // };
 
   useEffect(() => {
     async function getCardREviewList(id) {
@@ -51,7 +45,7 @@ function RevisiList({ token }) {
         );
         setListCardREvisi(data.data);
       } catch (error) {
-        notify(error.response.data.message);
+        Swal.fire("Gagal", `${error.response.data.message}`, "error");
       }
     }
     getCardREviewList(router.query.id);
@@ -71,7 +65,6 @@ function RevisiList({ token }) {
             <div className="row mt-8 mb-10">
               <div className="col-2 p-0">
                 <div className="progress-items">
-                  {/* <div className="line-progress"></div> */}
                   <div className="circle-progress active-circle">
                     <span className="title-progress">Submit Kerjasama</span>
                   </div>
@@ -99,7 +92,10 @@ function RevisiList({ token }) {
                 <div className="progress-items">
                   <div className="line-progress"></div>
                   <div className="circle-progress">
-                    <span className="title-progress text-center" style={{ top: "-4rem" }}>
+                    <span
+                      className="title-progress text-center"
+                      style={{ top: "-4rem" }}
+                    >
                       Submit Dokumen <br /> Kerjasama
                     </span>
                   </div>
@@ -109,7 +105,10 @@ function RevisiList({ token }) {
                 <div className="progress-items">
                   <div className="line-progress"></div>
                   <div className="circle-progress">
-                    <span className="title-progress text-center" style={{ top: "-4rem" }}>
+                    <span
+                      className="title-progress text-center"
+                      style={{ top: "-4rem" }}
+                    >
                       Review Dokumen <br /> Kerjasama
                     </span>
                   </div>
@@ -135,9 +134,6 @@ function RevisiList({ token }) {
                           className="row align-items-center justify-content-between"
                           style={cardContainer}
                         >
-
-
-
                           <div className="col-12 col-sm-6">
                             <h1
                               className="fw-500 fz-20"
@@ -153,11 +149,8 @@ function RevisiList({ token }) {
                             </p>
                           </div>
 
-                          {/* <span style={labelStyle}>{items.information2}</span> */}
-
                           <div className="col-12 col-sm-6 d-flex justify-content-end">
-                          {
-                            listCardREvisi.length - 1 === index ? (
+                            {listCardREvisi.length - 1 === index ? (
                               <Link
                                 href={{
                                   pathname:
@@ -170,7 +163,10 @@ function RevisiList({ token }) {
                                   },
                                 }}
                               >
-                                <a style={{width:"max-content"}} className="btn btn-sm btn-rounded-full bg-blue-primary text-white mt-10 mt-sm-0" >
+                                <a
+                                  style={{ width: "max-content" }}
+                                  className="btn btn-sm btn-rounded-full bg-blue-primary text-white mt-10 mt-sm-0"
+                                >
                                   Lihat Detail Revisi
                                 </a>
                               </Link>
@@ -187,21 +183,13 @@ function RevisiList({ token }) {
                                   },
                                 }}
                               >
-                                <a className="mt-10 mt-sm-0"  style={labelStyle}>{items.information2}</a>
+                                <a className="mt-10 mt-sm-0" style={labelStyle}>
+                                  {items.information2}
+                                </a>
                               </Link>
-                            )
-
-                            //
-                          }
+                            )}
                           </div>
                         </div>
-
-
-
-
-
-
-
                       </li>
                     );
                   })}

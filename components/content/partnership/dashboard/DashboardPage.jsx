@@ -5,7 +5,6 @@ import IconDoc from "../../../assets/icon/Doc";
 import ImageHero from "../../../../public/assets/media/logos/hero1.png";
 import ImagePlants from "../../../../public//assets/media/logos/Plants1.png";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchDashboard } from "../../../../redux/actions/partnership/dashboard.action";
 import IconCompalation from "../../../../public/assets/icon/Compilation.svg";
 import IconFoldercheck from "../../../../public/assets/icon/Foldercheck.svg";
 import IconWarningCircle from "../../../../public/assets/icon/Warningcircle.svg";
@@ -13,6 +12,7 @@ import IconStop from "../../../../public/assets/icon/folder-forbid-line.svg";
 import Image from "next/image";
 import { PieChart, Pie, Cell } from "recharts";
 import { getSession } from "next-auth/client";
+import Link from 'next/link'
 
 import axios from "axios";
 
@@ -65,15 +65,12 @@ export default function DashboardPage({ token }) {
       }
     }
     fetchDashboards();
-    // dispatch(fetchDashboard(token));
     getSession().then((session) => {
       setUser(session.user.user.data.user);
     });
   }, [dispatch, token]);
   return (
     <PageWrapper>
-      {/* head content */}
-
       <div
         className="position-relative br-12 bg-white py-10 px-6 overflow-hidden"
         style={{ height: "197px", maxHeight: "197px" }}
@@ -97,22 +94,30 @@ export default function DashboardPage({ token }) {
       {/* sec 1 */}
       <div className="row mt-8">
         <div className="col-12 col-sm-6">
-          <div className="br-12 bg-blue-primary p-10 text-white mt-2">
+
+          <Link href="/partnership/mitra" passHref>
+          
+          <div className="br-12 bg-blue-primary p-10 text-white mt-2 cursor-pointer">
             <IconUser />
             <h5 className="mt-4 fw-700 fz-24">
               {allDashboard.data_dashboard.data?.mitra}
             </h5>
             <h5 className="fw-500 fz-14">Total Mitra</h5>
           </div>
+          </Link>
+
+
         </div>
         <div className="col-12 col-sm-6">
-          <div className="br-12 bg-blue-dark p-10 text-white mt-2">
+          <Link href="/partnership/kerjasama" passHref>
+          <div className="br-12 bg-blue-dark p-10 text-white mt-2 cursor-pointer">
             <IconDoc />
             <h5 className="mt-4 fw-700 fz-24">
               {allDashboard.data_dashboard.data?.cooperation}
             </h5>
             <h5 className="fw-500 fz-14">Total Kerjasama</h5>
           </div>
+          </Link>
         </div>
       </div>
       {/* sec 2 */}
@@ -124,7 +129,7 @@ export default function DashboardPage({ token }) {
             </h5>
             <h5 className="fw-500 fz-14 text-gray-secondary">
               {allDashboard.data_dashboard.data?.cooperation_active +
-                allDashboard.data_dashboard.data?.cooperation_approved}
+                allDashboard.data_dashboard.data?.cooperation_approved}&nbsp;
               Total Aktif dan Tidak Aktif
             </h5>
             <div className="wrapper-chart-pie">

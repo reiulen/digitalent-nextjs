@@ -1,10 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import Pagination from "react-js-pagination";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import { useDispatch, useSelector } from "react-redux";
-import LoadingTable from "../../../LoadingTable";
 import Image from "next/image";
 import useDraggable from "./useDraggable";
 import { useDropzone } from "react-dropzone";
@@ -14,13 +12,6 @@ import {
 } from "../../../../redux/actions/partnership/tandaTangan.actions";
 
 
-// 
-
-// import React from "react";
-// import { PDFtoIMG } from "react-pdf-to-image";
-// import file from "../../../../components/assets/pad.pdf";
-
-// 
 const listStyle = {
   padding: "0",
   listStyle: "none",
@@ -34,12 +25,6 @@ const wrapperBox = {
   padding: "2rem 0",
 };
 
-const DraggableCard = () => {
-  const cardRef = useRef(null);
-  useDraggable(cardRef);
-
-  return <div className="cardss" ref={cardRef}></div>;
-};
 
 export default function PenandatanganVirtual({ token }) {
   const [ttdAdmin, setTtdAdmin] = useState("");
@@ -263,13 +248,6 @@ export default function PenandatanganVirtual({ token }) {
                       allTandaTangan.ttdPartner.data.length === 0 ? (
                         <p className="fw-700">Belom ada data ttd mitra !</p>
                       ) : (
-                        // <input
-                        //   readOnly
-                        //   value={allTandaTangan.ttdPartner.data[0].name}
-                        //   type="text"
-                        //   className="form-control form-control-lg"
-                        //   placeholder="Nanang Ismail"
-                        // />
 
                         <select
                           className="form-control form-control-lg"
@@ -327,21 +305,7 @@ export default function PenandatanganVirtual({ token }) {
           </div>
         </div>
       </div>
-    {/* </PDFtoIMG> */}
     </PageWrapper>
   );
 }
 
-
-
-
-
-
-
-// const TestD = () => (
-//   <div>
-    
-//   </div>
-// );
-
-// export default TestD;

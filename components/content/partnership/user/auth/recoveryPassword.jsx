@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from "react";
-import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import AuthWrapper from "../../../../wrapper/auth.wrapper";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import Swal from "sweetalert2";
 import { useSelector, useDispatch } from "react-redux";
 import axios from 'axios'
-import { vericationEmail } from "../../../../../redux/actions/partnership/user/authentication.actions";
 import { RESET_STATUS } from "../../../../../redux/types/partnership/user/authentication.type";
 const RecoveryMitra = () => {
   const router = useRouter();
@@ -20,22 +16,11 @@ const RecoveryMitra = () => {
     email: "",
   });
 
-  const notify = (value) =>
-    toast.info(`${value}`, {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-
   const submit = (e) => {
     e.preventDefault();
     if (email === "") {
       setError({ ...error, email: "Email tidak boleh kosong" });
-      notify("Email tidak boleh kosong");
+      Swal.fire("Gagal", `Email tidak boleh kosong`, "error")
     } else {
       Swal.fire({
         title: "Apakah anda yakin ?",
@@ -50,8 +35,6 @@ const RecoveryMitra = () => {
         if (result.value) {
           let formData = new FormData();
           formData.append("email", email);
-          // dispatch(vericationEmail(formData));
-
           try {
             const { data } = await axios.post(
               `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/authentication/forgot-password`,
@@ -63,7 +46,7 @@ const RecoveryMitra = () => {
         "success"
       )
           } catch (error) {
-            notify(error.response.data.message);
+            Swal.fire("Gagal", `${error.response.data.message}`, "error")
           }
         }
       });
@@ -72,7 +55,7 @@ const RecoveryMitra = () => {
 
   useEffect(() => {
     if (allAuthentication.status === "error") {
-      notify(allAuthentication.errorRegister);
+      Swal.fire("Gagal", `${allAuthentication.errorRegister}`, "error")
     } else if (allAuthentication.status === "success") {
       // jika sukses
       Swal.fire(
@@ -98,23 +81,12 @@ const RecoveryMitra = () => {
   return (
     <>
       <AuthWrapper image="multiethnic-businesswoman.svg" title="Pemulihan Password">
-        <ToastContainer
-          position="bottom-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
         <div
           className="col-lg-7 d-flex flex-wrap align-content-center"
           style={{ background: "#1A4367" }}
         >
           {/* Email pemulihan */}
-          <div className="container ">
+          <div className="container scroll-form-login">
             <div className="title-login text-center mt-6">
               <Image
                 src="/assets/logo/logo-6.svg"
@@ -162,15 +134,12 @@ const RecoveryMitra = () => {
                 <div className="bottom mt-9 text-center">
                   <p style={{ fontSize: "12px", color: "#ffffff" }}>
                     Belum menerima e-mail?
-                    {/* <Link href="/partnership/user/auth/login" passHref> */}
                     <button
                       type="submit"
                       className="text-primary ml-2 bg-transparent btn"
                     >
                       Kirim E-mail
                     </button>
-                    {/* <a className="text-primary ml-2">Kirim Ulang</a> */}
-                    {/* </Link> */}
                   </p>
                 </div>
               </form>

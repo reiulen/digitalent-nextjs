@@ -7,6 +7,7 @@ import {
   deleteArtikelReducer,
   detailArtikelReducer,
   updateArtikelReducer,
+  allArtikelsPesertaReducer,
 } from "./publikasi/artikel.reducers";
 import {
   allArtikelPesertaReducer,
@@ -403,6 +404,7 @@ import {
   drowpdownKabupatenReducers,
   drowpdownKabupatenDomisiliReducers,
   drowpdownPenyelenggaraReducers,
+  drowpdownFormBuilderReducers,
 } from "./pelatihan/admin/function.reducers";
 import { allProvinsiReducer, allKotaReducer } from "./utils/utils.reducers";
 import { reducerFunctionals } from "./utils/functionals.reducer";
@@ -464,7 +466,7 @@ import {
   kategoriVideoContentReducer,
   allTagVideoContentReducer,
   playVideoContentReducer,
-} from"../reducers/beranda/video-content.reducer"
+} from "../reducers/beranda/video-content.reducer";
 
 //END BERANDA
 
@@ -489,6 +491,7 @@ import {
 const reducer = combineReducers({
   // PUBLIKASI
   allArtikel: allArtikelReducer,
+  allArtikelsPeserta: allArtikelsPesertaReducer,
   newArtikel: newArtikelReducer,
   deleteArtikel: deleteArtikelReducer,
   detailArtikel: detailArtikelReducer,
@@ -748,11 +751,11 @@ const reducer = combineReducers({
   deleteTraining: deleteTrainingReducer,
   getEditTraining: getEditTrainingReducer,
   getEditTraining2: getEditTraining2Reducer,
-  getEditTraining3: getEditTraining3Reducer,
+  getEditTraining3: getEditTrainingReducer,
   getFormLPJ: getFormLPJReducer,
   newLPJ: newLPJReducer,
   getFormEvidence: getFormEvidenceReducer,
-  cloneTraining: cloneTrainingReducer,  
+  cloneTraining: cloneTrainingReducer,
   // ========== review pelatihan ========
   allListReview: allListReviewReducer,
   cardReview: cardReviewReducer,
@@ -811,6 +814,7 @@ const reducer = combineReducers({
   drowpdownKabupaten: drowpdownKabupatenReducers,
   drowpdownKabupatenDomisili: drowpdownKabupatenDomisiliReducers,
   drowpdownPenyelenggara: drowpdownPenyelenggaraReducers,
+  drowpdownFormBuilder: drowpdownFormBuilderReducers,
   updateStatus: updateStatusReducer,
 
   // ========== profile peserta ========
