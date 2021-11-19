@@ -314,20 +314,20 @@ const SubtansiUser = ({ token }) => {
   };
 
   const handlePage = () => {
-    const setData = {
-      list: JSON.stringify(
-        data.list_questions.map((item, index) => {
-          return {
-            ...item,
-            participant_answer: localStorage.getItem(index + 1),
-          };
-        })
-      ),
-      training_id: router.query.training_id,
-      type: router.query.category === "Test Substansi" && "substansi",
-    };
-    dispatch(postResult(setData, token));
-    localStorage.clear();
+    // const setData = {
+    //   list: JSON.stringify(
+    //     data.list_questions.map((item, index) => {
+    //       return {
+    //         ...item,
+    //         participant_answer: localStorage.getItem(index + 1),
+    //       };
+    //     })
+    //   ),
+    //   training_id: router.query.training_id,
+    //   type: router.query.category === "Test Substansi" && "substansi",
+    // };
+    // dispatch(postResult(setData, token));
+    // localStorage.clear();
     router.push(`/peserta/done-survey`);
   };
 
