@@ -1,36 +1,21 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/router";
 
 import Pagination from "react-js-pagination";
-import moment from "moment";
-import DatePicker from "react-datepicker";
 import Select from "react-select";
 
-import {
-  Container,
-  Card,
-  Button,
-  Row,
-  Col,
-  Form,
-  Badge,
-} from "react-bootstrap";
+import { Card, Row, Col, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 
 import FilterBar from "./section/FilterBar.component";
 import BreadcrumbComponent from "../../../components/global/Breadcrumb.component";
 import TrainingReminder from "../../../components/global/TrainingReminder.component";
+import CardPelatihanClose from "../../../components/global/CardPelatihanClose.component";
+import CardPelatihanOpen from "../../../components/global/CardPelatihanOpen.component";
+import CardPelatihanQuickView from "../../../components/global/CardPelatihanQuickView.component";
 import HomeWrapper from "../../../components/wrapper/Home.wrapper";
 
-import style from "../../../../styles/peserta/dashboard.module.css";
-
-import IconClose from "../../../../components/assets/icon/Close";
-import IconLove from "../../../../components/assets/icon/Love";
-import IconShare from "../../../../components/assets/icon/Share";
-import IconTime from "../../../../components/assets/icon-dashboard-peserta/Time";
-import IconPeserta from "../../../../components/assets/icon-dashboard-peserta/Peserta";
 import { SweatAlert } from "../../../../utils/middleware/helper";
 
 import PulseLoaderRender from "../../../components/loader/PulseLoader";
@@ -57,9 +42,7 @@ const DetailAkademi = ({ session }) => {
   const [activePage, setActivePage] = useState(1);
   const [oldAkademiDesc, setOldAkademiDesc] = useState(null);
   const [akademiId, setAkademiId] = useState(null);
-  const [akademiName, setAkademiName] = useState(null);
   const [akademiDesc, setAkademiDesc] = useState(null);
-  const [temaId, setTemaId] = useState(null);
   const [seeMoreStatus, setSeeMoreStatus] = useState(false);
 
   const [filterPenyelenggara, setFilterPenyelenggara] = useState(null);
@@ -185,31 +168,18 @@ const DetailAkademi = ({ session }) => {
     setShowDetail(arr);
   };
 
-  const handleCheckPelatihanReg = async (id, session) => {
-    if (session.Token) {
-      const data = await dispatch(checkRegisterPelatihan(id, session.Token));
-
+  const handleCheckPelatihanReg = async (index) => {
+    if (session && session.token) {
+      const data = await dispatch(checkRegisterPelatihan(index, session.token));
       if (data.status === true) {
-        router.push(`${router.pathname}/peserta/form-pendaftaran?id=${id}`);
+        router.push(`/peserta/form-pendaftaran?id=${index}`);
       } else if (data.status === false) {
         let errMessage = data.message;
         SweatAlert("Gagal", errMessage, "error");
       }
     } else {
-      router.push(`${router.pathname}/login`);
+      router.push(`/login`);
     }
-  };
-
-  const printTextTrim = (str) => {
-    let result = null;
-
-    if (str.length > textToTrim) {
-      result = str.slice(0, textToTrim) + "...";
-    } else {
-      result = str;
-    }
-
-    return result;
   };
 
   const handlePagination = (pageNumber) => {
@@ -466,500 +436,38 @@ const DetailAkademi = ({ session }) => {
                             >
                               <Card className="h-100 shadow-sm">
                                 {el.status !== "Open" ? (
-                                  <Button
-                                    variant="transparent"
-                                    disabled
-                                    className={`p-0 mb-0 ${style.btn_disabled_tema}`}
-                                  >
-                                    <div
-                                      style={{
-                                        width: "100%",
-                                        height: "180px",
-                                        position: "relative",
-                                      }}
-                                    >
-                                      <Image
-                                        className={`${style.image_dashboard}`}
-                                        src={
-                                          (el.gambar &&
-                                            process.env
-                                              .END_POINT_API_IMAGE_BEASISWA +
-                                              el.gambar) ||
-                                          "/assets/media/default-card.png"
-                                        }
-                                        layout="fill"
-                                        objectFit="cover"
-                                        alt="Image Thumbnail"
-                                      />
-                                    </div>
-                                    <Card.ImgOverlay>
-                                      <div className="d-flex justify-content-between">
-                                        {el.metode_pelatihan !== "Offline" && (
-                                          <Badge
-                                            bg={`py-3 px-4 ${style.badge_card}`}
-                                            classNam="d-flex "
-                                          >
-                                            Pelatihan {el.metode_pelatihan}
-                                          </Badge>
-                                        )}
-                                        {show[i] && el.status === "Open" && (
-                                          <div className="whishlist">
-                                            <Button
-                                              variant="light"
-                                              className={`float-right d-flex justify-content-center align-items-center ${style.wishlist_card}`}
-                                            >
-                                              <i
-                                                className="ri-heart-line p-0"
-                                                style={{
-                                                  color: "#6C6C6C",
-                                                }}
-                                              ></i>
-                                            </Button>
-                                            <Button
-                                              variant="light"
-                                              className={`float-right d-flex justify-content-center align-items-center mr-2 ${style.wishlist_card}`}
-                                            >
-                                              <i
-                                                className="ri-share-line p-0"
-                                                style={{
-                                                  color: "#6C6C6C",
-                                                }}
-                                              ></i>
-                                            </Button>
-                                          </div>
-                                        )}
-                                      </div>
-                                    </Card.ImgOverlay>
-                                    <Card.Body className="position-relative">
-                                      <div
-                                        className={
-                                          style.bungkus_mitra_pelatihan
-                                        }
-                                      >
-                                        <Image
-                                          src={
-                                            (el.gambar_mitra &&
-                                              process.env
-                                                .END_POINT_API_IMAGE_PARTNERSHIP +
-                                                el.gambar_mitra) ||
-                                            "/assets/media/mitra-default.png"
-                                          }
-                                          width={60}
-                                          height={60}
-                                          objectFit="cover"
-                                          thumbnail
-                                          roundedCircle
-                                          className={`${style.image_card_pelatihan} img-fluild`}
-                                          alt="Image Mitra"
-                                        />
-                                      </div>
-                                      <div
-                                        className="d-flex justify-content-between position-relative pb-0 mb-0"
-                                        style={{ top: "-15px" }}
-                                      >
-                                        <p
-                                          className={`pl-18 my-0 ${style.text_mitra}`}
-                                        >
-                                          {el.mitra}
-                                        </p>
-                                        <div className="status align-self-center">
-                                          {el.status === "Open" ? (
-                                            <p
-                                              className={`${style.status_mitra_open} text-uppercase my-0`}
-                                            >
-                                              Open
-                                            </p>
-                                          ) : (
-                                            <p
-                                              className={`${style.status_mitra_close} text-uppercase my-0`}
-                                            >
-                                              Close
-                                            </p>
-                                          )}
-                                        </div>
-                                      </div>
-                                      <div className="d-flex flex-wrap flex-column">
-                                        <p
-                                          className={`my-0 ${style.title_card}`}
-                                        >
-                                          {el.name}
-                                        </p>
-                                        <p
-                                          style={{
-                                            fontSize: "14px",
-                                            color: "#6C6C6C",
-                                          }}
-                                          className=" text-left"
-                                        >
-                                          {el.akademi}
-                                        </p>
-                                      </div>
-                                      <hr />
-                                      <div className="d-flex flex-column">
-                                        <div className="date d-flex align-items-center align-middle">
-                                          <i className="ri-time-line"></i>
-                                          <span
-                                            className={`${style.text_date_register} pl-2`}
-                                          >
-                                            Registrasi:{" "}
-                                            {moment(
-                                              el.pendaftaran_mulai
-                                            ).format("DD MMMM YYYY")}{" "}
-                                            -{" "}
-                                            {moment(
-                                              el.pendaftaran_selesai
-                                            ).format("DD MMMM YYYY")}
-                                          </span>
-                                        </div>
-                                        <div className="date d-flex align-items-center align-middle">
-                                          <i className="ri-group-line"></i>
-                                          <span
-                                            className={`${style.text_date_register} pl-2`}
-                                          >
-                                            Kuota: {el.kuota_peserta} Peserta
-                                          </span>
-                                        </div>
-                                      </div>
-                                    </Card.Body>
-                                  </Button>
+                                  <CardPelatihanClose row={el} />
                                 ) : (
-                                  <div
-                                    onMouseEnter={() => handleMouseEnter(i)}
-                                    onMouseLeave={() => handleMouseLeave(i)}
-                                  >
-                                    <div
-                                      className="w-100"
-                                      style={
-                                        show[i] !== true && el.status === "Open"
-                                          ? {
-                                              filter: "brightness(1)",
-                                              width: "100%",
-                                              height: "180px",
-                                              position: "relative",
-                                            }
-                                          : {
-                                              filter: "brightness(0.8)",
-                                              width: "100%",
-                                              height: "180px",
-                                              position: "relative",
-                                            }
-                                      }
-                                    >
-                                      <Image
-                                        className={`${style.image_dashboard}`}
-                                        src={
-                                          (el.gambar &&
-                                            process.env
-                                              .END_POINT_API_IMAGE_BEASISWA +
-                                              el.gambar) ||
-                                          "/assets/media/default-card.png"
-                                        }
-                                        layout="fill"
-                                        objectFit="cover"
-                                        alt="Image Thumbnail"
-                                      />
-                                    </div>
-                                    <Card.ImgOverlay>
-                                      <div className="d-flex justify-content-between">
-                                        {el.metode_pelatihan !== "Offline" && (
-                                          <div className="align-self-start">
-                                            <Badge
-                                              bg={`py-3 px-4 ${style.badge_card}`}
-                                              classNam="d-flex "
-                                            >
-                                              Pelatihan {el.metode_pelatihan}
-                                            </Badge>
-                                          </div>
-                                        )}
-                                        {show[i] && (
-                                          <div className="whishlist">
-                                            <Button
-                                              variant="light"
-                                              className={`float-right d-flex justify-content-center align-items-center ${style.wishlist_card}`}
-                                            >
-                                              <i
-                                                className="ri-heart-line p-0"
-                                                style={{
-                                                  color: "#6C6C6C",
-                                                }}
-                                              ></i>
-                                            </Button>
-                                            <Button
-                                              variant="light"
-                                              className={`float-right d-flex justify-content-center align-items-center mr-2 ${style.wishlist_card}`}
-                                            >
-                                              <i
-                                                className="ri-share-line p-0"
-                                                style={{
-                                                  color: "#6C6C6C",
-                                                }}
-                                              ></i>
-                                            </Button>
-                                          </div>
-                                        )}
-                                      </div>
-                                    </Card.ImgOverlay>
-                                    <Card.Body className="position-relative">
-                                      <div
-                                        className={
-                                          style.bungkus_mitra_pelatihan
-                                        }
-                                      >
-                                        <Image
-                                          src={
-                                            (el.gambar_mitra &&
-                                              process.env
-                                                .END_POINT_API_IMAGE_PARTNERSHIP +
-                                                el.gambar_mitra) ||
-                                            "/assets/media/mitra-default.png"
-                                          }
-                                          width={60}
-                                          height={60}
-                                          objectFit="cover"
-                                          thumbnail
-                                          roundedCircle
-                                          className={`${style.image_card_pelatihan} img-fluild`}
-                                          alt="Image Mitra"
-                                        />
-                                      </div>
-                                      <div
-                                        className="d-flex justify-content-between position-relative pb-0 mb-0"
-                                        style={{ top: "-15px" }}
-                                      >
-                                        <p
-                                          className={`pl-18 my-0 ${style.text_mitra}`}
-                                        >
-                                          {el.mitra}
-                                        </p>
-                                        <div className="status align-self-center">
-                                          {el.status === "Open" ? (
-                                            <p
-                                              className={`${style.status_mitra_open} text-uppercase my-0`}
-                                            >
-                                              Open
-                                            </p>
-                                          ) : (
-                                            <p
-                                              className={`${style.status_mitra_close} text-uppercase my-0`}
-                                            >
-                                              Close
-                                            </p>
-                                          )}
-                                        </div>
-                                      </div>
-                                      <p className={`my-0 ${style.title_card}`}>
-                                        {el.name}
-                                      </p>
-                                      <p
-                                        style={{
-                                          fontSize: "14px",
-                                          color: "#6C6C6C",
-                                        }}
-                                      >
-                                        {el.akademi}
-                                      </p>
-                                      <hr />
-                                      {show[i] !== true ? (
-                                        <div className="d-flex flex-column">
-                                          <div className="date d-flex align-items-center align-middle">
-                                            <i className="ri-time-line"></i>
-                                            <span
-                                              className={`${style.text_date_register} pl-2`}
-                                            >
-                                              Registrasi:{" "}
-                                              {moment(
-                                                el.pendaftaran_mulai
-                                              ).format("DD MMMM YYYY")}{" "}
-                                              -{" "}
-                                              {moment(
-                                                el.pendaftaran_selesai
-                                              ).format("DD MMMM YYYY")}
-                                            </span>
-                                          </div>
-                                          <div className="date d-flex align-items-center align-middle">
-                                            <i className="ri-group-line"></i>
-                                            <span
-                                              className={`${style.text_date_register} pl-2`}
-                                            >
-                                              Kuota: {el.kuota_peserta} Peserta
-                                            </span>
-                                          </div>
-                                        </div>
-                                      ) : (
-                                        <div style={{ marginTop: "21px" }}>
-                                          <Button
-                                            className={`btn-block rounded-xl my-auto ${style.btn_quick_view}`}
-                                            onClick={() => handleQuickView(i)}
-                                          >
-                                            Quick View
-                                          </Button>
-                                        </div>
-                                      )}
-                                    </Card.Body>
-                                  </div>
+                                  <CardPelatihanOpen
+                                    funcMouseEnter={(index) =>
+                                      handleMouseEnter(index)
+                                    }
+                                    funcMouseLeave={(index) =>
+                                      handleMouseLeave(index)
+                                    }
+                                    funcQuickView={(index) =>
+                                      handleQuickView(index)
+                                    }
+                                    show={show}
+                                    row={el}
+                                    i={i}
+                                  />
                                 )}
                               </Card>
                             </Col>
                           </>
                         ) : (
-                          <>
-                            <Col md={12} key={i} className="order-0 mb-5">
-                              <div className="container-fluid">
-                                <Row>
-                                  <Col md={4}>
-                                    <div
-                                      className="position-absolute mt-5"
-                                      style={{ zIndex: "100" }}
-                                    >
-                                      <span className="badgess-lg">
-                                        Pelatihan {el.metode_pelatihan}
-                                      </span>
-                                    </div>
-                                    <Image
-                                      src={
-                                        (el.gambar &&
-                                          process.env
-                                            .END_POINT_API_IMAGE_BEASISWA +
-                                            el.gambar) ||
-                                        "/assets/media/default-card.png"
-                                      }
-                                      alt="image card detail"
-                                      layout="fill"
-                                      objectFit="cover"
-                                      className="rounded"
-                                    />
-                                  </Col>
-
-                                  <Col md={8}>
-                                    <div className="py-8 ml-3">
-                                      <div className="position-relative d-flex align-items-start justify-content-between">
-                                        <div className="d-flex d-flex align-items-start">
-                                          <div className="">
-                                            <Image
-                                              src={
-                                                process.env
-                                                  .END_POINT_API_IMAGE_PARTNERSHIP +
-                                                el.gambar_mitra
-                                              }
-                                              width={80}
-                                              height={80}
-                                              objectFit="cover"
-                                              className={`${style.image_card_pelatihan}`}
-                                            />
-                                          </div>
-                                          <div className="ml-6">
-                                            <p
-                                              className="fz-14"
-                                              style={{ color: "#6C6C6C" }}
-                                            >
-                                              {akademi.name}
-                                            </p>
-                                            <p className="fz-30 fw-600">
-                                              {el.name}
-                                            </p>
-                                            <p className="fw-600 fz-14">
-                                              {el.mitra}
-                                            </p>
-                                          </div>
-                                        </div>
-
-                                        <div className="d-flex align-items-start">
-                                          <button className="roundedss-border btn btn-white">
-                                            <IconLove className="cursor-pointer" />
-                                          </button>
-                                          <button className="roundedss-border btn btn-white mx-6">
-                                            <IconShare className="cursor-pointer" />
-                                          </button>
-
-                                          <div
-                                            onClick={() =>
-                                              handleCloseQuickView(i)
-                                            }
-                                          >
-                                            <IconClose className="cursor-pointer" />
-                                          </div>
-                                        </div>
-                                      </div>
-
-                                      <p className="fz-16 fw-400 my-6">
-                                        <div
-                                          dangerouslySetInnerHTML={{
-                                            __html: printTextTrim(el.deskripsi),
-                                          }}
-                                        ></div>
-                                      </p>
-
-                                      <div className="d-flex align-items-center justify-content-between">
-                                        <div className="d-flex align-items-center">
-                                          <span style={{ color: "#6C6C6C" }}>
-                                            <IconTime className="mr-2" />
-                                            Registrasi:{" "}
-                                            {moment(
-                                              el.pendaftaran_mulai
-                                            ).format("DD MMMM YYYY")}{" "}
-                                            -{" "}
-                                            {moment(
-                                              el.pendaftaran_selesai
-                                            ).format("DD MMMM YYYY")}
-                                          </span>
-                                          <span
-                                            className="mx-6"
-                                            style={{ color: "#6C6C6C" }}
-                                          >
-                                            <IconPeserta className="mr-2" />
-                                            Kuota: {el.kuota_peserta} Peserta
-                                          </span>
-                                          <span
-                                            style={{ color: "#6C6C6C" }}
-                                            className="d-flex align-items-center"
-                                          >
-                                            <i
-                                              className="ri-map-pin-line mr-2"
-                                              style={{ color: "#6C6C6C" }}
-                                            ></i>
-                                            Lokasi: {el.alamat}
-                                          </span>
-                                        </div>
-                                      </div>
-
-                                      <hr />
-
-                                      <div className="row pt-6">
-                                        <div className="col-6">
-                                          <Link
-                                            href={`/detail/pelatihan/${el.id}`}
-                                            passHref
-                                          >
-                                            <a>
-                                              <button className="btn btn-outline-primary-new rounded-pill py-3 px-12 mr-4 w-100">
-                                                Lihat Selengkapnya
-                                              </button>
-                                            </a>
-                                          </Link>
-                                        </div>
-
-                                        {el.status !== "Closed" ? (
-                                          <div className="col-6">
-                                            <button
-                                              onClick={() =>
-                                                handleCheckPelatihanReg(
-                                                  el.id,
-                                                  session
-                                                )
-                                              }
-                                              className="d-flex justify-content-center btn-primary btn-register-peserta btn-sm py-3 px-12 rounded-pill btn-primary w-100"
-                                            >
-                                              Daftar Pelatihan
-                                            </button>
-                                          </div>
-                                        ) : null}
-                                      </div>
-                                    </div>
-                                  </Col>
-                                </Row>
-                              </div>
-                            </Col>
-                          </>
+                          <CardPelatihanQuickView
+                            row={el}
+                            i={i}
+                            akademi={akademi}
+                            funcCheckPelatihan={(index) =>
+                              handleCheckPelatihanReg(index)
+                            }
+                            funcClosePelatihan={(index) =>
+                              handleCloseQuickView(index)
+                            }
+                          />
                         );
                       })
                     ) : (
@@ -973,7 +481,7 @@ const DetailAkademi = ({ session }) => {
                 )}
               </Row>
               <Row className="my-5 d-flex justify-content-center">
-                {pelatihan && pelatihan.perPage < pelatihan.total ? (
+                {pelatihan && pelatihan.perPage < pelatihan.total && (
                   <div className="table-pagination">
                     <Pagination
                       activePage={activePage}
@@ -989,7 +497,7 @@ const DetailAkademi = ({ session }) => {
                       linkClass="page-link"
                     />
                   </div>
-                ) : null}
+                )}
               </Row>
             </Col>
           </Row>

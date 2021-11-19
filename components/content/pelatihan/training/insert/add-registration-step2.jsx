@@ -18,9 +18,9 @@ import StepInputPelatihan from "../../../../StepInputPelatihan";
 import LoadingPage from "../../../../LoadingPage";
 import ModalPreview from "../components/modal-preview-form.component";
 
-import FormManual from "./step-registration/form-manual";
-import FormCopy from "./step-registration/form-copy";
-import FormCopyEdit from "./step-registration/form-copy-edit";
+import FormManual from "../components/step-registration/form-manual";
+import FormCopy from "../components/step-registration/form-copy";
+import FormCopyEdit from "../components/step-registration/form-copy-edit";
 import { getDetailMasterPelatihan } from "../../../../../redux/actions/pelatihan/master-pendaftaran.action";
 
 const AddRegistrationStep2 = ({ propsStep, token }) => {
