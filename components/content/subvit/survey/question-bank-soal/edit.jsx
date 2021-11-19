@@ -122,7 +122,7 @@ const EditSoalTrivia = ({ token }) => {
       }
     });
 
-    const answers = JSON.stringify(answer);
+    const answers = answer;
     switch (methodAdd) {
       case "objective":
         if (valid) {

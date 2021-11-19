@@ -93,36 +93,36 @@ const Galeri = ({ token }) => {
     const onNewReset = () => {
         router.replace("/publikasi/galeri", undefined, { shallow: true });
     };
-    
-  const getWindowDimensions = () => {
-    // if (typeof window === 'undefined') {
-    //     global.window = {}
-    // }
 
-    const { innerWidth: width, innerHeight: height } = window;
-    return {
-      width,
-      height,
+    const getWindowDimensions = () => {
+        // if (typeof window === 'undefined') {
+        //     global.window = {}
+        // }
+
+        const { innerWidth: width, innerHeight: height } = window;
+        return {
+            width,
+            height,
+        };
     };
-  };
 
-  const [windowDimensions, setWindowDimensions] = useState(
-    // getWindowDimensions()
-    {}
-  );
+    const [windowDimensions, setWindowDimensions] = useState(
+        // getWindowDimensions()
+        {}
+    );
 
-  useEffect(() => {
-    function handleResize() {
-      setWindowDimensions(getWindowDimensions());
-    }
-    setWindowDimensions(getWindowDimensions());
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, [galeri])
+    useEffect(() => {
+        function handleResize() {
+            setWindowDimensions(getWindowDimensions());
+        }
+        setWindowDimensions(getWindowDimensions());
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, [galeri])
 
-  useEffect(() => {
+    useEffect(() => {
 
-  }, [windowDimensions])
+    }, [windowDimensions])
 
     const handleDelete = id => {
         Swal.fire({
@@ -588,6 +588,9 @@ const Galeri = ({ token }) => {
         setStartDate(null);
         setEndDate(null);
         setDisableEndDate(true);
+        setLimit(null)
+        setPublishValue(null)
+        setSearch("")
         router.replace("/publikasi/galeri", undefined, { shallow: false });
     };
 

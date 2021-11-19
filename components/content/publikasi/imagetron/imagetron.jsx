@@ -319,6 +319,9 @@ const Imagetron = ({ token }) => {
         setStartDate(null)
         setEndDate(null)
         setDisableEndDate(true)
+        setLimit(null)
+        setPublishValue(null)
+        setSearch("")
         router.replace("/publikasi/imagetron", undefined, { shallow: false });
     }
 

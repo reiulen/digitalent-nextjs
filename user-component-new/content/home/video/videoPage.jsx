@@ -59,6 +59,7 @@ const VideoPage = () => {
   const [ activeTitle, setActiveTitle ] = useState("Video Terupdate dan Terkini")
   const [ show, setShow ] = useState (false)
   const [ showFilter, setShowFilter ] = useState(false)
+  const [ showDesc, setShowDesc ] = useState(false)
 
   const getWindowDimensions = () => {
     const { innerWidth: width, innerHeight: height } = window;
@@ -108,6 +109,18 @@ useEffect(()=> {
 
     if (str.length > titleToTrim) {
       result = str.slice(0, titleToTrim) + "...";
+    } else {
+      result = str;
+    }
+
+    return result;
+  };
+
+  const handleDescToTrim = (str) => {
+    let result = null;
+
+    if (str.length > descToTrim) {
+      result = str.slice(0, descToTrim) + "...";
     } else {
       result = str;
     }
@@ -227,6 +240,7 @@ useEffect(()=> {
   const handleToggleModal = () => {
     setShow(false)
     setVideoPlaying(false)
+    setShowDesc(false)
   }
 
   return (
@@ -239,7 +253,7 @@ useEffect(()=> {
         {/* End of Breadcrumb */}
 
         {/* Header */}
-        <div>
+        <div className="col-12">
           <h1 className="fw-700">{activeTitle}</h1>
           <span>
             Temukan konten terupdate dan terkini mengenai Digital Talent
@@ -250,10 +264,15 @@ useEffect(()=> {
 
         {/* Filter Button */}
         <div 
-          className="col-lg-8 col-12 pl-0 ml-0 mt-10 mb-5 pr-12" 
+          className=
+          {
+            windowDimensions && windowDimensions.width && windowDimensions.width <= 770 ?
+              "col-lg-8 col-12 pl-0 ml-0 mt-10 mb-5"
+            :
+              "col-lg-8 col-12 pl-0 ml-0 mt-10 mb-5 pr-12"
+          }
         >
           <Splide
-            // hasSliderWrapper
             options={{
               arrows: false,
               pagination: false,
@@ -302,7 +321,7 @@ useEffect(()=> {
                       onClick={() => handleFilterKategori(row.nama_kategori)}
                       key={i}
                     >
-                      <div className="my-1 mx-5 py-1 px-9 text-white text-center text-truncate">
+                      <div className="my-1 mx-auto py-1 px-auto text-white text-center text-truncate">
                         {row.nama_kategori.toString().toUpperCase()}
                       </div>
                     </div>
@@ -316,7 +335,7 @@ useEffect(()=> {
                       onClick={() => handleFilterKategori(row.nama_kategori)}
                       key={i}
                     >
-                      <div className="my-1 mx-5 py-1 px-9 text-muted text-center text-truncate">
+                      <div className="my-1 mx-auto py-1 px-auto text-muted text-center text-truncate">
                         {row.nama_kategori.toString().toUpperCase()}
                       </div>
                     </div>
@@ -334,7 +353,14 @@ useEffect(()=> {
         <div className="row">
           
           {/* Left Side */}
-          <div className="col-lg-8 my-5 pr-15">
+          <div 
+            className={
+              windowDimensions && windowDimensions.width && windowDimensions.width <= 770 ?
+                "col-lg-8 mt-5 mb-3 pr-10"
+              :
+                "col-lg-8 mt-5 mb-3 pr-15"
+            }
+          >
 
             {/* Filter at mobile screen */}
 
@@ -376,14 +402,14 @@ useEffect(()=> {
                               <div className="col-6">
                                 {filterPublish === "desc" && sort === "" ? (
                                   <button
-                                    className="btn btn-primary rounded-pill btn-block"
+                                    className="btn btn-primary rounded-pill btn-block text-truncate"
                                     onClick={() => handleFilterPublish("")}
                                   >
                                     Terbaru
                                   </button>
                                 ) : (
                                   <button
-                                    className="btn btn-outline-light rounded-pill btn-block"
+                                    className="btn btn-outline-light rounded-pill btn-block text-truncate"
                                     onClick={() => handleFilterPublish("desc")}
                                   >
                                     Terbaru
@@ -394,14 +420,14 @@ useEffect(()=> {
                               <div className="col-6">
                                 {filterPublish === "asc" && sort === "" ? (
                                   <button
-                                    className="btn btn-primary rounded-pill btn-block"
+                                    className="btn btn-primary rounded-pill btn-block text-truncate"
                                     onClick={() => handleFilterPublish("")}
                                   >
                                     Terlama
                                   </button>
                                 ) : (
                                   <button
-                                    className="btn btn-outline-light rounded-pill btn-block"
+                                    className="btn btn-outline-light rounded-pill btn-block text-truncate"
                                     onClick={() => handleFilterPublish("asc")}
                                   >
                                     Terlama
@@ -413,14 +439,14 @@ useEffect(()=> {
                               <div className="col-6">
                                 {sort === "asc" && filterPublish === "" ? (
                                   <button
-                                    className="btn btn-primary rounded-pill btn-block"
+                                    className="btn btn-primary rounded-pill btn-block text-truncate"
                                     onClick={() => handleSort("")}
                                   >
                                     A-Z
                                   </button>
                                 ) : (
                                   <button
-                                    className="btn btn-outline-light rounded-pill btn-block"
+                                    className="btn btn-outline-light rounded-pill btn-block text-truncate"
                                     onClick={() => handleSort("asc")}
                                   >
                                     A-Z
@@ -431,14 +457,14 @@ useEffect(()=> {
                               <div className="col-6">
                                 {sort === "desc" && filterPublish === "" ? (
                                   <button
-                                    className="btn btn-primary rounded-pill btn-block"
+                                    className="btn btn-primary rounded-pill btn-block text-truncate"
                                     onClick={() => handleSort("")}
                                   >
                                     Z-A
                                   </button>
                                 ) : (
                                   <button
-                                    className="btn btn-outline-light rounded-pill btn-block"
+                                    className="btn btn-outline-light rounded-pill btn-block text-truncate"
                                     onClick={() => handleSort("desc")}
                                   >
                                     Z-A
@@ -506,10 +532,9 @@ useEffect(()=> {
                   </div>
                 </div>
               :
-                <div className="my-5">
+                <div className="mt-5">
                   <div
-                    className="row d-flex justify-content-between"
-                    style={{ width: "103.5%", flexWrap: "wrap" }}
+                    className="row d-flex justify-content-between flex-wrap"
                   >
                     {!video || (video && video.video.length === 0) ? (
 
@@ -525,8 +550,13 @@ useEffect(()=> {
                       video &&
                       video.video.map((row, i) => {
                         return (
-                          <div className="col-12 col-md-6 my-5">
-                            <div className="card mb-4 pr-10 border-0" key={i}>
+                          <div 
+                            className="col-12 col-md-6 my-5"
+                          >
+                            <div 
+                              className="card mb-4 border-0" 
+                              key={i}
+                            >
                               <Image
                                 alt={row.judul}
                                 unoptimized={process.env.ENVIRONMENT !== "PRODUCTION"}
@@ -559,13 +589,13 @@ useEffect(()=> {
                                   )
                                 }
                               />
-                              <div className="card-body">
-                                <div style={{ width: "126%", marginLeft: "-30px" }}>
+                              <div className="card-body px-0">
+                                <div>
                                   <h5 className="card-title text-truncate" style={{ width: "96%" }}>
                                     {row.judul}
                                   </h5>
                                   <div className="d-flex justify-content-between align-items-center">
-                                    <div className="row align-items-center">
+                                    <div className="d-flex flex-row align-items-center">
                                       <div className="border rounded-circle py-1 px-2">
                                         {/* Insert Logo Image Here */}
                                         <Image
@@ -575,11 +605,16 @@ useEffect(()=> {
                                           alt="Logo Image"
                                         />
                                       </div>
-                                      <span className="ml-2">{row.dibuat}</span>
+                                      <span 
+                                        className="ml-2 d-inline-block text-truncate" 
+                                        style={{ maxWidth: "120px" }} 
+                                      >
+                                        {row.dibuat}
+                                      </span>
                                     </div>
                                     <span
-                                      className="label label-inline label-light-primary font-weight-bold"
-                                      style={{ marginRight: "20px" }}
+                                      className="label label-inline label-light-primary font-weight-bold d-inline-block text-truncate"
+                                      style={{ maxWidth: "120px" }} 
                                     >
                                       {row.nama_kategori.toUpperCase()}
                                     </span>
@@ -597,9 +632,17 @@ useEffect(()=> {
             {/* End of Card Video */}
 
             {/* PAGINATION */}
-            <div>
+            <div className="d-flex justify-content-center">
               {video && video.total !== 0? (
-                <div className="table-pagination mb-10" style={{ marginLeft: "35%" }}>
+                <div 
+                  // className=" mb-10 mx-auto" 
+                  className={
+                    windowDimensions && windowDimensions.width && windowDimensions.width <= 770 ?
+                      "mx-auto table-pagination"
+                    :
+                      "mb-10 mx-auto table-pagination"
+                  }
+                >
                   <Pagination
                     activePage={activePage}
                     itemsCountPerPage={video.perPage}
@@ -646,14 +689,14 @@ useEffect(()=> {
                       <div className="col-md-6 col-12">
                         {filterPublish === "desc" && sort === "" ? (
                           <button
-                            className="btn btn-primary rounded-pill btn-block"
+                            className="btn btn-primary rounded-pill btn-block text-truncate"
                             onClick={() => handleFilterPublish("")}
                           >
                             Terbaru
                           </button>
                         ) : (
                           <button
-                            className="btn btn-outline-light rounded-pill btn-block"
+                            className="btn btn-outline-light rounded-pill btn-block text-truncate"
                             onClick={() => handleFilterPublish("desc")}
                           >
                             Terbaru
@@ -664,14 +707,14 @@ useEffect(()=> {
                       <div className="col-md-6 col-12">
                         {filterPublish === "asc" && sort === ""  ? (
                           <button
-                            className="btn btn-primary rounded-pill btn-block"
+                            className="btn btn-primary rounded-pill btn-block text-truncate"
                             onClick={() => handleFilterPublish("")}
                           >
                             Terlama
                           </button>
                         ) : (
                           <button
-                            className="btn btn-outline-light rounded-pill btn-block"
+                            className="btn btn-outline-light rounded-pill btn-block text-truncate"
                             onClick={() => handleFilterPublish("asc")}
                           >
                             Terlama
@@ -683,14 +726,14 @@ useEffect(()=> {
                       <div className="col-md-6 col-12">
                         {sort === "asc" && filterPublish === "" ? (
                           <button
-                            className="btn btn-primary rounded-pill btn-block"
+                            className="btn btn-primary rounded-pill btn-block text-truncate"
                             onClick={() => handleSort("")}
                           >
                             A-Z
                           </button>
                         ) : (
                           <button
-                            className="btn btn-outline-light rounded-pill btn-block"
+                            className="btn btn-outline-light rounded-pill btn-block text-truncate"
                             onClick={() => handleSort("asc")}
                           >
                             A-Z
@@ -731,7 +774,14 @@ useEffect(()=> {
             {/* End of Sort Filter Button */}
 
             {/* Tag */}
-            <div className="row mt-5 d-flex flex-column mx-10 ml-5">
+            <div 
+            className={
+                windowDimensions && windowDimensions.width && windowDimensions.width <= 770 ?
+                  "row mt-5 d-flex flex-column mx-auto"
+                :
+                  "row mt-5 d-flex flex-column mx-auto px-10"
+              }
+            >
               <h3 className="font-weight-bolder">
                 TEMUKAN LEBIH BANYAK APA YANG PENTING BAGI ANDA
               </h3>
@@ -771,6 +821,12 @@ useEffect(()=> {
           size="lg"
           onHide={() => handleToggleModal()}
           show={show}
+          className={
+            windowDimensions && windowDimensions.width && windowDimensions.width <= 770 ?
+              "rounded-lg mx-auto"
+            :
+              "rounded-lg"
+          }
           centered
         >
           <Modal.Header>
@@ -789,19 +845,36 @@ useEffect(()=> {
               url={url_video}
               controls
               width="100%"
-              height="50vh"
+              height={
+                windowDimensions && windowDimensions.width && windowDimensions.width <= 770 ?
+                  "25vh"
+                :
+                  "50vh"
+              }
               playing={video_playing}
               onPlay={handleIsPlayed}
             />
           </Modal.Body>
           <Modal.Footer>
             <div className="col-12">
+
+              {
+                windowDimensions && windowDimensions.width && windowDimensions.width <= 770 && dataKategori ?
+                    <div className="p-2 badge badge-pill badge-light font-weight-bold text-primary mb-3">
+                      {dataKategori}
+                    </div>
+                  :
+                    null
+              }
+
+              {/* Insert Title Here */}
               <h2 className="font-weight-bolder">
                 {judul_video}
               </h2>
 
-              <div className="mt-10 mb-5 row d-flex justify-content-between">
+              <div className="mt-5 mb-5 row d-flex justify-content-between">
                 <div className="d-flex align-self-center ml-4">
+                   {/* Insert Date Here */}
                   <div className="mr-3">
                     {
                       tanggal_publish !== null ? 
@@ -810,48 +883,92 @@ useEffect(()=> {
                       ""
                     }
                   </div>
-                  <div className="d-flex flex-row">
-                    {
-                      tags === null ? 
-                        null
-                        : tags.map((el, i) => {
-                            return (
-                              <div
-                                style={{
-                                  background: "#fff",
-                                  border: "1px solid #d7e1ea",
-                                }}
-                                className="mr-2 px-3 py-1 rounded"
-                                key={i}
-                              >
-                                <div
-                                  className="text-center"
-                                  style={{ fontSize: "10px" }}
-                                >
-                                  #{el.toUpperCase()}
-                                </div>
-                              </div>
-                            );
-                          })
-                      }
-                  </div>
-                </div>
 
-                <div>
-                  {dataKategori === null ? null : (
-                      <span className="p-2 badge  badge-light font-weight-bold text-primary">
-                        {dataKategori}
-                      </span>
-                    )}
+                  {/* Insert Tag Here */}
+                  {
+                    windowDimensions && windowDimensions.width && windowDimensions.width >= 770 ?
+                      <div className="d-flex flex-row flex-wrap">
+                        {
+                          tags === null ? 
+                            null
+                            : tags.map((el, i) => {
+                                return (
+                                  <div
+                                    style={{
+                                      background: "#fff",
+                                      border: "1px solid #d7e1ea",
+                                      height: "25px"
+                                    }}
+                                    className="mr-2 px-3 py-1 rounded text-truncate mb-2"
+                                    key={i}
+                                  >
+                                    <div
+                                      className="text-center text-truncate"
+                                      style={{ fontSize: "10px" }}
+                                    >
+                                      #{el.toUpperCase()}
+                                    </div>
+                                  </div>
+                                );
+                              })
+                          }
+                      </div>
+                    :
+                      null
+                  }
+                  
                 </div>
+                
+                {
+                  windowDimensions && windowDimensions.width && windowDimensions.width >= 770 ?
+                    <div>
+                      {dataKategori === null ? null : (
+                          <span className="p-2 badge  badge-light font-weight-bold text-primary">
+                            {dataKategori}
+                          </span>
+                        )}
+                    </div>
+                  :
+                    null
+                }
+                
+              </div>
+
+              <div 
+                className="my-3 d-flex text-wrap" 
+                style={{maxHeight:"40vh"}}
+              >
+                {/*Isi Video */}
+                {
+                  showDesc === false && isiVideo ?
+                    <div className="mx-0 px-0">
+                      { handleDescToTrim(isiVideo) }
+
+                      <div 
+                        className="mt-1 mb-3 text-primary"
+                        style={{cursor:"pointer"}}
+                        onClick={() => setShowDesc(true)}
+                      >
+                        Lihat Selengkapnya...
+                      </div>
+                    </div>
+                  :
+                    <div className="overflow-auto">
+                      {isiVideo}
+
+                      <div 
+                        className="mt-1 mb-3 text-primary"
+                        style={{cursor:"pointer"}}
+                        onClick={() => setShowDesc(false)}
+                      >
+                        Lihat Lebih Sedikit...
+                      </div>
+                    </div>
+                    
+                }
               </div>
             </div>
-            <div 
-              className="overflow-auto my-3" 
-              style={{maxHeight:"40vh"}}
-            >
-              {isiVideo}
-            </div>
+            
           </Modal.Footer>
         </Modal>
         {/* End of Modal */}
