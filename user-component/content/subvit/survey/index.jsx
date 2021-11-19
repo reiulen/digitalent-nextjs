@@ -129,10 +129,29 @@ const SubtansiUser = ({ token }) => {
     },
   ];
   let multi = [];
+  console.log(multi);
+
+  const handleMultiple = (item, index) => {
+    if (item.key.includes(localStorage.getItem(router.query.id + index))) {
+      // multi.splice(multi.indexOf(item.key), 1);
+      localStorage.removeItem(router.query.id + index, item.key);
+    } else {
+      // multi.push(item.key);
+      localStorage.setItem(router.query.id + index, item.key);
+    }
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+
+      console.log(key);
+    }
+
+    console.log(localStorage.getItem(router.query.id + index));
+  };
 
   const [data, setData] = useState(initialData);
   const [answer, setAnswer] = useState("");
-  const [d, setD] = useState("");
+  const [d, setD] = useState(localStorage.getItem(router.query.id));
+  console.log(d);
   const [listAnswer, setListAnswer] = useState([]);
   const [numberPage, setNumberPage] = useState("");
   const [numberAnswer, setNumberAnswer] = useState(false);
@@ -218,7 +237,6 @@ const SubtansiUser = ({ token }) => {
       // MASIH DIPAKE UNTUK TESTING
       // router.push(`/peserta/done-mid-tes`);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [count, data]);
 
   // MASIH DIPAKE UNTUK TESTING
@@ -260,23 +278,19 @@ const SubtansiUser = ({ token }) => {
 
   const handleAnswer = (e, id) => {
     setIndexSoal(id);
-
+    localStorage.setItem(router.query.id, e.key);
     initialData.map((item, index) => {
       if (e.sub && e.sub.length > 0 && item.type === "triggered_question") {
         item.open = true;
       }
     });
 
-    initialData.map((item, index) => {
-      if (item.type === "multiple_choice") {
-        localStorage.setItem(`${router.query.id}`, e.key);
-      }
-    });
     let dataTemp = [...initialData];
     setData(dataTemp);
 
     setAnswer(e.key);
-    localStorage.setItem(`${router.query.id}`, e.key);
+    console.log(localStorage.getItem(router.query.id));
+
     // localStorage.setItem(`${router.query.id}`, e.key);
 
     for (let i = 0; i < localStorage.length; i++) {
@@ -660,6 +674,84 @@ const SubtansiUser = ({ token }) => {
                     )}
                   </h1>
                   <hr />
+                  {data &&
+                    data[parseInt(router.query.id) - 1]?.answer !== null &&
+                    data[parseInt(router.query.id) - 1]?.answer.map(
+                      (item, index) => {
+                        console.log(
+                          localStorage.getItem(router.query.id + index)
+                        );
+                        return (
+                          <>
+                            {item.image !== null && item.image !== "" ? (
+                              <div className="d-flex flex-row">
+                                <div className="p-2">
+                                  <Image
+                                    src={
+                                      process.env.END_POINT_API_IMAGE_SUBVIT +
+                                        item.image || defaultImage
+                                    }
+                                    alt=""
+                                    width={70}
+                                    height={70}
+                                  />
+                                </div>
+                                <div
+                                  className="p-4"
+                                  style={{ width: "100%", height: "100%" }}
+                                >
+                                  <Card
+                                    className={
+                                      localStorage.getItem(
+                                        router.query.id + index
+                                      ) === item.key
+                                        ? styles.answer
+                                        : styles.boxAnswer
+                                    }
+                                    key={index}
+                                    onClick={() => {
+                                      handleMultiple(item, index);
+                                    }}
+                                  >
+                                    <table>
+                                      <tr>
+                                        <td style={{ width: "5px" }}>
+                                          {item.key}
+                                        </td>
+                                        <td style={{ width: "15px" }}>.</td>
+                                        <td>{item.option}</td>
+                                      </tr>
+                                    </table>
+                                  </Card>
+                                </div>
+                              </div>
+                            ) : (
+                              <Card
+                                className={
+                                  localStorage.getItem(
+                                    router.query.id + index
+                                  ) === item.key
+                                    ? styles.answer
+                                    : styles.boxAnswer
+                                }
+                                key={index}
+                                onClick={() => {
+                                  handleMultiple(item, index);
+                                }}
+                              >
+                                <table>
+                                  <tr>
+                                    <td style={{ width: "5px" }}>{item.key}</td>
+                                    <td style={{ width: "15px" }}>.</td>
+                                    <td>{item.option} </td>
+                                  </tr>
+                                </table>
+                              </Card>
+                            )}
+                          </>
+                        );
+                      }
+                    )}
                 </>
               )}
 
@@ -977,7 +1069,7 @@ const SubtansiUser = ({ token }) => {
                               : styles.boxAnswer
                           }
                           key={index}
-                          onClick={() => handleAnswerTriggered(item, index)}
+                          onClick={() => handleAnswerTriggered(item)}
                         >
                           <table>
                             <tr>
