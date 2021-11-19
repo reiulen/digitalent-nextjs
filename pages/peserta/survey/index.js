@@ -6,6 +6,10 @@ import { getSession } from "next-auth/client";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
 import { middlewareAuthPesertaSession } from "../../../utils/middleware/authMiddleware";
 import { getDataPribadi } from "../../../redux/actions/pelatihan/function.actions";
+import {
+  getAllRiwayatPelatihanPeserta,
+  getDetailRiwayatPelatihan,
+} from "../../../redux/actions/pelatihan/riwayat-pelatihan.actions";
 
 const SurveyPage = dynamic(
   () => import("../../../user-component/content/peserta/survey"),
@@ -21,16 +25,55 @@ const Layout = dynamic(() =>
   import("../../../user-component/components/template/Layout.component")
 );
 
+const BelumTersedia = dynamic(
+  () =>
+    import(
+      "../../../user-component/content/peserta/test-substansi/belum-tersedia.jsx"
+    ),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
+
 export default function TestSubstansiPage(props) {
   const session = props.session.user.user.data.user;
   return (
     <>
       <Layout title="Survey " session={session}>
-        <SurveyPage session={session} />
+        {props.success ? <SurveyPage session={session} /> : <BelumTersedia />}
       </Layout>
     </>
   );
 }
+
+// export const getServerSideProps = wrapper.getServerSideProps(
+//   (store) =>
+//     async ({ query, req }) => {
+//       const session = await getSession({ req });
+//       const middleware = middlewareAuthPesertaSession(session);
+
+//       if (!middleware.status) {
+//         return {
+//           redirect: {
+//             destination: middleware.redirect,
+//             permanent: false,
+//           },
+//         };
+//       }
+//       if (session) {
+//         await store.dispatch(
+//           getDataPribadi(session?.user.user.data.user.token)
+//         );
+//       }
+
+//       return {
+//         props: { data: "auth", session, title: "Dashboard - Peserta" },
+//       };
+//     }
+// );
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
@@ -46,14 +89,42 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
-      if (session) {
-        await store.dispatch(
-          getDataPribadi(session?.user.user.data.user.token)
+
+      let success = false;
+      if (!req.cookies.id_pelatihan) {
+        const { data } = await store.dispatch(
+          getAllRiwayatPelatihanPeserta(session.user.user.data.user.token)
         );
+        if (!data) {
+          return (success = false);
+        } else {
+          const survey = data.list.filter((item) => item.status === "survey");
+          if (survey.length > 0) {
+            await store.dispatch(
+              getDetailRiwayatPelatihan(
+                survey[0].id,
+                session.user.user.data.user.token
+              )
+            );
+            success = true;
+          } else {
+            success = false;
+          }
+        }
+      } else {
+        await store.dispatch(
+          getDetailRiwayatPelatihan(
+            req.cookies.id_pelatihan,
+            session.user.user.data.user.token
+          )
+        );
+        success = true;
       }
 
+      await store.dispatch(getDataPribadi(session.user.user.data.user.token));
+
       return {
-        props: { data: "auth", session, title: "Dashboard - Peserta" },
+        props: { data: "auth", session, title: "Dashboard - Peserta", success },
       };
     }
 );
