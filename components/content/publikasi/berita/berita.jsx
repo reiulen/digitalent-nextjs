@@ -306,6 +306,9 @@ const Berita = ({ token }) => {
         setStartDate(null)
         setEndDate(null)
         setDisableEndDate(true)
+        setLimit(null)
+        setSearch("")
+        setPublishValue(null)
         router.replace("/publikasi/berita", undefined, { shallow: false });
     }
 

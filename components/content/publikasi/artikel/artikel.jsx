@@ -310,6 +310,8 @@ const Artikel = ({ token }) => {
     setEndDate(null)
     setDisableEndDate(true)
     setLimit(null)
+    setPublishValue(null)
+    setSearch("")
     router.push('/publikasi/artikel', undefined, { shallow: false })
   }
 

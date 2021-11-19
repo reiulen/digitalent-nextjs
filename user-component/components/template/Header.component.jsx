@@ -295,7 +295,13 @@ const Header = () => {
               </h1>
               {router.pathname.includes(routerPath) && (
                 <Fragment>
-                  <Card className={styles.cardBody}>
+                  <Card
+                    className={styles.cardBody}
+                    hidden={
+                      router.pathname.includes(routerPath) &&
+                      router.pathname !== "/peserta/form-lpj"
+                    }
+                  >
                     <Row>
                       <Col
                         className={`${styles.textCardLeft} d-flex justify-content-between`}

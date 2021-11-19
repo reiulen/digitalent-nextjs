@@ -215,8 +215,8 @@ const DetailPelatihan = ({ session }) => {
             {/* PEMBATAS */}
             <div className="bg-white border rounded mb-5 p-6">
               <h4 className="fz-20 fw-600 mb-4">Mitra Pelatihan</h4>
-              <div className="row">
-                <div className="col-12 col-md-2">
+              <Row>
+                <Col md={12} sm={12} xl={2} lg={2}>
                   <div className="dot-bullet-detail">
                     <Image
                       src={
@@ -234,14 +234,14 @@ const DetailPelatihan = ({ session }) => {
                       alt="Image Mitra"
                     />
                   </div>
-                </div>
-                <div className="col-12 col-md-10">
-                  <div>
+                </Col>
+                <Col md={12} sm={12} xl={10} lg={10}>
+                  <div className="ml-md-3">
                     <p className="fw-600 fz-16 mb-2">{pelatihan.mitra_nama}</p>
                     <p style={{ color: "#6C6C6C" }}>{pelatihan.provinsi}</p>
                   </div>
-                </div>
-              </div>
+                </Col>
+              </Row>
             </div>
             <TrainingReminder session={session} />
           </Col>

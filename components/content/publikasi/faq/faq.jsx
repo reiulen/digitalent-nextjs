@@ -325,6 +325,9 @@ const Faq = ({ token }) => {
         setStartDate(null)
         setEndDate(null)
         setDisableEndDate(true)
+        setPublishValue(null)
+        setLimit(null)
+        setSearch("")
         router.replace("/publikasi/faq", undefined, { shallow: false });
     }
 

@@ -28,8 +28,14 @@ import {
   ERROR_DROPDOWN_PROVINSI,
   GET_DROPDOWN_KABUPATEN,
   ERROR_DROPDOWN_KABUPATEN,
+  GET_DROPDOWN_TEMPAT_LAHIR,
+  ERROR_DROPDOWN_TEMPAT_LAHIR,
   GET_DROPDOWN_KABUPATEN_DOMISILI,
   ERROR_DROPDOWN_KABUPATEN_DOMISILI,
+  GET_DROPDOWN_PROVINSI_TO_DESA,
+  ERROR_DROPDOWN_PROVINSI_TO_DESA,
+  GET_DROPDOWN_KECAMATAN_TO_DESA,
+  ERROR_DROPDOWN_KECAMATAN_TO_DESA,
   GET_DROPDOWN_PENYELENGGARA,
   ERROR_DROPDOWN_PENYELENGGARA,
   GET_DATA_PRIBADI_SUCCESS,
@@ -68,7 +74,7 @@ export const getDataPribadi = (token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: GET_DATA_PRIBADI_FAIL,
-      payload: error.message,
+      payload: error.response.data.message,
     });
   }
 };
@@ -490,6 +496,7 @@ export const dropdownKabupaten = (token, id) => async (dispatch) => {
         `api/option/provinsi-choose/${id}`,
       config
     );
+
     dispatch({
       type: GET_DROPDOWN_KABUPATEN,
       payload: data,
@@ -521,6 +528,83 @@ export const dropdownKabupatenDomisili = (token, id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ERROR_DROPDOWN_KABUPATEN_DOMISILI,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const dropdownProvinsiToDesa = (token, id) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    const { data } = await axios.get(
+      process.env.END_POINT_API_SITE_MANAGEMENT +
+        `api/option/provincial-descent/${id}`,
+      config
+    );
+
+    dispatch({
+      type: GET_DROPDOWN_PROVINSI_TO_DESA,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ERROR_DROPDOWN_PROVINSI_TO_DESA,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const dropdownKecamatanToDesa = (token, id) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    const { data } = await axios.get(
+      process.env.END_POINT_API_SITE_MANAGEMENT +
+        `api/option/provincial-descent/${id}`,
+      config
+    );
+
+    dispatch({
+      type: GET_DROPDOWN_KECAMATAN_TO_DESA,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ERROR_DROPDOWN_KECAMATAN_TO_DESA,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const dropdownTempatLahir = (token) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    const { data } = await axios.get(
+      process.env.END_POINT_API_SITE_MANAGEMENT +
+        `api/option/city?page=1&limit=500`,
+      config
+    );
+
+    console.log(data);
+
+    dispatch({
+      type: GET_DROPDOWN_TEMPAT_LAHIR,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ERROR_DROPDOWN_TEMPAT_LAHIR,
       payload: error.response.data.message,
     });
   }
