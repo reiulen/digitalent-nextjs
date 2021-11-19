@@ -37,7 +37,6 @@ const Header = ({ breadcrumb }) => {
 
   useEffect(() => {
     time();
-    time2();
   });
   const [jam, setJam] = useState();
   const time = () => {
@@ -64,35 +63,11 @@ const Header = ({ breadcrumb }) => {
     }, 1000);
   };
 
-  const time2 = () => {
-    var e = document.getElementById("waktu"),
-      d = new Date(),
-      h,
-      m,
-      s;
-    h = d.getHours();
-    m = set(d.getMinutes());
-    s = set(d.getSeconds());
-    if (e) {
-      e.innerHTML = h + ":" + m + ":" + s;
-    } else {
-      // router.push("/peserta");
-      // // window.location.reload();
-      // router.reload();
-    }
-
-    // setTimeout("time()", 1000);
-    setTimeout(() => {
-      time2();
-    }, 1000);
-  };
-
   const set = (e) => {
     e = e < 10 ? "0" + e : e;
     return e;
   };
   const [breadCrumbsName, setBreadCrumbsName] = useState([]);
-  useEffect(() => {}, []);
 
   return (
     <>

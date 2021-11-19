@@ -17,7 +17,7 @@ const Dashboard = ({ session, success }) => {
   const router = useRouter();
 
   const { error: errorDashboard, dataDashboard } = useSelector(
-    state => state.dashboardPeserta
+    (state) => state.dashboardPeserta
   );
   const { count, pelatihan, subvit } = dataDashboard;
 
@@ -239,9 +239,7 @@ const Dashboard = ({ session, success }) => {
                   <div
                     className="text-center"
                     style={{
-                      height: "200",
-                      paddingTop: "75px",
-                      paddingBottom: "75px",
+                      height: "200px",
                     }}
                   >
                     <Image
@@ -272,7 +270,7 @@ const Dashboard = ({ session, success }) => {
           {Object.keys(dataDashboard.pelatihan.pelatihan_berjalan).length >
             0 && (
             <Col md={6} className="mb-4 px-2">
-              <Card className="rounded-xl h-100">
+              <Card className="rounded-xl h-80">
                 <Card.Body>
                   <Card.Title>
                     <p className={style.card_title}>Pelatihan Terkini</p>
@@ -378,9 +376,7 @@ const Dashboard = ({ session, success }) => {
                   <div
                     className="text-center"
                     style={{
-                      height: "200",
-                      paddingTop: "75px",
-                      paddingBottom: "75px",
+                      height: "200px",
                     }}
                   >
                     <Image
