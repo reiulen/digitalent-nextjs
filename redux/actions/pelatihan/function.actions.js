@@ -68,7 +68,7 @@ export const getDataPribadi = (token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: GET_DATA_PRIBADI_FAIL,
-      payload: error.message,
+      payload: error.response.data.message,
     });
   }
 };
