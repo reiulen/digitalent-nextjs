@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react"
 import Image from "next/image";
 import Pagination from "react-js-pagination";
 import moment from "moment";
-import { Carousel } from "react-bootstrap";
+import { Modal, Carousel } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { Card, Container } from "react-bootstrap";
@@ -20,6 +20,7 @@ const Galeri = () => {
     const { detail, loading: loadingDetail } = useSelector((state) => state.detailBerandaGaleri)
     const { kategori } = useSelector((state) => state.kategoriBerandaGaleri)
 
+    const titleToTrim = 13; 
     const categoryToTrim = 9
     const descToTrim = 100
 
@@ -29,6 +30,7 @@ const Galeri = () => {
     const [ activePage, setActivePage ] = useState(1)
     const [ showFullDesc, setShowFullDesc ] = useState(false)
     const [ tag, setTag ] = useState("")
+    const [ showModal, setShowModal ] = useState (false)
 
     const getWindowDimensions = () => {
         // if (typeof window === 'undefined') {
@@ -103,6 +105,7 @@ const Galeri = () => {
     const handleDataModal = (id) => {
         dispatch (getDetailBerandaGaleri(id))
         setShowFullDesc(false)
+        setShowModal(true)
     }
 
     const handleFilterKategori = (str) => {
@@ -140,6 +143,18 @@ const Galeri = () => {
 
     }
 
+    const handleTitleToTrim = (str) => {
+        let result = null;
+    
+        if (str.length > titleToTrim) {
+          result = str.slice(0, titleToTrim) + "...";
+        } else {
+          result = str;
+        }
+    
+        return result;
+      };
+
     const handleCategoryToTrim = (str) => {
         let result = null
         
@@ -163,6 +178,10 @@ const Galeri = () => {
             result = str
         }
         return result
+    }
+
+    const handleCloseModal = () => {
+        setShowModal(false)
     }
 
     return (
@@ -286,106 +305,6 @@ const Galeri = () => {
                         </div>
                     </div>
                 :
-                    // <div className="col-12 d-flex flex-wrap justify-content-between">
-                        
-                    //     {   
-                    //         galeri && galeri.gallery && galeri.gallery.length !== 0 ?
-
-                    //             galeri.gallery.map ((el, i) => {
-                    //                 return (
-                    //                     <div 
-                    //                         key={i} 
-                    //                         className={`position-relative my-5 col-6 col-md-4`}
-                    //                         onMouseOver={() => handleMouseEnter(i)}
-                    //                         onMouseOut={() => handleMouseLeave(i)}
-                    //                     >
-                    //                         {
-                    //                             show && show[i] === false ?
-                    //                                 <div classname="card position-relative" style={{objectFit:"cover"}}>
-                    //                                     <Image
-                    //                                         src={
-                    //                                             process.env.END_POINT_API_IMAGE_PUBLIKASI +
-                    //                                             "publikasi/images/" + el.gambar
-                    //                                         }
-                    //                                         alt="Card Gallery"
-                    //                                         width= {400}
-                    //                                         height= {400}
-                    //                                         className="rounded-lg"
-                    //                                         style={{objectFit:"cover"}}
-                    //                                     />
-                    //                                 </div>
-                    //                             :
-                    //                                 <div 
-                    //                                     style={{
-                    //                                         width: "400px",
-                    //                                         height: "400px"
-                    //                                     }}
-
-                    //                                     onClick={() => handleDataModal(el.id_gallery)}
-                    //                                     data-target="#modalGaleri"
-                    //                                     data-toggle="modal"
-                    //                                 >   
-                    //                                     <div classname="position-relative" style={{objectFit:"cover"}}>
-                    //                                         <Image
-                    //                                             src={
-                    //                                                 process.env.END_POINT_API_IMAGE_PUBLIKASI +
-                    //                                                 "publikasi/images/" + el.gambar
-                    //                                             }
-                    //                                             alt="Card Gallery" 
-                    //                                             width= {400}
-                    //                                             height= {400}
-                    //                                             className="rounded-lg"
-                    //                                             style={{objectFit:"cover"}}
-                    //                                         />
-                    //                                     </div>
-                                                        
-                    //                                     <Card.ImgOverlay className="ml-4 p-0">
-                    //                                         <div 
-                    //                                             className="col-12 d-flex align-items-end m-0 p-0"
-                    //                                             style={{ 
-                    //                                                 width: "400px",
-                    //                                                 height: "400px",
-                    //                                                 cursor: "pointer",
-                    //                                                 transition: "height 0.5s ease-out",
-                    //                                                 background: "linear-gradient(to bottom, transparent 0%, black 100%)",
-                    //                                                 borderRadius:"10px"
-                    //                                             }}
-                    //                                         >
-                    //                                             <div className="d-flex flex-column">
-                    //                                                 <div>
-                    //                                                     <h5 className="font-weight-bolder text-white mb-5 mx-5">
-                    //                                                         {el.judul}
-                    //                                                     </h5>
-                    //                                                 </div>
-                                                                
-                    //                                                 <div>
-                    //                                                     <div className="badge badge-light mx-5 mb-5">
-                    //                                                         <div className="text-primary">
-                    //                                                             {/* Insert Kategori Here */}
-                    //                                                             {el.nama_kategori}
-                    //                                                         </div>
-                    //                                                     </div>
-                    //                                                 </div>
-                    //                                             </div>
-                                                                
-                                                                
-                    //                                         </div>
-                    //                                     </Card.ImgOverlay> 
-                    //                                 </div>
-
-                    //                         }
-                                            
-                    //                     </div>
-                    //                 )
-                    //             })
-                    //         :
-                    //             <div className="col-12 d-flex justify-content-center my-5">
-                    //                 <h1 className="font-weight-bolder">
-                    //                     Galeri Tidak Tersedia
-                    //                 </h1>
-                    //             </div>
-                    //     }
-                    // </div>
                     <div className="mt-5">
                         <div className="row d-flex justify-content-between flex-wrap">
                             {
@@ -401,8 +320,8 @@ const Galeri = () => {
                                             <div 
                                                 className="col-6 col-md-4 position-relative my-5"
                                                 key={i}
-                                                onMouseEnterr={() => handleMouseEnter(i)}
-                                                onMouseLeave={() => handleMouseLeave(i)}
+                                                onMouseOver={() => handleMouseEnter(i)}
+                                                onMouseOut={() => handleMouseLeave(i)}
                                             >
                                                 {
                                                     
@@ -417,31 +336,37 @@ const Galeri = () => {
                                                                     "publikasi/images/" + el.gambar
                                                                 }
                                                                 alt="Card Gallery"
-                                                                width= {400}
-                                                                height= {400}
+                                                                width= {500}
+                                                                height= {500}
                                                                 className="rounded-lg"
-                                                                style={{objectFit:"cover"}}
+                                                                objectFit="cover"
                                                             />
                                                         </div>
                                                     :
-                                                        <div    
+                                                        <div
                                                             onClick={() => handleDataModal(el.id_gallery)}
                                                             data-target="#modalGaleri"
                                                             data-toggle="modal"
-                                                        >
-                                                            <Image
-                                                                src={
-                                                                    process.env.END_POINT_API_IMAGE_PUBLIKASI +
-                                                                    "publikasi/images/" + el.gambar
-                                                                }
-                                                                alt="Card Gallery"
-                                                                width= {400}
-                                                                height= {400}
-                                                                className="rounded-lg"
-                                                                style={{objectFit:"cover"}}
-                                                            />
+                                                        >   
+                                                            <div
+                                                                classname="card position-relative" 
+                                                            >
+                                                                <Image
+                                                                    src={
+                                                                        process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                                                        "publikasi/images/" + el.gambar
+                                                                    }
+                                                                    alt="Card Gallery"
+                                                                    width= {500}
+                                                                    height= {500}
+                                                                    className="rounded-lg"
+                                                                    objectFit="cover"
+                                                                />
+                                                            </div>
 
+                                                            
                                                             <Card.ImgOverlay
+                                                                className="d-flex align-items-end mx-4"
                                                                 style={{ 
                                                                     cursor: "pointer",
                                                                     transition: "height 0.5s ease-out",
@@ -449,9 +374,34 @@ const Galeri = () => {
                                                                     borderRadius:"10px"
                                                                 }}
                                                             >
-
+                                                                <div className="d-flex flex-column">
+                                                                    <div>
+                                                                        {/* <h5 className="font-weight-bolder text-white mb-5 mx-5">
+                                                                            {el.judul}
+                                                                        </h5> */}
+                                                                        {
+                                                                            windowDimensions && windowDimensions.width && windowDimensions.width <= 770 ?
+                                                                                <div className="font-weight-bolder text-white mb-5 mx-5">
+                                                                                    {handleTitleToTrim(el.judul)} 
+                                                                                </div>
+                                                                            :
+                                                                                <h5 className="font-weight-bolder text-white mb-5 mx-5">
+                                                                                    {el.judul}
+                                                                                </h5> 
+                                                                        }
+                                                                    </div>
+                                                                
+                                                                    <div>
+                                                                        <div className="badge badge-light mx-5 mb-5">
+                                                                            <div className="text-primary">
+                                                                                {/* Insert Kategori Here */}
+                                                                                {el.nama_kategori}
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                
                                                             </Card.ImgOverlay>
-
                                                         </div>
                                                 }
                                             </div>
@@ -465,229 +415,403 @@ const Galeri = () => {
 
             {/* Modal */}
             {
-                detail ? 
-                    <div className="modal fade rounded-lg" id="modalGaleri">
-                        <div 
-                            // className="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable"
-                            className={windowDimensions.width > 1030 ? 
-                                "modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable" 
-                            :
-                                "modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable"
-                        }
-                        >
-                            <div className="modal-content">
-                                <div className="">
-                                    <div className="row">
-                                        {/* Slide */}
-                                        {
-                                            detail.gambar  && detail.gambar.length !== 0 ?
-                                                <div className="col-12 col-xl-7 m-0 p-0">
-                                                    <Carousel
-                                                        nextIcon = {
-                                                            detail.gambar.length > 1 ?  
-                                                                    <span aria-hidden="false" className="carousel-control-next-icon" />
-                                                                : 
-                                                                    null
-                                                            }
-                                                        prevIcon = {
-                                                            detail.gambar.length > 1 ?  
-                                                                    <span aria-hidden="false" className="carousel-control-prev-icon" />
-                                                                : 
-                                                                    null
-                                                            }
-                                                        nextLabel = {null}
-                                                        prevLabel = {null}
-                                                        indicators = {false}
-                                                    >
-                                                        {
+                detail && showModal === true ? 
+                    // <div className="modal fade rounded-lg" id="modalGaleri">
+                    //     <div 
+                    //         // className="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable"
+                    //         className={windowDimensions.width > 1030 ? 
+                    //             "modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable" 
+                    //         :
+                    //             "modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable"
+                    //     }
+                    //     >
+                    //         <div className="modal-content">
+                    //             <div className="">
+                    //                 <div className="row">
+                    //                     {/* Slide */}
+                    //                     {
+                    //                         detail.gambar  && detail.gambar.length !== 0 ?
+                    //                             <div className="col-12 col-xl-7 m-0 p-0">
+                    //                                 <Carousel
+                    //                                     nextIcon = {
+                    //                                         detail.gambar.length > 1 ?  
+                    //                                                 <span aria-hidden="false" className="carousel-control-next-icon" />
+                    //                                             : 
+                    //                                                 null
+                    //                                         }
+                    //                                     prevIcon = {
+                    //                                         detail.gambar.length > 1 ?  
+                    //                                                 <span aria-hidden="false" className="carousel-control-prev-icon" />
+                    //                                             : 
+                    //                                                 null
+                    //                                         }
+                    //                                     nextLabel = {null}
+                    //                                     prevLabel = {null}
+                    //                                     indicators = {false}
+                    //                                 >
+                    //                                     {
                                                             
-                                                                detail.gambar.map((el, i) => {
-                                                                    return (
-                                                                        <Carousel.Item key = {i}>
-                                                                            <div 
-                                                                                className="position-relative"
-                                                                                // style={{width:"auto", height:"auto"}}
-                                                                                style={ windowDimensions.width > 1030 ? 
-                                                                                        {
-                                                                                            height:"650px",
-                                                                                            width: "650px"
-                                                                                        }
-                                                                                    :
-                                                                                        {
-                                                                                            height:"250px",
-                                                                                            width: "350px"
-                                                                                        }
-                                                                                }
-                                                                            >
-                                                                                <Image
-                                                                                    src={
-                                                                                        process.env.END_POINT_API_IMAGE_PUBLIKASI +
-                                                                                        "publikasi/images/" + el.gambar
-                                                                                    }  
-                                                                                    alt="Slider" 
-                                                                                    objectFit="cover"
-                                                                                    layout="fill"
-                                                                                />
-                                                                            </div>
+                    //                                             detail.gambar.map((el, i) => {
+                    //                                                 return (
+                    //                                                     <Carousel.Item key = {i}>
+                    //                                                         <div 
+                    //                                                             className="position-relative"
+                    //                                                             // style={{width:"auto", height:"auto"}}
+                    //                                                             style={ windowDimensions.width > 1030 ? 
+                    //                                                                     {
+                    //                                                                         height:"650px",
+                    //                                                                         width: "650px"
+                    //                                                                     }
+                    //                                                                 :
+                    //                                                                     {
+                    //                                                                         height:"250px",
+                    //                                                                         width: "350px"
+                    //                                                                     }
+                    //                                                             }
+                    //                                                         >
+                    //                                                             <Image
+                    //                                                                 src={
+                    //                                                                     process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                    //                                                                     "publikasi/images/" + el.gambar
+                    //                                                                 }  
+                    //                                                                 alt="Slider" 
+                    //                                                                 objectFit="cover"
+                    //                                                                 layout="fill"
+                    //                                                             />
+                    //                                                         </div>
                                                                             
-                                                                        </Carousel.Item>
-                                                                    )
-                                                                })
-                                                        }
+                    //                                                     </Carousel.Item>
+                    //                                                 )
+                    //                                             })
+                    //                                     }
                                                         
                                                     
-                                                    </Carousel>
-                                                </div>
-                                            :
-                                                <div className="container-fluid">
-                                                    <div className="row">
-                                                        <PulseLoaderRender />
-                                                    </div>
-                                                </div>
-                                        }
+                    //                                 </Carousel>
+                    //                             </div>
+                    //                         :
+                    //                             <div className="container-fluid">
+                    //                                 <div className="row">
+                    //                                     <PulseLoaderRender />
+                    //                                 </div>
+                    //                             </div>
+                    //                     }
                                         
 
-                                        {/* Content */}
-                                        <div className="col-12 col-xl-5">
-                                            <div className="row">
-                                                <h5 className="text-dark font-weight-bolder ml-5 mt-3">
-                                                    { detail.judul }
-                                                </h5>
-                                            </div>
+                    //                     {/* Content */}
+                    //                     <div className="col-12 col-xl-5">
+                    //                         <div className="row">
+                    //                             <h5 className="text-dark font-weight-bolder ml-5 mt-3">
+                    //                                 { detail.judul }
+                    //                             </h5>
+                    //                         </div>
                                             
-                                            <div className="row d-flex justify-content-between text-muted">
-                                                <div className="d-flex align-items-center">
-                                                    <i className="ri-calendar-2-line mr-2 ml-5"></i>
-                                                    <span>
-                                                        {/* Insert Publish Date Here */}
-                                                        {moment(detail.tanggal_publish).format("DD MMMM YYYY")}
-                                                    </span>
-                                                </div>
+                    //                         <div className="row d-flex justify-content-between text-muted">
+                    //                             <div className="d-flex align-items-center">
+                    //                                 <i className="ri-calendar-2-line mr-2 ml-5"></i>
+                    //                                 <span>
+                    //                                     {/* Insert Publish Date Here */}
+                    //                                     {moment(detail.tanggal_publish).format("DD MMMM YYYY")}
+                    //                                 </span>
+                    //                             </div>
 
-                                                {
-                                                    kategori.map ((element, index) => {
+                    //                             {
+                    //                                 kategori.map ((element, index) => {
+                    //                                     return (
+                    //                                         detail.kategori_id == element.id ?
+                    //                                             <div className="badge badge-light mr-10" key ={index}>
+                    //                                                 <div className="text-primary">
+                    //                                                     {/* Insert Kategori Here */}
+                    //                                                     {element.nama_kategori}
+                    //                                                 </div>
+                    //                                             </div>
+                    //                                         :
+                    //                                             null
+                    //                                     )
+                    //                                 })
+                    //                             }
+                                                
+                    //                         </div>
+
+                    //                         <hr/>
+
+                    //                         <div 
+                    //                             className="p-3" 
+                    //                             style={{
+                    //                                 overflowY:"auto",
+                    //                                 overflowX:"hidden",
+                    //                                 maxHeight:"80vh"
+                    //                             }}
+                    //                         >
+                    //                             {/* Insert Desc Here */}
+                    //                             {
+                    //                                 windowDimensions.width > 1030 ?
+                    //                                     <p>
+                    //                                         {detail.isi_galeri}
+                    //                                     </p>
+                    //                                 :
+                    //                                     detail.isi_galeri && showFullDesc === false ?
+                    //                                         <div>
+                    //                                             <span>
+                    //                                                 {handleDescToTrim(detail.isi_galeri)}
+                    //                                             </span>
+                    //                                             <span 
+                    //                                                 className="ml-2" 
+                    //                                                 style={{color:"#007CFF"}}
+                    //                                                 onClick={() => setShowFullDesc(true)}
+                    //                                             >
+                    //                                                 Lihat Selengkapnya
+                    //                                             </span>
+                    //                                         </div>
+                    //                                     :
+                    //                                         <p>
+                    //                                             {detail.isi_galeri}
+                    //                                         </p>
+
+                    //                             }
+                                                
+                                                
+                    //                             <hr/>
+
+                    //                             <div className="row mb-5">
+                    //                                 <div className="col-5 d-flex flex-row  flex-wrap">
+                    //                                     {
+                    //                                         detail.tag ?
+                    //                                             detail.tag.map ((el, i) => {
+                    //                                                 return (
+                    //                                                     <div 
+                    //                                                         className="border p-3 rounded mr-5 my-1" 
+                    //                                                         key={i}
+                    //                                                         onClick={() => handleFilterTag(el)}
+                    //                                                         style={{cursor:"pointer"}}
+                    //                                                     >
+                    //                                                         #{el.toString().toUpperCase()}
+                    //                                                     </div>
+                                                        
+                    //                                                 )
+                    //                                             })
+                    //                                         :
+                    //                                             null
+                    //                                     }
+                                                        
+                    //                                 </div>
+
+                    //                                 <div className="col-6 mr-3 d-flex justify-content-end">
+                    //                                     <button className="btn btn-outline-light rounded-circle mr-3 text-center" style={{width: "40px", height:"40px" }}>
+                    //                                         <i className="ri-share-line p-auto m-auto"></i>
+                    //                                     </button>
+                                                        
+                    //                                     {/* <button className="btn btn-outline-light rounded-circle mr-3 text-center" style={{width: "40px", height:"40px" }}>
+                    //                                         <i className="ri-heart-line p-auto m-auto"></i>
+                    //                                     </button> */}
+                    //                                 </div>
+                    //                             </div>
+                    //                         </div>
+
+                    //                     </div>
+                    //                 </div>
+                    //             </div>
+                    //         </div>
+                    //     </div>
+
+                    // </div>
+                    <Modal
+                        show={showModal}
+                        onHide={() => handleCloseModal()}
+                        className="p-0 m-0 "
+                        size="lg"
+                    >
+                        <Modal.Body className="p-0 m-0">
+                            <div className="row p-0 m-0">
+                                <div 
+                                    className="col-12 col-lg-7 p-0 m-0 position-relative" 
+                                >
+                                    {
+                                        detail.gambar  && detail.gambar.length !== 0 ?
+                                        <Splide
+                                            options={{
+                                                arrows: false,
+                                                pagination: false,
+                                                // gap: "1rem",
+                                                drag: "free",
+                                                perPage: 1,
+                                            }}
+                                        >
+                                            {
+                                                detail.gambar.map ((el, i) => {
+                                                    return(
+                                                        <SplideSlide
+                                                            key={i}
+                                                            // style={{width:"650px", height:"650px"}}
+                                                            className="position-relative p-0 m-0"
+                                                        >
+                                                            <Image 
+                                                                src={
+                                                                    process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                                                    "publikasi/images/" + el.gambar
+                                                                }  
+                                                                alt="Slider" 
+                                                                objectFit="cover"
+                                                                // layout="fill"
+                                                                width={650}
+                                                                height={650}
+                                                                // height="auto"
+                                                            />
+                                                        </SplideSlide>
+                                                    )
+                                                })
+                                            }
+
+                                        </Splide>
+                                                
+                                        :
+                                            <div className="container-fluid">
+                                                <div className="row">
+                                                    <PulseLoaderRender />
+                                                </div>
+                                            </div>
+                                    }
+                                </div>
+
+                                <div className="col-12 col-lg-5 p-0 m-0">
+
+                                    {/* Insert Title Here */}
+                                    <h5 className="text-dark font-weight-bolder ml-2 mt-3">
+                                        { detail.judul }
+                                    </h5>
+
+                                    <div className="row d-flex justify-content-between text-muted">
+                                        <div className="d-flex align-items-center">
+                                            <i className="ri-calendar-2-line mr-2 ml-5"></i>
+                                            <span>
+                                                {moment(detail.tanggal_publish).format("DD MMMM YYYY")}
+                                            </span>
+                                        </div>
+
+                                        {
+                                            kategori.map ((element, index) => {
+                                                return (
+                                                    detail.kategori_id == element.id ?
+                                                        <div className="badge badge-light mr-10" key ={index}>
+                                                            <div className="text-primary">
+                                                                
+                                                                {element.nama_kategori}
+                                                            </div>
+                                                        </div>
+                                                    :
+                                                        null
+                                                )
+                                            })
+                                        }
+                                    
+                                    </div>
+
+                                    <hr/>
+                                    
+                                    <div 
+                                        className="p-3 " 
+                                        style={{
+                                            overflowY:"auto",
+                                            overflowX:"hidden",
+                                            maxHeight:"80vh"
+                                        }}
+                                    >
+                                        {
+                                            windowDimensions.width > 1030 ?
+                                                <p>
+                                                    {detail.isi_galeri}
+                                                </p>
+                                            :
+                                                detail.isi_galeri && showFullDesc === false ?
+                                                    <div>
+                                                        <span>
+                                                            {handleDescToTrim(detail.isi_galeri)}
+                                                        </span>
+                                                        <span 
+                                                            className="ml-2" 
+                                                            style={{color:"#007CFF"}}
+                                                            onClick={() => setShowFullDesc(true)}
+                                                        >
+                                                            Lihat Selengkapnya
+                                                        </span>
+                                                    </div>
+                                                :
+                                                    <p>
+                                                        {detail.isi_galeri}
+                                                    </p>
+
+                                        }
+                                        
+                                        
+                                        <hr/>
+
+                                        
+                                    </div>
+
+                                    <div className="row mb-5 pl-3">
+                                        <div className="col-6 d-flex flex-row  flex-wrap">
+                                            {
+                                                detail.tag ?
+                                                        detail.tag.map ((el, i) => {
                                                         return (
-                                                            detail.kategori_id == element.id ?
-                                                                <div className="badge badge-light mr-10" key ={index}>
-                                                                    <div className="text-primary">
-                                                                        {/* Insert Kategori Here */}
-                                                                        {element.nama_kategori}
-                                                                    </div>
-                                                                </div>
-                                                            :
-                                                                null
+                                                            <div 
+                                                                className="border p-3 rounded mr-5 my-1" 
+                                                                key={i}
+                                                                onClick={() => handleFilterTag(el)}
+                                                                style={{cursor:"pointer"}}
+                                                            >
+                                                                #{el.toString().toUpperCase()}
+                                                            </div>
+                                            
                                                         )
                                                     })
-                                                }
-                                                
-                                            </div>
+                                                :
+                                                    null
+                                            }
+                                            
+                                        </div>
 
-                                            <hr/>
-
-                                            <div 
-                                                className="p-3" 
-                                                style={{
-                                                    overflowY:"auto",
-                                                    overflowX:"hidden",
-                                                    maxHeight:"80vh"
-                                                }}
-                                            >
-                                                {/* Insert Desc Here */}
-                                                {
-                                                    windowDimensions.width > 1030 ?
-                                                        <p>
-                                                            {detail.isi_galeri}
-                                                        </p>
-                                                    :
-                                                        detail.isi_galeri && showFullDesc === false ?
-                                                            <div>
-                                                                <span>
-                                                                    {handleDescToTrim(detail.isi_galeri)}
-                                                                </span>
-                                                                <span 
-                                                                    className="ml-2" 
-                                                                    style={{color:"#007CFF"}}
-                                                                    onClick={() => setShowFullDesc(true)}
-                                                                >
-                                                                    Lihat Selengkapnya
-                                                                </span>
-                                                            </div>
-                                                        :
-                                                            <p>
-                                                                {detail.isi_galeri}
-                                                            </p>
-
-                                                }
-                                                
-                                                
-                                                <hr/>
-
-                                                <div className="row mb-5">
-                                                    <div className="col-5 d-flex flex-row  flex-wrap">
-                                                        {
-                                                            detail.tag ?
-                                                                detail.tag.map ((el, i) => {
-                                                                    return (
-                                                                        <div 
-                                                                            className="border p-3 rounded mr-5 my-1" 
-                                                                            key={i}
-                                                                            onClick={() => handleFilterTag(el)}
-                                                                            style={{cursor:"pointer"}}
-                                                                        >
-                                                                            #{el.toString().toUpperCase()}
-                                                                        </div>
-                                                        
-                                                                    )
-                                                                })
-                                                            :
-                                                                null
-                                                        }
-                                                        
-                                                    </div>
-
-                                                    <div className="col-6 mr-3 d-flex justify-content-end">
-                                                        <button className="btn btn-outline-light rounded-circle mr-3 text-center" style={{width: "40px", height:"40px" }}>
-                                                            <i className="ri-share-line p-auto m-auto"></i>
-                                                        </button>
-                                                        
-                                                        {/* <button className="btn btn-outline-light rounded-circle mr-3 text-center" style={{width: "40px", height:"40px" }}>
-                                                            <i className="ri-heart-line p-auto m-auto"></i>
-                                                        </button> */}
-                                                    </div>
-                                                </div>
-                                            </div>
-
+                                        <div className="col-6 d-flex justify-content-end text-right">
+                                            <button className="btn btn-outline-light rounded-circle text-center" style={{width: "40px", height:"40px" }}>
+                                                <i className="ri-share-line p-auto m-auto"></i>
+                                            </button>
+                                            
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
-                        </div>
-
-                    </div>
+                        </Modal.Body>
+                    </Modal>
                 :
-                    <div className="modal fade" id="modalGaleri">
-                        <div className="modal-dialog">
-                            <div className="modal-content">
-                                <div className="modal-header">
-                                    <h5 className="modal-title">Memuat...</h5>
-                                    <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div className="modal-body">
-                                    {/* <p>Data Tidak Tersedia</p> */}
-                                    <div className="container-fluid">
-                                        <div className="row">
-                                            <PulseLoaderRender />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="modal-footer">
-                                    <button type="button" className="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                    <Modal 
+                        show={showModal}
+                        onHide={() => handleCloseModal()}
+                    >
+                        <Modal.Header>
+                            <h5>
+                                Memuat..
+                            </h5>
+                        </Modal.Header>
+
+                        <Modal.Body>
+                            <div className="container-fluid">
+                                <div className="row">
+                                    <PulseLoaderRender />
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                        </Modal.Body>
+
+                        <Modal.Footer>
+                            <button 
+                                type="button" 
+                                className="btn btn-secondary" 
+                                data-dismiss="modal"
+                                onClick={() => handleCloseModal()}
+                            >
+                                Tutup
+                            </button>
+                        </Modal.Footer>
+                    </Modal>
             }
             
 
