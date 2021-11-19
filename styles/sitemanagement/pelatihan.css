@@ -318,3 +318,16 @@
   outline: none;
   white-space: nowrap;
 }
+
+@media only screen and (max-width: 1222px) {
+ .border-resnponsive{
+  border-top: solid 1px #D7E1EA;
+  padding-top: 40px;
+ }
+}
+
+@media only screen and (min-width: 1222px) {
+  .responsive-side-bar{
+    border-right: solid 1px #D7E1EA;
+  } 
+}
