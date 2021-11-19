@@ -239,7 +239,9 @@ const Dashboard = ({ session, success }) => {
                   <div
                     className="text-center"
                     style={{
-                      height: "200px",
+                      height: "200",
+                      paddingTop: "75px",
+                      paddingBottom: "75px",
                     }}
                   >
                     <Image
@@ -270,11 +272,12 @@ const Dashboard = ({ session, success }) => {
           {Object.keys(dataDashboard.pelatihan.pelatihan_berjalan).length >
             0 && (
             <Col md={6} className="mb-4 px-2">
-              <Card className="rounded-xl h-80">
+              <Card className="rounded-xl h-100">
                 <Card.Body>
                   <Card.Title>
                     <p className={style.card_title}>Pelatihan Terkini</p>
                   </Card.Title>
+
                   <Card className="shadow rounded-md mt-20">
                     <Image
                       className={`${style.image_dashboard}`}
@@ -369,7 +372,9 @@ const Dashboard = ({ session, success }) => {
                   <div
                     className="text-center"
                     style={{
-                      height: "200px",
+                      height: "200",
+                      paddingTop: "75px",
+                      paddingBottom: "75px",
                     }}
                   >
                     <Image
