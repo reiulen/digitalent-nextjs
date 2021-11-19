@@ -416,222 +416,28 @@ const Galeri = () => {
             {/* Modal */}
             {
                 detail && showModal === true ? 
-                    // <div className="modal fade rounded-lg" id="modalGaleri">
-                    //     <div 
-                    //         // className="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable"
-                    //         className={windowDimensions.width > 1030 ? 
-                    //             "modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable" 
-                    //         :
-                    //             "modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable"
-                    //     }
-                    //     >
-                    //         <div className="modal-content">
-                    //             <div className="">
-                    //                 <div className="row">
-                    //                     {/* Slide */}
-                    //                     {
-                    //                         detail.gambar  && detail.gambar.length !== 0 ?
-                    //                             <div className="col-12 col-xl-7 m-0 p-0">
-                    //                                 <Carousel
-                    //                                     nextIcon = {
-                    //                                         detail.gambar.length > 1 ?  
-                    //                                                 <span aria-hidden="false" className="carousel-control-next-icon" />
-                    //                                             : 
-                    //                                                 null
-                    //                                         }
-                    //                                     prevIcon = {
-                    //                                         detail.gambar.length > 1 ?  
-                    //                                                 <span aria-hidden="false" className="carousel-control-prev-icon" />
-                    //                                             : 
-                    //                                                 null
-                    //                                         }
-                    //                                     nextLabel = {null}
-                    //                                     prevLabel = {null}
-                    //                                     indicators = {false}
-                    //                                 >
-                    //                                     {
-                                                            
-                    //                                             detail.gambar.map((el, i) => {
-                    //                                                 return (
-                    //                                                     <Carousel.Item key = {i}>
-                    //                                                         <div 
-                    //                                                             className="position-relative"
-                    //                                                             // style={{width:"auto", height:"auto"}}
-                    //                                                             style={ windowDimensions.width > 1030 ? 
-                    //                                                                     {
-                    //                                                                         height:"650px",
-                    //                                                                         width: "650px"
-                    //                                                                     }
-                    //                                                                 :
-                    //                                                                     {
-                    //                                                                         height:"250px",
-                    //                                                                         width: "350px"
-                    //                                                                     }
-                    //                                                             }
-                    //                                                         >
-                    //                                                             <Image
-                    //                                                                 src={
-                    //                                                                     process.env.END_POINT_API_IMAGE_PUBLIKASI +
-                    //                                                                     "publikasi/images/" + el.gambar
-                    //                                                                 }  
-                    //                                                                 alt="Slider" 
-                    //                                                                 objectFit="cover"
-                    //                                                                 layout="fill"
-                    //                                                             />
-                    //                                                         </div>
-                                                                            
-                    //                                                     </Carousel.Item>
-                    //                                                 )
-                    //                                             })
-                    //                                     }
-                                                        
-                                                    
-                    //                                 </Carousel>
-                    //                             </div>
-                    //                         :
-                    //                             <div className="container-fluid">
-                    //                                 <div className="row">
-                    //                                     <PulseLoaderRender />
-                    //                                 </div>
-                    //                             </div>
-                    //                     }
-                                        
-
-                    //                     {/* Content */}
-                    //                     <div className="col-12 col-xl-5">
-                    //                         <div className="row">
-                    //                             <h5 className="text-dark font-weight-bolder ml-5 mt-3">
-                    //                                 { detail.judul }
-                    //                             </h5>
-                    //                         </div>
-                                            
-                    //                         <div className="row d-flex justify-content-between text-muted">
-                    //                             <div className="d-flex align-items-center">
-                    //                                 <i className="ri-calendar-2-line mr-2 ml-5"></i>
-                    //                                 <span>
-                    //                                     {/* Insert Publish Date Here */}
-                    //                                     {moment(detail.tanggal_publish).format("DD MMMM YYYY")}
-                    //                                 </span>
-                    //                             </div>
-
-                    //                             {
-                    //                                 kategori.map ((element, index) => {
-                    //                                     return (
-                    //                                         detail.kategori_id == element.id ?
-                    //                                             <div className="badge badge-light mr-10" key ={index}>
-                    //                                                 <div className="text-primary">
-                    //                                                     {/* Insert Kategori Here */}
-                    //                                                     {element.nama_kategori}
-                    //                                                 </div>
-                    //                                             </div>
-                    //                                         :
-                    //                                             null
-                    //                                     )
-                    //                                 })
-                    //                             }
-                                                
-                    //                         </div>
-
-                    //                         <hr/>
-
-                    //                         <div 
-                    //                             className="p-3" 
-                    //                             style={{
-                    //                                 overflowY:"auto",
-                    //                                 overflowX:"hidden",
-                    //                                 maxHeight:"80vh"
-                    //                             }}
-                    //                         >
-                    //                             {/* Insert Desc Here */}
-                    //                             {
-                    //                                 windowDimensions.width > 1030 ?
-                    //                                     <p>
-                    //                                         {detail.isi_galeri}
-                    //                                     </p>
-                    //                                 :
-                    //                                     detail.isi_galeri && showFullDesc === false ?
-                    //                                         <div>
-                    //                                             <span>
-                    //                                                 {handleDescToTrim(detail.isi_galeri)}
-                    //                                             </span>
-                    //                                             <span 
-                    //                                                 className="ml-2" 
-                    //                                                 style={{color:"#007CFF"}}
-                    //                                                 onClick={() => setShowFullDesc(true)}
-                    //                                             >
-                    //                                                 Lihat Selengkapnya
-                    //                                             </span>
-                    //                                         </div>
-                    //                                     :
-                    //                                         <p>
-                    //                                             {detail.isi_galeri}
-                    //                                         </p>
-
-                    //                             }
-                                                
-                                                
-                    //                             <hr/>
-
-                    //                             <div className="row mb-5">
-                    //                                 <div className="col-5 d-flex flex-row  flex-wrap">
-                    //                                     {
-                    //                                         detail.tag ?
-                    //                                             detail.tag.map ((el, i) => {
-                    //                                                 return (
-                    //                                                     <div 
-                    //                                                         className="border p-3 rounded mr-5 my-1" 
-                    //                                                         key={i}
-                    //                                                         onClick={() => handleFilterTag(el)}
-                    //                                                         style={{cursor:"pointer"}}
-                    //                                                     >
-                    //                                                         #{el.toString().toUpperCase()}
-                    //                                                     </div>
-                                                        
-                    //                                                 )
-                    //                                             })
-                    //                                         :
-                    //                                             null
-                    //                                     }
-                                                        
-                    //                                 </div>
-
-                    //                                 <div className="col-6 mr-3 d-flex justify-content-end">
-                    //                                     <button className="btn btn-outline-light rounded-circle mr-3 text-center" style={{width: "40px", height:"40px" }}>
-                    //                                         <i className="ri-share-line p-auto m-auto"></i>
-                    //                                     </button>
-                                                        
-                    //                                     {/* <button className="btn btn-outline-light rounded-circle mr-3 text-center" style={{width: "40px", height:"40px" }}>
-                    //                                         <i className="ri-heart-line p-auto m-auto"></i>
-                    //                                     </button> */}
-                    //                                 </div>
-                    //                             </div>
-                    //                         </div>
-
-                    //                     </div>
-                    //                 </div>
-                    //             </div>
-                    //         </div>
-                    //     </div>
-
-                    // </div>
                     <Modal
                         show={showModal}
                         onHide={() => handleCloseModal()}
-                        className="p-0 m-0 "
-                        size="lg"
+                        size={
+                            windowDimensions && windowDimensions.width && windowDimensions.width <= 770 ?
+                                "sm"
+                            :
+                                "lg"
+                        }
+                        centered
                     >
                         <Modal.Body className="p-0 m-0">
-                            <div className="row p-0 m-0">
+                            <div className="row">
                                 <div 
-                                    className="col-12 col-lg-7 p-0 m-0 position-relative" 
+                                    className="col-12 col-lg-7 position-relative" 
                                 >
                                     {
                                         detail.gambar  && detail.gambar.length !== 0 ?
                                         <Splide
                                             options={{
-                                                arrows: false,
+                                                arrows: detail.gambar.length > 1 ? true : false,
                                                 pagination: false,
-                                                // gap: "1rem",
                                                 drag: "free",
                                                 perPage: 1,
                                             }}
@@ -641,8 +447,7 @@ const Galeri = () => {
                                                     return(
                                                         <SplideSlide
                                                             key={i}
-                                                            // style={{width:"650px", height:"650px"}}
-                                                            className="position-relative p-0 m-0"
+                                                            className="position-relative"
                                                         >
                                                             <Image 
                                                                 src={
@@ -650,11 +455,10 @@ const Galeri = () => {
                                                                     "publikasi/images/" + el.gambar
                                                                 }  
                                                                 alt="Slider" 
+                                                                width="100%"
+                                                                height="100%"
+                                                                layout="responsive"
                                                                 objectFit="cover"
-                                                                // layout="fill"
-                                                                width={650}
-                                                                height={650}
-                                                                // height="auto"
                                                             />
                                                         </SplideSlide>
                                                     )
@@ -675,11 +479,24 @@ const Galeri = () => {
                                 <div className="col-12 col-lg-5 p-0 m-0">
 
                                     {/* Insert Title Here */}
-                                    <h5 className="text-dark font-weight-bolder ml-2 mt-3">
+                                    <h5 
+                                        className={
+                                            windowDimensions && windowDimensions.width && windowDimensions.width <= 770 ?
+                                                "text-dark text-wrap text-truncate font-weight-bolder mt-3 ml-7"
+                                            :
+                                                "text-dark text-wrap text-truncate font-weight-bolder mt-3"
+                                        }
+                                    >
                                         { detail.judul }
                                     </h5>
 
-                                    <div className="row d-flex justify-content-between text-muted">
+                                    <div 
+                                        className={windowDimensions && windowDimensions.width && windowDimensions.width <= 770 ?
+                                                "row d-flex justify-content-between text-muted ml-1"
+                                            :
+                                                "row d-flex justify-content-between text-muted"
+                                        }
+                                    >
                                         <div className="d-flex align-items-center">
                                             <i className="ri-calendar-2-line mr-2 ml-5"></i>
                                             <span>
@@ -705,24 +522,28 @@ const Galeri = () => {
                                     
                                     </div>
 
-                                    <hr/>
+                                    <hr
+                                        className="mr-5"
+                                    />
                                     
                                     <div 
-                                        className="p-3 " 
-                                        style={{
-                                            overflowY:"auto",
-                                            overflowX:"hidden",
-                                            maxHeight:"80vh"
-                                        }}
+                                        className="pr-3" 
                                     >
                                         {
-                                            windowDimensions.width > 1030 ?
-                                                <p>
+                                            windowDimensions && windowDimensions.width && windowDimensions.width > 1030 ?
+                                                <p 
+                                                    style={{
+                                                        overflowY:"auto",
+                                                        overflowX:"hidden",
+                                                        maxHeight:"180px"
+                                                    }}
+                                                    className="mr-2"
+                                                >
                                                     {detail.isi_galeri}
                                                 </p>
                                             :
                                                 detail.isi_galeri && showFullDesc === false ?
-                                                    <div>
+                                                    <div className="ml-7">
                                                         <span>
                                                             {handleDescToTrim(detail.isi_galeri)}
                                                         </span>
@@ -731,24 +552,41 @@ const Galeri = () => {
                                                             style={{color:"#007CFF"}}
                                                             onClick={() => setShowFullDesc(true)}
                                                         >
-                                                            Lihat Selengkapnya
+                                                            Lihat Selengkapnya..
                                                         </span>
                                                     </div>
                                                 :
-                                                    <p>
-                                                        {detail.isi_galeri}
-                                                    </p>
+                                                    <div>
+                                                        <p className="ml-7">
+                                                            {detail.isi_galeri}
+                                                        </p>
+                                                        <p
+                                                            style={{color:"#007CFF"}}
+                                                            onClick={() => setShowFullDesc(false)}
+                                                            className="ml-7"
+                                                        >
+                                                            Lihat Lebih Sedikit
+                                                        </p>
+                                                    </div>
+                                                    
 
                                         }
                                         
-                                        
-                                        <hr/>
-
+                                        <hr
+                                            className="mr-3"
+                                        />
                                         
                                     </div>
 
-                                    <div className="row mb-5 pl-3">
-                                        <div className="col-6 d-flex flex-row  flex-wrap">
+                                    <div 
+                                        className={
+                                            windowDimensions && windowDimensions.width && windowDimensions.width <= 770 ?
+                                                "row mb-5 ml-3"
+                                            :
+                                                "row mb-5"
+                                        }
+                                    >
+                                        <div className="col-5 d-flex flex-row flex-wrap">
                                             {
                                                 detail.tag ?
                                                         detail.tag.map ((el, i) => {
@@ -770,7 +608,7 @@ const Galeri = () => {
                                             
                                         </div>
 
-                                        <div className="col-6 d-flex justify-content-end text-right">
+                                        <div className="col-6 text-right">
                                             <button className="btn btn-outline-light rounded-circle text-center" style={{width: "40px", height:"40px" }}>
                                                 <i className="ri-share-line p-auto m-auto"></i>
                                             </button>
