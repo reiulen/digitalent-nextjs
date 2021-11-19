@@ -44,10 +44,12 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
   const { error: errorTempatLahir, data: dataTempatLahir } = useSelector(
     (state) => state.drowpdownTempatLahir.data
   );
+
+  console.log(dataTempatLahir);
   let optionsTempatLahir = [];
 
   dataTempatLahir &&
-    dataTempatLahir.list_signatures.map((item) => {
+    dataTempatLahir.city.map((item) => {
       return optionsTempatLahir.push({ label: item.label, value: item.id });
     });
 
