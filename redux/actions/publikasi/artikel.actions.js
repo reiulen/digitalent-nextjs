@@ -85,7 +85,7 @@ export const getAllArtikelsPeserta =
   async (dispatch) => {
     try {
       dispatch({ type: ARTIKEL_PESERTA_REQUEST });
-      let link = "http://192.168.11.96:8000/" + `api/artikel/auth/peserta`;
+      let link = process.env.END_POINT_API_PUBLIKASI + `api/artikel/auth/peserta`;
 
       const config = {
         params: {
@@ -146,7 +146,7 @@ export const getDetailArtikelsPeserta = (id, token) => async (dispatch) => {
       },
     };
 
-    let link = "http://192.168.11.96:8000/" + `api/artikel/auth/peserta/${id}`;
+    let link = process.env.END_POINT_API_PUBLIKASI + `api/artikel/auth/peserta/${id}`;
 
     const { data } = await axios.get(link, config);
 
@@ -200,7 +200,7 @@ export const newArtikelPeserta = (artikelData, token) => async (dispatch) => {
     };
 
     const { data } = await axios.post(
-      "http://192.168.11.96:8000/" + "api/artikel/auth/peserta",
+      process.env.END_POINT_API_PUBLIKASI + "api/artikel/auth/peserta",
       artikelData,
       config
     );
@@ -252,7 +252,7 @@ export const updateArtikelPeserta = (artikelData, token, id) => async (dispatch)
     };
 
     const { data } = await axios.post(
-      "http://192.168.11.96:8000/" + "api/artikel/auth/peserta/" + id,
+      process.env.END_POINT_API_PUBLIKASI + "api/artikel/auth/peserta/" + id,
       artikelData,
       config
     );
@@ -275,7 +275,7 @@ export const deleteArtikelPeserta = (id, token) => async (dispatch) => {
       },
     };
     const { data } = await axios.delete(
-      "http://192.168.11.96:8000/" + "api/artikel/auth/peserta/" + id,
+      process.env.END_POINT_API_PUBLIKASI + "api/artikel/auth/peserta/" + id,
       config
     );
 
