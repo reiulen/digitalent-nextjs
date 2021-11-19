@@ -69,7 +69,7 @@ export const getDataPribadi = (token) => async (dispatch) => {
       type: GET_DATA_PRIBADI_SUCCESS,
       payload: data,
     });
-    dispatch(getAllAkademi());
+
     return data;
   } catch (error) {
     dispatch({
