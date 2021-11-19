@@ -17,7 +17,10 @@ import {
   SweatAlert,
 } from "../../../../../utils/middleware/helper";
 import ReactCrop from "react-image-crop";
-import { getDataPribadi } from "../../../../../redux/actions/pelatihan/function.actions";
+import {
+  dropdownTempatLahir,
+  getDataPribadi,
+} from "../../../../../redux/actions/pelatihan/function.actions";
 import axios from "axios";
 
 const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
@@ -43,9 +46,10 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
   );
   let optionsTempatLahir = [];
 
-  dataTempatLahir.list_signatures.map((item) => {
-    return optionsTempatLahir.push({ label: item.label, value: item.id });
-  });
+  dataTempatLahir &&
+    dataTempatLahir.list_signatures.map((item) => {
+      return optionsTempatLahir.push({ label: item.label, value: item.id });
+    });
 
   const [name, setName] = useState((dataPribadi && dataPribadi.name) || "");
   const [email, setEmail] = useState((dataPribadi && dataPribadi.email) || "");
@@ -102,6 +106,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
   }
 
   useEffect(() => {
+    dispatch(dropdownTempatLahir(token));
     if (errorUpdateData) {
       // toast.error(errorUpdateData);
       SweatAlert("Gagal", errorUpdateData, "error");

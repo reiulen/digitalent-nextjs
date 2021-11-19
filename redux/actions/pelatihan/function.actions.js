@@ -596,6 +596,8 @@ export const dropdownTempatLahir = (token) => async (dispatch) => {
       config
     );
 
+    console.log(data);
+
     dispatch({
       type: GET_DROPDOWN_TEMPAT_LAHIR,
       payload: data,
