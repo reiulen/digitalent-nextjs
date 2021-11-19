@@ -870,11 +870,11 @@ const ListTraining = ({ token }) => {
                             <td className="align-middle text-center">
                               {row.status_substansi === "review" ||
                               row.status_substansi === "disetujui" ? (
-                                <span className="label label-inline label-light-success font-weight-bold">
+                                <span className="label label-inline label-light-success font-weight-bold text-capitalize">
                                   {row.status_substansi}
                                 </span>
                               ) : (
-                                <span className="label label-inline label-light-danger font-weight-bold">
+                                <span className="label label-inline label-light-danger font-weight-bold text-capitalize">
                                   {row.status_substansi}
                                 </span>
                               )}
@@ -995,20 +995,24 @@ const ListTraining = ({ token }) => {
                                       </a>
                                     </Link>
                                   )}
-                                {row.status_pelatihan !== "ditolak" && (
-                                  <Link
-                                    href={`/pelatihan/pelatihan/view-list-peserta/${row.id}`}
-                                  >
-                                    <a
-                                      className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                                      data-toggle="tooltip"
-                                      data-placement="bottom"
-                                      title="User"
+                                {row.status_substansi !== "ditolak" ||
+                                  row.status_pelatihan !== "review substansi" ||
+                                  row.status_pelatihan !==
+                                    "menunggu pendaftaran" ||
+                                  (row.status_substansi !== "revisi" && (
+                                    <Link
+                                      href={`/pelatihan/pelatihan/view-list-peserta/${row.id}`}
                                     >
-                                      <i className="ri-user-3-fill p-0 text-white"></i>
-                                    </a>
-                                  </Link>
-                                )}
+                                      <a
+                                        className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                        data-toggle="tooltip"
+                                        data-placement="bottom"
+                                        title="User"
+                                      >
+                                        <i className="ri-user-3-fill p-0 text-white"></i>
+                                      </a>
+                                    </Link>
+                                  ))}
                                 {row.status_pelatihan === "selesai" && (
                                   <Link
                                     href={`/pelatihan/pelatihan/upload-evidence/${row.id}`}
