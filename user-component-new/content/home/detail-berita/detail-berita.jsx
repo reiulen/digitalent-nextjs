@@ -173,7 +173,14 @@ const DetailBerita = () => {
                     <div className="row mt-10">
 
                         {/* Left Side */}
-                        <div className="col-12 col-md-8 pr-20">
+                        <div 
+                            className={
+                                windowDimensions && windowDimensions.width && windowDimensions.width > 770 ?
+                                    "col-12 col-lg-8 pr-20"
+                                :
+                                    "col-12 col-lg-8"
+                            }
+                        >
                             {/* Image */}
                             <Image
                                 // src="/assets/media/default-detail-image.png"
@@ -238,7 +245,7 @@ const DetailBerita = () => {
                         {/* Right Side */}
                         {
                             windowDimensions && windowDimensions.width && windowDimensions.width > 770 ?
-                                <div className="col-12 col-md-4">
+                                <div className="col-12 col-lg-4">
 
                                     {/* Search */}
                                     <div className="border rounded-lg">

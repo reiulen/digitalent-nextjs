@@ -635,7 +635,6 @@ useEffect(()=> {
             <div className="d-flex justify-content-center">
               {video && video.total !== 0? (
                 <div 
-                  // className=" mb-10 mx-auto" 
                   className={
                     windowDimensions && windowDimensions.width && windowDimensions.width <= 770 ?
                       "mx-auto table-pagination"
