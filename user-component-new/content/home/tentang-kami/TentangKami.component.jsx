@@ -18,7 +18,7 @@ const TentangKami = () => {
               <h1 className="fw-700 fz-36">Tentang Kami</h1>
 
               <div className="mt-5 mt-md-1">
-                <p className="mr-6 fz-18 text-muted fw-500">
+                <p className="mr-6 fz-18 text-muted fw-400">
                   Informasi tentang Digitalent Scholarship Kominfo
                 </p>
               </div>

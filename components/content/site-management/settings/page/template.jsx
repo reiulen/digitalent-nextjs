@@ -45,12 +45,12 @@ export default function Template(props) {
   }, [props.token, status]);
 
   return (
-    <div className="col-xl-8 styling-content-pelatihan">
+    <div className="col-xl-8 styling-content-pelatihan ">
       <form onSubmit={handleSubmit}>
-        <div className="notification-title">
-          <h1>Template Email</h1>
+        <div className="notification-title border-resnponsive mr-4">
+          <h1>Email</h1>
         </div>
-        <div className="form-group">
+        <div className="form-group mr-4">
           <label>Status</label>
           <select className="form-control" value={status} onChange={onChangeStatus}>
             <option selected>
@@ -72,7 +72,7 @@ export default function Template(props) {
             <option value="Tidak Lulus Pelatihan">Tidak Lulus Pelatihan</option>
           </select>
         </div>
-        <div className="form-group">
+        <div className="form-group mr-4">
           <label>Subject</label>
           <input
             type="text"
@@ -83,7 +83,7 @@ export default function Template(props) {
             onChange={onChangeSubject}
           />
         </div>
-        <div className="form-group">
+        <div className="form-group mr-4">
           <CKEditor
             editor={ClassicEditor}
             data={body}
@@ -93,7 +93,7 @@ export default function Template(props) {
             }}
           />
         </div>
-        <div className="d-flex justify-content-end mb-5">
+        <div className="d-flex justify-content-end mb-5 mr-4">
           <button type="reset" className="btn btn-reset" onClick={e => {
             setStatus("")
             setSubject("")

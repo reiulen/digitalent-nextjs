@@ -13,18 +13,39 @@ import LoadingPage from "../../../../LoadingPage";
 import ModalPreview from "../components/modal-preview-form.component";
 import { putTrainingStep2 } from "../../../../../redux/actions/pelatihan/training.actions";
 
-const EditRegistrationStep2 = ({token, propsStep}) => {
+import FormManual from "../components/step-registration/form-manual";
+import FormCopy from "../components/step-registration/form-copy";
+
+const EditRegistrationStep2 = ({ token, propsStep }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
   const { data: getEditTraining2 } = useSelector(
     (state) => state.getEditTraining2
   );
-
+  const { data: dataForm, error: errorDropdownForm } = useSelector(
+    (state) => state.drowpdownFormBuilder
+  );
 
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
   const [modalShow, setModalShow] = useState(false);
+
+  // TITLE FORM
+  const [titleManual, setTitleManual] = useState(getEditTraining2.judul_form);
+  const [titleCopy, setTitleCopy] = useState(getEditTraining2.judul_form);
+  // END TITLE FORM
+
+  //  FORM BUILDER
+  const [formBuilderManual, setFormBuilderManual] = useState(
+    getEditTraining2.FormBuilder
+  );
+  const [formBuilderCopy, setFormBuilderCopy] = useState(
+    getEditTraining2.FormBuilder
+  );
+  // END FORM BUILDER
+
+  const [viewForm, setViewForm] = useState(getEditTraining2.type_form);
 
   const [element] = useState([
     {
@@ -113,41 +134,12 @@ const EditRegistrationStep2 = ({token, propsStep}) => {
     },
   ]);
 
-  const [title, setTitle] = useState(getEditTraining2.judul_form);
-  const [formBuilder, setFormBuilder] = useState(getEditTraining2.FormBuilder ||[
-    {
-      key: 1,
-      name: "",
-      element: "",
-      size: "",
-      option: "",
-      dataOption: "",
-      required: false,
-    },
-  ]);
+  const optionsForm = dataForm.data || [];
 
-  const handleResetError = () => {
-    if (error) {
-      dispatch(clearErrors());
-    }
-  };
-
-  const inputChangeHandler = (e, index) => {
-    const { value, name, checked } = e.target;
-    const list = [...formBuilder];
-    list[index][name] = value;
-    if (name === "required") {
-      let check = checked === true ? "1" : "0";
-      list[index]["required"] = check;
-    }
-    setFormBuilder(list);
-  };
-
-  const addFieldHandler = () => {
-    const newKey = formBuilder[formBuilder.length - 1].key + 1;
-    setFormBuilder([
-      ...formBuilder,
+  const [formBuilder, setFormBuilder] = useState(
+    getEditTraining2.FormBuilder || [
       {
+        key: 1,
         name: "",
         element: "",
         size: "",
@@ -155,164 +147,8 @@ const EditRegistrationStep2 = ({token, propsStep}) => {
         dataOption: "",
         required: false,
       },
-    ]);
-  };
-
-  const removeFieldHandler = (index) => {
-    const list = [...formBuilder];
-    list.splice(index, 1);
-    list.forEach((row, i) => {
-      let key = i + 1;
-      list[i]["key"] = key;
-    });
-    setFormBuilder(list);
-  };
-
-  const renderDataOptionHandler = (row, i) => {
-    if (row.option === "select_reference") {
-      return (
-        <div className="col-sm-12 col-md-2">
-          <div className="form-group mb-2">
-            <label className="col-form-label font-weight-bold">
-              Data Option
-            </label>
-            <select
-              className="form-control"
-              name="dataOption"
-              value={row.dataOption}
-              onChange={(e) => inputChangeHandler(e, i)}
-            >
-              <option value="" disabled selected>
-                -- PILIH --
-              </option>
-              {dataOptions.map((datOpt, i) => (
-                <option key={i} value={datOpt.value}>
-                  {datOpt.value}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-      );
-    } else {
-      return (
-        <div className="col-sm-12 col-md-2">
-          <div className="form-group mb-2">
-            <label className="col-form-label font-weight-bold">
-              Data Option
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              name="dataOption"
-              value={row.dataOption}
-              placeholder="data1;data2"
-              autoComplete="off"
-              onChange={(e) => inputChangeHandler(e, i)}
-            />
-          </div>
-        </div>
-      );
-    }
-  };
-
-  const renderMultipleHandler = (row, i) => {
-    if (
-      row.element === "select" ||
-      row.element === "checkbox" ||
-      row.element === "radio"
-    ) {
-      return (
-        <>
-          <div className="col-sm-12 col-md-2">
-            <div className="form-group mb-2">
-              <label className="col-form-label font-weight-bold">Option</label>
-              <select
-                className="form-control"
-                name="option"
-                value={row.option}
-                onChange={(e) => inputChangeHandler(e, i)}
-              >
-                <option value="" disabled selected>
-                  -- PILIH --
-                </option>
-                {options.map((opt, i) => (
-                  <option key={i} value={opt.value}>
-                    {opt.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-          {renderDataOptionHandler(row, i)}
-        </>
-      );
-    } else {
-      return (
-        <>
-          <div className="col-sm-12 col-md-2">
-            <div className="form-group mb-2">
-              <label className="col-form-label font-weight-bold">Option</label>
-              <select
-                className="form-control"
-                name="option"
-                value={row.option}
-                onChange={(e) => inputChangeHandler(e, i)}
-                disabled
-              >
-                <option value="" disabled selected>
-                  -- PILIH --
-                </option>
-                {options.map((opt, i) => (
-                  <option key={i} value={opt.value}>
-                    {opt.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-          <div className="col-sm-12 col-md-2">
-            <div className="form-group mb-2">
-              <label className="col-form-label font-weight-bold">
-                Data Option
-              </label>
-              <select
-                className="form-control"
-                name="dataOption"
-                value={row.dataOption}
-                onChange={(e) => inputChangeHandler(e, i)}
-                disabled
-              >
-                <option value="" disabled selected>
-                  -- PILIH --
-                </option>
-                {dataOptions.map((datOpt, i) => (
-                  <option key={i} value={datOpt.value}>
-                    {datOpt.value}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-        </>
-      );
-    }
-  };
-
-
-
-
-  const showPreviewHandler = () => {
-    let list = [...formBuilder];
-    list.forEach((row, i) => {
-      if (row.option === "manual") {
-        let dataOption = row.dataOption.split(";");
-        row.dataOption = dataOption;
-      }
-    });
-    setFormBuilder(list);
-    setModalShow(true);
-  };
+    ]
+  );
 
   const closePreviewHandler = () => {
     let list = [...formBuilder];
@@ -328,15 +164,35 @@ const EditRegistrationStep2 = ({token, propsStep}) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    const data = {
-    "judul_form": title,
-    "Pelatian_id": parseInt(router.query.id),
-    "formBuilder": formBuilder
-};
-    if (simpleValidator.current.allValid()) {
-      dispatch(putTrainingStep2(token, data))
-      propsStep(3);
+    let formBuilderStore;
+    if (viewForm === "0") {
+      formBuilderStore = formBuilderManual;
+    } else if (viewForm === "1") {
+      formBuilderStore = formBuilderCopy;
+    } else if (viewForm === "2") {
+      formBuilderStore = formBuilderManual;
+    } else {
+      formBuilderStore;
+    }
 
+    let titleStore;
+    if (viewForm === "0") {
+      titleStore = titleManual;
+    } else if (viewForm === "1") {
+      titleStore = titleCopy;
+    } else if (viewForm === "2") {
+      titleStore = titleManual;
+    } else {
+      titleStore;
+    }
+    const data = {
+      judul_form: titleStore,
+      Pelatian_id: parseInt(router.query.id),
+      formBuilder: formBuilderStore,
+    };
+    if (simpleValidator.current.allValid()) {
+      dispatch(putTrainingStep2(token, data));
+      propsStep(3);
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -348,148 +204,114 @@ const EditRegistrationStep2 = ({token, propsStep}) => {
     }
   };
 
+  const viewRegistrationHandler = () => {
+    switch (viewForm) {
+      case "0":
+        return (
+          <FormManual
+            title={titleManual}
+            formBuilder={formBuilderManual}
+            funcTitle={(value) => setTitleManual(value)}
+            funcFormBuilder={(value) => setFormBuilderManual(value)}
+            funcModalShow={(value) => setModalShow(value)}
+            element={element}
+            size={size}
+            options={options}
+            dataOptions={dataOptions}
+          />
+        );
+        break;
+      case "1":
+        return (
+          <FormCopy
+            optionsForm={optionsForm}
+            title={titleCopy}
+            funcTitle={(value) => setTitleCopy(value)}
+            funcFormBuilder={(value) => setFormBuilderCopy(value)}
+            funcModalShow={(value) => setModalShow(value)}
+            token={token}
+          />
+        );
+        break;
+      case "2":
+        return (
+          <FormManual
+            title={titleManual}
+            formBuilder={formBuilderManual}
+            funcTitle={(value) => setTitleManual(value)}
+            funcFormBuilder={(value) => setFormBuilderManual(value)}
+            funcModalShow={(value) => setModalShow(value)}
+            element={element}
+            size={size}
+            options={options}
+            dataOptions={dataOptions}
+          />
+        );
+        break;
+      default:
+        return (
+          <FormManual
+            title={titleManual}
+            formBuilder={formBuilderManual}
+            funcTitle={(value) => setTitleManual(value)}
+            funcFormBuilder={(value) => setFormBuilderManual(value)}
+            funcModalShow={(value) => setModalShow(value)}
+            element={element}
+            size={size}
+            options={options}
+            dataOptions={dataOptions}
+          />
+        );
+        break;
+    }
+  };
+
   return (
     <div className="col-lg-12 order-1 px-0">
       <div className="card card-custom card-stretch gutter-b">
         <div className="card-body py-4">
           <form onSubmit={submitHandler}>
             <h3 className="font-weight-bolder pb-5 pt-4">Form Pendaftaran</h3>
+
             <div className="form-group mb-4">
               <label className="col-form-label font-weight-bold">
-                Judul Form
+                Tambah Form
               </label>
-              <input
-                type="text"
-                placeholder="Silahkan Masukan Judul Form"
-                className="form-control"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                autoComplete="off"
-              />
-            </div>
-
-            {formBuilder.map((row, i) => (
-              <div className="builder row" key={i}>
-                <div className="col-sm-12 col-md-2">
-                  <div className="form-group mb-2">
-                    <label className="col-form-label font-weight-bold">
-                      Nama Field
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      name="name"
-                      value={row.name}
-                      placeholder="Field"
-                      autoComplete="off"
-                      onChange={(e) => inputChangeHandler(e, i)}
-                    />
-                  </div>
-                </div>
-                <div className="col-sm-12 col-md-2">
-                  <div className="form-group mb-2">
-                    <label className="col-form-label font-weight-bold">
-                      Pilih Element
-                    </label>
-                    <select
-                      className="form-control"
-                      name="element"
-                      value={row.element}
-                      onChange={(e) => inputChangeHandler(e, i)}
-                    >
-                      <option value="" disabled selected>
-                        -- PILIH --
-                      </option>
-                      {element.map((el, i) => (
-                        <option key={i} value={el.value}>
-                          {el.name}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-                <div className="col-sm-12 col-md-2">
-                  <div className="form-group mb-2">
-                    <label className="col-form-label font-weight-bold">
-                      Size
-                    </label>
-                    <select
-                      className="form-control"
-                      name="size"
-                      value={row.size}
-                      onChange={(e) => inputChangeHandler(e, i)}
-                    >
-                      <option value="" disabled selected>
-                        -- PILIH --
-                      </option>
-                      {size.map((siz, i) => (
-                        <option key={i} value={siz.value}>
-                          {siz.name}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-
-                {renderMultipleHandler(row, i)}
-
-                <div className="col-sm-6 col-md-2">
-                  <label className="col-form-label font-weight-bold">
-                    Required
+              <div className="type-form">
+                <div className="form-check form-check-inline">
+                  <input
+                    className="form-check-input"
+                    type="radio"
+                    name="inlineRadioOptions"
+                    id="0-1"
+                    value="0"
+                    checked={
+                      (viewForm === "0" && true) || (viewForm === "2" && true)
+                    }
+                    onChange={(e) => setViewForm(e.target.value)}
+                  />
+                  <label className="form-check-label" htmlFor="0-1">
+                    Buat Manual || Copy & Edit
                   </label>
-                  <div className="d-flex align-items-end">
-                    <div className="form-group mr-7">
-                      <div className="form-check form-check-inline">
-                        <input
-                          type="checkbox"
-                          name="required"
-                          checked={row.required === "1" ? true : false}
-                          className="form-check-input"
-                          onChange={(e) => inputChangeHandler(e, i)}
-                        />
-                      </div>
-                    </div>
-                    {formBuilder.length !== 1 && row.key !== 1 ? (
-                      <button
-                        className="btn btn-link-action bg-danger text-white mb-3 ml-9"
-                        type="button"
-                        onClick={() => removeFieldHandler(i)}
-                      >
-                        <i className="ri-delete-bin-fill p-0 text-white"></i>
-                      </button>
-                    ) : (
-                      <button
-                        className="btn btn-link-action bg-danger text-white mb-3 ml-9 invisible"
-                        type="button"
-                        onClick={() => removeFieldHandler(i)}
-                      >
-                        <i className="ri-delete-bin-fill p-0 text-white"></i>
-                      </button>
-                    )}
-                  </div>
+                </div>
+                <div className="form-check form-check-inline">
+                  <input
+                    className="form-check-input"
+                    type="radio"
+                    name="inlineRadioOptions"
+                    id="1-2"
+                    value="1"
+                    checked={viewForm === "1" && true}
+                    onChange={(e) => setViewForm(e.target.value)}
+                  />
+                  <label className="form-check-label" htmlFor="1-2">
+                    Copy Form
+                  </label>
                 </div>
               </div>
-            ))} 
-
-            <div className="form-group mb-9 mt-4">
-              <div className="text-right">
-                <button
-                  className="btn btn-light-success mr-2"
-                  type="button"
-                  style={{ borderRadius: "30px", fontWeight: "600" }}
-                  onClick={showPreviewHandler}
-                >
-                  Review
-                </button>
-                <button
-                  className="btn btn-primary-rounded-full"
-                  type="button"
-                  onClick={addFieldHandler}
-                >
-                  <i className="ri-pencil-fill"></i> Tambah Field
-                </button>
-              </div>
             </div>
+
+            {viewRegistrationHandler()}
 
             <div className="form-group mt-9">
               <div className="text-right">
@@ -516,10 +338,28 @@ const EditRegistrationStep2 = ({token, propsStep}) => {
         centered
       >
         <ModalPreview
-          propsTitle={title}
-          propsForm={formBuilder}
+          propsTitle={
+            viewForm === "0"
+              ? titleManual
+              : viewForm === "1"
+              ? titleCopy
+              : viewForm === "2" && titleManual
+          }
+          propsForm={
+            viewForm === "0"
+              ? formBuilderManual
+              : viewForm === "1"
+              ? formBuilderCopy
+              : viewForm === "2" && formBuilderManual
+          }
           propsModalShow={modalShow}
-          sendPropsFormBuilder={(form) => setFormBuilder(form)}
+          sendPropsFormBuilder={(form) => {
+            viewForm === "0"
+              ? setFormBuilderManual(form)
+              : viewForm === "1"
+              ? setFormBuilderCopy(form)
+              : viewForm === "2" && setFormBuilderManual(form);
+          }}
           sendPropsModalShow={(value) => setModalShow(value)}
         />
       </Modal>

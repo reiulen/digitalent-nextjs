@@ -5,12 +5,12 @@ import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
 import { Container } from "react-bootstrap"
 
-import styles from "../../components/template/Sidebar.module.css";
+import styles from "../../../../user-component/components/template/Sidebar.module.css";
 
-import { getAllFaq } from "../../../redux/actions/beranda/faq-content.actions";
+import { getAllFaq } from "../../../../redux/actions/beranda/faq-content.actions";
 import { set } from "js-cookie";
-import PulseLoaderRender from "../../components/loader/PulseLoader";
-import SubHeaderComponent from "../../components/template/Subheader.component";
+import PulseLoaderRender from "../../../../user-component-new/components/loader/PulseLoader";
+import SubHeaderComponent from "../../../../user-component/components/template/Subheader.component";
 
 const FaqPage = () => {
     const dispatch = useDispatch();
