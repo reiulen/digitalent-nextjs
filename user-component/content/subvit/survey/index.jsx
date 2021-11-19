@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 import Image from "next/dist/client/image";
+import Dot from "../../../../public/assets/media/logos/dot.png";
 import { useSelector } from "react-redux";
 import ModalHeader from "react-bootstrap/esm/ModalHeader";
 import {
@@ -349,12 +350,22 @@ const SubtansiUser = ({ token }) => {
               <table>
                 <tr>
                   <td className={styles.academy}>
-                    {(data && data.academy) || "FGA"}
+                    {(data && data.academy) || "-"}
+                  </td>
+                  <td>&nbsp;</td>
+                  <td style={{ position: "relative", paddingBottom: "5px" }}>
+                    <Image
+                      alt=""
+                      src={Dot}
+                      width={5}
+                      height={5}
+                      className={styles.dot}
+                    />
                   </td>
 
                   <td>&nbsp;</td>
                   <td className={styles.training}>
-                    {(data && data.theme) || "Cloud Computing"}
+                    {(data && data.theme) || "-"}
                   </td>
                 </tr>
               </table>
@@ -402,8 +413,301 @@ const SubtansiUser = ({ token }) => {
                   </p>
                 </Col>
               </Row>
+              {data[parseInt(router.query.id) - 1].type ===
+                "triggered_question" && (
+                <>
+                  <h1 className={styles.soal}>
+                    {data &&
+                    data[parseInt(router.query.id) - 1].question_image !==
+                      null &&
+                    data[parseInt(router.query.id) - 1].question_image !==
+                      "" ? (
+                      <div className="d-flex flex-row">
+                        <div className="p-2">
+                          {" "}
+                          <Image
+                            src={
+                              process.env.END_POINT_API_IMAGE_SUBVIT +
+                                data[parseInt(router.query.id) - 1]
+                                  ?.question_image || defaultImage
+                            }
+                            alt=""
+                            width={150}
+                            ndl
+                            height={150}
+                          />
+                        </div>
+                        <div className="p-5">
+                          {data &&
+                            data[parseInt(router.query.id) - 1]?.question}
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="p-2">
+                        {data && data[parseInt(router.query.id) - 1]?.question}
+                      </div>
+                    )}
+                  </h1>
+                  <hr
+                    hidden={data[parseInt(router.query.id) - 1].open === true}
+                  />
+                  {data &&
+                  data[parseInt(router.query.id) - 1]?.answer !== null &&
+                  data &&
+                  data[parseInt(router.query.id) - 1].open === true
+                    ? data[parseInt(router.query.id) - 1]?.answer
+                        .filter(
+                          (data) =>
+                            data.key === localStorage.getItem(router.query.id)
+                        )
+                        .map((item, index) => {
+                          return (
+                            <>
+                              {item.image !== null && item.image !== "" ? (
+                                <div className="d-flex flex-row">
+                                  <div className="p-2">
+                                    <Image
+                                      src={
+                                        process.env.END_POINT_API_IMAGE_SUBVIT +
+                                          item.image || defaultImage
+                                      }
+                                      alt=""
+                                      width={70}
+                                      height={70}
+                                    />
+                                  </div>
+                                  <div
+                                    className="p-4"
+                                    style={{ width: "100%", height: "100%" }}
+                                  >
+                                    <Card
+                                      className={
+                                        multipleAnswer.includes(item.key)
+                                          ? styles.answer
+                                          : styles.boxAnswer
+                                      }
+                                      key={index}
+                                      onClick={() => {
+                                        handleAnswer(item, index);
+                                        // console.log(multi);
+                                      }}
+                                    >
+                                      <table>
+                                        <tr>
+                                          <td style={{ width: "5px" }}>
+                                            {item.key}
+                                          </td>
+                                          <td style={{ width: "15px" }}>.</td>
+                                          <td>{item.option}</td>
+                                        </tr>
+                                      </table>
+                                    </Card>
+                                  </div>
+                                </div>
+                              ) : (
+                                <Card
+                                  className={
+                                    multipleAnswer.includes(item.key)
+                                      ? styles.answer
+                                      : styles.boxAnswer
+                                  }
+                                  key={index}
+                                  onClick={() => {
+                                    handleAnswer(item, index);
+                                    // console.log(multi);
+                                  }}
+                                >
+                                  <table>
+                                    <tr>
+                                      <td style={{ width: "5px" }}>
+                                        {item.key}
+                                      </td>
+                                      <td style={{ width: "15px" }}>.</td>
+                                      <td>{item.option} </td>
+                                    </tr>
+                                  </table>
+                                </Card>
+                              )}
+                            </>
+                          );
+                        })
+                    : data[parseInt(router.query.id) - 1]?.answer &&
+                      data[parseInt(router.query.id) - 1]?.answer.map(
+                        (item, index) => {
+                          return (
+                            <>
+                              {item.image !== null && item.image !== "" ? (
+                                <div className="d-flex flex-row">
+                                  <div className="p-2">
+                                    <Image
+                                      src={
+                                        process.env.END_POINT_API_IMAGE_SUBVIT +
+                                          item.image || defaultImage
+                                      }
+                                      alt=""
+                                      width={70}
+                                      height={70}
+                                    />
+                                  </div>
+                                  <div
+                                    className="p-4"
+                                    style={{ width: "100%", height: "100%" }}
+                                  >
+                                    <Card
+                                      className={
+                                        multipleAnswer.includes(item.key)
+                                          ? styles.answer
+                                          : styles.boxAnswer
+                                      }
+                                      key={index}
+                                      onClick={() => {
+                                        handleAnswer(item, index);
+                                        // console.log(multi);
+                                      }}
+                                    >
+                                      <table>
+                                        <tr>
+                                          <td style={{ width: "5px" }}>
+                                            {item.key}
+                                          </td>
+                                          <td style={{ width: "15px" }}>.</td>
+                                          <td>{item.option}</td>
+                                        </tr>
+                                      </table>
+                                    </Card>
+                                  </div>
+                                </div>
+                              ) : (
+                                <Card
+                                  className={
+                                    multipleAnswer.includes(item.key)
+                                      ? styles.answer
+                                      : styles.boxAnswer
+                                  }
+                                  key={index}
+                                  onClick={() => {
+                                    handleAnswer(item, index);
+                                    // console.log(multi);
+                                  }}
+                                >
+                                  <table>
+                                    <tr>
+                                      <td style={{ width: "5px" }}>
+                                        {item.key}
+                                      </td>
+                                      <td style={{ width: "15px" }}>.</td>
+                                      <td>{item.option} </td>
+                                    </tr>
+                                  </table>
+                                </Card>
+                              )}
+                            </>
+                          );
+                        }
+                      )}
+                </>
+              )}
 
-              <h1 className={styles.soal}>
+              {data[parseInt(router.query.id) - 1].type ===
+                "multiple_choice" && (
+                <>
+                  <h1 className={styles.soal}>
+                    {data &&
+                    data[parseInt(router.query.id) - 1].question_image !==
+                      null &&
+                    data[parseInt(router.query.id) - 1].question_image !==
+                      "" ? (
+                      <div className="d-flex flex-row">
+                        <div className="p-2">
+                          {" "}
+                          <Image
+                            src={
+                              process.env.END_POINT_API_IMAGE_SUBVIT +
+                                data[parseInt(router.query.id) - 1]
+                                  ?.question_image || defaultImage
+                            }
+                            alt=""
+                            width={150}
+                            ndl
+                            height={150}
+                          />
+                        </div>
+                        <div className="p-5">
+                          {data &&
+                            data[parseInt(router.query.id) - 1]?.question}
+                          <br />
+                          <br />
+                          <span className={styles.multipleChoice}>
+                            Anda dapat memilih lebih dari 1 jawaban
+                          </span>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="p-2">
+                        {data && data[parseInt(router.query.id) - 1]?.question}
+                        <br />
+                        <br />
+                        <span className={styles.multipleChoice}>
+                          Anda dapat memilih lebih dari 1 jawaban
+                        </span>
+                      </div>
+                    )}
+                  </h1>
+                  <hr />
+                </>
+              )}
+
+              {data[parseInt(router.query.id) - 1].type ===
+                "pertanyaan_terbuka" && (
+                <>
+                  <h1 className={styles.soal}>
+                    {data &&
+                    data[parseInt(router.query.id) - 1].question_image !==
+                      null &&
+                    data[parseInt(router.query.id) - 1].question_image !==
+                      "" ? (
+                      <div className="d-flex flex-row">
+                        <div className="p-2">
+                          {" "}
+                          <Image
+                            src={
+                              process.env.END_POINT_API_IMAGE_SUBVIT +
+                                data[parseInt(router.query.id) - 1]
+                                  ?.question_image || defaultImage
+                            }
+                            alt=""
+                            width={150}
+                            ndl
+                            height={150}
+                          />
+                        </div>
+                        <div className="p-5">
+                          {data &&
+                            data[parseInt(router.query.id) - 1]?.question}
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="p-2">
+                        {data && data[parseInt(router.query.id) - 1]?.question}
+                      </div>
+                    )}
+                  </h1>
+                  <hr />
+                  <Form>
+                    <Form.Control
+                      as="textarea"
+                      rows={5}
+                      placeholder="Jelaskan jawaban Anda di sini..."
+                      className={styles.textArea}
+                      onChange={(event) => handleAnswerText(event)}
+                      value={localStorage.getItem(`${router.query.id}`)}
+                    />
+                  </Form>
+                </>
+              )}
+
+              {/* BEFORE REVISION */}
+              {/* <h1 className={styles.soal}>
                 {data &&
                 data[parseInt(router.query.id) - 1].question_image !== null &&
                 data[parseInt(router.query.id) - 1].question_image !== "" ? (
@@ -452,9 +756,9 @@ const SubtansiUser = ({ token }) => {
                 ) : (
                   data && data && data[parseInt(router.query.id) - 1].question
                 )}
-              </h1>
-              <hr hidden={data[parseInt(router.query.id) - 1].open === true} />
-              {data &&
+              </h1> */}
+              {/* <hr hidden={data[parseInt(router.query.id) - 1].open === true} /> */}
+              {/* {data &&
               data[parseInt(router.query.id) - 1]?.answer !== null &&
               data &&
               data[parseInt(router.query.id) - 1].open === true
@@ -626,7 +930,7 @@ const SubtansiUser = ({ token }) => {
                         </>
                       );
                     }
-                  )}
+                  )} */}
               {data[parseInt(router.query.id) - 1].type === "multiple_choice" &&
                 data[parseInt(router.query.id) - 1]?.answer &&
                 data[parseInt(router.query.id) - 1]?.answer.map(
@@ -677,19 +981,6 @@ const SubtansiUser = ({ token }) => {
                 </>
               )}
 
-              {data[parseInt(router.query.id) - 1].type ===
-                "pertanyaan_terbuka" && (
-                <Form>
-                  <Form.Control
-                    as="textarea"
-                    rows={5}
-                    placeholder="Jelaskan jawaban Anda di sini..."
-                    className={styles.textArea}
-                    onChange={() => handleAnswerText(event)}
-                    value={localStorage.getItem(`${router.query.id}`)}
-                  />
-                </Form>
-              )}
               <Row style={{ marginTop: "20px" }}>
                 <Col className={styles.btnBackResponsive}>
                   <Button
