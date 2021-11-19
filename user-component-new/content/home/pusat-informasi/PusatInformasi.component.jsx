@@ -14,7 +14,7 @@ const PusatInformasi = () => {
       <div>
         {/* content */}
         <h1 className="fw-700 fz-36">Pusat Informasi</h1>
-        <p className="mr-6 fz-18 text-muted fw-500">
+        <p className="mr-6 fz-18 text-muted fw-400">
           Pusat Informasi untuk Panduan Test Substansi dan Hak & Kewajiban
         </p>
         <div className="border px-6 py-10 mt-10">
