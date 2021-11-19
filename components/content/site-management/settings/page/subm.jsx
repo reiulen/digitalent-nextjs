@@ -215,10 +215,10 @@ export default function SUBM(props) {
   return (
     <div className="col-xl-8 styling-content-pelatihan">
       <form>
-        <div className="notification-title">
+        <div className="notification-title border-resnponsive mr-4">
           <h1>Status Update & Broadcast Email</h1>
         </div>
-        <div className="form-group my-4">
+        <div className="form-group my-4 mr-4">
           <h3 className="judul">Judul</h3>
           <input
             type="text"
@@ -233,7 +233,7 @@ export default function SUBM(props) {
           />
         </div>
         <h3 className="judul my-2">Data List Peserta</h3>
-        <div className="form-check d-flex pl-0 mb-4">
+        <div className="form-check d-flex pl-0 mb-4 mr-4">
           <div className="d-flex custom-control custom-radio styling-radio mr-4">
             <input
               className="form-check-input"
@@ -258,14 +258,14 @@ export default function SUBM(props) {
                 setVia(e.target.value);
               }}
             />
-            <h3 className="judul">Via Filter</h3>
+            <h3 className="judul pt-4">Via Filter</h3>
           </div>
         </div>
 
         {via === "template" && (
           <div className="mt-4">
             <div className="row">
-              <div className="col">
+              <div className="col mt-5">
                 <div className="title-unduh mb-5">
                   <h3 className="judul">Unduh Template Data Peserta</h3>
                 </div>
@@ -294,7 +294,7 @@ export default function SUBM(props) {
                   </div>
                 </div>
               </div>
-              <div className="col">
+              <div className="col mt-5">
                 <div className="title-unduh">
                   <h3 className="judul">Upload Data Peserta</h3>
                 </div>
@@ -324,7 +324,7 @@ export default function SUBM(props) {
                 </div>
               </div>
             </div>
-            <p className="border-bottom mt-4 pb-3">
+            <p className="border-bottom mt-4 pb-3 text-muted">
               *Isi Template Data Peserta Dengan Nomor Registrasi
             </p>
           </div>
@@ -333,7 +333,7 @@ export default function SUBM(props) {
         {via === "filter" && (
           <div className="mt-4">
             <div className="row border-bottom">
-              <div className="form-group col-xl-6">
+              <div className="form-group col-xl-6 mr-4">
                 <h3 className="judul">Tahun</h3>
                 <select
                   className="form-control"
@@ -348,7 +348,7 @@ export default function SUBM(props) {
                   {listYears}
                 </select>
               </div>
-              <div className="form-group col-xl-6">
+              <div className="form-group col-xl-6 mr-4">
                 <h3 className="judul">Akademi</h3>
                 <select
                   className="form-control"
@@ -363,7 +363,7 @@ export default function SUBM(props) {
                   {optAcademy}
                 </select>
               </div>
-              <div className="form-group col-xl-6">
+              <div className="form-group col-xl-6 mr-4">
                 <h3 className="judul">Tema</h3>
                 <select
                   className="form-control"
@@ -378,7 +378,7 @@ export default function SUBM(props) {
                   {optTheme}
                 </select>
               </div>
-              <div className="form-group col-xl-6">
+              <div className="form-group col-xl-6 mr-4">
                 <h3 className="judul">Penyelenggara</h3>
                 <select
                   className="form-control"
@@ -393,7 +393,7 @@ export default function SUBM(props) {
                   {optOrganizer}
                 </select>
               </div>
-              <div className="form-group col-xl-6">
+              <div className="form-group col-xl-6 mr-4">
                 <h3 className="judul">Pelatihan</h3>
                 <select
                   className="form-control"
@@ -408,7 +408,7 @@ export default function SUBM(props) {
                   {optTraining}
                 </select>
               </div>
-              <div className="form-group col-xl-6">
+              <div className="form-group col-xl-6 mr-4">
                 <h3 className="judul">Status Profil</h3>
                 <select
                   className="form-control"
@@ -423,7 +423,7 @@ export default function SUBM(props) {
                   {optStatusProfile}
                 </select>
               </div>
-              <div className="form-group col-xl-6">
+              <div className="form-group col-xl-6 mr-4">
                 <h3 className="judul">Status Seleksi</h3>
                 <select
                   className="form-control"
@@ -467,7 +467,7 @@ export default function SUBM(props) {
           </span>
         </div>
         <div className="status-peserta">
-          <div className="form-group">
+          <div className="form-group mr-4">
             <h3 className="mb-4 judul">Status</h3>
             <select
               className="form-control"
@@ -499,7 +499,7 @@ export default function SUBM(props) {
             </select>
           </div>
         </div>
-        <div className="update-status">
+        <div className="update-status mr-4">
           <h3 className="mb-4 judul">Broadcast Email & Send Notification</h3>
           <span className="d-flex switch switch-primary status-peserta">
             <label>
@@ -519,7 +519,7 @@ export default function SUBM(props) {
             </h3>
           </span>
         </div>
-        <div className="form-group">
+        <div className="form-group mr-4">
           <h3 className="judul">Subjek Email</h3>
           <input
             type="text"
@@ -533,7 +533,7 @@ export default function SUBM(props) {
             required
           />
         </div>
-        <div className="form-group">
+        <div className="form-group mr-4">
           <h3 className="judul">Konten Email</h3>
           <CKEditor
             editor={ClassicEditor}
@@ -544,7 +544,7 @@ export default function SUBM(props) {
             }}
           />
         </div>
-        <div className="d-flex justify-content-end mb-4">
+        <div className="d-flex justify-content-end mb-4 mr-4">
           <button type="reset" className="btn btn-reset" onClick={() => {
              setVia("template");
              setTitle("");
