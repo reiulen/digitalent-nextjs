@@ -26,17 +26,26 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
   const [, forceUpdate] = useState();
 
   const { error: errorDataPribadi, dataPribadi } = useSelector(
-    state => state.getDataPribadi
+    (state) => state.getDataPribadi
   );
 
   const {
     error: errorUpdateData,
     loading,
     success,
-  } = useSelector(state => state.updateDataPribadi);
+  } = useSelector((state) => state.updateDataPribadi);
   const { error: errorAgama, data: dataAgama } = useSelector(
-    state => state.drowpdownAgama
+    (state) => state.drowpdownAgama
   );
+
+  const { error: errorTempatLahir, data: dataTempatLahir } = useSelector(
+    (state) => state.drowpdownTempatLahir.data
+  );
+  let optionsTempatLahir = [];
+
+  dataTempatLahir.list_signatures.map((item) => {
+    return optionsTempatLahir.push({ label: item.label, value: item.id });
+  });
 
   const [name, setName] = useState((dataPribadi && dataPribadi.name) || "");
   const [email, setEmail] = useState((dataPribadi && dataPribadi.email) || "");
@@ -51,7 +60,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
     (dataPribadi && dataPribadi.agama) || null
   );
   const [tempatLahir, setTempatLahir] = useState(
-    (dataPribadi && dataPribadi.tempat_lahir) || ""
+    (dataPribadi && dataPribadi.tempat_lahir) || null
   );
   const [tanggalLahir, setTanggalLahir] = useState(
     (dataPribadi && moment(dataPribadi.tanggal_lahir).format("YYYY-MM-DD")) ||
@@ -111,7 +120,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
     }
   }, [errorUpdateData, success, dispatch, funcViewEdit]);
 
-  const onChangeKtp = e => {
+  const onChangeKtp = (e) => {
     const type = ["image/jpg", "image/png", "image/jpeg", "application/pdf"];
     if (e.target.files[0]) {
       if (type.includes(e.target.files[0].type)) {
@@ -168,7 +177,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
   //     }
   //   }
   // };
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
       const data = {
@@ -176,7 +185,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
         name,
         jenis_kelamin: kelamin.label || kelamin,
         agama: agama.label || agama,
-        tempat_lahir: tempatLahir,
+        tempat_lahir: tempatLahir.label || tempatLahir,
         tanggal_lahir: tanggalLahir,
         hubungan: hubunganUrgent,
         nama_kontak_darurat: nameUrgent,
@@ -185,7 +194,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
         nomorHandphone,
         email,
       };
-      console.log(data);
+
       dispatch(updateProfileDataPribadi(data, token));
     } else {
       simpleValidator.current.showMessages();
@@ -212,7 +221,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
   const [crop, setCrop] = useState({ unit: "%", width: 30, aspect: 9 / 9 });
   const [completedCrop, setCompletedCrop] = useState(null);
 
-  const onSelectFile = e => {
+  const onSelectFile = (e) => {
     if (e.target.files && e.target.files.length > 0) {
       const reader = new FileReader();
       reader.addEventListener("load", () => setUpImg(reader.result));
@@ -220,7 +229,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
     }
   };
 
-  const onLoad = useCallback(img => {
+  const onLoad = useCallback((img) => {
     imgRef.current = img;
   }, []);
 
@@ -279,12 +288,12 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
         data,
         config
       )
-      .then(res => {
+      .then((res) => {
         setShowUpdateGambar(false);
         toast.success("Berhasil Update");
         dispatch(getDataPribadi(token));
       })
-      .catch(err => {
+      .catch((err) => {
         toast.error("gagal");
       });
   };
@@ -394,8 +403,8 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
                           src={upImg}
                           onImageLoaded={onLoad}
                           crop={crop}
-                          onChange={c => setCrop(c)}
-                          onComplete={c => setCompletedCrop(c)}
+                          onChange={(c) => setCrop(c)}
+                          onComplete={(c) => setCompletedCrop(c)}
                         />
                       </Col>
                       <Col md={6}>
@@ -442,7 +451,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
                 className={style.formControl}
                 placeholder="Masukan Nama Lengkap"
                 value={name}
-                onChange={e => setName(e.target.value)}
+                onChange={(e) => setName(e.target.value)}
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("nama lengkap")
                 }
@@ -464,7 +473,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
                 type="email"
                 placeholder="Masukan Email"
                 value={email}
-                onChange={e => setEmail(e.target.value)}
+                onChange={(e) => setEmail(e.target.value)}
                 onBlur={() => simpleValidator.current.showMessageFor("email")}
               />
               {simpleValidator.current.message("email", email, "required", {
@@ -481,7 +490,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
                 type="text"
                 placeholder="Masukan NIK"
                 value={nik}
-                onChange={e => setNik(e.target.value)}
+                onChange={(e) => setNik(e.target.value)}
                 onBlur={() => simpleValidator.current.showMessageFor("nik")}
               />
               {simpleValidator.current.message("nik", nik, "required|integer", {
@@ -497,7 +506,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
                 }`}
                 options={optionsKelamin}
                 defaultValue={{ value: kelamin, label: kelamin }}
-                onChange={e => setKelamin({ label: e.label, value: e.value })}
+                onChange={(e) => setKelamin({ label: e.label, value: e.value })}
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("jenis kelamin")
                 }
@@ -521,7 +530,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
                 type="text"
                 placeholder="Masukan Nomor Handphone"
                 value={nomorHandphone}
-                onChange={e => setNomorHandphone(e.target.value)}
+                onChange={(e) => setNomorHandphone(e.target.value)}
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("nomor handphone")
                 }
@@ -544,7 +553,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
                 }`}
                 options={optionsAgama}
                 defaultValue={{ value: agama, label: agama }}
-                onChange={e => setAgama({ label: e.label, value: e.value })}
+                onChange={(e) => setAgama({ label: e.label, value: e.value })}
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("jenis kelamin")
                 }
@@ -559,19 +568,34 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
           <Row className="mb-3">
             <Form.Group as={Col} md={6}>
               <Form.Label className={style.label}>Tempat Lahir</Form.Label>
-              <Form.Control
+              {/* <Form.Control
                 className={style.formControl}
                 type="text"
                 placeholder="Masukan Tempat Lahir"
                 value={tempatLahir}
-                onChange={e => setTempatLahir(e.target.value)}
+                onChange={(e) => setTempatLahir(e.target.value)}
+                onBlur={() =>
+                  simpleValidator.current.showMessageFor("tempat lahir")
+                }
+              /> */}
+              <Select
+                placeholder={
+                  (dataPribadi && dataPribadi.tempat_lahir) === ""
+                    ? "Silahkan Pilih Kecamatan"
+                    : dataPribadi && dataPribadi.tempat_lahir
+                }
+                defaultValue={tempatLahir}
+                options={optionsTempatLahir}
+                onChange={(e) => {
+                  setTempatLahir({ label: e?.label, value: e?.value });
+                }}
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("tempat lahir")
                 }
               />
 
               {simpleValidator.current.message(
-                "templat lahir",
+                "tempat lahir",
                 tempatLahir,
                 "required",
                 {
@@ -586,7 +610,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
                 className={style.formControl}
                 type="date"
                 value={tanggalLahir}
-                onChange={e => setTanggalLahir(e.target.value)}
+                onChange={(e) => setTanggalLahir(e.target.value)}
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("tanggal lahir")
                 }
@@ -612,7 +636,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
               className={style.formControl}
               placeholder="Masukan Nama Lengkap"
               value={nameUrgent}
-              onChange={e => setNameUrgent(e.target.value)}
+              onChange={(e) => setNameUrgent(e.target.value)}
               onBlur={() =>
                 simpleValidator.current.showMessageFor("nama lengkap darurat")
               }
@@ -634,7 +658,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
                 type="text"
                 placeholder="Masukan Nomor Handphone"
                 value={nomorUrgent}
-                onChange={e => {
+                onChange={(e) => {
                   if (
                     e.target.value === "" ||
                     helperRegexNumber.test(e.target.value)
@@ -666,7 +690,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
                 type="text"
                 placeholder="Masukan Hubungan"
                 value={hubunganUrgent}
-                onChange={e => setHubunganUrgent(e.target.value)}
+                onChange={(e) => setHubunganUrgent(e.target.value)}
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("hubungan darurat")
                 }

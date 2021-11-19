@@ -35,6 +35,8 @@ import {
   ERROR_DROPDOWN_PROVINSI,
   GET_DROPDOWN_KABUPATEN,
   ERROR_DROPDOWN_KABUPATEN,
+  GET_DROPDOWN_TEMPAT_LAHIR,
+  ERROR_DROPDOWN_TEMPAT_LAHIR,
   GET_DROPDOWN_KABUPATEN_DOMISILI,
   ERROR_DROPDOWN_KABUPATEN_DOMISILI,
   GET_DROPDOWN_PROVINSI_TO_DESA,
@@ -493,6 +495,26 @@ export const drowpdownKecamatanToDesaReducers = (
         data: action.payload,
       };
     case ERROR_DROPDOWN_KECAMATAN_TO_DESA:
+      return {
+        error: action.payload,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};
+
+export const drowpdownTempatLahirReducers = (state = { data: [] }, action) => {
+  switch (action.type) {
+    case GET_DROPDOWN_TEMPAT_LAHIR:
+      return {
+        data: action.payload,
+      };
+    case ERROR_DROPDOWN_TEMPAT_LAHIR:
       return {
         error: action.payload,
       };

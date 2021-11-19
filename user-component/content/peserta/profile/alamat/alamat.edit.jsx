@@ -134,8 +134,6 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
       return optionsKelurahan.push({ label: item.value, value: item.id });
     });
 
-  console.log(optionsKelurahan);
-
   const optionsKabupatenDomisili = [];
   if (dataKabupatenDomisili?.length !== 0) {
     for (let index = 0; index < dataKabupatenDomisili.data.length; index++) {
@@ -566,7 +564,7 @@ const AlamatEdit = ({ funcViewEdit, token, wizzard, globalData }) => {
     e.preventDefault();
     simpleValidator.current.fields["kota domisili"] = true;
     simpleValidator.current.fields["kota ktp"] = true;
-    console.log(simpleValidator.current.fields);
+
     if (simpleValidator.current.allValid()) {
       const data = {
         address_ktp: alamatKtp,
