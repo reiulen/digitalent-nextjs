@@ -12,7 +12,7 @@ export default function Kontak() {
         <BreadcrumbComponent data={[{ link: router.asPath, name: "kontak" }]} />
         <div className="col-12 mt-5">
           <h1 className="fw-700 fz-36">Kontak</h1>
-          <p className="mr-6 fz-18 text-muted fw-500">
+          <p className="mr-6 fz-18 text-muted fw-400">
             Layanan Contact Center Digital Talent Scholarship
           </p>
         </div>
