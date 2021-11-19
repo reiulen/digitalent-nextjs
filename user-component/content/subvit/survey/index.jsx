@@ -255,7 +255,7 @@ const SubtansiUser = ({ token }) => {
   };
 
   const handleAnswerTriggered = (e) => {
-    localStorage.setItem(`${router.query.id}`, e.key);
+    localStorage.setItem(`${router.query.id}a`, e.key);
   };
 
   const handleAnswer = (e, id) => {
@@ -482,7 +482,9 @@ const SubtansiUser = ({ token }) => {
                                   >
                                     <Card
                                       className={
-                                        multipleAnswer.includes(item.key)
+                                        localStorage.getItem(
+                                          router.query.id
+                                        ) === item.key
                                           ? styles.answer
                                           : styles.boxAnswer
                                       }
@@ -507,7 +509,8 @@ const SubtansiUser = ({ token }) => {
                               ) : (
                                 <Card
                                   className={
-                                    multipleAnswer.includes(item.key)
+                                    localStorage.getItem(router.query.id) ===
+                                    item.key
                                       ? styles.answer
                                       : styles.boxAnswer
                                   }
@@ -555,7 +558,9 @@ const SubtansiUser = ({ token }) => {
                                   >
                                     <Card
                                       className={
-                                        multipleAnswer.includes(item.key)
+                                        localStorage.getItem(
+                                          router.query.id
+                                        ) === item.key
                                           ? styles.answer
                                           : styles.boxAnswer
                                       }
@@ -580,7 +585,8 @@ const SubtansiUser = ({ token }) => {
                               ) : (
                                 <Card
                                   className={
-                                    multipleAnswer.includes(item.key)
+                                    localStorage.getItem(router.query.id) ===
+                                    item.key
                                       ? styles.answer
                                       : styles.boxAnswer
                                   }
@@ -931,7 +937,7 @@ const SubtansiUser = ({ token }) => {
                       );
                     }
                   )} */}
-              {data[parseInt(router.query.id) - 1].type === "multiple_choice" &&
+              {/* {data[parseInt(router.query.id) - 1].type === "multiple_choice" &&
                 data[parseInt(router.query.id) - 1]?.answer &&
                 data[parseInt(router.query.id) - 1]?.answer.map(
                   (item, index) => {
@@ -946,7 +952,7 @@ const SubtansiUser = ({ token }) => {
                       </>
                     );
                   }
-                )}
+                )} */}
 
               {data[parseInt(router.query.id) - 1].open === true && (
                 <>
@@ -964,7 +970,12 @@ const SubtansiUser = ({ token }) => {
                     ].sub[0].answer.map((item, index) => {
                       return (
                         <Card
-                          className={styles.boxAnswer}
+                          className={
+                            localStorage.getItem(`${router.query.id}a`) ===
+                            item.key
+                              ? styles.answer
+                              : styles.boxAnswer
+                          }
                           key={index}
                           onClick={() => handleAnswerTriggered(item, index)}
                         >
