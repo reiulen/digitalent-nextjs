@@ -82,8 +82,6 @@ const DashboardSiteManagement = ({ token, user }) => {
     );
   });
 
-  console.log(allDataPeserta);
-
   const tablePeserta = allDataPeserta.map((item, index) => {
     return (
       <tr key={index}>
