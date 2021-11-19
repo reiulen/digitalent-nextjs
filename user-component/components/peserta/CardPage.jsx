@@ -34,12 +34,15 @@ const CardPage = ({
             backgroundPosition: "right top",
           }}
         >
-          <Card.Body>
+          <Card.Body
+            className="d-flex flex-column justify-content-between"
+            style={{ height: "180px" }}
+          >
             <p
               style={{
                 fontSize: "16px",
                 fontWeight: "600",
-                width: isSubvit ? "max-content" : "200px",
+                width: isSubvit ? "max-content" : "100%",
                 color: color,
               }}
             >
@@ -50,6 +53,7 @@ const CardPage = ({
               <Button
                 variant={background}
                 className="font-weight-bolder rounded-full"
+                style={{ width: "max-content" }}
               >
                 {text}
               </Button>

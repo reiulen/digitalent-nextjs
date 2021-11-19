@@ -163,7 +163,7 @@ const StepTwo = ({ token }) => {
           }
         });
 
-        const answers = JSON.stringify(answer);
+        const answers = answer;
         if (valid) {
           const data = {
             survey_question_bank_id: id,
@@ -189,7 +189,7 @@ const StepTwo = ({ token }) => {
           }
         });
 
-        const answers_multiple = JSON.stringify(answer_multiple);
+        const answers_multiple = answer_multiple;
         if (valid) {
           const data = {
             survey_question_bank_id: id,
@@ -226,7 +226,7 @@ const StepTwo = ({ token }) => {
           }
         });
 
-        const answers_triggered = JSON.stringify(answer_triggered);
+        const answers_triggered = answer_triggered;
         if (valid) {
           const data = {
             survey_question_bank_id: id,
@@ -280,7 +280,7 @@ const StepTwo = ({ token }) => {
           }
         });
 
-        const answers = JSON.stringify(answer);
+        const answers = answer;
         if (valid) {
           const data = {
             survey_question_bank_id: id,
@@ -306,7 +306,7 @@ const StepTwo = ({ token }) => {
           }
         });
 
-        const answers_multiple = JSON.stringify(answer_multiple);
+        const answers_multiple = answer_multiple;
         if (valid) {
           const data = {
             survey_question_bank_id: id,
@@ -328,6 +328,7 @@ const StepTwo = ({ token }) => {
             question_image,
             type: methodAdd,
           };
+
           dispatch(newSurveyQuestionDetail(data, token));
         }
         break;
@@ -343,7 +344,7 @@ const StepTwo = ({ token }) => {
           }
         });
 
-        const answers_triggered = JSON.stringify(answer_triggered);
+        const answers_triggered = answer_triggered;
         if (valid) {
           const data = {
             survey_question_bank_id: id,

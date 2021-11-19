@@ -152,7 +152,7 @@
   letter-spacing: 0.015em;
   margin-top: 20px;
   /* Neutral/White */
-
+  text-transform: uppercase;
   color: #ffffff;
 }
 .nik {
