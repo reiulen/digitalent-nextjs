@@ -94,14 +94,15 @@ const DataParticipant = ({ token }) => {
   });
 
   const optionsPeserta = [
-    { value: "menunggu", label: "Menunggu" },
+    { value: "sleksi administrasi", label: "Seleksi Administrasi" },
     { value: "tidak lulus administrasi", label: "Tidak Lulus Administrasi" },
     { value: "tes substansi", label: "Tes Substansi" },
     { value: "tidak lulus tes substansi", label: "Tidak Lulus Tes Substansi" },
-    { value: "lulus tes substansi", label: "Lulus Tes Substansi" },
+    { value: "seleksi akhir", label: "Seleksi Akhir" },
     { value: "ditolak", label: "Ditolak" },
     { value: "diterima", label: "Diterima" },
     { value: "pelatihan", label: "Pelatihan" },
+    { value: "administrasi akhir", label: "Administrasi Akhir" },
     { value: "lulus pelatihan", label: "Lulus Pelatihan" },
     { value: "tidak lulus pelatihan", label: "Tidak Lulus Pelatihan" },
   ];
@@ -246,10 +247,16 @@ const DataParticipant = ({ token }) => {
 
           <div className="card-body pb-0">
             <div className="row">
-              <div className="col-md-12">
+              <div className="col-md-6">
                 <p className="text-neutral-body my-0">Test Substansi</p>
                 <p className="text-success">
                   {peserta.list[0].subtansi_status || "-"}
+                </p>
+              </div>
+              <div className="col-md-6">
+                <p className="text-neutral-body my-0">Survey</p>
+                <p className="text-dark">
+                  {peserta.list[0].survey_status || "Belum Tersedia"}
                 </p>
               </div>
             </div>

@@ -34,7 +34,24 @@ const ProfileUser = ({ profile }) => {
             </div>
             <div className="col-md-9">
               <div className="data-pribadi">
-                <h3 className="font-weight-bolder mb-4">Data Pribadi</h3>
+                <div className="title d-flex align-items-center mb-3">
+                  <h3 className="font-weight-bolder mr-5">Data Pribadi</h3>
+                  <button
+                    className="btn btn-light-success fw-600 rounded-xl"
+                    style={{
+                      backgroundColor: "#E6FFF7",
+                      color: "#00B27A",
+                    }}
+                  >
+                    <i
+                      className="ri-check-double-fill"
+                      style={{
+                        color: "#00B27A",
+                      }}
+                    ></i>{" "}
+                    Verified
+                  </button>
+                </div>
                 <div className="row mb-3">
                   <div className="col-md-6">
                     <p className="text-neutral-body my-0">Nama Lengkap</p>
@@ -122,7 +139,7 @@ const ProfileUser = ({ profile }) => {
                     <p className="text-dark">{profile.kecamatan_ktp || "-"}</p>
                   </div>
                   <div className="col-md-6">
-                    <p className="text-neutral-body my-0">Pendidikan</p>
+                    <p className="text-neutral-body my-0">Kode Pos</p>
                     <p className="text-dark">{profile.kode_pos_ktp || "-"}</p>
                   </div>
                 </div>
@@ -155,10 +172,39 @@ const ProfileUser = ({ profile }) => {
                   </div>
                 </div>
               </div>
+              <div className="data-pekerjaan">
+                <h3 className="font-weight-bolder mb-4">Pekerjaan</h3>
+                <div className="row">
+                  <div className="col-md-12">
+                    <p className="text-neutral-body my-0">Status Pekerjaan</p>
+                    <p className="text-dark">
+                      {profile.staatus_pekerjaan || "-"}
+                    </p>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-6">
+                    <p className="text-neutral-body my-0">Pekerjaan</p>
+                    <p className="text-dark">{profile.pekerjaan || "-"}</p>
+                  </div>
+                  <div className="col-md-6">
+                    <p className="text-neutral-body my-0">
+                      Perusahaan / Institusi Tempat Bekerja
+                    </p>
+                    <p className="text-dark">{profile.perusahaan || "-"}</p>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-12">
+                    <p className="text-neutral-body my-0">Penghasilan</p>
+                    <p className="text-dark">{profile.penghasilan || "-"}</p>
+                  </div>
+                </div>
+              </div>
               <div className="data-berkas">
                 <h3 className="font-weight-bolder mb-4">Berkas</h3>
                 <div className="row">
-                  <div className="col-md-12">
+                  <div className="col-md-6">
                     <p className="text-neutral-body my-0">Scan KTP</p>
                     <Image
                       objectFit="cover"
@@ -169,6 +215,22 @@ const ProfileUser = ({ profile }) => {
                         (profile.File_ktp &&
                           process.env.END_POINT_API_IMAGE_BEASISWA +
                             profile.File_ktp) ||
+                        "/assets/media/default.jpg"
+                      }
+                      onClick={() => setShow(true)}
+                    />
+                  </div>
+                  <div className="col-md-6">
+                    <p className="text-neutral-body my-0">Ijasah</p>
+                    <Image
+                      objectFit="cover"
+                      alt="file-ijasah"
+                      width={320}
+                      height={200}
+                      src={
+                        (profile.ijasah &&
+                          process.env.END_POINT_API_IMAGE_BEASISWA +
+                            profile.ijasah) ||
                         "/assets/media/default.jpg"
                       }
                       onClick={() => setShow(true)}

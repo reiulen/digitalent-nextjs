@@ -930,12 +930,7 @@ const ListTraining = ({ token }) => {
                                       Review Substansi
                                     </option>
                                   )}
-                                  {row.status_pelatihan ===
-                                    "menunggu pendaftaran" && (
-                                    <option value="menunggu pendaftaran">
-                                      Menunggu Pendaftaran
-                                    </option>
-                                  )}
+
                                   <option value="dibatalkan">Dibatalkan</option>
                                 </select>
                               </div>
