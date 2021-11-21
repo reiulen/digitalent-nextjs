@@ -59,5 +59,8 @@ module.exports = {
 
     END_POINT_API_IMAGE_LOGO_MITRA:
       "https://dts-partnership-dev.s3-ap-southeast-1.amazonaws.com",
+
+    TOKEN_MAP:
+      "pk.eyJ1IjoiZGVuZHlsb3JkcyIsImEiOiJja3U1NHJnYjkxczdyMnZxZ2ptM2hlNXpqIn0.o5v5Ch0AFJIfeZER2vZvwA",
   },
 };

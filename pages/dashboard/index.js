@@ -1,5 +1,5 @@
 import { getSession } from "next-auth/client";
-import { middlewareAuthAdminSession } from "../utils/middleware/authMiddleware";
+import { middlewareAuthAdminSession } from "../../utils/middleware/authMiddleware";
 
 export default function DashboardPage() {
   return (

@@ -80,6 +80,36 @@ const Sidebar = ({ session }) => {
     },
     {
       id: 2,
+      name: "Dashboard Kabadan",
+      href: "/dashboard",
+      selected: false,
+      icon: "assets/icon/sidebar_temp/Dashboard.svg",
+      child: [
+        {
+          id: 1,
+          name: "Digitalent",
+          href: "/dashboard/digitalent",
+          selected: false,
+          child: [],
+        },
+        {
+          id: 2,
+          name: "Beasiswa",
+          href: "/dashboard/beasiswa",
+          selected: false,
+          child: [],
+        },
+        {
+          id: 3,
+          name: "Simonas",
+          href: "/dashboard/simonas",
+          selected: false,
+          child: [],
+        },
+      ],
+    },
+    {
+      id: 3,
       name: "Pelatihan",
       href: "",
       icon: "assets/icon/sidebar_temp/Pelatihan.svg",
