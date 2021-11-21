@@ -27,6 +27,7 @@ const Header = dynamic(
     ssr: false,
   }
 );
+
 const Sidebar = dynamic(
   () => import("../../../user-component/components/template/Sidebar.component"),
   {

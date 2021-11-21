@@ -4,13 +4,14 @@ import Head from "next/head";
 import { ToastContainer } from "react-toastify";
 import { Row, Col, Offcanvas, Button } from "react-bootstrap";
 import { useRouter } from "next/router";
-import LoadingSidebar from "../../content/peserta/components/loader/LoadingSidebar";
-import LoadingHeader from "../../content/peserta/components/loader/LoadingHeader";
-import LoadingNavbar from "../../content/peserta/components/loader/LoadingNavbar";
-import LoadingFooter from "../../content/peserta/components/loader/LoadingFooter";
+import LoadingSidebar from "../../../../user-component/content/peserta/components/loader/LoadingSidebar";
+import LoadingHeader from "../../../../user-component/content/peserta/components/loader/LoadingHeader";
+import LoadingNavbar from "../../../../user-component/content/peserta/components/loader/LoadingNavbar";
+import LoadingFooter from "../../../../user-component/content/peserta/components/loader/LoadingFooter";
 
 const Navbar = dynamic(
-  () => import("../../../user-component/components/template/Navbar2.component"),
+  () =>
+    import("../../../../user-component/components/template/Navbar2.component"),
   {
     loading: function loadingNow() {
       return <LoadingNavbar />;
@@ -18,20 +19,15 @@ const Navbar = dynamic(
     ssr: false,
   }
 );
-const Header = dynamic(
-  () =>
-    import(
-      "../../../user-component/components/template/HeaderCustom.component"
-    ),
-  {
-    loading: function loadingNow() {
-      return <LoadingHeader />;
-    },
-    ssr: false,
-  }
-);
+const Header = dynamic(() => import("./HeaderCustom.component"), {
+  loading: function loadingNow() {
+    return <LoadingHeader />;
+  },
+  ssr: false,
+});
 const Sidebar = dynamic(
-  () => import("../../../user-component/components/template/Sidebar.component"),
+  () =>
+    import("../../../../user-component/components/template/Sidebar.component"),
   {
     loading: function loadingNow() {
       return <LoadingSidebar />;
@@ -39,12 +35,15 @@ const Sidebar = dynamic(
     ssr: false,
   }
 );
-const Footer = dynamic(() => import("../beranda/footer"), {
-  loading: function loadingNow() {
-    return <LoadingFooter />;
-  },
-  ssr: false,
-});
+const Footer = dynamic(
+  () => import("../../../../user-component/components/beranda/footer"),
+  {
+    loading: function loadingNow() {
+      return <LoadingFooter />;
+    },
+    ssr: false,
+  }
+);
 
 const Layout = ({
   title = "Peserta - Pelatihan",

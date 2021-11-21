@@ -1,9 +1,10 @@
 import { Card, Col, Container, Row } from "react-bootstrap";
-import styles from "./Header.module.css";
+import styles from "../Header.module.css";
+
 import { useRouter } from "next/router";
 import { Fragment, useEffect, useState } from "react";
 import Image from "next/dist/client/image";
-import Default from "../../../public/assets/media/logos/default.png";
+import Default from "../../../../public/assets/media/logos/default.png";
 import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
 
@@ -11,10 +12,10 @@ const Header = ({ breadcrumb }) => {
   const router = useRouter();
 
   const { error: errorDataPribadi, dataPribadi } = useSelector(
-    (state) => state.getDataPribadi
+    state => state.getDataPribadi
   );
   const { error: errorPelatihan, pelatihan } = useSelector(
-    (state) => state.getPelatihan
+    state => state.getPelatihan
   );
   let routerPath;
   if (router.pathname.includes("form-pendaftaran"))
@@ -63,7 +64,7 @@ const Header = ({ breadcrumb }) => {
     }, 1000);
   };
 
-  const set = (e) => {
+  const set = e => {
     e = e < 10 ? "0" + e : e;
     return e;
   };
