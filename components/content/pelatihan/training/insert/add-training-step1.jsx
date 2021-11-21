@@ -27,7 +27,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
-  const today = new Date();
+  const [today, setToday] = useState(new Date());
   const drowpdownTemabyAkademi = useSelector(
     state => state.drowpdownTemabyAkademi
   );
@@ -442,6 +442,33 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
     }
   }, [targetKuotaRegister, targetKuotaUser]);
 
+  const filterPassedTime = time => {
+    const currentDate = new Date();
+    const selectedDate = new Date(time);
+    return currentDate.getTime() < selectedDate.getTime();
+  };
+
+  const filterPassedTime2 = time => {
+    const currentDate = new Date(startDateRegistration);
+    const selectedDate = new Date(time);
+
+    return currentDate.getTime() < selectedDate.getTime();
+  };
+
+  const filterPassedTime3 = time => {
+    const currentDate = new Date(endDateRegistration);
+    const selectedDate = new Date(time);
+
+    return currentDate.getTime() < selectedDate.getTime();
+  };
+
+  const filterPassedTime4 = time => {
+    const currentDate = new Date(startDateTraining);
+    const selectedDate = new Date(time);
+
+    return currentDate.getTime() < selectedDate.getTime();
+  };
+
   return (
     <div className="card card-custom card-stretch gutter-b">
       <div className="card-body py-4">
@@ -780,6 +807,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                   dateFormat="d MMMM yyyy - HH:mm"
                   className="form-control w-100 d-block"
                   placeholderText="Silahkan Pilih Tanggal Dari"
+                  filterTime={filterPassedTime}
                 />
                 <i className="ri-calendar-line right-center-absolute pr-3"></i>
               </div>
@@ -814,6 +842,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                   timeFormat="HH:mm"
                   dateFormat="d MMMM yyyy - HH:mm"
                   placeholderText="Silahkan Pilih Tanggal Sampai"
+                  filterTime={filterPassedTime2}
                 />
                 <i className="ri-calendar-line right-center-absolute pr-3"></i>
               </div>
@@ -844,6 +873,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                   timeFormat="HH:mm"
                   dateFormat="d MMMM yyyy - HH:mm"
                   placeholderText="Silahkan Pilih Tanggal Dari"
+                  filterTime={filterPassedTime3}
                 />
                 <i className="ri-calendar-line right-center-absolute pr-3"></i>
               </div>
@@ -868,6 +898,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                   value={
                     startDateTraining > endDateTraining ? "" : endDateTraining
                   }
+                  filterTime={filterPassedTime4}
                   showTimeSelect
                   className="form-control w-100 d-block"
                   locale="pt-BR"
@@ -963,7 +994,12 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                 type="number"
                 min="1"
                 value={targetKuotaUser}
-                onChange={e => setTargetKuotaUser(e.target.value)}
+                onChange={e => {
+                  helperRemoveZeroFromIndex0(
+                    e.target.value,
+                    setTargetKuotaUser
+                  );
+                }}
                 className="form-control"
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("kuota target peserta")
