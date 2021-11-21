@@ -21,7 +21,7 @@ const LoginAdmin = () => {
 
   const [hidePassword, setHidePassword] = useState(true);
 
-  const handlerShowPassword = (value) => {
+  const handlerShowPassword = value => {
     setHidePassword(value);
     var input = document.getElementById("input-password");
     if (input.type === "password") {
@@ -31,7 +31,7 @@ const LoginAdmin = () => {
     }
   };
 
-  const handlerSubmit = async (e) => {
+  const handlerSubmit = async e => {
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
       const data = {
@@ -63,7 +63,7 @@ const LoginAdmin = () => {
       <AuthWrapper image="multiethnic-businesswoman.svg" title="Login">
         <div
           className="col-lg-7 d-flex flex-wrap align-content-center"
-          style={{ background: "#1A4367" }}
+          style={{ background: "#0063CC" }}
         >
           <div className="container px-0 px-sm-4 scroll-form-login">
             <div className="title-login text-center mt-6">
@@ -99,7 +99,7 @@ const LoginAdmin = () => {
                     type="email"
                     className="form-control form-control-auth"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={e => setEmail(e.target.value)}
                     placeholder="Masukan Email"
                     onBlur={() =>
                       simpleValidator.current.showMessageFor("Email")
@@ -116,9 +116,7 @@ const LoginAdmin = () => {
                 </div>
                 <div className="form-group mt-6">
                   <label className="form-auth-label">Password</label>
-                  <Link
-                    href="/login/mitra/recorveryPassword"
-                  >
+                  <Link href="/login/mitra/recorveryPassword">
                     <a className="float-right text-primary">Lupa Password ?</a>
                   </Link>
                   <div className="position-relative">
@@ -127,7 +125,7 @@ const LoginAdmin = () => {
                       type="password"
                       className="form-control form-control-auth pr-10"
                       value={password}
-                      onChange={(e) => setPassword(e.target.value)}
+                      onChange={e => setPassword(e.target.value)}
                       placeholder="Masukan Password"
                       onBlur={() =>
                         simpleValidator.current.showMessageFor("Password")
@@ -157,8 +155,7 @@ const LoginAdmin = () => {
                   )}
                 </div>
 
-                <div className="w-max-cs">
-                <div className="capcha">
+                <div className="g-recaptcha">
                   <ReCAPTCHA
                     sitekey={process.env.CAPTCHA_SITE_KEY}
                     onChange={setCaptcha}
@@ -174,7 +171,6 @@ const LoginAdmin = () => {
                       className: "text-danger",
                     }
                   )}
-                </div>
                 </div>
 
                 <button
