@@ -16,7 +16,7 @@ const MapDigitalent = () => {
       <MapContainer
         center={[-1.062401, 120.5465227]}
         zoom={5}
-        scrollWheelZoom={true}
+        scrollWheelZoom={false}
         style={{ height: "500px", width: "100%" }}
       >
         <TileLayer

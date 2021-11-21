@@ -4,7 +4,7 @@ import StatistikProgres from "./statistik-progres.component";
 const CardInfo = ({ title, data }) => {
   return (
     <>
-      <div className="card card-custom border bg-white">
+      <div className="card card-custom border bg-white h-100">
         <div className="card-body pb-3">
           <p className="text-dashboard-gray fz-16 fw-500">{title}</p>
           <div className="row mt-5">

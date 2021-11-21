@@ -1,10 +1,13 @@
 import { getSession } from "next-auth/client";
 import { middlewareAuthAdminSession } from "../../utils/middleware/authMiddleware";
+import DashboardBeasiswa from "../../components/content/dashboard-kabadan/beasiswa/dashboard-beasiswa";
 
 export default function DashboardBeasiswaPage() {
   return (
     <>
-      <div className="d-flex flex-column flex-root"></div>
+      <div className="d-flex flex-column flex-root">
+        <DashboardBeasiswa />
+      </div>
     </>
   );
 }

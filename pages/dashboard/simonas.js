@@ -1,10 +1,13 @@
 import { getSession } from "next-auth/client";
 import { middlewareAuthAdminSession } from "../../utils/middleware/authMiddleware";
+import DashboardSimonas from "../../components/content/dashboard-kabadan/simonas/dashboard-simonas";
 
 export default function DashboardSimonasPage() {
   return (
     <>
-      <div className="d-flex flex-column flex-root"></div>
+      <div className="d-flex flex-column flex-root">
+        <DashboardSimonas />
+      </div>
     </>
   );
 }
