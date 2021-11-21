@@ -45,7 +45,7 @@ export const getAllListReview =
 
       let link =
         process.env.END_POINT_API_PELATIHAN +
-        `/api/v1/pelatihan/find-subtansi?page=${page}`;
+        `api/v1/pelatihan/find-subtansi?page=${page}`;
       if (keyword) link = link.concat(`&cari=${keyword}`);
       if (limit) link = link.concat(`&limit=${limit}`);
       if (pendaftaran_mulai)
@@ -86,7 +86,7 @@ export const getCardReview = (token) => async (dispatch) => {
   try {
     let link =
       process.env.END_POINT_API_PELATIHAN +
-      `/api/v1/pelatihan/list-count-subtansi`;
+      `api/v1/pelatihan/list-count-subtansi`;
 
     const config = {
       headers: {
@@ -113,7 +113,7 @@ export const getListRevisi = (token, id) => async (dispatch) => {
   try {
     let link =
       process.env.END_POINT_API_PELATIHAN +
-      `/api/v1/pelatihan/list-revisi?pelatian_id=${id}`;
+      `api/v1/pelatihan/list-revisi?pelatian_id=${id}`;
 
     const config = {
       headers: {
@@ -139,7 +139,7 @@ export const getReviewStep1Revisi = (token, id) => async (dispatch) => {
   try {
     let link =
       process.env.END_POINT_API_PELATIHAN +
-      `/api/v1/pelatihan/get-step-satu?pelatian_id=${id}`;
+      `api/v1/pelatihan/get-step-satu?pelatian_id=${id}`;
 
     const config = {
       headers: {
@@ -165,7 +165,7 @@ export const getReviewStep2Revisi = (token, id) => async (dispatch) => {
   try {
     let link =
       process.env.END_POINT_API_PELATIHAN +
-      `/api/v1/pelatihan/get-step-dua?pelatian_id=${id}`;
+      `api/v1/pelatihan/get-step-dua?pelatian_id=${id}`;
 
     const config = {
       headers: {
@@ -191,7 +191,7 @@ export const getReviewStep3Revisi = (token, id) => async (dispatch) => {
   try {
     let link =
       process.env.END_POINT_API_PELATIHAN +
-      `/api/v1/pelatihan/get-step-tiga?pelatian_id=${id}`;
+      `api/v1/pelatihan/get-step-tiga?pelatian_id=${id}`;
 
     const config = {
       headers: {
@@ -215,7 +215,9 @@ export const getReviewStep3Revisi = (token, id) => async (dispatch) => {
 
 export const getReviewStep4Revisi = (token, id) => async (dispatch) => {
   try {
-    let link = process.env.END_POINT_API_PELATIHAN + `/api/v1/pelatihan/pelatihan-parameter`;
+    let link =
+      process.env.END_POINT_API_PELATIHAN +
+      `api/v1/pelatihan/pelatihan-parameter`;
 
     const config = {
       params: {
@@ -230,8 +232,7 @@ export const getReviewStep4Revisi = (token, id) => async (dispatch) => {
       type: GET_REVIEW_STEP4_SUCCESS,
       payload: data,
     });
-  } catch (error) {
-  }
+  } catch (error) {}
 };
 
 export const revisiReviewPelatihan =
@@ -241,7 +242,7 @@ export const revisiReviewPelatihan =
 
       let link =
         process.env.END_POINT_API_PELATIHAN +
-        `/api/v1/pelatihan/revisi-pelatihan`;
+        `api/v1/pelatihan/revisi-pelatihan`;
 
       const config = {
         headers: {
@@ -269,7 +270,7 @@ export const tolakReviewPelatihan = (dataTolak, token) => async (dispatch) => {
 
     let link =
       process.env.END_POINT_API_PELATIHAN +
-      `/api/v1/pelatihan/update-status-subtansi`;
+      `api/v1/pelatihan/update-status-subtansi`;
 
     const config = {
       headers: {

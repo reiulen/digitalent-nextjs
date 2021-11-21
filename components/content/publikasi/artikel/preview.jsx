@@ -141,7 +141,7 @@ const Preview = () => {
                                     <div className="d-flex flex-column ml-3">
                                         <div className="font-weight-bolder mb-2">
                                             {/* Insert Admin Here */}
-                                            {artikel.name}
+                                            {artikel.role[0].name}
                                         </div>
                                         <div className="text-muted">
                                             {moment(artikel.tanggal_publish).format("DD MMMM YYYY")}
@@ -247,7 +247,7 @@ const Preview = () => {
                                                     <button
                                                         className="btn btn-primary-dashboard"
                                                         onClick={(e) =>
-                                                            handleHighlightWords(e, detail.isi_artikel)
+                                                            handleHighlightWords(e, artikel.isi_artikel)
                                                         }
                                                         style={{
                                                             borderTopRightRadius: "150px",

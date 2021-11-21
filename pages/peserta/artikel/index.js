@@ -63,6 +63,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
           success = true;
         }
       }
+      
       await store.dispatch(
         getAllArtikelsPeserta(session?.user.user.data.user.token)
       );

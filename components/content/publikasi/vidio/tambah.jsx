@@ -101,9 +101,7 @@ const TambahVidio = ({ token, id }) => {
                 data.splice([i], 1);
             }
         }
-        if ((tag).includes(data) !== true) {
-          setTag(data);
-        }
+        setTag(data);
     }
 
     const handleChangePublish = (e) => {
@@ -406,19 +404,23 @@ const TambahVidio = ({ token, id }) => {
                                     {/* <div>{tag}</div> */}
                                     <TagsInput
                                         value={tag}
-                                        onChange={(data) => handleTag(data)}
-                                        name="fruits"
+                                        onChange={(data) => {
+                                            handleTag(data)
+                                            setDisableTag(false)
+                                        }}
+                                        onExisting={(data) => setDisableTag(true)}
+                                        name="tag"
                                         placeHolder="Isi Tag disini dan Enter"
                                         seprators={["Enter", "Tab"]}
                                     // onBlur={() => simpleValidator.current.showMessageFor('tag')}
                                     />
                                     {
-                                        (disableTag === true) &&
+                                        (disableTag === true) ?
                                         <p className="text-danger">
-                                            Tag tidak bisa terdiri dari "SPACE" character saja
+                                            Tag tidak boleh sama
                                         </p>
-                                        // :
-                                        // null
+                                        :
+                                        null
                                     }
                                 </div>
                             </div>

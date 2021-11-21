@@ -44,8 +44,7 @@ export const updateProfileDataPribadi =
       dispatch({ type: UPDATE_DATA_PRIBADI_REQUEST });
 
       let link =
-        process.env.END_POINT_API_PELATIHAN +
-        `/api/v1/auth/update-data-pribadi`;
+        process.env.END_POINT_API_PELATIHAN + `api/v1/auth/update-data-pribadi`;
 
       const config = {
         headers: {
@@ -72,7 +71,7 @@ export const updateProfileDataPribadi =
 export const getProfileAlamat = (token) => async (dispatch) => {
   try {
     let link =
-      process.env.END_POINT_API_PELATIHAN + `/api/v1/auth/get-data-alamat`;
+      process.env.END_POINT_API_PELATIHAN + `api/v1/auth/get-data-alamat`;
 
     const config = {
       headers: {
@@ -99,7 +98,7 @@ export const updateProfileAlamat = (dataAlamat, token) => async (dispatch) => {
     dispatch({ type: UPDATE_ALAMAT_REQUEST });
 
     let link =
-      process.env.END_POINT_API_PELATIHAN + `/api/v1/auth/update-data-alamat`;
+      process.env.END_POINT_API_PELATIHAN + `api/v1/auth/update-data-alamat`;
 
     const config = {
       headers: {
@@ -126,7 +125,7 @@ export const updateProfileAlamat = (dataAlamat, token) => async (dispatch) => {
 export const getProfilePendidikan = (token) => async (dispatch) => {
   try {
     let link =
-      process.env.END_POINT_API_PELATIHAN + `/api/v1/auth/get-data-pendidikan`;
+      process.env.END_POINT_API_PELATIHAN + `api/v1/auth/get-data-pendidikan`;
 
     const config = {
       headers: {
@@ -213,8 +212,7 @@ export const getDataAsalSekolah =
 export const getProfileKeterampilan = (token) => async (dispatch) => {
   try {
     let link =
-      process.env.END_POINT_API_PELATIHAN +
-      `/api/v1/auth/get-data-keterampilan`;
+      process.env.END_POINT_API_PELATIHAN + `api/v1/auth/get-data-keterampilan`;
 
     const config = {
       headers: {
@@ -243,7 +241,7 @@ export const updateProfileKeterampilan =
 
       let link =
         process.env.END_POINT_API_PELATIHAN +
-        `/api/v1/auth/update-data-keterampilan`;
+        `api/v1/auth/update-data-keterampilan`;
 
       const config = {
         headers: {
@@ -299,7 +297,7 @@ export const updateProfilePekerjaan =
 
       let link =
         process.env.END_POINT_API_PELATIHAN +
-        `/api/v1/auth/update-data-pekerjaan`;
+        `api/v1/auth/update-data-pekerjaan`;
 
       const config = {
         headers: {

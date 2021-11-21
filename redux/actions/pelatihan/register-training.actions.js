@@ -34,7 +34,7 @@ export const getFormBuilder = (token, id) => async (dispatch) => {
   try {
     let link =
       process.env.END_POINT_API_PELATIHAN +
-      `/api/v1/pelatihan/get-step-dua?pelatian_id=${id}`;
+      `api/v1/pelatihan/get-step-dua?pelatian_id=${id}`;
 
     const config = {
       headers: {
@@ -48,6 +48,7 @@ export const getFormBuilder = (token, id) => async (dispatch) => {
       type: GET_FORM_BUILDER_SUCCESS,
       payload: data,
     });
+    return data;
   } catch (error) {
     dispatch({
       type: GET_FORM_BUILDER_FAIL,
@@ -60,7 +61,7 @@ export const getPelatihan = (token, id) => async (dispatch) => {
   try {
     let link =
       process.env.END_POINT_API_PELATIHAN +
-      `/api/v1/pelatihan/get-step-satu?pelatian_id=${id}`;
+      `api/v1/pelatihan/get-step-satu?pelatian_id=${id}`;
 
     const config = {
       headers: {
@@ -74,6 +75,7 @@ export const getPelatihan = (token, id) => async (dispatch) => {
       type: GET_PELATIHAN_SUCCESS,
       payload: data,
     });
+    return data;
   } catch (error) {
     dispatch({
       type: GET_PELATIHAN_FAIL,

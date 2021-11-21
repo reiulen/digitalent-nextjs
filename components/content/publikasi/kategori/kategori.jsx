@@ -180,7 +180,9 @@ const Kategori = ({ token }) => {
   };
 
   const resetValueSort = () => {
+    setLimit(null)
     setSearchKategori(null);
+    setSearch("")
     $("#selectKategori").prop("selectedIndex", 0);
     router.replace("/publikasi/kategori", undefined, { shallow: false });
   };

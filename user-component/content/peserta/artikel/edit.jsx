@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import SimpleReactValidator from "simple-react-validator";
 import Swal from "sweetalert2";
 import { TagsInput } from "react-tag-input-component";
+import { updateArtikelPeserta } from '../../../../redux/actions/publikasi/artikel.actions'
 import DatePicker from "react-datepicker";
 
 import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
@@ -15,7 +16,7 @@ import { Container } from "react-bootstrap";
 
 import styles from "../../../../styles/previewGaleri.module.css";
 
-const EditArtikelPeserta = () => {
+const EditArtikelPeserta = ({session}) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -25,8 +26,6 @@ const EditArtikelPeserta = () => {
   );
   const allAkademi = useSelector((state) => state.allAkademi);
   const allKategori = useSelector((state) => state.allKategori);
-
-  console.log(detailArtikelsPeserta);
 
   const importSwitch = () => import("bootstrap-switch-button-react");
   const SwitchButton = dynamic(importSwitch, {
@@ -42,7 +41,12 @@ const EditArtikelPeserta = () => {
   const [publishDate, setPublishDate] = useState(null);
   const [disablePublishDate, setDisablePublishDate] = useState(true);
   const [gambarPreview, setGambarPreview] = useState(
-    "/assets/media/default.jpg"
+    process.env.END_POINT_API_IMAGE_PUBLIKASI +
+    "publikasi/images/" +
+    detailArtikelsPeserta.artikel.data.gambar
+  );
+
+  const [gambar, setGambar] = useState(""
   );
   const [judul, setJudul] = useState(
     detailArtikelsPeserta.artikel.data.judul_artikel
@@ -54,8 +58,10 @@ const EditArtikelPeserta = () => {
     detailArtikelsPeserta.artikel.data.kategori_akademi
   );
   const [kategori, setKategori] = useState(
-    detailArtikelsPeserta.artikel.data.nama_kategori
+    detailArtikelsPeserta.artikel.data.kategori_id
   );
+  const [tag, setTag] = useState(detailArtikelsPeserta.artikel.data.tag);
+  const [checkTag, setCheckTag] = useState(false);
 
   let optionAkademi = allAkademi.akademi.map((item) => {
     return {
@@ -63,6 +69,63 @@ const EditArtikelPeserta = () => {
       value: item.id,
     };
   });
+
+  console.log(detailArtikelsPeserta)
+
+  const onChangeGambar = e => {
+    const type = ["image/jpg", "image/png", "image/jpeg"];
+
+    if (type.includes(e.target.files[0].type)) {
+      if (e.target.files[0].size > '2000000') {
+        e.target.value = null;
+        Swal.fire("Oops !", "Data Image Melebihi Ketentuan", "error");
+      } else {
+        const reader = new FileReader();
+        reader.onload = () => {
+          if (reader.readyState === 2) {
+            setGambar(reader.result);
+            setGambarPreview(reader.result);
+          }
+        };
+        reader.readAsDataURL(e.target.files[0]);
+      }
+    } else {
+      e.target.value = null;
+      Swal.fire(
+        "Oops !",
+        "Data yang bisa dimasukkan hanya berupa data gambar.",
+        "error"
+      );
+    }
+  };
+
+  function hasWhiteSpace(s) {
+    return s.indexOf(" ") >= 0;
+  }
+
+  const handleTag = (data, type) => {
+    for (let i = 0; i < data.length; i++) {
+      if (hasWhiteSpace(data[i])) {
+        data.splice([i], 1);
+      }
+    }
+    setTag(data);
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    const data = {
+      isi_artikel: deskripsi,
+      judul_artikel: judul,
+      gambar: gambar,
+      kategori_akademi: akademi,
+      kategori_id: kategori,
+      tag: tag,
+      _method: "put"
+    }
+    dispatch(updateArtikelPeserta(data, session.token, router.query.id))
+  };
+
 
   useEffect(() => {
     editorRef.current = {
@@ -83,7 +146,7 @@ const EditArtikelPeserta = () => {
             </h3>
           </div>
           <div className="card-body">
-            <form>
+            <div>
               <div className="form-group">
                 <label
                   htmlFor="staticEmail"
@@ -114,8 +177,10 @@ const EditArtikelPeserta = () => {
                       name="gambar"
                       className="custom-file-input"
                       id="inputGroupFile04"
+                      onChange={onChangeGambar}
                       accept="image/*"
                       style={{ display: "none" }}
+                      required
                     />
                   </div>
                 </div>
@@ -145,6 +210,7 @@ const EditArtikelPeserta = () => {
                     onChange={(e) => {
                       setJudul(e.target.value);
                     }}
+                    required
                   />
                 </div>
               </div>
@@ -191,6 +257,7 @@ const EditArtikelPeserta = () => {
                     }}
                     value={akademi}
                     className={`${styles.selectKategori} form-control dropdownArt`}
+                    required
                   >
                     {optionAkademi.map((item) => {
                       return (
@@ -217,11 +284,13 @@ const EditArtikelPeserta = () => {
                     }}
                     value={kategori}
                     className={`${styles.selectKategori} form-control dropdownArt`}
+                    required
                   >
+                    {console.log(allKategori)}
                     {allKategori.kategori.kategori.map((item) => {
                         if (item.jenis_kategori === "Artikel")
                           return (
-                            <option value={item.nama_kategori} key={item.id}>
+                            <option value={item.id} key={item.id}>
                               {item.nama_kategori}
                             </option>
                           );
@@ -245,7 +314,18 @@ const EditArtikelPeserta = () => {
                     name="fruits"
                     placeHolder="Isi Tag disini"
                     seprators={["Enter", "Tab"]}
+                    value={tag}
+                    onExisting={(data) => {
+                      setCheckTag(true);
+                    }}
+                    onChange={(data) => {
+                      setCheckTag(false);
+                      handleTag(data);
+                    }}
                   />
+                   {checkTag && (
+                      <span className="text-danger">Tag tidak boleh sama</span>
+                    )}
                 </div>
               </div>
 
@@ -262,12 +342,13 @@ const EditArtikelPeserta = () => {
                   <button
                     className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill btn-sm border-0`}
                     style={{ backgroundColor: "#007cff" }}
+                    onClick={onSubmit}
                   >
                     Ubah
                   </button>
                 </div>
               </div>
-            </form>
+            </div>
           </div>
         </div>
       </div>

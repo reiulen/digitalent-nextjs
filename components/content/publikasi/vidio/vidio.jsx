@@ -337,6 +337,9 @@ const Vidio = ({ token }) => {
         setStartDate(null)
         setEndDate(null)
         setDisableEndDate(true)
+        setPublishValue(null)
+        setSearch("")
+        setLimit(null)
         router.replace('/publikasi/video', undefined, { shallow: false })
     }
 
@@ -815,7 +818,7 @@ const Vidio = ({ token }) => {
                         width="100%"
                         height="50vh"
                         playing={video_playing}
-                        onPlay={handleIsPlayed}
+                        onStart={handleIsPlayed}
                     />
                 </Modal.Body>
                 <Modal.Footer>

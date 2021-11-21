@@ -20,7 +20,6 @@ const Dashboard = ({ session, success }) => {
     (state) => state.dashboardPeserta
   );
   const { count, pelatihan, subvit } = dataDashboard;
-
   // useEffect(() => {
   //   if (!success) {
   //     router.push("/peserta/wizzard");

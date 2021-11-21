@@ -18,6 +18,7 @@ import {
 import LoadingPage from "../../../../LoadingPage";
 import { disablePlusMinusPeriod } from "../../../../../utils/middleware/helper";
 import { CustomNumberInput } from "../../../../formCustomComponent/input";
+import {edit0Value} from '../../../../../utils/middleware/helper/index'
 import moment from "moment";
 
 const AddTrainingStep1 = ({ propsStep, token }) => {
@@ -932,7 +933,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                 type="number"
                 value={targetKuotaRegister}
                 onChange={(e) => {
-                  setTargetKuotaRegister(e.target.value);
+                  edit0Value(e.target.value,setTargetKuotaRegister)
                 }}
                 className="form-control"
                 min="1"
