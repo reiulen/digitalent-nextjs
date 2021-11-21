@@ -6,8 +6,8 @@ import Swal from "sweetalert2";
 import SimpleReactValidator from "simple-react-validator";
 import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
-import DatePicker from "react-datepicker";
-
+import DatePicker, { registerLocale } from "react-datepicker";
+import id from "date-fns/locale/id";
 import { GET_TRAINING_STEP1 } from "../../../../../redux/types/pelatihan/function.type";
 import {
   storeTrainingStep1,
@@ -31,7 +31,6 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
   const drowpdownTemabyAkademi = useSelector(
     state => state.drowpdownTemabyAkademi
   );
-
   const { trainingData } = useSelector(state => state.trainingStep1);
   const { error: dropdownErrorLevelPelatihan, data: dataLevelPelatihan } =
     useSelector(state => state.drowpdownLevelPelatihan);
@@ -469,6 +468,10 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
     return currentDate.getTime() < selectedDate.getTime();
   };
 
+  useEffect(() => {
+    registerLocale("id", id);
+  }, []);
+
   return (
     <div className="card card-custom card-stretch gutter-b">
       <div className="card-body py-4">
@@ -799,10 +802,15 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
               <div className="position-relative">
                 <DatePicker
                   selected={startDateRegistration}
-                  onChange={date => setStartDateRegistration(date)}
+                  onChange={date => {
+                    setEndDateRegistration(null);
+                    setStartDateTraining(null);
+                    setEndDateTraining(null);
+                    setStartDateRegistration(date);
+                  }}
                   showTimeSelect
                   minDate={today}
-                  locale="pt-BR"
+                  locale="id"
                   timeFormat="HH:mm"
                   dateFormat="d MMMM yyyy - HH:mm"
                   className="form-control w-100 d-block"
@@ -824,21 +832,19 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
               </label>
               <div className="position-relative">
                 <DatePicker
-                  selected={
-                    startDateRegistration > endDateRegistration
-                      ? ""
-                      : endDateRegistration
+                  selected={endDateRegistration}
+                  value={endDateRegistration}
+                  onChange={date => {
+                    setStartDateTraining(null);
+                    setEndDateTraining(null);
+                    setEndDateRegistration(date);
+                  }}
+                  minDate={
+                    startDateRegistration ? startDateRegistration : today
                   }
-                  value={
-                    startDateRegistration > endDateRegistration
-                      ? ""
-                      : endDateRegistration
-                  }
-                  onChange={date => setEndDateRegistration(date)}
-                  minDate={startDateRegistration}
                   showTimeSelect
                   className="form-control w-100 d-block"
-                  locale="pt-BR"
+                  locale="id"
                   timeFormat="HH:mm"
                   dateFormat="d MMMM yyyy - HH:mm"
                   placeholderText="Silahkan Pilih Tanggal Sampai"
@@ -865,11 +871,15 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
               <div className="position-relative">
                 <DatePicker
                   selected={startDateTraining}
-                  onChange={date => setStartDateTraining(date)}
-                  minDate={endDateRegistration}
+                  value={startDateTraining}
+                  onChange={date => {
+                    setEndDateTraining(null);
+                    setStartDateTraining(date);
+                  }}
+                  minDate={endDateRegistration ? endDateRegistration : today}
                   showTimeSelect
                   className="form-control w-100 d-block"
-                  locale="pt-BR"
+                  locale="id"
                   timeFormat="HH:mm"
                   dateFormat="d MMMM yyyy - HH:mm"
                   placeholderText="Silahkan Pilih Tanggal Dari"
@@ -891,17 +901,13 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
               <div className="position-relative">
                 <DatePicker
                   onChange={date => setEndDateTraining(date)}
-                  minDate={startDateTraining}
-                  selected={
-                    startDateTraining > endDateTraining ? "" : endDateTraining
-                  }
-                  value={
-                    startDateTraining > endDateTraining ? "" : endDateTraining
-                  }
+                  minDate={startDateTraining ? startDateTraining : today}
+                  selected={endDateTraining}
+                  value={endDateTraining}
                   filterTime={filterPassedTime4}
                   showTimeSelect
                   className="form-control w-100 d-block"
-                  locale="pt-BR"
+                  locale="id"
                   timeFormat="HH:mm"
                   dateFormat="d MMMM yyyy - HH:mm"
                   placeholderText="Silahkan Pilih Tanggal Sampai"
