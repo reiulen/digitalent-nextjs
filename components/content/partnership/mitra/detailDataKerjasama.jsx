@@ -683,7 +683,7 @@ const DetailDataKerjasama = ({ token }) => {
                                   <Link
                                     href={{
                                       pathname: `/partnership/mitra/detail-data-kerjasama-mitra/sub-detail`,
-                                      query: { id: getId },
+                                      query: { id: items.id },
                                     }}
                                   >
                                     <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete mr-3">
@@ -732,7 +732,6 @@ const DetailDataKerjasama = ({ token }) => {
                                       })
                                     }
                                   >
-                                    {console.log(items)}
                                     <IconPencil
                                       width="16"
                                       height="16"
