@@ -21,7 +21,8 @@ const EditDokumentKerjasamaById = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const allMK = useSelector((state) => state.allMK);
+  console.log(token);
+  const allMK = useSelector(state => state.allMK);
   //
   //
   // state onchange form data
@@ -60,19 +61,21 @@ const EditDokumentKerjasamaById = ({ token }) => {
             },
           }
         );
-        setIsntitusiName(data.data.institution_name);
-        setTitle(data.data.title);
-        setDate(data.data.submission_date);
-        setCooperationID(data.data.cooperation_category);
-        setPeriod(data.data.period);
-        setPeriodUnit(data.data.period_unit);
-        setPeriodDateStart(data.data.period_date_start);
-        setPeriodDateEnd(data.data.period_date_end);
-        setAggrementNumber(data.data.agreement_number_partner);
-        setAggrementNumberInfo(data.data.agreement_number_kemkominfo);
-        setSigninDate(data.data.signing_date);
-        setDocument(data.data.document_file);
-        setEmail(data.data.email);
+        if (data) {
+          setIsntitusiName(data.data.institution_name);
+          setTitle(data.data.title);
+          setDate(data.data.submission_date);
+          setCooperationID(data.data.cooperation_category);
+          setPeriod(data.data.period);
+          setPeriodUnit(data.data.period_unit);
+          setPeriodDateStart(data.data.period_date_start);
+          setPeriodDateEnd(data.data.period_date_end);
+          setAggrementNumber(data.data.agreement_number_partner);
+          setAggrementNumberInfo(data.data.agreement_number_kemkominfo);
+          setSigninDate(data.data.signing_date);
+          setDocument(data.data.document_file);
+          setEmail(data.data.email);
+        }
       } catch (error) {
         Swal.fire("Gagal", `${error.response.data.message}`, "error");
       }
@@ -81,12 +84,15 @@ const EditDokumentKerjasamaById = ({ token }) => {
     dispatch(cancelChangeCategory());
     dispatch(cancelChangeNamaLembaga());
   }, [dispatch, router.query.id, token]);
+
   useEffect(() => {
     dispatch(fetchListCooperationSelectById(token, cooperationC_id));
   }, [dispatch, allMK.idCooporationSelect, cooperationC_id, token]);
+
   useEffect(() => {
     dispatch(fetchDataEmail(token));
   }, [dispatch, allMK.institution_name, allMK.stateListMitra, token]);
+
   return (
     <PageWrapper>
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
@@ -263,7 +269,7 @@ const EditDokumentKerjasamaById = ({ token }) => {
                           <div className="col-sm-10">
                             <textarea
                               required
-                              onChange={(e) => changeFormCooporation(index, e)}
+                              onChange={e => changeFormCooporation(index, e)}
                               name="cooperation"
                               id={index + 1}
                               cols="30"
