@@ -5,10 +5,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { Row, Col, Card, Button, Badge, Modal } from "react-bootstrap";
 
 import style from "../../../../styles/peserta/dashboard.module.css";
-import CardPill from "../../../components/peserta/CardPill";
-import CardPage from "../../../components/peserta/CardPage";
+import CardPill from "../../../../user-component/components/peserta/CardPill";
+import CardPage from "../../../../user-component/components/peserta/CardPage";
 import { useRouter } from "next/router";
-import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
+import PesertaWrapper from "../../../../user-component/components/wrapper/Peserta.wrapper";
 import Cookies from "js-cookie";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -17,7 +17,7 @@ const Dashboard = ({ session, success }) => {
   const router = useRouter();
 
   const { error: errorDashboard, dataDashboard } = useSelector(
-    (state) => state.dashboardPeserta
+    state => state.dashboardPeserta
   );
   const { count, pelatihan, subvit } = dataDashboard;
   // useEffect(() => {
