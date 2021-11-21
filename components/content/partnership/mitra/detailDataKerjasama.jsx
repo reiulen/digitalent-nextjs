@@ -31,9 +31,7 @@ import {
   changeStatusListCooperation,
 } from "../../../../redux/actions/partnership/mitra.actions";
 
-import {
-  rejectCooperation,
-} from "../../../../redux/actions/partnership/managementCooporation.actions";
+import { rejectCooperation } from "../../../../redux/actions/partnership/managementCooporation.actions";
 
 import IconArrow from "../../../assets/icon/Arrow";
 import LoadingTable from "../../../LoadingTable";
@@ -45,8 +43,8 @@ const DetailDataKerjasama = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   let { update } = router.query;
-  const mitraDetailAll = useSelector((state) => state.allMitra);
-  const allMK = useSelector((state) => state.allMK);
+  const mitraDetailAll = useSelector(state => state.allMitra);
+  const allMK = useSelector(state => state.allMK);
 
   let selectRefKerjasama = null;
   let selectRefStatus = null;
@@ -55,12 +53,12 @@ const DetailDataKerjasama = ({ token }) => {
   const [valueStatus, setValueStatus] = useState("");
   const [valueKerjaSama, setValueKerjaSama] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
     dispatch(searchByKeyDetail(keyWord));
   };
 
-  const handleSubmitSearchMany = (event) => {
+  const handleSubmitSearchMany = event => {
     event.preventDefault();
     dispatch(changeValueStatus(valueStatus));
     dispatch(changeValueKerjaSama(valueKerjaSama));
@@ -83,12 +81,16 @@ const DetailDataKerjasama = ({ token }) => {
   const onNewReset = () => {
     setDeleteBar(false);
     setBarStatus(false);
-    router.replace(`/partnership/mitra/detail-data-kerjasama-mitra?id=${router.query.id}`, undefined, {
-      shallow: true,
-    });
+    router.replace(
+      `/partnership/mitra/detail-data-kerjasama-mitra?id=${router.query.id}`,
+      undefined,
+      {
+        shallow: true,
+      }
+    );
   };
 
-  const cooperationDelete = (id) => {
+  const cooperationDelete = id => {
     Swal.fire({
       title: "Apakah anda yakin ingin menghapus data ?",
       icon: "warning",
@@ -98,7 +100,7 @@ const DetailDataKerjasama = ({ token }) => {
       cancelButtonText: "Batal",
       confirmButtonText: "Ya !",
       dismissOnDestroy: false,
-    }).then(async (result) => {
+    }).then(async result => {
       if (result.value) {
         dispatch(deleteCooperation(token, id));
         setDeleteBar(true);
@@ -111,7 +113,7 @@ const DetailDataKerjasama = ({ token }) => {
 
   const [isStatusBar, setIsStatusBar] = useState(false);
 
-  const cooperationRejection = (id) => {
+  const cooperationRejection = id => {
     Swal.fire({
       title: "Apakah anda yakin ingin batalkan kerjasama ?",
       icon: "warning",
@@ -121,7 +123,7 @@ const DetailDataKerjasama = ({ token }) => {
       cancelButtonText: "Batal",
       confirmButtonText: "Ya !",
       dismissOnDestroy: false,
-    }).then(async (result) => {
+    }).then(async result => {
       if (result.value) {
         dispatch(rejectCooperation(token, id));
         setIsStatusBar(true);
@@ -142,7 +144,7 @@ const DetailDataKerjasama = ({ token }) => {
       cancelButtonText: "Batal",
       confirmButtonText: "Ya !",
       dismissOnDestroy: false,
-    }).then(async (result) => {
+    }).then(async result => {
       if (result.value) {
         let formData = new FormData();
         formData.append("_method", "put");
@@ -182,25 +184,35 @@ const DetailDataKerjasama = ({ token }) => {
     <PageWrapper>
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
         {deleteBar ? (
-        <AlertBar text="Berhasil menghapus data" className="alert-light-success" onClick={() => onNewReset()}/>
-      ) : (
-        ""
-      )}
+          <AlertBar
+            text="Berhasil menghapus data"
+            className="alert-light-success"
+            onClick={() => onNewReset()}
+          />
+        ) : (
+          ""
+        )}
         {update ? (
-        <AlertBar text="Berhasil mengubah data" className="alert-light-success" onClick={() => onNewReset()}/>
-      ) : (
-        ""
-      )}
+          <AlertBar
+            text="Berhasil mengubah data"
+            className="alert-light-success"
+            onClick={() => onNewReset()}
+          />
+        ) : (
+          ""
+        )}
         {barStatus ? (
-         <AlertBar text="Berhasil mengubah data" className="alert-light-success" onClick={() => onNewReset()}/>
-      ) : (
-        ""
-      )}
+          <AlertBar
+            text="Berhasil mengubah data"
+            className="alert-light-success"
+            onClick={() => onNewReset()}
+          />
+        ) : (
+          ""
+        )}
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3
-              className="card-title font-weight-bolder text-dark titles-1"
-            >
+            <h3 className="card-title font-weight-bolder text-dark titles-1">
               Kerjasama &nbsp;
               {mitraDetailAll?.mitraDetailAll?.data?.title}
             </h3>
@@ -219,11 +231,11 @@ const DetailDataKerjasama = ({ token }) => {
                     type="text"
                     className="form-control pl-10"
                     placeholder="Ketik disini untuk Pencarian..."
-                    onChange={(e) => setKeyWord(e.target.value)}
+                    onChange={e => setKeyWord(e.target.value)}
                   />
                   <button
                     type="button"
-                    onClick={(e) => handleSubmit(e)}
+                    onClick={e => handleSubmit(e)}
                     className="btn bg-blue-primary text-white right-center-absolute"
                     style={{
                       borderTopLeftRadius: "0",
@@ -290,7 +302,7 @@ const DetailDataKerjasama = ({ token }) => {
                                 Kategori Kerjasama
                               </label>
                               <Select
-                                ref={(ref) => (selectRefKerjasama = ref)}
+                                ref={ref => (selectRefKerjasama = ref)}
                                 className="basic-single"
                                 classNamePrefix="select"
                                 placeholder="Semua"
@@ -303,7 +315,7 @@ const DetailDataKerjasama = ({ token }) => {
                                 isRtl={false}
                                 isSearchable={true}
                                 name="color"
-                                onChange={(e) =>
+                                onChange={e =>
                                   setValueKerjaSama(e?.cooperation_categories)
                                 }
                                 options={mitraDetailAll.stateListKerjaSama}
@@ -314,7 +326,7 @@ const DetailDataKerjasama = ({ token }) => {
                                 Status
                               </label>
                               <Select
-                                ref={(ref) => (selectRefStatus = ref)}
+                                ref={ref => (selectRefStatus = ref)}
                                 className="basic-single"
                                 classNamePrefix="select"
                                 placeholder="Semua"
@@ -325,7 +337,7 @@ const DetailDataKerjasama = ({ token }) => {
                                 isRtl={false}
                                 isSearchable={true}
                                 name="color"
-                                onChange={(e) => setValueStatus(e?.name_en)}
+                                onChange={e => setValueStatus(e?.name_en)}
                                 options={mitraDetailAll.stateListStatus}
                               />
                             </div>
@@ -344,7 +356,7 @@ const DetailDataKerjasama = ({ token }) => {
                               <button
                                 className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
                                 type="button"
-                                onClick={(e) => handleSubmitSearchMany(e)}
+                                onClick={e => handleSubmitSearchMany(e)}
                               >
                                 Terapkan
                               </button>
@@ -424,7 +436,9 @@ const DetailDataKerjasama = ({ token }) => {
                             </td>
                             <td className="d-flex justify-content-start">
                               <div className="d-flex align-items-start justify-content-center flex-column">
-                                <p className="p-part-t text-overflow-ens">{items.title}</p>
+                                <p className="p-part-t text-overflow-ens">
+                                  {items.title}
+                                </p>
                                 <p className="p-part-d text-overflow-ens">
                                   (
                                   {items.cooperation_category === null
@@ -466,7 +480,7 @@ const DetailDataKerjasama = ({ token }) => {
                                     disabled
                                     className="form-control remove-icon-default dropdown-arrows-green"
                                     key={index}
-                                    onChange={(e) =>
+                                    onChange={e =>
                                       changeListStatus(e.target.value, items.id)
                                     }
                                   >
@@ -484,7 +498,7 @@ const DetailDataKerjasama = ({ token }) => {
                                     id=""
                                     className="form-control remove-icon-default dropdown-arrows-green"
                                     key={index}
-                                    onChange={(e) =>
+                                    onChange={e =>
                                       changeListStatus(e.target.value, items.id)
                                     }
                                   >
@@ -507,7 +521,7 @@ const DetailDataKerjasama = ({ token }) => {
                                     id=""
                                     className="form-control remove-icon-default dropdown-arrows-red-primary  pr-10"
                                     key={index}
-                                    onChange={(e) =>
+                                    onChange={e =>
                                       changeListStatus(e.target.value, items.id)
                                     }
                                   >
@@ -563,7 +577,7 @@ const DetailDataKerjasama = ({ token }) => {
                                     name=""
                                     id=""
                                     className="form-control remove-icon-default dropdown-arrows-blue pr-10"
-                                    onChange={(e) =>
+                                    onChange={e =>
                                       changeListStatus(e.target.value, items.id)
                                     }
                                   >
@@ -624,7 +638,6 @@ const DetailDataKerjasama = ({ token }) => {
                                 "YYYY MM DD"
                               ) > moment().format("YYYY MM DD") ? (
                                 <div className="d-flex align-items-center">
-
                                   <Link
                                     href={{
                                       pathname: `/partnership/mitra/detail-data-kerjasama-mitra/sub-detail`,
@@ -643,27 +656,6 @@ const DetailDataKerjasama = ({ token }) => {
                                     </a>
                                   </Link>
 
-                                  {/* <button
-                                    className="btn btn-link-action bg-blue-secondary btn-delete mr-2 position-relative"
-                                    onClick={() =>
-                                      router.push({
-                                        pathname: `/partnership/mitra/detail/mitra/${items.id}`,
-                                        query: { idDetail: getId },
-                                      })
-                                    }
-                                  >
-                                    <IconEye
-                                      width="14"
-                                      height="12"
-                                      fill="rgba(255,255,255,1)"
-                                    />
-                                    <div className="text-hover-show-hapus">
-                                      Detail
-                                    </div>
-                                  </button> */}
-
-
-
                                   <button
                                     className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
                                     onClick={() =>
@@ -674,8 +666,8 @@ const DetailDataKerjasama = ({ token }) => {
                                     }
                                   >
                                     <IconPencil
-                                      width="14"
-                                      height="12"
+                                      width="16"
+                                      height="16"
                                       fill="rgba(255,255,255,1)"
                                     />
                                     <div className="text-hover-show-hapus">
@@ -688,7 +680,6 @@ const DetailDataKerjasama = ({ token }) => {
                                   "YYYY MM DD"
                                 ) <= moment().format("YYYY MM DD") ? (
                                 <div className="d-flex align-items-center">
-
                                   <Link
                                     href={{
                                       pathname: `/partnership/mitra/detail-data-kerjasama-mitra/sub-detail`,
@@ -706,7 +697,6 @@ const DetailDataKerjasama = ({ token }) => {
                                       </div>
                                     </a>
                                   </Link>
-
 
                                   {/* <button
                                     className="btn btn-link-action bg-blue-secondary btn-delete mr-2 position-relative"
@@ -727,20 +717,25 @@ const DetailDataKerjasama = ({ token }) => {
                                     </div>
                                   </button> */}
 
-
-
                                   <button
                                     className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
                                     onClick={() =>
                                       router.push({
-                                        pathname: `/partnership/mitra/edit/mitra/${items.id}`,
-                                        query: { idDetail: getId },
+                                        pathname: `/partnership/mitra/edit/mitra/${items.title
+                                          .split(" ")
+                                          .join("-")
+                                          .toLowerCase()}`,
+                                        query: {
+                                          idDetail: getId,
+                                          id: items.id,
+                                        },
                                       })
                                     }
                                   >
+                                    {console.log(items)}
                                     <IconPencil
-                                      width="14"
-                                      height="12"
+                                      width="16"
+                                      height="16"
                                       fill="rgba(255,255,255,1)"
                                     />
                                     <div className="text-hover-show-hapus">
@@ -750,7 +745,6 @@ const DetailDataKerjasama = ({ token }) => {
                                 </div>
                               ) : items.status.name === "tidak aktif" ? (
                                 <div className="d-flex align-items-center">
-
                                   <Link
                                     href={{
                                       pathname: `/partnership/mitra/detail-data-kerjasama-mitra/sub-detail`,
@@ -787,8 +781,6 @@ const DetailDataKerjasama = ({ token }) => {
                                       Detail
                                     </div>
                                   </button> */}
-
-
 
                                   <button
                                     className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete"
@@ -858,10 +850,10 @@ const DetailDataKerjasama = ({ token }) => {
                                 <div className="d-flex align-items-center">
                                   <Link
                                     href={{
-                                      pathname:"/partnership/tanda-tangan/penandatanganan-virtual",
+                                      pathname:
+                                        "/partnership/tanda-tangan/penandatanganan-virtual",
                                       query: { id: items.id },
                                     }}
-                                    
                                     passHref
                                   >
                                     <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete mr-3">
@@ -876,11 +868,13 @@ const DetailDataKerjasama = ({ token }) => {
                                       </div>
                                     </a>
                                   </Link>
-                                  <button className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                                  type="button"
-                                  onClick={() =>
-                                          cooperationRejection(items.id)
-                                        }>
+                                  <button
+                                    className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                    type="button"
+                                    onClick={() =>
+                                      cooperationRejection(items.id)
+                                    }
+                                  >
                                     <Image
                                       src={`/assets/icon/Ditolak.svg`}
                                       width={19}
@@ -894,11 +888,13 @@ const DetailDataKerjasama = ({ token }) => {
                                 </div>
                               ) : items.status.name === "pengajuan-selesai" ? (
                                 <div className="d-flex align-items-center">
-                                  <button className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                                  type="button"
-                                  onClick={() =>
-                                          cooperationRejection(items.id)
-                                        }>
+                                  <button
+                                    className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                    type="button"
+                                    onClick={() =>
+                                      cooperationRejection(items.id)
+                                    }
+                                  >
                                     <Image
                                       src={`/assets/icon/Ditolak.svg`}
                                       width={19}
@@ -931,8 +927,8 @@ const DetailDataKerjasama = ({ token }) => {
                                     type="button"
                                     className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
                                     onClick={() =>
-                                          cooperationRejection(items.id)
-                                        }
+                                      cooperationRejection(items.id)
+                                    }
                                   >
                                     <Image
                                       src={`/assets/icon/Ditolak.svg`}
@@ -950,7 +946,8 @@ const DetailDataKerjasama = ({ token }) => {
                                 <div className="d-flex align-items-center">
                                   <Link
                                     href={{
-                                      pathname: "/partnership/mitra/detail-data-kerjasama-mitra/sub-detail",
+                                      pathname:
+                                        "/partnership/mitra/detail-data-kerjasama-mitra/sub-detail",
                                       query: { id: items.id },
                                     }}
                                   >
@@ -994,7 +991,7 @@ const DetailDataKerjasama = ({ token }) => {
                       mitraDetailAll?.mitraDetailAll?.data?.total
                     }
                     pageRangeDisplayed={3}
-                    onChange={(page) => dispatch(setPageDetail(page))}
+                    onChange={page => dispatch(setPageDetail(page))}
                     nextPageText={">"}
                     prevPageText={"<"}
                     firstPageText={"<<"}
@@ -1003,7 +1000,7 @@ const DetailDataKerjasama = ({ token }) => {
                     linkClass="page-link"
                   />
                 }
-                onChangeLimit={(e) => dispatch(setLimitDetail(e.target.value))}
+                onChangeLimit={e => dispatch(setLimitDetail(e.target.value))}
                 totalData={
                   mitraDetailAll.mitraDetailAll &&
                   mitraDetailAll.totalDataDetail
