@@ -3,13 +3,16 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { Card, Button, Modal, ModalBody } from "react-bootstrap";
 import ModalHeader from "react-bootstrap/esm/ModalHeader";
-import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
+import PesertaWrapper from "../../../../user-component/components/wrapper/Peserta.wrapper";
+// import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
+
 import styles from "./testSubstansi.module.css";
 
 const TestSubstansi = () => {
   const router = useRouter();
   const temaId = Cookies.get("id_tema");
   const pelatihanId = Cookies.get("id_pelatihan");
+
   const handlePage = () => {
     router.push(
       `/peserta/subvit/substansi/1?theme_id=${temaId}&training_id=${pelatihanId}&category=Test Substansi`
