@@ -17,7 +17,7 @@ import { getDashboardPeserta } from "../../../redux/actions/pelatihan/dashboard-
 const SeleksiAdministrasi = dynamic(
   () =>
     import(
-      "../../../user-component/content/peserta/administrasi/seleksiAdmin.jsx"
+      "../../../user-component-new/content/peserta/administrasi/seleksiAdmin.jsx"
     ),
   {
     loading: function loadingNow() {
@@ -30,7 +30,7 @@ const SeleksiAdministrasi = dynamic(
 const BelumTersedia = dynamic(
   () =>
     import(
-      "../../../user-component/content/peserta/administrasi/administrasi-belum-tersedia.jsx"
+      "../../../user-component-new/content/peserta/administrasi/administrasi-belum-tersedia.jsx"
     ),
   {
     loading: function loadingNow() {
@@ -61,7 +61,7 @@ export default function RiwayatPelatihanPage(props) {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  (store) =>
+  store =>
     async ({ query, req }) => {
       const session = await getSession({ req });
 

@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import style from "./testSubstansi.module.css";
 import { useRouter } from "next/router";
-import PesertaWrapper from "../../../../user-component/components/wrapper/Peserta.wrapper";
+import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
 import { useSelector } from "react-redux";
 import Cookies from "js-cookie";
 
