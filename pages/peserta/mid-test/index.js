@@ -15,7 +15,7 @@ import { getAllAkademi } from "../../../redux/actions/beranda/beranda.actions";
 const TesSubstansiDetail = dynamic(
   () =>
     import(
-      "../../../user-component/content/peserta/test-substansi/test-substansi-detail"
+      "../../../user-component-new/content/peserta/test-substansi/test-substansi-detail"
     ),
   {
     loading: function loadingNow() {
@@ -28,7 +28,7 @@ const TesSubstansiDetail = dynamic(
 const BelumTersedia = dynamic(
   () =>
     import(
-      "../../../user-component/content/peserta/test-substansi/belum-tersedia.jsx"
+      "../../../user-component-new/content/peserta/test-substansi/belum-tersedia.jsx"
     ),
   {
     loading: function loadingNow() {
@@ -58,7 +58,7 @@ export default function TestSubstansiPage(props) {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  (store) =>
+  store =>
     async ({ query, req }) => {
       const session = await getSession({ req });
       const middleware = middlewareAuthPesertaSession(session);
@@ -81,7 +81,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
           return (success = false);
         } else {
           const test_substansi = data.list.filter(
-            (item) => item.status === "tes substansi"
+            item => item.status === "tes substansi"
           );
           if (test_substansi.length > 0) {
             await store.dispatch(
