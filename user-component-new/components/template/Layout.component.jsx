@@ -33,11 +33,11 @@ const Layout = ({ session, children, title }) => {
       <Head>
         <title>{title}</title>
       </Head>
-      <div className="position-relative">
+      <div>
         <NavigationBar session={session} />
         <ToastContainer position="top-right" />
         {children}
-        <ChatBot />
+        <ChatBot></ChatBot>
         <Footer />
       </div>
     </>
