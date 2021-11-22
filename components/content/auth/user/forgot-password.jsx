@@ -49,10 +49,6 @@ const ForgotPassword = () => {
               setLoading(false);
               setCount(count + 1);
               setSuccess(true);
-              setTimeout(() => {
-                setSuccess(false);
-              }, 5000);
-
               console.log(res);
             })
             .catch((err) => {
@@ -139,14 +135,20 @@ const ForgotPassword = () => {
                     >
                       Kirim E-mail
                     </button>
-                    {success && (
-                      <center>
-                        <p className="mt-3 text-success">
-                          Sukses Mengirim Email, Silahkan Cek Email Anda
-                        </p>
-                      </center>
-                    )}
+
                     <div className="mt-10 fz-16">
+                      {success && (
+                        <center>
+                          {count === 2 && (
+                            <p
+                              className="mt-3 "
+                              style={{ fontSize: "16px", color: "#fff" }}
+                            >
+                              Sukses Mengirim Email, Silahkan Cek Email Anda !
+                            </p>
+                          )}
+                        </center>
+                      )}
                       <p className="text-white text-center">
                         Belum menerima e-mail?
                         <span>
