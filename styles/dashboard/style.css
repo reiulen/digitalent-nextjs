@@ -1,4 +1,7 @@
 /* GLOBAL */
+.text-dashboard-primary {
+  color: #007cff !important;
+}
 .text-dashboard-secondary {
   color: #203e80 !important;
 }
@@ -23,7 +26,7 @@
 
 .title-section-dashboard {
   font-weight: bold;
-  font-size: 32px;
+  font-size: 20px;
   line-height: 120%;
   color: #6c6c6c;
   text-transform: uppercase;
@@ -32,10 +35,9 @@
 
 /* BRAND ONE */
 .opening-hello .card .card-body {
-  background-image: url("/assets/media/jukut.svg"),
-    url("/assets/media/ilustrator-1.svg");
+  background-image: url("/assets/media/jukut.svg");
   background-repeat: no-repeat;
-  background-position: left bottom, right bottom;
+  background-position: left bottom;
 }
 
 .opening-hello .card {
@@ -44,15 +46,38 @@
 
 .opening-hello .card .card-body h2 {
   font-weight: 600;
-  font-size: 24px;
+  font-size: 18px;
   line-height: 140%;
   color: #203e80;
 }
 
 .opening-hello .card .card-body p {
   font-weight: 500;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 160%;
   color: #6c6c6c;
 }
 /* END BRAND ONE */
+
+.leaflet-popup-content-wrapper {
+  width: 200px !important;
+}
+
+@media only screen and (min-width: 900px) {
+  /* BRAND ONE */
+  .opening-hello .card .card-body {
+    background-image: url("/assets/media/jukut.svg"),
+      url("/assets/media/ilustrator-1.svg");
+    background-repeat: no-repeat;
+    background-position: left bottom, right bottom;
+  }
+  .title-section-dashboard {
+    font-size: 32px;
+  }
+  .opening-hello .card .card-body h2 {
+    font-size: 24px;
+  }
+  .opening-hello .card .card-body p {
+    font-size: 16px;
+  }
+}

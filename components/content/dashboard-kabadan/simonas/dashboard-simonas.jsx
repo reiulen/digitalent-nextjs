@@ -50,15 +50,6 @@ const DashboardSimonas = () => {
     { id: 1, title: "Pria", percent: 80, total: "3.000" },
     { id: 2, title: "Wanita", percent: 30, total: "2.000" },
   ];
-  const dataPendidikan = [
-    { id: 1, title: "D3", percent: 50, total: "3.000" },
-    { id: 2, title: "S1", percent: 40, total: "2.000" },
-    { id: 3, title: "SMA", percent: 40, total: "1.000" },
-    { id: 4, title: "SMK", percent: 30, total: "1.000" },
-    { id: 5, title: "S2", percent: 20, total: "1.000" },
-    { id: 6, title: "D4", percent: 10, total: "500" },
-    { id: 7, title: "Other", percent: 5, total: "100" },
-  ];
 
   return (
     <PageWrapper>
@@ -72,7 +63,7 @@ const DashboardSimonas = () => {
       <section className="total-perusahaan mt-10">
         <h2 className="title-section-dashboard">perusahaan</h2>
         <div className="row mt-5">
-          <div className="col-md-6">
+          <div className="col-md-6 mb-5">
             <CardTotal
               title={"Total Lowongan Pekerjaan"}
               value={252.329}
@@ -80,7 +71,7 @@ const DashboardSimonas = () => {
               statisticDay={"+20.220 (24H)"}
             />
           </div>
-          <div className="col-md-6">
+          <div className="col-md-6 mb-5">
             <CardTotal
               title={"Total Proyek"}
               value={252.329}
@@ -90,8 +81,8 @@ const DashboardSimonas = () => {
           </div>
         </div>
 
-        <div className="row mt-10">
-          <div className="col-md-6">
+        <div className="row mt-5">
+          <div className="col-md-6 mb-5">
             <div className="card card-custom border bg-white">
               <div className="card-body pb-3">
                 <p className="text-dashboard-gray fz-16 fw-500">
@@ -118,7 +109,7 @@ const DashboardSimonas = () => {
               </div>
             </div>
           </div>
-          <div className="col-md-6">
+          <div className="col-md-6 mb-5">
             <div className="card card-custom border bg-white">
               <div className="card-body pb-3">
                 <p className="text-dashboard-gray fz-16 fw-500">
@@ -147,10 +138,10 @@ const DashboardSimonas = () => {
         </div>
       </section>
 
-      <section className="total-pelamar mt-10">
+      <section className="total-pelamar mt-5">
         <h2 className="title-section-dashboard">pelamar</h2>
         <div className="row mt-5">
-          <div className="col-md-6">
+          <div className="col-md-6 mb-5">
             <CardTotal
               title={"Total Seluruh Lamaran"}
               value={252.329}
@@ -158,7 +149,7 @@ const DashboardSimonas = () => {
               statisticDay={"+20.220 (24H)"}
             />
           </div>
-          <div className="col-md-6">
+          <div className="col-md-6 mb-5">
             <CardTotal
               title={"Total Lamaran Aktif"}
               value={252.329}
@@ -168,8 +159,8 @@ const DashboardSimonas = () => {
           </div>
         </div>
 
-        <div className="row mt-10">
-          <div className="col-md-6">
+        <div className="row mt-5">
+          <div className="col-md-6 mb-5">
             <div className="card card-custom border bg-white">
               <div className="card-body pb-3">
                 <p className="text-dashboard-gray fz-16 fw-500">
@@ -196,7 +187,7 @@ const DashboardSimonas = () => {
               </div>
             </div>
           </div>
-          <div className="col-md-6">
+          <div className="col-md-6 mb-5">
             <div className="card card-custom border bg-white">
               <div className="card-body pb-3">
                 <p className="text-dashboard-gray fz-16 fw-500">
@@ -225,15 +216,15 @@ const DashboardSimonas = () => {
         </div>
       </section>
 
-      <section className="peta-penyebaran-peserta mt-10">
+      <section className="peta-penyebaran-peserta mt-5">
         <div className="card card-custom bg-white">
           <div className="card-body">
             <div className="head-filter">
-              <div className="d-flex justify-content-between align-items-center">
+              <div className="d-flex justify-content-between align-items-center flex-wrap">
                 <p className="text-dashboard-gray fz-16 fw-500 mt-3">
                   Penyebaran Peserta berdasarkan wilayah
                 </p>
-                <div className="list-filter d-flex">
+                <div className="list-filter d-flex flex-wrap">
                   <div className="d-flex align-items-center mr-3">
                     <p className="mt-3 mr-3 text-dashboard-gray-caption">
                       Filter By:
@@ -272,7 +263,7 @@ const DashboardSimonas = () => {
               </div>
             </div>
             <div className="row mt-10">
-              <div className="col-md-6">
+              <div className="col-md-6 mb-5">
                 <div className="card card-custom border bg-white">
                   <div className="card-body pb-3">
                     <p className="text-dashboard-gray fz-16 fw-500">
@@ -299,7 +290,7 @@ const DashboardSimonas = () => {
                   </div>
                 </div>
               </div>
-              <div className="col-md-6">
+              <div className="col-md-6 mb-5">
                 <div className="card card-custom border bg-white">
                   <div className="card-body pb-3">
                     <p className="text-dashboard-gray fz-16 fw-500">
@@ -326,14 +317,14 @@ const DashboardSimonas = () => {
                 </div>
               </div>
             </div>
-            <div className="row mt-10">
-              <div className="col-md-6">
+            <div className="row mt-5">
+              <div className="col-md-6 mb-5">
                 <CardInfo
                   title={"Umur Pelamar Lamaran Kerja"}
                   data={dataUmur}
                 />
               </div>
-              <div className="col-md-6">
+              <div className="col-md-6 mb-5">
                 <CardInfo
                   title={"Pelamar Kerja berdasarkan Jenis Kelamin"}
                   data={dataJenisKelamin}

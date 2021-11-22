@@ -154,7 +154,7 @@ const DashboardBeasiswa = () => {
 
       <section className="total-pengguna mt-10">
         <div className="row mt-5">
-          <div className="col-md-6">
+          <div className="col-md-6 mb-5">
             <CardTotal
               title={"Total Seluruh Pendaftar Beasiswa Dalam Negeri"}
               value={252.329}
@@ -162,7 +162,7 @@ const DashboardBeasiswa = () => {
               statisticDay={"+20.220 (24H)"}
             />
           </div>
-          <div className="col-md-6">
+          <div className="col-md-6 mb-5">
             <CardTotal
               title={"Total Seluruh Pendaftar Beasiswa Luar Negeri"}
               value={252.329}
@@ -173,9 +173,9 @@ const DashboardBeasiswa = () => {
         </div>
       </section>
 
-      <section className="statistik-peserta mt-10">
+      <section className="statistik-peserta mt-5">
         <div className="row mt-5">
-          <div className="col-md-6">
+          <div className="col-md-6 mb-5">
             <div className="card card-custom bg-white">
               <div className="card-body py-4">
                 <StatistikWrapper
@@ -206,7 +206,7 @@ const DashboardBeasiswa = () => {
               </div>
             </div>
           </div>
-          <div className="col-md-6">
+          <div className="col-md-6 mb-5">
             <div className="card card-custom bg-white">
               <div className="card-body py-4">
                 <StatistikWrapper
@@ -240,11 +240,11 @@ const DashboardBeasiswa = () => {
         </div>
       </section>
 
-      <section className="peta-penyebaran-peserta mt-10">
+      <section className="peta-penyebaran-peserta mt-5">
         <div className="card card-custom bg-white">
           <div className="card-body">
             <div className="head-filter">
-              <div className="d-flex justify-content-between align-items-center">
+              <div className="d-flex justify-content-between align-items-center flex-wrap">
                 <p className="text-dashboard-gray fz-16 fw-500 mt-3">
                   Penyebaran Peserta berdasarkan wilayah
                 </p>
@@ -269,7 +269,7 @@ const DashboardBeasiswa = () => {
               </div>
             </div>
             <div className="row mt-10">
-              <div className="col-md-6">
+              <div className="col-md-6 mb-5">
                 <div className="card card-custom border bg-white">
                   <div className="card-body pb-3">
                     <p className="text-dashboard-gray fz-16 fw-500">
@@ -296,7 +296,7 @@ const DashboardBeasiswa = () => {
                   </div>
                 </div>
               </div>
-              <div className="col-md-6">
+              <div className="col-md-6 mb-5">
                 <div className="card card-custom border bg-white">
                   <div className="card-body pb-3">
                     <p className="text-dashboard-gray fz-16 fw-500">
@@ -323,28 +323,28 @@ const DashboardBeasiswa = () => {
                 </div>
               </div>
             </div>
-            <div className="row mt-10">
-              <div className="col-md-6">
+            <div className="row mt-5">
+              <div className="col-md-6 mb-5">
                 <CardInfo
                   title={"Top 5 Perguruan Tinggi Dalam Negeri Tujuan Beasiswa"}
                   data={dataUniversitasDalam}
                 />
               </div>
-              <div className="col-md-6">
+              <div className="col-md-6 mb-5">
                 <CardInfo
                   title={"Top 5 Universitas Luar Negeri Tujuan Beasiswa"}
                   data={dataUniversitasLuarNegeri}
                 />
               </div>
             </div>
-            <div className="row mt-10">
-              <div className="col-md-6">
+            <div className="row mt-5">
+              <div className="col-md-6 mb-5">
                 <CardInfo
                   title={"Awardee Beasiswa Kominfo"}
                   data={dataAwardee}
                 />
               </div>
-              <div className="col-md-6">
+              <div className="col-md-6 mb-5">
                 <CardInfo title={"Alumni Beasiswa Kominfo"} data={dataAlumni} />
               </div>
             </div>

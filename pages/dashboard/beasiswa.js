@@ -1,11 +1,29 @@
 import { getSession } from "next-auth/client";
+import dynamic from "next/dynamic";
 import { middlewareAuthAdminSession } from "../../utils/middleware/authMiddleware";
-import DashboardBeasiswa from "../../components/content/dashboard-kabadan/beasiswa/dashboard-beasiswa";
+// import DashboardBeasiswa from "../../components/content/dashboard-kabadan/beasiswa/dashboard-beasiswa";
 
 export default function DashboardBeasiswaPage() {
+  const DashboardBeasiswa = dynamic(
+    () =>
+      import(
+        "../../components/content/dashboard-kabadan/beasiswa/dashboard-beasiswa"
+      ),
+    { ssr: false }
+  );
+  const MyMap = dynamic(
+    () =>
+      import(
+        "../../components/content/dashboard-kabadan/component/map-digitalent.component"
+      ),
+    { ssr: false }
+  );
   return (
     <>
       <div className="d-flex flex-column flex-root">
+        <div id="map" style={{ display: "none" }}>
+          <MyMap />
+        </div>
         <DashboardBeasiswa />
       </div>
     </>
