@@ -12,10 +12,11 @@ import IconAdd from "../../../../assets/icon/Add";
 import IconSearch from "../../../../assets/icon/Search";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import styles from "../../../../../styles/previewGaleri.module.css";
+
 import Swal from "sweetalert2";
-import {
-  postPage
-} from "../../../../../redux/actions/site-management/settings/page.actions";
+import Image from "next/image";
+import { postPage } from "../../../../../redux/actions/site-management/settings/page.actions";
 
 const TambahPage = ({ token }) => {
   let dispatch = useDispatch();
@@ -34,6 +35,13 @@ const TambahPage = ({ token }) => {
     pageName: "",
     pageStatus: "",
   });
+  const [titlePage, setTitlePage] = useState(null);
+  const [template, setTemplate] = useState(localStorage.getItem("template"));
+  const [gambar, setGambar] = useState("");
+  const [gambarPreview, setGambarPreview] = useState(
+    "/assets/media/default.jpg"
+  );
+  const [gambarName, setGambarName] = useState(null);
 
   const { loading, error, success } = useSelector((state) => state.newPage);
 
@@ -48,6 +56,29 @@ const TambahPage = ({ token }) => {
       progress: undefined,
     });
 
+  const onChangeGambar = (e) => {
+    const type = ["image/jpg", "image/png", "image/jpeg"];
+
+    if (type.includes(e.target.files[0].type)) {
+      if (e.target.files[0].size > "5000000") {
+        e.target.value = null;
+        Swal.fire("Oops !", "Data Image Melebihi Ketentuan", "error");
+      } else {
+        const reader = new FileReader();
+        reader.onload = () => {
+          if (reader.readyState === 2) {
+            setGambar(reader.result);
+            setGambarPreview(reader.result);
+          }
+        };
+        reader.readAsDataURL(e.target.files[0]);
+        setGambarName(e.target.files[0].name);
+      }
+    } else {
+      e.target.value = null;
+      Swal.fire("Oops !", "Thumbnail harus berupa data gambar.", "error");
+    }
+  };
 
   const submit = (e) => {
     e.preventDefault();
@@ -60,12 +91,13 @@ const TambahPage = ({ token }) => {
     } else if (pageName === "") {
       setError({ ...errorr, pageName: "page name tidak boleh kosong" });
       notify("page name tidak boleh kosong");
+    } else if (titlePage === "") {
+      setError({ ...errorr, pageName: "title page tidak boleh kosong" });
+      notify("title page tidak boleh kosong");
     } else if (pageStatus === "") {
       setError({ ...errorr, pageStatus: "page status tidak boleh kosong" });
       notify("page status tidak boleh kosong");
     } else {
-
-      
       Swal.fire({
         title: "Apakah anda yakin simpan ?",
         // text: "Data ini tidak bisa dikembalikan !",
@@ -78,16 +110,32 @@ const TambahPage = ({ token }) => {
         dismissOnDestroy: false,
       }).then((result) => {
         if (result.value) {
-          const sendData = {
-            name: pageName,
-            content: isi_artikel,
-            status: pageStatus,
-          };
-          dispatch(postPage(sendData,token));
+          let sendData = {};
+          if (template === "1") {
+            sendData = {
+              name: pageName,
+              template_type: template,
+              status: pageStatus,
+              property_template: {
+                title: titlePage,
+                content: isi_artikel,
+              },
+            };
+          } else {
+            sendData = {
+              name: pageName,
+              template_type: template,
+              status: pageStatus,
+              property_template: {
+                title: titlePage,
+                content: isi_artikel, 
+                image: gambar
+              },
+            };
+          }
+          dispatch(postPage(sendData, token));
         }
       });
-
-
     }
   };
 
@@ -99,12 +147,11 @@ const TambahPage = ({ token }) => {
 
     if (success) {
       Swal.fire("Berhasil Menyimpan data", "", "success").then(() => {
-       router.push({
-        pathname: `/site-management/setting/page`,
-        query: { success: true },
+        router.push({
+          pathname: `/site-management/setting/page`,
+          query: { success: true },
+        });
       });
-      });
-      
     }
 
     setEditorLoaded(true);
@@ -124,77 +171,15 @@ const TambahPage = ({ token }) => {
       />
       <form onSubmit={submit}>
         <div className="row">
-          <div className="col-12 col-xl-8 order-1">
+          <div
+            className="col-12 col-xl-4 order-1"
+            style={{
+              height: "max-content",
+            }}
+          >
             <div className="card card-custom card-stretch gutter-b">
               <div className="card-header border-0">
-                <h3
-                  className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 my-0 my-sm-5 titles-1"
-                >
-                  Tambah Page
-                </h3>
-              </div>
-              <div className="card-body pt-0">
-                <div>
-                  <h3
-                    className="card-title font-weight-bolder text-dark border-0 w-100 pb-5"
-                    style={{ fontSize: "16px" }}
-                  >
-                    Konten Page
-                  </h3>
-                  <div
-                    className="my-10"
-                    style={{
-                      width: "100%",
-                    }}
-                  >
-                    <div className="ckeditor">
-                      {editorLoaded ? (
-                        <CKEditor
-                          editor={ClassicEditor}
-                          data={isi_artikel}
-                          onReady={(editor) => {
-                            // You can store the "editor" and use when it is needed.
-                            // console.log("Editor is ready to use!", editor);
-                          }}
-                          onChange={(event, editor) => {
-                            const data = editor.getData();
-                            setIsiArtikel(data);
-                          }}
-                          
-                          config={{
-                            placeholder: "Tulis Deskripsi",
-                          }}
-                        />
-                      ) : (
-                        <p>Tunggu Sebentar</p>
-                      )}
-                    </div>
-                  </div>
-                  <div className="form-group row">
-                    <div className="col-sm-12 d-flex justify-content-end">
-                      <Link href="/site-management/setting/page" passHref>
-                        <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
-                          Kembali
-                        </a>
-                      </Link>
-                      <button
-                        type="submit"
-                        className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
-                      >
-                        Simpan
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="col-12 col-xl-4 order-1">
-            <div className="card card-custom card-stretch gutter-b">
-              <div className="card-header border-0">
-                <h3
-                  className="card-title font-weight-bolder text-dark border-0 w-100 pb-5 my-0 pt-5 my-sm-5 titles-1"
-                >
+                <h3 className="card-title font-weight-bolder text-dark border-0 w-100 pb-5 my-0 pt-5 my-sm-5 titles-1">
                   Page Attributes
                 </h3>
                 <div className="w-100">
@@ -205,7 +190,7 @@ const TambahPage = ({ token }) => {
                       onChange={(e) => setPageName(e.target.value)}
                       type="text"
                       className="form-control"
-                      placeholder="Placeholder"
+                      placeholder="Masukkan Page Name"
                     />
                     {/* <span className="form-text text-muted">
                       Please enter your full name
@@ -219,7 +204,9 @@ const TambahPage = ({ token }) => {
                       onChange={(e) => setPageStatus(e.target.value)}
                       defaultValue={pageStatus}
                     >
-                      <option value="">Pilih Status</option>
+                      <option value="" disabled selected>
+                        Pilih Status
+                      </option>
                       <option value="1">Listed</option>
                       <option value="0">Unlisted</option>
                     </select>
@@ -231,6 +218,361 @@ const TambahPage = ({ token }) => {
               </div>
             </div>
           </div>
+
+          {template === "0" && (
+            <div className="col-12 col-xl-8 order-1">
+              <div className="card card-custom card-stretch gutter-b">
+                <div className="card-header border-0 mt-6">
+                  <h3 className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 my-0 my-sm-5 titles-1">
+                    Page Content
+                  </h3>
+                </div>
+                <div className="card-body pt-0">
+                  <div>
+                    <h3
+                      className="card-title font-weight-bolder text-dark border-0 w-100"
+                      style={{ fontSize: "16px" }}
+                    >
+                      Title Page
+                    </h3>
+                    <div
+                      className="my-10"
+                      style={{
+                        width: "100%",
+                      }}
+                    >
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Tulis judul halaman"
+                        value={titlePage}
+                        onChange={(e) => {
+                          setTitlePage(e.target.value.replace(/[^a-zA-Z0-9]/g, ""));
+                        }}
+                      />
+                    </div>
+                  </div>
+                  <div className={`${styles.selectKategori} form-group`}>
+                    <label
+                      htmlFor="staticEmail"
+                      className="col-sm-4 col-form-label font-weight-bolder"
+                    >
+                      Image
+                    </label>
+                    <div className="row ml-4">
+                      <figure
+                        className="avatar item-rtl position-relative"
+                        data-toggle="modal"
+                        data-target="#exampleModalCenter"
+                      >
+                        <Image
+                          src={gambarPreview}
+                          alt="image"
+                          width={160}
+                          height={160}
+                          objectFit="fill"
+                        />
+                      </figure>
+                      <div className="position-relative">
+                        <label
+                          className="circle-top"
+                          htmlFor="inputGroupFile04"
+                        >
+                          <i className="ri-add-line text-dark"></i>
+                        </label>
+                        <input
+                          type="file"
+                          name="gambar"
+                          className="custom-file-input"
+                          id="inputGroupFile04"
+                          onChange={onChangeGambar}
+                          accept="image/*"
+                          onBlur={() =>
+                            simpleValidator.current.showMessageFor("gambar")
+                          }
+                          style={{ display: "none" }}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="ml-4"></div>
+                  </div>
+                  <div>
+                    <h3
+                      className="card-title font-weight-bolder text-dark border-0 w-100"
+                      style={{ fontSize: "16px" }}
+                    >
+                      Content Page
+                    </h3>
+                    <div
+                      className="my-10"
+                      style={{
+                        width: "100%",
+                      }}
+                    >
+                      <div className="ckeditor">
+                        {editorLoaded ? (
+                          <CKEditor
+                            editor={ClassicEditor}
+                            data={isi_artikel}
+                            onReady={(editor) => {
+                              // You can store the "editor" and use when it is needed.
+                              // console.log("Editor is ready to use!", editor);
+                            }}
+                            onChange={(event, editor) => {
+                              const data = editor.getData();
+                              setIsiArtikel(data);
+                            }}
+                            config={{
+                              placeholder: "Tulis Deskripsi",
+                            }}
+                          />
+                        ) : (
+                          <p>Tunggu Sebentar</p>
+                        )}
+                      </div>
+                    </div>
+                    <div className="form-group row">
+                      <div className="col-sm-12 d-flex justify-content-end">
+                        <Link href="/site-management/setting/page" passHref>
+                          <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
+                            Kembali
+                          </a>
+                        </Link>
+                        <button
+                          type="submit"
+                          className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
+                        >
+                          Simpan
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+          {template === "1" && (
+            <div className="col-12 col-xl-8 order-1">
+              <div className="card card-custom card-stretch gutter-b">
+                <div className="card-header border-0 mt-6">
+                  <h3 className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 my-0 my-sm-5 titles-1">
+                    Page Content
+                  </h3>
+                </div>
+                <div className="card-body pt-0">
+                  <div>
+                    <h3
+                      className="card-title font-weight-bolder text-dark border-0 w-100"
+                      style={{ fontSize: "16px" }}
+                    >
+                      Title Page
+                    </h3>
+                    <div
+                      className="my-10"
+                      style={{
+                        width: "100%",
+                      }}
+                    >
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Tulis judul halaman"
+                        value={titlePage}
+                        onChange={(e) => {
+                          setTitlePage(e.target.value.replace(/[^a-zA-Z0-9]/g, ""));
+                        }}
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <h3
+                      className="card-title font-weight-bolder text-dark border-0 w-100"
+                      style={{ fontSize: "16px" }}
+                    >
+                      Content Page
+                    </h3>
+                    <div
+                      className="my-10"
+                      style={{
+                        width: "100%",
+                      }}
+                    >
+                      <div className="ckeditor">
+                        {editorLoaded ? (
+                          <CKEditor
+                            editor={ClassicEditor}
+                            data={isi_artikel}
+                            onReady={(editor) => {
+                              // You can store the "editor" and use when it is needed.
+                              // console.log("Editor is ready to use!", editor);
+                            }}
+                            onChange={(event, editor) => {
+                              const data = editor.getData();
+                              setIsiArtikel(data);
+                            }}
+                            config={{
+                              placeholder: "Tulis Deskripsi",
+                            }}
+                          />
+                        ) : (
+                          <p>Tunggu Sebentar</p>
+                        )}
+                      </div>
+                    </div>
+                    <div className="form-group row">
+                      <div className="col-sm-12 d-flex justify-content-end">
+                        <Link href="/site-management/setting/page" passHref>
+                          <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
+                            Kembali
+                          </a>
+                        </Link>
+                        <button
+                          type="submit"
+                          className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
+                        >
+                          Simpan
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+          {template === "2" && (
+            <div className="col-12 col-xl-8 order-1">
+              <div className="card card-custom card-stretch gutter-b">
+                <div className="card-header border-0 mt-6">
+                  <h3 className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 my-0 my-sm-5 titles-1">
+                    Page Content
+                  </h3>
+                </div>
+                <div className="card-body pt-0">
+                  <div>
+                    <h3
+                      className="card-title font-weight-bolder text-dark border-0 w-100"
+                      style={{ fontSize: "16px" }}
+                    >
+                      Title Page
+                    </h3>
+                    <div
+                      className="my-10"
+                      style={{
+                        width: "100%",
+                      }}
+                    >
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Tulis judul halaman"
+                        value={titlePage}
+                        onChange={(e) => {
+                          setTitlePage(e.target.value.replace(/[^a-zA-Z0-9]/g, ""));
+                        }}
+                      />
+                    </div>
+                  </div>
+                  <div className={`${styles.selectKategori} form-group`}>
+                    <label
+                      htmlFor="staticEmail"
+                      className="col-sm-4 col-form-label font-weight-bolder"
+                    >
+                      Image
+                    </label>
+                    <div className="row ml-4">
+                      <figure
+                        className="avatar item-rtl position-relative"
+                        data-toggle="modal"
+                        data-target="#exampleModalCenter"
+                      >
+                        <Image
+                          src={gambarPreview}
+                          alt="image"
+                          width={160}
+                          height={160}
+                          objectFit="fill"
+                        />
+                      </figure>
+                      <div className="position-relative">
+                        <label
+                          className="circle-top"
+                          htmlFor="inputGroupFile04"
+                        >
+                          <i className="ri-add-line text-dark"></i>
+                        </label>
+                        <input
+                          type="file"
+                          name="gambar"
+                          className="custom-file-input"
+                          id="inputGroupFile04"
+                          onChange={onChangeGambar}
+                          accept="image/*"
+                          onBlur={() =>
+                            simpleValidator.current.showMessageFor("gambar")
+                          }
+                          style={{ display: "none" }}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="ml-4"></div>
+                  </div>
+                  <div>
+                    <h3
+                      className="card-title font-weight-bolder text-dark border-0 w-100"
+                      style={{ fontSize: "16px" }}
+                    >
+                      Content Page
+                    </h3>
+                    <div
+                      className="my-10"
+                      style={{
+                        width: "100%",
+                      }}
+                    >
+                      <div className="ckeditor">
+                        {editorLoaded ? (
+                          <CKEditor
+                            editor={ClassicEditor}
+                            data={isi_artikel}
+                            onReady={(editor) => {
+                              // You can store the "editor" and use when it is needed.
+                              // console.log("Editor is ready to use!", editor);
+                            }}
+                            onChange={(event, editor) => {
+                              const data = editor.getData();
+                              setIsiArtikel(data);
+                            }}
+                            config={{
+                              placeholder: "Tulis Deskripsi",
+                            }}
+                          />
+                        ) : (
+                          <p>Tunggu Sebentar</p>
+                        )}
+                      </div>
+                    </div>
+                    <div className="form-group row">
+                      <div className="col-sm-12 d-flex justify-content-end">
+                        <Link href="/site-management/setting/page" passHref>
+                          <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
+                            Kembali
+                          </a>
+                        </Link>
+                        <button
+                          type="submit"
+                          className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
+                        >
+                          Simpan
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </form>
     </PageWrapper>
