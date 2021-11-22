@@ -159,7 +159,7 @@ const EditDokumentKerjasamaById = ({ token }) => {
               <p className="fz-16">{email}</p>
 
               <div className="row">
-                <div className="col-12 col-sm-6">
+                <div className="col-12 col-xl-6">
                   <label
                     htmlFor="staticEmail"
                     className="col-form-label fz-14"
@@ -169,7 +169,7 @@ const EditDokumentKerjasamaById = ({ token }) => {
                   </label>
                   <p className="fz-16">{aggrementNumber}</p>
                 </div>
-                <div className="col-12 col-sm-6">
+                <div className="col-12 col-xl-6">
                   <label
                     htmlFor="staticEmail"
                     className="col-form-label fz-14"
@@ -186,7 +186,7 @@ const EditDokumentKerjasamaById = ({ token }) => {
                 className="col-form-label fz-14"
                 style={{ color: "#6C6C6C" }}
               >
-                Tanggal Penandatanganan
+                Tanggal tanda Tangan
               </label>
               <p className="fz-16">{signinDate}</p>
               <label
@@ -277,8 +277,8 @@ const EditDokumentKerjasamaById = ({ token }) => {
                     }
                   )}
               {/* end looping second */}
-              <div className="form-group row">
-                <div className="col-sm-12 d-flex justify-content-end">
+              <div className="form-group">
+                <div className="d-flex flex-column flex-sm-row justify-content-sm-end justify-content-start">
                   <Link
                     href={{
                       pathname:
@@ -287,7 +287,7 @@ const EditDokumentKerjasamaById = ({ token }) => {
                     }}
                     className="mr-2"
                   >
-                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary">
+                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary d-flex justify-content-center">
                       Kembali
                     </a>
                   </Link>

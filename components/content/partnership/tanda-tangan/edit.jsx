@@ -245,9 +245,9 @@ const EditTandaTangan = ({ token }) => {
                       />
                     </div>
                   </div>
-                  <div className="d-flex flex-wrap align-items-center">
+                  <div className="d-flex flex-wrap align-items-center justify-content-center">
                     <a
-                      className="btn btn-sm btn-rounded-full text-blue-primary border-primary text-blue-primary mr-5 mt-5"
+                      className="btn btn-sm btn-rounded-full text-blue-primary border-primary text-blue-primary mr-md-5 mt-5"
                       onClick={() => dataTandaTangan()}
                     >
                       Buat Tanda Tangan Baru
@@ -264,16 +264,16 @@ const EditTandaTangan = ({ token }) => {
                 </div>
               </div>
 
-              <div className="form-group row">
-                <div className="col-sm-12 d-flex justify-content-end">
+              <div className="form-group">
+                <div className="d-flex flex-column flex-md-row justify-content-end">
                   <Link href="/partnership/tanda-tangan">
-                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
+                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5 d-flex justify-content-center">
                       Kembali
                     </a>
                   </Link>
                   <button
                     type="button"
-                    className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
+                    className="btn btn-sm btn-rounded-full bg-blue-primary text-white d-flex justify-content-center"
                     onClick={(e) => submit(e)}
                   >
                     Simpan
