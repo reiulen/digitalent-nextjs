@@ -57,32 +57,16 @@ export default function Carousel({ data }) {
     cssEase: "linear",
     speed: 500,
     slidesToScroll: 1,
-    variableWidth: data && data.imagetron.length > 1 ? true : false,
+    variableWidth: true,
     centerMode: true,
     centerPadding: "40px",
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
     responsive: [
       {
-        breakpoint: 600,
+        breakpoint: 1700,
         settings: {
           variableWidth: false,
-          centerMode: true,
-          centerPadding: "40px",
-        },
-      },
-      {
-        breakpoint: 700,
-        settings: {
-          variableWidth: false,
-          centerMode: true,
-          centerPadding: "40px",
-        },
-      },
-      {
-        breakpoint: 1124,
-        settings: {
-          variableWidth: true,
           centerMode: true,
           centerPadding: "40px",
         },
@@ -95,15 +79,15 @@ export default function Carousel({ data }) {
       <Slider {...settings}>
         {data &&
           data.imagetron.map((row, i) => (
-            <div style={{ width: 1200 }} key={i}>
+            <div style={{ width: 1650 }} key={i}>
               <Image
                 src={
                   process.env.END_POINT_API_IMAGE_PUBLIKASI +
                   "publikasi/images/" +
                   row.gambar
                 }
-                width={1200}
-                height={windowDimensions.width < 800 ? 550 : 400}
+                width={1650}
+                height={windowDimensions.width < 800 ? 800 : 500}
                 objectFit="cover"
                 className="img-carousel"
               />

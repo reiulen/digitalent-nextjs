@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getFormLPJ } from "../../../redux/actions/pelatihan/training.actions";
 
 const FormLpj = dynamic(
-  () => import("../../../user-component/content/form-lpj/index"),
+  () => import("../../../user-component-new/content/peserta/form-lpj/index"),
   {
     loading: function loadingNow() {
       return <LoadingSkeleton />;

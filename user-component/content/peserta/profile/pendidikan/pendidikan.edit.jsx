@@ -18,6 +18,7 @@ import { UPDATE_PENDIDIKAN_RESET } from "../../../../../redux/types/pelatihan/pr
 import {
   helperRegexGPA,
   helperRegexNumber,
+  helperRemoveZeroFromIndex0,
   SweatAlert,
   yyyy,
 } from "../../../../../utils/middleware/helper";
@@ -824,7 +825,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                       e.target.value === "" ||
                       helperRegexNumber.test(e.target.value)
                     ) {
-                      setTahunMasuk(e.target.value);
+                      helperRemoveZeroFromIndex0(e.target.value, setTahunMasuk);
                     }
                   }}
                   maxLength={4}
@@ -856,7 +857,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                       e.target.value === "" ||
                       helperRegexNumber.test(e.target.value)
                     ) {
-                      setTahunMasuk(e.target.value);
+                      helperRemoveZeroFromIndex0(e.target.value, setTahunMasuk);
                     }
                   }}
                   maxLength={4}
@@ -888,7 +889,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                       e.target.value === "" ||
                       helperRegexNumber.test(e.target.value)
                     ) {
-                      setTahunMasuk(e.target.value);
+                      helperRemoveZeroFromIndex0(e.target.value, setTahunMasuk);
                     }
                   }}
                   maxLength={4}
@@ -920,7 +921,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                       e.target.value === "" ||
                       helperRegexNumber.test(e.target.value)
                     ) {
-                      setTahunMasuk(e.target.value);
+                      helperRemoveZeroFromIndex0(e.target.value, setTahunMasuk);
                     }
                   }}
                   maxLength={4}
@@ -1147,7 +1148,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   placeholder="Silahkan Masukan IPK"
                   value={ipk}
                   onChange={e => {
-                    setIpk(e.target.value);
+                    helperRemoveZeroFromIndex0(e.target.value, setIpk);
                   }}
                   onBlur={() => simpleValidator.current.showMessageFor("ipk")}
                 />
@@ -1171,7 +1172,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                       e.target.value === "" ||
                       helperRegexNumber.test(e.target.value)
                     ) {
-                      setTahunMasuk(e.target.value);
+                      helperRemoveZeroFromIndex0(e.target.value, setTahunMasuk);
                     }
                   }}
                   maxLength={4}
@@ -1199,7 +1200,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   placeholder="Silahkan Masukan IPK"
                   value={ipk}
                   onChange={e => {
-                    setIpk(e.target.value);
+                    helperRemoveZeroFromIndex0(e.target.value, setIpk);
                   }}
                   max={4}
                   onBlur={() => simpleValidator.current.showMessageFor("ipk")}
@@ -1224,7 +1225,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                       e.target.value === "" ||
                       helperRegexNumber.test(e.target.value)
                     ) {
-                      setTahunMasuk(e.target.value);
+                      helperRemoveZeroFromIndex0(e.target.value, setTahunMasuk);
                     }
                   }}
                   maxLength={4}
@@ -1252,7 +1253,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   placeholder="Silahkan Masukan IPK"
                   value={ipk}
                   onChange={e => {
-                    setIpk(e.target.value);
+                    helperRemoveZeroFromIndex0(e.target.value, setIpk);
                   }}
                   max={4}
                   onBlur={() => simpleValidator.current.showMessageFor("ipk")}
@@ -1277,7 +1278,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                       e.target.value === "" ||
                       helperRegexNumber.test(e.target.value)
                     ) {
-                      setTahunMasuk(e.target.value);
+                      helperRemoveZeroFromIndex0(e.target.value, setTahunMasuk);
                     }
                   }}
                   maxLength={4}
@@ -1306,7 +1307,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   value={ipk}
                   max={4}
                   onChange={e => {
-                    setIpk(e.target.value);
+                    helperRemoveZeroFromIndex0(e.target.value, setIpk);
                   }}
                   onBlur={() => simpleValidator.current.showMessageFor("ipk")}
                 />
@@ -1330,7 +1331,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                       e.target.value === "" ||
                       helperRegexNumber.test(e.target.value)
                     ) {
-                      setTahunMasuk(e.target.value);
+                      helperRemoveZeroFromIndex0(e.target.value, setTahunMasuk);
                     }
                   }}
                   maxLength={4}

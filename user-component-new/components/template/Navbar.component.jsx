@@ -43,7 +43,7 @@ const Navigationbar = ({ session }) => {
   const router = useRouter();
   const [isShowDropdown, setIsShowDropdown] = useState(false);
   const { error: errorDataPribadi, dataPribadi } = useSelector(
-    state => state.getDataPribadi
+    (state) => state.getDataPribadi
   );
 
   useEffect(() => {
@@ -154,7 +154,7 @@ const Navigationbar = ({ session }) => {
             )}
             <Navbar.Toggle
               aria-controls="basic-navbar-nav"
-              onClick={e => {
+              onClick={(e) => {
                 setIsNavOpen(!isNavOpen);
               }}
               className="p-3"
