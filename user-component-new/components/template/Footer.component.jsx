@@ -15,7 +15,7 @@ export default function Footer() {
     dispatch(getBerandaFooter());
   }, [dispatch]);
   return (
-    <div style={{ backgroundColor: "#203E80" }}>
+    <div className="color-secondary-primary">
       <Container fluid className="px-md-25">
         <Row className="w-100 px-0 mx-0 mb-0 py-5">
           <Col md={2} sm={12}>
