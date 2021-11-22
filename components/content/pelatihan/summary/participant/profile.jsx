@@ -5,6 +5,7 @@ import { Modal, Button } from "react-bootstrap";
 
 const ProfileUser = ({ profile }) => {
   const [show, setShow] = useState(false);
+  const [showIjasah, setShowIjasah] = useState(false);
   return (
     <>
       <div className="card card-custom card-stretch gutter-b">
@@ -235,7 +236,7 @@ const ProfileUser = ({ profile }) => {
                             profile.ijasah) ||
                         "/assets/media/default.jpg"
                       }
-                      onClick={() => setShow(true)}
+                      onClick={() => setShowIjasah(true)}
                     />
                   </div>
                 </div>
@@ -278,6 +279,41 @@ const ProfileUser = ({ profile }) => {
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={() => setShow(false)}>Kembali</Button>
+        </Modal.Footer>
+      </Modal>
+      <Modal
+        show={showIjasah}
+        onHide={() => setShowIjasah(false)}
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header>
+          <Modal.Title id="contained-modal-title-vcenter">
+            {profile?.File_ktp}
+            <button
+              type="button"
+              className="close"
+              onClick={() => setShowIjasah(false)}
+            >
+              <i className="ri-close-fill" style={{ fontSize: "25px" }}></i>
+            </button>
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Image
+            src={
+              (profile.ijasah &&
+                process.env.END_POINT_API_IMAGE_BEASISWA + profile.ijasah) ||
+              "/assets/media/default.jpg"
+            }
+            objectFit="cover"
+            height={200}
+            width={400}
+            alt="ktp-modal"
+          />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={() => setShowIjasah(false)}>Kembali</Button>
         </Modal.Footer>
       </Modal>
     </>

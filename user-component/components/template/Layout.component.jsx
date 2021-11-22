@@ -9,46 +9,68 @@ import LoadingHeader from "../../content/peserta/components/loader/LoadingHeader
 import LoadingNavbar from "../../content/peserta/components/loader/LoadingNavbar";
 import LoadingFooter from "../../content/peserta/components/loader/LoadingFooter";
 
-const Navbar = dynamic(() => import("../../../user-component/components/template/Navbar2.component"), {
-  loading: function loadingNow() {
-    return <LoadingNavbar />;
-  },
-  ssr: false,
-});
-const Header = dynamic(() => import("../../../user-component/components/template/Header.component"), {
-  loading: function loadingNow() {
-    return <LoadingHeader />;
-  },
-  ssr: false,
-});
-const Sidebar = dynamic(() => import("../../../user-component/components/template/Sidebar.component"), {
-  loading: function loadingNow() {
-    return <LoadingSidebar />;
-  },
-  ssr: false,
-});
-const Footer = dynamic(() => import("../../../user-component-new/components/template/Footer.component"), {
-  loading: function loadingNow() {
-    return <LoadingFooter />;
-  },
-  ssr: false,
-});
+const Navbar = dynamic(
+  () => import("../../../user-component/components/template/Navbar2.component"),
+  {
+    loading: function loadingNow() {
+      return <LoadingNavbar />;
+    },
+    ssr: false,
+  }
+);
+const Header = dynamic(
+  () => import("../../../user-component/components/template/Header.component"),
+  {
+    loading: function loadingNow() {
+      return <LoadingHeader />;
+    },
+    ssr: false,
+  }
+);
+const Sidebar = dynamic(
+  () => import("../../../user-component/components/template/Sidebar.component"),
+  {
+    loading: function loadingNow() {
+      return <LoadingSidebar />;
+    },
+    ssr: false,
+  }
+);
+const Footer = dynamic(
+  () =>
+    import("../../../user-component-new/components/template/Footer.component"),
+  {
+    loading: function loadingNow() {
+      return <LoadingFooter />;
+    },
+    ssr: false,
+  }
+);
 
-const HeaderWizzard = dynamic(() => import("../wizzard-template/Header-Wizzard.component"), {
-  loading: function loadingNow() {
-    return <LoadingHeader />;
-  },
-  ssr: false,
-});
+const HeaderWizzard = dynamic(
+  () => import("../wizzard-template/Header-Wizzard.component"),
+  {
+    loading: function loadingNow() {
+      return <LoadingHeader />;
+    },
+    ssr: false,
+  }
+);
 const Layout = ({ title = "Peserta - Pelatihan", session, children }) => {
   const router = useRouter();
   let routerPath;
-  if (router.pathname.includes("form-pendaftaran")) routerPath = "form-pendaftaran";
-  if (router.pathname === "/peserta/subvit/substansi/[id]") routerPath = "/peserta/subvit/substansi/[id]";
-  if (router.pathname === "/peserta/subvit/survey/[id]") routerPath = "/peserta/subvit/survey/[id]";
-  if (router.pathname === "/peserta/subvit/trivia/[id]") routerPath = "/peserta/subvit/trivia/[id]";
-  if (router.pathname === "/peserta/subvit/mid-test/[id]") routerPath = "/peserta/subvit/mid-test/[id]";
-  if (router.pathname === "/peserta/subvit/survey/[id]") routerPath = "/peserta/subvit/survey/[id]";
+  if (router.pathname.includes("form-pendaftaran"))
+    routerPath = "form-pendaftaran";
+  if (router.pathname === "/peserta/subvit/substansi/[id]")
+    routerPath = "/peserta/subvit/substansi/[id]";
+  if (router.pathname === "/peserta/subvit/survey/[id]")
+    routerPath = "/peserta/subvit/survey/[id]";
+  if (router.pathname === "/peserta/subvit/trivia/[id]")
+    routerPath = "/peserta/subvit/trivia/[id]";
+  if (router.pathname === "/peserta/subvit/mid-test/[id]")
+    routerPath = "/peserta/subvit/mid-test/[id]";
+  if (router.pathname === "/peserta/subvit/survey/[id]")
+    routerPath = "/peserta/subvit/survey/[id]";
   if (router.pathname === "/peserta/form-lpj") routerPath = "/peserta/form-lpj";
   if (router.pathname == "/peserta/wizzard") routerPath = "/peserta/wizzard";
 
@@ -61,11 +83,19 @@ const Layout = ({ title = "Peserta - Pelatihan", session, children }) => {
       </Head>
       <Navbar session={session} />
 
-      {routerPath == "/peserta/wizzard" ? <HeaderWizzard session={session} /> : <Header session={session} />}
+      {routerPath == "/peserta/wizzard" ? (
+        <HeaderWizzard session={session} />
+      ) : (
+        <Header session={session} />
+      )}
       <ToastContainer position="top-right" />
       <div className="container-fluid py-5">
         <Row>
-          <Col md={3}>{!router.pathname.includes(routerPath) && <Sidebar screenClass={"d-none d-lg-block"} titleAkun={"AKUN"} />}</Col>
+          <Col md={3}>
+            {!router.pathname.includes(routerPath) && (
+              <Sidebar screenClass={"d-none d-lg-block"} titleAkun={"AKUN"} />
+            )}
+          </Col>
           {children}
         </Row>
       </div>

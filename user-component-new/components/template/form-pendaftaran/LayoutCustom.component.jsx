@@ -35,15 +35,12 @@ const Sidebar = dynamic(
     ssr: false,
   }
 );
-const Footer = dynamic(
-  () => import("../../../../user-component/components/beranda/footer"),
-  {
-    loading: function loadingNow() {
-      return <LoadingFooter />;
-    },
-    ssr: false,
-  }
-);
+const Footer = dynamic(() => import("../../template/Footer.component"), {
+  loading: function loadingNow() {
+    return <LoadingFooter />;
+  },
+  ssr: false,
+});
 
 const Layout = ({
   title = "Peserta - Pelatihan",
