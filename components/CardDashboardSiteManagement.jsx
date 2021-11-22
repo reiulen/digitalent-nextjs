@@ -28,7 +28,7 @@ const CardDashboardSiteManagement = ({
         }}
         onMouseOver={() => {
          setHoverBackground("bg-primary")
-         setHoverImage(hover)
+         hover ? setHoverImage(hover) : null
          setHoverFont("text-white")
         }}
         onMouseOut={() => {
