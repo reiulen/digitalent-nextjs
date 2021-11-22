@@ -19,7 +19,7 @@ const DashboardSetting = () => {
               icon="/assets/icon/setting-light.svg"
               color="text-white"
               title="General"
-              link="/site-management"
+              link="/site-management/setting/general"
             ></CardDashboardSiteManagement>
           </div>
           <div className="col-6 col-md">
@@ -29,7 +29,7 @@ const DashboardSetting = () => {
               icon="/assets/icon/notif-grey.svg"
               color="text-muted"
               title="Promp Update Notification"
-              link="/site-management"
+              link="/site-management/setting/pelatihan?sidebar=Prompt"
             ></CardDashboardSiteManagement>
           </div>
           <div className="col-6 col-md">
@@ -39,7 +39,7 @@ const DashboardSetting = () => {
               icon="/assets/icon/page-grey.svg"
               color="text-muted"
               title="Page"
-              link="/site-management"
+              link="/site-management/setting/page"
             ></CardDashboardSiteManagement>
           </div>
           <div className="col-6 col-md">
@@ -49,7 +49,7 @@ const DashboardSetting = () => {
               icon="/assets/icon/menu-grey.svg"
               color="text-muted"
               title="Menu"
-              link="/site-management"
+              link="/site-management/setting/menu"
             ></CardDashboardSiteManagement>
           </div>
           <div className="col-6 col-md">
@@ -59,17 +59,7 @@ const DashboardSetting = () => {
               icon="/assets/icon/link-grey.svg"
               color="text-muted"
               title="API"
-              link="/site-management"
-            ></CardDashboardSiteManagement>
-          </div>
-          <div className="col-6 col-md">
-            <CardDashboardSiteManagement
-              background="bg-white"
-              backgroundImage="/assets/icon/taieri-light.svg"
-              icon="/assets/icon/tag-grey.svg"
-              color="text-muted"
-              title="CSS"
-              link="/site-management"
+              link="/site-management/setting/api"
             ></CardDashboardSiteManagement>
           </div>
           <div className="col-6 col-md"></div>

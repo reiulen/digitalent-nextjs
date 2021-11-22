@@ -24,7 +24,7 @@ const EditDokumentKerjasamaById = ({ token }) => {
   const router = useRouter();
   let { idDetail } = router.query;
 
-  const allMK = useSelector((state) => state.allMK);
+  const allMK = useSelector(state => state.allMK);
   //
   //
   // state onchange form data
@@ -56,7 +56,7 @@ const EditDokumentKerjasamaById = ({ token }) => {
 
   // onchange pdf
   const fileType = ["application/pdf"];
-  const handlePdfFileChange = (e) => {
+  const handlePdfFileChange = e => {
     let selectedFile = e.target.files[0];
     setDocumentLocal(selectedFile);
     setViewPDF("");
@@ -64,7 +64,7 @@ const EditDokumentKerjasamaById = ({ token }) => {
       if (selectedFile && fileType.includes(selectedFile.type)) {
         let reader = new FileReader();
         reader.readAsDataURL(selectedFile);
-        reader.onloadend = (e) => {
+        reader.onloadend = e => {
           setPdfFile(e.target.result);
           setNamePDF(selectedFile.name);
           setPdfFileError("");
@@ -109,7 +109,7 @@ const EditDokumentKerjasamaById = ({ token }) => {
       cancelButtonText: "Tidak",
       confirmButtonText: "Ya",
       dismissOnDestroy: false,
-    }).then(async (result) => {
+    }).then(async result => {
       if (result.value) {
         let formData = new FormData();
         const method = "PUT";
@@ -173,7 +173,7 @@ const EditDokumentKerjasamaById = ({ token }) => {
     });
   };
 
-  const changeSetCooperationC_id = (value) => {
+  const changeSetCooperationC_id = value => {
     setCooperationC_id(value);
     dispatch(changeCooperationSelectByID(value));
   };
@@ -192,12 +192,12 @@ const EditDokumentKerjasamaById = ({ token }) => {
     setCooperationID(dataCoopertaion);
   };
 
-  const onChangePeriodeDateStart = (date) => {
+  const onChangePeriodeDateStart = date => {
     setPeriodDateStart(moment(date).format("YYYY-MM-DD"));
     checkPeriod(moment(date).format("YYYY-MM-DD"));
   };
 
-  const checkPeriod = (dateNow) => {
+  const checkPeriod = dateNow => {
     if (periodUnit === "bulan") {
       let futureMonth = moment(dateNow)
         .add(parseInt(period), "M")
@@ -245,9 +245,11 @@ const EditDokumentKerjasamaById = ({ token }) => {
     dispatch(cancelChangeCategory());
     dispatch(cancelChangeNamaLembaga());
   }, [dispatch, router.query.id, token]);
+
   useEffect(() => {
     dispatch(fetchListCooperationSelectById(token, cooperationC_id));
   }, [dispatch, allMK.idCooporationSelect, cooperationC_id, token]);
+
   useEffect(() => {
     dispatch(fetchDataEmail(token));
   }, [dispatch, allMK.institution_name, allMK.stateListMitra, token]);
@@ -271,6 +273,7 @@ const EditDokumentKerjasamaById = ({ token }) => {
     }
     periodCheck();
   }, [period, date, periodUnit]);
+
   return (
     <PageWrapper>
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
@@ -304,7 +307,7 @@ const EditDokumentKerjasamaById = ({ token }) => {
                 <input
                   required
                   value={title}
-                  onChange={(e) => setTitle(e.target.value)}
+                  onChange={e => setTitle(e.target.value)}
                   type="text"
                   className="form-control"
                   placeholder="Judul Kerjasama"
@@ -352,9 +355,7 @@ const EditDokumentKerjasamaById = ({ token }) => {
                     <div className="col-12 col-sm-9">
                       <select
                         required
-                        onChange={(e) =>
-                          changeSetCooperationC_id(e.target.value)
-                        }
+                        onChange={e => changeSetCooperationC_id(e.target.value)}
                         name=""
                         id=""
                         className="form-control mt-2"
@@ -396,7 +397,7 @@ const EditDokumentKerjasamaById = ({ token }) => {
                       required
                       type="number"
                       className="form-control"
-                      onChange={(e) => setPeriod(e.target.value)}
+                      onChange={e => setPeriod(e.target.value)}
                       value={period}
                     />
                   </div>
@@ -422,7 +423,7 @@ const EditDokumentKerjasamaById = ({ token }) => {
                     <div className="d-flex align-items-center position-relative datepicker-w mt-2">
                       <DatePicker
                         className="form-search-date form-control-sm form-control cursor-pointer disabled-form"
-                        onChange={(date) => onChangePeriodeDateStart(date)}
+                        onChange={date => onChangePeriodeDateStart(date)}
                         value={periodDateStart}
                         minDate={moment().toDate()}
                         dateFormat="dd/MM/yyyy"
@@ -438,7 +439,7 @@ const EditDokumentKerjasamaById = ({ token }) => {
                     <div className="d-flex align-items-center position-relative datepicker-w mt-2 disabled-form">
                       <DatePicker
                         className="form-search-date form-control-sm form-control cursor-pointer"
-                        onChange={(date) =>
+                        onChange={date =>
                           setPeriodDateEnd(moment(date).format("YYYY-MM-DD"))
                         }
                         disabled
@@ -497,7 +498,7 @@ const EditDokumentKerjasamaById = ({ token }) => {
                 </label>
                 <input
                   required
-                  onChange={(e) => setAggrementNumber(e.target.value)}
+                  onChange={e => setAggrementNumber(e.target.value)}
                   type="text"
                   value={aggrementNumber}
                   className="form-control"
@@ -511,7 +512,7 @@ const EditDokumentKerjasamaById = ({ token }) => {
                 <input
                   required
                   type="text"
-                  onChange={(e) => setAggrementNumberInfo(e.target.value)}
+                  onChange={e => setAggrementNumberInfo(e.target.value)}
                   value={aggrementNumberInfo}
                   className="form-control"
                 />
@@ -525,7 +526,7 @@ const EditDokumentKerjasamaById = ({ token }) => {
                 <div className="d-flex align-items-center position-relative datepicker-w">
                   <DatePicker
                     className="form-search-date form-control-sm form-control cursor-pointer"
-                    onChange={(date) =>
+                    onChange={date =>
                       setSigninDate(moment(date).format("YYYY-MM-DD"))
                     }
                     value={signinDate}
@@ -652,7 +653,7 @@ const EditDokumentKerjasamaById = ({ token }) => {
                           {items.cooperation_form}
                         </label>
                         <textarea
-                          onChange={(e) => changeDataContentDefault(e, i)}
+                          onChange={e => changeDataContentDefault(e, i)}
                           value={items.form_content}
                           name=""
                           id={i}
@@ -688,7 +689,7 @@ const EditDokumentKerjasamaById = ({ token }) => {
                           </label>
                           <textarea
                             required
-                            onChange={(e) => changeFormCooporation(index, e)}
+                            onChange={e => changeFormCooporation(index, e)}
                             name="cooperation"
                             id={index + 1}
                             cols="30"
