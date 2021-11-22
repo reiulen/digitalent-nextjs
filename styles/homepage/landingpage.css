@@ -152,6 +152,18 @@
   background-color: #ffffff;
 }
 
+.galeri-update-new {
+  background-color: #fafafb;
+}
+
+.come-join-new {
+  background: #fafafb;
+  background-image: url("/assets/media/bg-come-join.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 /* STEP REGISTER */
 .title-step-register h1 {
   font-weight: 600;
