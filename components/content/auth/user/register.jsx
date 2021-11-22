@@ -90,10 +90,7 @@ const RegisterUser = () => {
       };
 
       axios
-        .post(
-          process.env.END_POINT_API_PELATIHAN + `api/v1/auth/register`,
-          data
-        )
+        .post(process.env.END_POINT_API_PELATIHAN + `api/v1/auth/register`, data)
         .then((res) => {
           setLoading(false);
           if (res.data.status) {
@@ -117,18 +114,10 @@ const RegisterUser = () => {
   return (
     <>
       <AuthWrapper image="bg-user-1.png" title="Register">
-        <div
-          className="col-lg-7 d-flex flex-wrap align-content-center"
-          style={{ background: "#0063CC" }}
-        >
+        <div className="col-lg-7 d-flex flex-wrap align-content-center" style={{ background: "#0063CC" }}>
           <div className="container ">
             <div className="title-login text-center mt-6">
-              <Image
-                src="/assets/logo/logo-6.svg"
-                width={320}
-                height={124}
-                alt="Logo-5"
-              />
+              <Image src="/assets/logo/logo-6.svg" width={320} height={124} alt="Logo-5" />
 
               <h3
                 className="align-middle mt-8"
@@ -144,61 +133,37 @@ const RegisterUser = () => {
               </h3>
             </div>
 
-            <div
-              className="title-form col-lg-6 p-0 mx-auto"
-              style={{ marginTop: "30px" }}
-            >
+            <div className="title-form col-lg-6 p-0 mx-auto" style={{ marginTop: "30px" }}>
               <form onSubmit={handlerSubmit}>
                 <div className="form-group mb-2">
-                  <label className="form-auth-label">Nama Lengkap</label>
+                  <label className="form-auth-label">Nama Lengkap </label>
                   <input
                     type="text"
-                    className={`form-control form-control-auth ${
-                      simpleValidator.current.fieldValid("nama lengkap") !==
-                        true &&
-                      simpleValidator.current.messagesShown === true &&
-                      "is-invalid"
-                    }`}
+                    className={`form-control form-control-auth ${simpleValidator.current.fieldValid("nama lengkap") !== true && simpleValidator.current.messagesShown === true && "is-invalid"}`}
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    placeholder="Masukkan Nama Lengkap"
-                    onBlur={() =>
-                      simpleValidator.current.showMessageFor("nama lengkap")
-                    }
+                    placeholder="Nama Sesuai KTP"
+                    onBlur={() => simpleValidator.current.showMessageFor("nama lengkap")}
                   />
 
-                  {simpleValidator.current.message(
-                    "nama lengkap",
-                    name,
-                    "required",
-                    {
-                      className: "text-danger",
-                    }
-                  )}
+                  {simpleValidator.current.message("nama lengkap", name, "required", {
+                    className: "text-danger",
+                  })}
                 </div>
                 <div className="form-group mb-2">
                   <label className="form-auth-label">NIK</label>
                   <input
                     type="text"
-                    className={`form-control form-control-auth ${
-                      simpleValidator.current.fieldValid("nik") !== true &&
-                      simpleValidator.current.messagesShown === true &&
-                      "is-invalid"
-                    }`}
+                    className={`form-control form-control-auth ${simpleValidator.current.fieldValid("nik") !== true && simpleValidator.current.messagesShown === true && "is-invalid"}`}
                     value={nik}
                     onChange={(e) => setNik(e.target.value)}
                     placeholder="Masukkan NIK"
                     onBlur={() => simpleValidator.current.showMessageFor("nik")}
                     maxLength={16}
                   />
-                  {simpleValidator.current.message(
-                    "nik",
-                    nik,
-                    "integer|size:16|required",
-                    {
-                      className: "text-danger",
-                    }
-                  )}
+                  {simpleValidator.current.message("nik", nik, "integer|size:16|required", {
+                    className: "text-danger",
+                  })}
                 </div>
                 <div className="form-group mb-2">
                   <label className="form-auth-label">No. Handphone</label>
@@ -214,39 +179,23 @@ const RegisterUser = () => {
                     }}
                     buttonStyle={{ borderRadius: "10px 0 0 10px" }}
                   />
-                  {simpleValidator.current.message(
-                    "nomor handphone",
-                    noHp,
-                    "required",
-                    {
-                      className: "text-danger",
-                    }
-                  )}
+                  {simpleValidator.current.message("nomor handphone", noHp, "required", {
+                    className: "text-danger",
+                  })}
                 </div>
                 <div className="form-group mb-2">
                   <label className="form-auth-label">E-mail</label>
                   <input
                     type="email"
-                    className={`form-control form-control-auth ${
-                      simpleValidator.current.fieldValid("Email") !== true &&
-                      simpleValidator.current.messagesShown === true &&
-                      "is-invalid"
-                    }`}
+                    className={`form-control form-control-auth ${simpleValidator.current.fieldValid("Email") !== true && simpleValidator.current.messagesShown === true && "is-invalid"}`}
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Masukkan Email"
-                    onBlur={() =>
-                      simpleValidator.current.showMessageFor("Email")
-                    }
+                    onBlur={() => simpleValidator.current.showMessageFor("Email")}
                   />
-                  {simpleValidator.current.message(
-                    "Email",
-                    email,
-                    "required|email",
-                    {
-                      className: "text-danger",
-                    }
-                  )}
+                  {simpleValidator.current.message("Email", email, "required|email", {
+                    className: "text-danger",
+                  })}
                 </div>
                 <div className="form-group">
                   <label className="form-auth-label">Password</label>
@@ -254,50 +203,24 @@ const RegisterUser = () => {
                     <input
                       id="input-password"
                       type="password"
-                      className={`form-control form-control-auth pr-1 ${
-                        simpleValidator.current.fieldValid("Password") !==
-                          true &&
-                        simpleValidator.current.messagesShown === true &&
-                        "is-invalid"
-                      }`}
+                      className={`form-control form-control-auth pr-1 ${simpleValidator.current.fieldValid("Password") !== true && simpleValidator.current.messagesShown === true && "is-invalid"}`}
                       value={password}
                       onChange={(e) => handlePassword(e.target.value)}
                       placeholder="Masukkan Password"
-                      onBlur={() =>
-                        simpleValidator.current.showMessageFor("Password")
-                      }
+                      onBlur={() => simpleValidator.current.showMessageFor("Password")}
                     />
 
-                    {hidePassword === true &&
-                      simpleValidator.current.fieldValid("Password") !==
-                        false && (
-                        <i
-                          className="ri-eye-fill right-center-absolute cursor-pointer"
-                          style={{ right: "10px" }}
-                          onClick={() => handlerShowPassword(false)}
-                        />
-                      )}
-                    {hidePassword === false &&
-                      simpleValidator.current.fieldValid("Password") !==
-                        false && (
-                        <i
-                          className="ri-eye-off-fill right-center-absolute cursor-pointer"
-                          style={{ right: "10px" }}
-                          onClick={() => handlerShowPassword(true)}
-                        />
-                      )}
+                    {hidePassword === true && simpleValidator.current.fieldValid("Password") !== false && (
+                      <i className="ri-eye-fill right-center-absolute cursor-pointer" style={{ right: "10px" }} onClick={() => handlerShowPassword(false)} />
+                    )}
+                    {hidePassword === false && simpleValidator.current.fieldValid("Password") !== false && (
+                      <i className="ri-eye-off-fill right-center-absolute cursor-pointer" style={{ right: "10px" }} onClick={() => handlerShowPassword(true)} />
+                    )}
                   </div>
-                  {simpleValidator.current.message(
-                    "Password",
-                    password,
-                    "required|min:8|max:18",
-                    {
-                      className: "text-danger",
-                    }
-                  )}
-                  {messageDontMatch && (
-                    <p className="text-danger">Password tidak sama</p>
-                  )}
+                  {simpleValidator.current.message("Password", password, "required|min:8|max:18", {
+                    className: "text-danger",
+                  })}
+                  {messageDontMatch && <p className="text-danger">Password tidak sama</p>}
                 </div>
                 <div className="form-group">
                   <label className="form-auth-label">Konfirmasi Password</label>
@@ -306,60 +229,29 @@ const RegisterUser = () => {
                       id="input-password-confirm"
                       type="password"
                       className={`form-control form-control-auth pr-10 ${
-                        simpleValidator.current.fieldValid(
-                          "Konfirmasi Password"
-                        ) !== true &&
-                        simpleValidator.current.messagesShown === true &&
-                        "is-invalid"
+                        simpleValidator.current.fieldValid("Konfirmasi Password") !== true && simpleValidator.current.messagesShown === true && "is-invalid"
                       }`}
                       value={passwordConfirm}
                       onChange={(e) => handlePasswordConfirm(e.target.value)}
                       placeholder="Masukkan Konfirmasi Password"
-                      onBlur={() =>
-                        simpleValidator.current.showMessageFor(
-                          "Konfirmasi Password"
-                        )
-                      }
+                      onBlur={() => simpleValidator.current.showMessageFor("Konfirmasi Password")}
                     />
 
-                    {hidePasswordConfirm === true &&
-                      simpleValidator.current.fieldValid(
-                        "Konfirmasi Password"
-                      ) !== false && (
-                        <i
-                          className="ri-eye-fill right-center-absolute cursor-pointer"
-                          style={{ right: "10px" }}
-                          onClick={() => handlerShowPasswordConfirm(false)}
-                        />
-                      )}
-                    {hidePasswordConfirm === false &&
-                      simpleValidator.current.fieldValid(
-                        "Konfirmasi Password"
-                      ) !== false && (
-                        <i
-                          className="ri-eye-off-fill right-center-absolute cursor-pointer"
-                          style={{ right: "10px" }}
-                          onClick={() => handlerShowPasswordConfirm(true)}
-                        />
-                      )}
+                    {hidePasswordConfirm === true && simpleValidator.current.fieldValid("Konfirmasi Password") !== false && (
+                      <i className="ri-eye-fill right-center-absolute cursor-pointer" style={{ right: "10px" }} onClick={() => handlerShowPasswordConfirm(false)} />
+                    )}
+                    {hidePasswordConfirm === false && simpleValidator.current.fieldValid("Konfirmasi Password") !== false && (
+                      <i className="ri-eye-off-fill right-center-absolute cursor-pointer" style={{ right: "10px" }} onClick={() => handlerShowPasswordConfirm(true)} />
+                    )}
                   </div>
-                  {simpleValidator.current.message(
-                    "Konfirmasi Password",
-                    passwordConfirm,
-                    "required",
-                    {
-                      className: "text-danger",
-                    }
-                  )}
-                  {messageDontMatch && (
-                    <p className="text-danger">Password tidak sama</p>
-                  )}
+                  {simpleValidator.current.message("Konfirmasi Password", passwordConfirm, "required", {
+                    className: "text-danger",
+                  })}
+                  {messageDontMatch && <p className="text-danger">Password tidak sama</p>}
                 </div>
 
                 <div className="form-group row mb-4">
-                  <label className="form-auth-label col-sm-4">
-                    Verifikasi By
-                  </label>
+                  <label className="form-auth-label col-sm-4">Verifikasi By</label>
                   <div className="col-sm-8 my-auto">
                     <div className="form-check form-check-inline">
                       <input
@@ -369,13 +261,9 @@ const RegisterUser = () => {
                         value="1"
                         checked={verify === "email"}
                         onClick={() => setVerify("email")}
-                        onBlur={() =>
-                          simpleValidator.current.showMessageFor("verifikasi")
-                        }
+                        onBlur={() => simpleValidator.current.showMessageFor("verifikasi")}
                       />
-                      <label className="form-check-label form-auth-label">
-                        Email
-                      </label>
+                      <label className="form-check-label form-auth-label">Email</label>
                     </div>
                     <div className="form-check form-check-inline">
                       <input
@@ -385,39 +273,19 @@ const RegisterUser = () => {
                         className="form-check-input"
                         checked={verify === "sms"}
                         onClick={() => setVerify("sms")}
-                        onBlur={() =>
-                          simpleValidator.current.showMessageFor("verifikasi")
-                        }
+                        onBlur={() => simpleValidator.current.showMessageFor("verifikasi")}
                       />
-                      <label className="form-check-label form-auth-label">
-                        No.Handphone
-                      </label>
+                      <label className="form-check-label form-auth-label">No.Handphone</label>
                     </div>
-                    {simpleValidator.current.message(
-                      "verifikasi",
-                      verify,
-                      "required",
-                      { className: "text-danger" }
-                    )}
+                    {simpleValidator.current.message("verifikasi", verify, "required", { className: "text-danger" })}
                   </div>
                 </div>
 
                 <div className="capcha">
-                  <ReCAPTCHA
-                    sitekey={process.env.CAPTCHA_SITE_KEY}
-                    onChange={setCaptcha}
-                    onBlur={() =>
-                      simpleValidator.current.showMessageFor("Captcha")
-                    }
-                  />
-                  {simpleValidator.current.message(
-                    "Captcha",
-                    captcha,
-                    "required",
-                    {
-                      className: "text-danger",
-                    }
-                  )}
+                  <ReCAPTCHA sitekey={process.env.CAPTCHA_SITE_KEY} onChange={setCaptcha} onBlur={() => simpleValidator.current.showMessageFor("Captcha")} />
+                  {simpleValidator.current.message("Captcha", captcha, "required", {
+                    className: "text-danger",
+                  })}
                 </div>
 
                 {loading ? (
@@ -425,10 +293,7 @@ const RegisterUser = () => {
                     <LoadingTable loading={loading} />
                   </div>
                 ) : (
-                  <button
-                    type="submit"
-                    className="btn btn-primary-rounded-full bg-secondary btn-block mt-5"
-                  >
+                  <button type="submit" className="btn btn-primary-rounded-full bg-secondary btn-block mt-5">
                     Daftar
                   </button>
                 )}
@@ -437,10 +302,7 @@ const RegisterUser = () => {
                 <p style={{ fontSize: "12px", color: "#ffffff" }}>
                   Sudah punya akun?
                   <Link href="/login">
-                    <a
-                      className="font-weight-bolder ml-2"
-                      style={{ color: "#4CBDE2" }}
-                    >
+                    <a className="font-weight-bolder ml-2" style={{ color: "#4CBDE2" }}>
                       Masuk
                     </a>
                   </Link>
