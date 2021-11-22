@@ -297,7 +297,7 @@ const Beranda = ({ session }) => {
                     >
                       <div
                         className={`card-1 ${
-                          activeTab !== i ? "bg-white" : "bg-secondary"
+                          activeTab !== i ? "bg-white" : "bg-beranda-primary"
                         }`}
                         style={{ height: "80px" }}
                       >
@@ -363,204 +363,196 @@ const Beranda = ({ session }) => {
                       <Row>
                         {pelatihan !== null && pelatihan[i] !== undefined ? (
                           pelatihan[i].showDetail !== true ? (
-                            pelatihan[i].pelatihan.length > 0 ? (
-                              pelatihan[i].pelatihan.map((row, j) => (
-                                <Col md={4} className="mb-5" key={j}>
-                                  <Card
-                                    className="h-100 shadow-sm border-0"
-                                    onMouseEnter={() => handleMouseEnter(i, j)}
-                                    onMouseLeave={() => handleMouseLeave(i, j)}
-                                  >
-                                    {row.status !== "Open" ? (
-                                      <CardPelatihanClose row={row} />
-                                    ) : (
-                                      <>
-                                        <div
-                                          className={
-                                            pelatihan[i].pelatihan[j].hover !==
-                                            true
-                                              ? `parent-image-pelatihan-new`
-                                              : `parent-image-pelatihan-new-hover`
+                            pelatihan[i].pelatihan.length > 0 &&
+                            pelatihan[i].pelatihan.map((row, j) => (
+                              <Col md={4} className="mb-5" key={j}>
+                                <Card
+                                  className="h-100 shadow-sm border-0"
+                                  onMouseEnter={() => handleMouseEnter(i, j)}
+                                  onMouseLeave={() => handleMouseLeave(i, j)}
+                                >
+                                  {row.status !== "Open" ? (
+                                    <CardPelatihanClose row={row} />
+                                  ) : (
+                                    <>
+                                      <div
+                                        className={
+                                          pelatihan[i].pelatihan[j].hover !==
+                                          true
+                                            ? `parent-image-pelatihan-new`
+                                            : `parent-image-pelatihan-new-hover`
+                                        }
+                                      >
+                                        <Image
+                                          className={`image-list-pelatihan-new`}
+                                          src={
+                                            (row.gambar &&
+                                              process.env
+                                                .END_POINT_API_IMAGE_BEASISWA +
+                                                row.gambar) ||
+                                            "/assets/media/default-card.png"
                                           }
-                                        >
+                                          layout="fill"
+                                          objectFit="cover"
+                                          alt="Image Thumbnail"
+                                        />
+                                      </div>
+                                      <Card.ImgOverlay>
+                                        <div className="d-flex justify-content-between">
+                                          <div className="align-self-start">
+                                            {row.metode_pelatihan !==
+                                              "Offline" && (
+                                              <Badge
+                                                bg={`py-3 px-4 badge-card-pelatihan-new`}
+                                                classNam="d-flex "
+                                              >
+                                                Pelatihan {row.metode_pelatihan}
+                                              </Badge>
+                                            )}
+                                          </div>
+
+                                          {pelatihan[i].pelatihan[j].hover &&
+                                            row.status === "Open" && (
+                                              <div className="whishlist align-self-end">
+                                                <Button
+                                                  variant="light"
+                                                  className={`float-right d-flex justify-content-center align-items-center wishlist-card-new`}
+                                                >
+                                                  <i
+                                                    className="ri-heart-line p-0"
+                                                    style={{
+                                                      color: "#6C6C6C",
+                                                    }}
+                                                  ></i>
+                                                </Button>
+                                                <Button
+                                                  variant="light"
+                                                  className={`float-right d-flex justify-content-center align-items-center mr-2 wishlist-card-new`}
+                                                >
+                                                  <i
+                                                    className="ri-share-line p-0"
+                                                    style={{
+                                                      color: "#6C6C6C",
+                                                    }}
+                                                  ></i>
+                                                </Button>
+                                              </div>
+                                            )}
+                                        </div>
+                                      </Card.ImgOverlay>
+                                      <Card.Body className="position-relative">
+                                        <div className="mitra-pelatihan-new">
                                           <Image
-                                            className={`image-list-pelatihan-new`}
                                             src={
-                                              (row.gambar &&
+                                              (row.gambar_mitra &&
                                                 process.env
-                                                  .END_POINT_API_IMAGE_BEASISWA +
-                                                  row.gambar) ||
-                                              "/assets/media/default-card.png"
+                                                  .END_POINT_API_IMAGE_PARTNERSHIP +
+                                                  row.gambar_mitra) ||
+                                              "/assets/media/mitra-default.png"
                                             }
-                                            layout="fill"
+                                            width={60}
+                                            height={60}
                                             objectFit="cover"
-                                            alt="Image Thumbnail"
+                                            thumbnail
+                                            roundedCircle
+                                            className={`mitra-pelatihan-image-new`}
+                                            alt="Image Mitra"
                                           />
                                         </div>
-                                        <Card.ImgOverlay>
-                                          <div className="d-flex justify-content-between">
-                                            <div className="align-self-start">
-                                              {row.metode_pelatihan !==
-                                                "Offline" && (
-                                                <Badge
-                                                  bg={`py-3 px-4 badge-card-pelatihan-new`}
-                                                  classNam="d-flex "
-                                                >
-                                                  Pelatihan{" "}
-                                                  {row.metode_pelatihan}
-                                                </Badge>
-                                              )}
-                                            </div>
-
-                                            {pelatihan[i].pelatihan[j].hover &&
-                                              row.status === "Open" && (
-                                                <div className="whishlist align-self-end">
-                                                  <Button
-                                                    variant="light"
-                                                    className={`float-right d-flex justify-content-center align-items-center wishlist-card-new`}
-                                                  >
-                                                    <i
-                                                      className="ri-heart-line p-0"
-                                                      style={{
-                                                        color: "#6C6C6C",
-                                                      }}
-                                                    ></i>
-                                                  </Button>
-                                                  <Button
-                                                    variant="light"
-                                                    className={`float-right d-flex justify-content-center align-items-center mr-2 wishlist-card-new`}
-                                                  >
-                                                    <i
-                                                      className="ri-share-line p-0"
-                                                      style={{
-                                                        color: "#6C6C6C",
-                                                      }}
-                                                    ></i>
-                                                  </Button>
-                                                </div>
-                                              )}
-                                          </div>
-                                        </Card.ImgOverlay>
-                                        <Card.Body className="position-relative">
-                                          <div className="mitra-pelatihan-new">
-                                            <Image
-                                              src={
-                                                (row.gambar_mitra &&
-                                                  process.env
-                                                    .END_POINT_API_IMAGE_PARTNERSHIP +
-                                                    row.gambar_mitra) ||
-                                                "/assets/media/mitra-default.png"
-                                              }
-                                              width={60}
-                                              height={60}
-                                              objectFit="cover"
-                                              thumbnail
-                                              roundedCircle
-                                              className={`mitra-pelatihan-image-new`}
-                                              alt="Image Mitra"
-                                            />
-                                          </div>
-                                          <div
-                                            className="d-flex justify-content-between position-relative pb-0 mb-0"
-                                            style={{ top: "-15px" }}
-                                          >
-                                            <p
-                                              className={`pl-18 my-0 text-mitra-new`}
-                                            >
-                                              {row.mitra}
-                                            </p>
-                                            <div className="status align-self-center">
-                                              <p
-                                                className={`${
-                                                  row.status === "Open"
-                                                    ? "status-mitra-open-new"
-                                                    : "status-mitra-close-new"
-                                                } text-uppercase my-0`}
-                                              >
-                                                {row.status}
-                                              </p>
-                                            </div>
-                                          </div>
-                                          <p className={`my-0 title-card-new`}>
-                                            {row.name}
-                                          </p>
+                                        <div
+                                          className="d-flex justify-content-between position-relative pb-0 mb-0"
+                                          style={{ top: "-15px" }}
+                                        >
                                           <p
-                                            style={{
-                                              fontSize: "14px",
-                                              color: "#6C6C6C",
-                                            }}
+                                            className={`pl-18 my-0 text-mitra-new`}
                                           >
-                                            {row.akademi}
+                                            {row.mitra}
                                           </p>
-                                          <hr />
-                                          {pelatihan[i].pelatihan[j].hover !==
-                                          true ? (
-                                            <div className="d-flex flex-column">
-                                              <div className="date d-flex align-items-center align-middle">
-                                                <i className="ri-time-line"></i>
-                                                <span
-                                                  className={`text-date-register-new pl-2`}
-                                                >
-                                                  Registrasi:{" "}
-                                                  {moment(
-                                                    row.pendaftaran_mulai
-                                                  ).format("DD MMMM YYYY")}{" "}
-                                                  -{" "}
-                                                  {moment(
-                                                    row.pendaftaran_selesai
-                                                  ).format("DD MMMM YYYY")}
-                                                </span>
-                                              </div>
-                                              <div className="date d-flex align-items-center align-middle">
-                                                <i className="ri-group-line"></i>
-                                                <span
-                                                  className={`text-date-register-new pl-2`}
-                                                >
-                                                  Kuota: {row.kuota_peserta}{" "}
-                                                  Peserta
-                                                </span>
-                                              </div>
-                                            </div>
-                                          ) : (
-                                            <div style={{ marginTop: "21px" }}>
-                                              <Button
-                                                className={`btn-block rounded-xl my-auto btn-quick-view-new`}
-                                                onClick={() =>
-                                                  handleQuickView(
-                                                    i,
-                                                    row.gambar,
-                                                    row.status,
-                                                    row.gambar_mitra,
-                                                    row.akademi,
-                                                    row.deskripsi,
-                                                    row.name,
-                                                    row.kuota_peserta,
-                                                    row.mitra,
-                                                    row.alamat,
-                                                    row.pendaftaran_mulai,
-                                                    row.pendaftaran_selesai,
-                                                    row.id,
-                                                    row.metode_pelatihan
-                                                  )
-                                                }
+                                          <div className="status align-self-center">
+                                            <p
+                                              className={`${
+                                                row.status === "Open"
+                                                  ? "status-mitra-open-new"
+                                                  : "status-mitra-close-new"
+                                              } text-uppercase my-0`}
+                                            >
+                                              {row.status}
+                                            </p>
+                                          </div>
+                                        </div>
+                                        <p className={`my-0 title-card-new`}>
+                                          {row.name}
+                                        </p>
+                                        <p
+                                          style={{
+                                            fontSize: "14px",
+                                            color: "#6C6C6C",
+                                          }}
+                                        >
+                                          {row.akademi}
+                                        </p>
+                                        <hr />
+                                        {pelatihan[i].pelatihan[j].hover !==
+                                        true ? (
+                                          <div className="d-flex flex-column">
+                                            <div className="date d-flex align-items-center align-middle">
+                                              <i className="ri-time-line"></i>
+                                              <span
+                                                className={`text-date-register-new pl-2`}
                                               >
-                                                LIHAT SINGKAT
-                                              </Button>
+                                                Registrasi:{" "}
+                                                {moment(
+                                                  row.pendaftaran_mulai
+                                                ).format("DD MMMM YYYY")}{" "}
+                                                -{" "}
+                                                {moment(
+                                                  row.pendaftaran_selesai
+                                                ).format("DD MMMM YYYY")}
+                                              </span>
                                             </div>
-                                          )}
-                                        </Card.Body>
-                                      </>
-                                    )}
-                                  </Card>
-                                </Col>
-                              ))
-                            ) : (
-                              <div className="container-fluid">
-                                <h1 className="text-center text-muted col-12 font-weight-bolder">
-                                  Pelatihan Belum Tersedia
-                                </h1>
-                              </div>
-                            )
+                                            <div className="date d-flex align-items-center align-middle">
+                                              <i className="ri-group-line"></i>
+                                              <span
+                                                className={`text-date-register-new pl-2`}
+                                              >
+                                                Kuota: {row.kuota_peserta}{" "}
+                                                Peserta
+                                              </span>
+                                            </div>
+                                          </div>
+                                        ) : (
+                                          <div style={{ marginTop: "21px" }}>
+                                            <Button
+                                              className={`btn-block rounded-xl my-auto btn-quick-view-new`}
+                                              onClick={() =>
+                                                handleQuickView(
+                                                  i,
+                                                  row.gambar,
+                                                  row.status,
+                                                  row.gambar_mitra,
+                                                  row.akademi,
+                                                  row.deskripsi,
+                                                  row.name,
+                                                  row.kuota_peserta,
+                                                  row.mitra,
+                                                  row.alamat,
+                                                  row.pendaftaran_mulai,
+                                                  row.pendaftaran_selesai,
+                                                  row.id,
+                                                  row.metode_pelatihan
+                                                )
+                                              }
+                                            >
+                                              LIHAT SINGKAT
+                                            </Button>
+                                          </div>
+                                        )}
+                                      </Card.Body>
+                                    </>
+                                  )}
+                                </Card>
+                              </Col>
+                            ))
                           ) : (
                             <>
                               <div className="container-fluid">
