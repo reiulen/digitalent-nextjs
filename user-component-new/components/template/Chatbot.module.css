@@ -1,0 +1,96 @@
+.Chatbot_container {
+  width: 150px;
+}
+
+.one {
+  background-color: #e6f2ff;
+  transition-timing-function: linear;
+}
+
+.Chatbot_container {
+  width: auto;
+  transition: width 1s ease-in-out height 1s ease-in-out;
+}
+
+.chatbot_box {
+  width: 150px;
+  position: fixed;
+  height: 130px;
+  right: 0;
+  bottom: 60px;
+  transition-duration: 0.5s;
+  transition-property: width;
+  border-radius: 100% 0 0 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #e6f2ff;
+}
+
+/* .helpbtn_active {
+  top: -25px !important;
+  right: 100px !important;
+} */
+
+.chatbot_btn_help {
+  position: absolute;
+  right: 85px;
+  top: 10px;
+  background-color: #e6f2ff;
+  width: max-content;
+  padding: 6px, 10px, 6px, 10px;
+  font-size: 12px;
+  font-weight: bold;
+  max-height: max-content;
+  /* overflow: hidden; */
+  transition-duration: 0.5s;
+  transition-property: right, top;
+  transition-timing-function: ease-in-out;
+  /* height: 100%; */
+}
+
+.helpbtn_active {
+  max-height: 0px;
+  overflow: hidden;
+  transition-property: max-height;
+  transition-duration: 1s;
+  transition-timing-function: ease-in-out;
+}
+
+.helpbtn_inactive {
+  max-height: 100%;
+  overflow: hidden;
+  transition-property: max-height;
+  transition-duration: 2s;
+  transition-timing-function: linear;
+}
+
+/* .chatbot_btn_help :hover {
+  position: absolute;
+  right: 60px;
+  background-color: #e6f2ff;
+  margin-top: -20px;
+  width: max-content;
+  padding: 6px, 10px, 6px, 10px;
+  font-size: 12px;
+  font-weight: bold;
+} */
+
+@media (max-width: 575.98px) {
+  .Chatbot_container {
+    right: 0;
+    bottom: 10px;
+    bottom: 50px;
+    width: 60px;
+    border-radius: 50% 0 0 50%;
+    background-color: #e6f2ff;
+  }
+  .chatbot_btn_help {
+    position: absolute;
+    right: 60px;
+    background-color: #e6f2ff;
+    margin-top: -20px;
+    width: max-content;
+    padding: 6px, 10px, 6px, 10px;
+  }
+}

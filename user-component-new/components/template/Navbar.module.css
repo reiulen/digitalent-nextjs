@@ -1,20 +1,40 @@
 .adadeh {
-    color: black !important;
-    background-color: black;
+  color: black !important;
+  background-color: black;
 }
 
 @media (max-width: 800px) {
-    .collapsed {
-        max-height: 300px;
-        max-width: 100%;
-        overflow-x: hidden;
-        overflow-y: scroll;
-        overflow-x: hidden;
-        max-width: 100%;
-        z-index: 1;
-    }
+  .collapsed {
+    max-height: 300px;
+    max-width: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    max-width: 100%;
+    z-index: 1;
+  }
 
-    .wrapAccounts {
-        width: 100%;
-    }
+  .wrapAccounts {
+    width: 100%;
+  }
+}
+.navbar_btnPrimary {
+  background-color: #007cff;
+  color: white;
+  width: 100%;
+}
+
+.navbar_btnPrimary i {
+  color: white !important;
+}
+
+.navbar_btnPrimary:hover i {
+  color: #007cff !important;
+}
+
+.navbar_btnPrimary:hover {
+  background-color: white;
+
+  color: #007cff;
+  width: 100%;
 }
