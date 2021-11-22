@@ -36,12 +36,16 @@ const Sidebar = dynamic(
     ssr: false,
   }
 );
-const Footer = dynamic(() => import("../beranda/footer"), {
-  loading: function loadingNow() {
-    return <LoadingFooter />;
-  },
-  ssr: false,
-});
+const Footer = dynamic(
+  () =>
+    import("../../../user-component-new/components/template/Footer.component"),
+  {
+    loading: function loadingNow() {
+      return <LoadingFooter />;
+    },
+    ssr: false,
+  }
+);
 
 const HeaderWizzard = dynamic(
   () => import("../wizzard-template/Header-Wizzard.component"),
