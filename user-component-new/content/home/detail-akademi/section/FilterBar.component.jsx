@@ -92,6 +92,32 @@ const FilterBar = () => {
       color: "#0063CC",
     }),
   };
+  const customStylesTheme = {
+    control: (styles) => ({
+      ...styles,
+      borderRadius: "30px",
+      paddingLeft: "25px",
+      overflowY: "overlay",
+    }),
+    multiValue: (styles) => ({
+      ...styles,
+      backgroundColor: "#E6F2FF",
+      borderRadius: "30px",
+    }),
+    multiValueLabel: (styles) => ({
+      ...styles,
+      color: "#0063CC",
+    }),
+    valueContainer: (styles) => ({
+      ...styles,
+      position: temaId.length > 1 ? "absolute" : "relative",
+      width: "auto",
+    }),
+    indicatorsContainer: (styles) => ({
+      ...styles,
+      display: temaId.length > 1 ? "none" : "",
+    }),
+  };
 
   const handleSearch = () => {
     let temaArr = [];
@@ -144,11 +170,12 @@ const FilterBar = () => {
       <div className="mb-5 w-100 mr-md-4 mr-0 position-relative">
         <Select
           options={optionsTheme}
-          styles={customStylesTop}
+          styles={customStylesTheme}
           placeholder="Pilih Tema"
           isMulti
           onChange={(e) => setTemaId(e)}
           defaultValue={[optionsTheme[activeTheme]]}
+          isClearable={false}
         />
         <i
           className="ri-search-line left-center-absolute"

@@ -290,3 +290,9 @@
     font-size: 15px;
   }
 }
+
+@media (max-width: 350px) {
+  .badge-card-pelatihan-new {
+    font-size: 10px;
+  }
+}
