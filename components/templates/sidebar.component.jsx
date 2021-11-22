@@ -76,10 +76,32 @@ const Sidebar = ({ session }) => {
       href: "/dashboard",
       selected: false,
       icon: "assets/icon/sidebar_temp/Dashboard.svg",
-      child: [],
+      child: [
+        {
+          id: 1,
+          name: "Digitalent",
+          href: "/dashboard",
+          selected: false,
+          child: [],
+        },
+        {
+          id: 2,
+          name: "Beasiswa",
+          href: "/dashboard/beasiswa",
+          selected: false,
+          child: [],
+        },
+        {
+          id: 3,
+          name: "Simonas",
+          href: "/dashboard/simonas",
+          selected: false,
+          child: [],
+        },
+      ],
     },
     {
-      id: 2,
+      id: 3,
       name: "Pelatihan",
       href: "",
       icon: "assets/icon/sidebar_temp/Pelatihan.svg",
@@ -661,39 +683,7 @@ const Sidebar = ({ session }) => {
           ) : (
             <ul className="menu-nav">
               {menu.map((items, index) => {
-                return index === 0 ? (
-                  <li
-                    className={`menu-item menu-item-submenu ${
-                      items.selected ? "menu-item-open" : ""
-                    }`}
-                    aria-haspopup="true"
-                    data-menu-toggle="hover"
-                    key={index}
-                    id="main-menu"
-                  >
-                    <button
-                      className="btn menu-link"
-                      onClick={() => router.push("/dashboard")}
-                    >
-                      <span className="svg-icon menu-icon d-flex align-items-center">
-                        <Image
-                          alt="icon-sidebar-logo"
-                          src={`/${items.icon}`}
-                          width={24}
-                          height={24}
-                        />
-                      </span>
-                      <span
-                        className="menu-text ml-2"
-                        onClick={(e) => {
-                          handleOpenMenu(null, null, null);
-                        }}
-                      >
-                        {items.name}
-                      </span>
-                    </button>
-                  </li>
-                ) : (
+                return (
                   <li
                     className={`menu-item menu-item-submenu ${
                       items.selected && "menu-item-open"

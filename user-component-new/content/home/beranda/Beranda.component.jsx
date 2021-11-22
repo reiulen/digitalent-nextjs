@@ -20,6 +20,8 @@ import InfoVideo from "./section/InfoVideo.component";
 import ComeJoin from "./section/ComeJoin.component";
 import CardPelatihanClose from "../../../components/global/CardPelatihanClose.component";
 
+import HomeWrapper from "../../../components/wrapper/Home.wrapper";
+
 const Beranda = ({ session }) => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -264,58 +266,61 @@ const Beranda = ({ session }) => {
         <Carousel data={publikasi} />
       </section>
 
-      <section className="tema-carousel-new carousel-secondarys mb-4">
-        {akademi && (
-          <Splide options={optionsSplide} hasSliderWrapper>
-            {akademi &&
-              akademi.map((row, i) => (
-                <SplideSlide key={i}>
-                  <div className="d-flex align-items-center h-100" onClick={() => handleActive(i, row.id)} style={{ cursor: "pointer" }}>
-                    <div className={`card-1 ${activeTab !== i ? "bg-white" : "bg-secondary"}`} style={{ height: "80px" }}>
-                      <h1 className={`mb-0 mr-2 fw-700 ${activeTab === i && "text-white"}`}>{row.slug}</h1>
-                      <div>
-                        <p className={`mb-0 ${activeTab === i && "text-white"}`}>{row.name.split(" ").splice(0, 3).join(" ")}</p>
+      <Container fluid className="px-xl-30 px-lg-10 px-0">
+        <section className="tema-carousel-new carousel-secondarys mt-md-0 mt-10">
+          {akademi && (
+            <Splide options={optionsSplide} hasSliderWrapper>
+              {akademi &&
+                akademi.map((row, i) => (
+                  <SplideSlide key={i}>
+                    <div className="d-flex align-items-center h-100" onClick={() => handleActive(i, row.id)} style={{ cursor: "pointer" }}>
+                      <div className={`card-1 ${activeTab !== i ? "bg-white" : "bg-beranda-primary"}`} style={{ height: "80px" }}>
+                        <h1 className={`mb-0 mr-2 fw-700 ${activeTab === i && "text-white"}`}>{row.slug}</h1>
+                        <div>
+                          <p className={`mb-0 ${activeTab === i && "text-white"}`}>{row.name.split(" ").splice(0, 3).join(" ")}</p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </SplideSlide>
-              ))}
-          </Splide>
-        )}
-      </section>
+                  </SplideSlide>
+                ))}
+            </Splide>
+          )}
+        </section>
+      </Container>
 
       <section className="pelatihan-new">
-        {loadingTema ? (
-          <>
-            <div className="container-fluid">
-              <div className="row">
-                <PulseLoaderRender />
+        <Container fluid className="px-xl-40 px-lg-10 px-10 mt-5">
+          {loadingTema ? (
+            <>
+              <div className="container-fluid">
+                <div className="row">
+                  <PulseLoaderRender />
+                </div>
               </div>
-            </div>
-          </>
-        ) : (
-          <Container fluid className="px-md-20 px-10 pb-10">
-            {tema ? (
-              tema.map((row, i) => (
-                <>
-                  {row.pelatihan !== null && (
-                    <div className="d-flex justify-content-between header-pelatihan-new" key={i}>
-                      <div className="title-pelatihan">
-                        <h1>{row.Name}</h1>
+            </>
+          ) : (
+            <div className="pb-10">
+              {tema ? (
+                tema.map((row, i) => (
+                  <>
+                    {row.pelatihan !== null && (
+                      <div className="d-flex justify-content-between header-pelatihan-new" key={i}>
+                        <div className="title-pelatihan">
+                          <h1>{row.Name}</h1>
+                        </div>
+                        <div className="link-pelatihan-new">
+                          <Link href={`/detail/akademi/${akademiId}?tema_id=${row.id}`}>
+                            <span>Lihat Semua {">"}</span>
+                          </Link>
+                        </div>
                       </div>
-                      <div className="link-pelatihan-new">
-                        <Link href={`/detail/akademi/${akademiId}?tema_id=${row.id}`}>
-                          <span>Lihat Semua {">"}</span>
-                        </Link>
-                      </div>
-                    </div>
-                  )}
+                    )}
 
-                  <div className="card-pelatihan-new mb-10 mt-5">
-                    <Row>
-                      {pelatihan !== null && pelatihan[i] !== undefined ? (
-                        pelatihan[i].showDetail !== true ? (
-                          pelatihan[i].pelatihan.length > 0 ? (
+                    <div className="card-pelatihan-new mb-10 mt-5">
+                      <Row>
+                        {pelatihan !== null && pelatihan[i] !== undefined ? (
+                          pelatihan[i].showDetail !== true ? (
+                            pelatihan[i].pelatihan.length > 0 &&
                             pelatihan[i].pelatihan.map((row, j) => (
                               <Col md={4} className="mb-5" key={j}>
                                 <Card className="h-100 shadow-sm border-0" onMouseEnter={() => handleMouseEnter(i, j)} onMouseLeave={() => handleMouseLeave(i, j)}>
@@ -440,185 +445,183 @@ const Beranda = ({ session }) => {
                               </Col>
                             ))
                           ) : (
-                            <div className="container-fluid">
-                              <h1 className="text-center text-muted col-12 font-weight-bolder">Pelatihan Belum Tersedia</h1>
-                            </div>
-                          )
-                        ) : (
-                          <>
-                            <div className="container-fluid">
-                              <div className="row border">
-                                <div className="col-12 col-md-4">
-                                  <div className="position-absolute mt-5" style={{ zIndex: "100" }}>
-                                    <span className="badgess-lg">Pelatihan {cardMetode}</span>
-                                  </div>
-                                  <div style={{ minHeight: "425px" }}>
-                                    <Image
-                                      src={(cardImage && process.env.END_POINT_API_IMAGE_BEASISWA + cardImage) || "/assets/media/default-card.png"}
-                                      alt="image card detail"
-                                      layout="fill"
-                                      objectFit="cover"
-                                      className="rounded"
-                                    />
-                                  </div>
-                                </div>
-
-                                <div className="col-12 col-md-8">
-                                  <div className="py-8 ml-3">
-                                    <div className="position-relative d-flex align-items-start justify-content-between">
-                                      <div className="d-flex d-flex align-items-start">
-                                        <div className="dot-bullet">
-                                          <Image src={process.env.END_POINT_API_IMAGE_PARTNERSHIP + cardImageMitra} layout="fill" objectFit="cover" />
-                                        </div>
-                                        <div className="ml-6">
-                                          <p className="fz-14" style={{ color: "#6C6C6C" }}>
-                                            {cardAkademi}
-                                          </p>
-                                          <p className="fz-30 fw-600">{cardName}</p>
-                                          <p className="fw-600 fz-14">{cardMitra}</p>
-                                        </div>
-                                      </div>
-
-                                      <div className="d-flex align-items-start">
-                                        <div className="whislist mr-5">
-                                          <Button variant="light" className={`float-right d-flex justify-content-center align-items-center wishlist-card-new`}>
-                                            <i
-                                              className="ri-heart-line p-0"
-                                              style={{
-                                                color: "#6C6C6C",
-                                              }}
-                                            ></i>
-                                          </Button>
-                                          <Button variant="light" className={`float-right d-flex justify-content-center align-items-center mr-2 wishlist-card-new mr-5`}>
-                                            <i
-                                              className="ri-share-line p-0"
-                                              style={{
-                                                color: "#6C6C6C",
-                                              }}
-                                            ></i>
-                                          </Button>
-                                        </div>
-
-                                        <div onClick={() => handleCloseQuickView(i)} className="mr-5">
-                                          <IconClose className="cursor-pointer" />
-                                        </div>
-                                      </div>
+                            <>
+                              <div className="container-fluid">
+                                <div className="row border">
+                                  <div className="col-12 col-md-4">
+                                    <div className="position-absolute mt-5" style={{ zIndex: "100" }}>
+                                      <span className="badgess-lg">Pelatihan {cardMetode}</span>
                                     </div>
-
-                                    <p className="fz-16 fw-400 my-6">
-                                      <div
-                                        dangerouslySetInnerHTML={{
-                                          __html: PrintTextTrim(cardDeskripsi),
-                                        }}
-                                      ></div>
-                                    </p>
-
-                                    <div className="d-flex align-items-center">
-                                      <div className="date d-flex align-items-center align-middle mr-5">
-                                        <i className="ri-time-line"></i>
-                                        <span className="ml-6" style={{ color: "#6C6C6C" }}>
-                                          Registrasi: {moment(cardPendaftaranMulai).format("DD MMMM YYYY")} - {moment(cardPendaftaranSelesai).format("DD MMMM YYYY")}
-                                        </span>
-                                      </div>
-                                      <div className="date d-flex align-items-center align-middle mr-5">
-                                        <i className="ri-group-line"></i>
-                                        <span style={{ color: "#6C6C6C" }}>Kuota: {cardKuota}</span>
-                                      </div>
-                                      <div className="date d-flex align-items-center align-middle">
-                                        <i className="ri-map-pin-line mr-2" style={{ color: "#6C6C6C" }}></i>
-                                        <span style={{ color: "#6C6C6C" }} className="d-flex align-items-center">
-                                          Lokasi: {cardAlamat}
-                                        </span>
-                                      </div>
+                                    <div style={{ minHeight: "425px" }}>
+                                      <Image
+                                        src={(cardImage && process.env.END_POINT_API_IMAGE_BEASISWA + cardImage) || "/assets/media/default-card.png"}
+                                        alt="image card detail"
+                                        layout="fill"
+                                        objectFit="cover"
+                                        className="rounded"
+                                      />
                                     </div>
+                                  </div>
 
-                                    <hr />
+                                  <div className="col-12 col-md-8">
+                                    <div className="py-8 ml-3">
+                                      <div className="position-relative d-flex align-items-start justify-content-between">
+                                        <div className="d-flex d-flex align-items-start">
+                                          <div className="dot-bullet">
+                                            <Image src={process.env.END_POINT_API_IMAGE_PARTNERSHIP + cardImageMitra} layout="fill" objectFit="cover" />
+                                          </div>
+                                          <div className="ml-6">
+                                            <p className="fz-14" style={{ color: "#6C6C6C" }}>
+                                              {cardAkademi}
+                                            </p>
+                                            <p className="fz-30 fw-600">{cardName}</p>
+                                            <p className="fw-600 fz-14">{cardMitra}</p>
+                                          </div>
+                                        </div>
 
-                                    <div className="row pt-6">
-                                      <div className="col-6">
-                                        <Link href={`/detail/pelatihan/${cardId}`} passHref>
-                                          <a>
-                                            <button className="btn btn-outline-primary-new rounded-pill py-3 px-12 mr-4 w-100 font-weight-bolder">Lihat Selengkapnya</button>
-                                          </a>
-                                        </Link>
+                                        <div className="d-flex align-items-start">
+                                          <div className="whislist mr-5">
+                                            <Button variant="light" className={`float-right d-flex justify-content-center align-items-center wishlist-card-new`}>
+                                              <i
+                                                className="ri-heart-line p-0"
+                                                style={{
+                                                  color: "#6C6C6C",
+                                                }}
+                                              ></i>
+                                            </Button>
+                                            <Button variant="light" className={`float-right d-flex justify-content-center align-items-center mr-2 wishlist-card-new mr-5`}>
+                                              <i
+                                                className="ri-share-line p-0"
+                                                style={{
+                                                  color: "#6C6C6C",
+                                                }}
+                                              ></i>
+                                            </Button>
+                                          </div>
+
+                                          <div onClick={() => handleCloseQuickView(i)} className="mr-5">
+                                            <IconClose className="cursor-pointer" />
+                                          </div>
+                                        </div>
                                       </div>
 
-                                      {cardStatus !== "Closed" && (
+                                      <p className="fz-16 fw-400 my-6">
+                                        <div
+                                          dangerouslySetInnerHTML={{
+                                            __html: PrintTextTrim(cardDeskripsi),
+                                          }}
+                                        ></div>
+                                      </p>
+
+                                      <div className="d-flex align-items-center">
+                                        <div className="date d-flex align-items-center align-middle mr-5">
+                                          <i className="ri-time-line"></i>
+                                          <span className="ml-6" style={{ color: "#6C6C6C" }}>
+                                            Registrasi: {moment(cardPendaftaranMulai).format("DD MMMM YYYY")} - {moment(cardPendaftaranSelesai).format("DD MMMM YYYY")}
+                                          </span>
+                                        </div>
+                                        <div className="date d-flex align-items-center align-middle mr-5">
+                                          <i className="ri-group-line"></i>
+                                          <span style={{ color: "#6C6C6C" }}>Kuota: {cardKuota}</span>
+                                        </div>
+                                        <div className="date d-flex align-items-center align-middle">
+                                          <i className="ri-map-pin-line mr-2" style={{ color: "#6C6C6C" }}></i>
+                                          <span style={{ color: "#6C6C6C" }} className="d-flex align-items-center">
+                                            Lokasi: {cardAlamat}
+                                          </span>
+                                        </div>
+                                      </div>
+
+                                      <hr />
+
+                                      <div className="row pt-6">
                                         <div className="col-6">
-                                          <button
-                                            onClick={() => handleCheckPelatihanReg(cardId, session)}
-                                            className="d-flex justify-content-center  btn-register-peserta btn-sm py-3 px-12 rounded-pill btn-primary w-100"
-                                          >
-                                            Daftar Pelatihan
-                                          </button>
+                                          <Link href={`/detail/pelatihan/${cardId}`} passHref>
+                                            <a>
+                                              <button className="btn btn-outline-primary-new rounded-pill py-3 px-12 mr-4 w-100 font-weight-bolder">Lihat Selengkapnya</button>
+                                            </a>
+                                          </Link>
                                         </div>
-                                      )}
+
+                                        {cardStatus !== "Closed" && (
+                                          <div className="col-6">
+                                            <button
+                                              onClick={() => handleCheckPelatihanReg(cardId, session)}
+                                              className="d-flex justify-content-center  btn-register-peserta btn-sm py-3 px-12 rounded-pill btn-primary w-100"
+                                            >
+                                              Daftar Pelatihan
+                                            </button>
+                                          </div>
+                                        )}
+                                      </div>
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                            </div>
-                          </>
-                        )
-                      ) : (
-                        <div className="container-fluid">
-                          <h1 className="text-center text-muted col-12 font-weight-bolder">Pelatihan Belum Tersedia</h1>
-                        </div>
-                      )}
-                    </Row>
+                            </>
+                          )
+                        ) : (
+                          <div className="container-fluid">
+                            <h1 className="text-center text-muted col-12 font-weight-bolder">Pelatihan Belum Tersedia</h1>
+                          </div>
+                        )}
+                      </Row>
+                    </div>
+                  </>
+                ))
+              ) : (
+                <div className="mt-20">
+                  <div className="row">
+                    <h1 className="text-center text-muted col-12 font-weight-bolder">Tema Pelatihan Belum Tersedia</h1>
                   </div>
-                </>
-              ))
-            ) : (
-              <div className="container-fluid mt-20">
-                <div className="row">
-                  <h1 className="text-center text-muted col-12 font-weight-bolder">Tema Pelatihan Belum Tersedia</h1>
                 </div>
-              </div>
-            )}
+              )}
 
-            {tema && tema.length > 1 && (
-              <div className="d-flex justify-content-center mt-20">
-                <Link href={`/detail/akademi/${akademiId}`}>
-                  <button className="btn btn-outline-primary-new rounded-pill font-weight-bolder py-3 px-12">Lebih Banyak Tema {">"}</button>
-                </Link>
-              </div>
-            )}
-          </Container>
-        )}
-      </section>
-
-      <section className="step-register-new mt-10 mb-20 ">
-        <Container fluid className="px-md-20 pb-10">
-          <div className="title-step-register text-center">
-            <h1>
-              Tahapan Pendaftaran <br /> Digital Talent Scholarship
-            </h1>
-            <div className="mt-md-20 mt-10">
-              <Image src="/assets/media/image-step-register.png" width={1200} height={366} />
+              {tema && tema.length > 1 && (
+                <div className="d-flex justify-content-center mt-20">
+                  <Link href={`/detail/akademi/${akademiId}`}>
+                    <button className="btn btn-outline-primary-new rounded-pill font-weight-bolder py-3 px-12">Lebih Banyak Tema {">"}</button>
+                  </Link>
+                </div>
+              )}
             </div>
-          </div>
+          )}
         </Container>
       </section>
 
+      <section className="step-register-new mt-10 mb-20 ">
+        <div className="title-step-register text-center">
+          <h1>
+            Tahapan Pendaftaran <br /> Digital Talent Scholarship
+          </h1>
+          <div className="mt-md-20 mt-10">
+            <Image src="/assets/media/image-step-register.png" width={1200} height={366} />
+          </div>
+        </div>
+      </section>
+
       <section className="rilis-media-new">
-        <Container fluid className="px-md-20 pb-10">
+        <Container fluid className="px-xl-40 px-lg-10 px-10 mt-5">
           <RilisMedia berita={publikasi && publikasi.berita && publikasi.berita.length !== 0 ? publikasi.berita : null} />
         </Container>
       </section>
 
       <section className="galeri-update-new">
-        <GaleriUpdate gambar={publikasi && publikasi.gallery && publikasi.gallery.length !== 0 ? publikasi.gallery : null} />
+        <Container fluid className="px-xl-40 px-lg-10 px-10 mt-5">
+          <GaleriUpdate gambar={publikasi && publikasi.gallery && publikasi.gallery.length !== 0 ? publikasi.gallery : null} />
+        </Container>
       </section>
 
       <section className="info-vidio-new">
-        <Container fluid className="px-md-20">
+        <Container fluid className="px-xl-40 px-lg-10 px-10 mt-5">
           <InfoVideo video={publikasi && publikasi.video ? publikasi.video : null} />
         </Container>
       </section>
 
       <section className="come-join-new">
-        <ComeJoin />
+        <Container fluid className="px-xl-40 px-lg-10 px-10 mt-5">
+          <ComeJoin />
+        </Container>
       </section>
     </>
   );

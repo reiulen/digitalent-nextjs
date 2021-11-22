@@ -1,0 +1,26 @@
+@media (max-width: 540px) {
+  .btnSearch {
+    min-width: 100%;
+  }
+}
+
+@media (max-width: 280px) {
+  .pagination {
+    display: none;
+  }
+  .paginationResponsive {
+    display: inline !important;
+  }
+  .column {
+    width: 80px !important;
+  }
+  .columnText {
+    font-size: 10px !important;
+  }
+  .labelColumn {
+    font-size: 12px !important;
+  }
+}
+.paginationResponsive {
+  display: none;
+}

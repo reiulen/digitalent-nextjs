@@ -11,10 +11,10 @@ const Header = () => {
   const router = useRouter();
 
   const { error: errorDataPribadi, dataPribadi } = useSelector(
-    state => state.getDataPribadi
+    (state) => state.getDataPribadi
   );
   const { error: errorPelatihan, pelatihan } = useSelector(
-    state => state.getPelatihan
+    (state) => state.getPelatihan
   );
   let routerPath;
   if (router.pathname.includes("form-pendaftaran"))
@@ -58,7 +58,7 @@ const Header = () => {
     }, 1000);
   };
 
-  const set = e => {
+  const set = (e) => {
     e = e < 10 ? "0" + e : e;
     return e;
   };
@@ -69,7 +69,7 @@ const Header = () => {
     // localStorage.setItem("viewEdit", false);
   };
 
-  const handleProfile = e => {
+  const handleProfile = (e) => {
     localStorage.setItem("btn", 0);
   };
 
@@ -135,7 +135,7 @@ const Header = () => {
                           localStorage.getItem("btn") === "0" ? (
                           <>
                             <a
-                              onClick={event => handleProfile(event)}
+                              onClick={(event) => handleProfile(event)}
                               className={styles.breadcrumbProfile}
                             >
                               Profile
@@ -168,7 +168,7 @@ const Header = () => {
                           localStorage.getItem("btn") === "1" ? (
                           <>
                             <a
-                              onClick={event => handleProfile(event)}
+                              onClick={(event) => handleProfile(event)}
                               className={styles.breadcrumbProfile}
                             >
                               Profile
@@ -201,7 +201,7 @@ const Header = () => {
                           localStorage.getItem("btn") === "2" ? (
                           <>
                             <a
-                              onClick={event => handleProfile(event)}
+                              onClick={(event) => handleProfile(event)}
                               className={styles.breadcrumbProfile}
                             >
                               Profile
@@ -234,7 +234,7 @@ const Header = () => {
                           localStorage.getItem("btn") === "3" ? (
                           <>
                             <a
-                              onClick={event => handleProfile(event)}
+                              onClick={(event) => handleProfile(event)}
                               className={styles.breadcrumbProfile}
                             >
                               Profile
@@ -310,7 +310,7 @@ const Header = () => {
                           className="d-flex flex-row "
                           style={{ float: "left" }}
                         >
-                          <div className="p-1">
+                          <div className={`${styles.breadCrumbText} p-1`}>
                             {router.pathname.includes("substansi") ? (
                               "Test Substansi"
                             ) : router.pathname.includes("survey") ? (
