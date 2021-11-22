@@ -6,8 +6,8 @@ import Swal from "sweetalert2";
 import SimpleReactValidator from "simple-react-validator";
 import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
-import DatePicker from "react-datepicker";
-
+import DatePicker, { registerLocale } from "react-datepicker";
+import id from "date-fns/locale/id";
 import { GET_TRAINING_STEP1 } from "../../../../../redux/types/pelatihan/function.type";
 import {
   storeTrainingStep1,
@@ -16,42 +16,43 @@ import {
   dropdownTemabyAkademi,
 } from "../../../../../redux/actions/pelatihan/function.actions";
 import LoadingPage from "../../../../LoadingPage";
-import { disablePlusMinusPeriod } from "../../../../../utils/middleware/helper";
+import {
+  disablePlusMinusPeriod,
+  helperRemoveZeroFromIndex0,
+} from "../../../../../utils/middleware/helper";
 import { CustomNumberInput } from "../../../../formCustomComponent/input";
-import {edit0Value} from '../../../../../utils/middleware/helper/index'
 import moment from "moment";
 
 const AddTrainingStep1 = ({ propsStep, token }) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
-  const today = new Date();
+  const [today, setToday] = useState(new Date());
   const drowpdownTemabyAkademi = useSelector(
-    (state) => state.drowpdownTemabyAkademi
+    state => state.drowpdownTemabyAkademi
   );
-
-  const { trainingData } = useSelector((state) => state.trainingStep1);
+  const { trainingData } = useSelector(state => state.trainingStep1);
   const { error: dropdownErrorLevelPelatihan, data: dataLevelPelatihan } =
-    useSelector((state) => state.drowpdownLevelPelatihan);
+    useSelector(state => state.drowpdownLevelPelatihan);
   const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(
-    (state) => state.drowpdownAkademi
+    state => state.drowpdownAkademi
   );
   const { error: dropdownErrorTema, data: dataTema } = useSelector(
-    (state) => state.drowpdownTema
+    state => state.drowpdownTema
   );
   const { error: dropdownErrorPenyelenggara, data: dataPenyelenggara } =
-    useSelector((state) => state.drowpdownPenyelenggara);
+    useSelector(state => state.drowpdownPenyelenggara);
   const { error: dropdownErrorMitra, data: dataMitra } = useSelector(
-    (state) => state.drowpdownMitra
+    state => state.drowpdownMitra
   );
   const { error: dropdownErrorZonasi, data: dataZonasi } = useSelector(
-    (state) => state.drowpdownZonasi
+    state => state.drowpdownZonasi
   );
   const { error: dropdownErrorProvinsi, data: dataProvinsi } = useSelector(
-    (state) => state.drowpdownProvinsi
+    state => state.drowpdownProvinsi
   );
   const { error: dropdownErrorKabupaten, data: dataKabupaten } = useSelector(
-    (state) => state.drowpdownKabupaten
+    state => state.drowpdownKabupaten
   );
 
   const [editorLoaded, setEditorLoaded] = useState(false);
@@ -224,7 +225,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
     }
   };
 
-  const onLogoHandler = (e) => {
+  const onLogoHandler = e => {
     const type = ["image/jpg", "image/png", "image/jpeg"];
     if (e.target.files[0]) {
       if (type.includes(e.target.files[0].type)) {
@@ -253,7 +254,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
     }
   };
 
-  const onThumbnailHandler = (e) => {
+  const onThumbnailHandler = e => {
     const type = ["image/jpg", "image/png", "image/jpeg"];
     if (e.target.files[0]) {
       if (type.includes(e.target.files[0].type)) {
@@ -282,7 +283,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
     }
   };
 
-  const onDeleteHandler = (type) => {
+  const onDeleteHandler = type => {
     switch (type) {
       case "LOGO":
         setLogoFile("");
@@ -301,7 +302,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
     }
   };
 
-  const onSilabusHandler = (e) => {
+  const onSilabusHandler = e => {
     const type = ["application/pdf"];
     if (e.target.files[0]) {
       if (type.includes(e.target.files[0].type)) {
@@ -330,7 +331,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
     }
   };
 
-  const submitHandler = (e) => {
+  const submitHandler = e => {
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
       const data = {
@@ -389,7 +390,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
 
   useEffect(() => {
     const number = document.getElementById("number1");
-    number.onkeydown = (e) => {
+    number.onkeydown = e => {
       if (e.code == "Minus") {
         return false;
       }
@@ -410,7 +411,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
 
   useEffect(() => {
     const number = document.getElementById("number2");
-    number.onkeydown = (e) => {
+    number.onkeydown = e => {
       if (e.code == "Minus") {
         return false;
       }
@@ -439,6 +440,37 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
       setTargetKuotaUser(+targetKuotaRegister);
     }
   }, [targetKuotaRegister, targetKuotaUser]);
+
+  const filterPassedTime = time => {
+    const currentDate = new Date();
+    const selectedDate = new Date(time);
+    return currentDate.getTime() < selectedDate.getTime();
+  };
+
+  const filterPassedTime2 = time => {
+    const currentDate = new Date(startDateRegistration);
+    const selectedDate = new Date(time);
+
+    return currentDate.getTime() < selectedDate.getTime();
+  };
+
+  const filterPassedTime3 = time => {
+    const currentDate = new Date(endDateRegistration);
+    const selectedDate = new Date(time);
+
+    return currentDate.getTime() < selectedDate.getTime();
+  };
+
+  const filterPassedTime4 = time => {
+    const currentDate = new Date(startDateTraining);
+    const selectedDate = new Date(time);
+
+    return currentDate.getTime() < selectedDate.getTime();
+  };
+
+  useEffect(() => {
+    registerLocale("id", id);
+  }, []);
 
   return (
     <div className="card card-custom card-stretch gutter-b">
@@ -497,7 +529,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
               placeholder="Silahkan Masukkan Nama Pelatihan"
               className="form-control"
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={e => setName(e.target.value)}
               onBlur={() =>
                 simpleValidator.current.showMessageFor("nama pelatihan")
               }
@@ -519,7 +551,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                 placeholder="Silahkan Pilih Level Pelatihan"
                 options={optionsLevelPelatihan}
                 defaultValue={level}
-                onChange={(e) => setLevel({ value: e?.value, label: e?.label })}
+                onChange={e => setLevel({ value: e?.value, label: e?.label })}
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("level pelatihan")
                 }
@@ -540,7 +572,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                 placeholder="Silahkan Pilih Akademi"
                 options={optionsAkademi}
                 defaultValue={academy}
-                onChange={(e) => {
+                onChange={e => {
                   setAcademy({ value: e?.value, label: e?.label });
                   if (e?.value === academy.value) {
                     return;
@@ -569,7 +601,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                 options={drowpdownTemabyAkademi.data.data}
                 defaultValue={theme}
                 value={theme}
-                onChange={(e) => setTheme({ value: e?.value, label: e?.label })}
+                onChange={e => setTheme({ value: e?.value, label: e?.label })}
                 onBlur={() => simpleValidator.current.showMessageFor("tema")}
               />
             </div>
@@ -724,9 +756,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
               placeholder="Silahkan Pilih Penyelenggara"
               options={optionsPenyelenggara}
               defaultValue={organizer}
-              onChange={(e) =>
-                setOrganizer({ value: e?.value, label: e?.label })
-              }
+              onChange={e => setOrganizer({ value: e?.value, label: e?.label })}
               onBlur={() =>
                 simpleValidator.current.showMessageFor("penyelenggara")
               }
@@ -749,7 +779,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
               placeholder="Silahkan Pilih Mitra"
               options={optionsMitra}
               defaultValue={mitra}
-              onChange={(e) => setMitra({ value: e?.value, label: e?.label })}
+              onChange={e => setMitra({ value: e?.value, label: e?.label })}
               onBlur={() => simpleValidator.current.showMessageFor("mitra")}
             />
             {simpleValidator.current.message(
@@ -772,14 +802,20 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
               <div className="position-relative">
                 <DatePicker
                   selected={startDateRegistration}
-                  onChange={(date) => setStartDateRegistration(date)}
+                  onChange={date => {
+                    setEndDateRegistration(null);
+                    setStartDateTraining(null);
+                    setEndDateTraining(null);
+                    setStartDateRegistration(date);
+                  }}
                   showTimeSelect
                   minDate={today}
-                  locale="pt-BR"
+                  locale="id"
                   timeFormat="HH:mm"
                   dateFormat="d MMMM yyyy - HH:mm"
                   className="form-control w-100 d-block"
                   placeholderText="Silahkan Pilih Tanggal Dari"
+                  filterTime={filterPassedTime}
                 />
                 <i className="ri-calendar-line right-center-absolute pr-3"></i>
               </div>
@@ -796,24 +832,23 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
               </label>
               <div className="position-relative">
                 <DatePicker
-                  selected={
-                    startDateRegistration > endDateRegistration
-                      ? ""
-                      : endDateRegistration
+                  selected={endDateRegistration}
+                  value={endDateRegistration}
+                  onChange={date => {
+                    setStartDateTraining(null);
+                    setEndDateTraining(null);
+                    setEndDateRegistration(date);
+                  }}
+                  minDate={
+                    startDateRegistration ? startDateRegistration : today
                   }
-                  value={
-                    startDateRegistration > endDateRegistration
-                      ? ""
-                      : endDateRegistration
-                  }
-                  onChange={(date) => setEndDateRegistration(date)}
-                  minDate={startDateRegistration}
                   showTimeSelect
                   className="form-control w-100 d-block"
-                  locale="pt-BR"
+                  locale="id"
                   timeFormat="HH:mm"
                   dateFormat="d MMMM yyyy - HH:mm"
                   placeholderText="Silahkan Pilih Tanggal Sampai"
+                  filterTime={filterPassedTime2}
                 />
                 <i className="ri-calendar-line right-center-absolute pr-3"></i>
               </div>
@@ -836,14 +871,19 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
               <div className="position-relative">
                 <DatePicker
                   selected={startDateTraining}
-                  onChange={(date) => setStartDateTraining(date)}
-                  minDate={endDateRegistration}
+                  value={startDateTraining}
+                  onChange={date => {
+                    setEndDateTraining(null);
+                    setStartDateTraining(date);
+                  }}
+                  minDate={endDateRegistration ? endDateRegistration : today}
                   showTimeSelect
                   className="form-control w-100 d-block"
-                  locale="pt-BR"
+                  locale="id"
                   timeFormat="HH:mm"
                   dateFormat="d MMMM yyyy - HH:mm"
                   placeholderText="Silahkan Pilih Tanggal Dari"
+                  filterTime={filterPassedTime3}
                 />
                 <i className="ri-calendar-line right-center-absolute pr-3"></i>
               </div>
@@ -860,17 +900,14 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
               </label>
               <div className="position-relative">
                 <DatePicker
-                  onChange={(date) => setEndDateTraining(date)}
-                  minDate={startDateTraining}
-                  selected={
-                    startDateTraining > endDateTraining ? "" : endDateTraining
-                  }
-                  value={
-                    startDateTraining > endDateTraining ? "" : endDateTraining
-                  }
+                  onChange={date => setEndDateTraining(date)}
+                  minDate={startDateTraining ? startDateTraining : today}
+                  selected={endDateTraining}
+                  value={endDateTraining}
+                  filterTime={filterPassedTime4}
                   showTimeSelect
                   className="form-control w-100 d-block"
-                  locale="pt-BR"
+                  locale="id"
                   timeFormat="HH:mm"
                   dateFormat="d MMMM yyyy - HH:mm"
                   placeholderText="Silahkan Pilih Tanggal Sampai"
@@ -932,8 +969,11 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                 placeholder="Silahkan Masukan Kuota Target Pendaftar"
                 type="number"
                 value={targetKuotaRegister}
-                onChange={(e) => {
-                  edit0Value(e.target.value,setTargetKuotaRegister)
+                onChange={e => {
+                  helperRemoveZeroFromIndex0(
+                    e.target.value,
+                    setTargetKuotaRegister
+                  );
                 }}
                 className="form-control"
                 min="1"
@@ -960,7 +1000,12 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                 type="number"
                 min="1"
                 value={targetKuotaUser}
-                onChange={(e) => setTargetKuotaUser(e.target.value)}
+                onChange={e => {
+                  helperRemoveZeroFromIndex0(
+                    e.target.value,
+                    setTargetKuotaUser
+                  );
+                }}
                 className="form-control"
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("kuota target peserta")
@@ -1184,9 +1229,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                 placeholder="Silahkan Pilih Level Zonasi"
                 options={optionsZonasi}
                 defaultValue={zonasi}
-                onChange={(e) =>
-                  setZonasi({ value: e?.value, label: e?.label })
-                }
+                onChange={e => setZonasi({ value: e?.value, label: e?.label })}
                 onBlur={() => simpleValidator.current.showMessageFor("zonasi")}
               />
               {simpleValidator.current.message(
@@ -1204,7 +1247,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                 placeholder="Silahkan Pilih Batch"
                 options={optionBatch}
                 defaultValue={batch}
-                onChange={(e) => setBatch({ value: e?.value, label: e?.label })}
+                onChange={e => setBatch({ value: e?.value, label: e?.label })}
                 onBlur={() => simpleValidator.current.showMessageFor("batch")}
               />
               {simpleValidator.current.message(
@@ -1284,7 +1327,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
               value={address}
               rows="6"
               className="form-control"
-              onChange={(e) => setAddress(e.target.value)}
+              onChange={e => setAddress(e.target.value)}
               onBlur={() => simpleValidator.current.showMessageFor("alamat")}
               placeholder="Silahkan Masukan Alamat Disini"
             />
@@ -1302,7 +1345,7 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                 placeholder="Silahkan Pilih Provinsi"
                 options={optionsProvinsi}
                 defaultValue={province}
-                onChange={(e) => {
+                onChange={e => {
                   selectRefKabupaten.select.clearValue();
                   setProvince({ label: e?.label, value: e?.value });
                   dispatch(dropdownKabupaten(token, e.value));
@@ -1325,11 +1368,11 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                 Kota / Kabupaten
               </label>
               <Select
-                ref={(ref) => (selectRefKabupaten = ref)}
+                ref={ref => (selectRefKabupaten = ref)}
                 placeholder="Silahkan Pilih Kota / Kabupaten"
                 options={optionsKabupaten}
                 defaultValue={city}
-                onChange={(e) => setCity({ value: e?.value, label: e?.label })}
+                onChange={e => setCity({ value: e?.value, label: e?.label })}
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("kota/kabupaten")
                 }

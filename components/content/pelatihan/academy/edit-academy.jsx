@@ -32,10 +32,10 @@ const EditAcademy = ({ token }) => {
     loading: detailLoading,
     error: detailError,
     academy,
-  } = useSelector((state) => state.detailAcademy);
+  } = useSelector(state => state.detailAcademy);
 
   const { loading, error, isUpdated } = useSelector(
-    (state) => state.updateAcademy
+    state => state.updateAcademy
   );
 
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
@@ -93,7 +93,7 @@ const EditAcademy = ({ token }) => {
     }
   };
 
-  const onChangeLogo = (e) => {
+  const onChangeLogo = e => {
     const type = ["image/jpg", "image/png", "image/jpeg"];
     if (e.target.files[0]) {
       if (type.includes(e.target.files[0].type)) {
@@ -128,7 +128,7 @@ const EditAcademy = ({ token }) => {
     setLogoName("");
   };
 
-  const onChangeBrowsur = (e) => {
+  const onChangeBrowsur = e => {
     const type = ["image/jpg", "image/png", "image/jpeg", "application/pdf"];
     if (e.target.files[0]) {
       if (type.includes(e.target.files[0].type)) {
@@ -163,7 +163,7 @@ const EditAcademy = ({ token }) => {
     setBrowsurPreview("");
   };
 
-  const submitHandler = (e) => {
+  const submitHandler = e => {
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
       const idInt = parseInt(id);
@@ -174,7 +174,7 @@ const EditAcademy = ({ token }) => {
         logo: logoFile,
         brosur:
           browsurName === "Belum ada file" && browsurFile === ""
-            ? "dihapus"
+            ? "Dihapus"
             : browsurFile,
         status: status.value,
         id: idInt,
@@ -240,7 +240,7 @@ const EditAcademy = ({ token }) => {
                   placeholder="Silahkan Masukan Kode Akademi"
                   className="form-control"
                   value={slug}
-                  onChange={(e) => setSlug(e.target.value)}
+                  onChange={e => setSlug(e.target.value)}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("kode akademi")
                   }
@@ -312,7 +312,7 @@ const EditAcademy = ({ token }) => {
                   placeholder="Silahkan Masukan Nama Akademi"
                   className="form-control"
                   value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={e => setName(e.target.value)}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("nama akademi")
                   }
@@ -334,7 +334,7 @@ const EditAcademy = ({ token }) => {
                     <CKEditor
                       editor={ClassicEditor}
                       data={description}
-                      onReady={(editor) => {
+                      onReady={editor => {
                         // You can store the "editor" and use when it is needed.
                       }}
                       onChange={(event, editor) => {
@@ -374,7 +374,9 @@ const EditAcademy = ({ token }) => {
                       onChange={onChangeBrowsur}
                     />
                     <label className="custom-file-label" htmlFor="customFile">
-                      {browsurName}
+                      {browsurName == "dihapus"
+                        ? "Belum ada file"
+                        : browsurName}
                     </label>
                   </div>
                   <button
@@ -397,9 +399,7 @@ const EditAcademy = ({ token }) => {
                 <Select
                   options={optionsStatus}
                   defaultValue={status}
-                  onChange={(e) =>
-                    setStatus({ value: e.value, label: e.label })
-                  }
+                  onChange={e => setStatus({ value: e.value, label: e.label })}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("status")
                   }
