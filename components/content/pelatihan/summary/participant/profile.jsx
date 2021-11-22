@@ -36,21 +36,23 @@ const ProfileUser = ({ profile }) => {
               <div className="data-pribadi">
                 <div className="title d-flex align-items-center mb-3">
                   <h3 className="font-weight-bolder mr-5">Data Pribadi</h3>
-                  <button
-                    className="btn btn-light-success fw-600 rounded-xl"
-                    style={{
-                      backgroundColor: "#E6FFF7",
-                      color: "#00B27A",
-                    }}
-                  >
-                    <i
-                      className="ri-check-double-fill"
+                  {profile.status_verified && (
+                    <button
+                      className="btn btn-light-success fw-600 rounded-xl"
                       style={{
+                        backgroundColor: "#E6FFF7",
                         color: "#00B27A",
                       }}
-                    ></i>{" "}
-                    Verified
-                  </button>
+                    >
+                      <i
+                        className="ri-check-double-fill"
+                        style={{
+                          color: "#00B27A",
+                        }}
+                      ></i>{" "}
+                      Verified
+                    </button>
+                  )}
                 </div>
                 <div className="row mb-3">
                   <div className="col-md-6">
