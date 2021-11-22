@@ -109,6 +109,7 @@ export const postPage = (sendData, token) => {
         payload: data,
       });
     } catch (error) {
+      
       dispatch({
         type: POST_PAGE_FAIL,
         payload: error.response.data.message,

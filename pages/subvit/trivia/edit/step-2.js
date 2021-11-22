@@ -3,6 +3,7 @@ import EditTriviaStep2 from "../../../../components/content/subvit/trivia/edit/s
 import { getDetailTriviaQuestionBanks } from "../../../../redux/actions/subvit/trivia-question.actions";
 import { wrapper } from "../../../../redux/store";
 import { getSession } from "next-auth/client";
+import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
 
 export default function EditTriviaStep2Page(props) {
   const session = props.session.user.user.data;
@@ -31,6 +32,17 @@ export const getServerSideProps = wrapper.getServerSideProps(
       await store.dispatch(
         getDetailTriviaQuestionBanks(query.id, session.user.user.data.token)
       );
+      const middleware = middlewareAuthAdminSession(
+        middlewareAuthAdminSessionsession
+      );
+      if (!middleware.status) {
+        return {
+          redirect: {
+            destination: middleware.redirect,
+            permanent: false,
+          },
+        };
+      }
       return {
         props: { session, title: "Ubah Triva Step 2 - Subvit" },
       };

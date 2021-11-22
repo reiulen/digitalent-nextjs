@@ -22,7 +22,9 @@ export default function Pages(props) {
   const session = props.session.user.user.data;
   return (
     <>
-      <div className="d-flex flex-column flex-root">
+      <div className="d-flex flex-column flex-root bg-white" style={{
+        marginTop: "-25px",
+      }}>
         <PreviewPage token={session.token} />
       </div>
     </>

@@ -297,11 +297,17 @@ export const listLogReducer = (state = initialState, action) => {
       };
 
     case DETAIL_LOG_API_SUCCESS:
-      return {
-        ...state,
-        status: statuslist.success,
-        data: action.payload.data,
-      };
+      if (action.payload.status === true) {
+        return {
+          ...state,
+          status: statuslist.success,
+          data: action.payload?.data,
+        };
+      } else {
+        return {
+          
+        }
+      }
 
     case DETAIL_LOG_API_FAIL:
       return {
@@ -345,6 +351,11 @@ export const listLogReducer = (state = initialState, action) => {
         ...state,
         limit: action.limitValue,
         page: 1,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        error: null,
       };
 
     default:

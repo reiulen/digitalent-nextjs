@@ -1,14 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import PageWrapper from "../../../../wrapper/page.wrapper";
 import Swal from "sweetalert2";
 import { useRouter } from "next/router";
 import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
+import SimpleReactValidator from "simple-react-validator";
 import IconAdd from "../../../../assets/icon/Add";
 import IconDelete from "../../../../assets/icon/Delete";
 import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
+
+import styles from "../../../../../styles/sitemanagement/userMitra.module.css"
+import styles2 from "../../../../../styles/previewGaleri.module.css"
 
 const Tambah = ({ token }) => {
   const router = useRouter();
@@ -25,6 +29,10 @@ const Tambah = ({ token }) => {
   const [status, setStatus] = useState(detailZonasi.data.data.status);
   const [defaultValueKabputen, setDefaultValueKabputen] = useState([]);
   const [defaultValueProvinces, setDefaultValueProvinces] = useState([]);
+
+  const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
+  const [, forceUpdate] = useState();
+
   // state provinsi for set in option provinsi
   const [provincesOption, setProvincesOption] = useState([]);
   // state kabupaten for set in option kabupaten
@@ -37,7 +45,7 @@ const Tambah = ({ token }) => {
       return {
         provinsi: [{ label: items.provinsi, value: items.provinsi }],
         kabupaten: items.kota_kabupaten,
-        value:items.kota_kabupaten
+        value: items.kota_kabupaten
       };
     })
   );
@@ -55,7 +63,7 @@ const Tambah = ({ token }) => {
     _temp.push({
       provinsi: [],
       kabupaten: [],
-      value:[]
+      value: []
     });
     _tempValue.push({
       provinsi_old: "",
@@ -89,7 +97,7 @@ const Tambah = ({ token }) => {
     let _newTempOption = _tempOption.filter(items => items.label !== e.label)
     setProvincesOption(_newTempOption);
 
-    
+
     _temp[index].value = []
     _temp[index].kabupaten = []
     _tempValue[index].kota_kabupaten = []
@@ -129,82 +137,92 @@ const Tambah = ({ token }) => {
 
   const submit = (e) => {
     e.preventDefault();
+    if (simpleValidator.current.allValid()) {
 
-    // cek field loop field kab
-    let isRightKab = true 
-    formInput.forEach(element => {
-      if(element.value.length === 0){
-        isRightKab = false
-      }
-    });
-    // cek field loop field prov
-    let isRightProv = true 
-    valueSend.forEach(element => {
-      if(!element.provinsi){
-        isRightProv = false
-      }
-    });
-
-    if (nameZonation === "") {
-      Swal.fire("Gagal simpan", "Nama zonasi tidak boleh kosong", "error");
-    } else if (status === "") {
-      Swal.fire("Gagal simpan", "Form status tidak boleh kosong", "error");
-    }
-
-    else if (!isRightProv) {
-      Swal.fire("Gagal simpan", "Form Provinsi tidak boleh kosong", "error");
-    } 
-    else if (!isRightKab) {
-      Swal.fire("Gagal simpan", "Form Kabupaten tidak boleh kosong", "error");
-    } 
-    else {
-      Swal.fire({
-        title: "Apakah anda yakin simpan ?",
-        // text: "Data ini tidak bisa dikembalikan !",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        cancelButtonText: "Batal",
-        confirmButtonText: "Ya !",
-        dismissOnDestroy: false,
-      }).then(async (result) => {
-        if (result.value) {
-          const sendData = {
-            id: router.query.id,
-            name: nameZonation,
-            status: status,
-            data: valueSend,
-          };
-
-
-          try {
-            let { data } = await axios.post(
-              `${process.env.END_POINT_API_SITE_MANAGEMENT}api/zonasi/update`,
-              sendData,
-              {
-                headers: {
-                  authorization: `Bearer ${token}`,
-                },
-              }
-            );
-
-            Swal.fire("Berhasil", "Data berhasil disimpan", "success").then(
-              () => {
-                router.push(`/site-management/master-data/master-zonasi`);
-              }
-            );
-          } catch (error) {
-            Swal.fire(
-              "Gagal simpan",
-              `${error.response.data.message}`,
-              "error"
-            );
-          }
+      // cek field loop field kab
+      let isRightKab = true
+      formInput.forEach(element => {
+        if (element.value.length === 0) {
+          isRightKab = false
         }
       });
+      // cek field loop field prov
+      let isRightProv = true
+      valueSend.forEach(element => {
+        if (!element.provinsi) {
+          isRightProv = false
+        }
+      });
+
+      if (nameZonation === "") {
+        Swal.fire("Gagal simpan", "Nama zonasi tidak boleh kosong", "error");
+      } else if (status === "") {
+        Swal.fire("Gagal simpan", "Form status tidak boleh kosong", "error");
+      }
+
+      else if (!isRightProv) {
+        Swal.fire("Gagal simpan", "Form Provinsi tidak boleh kosong", "error");
+      }
+      else if (!isRightKab) {
+        Swal.fire("Gagal simpan", "Form Kabupaten tidak boleh kosong", "error");
+      }
+      else {
+        Swal.fire({
+          title: "Apakah anda yakin simpan ?",
+          // text: "Data ini tidak bisa dikembalikan !",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          cancelButtonText: "Batal",
+          confirmButtonText: "Ya !",
+          dismissOnDestroy: false,
+        }).then(async (result) => {
+          if (result.value) {
+            const sendData = {
+              id: router.query.id,
+              name: nameZonation,
+              status: status,
+              data: valueSend,
+            };
+
+
+            try {
+              let { data } = await axios.post(
+                `${process.env.END_POINT_API_SITE_MANAGEMENT}api/zonasi/update`,
+                sendData,
+                {
+                  headers: {
+                    authorization: `Bearer ${token}`,
+                  },
+                }
+              );
+
+              Swal.fire("Berhasil", "Data berhasil disimpan", "success").then(
+                () => {
+                  router.push(`/site-management/master-data/master-zonasi`);
+                }
+              );
+            } catch (error) {
+              Swal.fire(
+                "Gagal simpan",
+                `${error.response.data.message}`,
+                "error"
+              );
+            }
+          }
+        });
+      }
+    } else {
+      simpleValidator.current.showMessages();
+      forceUpdate(1);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Isi data dengan benar !",
+      });
     }
-  };
+  }
 
   // add value and label in response api for react select first load page
   useEffect(() => {
@@ -216,17 +234,17 @@ const Tambah = ({ token }) => {
 
   return (
     <PageWrapper>
-      <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
+      <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
-          <div className="card-header border-0">
+          <div className="card-header">
             <h3
-              className="card-title font-weight-bolder text-dark titles-1"
+              className="card-title font-weight-bolder text-dark"
             >
               Ubah Zonasi
             </h3>
           </div>
           <form>
-            <div className="card-body pt-0 px-4 px-sm-8">
+            <div className="card-body">
               <div className="form-group">
                 <label>Nama Zonasi</label>
                 <input
@@ -235,7 +253,15 @@ const Tambah = ({ token }) => {
                   type="text"
                   value={nameZonation}
                   className="form-control"
+                  onBlur={() => simpleValidator.current.showMessageFor("namaZonasi")}
                 />
+
+                {simpleValidator.current.message(
+                  "namaZonasi",
+                  nameZonation,
+                  "required",
+                  { className: "text-danger" }
+                )}
               </div>
 
               {/*  */}
@@ -245,6 +271,7 @@ const Tambah = ({ token }) => {
                   <select
                     className="form-control"
                     onChange={(e) => setStatus(e.target.value)}
+                    onBlur={() => simpleValidator.current.showMessageFor("status")}
                   >
                     <option value="0">Tidak aktif</option>
                     <option value="1">Aktif</option>
@@ -257,6 +284,13 @@ const Tambah = ({ token }) => {
                     <option value="1">Aktif</option>
                     <option value="0">Tidak aktif</option>
                   </select>
+                )}
+
+                {simpleValidator.current.message(
+                  "status",
+                  status,
+                  "required",
+                  { className: "text-danger" }
                 )}
               </div>
 
@@ -282,13 +316,21 @@ const Tambah = ({ token }) => {
                             name="color"
                             onChange={(e) => changeListProvinces(e, index)}
                             options={provincesOption}
+                            onBlur={() => simpleValidator.current.showMessageFor("province")}
                           />
+
+                          {simpleValidator.current.message(
+                            "province",
+                            items.value,
+                            "required",
+                            { className: "text-danger" }
+                          )}
                         </div>
                       </div>
                       <div className="col-12 col-sm-6">
                         <div className="form-group mt-4">
                           <div className="position-relative d-flex align-items-end w-100">
-                            <div className="form-group w-100 mr-6 mb-1">
+                            <div className="form-group w-100 mr-2 mb-1">
                               <label>Kota / Kabupaten</label>
                               <Select
                                 // ref={(ref) => (selectRefKabupaten = ref)}
@@ -306,7 +348,15 @@ const Tambah = ({ token }) => {
                                 name="color"
                                 onChange={(e) => changeListKabupaten(e, index)}
                                 options={items.kabupaten}
+                                onBlur={() => simpleValidator.current.showMessageFor("kabupaten")}
                               />
+
+                              {simpleValidator.current.message(
+                                "kabupaten",
+                                items.value,
+                                "required",
+                                { className: "text-danger" }
+                              )}
                             </div>
 
                             {index === 0 ? (
@@ -356,13 +406,13 @@ const Tambah = ({ token }) => {
               <div className="form-group row">
                 <div className="col-sm-12 d-flex justify-content-end">
                   <Link href="/site-management/master-data/master-zonasi">
-                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
+                    <a className={`${styles.btnKembali} btn btn-white-ghost-rounded-full rounded-pill mr-2`}>
                       Kembali
                     </a>
                   </Link>
                   <button
                     type="button"
-                    className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
+                    className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill`}
                     onClick={(e) => submit(e)}
                   >
                     Simpan

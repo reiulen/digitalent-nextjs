@@ -18,15 +18,9 @@ export default function PreviewArtikel(props) {
   const session = props.session.user.user.data;
   return (
     <div className="wrapper-preview" style={{ background: '#fff' }}>
-      <div className="d-flex flex-column flex-root content-preview">
-        <Layout title="Pratinjau Artikel - Publikasi" token={session.token}>
-          <Preview />
-        </Layout>
-      </div>
-
-      <div className="footer-preview">
-        <Footer />
-      </div>
+      <Layout title="Pratinjau Artikel - Publikasi" token={session.token}>
+        <Preview />
+      </Layout>
     </div>
   );
 }
