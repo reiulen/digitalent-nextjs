@@ -1,5 +1,6 @@
 import StepThree from "../../../components/content/subvit/substansi/tambah/step-3.jsx";
 import { getSession } from "next-auth/client";
+import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware.js";
 
 export default function TambahBankSoalTesSubstansiStep3(props) {
   const session = props.session.user.user.data;
@@ -18,6 +19,16 @@ export async function getServerSideProps(context) {
     return {
       redirect: {
         destination: "http://dts-dev.majapahit.id/login/admin",
+        permanent: false,
+      },
+    };
+  }
+
+  const middleware = middlewareAuthAdminSession(session);
+  if (!middleware.status) {
+    return {
+      redirect: {
+        destination: middleware.redirect,
         permanent: false,
       },
     };

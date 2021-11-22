@@ -158,7 +158,7 @@ const Table = ({ token }) => {
                           </td>
                         </tr>
                       ) : (
-                        allPage.data.setting_page.map((items, index) => {
+                        allPage.data.setting_page.reverse().map((items, index) => {
                           return (
                             <tr key={index}>
                               <td className="align-middle text-left">
@@ -203,7 +203,7 @@ const Table = ({ token }) => {
                                     </a>
                                   </Link>
                                   <Link
-                                    href={`/site-management/setting/preview-page/${items.id}`}
+                                    href={`/site-management/setting/preview-page/${items.url}`}
                                   >
                                     <a className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete">
                                       <IconEye width="16" height="16" />

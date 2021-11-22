@@ -128,8 +128,8 @@ const TambahPage = ({ token }) => {
               status: pageStatus,
               property_template: {
                 title: titlePage,
-                content: isi_artikel, 
-                image: gambar
+                content: isi_artikel,
+                image: gambar,
               },
             };
           }
@@ -152,6 +152,9 @@ const TambahPage = ({ token }) => {
           query: { success: true },
         });
       });
+    }
+    if (error) {
+      Swal.fire(error, "", "error").then(() => {});
     }
 
     setEditorLoaded(true);
@@ -247,7 +250,9 @@ const TambahPage = ({ token }) => {
                         placeholder="Tulis judul halaman"
                         value={titlePage}
                         onChange={(e) => {
-                          setTitlePage(e.target.value.replace(/[^a-zA-Z0-9]/g, ""));
+                          setTitlePage(
+                            e.target.value.replace(/[^a-zA-Z0-9]/g, "")
+                          );
                         }}
                       />
                     </div>
@@ -380,7 +385,9 @@ const TambahPage = ({ token }) => {
                         placeholder="Tulis judul halaman"
                         value={titlePage}
                         onChange={(e) => {
-                          setTitlePage(e.target.value.replace(/[^a-zA-Z0-9]/g, ""));
+                          setTitlePage(
+                            e.target.value.replace(/[^a-zA-Z0-9]/g, "")
+                          );
                         }}
                       />
                     </div>
@@ -404,8 +411,6 @@ const TambahPage = ({ token }) => {
                             editor={ClassicEditor}
                             data={isi_artikel}
                             onReady={(editor) => {
-                              // You can store the "editor" and use when it is needed.
-                              // console.log("Editor is ready to use!", editor);
                             }}
                             onChange={(event, editor) => {
                               const data = editor.getData();
@@ -468,7 +473,9 @@ const TambahPage = ({ token }) => {
                         placeholder="Tulis judul halaman"
                         value={titlePage}
                         onChange={(e) => {
-                          setTitlePage(e.target.value.replace(/[^a-zA-Z0-9]/g, ""));
+                          setTitlePage(
+                            e.target.value.replace(/[^a-zA-Z0-9]/g, "")
+                          );
                         }}
                       />
                     </div>

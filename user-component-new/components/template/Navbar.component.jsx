@@ -463,7 +463,7 @@ const Navigationbar = ({ session }) => {
                 </Link>
                 <Link href="/register">
                   <a className="mx-2">
-                    <button className="btn btn-sm btn-block btn-register-peserta btn-primary m-2 justify-content-center py-3">
+                    <button className="btn btn-sm btn-block btn-register-peserta color-primary-primary m-2 justify-content-center py-3">
                       <IconRegister className="mr-2 icon-register" />
                       Daftar
                     </button>
