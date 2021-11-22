@@ -4,6 +4,7 @@ import Layout from "../../../../components/templates/layout.component";
 
 import { getDetailSubtanceQuestionBanks } from "../../../../redux/actions/subvit/subtance.actions";
 import { wrapper } from "../../../../redux/store";
+import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
 
 export default function EditSubstansiStep2Page(props) {
   const session = props.session.user.user.data;
@@ -24,6 +25,15 @@ export const getServerSideProps = wrapper.getServerSideProps(
         return {
           redirect: {
             destination: "http://dts-dev.majapahit.id/login/admin",
+            permanent: false,
+          },
+        };
+      }
+      const middleware = middlewareAuthAdminSession(session);
+      if (!middleware.status) {
+        return {
+          redirect: {
+            destination: middleware.redirect,
             permanent: false,
           },
         };

@@ -3,6 +3,7 @@ import LoadingSkeleton from "../../../components/LoadingSkeleton";
 import { getAllTriviaQuestionBanks } from "../../../redux/actions/subvit/trivia-question.actions";
 import { getSession } from "next-auth/client";
 import { wrapper } from "../../../redux/store";
+import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
 
 const ListTrivia = dynamic(
   () => import("../../../components/content/subvit/trivia/list-trivia"),
@@ -34,6 +35,16 @@ export const getServerSideProps = wrapper.getServerSideProps(
         return {
           redirect: {
             destination: "http://dts-dev.majapahit.id/login/admin",
+            permanent: false,
+          },
+        };
+      }
+
+      const middleware = middlewareAuthAdminSession(session);
+      if (!middleware.status) {
+        return {
+          redirect: {
+            destination: middleware.redirect,
             permanent: false,
           },
         };

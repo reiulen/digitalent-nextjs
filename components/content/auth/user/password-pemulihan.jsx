@@ -13,6 +13,8 @@ import LoadingTable from "../../../LoadingTable";
 const PasswordPemulihan = () => {
   const router = useRouter();
 
+  console.log(router.query.token);
+
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
 
   const [password, setPassword] = useState("");
@@ -85,17 +87,18 @@ const PasswordPemulihan = () => {
             password: password,
             password_confirmasi: passwordConfirm,
           };
-
+          console.log(data);
           await axios
             .post(
               process.env.END_POINT_API_PELATIHAN +
-                "api/v1/auth/request-forgot-password",
+                "api/v1/auth/forgot-password",
               data
             )
             .then((res) => {
               setLoading(false);
               // console.log(res); MASIH DIPAKE
-              SweatAlert("Berhasil", res.data.data, "success");
+              SweatAlert("Berhasil ", "Berhasil Merubah Password", "success");
+              router.push("/login");
             })
             .catch((err) => {
               setLoading(false);

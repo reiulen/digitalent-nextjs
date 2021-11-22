@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 import Link from "next/link";
+import Select from "react-select";
 import dynamic from "next/dynamic";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -20,6 +21,8 @@ import {
   dropdownTemabyAkademi,
 } from "../../../../../redux/actions/pelatihan/function.actions";
 import axios from "axios";
+import { Form } from "react-bootstrap";
+import SimpleReactValidator from "simple-react-validator";
 
 const StepOne = ({ token }) => {
   const dispatch = useDispatch();
@@ -45,12 +48,15 @@ const StepOne = ({ token }) => {
 
   const [typeSave, setTypeSave] = useState("lanjut");
   const [academy_id, setAcademyId] = useState(subtance.academy_id);
+  const [academyLabel, setAcademyLabel] = useState("");
   const [theme_id, setThemeId] = useState(subtance.theme_id);
   const [training_id, setTrainingId] = useState(subtance.training_id);
   const [category, setCategory] = useState(subtance.category);
+  const [optionTema, setOptionTema] = useState(null);
+
+  const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
 
   useEffect(() => {
-    optionPelatihan;
     dispatch(dropdownTemabyAkademi(academy_id, token));
     dispatch(dropdownPelatihanbyTema(theme_id, token));
     if (isUpdated) {
@@ -118,44 +124,58 @@ const StepOne = ({ token }) => {
   const [optionPelatihan, setOptionPelatihan] = useState([]);
 
   const handleChangePelatihan = (e) => {
-    setThemeId(e.target.value);
+    setThemeId(e.value);
   };
 
   const handleChangeTema = (e) => {
-    setAcademyId(e.target.value);
+    setAcademyId(e.value);
+    setAcademyLabel(e.label);
+    // MASIH DIPAKE
+    // const config = {
+    //   headers: {
+    //     Authorization: "Bearer " + token,
+    //   },
+    // };
+    // axios
+    //   .get(
+    //     process.env.END_POINT_API_PELATIHAN +
+    //       `api/v1/tema/dropdown-tema-by-akademi?akademi_id=${e.value}`,
+    //     config
+    //   )
+    //   .then((res) => {
+    //     setOptionTema(res.data.data);
+    //     const id = res.data.data.map((item) => {
+    //       return item.value;
+    //     });
 
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
-    axios
-      .get(
-        process.env.END_POINT_API_PELATIHAN +
-          `api/v1/tema/dropdown-tema-by-akademi?akademi_id=${e.target.value}`,
-        config
-      )
-      .then((res) => {
-        const id = res.data.data.map((item) => {
-          return item.value;
-        });
-
-        axios
-          .get(
-            process.env.END_POINT_API_PELATIHAN +
-              `api/v1/pelatihan/dropdown-pelatihan-tema?id=${theme_id}`,
-            config
-          )
-          .then((res) => {
-            setOptionPelatihan(res.data.data);
-          });
-      });
+    //     axios
+    //       .get(
+    //         process.env.END_POINT_API_PELATIHAN +
+    //           `api/v1/pelatihan/dropdown-pelatihan-tema?id=${theme_id}`,
+    //         config
+    //       )
+    //       .then((res) => {
+    //         setOptionPelatihan(res.data.data);
+    //       });
+    //   });
   };
 
   const handleTraining = (e) => {
-    setTrainingId(parseInt(e.target.value));
+    setTrainingId(parseInt(e.value));
   };
 
+  const optionsKategori = [
+    { value: "Test Substansi", label: "Test Substansi" },
+    { value: "Mid Test", label: "Mid Test" },
+  ];
+
+  let optionsTema = [];
+
+  data.data &&
+    data.data.map((item) => {
+      return optionsTema.push({ label: item.label, value: item.value });
+    });
+  console.log(subtance);
   return (
     <PageWrapper>
       {error ? (
@@ -191,7 +211,83 @@ const StepOne = ({ token }) => {
             <h2 className="card-title h2 text-dark">Ubah Test Substansi</h2>
           </div>
           <div className="card-body pt-0">
-            <form onSubmit={onSubmit}>
+            <Form>
+              <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label className=" col-form-label font-weight-bold">
+                  Akademi
+                </Form.Label>
+                <Select
+                  placeholder={
+                    subtance.academy
+                      ? subtance.academy.name
+                      : "Silahkan Pilih Akademi"
+                  }
+                  options={dataAkademi.data}
+                  onChange={(event) => handleChangeTema(event)}
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("akademi")
+                  }
+                />
+                {simpleValidator.current.message(
+                  "akademi",
+                  academy_id,
+                  "required",
+                  {
+                    className: "text-danger",
+                  }
+                )}
+              </Form.Group>
+
+              <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label className=" col-form-label font-weight-bold">
+                  Tema
+                </Form.Label>
+                <Select
+                  placeholder={
+                    subtance.theme ? subtance.theme.name : "Silahkan Pilih Tema"
+                  }
+                  options={optionsTema}
+                  onChange={(event) => handleChangePelatihan(event)}
+                  onBlur={() => simpleValidator.current.showMessageFor("tema")}
+                />
+                {simpleValidator.current.message("tema", theme_id, "required", {
+                  className: "text-danger",
+                })}
+              </Form.Group>
+
+              <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label className=" col-form-label font-weight-bold">
+                  Pelatihan
+                </Form.Label>
+                <Select
+                  placeholder={
+                    subtance.training
+                      ? subtance.training.name
+                      : "Silahkan Pilih Pelatihan"
+                  }
+                  options={dataPelatihan2}
+                  onChange={(e) => handleTraining(e)}
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label className=" col-form-label font-weight-bold">
+                  Kategori
+                </Form.Label>
+                <Select
+                  placeholder={
+                    subtance.category
+                      ? subtance.category
+                      : "Silahkan Pilih Kategori"
+                  }
+                  options={optionsKategori}
+                  onChange={(e) => setCategory(e.value)}
+                />
+              </Form.Group>
+            </Form>
+
+            {/* MASIH DIPAKE UNTUK BACKUP */}
+            {/* <form onSubmit={onSubmit}>
               <div className="form-group mb-2">
                 <label
                   htmlFor="staticEmail"
@@ -349,7 +445,25 @@ const StepOne = ({ token }) => {
                   </button>
                 </div>
               </div>
-            </form>
+            </form> */}
+            <div className="form-group mt-10">
+              <div className=""></div>
+              <div className=" text-right">
+                <button
+                  className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
+                  onClick={onSubmit}
+                >
+                  Simpan & Lanjut
+                </button>
+                <button
+                  className="btn btn-primary-rounded-full"
+                  onClick={saveDraft}
+                  type="button"
+                >
+                  Simpan Draft
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
