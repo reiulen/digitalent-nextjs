@@ -1,12 +1,12 @@
 import { Card, Col, Container, Form, Row, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import Footer from "../../../user-component/components/beranda/footer";
+import Footer from "../../../../user-component/components/beranda/footer";
 import styles from "./formLpj.module.css";
 import { useEffect, useState } from "react";
-import { getBerandaFooter } from "../../../redux/actions/beranda/beranda.actions";
+import { getBerandaFooter } from "../../../../redux/actions/beranda/beranda.actions";
 import moment from "moment";
 import "moment/locale/id";
-import { SweatAlert } from "../../../utils/middleware/helper";
+import { SweatAlert } from "../../../../utils/middleware/helper";
 import axios from "axios";
 
 const FormLPJ = ({ token }) => {

@@ -310,7 +310,7 @@ const Header = () => {
                           className="d-flex flex-row "
                           style={{ float: "left" }}
                         >
-                          <div className="p-1">
+                          <div className={`${styles.breadCrumbText} p-1`}>
                             {router.pathname.includes("substansi") ? (
                               "Test Substansi"
                             ) : router.pathname.includes("survey") ? (
