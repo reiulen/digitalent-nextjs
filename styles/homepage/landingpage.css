@@ -264,6 +264,54 @@
   color: #1f1f1f;
 }
 
+.color-primary-primary{
+  background-color: #0100BE;
+}
+
+.color-primary-secondary{
+  background-color: #2A62ED;
+}
+
+.color-primary-extras{
+  background-color: #5EC8F2;
+}
+
+.color-primary-primary:hover{
+  color: #fff;
+}
+
+.color-primary-secondary:hover{
+  color: #fff;
+}
+
+.color-primary-extras:hover{
+  color: #fff;
+}
+
+.color-secondary-primary{
+  background-color: #0100BE;
+}
+
+.color-secondary-secondary{
+  background-color: #2A62ED;
+}
+
+.color-secondary-extras{
+  background-color: #5EC8F2;
+}
+
+.color-extras-primary{
+  background-color: #0100BE;
+}
+
+.color-extras-secondary{
+  background-color: #2A62ED;
+}
+
+.color-extras-extras{
+  background-color: #5EC8F2;
+}
+
 @media (max-width: 395px) {
   .penyelenggara-mitra .penyelenggara-wrapper {
     width: 130px;
