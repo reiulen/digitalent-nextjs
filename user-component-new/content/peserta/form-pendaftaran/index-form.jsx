@@ -15,7 +15,7 @@ import FormBerhasil from "./form-berhasil";
 
 import { clearErrors } from "../../../../redux/actions/pelatihan/register-training.actions";
 import { PENDAFTARAN_PELATIHAN_RESET } from "../../../../redux/types/pelatihan/register-training.type";
-import Layout from "../../../../user-component/components/template/LayoutCustom.component";
+import Layout from "../../../components/template/form-pendaftaran/LayoutCustom.component";
 // const Layout = dynamic(
 //   () =>
 //     import(
@@ -29,20 +29,20 @@ const IndexForm = ({ token, session }) => {
   const router = useRouter();
 
   const { error: errorFormBuilder, formBuilder: dataForm } = useSelector(
-    (state) => state.getFormBuilder
+    state => state.getFormBuilder
   );
   const { error: errorPelatihan, pelatihan: dataTraining } = useSelector(
-    (state) => state.getPelatihan
+    state => state.getPelatihan
   );
   const { error: errorDataPribadi, dataPribadi } = useSelector(
-    (state) => state.getDataPribadi
+    state => state.getDataPribadi
   );
   const {
     error: errorNewPendaftaran,
     pendaftaran,
     loading,
     success,
-  } = useSelector((state) => state.newPendaftaranPelatihan);
+  } = useSelector(state => state.newPendaftaranPelatihan);
 
   let error;
   if (errorFormBuilder) error = errorFormBuilder;
@@ -168,7 +168,7 @@ const IndexForm = ({ token, session }) => {
             <Card className="card-custom gutter-b">
               <FormPendaftaran
                 propsTitle={title}
-                funcView={(val) => setView(val)}
+                funcView={val => setView(val)}
               />
             </Card>
           </>
@@ -182,7 +182,7 @@ const IndexForm = ({ token, session }) => {
               propsDataPribadi={dataPeserta}
               propsDataPelatihan={dataPelatihan}
               token={token}
-              funcView={(val) => setView(val)}
+              funcView={val => setView(val)}
             />
           </Card>
         );
@@ -271,7 +271,7 @@ const IndexForm = ({ token, session }) => {
             <Card className="card-custom gutter-b">
               <FormPendaftaran
                 propsTitle={title}
-                funcView={(val) => setView(val)}
+                funcView={val => setView(val)}
               />
             </Card>
           </>

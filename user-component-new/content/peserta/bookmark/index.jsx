@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
+import PesertaWrapper from "../../../../user-component/components/wrapper/Peserta.wrapper";
 import { Row, Col, Container, Card, Button, Badge } from "react-bootstrap";
 import Image from "next/image";
 import { useSelector } from "react-redux";
@@ -7,16 +7,16 @@ import style from "../../../../styles/peserta/dashboard.module.css";
 
 export default function Bookmark() {
   const { pelatihan, loading: loadingPelatihan } = useSelector(
-    (state) => state.allPelatihan
+    state => state.allPelatihan
   );
   const { loading: loadingPenyeleggara, penyelenggara: allPenyelenggara } =
-    useSelector((state) => state.allPenyelenggaraPeserta);
+    useSelector(state => state.allPenyelenggaraPeserta);
 
   const i = 1;
 
   const [show, setShow] = useState([]);
 
-  const el = pelatihan.list[0];
+  const el = pelatihan?.list[0] || [];
 
   return (
     <PesertaWrapper>

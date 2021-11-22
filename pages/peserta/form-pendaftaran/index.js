@@ -18,7 +18,7 @@ import { getAllAkademi } from "../../../redux/actions/beranda/beranda.actions";
 const IndexForm = dynamic(
   () =>
     import(
-      "../../../user-component/content/peserta/form-pendaftaran/index-form"
+      "../../../user-component-new/content/peserta/form-pendaftaran/index-form"
     ),
   {
     loading: function loadingNow() {
@@ -27,12 +27,16 @@ const IndexForm = dynamic(
     ssr: false,
   }
 );
-
+const Layout = dynamic(() =>
+  import(
+    "../../../user-component-new/components/template/Layout-peserta.component"
+  )
+);
 export default function FormPendaftaran(props) {
   const dispatch = useDispatch();
   const session = props.session.user.user.data.user;
   const { error: errorFormBuilder, formBuilder: dataForm } = useSelector(
-    (state) => state.getFormBuilder
+    state => state.getFormBuilder
   );
 
   useEffect(() => {
@@ -64,7 +68,7 @@ export default function FormPendaftaran(props) {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  (store) =>
+  store =>
     async ({ query, req }) => {
       const session = await getSession({ req });
       const middleware = middlewareAuthPesertaSession(session);
