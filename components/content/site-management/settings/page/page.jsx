@@ -88,7 +88,7 @@ const Table = ({ token }) => {
               List Page
             </h3>
             <div className="card-toolbar">
-              <Link href="/site-management/setting/tambah-page" passHref>
+              <Link href="/site-management/setting/pilih-template" passHref>
                 <a className="btn btn-rounded-full bg-blue-primary text-white">
                   <IconAdd className="mr-3" width="14" height="14" />
                   Tambah Page
