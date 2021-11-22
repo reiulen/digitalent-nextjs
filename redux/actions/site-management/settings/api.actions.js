@@ -214,10 +214,10 @@ export const getDetailApi = (id, token) => async (dispatch) => {
         Authorization: "Bearer " + token,
       },
     };
-
+    
     let link =
-      process.env.END_POINT_API_SITE_MANAGEMENT +
-      `api/setting-api/detail/${id}`;
+    process.env.END_POINT_API_SITE_MANAGEMENT +
+    `api/setting-api/detail/${id}`;
 
     const { data } = await axios.get(link, config);
 
@@ -228,6 +228,7 @@ export const getDetailApi = (id, token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: DETAIL_API_FAIL,
+      payload: error.response.data.message,
     });
   }
 };
@@ -310,4 +311,11 @@ export const exportFileCSV = (token, id) => {
       return;
     }
   };
+};
+
+// Clear Error
+export const clearErrors = () => async (dispatch) => {
+  dispatch({
+    type: CLEAR_ERRORS,
+  });
 };
