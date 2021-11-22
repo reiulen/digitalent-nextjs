@@ -6,6 +6,7 @@ import { getDetailSubtanceQuestionBanks } from "../../../redux/actions/subvit/su
 import { getAllSubtanceQuestionBanksType } from "../../../redux/actions/subvit/subtance-question-type.actions";
 import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
+import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
 
 export default function DetailSubstansiPage(props) {
   const session = props.session.user.user.data;
@@ -26,6 +27,16 @@ export const getServerSideProps = wrapper.getServerSideProps(
         return {
           redirect: {
             destination: "http://dts-dev.majapahit.id/login/admin",
+            permanent: false,
+          },
+        };
+      }
+
+      const middleware = middlewareAuthAdminSession(session);
+      if (!middleware.status) {
+        return {
+          redirect: {
+            destination: middleware.redirect,
             permanent: false,
           },
         };

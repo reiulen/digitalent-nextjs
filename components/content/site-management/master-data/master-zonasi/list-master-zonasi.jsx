@@ -19,6 +19,9 @@ import {
 } from "../../../../../redux/actions/site-management/zonasi.actions";
 import { DELETE_ZONASI_RESET } from "../../../../../redux/types/site-management/zonasi.type";
 
+import styles from "../../../../../styles/previewGaleri.module.css"
+import stylesPag from "../../../../../styles/pagination.module.css"
+
 const Table = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
@@ -42,27 +45,54 @@ const Table = ({ token }) => {
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
-          <div className="card-header border-0">
+          <div className="card-header row border-0">
             <h3
-              className="card-title font-weight-bolder text-dark titles-1"
+              className={`${styles.headTitle} col-12 col-sm-8 col-md-8 col-lg-7 col-xl-9`}
             >
               List Master Zonasi
             </h3>
-            <div className="card-toolbar">
+            <div className="card-toolbar row col-12 col-sm-4 col-md-4 col-lg-5 col-xl-3">
               <Link
                 href="/site-management/master-data/master-zonasi/tambah-zonasi"
                 passHref
               >
-                <a className="btn btn-rounded-full bg-blue-primary text-white">
+                <a className={`${styles.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bold btn-block`}>
                   <IconAdd className="mr-3" width="14" height="14" />
                   Tambah Master Zonasi
                 </a>
               </Link>
             </div>
           </div>
-          <div className="card-body pt-0 px-4 px-sm-8">
+          <div className="card-body pt-0">
             <div className="table-filter">
-              <div className="row align-items-center">
+              <div className="row">
+                <div className="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                  <div className="position-relative overflow-hidden mt-3"
+                    style={{ maxWidth: "330px" }}
+                  >
+                    <i className="ri-search-line left-center-absolute ml-2"></i>
+                    <input
+                      type="text"
+                      className={`${styles.cari} form-control pl-10`}
+                      placeholder="Ketik disini untuk Pencarian..."
+                      // value={search}
+                      onChange={(e) => handleChangeValueSearch(e.target.value)}
+                    />
+                    <button
+                      className={`${styles.fontCari} btn bg-blue-primary text-white right-center-absolute`}
+                      style={{
+                        borderTopLeftRadius: "0",
+                        borderBottomLeftRadius: "0",
+                      }}
+                      onClick={() => handleSubmit()}
+                    >
+                      Cari
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* <div className="row align-items-center">
                 <div className="col-12 col-xl-12">
                   <div
                     className="d-flex align-items-center w-100"
@@ -85,7 +115,7 @@ const Table = ({ token }) => {
                           />
                           <button
                             type="button"
-                            onClick={()=>handleSubmit()}
+                            onClick={() => handleSubmit()}
                             className="btn bg-blue-primary text-white right-center-absolute"
                             style={{
                               borderTopLeftRadius: "0",
@@ -99,8 +129,10 @@ const Table = ({ token }) => {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
+
             </div>
+
             <div className="table-page mt-5">
               <div className="table-responsive">
                 {allZonasi.status === "process" ? (
@@ -117,7 +149,7 @@ const Table = ({ token }) => {
                     </thead>
                     <tbody>
                       {allZonasi?.data?.zonasi?.length === 0 ? (
-                        <td className="align-middle text-center" colSpan="4">Data Masih Kosong</td>
+                        <td className="align-middle text-center" colSpan="4">Data Kosong</td>
                       ) : (
                         allZonasi?.data?.zonasi?.map((items, index) => {
                           return (
@@ -126,26 +158,26 @@ const Table = ({ token }) => {
                                 {allZonasi.page === 1
                                   ? index + 1
                                   : (allZonasi.page - 1) * allZonasi.limit +
-                                    (index + 1)}
+                                  (index + 1)}
                               </td>
                               <td className="align-middle text-left">{items.label}</td>
                               <td className="align-middle text-left">
-                                 {items.status == 1 ?
-                        <p
-                        className="status-div-green mb-0"
-                        style={{ width: "max-content" }}
-                        >
-                          Aktif
-                        </p>
-                        :
+                                {items.status == 1 ?
+                                  <p
+                                    className="status-div-green mb-0"
+                                    style={{ width: "max-content" }}
+                                  >
+                                    Aktif
+                                  </p>
+                                  :
 
-                        <p
-                        className="status-div-red mb-0"
-                        style={{ width: "max-content" }}
-                        >
-                          Tidak Aktif
-                        </p>
-                        }
+                                  <p
+                                    className="status-div-red mb-0"
+                                    style={{ width: "max-content" }}
+                                  >
+                                    Tidak Aktif
+                                  </p>
+                                }
                               </td>
                               <td className="align-middle text-left">
                                 <div className="d-flex align-items-center">
@@ -184,8 +216,8 @@ const Table = ({ token }) => {
                 )}
               </div>
 
-              <div className="row px-4">
-                <div className="table-pagination">
+              <div className="row">
+                <div className={`${stylesPag.pagination} table-pagination`}>
                   <Pagination
                     activePage={allZonasi?.page}
                     itemsCountPerPage={allZonasi?.data?.perPage}
@@ -201,15 +233,15 @@ const Table = ({ token }) => {
                   />
                 </div>
 
-                <div className="table-total ml-auto mr-4">
-                  <div className="row mt-4">
-                    <div className="col-4 mr-0 p-0">
+                <div className={`${stylesPag.rightPag} table-total ml-auto`}>
+                  <div className="row">
+                    <div className="col-4 mr-0 mt-3">
                       <select
                         className="form-control cursor-pointer pr-2"
                         id="exampleFormControlSelect2"
                         defaultValue=""
                         style={{
-                          width: "63px",
+                          width: "70px",
                           background: "#F3F6F9",
                           borderColor: "#F3F6F9",
                           color: "#9E9E9E",

@@ -46,80 +46,115 @@ const TentangKami = ({ token }) => {
       shallow: true,
     });
   };
+
+  console.log(pages);
   return (
     <PageWrapper>
       <div className="row">
-        <div className="col-12 order-1">
-          <div className="card card-custom card-stretch gutter-b">
-            <div
-              className="card-header border-0 position-relative"
-              style={styleHeader}
+        {pages.template_type === 0 && (
+          <div className="col-12 order-1">
+            <h3
+              className="card-title font-weight-bolder text-dark w-100 pb-5 my-0 my-sm-5"
+              style={{ fontSize: "40px" }}
             >
-              <div>
-                <Image
-                  src={BgHeader}
-                  alt="Picture of the author"
-                  layout="fill"
-                  objectFit="cover"
-                />
-              </div>
-              <h3
-                className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 my-0 my-sm-5 titles-1"
-              >
-                Tentang Kami
-              </h3>
-            </div>
-            <div className="card-body pt-0 px-0 px-sm-8">
-              <div className="card gutter-b" style={styleCardContent}>
-                {/* <div className="card-header">
-                  <div className="card-title">
-                    <h3 className="card-label">
-                      Basic Card
-                      <small>sub title</small>
-                    </h3>
-                  </div>
-                </div> */}
-                <div className="card-body fz-16">
-                  <div
-                className="ml-2"
-                dangerouslySetInnerHTML={{ __html: pages.content }}
+              {pages.name}
+            </h3>
+            <div className="">
+              <Image
+                src={
+                  process.env.END_POINT_API_IMAGE_SITE_MANAGEMENT +
+                  "site-management/images/" +
+                  pages.property_template.image
+                }
+                width="1500vw"
+                height="1000vh"
+                objectFit="fill"
+                alt="Detail Image"
+                className="rounded-lg"
               />
-                  {/* <p>
-                    Program Digital Talent Scholarship adalah program pelatihan
-                    pengembangan kompetensi yang telah diberikan kepada talenta
-                    digital Indonesia sejak tahun 2018. Program Digital Talent
-                    Scholarship tahun 2021 didesain untuk menciptakan ekosistem
-                    seimbang dalam memaksimalkan peran pentahelix (pemerintah,
-                    komunitas/masyarakat, institusi pendidikan tinggi, dunia
-                    usaha, dan media) untuk menjadi fasilitator dan akselerator
-                    pendukung ekonomi digital.
-                  </p>
-                  <p>
-                    Program Digital Talent Scholarship bertujuan untuk
-                    meningkatkan keterampilan dan daya saing, produktivitas,
-                    profesionalisme SDM bidang teknologi informasi dan
-                    komunikasi bagi angkatan kerja muda Indonesia, masyarakat
-                    umum, dan aparatur sipil negara.
-                  </p>
-                  <p>
-                    Program DTS 2021 secara garis besar dibagi menjadi delapan
-                    akademi, yaitu:
-                  </p>
-                  <ul style={listNumber}>
-                    <li>Fresh Graduate Academy (FGA)</li>
-                    <li>Vocational School Graduate Academy (VSGA)</li>
-                    <li>Thematic Academy (TA)</li>
-                    <li>Professional Academy (ProA)</li>
-                    <li>Government Transformation Academy (GTA)</li>
-                    <li>Digital Entrepreneurship Academy (DEA)</li>
-                    <li>Digital Leadership Academy (DLA)</li>
-                    <li>Talent Scouting Academy (TSA)</li>
-                  </ul> */}
+            </div>
+            <div className="border-rounded">
+              <div className="border rounded-lg mb-5">
+                <div
+                  className="row my-5 mx-5 text-justify"
+                  style={{ overflowX: "hidden" }}
+                >
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: pages.property_template.content,
+                    }}
+                  ></div>
                 </div>
               </div>
             </div>
           </div>
-        </div>{" "}
+        )}
+
+        {pages.template_type === 1 && (
+          <div className="col-12 order-1">
+            <h3
+              className="card-title font-weight-bolder text-dark w-100 pb-5 my-0 my-sm-5"
+              style={{ fontSize: "40px" }}
+            >
+              {pages.name}
+            </h3>
+            <div className="border-rounded">
+              <div className="border rounded-lg mb-5">
+                <div
+                  className="row my-5 mx-5 text-justify"
+                  style={{ overflowX: "hidden" }}
+                >
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: pages.property_template.content,
+                    }}
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {pages.template_type === 2 && (
+          <div className="col-12 order-1">
+            <h3
+              className="card-title font-weight-bolder text-dark w-100 pb-5 my-0 my-sm-5"
+              style={{ fontSize: "40px" }}
+            >
+              {pages.name}
+            </h3>
+            <div className="row">
+              <div className="col-md-3 mt-3">
+                <Image
+                  src={
+                    process.env.END_POINT_API_IMAGE_SITE_MANAGEMENT +
+                    "site-management/images/" +
+                    pages.property_template.image
+                  }
+                  width="1500vw"
+                  height="1000vh"
+                  objectFit="fill"
+                  alt="Detail Image"
+                  className="rounded-lg"
+                />
+              </div>
+              <div className="border-rounded col-md-8 mt-3">
+                <div className="border rounded-lg mb-5">
+                  <div
+                    className="row my-5 mx-5 text-justify"
+                    style={{ overflowX: "hidden" }}
+                  >
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: pages.property_template.content,
+                      }}
+                    ></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </PageWrapper>
   );

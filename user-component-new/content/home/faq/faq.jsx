@@ -70,7 +70,7 @@ const FaqPage = () => {
                 <p className="my-5 text-muted">Ada yang bisa Kami Bantu ?</p>
             </div>
             <div className="row">
-                <div className="col-lg-5">
+                <div className="col-lg-4">
                     <div className="position-relative overflow-hidden my-5">
                         <i className="ri-search-line left-center-absolute ml-3"></i>
                         <input
@@ -132,7 +132,7 @@ const FaqPage = () => {
                     </div>
                 </div>
 
-                <div className="col-lg-7">
+                <div className="col-lg-8">
                     <div className="ml-3">
                         {faq?.faq.length > 0 && (
                             <h2

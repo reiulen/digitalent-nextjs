@@ -1,15 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import PageWrapper from "../../../../wrapper/page.wrapper";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import Swal from "sweetalert2";
+import SimpleReactValidator from "simple-react-validator";
 
-const TambahApi = ({ token,id }) => {
+import styles from "../../../../../styles/sitemanagement/userMitra.module.css"
+import styles2 from "../../../../../styles/previewGaleri.module.css"
+
+const TambahApi = ({ token, id }) => {
   const router = useRouter();
 
-  const {mitaSite} = useSelector((state) => state.detailMitraSite);
+  const { mitaSite } = useSelector((state) => state.detailMitraSite);
 
   const [nameCooperation, setNameCooperation] = useState(mitaSite.institution_name);
   const [email, setEmail] = useState(mitaSite.email);
@@ -19,6 +23,9 @@ const TambahApi = ({ token,id }) => {
 
   const [hidePassword, setHidePassword] = useState(true);
   const [hidePasswordConfirm, setHidePasswordConfirm] = useState(true);
+
+  const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
+  const [, forceUpdate] = useState();
 
   const handlerShowPassword = (value) => {
     setHidePassword(value);
@@ -42,71 +49,82 @@ const TambahApi = ({ token,id }) => {
 
   const submit = async (e) => {
     e.preventDefault();
-    if (nameCooperation === "") {
-      Swal.fire(
-        "Gagal simpan",
-        "Form Nama Lembaga tidak boleh kosong",
-        "error"
-      );
-    } else if (email === "") {
-      Swal.fire("Gagal simpan", "Form Email tidak boleh kosong", "error");
-    } 
-    // else if (password === "") {
-    //   Swal.fire("Gagal simpan", "Form Password tidak boleh kosong", "error");
-    // } 
-    // else if (confirmPassword === "") {
-    //   Swal.fire(
-    //     "Gagal simpan",
-    //     "Form Konfirmasi Password tidak boleh kosong",
-    //     "error"
-    //   );
-    // } 
-    else if (status === "") {
-      Swal.fire("Gagal simpan", "Form Status tidak boleh kosong", "error");
-    } else {
-      let formData = new FormData();
-      formData.append("name", nameCooperation);
-      formData.append("email", email);
+    if (simpleValidator.current.allValid()) {
 
-
-      if(password && confirmPassword) {
-      formData.append("password", password);
-      formData.append("password_confirmation", confirmPassword);
-      }
-
-
-      formData.append("status", status);
-      formData.append("_method", "put");
-      try {
-        let { data } = await axios.post(
-          `${process.env.END_POINT_API_SITE_MANAGEMENT}api/user-mitra/update/${router.query.id}`,
-          formData,
-          {
-            headers: {
-              authorization: `Bearer ${token}`,
-            },
-          }
+      if (nameCooperation === "") {
+        Swal.fire(
+          "Gagal simpan",
+          "Form Nama Lembaga tidak boleh kosong",
+          "error"
         );
-        Swal.fire("Berhasil", "Data berhasil disimpan", "success").then(() => {
-          router.push(`/site-management/user/mitra/`);
-        });
-      } catch (error) {
-        Swal.fire("Gagal simpan", `${error.response.data.message}`, "error");
+      } else if (email === "") {
+        Swal.fire("Gagal simpan", "Form Email tidak boleh kosong", "error");
       }
+      // else if (password === "") {
+      //   Swal.fire("Gagal simpan", "Form Password tidak boleh kosong", "error");
+      // } 
+      // else if (confirmPassword === "") {
+      //   Swal.fire(
+      //     "Gagal simpan",
+      //     "Form Konfirmasi Password tidak boleh kosong",
+      //     "error"
+      //   );
+      // } 
+      else if (status === "") {
+        Swal.fire("Gagal simpan", "Form Status tidak boleh kosong", "error");
+      } else {
+        let formData = new FormData();
+        formData.append("name", nameCooperation);
+        formData.append("email", email);
+
+
+        if (password && confirmPassword) {
+          formData.append("password", password);
+          formData.append("password_confirmation", confirmPassword);
+        }
+
+
+        formData.append("status", status);
+        formData.append("_method", "put");
+        try {
+          let { data } = await axios.post(
+            `${process.env.END_POINT_API_SITE_MANAGEMENT}api/user-mitra/update/${router.query.id}`,
+            formData,
+            {
+              headers: {
+                authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          Swal.fire("Berhasil", "Data berhasil disimpan", "success").then(() => {
+            router.push(`/site-management/user/mitra/`);
+          });
+        } catch (error) {
+          Swal.fire("Gagal simpan", `${error.response.data.message}`, "error");
+        }
+      }
+    } else {
+      simpleValidator.current.showMessages();
+      forceUpdate(1);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Isi data dengan benar !",
+      });
     }
   };
   return (
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
-          <div className="card-header border-0">
+          <div className="card-header">
             <h3
-              className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 mb-5 mt-5 titles-1"
+              className="card-title font-weight-bolder text-dark"
             >
               Edit Mitra
             </h3>
           </div>
-          <div className="card-body pt-0 px-4 px-sm-8">
+          <div className="card-body">
             <form>
               <div className="form-group">
                 <label>Nama Lengkap</label>
@@ -116,7 +134,15 @@ const TambahApi = ({ token,id }) => {
                   className="form-control"
                   placeholder="Masukkan nama lengkap"
                   onChange={(e) => setNameCooperation(e.target.value)}
+                  onBlur={() => simpleValidator.current.showMessageFor("namaLengkap")}
                 />
+
+                {simpleValidator.current.message(
+                  "namaLengkap",
+                  nameCooperation,
+                  "required",
+                  { className: "text-danger" }
+                )}
               </div>
               <div className="form-group">
                 <label>Email</label>
@@ -126,7 +152,16 @@ const TambahApi = ({ token,id }) => {
                   type="email"
                   className="form-control"
                   placeholder="mitra@gmail.com"
+                  onBlur={() => simpleValidator.current.showMessageFor("email")}
                 />
+
+
+                {simpleValidator.current.message(
+                  "email",
+                  email,
+                  "required",
+                  { className: "text-danger" }
+                )}
               </div>
               <div className="form-group">
                 <label>Password</label>
@@ -135,23 +170,35 @@ const TambahApi = ({ token,id }) => {
                     onChange={(e) => setPassword(e.target.value)}
                     id="input-password"
                     type="password"
-                    className="form-control"
+                    className={`${styles.passwordWord} form-control`}
                     placeholder="Masukkan password"
+                    onBlur={() => simpleValidator.current.showMessageFor("password")}
                   />
+
                   {hidePassword === true ? (
                     <i
-                      className="ri-eye-fill right-center-absolute cursor-pointer"
-                      style={{ right: "10px" }}
+                      className={`${styles.iconHide} ri-eye-fill right-center-absolute cursor-pointer`}
                       onClick={() => handlerShowPassword(false)}
                     />
                   ) : (
                     <i
-                      className="ri-eye-off-fill right-center-absolute cursor-pointer"
-                      style={{ right: "10px" }}
+                      className={`${styles.iconHide} ri-eye-off-fill right-center-absolute cursor-pointer`}
                       onClick={() => handlerShowPassword(true)}
                     />
                   )}
+
+                  {simpleValidator.current.message(
+                    "password",
+                    password,
+                    "required",
+                    { className: "text-danger" }
+                  )}
                 </div>
+                <p className={`${styles.notes}`} style={{ color: "#b7b5cf" }}>
+                  Min 8 Karakter,<br />
+                  Case Sensitivity (min t.d 1 Uppercase, 1 lowercase)<br />
+                  Min 1 Symbol/angka
+                </p>
               </div>
               <div className="form-group">
                 <label>Konfirmasi Password</label>
@@ -160,35 +207,38 @@ const TambahApi = ({ token,id }) => {
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     id="input-password-confirm"
                     type="password"
-                    className="form-control"
+                    className={`${styles.passwordWord} form-control`}
                     placeholder="Masukkan password konfirmasi"
+                    onBlur={() => simpleValidator.current.showMessageFor("confirmPassword")}
                   />
+
                   {hidePasswordConfirm === true ? (
                     <i
-                      className="ri-eye-fill right-center-absolute cursor-pointer"
-                      style={{ right: "10px" }}
+                      className={`${styles.iconHide} ri-eye-fill right-center-absolute cursor-pointer`}
                       onClick={() => handlerShowPasswordConfirm(false)}
                     />
                   ) : (
                     <i
-                      className="ri-eye-off-fill right-center-absolute cursor-pointer"
-                      style={{ right: "10px" }}
+                      className={`${styles.iconHide} ri-eye-off-fill right-center-absolute cursor-pointer`}
                       onClick={() => handlerShowPasswordConfirm(true)}
                     />
                   )}
+
+                  {simpleValidator.current.message(
+                    "confirmPassword",
+                    confirmPassword,
+                    "required",
+                    { className: "text-danger" }
+                  )}
                 </div>
               </div>
-              <p style={{color:"#b7b5cf"}}>
-                Min 8 Karakter,<br/>
-                Case Sensitivity (min t.d 1 Uppercase, 1 lowercase)<br/>
-                Min 1 Symbol/angka
-              </p>
               <div className="form-group">
                 <label>Status</label>
                 {mitaSite.status == 1 ? (
                   <select
                     className="form-control"
                     onChange={(e) => setStatus(e.target.value)}
+                    onBlur={() => simpleValidator.current.showMessageFor("status")}
                   >
                     <option value="1">Aktif</option>
                     <option value="0">Tidak Aktif</option>
@@ -202,18 +252,25 @@ const TambahApi = ({ token,id }) => {
                     <option value="1">Aktif</option>
                   </select>
                 )}
+
+                {simpleValidator.current.message(
+                  "status",
+                  status,
+                  "required",
+                  { className: "text-danger" }
+                )}
               </div>
             </form>
             <div className="form-group row">
               <div className="col-sm-12 d-flex justify-content-end">
                 <Link href="/site-management/user/mitra" passHref>
-                  <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
+                  <a className={`${styles.btnKembali} btn btn-white-ghost-rounded-full rounded-pill mr-2`}>
                     Kembali
                   </a>
                 </Link>
                 <button
                   type="button"
-                  className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
+                  className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill`}
                   onClick={(e) => submit(e)}
                 >
                   Simpan

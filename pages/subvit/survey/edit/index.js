@@ -9,6 +9,7 @@ import {
 
 import { getDetailSurveyQuestionBanks } from "../../../../redux/actions/subvit/survey-question.actions";
 import { wrapper } from "../../../../redux/store";
+import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
 
 export default function EditSurveyStep1Page(props) {
   const session = props.session.user.user.data;
@@ -29,6 +30,16 @@ export const getServerSideProps = wrapper.getServerSideProps(
         return {
           redirect: {
             destination: "http://dts-dev.majapahit.id/login/admin",
+            permanent: false,
+          },
+        };
+      }
+
+      const middleware = middlewareAuthAdminSession(session);
+      if (!middleware.status) {
+        return {
+          redirect: {
+            destination: middleware.redirect,
             permanent: false,
           },
         };
