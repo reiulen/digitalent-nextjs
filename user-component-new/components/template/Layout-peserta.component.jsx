@@ -4,10 +4,10 @@ import Head from "next/head";
 import { ToastContainer } from "react-toastify";
 import { Row, Col, Offcanvas, Button } from "react-bootstrap";
 import { useRouter } from "next/router";
-import LoadingSidebar from "../../content/peserta/components/loader/LoadingSidebar";
-import LoadingHeader from "../../content/peserta/components/loader/LoadingHeader";
-import LoadingNavbar from "../../content/peserta/components/loader/LoadingNavbar";
-import LoadingFooter from "../../content/peserta/components/loader/LoadingFooter";
+import LoadingSidebar from "../loader/LoadingSidebar";
+import LoadingHeader from "../loader/LoadingHeader";
+import LoadingNavbar from "../loader/LoadingNavbar";
+import LoadingFooter from "../loader/LoadingFooter";
 
 const Navbar = dynamic(
   () => import("../../../user-component/components/template/Navbar2.component"),
@@ -19,10 +19,7 @@ const Navbar = dynamic(
   }
 );
 const Header = dynamic(
-  () =>
-    import(
-      "../../../user-component/components/template/HeaderCustom.component"
-    ),
+  () => import("../../../user-component/components/template/Header.component"),
   {
     loading: function loadingNow() {
       return <LoadingHeader />;
@@ -30,6 +27,7 @@ const Header = dynamic(
     ssr: false,
   }
 );
+
 const Sidebar = dynamic(
   () => import("../../../user-component/components/template/Sidebar.component"),
   {
@@ -39,19 +37,23 @@ const Sidebar = dynamic(
     ssr: false,
   }
 );
-const Footer = dynamic(() => import("../beranda/footer"), {
+const Footer = dynamic(() => import("./Footer.component"), {
   loading: function loadingNow() {
     return <LoadingFooter />;
   },
   ssr: false,
 });
 
-const Layout = ({
-  title = "Peserta - Pelatihan",
-  session,
-  breadcrumb,
-  children,
-}) => {
+const HeaderWizzard = dynamic(
+  () => import("./wizzard-template/Header-Wizzard.component"),
+  {
+    loading: function loadingNow() {
+      return <LoadingHeader />;
+    },
+    ssr: false,
+  }
+);
+const Layout = ({ title = "Peserta - Pelatihan", session, children }) => {
   const router = useRouter();
   let routerPath;
   if (router.pathname.includes("form-pendaftaran"))
@@ -66,6 +68,9 @@ const Layout = ({
     routerPath = "/peserta/subvit/mid-test/[id]";
   if (router.pathname === "/peserta/subvit/survey/[id]")
     routerPath = "/peserta/subvit/survey/[id]";
+  if (router.pathname === "/peserta/form-lpj") routerPath = "/peserta/form-lpj";
+  if (router.pathname == "/peserta/wizzard") routerPath = "/peserta/wizzard";
+
   return (
     <>
       <Head>
@@ -74,7 +79,12 @@ const Layout = ({
         <meta name="viewport" content="initial-scale=1.0,width=device-width" />
       </Head>
       <Navbar session={session} />
-      <Header session={session} breadcrumb={breadcrumb} />
+
+      {routerPath == "/peserta/wizzard" ? (
+        <HeaderWizzard session={session} />
+      ) : (
+        <Header session={session} />
+      )}
       <ToastContainer position="top-right" />
       <div className="container-fluid py-5">
         <Row>
