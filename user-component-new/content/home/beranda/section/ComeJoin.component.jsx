@@ -12,7 +12,7 @@ export default function ComeJoin() {
             </h1>
             <Link href="/register">
               <a>
-                <button className="btn btn-primary btn-register-peserta btn-sm mt-10 mt-sm-20 mb-10 sm-mb-0">
+                <button className="btn btn-beranda-primary mt-10 mt-sm-20 mb-10 sm-mb-0 fw-500 rounded-xl">
                   {/* <IconRegister className="mr-2" /> */}
                   Daftar Sekarang!
                 </button>
