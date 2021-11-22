@@ -13,7 +13,7 @@ import LoadingPage from "../../../../LoadingPage";
 
 import { putTrainingStep3 } from "../../../../../redux/actions/pelatihan/training.actions";
 
-const EditCommitmentStep3 = ({token, propsStep}) => {
+const EditCommitmentStep3 = ({ token, propsStep }) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -21,7 +21,6 @@ const EditCommitmentStep3 = ({token, propsStep}) => {
   const { data: getEditTraining3 } = useSelector(
     (state) => state.getEditTraining3
   );
-
 
   const [editorLoaded, setEditorLoaded] = useState(false);
   const { CKEditor, ClassicEditor, Base64UploadAdapter } =
@@ -31,7 +30,9 @@ const EditCommitmentStep3 = ({token, propsStep}) => {
   const [, forceUpdate] = useState();
 
   const [commitment, setCommitment] = useState(getEditTraining3.komitmen);
-  const [description, setDescription] = useState(getEditTraining3.deskripsi);
+  const [description, setDescription] = useState(
+    getEditTraining3.deskripsi_komitmen
+  );
 
   useEffect(() => {
     editorRef.current = {
@@ -53,11 +54,11 @@ const EditCommitmentStep3 = ({token, propsStep}) => {
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
       const data = {
-        "Pelatian_id" : parseInt(router.query.id),
+        Pelatian_id: parseInt(router.query.id),
         komitmen: commitment,
         deskripsi: commitment === "1" ? description : "",
       };
-      dispatch(putTrainingStep3(token, data))
+      dispatch(putTrainingStep3(token, data));
       router.push("/pelatihan/pelatihan");
     } else {
       simpleValidator.current.showMessages();
