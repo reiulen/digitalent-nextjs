@@ -107,6 +107,7 @@ export default function DashboardPage({ token }) {
                       src="/assets/icon/add-user-white.svg"
                       width={50}
                       height={50}
+                      alt="add-user"
                     />
 
                     {/* <i className="ri-user-add-fill ri-4x text-white" /> */}
@@ -152,6 +153,7 @@ export default function DashboardPage({ token }) {
                       src="/assets/icon/clipboard-list-white.svg"
                       width={50}
                       height={50}
+                      alt="clipboard"
                     />
 
                     <h1 className="text-white ml-3 mt-7" style={{fontSize:"3rem"}}>
@@ -175,6 +177,7 @@ export default function DashboardPage({ token }) {
                   height={100}
                   className="mr-0"
                   style={{marginTop:"-2rem", marginRight:"-3rem"}}
+                  alt="clipboard"
                 />
               </div>
             </div>
