@@ -45,6 +45,15 @@
   color: #ffffff;
 }
 
+@media (max-width: 280px) {
+  .breadCrumbText {
+    font-size: 12px !important;
+  }
+  .breadCrumbName {
+    font-size: 12px !important;
+  }
+}
+
 .breadCrumbText {
   font-family: Poppins;
   font-style: normal;
