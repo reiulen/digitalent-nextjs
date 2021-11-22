@@ -110,12 +110,12 @@ const FilterBar = () => {
     }),
     valueContainer: (styles) => ({
       ...styles,
-      position: temaId.length > 1 ? "absolute" : "relative",
+      position: temaId && temaId.length > 1 ? "absolute" : "relative",
       width: "auto",
     }),
     indicatorsContainer: (styles) => ({
       ...styles,
-      display: temaId.length > 1 ? "none" : "",
+      display: temaId && temaId.length > 1 ? "none" : "",
     }),
   };
 
