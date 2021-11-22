@@ -9,12 +9,10 @@ export default function Kontak() {
   return (
     <>
       <Container fluid className="px-md-30 px-10 py-10">
-        <BreadcrumbComponent data={[{ link: router.asPath, name: "kontak" }]} />
+        <BreadcrumbComponent data={[{ link: router.asPath, name: "Kontak" }]} />
         <div className="col-12 mt-5">
           <h1 className="fw-700 fz-36">Kontak</h1>
-          <p className="mr-6 fz-18 text-muted fw-400">
-            Layanan Contact Center Digital Talent Scholarship
-          </p>
+          <p className="mr-6 fz-18 text-muted fw-400">Layanan Contact Center Digital Talent Scholarship</p>
         </div>
         <div className="my-10 w-100">
           <Card className="rounded-xl">
