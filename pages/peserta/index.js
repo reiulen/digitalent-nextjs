@@ -12,7 +12,7 @@ import { useRouter } from "next/router";
 import { getAllAkademi } from "../../redux/actions/beranda/beranda.actions";
 
 const Dashboard = dynamic(
-  () => import("../../user-component/content/peserta/dashboard"),
+  () => import("../../user-component-new/content/peserta/dashboard"),
   {
     loading: function loadingNow() {
       return <LoadingContent />;
@@ -37,7 +37,7 @@ export default function DashboardPage(props) {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  (store) =>
+  store =>
     async ({ query, req }) => {
       const session = await getSession({ req });
 

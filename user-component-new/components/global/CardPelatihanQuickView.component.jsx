@@ -22,7 +22,7 @@ const CardPelatihanQuickView = ({
     let result = null;
 
     if (str.length > 200) {
-      result = str.slice(0, 200) + "...";
+      result = str.slice(0, 100) + "...";
     } else {
       result = str;
     }

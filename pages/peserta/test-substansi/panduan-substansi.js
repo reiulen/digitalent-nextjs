@@ -10,7 +10,7 @@ import { getDetailRiwayatPelatihan } from "../../../redux/actions/pelatihan/riwa
 import { getAllAkademi } from "../../../redux/actions/beranda/beranda.actions";
 
 const TestSubstansi = dynamic(
-  () => import("../../../user-component/content/peserta/test-substansi"),
+  () => import("../../../user-component-new/content/peserta/test-substansi"),
   {
     loading: function loadingNow() {
       return <LoadingSkeleton />;
@@ -35,7 +35,7 @@ export default function TestSubstansiPage(props) {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  (store) =>
+  store =>
     async ({ query, req }) => {
       const session = await getSession({ req });
       const middleware = middlewareAuthPesertaSession(session);

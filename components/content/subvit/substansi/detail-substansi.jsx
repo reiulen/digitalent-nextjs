@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import Link from "next/link";
 import Image from "next/image";
+import styles from "./substansi.module.css";
 import { useRouter } from "next/router";
 
 import Pagination from "react-js-pagination";
@@ -302,112 +303,168 @@ const DetailSubstansi = ({ token }) => {
           <div className="card-body">
             <div className="row">
               <div className="col-md-6">
-                <div className="row">
-                  <table>
-                    <tr>
-                      <td>
-                        <p className="font-weight-bolder text-dark">Akademi</p>
-                      </td>
-                      <td>
-                        <p className="pl-5">
-                          {subtance.academy != null
-                            ? subtance.academy.name
-                            : "-"}
-                        </p>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <p className="font-weight-bolder text-dark">Tema</p>
-                      </td>
-                      <td>
-                        <p className="pl-5">
-                          {subtance.theme ? subtance.theme.name : "-"}
-                        </p>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <p className="font-weight-bolder text-dark">
-                          Pelatihan
-                        </p>
-                      </td>
-                      <td>
-                        <p className="pl-5">
-                          {subtance.training != null
-                            ? subtance.training.name
-                            : "-"}
-                        </p>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <p className="font-weight-bolder text-dark">Kategori</p>
-                      </td>
-                      <td>
-                        <p className="pl-5">{subtance.category || "-"}</p>
-                      </td>
-                    </tr>
-                  </table>
-                </div>
+                <table>
+                  <tr>
+                    <td
+                      className={styles.column}
+                      style={{ width: "100px", verticalAlign: "top" }}
+                    >
+                      <p
+                        className={`${styles.labelColumn} font-weight-bolder text-dark`}
+                      >
+                        Akademi
+                      </p>
+                    </td>
+                    <td>
+                      <p className={`${styles.columnText} pl-5`}>
+                        {subtance.academy != null ? subtance.academy.name : "-"}
+                      </p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td
+                      className={styles.column}
+                      style={{ width: "100px", verticalAlign: "top" }}
+                    >
+                      <p
+                        className={`${styles.labelColumn} font-weight-bolder text-dark`}
+                      >
+                        Tema
+                      </p>
+                    </td>
+                    <td>
+                      <p className={`${styles.columnText} pl-5`}>
+                        {subtance.theme ? subtance.theme.name : "-"}
+                      </p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td
+                      className={styles.column}
+                      style={{ width: "100px", verticalAlign: "top" }}
+                    >
+                      <p
+                        className={`${styles.labelColumn} font-weight-bolder text-dark`}
+                      >
+                        Pelatihan
+                      </p>
+                    </td>
+                    <td>
+                      <p className={`${styles.columnText} pl-5`}>
+                        {subtance.training != null
+                          ? subtance.training.name
+                          : "-"}
+                      </p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td
+                      className={styles.column}
+                      style={{ width: "100px", verticalAlign: "top" }}
+                    >
+                      <p
+                        className={`${styles.labelColumn} font-weight-bolder text-dark`}
+                      >
+                        Kategori
+                      </p>
+                    </td>
+                    <td>
+                      <p className={`${styles.columnText} pl-5`}>
+                        {subtance.category || "-"}
+                      </p>
+                    </td>
+                  </tr>
+                </table>
               </div>
               <div className="col-md-6">
-                <div className="row">
-                  <table>
-                    <tr>
-                      <td>
-                        <p className="font-weight-bolder text-dark">
-                          Pelaksanaan
-                        </p>
-                      </td>
-                      <td>
-                        <p className="pl-5">
-                          {getStartEndAt(subtance.start_at, subtance.end_at)}
-                        </p>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <p className="font-weight-bolder text-dark">
-                          Jumlah Soal
-                        </p>
-                      </td>
-                      <td>
-                        <p className="pl-5">{subtance.bank_soal} Soal</p>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <p className="font-weight-bolder text-dark">
-                          Passing Grade
-                        </p>
-                      </td>
-                      <td>
-                        <p className="pl-5">{subtance.passing_grade || "-"}</p>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <p className="font-weight-bolder text-dark">
-                          Durasi Tes
-                        </p>
-                      </td>
-                      <td>
-                        <p className="pl-5">{subtance.duration} Menit</p>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <p className="font-weight-bolder text-dark">Status</p>
-                      </td>
-                      <td>
-                        <p className="pl-5">
-                          {subtance.status ? "Publish" : "Draft"}
-                        </p>
-                      </td>
-                    </tr>
-                  </table>
-                </div>
+                <table>
+                  <tr>
+                    <td
+                      className={styles.column}
+                      style={{ width: "100px", verticalAlign: "top" }}
+                    >
+                      <p
+                        className={`${styles.labelColumn} font-weight-bolder text-dark`}
+                      >
+                        Pelaksanaan
+                      </p>
+                    </td>
+
+                    <td>
+                      <p className={`${styles.columnText} pl-5`}>
+                        {getStartEndAt(subtance.start_at, subtance.end_at)}
+                      </p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td
+                      className={styles.column}
+                      style={{ width: "100px", verticalAlign: "top" }}
+                    >
+                      <p
+                        className={`${styles.labelColumn} font-weight-bolder text-dark`}
+                      >
+                        Jumlah Soal
+                      </p>
+                    </td>
+                    <td>
+                      <p className={`${styles.columnText} pl-5`}>
+                        {subtance.bank_soal} Soal
+                      </p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td
+                      className={styles.column}
+                      style={{ width: "100px", verticalAlign: "top" }}
+                    >
+                      <p
+                        className={`${styles.labelColumn} font-weight-bolder text-dark`}
+                      >
+                        Passing Grade
+                      </p>
+                    </td>
+                    <td>
+                      <p className={`${styles.columnText} pl-5`}>
+                        {subtance.passing_grade || "-"}
+                      </p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td
+                      className={styles.column}
+                      style={{ width: "100px", verticalAlign: "top" }}
+                    >
+                      <p
+                        className={`${styles.labelColumn} font-weight-bolder text-dark`}
+                      >
+                        Durasi Tes
+                      </p>
+                    </td>
+                    <td>
+                      <p className={`${styles.columnText} pl-5`}>
+                        {subtance.duration} Menit
+                      </p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td
+                      className={styles.column}
+                      style={{ width: "100px", verticalAlign: "top" }}
+                    >
+                      <p
+                        className={`${styles.labelColumn} font-weight-bolder text-dark`}
+                      >
+                        Status
+                      </p>
+                    </td>
+                    <td>
+                      <p className={`${styles.columnText} pl-5`}>
+                        {subtance.status ? "Publish" : "Draft"}
+                      </p>
+                    </td>
+                  </tr>
+                </table>
               </div>
             </div>
           </div>
@@ -435,15 +492,15 @@ const DetailSubstansi = ({ token }) => {
           <div className="card-body pt-0">
             <div className="table-filter">
               <div className="row align-items-center">
-                <div className="col-lg-8 col-xl-8">
+                <div className="col-lg-8 col-xl-8 col-md-8">
                   <div
-                    className="position-relative overflow-hidden mt-3"
+                    className={`${styles.btnSearch} position-relative overflow-hidden mt-3`}
                     style={{ maxWidth: "330px" }}
                   >
                     <i className="ri-search-line left-center-absolute ml-2"></i>
                     <input
                       type="text"
-                      className="form-control pl-10"
+                      className={`${styles.inputSearch} form-control pl-10`}
                       placeholder="Ketik disini untuk Pencarian..."
                       onChange={(e) => setSearch(e.target.value)}
                     />
@@ -451,6 +508,7 @@ const DetailSubstansi = ({ token }) => {
                       className="btn bg-blue-primary text-white right-center-absolute"
                       style={{
                         borderTopLeftRadius: "0",
+
                         borderBottomLeftRadius: "0",
                       }}
                       onClick={handleSearch}
@@ -459,11 +517,11 @@ const DetailSubstansi = ({ token }) => {
                     </button>
                   </div>
                 </div>
-                <div className="col-lg-4 col-xl-4">
+                <div className="col-lg-4 col-xl-4 col-md-4">
                   <button
-                    className="btn border d-flex align-items-center justify-content-between mt-1"
+                    className={`${styles.btnFilter} btn border d-flex align-items-center justify-content-between mt-1`}
                     style={{
-                      minWidth: "280px",
+                      minWidth: "100%",
                       color: "#bdbdbd",
                       float: "right",
                     }}
@@ -559,7 +617,7 @@ const DetailSubstansi = ({ token }) => {
                     ) : (
                       <tr>
                         <td className="text-center" colSpan={7}>
-                          Data Masih Kosong
+                          Data Tidak Ditemukan
                         </td>
                       </tr>
                     )}
@@ -571,25 +629,46 @@ const DetailSubstansi = ({ token }) => {
                 {subtance_question_detail &&
                   subtance_question_detail.perPage <
                     subtance_question_detail.total && (
-                    <div className="table-pagination">
-                      <Pagination
-                        activePage={page}
-                        itemsCountPerPage={subtance_question_detail.perPage}
-                        totalItemsCount={subtance_question_detail.total}
-                        pageRangeDisplayed={3}
-                        onChange={handlePagination}
-                        nextPageText={">"}
-                        prevPageText={"<"}
-                        firstPageText={"<<"}
-                        lastPageText={">>"}
-                        itemClass="page-item"
-                        linkClass="page-link"
-                      />
-                    </div>
+                    <>
+                      {/* KONDISI KETIKA GALAXY FOLD */}
+                      <div
+                        className={`${styles.paginationResponsive} table-pagination`}
+                      >
+                        <Pagination
+                          activePage={page}
+                          itemsCountPerPage={subtance_question_detail.perPage}
+                          totalItemsCount={subtance_question_detail.total}
+                          pageRangeDisplayed={2}
+                          onChange={handlePagination}
+                          nextPageText={">"}
+                          prevPageText={"<"}
+                          firstPageText={"<<"}
+                          lastPageText={">>"}
+                          itemClass="page-item"
+                          linkClass="page-link"
+                        />
+                      </div>
+                      {/* KONDISI NORMAL */}
+                      <div className={`${styles.pagination} table-pagination`}>
+                        <Pagination
+                          activePage={page}
+                          itemsCountPerPage={subtance_question_detail.perPage}
+                          totalItemsCount={subtance_question_detail.total}
+                          pageRangeDisplayed={3}
+                          onChange={handlePagination}
+                          nextPageText={">"}
+                          prevPageText={"<"}
+                          firstPageText={"<<"}
+                          lastPageText={">>"}
+                          itemClass="page-item"
+                          linkClass="page-link"
+                        />
+                      </div>
+                    </>
                   )}
                 {subtance_question_detail &&
                 subtance_question_detail.total > 5 ? (
-                  <div className="table-total ml-auto">
+                  <div className="table-total ml-auto mt-3">
                     <div className="row">
                       <div className="col-4 mr-0 p-0">
                         <select
@@ -640,12 +719,12 @@ const DetailSubstansi = ({ token }) => {
           <Modal.Title>Filter</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div className="form-group mb-5">
+          {/* <div className="form-group mb-5">
             <label className="p-0">Pelatihan</label>
             <select className="form-control">
               <option>Semua</option>
             </select>
-          </div>
+          </div> */}
           <div className="form-group mb-5">
             <label className="p-0">Status</label>
             <select

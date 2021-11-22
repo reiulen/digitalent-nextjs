@@ -136,20 +136,40 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
         };
       })[0]
   );
-  
+
   //tanggal pendaftaran
   const [startDateRegistration, setStartDateRegistration] = useState(
-    new Date(getEditTraining.pendaftaran_mulai.slice(0, getEditTraining.pendaftaran_mulai.length -1))
+    new Date(
+      getEditTraining.pendaftaran_mulai.slice(
+        0,
+        getEditTraining.pendaftaran_mulai.length - 1
+      )
+    )
   );
   const [endDateRegistration, setEndDateRegistration] = useState(
-    new Date(getEditTraining.pendaftaran_selesai.slice(0, getEditTraining.pendaftaran_selesai.length -1))
+    new Date(
+      getEditTraining.pendaftaran_selesai.slice(
+        0,
+        getEditTraining.pendaftaran_selesai.length - 1
+      )
+    )
   );
   //tanggal pelatihan
   const [startDateTraining, setStartDateTraining] = useState(
-    new Date(getEditTraining.pelatihan_mulai.slice(0, getEditTraining.pelatihan_mulai.length -1))
+    new Date(
+      getEditTraining.pelatihan_mulai.slice(
+        0,
+        getEditTraining.pelatihan_mulai.length - 1
+      )
+    )
   );
   const [endDateTraining, setEndDateTraining] = useState(
-    new Date(getEditTraining.pelatihan_selesai.slice(0, getEditTraining.pelatihan_selesai.length -1))
+    new Date(
+      getEditTraining.pelatihan_selesai.slice(
+        0,
+        getEditTraining.pelatihan_selesai.length - 1
+      )
+    )
   );
   const [description, setDescription] = useState(getEditTraining.deskripsi);
   //kuota
@@ -451,6 +471,17 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
     }
   };
 
+  const [errorMessageKuota, setErrorMessageKuota] = useState(false);
+  useEffect(() => {
+    if (targetKuotaUser < targetKuotaRegister) {
+      setErrorMessageKuota(false);
+    }
+    if (+targetKuotaUser > +targetKuotaRegister) {
+      setErrorMessageKuota(true);
+      setTargetKuotaUser(+targetKuotaRegister);
+    }
+  }, [targetKuotaRegister, targetKuotaUser]);
+
   return (
     <div className="col-lg-12 order-1 px-0">
       <div className="card card-custom card-stretch gutter-b">
@@ -465,6 +496,7 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
               <div className="col-sm-10 my-auto">
                 <div className="form-check form-check-inline">
                   <input
+                    disabled
                     type="radio"
                     name="program"
                     className="form-check-input"
@@ -481,6 +513,7 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                 </div>
                 <div className="form-check form-check-inline">
                   <input
+                    disabled
                     type="radio"
                     name="program"
                     value="0"
@@ -559,7 +592,7 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                   onChange={(e) => {
                     setAcademy({ value: e?.value, label: e?.label });
                     if (e?.value === academy.value) {
-                      return
+                      return;
                     } else {
                       setTheme(null);
                     }
@@ -609,7 +642,9 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                     }
                   />
                   <label className="custom-file-label" htmlFor="customFile">
-                    {logoName.includes("silabus") ? logoName.split("/")[2] : logoName}
+                    {logoName.includes("logo")
+                      ? logoName.split("/")[2]
+                      : logoName}
                   </label>
                   <label style={{ marginTop: "15px" }}>
                     {simpleValidator.current.message(
@@ -649,7 +684,10 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                     }
                   />
                   <label className="custom-file-label" htmlFor="customFile">
-                    {thumbnailName.includes("silabus") ? thumbnailName.split("/")[2] : thumbnailName}
+                    {console.log(thumbnailName)}
+                    {thumbnailName.includes("thumbnail")
+                      ? thumbnailName.split("/")[2]
+                      : thumbnailName}
                   </label>
                   <label style={{ marginTop: "15px" }}>
                     {simpleValidator.current.message(
@@ -689,7 +727,9 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                     }
                   />
                   <label className="custom-file-label" htmlFor="customFile">
-                    {silabusName.includes("silabus") ? silabusName.split("/")[2] : silabusName}
+                    {silabusName.includes("silabus")
+                      ? silabusName.split("/")[2]
+                      : silabusName}
                   </label>
                   <label style={{ marginTop: "15px" }}></label>
                 </div>
@@ -786,9 +826,14 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                 onChange={(e) => setMitra({ value: e?.value, label: e?.label })}
                 onBlur={() => simpleValidator.current.showMessageFor("mitra")}
               />
-              {simpleValidator.current.message("mitra", mitra, metodeImplementation === "Swakelola" ? "" : "required", {
-              className: "text-danger",
-            })}
+              {simpleValidator.current.message(
+                "mitra",
+                mitra,
+                metodeImplementation === "Swakelola" ? "" : "required",
+                {
+                  className: "text-danger",
+                }
+              )}
             </div>
 
             <h3 className="font-weight-bolder pt-3">Tanggal Pendaftaran</h3>
@@ -958,6 +1003,7 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                     )
                   }
                 />
+
                 {simpleValidator.current.message(
                   "kuota target pendaftar",
                   targetKuotaRegister,
@@ -980,6 +1026,11 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                     )
                   }
                 />
+                {errorMessageKuota && (
+                  <p className="text-danger">
+                    Kuota user tidak boleh lebih dari kuota register
+                  </p>
+                )}
                 {simpleValidator.current.message(
                   "kuota target peserta",
                   targetKuotaUser,
@@ -1040,6 +1091,7 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                   <input
                     type="radio"
                     name="plotRegistration"
+                    disabled
                     className="form-check-input"
                     value="Administrasi - Test Substansi"
                     checked={
@@ -1060,6 +1112,7 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                   <input
                     type="radio"
                     name="plotRegistration"
+                    disabled
                     className="form-check-input"
                     value="Tes Substansi - Administrasi"
                     checked={
@@ -1080,6 +1133,7 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                   <input
                     type="radio"
                     name="plotRegistration"
+                    disabled
                     className="form-check-input"
                     value="Tanpa Tes Substansi & Administrasi"
                     checked={

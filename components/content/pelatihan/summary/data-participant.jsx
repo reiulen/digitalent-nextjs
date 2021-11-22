@@ -29,6 +29,7 @@ import {
   getFormLpj,
   clearErrors,
 } from "../../../../redux/actions/pelatihan/summary.actions";
+import { getEditTrainingStep1 } from "../../../../redux/actions/pelatihan/training.actions";
 import {
   UPDATE_STATUS_RESET,
   UPDATE_REMINDER_RESET,
@@ -63,6 +64,9 @@ const DataParticipant = ({ token }) => {
   );
   const { error: errorDataPribadiRow, dataPeserta } = useSelector(
     (state) => state.getDataPribadiRow
+  );
+  const { error: errorDataPelatihan, data: dataTraining } = useSelector(
+    (state) => state.getEditTraining
   );
   const {
     error: errorUpdateStatus,
@@ -128,6 +132,7 @@ const DataParticipant = ({ token }) => {
       dispatch(getBerkasPendaftaran(token, peserta.list[0].id));
       dispatch(getFormKomitmen(token, peserta.list[0].id));
       dispatch(getFormLpj(token, peserta.list[0].id));
+      dispatch(getEditTrainingStep1(peserta.list[0].pelatian_id, token));
     }
 
     if (errorUpdateStatus) {
@@ -260,32 +265,96 @@ const DataParticipant = ({ token }) => {
                 </p>
               </div>
             </div>
-            <div className="form-group row mb-2">
-              <div className="col-sm-12 col-md-6">
-                <label className="col-form-label font-weight-bold">
-                  Administrasi
-                </label>
-                <Select
-                  options={optionsAdministrasi}
-                  placeholder={peserta.list[0].administrasi || "-"}
-                  onChange={(e) =>
-                    setStatusAdministrasi({ label: e.label, value: e.value })
-                  }
-                />
-              </div>
-              <div className="col-sm-12 col-md-6">
-                <label className="col-form-label font-weight-bold">
-                  Status Peserta
-                </label>
-                <Select
-                  options={optionsPeserta}
-                  placeholder={peserta.list[0].status || "-"}
-                  onChange={(e) =>
-                    setStatusPeserta({ label: e.label, value: e.value })
-                  }
-                />
-              </div>
-            </div>
+            {/* PENYESUAIAN STATUS PESERTA PELATIHAN */}
+            {dataTraining &&
+              dataTraining.alur_pendaftaran ===
+                "Tes Substansi - Administrasi" && (
+                <div className="form-group row mb-2">
+                  <div className="col-sm-12 col-md-6">
+                    <label className="col-form-label font-weight-bold">
+                      Administrasi
+                    </label>
+                    <Select
+                      options={optionsAdministrasi}
+                      placeholder={peserta.list[0].administrasi || "-"}
+                      onChange={(e) =>
+                        setStatusAdministrasi({
+                          label: e.label,
+                          value: e.value,
+                        })
+                      }
+                      isDisabled={
+                        peserta.list[0].status !== "seleksi administrasi" ||
+                        (peserta.list[0].status !== "tidak lulus administrasi"
+                          ? true
+                          : false)
+                      }
+                    />
+                  </div>
+                  <div className="col-sm-12 col-md-6">
+                    <label className="col-form-label font-weight-bold">
+                      Status Peserta
+                    </label>
+                    <Select
+                      options={optionsPeserta}
+                      placeholder={peserta.list[0].status || "-"}
+                      onChange={(e) =>
+                        setStatusPeserta({ label: e.label, value: e.value })
+                      }
+                      isDisabled={
+                        peserta.list[0].status !== "seleksi akhir"
+                          ? true
+                          : false
+                      }
+                    />
+                  </div>
+                </div>
+              )}
+            {dataTraining &&
+              dataTraining.alur_pendaftaran ===
+                "Administrasi - Test Substansi" && (
+                <div className="form-group row mb-2">
+                  <div className="col-sm-12 col-md-6">
+                    <label className="col-form-label font-weight-bold">
+                      Administrasi
+                    </label>
+                    <Select
+                      options={optionsAdministrasi}
+                      placeholder={peserta.list[0].administrasi || "-"}
+                      onChange={(e) =>
+                        setStatusAdministrasi({
+                          label: e.label,
+                          value: e.value,
+                        })
+                      }
+                      isDisabled={
+                        peserta.list[0].status !== "tes substansi" ||
+                        peserta.list[0].status !==
+                          "tidak lulus tes substansi" ||
+                        (peserta.list[0].status !== "seleksi akhir"
+                          ? false
+                          : true)
+                      }
+                    />
+                  </div>
+                  <div className="col-sm-12 col-md-6">
+                    <label className="col-form-label font-weight-bold">
+                      Status Peserta
+                    </label>
+                    <Select
+                      options={optionsPeserta}
+                      placeholder={peserta.list[0].status || "-"}
+                      onChange={(e) =>
+                        setStatusPeserta({ label: e.label, value: e.value })
+                      }
+                      isDisabled={
+                        peserta.list[0].status !== "seleksi akhir" && true
+                      }
+                    />
+                  </div>
+                </div>
+              )}
+            {/* END PENYESUAIAN STATUS PESERTA PELATIHAN */}
 
             <div className="form-group mt-7">
               <div className="text-right">
