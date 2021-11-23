@@ -159,10 +159,42 @@ const Table = ({ token }) => {
 
   return (
     <PageWrapper>
-      {deleteBar ? <AlertBar text="Berhasil menghapus data" className="alert-light-danger" onClick={() => onNewReset()} /> : ""}
-      {successInputProfile ? <AlertBar text="Berhasil menyimpan data" className="alert-light-success" onClick={() => onNewReset()} /> : ""}
-      {successSubmitDokumentKerjasama ? <AlertBar text="Berhasil menyimpan data" className="alert-light-success" onClick={() => onNewReset()} /> : ""}
-      {successUpdateStatus ? <AlertBar text="Berhasil membatalkan kerjasama" className="alert-light-success" onClick={() => onNewReset()} /> : ""}
+      {deleteBar ? (
+        <AlertBar
+          text="Berhasil menghapus data"
+          className="alert-light-success"
+          onClick={() => onNewReset()}
+        />
+      ) : (
+        ""
+      )}
+      {successInputProfile ? (
+        <AlertBar
+          text="Berhasil menyimpan data"
+          className="alert-light-success"
+          onClick={() => onNewReset()}
+        />
+      ) : (
+        ""
+      )}
+      {successSubmitDokumentKerjasama ? (
+        <AlertBar
+          text="Berhasil menyimpan data"
+          className="alert-light-success"
+          onClick={() => onNewReset()}
+        />
+      ) : (
+        ""
+      )}
+      {successUpdateStatus ? (
+        <AlertBar
+          text="Berhasil membatalkan kerjasama"
+          className="alert-light-success"
+          onClick={() => onNewReset()}
+        />
+      ) : (
+        ""
+      )}
       <div className="col-lg-12 col-md-12">
         <div className="row">
           {/* card 1 */}

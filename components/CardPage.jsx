@@ -11,7 +11,8 @@ const CardPage = ({
   title,
   publishedVal = "",
   routePublish,
-  search
+  search,
+  backgroundCard
 }) => {
   return (
     <div
@@ -25,22 +26,31 @@ const CardPage = ({
         }
       }}
       style={
-        publishedVal !== ""
-          ? {
-            cursor: "pointer",
-            backgroundImage: "url('/assets/media/card-img.svg')",
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: "right top",
-            backgroundSize: "100px",
-            
-          }
-          : {
+        publishedVal !== "" ? 
+          
+          backgroundCard ?
+            {
+              cursor: "pointer",
+              backgroundImage: `url(${backgroundCard})`,
+              backgroundRepeat: "no-repeat",
+              backgroundPosition: "right top",
+              backgroundSize: "100px",
+            }
+          :
+            {
+              cursor: "pointer",
+              backgroundImage: "url('/assets/media/card-img.svg')",
+              backgroundRepeat: "no-repeat",
+              backgroundPosition: "right top",
+              backgroundSize: "100px",
+            }
+        : 
+          {
             cursor: "default",
             backgroundImage: "url('/assets/media/card-img.svg')",
             backgroundRepeat: "no-repeat",
             backgroundPosition: "right top",
             backgroundSize: "100px",
-            
           }
       }
     >

@@ -194,14 +194,14 @@ const ReviewKerjasama = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark titles-1">
-              Review Kerjasama {mitra && mitra}
+              Review Kerjasama {mitra && mitra} 
             </h3>
           </div>
           <div className="card-body pt-0">
             {statusInfo && statusInfo === "Sudah direview" ? (
               <form>
                 <div className="form-group">
-                  <label htmlFor="staticEmail" className="col-form-label">
+                  <label htmlFor="staticEmail" className="col-form-label text-muted">
                     Tanggal
                   </label>
                   <input
@@ -431,8 +431,8 @@ const ReviewKerjasama = ({ token }) => {
                       );
                     })}
 
-                <div className="form-group row">
-                  <div className="col-sm-12 d-flex flex-wrap justify-content-start justify-content-sm-end">
+                <div className="form-group">
+                  <div className="d-flex flex-column flex-md-row flex-wrap justify-content-start justify-content-md-end">
                     <button
                       type="button"
                       onClick={(e) => rejectDokument(e)}
@@ -444,7 +444,7 @@ const ReviewKerjasama = ({ token }) => {
                     <button
                       type="button"
                       onClick={(e) => ajukanRevisi(e)}
-                      className="btn btn-sm btn-rounded-full bg-yellow-primary text-white mx-3 mt-2"
+                      className="btn btn-sm btn-rounded-full bg-yellow-primary text-white ml-3 mr-0 mr-sm-3 mt-2"
                     >
                       Ajukan Revisi
                     </button>

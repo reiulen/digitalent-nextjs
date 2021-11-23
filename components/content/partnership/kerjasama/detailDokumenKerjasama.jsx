@@ -139,7 +139,7 @@ const DetailDokumenKerjasama = ({ token }) => {
               </p>
 
               <div className="row">
-                <div className="col-12 col-sm-6">
+                <div className="col-12 col-xl-6">
                   <label
                     htmlFor="staticEmail"
                     className="col-form-label fz-14"
@@ -153,7 +153,7 @@ const DetailDokumenKerjasama = ({ token }) => {
                       : allMK.cooperationById.data.agreement_number_partner}
                   </p>
                 </div>
-                <div className="col-12 col-sm-6">
+                <div className="col-12 col-xl-6">
                   <label
                     htmlFor="staticEmail"
                     className="col-form-label fz-14"
