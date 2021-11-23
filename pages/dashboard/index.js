@@ -1,10 +1,30 @@
 import { getSession } from "next-auth/client";
+import dynamic from "next/dynamic";
 import { middlewareAuthAdminSession } from "../../utils/middleware/authMiddleware";
 
 export default function DashboardPage() {
+  const DashboardDigitalent = dynamic(
+    () =>
+      import(
+        "../../components/content/dashboard-kabadan/digitalent/dashboard-digitalent"
+      ),
+    { ssr: false }
+  );
+  const MyMap = dynamic(
+    () =>
+      import(
+        "../../components/content/dashboard-kabadan/component/map-digitalent.component"
+      ),
+    { ssr: false }
+  );
   return (
     <>
-      <div className="d-flex flex-column flex-root"></div>
+      <div className="d-flex flex-column flex-root">
+        <div id="map" style={{ display: "none" }}>
+          <MyMap />
+        </div>
+        <DashboardDigitalent />
+      </div>
     </>
   );
 }
