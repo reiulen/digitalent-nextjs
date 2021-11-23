@@ -152,37 +152,6 @@ const Tambah = ({ token }) => {
       });
     }
   };
-
-  // const [NamePDF, setNamePDF] = useState(null);
-  // const fileType = ["image/png"];
-  // const fileTypeJpeg = ["image/jpeg"];
-  // const fileMax = 2097152;
-  // const onChangeImage = (e) => {
-  //   let selectedFile = e.target.files[0];
-
-  //   if (selectedFile) {
-  //     if (
-  //       (selectedFile && fileTypeJpeg.includes(selectedFile.type)) ||
-  //       (fileType.includes(selectedFile.type) && selectedFile.size <= fileMax)
-  //     ) {
-  //       let reader = new FileReader();
-  //       reader.readAsDataURL(selectedFile);
-  //       reader.onloadend = (e) => {
-  //         setAgency_logo(e.target.result);
-  //         setNamePDF(selectedFile.name);
-  //       };
-  //     } else {
-  //       Swal.fire(
-  //         "Gagal",
-  //         `gambar harus PNG atau JPG dan max size 2mb`,
-  //         "error"
-  //       );
-  //     }
-  //   } else {
-  //     Swal.fire("Gagal", `upload gambar dulu`, "error");
-  //   }
-  // };
-
   // Image Cropping
   const [ showEditImage, setShowEditImage ] = useState(false)
   const [upImg, setUpImg] = useState();
