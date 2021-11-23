@@ -67,7 +67,6 @@ const ProfileWrapper = ({
         dispatch(getDataPribadi(token));
       })
       .catch((err) => {
-        console.log(err);
         toast.error("gagal");
       });
 

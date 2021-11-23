@@ -187,7 +187,7 @@ const RevisiKerjasama = ({ token }) => {
                   <div className="col-12 col-xl-6">
                     <div className="d-flex align-items-center position-relative datepicker-w mt-2 disabled-form">
                       <DatePicker
-                        className="form-search-date form-control-sm form-control cursor-pointer"
+                        className="form-search-date form-control-sm form-control cursor-pointer ml-n3"
                         selected={startDate}
                         selectsStart
                         value={period_start && period_start}
@@ -234,7 +234,7 @@ const RevisiKerjasama = ({ token }) => {
                   type="text"
                   readOnly
                   name="text_input"
-                  className="form-control mb-3 mb-lg-0 border-0"
+                  className="form-control mb-3 mb-lg-0 border-0 ml-n3"
                   placeholder="Masukan Nomor Perjanjian Lembaga"
                   value={no_perjanjianLembaga && no_perjanjianLembaga}
                 />
@@ -247,7 +247,7 @@ const RevisiKerjasama = ({ token }) => {
                   readOnly
                   type="text"
                   name="text_input"
-                  className="form-control mb-3 mb-lg-0 border-0"
+                  className="form-control mb-3 mb-lg-0 border-0 ml-n3"
                   placeholder="Masukan Nomor Perjanjian Kemkominfo"
                   value={no_perjanjianKoninfo && no_perjanjianKoninfo}
                 />
@@ -262,7 +262,7 @@ const RevisiKerjasama = ({ token }) => {
                     <DatePicker
                       readOnly
                       value={tgl_ttd && tgl_ttd}
-                      className="form-search-date form-control-sm form-control cursor-pointer"
+                      className="form-search-date form-control-sm form-control cursor-pointer ml-n2"
                       selected={startDate}
                       selectsStart
                       dateFormat="YYYY-MM-DD"
@@ -323,7 +323,7 @@ const RevisiKerjasama = ({ token }) => {
                     rows="5"
                     value={catatanREvisi}
                     className="form-control"
-                    placeholder="Tuliskan Catatan Tambahan"
+                    placeholder="Masukan Catatan Revisi"
                   ></textarea>
                   {error.catatanREvisi ? (
                     <p className="error-text">{error.catatanREvisi}</p>

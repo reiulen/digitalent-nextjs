@@ -206,7 +206,7 @@ const RevisiSubmit = ({token}) => {
               </div>
 
               <div className="row">
-                <div className="col-12 col-sm-6">
+                <div className="col-12 col-xl-6">
                   <div className="form-group mb-10">
                     <label className="required mb-2">Judul Kerjasama</label>
                     <input
@@ -219,7 +219,7 @@ const RevisiSubmit = ({token}) => {
                     {/* {error.date ? <p className="error-text">{error.date}</p> : ""} */}
                   </div>
                 </div>
-                <div className="col-12 col-sm-6">
+                <div className="col-12 col-xl-6">
                   <div className="form-group mb-10">
                     <label className="required mb-2">Kategori Kerjasama</label>
                     <select
@@ -237,7 +237,7 @@ const RevisiSubmit = ({token}) => {
               </div>
 
               <div className="row">
-                <div className="col-12 col-sm-6">
+                <div className="col-12 col-xl-6">
                   <div className="form-group mb-10">
                     <label className="required mb-2">Periode Kerjasama</label>
                     <input
@@ -250,10 +250,14 @@ const RevisiSubmit = ({token}) => {
                     {/* {error.date ? <p className="error-text">{error.date}</p> : ""} */}
                   </div>
                 </div>
-                <div className="col-12 col-sm-6">
+                <div className="col-12 col-xl-6">
                   <div className="form-group mb-10">
                     <label className="required mb-2"></label>
-                    <select className="form-control mt-2 border-0" style={{backgroundColor:"transparent"}} disabled>
+                    <select 
+                      className="form-control remove-icon-default mt-2 border-0" 
+                      style={{backgroundColor:"transparent"}} 
+                      disabled
+                    >
                       <option value="">Tahun</option>
                     </select>
                     {/* {error.date ? <p className="error-text">{error.date}</p> : ""} */}
@@ -268,7 +272,7 @@ const RevisiSubmit = ({token}) => {
                 : allCooperation.map((items, index) => {
                     return (
                       <div className="row" key={index}>
-                        <div className="col-12 col-sm-6">
+                        <div className="col-12 col-xl-6">
                           <div className="form-group">
                             <label
                               htmlFor="staticEmail"
@@ -291,7 +295,7 @@ const RevisiSubmit = ({token}) => {
                             </div>
                           </div>
                         </div>
-                        <div className="col-12 col-sm-6">
+                        <div className="col-12 col-xl-6">
                           <div className="form-group">
                             <label
                               htmlFor="staticEmail"
