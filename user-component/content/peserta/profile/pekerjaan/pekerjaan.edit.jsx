@@ -15,6 +15,7 @@ import { UPDATE_PEKERJAAN_RESET } from "../../../../../redux/types/pelatihan/pro
 import router from "next/router";
 import {
   helperRegexNumber,
+  helperRemoveZeroFromIndex0,
   SweatAlert,
 } from "../../../../../utils/middleware/helper";
 
@@ -345,7 +346,10 @@ const PekerjaanEdit = ({ funcViewEdit, token, wizzard }) => {
                           e.target.value === "" ||
                           helperRegexNumber.test(e.target.value)
                         ) {
-                          setTahunMasuk(e.target.value);
+                          helperRemoveZeroFromIndex0(
+                            e.target.value,
+                            setTahunMasuk
+                          );
                         }
                       }}
                       onBlur={() =>

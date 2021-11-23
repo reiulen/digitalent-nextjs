@@ -20,6 +20,13 @@ const Footer = dynamic(() => import("./Footer.component"), {
   ssr: false,
 });
 
+const ChatBot = dynamic(() => import("./ChatBot.component"), {
+  loading: function loadingNow() {
+    return <LoadingFooter />;
+  },
+  ssr: false,
+});
+
 const Layout = ({ session, children, title }) => {
   return (
     <>
@@ -30,6 +37,7 @@ const Layout = ({ session, children, title }) => {
         <NavigationBar session={session} />
         <ToastContainer position="top-right" />
         {children}
+        <ChatBot></ChatBot>
         <Footer />
       </div>
     </>

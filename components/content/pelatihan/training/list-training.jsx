@@ -314,8 +314,8 @@ const ListTraining = ({ token }) => {
         statusSubstansi != null ? statusSubstansi.value : null,
         statusPelatihan != null ? statusPelatihan.value : null,
         penyelenggara != null ? penyelenggara.value : null,
-        academy,
-        theme,
+        academy != null ? academy.value : null,
+        theme != null ? theme.value : null,
         token,
         berjalan
       )
@@ -815,7 +815,9 @@ const ListTraining = ({ token }) => {
                             </td>
                             <td className="align-middle">
                               <p className="font-weight-bolder my-0">
-                                {row.name}
+                                {row.name.length > 30
+                                  ? row.name.substring(0, 30) + "..."
+                                  : row.name}
                               </p>
                               <p className="my-0">{row.penyelenggara}</p>
                               <p className="my-0">{row.provinsi}</p>

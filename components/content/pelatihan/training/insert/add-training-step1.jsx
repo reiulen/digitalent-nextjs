@@ -6,8 +6,8 @@ import Swal from "sweetalert2";
 import SimpleReactValidator from "simple-react-validator";
 import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
-import DatePicker from "react-datepicker";
-
+import DatePicker, { registerLocale } from "react-datepicker";
+import id from "date-fns/locale/id";
 import { GET_TRAINING_STEP1 } from "../../../../../redux/types/pelatihan/function.type";
 import {
   storeTrainingStep1,
@@ -16,20 +16,21 @@ import {
   dropdownTemabyAkademi,
 } from "../../../../../redux/actions/pelatihan/function.actions";
 import LoadingPage from "../../../../LoadingPage";
-import { disablePlusMinusPeriod } from "../../../../../utils/middleware/helper";
+import {
+  disablePlusMinusPeriod,
+  helperRemoveZeroFromIndex0,
+} from "../../../../../utils/middleware/helper";
 import { CustomNumberInput } from "../../../../formCustomComponent/input";
-import {edit0Value} from '../../../../../utils/middleware/helper/index'
 import moment from "moment";
 
 const AddTrainingStep1 = ({ propsStep, token }) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
-  const today = new Date();
+  const [today, setToday] = useState(new Date());
   const drowpdownTemabyAkademi = useSelector(
     (state) => state.drowpdownTemabyAkademi
   );
-
   const { trainingData } = useSelector((state) => state.trainingStep1);
   const { error: dropdownErrorLevelPelatihan, data: dataLevelPelatihan } =
     useSelector((state) => state.drowpdownLevelPelatihan);
@@ -440,6 +441,37 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
     }
   }, [targetKuotaRegister, targetKuotaUser]);
 
+  const filterPassedTime = (time) => {
+    const currentDate = new Date();
+    const selectedDate = new Date(time);
+    return currentDate.getTime() < selectedDate.getTime();
+  };
+
+  const filterPassedTime2 = (time) => {
+    const currentDate = new Date(startDateRegistration);
+    const selectedDate = new Date(time);
+
+    return currentDate.getTime() < selectedDate.getTime();
+  };
+
+  const filterPassedTime3 = (time) => {
+    const currentDate = new Date(endDateRegistration);
+    const selectedDate = new Date(time);
+
+    return currentDate.getTime() < selectedDate.getTime();
+  };
+
+  const filterPassedTime4 = (time) => {
+    const currentDate = new Date(startDateTraining);
+    const selectedDate = new Date(time);
+
+    return currentDate.getTime() < selectedDate.getTime();
+  };
+
+  useEffect(() => {
+    registerLocale("id", id);
+  }, []);
+
   return (
     <div className="card card-custom card-stretch gutter-b">
       <div className="card-body py-4">
@@ -772,14 +804,20 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
               <div className="position-relative">
                 <DatePicker
                   selected={startDateRegistration}
-                  onChange={(date) => setStartDateRegistration(date)}
+                  onChange={(date) => {
+                    setEndDateRegistration(null);
+                    setStartDateTraining(null);
+                    setEndDateTraining(null);
+                    setStartDateRegistration(date);
+                  }}
                   showTimeSelect
                   minDate={today}
-                  locale="pt-BR"
+                  locale="id"
                   timeFormat="HH:mm"
                   dateFormat="d MMMM yyyy - HH:mm"
                   className="form-control w-100 d-block"
                   placeholderText="Silahkan Pilih Tanggal Dari"
+                  filterTime={filterPassedTime}
                 />
                 <i className="ri-calendar-line right-center-absolute pr-3"></i>
               </div>
@@ -796,24 +834,23 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
               </label>
               <div className="position-relative">
                 <DatePicker
-                  selected={
-                    startDateRegistration > endDateRegistration
-                      ? ""
-                      : endDateRegistration
+                  selected={endDateRegistration}
+                  value={endDateRegistration}
+                  onChange={(date) => {
+                    setStartDateTraining(null);
+                    setEndDateTraining(null);
+                    setEndDateRegistration(date);
+                  }}
+                  minDate={
+                    startDateRegistration ? startDateRegistration : today
                   }
-                  value={
-                    startDateRegistration > endDateRegistration
-                      ? ""
-                      : endDateRegistration
-                  }
-                  onChange={(date) => setEndDateRegistration(date)}
-                  minDate={startDateRegistration}
                   showTimeSelect
                   className="form-control w-100 d-block"
-                  locale="pt-BR"
+                  locale="id"
                   timeFormat="HH:mm"
                   dateFormat="d MMMM yyyy - HH:mm"
                   placeholderText="Silahkan Pilih Tanggal Sampai"
+                  filterTime={filterPassedTime2}
                 />
                 <i className="ri-calendar-line right-center-absolute pr-3"></i>
               </div>
@@ -836,14 +873,19 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
               <div className="position-relative">
                 <DatePicker
                   selected={startDateTraining}
-                  onChange={(date) => setStartDateTraining(date)}
-                  minDate={endDateRegistration}
+                  value={startDateTraining}
+                  onChange={(date) => {
+                    setEndDateTraining(null);
+                    setStartDateTraining(date);
+                  }}
+                  minDate={endDateRegistration ? endDateRegistration : today}
                   showTimeSelect
                   className="form-control w-100 d-block"
-                  locale="pt-BR"
+                  locale="id"
                   timeFormat="HH:mm"
                   dateFormat="d MMMM yyyy - HH:mm"
                   placeholderText="Silahkan Pilih Tanggal Dari"
+                  filterTime={filterPassedTime3}
                 />
                 <i className="ri-calendar-line right-center-absolute pr-3"></i>
               </div>
@@ -861,16 +903,13 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
               <div className="position-relative">
                 <DatePicker
                   onChange={(date) => setEndDateTraining(date)}
-                  minDate={startDateTraining}
-                  selected={
-                    startDateTraining > endDateTraining ? "" : endDateTraining
-                  }
-                  value={
-                    startDateTraining > endDateTraining ? "" : endDateTraining
-                  }
+                  minDate={startDateTraining ? startDateTraining : today}
+                  selected={endDateTraining}
+                  value={endDateTraining}
+                  filterTime={filterPassedTime4}
                   showTimeSelect
                   className="form-control w-100 d-block"
-                  locale="pt-BR"
+                  locale="id"
                   timeFormat="HH:mm"
                   dateFormat="d MMMM yyyy - HH:mm"
                   placeholderText="Silahkan Pilih Tanggal Sampai"
@@ -933,7 +972,10 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                 type="number"
                 value={targetKuotaRegister}
                 onChange={(e) => {
-                  edit0Value(e.target.value,setTargetKuotaRegister)
+                  helperRemoveZeroFromIndex0(
+                    e.target.value,
+                    setTargetKuotaRegister
+                  );
                 }}
                 className="form-control"
                 min="1"
@@ -960,7 +1002,12 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                 type="number"
                 min="1"
                 value={targetKuotaUser}
-                onChange={(e) => setTargetKuotaUser(e.target.value)}
+                onChange={(e) => {
+                  helperRemoveZeroFromIndex0(
+                    e.target.value,
+                    setTargetKuotaUser
+                  );
+                }}
                 className="form-control"
                 onBlur={() =>
                   simpleValidator.current.showMessageFor("kuota target peserta")
@@ -1069,12 +1116,12 @@ const AddTrainingStep1 = ({ propsStep, token }) => {
                   type="radio"
                   name="plotRegistration"
                   className="form-check-input"
-                  value="Tanpa Tes Substansi & Administrasi"
+                  value="Tanpa Tes Substansi dan Administrasi"
                   checked={
-                    plotRegistration === "Tanpa Tes Substansi & Administrasi"
+                    plotRegistration === "Tanpa Tes Substansi dan Administrasi"
                   }
                   onClick={() =>
-                    setPlotRegistration("Tanpa Tes Substansi & Administrasi")
+                    setPlotRegistration("Tanpa Tes Substansi dan Administrasi")
                   }
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("alur pendaftaran")

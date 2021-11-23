@@ -16,7 +16,7 @@ import {
 } from "../../../redux/actions/beranda/detail-akademi.actions";
 
 const Bookmark = dynamic(
-  () => import("../../../user-component/content/peserta/bookmark/index"),
+  () => import("../../../user-component-new/content/peserta/bookmark/index"),
   {
     loading: function loadingNow() {
       return <LoadingContent />;
@@ -26,7 +26,9 @@ const Bookmark = dynamic(
 );
 
 const Layout = dynamic(() =>
-  import("../../../user-component/components/template/Layout.component")
+  import(
+    "../../../user-component-new/components/template/Layout-peserta.component"
+  )
 );
 
 export default function BookmarkPage(props) {
@@ -41,7 +43,7 @@ export default function BookmarkPage(props) {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  (store) =>
+  store =>
     async ({ query, req, params }) => {
       const session = await getSession({ req });
 

@@ -167,7 +167,7 @@ const DashboardSiteManagement = ({ token, user }) => {
                 hover="/assets/icon/HoverSUBM.svg"
                 color="text-black"
                 title="SUBM"
-                link="/site-management/setting/pelatihan"
+                link="/site-management/setting/pelatihan?sidebar=SUBM"
               ></CardDashboardSiteManagement>
             </div>
             <div className="col-lg-3 mt-2">

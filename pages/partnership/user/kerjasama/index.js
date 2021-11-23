@@ -8,11 +8,7 @@ import { wrapper } from "../../../../redux/store";
 //   reqCooperationUser,
 // } from "../../../../redux/actions/partnership/user/cooperation.actions";
 
-const Table = dynamic(
-  () =>
-    import("../../../../components/content/partnership/user/kerjasama/table"),
-  { loading: () => <LoadingSkeleton />, ssr: false }
-);
+const Table = dynamic(() => import("../../../../components/content/partnership/user/kerjasama/table"), { loading: () => <LoadingSkeleton />, ssr: false });
 
 export default function IndexPage(props) {
   const session = props.session.user.user.data;
@@ -25,27 +21,24 @@ export default function IndexPage(props) {
   );
 }
 
-export const getServerSideProps = wrapper.getServerSideProps(
-  () =>
-    async ({ req }) => {
-      const session = await getSession({ req });
-      if (!session) {
-        return {
-          redirect: {
-            destination: "http://dts-dev.majapahit.id/login/mitra",
-            permanent: false,
-          },
-        };
-      }
+export const getServerSideProps = wrapper.getServerSideProps(() => async ({ req }) => {
+  const session = await getSession({ req });
+  if (!session) {
+    return {
+      redirect: {
+        destination: "http://dts-dev.majapahit.id/login/mitra",
+        permanent: false,
+      },
+    };
+  }
 
-      // await store.dispatch(fetchListSelectStatus(session.user.user.data.token));
-      // await store.dispatch(
-      //   fetchListSelectCooperation(session.user.user.data.token)
-      // );
-      // await store.dispatch(reqCooperationUser(session.user.user.data.token));
+  // await store.dispatch(fetchListSelectStatus(session.user.user.data.token));
+  // await store.dispatch(
+  //   fetchListSelectCooperation(session.user.user.data.token)
+  // );
+  // await store.dispatch(reqCooperationUser(session.user.user.data.token));
 
-      return {
-        props: { session, title: "Kerjasama - Partnership" },
-      };
-    }
-);
+  return {
+    props: { session, title: "Kerjasama - Partnership" },
+  };
+});
