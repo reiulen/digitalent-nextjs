@@ -1,68 +1,145 @@
-.inputNilai{
-    margin-left: -48px;
-    width: 60px;
+.inputNilai {
+  margin-left: -48px;
+  width: 60px;
 }
 
-.inputNilaiCheckbox{
-    width: 60px;
+.inputNilaiCheckbox {
+  width: 60px;
 }
 
-.btnDeleteCheckbox{
-    /* margin-left: 13px; */
+.btnDeleteCheckbox {
+  /* margin-left: 13px; */
 }
 
-.iconTambah{
-    margin-left: 12px;
+.iconTambah {
+  /* margin-left: 12px; */
+  text-align: center;
 }
 
-.btnTambah{
-    margin-left: 30px;
+.btnAddAnswer {
+  width: 220px;
 }
 
+.btnTambah {
+  margin-left: 30px;
+}
 
 @media only screen and (max-width: 1024px) {
-    /* .btnSwitch{
+  /* .btnSwitch{
         width: 10px;
         height: 10px;
     } */
-    .iconTambah{
-        margin-left: 4px;
-    }
-    .inputNilai{
-        margin-left: -32px;
-        width: 45px;
-    }
-    .inputNilaiCheckbox{
-        /* margin-left: -10px; */
-        width: 45px;
-    }
-    .iconTambah{
-        margin-left: -9px;
-    }
-    .btnDeleteCheckbox{
-        margin-left: 5px;
-    }
+  .iconTambah {
+    margin-left: 4px;
+  }
+  .inputNilai {
+    margin-left: -32px;
+    width: 45px;
+  }
+  .btnAddAnswer {
+    width: 220px;
+  }
+  .inputNilaiCheckbox {
+    /* margin-left: -10px; */
+    width: 45px;
+  }
+  .iconTambah {
+    margin-left: -9px;
+  }
+  .btnDeleteCheckbox {
+    margin-left: 5px;
+  }
 }
 
 @media only screen and (max-width: 768px) {
-    .iconTambah{
-        margin-left: 11px;
-    }
+  .iconTambah {
+    margin-left: 11px;
+  }
+  .btnAddAnswer {
+    width: 220px;
+    text-align: center;
+  }
 }
 
 @media only screen and (max-width: 576px) {
-    .iconTambah{
-        margin-left: 53px;
-    }
-    .inputNilai{
-        margin-left: 0px;
-        width: 100%;
-    }
-    .inputNilaiCheckbox{
-        width: 160px;
-        /* margin-left: -15px; */
-    }
-    .btnDeleteCheckbox{
-        margin: 5px 0 0 0;
-    }
+  .iconTambah {
+    margin-left: 53px;
+  }
+  .btnAddAnswer {
+    width: 100%;
+    text-align: center;
+  }
+  .inputNilai {
+    margin-left: 0px;
+    width: 100%;
+  }
+  .inputNilaiCheckbox {
+    width: 160px;
+    /* margin-left: -15px; */
+  }
+  .btnDeleteCheckbox {
+    margin: 5px 0 0 0;
+  }
+}
+
+@media only screen and (max-width: 540px) {
+  .iconTambah {
+    margin-left: 53px;
+  }
+  .btnAddAnswer {
+    width: 280px;
+  }
+  .inputNilai {
+    margin-left: 0px;
+    width: 100%;
+  }
+  .inputNilaiCheckbox {
+    width: 160px;
+    /* margin-left: -15px; */
+  }
+  .btnDeleteCheckbox {
+    margin: 5px 0 0 0;
+  }
+}
+
+@media only screen and (max-width: 414px) {
+  .iconTambah {
+    margin-left: 53px;
+  }
+  .btnAddAnswer {
+    width: 100%;
+  }
+  .inputNilai {
+    margin-left: 0px;
+    width: 100%;
+  }
+  .iconTambah {
+    display: none !important;
+  }
+  .inputNilaiCheckbox {
+    width: 160px;
+    /* margin-left: -15px; */
+  }
+  .btnDeleteCheckbox {
+    margin: 5px 0 0 0;
+  }
+}
+
+@media only screen and (max-width: 320px) {
+  .btnAddAnswer {
+    width: 100%;
+  }
+  .iconTambah {
+    display: none !important;
+  }
+}
+
+@media only screen and (max-width: 280px) {
+  .btnAddAnswer {
+    width: 100%;
+    margin: 0 auto;
+  }
+  .iconTambah {
+    display: none !important;
+  }
 }
