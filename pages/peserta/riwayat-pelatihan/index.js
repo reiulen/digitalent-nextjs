@@ -57,6 +57,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       const data = await store.dispatch(
         getDataPribadi(session.user.user.data.user.token)
       );
+      console.log(data, "dari riwayat pelatihan pages");
       await store.dispatch(getAllAkademi());
 
       return {

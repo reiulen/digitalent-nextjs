@@ -22,7 +22,7 @@ const EditDokumentKerjasamaById = ({ token }) => {
   const router = useRouter();
 
   console.log(token);
-  const allMK = useSelector(state => state.allMK);
+  const allMK = useSelector((state) => state.allMK);
   //
   //
   // state onchange form data
@@ -269,7 +269,7 @@ const EditDokumentKerjasamaById = ({ token }) => {
                           <div className="col-sm-10">
                             <textarea
                               required
-                              onChange={e => changeFormCooporation(index, e)}
+                              onChange={(e) => changeFormCooporation(index, e)}
                               name="cooperation"
                               id={index + 1}
                               cols="30"
@@ -289,7 +289,7 @@ const EditDokumentKerjasamaById = ({ token }) => {
                     href={{
                       pathname:
                         "/partnership/mitra/detail-data-kerjasama-mitra",
-                      query: { id: router.query.id },
+                      query: { id: router.query.idDetail },
                     }}
                     className="mr-2"
                   >

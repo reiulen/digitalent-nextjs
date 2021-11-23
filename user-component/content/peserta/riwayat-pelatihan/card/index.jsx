@@ -19,6 +19,7 @@ export default function CardTemplateOriginal({ data }) {
 
   useEffect(() => {
     if (data.status.includes("tidak")) return setLabel("danger");
+    if (data.status.includes("lulus")) return setLabel("success");
     if (data.status.includes("menunggu") || data.status.includes("seleksi"))
       return setLabel("warning");
     if (data.status == "survey belum tersedia") return setLabel("primary");
@@ -26,7 +27,6 @@ export default function CardTemplateOriginal({ data }) {
     if (data.status.includes("tes substansi")) return setLabel("primary");
     if (data.status.includes("seleksi administrasi"))
       return setLabel("warning");
-    if (data.status.includes("lulus")) return setLabel("success");
     if (data.status.includes("belum tersedia")) return setLabel("warning");
     if (data.status.includes("pelatihan")) return setLabel("primary");
 
@@ -98,7 +98,7 @@ export default function CardTemplateOriginal({ data }) {
     }
   };
 
-  console.log(data); // ID 305 fajar
+  console.log(data.status, " <============ini status"); // ID 305 fajar
 
   return (
     <Fragment>

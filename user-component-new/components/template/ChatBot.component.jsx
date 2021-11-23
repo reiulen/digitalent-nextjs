@@ -44,12 +44,13 @@ export default function ChatBot() {
                     <i className="ri-draft-fill" />
                     Form Pengaduan
                   </div>
-                  <div
+                  <a
                     className={`${style.chatbot_options} btn-primary btn btn-block rounded-full `}
+                    href="tel:0213452841"
                   >
                     <i className="ri-phone-fill" />
                     Hubungi Kami
-                  </div>
+                  </a>
                 </div>
               )}
             </div>
