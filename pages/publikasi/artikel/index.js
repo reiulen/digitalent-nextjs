@@ -12,6 +12,7 @@ import { wrapper } from "../../../redux/store";
 // import LoadingPage from "../../../components/LoadingPage";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
 
+
 const Artikel = dynamic(
   () => import("../../../components/content/publikasi/artikel/artikel"),
   {

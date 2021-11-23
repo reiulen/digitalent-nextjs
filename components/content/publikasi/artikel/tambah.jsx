@@ -21,6 +21,8 @@ import { NEW_ARTIKEL_RESET } from "../../../../redux/types/publikasi/artikel.typ
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingPage from "../../../LoadingPage";
 
+import { useQuill } from "react-quilljs";
+
 const TambahArtikel = ({ token, id }) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
@@ -28,8 +30,8 @@ const TambahArtikel = ({ token, id }) => {
 
   const importSwitch = () => import("bootstrap-switch-button-react");
   const [editorLoaded, setEditorLoaded] = useState(false);
-  const { CKEditor, ClassicEditor, Base64UploadAdapter } =
-    editorRef.current || {};
+  // const { CKEditor, ClassicEditor, Base64UploadAdapter } =
+  //   editorRef.current || {};
   const SwitchButton = dynamic(importSwitch, {
     ssr: false,
   });
@@ -45,13 +47,24 @@ const TambahArtikel = ({ token, id }) => {
     kategori,
   } = useSelector((state) => state.allKategori);
 
+  const { quill, quillRef } = useQuill();
 
   useEffect(() => {
 
-    editorRef.current = {
-      CKEditor: require("@ckeditor/ckeditor5-react").CKEditor, //Added .CKEditor
-      ClassicEditor: require("@ckeditor/ckeditor5-build-classic"),
-    };
+    // editorRef.current = {
+    //   CKEditor: require("@ckeditor/ckeditor5-react").CKEditor, //Added .CKEditor
+    //   ClassicEditor: require("@ckeditor/ckeditor5-build-classic"),
+    // };
+
+    if (quill) {
+      quill.on('text-change', (delta, oldDelta, source) => {
+        // console.log('Text change!');
+        // console.log(quill.getText()); // Get text only
+        // console.log(quill.getContents()); // Get delta contents
+        setIsiArtikel(quill.root.innerHTML); // Get innerHTML using quill
+        // console.log(quillRef.current.firstChild.innerHTML); // Get innerHTML using quillRef
+      });
+    }
 
     setEditorLoaded(true);
     if (success) {
@@ -60,7 +73,7 @@ const TambahArtikel = ({ token, id }) => {
         query: { success: true },
       });
     }
-  }, [dispatch, error, success, simpleValidator, router]);
+  }, [dispatch, error, success, simpleValidator, router, quill]);
 
   const [judul_artikel, setJudulArtikel] = useState("");
   const [isi_artikel, setIsiArtikel] = useState("");
@@ -189,6 +202,7 @@ const TambahArtikel = ({ token, id }) => {
         })
           .then((result) => {
             if (result.isConfirmed) {
+              // console.log(data);
               dispatch(newArtikel(data, token));
             }
           });
@@ -220,6 +234,7 @@ const TambahArtikel = ({ token, id }) => {
         })
           .then((result) => {
             if (result.isConfirmed) {
+              // console.log(data);
               dispatch(newArtikel(data, token));
             }
           });
@@ -312,32 +327,41 @@ const TambahArtikel = ({ token, id }) => {
                   <div className={`${styles.deskripsiTambah} col-sm-12`}>
                     <div className="ckeditor">
                       {editorLoaded ? (
-                        <CKEditor
-                          editor={ClassicEditor}
-                          data={isi_artikel}
-                          onChange={(event, editor) => {
-                            const data = editor.getData();
-                            setIsiArtikel(data);
-                          }}
-                          onBlur={() =>
-                            simpleValidator.current.showMessageFor(
-                              "isi_artikel"
-                            )
-                          }
-                          config={{
-                            placeholder: "Tulis Deskripsi",
-                          }}
-                        />
+                        // <CKEditor
+                        //   editor={ClassicEditor}
+                        //   data={isi_artikel}
+                        //   onChange={(event, editor) => {
+                        //     const data = editor.getData();
+                        //     setIsiArtikel(data);
+                        //   }}
+                        //   onBlur={() =>
+                        //     simpleValidator.current.showMessageFor(
+                        //       "isi_artikel"
+                        //     )
+                        //   }
+                        //   config={{
+                        //     placeholder: "Tulis Deskripsi",
+                        //   }}
+                        // />
+
+                        <div style={{ width: "600px", height: "300px" }}>
+                          <div 
+                            ref={quillRef} 
+                            onChange={(event) => {
+                                  // const data = editor.getData();
+                                  // setIsiArtikel(data);
+                          }}/>
+                      </div>
 
                       ) : (
                         <p>Tunggu Sebentar</p>
                       )}
-                      {simpleValidator.current.message(
+                      {/* {simpleValidator.current.message(
                         "isi_artikel",
                         isi_artikel,
                         "required|min:100|max:12000",
                         { className: "text-danger" }
-                      )}
+                      )} */}
                     </div>
                   </div>
                 </div>
