@@ -195,42 +195,52 @@ const Table = ({ token }) => {
       ) : (
         ""
       )}
-      <div className="col-lg-12 col-md-12">
-        <div className="row">
-          {/* card 1 */}
-          <CardPage
-            background="bg-light-success "
-            icon="Done-circle1.svg"
-            color="#ffffff"
-            value={allCooperationUser.totalDataActive}
-            titleValue=""
-            title="Kerjasama Aktif"
-            publishedVal="1"
-            routePublish={() => dispatch(changeValueStatusCard("active"))}
-          />
-
-          {/* card 2 */}
-          <CardPage
-            background="bg-light-warning"
-            icon="Info-circle.svg"
-            color="#ffffff"
-            value={allCooperationUser.totalDataAnother}
-            titleValue=""
-            title="Pengajuan Kerjasama"
-            publishedVal="1"
-            routePublish={() => dispatch(changeValueStatusCard("submission"))}
-          />
-          <CardPage
-            background="bg-light-danger"
-            icon="Error-circle.svg"
-            color="#ffffff"
-            value={sumWillExpire}
-            titleValue=""
-            title="Kerjasama akan Habis"
-            publishedVal="1"
-            routePublish={() => dispatch(changeValueStatusCard("will_expire"))}
-          />
-          {/* card 3 */}
+      <div>
+        <div className="row pl-0 ml-n7 pr-3">
+          {/* card Kerjasama Aktif */}
+          <div className="col-12 col-md-6 col-lg-6 col-xl-4">
+            <CardPage
+              background="bg-light-success "
+              icon="Done-circle1.svg"
+              color="#ffffff"
+              value={allCooperationUser.totalDataActive}
+              titleValue=""
+              title="Kerjasama Aktif"
+              publishedVal="1"
+              routePublish={() => dispatch(changeValueStatusCard("active"))}
+              backgroundCard="/assets/icon/clipboard-check-green.svg"
+            />
+          </div>
+          
+          {/* card Pengajuan Kerjasama */}
+          <div className="col-12 col-md-6 col-lg-6 col-xl-4">
+            <CardPage
+              background="bg-light-warning"
+              icon="Info-circle.svg"
+              color="#ffffff"
+              value={allCooperationUser.totalDataAnother}
+              titleValue=""
+              title="Pengajuan Kerjasama"
+              publishedVal="1"
+              routePublish={() => dispatch(changeValueStatusCard("submission"))}
+              backgroundCard="/assets/icon/clipboard-list-yellow.svg"
+            />
+          </div>
+          
+          {/* card Kerjasama Akan Habis */}
+          <div className="col-12 col-xl-4">
+            <CardPage
+              background="bg-light-danger"
+              icon="Error-circle.svg"
+              color="#ffffff"
+              value={sumWillExpire}
+              titleValue=""
+              title="Kerjasama akan Habis"
+              publishedVal="1"
+              routePublish={() => dispatch(changeValueStatusCard("will_expire"))}
+              backgroundCard="/assets/icon/clipboard-cross-red.svg"
+            />
+          </div>
         </div>
       </div>
 
@@ -268,15 +278,15 @@ const Table = ({ token }) => {
             <div className="table-filter">
               <div className="row align-items-center">
                 <div className="col-lg-12 col-xl-12">
-                  <div className="row">
-                    <div className="col-12 col-sm-6">
+                  <div className="row mb-3">
+                    <div className="col-12 col-xl-4 ">
                       <div className="position-relative overflow-hidden w-100 mt-5">
                         <IconSearch style={{ left: "10" }} className="left-center-absolute" />
                         <input
                           id="kt_datatable_search_query"
                           type="text"
                           className="form-control pl-10"
-                          placeholder="Ketik disini untuk Pencarian..."
+                          placeholder="Cari..."
                           onChange={(e) => handleChangeValueSearch(e.target.value)}
                         />
                         <button
@@ -292,11 +302,11 @@ const Table = ({ token }) => {
                         </button>
                       </div>
                     </div>
-                    <div className="col-12 col-sm-6">
-                      <div className="d-flex flex-wrap align-items-center justify-content-end mt-2">
+                    <div className="col-12 col-xl-8 ">
+                      <div className="d-flex flex-wrap align-items-center justify-content-xl-end mt-2">
                         {/* sorotir by modal */}
                         <button
-                          className="avatar item-rtl btn border d-flex align-items-center justify-content-between mt-2"
+                          className="avatar item-rtl btn border col-12 col-xl-4 d-flex align-items-center justify-content-between mt-2 mt-xl-0 mt-7"
                           data-toggle="modal"
                           data-target="#exampleModalCenter"
                           style={{ color: "#464646", minWidth: "230px" }}
@@ -408,11 +418,18 @@ const Table = ({ token }) => {
 
                     <tbody>
                       {allCooperationUser.cooperationMitra.data && allCooperationUser?.cooperationMitra?.data?.list_cooperations?.length === 0 ? (
-                        <tr>
-                          <td colSpan="8" className="text-center">
-                            <h4>Data tidak ditemukan</h4>
-                          </td>
-                        </tr>
+                        valueSearch ?
+                            <tr>
+                              <td colSpan="8" className="text-center">
+                                <h4>Data tidak ditemukan</h4>
+                              </td>
+                            </tr>
+                          :
+                            <tr>
+                              <td colSpan="8" className="text-center">
+                                <h4>Data kosong</h4>
+                              </td>
+                            </tr>
                       ) : (
                         allCooperationUser?.cooperationMitra?.data?.list_cooperations?.map((items, index) => {
                           return (
@@ -670,7 +687,7 @@ const Table = ({ token }) => {
                 )}
               </div>
               <div className="row">
-                <div className="table-pagination">
+                <div className="table-pagination col-12 col-md-8">
                   <Pagination
                     activePage={allCooperationUser.page}
                     itemsCountPerPage={allCooperationUser?.cooperationMitra?.data?.perPage}
@@ -685,7 +702,7 @@ const Table = ({ token }) => {
                     linkClass="page-link"
                   />
                 </div>
-                <div className="table-total ml-auto">
+                <div className="table-total col-12 col-md-4 d-flex justify-content-md-end ml-md-0 ml-4">
                   <div className="row mt-4">
                     <div className="col-4 mr-0 p-0">
                       <select

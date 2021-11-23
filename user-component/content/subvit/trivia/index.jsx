@@ -104,13 +104,14 @@ const SubtansiUser = ({ token }) => {
       return () => clearInterval(secondsLeft);
     } else {
       localStorage.clear();
+      // MASIH DIPAKE AKAN DIBUKA SETELAH NO BUGS
       // router.push(`/peserta/done-trivia`);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [count]);
 
   useEffect(() => {
-    // console.log(data.time_left);
+    // MASIH DIPAKE AKAN DIBUKA SETELAH NO BUGS
     // setData(initialData);
     // setData(random_subtance_question_detail);
 

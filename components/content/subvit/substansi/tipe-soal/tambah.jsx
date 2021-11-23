@@ -15,6 +15,7 @@ import styles from "../../trivia/edit/step.module.css";
 import { useRouter } from "next/router";
 import LoadingPage from "../../../../LoadingPage";
 import { FAIL_COOPERTAION_ACTIVE_SELECT_BY_ID } from "../../../../../redux/types/partnership/management_cooporation.type";
+import { helperRegexNumber } from "../../../../../utils/middleware/helper";
 
 const TambahTipeSoal = ({ token }) => {
   const dispatch = useDispatch();
@@ -42,7 +43,7 @@ const TambahTipeSoal = ({ token }) => {
   }, [dispatch, error, success, router]);
 
   const [name, setName] = useState("");
-  const [value, setValue] = useState(null);
+  const [value, setValue] = useState("");
   const [status_, setStatus_] = useState(false);
   const [, forceUpdate] = useState();
 
@@ -95,6 +96,12 @@ const TambahTipeSoal = ({ token }) => {
 
   const handleChange = (e) => {
     setStatus_(e.target.value);
+  };
+
+  const handleBobot = (e) => {
+    if (e === "" || helperRegexNumber.test(e)) {
+      setValue(e);
+    }
   };
 
   return (
@@ -159,10 +166,10 @@ const TambahTipeSoal = ({ token }) => {
                 <div className="col-sm-12">
                   <span className="font-weight-bold">Bobot Nilai</span>
                   <input
-                    type="number"
+                    type="text"
                     className="form-control"
                     placeholder="*Contoh: 2"
-                    onChange={(e) => setValue(e.target.value)}
+                    onChange={(e) => handleBobot(e.target.value)}
                     onBlur={() =>
                       simpleValidator.current.showMessageFor("bobot nilai")
                     }
