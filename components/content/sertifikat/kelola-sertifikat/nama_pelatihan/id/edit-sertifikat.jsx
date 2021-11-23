@@ -356,7 +356,7 @@ export default function EditSertifikat({ token }) {
         if (localBackgroundSyllabus) {
           formData.append("background_syllabus", localBackgroundSyllabus);
         }
-        console.log(signature, "ini signaturenya");
+
         for (let i = 0; i < number_of_signatures; i++) {
           if (signature[i].localSignature) {
             formData.append(

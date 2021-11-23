@@ -304,10 +304,6 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
       });
   };
 
-  useEffect(() => {
-    console.log(upImg, "ini up image");
-  }, [upImg]);
-
   return (
     <>
       <Form onSubmit={handleSubmit}>

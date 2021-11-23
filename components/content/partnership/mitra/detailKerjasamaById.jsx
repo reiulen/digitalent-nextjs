@@ -21,7 +21,6 @@ const EditDokumentKerjasamaById = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  console.log(token);
   const allMK = useSelector((state) => state.allMK);
   //
   //

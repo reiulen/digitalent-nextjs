@@ -69,19 +69,11 @@ export default function CardTemplateOriginal({ data, session }) {
         Swal.fire(data.message, "Berhasil upload sertifikasi", "success");
       }
     } catch (error) {
-      console.log(error);
       Swal.fire("Gagal", `${error.response.data.message}`, "error");
     }
   };
 
   const handleClick = async (name, id) => {
-    // let file_path = data.data;
-    // let a = document.createElement("A");
-    // a.href = `http://192.168.11.44:83/storage/pdf/2fe3e1a9-973f-4acf-8b09-e2fe6a7c3974-November.pdf`;
-    // a.download = file_path.substr(file_path.lastIndexOf("/") + 1);
-    // document.body.appendChild(a);
-    // a.click();
-    // document.body.removeChild(a);
     if (name == "download") {
       try {
         const { data } = await axios.get(
@@ -90,19 +82,20 @@ export default function CardTemplateOriginal({ data, session }) {
         );
         if (data) {
           // console.log(data);
-          const a = document.createElement("a");
-          a.href = data.data;
-          a.download = "Bukti Pendaftaran.pdf";
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-          // const link = document.createElement("a");
-          // link.download = `Form Pendaftaran.pdf`;
-          // link.href = data.data;
-          // link.click();
+          // const a = document.createElement("a");
+          // a.href = data.data;
+          // a.download = "Bukti Pendaftaran.pdf";
+          // document.body.appendChild(a);
+          // a.click();
+          // document.body.removeChild(a);
+
+          const link = document.createElement("a");
+          link.download = `Form Pendaftaran.pdf`;
+          // link.target = "_blank";
+          link.href = data.data;
+          link.click();
         }
       } catch (error) {
-        console.log(error);
         Swal.fire("Gagal", `${error.response.data.message}`, "error");
       }
 
@@ -137,7 +130,7 @@ export default function CardTemplateOriginal({ data, session }) {
     }
   };
 
-  console.log(data, " <============ini status"); // ID 305 fajar
+  // console.log(data, " <============ini status"); // ID 305 fajar
   return (
     <Fragment>
       <Card className="position-relative">
@@ -165,7 +158,7 @@ export default function CardTemplateOriginal({ data, session }) {
                 );
 
               if (data.status.includes("tes substansi"))
-                return console.log("masuk sini");
+                return router.push("/peserta/test-substansi");
               // switch (data.status) {
               //   case "menunggu":
               //     Cookies.set("id_pelatihan", data.id);

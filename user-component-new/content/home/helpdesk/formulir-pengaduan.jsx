@@ -28,7 +28,6 @@ export default function FormPengaduan() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
-      console.log("masuk");
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
