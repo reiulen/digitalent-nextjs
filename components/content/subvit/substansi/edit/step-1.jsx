@@ -175,7 +175,7 @@ const StepOne = ({ token }) => {
     data.data.map((item) => {
       return optionsTema.push({ label: item.label, value: item.value });
     });
-  console.log(subtance);
+
   return (
     <PageWrapper>
       {error ? (

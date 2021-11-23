@@ -45,7 +45,6 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
     (state) => state.drowpdownTempatLahir.data
   );
 
-  console.log(dataTempatLahir);
   let optionsTempatLahir = [];
 
   dataTempatLahir &&

@@ -130,13 +130,10 @@ const SubtansiUser = ({ token }) => {
   ];
   let multi = [];
 
-  console.log(multi);
-  // console.log(localStorage.getItem(router.query.id + index));
-
   const [data, setData] = useState(initialData);
   const [answer, setAnswer] = useState("");
   const [d, setD] = useState("");
-  console.log(d);
+
   const [listAnswer, setListAnswer] = useState([]);
   const [numberPage, setNumberPage] = useState("");
   const [numberAnswer, setNumberAnswer] = useState(false);
@@ -144,7 +141,7 @@ const SubtansiUser = ({ token }) => {
   const [modalResponsive, setModalResponsive] = useState(false);
   const [multipleAnswer, setMultipleAnswer] = useState(multi);
   const [indexSoal, setIndexSoal] = useState(0);
-  // console.log("hehe", multipleAnswer);
+
   const [count, setCount] = useState(data && data.time_left);
   const [modalDone, setModalDone] = useState(false);
 
@@ -170,7 +167,6 @@ const SubtansiUser = ({ token }) => {
       keyMap.push(key);
     }
   };
-  console.log(keyMap);
 
   const handleModalSoal = () => {
     setModalSoal(true);
@@ -236,17 +232,17 @@ const SubtansiUser = ({ token }) => {
       return () => clearInterval(secondsLeft);
     } else {
       localStorage.clear();
-      // MASIH DIPAKE UNTUK TESTING
+      // MASIH DIPAKE UNTUK SETELAH TESTING
       // router.push(`/peserta/done-mid-tes`);
     }
   }, [count, data]);
 
-  // MASIH DIPAKE UNTUK TESTING
+  // MASIH DIPAKE UNTUK SETELAH TESTING
   // useEffect(() => {
   //   axios
   //     .get("https://run.mocky.io/v3/8f420e68-c974-456f-97ff-9862330d6190")
   //     .then((res) => setData(res.data.data));
-  //   console.log(JSON.parse(data[0].answer));
+  //
   //   // setData(random_subtance_question_detail);
   // }, []);
 
@@ -291,9 +287,6 @@ const SubtansiUser = ({ token }) => {
     setData(dataTemp);
 
     setAnswer(e.key);
-    console.log(localStorage.getItem(router.query.id));
-
-    // localStorage.setItem(`${router.query.id}`, e.key);
 
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i);
@@ -336,26 +329,18 @@ const SubtansiUser = ({ token }) => {
   };
 
   const handleTest = (e, i, it) => {
-    // console.log(i);
     if (e.target.checked === true) {
       localStorage.setItem(router.query.id + "/" + i, it.key);
-
-      // console.log(it);
     } else {
       localStorage.removeItem(router.query.id + "/" + i);
     }
-    // console.log(as);
-    // console.log(e.target, i, it);
+
     let list22 = [];
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i);
       list22.push(localStorage.getItem(key));
-      // console.log(key);
     }
-    // console.log(list22);
   };
-
-  // console.log(multi);
 
   return (
     <>
@@ -507,7 +492,6 @@ const SubtansiUser = ({ token }) => {
                                       key={index}
                                       onClick={() => {
                                         handleAnswer(item, index);
-                                        // console.log(multi);
                                       }}
                                     >
                                       <table>
@@ -533,7 +517,6 @@ const SubtansiUser = ({ token }) => {
                                   key={index}
                                   onClick={() => {
                                     handleAnswer(item, index);
-                                    // console.log(multi);
                                   }}
                                 >
                                   <table>
@@ -583,7 +566,6 @@ const SubtansiUser = ({ token }) => {
                                       key={index}
                                       onClick={() => {
                                         handleAnswer(item, index);
-                                        // console.log(multi);
                                       }}
                                     >
                                       <table>
@@ -609,7 +591,6 @@ const SubtansiUser = ({ token }) => {
                                   key={index}
                                   onClick={() => {
                                     handleAnswer(item, index);
-                                    // console.log(multi);
                                   }}
                                 >
                                   <table>
@@ -680,7 +661,6 @@ const SubtansiUser = ({ token }) => {
                     data[parseInt(router.query.id) - 1]?.answer !== null &&
                     data[parseInt(router.query.id) - 1]?.answer.map(
                       (item, index) => {
-                        console.log(localStorage.getItem(router.query.id + d));
                         return (
                           <>
                             {item.image !== null && item.image !== "" ? (
@@ -800,248 +780,6 @@ const SubtansiUser = ({ token }) => {
                   </Form>
                 </>
               )}
-
-              {/* BEFORE REVISION */}
-              {/* <h1 className={styles.soal}>
-                {data &&
-                data[parseInt(router.query.id) - 1].question_image !== null &&
-                data[parseInt(router.query.id) - 1].question_image !== "" ? (
-                  <div className="d-flex flex-row">
-                    <div className="p-2">
-                      <Image
-                        src={
-                          process.env.END_POINT_API_IMAGE_SUBVIT +
-                            data[parseInt(router.query.id) - 1]
-                              ?.question_image || defaultImage
-                        }
-                        alt=""
-                        width={150}
-                        ndl
-                        height={150}
-                      />
-                    </div>
-                    {data[parseInt(router.query.id) - 1].type ===
-                    "multiple_choice" ? (
-                      <div className="p-5">
-                        {data && data[parseInt(router.query.id) - 1]?.question}
-                        <br />
-                        <br />
-                        <span className={styles.multipleChoice}>
-                          Anda dapat memilih lebih dari 1 jawaban
-                        </span>
-                      </div>
-                    ) : (
-                      <div className="p-5">
-                        {data && data[parseInt(router.query.id) - 1]?.question}
-                      </div>
-                    )}
-                  </div>
-                ) : data[parseInt(router.query.id) - 1].type ===
-                  "multiple_choice" ? (
-                  <div>
-                    {data &&
-                      data &&
-                      data[parseInt(router.query.id) - 1].question}
-                    <br />
-                    <br />
-                    <span className={styles.multipleChoice}>
-                      Anda dapat memilih lebih dari 1 jawaban
-                    </span>
-                  </div>
-                ) : (
-                  data && data && data[parseInt(router.query.id) - 1].question
-                )}
-              </h1> */}
-              {/* <hr hidden={data[parseInt(router.query.id) - 1].open === true} /> */}
-              {/* {data &&
-              data[parseInt(router.query.id) - 1]?.answer !== null &&
-              data &&
-              data[parseInt(router.query.id) - 1].open === true
-                ? data[parseInt(router.query.id) - 1]?.answer
-                    .filter(
-                      (data) =>
-                        data.key === localStorage.getItem(router.query.id)
-                    )
-                    .map((item, index) => {
-                      return (
-                        <>
-                          {item.image !== null && item.image !== "" ? (
-                            <div className="d-flex flex-row">
-                              <div className="p-2">
-                                <Image
-                                  src={
-                                    process.env.END_POINT_API_IMAGE_SUBVIT +
-                                      item.image || defaultImage
-                                  }
-                                  alt=""
-                                  width={70}
-                                  height={70}
-                                />
-                              </div>
-                              <div
-                                className="p-4"
-                                style={{ width: "100%", height: "100%" }}
-                              >
-                                <Card
-                                  className={
-                                    multipleAnswer.includes(item.key)
-                                      ? styles.answer
-                                      : styles.boxAnswer
-                                  }
-                                  key={index}
-                                  onClick={() => {
-                                    if (multi.includes(item.key)) {
-                                      multi.splice(multi.indexOf(item.key), 1);
-                                    } else {
-                                      multi.push(item.key);
-                                    }
-                                    // console.log(multi);
-                                  }}
-                                >
-                                  <table>
-                                    <tr>
-                                      <td style={{ width: "5px" }}>
-                                        {item.key}
-                                      </td>
-                                      <td style={{ width: "15px" }}>.</td>
-                                      <td>{item.option}</td>
-                                    </tr>
-                                  </table>
-                                </Card>
-                              </div>
-                            </div>
-                          ) : data[parseInt(router.query.id) - 1].type ===
-                            "multiple_choice" ? (
-                            <p>TEst</p>
-                          ) : (
-                            <Card
-                              className={
-                                multipleAnswer.includes(item.key)
-                                  ? styles.answer
-                                  : styles.boxAnswer
-                              }
-                              key={index}
-                              onClick={() => {
-                                if (multi.includes(item.key)) {
-                                  multi.splice(multi.indexOf(item.key), 1);
-                                } else {
-                                  multi.push(item.key);
-                                }
-                                // console.log(multi);
-                              }}
-                            >
-                              <table>
-                                <tr>
-                                  <td style={{ width: "5px" }}>{item.key}</td>
-                                  <td style={{ width: "15px" }}>.</td>
-                                  <td>{item.option} </td>
-                                </tr>
-                              </table>
-                            </Card>
-                          )}
-                        </>
-                      );
-                    })
-                : data[parseInt(router.query.id) - 1]?.answer &&
-                  data[parseInt(router.query.id) - 1]?.answer.map(
-                    (item, index) => {
-                      return (
-                        <>
-                          {item.image !== null && item.image !== "" ? (
-                            <div className="d-flex flex-row">
-                              <div className="p-2">
-                                <Image
-                                  src={
-                                    process.env.END_POINT_API_IMAGE_SUBVIT +
-                                      item.image || defaultImage
-                                  }
-                                  alt=""
-                                  width={70}
-                                  height={70}
-                                />
-                              </div>
-                              <div
-                                className="p-4"
-                                style={{ width: "100%", height: "100%" }}
-                              >
-                                <Card
-                                  className={
-                                    multipleAnswer.includes(item.key)
-                                      ? styles.answer
-                                      : styles.boxAnswer
-                                  }
-                                  key={index}
-                                  onClick={() => {
-                                    if (multi.includes(item.key)) {
-                                      multi.splice(multi.indexOf(item.key), 1);
-                                    } else {
-                                      multi.push(item.key);
-                                    }
-                                    // console.log(multi);
-                                  }}
-                                >
-                                  <table>
-                                    <tr>
-                                      <td style={{ width: "5px" }}>
-                                        {item.key}
-                                      </td>
-                                      <td style={{ width: "15px" }}>.</td>
-                                      <td>{item.option}</td>
-                                    </tr>
-                                  </table>
-                                </Card>
-                              </div>
-                            </div>
-                          ) : data[parseInt(router.query.id) - 1]?.answer &&
-                            data[parseInt(router.query.id) - 1].type ===
-                              "multiple_choice" ? (
-                            <p>TEST</p>
-                          ) : (
-                            <Card
-                              className={
-                                multipleAnswer.includes(item.key)
-                                  ? styles.answer
-                                  : styles.boxAnswer
-                              }
-                              key={index}
-                              onClick={() => {
-                                if (multi.includes(item.key)) {
-                                  multi.splice(multi.indexOf(item.key), 1);
-                                } else {
-                                  multi.push(item.key);
-                                }
-                                // console.log(multi);
-                              }}
-                            >
-                              <table>
-                                <tr>
-                                  <td style={{ width: "5px" }}>{item.key}</td>
-                                  <td style={{ width: "15px" }}>.</td>
-                                  <td>{item.option} </td>
-                                </tr>
-                              </table>
-                            </Card>
-                          )}
-                        </>
-                      );
-                    }
-                  )} */}
-              {/* {data[parseInt(router.query.id) - 1].type === "multiple_choice" &&
-                data[parseInt(router.query.id) - 1]?.answer &&
-                data[parseInt(router.query.id) - 1]?.answer.map(
-                  (item, index) => {
-                    return (
-                      <>
-                        <Form.Check
-                          className={styles.check}
-                          inline
-                          label={item.key + "." + item.option}
-                          onClick={(event) => handleTest(event, index, item)}
-                        />
-                      </>
-                    );
-                  }
-                )} */}
 
               {data[parseInt(router.query.id) - 1].open === true && (
                 <>
@@ -1190,8 +928,7 @@ const SubtansiUser = ({ token }) => {
                     const key = localStorage.key(i);
                     list.push(key);
                   }
-                  console.log(JSON.stringify(`${item}a`));
-                  console.log(list.includes(JSON.stringify(`${item}`)));
+
                   return (
                     <>
                       {list.includes(JSON.stringify(item + 1)) ? (

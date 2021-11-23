@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, Button, Badge } from "react-bootstrap";
 import Image from "next/image";
+import ShareOverlay from "../global/ShareOverlay.component";
 
 const CardPelatihanOpen = ({
   funcMouseEnter,
@@ -38,14 +39,12 @@ const CardPelatihanOpen = ({
         <Card.ImgOverlay>
           <div className="d-flex justify-content-between">
             <div className="align-self-start">
-              {row.metode_pelatihan !== "Offline" && (
-                <Badge
-                  bg={`py-3 px-4 badge-card-pelatihan-new`}
-                  classNam="d-flex "
-                >
-                  Pelatihan {row.metode_pelatihan}
-                </Badge>
-              )}
+              <Badge
+                bg={`py-3 px-4 badge-card-pelatihan-new`}
+                classNam="d-flex "
+              >
+                Pelatihan {row.metode_pelatihan}
+              </Badge>
             </div>
             {show[i] && (
               <div className="whishlist align-self-end float-right">
@@ -60,17 +59,22 @@ const CardPelatihanOpen = ({
                     }}
                   ></i>
                 </Button>
-                <Button
-                  variant="light"
-                  className={`float-right d-flex justify-content-center align-items-center mr-2 wishlist-card-new`}
+                <ShareOverlay
+                  url={`${process.env.PATH_URL}/detail/pelatihan/${row.id}`}
+                  quote={row.name}
                 >
-                  <i
-                    className="ri-share-line p-0"
-                    style={{
-                      color: "#6C6C6C",
-                    }}
-                  ></i>
-                </Button>
+                  <Button
+                    variant="light"
+                    className={`float-right d-flex justify-content-center align-items-center mr-2 wishlist-card-new`}
+                  >
+                    <i
+                      className="ri-share-line p-0"
+                      style={{
+                        color: "#6C6C6C",
+                      }}
+                    ></i>
+                  </Button>
+                </ShareOverlay>
               </div>
             )}
           </div>
@@ -143,7 +147,7 @@ const CardPelatihanOpen = ({
                 className={`btn-block rounded-xl my-auto btn-quick-view-new`}
                 onClick={() => funcQuickView(i)}
               >
-                LIHAT SINGKAT
+                LIHAT
               </Button>
             </div>
           )}
