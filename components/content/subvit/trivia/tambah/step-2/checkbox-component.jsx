@@ -136,7 +136,7 @@ const CheckboxComponent = ({
                     className="form-control pb-0 my-0"
                     name="option"
                     value={x.option}
-                    placeholder={x.key}
+                    placeholder={`Isi Jawaban ${x.key}`}
                     onChange={(e) => handleInputChange(e, i)}
                     autoComplete="off"
                   />
@@ -176,6 +176,7 @@ const CheckboxComponent = ({
                         value={x.value}
                         onChange={(e) => handleInputChange(e, i)}
                         autoComplete="off"
+                        placeholder="2"
                       />
                     </div>
 
@@ -197,7 +198,9 @@ const CheckboxComponent = ({
                         </button>
                       )}
                     </div>
-                    <div className={`${styles.btnSwitch} col-3 col-md-4 col-lg-4 col-xl-5`}>
+                    <div
+                      className={`${styles.btnSwitch} col-3 col-md-4 col-lg-4 col-xl-5`}
+                    >
                       <SwitchButton
                         checked={x.is_right}
                         onlabel=" "
@@ -211,7 +214,6 @@ const CheckboxComponent = ({
                       />
                     </div>
                   </div>
-
                 </div>
               </div>
             </>
@@ -219,15 +221,16 @@ const CheckboxComponent = ({
         })}
       </div>
 
-      <div className="form-group row">
-        <div className="col-sm-7 col-md-4">
+      <div className="form-group ">
+        <div>
           {answer.length < 6 ? (
             <button
               type="button"
-              className="col-12 col-md-12 col-lg-12 col-xl-9 btn btn-rounded-full bg-blue-secondary text-white"
+              className={`${styles.btnAddAnswer} btn btn-secondary-rounded-full bg-blue-secondary text-white`}
               onClick={() => handleAddClick()}
             >
-              <i className={`${styles.iconTambah} ri-add-fill text-white`}></i> Tambah Jawaban
+              <i className={`${styles.iconTambah} ri-add-fill text-white`}></i>
+              <span>Tambah Jawaban</span>
             </button>
           ) : (
             ""
@@ -254,6 +257,7 @@ const CheckboxComponent = ({
                 props_duration(e.target.value);
               }}
               min={1}
+              placeholder="120"
             />
             <div className="input-group-append">
               <span

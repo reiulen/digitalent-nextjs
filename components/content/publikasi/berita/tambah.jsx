@@ -324,7 +324,7 @@ const TambahBerita = ({ token, id }) => {
                                             alt="image"
                                             width={160}
                                             height={160}
-                                            objectFit="fill"
+                                            objectFit="cover"
                                         />
                                     </figure>
                                     <div>

@@ -121,7 +121,7 @@ const BlankComponent = ({ props_answer, props_duration }) => {
                     className="form-control"
                     name="option"
                     value={x.option}
-                    placeholder={x.key}
+                    placeholder={`Pilihan ${x.key}`}
                     onChange={(e) => handleInputChange(e, i)}
                     autoComplete="off"
                   />
@@ -135,7 +135,7 @@ const BlankComponent = ({ props_answer, props_duration }) => {
                     Nilai
                   </label>
                   <div className="row justify-content-center align-items-center">
-                    <div className="form-group col-12 col-md-3 mb-3">
+                    <div className="form-group col-12 col-md-5 mb-3">
                       <input
                         type="number"
                         className={`${styles.inputNilai} form-control`}
@@ -143,6 +143,7 @@ const BlankComponent = ({ props_answer, props_duration }) => {
                         value={x.value}
                         onChange={(e) => handleInputChange(e, i)}
                         autoComplete="off"
+                        placeholder="2"
                       />
                     </div>
                     <div className="col-12 col-sm-2">
@@ -166,20 +167,21 @@ const BlankComponent = ({ props_answer, props_duration }) => {
         })}
       </div>
 
-      <div className="form-group row">
+      <div className="form-group ">
         {/* <div className="row"> */}
-          <div className="col-sm-7 col-md-4 col-lg-5 text-center">
-            {answer.length < 6 ? (
-              <button
-                type="button"
-                className="col-12 col-md-12 col-lg-10 col-xl-7 btn btn-rounded-full bg-blue-secondary text-white"
-                onClick={() => handleAddClick()}
-              >
-                <i className={`${styles.iconTambah} ri-add-fill text-white`}></i> Tambah Jawaban
-              </button>
-            ) : (
-              ""
-            )}
+        <div>
+          {answer.length < 6 ? (
+            <button
+              type="button"
+              className={`${styles.btnAddAnswer} btn btn-secondary-rounded-full bg-blue-secondary text-white`}
+              onClick={() => handleAddClick()}
+            >
+              <i className={`${styles.iconTambah} ri-add-fill text-white`}></i>{" "}
+              <span>Tambah Jawaban</span>
+            </button>
+          ) : (
+            ""
+          )}
           {/* </div> */}
         </div>
       </div>
@@ -198,6 +200,7 @@ const BlankComponent = ({ props_answer, props_duration }) => {
               className="form-control"
               aria-describedby="basic-addon2"
               value={duration}
+              placeholder="120"
               onChange={(e) => {
                 setDuration(e.target.value);
                 props_duration(e.target.value);
