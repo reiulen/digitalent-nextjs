@@ -46,7 +46,8 @@ tbody {
 }
 
 .table.table-separate th.permision {
-  padding-right: 11rem !important;
+  padding-right: 17rem !important;
+  border: 0;
 }
 
 .table.table-separate th.child-permission {
