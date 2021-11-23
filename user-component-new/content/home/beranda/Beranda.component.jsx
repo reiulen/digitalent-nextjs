@@ -373,7 +373,7 @@ const Beranda = ({ session }) => {
                                   onMouseEnter={() => handleMouseEnter(i, j)}
                                   onMouseLeave={() => handleMouseLeave(i, j)}
                                 >
-                                  {row.status !== "Open" ? (
+                                  {row.status !== "Dibuka" ? (
                                     <CardPelatihanClose row={row} />
                                   ) : (
                                     <>
