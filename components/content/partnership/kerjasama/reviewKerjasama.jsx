@@ -194,25 +194,25 @@ const ReviewKerjasama = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark titles-1">
-              Review Kerjasama {mitra && mitra} 
+              Review Kerjasama {mitra && mitra}
             </h3>
           </div>
           <div className="card-body pt-0">
             {statusInfo && statusInfo === "Sudah direview" ? (
               <form>
                 <div className="form-group">
-                  <label htmlFor="staticEmail" className="col-form-label text-muted">
+                  <label htmlFor="staticEmail" className="col-form-label" style={{color:"#6C6C6C"}}>
                     Tanggal
                   </label>
                   <input
                     type="date"
                     required
                     value={dateView && dateView}
-                    className="form-control border-0"
+                    className="form-control border-0 ml-n4"
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="staticEmail" className="col-form-label">
+                  <label htmlFor="staticEmail" className="col-form-label" style={{color:"#6C6C6C"}}>
                     Judul kerjasama
                   </label>
                   <input
@@ -221,12 +221,12 @@ const ReviewKerjasama = ({ token }) => {
                     value={titleView && titleView}
                     onChange={(e) => setTitle(e.target.value)}
                     type="text"
-                    className="form-control border-0"
+                    className="form-control border-0 ml-n4"
                     placeholder="Judul Kerjasama"
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="staticEmail" className="col-form-label">
+                  <label htmlFor="staticEmail" className="col-form-label" style={{color:"#6C6C6C"}}>
                     Kategori kerjasama
                   </label>
                   <select
@@ -241,7 +241,7 @@ const ReviewKerjasama = ({ token }) => {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="staticEmail" className="col-form-label">
+                  <label htmlFor="staticEmail" className="col-form-label" style={{color:"#6C6C6C"}}>
                     Periode
                   </label>
                   <div className="row">
@@ -250,7 +250,7 @@ const ReviewKerjasama = ({ token }) => {
                         required
                         readOnly
                         type="number"
-                        className="form-control mt-2 border-0"
+                        className="form-control mt-2 border-0 ml-n4"
                         onChange={(e) => setPeriod(e.target.value)}
                         value={periodView}
                       />
@@ -271,6 +271,7 @@ const ReviewKerjasama = ({ token }) => {
                               <label
                                 htmlFor="staticEmail"
                                 className="col-form-label"
+                                style={{color:"#6C6C6C"}}
                               >
                                 {items.cooperation_form}
                               </label>

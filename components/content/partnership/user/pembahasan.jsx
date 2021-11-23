@@ -127,8 +127,8 @@ function Pembahasan({ token }) {
                   </p>
                 </div>
 
-                <div className="form-group row">
-                  <div className="col-sm-12 d-flex flex-wrap justify-content-end">
+                <div className="form-group col-12 col-xl-6 flex-row">
+                  <div className="d-flex flex-wrap justify-content-between">
                     <Link
                       href="/partnership/user/tanda-tangan-digital"
                       passHref
