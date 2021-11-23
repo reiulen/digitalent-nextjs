@@ -3,6 +3,7 @@ import style from "./Chatbot.module.css";
 import Image from "next/image";
 import { Row, Col } from "react-bootstrap";
 import Link from "next/link";
+
 export default function ChatBot() {
   const [clicked, setClicked] = useState(false);
 
@@ -15,16 +16,16 @@ export default function ChatBot() {
         }}
       >
         <div
-          className={`${style.chatbot_box} ${style.one} d-flex justify-content-end`}
+          className={`${style.chatbot_box} ${style.one} d-flex justify-content-end `}
           style={clicked ? { width: "280px" } : {}}
         >
-          <div
-            className={`btn btn-block text-primary rounded-full shadow-sm ${style.chatbot_btn_help}`}
-            style={
-              clicked
-                ? { right: "120px", top: 0, maxHeight: "max-content" }
-                : {}
-            }
+          <button
+            className={`btn btn-block text-primary rounded-full shadow-sm ${
+              style.chatbot_btn_help
+            } ${clicked && style.right_animation}`}
+            // style={
+            //   clicked ? { right: "60px", top: 0, maxHeight: "max-content" } : {}
+            // }
           >
             <div className={`my-3 `}>Butuh Bantuan?</div>
             <div
@@ -38,7 +39,7 @@ export default function ChatBot() {
                   >
                     <i className="ri-question-answer-fill" /> Live Chat
                   </div>
-                  <Link href="/peserta">
+                  <Link href="/helpdesk/formulir-pengaduan">
                     <div
                       className={`${style.chatbot_options} btn-primary btn btn-block rounded-full `}
                     >
@@ -57,8 +58,8 @@ export default function ChatBot() {
                 </div>
               )}
             </div>
-          </div>
-          <div className={`${style.chatbot_image} d-flex justify-content-end`}>
+          </button>
+          <div className={`${style.chatbot_image} justify-content-end`}>
             <Image
               width={110}
               height={140}

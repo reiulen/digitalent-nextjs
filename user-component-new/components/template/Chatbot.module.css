@@ -1,10 +1,10 @@
 .one {
-  background-color: #e6f2ff;
+  /* background-color: #e6f2ff; */
   transition-timing-function: linear;
 }
 
 .Chatbot_container {
-  width: auto;
+  width: 0;
   transition: width 1s ease-in-out height 1s ease-in-out;
 }
 
@@ -62,25 +62,21 @@
   transition-timing-function: linear;
 }
 
-/* .chatbot_btn_help :hover {
-  position: absolute;
-  right: 60px;
-  background-color: #e6f2ff;
-  margin-top: -20px;
-  width: max-content;
-  padding: 6px, 10px, 6px, 10px;
-  font-size: 12px;
-  font-weight: bold;
-} */
+.right_animation {
+  right: 120px;
+  max-height: max-content;
+}
 
 @media (max-width: 575.98px) {
   .Chatbot_container {
-    right: 0;
+    transition: width 1s ease-in-out height 1s ease-in-out;
+    z-index: 999;
+    /* right: 0;
     bottom: 10px;
     bottom: 50px;
-    width: 60px;
+    width: 0;
     border-radius: 50% 0 0 50%;
-    background-color: #e6f2ff;
+    background-color: #e6f2ff; */
     /* transform: scale(0.55); */
     /* transform-origin: 0 0; */
     /* -webkit-transform: scale(0.55); */
@@ -88,30 +84,43 @@
   }
   .chatbot_box {
     /* transform: translateX(-50px); */
-    transform: scale(0.55);
-    -webkit-transform: scale(0.55);
-    width: 150px;
+    /* display: none; */
+    /* transform: scale(0.55); */
+    /* -webkit-transform: scale(0.55); */
+    z-index: 999;
+
+    width: 0px;
     position: fixed;
     height: 130px;
-    right: -20px;
+    right: 0px;
     bottom: 60px;
-    transition-duration: 0.5s;
-    transition-property: width;
-    border-radius: 100% 0 0 100%;
+    /* transition-duration: 0.5s; */
+    /* transition-property: width; */
+    /* border-radius: 100% 0 0 100%; */
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #e6f2ff;
+    background-color: transparent;
     /* transform-origin: 0 0; */
     /* -webkit-transform-origin: 0 0; */
   }
 
   .chatbot_btn_help {
     position: absolute;
-    right: 60px;
+    right: 20px;
     background-color: #e6f2ff;
-    margin-top: -20px;
+    margin-top: -10px;
     width: max-content;
     padding: 6px, 10px, 6px, 10px;
+    transition-duration: 0.5s;
+    /* transition-property: right, top; */
+    /* transition-timing-function: ease-in-out; */
+  }
+  .chatbot_image {
+    display: none;
+  }
+  .right_animation {
+    right: 20px;
+    max-height: max-content;
   }
 }
