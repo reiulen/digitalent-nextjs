@@ -15,7 +15,7 @@ const AddMasterPelatihan = ({ token }) => {
   const router = useRouter();
 
   const { registrationData } = useSelector((state) => state.registrationStep2);
-  const [success, setSuccess] = useState("");
+  const [success, setSuccess] = useState(0);
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
   const [modalShow, setModalShow] = useState(false);
@@ -325,13 +325,21 @@ const AddMasterPelatihan = ({ token }) => {
           Authorization: `Bearer ${token}`,
         },
       };
-      const result = await axios.post(
-        process.env.END_POINT_API_PELATIHAN + `api/v1/formBuilder/create`,
-        data,
-        config
-      );
-      if (result.status == 200) {
-        setSuccess(true);
+      try {
+        const result = await axios.post(
+          process.env.END_POINT_API_PELATIHAN + `api/v1/formBuilder/create`,
+          data,
+          config
+        );
+        if (result.status == 200) {
+          setSuccess(1);
+        }
+        if (!result.status) {
+          throw new Error(result.message);
+        }
+      } catch (error) {
+        console.log(error);
+        setSuccess(2);
       }
     } else {
       simpleValidator.current.showMessages();
@@ -343,11 +351,14 @@ const AddMasterPelatihan = ({ token }) => {
       });
     }
   };
-
+  console.log(success);
   useEffect(() => {
-    if (success) {
+    if (success === 1) {
       SweatAlert("Berhasil", "Berhasil tambah form pendaftaran", "success");
       router.push("/pelatihan/master-pendaftaran");
+    }
+    if (success === 2) {
+      SweatAlert("Gagal", "Panjang Karakter max 100", "error");
     }
   }, [success, router]);
 
@@ -463,6 +474,7 @@ const AddMasterPelatihan = ({ token }) => {
                           />
                         </div>
                       </div>
+
                       {formBuilder.length !== 1 && row.key !== 1 ? (
                         <button
                           className="btn btn-link-action bg-danger text-white mb-3 ml-9"

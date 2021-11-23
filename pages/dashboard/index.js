@@ -1,9 +1,8 @@
 import { getSession } from "next-auth/client";
-import { middlewareAuthAdminSession } from "../../utils/middleware/authMiddleware";
-// import DashboardDigitalent from "../../components/content/dashboard-kabadan/digitalent/dashboard-digitalent";
 import dynamic from "next/dynamic";
+import { middlewareAuthAdminSession } from "../../utils/middleware/authMiddleware";
 
-export default function DashboardDigitalentPage() {
+export default function DashboardPage() {
   const DashboardDigitalent = dynamic(
     () =>
       import(
@@ -18,7 +17,6 @@ export default function DashboardDigitalentPage() {
       ),
     { ssr: false }
   );
-
   return (
     <>
       <div className="d-flex flex-column flex-root">

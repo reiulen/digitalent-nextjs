@@ -4,6 +4,8 @@ import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import SimpleReactValidator from "simple-react-validator";
 import Swal from "sweetalert2";
+import styleBtn from "../../trivia/edit/step.module.css";
+import styles from "../../../../../styles/stepInput.module.css";
 
 import {
   newCloneSubtanceQuestionBanks,
@@ -333,12 +335,55 @@ const StepOne = ({ token }) => {
                 </div>
               </div>
 
-              <div className="form-group mb-3">
+              <div className="row mt-7">
+                <div className=" col-xs-12 col-sm-12 col-md-12 pt-0">
+                  <div className="float-right ">
+                    <div className={styles.foldResponsive}>
+                      <button
+                        className={`${styles.btnNextFold} btn btn-light-ghost-rounded-full mr-2`}
+                        type="button"
+                        onClick={onSubmit}
+                      >
+                        Simpan & Lanjut
+                      </button>
+                      <button
+                        className={`${styles.btnDraftFold} btn btn-primary-rounded-full`}
+                        onClick={saveDraft}
+                        type="button"
+                      >
+                        Simpan Draft
+                      </button>
+                    </div>
+                    <div className={`${styles.normalBtn} row`}>
+                      <div className="col-xs-6">
+                        <button
+                          className={`${styleBtn.btnNext} btn btn-light-ghost-rounded-full mr-2`}
+                          type="button"
+                          onClick={onSubmit}
+                        >
+                          Simpan & Lanjut
+                        </button>
+                      </div>
+                      <div className="col-xs-6">
+                        <button
+                          className={` btn btn-primary-rounded-full`}
+                          onClick={saveDraft}
+                          type="button"
+                        >
+                          Simpan Draft
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* <div className="form-group mb-3">
                 <div className=""></div>
                 <div className=" col-md-12 text-right">
                   <button
                     type="submit"
-                    className="btn btn-light-ghost-rounded-full mr-2"
+                    className={`${styleBtn.btnNext} btn btn-light-ghost-rounded-full mr-2`}
                   >
                     Simpan & Lanjut
                   </button>
@@ -350,7 +395,7 @@ const StepOne = ({ token }) => {
                     Simpan Draft
                   </button>
                 </div>
-              </div>
+              </div> */}
             </form>
           </div>
         </div>

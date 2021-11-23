@@ -327,6 +327,11 @@ a {
 .slick-list button .slick-arrow .slick-next {
   display: none !important;
 }
+@media screen and (max-width: 576px) {
+  .responsive-columns {
+    justify-content: center !important;
+  }
+}
 
 @media screen and (min-width: 600px) {
   .img-carousel {

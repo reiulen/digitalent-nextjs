@@ -4,6 +4,12 @@
     right: 10px;
 }
 
+@media only screen and (max-width: 576px) {
+    .deleteMenu{
+        margin-top: 100px;
+    }
+}
+
 @media only screen and (max-width: 280px) {
     .passwordWord{
         font-size: 9.8px;

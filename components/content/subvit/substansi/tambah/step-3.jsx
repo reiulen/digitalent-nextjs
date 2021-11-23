@@ -17,6 +17,7 @@ import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInput from "/components/StepInput";
 import LoadingPage from "../../../../LoadingPage";
 import styles from "../../trivia/edit/step.module.css";
+import { helperRegexNumber } from "../../../../../utils/middleware/helper";
 
 const StepThree = ({ token }) => {
   const dispatch = useDispatch();
@@ -129,6 +130,24 @@ const StepThree = ({ token }) => {
 
   const handleStatus = (e) => {
     setStatus(e.target.value);
+  };
+
+  const handleTotalSoal = (e) => {
+    if (e === "" || helperRegexNumber.test(e)) {
+      setJumlahSoal(e);
+    }
+  };
+
+  const handleDuration = (e) => {
+    if (e === "" || helperRegexNumber.test(e)) {
+      setDuration(e);
+    }
+  };
+
+  const handlePassingGrade = (e) => {
+    if (e === "" || helperRegexNumber.test(e)) {
+      setPassingGrade(e);
+    }
   };
 
   return (
@@ -244,11 +263,12 @@ const StepThree = ({ token }) => {
                   </p>
                   <div className="input-group">
                     <input
-                      type="number"
+                      type="text"
                       className="form-control"
                       aria-describedby="basic-addon2"
                       value={jumlah_soal}
-                      onChange={(e) => setJumlahSoal(e.target.value)}
+                      placeholder="20"
+                      onChange={(e) => handleTotalSoal(e.target.value)}
                       onBlur={() =>
                         simpleValidator.current.showMessageFor("jumlah soal")
                       }
@@ -280,11 +300,12 @@ const StepThree = ({ token }) => {
                   </p>
                   <div className="input-group">
                     <input
-                      type="number"
+                      type="text"
                       className="form-control"
                       aria-describedby="basic-addon2"
                       value={duration}
-                      onChange={(e) => setDuration(e.target.value)}
+                      placeholder="123 "
+                      onChange={(e) => handleDuration(e.target.value)}
                       onBlur={() =>
                         simpleValidator.current.showMessageFor("durasi")
                       }
@@ -318,11 +339,12 @@ const StepThree = ({ token }) => {
                   </p>
                   <div className="input-group">
                     <input
-                      type="number"
+                      type="text"
+                      placeholder="80.00"
                       className="form-control"
                       aria-describedby="basic-addon2"
                       value={passing_grade}
-                      onChange={(e) => setPassingGrade(e.target.value)}
+                      onChange={(e) => handlePassingGrade(e.target.value)}
                       onBlur={() =>
                         simpleValidator.current.showMessageFor("passing grade")
                       }
