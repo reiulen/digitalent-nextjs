@@ -456,15 +456,17 @@ const Navigationbar = ({ session }) => {
                 <Link href="/login">
                   <a className="mx-2">
                     <button className="btn btn-sm btn-block btn-login-peserta btn-outline-primary-new m-2 justify-content-center py-3">
-                      <IconLogin className="mr-2 icon-login" />
+                      {/* <IconLogin className="mr-2 icon-login" /> */}
+                      <i className="ri-login-box-line mr-2"></i>
                       Masuk
                     </button>
                   </a>
                 </Link>
                 <Link href="/register">
                   <a className="mx-2">
-                    <button className="btn btn-sm btn-block btn-register-peserta color-primary-primary m-2 justify-content-center py-3">
-                      <IconRegister className="mr-2 icon-register" />
+                    <button className="btn btn-sm btn-block btn-register-peserta color-primary m-2 justify-content-center py-3">
+                      {/* <IconRegister className="mr-2 icon-register" /> */}
+                      <i className="ri-user-line mr-2"></i>
                       Daftar
                     </button>
                   </a>

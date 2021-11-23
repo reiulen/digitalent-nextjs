@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import style from "./Chatbot.module.css";
 import Image from "next/image";
 import { Row, Col } from "react-bootstrap";
-
+import Link from "next/link";
 export default function ChatBot() {
   const [clicked, setClicked] = useState(false);
 
@@ -38,12 +38,15 @@ export default function ChatBot() {
                   >
                     <i className="ri-question-answer-fill" /> Live Chat
                   </div>
-                  <div
-                    className={`${style.chatbot_options} btn-primary btn btn-block rounded-full `}
-                  >
-                    <i className="ri-draft-fill" />
-                    Form Pengaduan
-                  </div>
+                  <Link href="/peserta">
+                    <div
+                      className={`${style.chatbot_options} btn-primary btn btn-block rounded-full `}
+                    >
+                      <i className="ri-draft-fill" />
+                      Form Pengaduan
+                    </div>
+                  </Link>
+
                   <a
                     className={`${style.chatbot_options} btn-primary btn btn-block rounded-full `}
                     href="tel:0213452841"
