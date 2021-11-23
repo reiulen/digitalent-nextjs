@@ -4,11 +4,9 @@ import "remixicon/fonts/remixicon.css";
 import "react-toastify/dist/ReactToastify.css";
 import "react-image-crop/dist/ReactCrop.css";
 import "react-phone-input-2/lib/style.css";
-
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css"; //NEW
 import "@splidejs/splide/dist/css/splide.min.css";
-
 import "../styles/sitemanagement/pelatihan.css";
 import "../styles/peserta/dashboards.css";
 import "../styles/progresBar.css";
