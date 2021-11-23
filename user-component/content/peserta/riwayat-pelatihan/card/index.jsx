@@ -9,8 +9,9 @@ import moment from "moment";
 import axios from "axios";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
+import Swal from "sweetalert2";
 
-export default function CardTemplateOriginal({ data }) {
+export default function CardTemplateOriginal({ data, session }) {
   const router = useRouter();
   const dateFrom = moment(data.pendaftaran_mulai).format("LL");
   const dateTo = moment(data.pendaftaran_selesai).format("LL");
@@ -22,13 +23,17 @@ export default function CardTemplateOriginal({ data }) {
     if (data.status.includes("lulus")) return setLabel("success");
     if (data.status.includes("menunggu") || data.status.includes("seleksi"))
       return setLabel("warning");
-    if (data.status == "survey belum tersedia") return setLabel("primary");
-    if (data.status == "LPJ belum tersedia") return setLabel("primary");
     if (data.status.includes("tes substansi")) return setLabel("primary");
     if (data.status.includes("seleksi administrasi"))
       return setLabel("warning");
     if (data.status.includes("belum tersedia")) return setLabel("warning");
-    if (data.status.includes("pelatihan")) return setLabel("primary");
+    if (
+      data.status.includes("pelatihan") ||
+      data.status.includes("LPJ") ||
+      data.status.includes("survey")
+    )
+      return setLabel("primary");
+    // if (data.status.includes("pelatihan")) return setLabel("primary");
 
     // if (data.status.includes("menunggu")) {
     //   return setLabel("warning");
@@ -45,30 +50,64 @@ export default function CardTemplateOriginal({ data }) {
 
   const [imageSertifikasi, setImageSertifikasi] = useState();
   const [statusSertifikasi, setStatusSertifikasi] = useState(1);
-
-  const uploadSertifikasi = async (data, id) => {
-    const link = `${process.env.END_POINT_API_PELATIHAN}api/v1/formPendaftaran/update-sertifikat`;
-
-    const config = {
-      headers: {
-        Authorization: "Bearer " + props.session.token,
-      },
-    };
-
-    const body = {
-      id: +id,
-      sertifikasi: statusSertifikasi.toString(),
-      file_sertifikat: data,
-    };
+  const config = {
+    headers: {
+      authorization: "Bearer " + session.token,
+    },
+  };
+  const uploadSertifikasi = async (sertifikasi, id) => {
     try {
-      const data = await axios.post(link, body, config);
+      const link = `${process.env.END_POINT_API_PELATIHAN}api/v1/formPendaftaran/update-sertifikat`;
+      const body = {
+        id: +id,
+        sertifikasi: statusSertifikasi.toString(),
+        file_sertifikat: sertifikasi,
+      };
+
+      const { data } = await axios.post(link, body, config);
+      if (data) {
+        Swal.fire(data.message, "Berhasil upload sertifikasi", "success");
+      }
     } catch (error) {
+      console.log(error);
       Swal.fire("Gagal", `${error.response.data.message}`, "error");
     }
   };
 
-  const handleClick = () => {
-    console.log("test");
+  const handleClick = async (name, id) => {
+    // let file_path = data.data;
+    // let a = document.createElement("A");
+    // a.href = `http://192.168.11.44:83/storage/pdf/2fe3e1a9-973f-4acf-8b09-e2fe6a7c3974-November.pdf`;
+    // a.download = file_path.substr(file_path.lastIndexOf("/") + 1);
+    // document.body.appendChild(a);
+    // a.click();
+    // document.body.removeChild(a);
+    if (name == "download") {
+      try {
+        const { data } = await axios.get(
+          `${process.env.END_POINT_API_PELATIHAN}api/v1/formPendaftaran/export-pdf?id=${id}`,
+          config
+        );
+        if (data) {
+          // console.log(data);
+          const a = document.createElement("a");
+          a.href = data.data;
+          a.download = "Bukti Pendaftaran.pdf";
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          // const link = document.createElement("a");
+          // link.download = `Form Pendaftaran.pdf`;
+          // link.href = data.data;
+          // link.click();
+        }
+      } catch (error) {
+        console.log(error);
+        Swal.fire("Gagal", `${error.response.data.message}`, "error");
+      }
+
+      // anchor.href = data.
+    }
   };
 
   const [fileName, setFileName] = useState();
@@ -98,8 +137,7 @@ export default function CardTemplateOriginal({ data }) {
     }
   };
 
-  console.log(data.status, " <============ini status"); // ID 305 fajar
-
+  console.log(data, " <============ini status"); // ID 305 fajar
   return (
     <Fragment>
       <Card className="position-relative">
@@ -183,7 +221,7 @@ export default function CardTemplateOriginal({ data }) {
             }}
           >
             <Row>
-              <Col md={3}>
+              <Col lg={3}>
                 <img
                   className="rounded-xl img-fluid d-block w-100"
                   src={`${process.env.END_POINT_API_IMAGE_BEASISWA}${data.gambar}`}
@@ -191,11 +229,11 @@ export default function CardTemplateOriginal({ data }) {
                   style={{ height: "200px", objectFit: "cover" }}
                 />
               </Col>
-              <Col md={9}>
+              <Col lg={9}>
                 <Row className="h-100">
                   <Col
                     lg={2}
-                    className="d-flex justify-content-center align-items-center my-10 my-lg-0 order-2 order-md-1"
+                    className="d-flex justify-content-start align-items-center my-10 my-lg-0 order-2 order-lg-1"
                   >
                     <img
                       src={
@@ -209,21 +247,23 @@ export default function CardTemplateOriginal({ data }) {
                       style={{ borderRadius: "50%", objectFit: "cover" }}
                     />
                   </Col>
-                  <Col md={7} className="my-auto order-3 order-md-2 row">
-                    <h4 className="font-weight-bolder d-flex justify-content-center justify-content-md-start my-0 p-0 col-12 order-1 order-md-1">
+                  <Col lg={7} className="my-auto order-3 order-lg-2 row p-0 ">
+                    <h4 className="font-weight-bolder d-flex justify-content-start justify-content-lg-start my-0 p-0 col-12 order-1 order-lg-1">
                       {data.name}
                     </h4>
                     <div
-                      className="d-flex align-items-center justify-content-md-start justify-content-center order-1 order-md-2"
+                      className="d-flex align-items-center p-0 justify-content-lg-start justify-content-start order-1 order-lg-2 col-12"
                       style={{ color: "#203E80" }}
                     >
-                      <div className="font-weight-bolder">Bukalapak</div>
-                      <div className="text-muted pl-2 justify-content-center">
+                      <div className="font-weight-bolder text-truncate text-left">
+                        {data.mitra}
+                      </div>
+                      <div className="text-muted pl-2 justify-content-center ">
                         &bull; {data.akademi}
                       </div>
                     </div>
                   </Col>
-                  <Col className="order-1 order-md-3 d-flex  justify-content-center justify-content-md-end">
+                  <Col className="p-0 order-4 order-lg-3 my-5 my-lg-0 d-flex justify-content-start justify-content-lg-end ">
                     {data.midtest ? (
                       <p
                         style={{ borderRadius: "50px" }}
@@ -240,7 +280,7 @@ export default function CardTemplateOriginal({ data }) {
                       style={{ borderRadius: "50px" }}
                       className={`label label-inline label-light-${
                         data.survei ? "primary" : label
-                      } font-weight-bolder p-0 px-4 text-capitalize`}
+                      } font-weight-bolder p-0 px-4  text-capitalize`}
                     >
                       {data.lpj
                         ? "Kerjakan LPJ"
@@ -249,8 +289,8 @@ export default function CardTemplateOriginal({ data }) {
                         : data.status == "pelatihan" && data.trivia
                         ? "kerjakan trivia"
                         : data.status == "survey belum tersedia"
-                        ? "Isi survey"
-                        : data.status == "LPJ belum tersedia"
+                        ? "Isi survei"
+                        : data.status.includes("LPJ")
                         ? "Isi LPJ"
                         : data.status}
                       {/* {data.lpj
@@ -270,17 +310,17 @@ export default function CardTemplateOriginal({ data }) {
                         : data.status} */}
                     </p>
                   </Col>
-                  <Col md={12} className="my-auto order-4">
-                    <div className="d-flex align-items-center align-middle ">
+                  <Col lg={12} className="order-5">
+                    <div className="d-flex align-items-center align-middle text-left">
                       <i className="ri-time-line"></i>
                       <span className={` pl-2`}>
                         Pelatihan : {dateFrom} - {dateTo}
                       </span>
-                    </div>{" "}
+                    </div>
                   </Col>
                   <Col
-                    md={12}
-                    className="my-auto order-5 pb-40 pb-md-30 pb-lg-20"
+                    lg={12}
+                    className="my-auto order-5 pb-40 pb-lg-30 pb-lg-20"
                   >
                     <div className="d-flex align-items-center align-middle ">
                       <i className="ri-map-pin-line"></i>
@@ -294,32 +334,33 @@ export default function CardTemplateOriginal({ data }) {
         </Button>
 
         <div
-          className="position-absolute w-100 d-lg-flex pb-10 pb-md-0 pb-lg-10"
+          className="position-absolute w-100 d-lg-flex pb-10 pb-lg-0 pb-lg-10"
           style={{ bottom: 0 }}
         >
           <Col lg={3} />
           {data.lpj ? (
             <Fragment>
-              <CustomButton
-                click={() =>
-                  router.push(
-                    `/peserta/subvit/substansi/panduan-test-substansi`
-                  )
-                }
-              >
+              <CustomButton click={() => router.push(`/peserta/form-lpj`)}>
                 <i className="ri-file-text-line mr-2"></i>
                 Isi Laporan Pertangungjawaban
               </CustomButton>
             </Fragment>
           ) : data.survei || data.status == "survey belum tersedia" ? (
             <Fragment>
-              <CustomButton outline click={() => handleClick("download")}>
+              <CustomButton
+                outline
+                click={() => handleClick("download", data.id_pendaftaran)}
+              >
                 <i className="ri-download-2-fill mr-2"></i>
                 Bukti Pendaftaran
               </CustomButton>
               <CustomButton
                 disabled={!data.survei}
-                click={() => handleClick("download")}
+                click={() => {
+                  router.push("/peserta/survey");
+                  Cookies.set("id_pelatihan", data.id);
+                  Cookies.set("id_tema", data.tema_id);
+                }}
               >
                 Isi Survei
                 <i className="ri-arrow-right-s-line mr-2"></i>
@@ -327,13 +368,16 @@ export default function CardTemplateOriginal({ data }) {
             </Fragment>
           ) : data.lpj || data.status == "LPJ belum tersedia" ? (
             <Fragment>
-              <CustomButton outline click={() => handleClick("download")}>
+              <CustomButton
+                outline
+                click={() => handleClick("download", data.id_pendaftaran)}
+              >
                 <i className="ri-download-2-fill mr-2"></i>
                 Bukti Pendaftaran
               </CustomButton>
               <CustomButton
                 disabled={!data.lpj}
-                click={() => handleClick("download")}
+                click={() => handleClick("download", data.id_pendaftaran)}
               >
                 Isi Laporan Pertangung Jawaban
                 <i className="ri-arrow-right-s-line mr-2"></i>
@@ -342,21 +386,21 @@ export default function CardTemplateOriginal({ data }) {
           ) : data.status == "pelatihan" && data.trivia && data.midtest ? (
             <Fragment>
               <CustomButton
-                click={() =>
-                  router.push(
-                    `/peserta/subvit/substansi/panduan-test-substansi`
-                  )
-                }
+                click={() => {
+                  router.push(`/peserta/test-substansi`);
+                  Cookies.set("id_pelatihan", data.id);
+                  Cookies.set("id_tema", data.tema_id);
+                }}
               >
                 Kerjakan Mid Test
                 <i className="ri-arrow-right-s-line mr-2"></i>
               </CustomButton>
               <CustomButton
-                click={() =>
-                  router.push(
-                    `/peserta/subvit/substansi/panduan-test-substansi`
-                  )
-                }
+                click={() => {
+                  router.push(`/peserta/trivia`);
+                  Cookies.set("id_pelatihan", data.id);
+                  Cookies.set("id_tema", data.tema_id);
+                }}
               >
                 Kerjakan Trivia <i className="ri-arrow-right-s-line mr-2"></i>
               </CustomButton>
@@ -364,43 +408,58 @@ export default function CardTemplateOriginal({ data }) {
           ) : data.status == "pelatihan" && data.trivia ? (
             <Fragment>
               <CustomButton
-                click={() =>
-                  router.push(
-                    `/peserta/subvit/substansi/panduan-test-substansi`
-                  )
-                }
+                click={() => {
+                  router.push(`/peserta/trivia`);
+                  Cookies.set("id_pelatihan", data.id);
+                  Cookies.set("id_tema", data.tema_id);
+                }}
               >
                 Kerjakan Trivia <i className="ri-arrow-right-s-line mr-2"></i>
               </CustomButton>
             </Fragment>
           ) : data.status == "pelatihan" ? (
             <Fragment>
-              <CustomButton outline click={() => handleClick("download")}>
+              <CustomButton
+                outline
+                click={() => handleClick("download", data.id_pendaftaran)}
+              >
                 <i className="ri-download-2-fill mr-2"></i>
                 Bukti Pendaftaran
               </CustomButton>
             </Fragment>
           ) : data.status == "menunggu" ? (
             <Fragment>
-              <CustomButton click={() => handleClick("download")}>
+              <CustomButton
+                click={() => handleClick("download", data.id_pendaftaran)}
+              >
                 <i className="ri-download-2-fill mr-2"></i>
                 Bukti Pendaftaran
               </CustomButton>
             </Fragment>
           ) : data.status == "lulus pelatihan" ? (
             <Fragment>
-              <CustomButton outline click={() => setShowModalSertifikasi(true)}>
-                <i className="ri-download-2-fill mr-2"></i>
-                Bukti Pendaftaran
-              </CustomButton>
-              <CustomButton click={() => handleClick("download")}>
+              {data.sertifikasi == "1" && (
+                <CustomButton
+                  outline
+                  click={() => setShowModalSertifikasi(true)}
+                >
+                  <i className="ri-upload-2-fill mr-2"></i>
+                  Upload Sertifikasi
+                </CustomButton>
+              )}
+              <CustomButton
+                click={() => handleClick("download", data.id_pendaftaran)}
+              >
                 <i className="ri-download-2-fill mr-2"></i>
                 Bukti Pendaftaran
               </CustomButton>
             </Fragment>
           ) : data.status == "tes substansi" ? (
             <Fragment>
-              <CustomButton outline click={() => handleClick("download")}>
+              <CustomButton
+                outline
+                click={() => handleClick("download", data.id_pendaftaran)}
+              >
                 <i className="ri-download-2-fill mr-2"></i>
                 Bukti Pendaftaran
               </CustomButton>
@@ -408,7 +467,7 @@ export default function CardTemplateOriginal({ data }) {
                 click={() => {
                   router.push(`/peserta/test-substansi/panduan-substansi`);
                 }}
-                disabled={!data.tes_substansi}
+                disabled={!data.tes_subtansi}
               >
                 Test Substansi <i className="ri-arrow-right-s-line mr-2"></i>
               </CustomButton>
@@ -419,7 +478,9 @@ export default function CardTemplateOriginal({ data }) {
                 <i className="ri-upload-2-fill mr-2"></i>
                 Upload Sertifikasi
               </CustomButton>
-              <CustomButton click={() => handleClick("download")}>
+              <CustomButton
+                click={() => handleClick("download", data.id_pendaftaran)}
+              >
                 <i className="ri-download-2-fill mr-2"></i>
                 Bukti Pendaftaran
               </CustomButton>
@@ -427,23 +488,43 @@ export default function CardTemplateOriginal({ data }) {
           ) : data.status.includes("seleksi administrasi") ||
             data.status.includes("seleksi") ? (
             <Fragment>
-              <CustomButton outline click={() => handleClick("download")}>
+              <CustomButton
+                outline
+                click={() => handleClick("download", data.id_pendaftaran)}
+              >
                 <i className="ri-download-2-fill mr-2"></i>
                 Bukti Pendaftaran
               </CustomButton>
             </Fragment>
           ) : data.status.includes("menunggu") ? (
             <Fragment>
-              <CustomButton outline click={() => handleClick("download")}>
+              <CustomButton
+                outline
+                click={() => handleClick("download", data.id_pendaftaran)}
+              >
                 <i className="ri-download-2-fill mr-2"></i>
                 Bukti Pendaftaran
               </CustomButton>
             </Fragment>
           ) : data.status.includes("belum tersedia") ? (
             <Fragment>
-              <CustomButton outline click={() => handleClick("download")}>
+              <CustomButton
+                outline
+                click={() => handleClick("download", data.id_pendaftaran)}
+              >
                 <i className="ri-download-2-fill mr-2"></i>
                 Bukti Pendaftaran
+              </CustomButton>
+            </Fragment>
+          ) : data.status === "LPJ belum mengerjakan" ? (
+            <Fragment>
+              <CustomButton
+                disabled
+                outline
+                click={() => handleClick("download", data.id_pendaftaran)}
+              >
+                <i className="ri-file-text-line mr-2"></i>
+                Isi Laporan Pertangungjawaban
               </CustomButton>
             </Fragment>
           ) : (
