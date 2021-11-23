@@ -279,7 +279,10 @@ const TambahTriviaStepOne = ({ token }) => {
                     name="training_id"
                     id=""
                     onChange={(e) => setTrainingId(e.target.value)}
-                    onBlur={(e) => setTrainingId(e.target.value)}
+                    onBlur={(e) => {
+                      setTrainingId(e.target.value);
+                      simpleValidator.current.showMessageFor("training_id");
+                    }}
                     className="form-control"
                   >
                     <option selected disabled value="">
@@ -297,6 +300,12 @@ const TambahTriviaStepOne = ({ token }) => {
                           </>
                         );
                       })}
+                    {simpleValidator.current.message(
+                      "training",
+                      training_id,
+                      "required",
+                      { className: "text-danger" }
+                    )}
                   </select>
                 </div>
               </div>

@@ -27,14 +27,12 @@ const CardPelatihanClose = ({ row }) => {
         <Card.ImgOverlay>
           <div className="d-flex justify-content-between">
             <div className="align-self-start">
-              {row.metode_pelatihan !== "Offline" && (
-                <Badge
-                  bg={`py-3 px-4 badge-card-pelatihan-new`}
-                  classNam="d-flex "
-                >
-                  Pelatihan {row.metode_pelatihan}
-                </Badge>
-              )}
+              <Badge
+                bg={`py-3 px-4 badge-card-pelatihan-new`}
+                classNam="d-flex "
+              >
+                Pelatihan {row.metode_pelatihan}
+              </Badge>
             </div>
           </div>
         </Card.ImgOverlay>
@@ -57,7 +55,7 @@ const CardPelatihanClose = ({ row }) => {
             />
           </div>
           <div
-            className="d-flex justify-content-between position-relative pb-0 mb-0"
+            className="d-flex justify-content-between position-relative pb-0 mb-0 flex-wrap"
             style={{ top: "-15px" }}
           >
             <p className={`pl-18 my-0 text-mitra-new`}>{row.mitra}</p>
@@ -67,7 +65,7 @@ const CardPelatihanClose = ({ row }) => {
                   row.status === "Open"
                     ? "status-mitra-open-new"
                     : "status-mitra-close-new"
-                } text-uppercase my-0`}
+                } text-uppercase mt-2 mt-lg-2 mt-xl-0 ml-md-17 ml-17`}
               >
                 {row.status}
               </p>

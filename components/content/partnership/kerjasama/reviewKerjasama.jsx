@@ -201,18 +201,18 @@ const ReviewKerjasama = ({ token }) => {
             {statusInfo && statusInfo === "Sudah direview" ? (
               <form>
                 <div className="form-group">
-                  <label htmlFor="staticEmail" className="col-form-label">
+                  <label htmlFor="staticEmail" className="col-form-label" style={{color:"#6C6C6C"}}>
                     Tanggal
                   </label>
                   <input
                     type="date"
                     required
                     value={dateView && dateView}
-                    className="form-control border-0"
+                    className="form-control border-0 ml-n4"
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="staticEmail" className="col-form-label">
+                  <label htmlFor="staticEmail" className="col-form-label" style={{color:"#6C6C6C"}}>
                     Judul kerjasama
                   </label>
                   <input
@@ -221,12 +221,12 @@ const ReviewKerjasama = ({ token }) => {
                     value={titleView && titleView}
                     onChange={(e) => setTitle(e.target.value)}
                     type="text"
-                    className="form-control border-0"
+                    className="form-control border-0 ml-n4"
                     placeholder="Judul Kerjasama"
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="staticEmail" className="col-form-label">
+                  <label htmlFor="staticEmail" className="col-form-label" style={{color:"#6C6C6C"}}>
                     Kategori kerjasama
                   </label>
                   <select
@@ -241,7 +241,7 @@ const ReviewKerjasama = ({ token }) => {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="staticEmail" className="col-form-label">
+                  <label htmlFor="staticEmail" className="col-form-label" style={{color:"#6C6C6C"}}>
                     Periode
                   </label>
                   <div className="row">
@@ -250,7 +250,7 @@ const ReviewKerjasama = ({ token }) => {
                         required
                         readOnly
                         type="number"
-                        className="form-control mt-2 border-0"
+                        className="form-control mt-2 border-0 ml-n4"
                         onChange={(e) => setPeriod(e.target.value)}
                         value={periodView}
                       />
@@ -271,6 +271,7 @@ const ReviewKerjasama = ({ token }) => {
                               <label
                                 htmlFor="staticEmail"
                                 className="col-form-label"
+                                style={{color:"#6C6C6C"}}
                               >
                                 {items.cooperation_form}
                               </label>
@@ -431,8 +432,8 @@ const ReviewKerjasama = ({ token }) => {
                       );
                     })}
 
-                <div className="form-group row">
-                  <div className="col-sm-12 d-flex flex-wrap justify-content-start justify-content-sm-end">
+                <div className="form-group">
+                  <div className="d-flex flex-column flex-md-row flex-wrap justify-content-start justify-content-md-end">
                     <button
                       type="button"
                       onClick={(e) => rejectDokument(e)}
@@ -444,7 +445,7 @@ const ReviewKerjasama = ({ token }) => {
                     <button
                       type="button"
                       onClick={(e) => ajukanRevisi(e)}
-                      className="btn btn-sm btn-rounded-full bg-yellow-primary text-white mx-3 mt-2"
+                      className="btn btn-sm btn-rounded-full bg-yellow-primary text-white ml-3 mr-0 mr-sm-3 mt-2"
                     >
                       Ajukan Revisi
                     </button>

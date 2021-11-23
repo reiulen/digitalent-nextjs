@@ -178,16 +178,66 @@ const Table = ({ token }) => {
   }, [dispatch, token]);
   return (
     <PageWrapper>
-      {update ? <AlertBar text="Berhasil mengubah data" className="alert-light-warning" onClick={() => onNewReset()} /> : ""}
-      {successMakeREvisi ? <AlertBar text="Berhasil menambahkan data revisi" className="alert-light-success" onClick={() => onNewReset()} /> : ""}
-      {successTerima ? <AlertBar text="Berhasil mengubah data status" className="alert-light-success" onClick={() => onNewReset()} /> : ""}
-      {isStatusBar ? <AlertBar text="Berhasil mengubah data status" className="alert-light-success" onClick={() => onNewReset()} /> : ""}
-      {deleteBar ? <AlertBar text="Berhasil menghapus data" className="alert-light-danger" onClick={() => onNewReset()} /> : ""}
-      {successReject ? <AlertBar text="Berhasil mengubah data status" className="alert-light-success" onClick={() => onNewReset()} /> : ""}
-      <div className="col-lg-12 col-md-12">
+      {update ? (
+        <AlertBar
+          text="Berhasil mengubah data"
+          className="alert-light-success"
+          onClick={() => onNewReset()}
+        />
+      ) : (
+        ""
+      )}
+      {successMakeREvisi ? (
+        <AlertBar
+          text="Berhasil menambahkan data revisi"
+          className="alert-light-success"
+          onClick={() => onNewReset()}
+        />
+      ) : (
+        ""
+      )}
+      {successTerima ? (
+        <AlertBar
+          text="Berhasil mengubah data status"
+          className="alert-light-success"
+          onClick={() => onNewReset()}
+        />
+      ) : (
+        ""
+      )}
+      {isStatusBar ? (
+        <AlertBar
+          text="Berhasil mengubah data status"
+          className="alert-light-success"
+          onClick={() => onNewReset()}
+        />
+      ) : (
+        ""
+      )}
+      {deleteBar ? (
+        <AlertBar
+          text="Berhasil menghapus data"
+          className="alert-light-success"
+          onClick={() => onNewReset()}
+        />
+      ) : (
+        ""
+      )}
+      {successReject ? (
+        <AlertBar
+          text="Berhasil mengubah data status"
+          className="alert-light-success"
+          onClick={() => onNewReset()}
+        />
+      ) : (
+        ""
+      )}
+
+      <div>
         <div className="row">
-          {/* card 1 */}
-          <CardPage
+          {/* card Kerjasama Aktif */}
+          <div className="col-12 col-md-6 col-lg-6 col-xl-4">
+            <CardPage
             background="bg-light-success "
             icon="Done-circle1.svg"
             color="#ffffff"
@@ -196,44 +246,61 @@ const Table = ({ token }) => {
             title="Kerjasama Aktif"
             publishedVal="1"
             routePublish={() => dispatch(changeValueStatusCard("active"))}
+            backgroundCard="/assets/icon/clipboard-check-green.svg"
           />
+          </div>
 
-          {/* card 2 */}
-          <CardPage
-            background="bg-light-warning"
-            icon="Info-circle.svg"
-            color="#ffffff"
-            value={allMK.totalDataAnother}
-            titleValue=""
-            title="Pengajuan Kerjasama"
-            publishedVal="1"
-            routePublish={() => dispatch(changeValueStatusCard("submission"))}
-          />
-          <CardPage
-            background="bg-light-danger"
-            icon="Error-circle.svg"
-            color="#ffffff"
-            value={sumWillExpire}
-            titleValue=""
-            title="Kerjasama akan Habis"
-            publishedVal="1"
-            routePublish={() => dispatch(changeValueStatusCard("will_expire"))}
-          />
-          {/* card 3 */}
+          {/* card Pengajuan Kerjasama */}
+          <div className="col-12 col-md-6  col-lg-6 col-xl-4">
+            <CardPage
+              background="bg-light-warning"
+              icon="Info-circle.svg"
+              color="#ffffff"
+              value={allMK.totalDataAnother}
+              titleValue=""
+              title="Pengajuan Kerjasama"
+              publishedVal="1"
+              routePublish={() => dispatch(changeValueStatusCard("submission"))}
+              backgroundCard="/assets/icon/clipboard-list-yellow.svg"
+            />
+          </div>
+
+          {/* card Kerjasama Akan Habis */}
+          <div className="col-12 col-xl-4">
+            <CardPage
+              background="bg-light-danger"
+              icon="Error-circle.svg"
+              color="#ffffff"
+              value={sumWillExpire}
+              titleValue=""
+              title="Kerjasama akan Habis"
+              publishedVal="1"
+              routePublish={() => dispatch(changeValueStatusCard("will_expire"))}
+              backgroundCard="/assets/icon/clipboard-cross-red.svg"
+            />
+          </div>
         </div>
       </div>
 
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
-          <div className="d-flex flex-wrap align-items-center justify-content-between px-8 py-4">
-            <h1 className="card-title font-weight-bolder text-dark mb-0 mt-4 titles-1">Kerjasama</h1>
+          <div className="d-flex flex-wrap align-items-center px-5 py-4">
+            <div className="col-12 col-xl-6">
+              <h1 className="card-title font-weight-bolder text-dark mb-0 mt-4 titles-1">
+                Kerjasama
+              </h1>
+            </div>
+            
 
-            <Link href="/partnership/kerjasama/tambah">
-              <a className="btn btn-rounded-full bg-blue-primary text-white mt-4">
-                <IconAdd className="mr-3" width="18" height="16" />
-                Tambah kerjasama
-              </a>
-            </Link>
+            <div className="col-12 col-xl-6 d-flex justify-content-xl-end">
+              <Link href="/partnership/kerjasama/tambah">
+                <a className="btn btn-rounded-full bg-blue-primary text-white mt-4">
+                  <IconAdd className="mr-3" width="18" height="16" />
+                  Tambah kerjasama
+                </a>
+              </Link>
+            </div>
+            
           </div>
 
           <div className="card-body pt-0">
@@ -249,8 +316,10 @@ const Table = ({ token }) => {
                           id="kt_datatable_search_query"
                           type="text"
                           className="form-control pl-10"
-                          placeholder="Ketik disini untuk Pencarian..."
-                          onChange={(e) => handleChangeValueSearch(e.target.value)}
+                          placeholder="Cari..."
+                          onChange={(e) =>
+                            handleChangeValueSearch(e.target.value)
+                          }
                         />
                         <button
                           type="button"
@@ -265,11 +334,12 @@ const Table = ({ token }) => {
                         </button>
                       </div>
                     </div>
-                    <div className="col-12 col-sm-8">
-                      <div className="d-flex flex-wrap align-items-center justify-content-end mt-2">
-                        {/* sorotir by modal */}
+
+                    <div className="col-12 col-xl-8">
+                      <div className="d-flex flex-wrap align-items-center justify-content-xl-end mt-2">
+                        {/* sortir by modal */}
                         <button
-                          className="avatar item-rtl btn border d-flex align-items-center justify-content-between mt-2"
+                          className="avatar item-rtl btn border col-9 col-xl-4 d-flex align-items-center justify-content-between mt-2 mr-8"
                           data-toggle="modal"
                           data-target="#exampleModalCenter"
                           style={{ color: "#464646", minWidth: "230px" }}
@@ -280,6 +350,7 @@ const Table = ({ token }) => {
                           </div>
                           <IconArrow fill="#E4E6EF" width="11" height="11" />
                         </button>
+
                         {/* modal */}
                         <form className="form text-left">
                           <div className="modal fade" id="exampleModalCenter" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -375,7 +446,11 @@ const Table = ({ token }) => {
                         {/* end modal */}
 
                         {/* btn export */}
-                        <button className="btn btn-rounded-full bg-blue-secondary text-white ml-4 mt-2" type="button" onClick={() => dispatch(exportFileCSV(token))}>
+                        <button
+                          className="btn btn-rounded-full bg-blue-secondary text-white mt-2"
+                          type="button"
+                          onClick={() => dispatch(exportFileCSV(token))}
+                        >
                           Export .xlsx
                         </button>
                       </div>
@@ -690,7 +765,7 @@ const Table = ({ token }) => {
                 )}
               </div>
               <div className="row">
-                <div className="table-pagination">
+                <div className="table-pagination col-12 col-md-8">
                   <Pagination
                     activePage={allMK.page}
                     itemsCountPerPage={allMK?.m_cooporation?.data?.perPage}
@@ -705,7 +780,7 @@ const Table = ({ token }) => {
                     linkClass="page-link"
                   />
                 </div>
-                <div className="table-total ml-auto">
+                <div className="table-total col-12 col-md-4 d-flex justify-content-md-end ml-md-0 ml-4">
                   <div className="row mt-4">
                     <div className="col-4 mr-0 p-0">
                       <select

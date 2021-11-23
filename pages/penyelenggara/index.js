@@ -46,7 +46,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
       let sessionToken = session?.user.user.data.user.token;
 
-      // await store.dispatch(getDataPribadi(sessionToken));
+      await store.dispatch(getDataPribadi(sessionToken));
       await store.dispatch(getAllPenyeleggaraPage());
 
       return {
