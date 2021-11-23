@@ -402,15 +402,12 @@ const Beranda = ({ session }) => {
                                       <Card.ImgOverlay>
                                         <div className="d-flex justify-content-between">
                                           <div className="align-self-start">
-                                            {row.metode_pelatihan !==
-                                              "Offline" && (
-                                              <Badge
-                                                bg={`py-3 px-4 badge-card-pelatihan-new`}
-                                                classNam="d-flex "
-                                              >
-                                                Pelatihan {row.metode_pelatihan}
-                                              </Badge>
-                                            )}
+                                            <Badge
+                                              bg={`py-3 px-4 badge-card-pelatihan-new`}
+                                              classNam="d-flex "
+                                            >
+                                              Pelatihan {row.metode_pelatihan}
+                                            </Badge>
                                           </div>
 
                                           {pelatihan[i].pelatihan[j].hover &&
@@ -550,7 +547,7 @@ const Beranda = ({ session }) => {
                                                 )
                                               }
                                             >
-                                              LIHAT SINGKAT
+                                              LIHAT
                                             </Button>
                                           </div>
                                         )}
@@ -720,7 +717,7 @@ const Beranda = ({ session }) => {
                                           </Link>
                                         </div>
 
-                                        {cardStatus !== "Closed" && (
+                                        {cardStatus !== "Ditutup" && (
                                           <div className="col-6">
                                             <button
                                               onClick={() =>

@@ -39,14 +39,12 @@ const CardPelatihanOpen = ({
         <Card.ImgOverlay>
           <div className="d-flex justify-content-between">
             <div className="align-self-start">
-              {row.metode_pelatihan !== "Offline" && (
-                <Badge
-                  bg={`py-3 px-4 badge-card-pelatihan-new`}
-                  classNam="d-flex "
-                >
-                  Pelatihan {row.metode_pelatihan}
-                </Badge>
-              )}
+              <Badge
+                bg={`py-3 px-4 badge-card-pelatihan-new`}
+                classNam="d-flex "
+              >
+                Pelatihan {row.metode_pelatihan}
+              </Badge>
             </div>
             {show[i] && (
               <div className="whishlist align-self-end float-right">
@@ -149,7 +147,7 @@ const CardPelatihanOpen = ({
                 className={`btn-block rounded-xl my-auto btn-quick-view-new`}
                 onClick={() => funcQuickView(i)}
               >
-                LIHAT SINGKAT
+                LIHAT
               </Button>
             </div>
           )}
