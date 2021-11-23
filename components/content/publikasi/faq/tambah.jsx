@@ -20,11 +20,15 @@ import LoadingPage from '../../../LoadingPage';
 import "../../../../styles/publikasi.module.css"
 
 const TambahFaq = ({ token, id }) => {
+    const editorRef = useRef();
     const dispatch = useDispatch()
     const router = useRouter()
 
     const importSwitch = () => import('bootstrap-switch-button-react')
 
+    const [editorLoaded, setEditorLoaded] = useState(false);
+    const { CKEditor, ClassicEditor, Base64UploadAdapter } =
+        editorRef.current || {};
     const SwitchButton = dynamic(importSwitch, {
         ssr: false
     })
@@ -32,6 +36,22 @@ const TambahFaq = ({ token, id }) => {
     const { loading, error, success } = useSelector(state => state.newFaq)
     const { kategori } = useSelector(state => state.allKategori)
     const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
+
+    useEffect(() => {
+
+        editorRef.current = {
+            CKEditor: require("@ckeditor/ckeditor5-react").CKEditor, //Added .CKEditor
+            ClassicEditor: require("@ckeditor/ckeditor5-build-classic"),
+        };
+
+        setEditorLoaded(true);
+        if (success) {
+            router.push({
+                pathname: `/publikasi/faq`,
+                query: { success: true },
+            });
+        }
+    }, [dispatch, error, success, simpleValidator, router]);
 
     useEffect(() => {
         if (success) {
@@ -214,7 +234,38 @@ const TambahFaq = ({ token, id }) => {
                             <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Jawaban</label>
                                 <div className={`${styles.deskripsiTambah} col-sm-12`}>
-                                    <textarea
+                                    <div className="ckeditor">
+                                        {editorLoaded ? (
+                                            <CKEditor
+                                                editor={ClassicEditor}
+                                                data={jawaban}
+                                                onChange={(event, editor) => {
+                                                    const data = editor.getData();
+                                                    setJawaban(data);
+                                                }}
+                                                onBlur={() =>
+                                                    simpleValidator.current.showMessageFor(
+                                                        "jawaban"
+                                                    )
+                                                }
+                                                config={{
+                                                    placeholder: "Tulis Deskripsi",
+                                                }}
+                                            />
+
+                                        ) : (
+                                            <p>Tunggu Sebentar</p>
+                                        )}
+                                        {simpleValidator.current.message(
+                                            "jawaban",
+                                            jawaban,
+                                            "required",
+                                            // "required|min:100|max:12000",
+                                            { className: "text-danger" }
+                                        )}
+                                    </div>
+
+                                    {/* <textarea
                                         className={`${styles.deskripsiTambah} form-control`}
                                         placeholder='Tulis disini'
                                         name="jawaban"
@@ -223,7 +274,7 @@ const TambahFaq = ({ token, id }) => {
                                         value={jawaban}
                                         onBlur={() => simpleValidator.current.showMessageFor("jawaban")}
                                     />
-                                    {simpleValidator.current.message("jawaban", jawaban, "required|max:7000", { className: "text-danger" })}
+                                    {simpleValidator.current.message("jawaban", jawaban, "required|max:7000", { className: "text-danger" })} */}
                                 </div>
                             </div>
 

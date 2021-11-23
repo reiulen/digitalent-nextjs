@@ -60,7 +60,7 @@ const GeneralPage = ({ token }) => {
   const submit = (e) => {
     e.preventDefault();
     if (description === "") {
-      Swal.fire("Gagal simpan", "Form description tidak boleh kosong", "error");
+      Swal.fire("Oops !", "Form description tidak boleh kosong", "error");
     } else {
       Swal.fire({
         title: "Apakah anda yakin simpan ?",
@@ -99,7 +99,7 @@ const GeneralPage = ({ token }) => {
             Swal.fire("Berhasil", "Berhasil simpan data", "success");
           } catch (error) {
             Swal.fire(
-              "Gagal simpan",
+              "Oops !",
               `${error.response.data.message}`,
               "error"
             );
@@ -114,7 +114,7 @@ const GeneralPage = ({ token }) => {
 
     if (_temp.length > 20) {
       Swal.fire(
-        "Gagal simpan",
+        "Oops !",
         `Data external link tidak boleh lebih dari 20`,
         "error"
       );
@@ -161,37 +161,40 @@ const GeneralPage = ({ token }) => {
     });
 
   const fileMax = 2097152;
+  const fileMax2 = 5000000;
   const onChangeImage = (e) => {
     if (imageLogoApi) {
       setImageLogoApi("");
       let selectedFile = e.target.files[0];
       if (selectedFile) {
-        if (selectedFile && selectedFile.size <= fileMax) {
+        if (selectedFile && selectedFile.size <= fileMax2) {
           let reader = new FileReader();
           reader.readAsDataURL(selectedFile);
           reader.onloadend = (e) => {
             setImageLogo(e.target.result);
           };
         } else {
-          notify("gambar harus PNG atau JPG dan max size 2mb");
+          // notify("gambar harus PNG atau JPG dan max size 2mb");
+          Swal.fire("Oops !", "Gambar harus PNG atau JPG dan max size 5MB", "error");
         }
       } else {
-        notify("upload gambar dulu");
+        // notify("upload gambar dulu");
+        Swal.fire("Oops !", "Upload Gambar Dulu", "error");
       }
     } else {
       let selectedFile = e.target.files[0];
       if (selectedFile) {
-        if (selectedFile && selectedFile.size <= fileMax) {
+        if (selectedFile && selectedFile.size <= fileMax2) {
           let reader = new FileReader();
           reader.readAsDataURL(selectedFile);
           reader.onloadend = (e) => {
             setImageLogo(e.target.result);
           };
         } else {
-          notify("gambar harus PNG atau JPG dan max size 2mb");
+          Swal.fire("Oops !", "Gambar harus PNG atau JPG dan max size 5MB", "error");
         }
       } else {
-        notify("upload gambar dulu");
+        Swal.fire("Oops !", "Upload Gambar Dulu", "error");
       }
     }
   };
@@ -200,32 +203,32 @@ const GeneralPage = ({ token }) => {
       setImageLogoApi2("");
       let selectedFile = e.target.files[0];
       if (selectedFile) {
-        if (selectedFile && selectedFile.size <= fileMax) {
+        if (selectedFile && selectedFile.size <= fileMax2) {
           let reader = new FileReader();
           reader.readAsDataURL(selectedFile);
           reader.onloadend = (e) => {
             setImageLogo2(e.target.result);
           };
         } else {
-          notify("gambar harus PNG atau JPG dan max size 2mb");
+          Swal.fire("Oops !", "Gambar harus PNG atau JPG dan max size 5MB", "error");
         }
       } else {
-        notify("upload gambar dulu");
+        Swal.fire("Oops !", "Upload Gambar Dulu", "error");
       }
     } else {
       let selectedFile = e.target.files[0];
       if (selectedFile) {
-        if (selectedFile && selectedFile.size <= fileMax) {
+        if (selectedFile && selectedFile.size <= fileMax2) {
           let reader = new FileReader();
           reader.readAsDataURL(selectedFile);
           reader.onloadend = (e) => {
             setImageLogo2(e.target.result);
           };
         } else {
-          notify("gambar harus PNG atau JPG dan max size 2mb");
+          Swal.fire("Oops !", "Gambar harus PNG atau JPG dan max size 5MB", "error");
         }
       } else {
-        notify("upload gambar dulu");
+        Swal.fire("Oops !", "Upload Gambar Dulu", "error");
       }
     }
   };
@@ -252,7 +255,7 @@ const GeneralPage = ({ token }) => {
 
     if (_temp.length > 5) {
       Swal.fire(
-        "Gagal simpan",
+        "Oops !",
         `Data social media tidak boleh lebih dari 5`,
         "error"
       );
@@ -297,7 +300,7 @@ const GeneralPage = ({ token }) => {
     _temp.map((items, idx) => {
       if (idx === index) {
         if (selectedFile) {
-          if (selectedFile && selectedFile.size <= fileMax) {
+          if (selectedFile && selectedFile.size <= fileMax2) {
             let reader = new FileReader();
             reader.readAsDataURL(selectedFile);
             reader.onloadend = (e) => {
@@ -306,10 +309,10 @@ const GeneralPage = ({ token }) => {
               setFormSocialMedia(_temp);
             };
           } else {
-            notify("gambar harus PNG atau JPG dan max size 2mb");
+            Swal.fire("Oops !", "Gambar harus PNG atau JPG dan max size 5MB", "error");
           }
         } else {
-          notify("upload gambar dulu");
+          Swal.fire("Oops !", "Upload Gambar Dulu", "error");
         }
       }
     });
@@ -322,7 +325,6 @@ const GeneralPage = ({ token }) => {
         _temp[index].image_logo = "";
       }
     });
-
     setFormSocialMedia(_temp);
   };
 
@@ -350,16 +352,16 @@ const GeneralPage = ({ token }) => {
           setFormSocialMedia(data.data.social_media);
         }
       } catch (error) {
-        notify(error.response.data.message);
+        Swal.fire("Oops !", `${error.response.data.message}`, "error");
+        // notify(error.response.data.message);
       }
     }
-
     getDataGeneral(token);
   }, [token]);
 
   return (
     <PageWrapper>
-      <ToastContainer
+      {/* <ToastContainer
         position="bottom-right"
         autoClose={5000}
         hideProgressBar={false}
@@ -369,7 +371,7 @@ const GeneralPage = ({ token }) => {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-      />
+      /> */}
       <div className="row">
         <div className="col-12 order-1">
           <div className="card card-custom card-stretch gutter-b">
@@ -391,21 +393,21 @@ const GeneralPage = ({ token }) => {
                           <div className="image-input-wrapper">
                             {imageLogoApi === ""
                               ? imageLogo && (
-                                  <Image
-                                    src={imageLogo}
-                                    layout="fill"
-                                    objectFit="fill"
-                                    alt="imageLogo"
-                                  />
-                                )
+                                <Image
+                                  src={imageLogo}
+                                  layout="fill"
+                                  objectFit="fill"
+                                  alt="imageLogo"
+                                />
+                              )
                               : imageLogoApi && (
-                                  <Image
-                                    src={`${process.env.END_POINT_API_IMAGE_SITE_MANAGEMENT}site-management/images/${imageLogoApi}`}
-                                    layout="fill"
-                                    objectFit="fill"
-                                    alt="imageLogo"
-                                  />
-                                )}
+                                <Image
+                                  src={`${process.env.END_POINT_API_IMAGE_SITE_MANAGEMENT}site-management/images/${imageLogoApi}`}
+                                  layout="fill"
+                                  objectFit="fill"
+                                  alt="imageLogo"
+                                />
+                              )}
                           </div>
 
                           <label
@@ -480,21 +482,21 @@ const GeneralPage = ({ token }) => {
                           <div className="image-input-wrapper">
                             {imageLogoApi2 === ""
                               ? imageLogo2 && (
-                                  <Image
-                                    src={imageLogo2}
-                                    layout="fill"
-                                    objectFit="fill"
-                                    alt="imageLogo"
-                                  />
-                                )
+                                <Image
+                                  src={imageLogo2}
+                                  layout="fill"
+                                  objectFit="fill"
+                                  alt="imageLogo"
+                                />
+                              )
                               : imageLogoApi2 && (
-                                  <Image
-                                    src={`${process.env.END_POINT_API_IMAGE_SITE_MANAGEMENT}site-management/images/${imageLogoApi2}`}
-                                    layout="fill"
-                                    objectFit="fill"
-                                    alt="imageLogo"
-                                  />
-                                )}
+                                <Image
+                                  src={`${process.env.END_POINT_API_IMAGE_SITE_MANAGEMENT}site-management/images/${imageLogoApi2}`}
+                                  layout="fill"
+                                  objectFit="fill"
+                                  alt="imageLogo"
+                                />
+                              )}
                           </div>
 
                           <label
@@ -562,7 +564,7 @@ const GeneralPage = ({ token }) => {
                     </div>
                   </div>
                   <div className="form-group">
-                    <label>Desciption:</label>
+                    <label>Description:</label>
                     <input
                       value={description}
                       onChange={(e) => setDescription(e.target.value)}
@@ -586,25 +588,25 @@ const GeneralPage = ({ token }) => {
                               <div className="image-input image-input-outline">
                                 <div className="image-input-wrapper">
                                   {isUpdate &&
-                                  /\.(gif|jpe?g|tiff?|png|webp|bmp)$/i.test(
-                                    items.image_logo
-                                  )
+                                    /\.(gif|jpe?g|tiff?|png|webp|bmp)$/i.test(
+                                      items.image_logo
+                                    )
                                     ? items.image_logo && (
-                                        <Image
-                                          src={`${process.env.END_POINT_API_IMAGE_SITE_MANAGEMENT}site-management/images/${items.image_logo}`}
-                                          layout="fill"
-                                          objectFit="fill"
-                                          alt="imageLogo"
-                                        />
-                                      )
+                                      <Image
+                                        src={`${process.env.END_POINT_API_IMAGE_SITE_MANAGEMENT}site-management/images/${items.image_logo}`}
+                                        layout="fill"
+                                        objectFit="fill"
+                                        alt="imageLogo"
+                                      />
+                                    )
                                     : items.image_logo && (
-                                        <Image
-                                          src={items.image_logo}
-                                          layout="fill"
-                                          objectFit="fill"
-                                          alt="imageLogo"
-                                        />
-                                      )}
+                                      <Image
+                                        src={items.image_logo}
+                                        layout="fill"
+                                        objectFit="fill"
+                                        alt="imageLogo"
+                                      />
+                                    )}
                                 </div>
 
                                 <label
@@ -677,7 +679,7 @@ const GeneralPage = ({ token }) => {
                             </div>
                           </div>
                           <div className="row">
-                            <div className="col-12 col-md-6">
+                            <div className="col-12 col-md-5 col-xl-5">
                               <div className="form-group">
                                 <label>Nama Social Media</label>
                                 <input
@@ -691,7 +693,7 @@ const GeneralPage = ({ token }) => {
                                 />
                               </div>
                             </div>
-                            <div className="col-12 col-md-6">
+                            <div className="col-12 col-md-6 col-xl-6">
                               <div className="row">
                                 <div className="col-12 col-md-11">
                                   <div className="form-group">
@@ -713,8 +715,8 @@ const GeneralPage = ({ token }) => {
                                 {index === 0 ? (
                                   ""
                                 ) : (
-                                  <div className="col-12 col-md-1">
-                                    <div className="d-flex align-items-center h-100 justify-content-end">
+                                  <div className="col-12 col-md-1 col-xl-1">
+                                    <div className="d-flex align-items-center h-100 justify-content-end ml-14">
                                       <button
                                         type="button"
                                         onClick={() => removeSocialMedia(index)}
