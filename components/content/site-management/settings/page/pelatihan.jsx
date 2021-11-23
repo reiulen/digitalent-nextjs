@@ -4,6 +4,7 @@ import Image from "next/image";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
+import { useRouter } from "next/router";
 
 import PageWrapper from "../../../../wrapper/page.wrapper";
 import Upload from "../../../../../public/assets/icon/sitemanagement/Upload.svg";
@@ -19,17 +20,13 @@ import { loadDataPrompt } from "../../../../../redux/actions/site-management/set
 export default function Pelatihan({ token }) {
 
   let dispatch = useDispatch();
+  const router = useRouter();
 
   useEffect(() => {
     dispatch(loadDataPrompt(token));
   }, [token, dispatch]);
 
-  const initialState = {
-    page: "SUBM",
-  };
-
-  const [{ page }, setState] =
-    useState(initialState);
+ const [page, setPage] = useState(router.query.sidebar !== undefined ? router.query?.sidebar : "Prompt")
 
   return (
     <PageWrapper>
@@ -49,7 +46,7 @@ export default function Pelatihan({ token }) {
                           page === "Prompt" ? "isactive" : "prompt"
                         }`}
                         onClick={() => {
-                          setState({ page: "Prompt" });
+                          setPage("Prompt");
                         }}
                       >
                         <Image
@@ -73,7 +70,7 @@ export default function Pelatihan({ token }) {
                           page === "Template" ? "isactive" : "prompt"
                         }`}
                         onClick={() => {
-                          setState({ page: "Template" });
+                          setPage("Template");
                         }}
                       >
                         <Image
@@ -97,7 +94,7 @@ export default function Pelatihan({ token }) {
                           page === "SUBM" ? "isactive" : "prompt"
                         }`}
                         onClick={() => {
-                          setState({ page: "SUBM" });
+                          setPage("SUBM");
                         }}
                       >
                         <Image
@@ -121,7 +118,7 @@ export default function Pelatihan({ token }) {
                           page === "File Size" ? "isactive" : "prompt"
                         }`}
                         onClick={() => {
-                          setState({ page: "File Size" });
+                          setPage("File Size");
                         }}
                       >
                         <Image
@@ -145,7 +142,7 @@ export default function Pelatihan({ token }) {
                           page === "Ketentuan Pelatihan" ? "isactive" : "prompt"
                         }`}
                         onClick={() => {
-                          setState({ page: "Ketentuan Pelatihan" });
+                          setPage("Ketentuan Pelatihan");
                         }}
                       >
                         <Image

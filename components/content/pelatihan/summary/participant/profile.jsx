@@ -5,6 +5,7 @@ import { Modal, Button } from "react-bootstrap";
 
 const ProfileUser = ({ profile }) => {
   const [show, setShow] = useState(false);
+  const [showIjasah, setShowIjasah] = useState(false);
   return (
     <>
       <div className="card card-custom card-stretch gutter-b">
@@ -36,21 +37,23 @@ const ProfileUser = ({ profile }) => {
               <div className="data-pribadi">
                 <div className="title d-flex align-items-center mb-3">
                   <h3 className="font-weight-bolder mr-5">Data Pribadi</h3>
-                  <button
-                    className="btn btn-light-success fw-600 rounded-xl"
-                    style={{
-                      backgroundColor: "#E6FFF7",
-                      color: "#00B27A",
-                    }}
-                  >
-                    <i
-                      className="ri-check-double-fill"
+                  {profile.status_verified && (
+                    <button
+                      className="btn btn-light-success fw-600 rounded-xl"
                       style={{
+                        backgroundColor: "#E6FFF7",
                         color: "#00B27A",
                       }}
-                    ></i>{" "}
-                    Verified
-                  </button>
+                    >
+                      <i
+                        className="ri-check-double-fill"
+                        style={{
+                          color: "#00B27A",
+                        }}
+                      ></i>{" "}
+                      Verified
+                    </button>
+                  )}
                 </div>
                 <div className="row mb-3">
                   <div className="col-md-6">
@@ -233,7 +236,7 @@ const ProfileUser = ({ profile }) => {
                             profile.ijasah) ||
                         "/assets/media/default.jpg"
                       }
-                      onClick={() => setShow(true)}
+                      onClick={() => setShowIjasah(true)}
                     />
                   </div>
                 </div>
@@ -276,6 +279,41 @@ const ProfileUser = ({ profile }) => {
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={() => setShow(false)}>Kembali</Button>
+        </Modal.Footer>
+      </Modal>
+      <Modal
+        show={showIjasah}
+        onHide={() => setShowIjasah(false)}
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header>
+          <Modal.Title id="contained-modal-title-vcenter">
+            {profile?.File_ktp}
+            <button
+              type="button"
+              className="close"
+              onClick={() => setShowIjasah(false)}
+            >
+              <i className="ri-close-fill" style={{ fontSize: "25px" }}></i>
+            </button>
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Image
+            src={
+              (profile.ijasah &&
+                process.env.END_POINT_API_IMAGE_BEASISWA + profile.ijasah) ||
+              "/assets/media/default.jpg"
+            }
+            objectFit="cover"
+            height={200}
+            width={400}
+            alt="ktp-modal"
+          />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={() => setShowIjasah(false)}>Kembali</Button>
         </Modal.Footer>
       </Modal>
     </>

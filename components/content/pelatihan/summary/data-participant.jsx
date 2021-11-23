@@ -29,6 +29,7 @@ import {
   getFormLpj,
   clearErrors,
 } from "../../../../redux/actions/pelatihan/summary.actions";
+import { getEditTrainingStep1 } from "../../../../redux/actions/pelatihan/training.actions";
 import {
   UPDATE_STATUS_RESET,
   UPDATE_REMINDER_RESET,
@@ -64,6 +65,9 @@ const DataParticipant = ({ token }) => {
   const { error: errorDataPribadiRow, dataPeserta } = useSelector(
     (state) => state.getDataPribadiRow
   );
+  const { error: errorDataPelatihan, data: dataTraining } = useSelector(
+    (state) => state.getEditTraining
+  );
   const {
     error: errorUpdateStatus,
     loading,
@@ -93,7 +97,7 @@ const DataParticipant = ({ token }) => {
     tanggalLahir: moment(dataPeserta.tanggal_lahir).format("DD MMMM YYYY"),
   });
 
-  const optionsPeserta = [
+  let optionsPeserta = [
     { value: "sleksi administrasi", label: "Seleksi Administrasi" },
     { value: "tidak lulus administrasi", label: "Tidak Lulus Administrasi" },
     { value: "tes substansi", label: "Tes Substansi" },
@@ -106,6 +110,77 @@ const DataParticipant = ({ token }) => {
     { value: "lulus pelatihan", label: "Lulus Pelatihan" },
     { value: "tidak lulus pelatihan", label: "Tidak Lulus Pelatihan" },
   ];
+
+  switch (dataTraining && dataTraining.alur_pendaftaran) {
+    case "Tes Substansi - Administrasi":
+      switch (peserta.list[0].status) {
+        case "seleksi akhir":
+          optionsPeserta = [
+            { value: "ditolak", label: "Ditolak" },
+            { value: "diterima", label: "Diterima" },
+          ];
+          break;
+      }
+      break;
+    case "Administrasi - Test Substansi":
+      switch (peserta.list[0].status) {
+        case "seleksi akhir":
+          optionsPeserta = [
+            { value: "seleksi akhir", label: "Seleksi Akhir" },
+            { value: "ditolak", label: "Ditolak" },
+            { value: "diterima", label: "Diterima" },
+          ];
+          break;
+      }
+      break;
+    case "Tanpa Tes Substansi dan Administrasi":
+      switch (peserta.list[0].status) {
+        case "seleksi akhir":
+          optionsPeserta = [
+            { value: "seleksi akhir", label: "Seleksi Akhir" },
+            { value: "ditolak", label: "Ditolak" },
+            { value: "diterima", label: "Diterima" },
+          ];
+          break;
+      }
+      break;
+
+    default:
+      break;
+  }
+
+  switch (peserta.list[0].status) {
+    case "ditolak":
+      optionsPeserta = [{ value: "ditolak", label: "Ditolak" }];
+      break;
+    case "diterima":
+      optionsPeserta = [
+        { value: "diterima", label: "Diterima" },
+        { value: "pelatihan", label: "Pelatihan" },
+      ];
+      break;
+    case "pelatihan":
+      optionsPeserta = [
+        { value: "pelatihan", label: "Pelatihan" },
+        { value: "administrasi akhir", label: "Administrasi Akhir" },
+      ];
+      break;
+    case "administrasi akhir":
+      optionsPeserta = [
+        { value: "administrasi akhir", label: "Administrasi Akhir" },
+        { value: "lulus pelatihan", label: "Lulus Pelatihan" },
+        { value: "tidak lulus pelatihan", label: "Tidak Lulus Pelatihan" },
+      ];
+      break;
+    case "tidak lulus pelatihan":
+      optionsPeserta = [
+        { value: "tidak lulus pelatihan", label: "Tidak Lulus Pelatihan" },
+      ];
+      break;
+    case "lulus pelatihan":
+      optionsPeserta = [{ value: "lulus pelatihan", label: "Lulus Pelatihan" }];
+      break;
+  }
 
   const optionsAdministrasi = [
     { value: "unverified", label: "Unverified" },
@@ -128,6 +203,7 @@ const DataParticipant = ({ token }) => {
       dispatch(getBerkasPendaftaran(token, peserta.list[0].id));
       dispatch(getFormKomitmen(token, peserta.list[0].id));
       dispatch(getFormLpj(token, peserta.list[0].id));
+      dispatch(getEditTrainingStep1(peserta.list[0].pelatian_id, token));
     }
 
     if (errorUpdateStatus) {
@@ -260,32 +336,135 @@ const DataParticipant = ({ token }) => {
                 </p>
               </div>
             </div>
-            <div className="form-group row mb-2">
-              <div className="col-sm-12 col-md-6">
-                <label className="col-form-label font-weight-bold">
-                  Administrasi
-                </label>
-                <Select
-                  options={optionsAdministrasi}
-                  placeholder={peserta.list[0].administrasi || "-"}
-                  onChange={(e) =>
-                    setStatusAdministrasi({ label: e.label, value: e.value })
-                  }
-                />
-              </div>
-              <div className="col-sm-12 col-md-6">
-                <label className="col-form-label font-weight-bold">
-                  Status Peserta
-                </label>
-                <Select
-                  options={optionsPeserta}
-                  placeholder={peserta.list[0].status || "-"}
-                  onChange={(e) =>
-                    setStatusPeserta({ label: e.label, value: e.value })
-                  }
-                />
-              </div>
-            </div>
+            {/* PENYESUAIAN STATUS PESERTA PELATIHAN */}
+            {dataTraining &&
+              dataTraining.alur_pendaftaran ===
+                "Tes Substansi - Administrasi" && (
+                <div className="form-group row mb-2">
+                  <div className="col-sm-12 col-md-6">
+                    <label className="col-form-label font-weight-bold">
+                      Administrasi
+                    </label>
+                    <Select
+                      options={optionsAdministrasi}
+                      placeholder={peserta.list[0].administrasi || "-"}
+                      onChange={(e) =>
+                        setStatusAdministrasi({
+                          label: e.label,
+                          value: e.value,
+                        })
+                      }
+                      isDisabled={
+                        peserta.list[0].status !== "seleksi administrasi" ||
+                        (peserta.list[0].status !== "tidak lulus administrasi"
+                          ? true
+                          : false)
+                      }
+                    />
+                  </div>
+                  <div className="col-sm-12 col-md-6">
+                    <label className="col-form-label font-weight-bold">
+                      Status Peserta
+                    </label>
+                    <Select
+                      options={optionsPeserta}
+                      placeholder={peserta.list[0].status || "-"}
+                      onChange={(e) =>
+                        setStatusPeserta({ label: e.label, value: e.value })
+                      }
+                      isDisabled={
+                        peserta.list[0].status !== "seleksi akhir"
+                          ? true
+                          : false
+                      }
+                    />
+                  </div>
+                </div>
+              )}
+            {dataTraining &&
+              dataTraining.alur_pendaftaran ===
+                "Administrasi - Test Substansi" && (
+                <div className="form-group row mb-2">
+                  <div className="col-sm-12 col-md-6">
+                    <label className="col-form-label font-weight-bold">
+                      Administrasi
+                    </label>
+                    <Select
+                      options={optionsAdministrasi}
+                      placeholder={peserta.list[0].administrasi || "-"}
+                      onChange={(e) =>
+                        setStatusAdministrasi({
+                          label: e.label,
+                          value: e.value,
+                        })
+                      }
+                      isDisabled={
+                        peserta.list[0].status !== "tes substansi" ||
+                        peserta.list[0].status !==
+                          "tidak lulus tes substansi" ||
+                        (peserta.list[0].status !== "seleksi akhir"
+                          ? false
+                          : true)
+                      }
+                    />
+                  </div>
+                  <div className="col-sm-12 col-md-6">
+                    <label className="col-form-label font-weight-bold">
+                      Status Peserta
+                    </label>
+                    <Select
+                      options={optionsPeserta}
+                      placeholder={peserta.list[0].status || "-"}
+                      onChange={(e) =>
+                        setStatusPeserta({ label: e.label, value: e.value })
+                      }
+                      isDisabled={
+                        peserta.list[0].status === "seleksi administrasi" ||
+                        peserta.list[0].status === "tidak lulus administrasi" ||
+                        peserta.list[0].status === "tes substansi" ||
+                        peserta.list[0].status === "tidak lulus tes substansi"
+                          ? true
+                          : false
+                      }
+                    />
+                  </div>
+                </div>
+              )}
+            {dataTraining &&
+              dataTraining.alur_pendaftaran ===
+                "Tanpa Tes Substansi dan Administrasi" && (
+                <div className="form-group row mb-2">
+                  <div className="col-sm-12 col-md-6">
+                    <label className="col-form-label font-weight-bold">
+                      Administrasi
+                    </label>
+                    <Select
+                      options={optionsAdministrasi}
+                      placeholder={peserta.list[0].administrasi || "-"}
+                      onChange={(e) =>
+                        setStatusAdministrasi({
+                          label: e.label,
+                          value: e.value,
+                        })
+                      }
+                      isDisabled
+                    />
+                  </div>
+                  <div className="col-sm-12 col-md-6">
+                    <label className="col-form-label font-weight-bold">
+                      Status Peserta
+                    </label>
+                    <Select
+                      options={optionsPeserta}
+                      placeholder={peserta.list[0].status || "-"}
+                      onChange={(e) =>
+                        setStatusPeserta({ label: e.label, value: e.value })
+                      }
+                    />
+                  </div>
+                </div>
+              )}
+            {/* END PENYESUAIAN STATUS PESERTA PELATIHAN */}
 
             <div className="form-group mt-7">
               <div className="text-right">

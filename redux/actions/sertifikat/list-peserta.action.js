@@ -13,9 +13,7 @@ export const getAllParticipant =
   async (dispatch) => {
     try {
       dispatch({ type: LIST_PESERTA_REQUEST });
-      let link =
-        process.env.END_POINT_API_SERTIFIKAT +
-        `api/manage_certificates/detail-mitra/${id}?page=${page}`;
+      let link = process.env.END_POINT_API_SERTIFIKAT + `api/manage_certificates/detail-mitra/${id}?page=${page}`;
       if (keyword) link = link.concat(`&keyword=${keyword}`);
       if (limit) link = link.concat(`&limit=${limit}`);
       const config = {
@@ -31,7 +29,7 @@ export const getAllParticipant =
     } catch (error) {
       dispatch({
         type: LIST_PESERTA_FAIL,
-        payload: error.response.data.message,
+        payload: error.response.data.message || error.message,
       });
     }
   };
@@ -41,9 +39,7 @@ export const getDetailParticipant =
   async (dispatch) => {
     try {
       dispatch({ type: DETAIL_LIST_PESERTA_REQUEST });
-      let link =
-        process.env.END_POINT_API_SERTIFIKAT +
-        `api/manage_certificates/detail-mitra/${id}?page=${page}`;
+      let link = process.env.END_POINT_API_SERTIFIKAT + `api/manage_certificates/detail-mitra/${id}?page=${page}`;
       if (keyword) link = link.concat(`&keyword=${keyword}`);
       if (limit) link = link.concat(`&limit=${limit}`);
 
@@ -59,7 +55,7 @@ export const getDetailParticipant =
     } catch (error) {
       dispatch({
         type: DETAIL_LIST_PESERTA_FAIL,
-        payload: error.response.data.message,
+        payload: error.response.data.message || error.message,
       });
     }
   };

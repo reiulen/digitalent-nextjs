@@ -189,6 +189,7 @@ const EditRegistrationStep2 = ({ token, propsStep }) => {
       judul_form: titleStore,
       Pelatian_id: parseInt(router.query.id),
       formBuilder: formBuilderStore,
+      type_form: viewForm,
     };
     if (simpleValidator.current.allValid()) {
       dispatch(putTrainingStep2(token, data));

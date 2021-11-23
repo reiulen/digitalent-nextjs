@@ -15,20 +15,21 @@ const BreadcrumbComponent = ({ data = [] }) => {
               <i className="ri-arrow-right-s-line"></i>
             </span>
             <Link href={row.link} passHref>
-              {
-                i === (data.length - 1) ?
-                  
-                  row.name.length > 25 ?
-                    <span>{row.name.substring(0, 25) + " ..."}</span>
-                  :
+              {i === data.length - 1 ? (
+                row.name.length > 25 ? (
+                  <span>{row.name.substring(0, 25) + " ..."}</span>
+                ) : (
                   <span>{row.name}</span>
-                :
-    
-                  row.name.length > 25 ?
-                    <span className="text-primary" style={{cursor:"pointer"}}>{row.name.substring(0, 25) + " ..."}</span>
-                  :
-                    <span className="text-primary" style={{cursor:"pointer"}}>{row.name}</span>
-              }
+                )
+              ) : row.name.length > 25 ? (
+                <span className="text-primary" style={{ cursor: "pointer" }}>
+                  {row.name.substring(0, 25) + " ..."}
+                </span>
+              ) : (
+                <span className="text-primary" style={{ cursor: "pointer" }}>
+                  {row.name}
+                </span>
+              )}
             </Link>
           </div>
         ))}

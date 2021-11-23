@@ -43,10 +43,12 @@ export const dd = today.getDate();
 export const mm = today.getMonth() + 1; //January is 0 so need to add 1 to make it 1!
 export const yyyy = today.getFullYear();
 
-export const edit0Value = (e, setValue) => {
-  if(e.toString().charAt(0) === "0"){
-    setValue(e.replace("0", ""))
-  }else{
-    setValue(e);
+export const helperRemoveZeroFromIndex0 = (value, setValue) => {
+  // cara pakai removeZeroFromIndex0(e.target.value, setName)
+
+  if (value.toString().charAt(0) === "0") {
+    setValue(value.replace("0", ""));
+  } else {
+    setValue(value);
   }
-}
+};
