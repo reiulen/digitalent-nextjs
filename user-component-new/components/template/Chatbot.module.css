@@ -14,7 +14,7 @@
   position: fixed;
   height: 130px;
   right: 0;
-  bottom: 60px;
+  bottom: 80px;
   transition-duration: 0.5s;
   transition-property: width;
   border-radius: 100% 0 0 100%;

@@ -73,7 +73,6 @@ const Layout = ({ title = "Peserta - Pelatihan", session, children }) => {
         <meta name="viewport" content="initial-scale=1.0,width=device-width" />
       </Head>
       <Navbar session={session} />
-
       {routerPath == "/peserta/wizzard" ? (
         <HeaderWizzard session={session} />
       ) : (
