@@ -77,9 +77,9 @@ function RevisiList({ token }) {
                               Versi.{items.version}
                             </p>
                           </div>
-                          <div className="col-12 col-sm-6 d-flex justify-content-end">
+                          <div className="col-12 col-sm-6 d-flex justify-content-sm-end justify-content-start">
                             {items.information2 === "Menunggu Mitra" ? (
-                              <a className="mt-10 mt-sm-0" style={labelStyle}>
+                              <a className="mt-3 mb-3 mt-sm-10" style={labelStyle}>
                                 {items.information2}
                               </a>
                             ) : (
@@ -94,7 +94,7 @@ function RevisiList({ token }) {
                                   },
                                 }}
                               >
-                                <a className="btn btn-sm btn-rounded-full bg-blue-primary text-white mt-10 mt-sm-0">
+                                <a className="btn btn-sm btn-rounded-full bg-blue-primary text-white mt-3 mb-3 mt-sm-10">
                                   {items.information2}
                                 </a>
                               </Link>

@@ -295,7 +295,7 @@ const EditDokumentKerjasamaById = ({ token }) => {
                   type="text"
                   value={date}
                   name="text_input"
-                  className="form-control mb-3 mb-lg-0 border-0"
+                  className="form-control mb-3 mb-lg-0 border-0 ml-n4"
                   style={{ backgroundColor: "transparent" }}
                 />
               </div>
@@ -468,7 +468,7 @@ const EditDokumentKerjasamaById = ({ token }) => {
                       type="text"
                       value={isntitusiName}
                       name="text_input"
-                      className="form-control mb-3 mb-lg-0 border-0"
+                      className="form-control mb-3 mb-lg-0 border-0 ml-n4"
                       placeholder="Masukan Alamat E-mail"
                       style={{ backgroundColor: "transparent" }}
                     />
@@ -484,7 +484,7 @@ const EditDokumentKerjasamaById = ({ token }) => {
                       type="text"
                       value={email}
                       name="text_input"
-                      className="form-control mb-3 mb-lg-0 border-0"
+                      className="form-control mb-3 mb-lg-0 border-0 ml-n4"
                       placeholder="Masukan Alamat E-mail"
                       style={{ backgroundColor: "transparent" }}
                     />
@@ -702,8 +702,8 @@ const EditDokumentKerjasamaById = ({ token }) => {
                     }
                   )}
 
-              <div className="form-group row">
-                <div className="col-sm-12 d-flex justify-content-end">
+              <div className="form-group">
+                <div className="d-flex justify-content-end flex-column flex-md-row">
                   <Link
                     href={{
                       pathname:
@@ -711,13 +711,13 @@ const EditDokumentKerjasamaById = ({ token }) => {
                       query: { id: idDetail },
                     }}
                   >
-                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary">
+                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary d-flex justify-content-center">
                       Kembali
                     </a>
                   </Link>
                   <button
                     type="button"
-                    className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
+                    className="btn btn-sm btn-rounded-full bg-blue-primary text-white d-flex justify-content-center"
                     onClick={() => handleSubmit()}
                   >
                     Ubah
