@@ -393,13 +393,13 @@ const Tambah = ({ token }) => {
               <div className="form-group row">
                 <div className="col-sm-12 d-flex justify-content-end">
                   <Link href="/site-management/master-data/master-zonasi">
-                    <a className={`${styles.btnKembali} btn btn-white-ghost-rounded-full rounded-pill mr-2`}>
+                    <a className={`${styles2.btnKembali} btn btn-white-ghost-rounded-full rounded-pill mr-2`}>
                       Kembali
                     </a>
                   </Link>
                   <button
                     type="button"
-                    className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill`}
+                    className={`${styles2.btnSimpan} btn btn-primary-rounded-full rounded-pill`}
                     onClick={(e) => submit(e)}
                   >
                     Simpan

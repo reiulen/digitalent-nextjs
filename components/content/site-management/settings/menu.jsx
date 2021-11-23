@@ -552,7 +552,6 @@ const Table = ({ token }) => {
                 <div className="col-sm-12 d-flex justify-content-end">
                   <button
                     className={`${styles.btnKembali} btn btn-white-ghost-rounded-full rounded-pill mr-2`}
-                    // className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5"
                     type="button"
                     onClick={() => cancel()}
                   >
@@ -561,7 +560,6 @@ const Table = ({ token }) => {
                   <button
                     type="submit"
                     className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill`}
-                  // className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
                   >
                     Simpan
                   </button>

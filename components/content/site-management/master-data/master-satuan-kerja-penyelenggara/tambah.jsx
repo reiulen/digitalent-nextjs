@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Pagination from "react-js-pagination";
@@ -14,6 +14,10 @@ import Select from "react-select";
 import axios from "axios";
 import Swal from "sweetalert2";
 
+import SimpleReactValidator from "simple-react-validator";
+
+import styles from "../../../../../styles/previewGaleri.module.css"
+
 const TambahApi = ({ token }) => {
   const router = useRouter();
   let selectRefProvinsi = null;
@@ -25,6 +29,9 @@ const TambahApi = ({ token }) => {
   const [status, setStatus] = useState("");
   const [valueProvinsi, setValueProvinsi] = useState([]);
   const [kabupaten, setKabupaten] = useState([]);
+
+  const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
+  const [, forceUpdate] = useState();
 
   const changeListProvinsi = (e) => {
     let data = e.map((items) => {
@@ -41,62 +48,72 @@ const TambahApi = ({ token }) => {
 
   const submit = (e) => {
     e.preventDefault();
+    if (simpleValidator.current.allValid()) {
 
-    if (nameUnitWork === "") {
-      Swal.fire(
-        "Gagal simpan",
-        "Form nama satuan kerja tidak boleh kosong",
-        "error"
-      );
-    } else if (status === "") {
-      Swal.fire("Gagal simpan", "Form status tidak boleh kosong", "error");
-    } else if (!valueProvinsi.length) {
-      Swal.fire("Gagal simpan", "Form provinsi tidak boleh kosong", "error");
-    } else {
-      Swal.fire({
-        title: "Apakah anda yakin simpan ?",
-        // text: "Data ini tidak bisa dikembalikan !",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        cancelButtonText: "Batal",
-        confirmButtonText: "Ya !",
-        dismissOnDestroy: false,
-      }).then(async (result) => {
-        if (result.value) {
-          const sendData = {
-            name: nameUnitWork,
-            status: status,
-            data: valueProvinsi,
-          };
+      if (nameUnitWork === "") {
+        Swal.fire(
+          "Gagal simpan",
+          "Form nama satuan kerja tidak boleh kosong",
+          "error"
+        );
+      } else if (status === "") {
+        Swal.fire("Gagal simpan", "Form status tidak boleh kosong", "error");
+      } else if (!valueProvinsi.length) {
+        Swal.fire("Gagal simpan", "Form provinsi tidak boleh kosong", "error");
+      } else {
+        Swal.fire({
+          title: "Apakah anda yakin simpan ?",
+          // text: "Data ini tidak bisa dikembalikan !",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          cancelButtonText: "Batal",
+          confirmButtonText: "Ya !",
+          dismissOnDestroy: false,
+        }).then(async (result) => {
+          if (result.value) {
+            const sendData = {
+              name: nameUnitWork,
+              status: status,
+              data: valueProvinsi,
+            };
 
-          try {
-            let { data } = await axios.post(
-              `${process.env.END_POINT_API_SITE_MANAGEMENT}api/satuan/store`,
-              sendData,
-              {
-                headers: {
-                  authorization: `Bearer ${token}`,
-                },
-              }
-            );
+            try {
+              let { data } = await axios.post(
+                `${process.env.END_POINT_API_SITE_MANAGEMENT}api/satuan/store`,
+                sendData,
+                {
+                  headers: {
+                    authorization: `Bearer ${token}`,
+                  },
+                }
+              );
 
-            Swal.fire("Berhasil", "Data berhasil disimpan", "success").then(
-              () => {
-                router.push(
-                  `/site-management/master-data/master-satuan-kerja-penyelenggara/`
-                );
-              }
-            );
-          } catch (error) {
-            Swal.fire(
-              "Gagal simpan",
-              `${error.response.data.message}`,
-              "error"
-            );
+              Swal.fire("Berhasil", "Data berhasil disimpan", "success").then(
+                () => {
+                  router.push(
+                    `/site-management/master-data/master-satuan-kerja-penyelenggara/`
+                  );
+                }
+              );
+            } catch (error) {
+              Swal.fire(
+                "Gagal simpan",
+                `${error.response.data.message}`,
+                "error"
+              );
+            }
           }
-        }
+        });
+      }
+    } else {
+      simpleValidator.current.showMessages();
+      forceUpdate(1);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Isi data dengan benar !",
       });
     }
   };
@@ -112,38 +129,54 @@ const TambahApi = ({ token }) => {
       <form onSubmit={submit}>
         <div className="col-lg-12 order-1 px-0">
           <div className="card card-custom card-stretch gutter-b">
-            <div className="card-header border-0">
-              <h3 className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 mb-5 mt-5 titles-1">
+            <div className="card-header">
+              <h3 className="card-title font-weight-bolder text-dark">
                 Tambah Satuan Kerja Penyelenggara
               </h3>
             </div>
-            <div className="card-body pt-0 px-4 px-sm-8">
+            <div className="card-body">
               <div className="form-group">
                 <label>Nama Satuan Kerja</label>
                 <input
                   onChange={(e) => setNameUnitWork(e.target.value)}
                   type="text"
-                  className="form-control"
+                  className={`${styles.cari} form-control`}
                   placeholder="Masukkan nama satuan kerja"
+                  onBlur={() => simpleValidator.current.showMessageFor("namaSatuanKerja")}
                 />
+
+                {simpleValidator.current.message(
+                  "namaSatuanKerja",
+                  nameUnitWork,
+                  "required",
+                  { className: "text-danger" }
+                )}
               </div>
               <div className="form-group">
                 <label>Status</label>
                 <select
-                  className="form-control"
+                  className={`${styles.cari} form-control`}
                   id="exampleSelect1"
                   onChange={(e) => setStatus(e.target.value)}
+                  onBlur={() => simpleValidator.current.showMessageFor("status")}
                 >
                   <option value="">Pilih Status</option>
                   <option value="1">Aktif</option>
                   <option value="0">Tidak Aktif</option>
                 </select>
+
+                {simpleValidator.current.message(
+                  "status",
+                  status,
+                  "required",
+                  { className: "text-danger" }
+                )}
               </div>
               <div className="form-group">
                 <label htmlFor="exampleSelect1">Provinsi</label>
                 <Select
                   ref={(ref) => (selectRefProvinsi = ref)}
-                  className="basic-single"
+                  className={`${styles.cari} basic-single`}
                   classNamePrefix="select"
                   placeholder="Pilih provinsi"
                   isMulti
@@ -156,7 +189,15 @@ const TambahApi = ({ token }) => {
                   name="color"
                   onChange={(e) => changeListProvinsi(e)}
                   options={provinsi}
+                  onBlur={() => simpleValidator.current.showMessageFor("provinsi")}
                 />
+
+                {simpleValidator.current.message(
+                  "provinsi",
+                  valueProvinsi,
+                  "required",
+                  { className: "text-danger" }
+                )}
               </div>
               <div className="form-group row">
                 <div className="col-sm-12 d-flex justify-content-end">
@@ -164,13 +205,13 @@ const TambahApi = ({ token }) => {
                     href="/site-management/master-data/master-satuan-kerja-penyelenggara"
                     passHref
                   >
-                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
+                    <a className={`${styles.btnKembali} btn btn-white-ghost-rounded-full rounded-pill mr-2`}>
                       Kembali
                     </a>
                   </Link>
                   <button
                     type="submit"
-                    className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
+                    className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill`}
                   >
                     Simpan
                   </button>
