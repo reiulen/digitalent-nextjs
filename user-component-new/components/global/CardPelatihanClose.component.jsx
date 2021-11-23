@@ -57,7 +57,7 @@ const CardPelatihanClose = ({ row }) => {
             />
           </div>
           <div
-            className="d-flex justify-content-between position-relative pb-0 mb-0"
+            className="d-flex justify-content-between position-relative pb-0 mb-0 flex-wrap"
             style={{ top: "-15px" }}
           >
             <p className={`pl-18 my-0 text-mitra-new`}>{row.mitra}</p>
@@ -67,7 +67,7 @@ const CardPelatihanClose = ({ row }) => {
                   row.status === "Open"
                     ? "status-mitra-open-new"
                     : "status-mitra-close-new"
-                } text-uppercase my-0`}
+                } text-uppercase mt-2 mt-lg-2 mt-xl-0 ml-md-17 ml-17`}
               >
                 {row.status}
               </p>

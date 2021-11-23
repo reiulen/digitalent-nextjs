@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, Button, Badge } from "react-bootstrap";
 import Image from "next/image";
+import ShareOverlay from "../global/ShareOverlay.component";
 
 const CardPelatihanOpen = ({
   funcMouseEnter,
@@ -60,17 +61,22 @@ const CardPelatihanOpen = ({
                     }}
                   ></i>
                 </Button>
-                <Button
-                  variant="light"
-                  className={`float-right d-flex justify-content-center align-items-center mr-2 wishlist-card-new`}
+                <ShareOverlay
+                  url={`${process.env.PATH_URL}/detail/pelatihan/${row.id}`}
+                  quote={row.name}
                 >
-                  <i
-                    className="ri-share-line p-0"
-                    style={{
-                      color: "#6C6C6C",
-                    }}
-                  ></i>
-                </Button>
+                  <Button
+                    variant="light"
+                    className={`float-right d-flex justify-content-center align-items-center mr-2 wishlist-card-new`}
+                  >
+                    <i
+                      className="ri-share-line p-0"
+                      style={{
+                        color: "#6C6C6C",
+                      }}
+                    ></i>
+                  </Button>
+                </ShareOverlay>
               </div>
             )}
           </div>
