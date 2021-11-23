@@ -217,57 +217,63 @@ const Table = ({ token }) => {
               </div>
 
               <div className="row">
-                <div className={`${stylesPag.pagination} table-pagination`}>
-                  <Pagination
-                    activePage={allZonasi?.page}
-                    itemsCountPerPage={allZonasi?.data?.perPage}
-                    totalItemsCount={allZonasi?.data?.total}
-                    pageRangeDisplayed={3}
-                    onChange={(page) => dispatch(setPage(page))}
-                    nextPageText={">"}
-                    prevPageText={"<"}
-                    firstPageText={"<<"}
-                    lastPageText={">>"}
-                    itemClass="page-item"
-                    linkClass="page-link"
-                  />
-                </div>
+                {allZonasi && allZonasi?.data?.perPage < allZonasi?.data?.total &&
+                  <>
+                    <div className={`${stylesPag.pagination} table-pagination`}>
+                      <Pagination
+                        activePage={allZonasi?.page}
+                        itemsCountPerPage={allZonasi?.data?.perPage}
+                        totalItemsCount={allZonasi?.data?.total}
+                        pageRangeDisplayed={3}
+                        onChange={(page) => dispatch(setPage(page))}
+                        nextPageText={">"}
+                        prevPageText={"<"}
+                        firstPageText={"<<"}
+                        lastPageText={">>"}
+                        itemClass="page-item"
+                        linkClass="page-link"
+                      />
+                    </div>
+                  </>
+                }
 
-                <div className={`${stylesPag.rightPag} table-total ml-auto`}>
-                  <div className="row">
-                    <div className="col-4 mr-0 mt-3">
-                      <select
-                        className="form-control cursor-pointer pr-2"
-                        id="exampleFormControlSelect2"
-                        defaultValue=""
-                        style={{
-                          width: "70px",
-                          background: "#F3F6F9",
-                          borderColor: "#F3F6F9",
-                          color: "#9E9E9E",
-                        }}
-                        onChange={(e) =>
-                          dispatch(limitCooporation(e.target.value, token))
-                        }
-                      >
-                        <option value="5">5</option>
-                        <option value="10">10</option>
-                        <option value="30">30</option>
-                        <option value="40">40</option>
-                        <option value="50">50</option>
-                      </select>
+                {allZonasi ?
+                  <div className={`${stylesPag.rightPag} table-total ml-auto`}>
+                    <div className="row">
+                      <div className="col-4 mr-0 mt-3">
+                        <select
+                          className="form-control cursor-pointer pr-2"
+                          id="exampleFormControlSelect2"
+                          defaultValue=""
+                          style={{
+                            width: "70px",
+                            background: "#F3F6F9",
+                            borderColor: "#F3F6F9",
+                            color: "#9E9E9E",
+                          }}
+                          onChange={(e) =>
+                            dispatch(limitCooporation(e.target.value, token))
+                          }
+                        >
+                          <option value="5">5</option>
+                          <option value="10">10</option>
+                          <option value="30">30</option>
+                          <option value="40">40</option>
+                          <option value="50">50</option>
+                        </select>
+                      </div>
+                      <div className="col-8 my-auto">
+                        <p
+                          className="align-middle mt-3"
+                          style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}
+                        >
+                          Total Data {allZonasi?.data && allZonasi?.data?.total} List
+                          Data
+                        </p>
+                      </div>
                     </div>
-                    <div className="col-8 my-auto">
-                      <p
-                        className="align-middle mt-3"
-                        style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}
-                      >
-                        Total Data {allZonasi?.data && allZonasi?.data?.total} List
-                        Data
-                      </p>
-                    </div>
-                  </div>
-                </div>
+                  </div> : ""
+                }
               </div>
             </div>
           </div>
