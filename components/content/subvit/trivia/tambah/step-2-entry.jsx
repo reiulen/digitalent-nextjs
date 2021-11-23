@@ -448,7 +448,7 @@ const StepTwo = ({ token }) => {
           <StepInput step="2"></StepInput>
           <div className="card-header border-0">
             <h2 className="card-title h2 text-dark">
-              Soal {trivia.bank_soal + 1}
+              Soal {trivia && trivia.bank_soal + 1}
             </h2>
           </div>
           <div className="card-body pt-0">
@@ -467,6 +467,7 @@ const StepTwo = ({ token }) => {
                     value={question}
                     onChange={(e) => setSoal(e.target.value)}
                     autoComplete="off"
+                    placeholder="Isi Pertanyaan"
                   />
                 </div>
               </div>
@@ -495,7 +496,7 @@ const StepTwo = ({ token }) => {
 
               <div className="font-weight-bold">Jenis Pertanyaan</div>
               <div className="form-group row mt-4 mb-3">
-                <div className="col-sm-12 col-md-8">
+                <div className="col-sm-12 col-md-8 col-xs-4">
                   <div className="form-check form-check-inline">
                     <input
                       className="form-check-input"
@@ -553,13 +554,13 @@ const StepTwo = ({ token }) => {
                       className={`${styles.btnSave} col-12 col-sm-12 col-md-7 col-lg-7 col-xl-5 buttoon float-right row justify-content-between`}
                     >
                       <button
-                        className={`${styles.btnNext} col-12 col-sm-12 col-md-5 col-lg-5 col-xl-5 btn btn-light-ghost-rounded-full`}
+                        className={`mt-3 col-12 col-sm-12 col-md-5 col-lg-5 col-xl-5 btn btn-light-ghost-rounded-full`}
                         type="submit"
                       >
                         Simpan & Lanjut
                       </button>
                       <button
-                        className="col-12 col-sm-12 col-md-5 col-lg-5 col-xl-5 btn btn-primary-rounded-full"
+                        className="mt-3 col-12 col-sm-12 col-md-5 col-lg-5 col-xl-5 btn btn-primary-rounded-full"
                         onClick={saveDraft}
                         type="button"
                       >
