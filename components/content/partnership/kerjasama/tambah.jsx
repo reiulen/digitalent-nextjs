@@ -201,11 +201,11 @@ const Tambah = ({ token }) => {
                       <label className="required fw-bold fs-6 mb-2">
                         Lembaga
                       </label>
-                      <Select
+                      <select
                         onFocus={() =>
                           setError({ ...error, institution_name: "" })
                         }
-                        className="basic-single"
+                        className="basic-single form-control"
                         classNamePrefix="select"
                         placeholder="Pilih Lembaga"
                         defaultValue={allMK?.stateListMitra[0]}
