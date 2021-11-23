@@ -5,6 +5,7 @@
 
 .Chatbot_container {
   width: 0;
+  cursor: pointer;
   transition: width 1s ease-in-out height 1s ease-in-out;
 }
 
