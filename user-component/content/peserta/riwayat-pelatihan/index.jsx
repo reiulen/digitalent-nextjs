@@ -27,6 +27,7 @@ export default function RiwayatPelatihan({ session }) {
 
   const handleClose = () => setShowModal(false);
   const handleShow = () => setShowModal(true);
+
   const handleFilter = () => {
     setShowModal(false);
   };
@@ -41,10 +42,9 @@ export default function RiwayatPelatihan({ session }) {
 
   const [filter, setFilter] = useState([
     { name: "semua", value: "all" },
-    { name: "test substansi", value: "tes_substansi" },
-    { name: "administrasi", value: "all" },
+    { name: "seleksi", value: "seleksi" },
     { name: "pelatihan", value: "pelatihan" },
-    { name: "selesai", value: "akhir" },
+    { name: "selesai", value: "selesai" },
   ]);
 
   useEffect(() => {
@@ -90,11 +90,10 @@ export default function RiwayatPelatihan({ session }) {
                 </Col>
                 <Col lg={4} className="w-100">
                   <button
-                    className="btn border d-flex align-items-center justify-content-between border-2 border-primary w-100"
+                    className="btn border d-flex align-items-center justify-content-between border-2 border-primary w-100 mt-5 mt-lg-0"
                     data-toggle="modal"
                     style={{
                       color: "#464646",
-                      minWidth: "230px",
                     }}
                     onClick={handleShow}
                   >
@@ -105,10 +104,11 @@ export default function RiwayatPelatihan({ session }) {
                     <IconArrow fill="#ADB5BD" width="10" height="6" />
                   </button>
                 </Col>
-                <Row className="pt-4 d-flex justify-content-between w-100">
+
+                <Row className="pt-4 w-100">
                   {filter.map((item, i) => {
                     return (
-                      <Col key={i}>
+                      <Col md={2} sm={3} key={i} className="d-flex w-100">
                         <Button
                           variant={
                             selected == i ? "primary" : "outline-primary"
@@ -117,7 +117,7 @@ export default function RiwayatPelatihan({ session }) {
                             setSelected(i);
                             dispatch(setValuePeserta(filter[i].value));
                           }}
-                          className={`rounded-full mx-5 w-100 text-capitalize`}
+                          className={`rounded-full mx-4 w-md-100 w-100 my-2 my-md-0 text-capitalize`}
                         >
                           {item.name}
                         </Button>
