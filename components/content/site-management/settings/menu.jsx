@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import IconDelete from "../../../assets/icon/Delete";
 import IconAdd from "../../../assets/icon/Add";
@@ -7,8 +7,17 @@ import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
 import Swal from "sweetalert2";
 import Modal from "../../site-management/modal";
+
+import styles from "../../../../styles/sitemanagement/userMitra.module.css";
+import styles2 from "../../../../styles/previewGaleri.module.css";
+import stylesPag from "../../../../styles/pagination.module.css"
+
+import SimpleReactValidator from "simple-react-validator";
+
 const Table = ({ token }) => {
   const [array, setArray] = useState([]);
+  const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
+  const [, forceUpdate] = useState();
 
   const firstPush = () => {
     let _temp = [...array];
@@ -114,101 +123,116 @@ const Table = ({ token }) => {
 
   const submit = async (e) => {
     e.preventDefault();
-    let datar = [...array]
+    if (simpleValidator.current.allValid()) {
 
-    datar.forEach((items, index) => {
-      if (!items.name && !items.link) {
-        datar[index] = {
-          ...items,
-          error: "field name dan link tidak boleh kosong",
-        };
-        setArray(datar)
-      }
-      if (items.name && !items.link) {
-        datar[index] = { ...items, error: "field link tidak boleh kosong" };
-        setArray(datar)
-      }
-      if (!items.name && items.link) {
-        datar[index] = { ...items, error: "field name tidak boleh kosong" };
-        setArray(datar)
-      }
-      if (items.child.length) {
-        items.child.forEach((itm, idx) => {
-          if (!itm.name && itm.link === "") {
-            datar[index].child[idx] = {
-              ...itm,
-              error: "field name dan link submenu tidak boleh kosong",
-            };
-            setArray(datar)
-          }
-          if (itm.name && itm.link === "") {
-            datar[index].child[idx] = {
-              ...itm,
-              error: "field link submenu tidak boleh kosong",
-            };
-            setArray(datar)
-          }
-          if (!itm.name && itm.link !== "") {
-            datar[index].child[idx] = {
-              ...itm,
-              error: "field link submenu tidak boleh kosong",
-            };
-            setArray(datar)
-          }
-          if (!itm.name && itm.link === undefined) {
-            datar[index].child[idx] = {
-              ...itm,
-              error: "field name submenu tidak boleh kosong",
-            };
-            setArray(datar)
-          }
-          if (itm.child.length) {
-            itm.child.forEach((itz, idz) => {
-              if (!itz.name && !itz.link) {
-                datar[index].child[idx].child[idz] = {
-                  ...itz,
-                  error: "field name dan link submenu tidak boleh kosong",
-                };
-                setArray(datar)
-              }
-              if (itz.name && !itz.link) {
-                datar[index].child[idx].child[idz] = {
-                  ...itz,
-                  error: "field link submenu tidak boleh kosong",
-                };
-                setArray(datar)
-              }
-              if (!itz.name && itz.link) {
-                datar[index].child[idx].child[idz] = {
-                  ...itz,
-                  error: "field name submenu tidak boleh kosong",
-                };
-                setArray(datar)
-              }
-            });
-          }
-        });
-      }
-    });
-    
-    const sendData = { menu: array };
-    try {
-      let { data } = await axios.post(
-        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-menu/store`,
-        sendData,
-        {
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
+      let datar = [...array]
+
+      datar.forEach((items, index) => {
+        if (!items.name && !items.link) {
+          datar[index] = {
+            ...items,
+            // error: "menu dan link tidak boleh kosong",
+          };
+          setArray(datar)
         }
-      );
-      Swal.fire("Berhasil", "Data berhasil disimpan", "success");
-    } catch (error) {
-      Swal.fire("Gagal", `${error.response.data.message}`, "error")
+        if (items.name && !items.link) {
+          datar[index] = {
+            ...items,
+            //  error: "field link tidak boleh kosong" 
+          };
+          setArray(datar)
+        }
+        if (!items.name && items.link) {
+          // datar[index] = { ...items, error: "field name tidak boleh kosong" };
+          setArray(datar)
+        }
+        if (items.child.length) {
+          items.child.forEach((itm, idx) => {
+            if (!itm.name && itm.link === "") {
+              datar[index].child[idx] = {
+                ...itm,
+                // error: "field name dan link submenu tidak boleh kosong",
+              };
+              setArray(datar)
+            }
+            if (itm.name && itm.link === "") {
+              datar[index].child[idx] = {
+                ...itm,
+                // error: "field link submenu tidak boleh kosong",
+              };
+              setArray(datar)
+            }
+            if (!itm.name && itm.link !== "") {
+              datar[index].child[idx] = {
+                ...itm,
+                // error: "field link submenu tidak boleh kosong",
+              };
+              setArray(datar)
+            }
+            if (!itm.name && itm.link === undefined) {
+              datar[index].child[idx] = {
+                ...itm,
+                // error: "field name submenu tidak boleh kosong",
+              };
+              setArray(datar)
+            }
+            if (itm.child.length) {
+              itm.child.forEach((itz, idz) => {
+                if (!itz.name && !itz.link) {
+                  datar[index].child[idx].child[idz] = {
+                    ...itz,
+                    // error: "field name dan link submenu tidak boleh kosong",
+                  };
+                  setArray(datar)
+                }
+                if (itz.name && !itz.link) {
+                  datar[index].child[idx].child[idz] = {
+                    ...itz,
+                    // error: "field link submenu tidak boleh kosong",
+                  };
+                  setArray(datar)
+                }
+                if (!itz.name && itz.link) {
+                  datar[index].child[idx].child[idz] = {
+                    ...itz,
+                    // error: "field name submenu tidak boleh kosong",
+                  };
+                  setArray(datar)
+                }
+              });
+            }
+          });
+        }
+      })
+    } else {
+      simpleValidator.current.showMessages();
+      forceUpdate(1);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Isi data dengan benar !",
+      });
     }
+
+    const sendData = { menu: array };
+    // try {
+    let { data } = await axios.post(
+      `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-menu/store`,
+      sendData,
+      {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    Swal.fire("Berhasil", "Data berhasil disimpan", "success");
+    // } catch (error) {
+    //   // Swal.fire("Gagal", `${error.response.data.message}`, "error")
+    //   Swal.fire("Oops...", `Isi data dengan benar !`, "error");
+    // }
   };
 
-  
+
 
   const cancel = () => {
     Swal.fire({
@@ -253,13 +277,14 @@ const Table = ({ token }) => {
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
-          <div className="card-header border-b">
-            <h3 className="card-title font-weight-bolder text-dark titles-1">
+          <div className="card-header row border-b">
+            <h3 className={`${styles2.headTitle} col-12 col-sm-8 col-md-8 col-lg-7 col-xl-9`}>
               Menu
             </h3>
-            <div className="card-toolbar">
+            <div className="card-toolbar row col-12 col-sm-4 col-md-4 col-lg-5 col-xl-3">
               <button
-                className="btn btn-rounded-full bg-blue-primary text-white"
+                // className="btn btn-rounded-full bg-blue-primary text-white"
+                className={`${styles2.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bold btn-block`}
                 onClick={() => firstPush()}
               >
                 <IconAdd className="mr-3" width="14" height="14" />
@@ -267,14 +292,14 @@ const Table = ({ token }) => {
               </button>
             </div>
           </div>
-          <div className="card-body pt-0 mt-10 px-4 px-sm-8">
+          <div className="card-body">
             <form onSubmit={submit}>
               {array.map((parrent, i) => {
                 return (
                   <div key={i}>
                     <div>
                       <div className="row">
-                        <div className="col-md-12 col-xl-5">
+                        <div className="col-12 col-sm-12 col-md-5 col-lg-5 col-xl-5">
                           <div className="form-group">
                             <label>Menu {i + 1}</label>
                             <input
@@ -284,11 +309,19 @@ const Table = ({ token }) => {
                               type="text"
                               className="form-control"
                               placeholder="Masukkan Menu"
+                              onBlur={() => simpleValidator.current.showMessageFor("menu")}
                             />
+                            {simpleValidator.current.message(
+                              "menu",
+                              parrent.name,
+                              "required",
+                              { className: "text-danger" }
+                            )}
                           </div>
-                          <p className="error-text mb-4">{parrent?.error}</p>
+
+                          {/* <p className="error-text mb-5">{parrent?.error}</p> */}
                         </div>
-                        <div className="col-md-12 col-xl-5">
+                        <div className="col-12 col-sm-12 col-md-5 col-lg-5 col-xl-5">
                           <div className="form-group">
                             <label>Link {i + 1}</label>
                             <input
@@ -297,13 +330,21 @@ const Table = ({ token }) => {
                               onChange={(e) => handleChangeInput(e, i)}
                               type="text"
                               className="form-control"
-                              placeholder={`Masukkan link ${i+1}`}
+                              placeholder={`Masukkan link ${i + 1}`}
+                              onBlur={() => simpleValidator.current.showMessageFor("link")}
                             />
+
+                            {simpleValidator.current.message(
+                              "link",
+                              parrent.link,
+                              "required",
+                              { className: "text-danger" }
+                            )}
                           </div>
                         </div>
-                        <div className="col-md-12 col-xl-2">
+                        <div className="col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
                           <div className="d-flex align-items-center h-100">
-                            <button
+                            {/* <button
                               type="button"
                               className="btn mr-4 mb-5"
                               style={{ backgroundColor: "#4299E1" }}
@@ -323,15 +364,17 @@ const Table = ({ token }) => {
                                 width={16}
                                 height={16}
                               />
-                            </button>
-                            <button
-                              type="button"
-                              className="btn mb-5"
-                              style={{ backgroundColor: "#EE2D41" }}
-                              onClick={() => handleDeleteMenu(i)}
-                            >
-                              <IconDelete />
-                            </button>
+                            </button> */}
+                            <div className={`${styles.deleteMenu}`}>
+                              <button
+                                type="button"
+                                className="col-11 col-sm-8 col-md-4 col-lg-4 col-xl-3 btn"
+                                style={{ backgroundColor: "#EE2D41", position: 'absolute', top: '25px' }}
+                                onClick={() => handleDeleteMenu(i)}
+                              >
+                                <IconDelete />
+                              </button>
+                            </div>
                             <Modal />
                           </div>
                         </div>
@@ -354,7 +397,7 @@ const Table = ({ token }) => {
                                     type="text"
                                     value={child1.name}
                                     className="form-control"
-                                    placeholder={`Masukkan sub menu ${j+1}`}
+                                    placeholder={`Masukkan sub menu ${j + 1}`}
                                   />
                                 </div>
                                 <p className="error-text mb-4">{child1?.error}</p>
@@ -370,7 +413,7 @@ const Table = ({ token }) => {
                                     name="inputLink"
                                     type="text"
                                     className="form-control"
-                                    placeholder={`Masukkan sub link ${j+1}`}
+                                    placeholder={`Masukkan sub link ${j + 1}`}
                                   />
                                 </div>
                               </div>
@@ -413,12 +456,12 @@ const Table = ({ token }) => {
                                     type="text"
                                     value={child1.name}
                                     className="form-control"
-                                    placeholder={`Masukkan sub menu ${j+1}`}
+                                    placeholder={`Masukkan sub menu ${j + 1}`}
                                   />
                                 </div>
                                 <p className="error-text mb-4">{child1?.error}</p>
                               </div>
-                              <div className="col-md-12 col-xl-2">
+                              <div className="col-md-12 col-xl-2 mt-4">
                                 <div className="d-flex align-items-center h-100">
                                   <button
                                     type="button"
@@ -460,7 +503,7 @@ const Table = ({ token }) => {
                                       name="inputName"
                                       type="text"
                                       className="form-control"
-                                      placeholder={`Masukkan sub sub menu ${k+1}`}
+                                      placeholder={`Masukkan sub sub menu ${k + 1}`}
                                     />
                                   </div>
                                   <p className="error-text mb-4">{child3?.error}</p>
@@ -478,7 +521,7 @@ const Table = ({ token }) => {
                                       className="form-control"
                                       placeholder={`Masukkan sub sub link ${k + 1}`}
                                     />
-                                    
+
                                   </div>
                                 </div>
                                 <div className="col-md-12 col-xl-2">
@@ -503,12 +546,13 @@ const Table = ({ token }) => {
                 );
               })}
 
-              {!array.length ? <div className="d-flex justify-content-center py-5">Data kosong</div>:""}
+              {!array.length ? <div className="d-flex justify-content-center py-5">Data kosong</div> : ""}
 
               <div className="form-group row mt-10 mt-sm-5">
                 <div className="col-sm-12 d-flex justify-content-end">
                   <button
-                    className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5"
+                    className={`${styles.btnKembali} btn btn-white-ghost-rounded-full rounded-pill mr-2`}
+                    // className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5"
                     type="button"
                     onClick={() => cancel()}
                   >
@@ -516,7 +560,8 @@ const Table = ({ token }) => {
                   </button>
                   <button
                     type="submit"
-                    className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
+                    className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill`}
+                  // className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
                   >
                     Simpan
                   </button>

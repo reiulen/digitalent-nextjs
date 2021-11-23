@@ -16,6 +16,8 @@ import HomeWrapper from "../../../components/wrapper/Home.wrapper";
 import IconLove from "../../../../components/assets/icon/Love";
 import IconShare from "../../../../components/assets/icon/Share";
 
+import ShareOverlay from "../../../components/global/ShareOverlay.component";
+
 import { checkRegisterPelatihan } from "../../../../redux/actions/beranda/detail-pelatihan.actions";
 import axios from "axios";
 
@@ -109,12 +111,15 @@ const DetailPelatihan = ({ session }) => {
 
                   <Col md={2} sm={6}>
                     <div className="d-flex align-items-center justify-content-md-end">
-                      <button className="btn btn-white roundedss-border mr-4">
-                        {/* <i className="ri-share-line"></i> */}
-                        <IconShare />
-                      </button>
+                      <ShareOverlay
+                        url={`${process.env.PATH_URL}/detail/pelatihan/${pelatihan.id}`}
+                        quote={pelatihan.name}
+                      >
+                        <button className="btn btn-white roundedss-border mr-4">
+                          <IconShare />
+                        </button>
+                      </ShareOverlay>
                       <button className="btn btn-white roundedss-border">
-                        {/* <i className="ri-heart-line"></i> */}
                         <IconLove />
                       </button>
                     </div>

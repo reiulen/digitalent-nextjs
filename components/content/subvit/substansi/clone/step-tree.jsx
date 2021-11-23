@@ -12,10 +12,13 @@ import DatePicker from "react-datepicker";
 import SimpleReactValidator from "simple-react-validator";
 import Swal from "sweetalert2";
 import moment from "moment";
+import styles from "../../../../../styles/stepInput.module.css";
+import styleBtn from "../../trivia/edit/step.module.css";
 
 import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInput from "/components/StepInputClone";
 import LoadingPage from "../../../../LoadingPage";
+import { helperRegexNumber } from "../../../../../utils/middleware/helper";
 
 const StepTwo = ({ token }) => {
   const dispatch = useDispatch();
@@ -117,6 +120,24 @@ const StepTwo = ({ token }) => {
   const handleResetError = () => {
     if (error) {
       dispatch(clearErrors());
+    }
+  };
+
+  const handleTotalSoal = (e) => {
+    if (e === "" || helperRegexNumber.test(e)) {
+      setJumlahSoal(e);
+    }
+  };
+
+  const handleDuration = (e) => {
+    if (e === "" || helperRegexNumber.test(e)) {
+      setDuration(e);
+    }
+  };
+
+  const handlePassingGrade = (e) => {
+    if (e === "" || helperRegexNumber.test(e)) {
+      setPassingGrade(e);
     }
   };
 
@@ -234,11 +255,11 @@ const StepTwo = ({ token }) => {
                   </p>
                   <div className="input-group">
                     <input
-                      type="number"
+                      type="text"
                       className="form-control"
                       aria-describedby="basic-addon2"
                       value={jumlah_soal}
-                      onChange={(e) => setJumlahSoal(e.target.value)}
+                      onChange={(e) => handleTotalSoal(e.target.value)}
                       onBlur={() =>
                         simpleValidator.current.showMessageFor("jumlah soal")
                       }
@@ -270,11 +291,11 @@ const StepTwo = ({ token }) => {
                   </p>
                   <div className="input-group">
                     <input
-                      type="number"
+                      type="text"
                       className="form-control"
                       aria-describedby="basic-addon2"
                       value={duration}
-                      onChange={(e) => setDuration(e.target.value)}
+                      onChange={(e) => handleDuration(e.target.value)}
                       onBlur={() =>
                         simpleValidator.current.showMessageFor("durasi")
                       }
@@ -309,11 +330,11 @@ const StepTwo = ({ token }) => {
                   </p>
                   <div className="input-group">
                     <input
-                      type="number"
+                      type="text"
                       className="form-control"
                       aria-describedby="basic-addon2"
                       value={passing_grade}
-                      onChange={(e) => setPassingGrade(e.target.value)}
+                      onChange={(e) => handlePassingGrade(e.target.value)}
                       onBlur={() =>
                         simpleValidator.current.showMessageFor("passing grade")
                       }
@@ -371,22 +392,46 @@ const StepTwo = ({ token }) => {
                 </div>
               </div>
 
-              <div className="form-group row">
-                <div className="col-sm-2"></div>
-                <div className="col-sm-10 text-right">
-                  <button
-                    className="btn btn-light-ghost-rounded-full mr-2"
-                    type="submit"
-                  >
-                    Simpan & Lanjut
-                  </button>
-                  <button
-                    className="btn btn-primary-rounded-full"
-                    onClick={saveDraft}
-                    type="button"
-                  >
-                    Simpan Draft
-                  </button>
+              <div className="row">
+                <div className=" col-xs-12 col-sm-12 col-md-12 pt-0">
+                  <div className="float-right ">
+                    <div className={styles.foldResponsive}>
+                      <button
+                        className={`${styles.btnNextFold} btn btn-light-ghost-rounded-full mr-2`}
+                        type="button"
+                        onClick={onSubmit}
+                      >
+                        Simpan & Lanjut
+                      </button>
+                      <button
+                        className={`${styles.btnDraftFold} btn btn-primary-rounded-full`}
+                        onClick={saveDraft}
+                        type="button"
+                      >
+                        Simpan Draft
+                      </button>
+                    </div>
+                    <div className={`${styles.normalBtn} row`}>
+                      <div className="col-xs-6">
+                        <button
+                          className={`${styleBtn.btnNext} btn btn-light-ghost-rounded-full mr-2`}
+                          type="button"
+                          onClick={onSubmit}
+                        >
+                          Simpan & Lanjut
+                        </button>
+                      </div>
+                      <div className="col-xs-6">
+                        <button
+                          className={` btn btn-primary-rounded-full`}
+                          onClick={saveDraft}
+                          type="button"
+                        >
+                          Simpan Draft
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </form>
