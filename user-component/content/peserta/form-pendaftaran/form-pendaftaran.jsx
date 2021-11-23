@@ -328,7 +328,6 @@ const FormPendaftaran = ({ propsTitle, funcView }) => {
       <Card.Body>
         <form onSubmit={onSubmit}>
           <h3 className="font-weight-bolder pb-5 pt-4">{title}</h3>
-
           <div className="row">
             {dataPendaftaran &&
               dataPendaftaran.map((row, i) => (

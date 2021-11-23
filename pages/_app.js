@@ -20,7 +20,6 @@ import "../styles/sitemanagement/pelatihan.css";
 import "../styles/peserta/dashboards.css";
 // import "../styles/peserta/galeri.module.css"
 import "../styles/homepage/landingpage.css";
-
 import SimpleReactValidator from "simple-react-validator";
 import { wrapper } from "../redux/store";
 import moment from "moment";
