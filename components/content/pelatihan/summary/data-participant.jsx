@@ -331,7 +331,7 @@ const DataParticipant = ({ token }) => {
               </div>
               <div className="col-md-6">
                 <p className="text-neutral-body my-0">Survey</p>
-                <p className="text-dark">
+                <p className="text-success">
                   {peserta.list[0].survey_status || "Belum Tersedia"}
                 </p>
               </div>
