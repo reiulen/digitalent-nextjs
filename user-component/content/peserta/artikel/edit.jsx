@@ -70,8 +70,6 @@ const EditArtikelPeserta = ({session}) => {
     };
   });
 
-  console.log(detailArtikelsPeserta)
-
   const onChangeGambar = e => {
     const type = ["image/jpg", "image/png", "image/jpeg"];
 
