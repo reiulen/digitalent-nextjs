@@ -49,7 +49,7 @@ export default function Footer() {
                   footer.social_media &&
                   footer.social_media.length !== 0 &&
                   footer.social_media.map((row, i) => (
-                    <Link href={row.link_social_media}>
+                    <a href={row.link_social_media} target="_blank">
                       <div className="cursor-pointer mx-md-0 mx-2">
                         <Image
                           key={i}
@@ -66,7 +66,7 @@ export default function Footer() {
                           objectFit="cover"
                         />
                       </div>
-                    </Link>
+                    </a>
                   ))}
               </div>
             </div>
@@ -107,7 +107,9 @@ export default function Footer() {
                     }
                   >
                     <Link href={row.link}>
-                      <a className="text-white fw-500">{row.name}</a>
+                      <a className="text-white fw-500" target="_blank">
+                        {row.name}
+                      </a>
                     </Link>
                   </div>
                 ))}

@@ -2,7 +2,6 @@ import React from "react";
 import { Row, Col } from "react-bootstrap";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/dist/client/router";
 
 import style from "../../../styles/peserta/dashboard.module.css";
 
@@ -21,7 +20,6 @@ const CardPelatihanQuickView = ({
   funcCheckPelatihan,
   funcClosePelatihan,
 }) => {
-  const router = useRouter();
   const printTextTrim = (str) => {
     let result = null;
 
@@ -81,14 +79,13 @@ const CardPelatihanQuickView = ({
                       <p className="fw-600 fz-14">{row.mitra}</p>
                     </div>
                   </div>
-                  {console.log(process.env.PATH_URL)}
                   <div className="d-flex align-items-start">
                     <button className="roundedss-border btn btn-white">
                       <IconLove className="cursor-pointer" />
                     </button>
 
                     <ShareOverlay
-                      url={process.env.PATH_URL + `/detail/pelatihan/${row.id}`}
+                      url={`${process.env.PATH_URL}/detail/pelatihan/${row.id}`}
                       quote={row.name}
                     >
                       <button className="roundedss-border btn btn-white mx-6">

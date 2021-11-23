@@ -78,8 +78,10 @@ const DetailAkademi = ({ session }) => {
 
   useEffect(() => {
     handleHoverCard();
-    handleTextTrim();
-  }, []);
+    if (akademi) {
+      handleTextTrim();
+    }
+  }, [akademi]);
 
   const handleTextTrim = () => {
     if (akademi) {
