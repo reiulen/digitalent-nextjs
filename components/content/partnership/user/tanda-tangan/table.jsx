@@ -162,9 +162,9 @@ const Table = ({ token }) => {
           <div className="card-body pt-0">
             <div className="table-filter">
               <div className="row align-items-center">
-                <div className="col-lg-10 col-xl-10">
-                  <div className="row w-100 my-5">
-                    <div className="col-12 col-sm-6">
+                <div className="col-lg-12 col-xl-12">
+                  <div className="row my-5">
+                    <div className="col-12 col-xl-4">
                       <div className="position-relative overflow-hidden w-100">
                         <IconSearch
                           style={{ left: "10" }}
@@ -174,7 +174,7 @@ const Table = ({ token }) => {
                           id="kt_datatable_search_query"
                           type="text"
                           className="form-control pl-10"
-                          placeholder="Ketik disini untuk Pencarian..."
+                          placeholder="Cari..."
                           onChange={(e) => setKeyWord(e.target.value)}
                         />
                         <button
@@ -214,11 +214,18 @@ const Table = ({ token }) => {
                       {allTandaTanganUser.tanda_tangan.data &&
                       allTandaTanganUser.tanda_tangan.data.list_signatures
                         .length === 0 ? (
-                        <tr>
-                          <td colSpan="4" className="text-center">
-                            <h4>Data tidak ditemukan</h4>
-                          </td>
-                        </tr>
+                          keyWord ?
+                              <tr>
+                                <td colSpan="4" className="text-center">
+                                  <h4>Data tidak ditemukan</h4>
+                                </td>
+                              </tr>
+                            :
+                              <tr>
+                                <td colSpan="4" className="text-center">
+                                  <h4>Data Kosong</h4>
+                                </td>
+                              </tr>
                       ) : (
                         allTandaTanganUser.tanda_tangan.data &&
                         allTandaTanganUser.tanda_tangan.data.list_signatures.map(
@@ -323,7 +330,7 @@ const Table = ({ token }) => {
               </div>
 
               <div className="row">
-                <div className="table-pagination">
+                <div className="table-pagination col-12 col-md-8">
                   <Pagination
                     activePage={allTandaTanganUser.page}
                     itemsCountPerPage={
@@ -342,8 +349,8 @@ const Table = ({ token }) => {
                     linkClass="page-link"
                   />
                 </div>
-                <div className="table-total ml-auto">
-                  <div className="row">
+                <div className="table-total col-12 col-md-4 d-flex justify-content-md-end ml-md-0 ml-4">
+                  <div className="row mt-4">
                     <div className="col-4 mr-0 p-0">
                       <select
                         className="form-control"

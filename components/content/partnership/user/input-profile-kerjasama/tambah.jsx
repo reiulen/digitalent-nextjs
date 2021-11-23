@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import Link from "next/link";
 import PageWrapper from "../../../../wrapper/page.wrapper";
 import { useRouter } from "next/router";
@@ -8,6 +8,8 @@ import axios from "axios";
 import IconClose from "../../../../assets/icon/Close";
 import Image from "next/image";
 import AlertBar from "../../components/BarAlert";
+import { Modal } from "react-bootstrap";
+import ReactCrop from "react-image-crop";
 
 const Tambah = ({ token }) => {
   const router = useRouter();
@@ -150,36 +152,69 @@ const Tambah = ({ token }) => {
       });
     }
   };
+  // Image Cropping
+  const [ showEditImage, setShowEditImage ] = useState(false)
+  const [upImg, setUpImg] = useState();
+  const imgRef = useRef(null);
+  const previewCanvasRef = useRef(null);
+  const [crop, setCrop] = useState({ unit: "%", width: 30, aspect: 9 / 9 });
+  const [completedCrop, setCompletedCrop] = useState(null);
 
-  const [NamePDF, setNamePDF] = useState(null);
-  const fileType = ["image/png"];
-  const fileTypeJpeg = ["image/jpeg"];
-  const fileMax = 2097152;
-  const onChangeImage = (e) => {
-    let selectedFile = e.target.files[0];
-
-    if (selectedFile) {
-      if (
-        (selectedFile && fileTypeJpeg.includes(selectedFile.type)) ||
-        (fileType.includes(selectedFile.type) && selectedFile.size <= fileMax)
-      ) {
-        let reader = new FileReader();
-        reader.readAsDataURL(selectedFile);
-        reader.onloadend = (e) => {
-          setAgency_logo(e.target.result);
-          setNamePDF(selectedFile.name);
-        };
-      } else {
-        Swal.fire(
-          "Gagal",
-          `gambar harus PNG atau JPG dan max size 2mb`,
-          "error"
-        );
-      }
-    } else {
-      Swal.fire("Gagal", `upload gambar dulu`, "error");
+  const onSelectFile = (e) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const reader = new FileReader();
+      reader.addEventListener("load", () => setUpImg(reader.result));
+      reader.readAsDataURL(e.target.files[0]);
     }
   };
+
+  const onLoad = useCallback((img) => {
+    imgRef.current = img;
+  }, []);
+
+  useEffect(() => {
+    if (!completedCrop || !previewCanvasRef.current || !imgRef.current) {
+      return;
+    }
+
+    const image = imgRef.current;
+    const canvas = previewCanvasRef.current;
+    const crop = completedCrop;
+
+    const scaleX = image.naturalWidth / image.width;
+    const scaleY = image.naturalHeight / image.height;
+    const ctx = canvas.getContext("2d");
+    const pixelRatio = window.devicePixelRatio;
+
+    canvas.width = crop.width * pixelRatio * scaleX;
+    canvas.height = crop.height * pixelRatio * scaleY;
+
+    ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+    ctx.imageSmoothingQuality = "high";
+
+    ctx.drawImage(
+      image,
+      crop.x * scaleX,
+      crop.y * scaleY,
+      crop.width * scaleX,
+      crop.height * scaleY,
+      0,
+      0,
+      crop.width * scaleX,
+      crop.height * scaleY
+    );
+  }, [completedCrop]);
+
+  const onHandleHideModal = () => {
+    setShowEditImage(false)
+    setUpImg(null)
+  }
+
+  const onSubmitEditImage = () => {
+    setShowEditImage(false)
+    setUpImg(null)
+    setAgency_logo(previewCanvasRef.current.toDataURL("image/png"))
+  }
 
   const onChangeProvinces = (e) => {
     setIndonesia_provinces_id(e.id);
@@ -300,6 +335,8 @@ const Tambah = ({ token }) => {
       ) : (
         ""
       )}
+
+      {/* Content */}
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
 
         <div className="card card-custom card-stretch gutter-b">
@@ -318,7 +355,7 @@ const Tambah = ({ token }) => {
                   disabled
                   type="text"
                   name="text_input"
-                  className="form-control border-0"
+                  className="form-control border-0 ml-n4"
                   value={institution_name}
                   style={{ backgroundColor: "transparent" }}
                 />
@@ -330,7 +367,7 @@ const Tambah = ({ token }) => {
               </div>
 
               <div className="row">
-                <div className="col-12 col-sm-6">
+                <div className="col-12 col-xl-6">
                   <div className="form-group mb-0 mb-sm-4">
                     <label htmlFor="staticEmail" className="col-form-label">
                       Website
@@ -351,7 +388,7 @@ const Tambah = ({ token }) => {
                     )}
                   </div>
                 </div>
-                <div className="col-12 col-sm-6">
+                <div className="col-12 col-xl-6">
                   <div className="form-group mb-0 mb-sm-4">
                     <label htmlFor="staticEmail" className="col-form-label">
                       Email
@@ -361,7 +398,7 @@ const Tambah = ({ token }) => {
                       onFocus={() => setError({ ...error, email: "" })}
                       type="text"
                       name="text_input"
-                      className="form-control border-0"
+                      className="form-control border-0 ml-n4"
                       value={email}
                       style={{ backgroundColor: "transparent" }}
                     />
@@ -376,48 +413,64 @@ const Tambah = ({ token }) => {
 
               <div className="form-group mb-0 mb-sm-4">
                 <label htmlFor="staticEmail" className="col-form-label">
-                  Gambar Logo
+                  Gambar Logo 
                 </label>
 
                 {!agency_logo ? (
-                  <div
-                    data-toggle="modal"
-                    data-target="#exampleModalCenter"
-                    className="shadow-image-form cursor-pointer position-relative"
-                    style={{
-                      maxWidth: "168px",
-                      maxHeight: "168px",
-                      width: "168px",
-                      height: "168px",
-                    }}
-                  >
-                    <Image
-                      src={
-                        process.env.END_POINT_API_IMAGE_PARTNERSHIP + imageview
-                      }
-                      alt="Picture of the author"
-                      layout="fill"
-                      objectFit="fill"
-                    />
+                  <div className="ml-4 row">
+                    <figure
+                      className="avatar item-rtl position-relative shadow-sm rounded-circle"
+                      data-toggle="modal"
+                      data-target="#exampleModalCenter"
+                    >
+                      <Image
+                        src={
+                          process.env.END_POINT_API_IMAGE_PARTNERSHIP + imageview
+                        }
+                        alt="image"
+                        width={160}
+                        height={160}
+                        objectFit="fill"
+                        className="rounded-circle"
+                      />
+                    </figure>
+    
+                    <div className="position-relative">
+                      <label 
+                        className="circle-top" 
+                        onClick={() => setShowEditImage(true)}
+                      >
+                        <i className="ri-add-line text-dark"></i>
+                      </label>
+                    </div>
                   </div>
+
+                  
                 ) : (
-                  <div
-                    data-toggle="modal"
-                    data-target="#exampleModalCenter"
-                    className="shadow-image-form cursor-pointer position-relative"
-                    style={{
-                      maxWidth: "168px",
-                      maxHeight: "168px",
-                      width: "168px",
-                      height: "168px",
-                    }}
-                  >
-                    <Image
-                      src={agency_logo}
-                      alt="Picture of the author"
-                      layout="fill"
-                      objectFit="fill"
-                    />
+                  <div className="ml-4 row">
+                    <figure
+                      className="avatar item-rtl position-relative shadow-sm rounded-circle"
+                      data-toggle="modal"
+                      data-target="#exampleModalCenter"
+                    >
+                      <Image
+                        src={agency_logo}
+                        alt="image"
+                        width={160}
+                        height={160}
+                        objectFit="fill"
+                        className="rounded-circle"
+                      />
+
+                    </figure>
+                    <div className="position-relative">
+                      <label 
+                        className="circle-top" 
+                        onClick={() => setShowEditImage(true)}
+                      >
+                        <i className="ri-add-line text-dark"></i>
+                      </label>
+                    </div>
                   </div>
                 )}
 
@@ -433,32 +486,8 @@ const Tambah = ({ token }) => {
                   ""
                 )}
 
-                <div className="input-group">
-                  <div className="custom-file">
-                    <input
-                      onFocus={() => setError({ ...error, agency_logo: "" })}
-                      onChange={(e) => onChangeImage(e)}
-                      type="file"
-                      name="logo"
-                      className="custom-file-input cursor-pointer"
-                      id="inputGroupFile04"
-                      accept="image/png,image/jpg"
-                    />
-
-                    <label
-                      className="custom-file-label"
-                      htmlFor="inputGroupFile04"
-                    >
-                      {NamePDF ? NamePDF : "Cari Logo"}
-                    </label>
-                  </div>
-                </div>
-                {error.agency_logo ? (
-                  <p className="error-text">{error.agency_logo}</p>
-                ) : (
-                  ""
-                )}
               </div>
+
               {/* modal image show */}
               <div
                 className="modal fade"
@@ -534,7 +563,7 @@ const Tambah = ({ token }) => {
               </div>
 
               <div className="row">
-                <div className="col-12 col-sm-6">
+                <div className="col-12 col-xl-6">
                   <div className="form-group mb-0 mb-sm-4">
                     <label htmlFor="staticEmail" className="col-form-label">
                       Provinsi
@@ -568,7 +597,7 @@ const Tambah = ({ token }) => {
                     )}
                   </div>
                 </div>
-                <div className="col-12 col-sm-6">
+                <div className="col-12 col-xl-6">
                   <div className="form-group mb-0 mb-sm-4">
                     <label htmlFor="staticEmail" className=" col-form-label">
                       Kota / Kabupaten
@@ -626,7 +655,7 @@ const Tambah = ({ token }) => {
               </div>
 
               <div className="row">
-                <div className="col-12 col-sm-6">
+                <div className="col-12 col-xl-6">
                   <div className="form-group mb-0 mb-sm-4">
                     <label htmlFor="staticEmail" className="col-form-label">
                       Nama Person In Charge (PIC)
@@ -646,7 +675,7 @@ const Tambah = ({ token }) => {
                     )}
                   </div>
                 </div>
-                <div className="col-12 col-sm-6">
+                <div className="col-12 col-xl-6">
                   <div className="form-group mb-0 mb-sm-4">
                     <label htmlFor="staticEmail" className="col-form-label">
                       Nomor Handphone Person In Charge (PIC)
@@ -694,10 +723,10 @@ const Tambah = ({ token }) => {
                 )}
               </div>
 
-              <div className="form-group row">
-                <div className="col-sm-12 d-flex justify-content-end">
+              <div className="form-group">
+                <div className="d-flex justify-content-end flex-column flex-md-row">
                   <Link href="/partnership/user/kerjasama" passHref>
-                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
+                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5 d-flex justify-content-center">
                       Kembali
                     </a>
                   </Link>
@@ -705,7 +734,7 @@ const Tambah = ({ token }) => {
                   <button
                     type="button"
                     onClick={(e) => submit(e)}
-                    className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
+                    className="btn btn-sm btn-rounded-full bg-blue-primary text-white d-flex justify-content-center"
                   >
                     Simpan
                   </button>
@@ -715,6 +744,107 @@ const Tambah = ({ token }) => {
           </div>
         </div>
       </div>
+      {/* End of Content */}
+
+      {/* Modal Edit Image  */}
+      <Modal
+        show={showEditImage}
+        onHide={() => onHandleHideModal() }
+      >
+        <Modal.Header>
+          <Modal.Title>Ganti Logo Lembaga</Modal.Title>
+
+          <button
+            type="button"
+            className="close"
+            onClick={() => onHandleHideModal()}
+          >
+            <i className="ri-close-fill" style={{ fontSize: "25px" }}></i>
+          </button>
+
+        </Modal.Header>
+
+        <Modal.Body>
+          <div>
+            Logo Lembaga
+          </div>
+
+          <div className="my-5">
+              <button 
+                className="btn btn-rounded-full btn-sm bg-blue-primary text-white d-flex justify-content-center"
+                onClick={() => {
+                  document.getElementById("edit-image").click();
+                }}
+              >
+                <i className="ri-upload-2-fill text-white"></i> Pilih Logo Lembaga
+              </button>
+
+              <input
+                type="file"
+                name="gambar"
+                className="custom-file-input"
+                id="edit-image"
+                accept="image/*"
+                style={{ display: "none" }}
+                onChange={onSelectFile}
+              />
+
+              <div className="row mt-5">
+                <div className="col-12 col-md-6">
+                  <ReactCrop 
+                    src={upImg}
+                    onImageLoaded={onLoad}
+                    crop={crop}
+                    onChange={(c) => setCrop(c)}
+                    onComplete={(c) => setCompletedCrop(c)}
+                  />
+                </div>
+
+                <div className="col-12 col-md-6">
+                    {
+                      upImg ?
+                        <div>
+                          <div>
+                            Pratinjau
+                          </div>
+                          <canvas
+                            ref={previewCanvasRef}
+                            style={{
+                              width: Math.round(completedCrop?.width ?? 0),
+                              height: Math.round(completedCrop?.height ?? 0),
+                              borderRadius: "50%",
+                            }}
+                          />
+                        </div>
+                      :
+                        null
+                    }
+                </div>
+              </div>
+          </div>
+        </Modal.Body>
+
+        <Modal.Footer>
+          <div className="row">
+            <div className="d-flex justify-content-between align-items-center">
+                  <button
+                    className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5 d-flex justify-content-center"
+                    onClick={() => onHandleHideModal()}
+                  >
+                    Batal
+                  </button>
+                  <button
+                    className="btn btn-sm btn-rounded-full bg-blue-primary text-white d-flex justify-content-center"
+                    onClick={() => onSubmitEditImage()}
+                  >
+                    Simpan
+                  </button>
+            </div>
+          </div>
+        </Modal.Footer>
+
+      </Modal>
+      {/* End of Modal Edit Image */}
     </PageWrapper>
   );
 };
