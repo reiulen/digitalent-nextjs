@@ -35,6 +35,8 @@ const SubHeader = () => {
   const days = new Date().toLocaleTimeString("in-ID", { weekday: "long" });
   const [breadcrumbs, setBreadcrumbs] = useState(null);
 
+  console.log(breadcrumbs);
+
   useEffect(() => {
     if (router) {
       const linkPath = router.asPath.split("/");

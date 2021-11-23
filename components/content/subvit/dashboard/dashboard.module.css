@@ -1,9 +1,9 @@
-@media (max-width: 1024px) {
+@media (max-width: 1280px) {
   .pieChart {
     position: absolute;
     top: 350;
     width: 400px !important;
-    left: -85px !important;
+    left: -30px !important;
   }
   .cardList {
     height: 40px !important;
@@ -15,8 +15,9 @@
     margin-top: 5px !important  ;
   }
   .cardNumber {
-    vertical-align: center !important;
-    padding: 20px 0px !important;
+    vertical-align: top !important;
+    width: 38px !important;
+    height: 38px !important;
   }
   .theme {
     font-size: 9px !important;
@@ -33,8 +34,67 @@
   }
 }
 
+@media (max-width: 1024px) {
+  .pieChart {
+    position: absolute;
+    top: 350;
+    width: 400px !important;
+    left: -95px !important;
+  }
+  .cardList {
+    height: 40px !important;
+  }
+  .cardTwo {
+    height: 100%;
+  }
+  .colCard {
+    margin-top: 5px !important  ;
+  }
+  .theme {
+    font-size: 10px !important;
+  }
+  .training {
+    font-size: 10px !important;
+  }
+  .cardNumber {
+    vertical-align: top !important;
+    width: 20px !important;
+    height: 20px !important;
+  }
+  .theme {
+    font-size: 9px !important;
+  }
+  .training {
+    font-size: 8px !important;
+  }
+  .optionDropdown {
+    font-size: 8px !important;
+    padding: 0px;
+  }
+  .note {
+    font-size: 8px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .pieChart {
+    position: absolute;
+    left: 100px !important;
+    width: 400px !important;
+  }
+  .cardSubstansi {
+    display: none;
+  }
+  .cardSurvey {
+    display: none;
+  }
+}
+
 @media (max-width: 490px) {
   .cardSubstansi {
+    display: none;
+  }
+  .cardSurvey {
     display: none;
   }
   .pieChart {
@@ -44,9 +104,26 @@
     left: -60px !important;
   }
 }
+@media (max-width: 540px) {
+  .cardSubstansi {
+    display: none;
+  }
+  .cardSurvey {
+    display: none;
+  }
+  .pieChart {
+    position: absolute;
+    top: 350;
+    width: 400px !important;
+    left: 0px !important;
+  }
+}
 
 @media (max-width: 414px) {
   .cardSubstansi {
+    display: none;
+  }
+  .cardSurvey {
     display: none;
   }
   .pieChart {
@@ -56,12 +133,18 @@
     left: -70px !important;
   }
   .labelChart {
-    font-size: 20px !important;
+    font-size: 30px !important;
+  }
+  .cardBottom {
+    padding: 10px !important;
   }
 }
 
 @media (max-width: 375px) {
   .cardSubstansi {
+    display: none;
+  }
+  .cardSurvey {
     display: none;
   }
   .pieChart {
@@ -76,16 +159,7 @@
   .cardSubstansi {
     display: none;
   }
-  .pieChart {
-    position: absolute;
-    top: 350;
-    width: 400px !important;
-    left: -100px !important;
-  }
-}
-
-@media (max-width: 320px) {
-  .cardSubstansi {
+  .cardSurvey {
     display: none;
   }
   .pieChart {
@@ -93,6 +167,45 @@
     top: 350;
     width: 400px !important;
     left: -100px !important;
+  }
+  .cardBottom {
+    padding: 5px !important;
+  }
+  .labelChart {
+    font-size: 25px !important;
+  }
+}
+
+@media (max-width: 320px) {
+  .cardSubstansi {
+    display: none;
+  }
+  .cardSurvey {
+    display: none;
+  }
+  .pieChart {
+    position: absolute;
+    top: 350;
+    width: 400px !important;
+    left: -115px !important;
+  }
+  .labelChart {
+    font-size: 25px !important;
+  }
+}
+
+@media (max-width: 280px) {
+  .pieChart {
+    display: none;
+  }
+  .pieChartResponsiveFold {
+    display: block !important;
+    position: absolute;
+    left: -140px;
+    width: 400px !important;
+  }
+  .cardSurvey {
+    display: none;
   }
 }
 
@@ -105,6 +218,8 @@
 .cardBottom {
   position: absolute;
   bottom: 0;
+  width: 100%;
+  padding: 30px;
 }
 
 .textCardTwo {
@@ -285,6 +400,9 @@
   /* or 22px */
 
   text-align: center;
+  vertical-align: top;
+  height: 38px !important;
+  width: 38px !important;
 
   /* Brand/Primary/Primary */
 
@@ -404,4 +522,8 @@
   /* Neutral/Caption */
 
   color: #adb5bd !important;
+}
+
+.pieChartResponsiveFold {
+  display: none;
 }

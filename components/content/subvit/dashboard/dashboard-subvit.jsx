@@ -236,7 +236,7 @@ const DashbardSubvit = ({ token }) => {
           </div>
           <div className="col-lg-6 col-xxl-6 order-1 order-xxl-2">
             <div className="row">
-              <div className="col-lg-4 col-xxl-4 order-1 order-xxl-2">
+              <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4  col-xxl-4 order-1 order-xxl-2">
                 <CardDashboardMini
                   link="/subvit/substansi"
                   background="bg-white"
@@ -244,7 +244,7 @@ const DashbardSubvit = ({ token }) => {
                   title="Test Substansi"
                 />
               </div>
-              <div className="col-lg-4 col-xxl-4 order-1 order-xxl-2">
+              <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 col-xxl-4 order-1 order-xxl-2">
                 <CardDashboardMini
                   link="/subvit/survey"
                   background="bg-white"
@@ -252,7 +252,7 @@ const DashbardSubvit = ({ token }) => {
                   title="Survey"
                 />
               </div>
-              <div className="col-lg-4 col-xxl-4 order-1 order-xxl-2">
+              <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 col-xxl-4 order-1 order-xxl-2">
                 <CardDashboardMini
                   link="/subvit/trivia"
                   background="bg-white"
@@ -276,6 +276,48 @@ const DashbardSubvit = ({ token }) => {
                 ) : (
                   <>
                     <center>
+                      {/* RESPONSIVE FOLD */}
+                      <div
+                        style={{
+                          width: "100%",
+                          height: 300,
+                        }}
+                        className={styles.pieChartResponsiveFold}
+                      >
+                        <ResponsiveContainer>
+                          <PieChart>
+                            <Tooltip />
+                            <Pie
+                              data={dataItem.slice(0, 3)}
+                              cx={250}
+                              cy={150}
+                              innerRadius={90}
+                              outerRadius={110}
+                              fill="#8884d8"
+                              dataKey="value"
+                            >
+                              {dataItem.map((entry, index) => (
+                                <>
+                                  <Cell
+                                    key={`cell-${index}`}
+                                    fill={COLORS[index % COLORS.length]}
+                                  ></Cell>
+                                </>
+                              ))}
+
+                              <Label
+                                width={30}
+                                position="center"
+                                className={styles.labelChart}
+                              >
+                                {dashboard_subvit &&
+                                  dashboard_subvit.chart &&
+                                  dashboard_subvit.chart[3].total}
+                              </Label>
+                            </Pie>
+                          </PieChart>
+                        </ResponsiveContainer>
+                      </div>
                       <div
                         style={{
                           width: "100%",
@@ -290,8 +332,8 @@ const DashbardSubvit = ({ token }) => {
                               data={dataItem.slice(0, 3)}
                               cx={250}
                               cy={150}
-                              innerRadius={60}
-                              outerRadius={80}
+                              innerRadius={100}
+                              outerRadius={120}
                               fill="#8884d8"
                               dataKey="value"
                             >
@@ -319,9 +361,14 @@ const DashbardSubvit = ({ token }) => {
                       </div>
                     </center>
                     <div className={styles.cardBottom}>
-                      <table>
+                      <table
+                        style={{
+                          width: "100%",
+                          textAlign: "center",
+                        }}
+                      >
                         <tr>
-                          <td>
+                          <td style={{ width: "60px" }}>
                             <Image
                               src={imageSubstansi}
                               alt=""
@@ -329,74 +376,58 @@ const DashbardSubvit = ({ token }) => {
                               height={50}
                             />
                           </td>
-                        </tr>
-                      </table>
-                    </div>
-                    {/* <div
-                      className={`${styles.cardBottom} d-flex flex-row `}
-                      style={{ padding: "0px 20px" }}
-                    >
-                      <div className="p-5">
-                        <div className="d-flex flex-row">
-                          <div className="p-2" style={{ padding: "0px" }}>
-                            <Image
-                              src={imageSubstansi}
-                              alt=""
-                              width={60}
-                              height={50}
-                            />
-                          </div>
-                          <div className={`${styles.substansi} p-2`}>
-                            {dashboard_subvit &&
-                              dashboard_subvit.chart &&
-                              dashboard_subvit.chart[0].total_substansi}
-                            <br />
-                            <span className={styles.subTextTotal}>
-                              Substansi
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="p-5">
-                        <div className="d-flex flex-row">
-                          <div className="p-2" style={{ padding: "0px" }}>
-                            {" "}
+                          <td style={{ textAlign: "left" }}>
+                            <div className={`${styles.substansi} p-2`}>
+                              {dashboard_subvit &&
+                                dashboard_subvit.chart &&
+                                dashboard_subvit.chart[0].total_substansi}
+                              <br />
+                              <span className={styles.subTextTotal}>
+                                Substansi
+                              </span>
+                            </div>
+                          </td>
+                          <td style={{ width: "60px" }}>
                             <Image
                               src={imageSurvey}
                               alt=""
                               width={60}
                               height={50}
                             />
-                          </div>
-                          <div className={`${styles.survey} p-2`}>
-                            {dashboard_subvit &&
-                              dashboard_subvit.chart &&
-                              dashboard_subvit.chart[1].total_survey}
-                            <br />
-                            <span className={styles.subTextTotal}>Survey</span>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="p-5">
-                        <div className="d-flex flex-row">
-                          <div className="p-2" style={{ padding: "0px" }}>
+                          </td>
+                          <td style={{ textAlign: "left" }}>
+                            <div className={`${styles.substansi} p-2`}>
+                              {dashboard_subvit &&
+                                dashboard_subvit.chart &&
+                                dashboard_subvit.chart[1].total_survey}
+                              <br />
+                              <span className={styles.subTextTotal}>
+                                Survey
+                              </span>
+                            </div>
+                          </td>
+                          <td style={{ width: "60px" }}>
                             <Image
                               src={imageTrivia}
                               alt=""
                               width={60}
                               height={50}
                             />
-                          </div>
-                          <div className={`${styles.trivia} p-2`}>
-                            {dashboard_subvit &&
-                              dashboard_subvit.chart &&
-                              dashboard_subvit.chart[2].total_trivia}
-                            <br />
-                            <span className={styles.subTextTotal}>Trivia</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
+                          </td>
+                          <td style={{ textAlign: "left" }}>
+                            <div className={`${styles.substansi} p-2`}>
+                              {dashboard_subvit &&
+                                dashboard_subvit.chart &&
+                                dashboard_subvit.chart[2].total_trivia}
+                              <br />
+                              <span className={styles.subTextTotal}>
+                                Trivia
+                              </span>
+                            </div>
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
                   </>
                 )}
               </div>
@@ -418,7 +449,7 @@ const DashbardSubvit = ({ token }) => {
                         <div className={`${styles.cardList} card`} key={index}>
                           <div className="row">
                             <div
-                              className="col-sm-1 col-xs-1"
+                              className="col-sm-1 col-xs-1 col-md-1 col-lg-1 col-xl-1 col-xxl-1"
                               style={{ padding: "0px" }}
                             >
                               <div
@@ -433,7 +464,7 @@ const DashbardSubvit = ({ token }) => {
                               </div>
                             </div>
                             <div
-                              className={`${styles.theme} col-sm-5 col-xs-8`}
+                              className={`${styles.theme} col-sm-5 col-xs-8 col-md-7 col-lg-7 col-xl-5 col-xxl-7`}
                             >
                               {item.theme ? item.theme.name : "-"}
                               <br />
@@ -442,7 +473,7 @@ const DashbardSubvit = ({ token }) => {
                               </span>
                             </div>
                             <div
-                              className={`${styles.total} col-sm-6 col-xs-3`}
+                              className={`${styles.total} col-sm-6 col-xs-3 col-md-4 col-lg-4 col-xl-6 col-xxl-4`}
                             >
                               {item.participant_finished
                                 ? item.participant_finished
@@ -597,7 +628,7 @@ const DashbardSubvit = ({ token }) => {
             </div>
           </div>
           <div className="col-lg-6 col-xxl-6 order-1 order-xxl-2">
-            <div className={`${styles.cardSubstansi} card`}>
+            <div className={`${styles.cardSurvey} card`}>
               <div className={`${styles.cardPesertaBody} card-body`}>
                 <h1 className={`${styles.headPeserta}`}>Survey</h1>
                 <p className={`${styles.subHeadPeserta}`}>
