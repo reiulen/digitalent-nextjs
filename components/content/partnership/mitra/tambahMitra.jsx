@@ -246,7 +246,7 @@ const TambahMitra = ({ token }) => {
               </div>
 
               <div className="row">
-                <div className="col-12 col-sm-6">
+                <div className="col-12 col-xl-6">
                   <div className="form-group">
                     <label htmlFor="staticEmail" className="col-form-label">
                       Website
@@ -265,7 +265,7 @@ const TambahMitra = ({ token }) => {
                     )}
                   </div>
                 </div>
-                <div className="col-12 col-sm-6">
+                <div className="col-12 col-xl-6">
                   <div className="form-group">
                     <label htmlFor="staticEmail" className="col-form-label">
                       Email
@@ -405,7 +405,7 @@ const TambahMitra = ({ token }) => {
               </div>
 
               <div className="row">
-                <div className="col-12 col-sm-6">
+                <div className="col-12 col-xl-6">
                   <div className="form-group">
                     <label htmlFor="staticEmail" className="col-form-label">
                       Provinsi
@@ -436,7 +436,7 @@ const TambahMitra = ({ token }) => {
                     )}
                   </div>
                 </div>
-                <div className="col-12 col-sm-6">
+                <div className="col-12 col-xl-6">
                   {/* ========================================= cities */}
                   <div className="form-group">
                     <label htmlFor="staticEmail" className=" col-form-label">
@@ -491,7 +491,7 @@ const TambahMitra = ({ token }) => {
               </div>
 
               <div className="row">
-                <div className="col-12 col-sm-6">
+                <div className="col-12 col-xl-6">
                   <div className="form-group">
                     <label htmlFor="staticEmail" className="col-form-label">
                       Nama Person In Charge (PIC)
@@ -514,7 +514,7 @@ const TambahMitra = ({ token }) => {
                   </div>
                   </div>
                 </div>
-                <div className="col-12 col-sm-6">
+                <div className="col-12 col-xl-6">
                   <div className="form-group">
                     <label htmlFor="staticEmail" className="col-form-label">
                       Nomor Handphone Person In Charge (PIC)
@@ -560,16 +560,16 @@ const TambahMitra = ({ token }) => {
                 )}
               </div>
 
-              <div className="form-group row">
-                <div className="col-sm-12 d-flex justify-content-end">
+              <div className="form-group">
+                <div className="d-flex justify-content-end flex-column flex-md-row">
                   <Link href="/partnership/mitra">
-                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
+                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5 d-flex justify-content-center">
                       Kembali
                     </a>
                   </Link>
                   <button
                     type="submit"
-                    className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
+                    className="btn btn-sm btn-rounded-full bg-blue-primary text-white d-flex justify-content-center"
                   >
                     Simpan
                   </button>

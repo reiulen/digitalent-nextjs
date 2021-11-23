@@ -207,11 +207,17 @@ const FormManual = ({
           onChange={(e) => funcTitle(e.target.value)}
           onBlur={() => simpleValidator.current.showMessageFor("judul form")}
           autoComplete="off"
+          maxLength={100}
         />
 
-        {simpleValidator.current.message("judul form", title, "required", {
-          className: "text-danger",
-        })}
+        {simpleValidator.current.message(
+          "judul form",
+          title,
+          "required|max:100",
+          {
+            className: "text-danger",
+          }
+        )}
       </div>
 
       {formBuilder.map((row, i) => (
@@ -277,11 +283,12 @@ const FormManual = ({
           </div>
 
           {renderMultipleHandler(row, i)}
-
           <div className="col-sm-6 col-md-2">
-            <label className="col-form-label font-weight-bold">Required</label>
-            <div className="d-flex align-items-end">
-              <div className="form-group mr-7">
+            <label className="col-form-label font-weight-bold ml-md-10">
+              Required
+            </label>
+            <div className="d-flex align-items-end justify-content-between">
+              <div className="form-group ml-md-10">
                 <div className="form-check form-check-inline">
                   <input
                     type="checkbox"
@@ -294,7 +301,7 @@ const FormManual = ({
               </div>
               {formBuilder.length !== 1 && row.key !== 1 ? (
                 <button
-                  className="btn btn-link-action bg-danger text-white mb-3 ml-9"
+                  className="btn btn-link-action bg-danger text-white mb-3 "
                   type="button"
                   onClick={() => removeFieldHandler(i)}
                 >
@@ -302,7 +309,7 @@ const FormManual = ({
                 </button>
               ) : (
                 <button
-                  className="btn btn-link-action bg-danger text-white mb-3 ml-9 invisible"
+                  className="btn btn-link-action bg-danger text-white mb-3  invisible"
                   type="button"
                   onClick={() => removeFieldHandler(i)}
                 >
@@ -314,7 +321,7 @@ const FormManual = ({
         </div>
       ))}
 
-      <div className="form-group mb-9 mt-4">
+      <div className="form-group mb-9 mt-10">
         <div className="text-right">
           <button
             className="btn btn-light-success mr-2"

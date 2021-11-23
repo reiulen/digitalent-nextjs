@@ -192,7 +192,7 @@ const DetailDataKerjasama = ({ token }) => {
 
           <div className="card-body pt-0">
             <div className="row">
-              <div className="col-12 col-sm-6">
+              <div className="col-12 col-xl-6">
                 <div className="position-relative overflow-hidden w-100 mt-5">
                   <IconSearch style={{ left: "10" }} className="left-center-absolute" />
                   <input id="kt_datatable_search_query" type="text" className="form-control pl-10" placeholder="Ketik disini untuk Pencarian..." onChange={(e) => setKeyWord(e.target.value)} />
@@ -209,11 +209,11 @@ const DetailDataKerjasama = ({ token }) => {
                   </button>
                 </div>
               </div>
-              <div className="col-12 col-sm-6">
-                <div className="d-flex flex-wrap align-items-center justify-content-end mt-2">
+              <div className="col-12 col-xl-6">
+                <div className="d-flex flex-wrap align-items-center justify-content-xl-end justify-content-start mt-2">
                   {/* disini sortir modal */}
                   <button
-                    className="avatar item-rtl btn border d-flex align-items-center justify-content-between mt-2"
+                    className="avatar item-rtl btn border d-flex align-items-center justify-content-between mt-2 col-12 col-md-9 col-xl-3 mr-sm-1"
                     data-toggle="modal"
                     data-target="#exampleModalCenter"
                     style={{ color: "#464646", minWidth: "230px" }}
@@ -297,7 +297,7 @@ const DetailDataKerjasama = ({ token }) => {
                   <button
                     type="button"
                     onClick={() => dispatch(exportFileCSVDetail(token, getId))}
-                    className="btn btn-rounded-full bg-blue-secondary text-white ml-4 mt-2"
+                    className="btn btn-rounded-full bg-blue-secondary text-white ml-sm-11  ml-md-6 mt-2"
                     style={{ width: "max-content" }}
                   >
                     Export .xlsx

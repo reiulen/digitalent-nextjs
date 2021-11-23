@@ -193,7 +193,7 @@ const Tambah = ({ token }) => {
                   {error.date ? <p className="error-text">{error.date}</p> : ""}
                 </div>
                 <div className="row">
-                  <div className="col-12 col-sm-6">
+                  <div className="col-12 col-xl-6">
                     <div
                       className="fv-row mb-6 position-relative"
                       style={{ zIndex: "4" }}
@@ -225,7 +225,7 @@ const Tambah = ({ token }) => {
                       )}
                     </div>
                   </div>
-                  <div className="col-12 col-sm-6">
+                  <div className="col-12 col-xl-6">
                     <div className="fv-row mb-6">
                       <label className="required fw-bold fs-6 mb-2">
                         Email
@@ -373,19 +373,23 @@ const Tambah = ({ token }) => {
                 ) : (
                   ""
                 )}
-                <div className="form-group row">
-                  <div className="col-sm-12 d-flex justify-content-end">
+                <div className="form-group">
+                  <div className="d-flex justify-content-end flex-column flex-md-row">
+                    
                     <Link href="/partnership/kerjasama">
                       <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
                         Kembali
                       </a>
                     </Link>
+                    
                     <button
                       type="submit"
-                      className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
+                      className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
                     >
                       Lanjut
                     </button>
+                   
+                    
                   </div>
                 </div>
               </form>

@@ -184,7 +184,7 @@ const RevisiKerjasama = ({ token }) => {
                   Periode Kerjasama
                 </label>
                 <div className="row">
-                  <div className="col-12 col-sm-6">
+                  <div className="col-12 col-xl-6">
                     <div className="d-flex align-items-center position-relative datepicker-w mt-2 disabled-form">
                       <DatePicker
                         className="form-search-date form-control-sm form-control cursor-pointer"
@@ -202,7 +202,7 @@ const RevisiKerjasama = ({ token }) => {
                       />
                     </div>
                   </div>
-                  <div className="col-12 col-sm-6">
+                  <div className="col-12 col-xl-6">
                     <div className="d-flex align-items-center position-relative datepicker-w mt-2 disabled-form">
                       <DatePicker
                         className="form-search-date form-control-sm form-control cursor-pointer "
@@ -254,7 +254,7 @@ const RevisiKerjasama = ({ token }) => {
               </div>
 
               <div className="row">
-                <div className="col-12 col-sm-6">
+                <div className="col-12 col-xl-6">
                   <label htmlFor="staticEmail" className="col-form-label">
                     Tanggal Penandatanganan
                   </label>
@@ -275,7 +275,7 @@ const RevisiKerjasama = ({ token }) => {
                     />
                   </div>
                 </div>
-                <div className="col-12 col-sm-6">
+                <div className="col-12 col-xl-6">
                   <div className="form-group">
                     <label htmlFor="staticEmail" className="col-form-label">
                       Dokumen Kerjasama
@@ -302,7 +302,7 @@ const RevisiKerjasama = ({ token }) => {
                           )
                         }
                       >
-                        Buka File
+                        Unduh
                       </button>
                     </div>
                   </div>
@@ -323,7 +323,7 @@ const RevisiKerjasama = ({ token }) => {
                     rows="5"
                     value={catatanREvisi}
                     className="form-control"
-                    placeholder="Masukan Tujuan Kerjasama"
+                    placeholder="Tuliskan Catatan Tambahan"
                   ></textarea>
                   {error.catatanREvisi ? (
                     <p className="error-text">{error.catatanREvisi}</p>
@@ -333,8 +333,8 @@ const RevisiKerjasama = ({ token }) => {
                 </div>
               </div>
 
-              <div className="form-group row">
-                <div className="col-sm-12 d-flex flex-wrap justify-content-start justify-content-sm-end">
+              <div className="form-group">
+                <div className="d-flex flex-column flex-md-row  flex-wrap justify-content-start justify-content-sm-end">
                   <button
                     onClick={(e) => rejectDokument(e)}
                     className="btn btn-sm btn-rounded-full bg-red-primary text-white ml-3 ml-sm-0 mt-2"
