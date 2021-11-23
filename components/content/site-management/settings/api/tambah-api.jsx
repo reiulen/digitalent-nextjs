@@ -11,9 +11,12 @@ import Select from "react-select";
 import Swal from "sweetalert2";
 import SimpleReactValidator from "simple-react-validator";
 
+import styles from "../../../../../styles/previewGaleri.module.css"
+
 const TambahApi = ({ token }) => {
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
+
   const router = useRouter();
   const listApi = useSelector((state) => state.listApi);
   const [nameApi, setNameApi] = useState("");
@@ -48,27 +51,28 @@ const TambahApi = ({ token }) => {
 
   const submit = (e) => {
     e.preventDefault();
-    Swal.fire({
-      title: "Apakah anda yakin simpan ?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      cancelButtonText: "Batal",
-      confirmButtonText: "Ya !",
-      dismissOnDestroy: false,
-    }).then(async (result) => {
-      if (result.value) {
-        const sendData = {
-          api_name: nameApi,
-          username: nameUser,
-          id_api: apiChoice,
-          from_date: from,
-          to_date: to,
-          status: status,
-          fields: field,
-        };
-        try {
+    if (simpleValidator.current.allValid()) {
+
+      Swal.fire({
+        title: "Apakah anda yakin simpan ?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        cancelButtonText: "Batal",
+        confirmButtonText: "Ya !",
+        dismissOnDestroy: false,
+      }).then(async (result) => {
+        if (result.value) {
+          const sendData = {
+            api_name: nameApi,
+            username: nameUser,
+            id_api: apiChoice,
+            from_date: from,
+            to_date: to,
+            status: status,
+            fields: field,
+          };
           let { data } = await axios.post(
             `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-api/store`,
             sendData,
@@ -83,17 +87,17 @@ const TambahApi = ({ token }) => {
               router.push(`/site-management/setting/api`);
             }
           );
-        } catch (error) {
-          simpleValidator.current.showMessages();
-          forceUpdate(1);
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Isi data dengan benar !",
-          });
         }
-      }
-    });
+      });
+    } else {
+      simpleValidator.current.showMessages();
+      forceUpdate(1);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Isi data dengan benar !",
+      });
+    }
   };
 
   useEffect(() => {
@@ -130,26 +134,26 @@ const TambahApi = ({ token }) => {
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
-          <div className="card-header border-0">
-            <h3 className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 mb-5 mt-5 titles-1">
+          <div className="card-header">
+            <h3 className="card-title font-weight-bolder text-dark">
               Tambah API
             </h3>
           </div>
-          <div className="card-body pt-0">
+          <div className="card-body">
             <form>
               <div className="form-group">
                 <label>Nama API</label>
                 <input
                   type="text"
                   onChange={(e) => setNameApi(e.target.value)}
-                  className="form-control"
+                  className={`${styles.cari} form-control`}
                   placeholder="Masukkan nama api"
                   onBlur={() =>
-                    simpleValidator.current.showMessageFor("nameApi")
+                    simpleValidator.current.showMessageFor("namaApi")
                   }
                 />
                 {simpleValidator.current.message(
-                  "nameApi",
+                  "namaApi",
                   nameApi,
                   "required",
                   { className: "text-danger" }
@@ -160,14 +164,14 @@ const TambahApi = ({ token }) => {
                 <input
                   onChange={(e) => setNameUser(e.target.value)}
                   type="text"
-                  className="form-control"
+                  className={`${styles.cari} form-control`}
                   placeholder="Masukkan nama pengguna"
                   onBlur={() =>
-                    simpleValidator.current.showMessageFor("nameUser")
+                    simpleValidator.current.showMessageFor("namaPengguna")
                   }
                 />
                 {simpleValidator.current.message(
-                  "nameUser",
+                  "namaPengguna",
                   nameUser,
                   "required",
                   { className: "text-danger" }
@@ -177,14 +181,14 @@ const TambahApi = ({ token }) => {
                 <label>Status</label>
                 <select
                   onChange={(e) => setStatus(e.target.value)}
-                  className="form-control"
+                  className={`${styles.cari} form-control`}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("status")
                   }
                 >
                   <option value="">Pilih status</option>
                   <option value="1">Aktif</option>
-                  <option value="0">Nonaktif</option>
+                  <option value="0">Tidak Aktif</option>
                 </select>
                 {simpleValidator.current.message("status", status, "required", {
                   className: "text-danger",
@@ -195,10 +199,10 @@ const TambahApi = ({ token }) => {
                 <label>Pilih API</label>
                 <select
                   onBlur={() =>
-                    simpleValidator.current.showMessageFor("apiChoice")
+                    simpleValidator.current.showMessageFor("api")
                   }
                   onChange={(e) => changeChoiceApi(e)}
-                  className="form-control"
+                  className={`${styles.cari} form-control`}
                 >
                   <option value="">Pilih api</option>
                   {listApi?.listApi?.map((items, index) => {
@@ -210,7 +214,7 @@ const TambahApi = ({ token }) => {
                   })}
                 </select>
                 {simpleValidator.current.message(
-                  "apiChoice",
+                  "api",
                   apiChoice,
                   "required",
                   { className: "text-danger" }
@@ -220,7 +224,7 @@ const TambahApi = ({ token }) => {
                 <label>Field</label>
                 <Select
                   value={valueField}
-                  className="basic-single"
+                  className={`${styles.cari} basic-single`}
                   classNamePrefix="select"
                   placeholder="Pilih Field"
                   isMulti
@@ -231,24 +235,24 @@ const TambahApi = ({ token }) => {
                   isSearchable={true}
                   name="color"
                   onBlur={() =>
-                    simpleValidator.current.showMessageFor("valueField")
+                    simpleValidator.current.showMessageFor("field")
                   }
                   onChange={(e) => changeListApi(e)}
                   options={optionListField}
                 />
                 {simpleValidator.current.message(
-                  "valueField",
+                  "field",
                   valueField,
                   "required",
                   { className: "text-danger" }
                 )}
               </div>
               <div className="form-group row">
-                <div className="col-12 col-sm-6">
+                <div className="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 mb-5">
                   <label>From</label>
                   <div className="d-flex align-items-center position-relative datepicker-w mt-2">
                     <DatePicker
-                      className="form-search-date form-control cursor-pointer"
+                      className={`${styles.cari} form-search-date form-control cursor-pointer`}
                       onChange={(date) => onChangePeriodeDateStart(date)}
                       value={from}
                       dateFormat="YYYY-MM-DD"
@@ -267,11 +271,11 @@ const TambahApi = ({ token }) => {
                     className: "text-danger",
                   })}
                 </div>
-                <div className="col-lg-6">
+                <div className="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
                   <label>To</label>
                   <div className="d-flex align-items-center position-relative datepicker-w mt-2">
                     <DatePicker
-                      className="form-search-date form-control cursor-pointer"
+                      className={`${styles.cari} form-search-date form-control cursor-pointer`}
                       onChange={(date) => onChangePeriodeDateEnd(date)}
                       value={to}
                       disabled={!from}
@@ -296,14 +300,14 @@ const TambahApi = ({ token }) => {
               <div className="form-group row">
                 <div className="col-sm-12 d-flex justify-content-end">
                   <Link href="/site-management/setting/api">
-                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
+                    <a className={`${styles.btnKembali} btn btn-white-ghost-rounded-full rounded-pill mr-2`}>
                       Kembali
                     </a>
                   </Link>
                   <button
                     onClick={(e) => submit(e)}
                     type="button"
-                    className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
+                    className={`${styles.btnSimpan} btn btn-primary-rounded-full rounded-pill`}
                   >
                     Simpan
                   </button>
