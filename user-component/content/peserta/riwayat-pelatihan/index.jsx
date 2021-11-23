@@ -124,20 +124,6 @@ export default function RiwayatPelatihan({ session }) {
                       </Col>
                     );
                   })}
-
-                  {/* <Button className={`rounded-full mx-5 w-100`}>
-                    Test Substansi
-                  </Button>
-                  <Button className={`rounded-full mx-5 w-100`}>
-                    Administrasi
-                  </Button>
-                  <Button className={`rounded-full mx-5 w-100`}>
-                    Pelatihan
-                  </Button>
-                  <Button className={`rounded-full mx-5 w-100`}>
-                    Survey & LPJ
-                  </Button>
-                  <Button className={`rounded-full mx-5 w-100`}>Selesai</Button> */}
                 </Row>
               </Row>
             </Card.Body>
@@ -150,49 +136,7 @@ export default function RiwayatPelatihan({ session }) {
               <CardPeserta status={"test"} data={el} session={session} />
             </Fragment>
           );
-          // img_figure={"/assets/media/mitra-icon/bukalapak-1.svg"}
-          // img_mitra={"/assets/media/mitra-icon/bukalapak-1.svg"}
-          // mitra_name={"bukalapak"}
-          // pelatihan_name={"Intermediate Multimedia Designer"}
-          // label={"warning"}
-          // location={
-          //   "Pasaraya Blok M Gedung B Lt. 6, Jakarta Barat, Indonesia"
-          // }
         })}
-        {/* <CardPeserta status={"isi lpj"} data={el} session={session} /> */}
-        {/* <CardPeserta totalButton={2} status={"tes substansi"} /> */}
-        {/* {dataRiwayatPelatihan.listPelatihan.list.map((el) => {
-          if (el.survei == true && el.lpj == true) {
-            return <CardPeserta status={"isi lpj"} data={el} />;
-          } else if (el.survei == true && el.lpj == false) {
-            return <CardPeserta data={el} status={"isi survey"} />;
-          } else if (el.lpj == true) {
-            return <CardPeserta status={"isi lpj"} data={el} />;
-          }
-
-          if (el.midtest) {
-            return <CardPeserta status={"kerjakan mid test"} data={el} />;
-          }
-        })} */}
-        {/* <CardPeserta totalButton={2} status={"kerjakan mid test"} /> */}
-        {/* <CardPeserta totalButton={2} data={el} status={"isi survey"} /> */}
-
-        {/* <CardPeserta totalButton={2} status={"lolos administrasi"} />
-        <CardPeserta totalButton={2} status={"menunggu jadwal"} /> */}
-        {/* 
-        <CardPeserta
-              totalButton={2}
-              data={el}
-              status={"seleksi administrasi"}
-            />
-        <CardPeserta totalButton={2} status={"seleksi administrasi"} />
-        <CardPeserta totalButton={2} status={"lolos substansi"} />
-        <CardPeserta totalButton={2} status={"tidak lulus"} />
-        <CardPeserta totalButton={2} status={"ikuti pelatihan"} />
-        <CardPeserta totalButton={2} status={"kerjakan mid test"} />
-        <CardPeserta totalButton={2} status={"kerjakan trivia"} />
-        <CardPeserta totalButton={2} status={"lulus pelatihan"} />
-         */}
       </PesertaWrapper>
       <Modal show={showModal} onHide={handleClose} centered>
         <Modal.Header>
