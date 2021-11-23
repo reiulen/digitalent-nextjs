@@ -11,6 +11,8 @@ import IconShare from "../../../components/assets/icon/Share";
 import IconTime from "../../../components/assets/icon-dashboard-peserta/Time";
 import IconPeserta from "../../../components/assets/icon-dashboard-peserta/Peserta";
 
+import ShareOverlay from "./ShareOverlay.component";
+
 const CardPelatihanQuickView = ({
   row,
   i,
@@ -77,14 +79,19 @@ const CardPelatihanQuickView = ({
                       <p className="fw-600 fz-14">{row.mitra}</p>
                     </div>
                   </div>
-
                   <div className="d-flex align-items-start">
                     <button className="roundedss-border btn btn-white">
                       <IconLove className="cursor-pointer" />
                     </button>
-                    <button className="roundedss-border btn btn-white mx-6">
-                      <IconShare className="cursor-pointer" />
-                    </button>
+
+                    <ShareOverlay
+                      url={`${process.env.PATH_URL}/detail/pelatihan/${row.id}`}
+                      quote={row.name}
+                    >
+                      <button className="roundedss-border btn btn-white mx-6">
+                        <IconShare className="cursor-pointer" />
+                      </button>
+                    </ShareOverlay>
 
                     <div onClick={() => funcClosePelatihan(i)}>
                       <IconClose className="cursor-pointer" />

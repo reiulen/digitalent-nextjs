@@ -97,22 +97,28 @@ const Table = ({ token }) => {
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0 px-4 px-sm-6">
-            <h3
-              className="card-title font-weight-bolder text-dark titles-1"
-            >
-              Master Kategori Kerjasama
-            </h3>
-            <div className="card-toolbar">
-              <Link href="/partnership/master-kategori-kerjasama/tambah-kategori-kerjasama">
-                <a className="btn btn-rounded-full bg-blue-primary text-white">
-                  <IconAdd className="mr-3" width="14" height="14" />
-                  Tambah Kategori Kerjasama
-                </a>
-              </Link>
+            <div className="col-12 col-xl-6">
+              <h3
+                className="card-title font-weight-bolder text-dark titles-1"
+              >
+                Master Kategori Kerjasama
+              </h3>
             </div>
+            
+            <div className="col-12 col-xl-6 d-flex justify-content-xl-end">
+              <div className="card-toolbar mb-5">
+                <Link href="/partnership/master-kategori-kerjasama/tambah-kategori-kerjasama">
+                  <a className="btn btn-rounded-full bg-blue-primary text-white">
+                    <IconAdd className="mr-3" width="14" height="14" />
+                    Tambah Kategori Kerjasama
+                  </a>
+                </Link>
+              </div>
+            </div>
+            
           </div>
 
-          <div className="card-body pt-0 px-4 px-sm-6">
+          <div className="card-body pt-0 px-4 px-sm-6 mb-10">
             <div className="table-filter">
               <div className="row align-items-center">
                 <div className="col-lg-12 col-xl-12">
@@ -130,7 +136,7 @@ const Table = ({ token }) => {
                             id="kt_datatable_search_query"
                             type="text"
                             className="form-control pl-10"
-                            placeholder="Ketik disini untuk Pencarian..."
+                            placeholder="Cari.."
                             onChange={(e) =>
                               handleChangeValueSearch(e.target.value)
                             }
@@ -265,7 +271,7 @@ const Table = ({ token }) => {
               </div>
 
               <div className="row">
-                <div className="table-pagination paginate-cs">
+                <div className="table-pagination paginate-cs col-12 col-md-8">
                   <Pagination
                     activePage={allMKCooporation.page}
                     itemsCountPerPage={
@@ -284,7 +290,7 @@ const Table = ({ token }) => {
                     linkClass="page-link"
                   />
                 </div>
-                <div className="table-total ml-auto">
+                <div className="table-total ml-auto col-12 col-md-4 d-flex justify-content-md-end">
                   <div className="row">
                     <div className="col-4 mr-0">
                       <select

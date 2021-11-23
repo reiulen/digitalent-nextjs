@@ -148,27 +148,30 @@ const Table = ({ token }) => {
       )}
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
-          <div className="d-flex flex-wrap align-items-center justify-content-between px-8 py-4">
+          <div className="d-flex  flex-column flex-xl-row flex-wrap align-items-xl-center justify-content-xl-between pl-xl-8 px-6 py-4">
             <h1 className="card-title font-weight-bolder text-dark mb-0 mt-4 titles-1">
               Master Mitra
             </h1>
-            <Link href="/partnership/mitra/tambah">
-              <a className="btn btn-rounded-full bg-blue-primary text-white mt-4">
-                <IconAdd
-                  className="mr-3"
-                  width="16"
-                  height="16"
-                  fill="rgba(255,255,255,1)"
-                />
-                Tambah Mitra Baru
-              </a>
-            </Link>
+            
+            <div className="col-12 col-md-5 col-xl-3 ml-n5">
+              <Link href="/partnership/mitra/tambah">
+                <a className="btn btn-rounded-full bg-blue-primary text-white mt-4 d-flex justify-content-center">
+                  <IconAdd
+                    className="mr-3"
+                    width="16"
+                    height="16"
+                    fill="rgba(255,255,255,1)"
+                  />
+                  Tambah Mitra Baru
+                </a>
+              </Link>
+            </div>
+           
           </div>
-          {/*  */}
 
           <div className="card-body pt-0 px-4 px-sm-8">
-            <div className="row w-100">
-              <div className="col-12 col-xl-4">
+            <div className="row">
+              <div className="col-12 col-md-8 col-xl-4">
                 <div className="position-relative overflow-hidden w-100 mt-3">
                   <IconSearch
                     style={{ left: "10" }}
@@ -178,7 +181,7 @@ const Table = ({ token }) => {
                     id="kt_datatable_search_query"
                     type="text"
                     className="form-control pl-10"
-                    placeholder="Ketik disini untuk Pencarian..."
+                    placeholder="Cari..."
                     onChange={(e) => setKeyWord(e.target.value)}
                   />
                   <button
@@ -195,8 +198,8 @@ const Table = ({ token }) => {
                 </div>
               </div>
 
-              <div className="col-12 col-xl-8">
-                <div className="d-flex align-items-center justify-content-end mt-2">
+              <div className="col-12 col-md-4 col-xl-8 ">
+                <div className="d-flex align-items-center justify-content-md-end justify-content-start mt-2">
                   {/* disini sortir modal */}
 
                   <button

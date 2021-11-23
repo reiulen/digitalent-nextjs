@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "../styles/stepInput.module.css";
 
 const StepInput = ({ step }) => {
   let stepBg1 = "bg-neutral";
@@ -67,7 +68,7 @@ const StepInput = ({ step }) => {
                     2
                   </h1>
                 </div>
-                <div className="my-5">
+                <div className={`${styles.topHeader} my-5`}>
                   <h5 className={`${textHeader2}`}>Bank Soal</h5>
                   <p className={`${textDesc2}`}>Verifikasi Bank Soal</p>
                 </div>

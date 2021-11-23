@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import Pagination from "react-js-pagination";
 import Swal from "sweetalert2";
+import styles from "../../../../../styles/stepInput.module.css";
+import styleBtn from "../../trivia/edit/step.module.css";
 
 import {
   getAllSubtanceQuestionDetail,
@@ -222,7 +224,7 @@ const StepTwo = ({ token }) => {
           <div className="card-body">
             <div className="table-filter">
               <div className="row align-items-center">
-                <div className="col-lg-5 col-xl-5">
+                <div className="col-xs-4 col-sm-5 col-lg-5 col-xl-5 col-md-8">
                   <div
                     className="position-relative overflow-hidden mt-3"
                     style={{ maxWidth: "330px" }}
@@ -247,18 +249,22 @@ const StepTwo = ({ token }) => {
                   </div>
                 </div>
 
-                <div className="col-lg-1 col-xl-1"></div>
+                <div className="col-xs-1 col-sm-1 col-lg-1 col-xl-1 col-md-1"></div>
 
-                <div className="col-lg-2 col-xl-2 ml-auto">
+                <div className="col-xs-7 col-sm-6 col-lg-4 col-xl-3 col-md-3  ml-auto mt-3">
                   <button
                     className="btn btn-primary-rounded-full btn-block mt-2"
+                    style={{ width: "100%" }}
                     onClick={handleModal}
                   >
                     <i className="flaticon2-notepad"></i>Tambah Soal
                   </button>
                 </div>
 
-                <div id="btn-delete-all" className="col-lg-2 col-xl-2 d-none">
+                <div
+                  id="btn-delete-all"
+                  className="col-lg-2 col-xl-2 d-none mt-3"
+                >
                   <button
                     className="btn btn-danger btn-block"
                     onClick={handleDeleteAll}
@@ -427,23 +433,45 @@ const StepTwo = ({ token }) => {
                     )}
                 </div>
               </div>
-              <div className="row">
-                <div className="col-sm-12 col-md-12 pt-0">
-                  <div className="float-right">
-                    <button
-                      className="btn btn-light-ghost-rounded-full mr-2"
-                      type="button"
-                      onClick={saveLanjut}
-                    >
-                      Simpan & Lanjut
-                    </button>
-                    <button
-                      className="btn btn-primary-rounded-full"
-                      onClick={saveDraft}
-                      type="button"
-                    >
-                      Simpan Draft
-                    </button>
+              <div className="row mt-7">
+                <div className=" col-xs-12 col-sm-12 col-md-12 pt-0">
+                  <div className="float-right ">
+                    <div className={styles.foldResponsive}>
+                      <button
+                        className={`${styles.btnNextFold} btn btn-light-ghost-rounded-full mr-2`}
+                        type="button"
+                        onClick={saveLanjut}
+                      >
+                        Simpan & Lanjut
+                      </button>
+                      <button
+                        className={`${styles.btnDraftFold} btn btn-primary-rounded-full`}
+                        onClick={saveDraft}
+                        type="button"
+                      >
+                        Simpan Draft
+                      </button>
+                    </div>
+                    <div className={`${styles.normalBtn} row`}>
+                      <div className="col-xs-6">
+                        <button
+                          className={`${styleBtn.btnNext} btn btn-light-ghost-rounded-full mr-2`}
+                          type="button"
+                          onClick={saveLanjut}
+                        >
+                          Simpan & Lanjut
+                        </button>
+                      </div>
+                      <div className="col-xs-6">
+                        <button
+                          className={` btn btn-primary-rounded-full`}
+                          onClick={saveDraft}
+                          type="button"
+                        >
+                          Simpan Draft
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

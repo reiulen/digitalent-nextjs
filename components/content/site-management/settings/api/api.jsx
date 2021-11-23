@@ -11,6 +11,9 @@ import IconDelete from "../../../../assets/icon/Delete";
 import IconAdd from "../../../../assets/icon/Add";
 import IconSearch from "../../../../assets/icon/Search";
 
+import styles from "../../../../../styles/previewGaleri.module.css";
+import stylesPag from "../../../../../styles/pagination.module.css";
+
 import {
   deleteApis,
   getAllApi,
@@ -86,55 +89,51 @@ const Table = ({ token }) => {
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
-          <div className="card-header border-0">
-            <h3 className="card-title font-weight-bolder text-dark titles-1">
+          <div className="card-header row border-0">
+            <h3 className={`${styles.headTitle} col-12 col-sm-8 col-md-8 col-lg-7 col-xl-9`}>
               List API
             </h3>
-            <div className="card-toolbar">
+            <div className="card-toolbar row col-12 col-sm-4 col-md-4 col-lg-5 col-xl-3">
               <Link href="/site-management/setting/api/tambah-api" passHref>
-                <a className="btn btn-rounded-full bg-blue-primary text-white">
+                <a className={`${styles.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bold btn-block`}>
                   <IconAdd className="mr-3" width="14" height="14" />
                   Tambah API
                 </a>
               </Link>
             </div>
           </div>
-          <div className="card-body pt-0 px-4 px-sm-8">
+          <div className="card-body">
             <div className="table-filter">
-              <div className="row align-items-center">
-                <div className="col-lg-12 col-xl-12">
-                  <div className="row w-100 ml-0 ml-sm-0">
-                    <div className="col-12 col-xl-4">
-                      <div className="position-relative overflow-hidden w-100">
-                        <IconSearch
-                          style={{ left: "10" }}
-                          className="left-center-absolute"
-                        />
-                        <input
-                          id="kt_datatable_search_query"
-                          type="text"
-                          className="form-control pl-10"
-                          placeholder="Ketik disini untuk Pencarian..."
-                          onChange={(e) =>
-                            handleChangeValueSearch(e.target.value)
-                          }
-                        />
-                        <button
-                          type="button"
-                          onClick={(e) => handleSubmit(e)}
-                          className="btn bg-blue-primary text-white right-center-absolute"
-                          style={{
-                            borderTopLeftRadius: "0",
-                            borderBottomLeftRadius: "0",
-                          }}
-                        >
-                          Cari
-                        </button>
-                      </div>
-                    </div>
+              <div className="row">
+                <div className="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                  <div className="position-relative overflow-hidden mt-3"
+                    style={{ maxWidth: "330px" }}
+                  >
+                    <i className="ri-search-line left-center-absolute ml-2"></i>
+                    <input
+                      id="kt_datatable_search_query"
+                      type="text"
+                      className={`${styles.cari} form-control pl-10`}
+                      placeholder="Ketik disini untuk Pencarian..."
+                      onChange={(e) =>
+                        handleChangeValueSearch(e.target.value)
+                      }
+                    />
+                    <button
+                      type="button"
+                      onClick={(e) => handleSubmit(e)}
+                      className="btn bg-blue-primary text-white right-center-absolute"
+                      style={{
+                        borderTopLeftRadius: "0",
+                        borderBottomLeftRadius: "0",
+                      }}
+                    >
+                      Cari
+                    </button>
                   </div>
                 </div>
               </div>
+
             </div>
             <div className="table-page mt-5">
               <div className="table-responsive">
@@ -167,7 +166,7 @@ const Table = ({ token }) => {
                                 {allApi.page === 1
                                   ? index + 1
                                   : (allApi.page - 1) * allApi.limit +
-                                    (index + 1)}
+                                  (index + 1)}
                               </td>
                               <td className="align-middle text-left">
                                 <p className="p-part-t text-overflow-ens">
@@ -256,57 +255,63 @@ const Table = ({ token }) => {
                 )}
               </div>
 
-              <div className="row px-4">
-                <div className="table-pagination">
-                  <Pagination
-                    activePage={allApi.page}
-                    itemsCountPerPage={allApi.data.perPage}
-                    totalItemsCount={allApi.data.total}
-                    pageRangeDisplayed={3}
-                    onChange={(page) => dispatch(setPage(page))}
-                    nextPageText={">"}
-                    prevPageText={"<"}
-                    firstPageText={"<<"}
-                    lastPageText={">>"}
-                    itemClass="page-item"
-                    linkClass="page-link"
-                  />
-                </div>
+              <div className="row">
+                {allApi && allApi?.data?.perPage < allApi?.data?.total &&
+                  <>
+                    <div className={`${stylesPag.pagination} table-pagination`}>
+                      <Pagination
+                        activePage={allApi.page}
+                        itemsCountPerPage={allApi.data.perPage}
+                        totalItemsCount={allApi.data.total}
+                        pageRangeDisplayed={3}
+                        onChange={(page) => dispatch(setPage(page))}
+                        nextPageText={">"}
+                        prevPageText={"<"}
+                        firstPageText={"<<"}
+                        lastPageText={">>"}
+                        itemClass="page-item"
+                        linkClass="page-link"
+                      />
+                    </div>
+                  </>
+                }
 
-                <div className="table-total ml-auto mr-4">
-                  <div className="row mt-4">
-                    <div className="col-4 mr-0 p-0">
-                      <select
-                        className="form-control pr-2 cursor-pointer"
-                        id="exampleFormControlSelect2"
-                        defaultValue=""
-                        style={{
-                          width: "63px",
-                          background: "#F3F6F9",
-                          borderColor: "#F3F6F9",
-                          color: "#9E9E9E",
-                        }}
-                        onChange={(e) =>
-                          dispatch(limitCooporation(e.target.value, token))
-                        }
-                      >
-                        <option value="5">5</option>
-                        <option value="10">10</option>
-                        <option value="30">30</option>
-                        <option value="40">40</option>
-                        <option value="50">50</option>
-                      </select>
+                {allApi ?
+                  <div className={`${stylesPag.rightPag} table-total ml-auto`}>
+                    <div className="row">
+                      <div className="col-4 mt-3">
+                        <select
+                          className="form-control pr-2 cursor-pointer"
+                          id="exampleFormControlSelect2"
+                          defaultValue=""
+                          style={{
+                            width: "70px",
+                            background: "#F3F6F9",
+                            borderColor: "#F3F6F9",
+                            color: "#9E9E9E",
+                          }}
+                          onChange={(e) =>
+                            dispatch(limitCooporation(e.target.value, token))
+                          }
+                        >
+                          <option value="5">5</option>
+                          <option value="10">10</option>
+                          <option value="30">30</option>
+                          <option value="40">40</option>
+                          <option value="50">50</option>
+                        </select>
+                      </div>
+                      <div className="col-8 my-auto">
+                        <p
+                          className="align-middle mt-3"
+                          style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}
+                        >
+                          Total Data {allApi.data && allApi.data.total} List Data
+                        </p>
+                      </div>
                     </div>
-                    <div className="col-8 my-auto">
-                      <p
-                        className="align-middle mt-3"
-                        style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}
-                      >
-                        Total Data {allApi.data && allApi.data.total} List Data
-                      </p>
-                    </div>
-                  </div>
-                </div>
+                  </div> : ""
+                }
               </div>
             </div>
           </div>

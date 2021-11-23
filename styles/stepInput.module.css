@@ -1,23 +1,45 @@
 @media only screen and (max-width: 1024px) {
-    /* Step Input */
+  /* Step Input */
 
-    .topHeader{
-        height: 76px;
-    }
+  .topHeader {
+    height: 78px;
+  }
 }
 
 @media only screen and (max-width: 992px) {
-    /* Step Input */
+  /* Step Input */
 
-    .topHeader{
-        height: 55px;
-    }
+  .topHeader {
+    height: 55px;
+  }
 }
 
 @media only screen and (max-width: 768px) {
-    /* Step Input */
+  /* Step Input */
 
-    .topHeader{
-        height: 55px;
-    }
+  .topHeader {
+    height: 55px;
+  }
+}
+
+@media only screen and (max-width: 280px) {
+  /* Step Input */
+
+  .btnNextFold {
+    margin-top: 10px;
+    width: 100%;
+  }
+  .btnDraftFold {
+    margin-top: 10px;
+    width: 100%;
+  }
+  .foldResponsive {
+    display: inline !important;
+  }
+  .normalBtn {
+    display: none;
+  }
+}
+.foldResponsive {
+  display: none;
 }
