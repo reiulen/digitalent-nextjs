@@ -318,7 +318,21 @@ const DashbardSubvit = ({ token }) => {
                         </ResponsiveContainer>
                       </div>
                     </center>
-                    <div
+                    <div className={styles.cardBottom}>
+                      <table>
+                        <tr>
+                          <td>
+                            <Image
+                              src={imageSubstansi}
+                              alt=""
+                              width={60}
+                              height={50}
+                            />
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                    {/* <div
                       className={`${styles.cardBottom} d-flex flex-row `}
                       style={{ padding: "0px 20px" }}
                     >
@@ -382,7 +396,7 @@ const DashbardSubvit = ({ token }) => {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
                   </>
                 )}
               </div>
