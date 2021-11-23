@@ -49,12 +49,10 @@ const ForgotPassword = () => {
               setLoading(false);
               setCount(count + 1);
               setSuccess(true);
-              console.log(res);
             })
             .catch((err) => {
               setLoading(false);
               SweatAlert("Gagal", err.response.data.message, "error");
-              console.log(err.response);
             });
         }
       });
@@ -139,14 +137,12 @@ const ForgotPassword = () => {
                     <div className="mt-10 fz-16">
                       {success && (
                         <center>
-                          {count === 2 && (
-                            <p
-                              className="mt-3 "
-                              style={{ fontSize: "16px", color: "#fff" }}
-                            >
-                              Sukses Mengirim Email, Silahkan Cek Email Anda !
-                            </p>
-                          )}
+                          <p
+                            className="mt-3 "
+                            style={{ fontSize: "16px", color: "#fff" }}
+                          >
+                            Sukses Mengirim Email, Silahkan Cek Email Anda !
+                          </p>
                         </center>
                       )}
                       <p className="text-white text-center">
