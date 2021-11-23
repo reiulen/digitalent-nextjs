@@ -225,7 +225,7 @@ const Edit = ({ token }) => {
                             <input
                               type="text"
                               name="name"
-                              className="form-control mr-6"
+                              className="form-control"
                               placeholder="Tujuan Kerjasama"
                               value={item.name}
                               onChange={(e) => handleChange(e, index)}
@@ -338,16 +338,16 @@ const Edit = ({ token }) => {
                 </div>
               </div>
 
-              <div className="form-group row">
-                <div className="col-sm-12 d-flex justify-content-end">
+              <div className="form-group">
+                <div className="d-flex flex-column flex-md-row justify-content-end">
                   <Link href="/partnership/master-kategori-kerjasama">
-                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
+                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5 d-flex justify-content-center" >
                       Kembali
                     </a>
                   </Link>
                   <button
                     type="button"
-                    className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
+                    className="btn btn-sm btn-rounded-full bg-blue-primary text-white d-flex justify-content-center"
                     onClick={(e) => handleSubmit(e)}
                   >
                     Simpan
