@@ -9,24 +9,18 @@ import LoadingHeader from "../loader/LoadingHeader";
 import LoadingNavbar from "../loader/LoadingNavbar";
 import LoadingFooter from "../loader/LoadingFooter";
 
-const Navbar = dynamic(
-  () => import("../../../user-component/components/template/Navbar2.component"),
-  {
-    loading: function loadingNow() {
-      return <LoadingNavbar />;
-    },
-    ssr: false,
-  }
-);
-const Header = dynamic(
-  () => import("../../../user-component/components/template/Header.component"),
-  {
-    loading: function loadingNow() {
-      return <LoadingHeader />;
-    },
-    ssr: false,
-  }
-);
+const Navbar = dynamic(() => import("./Navbar.component"), {
+  loading: function loadingNow() {
+    return <LoadingNavbar />;
+  },
+  ssr: false,
+});
+const Header = dynamic(() => import("./Header.component"), {
+  loading: function loadingNow() {
+    return <LoadingHeader />;
+  },
+  ssr: false,
+});
 
 const Sidebar = dynamic(
   () => import("../../../user-component/components/template/Sidebar.component"),
