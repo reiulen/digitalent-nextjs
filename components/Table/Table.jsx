@@ -18,9 +18,9 @@ export default function Tables({
         </Table>
       </div>
       <div className="row mt-3">
-        <div className="table-pagination pagination-custom col-12 col-md-6">{pagination}</div>
-        <div className="table-total col-12 col-md-6">
-          <div className="d-flex align-items-center justify-content-end">
+        <div className="table-pagination pagination-custom col-12 col-md-8">{pagination}</div>
+        <div className="table-total col-12 col-md-4 mt-3">
+          <div className="d-flex align-items-center justify-content-sm-end justify-content-start">
               <select
                 className="form-control select-limit-table"
                 id="exampleFormControlSelect2"

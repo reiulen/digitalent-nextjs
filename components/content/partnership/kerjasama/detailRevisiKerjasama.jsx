@@ -110,14 +110,14 @@ const DetailRevisiKerjasama = ({ token }) => {
           <div className="card-body pt-0">
             <form>
               <div className="form-group mb-10">
-                <label className="required mb-2">Tanggal</label>
+                <label className="required mb-2 text-muted">Tanggal</label>
                 <div className="position-relative">
                   <input
                     placeholder="Pilih Tanggal"
                     readOnly
                     value={date && date}
                     type="date"
-                    className="form-control mb-3 mb-lg-0 border-0"
+                    className="form-control mb-3 mb-lg-0 ml-n4 border-0"
                   />
                 </div>
               </div>
@@ -125,21 +125,21 @@ const DetailRevisiKerjasama = ({ token }) => {
               <div className="row">
                 <div className="col-12 col-sm-6">
                   <div className="form-group mb-10">
-                    <label className="required mb-2">Judul Kerjasama</label>
+                    <label className="required mb-2 text-muted">Judul Kerjasama</label>
                     <input
                       placeholder="Masukan Judul Kerjasama"
                       readOnly
                       value={title && title}
                       type="text"
-                      className="form-control mb-3 mb-lg-0 border-0"
+                      className="form-control mb-3 mb-lg-0 border-0 ml-n4"
                     />
                   </div>
                 </div>
                 <div className="col-12 col-sm-6">
                   <div className="form-group mb-10">
-                    <label className="required mb-2">Kategori Kerjasama</label>
+                    <label className="required mb-2 text-muted">Kategori Kerjasama</label>
                     <select
-                      className="form-control remove-icon-default border-0"
+                      className="form-control remove-icon-default border-0 ml-n4"
                       disabled
                       style={{backgroundColor:"transparent"}}
                     >
@@ -154,20 +154,20 @@ const DetailRevisiKerjasama = ({ token }) => {
               <div className="row">
                 <div className="col-12 col-sm-6">
                   <div className="form-group mb-10">
-                    <label className="required mb-2">Periode Kerjasama</label>
+                    <label className="required mb-2 text-muted">Periode Kerjasama</label>
                     <input
                       placeholder="Masukan Lama Kerjasama"
                       readOnly
                       value={period && period}
                       type="number"
-                      className="form-control mb-3 mb-lg-0 border-0"
+                      className="form-control mb-3 mb-lg-0 border-0 ml-n4"
                     />
                   </div>
                 </div>
                 <div className="col-12 col-sm-6">
                   <div className="form-group mb-10">
                     <label className="required mb-2"></label>
-                    <select className="form-control mt-2 border-0 remove-icon-default" disabled style={{backgroundColor:"transparent"}}>
+                    <select className="form-control mt-2 border-0 remove-icon-default ml-n4" disabled style={{backgroundColor:"transparent"}}>
                       <option value="">Tahun</option>
                     </select>
                   </div>
@@ -184,11 +184,11 @@ const DetailRevisiKerjasama = ({ token }) => {
                 : allCooperation.map((items, index) => {
                     return (
                       <div className="row" key={index}>
-                        <div className="col-12 col-sm-6">
+                        <div className="col-12 col-xl-6">
                           <div className="form-group">
                             <label
                               htmlFor="staticEmail"
-                              className="col-form-label"
+                              className="col-form-label text-muted"
                             >
                               {items.cooperation_form}
                             </label>
@@ -200,13 +200,13 @@ const DetailRevisiKerjasama = ({ token }) => {
                                 cols="30"
                                 rows="5"
                                 value={items.form_content}
-                                className="form-control border-0"
+                                className="form-control border-0 ml-n4"
                                 placeholder="Tuliskan Tujuan Kerjasama"
                               ></textarea>
                             </div>
                           </div>
                         </div>
-                        <div className="col-12 col-sm-6">
+                        <div className="col-12 col-xl-6">
                           <div className="form-group">
                             <label
                               htmlFor="staticEmail"
@@ -252,21 +252,21 @@ const DetailRevisiKerjasama = ({ token }) => {
                 </div>
               </div>
 
-              <div className="form-group row">
-                <div className="col-sm-12 d-flex justify-content-end">
+              <div className="form-group">
+                <div className="d-flex flex-column flex-sm-row justify-content-end">
                   <Link
                     href={{
                       pathname: `/partnership/kerjasama/revisi-kerjasama/`,
                       query: { id: router.query.id },
                     }}
                   >
-                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
+                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5 d-flex justify-content-center">
                       Kembali
                     </a>
                   </Link>
                   <button
                     type="button"
-                    className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
+                    className="btn btn-sm btn-rounded-full bg-blue-primary text-white d-flex justify-content-center"
                     onClick={() => handleSubmit()}
                   >
                     Simpan

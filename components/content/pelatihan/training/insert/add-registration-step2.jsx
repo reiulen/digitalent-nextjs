@@ -419,7 +419,7 @@ const AddRegistrationStep2 = ({ propsStep, token }) => {
 
             {viewRegistrationHandler()}
 
-            <div className="form-group mt-9">
+            <div className="form-group mt-md-20">
               <div className="text-right">
                 <button
                   className="btn btn-light-ghost-rounded-full mr-2"
