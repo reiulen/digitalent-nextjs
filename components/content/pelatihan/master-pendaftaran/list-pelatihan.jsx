@@ -33,18 +33,18 @@ export default function MasterPelatihan({ token }) {
   const dispatch = useDispatch();
 
   const { loading, error, list } = useSelector(
-    state => state.getAllMasterPelatihan
+    (state) => state.getAllMasterPelatihan
   );
 
   const { success, status: statusUpdate } = useSelector(
-    state => state.updateStatusMaster
+    (state) => state.updateStatusMaster
   );
 
   const AllMasterPendaftaran = useSelector(
-    state => state.getAllMasterPelatihan
+    (state) => state.getAllMasterPelatihan
   );
 
-  const deleted = useSelector(state => state.deleteMasterPelatihan);
+  const deleted = useSelector((state) => state.deleteMasterPelatihan);
 
   useEffect(() => {
     if (
@@ -67,24 +67,24 @@ export default function MasterPelatihan({ token }) {
 
   let selectRefAkademi = null;
 
-  const resetValueSort = e => {
+  const resetValueSort = (e) => {
     e.preventDefault();
     setStatus(null);
     dispatch({ type: RESET_STATUS_FILTER });
   };
 
-  const handleSearch = e => {
+  const handleSearch = (e) => {
     e.preventDefault();
     dispatch(searchKeyword(search));
   };
 
   const [status, setStatus] = useState();
 
-  const handleSelectStatus = e => {
+  const handleSelectStatus = (e) => {
     setStatus(e);
   };
 
-  const handleFilter = e => {
+  const handleFilter = (e) => {
     e.preventDefault();
     dispatch(setValueStatus(status.value));
   };
@@ -109,7 +109,7 @@ export default function MasterPelatihan({ token }) {
     success,
   ]);
 
-  const handleDelete = id => {
+  const handleDelete = (id) => {
     Swal.fire({
       title: "Apakah anda yakin ?",
       text: "Data ini tidak bisa dikembalikan !",
@@ -119,7 +119,7 @@ export default function MasterPelatihan({ token }) {
       cancelButtonColor: "#d33",
       confirmButtonText: "Ya !",
       cancelButtonText: "Batal",
-    }).then(result => {
+    }).then((result) => {
       if (result.isConfirmed) {
         dispatch(deleteMasterTraining(id, token));
       }
@@ -202,7 +202,7 @@ export default function MasterPelatihan({ token }) {
                       type="text"
                       className="form-control pl-10"
                       placeholder="Ketik disini untuk Pencarian..."
-                      onChange={e => setSearch(e.target.value)}
+                      onChange={(e) => setSearch(e.target.value)}
                     />
                     <button
                       className="btn bg-blue-primary text-white right-center-absolute"
@@ -210,7 +210,7 @@ export default function MasterPelatihan({ token }) {
                         borderTopLeftRadius: "0",
                         borderBottomLeftRadius: "0",
                       }}
-                      onClick={e => {
+                      onClick={(e) => {
                         handleSearch(e);
                       }}
                     >
@@ -218,8 +218,8 @@ export default function MasterPelatihan({ token }) {
                     </button>
                   </div>
                 </div>
-                <div className="col-lg-6 col-sm-6">
-                  <div className="d-flex flex-wrap align-items-center justify-content-end mt-2">
+                <div className="col-lg-6 col-sm-6 pake">
+                  <div className="d-flex flex-wrap align-items-center justify-content-end mt-2 responsive-columns">
                     {/* sortir by modal */}
                     <button
                       className="avatar item-rtl btn border d-flex align-items-center justify-content-between mt-2"
@@ -274,7 +274,7 @@ export default function MasterPelatihan({ token }) {
                                   Status
                                 </label>
                                 <Select
-                                  ref={ref => (selectRefAkademi = ref)}
+                                  ref={(ref) => (selectRefAkademi = ref)}
                                   className="basic-single"
                                   classNamePrefix="select"
                                   placeholder="Semua"
@@ -285,7 +285,7 @@ export default function MasterPelatihan({ token }) {
                                   isSearchable={true}
                                   name="color"
                                   value={status || "-"}
-                                  onChange={e => {
+                                  onChange={(e) => {
                                     handleSelectStatus(e);
                                   }}
                                   options={dataStatus}
@@ -299,14 +299,14 @@ export default function MasterPelatihan({ token }) {
                                   type="button"
                                   data-dismiss="modal"
                                   aria-label="Close"
-                                  onClick={e => resetValueSort(e)}
+                                  onClick={(e) => resetValueSort(e)}
                                 >
                                   Reset
                                 </button>
                                 <button
                                   className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
                                   type="button"
-                                  onClick={e => handleFilter(e)}
+                                  onClick={(e) => handleFilter(e)}
                                 >
                                   Terapkan
                                 </button>
@@ -355,10 +355,16 @@ export default function MasterPelatihan({ token }) {
                                       AllMasterPendaftaran?.limit +
                                     (i + 1)}
                               </td>
+
                               {/* START TABLE DATA */}
                               <td className="align-middle">{item.id}</td>
                               <td className="align-middle">
-                                {item.judul_form}
+                                <p
+                                  className="d-inline-block text-truncate"
+                                  style={{ width: "11rem" }}
+                                >
+                                  {item.judul_form}
+                                </p>
                               </td>
                               <td className="align-middle">
                                 <div className="position-relative w-max-content">
@@ -370,7 +376,7 @@ export default function MasterPelatihan({ token }) {
                                     }`}
                                     key={i}
                                     value={item.status}
-                                    onChange={e =>
+                                    onChange={(e) =>
                                       handleStatusPublish(
                                         e,
                                         item.id,
@@ -435,56 +441,61 @@ export default function MasterPelatihan({ token }) {
                 )}
               </div>
               {/* START Pagination */}
-              <div className="row">
-                {list && (
-                  <div className="table-pagination my-auto">
-                    <Pagination
-                      activePage={AllMasterPendaftaran?.page}
-                      itemsCountPerPage={list?.perPage}
-                      totalItemsCount={list?.total}
-                      pageRangeDisplayed={3}
-                      onChange={page => dispatch(setValuePage(page))}
-                      nextPageText={">"}
-                      prevPageText={"<"}
-                      firstPageText={"<<"}
-                      lastPageText={">>"}
-                      itemClass="page-item"
-                      linkClass="page-link"
-                    />
-                  </div>
-                )}
-                <div className="table-total ml-auto">
-                  <div className="row mt-4">
-                    <div className="col-4 mr-0 p-0 my-auto">
-                      <select
-                        className="form-control"
-                        id="exampleFormControlSelect2"
-                        style={{
-                          width: "65px",
-                          background: "#F3F6F9",
-                          borderColor: "#F3F6F9",
-                          color: "#9E9E9E",
-                        }}
-                        onChange={e => dispatch(setValueLimit(e.target.value))}
-                      >
-                        <option>5</option>
-                        <option>10</option>
-                        <option>30</option>
-                        <option>40</option>
-                        <option>50</option>
-                      </select>
+              {list?.total >= 5 && (
+                <div className="row">
+                  {list && (
+                    <div className="table-pagination my-auto">
+                      <Pagination
+                        activePage={AllMasterPendaftaran?.page}
+                        itemsCountPerPage={list?.perPage}
+                        totalItemsCount={list?.total}
+                        pageRangeDisplayed={3}
+                        onChange={(page) => dispatch(setValuePage(page))}
+                        nextPageText={">"}
+                        prevPageText={"<"}
+                        firstPageText={"<<"}
+                        lastPageText={">>"}
+                        itemClass="page-item"
+                        linkClass="page-link"
+                      />
                     </div>
-                    <div className="col-8 my-auto">
-                      <p
-                        className="align-middle my-auto"
-                        style={{ color: "#B5B5C3" }}
-                      >
-                        Total Data {list?.total}
-                      </p>
+                  )}
+                  <div className="table-total ml-auto">
+                    <div className="row mt-4">
+                      <div className="col-4 mr-0 p-0 my-auto">
+                        <select
+                          className="form-control"
+                          id="exampleFormControlSelect2"
+                          style={{
+                            width: "65px",
+                            background: "#F3F6F9",
+                            borderColor: "#F3F6F9",
+                            color: "#9E9E9E",
+                          }}
+                          onChange={(e) =>
+                            dispatch(setValueLimit(e.target.value))
+                          }
+                        >
+                          <option>5</option>
+                          <option>10</option>
+                          <option>30</option>
+                          <option>40</option>
+                          <option>50</option>
+                        </select>
+                      </div>
+                      <div className="col-8 my-auto">
+                        <p
+                          className="align-middle my-auto"
+                          style={{ color: "#B5B5C3" }}
+                        >
+                          Total Data {list?.total}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              )}
+
               {/* End Pagination */}
             </div>
             {/* END TABLE */}

@@ -210,7 +210,7 @@ const SubmitKerjasama = ({ token }) => {
                   Periode Kerjasama
                 </label>
                 <div className="row">
-                  <div className="col-12 col-sm-6">
+                  <div className="col-12 col-xl-6">
                     <div className="d-flex align-items-center position-relative datepicker-w mt-2">
                       <DatePicker
                         onFocus={() =>
@@ -224,7 +224,7 @@ const SubmitKerjasama = ({ token }) => {
                         startDate={startDate}
                         endDate={endDate}
                         dateFormat="YYYY-MM-DD"
-                        placeholderText="Dari Tanggal"
+                        placeholderText="Mulai Tanggal"
                         minDate={moment().toDate()}
                       />
                       <IconCalender
@@ -238,8 +238,8 @@ const SubmitKerjasama = ({ token }) => {
                       ""
                     )}
                   </div>
-                  <div className="col-12 col-sm-6">
-                    <div className="d-flex align-items-center position-relative datepicker-w mt-2 disabled-form disabled-form">
+                  <div className="col-12 col-xl-6">
+                    <div className="d-flex align-items-center position-relative datepicker-w mt-10 mt-xl-2 ">
                       <DatePicker
                         className="form-search-date form-control cursor-pointer"
                         selected={endDate}
@@ -309,7 +309,7 @@ const SubmitKerjasama = ({ token }) => {
 
               <div className="form-group">
                 <label htmlFor="staticEmail" className="col-form-label">
-                  Tanggal Penandatanganan
+                  Tanggal Tanda Tangan
                 </label>
                 <div className="d-flex align-items-center position-relative datepicker-w w-100">
                   <DatePicker
@@ -326,7 +326,7 @@ const SubmitKerjasama = ({ token }) => {
                     minDate={moment().toDate()}
                     maxDate={addDays(startDate, 20)}
                     dateFormat="dd/MM/yyyy"
-                    placeholderText="Tanggal"
+                    placeholderText="Pilih Tanggal"
                   />
                   <IconCalender
                     className="right-center-absolute"
@@ -342,7 +342,7 @@ const SubmitKerjasama = ({ token }) => {
 
               <div className="form-group">
                 <label htmlFor="staticEmail" className="col-form-label">
-                  Upload Dokumen Kerjasama
+                  Unggah Dokumen Kerjasama
                 </label>
                 <div className="input-group">
                   <div className="custom-file">
@@ -356,10 +356,10 @@ const SubmitKerjasama = ({ token }) => {
                       onChange={handlePdfFileChange}
                     />
                     <label
-                      className="custom-file-label"
+                      className="custom-file-label text-muted"
                       htmlFor="inputGroupFile04"
                     >
-                      {NamePDF ? NamePDF : "Cari Dokumen"}
+                      {NamePDF ? NamePDF : "Belum ada file"}
                     </label>
                   </div>
                 </div>
@@ -386,16 +386,16 @@ const SubmitKerjasama = ({ token }) => {
                 {!viewPDF && <>No pdf file selected </>}
               </div>
 
-              <div className="form-group row mt-6">
-                <div className="col-sm-12 d-flex justify-content-end">
+              <div className="form-group mt-6">
+                <div className="flex-column flex-sm-row d-flex justify-content-end">
                   <Link href="/partnership/kerjasama">
-                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
+                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5 d-flex justify-content-center">
                       Kembali
                     </a>
                   </Link>
                   <button
                     type="submit"
-                    className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
+                    className="btn btn-sm btn-rounded-full bg-blue-primary text-white d-flex justify-content-center"
                   >
                     Kirim
                   </button>

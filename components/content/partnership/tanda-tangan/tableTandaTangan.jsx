@@ -109,12 +109,12 @@ const Table = ({ token }) => {
         ""
       )}
       {successDelete ? (
-        <AlertBar text="Berhasil menghapus data" className="alert-light-danger" onClick={() => onNewReset()}/>
+        <AlertBar text="Berhasil menghapus data" className="alert-light-success" onClick={() => onNewReset()}/>
       ) : (
         ""
       )}
       {update ? (
-        <AlertBar text="Berhasil mengubah data" className="alert-light-warning" onClick={() => onNewReset()}/>
+        <AlertBar text="Berhasil mengubah data" className="alert-light-success" onClick={() => onNewReset()}/>
       ) : (
         ""
       )}
@@ -127,18 +127,23 @@ const Table = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
 
           <div className="card-header border-0">
-            <h3
-              className="card-title font-weight-bolder text-dark titles-1"
-            >
-              Tanda Tangan Digital
-            </h3>
-            <div className="card-toolbar">
-              <Link href="/partnership/tanda-tangan/tambah">
-                <a className="btn btn-rounded-full bg-blue-primary text-white">
-                  <IconAdd className="mr-3" width="14" height="14" />
-                  Tambah Tanda Tangan
-                </a>
-              </Link>
+            <div className="col-12 col-xl-6">
+              <h3
+                className="card-title font-weight-bolder text-dark titles-1"
+              >
+                Tanda Tangan Digital
+              </h3>
+            </div>
+            
+            <div className="col-12 col-xl-6 d-flex justify-content-xl-end">
+              <div className="card-toolbar">
+                <Link href="/partnership/tanda-tangan/tambah">
+                  <a className="btn btn-rounded-full bg-blue-primary text-white">
+                    <IconAdd className="mr-3" width="14" height="14" />
+                    Tambah Tanda Tangan
+                  </a>
+                </Link>
+              </div>
             </div>
           </div>
 
@@ -146,10 +151,10 @@ const Table = ({ token }) => {
             {/* <form onSubmit={handleSubmit}> */}
               <div className="table-filter">
                 <div className="row align-items-center">
-                  <div className="col-lg-10 col-xl-10">
+                  <div className="col-12">
                     <div className="row w-100 my-5">
-                      <div className="col-12 col-sm-6">
-                        <div className="position-relative overflow-hidden w-100">
+                      <div className="col-12 col-xl-6">
+                        <div className="position-relative overflow-hidden">
                           <IconSearch
                             style={{ left: "10" }}
                             className="left-center-absolute"
@@ -158,7 +163,7 @@ const Table = ({ token }) => {
                             id="kt_datatable_search_query"
                             type="text"
                             className="form-control pl-10"
-                            placeholder="Ketik disini untuk Pencarian..."
+                            placeholder="Cari.."
                             onChange={(e) => setKeyWord(e.target.value)}
                           />
                           <button
@@ -316,7 +321,7 @@ const Table = ({ token }) => {
               </div>
 
               <div className="row">
-                <div className="table-pagination">
+                <div className="table-pagination col-12 col-md-8">
                   <Pagination
                     activePage={allTandaTangan.page}
                     itemsCountPerPage={
@@ -333,7 +338,7 @@ const Table = ({ token }) => {
                     linkClass="page-link"
                   />
                 </div>
-                <div className="table-total ml-auto">
+                <div className="table-total ml-5 col-12 col-md-4 d-flex justify-content-md-end ml-md-0">
                   <div className="row">
                     <div className="col-4 mr-0 p-0">
                       <select
