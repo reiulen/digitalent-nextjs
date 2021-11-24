@@ -1,21 +1,23 @@
 import React from "react";
 
 import dynamic from "next/dynamic";
-import LoadingSkeleton from "../../../../components/LoadingSkeleton";
-import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
+import LoadingSkeleton from "../../../components/LoadingSkeleton";
+import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
 
-import { wrapper } from "../../../../redux/store";
+import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
 
 import {
   getStatusPendaftar,
   getAkademiByPelatihan,
   getPendaftaranPeserta,
-} from "../../../../redux/actions/pelatihan/summary.actions";
+} from "../../../redux/actions/pelatihan/summary.actions";
 
-const DetailSummary = dynamic(
+const DaftarPeserta = dynamic(
   () =>
-    import("../../../../components/content/pelatihan/summary/detail-summary"),
+    import(
+      "../../../components/content/daftar-peserta-kabadan/peserta-pelatihan/daftar-peserta-pelatihan"
+    ),
   {
     loading: function loadingNow() {
       return <LoadingSkeleton />;
@@ -24,12 +26,12 @@ const DetailSummary = dynamic(
   }
 );
 
-export default function DetailSummaryPage(props) {
+export default function DaftarPesertaPage(props) {
   const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <DetailSummary token={session.token} />
+        <DaftarPeserta token={session.token} />
       </div>
     </>
   );
@@ -51,13 +53,13 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       await store.dispatch(
-        getStatusPendaftar(session.user.user.data.token, params.id)
+        getStatusPendaftar(session.user.user.data.token, query.id)
       );
       await store.dispatch(
-        getAkademiByPelatihan(session.user.user.data.token, params.id)
+        getAkademiByPelatihan(session.user.user.data.token, query.id)
       );
       await store.dispatch(
-        getPendaftaranPeserta(session.user.user.data.token, params.id)
+        getPendaftaranPeserta(session.user.user.data.token, query.id)
       );
 
       return {
