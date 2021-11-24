@@ -25,7 +25,6 @@ export default function ListPesertaID({ token }) {
   );
   const [currentUser, setCurrentUser] = useState([]);
 
-  console.log(participant, "ini participant");
   useEffect(() => {
     const data = participant?.data?.list?.filter((el) => el.user == query.name);
     setCurrentUser(data);

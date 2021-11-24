@@ -111,7 +111,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
         getDashboardPeserta(session?.user.user.data.user.token)
       );
       const status = data.pelatihan.pelatihan_selesi.status || "";
-      console.log(data);
       if (!status || status == "") {
         success = false;
       } else if (

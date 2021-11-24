@@ -28,7 +28,6 @@ export default function TTEP12({ token }) {
               setFileUpload(reader.result);
             }
           };
-          console.log(e.target.files[0], "ini target file");
           reader.readAsDataURL(e.target.files[0]);
           setFilePreview(e.target.files[0]);
           setFileName(e.target.files[0].name);

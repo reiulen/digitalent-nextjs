@@ -492,8 +492,8 @@ export default function EditSertifikat({ token }) {
       // console.log("masuk sin");
       // console.log(data);
     } catch (e) {
-      console.log(e);
-      console.log("masuk error");
+      // console.log(e);
+      // console.log("masuk error");
     }
   };
 
