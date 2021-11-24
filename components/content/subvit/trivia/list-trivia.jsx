@@ -466,11 +466,6 @@ const ListTrivia = ({ token }) => {
                           >
                             50
                           </option>
-                          {/* <option>5</option>
-                          <option>10</option>
-                          <option>30</option>
-                          <option>40</option>
-                          <option>50</option> */}
                         </select>
                       </div>
                       <div className="col-8 my-auto">

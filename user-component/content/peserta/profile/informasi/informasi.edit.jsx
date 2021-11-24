@@ -578,16 +578,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
           <Row className="mb-3">
             <Form.Group as={Col} md={6}>
               <Form.Label className={style.label}>Tempat Lahir</Form.Label>
-              {/* <Form.Control
-                className={style.formControl}
-                type="text"
-                placeholder="Masukan Tempat Lahir"
-                value={tempatLahir}
-                onChange={(e) => setTempatLahir(e.target.value)}
-                onBlur={() =>
-                  simpleValidator.current.showMessageFor("tempat lahir")
-                }
-              /> */}
+
               <Select
                 placeholder={
                   (dataPribadi && dataPribadi.tempat_lahir) === ""
