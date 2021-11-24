@@ -272,6 +272,7 @@ import {
   detailRolesReducer,
   updateRolesReducer,
   deleteRolesReducer,
+  allPermissionReducer,
 } from "./site-management/role.reducers";
 
 // ============== unit work ===============
@@ -471,6 +472,13 @@ import {
   allTagVideoContentReducer,
   playVideoContentReducer,
 } from "../reducers/beranda/video-content.reducer";
+
+// ========== faq ========
+
+import {
+  allFaqContentReducer,
+  kategoriBerandaFaqReducer,
+} from "../reducers/beranda/faq-content.reducers";
 
 //END BERANDA
 
@@ -723,6 +731,7 @@ const reducer = combineReducers({
   detailRoles: detailRolesReducer,
   updateRoles: updateRolesReducer,
   deleteRoles: deleteRolesReducer,
+  allPermission: allPermissionReducer,
   // ============ PELATIHAN =======
   allPrompt: allPromptReducer,
   // ============ Dashboatd =======
@@ -882,6 +891,10 @@ const reducer = combineReducers({
   kategoriVideoContent: kategoriVideoContentReducer,
   allTagVideoContent: allTagVideoContentReducer,
   playVideoContent: playVideoContentReducer,
+
+  // ========== faq ========
+  allFaqContent:allFaqContentReducer,
+  kategoriBerandaFaq:kategoriBerandaFaqReducer,
   //END BERANDA
 
   // ========== Riwayat Pelatihan ========

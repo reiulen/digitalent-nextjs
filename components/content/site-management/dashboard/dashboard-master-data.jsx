@@ -19,7 +19,7 @@ const DashboardMasterData = ({ session }) => {
               icon="/assets/icon/pin-light.svg"
               color="text-white"
               title="Master Zonasi"
-              link="/site-management"
+              link="/site-management/master-data/master-zonasi"
             ></CardDashboardSiteManagement>
           </div>
           <div className="col-6 col-md">
@@ -28,8 +28,8 @@ const DashboardMasterData = ({ session }) => {
               backgroundImage="/assets/icon/taieri-light.svg"
               icon="/assets/icon/clock-grey.svg"
               color="text-muted"
-              title="Master tuan Kerja"
-              link="/site-management"
+              title="Master Satuan Kerja"
+              link="/site-management/master-data/master-satuan-kerja-penyelenggara"
             ></CardDashboardSiteManagement>
           </div>
           <div className="col-6 col-md"></div>

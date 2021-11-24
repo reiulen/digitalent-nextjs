@@ -20,6 +20,13 @@ export default function CardTemplateOriginal({ data, session }) {
 
   useEffect(() => {
     if (data.status.includes("tidak")) return setLabel("danger");
+    if (data.status.includes("menunggu") || data.status.includes("seleksi"))
+      return setLabel("warning");
+    if (data.status == "survey belum tersedia") return setLabel("primary");
+    if (data.status == "LPJ belum tersedia") return setLabel("primary");
+    if (data.status.includes("tes substansi")) return setLabel("primary");
+    if (data.status.includes("seleksi administrasi"))
+      return setLabel("warning");
     if (data.status.includes("lulus")) return setLabel("success");
     if (data.status.includes("menunggu") || data.status.includes("seleksi"))
       return setLabel("warning");

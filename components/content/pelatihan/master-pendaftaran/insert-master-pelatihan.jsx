@@ -338,7 +338,6 @@ const AddMasterPelatihan = ({ token }) => {
           throw new Error(result.message);
         }
       } catch (error) {
-        console.log(error);
         setSuccess(2);
       }
     } else {
@@ -351,7 +350,6 @@ const AddMasterPelatihan = ({ token }) => {
       });
     }
   };
-  console.log(success);
   useEffect(() => {
     if (success === 1) {
       SweatAlert("Berhasil", "Berhasil tambah form pendaftaran", "success");

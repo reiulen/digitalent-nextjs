@@ -172,7 +172,7 @@ const Navigationbar = ({ session }) => {
             <div className="position-relative w-100">
               <FormControl
                 type="search"
-                placeholder="Search"
+                placeholder="Cari"
                 className="pl-10 rounded-full border-search py-6"
                 aria-label="Search"
                 style={{
@@ -308,7 +308,7 @@ const Navigationbar = ({ session }) => {
             <div className="position-relative w-100 d-none d-lg-block">
               <FormControl
                 type="search"
-                placeholder="Search"
+                placeholder="Cari"
                 className="pl-10 rounded-full border-search py-6"
                 aria-label="Search"
                 style={{

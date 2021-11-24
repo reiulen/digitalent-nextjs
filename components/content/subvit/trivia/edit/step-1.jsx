@@ -297,11 +297,6 @@ const StepOne = ({ token }) => {
                           </>
                         );
                       })}
-                    {/* <option value={1} selected>
-                      {" "}
-                      Google Cloud Computing{" "}
-                    </option>
-                    <option value={2}> Adobe UI/UX Designer </option> */}
                   </select>
                 </div>
               </div>

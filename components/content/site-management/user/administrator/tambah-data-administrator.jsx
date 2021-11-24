@@ -154,6 +154,7 @@ const TambahApi = ({ token }) => {
               name: name,
               email: email,
               password: password,
+              password_confirmation: confirmPassword,
               role: role,
               unit_work_ids: unitWork,
               type_access: typeAccess,
@@ -191,6 +192,7 @@ const TambahApi = ({ token }) => {
               name: name,
               email: email,
               password: password,
+              password_confirmation: confirmPassword,
               role: role,
               unit_work_id: unitWork,
               type_access: typeAccess,
@@ -266,7 +268,7 @@ const TambahApi = ({ token }) => {
                 <label>Email</label>
                 <input
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => setEmail(e.target.value.replace(/[^A-Za-z0-9 ]/g, ""))}
                   type="email"
                   className="form-control"
                   placeholder="Masukkan email"

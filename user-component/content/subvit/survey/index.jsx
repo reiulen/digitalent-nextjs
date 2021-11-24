@@ -155,10 +155,8 @@ const SubtansiUser = ({ token }) => {
   const handleMultiple = (item, index) => {
     setD(index);
     if (item.key.includes(localStorage.getItem(index + "a"))) {
-      // multi.splice(multi.indexOf(item.key), 1);
       localStorage.removeItem(index + "a", item.key);
     } else {
-      // multi.push(item.key);
       localStorage.setItem(index + "a", item.key);
     }
 

@@ -6,7 +6,7 @@ import moment from "moment";
 
 export default function RilisMedia({ berita }) {
   return (
-    <div className="rillirs-media py-15">
+    <div className="rillirs-media py-20">
       <h1 className="fw-600 text-center" style={{ color: "#1F1F1F" }}>
         Rilis Media & Informasi Terbaru
       </h1>
@@ -72,7 +72,7 @@ export default function RilisMedia({ berita }) {
           <Link href="/login">
             <a>
               <button className="btn btn-outline-primary-new font-weight-bolder rounded-pill py-3 px-12">
-                Lihat Selengkapnya &rarr;
+                Lihat Selengkapnya >
               </button>
             </a>
           </Link>

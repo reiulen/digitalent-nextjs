@@ -15,7 +15,7 @@ export default function Footer() {
     dispatch(getBerandaFooter());
   }, [dispatch]);
   return (
-    <div className="color-secondary-primary">
+    <div className="color-secondary-secondary">
       <Container fluid className="px-md-25">
         <Row className="w-100 px-0 mx-0 mb-0 py-5">
           <Col md={2} sm={12}>
@@ -34,7 +34,7 @@ export default function Footer() {
               />
             </div>
           </Col>
-          <Col md={7} sm={12}>
+          <Col md={8} sm={12}>
             <div className="h-100 d-flex align-items-center mt-md-2">
               <p className="fw-500 text-white">
                 {(footer && footer.logo_description) ||
@@ -42,15 +42,15 @@ export default function Footer() {
               </p>
             </div>
           </Col>
-          <Col md={3} sm={12} className="my-5">
+          <Col md={2} sm={12} className="my-5">
             <div className="h-100 w-100">
-              <div className="pl-md-10 d-flex border-left-md align-items-md-center justify-content-md-between  h-100 w-100">
+              <div className="pl-md-20 d-flex border-left-md align-items-md-center justify-content-md-end h-100 w-100">
                 {footer &&
                   footer.social_media &&
                   footer.social_media.length !== 0 &&
                   footer.social_media.map((row, i) => (
                     <a href={row.link_social_media} target="_blank">
-                      <div className="cursor-pointer mx-md-0 mx-2">
+                      <div className="cursor-pointer mx-md-0 px-2">
                         <Image
                           key={i}
                           src={
@@ -61,8 +61,8 @@ export default function Footer() {
                             "/assets/media/logo-default.png"
                           }
                           alt={row.name}
-                          width={20}
-                          height={20}
+                          width={25}
+                          height={25}
                           objectFit="cover"
                         />
                       </div>

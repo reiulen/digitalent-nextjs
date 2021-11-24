@@ -251,7 +251,7 @@ const TambahPage = ({ token }) => {
                         value={titlePage}
                         onChange={(e) => {
                           setTitlePage(
-                            e.target.value.replace(/[^a-zA-Z0-9]/g, "")
+                            e.target.value.replace(/[^a-zA-Z0-9 ]/g, "")
                           );
                         }}
                       />
@@ -385,7 +385,7 @@ const TambahPage = ({ token }) => {
                         value={titlePage}
                         onChange={(e) => {
                           setTitlePage(
-                            e.target.value.replace(/[^a-zA-Z0-9]/g, "")
+                            e.target.value.replace(/[^a-zA-Z0-9 ]/g, "")
                           );
                         }}
                       />
@@ -472,7 +472,7 @@ const TambahPage = ({ token }) => {
                         value={titlePage}
                         onChange={(e) => {
                           setTitlePage(
-                            e.target.value.replace(/[^a-zA-Z0-9]/g, "")
+                            e.target.value.replace(/[^a-zA-Z0-9 ]/g, "")
                           );
                         }}
                       />

@@ -21,7 +21,7 @@ export default function InfoVideo({ video }) {
           </div>
         </Col>
         <Col md={6} className="my-auto">
-          <div className="px-md-20">
+          <div className="pl-md-20">
             <h1 className="fw-600" style={{ color: "#1F1F1F" }}>
               Informasi Dalam Video Terkini
             </h1>
@@ -32,7 +32,7 @@ export default function InfoVideo({ video }) {
             <Link href="/video">
               <a>
                 <button className="btn btn-outline-primary-new font-weight-bolder rounded-pill py-3 px-12 mb-5">
-                  Lihat Selengkapnya &rarr;
+                  Lihat Selengkapnya >
                 </button>
               </a>
             </Link>
