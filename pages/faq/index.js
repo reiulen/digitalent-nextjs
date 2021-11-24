@@ -2,7 +2,8 @@ import { getSession } from "next-auth/client"
 import dynamic from "next/dynamic";
 import { wrapper } from "../../redux/store";
 
-import { getAllFaq } from "../../redux/actions/beranda/faq-content.actions"
+import { getAllFaq, getKategoriBerandaFaq } from "../../redux/actions/beranda/faq-content.actions"
+import { getDataPribadi } from "../../redux/actions/pelatihan/function.actions"
 
 const FaqPage = dynamic(
     () => import("../../user-component-new/content/home/faq/faq")
@@ -13,14 +14,23 @@ const Layout = dynamic(
 )
 
 export default function FaqDetail(props) {
+    // let session = null;
+    // if (props.session) {
+    //     session = props.session.user.user.data.Token
+    // }
+
     let session = null;
+
     if (props.session) {
-        session = props.session.user.user.data.Token
+        session = props.session.user.user.data.user;
     }
     return (
         <div>
-            <Layout title="FAQ" token={session}>
+            {/* <Layout title="FAQ" token={session}>
                 <FaqPage token={session} />
+            </Layout> */}
+            <Layout title="FAQ" session={session}>
+                <FaqPage session={session} />
             </Layout>
         </div>
     )
@@ -28,10 +38,17 @@ export default function FaqDetail(props) {
 
 export const getServerSideProps = wrapper.getServerSideProps(
     (store) =>
-        async ({ req }) => {
+        async ({ query, req }) => {
             const session = await getSession({ req })
 
-            await store.dispatch(getAllFaq());
+            let sessionToken = session?.user.user.data.user.token;
+
+            await store.dispatch(getDataPribadi(sessionToken));
+
+            await store.dispatch(getAllFaq(query.pinned));
+
+            await store.dispatch(getKategoriBerandaFaq());
+
             return {
                 props: {
                     session,

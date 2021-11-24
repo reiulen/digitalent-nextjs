@@ -7,7 +7,7 @@ import { Container } from "react-bootstrap"
 
 import styles from "../../../../user-component/components/template/Sidebar.module.css";
 
-import { getAllFaq } from "../../../../redux/actions/beranda/faq-content.actions";
+import { getAllFaq, getKategoriBerandaFaq } from "../../../../redux/actions/beranda/faq-content.actions";
 import { set } from "js-cookie";
 import PulseLoaderRender from "../../../../user-component-new/components/loader/PulseLoader";
 import SubHeaderComponent from "../../../../user-component/components/template/Subheader.component";
@@ -20,55 +20,65 @@ const FaqPage = () => {
         loading: loadingFaq,
         error,
         faq,
-    } = useSelector((state) => state.allFaq);
+    } = useSelector((state) => state.allFaqContent);
+    const { kategori } = useSelector((state) => state.kategoriBerandaFaq)
 
-    const [deskripsi, setDeskripsi] = useState(
-        faq ? faq?.faq[0]?.nama_kategori : ""
-    );
-    const [title, setTitle] = useState(faq?.faq[0]?.nama_kategori);
+    // const [deskripsi, setDeskripsi] = useState(
+    //     faq ? faq?.faq[0]?.nama_kategori : ""
+    // );
+    // const [title, setTitle] = useState(faq?.faq[0]?.nama_kategori);
     const [disableBtn, setDisableBtn] = useState(false);
     const [keyword, setKeyword] = useState("");
     const [disableBtnPlus, setDisableBtnPlus] = useState(null);
     const [active, setActive] = useState(false);
-    const [sidebar, setSidebar] = useState(
-        faq?.faq.map((item) => {
-            return item.nama_kategori;
-        })
-    );
+    // const [sidebar, setSidebar] = useState(
+    //     faq?.faq.map((item) => {
+    //         return item.nama_kategori;
+    //     })
+    // );
 
     const hover = "fas fa-arrow-right mr-3 text-primary"
     const nonHover = "fas fa-arrow-right mr-3"
 
-    const [content, setContent] = useState(
-        faq?.faq.map((row, i) => {
-            return {
-                ...row,
-                isShow: false,
-            };
-        })
-    );
+    // const [content, setContent] = useState(
+    //     faq?.faq.map((row, i) => {
+    //         return {
+    //             ...row,
+    //             isShow: false,
+    //         };
+    //     })
+    // );
 
     const handleFilterKeyword = (e) => {
         e.preventDefault();
         dispatch(getAllFaq(keyword));
     };
 
-    const sideBar = sidebar?.filter((item, pos) => {
-        return sidebar.indexOf(item) === pos;
-    });
-
+    // const sideBar = sidebar?.filter((item, pos) => {
+    //     return sidebar.indexOf(item) === pos;
+    // });
 
     return (
         <Container fluid className="px-md-30 px-10 py-10 bg-white">
             <SubHeaderComponent
                 data={[{ link: router.asPath, name: "Frequently Asked Questions" }]}
             />
-            <div>
-                <h1 style={{ fontWeight: "800" }}>
-                    Frequently Asked Questions
-                </h1>
-                <p className="my-5 text-muted">Ada yang bisa Kami Bantu ?</p>
+            <div className="row">
+                <div className="col-12 col-lg-4"> 
+                    <h1 style={{ fontWeight: "800" }}>
+                        Tanya Jawab
+                    </h1>
+                    <p className="my-5 text-muted">Ada yang bisa Kami Bantu ?</p>
+                </div>
+                <div className="col-12 col-lg-8">
+                    <div className="rounded-lg p-5 text-wrap" style={{backgroundColor:"#E6F2FF", fontSize:"14px"}}>
+                        <div className="font-weight-bold">
+                            "Budayakan membaca. Calon peserta/peserta harus membaca setiap informasi dengan lengkap dan teliti, agar terhindar dari kesalahan informasi dan mengurangi pertanyaan berulang yang tidak perlu."
+                        </div>
+                    </div>
+                </div>
             </div>
+            
             <div className="row">
                 <div className="col-lg-4">
                     <div className="position-relative overflow-hidden my-5">
@@ -98,7 +108,7 @@ const FaqPage = () => {
                         <h4 style={{ fontWeight: "600", marginTop: "50px" }}>
                             Kategori Pertanyaan
                         </h4>
-                        {sideBar.length > 0 ? (
+                        {/* {sideBar.length > 0 ? (
                             sideBar?.map((row, i) => {
                                 return (
                                     <div style={{ marginLeft: "-35px" }} key={i}>
@@ -128,13 +138,45 @@ const FaqPage = () => {
                                     Kategori FAQ Tidak Tersedia
                                 </h4>
                             </div>
-                        )}
+                        )} */}
+                        <div>
+                            <div className="d-flex flex-row">
+                                <div className="d-flex align-items-center my-5">
+                                    <td>Pertanyaan Populer</td>
+                                </div>
+                            </div>
+                        </div>
+
+                        {
+                            kategori && kategori.length !== 0 ?
+                                kategori.map ((el, i) => {
+                                    return (
+                                        <div
+                                            // style={{ marginLeft: "-35px" }} 
+                                            key={i}
+                                        >
+                                            <div className="d-flex flex-row">
+                                                <div className="d-flex align-items-center my-5">
+                                                    {/* <i className={hover}/> */}
+                                                    <td>{el.nama_kategori}</td>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )
+                                })
+                            :
+                                <div>
+                                    <h4 className="font-weight-bolder">
+                                        Kategori FAQ Tidak Tersedia
+                                    </h4>
+                                </div>
+                        }
                     </div>
                 </div>
 
                 <div className="col-lg-8">
                     <div className="ml-3">
-                        {faq?.faq.length > 0 && (
+                        {/* {faq?.faq.length > 0 && (
                             <h2
                                 style={{
                                     fontWeight: "800",
@@ -144,8 +186,8 @@ const FaqPage = () => {
                             >
                                 {title}
                             </h2>
-                        )}
-                        {loadingFaq ? (
+                        )} */}
+                        {/* {loadingFaq ? (
                             <div className="container-fluid">
                                 <div className="row">
                                     <PulseLoaderRender />
@@ -230,7 +272,7 @@ const FaqPage = () => {
                                         </h2>
                                     </div>
                                 )}
-                            </div>}
+                            </div>} */}
                     </div>
                 </div>
             </div>

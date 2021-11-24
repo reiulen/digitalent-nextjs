@@ -198,7 +198,7 @@ const DetailBerita = () => {
 
                             {/* Berita */}
                             <div className="border rounded-lg mb-5 mt-15">
-                                <div className="row my-5 mx-5 text-justify" style={{overflowX:"hidden"}}>
+                                <div className="row my-5 mx-5 text-justify">
                                     {
                                         resultText ?
                                             <div dangerouslySetInnerHTML={{__html: resultText}}></div>
