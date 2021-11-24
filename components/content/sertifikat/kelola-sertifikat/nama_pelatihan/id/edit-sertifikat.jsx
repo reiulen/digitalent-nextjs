@@ -1,5 +1,5 @@
 // #Next & React
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, Fragment } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 // #Page, Component & Library
@@ -1604,7 +1604,7 @@ export default function EditSertifikat({ token }) {
                                           </label>
                                         </div>
                                       ) : (
-                                        <>
+                                        <Fragment>
                                           <div
                                             style={{
                                               background: "#FFFFFF",
@@ -1657,7 +1657,7 @@ export default function EditSertifikat({ token }) {
                                               Buat Ulang Tanda Tangan
                                             </button>
                                           </div>
-                                        </>
+                                        </Fragment>
                                       )}
                                       {certificate_type == "2 lembar"
                                         ? simpleValidator.current.message(

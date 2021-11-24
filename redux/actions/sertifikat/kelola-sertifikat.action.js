@@ -238,7 +238,6 @@ export const updateSertifikat = (id, formData, token) => async (dispatch) => {
     };
 
     const { data } = await axios.post(link, formData, config);
-
     if (data) {
       dispatch({ type: UPDATE_SERTIFIKAT_SUCCESS, payload: data });
     }

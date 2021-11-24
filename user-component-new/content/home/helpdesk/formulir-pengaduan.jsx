@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { Container, Row, Col, InputGroup, Form, Button } from "react-bootstrap";
 import ReCAPTCHA from "react-google-recaptcha";
 import SimpleReactValidator from "simple-react-validator";
-
+import style from "./helpdesk.module.css";
 export default function FormPengaduan() {
   const router = useRouter();
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
@@ -34,20 +34,49 @@ export default function FormPengaduan() {
     }
   };
 
+  const [active, setActive] = useState(
+    router.asPath.includes("formulir-pengaduan")
+  );
+
+  const sidebar = ["live-chat", "formulir-pengaduan", "hubungi-kami"];
+  const [index, setIndex] = useState(null);
+
+  useEffect(() => {
+    const arr = router.asPath.split("/");
+    const current = arr[arr.length - 1];
+    setIndex(sidebar.indexOf(current));
+  }, [router]);
+
   return (
     <Container fluid className="px-md-30 px-10 py-10 bg-white">
-      <SubHeaderComponent data={[{ link: router.asPath, name: "Artikel" }]} />
+      <SubHeaderComponent data={[{ link: router.asPath, name: "Helpdesk" }]} />
       <Row>
         <Col md={4}>
-          <div className="d-flex align-items-center">
-            <i className="ri-arrow-right-line" /> Live Chat
-          </div>
-          <div className="d-flex align-items-center">
-            <i className="ri-arrow-right-line" />
+          <h1 style={{ fontSize: "40px", fontWeight: 700 }}>BANTUAN</h1>
+          <p className="fz-18 mb-18" style={{ color: "#6C6C6C" }}>
+            Ada yang bisa kami bantu?
+          </p>
+          {sidebar &&
+            sidebar.map((el, i) => (
+              <a
+                className={`d-flex align-items-center mb-8 text-capitalize ${
+                  i === index ? style.helpdesk_sidebar_active : ""
+                }`}
+              >
+                <i className="ri-arrow-right-line mr-4" />
+                {el.split("-").join(" ")}
+              </a>
+            ))}
+          <div
+            className={`d-flex align-items-center mb-8 ${
+              active ? style.helpdesk_sidebar_active : ""
+            }`}
+          >
+            <i className="ri-arrow-right-line mr-4" />
             Formulir Pengaduan
           </div>
           <div className="d-flex align-items-center">
-            <i className="ri-arrow-right-line" />
+            <i className="ri-arrow-right-line mr-4" />
             Hubungi Kami
           </div>
         </Col>
