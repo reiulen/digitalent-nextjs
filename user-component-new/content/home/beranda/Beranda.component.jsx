@@ -22,8 +22,6 @@ import CardPelatihanClose from "../../../components/global/CardPelatihanClose.co
 
 import ShareOverlay from "../../../components/global/ShareOverlay.component";
 
-import HomeWrapper from "../../../components/wrapper/Home.wrapper";
-
 const Beranda = ({ session }) => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -58,22 +56,22 @@ const Beranda = ({ session }) => {
     gap: "1rem",
     drag: "free",
     perPage: 4,
-    height: "200px",
+    height: "150px",
     type: "loop",
     breakpoints: {
       1262: {
-        height: "200px",
+        height: "150px",
       },
       1062: {
-        height: "200px",
+        height: "150px",
         perPage: 3,
       },
       833: {
-        height: "200px",
+        height: "150px",
         perPage: 2,
       },
       726: {
-        height: "200px",
+        height: "150px",
         perPage: 2,
       },
       629: {
@@ -281,12 +279,12 @@ const Beranda = ({ session }) => {
 
   return (
     <>
-      <section className="image-carousel-new mt-15">
+      <section className="image-carousel-new mt-10">
         <Carousel data={publikasi} />
       </section>
 
-      <Container fluid className="px-xl-30 px-lg-10 px-0">
-        <section className="tema-carousel-new carousel-secondarys mt-md-0 mt-10">
+      <Container fluid className="px-xl-30 px-lg-10 px-0 py-md-10 pt-3">
+        <section className="tema-carousel-new carousel-secondarys">
           {akademi && (
             <Splide options={optionsSplide} hasSliderWrapper>
               {akademi &&
@@ -298,10 +296,9 @@ const Beranda = ({ session }) => {
                       style={{ cursor: "pointer" }}
                     >
                       <div
-                        className={`card-1 ${
+                        className={`card-1 splide-beranda-new ${
                           activeTab !== i ? "bg-white" : "bg-beranda-primary"
                         }`}
-                        style={{ height: "80px" }}
                       >
                         <h1
                           className={`mb-0 mr-2 fw-700 ${
@@ -329,7 +326,7 @@ const Beranda = ({ session }) => {
       </Container>
 
       <section className="pelatihan-new">
-        <Container fluid className="px-xl-40 px-lg-10 px-10 mt-5">
+        <Container fluid className="px-xl-35 px-lg-10 px-10 mt-5">
           {loadingTema ? (
             <>
               <div className="container-fluid">
@@ -411,7 +408,7 @@ const Beranda = ({ session }) => {
                                           </div>
 
                                           {pelatihan[i].pelatihan[j].hover &&
-                                            row.status === "Open" && (
+                                            row.status === "Dibuka" && (
                                               <div className="whishlist align-self-end">
                                                 <Button
                                                   variant="light"
@@ -425,7 +422,7 @@ const Beranda = ({ session }) => {
                                                   ></i>
                                                 </Button>
                                                 <ShareOverlay
-                                                  url={`${process.env.PATH_URL}/detail/pelatihan/${row.id}`}
+                                                  url={`http://dts-dev.majapahit.id/detail/pelatihan/${row.id}`}
                                                   quote={row.name}
                                                 >
                                                   <Button
@@ -475,7 +472,7 @@ const Beranda = ({ session }) => {
                                           <div className="status align-self-center">
                                             <p
                                               className={`${
-                                                row.status === "Open"
+                                                row.status === "Dibuka"
                                                   ? "status-mitra-open-new"
                                                   : "status-mitra-close-new"
                                               } text-uppercase my-0`}
@@ -631,17 +628,22 @@ const Beranda = ({ session }) => {
                                                 }}
                                               ></i>
                                             </Button>
-                                            <Button
-                                              variant="light"
-                                              className={`float-right d-flex justify-content-center align-items-center mr-2 wishlist-card-new mr-5`}
+                                            <ShareOverlay
+                                              url={`http://dts-dev.majapahit.id/detail/pelatihan/${cardId}`}
+                                              quote={cardName}
                                             >
-                                              <i
-                                                className="ri-share-line p-0"
-                                                style={{
-                                                  color: "#6C6C6C",
-                                                }}
-                                              ></i>
-                                            </Button>
+                                              <Button
+                                                variant="light"
+                                                className={`float-right d-flex justify-content-center align-items-center mr-2 wishlist-card-new mr-5`}
+                                              >
+                                                <i
+                                                  className="ri-share-line p-0"
+                                                  style={{
+                                                    color: "#6C6C6C",
+                                                  }}
+                                                ></i>
+                                              </Button>
+                                            </ShareOverlay>
                                           </div>
 
                                           <div
@@ -775,22 +777,25 @@ const Beranda = ({ session }) => {
       </section>
 
       <section className="step-register-new mt-10 mb-20 ">
-        <div className="title-step-register text-center">
-          <h1>
-            Tahapan Pendaftaran <br /> Digital Talent Scholarship
-          </h1>
-          <div className="mt-md-20 mt-10">
-            <Image
-              src="/assets/media/image-step-register.png"
-              width={1200}
-              height={366}
-            />
+        <Container fluid className="px-xl-35 px-lg-10 px-10 mt-5">
+          <div className="title-step-register text-center">
+            <h1>
+              Tahapan Pendaftaran <br /> Digital Talent Scholarship
+            </h1>
+            <Col md={12}>
+              <div className="mt-md-20 mt-10 ">
+                <img
+                  src="/assets/media/image-step-register.png"
+                  style={{ width: "100%" }}
+                />
+              </div>
+            </Col>
           </div>
-        </div>
+        </Container>
       </section>
 
       <section className="rilis-media-new">
-        <Container fluid className="px-xl-40 px-lg-10 px-10 mt-5">
+        <Container fluid className="px-xl-37 px-lg-10 px-10 mt-5">
           <RilisMedia
             berita={
               publikasi && publikasi.berita && publikasi.berita.length !== 0
@@ -802,7 +807,7 @@ const Beranda = ({ session }) => {
       </section>
 
       <section className="galeri-update-new">
-        <Container fluid className="px-xl-40 px-lg-10 px-10 mt-5">
+        <Container fluid className="px-xl-37 px-lg-10 px-10 mt-5">
           <GaleriUpdate
             gambar={
               publikasi && publikasi.gallery && publikasi.gallery.length !== 0
@@ -814,7 +819,7 @@ const Beranda = ({ session }) => {
       </section>
 
       <section className="info-vidio-new">
-        <Container fluid className="px-xl-40 px-lg-10 px-10 mt-5">
+        <Container fluid className="px-xl-37 px-lg-10 px-10 mt-5">
           <InfoVideo
             video={publikasi && publikasi.video ? publikasi.video : null}
           />
@@ -822,7 +827,7 @@ const Beranda = ({ session }) => {
       </section>
 
       <section className="come-join-new">
-        <Container fluid className="px-xl-40 px-lg-10 px-10 mt-5">
+        <Container fluid className="px-xl-37 px-lg-10 px-10 mt-5">
           <ComeJoin />
         </Container>
       </section>

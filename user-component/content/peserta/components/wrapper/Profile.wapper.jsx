@@ -180,7 +180,7 @@ const ProfileWrapper = ({
                     {dataPribadi ? dataPribadi.name || "-" : "-"}{" "}
                     {/* KEBUTUHAN SPRINT DEPAN */}
                     {
-                      (dataPribadi.handphone_verifikasi,
+                      (dataPribadi?.handphone_verifikasi,
                       dataPribadi.email_verifikasi === true && (
                         <span>
                           <Button className={style.btnVerification}>
