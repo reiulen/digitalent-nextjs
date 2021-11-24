@@ -67,12 +67,12 @@ const ListDaftarPelatihan = ({ token }) => {
 
   const optionsStatusPelatihan = [
     { value: "review substansi", label: "Review Substansi" },
-    { value: "menunggu", label: "Menunggu" },
+    { value: "menunggu pendaftaran", label: "Menunggu Pendaftaran" },
     { value: "pendaftaran", label: "Pendaftaran" },
-    { value: "seleksi administrasi", label: "Seleksi Administrasi" },
-    { value: "seleksi substansi", label: "Seleksi Substansi" },
+    { value: "seleksi", label: "Seleksi" },
     { value: "pelatihan", label: "Pelatihan" },
     { value: "selesai", label: "Selesai" },
+    { value: "dibatalkan", label: "Dibatalkan" },
   ];
 
   const optionsStatusSubstansi = [
