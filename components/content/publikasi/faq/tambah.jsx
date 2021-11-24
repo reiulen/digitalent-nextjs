@@ -29,6 +29,7 @@ const TambahFaq = ({ token, id }) => {
     const [editorLoaded, setEditorLoaded] = useState(false);
     const { CKEditor, ClassicEditor, Base64UploadAdapter } =
         editorRef.current || {};
+
     const SwitchButton = dynamic(importSwitch, {
         ssr: false
     })

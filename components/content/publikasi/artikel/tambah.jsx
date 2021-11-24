@@ -30,8 +30,6 @@ const TambahArtikel = ({ token, id }) => {
 
   const importSwitch = () => import("bootstrap-switch-button-react");
   const [editorLoaded, setEditorLoaded] = useState(false);
-  // const { CKEditor, ClassicEditor, Base64UploadAdapter } =
-  //   editorRef.current || {};
   const SwitchButton = dynamic(importSwitch, {
     ssr: false,
   });
@@ -48,22 +46,28 @@ const TambahArtikel = ({ token, id }) => {
   } = useSelector((state) => state.allKategori);
 
   const { quill, quillRef } = useQuill();
+  const limit = 12000
 
   useEffect(() => {
 
-    // editorRef.current = {
-    //   CKEditor: require("@ckeditor/ckeditor5-react").CKEditor, //Added .CKEditor
-    //   ClassicEditor: require("@ckeditor/ckeditor5-build-classic"),
-    // };
-
     if (quill) {
       quill.on('text-change', (delta, oldDelta, source) => {
-        // console.log('Text change!');
-        // console.log(quill.getText()); // Get text only
-        // console.log(quill.getContents()); // Get delta contents
         setIsiArtikel(quill.root.innerHTML); // Get innerHTML using quill
-        // console.log(quillRef.current.firstChild.innerHTML); // Get innerHTML using quillRef
+
+        if (quill.root.innerText.length <= limit) {
+          return;
+        }
+        const { ops } = delta;
+        let updatedOps;
+        if (ops.length === 1) {
+          updatedOps = [{ delete: ops[0].insert.length }];
+        } else {
+          updatedOps = [ops[0], { delete: ops[1].insert.length }];
+        }
+        quill.updateContents({ ops: updatedOps });
       });
+
+
     }
 
     setEditorLoaded(true);
@@ -202,7 +206,6 @@ const TambahArtikel = ({ token, id }) => {
         })
           .then((result) => {
             if (result.isConfirmed) {
-              // console.log(data);
               dispatch(newArtikel(data, token));
             }
           });
@@ -234,7 +237,6 @@ const TambahArtikel = ({ token, id }) => {
         })
           .then((result) => {
             if (result.isConfirmed) {
-              // console.log(data);
               dispatch(newArtikel(data, token));
             }
           });
@@ -327,31 +329,11 @@ const TambahArtikel = ({ token, id }) => {
                   <div className={`${styles.deskripsiTambah} col-sm-12`}>
                     <div className="ckeditor">
                       {editorLoaded ? (
-                        // <CKEditor
-                        //   editor={ClassicEditor}
-                        //   data={isi_artikel}
-                        //   onChange={(event, editor) => {
-                        //     const data = editor.getData();
-                        //     setIsiArtikel(data);
-                        //   }}
-                        //   onBlur={() =>
-                        //     simpleValidator.current.showMessageFor(
-                        //       "isi_artikel"
-                        //     )
-                        //   }
-                        //   config={{
-                        //     placeholder: "Tulis Deskripsi",
-                        //   }}
-                        // />
-
-                        <div style={{ width: "600px", height: "300px" }}>
-                          <div 
-                            ref={quillRef} 
-                            onChange={(event) => {
-                                  // const data = editor.getData();
-                                  // setIsiArtikel(data);
-                          }}/>
-                      </div>
+                        <div style={{ width: "100%", height: "300px" }}>
+                          <div
+                            ref={quillRef}
+                          />
+                        </div>
 
                       ) : (
                         <p>Tunggu Sebentar</p>
@@ -384,7 +366,7 @@ const TambahArtikel = ({ token, id }) => {
                         alt="image"
                         width={160}
                         height={160}
-                        objectFit="fill"
+                        objectFit="cover"
                       />
                     </figure>
                     <div className="position-relative">
@@ -539,7 +521,7 @@ const TambahArtikel = ({ token, id }) => {
                       // onBlur={() => simpleValidator.current.showMessageFor('tag')}
                       seprators={["Enter", "Tab"]}
                     />
-                    
+
                     {
                       disableTag === true ?
                         <p className="text-danger">

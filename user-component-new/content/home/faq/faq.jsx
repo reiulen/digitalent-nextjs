@@ -214,8 +214,8 @@ const FaqPage = () => {
                                                             }
                                                             key={i}
                                                         >
-                                                            <div className="accordion-body card card-body border-0 mb-5 text-justify">
-                                                                {row.jawaban}
+                                                            <div className="accordion-body card card-body border-0 mb-5 text-justify" dangerouslySetInnerHTML={{ __html: row.jawaban }}>
+                                                                {/* {row.jawaban} */}
                                                             </div>
                                                         </div>
                                                     </div>

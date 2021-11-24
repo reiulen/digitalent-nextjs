@@ -4,6 +4,14 @@
     right: 10px;
 }
 
+@media only screen and (max-width: 1024px) {
+    /* MENU GENERAL */
+    
+    .btnTambahContent{
+        font-size: 11px;
+    }
+}
+
 @media only screen and (max-width: 576px) {
     .deleteMenu{
         margin-top: 100px;
@@ -20,5 +28,11 @@
     }
     .notes{
         font-size: 10px;
+    }
+    
+    /* MENU GENERAL */
+    
+    .btnTambahContent{
+        font-size: 9.3px;
     }
 }

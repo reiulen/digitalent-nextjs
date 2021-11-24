@@ -79,6 +79,10 @@
   width: auto;
 }
 
+.modalsPrevImage{
+  height: 400px;
+}
+
 .tagModal {
   font-size: 10px;
 }
