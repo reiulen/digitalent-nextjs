@@ -45,8 +45,8 @@ export const allUnitWorkReducer = (state = initialState, action) => {
         ...state,
         status: statuslist.process,
       };
-
-    case UNIT_WORK_SUCCESS:
+      
+      case UNIT_WORK_SUCCESS:
       return {
         ...state,
         status: statuslist.success,

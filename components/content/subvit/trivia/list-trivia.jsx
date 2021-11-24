@@ -163,8 +163,6 @@ const ListTrivia = ({ token }) => {
     }
   };
 
-  console.log(trivia);
-
   return (
     <PageWrapper>
       {error ? (
@@ -303,7 +301,6 @@ const ListTrivia = ({ token }) => {
                       ) : (
                         trivia &&
                         trivia.list_trivia.map((row, i) => {
-                          console.log(row);
                           const paginate = i + 1 * (page * limit);
                           const dividers = limit - 1;
                           return (

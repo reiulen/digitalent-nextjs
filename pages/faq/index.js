@@ -10,7 +10,8 @@ const FaqPage = dynamic(
 )
 
 const Layout = dynamic(
-    () => import("../../user-component-new/components/template/Layout.component")
+    () => import("../../user-component-new/components/template/Layout.component"),
+    { ssr: false }
 )
 
 export default function FaqDetail(props) {
@@ -24,11 +25,9 @@ export default function FaqDetail(props) {
     if (props.session) {
         session = props.session.user.user.data.user;
     }
+    
     return (
         <div>
-            {/* <Layout title="FAQ" token={session}>
-                <FaqPage token={session} />
-            </Layout> */}
             <Layout title="FAQ" session={session}>
                 <FaqPage session={session} />
             </Layout>

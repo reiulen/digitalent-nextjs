@@ -74,7 +74,7 @@ export const deleteUnitWork = (id, token) => async (dispatch) => {
 
     const { data } = await axios.delete(
       process.env.END_POINT_API_SITE_MANAGEMENT +
-        `api/setting-page/delete/${id}`,
+      `api/setting-page/delete/${id}`,
       config
     );
 
