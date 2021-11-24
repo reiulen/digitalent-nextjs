@@ -244,12 +244,12 @@ const Berita = () => {
                             windowDimensions && windowDimensions.width && windowDimensions.width <= 770 ?
                                 "col-12 pl-0 ml-4 mt-10 mb-5"
                             :
-                                "col-lg-8 col-12 pl-0 ml-4 mt-10 mb-5 pr-10"
+                                "col-lg-8 col-12 pl-0 ml-0 mt-10 mb-5 pr-10"
                         }
                     >
                         <Splide
                             options={{
-                                arrows: false,
+                                arrows: true,
                                 pagination: false,
                                 gap: "1rem",
                                 drag: "free",
@@ -260,12 +260,13 @@ const Berita = () => {
                                       },
                                 }
                             }}
+                            className="px-20"
                         >
                             {
                                 kategoriBerita === "" ?
                                     <SplideSlide>
                                         <div 
-                                            className="d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-3 mr-7 my-5" 
+                                            className="d-flex align-items-center justify-content-center rounded-pill bg-primary-dashboard py-1 px-3 mr-5 my-5" 
                                             style={{ cursor: "pointer", height:"40px" }}
                                             onClick={() => handleFilterKategori("")}
                                         >
@@ -277,7 +278,7 @@ const Berita = () => {
                                 :
                                     <SplideSlide>
                                         <div 
-                                            className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-7 my-5" 
+                                            className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-5 my-5" 
                                             style={{ cursor: "pointer", height:"40px" }}
                                             onClick={() => handleFilterKategori("")}
                                         >
@@ -295,7 +296,7 @@ const Berita = () => {
                                             kategoriBerita == el.nama_kategori ?
                                                 <SplideSlide>
                                                     <div 
-                                                        className="d-flex align-items-center justify-content-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-7 my-5" 
+                                                        className="d-flex align-items-center justify-content-center border rounded-pill bg-primary-dashboard py-1 px-3 mr-5 my-5" 
                                                         style={{ cursor: "pointer", height:"40px" }}
                                                         onClick={() => handleFilterKategori(el.nama_kategori)}
                                                         key={i}
@@ -309,7 +310,7 @@ const Berita = () => {
                                             :
                                                 <SplideSlide>
                                                     <div 
-                                                        className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-7 my-5" 
+                                                        className="d-flex align-items-center justify-content-center border rounded-pill bg-white py-1 px-3 mr-5 my-5" 
                                                         style={{ cursor: "pointer", height:"40px" }}
                                                         onClick={() => handleFilterKategori(el.nama_kategori)}
                                                         key={i}

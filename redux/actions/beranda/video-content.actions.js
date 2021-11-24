@@ -1,22 +1,11 @@
-// import {
-//     VIDEO_REQUEST,
-//     VIDEO_SUCCESS,
-//     VIDEO_FAIL,
-//     TAG_REQUEST,
-//     TAG_SUCCESS,
-//     TAG_FAIL,
-//     PLAY_REQUEST,
-//     PLAY_SUCCESS,
-//     PLAY_FAIL,
-//     KATEGORI_VIDEO_CONTENT_REQUEST,
-//     KATEGORI_VIDEO_CONTENT_SUCCESS,
-//     KATEGORI_VIDEO_CONTENT_FAIL
-// } from "../../types/publikasi/video.type"
-
 import {
     BERANDA_VIDEO_REQUEST,
     BERANDA_VIDEO_SUCCESS,
     BERANDA_VIDEO_FAIL,
+
+    DETAIL_BERANDA_VIDEO_REQUEST,
+    DETAIL_BERANDA_VIDEO_SUCCESS,
+    DETAIL_BERANDA_VIDEO_FAIL,
 
     KATEGORI_BERANDA_VIDEO_REQUEST,
     KATEGORI_BERANDA_VIDEO_SUCCESS,
@@ -73,6 +62,27 @@ export const getAllVideoContent = (
     }
 }
 
+export const getDetailBerandaVideo = (id) => async dispatch => {
+    try {
+        // dispatch({ type: DETAIL_BERANDA_VIDEO_REQUEST })
+
+        let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/home/video/${id}`
+
+        const { data } = await axios.get(link)
+
+        dispatch ({
+            type: DETAIL_BERANDA_VIDEO_SUCCESS,
+            payload: data.data
+        })
+        
+    } catch (error) {
+        dispatch ({
+            type: DETAIL_BERANDA_VIDEO_FAIL,
+            payload: error.response.data.message
+        })
+    }
+}
+
 
 export const getKategoriVideoContent = () => async (dispatch) => {
     try {
@@ -124,7 +134,7 @@ export const playVideoContent = (videoData) => async (dispatch) => {
 
         let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/video/play/${videoData.id}`
        
-        const { data } = await axios.get(link, videoData)
+        const { data } = await axios.post(link, videoData)
 
         dispatch({
             type: PLAY_BERANDA_VIDEO_SUCCESS,
@@ -138,3 +148,10 @@ export const playVideoContent = (videoData) => async (dispatch) => {
         })
     }
 }
+
+// Clear Error
+export const clearErrors = () => async dispatch => {
+    dispatch({
+      type: CLEAR_ERRORS,
+    });
+};

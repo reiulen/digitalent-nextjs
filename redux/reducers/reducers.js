@@ -70,13 +70,6 @@ import {
   updateSettingPublikasiReducer,
 } from "./publikasi/setting.reducers";
 
-// import {
-//   allVideoContentReducer,
-//   allTagReducer,
-//   playVideoContentReducer,
-//   kategoriVideoContentReducer,
-// } from "./beranda/video-content.reducer";
-
 import { allDashboardPublikasiReducer } from "./publikasi/dashboard-publikasi.reducers";
 
 // Subvit
@@ -469,6 +462,7 @@ import {
 // ========== video ========
 import {
   allVideoContentReducer,
+  detailBerandaVideoReducer,
   kategoriVideoContentReducer,
   allTagVideoContentReducer,
   playVideoContentReducer,
@@ -890,6 +884,7 @@ const reducer = combineReducers({
 
   // ========== video ========
   allVideoContent: allVideoContentReducer,
+  detailBerandaVideo: detailBerandaVideoReducer,
   kategoriVideoContent: kategoriVideoContentReducer,
   allTagVideoContent: allTagVideoContentReducer,
   playVideoContent: playVideoContentReducer,
