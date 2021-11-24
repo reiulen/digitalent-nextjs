@@ -47,17 +47,18 @@ export default function NamaPelatihan({ token }) {
 
   const resetValueSort = (e) => {
     e.preventDefault();
-    setAcademy(null);
-    setTemaPelatihan(null);
-    // temaRef.select.clearValue();
-    // selectRefAkademi.select.clearValue();
+    temaRef.select.clearValue();
+    selectRefAkademi.select.clearValue();
     setDisable(true);
     dispatch({ type: RESET_VALUE_FILTER });
   };
 
   useEffect(() => {
+    // console.log(themeOptions, "ini theme options");
+    // di tema nya di kasih academy id
+    // biar gw kalo nge filter itu berdasarkan academy id yang ada di options tema nya
     const filteredTheme = themeOptions.filter(
-      (items) => items.id == academy?.id
+      (items) => items.id == academy?.value
     );
     const data = filteredTheme.map((el) => {
       return { ...el, value: el.name, label: el.name };
@@ -71,15 +72,10 @@ export default function NamaPelatihan({ token }) {
   };
 
   const handleSelectAcademy = (e) => {
-    setAcademy(e.label);
-    setTemaPelatihan(null);
+    setAcademy(e);
     setDisable(false);
-    // temaRef.select.clearValue();
+    temaRef.select.clearValue();
   };
-
-  useEffect(() => {
-    console.log("ini academy", academy);
-  }, [academy]);
 
   const handleFilter = (e) => {
     e.preventDefault();
@@ -91,10 +87,10 @@ export default function NamaPelatihan({ token }) {
       );
     } else {
       if (academy) {
-        dispatch(setValueAcademy(academy.value));
+        dispatch(setValueAcademy(academy.label));
       }
       if (temaPelatihan) {
-        dispatch(setValueTheme(temaPelatihan.value));
+        dispatch(setValueTheme(temaPelatihan.label));
       }
     }
   };
@@ -243,7 +239,7 @@ export default function NamaPelatihan({ token }) {
                                   ref={(ref) => (selectRefAkademi = ref)}
                                   className="basic-single"
                                   classNamePrefix="select"
-                                  placeholder={(academy && academy) || "Semua"}
+                                  placeholder="Semua"
                                   isDisabled={false}
                                   isLoading={false}
                                   isClearable={false}
@@ -253,7 +249,6 @@ export default function NamaPelatihan({ token }) {
                                   onChange={(e) => {
                                     handleSelectAcademy(e);
                                   }}
-                                  value={academy}
                                   options={academyOptions}
                                 />
                               </div>
@@ -274,8 +269,7 @@ export default function NamaPelatihan({ token }) {
                                   isRtl={false}
                                   isSearchable={true}
                                   name="color"
-                                  onChange={(e) => setTemaPelatihan(e?.label)}
-                                  value={temaPelatihan}
+                                  onChange={(e) => setTemaPelatihan(e)}
                                   options={themeOptions}
                                 />
                               </div>

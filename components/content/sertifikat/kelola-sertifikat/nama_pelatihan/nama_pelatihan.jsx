@@ -32,7 +32,7 @@ export default function NamaPelatihanID({ token }) {
   const [status, setStatus] = useState(null);
 
   let { page = 1 } = router.query;
-  console.log(certificates);
+
   const handleLimit = (val) => {
     setLimit(val);
     router.push(
