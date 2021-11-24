@@ -21,9 +21,11 @@ import {
   SET_PAGE,
   SEARCH_COORPORATION,
   CLEAR_ERRORS,
+  PERMISSION_BY_PARENT,
 } from "../../types/site-management/role.type";
 
 import axios from "axios";
+import Swal from "sweetalert2";
 
 export const getAllRoles = (token) => async (dispatch, getState) => {
   try {
@@ -105,6 +107,9 @@ export const postRoles = (sendData, token) => {
         type: POST_ROLES_SUCCESS,
         payload: data,
       });
+      Swal.fire("Berhasil", "Data berhasil tersimpan", "success").then(() => {
+        router.push("/site-management/role");
+      });
     } catch (error) {
       dispatch({
         type: POST_ROLES_FAIL,
@@ -137,6 +142,27 @@ export const getDetailRoles = (id, token) => async (dispatch) => {
     dispatch({
       type: DETAIL_ROLES_FAIL,
     });
+  }
+};
+
+export const getAllPermission = (token) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    
+    let link =
+    process.env.END_POINT_API_SITE_MANAGEMENT + `api/permission/parent`;
+    
+    const { data } = await axios.get(link, config);
+    
+    dispatch({
+      type: PERMISSION_BY_PARENT,
+      payload: data,
+    });
+  } catch (error) {
   }
 };
 

@@ -244,7 +244,6 @@ export const getDetailAdminSite = (id, token) => async (dispatch) => {
       process.env.END_POINT_API_SITE_MANAGEMENT + `api/user/detail/${id}`;
 
     const { data } = await axios.get(link, config);
-    console.log("data terhasilll", data);
 
     dispatch({
       type: DETAIL_ADMIN_SITE_SUCCESS,

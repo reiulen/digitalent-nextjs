@@ -150,7 +150,7 @@ const PilihTemplate = ({ token }) => {
                     </div>
                     <div className="row d-flex">
                       <div
-                        className="container text-center mb-4 col-12 col-md-5 col-xl-5  mr-10 m-0"
+                        className="container text-center mb-4 col-12 col-md-6 col-xl-5 m-0"
                         style={{
                           backgroundColor: "#F2F7FC",
                           border: "dashed #ADB5BD",

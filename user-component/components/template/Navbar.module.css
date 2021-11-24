@@ -17,3 +17,25 @@
     width: 100%;
   }
 }
+
+.navbar_btnPrimary {
+  background-color: white;
+  border: 1px solid #007cff;
+  /* background-color: black; */
+  color: #007cff;
+  width: 100%;
+}
+
+.navbar_btnPrimary i {
+  color: #007cff !important;
+}
+
+.navbar_btnPrimary:hover i {
+  color: white !important;
+}
+
+.navbar_btnPrimary:hover {
+  background-color: #007cff;
+  color: white;
+  width: 100%;
+}

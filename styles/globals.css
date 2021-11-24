@@ -324,9 +324,27 @@ a {
   padding: 0 5px;
 }
 
+.splide-beranda-new {
+  height: 64px;
+}
+
 .slick-list button .slick-arrow .slick-next {
   display: none !important;
 }
+
+.slick-dots li.slick-active .dot {
+  background: #007cff !important;
+  width: 16px !important;
+}
+
+.slick-dots li.slick-active {
+  margin-right: 2px !important;
+}
+
+.slick-dots li {
+  margin-right: 0px !important;
+}
+
 @media screen and (max-width: 576px) {
   .responsive-columns {
     justify-content: center !important;
@@ -334,6 +352,10 @@ a {
 }
 
 @media screen and (min-width: 600px) {
+  .splide-beranda-new {
+    height: 70px;
+  }
+
   .img-carousel {
     border-radius: 16px;
   }
