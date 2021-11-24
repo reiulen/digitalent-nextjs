@@ -29,20 +29,22 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
 
-  const { data: dataAsalSekolah } = useSelector(state => state.getAsalSekolah);
+  const { data: dataAsalSekolah } = useSelector(
+    (state) => state.getAsalSekolah
+  );
 
   const { error: errorPendidikan, data: dataPendidikan } = useSelector(
-    state => state.drowpdownPendidikan
+    (state) => state.drowpdownPendidikan
   );
   const { error: errorPendidikanData, pendidikan } = useSelector(
-    state => state.dataPendidikan
+    (state) => state.dataPendidikan
   );
 
   const {
     error: errorUpdateData,
     loading,
     success,
-  } = useSelector(state => state.updatePendidikan);
+  } = useSelector((state) => state.updatePendidikan);
 
   const [jengjangPendidikan, setJenjangPendidikan] = useState(
     (pendidikan && {
@@ -116,7 +118,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
     asalSekolah,
   ]);
 
-  const searchAsal = word => {
+  const searchAsal = (word) => {
     let array = [];
     const searchData = getAsalSekolah;
     searchData.filter((data, index) => {
@@ -127,7 +129,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
     setDataSearch(array);
   };
 
-  const onChangeIjazah = e => {
+  const onChangeIjazah = (e) => {
     const type = ["image/jpeg", "image/jpg", "application/pdf"];
     if (e.target.files[0]) {
       if (type.includes(e.target.files[0].type)) {
@@ -156,7 +158,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
     }
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     let data = {};
     if (simpleValidator.current.allValid()) {
@@ -238,7 +240,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
     }
     const target = document.getElementById("formGridIpk");
     if (target) {
-      target.onkeydown = e => {
+      target.onkeydown = (e) => {
         if (e.code == "Minus") {
           return false;
         }
@@ -270,7 +272,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 }
                 options={optionsJenjangPendidikan}
                 defaultValue={jengjangPendidikan}
-                onChange={e =>
+                onChange={(e) =>
                   setJenjangPendidikan({ label: e.label, value: e.value })
                 }
                 onBlur={() =>
@@ -287,9 +289,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
               }
             )}
           </Form.Group>
-
           {jengjangPendidikan.value === 19 && <div className=""></div>}
-
           {jengjangPendidikan.label === "SMA/Sederajat" && (
             <Form.Group className="mb-3" controlId="formGridAdress1">
               <Form.Label>Asal Sekolah / Perguruan Tinggi</Form.Label>
@@ -299,7 +299,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   type="text"
                   className="form-control"
                   value={asalSekolah}
-                  onChange={e => {
+                  onChange={(e) => {
                     setAsalSekolah(e.target.value);
                   }}
                 />
@@ -310,20 +310,6 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                         return <option value={item.label} key={index} />;
                       })}
                 </datalist>
-                {/* <Select
-                  placeholder={
-                    (pendidikan && pendidikan.asal_pendidikan) ||
-                    "Silahkan Pilih Asal Sekolah"
-                  }
-                  options={getAsalSekolah}
-                  defaultValue={asalSekolah}
-                  onChange={(e) => setAsalSekolah({ label: e.label, value: e.value })}
-                  onBlur={() =>
-                    simpleValidator.current.showMessageFor(
-                      "asal ( sekolah/ pt )"
-                    )
-                  }
-                /> */}
               </div>
               {simpleValidator.current.message(
                 "asal sekolah",
@@ -333,29 +319,8 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   className: "text-danger",
                 }
               )}
-
-              {/* <input
-                type="text"
-                className="form-control"
-                value={asalSekolah}
-                onChange={(e) => {
-                  setAsalSekolah(e.target.value);
-                  searchAsal(e.target.value);
-                }}
-                list="data"
-              />
-              <datalist id="data">
-                {dataSearch.map((item, index) => {
-                  return (
-                    <option value={item.label} key={index}>
-                      {item.label}
-                    </option>
-                  );
-                })}
-              </datalist> */}
             </Form.Group>
           )}
-
           {jengjangPendidikan.label === "D3" && (
             <Row>
               <Form.Group
@@ -371,7 +336,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     type="text"
                     className="form-control"
                     value={asalSekolah}
-                    onChange={e => {
+                    onChange={(e) => {
                       setAsalSekolah(e.target.value);
                     }}
                   />
@@ -382,20 +347,6 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                           return <option value={item.label} key={index} />;
                         })}
                   </datalist>
-                  {/* <Select
-                  placeholder={
-                    (pendidikan && pendidikan.asal_pendidikan) ||
-                    "Silahkan Pilih Asal Sekolah"
-                  }
-                  options={getAsalSekolah}
-                  defaultValue={asalSekolah}
-                  onChange={(e) => setAsalSekolah({ label: e.label, value: e.value })}
-                  onBlur={() =>
-                    simpleValidator.current.showMessageFor(
-                      "asal ( sekolah/ pt )"
-                    )
-                  }
-                /> */}
                 </div>
                 {simpleValidator.current.message(
                   "asal sekolah",
@@ -405,26 +356,6 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     className: "text-danger",
                   }
                 )}
-
-                {/* <input
-                type="text"
-                className="form-control"
-                value={asalSekolah}
-                onChange={(e) => {
-                  setAsalSekolah(e.target.value);
-                  searchAsal(e.target.value);
-                }}
-                list="data"
-              />
-              <datalist id="data">
-                {dataSearch.map((item, index) => {
-                  return (
-                    <option value={item.label} key={index}>
-                      {item.label}
-                    </option>
-                  );
-                })}
-              </datalist> */}
               </Form.Group>
               <Form.Group
                 as={Col}
@@ -436,7 +367,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 <Form.Control
                   placeholder="Silahkan Masukan Program Studi"
                   value={programStudi}
-                  onChange={e => setProgramStudi(e.target.value)}
+                  onChange={(e) => setProgramStudi(e.target.value)}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("program studi")
                   }
@@ -452,7 +383,6 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
               </Form.Group>
             </Row>
           )}
-
           {jengjangPendidikan.label === "S1" && (
             <Row>
               <Form.Group
@@ -468,7 +398,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     type="text"
                     className="form-control"
                     value={asalSekolah}
-                    onChange={e => {
+                    onChange={(e) => {
                       setAsalSekolah(e.target.value);
                     }}
                   />
@@ -479,20 +409,6 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                           return <option value={item.label} key={index} />;
                         })}
                   </datalist>
-                  {/* <Select
-                  placeholder={
-                    (pendidikan && pendidikan.asal_pendidikan) ||
-                    "Silahkan Pilih Asal Sekolah"
-                  }
-                  options={getAsalSekolah}
-                  defaultValue={asalSekolah}
-                  onChange={(e) => setAsalSekolah({ label: e.label, value: e.value })}
-                  onBlur={() =>
-                    simpleValidator.current.showMessageFor(
-                      "asal ( sekolah/ pt )"
-                    )
-                  }
-                /> */}
                 </div>
                 {simpleValidator.current.message(
                   "asal sekolah",
@@ -502,26 +418,6 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     className: "text-danger",
                   }
                 )}
-
-                {/* <input
-                type="text"
-                className="form-control"
-                value={asalSekolah}
-                onChange={(e) => {
-                  setAsalSekolah(e.target.value);
-                  searchAsal(e.target.value);
-                }}
-                list="data"
-              />
-              <datalist id="data">
-                {dataSearch.map((item, index) => {
-                  return (
-                    <option value={item.label} key={index}>
-                      {item.label}
-                    </option>
-                  );
-                })}
-              </datalist> */}
               </Form.Group>
               <Form.Group
                 as={Col}
@@ -533,7 +429,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 <Form.Control
                   placeholder="Silahkan Masukan Program Studi"
                   value={programStudi}
-                  onChange={e => setProgramStudi(e.target.value)}
+                  onChange={(e) => setProgramStudi(e.target.value)}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("program studi")
                   }
@@ -564,7 +460,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     type="text"
                     className="form-control"
                     value={asalSekolah}
-                    onChange={e => {
+                    onChange={(e) => {
                       setAsalSekolah(e.target.value);
                     }}
                   />
@@ -575,20 +471,6 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                           return <option value={item.label} key={index} />;
                         })}
                   </datalist>
-                  {/* <Select
-                  placeholder={
-                    (pendidikan && pendidikan.asal_pendidikan) ||
-                    "Silahkan Pilih Asal Sekolah"
-                  }
-                  options={getAsalSekolah}
-                  defaultValue={asalSekolah}
-                  onChange={(e) => setAsalSekolah({ label: e.label, value: e.value })}
-                  onBlur={() =>
-                    simpleValidator.current.showMessageFor(
-                      "asal ( sekolah/ pt )"
-                    )
-                  }
-                /> */}
                 </div>
                 {simpleValidator.current.message(
                   "asal sekolah",
@@ -598,26 +480,6 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     className: "text-danger",
                   }
                 )}
-
-                {/* <input
-                type="text"
-                className="form-control"
-                value={asalSekolah}
-                onChange={(e) => {
-                  setAsalSekolah(e.target.value);
-                  searchAsal(e.target.value);
-                }}
-                list="data"
-              />
-              <datalist id="data">
-                {dataSearch.map((item, index) => {
-                  return (
-                    <option value={item.label} key={index}>
-                      {item.label}
-                    </option>
-                  );
-                })}
-              </datalist> */}
               </Form.Group>
               <Form.Group
                 as={Col}
@@ -629,7 +491,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 <Form.Control
                   placeholder="Silahkan Masukan Program Studi"
                   value={programStudi}
-                  onChange={e => setProgramStudi(e.target.value)}
+                  onChange={(e) => setProgramStudi(e.target.value)}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("program studi")
                   }
@@ -660,7 +522,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     type="text"
                     className="form-control"
                     value={asalSekolah}
-                    onChange={e => {
+                    onChange={(e) => {
                       setAsalSekolah(e.target.value);
                     }}
                   />
@@ -671,20 +533,6 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                           return <option value={item.label} key={index} />;
                         })}
                   </datalist>
-                  {/* <Select
-                  placeholder={
-                    (pendidikan && pendidikan.asal_pendidikan) ||
-                    "Silahkan Pilih Asal Sekolah"
-                  }
-                  options={getAsalSekolah}
-                  defaultValue={asalSekolah}
-                  onChange={(e) => setAsalSekolah({ label: e.label, value: e.value })}
-                  onBlur={() =>
-                    simpleValidator.current.showMessageFor(
-                      "asal ( sekolah/ pt )"
-                    )
-                  }
-                /> */}
                 </div>
                 {simpleValidator.current.message(
                   "asal sekolah",
@@ -694,26 +542,6 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                     className: "text-danger",
                   }
                 )}
-
-                {/* <input
-                type="text"
-                className="form-control"
-                value={asalSekolah}
-                onChange={(e) => {
-                  setAsalSekolah(e.target.value);
-                  searchAsal(e.target.value);
-                }}
-                list="data"
-              />
-              <datalist id="data">
-                {dataSearch.map((item, index) => {
-                  return (
-                    <option value={item.label} key={index}>
-                      {item.label}
-                    </option>
-                  );
-                })}
-              </datalist> */}
               </Form.Group>
               <Form.Group
                 as={Col}
@@ -725,7 +553,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                 <Form.Control
                   placeholder="Silahkan Masukan Program Studi"
                   value={programStudi}
-                  onChange={e => setProgramStudi(e.target.value)}
+                  onChange={(e) => setProgramStudi(e.target.value)}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("program studi")
                   }
@@ -741,14 +569,13 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
               </Form.Group>
             </Row>
           )}
-
           {jengjangPendidikan.label === "TK" && (
             <Form.Group className="mb-3" controlId="formGridAddress1">
               <Form.Label>Lainnya ( Sekolah / PT)</Form.Label>
               <Form.Control
                 placeholder="Silahkan Masukan Lainnya ( Sekolah / PT)"
                 value={lainya}
-                onChange={e => setLainya(e.target.value)}
+                onChange={(e) => setLainya(e.target.value)}
                 onBlur={() =>
                   simpleValidator.current.showMessageFor(
                     "lainya ( sekolah/ pt )"
@@ -771,7 +598,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
               <Form.Control
                 placeholder="Silahkan Masukan Lainnya ( Sekolah / PT)"
                 value={lainya}
-                onChange={e => setLainya(e.target.value)}
+                onChange={(e) => setLainya(e.target.value)}
                 onBlur={() =>
                   simpleValidator.current.showMessageFor(
                     "lainya ( sekolah/ pt )"
@@ -794,7 +621,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
               <Form.Control
                 placeholder="Silahkan Masukan Lainnya ( Sekolah / PT)"
                 value={lainya}
-                onChange={e => setLainya(e.target.value)}
+                onChange={(e) => setLainya(e.target.value)}
                 onBlur={() =>
                   simpleValidator.current.showMessageFor(
                     "lainya ( sekolah/ pt )"
@@ -811,7 +638,6 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
               )}
             </Form.Group>
           )}
-
           {jengjangPendidikan.label === "TK" && (
             <Row className="mb-3">
               <Form.Group as={Col} md={6} controlId="formGridTahun">
@@ -820,7 +646,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   type="text"
                   placeholder="Silahkan Masukan Tahun Masuk"
                   value={tahunMasuk}
-                  onChange={e => {
+                  onChange={(e) => {
                     if (
                       e.target.value === "" ||
                       helperRegexNumber.test(e.target.value)
@@ -852,7 +678,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   type="text"
                   placeholder="Silahkan Masukan Tahun Masuk"
                   value={tahunMasuk}
-                  onChange={e => {
+                  onChange={(e) => {
                     if (
                       e.target.value === "" ||
                       helperRegexNumber.test(e.target.value)
@@ -884,7 +710,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   type="text"
                   placeholder="Silahkan Masukan Tahun Masuk"
                   value={tahunMasuk}
-                  onChange={e => {
+                  onChange={(e) => {
                     if (
                       e.target.value === "" ||
                       helperRegexNumber.test(e.target.value)
@@ -916,7 +742,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   type="text"
                   placeholder="Silahkan Masukan Tahun Masuk"
                   value={tahunMasuk}
-                  onChange={e => {
+                  onChange={(e) => {
                     if (
                       e.target.value === "" ||
                       helperRegexNumber.test(e.target.value)
@@ -940,7 +766,6 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
               </Form.Group>
             </Row>
           )}
-
           {jengjangPendidikan.label === "SD/Sederajat" && (
             <div className="form-group">
               <label className="col-form-label">Unggah Ijazah</label>
@@ -976,7 +801,6 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
               </small>
             </div>
           )}
-
           {jengjangPendidikan.label === "SMP/Sederajat" && (
             <div className="form-group">
               <label className="col-form-label">Unggah Ijazah</label>
@@ -1012,7 +836,6 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
               </small>
             </div>
           )}
-
           {jengjangPendidikan.label === "SMA/Sederajat" && (
             <div className="form-group">
               <label className="col-form-label">Unggah Ijazah</label>
@@ -1048,97 +871,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
               </small>
             </div>
           )}
-          {/* 
-          {jengjangPendidikan.label === "D3" && (
-            <Form.Group className="mb-3" controlId="formGridAddress1">
-              <Form.Label>Program Studi</Form.Label>
-              <Form.Control
-                placeholder="Silahkan Masukan Program Studi"
-                value={programStudi}
-                onChange={(e) => setProgramStudi(e.target.value)}
-                onBlur={() =>
-                  simpleValidator.current.showMessageFor("program studi")
-                }
-              />
-              {simpleValidator.current.message(
-                "program studi",
-                programStudi,
-                programStudi === null ? "required" : "",
-                {
-                  className: "text-danger",
-                }
-              )}
-            </Form.Group>
           )} */}
-          {/* {jengjangPendidikan.label === "S1" && (
-            <Form.Group className="mb-3" controlId="formGridAddress1">
-              <Form.Label>Program Studi</Form.Label>
-              <Form.Control
-                placeholder="Silahkan Masukan Program Studi"
-                value={programStudi}
-                onChange={(e) => setProgramStudi(e.target.value)}
-                onBlur={() =>
-                  simpleValidator.current.showMessageFor("program studi")
-                }
-              />
-              {simpleValidator.current.message(
-                "program studi",
-                programStudi,
-                programStudi === null ? "required" : "",
-                {
-                  className: "text-danger",
-                }
-              )}
-            </Form.Group>
-          )} */}
-          {/* {jengjangPendidikan.label === "S2" && (
-            <Form.Group
-              as={Col}
-              md={6}
-              className="mb-3"
-              controlId="formGridAddress1"
-            >
-              <Form.Label>Program Studi</Form.Label>
-              <Form.Control
-                placeholder="Silahkan Masukan Program Studi"
-                value={programStudi}
-                onChange={(e) => setProgramStudi(e.target.value)}
-                onBlur={() =>
-                  simpleValidator.current.showMessageFor("program studi")
-                }
-              />
-              {simpleValidator.current.message(
-                "program studi",
-                programStudi,
-                programStudi === null ? "required" : "",
-                {
-                  className: "text-danger",
-                }
-              )}
-            </Form.Group>
-          )} */}
-          {/* {jengjangPendidikan.label === "S3" && (
-            <Form.Group className="mb-3" controlId="formGridAddress1">
-              <Form.Label>Program Studi</Form.Label>
-              <Form.Control
-                placeholder="Silahkan Masukan Program Studi"
-                value={programStudi}
-                onChange={(e) => setProgramStudi(e.target.value)}
-                onBlur={() =>
-                  simpleValidator.current.showMessageFor("program studi")
-                }
-              />
-              {simpleValidator.current.message(
-                "program studi",
-                programStudi,
-                programStudi === null ? "required" : "",
-                {
-                  className: "text-danger",
-                }
-              )}
-            </Form.Group>
-          )} */}
-
           {jengjangPendidikan.label === "D3" && (
             <Row className="mb-3">
               <Form.Group as={Col} md={6} controlId="formGridIpk">
@@ -1147,7 +880,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   type="number"
                   placeholder="Silahkan Masukan IPK"
                   value={ipk}
-                  onChange={e => {
+                  onChange={(e) => {
                     helperRemoveZeroFromIndex0(e.target.value, setIpk);
                   }}
                   onBlur={() => simpleValidator.current.showMessageFor("ipk")}
@@ -1167,7 +900,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   type="text"
                   placeholder="Silahkan Masukan Tahun Masuk"
                   value={tahunMasuk}
-                  onChange={e => {
+                  onChange={(e) => {
                     if (
                       e.target.value === "" ||
                       helperRegexNumber.test(e.target.value)
@@ -1199,7 +932,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   type="number"
                   placeholder="Silahkan Masukan IPK"
                   value={ipk}
-                  onChange={e => {
+                  onChange={(e) => {
                     helperRemoveZeroFromIndex0(e.target.value, setIpk);
                   }}
                   max={4}
@@ -1220,7 +953,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   type="text"
                   placeholder="Silahkan Masukan Tahun Masuk"
                   value={tahunMasuk}
-                  onChange={e => {
+                  onChange={(e) => {
                     if (
                       e.target.value === "" ||
                       helperRegexNumber.test(e.target.value)
@@ -1252,7 +985,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   type="number"
                   placeholder="Silahkan Masukan IPK"
                   value={ipk}
-                  onChange={e => {
+                  onChange={(e) => {
                     helperRemoveZeroFromIndex0(e.target.value, setIpk);
                   }}
                   max={4}
@@ -1273,7 +1006,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   type="text"
                   placeholder="Silahkan Masukan Tahun Masuk"
                   value={tahunMasuk}
-                  onChange={e => {
+                  onChange={(e) => {
                     if (
                       e.target.value === "" ||
                       helperRegexNumber.test(e.target.value)
@@ -1306,7 +1039,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   placeholder="Silahkan Masukan IPK"
                   value={ipk}
                   max={4}
-                  onChange={e => {
+                  onChange={(e) => {
                     helperRemoveZeroFromIndex0(e.target.value, setIpk);
                   }}
                   onBlur={() => simpleValidator.current.showMessageFor("ipk")}
@@ -1326,7 +1059,7 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
                   type="text"
                   placeholder="Silahkan Masukan Tahun Masuk"
                   value={tahunMasuk}
-                  onChange={e => {
+                  onChange={(e) => {
                     if (
                       e.target.value === "" ||
                       helperRegexNumber.test(e.target.value)
@@ -1350,7 +1083,6 @@ const PendidikanEdit = ({ funcViewEdit, token, wizzard }) => {
               </Form.Group>
             </Row>
           )}
-
           {jengjangPendidikan.label === "D3" && (
             <div className="form-group">
               <label className="col-form-label">Unggah Ijazah</label>

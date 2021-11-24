@@ -719,12 +719,6 @@ const DetailSubstansi = ({ token }) => {
           <Modal.Title>Filter</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {/* <div className="form-group mb-5">
-            <label className="p-0">Pelatihan</label>
-            <select className="form-control">
-              <option>Semua</option>
-            </select>
-          </div> */}
           <div className="form-group mb-5">
             <label className="p-0">Status</label>
             <select

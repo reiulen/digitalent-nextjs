@@ -5,8 +5,14 @@
     width: 400px !important;
     left: -30px !important;
   }
+  .cardBackground {
+    height: 210px !important;
+  }
   .cardList {
     height: 40px !important;
+  }
+  .btnDropdown {
+    margin-top: 70px;
   }
   .cardTwo {
     height: 100%;
@@ -35,17 +41,34 @@
 }
 
 @media (max-width: 1024px) {
+  .displayMedium {
+    display: block !important;
+  }
+  .displayNormal {
+    display: none;
+  }
+
   .pieChart {
     position: absolute;
     top: 350;
     width: 400px !important;
-    left: -95px !important;
+    left: 80px !important;
   }
+
   .cardList {
     height: 40px !important;
   }
+  .btnDropdown {
+    margin-top: 10px;
+  }
+  .cardSurvey {
+    display: none;
+  }
+  .cardSubstansi {
+    display: none;
+  }
   .cardTwo {
-    height: 100%;
+    height: 210px;
   }
   .colCard {
     margin-top: 5px !important  ;
@@ -236,7 +259,7 @@
   padding: 10px 10px !important;
 }
 .btnDropdown {
-  padding: 4px 20px !important;
+  padding: 8px 60px !important;
   background: #4299e1 !important;
   border-radius: 30px;
   border: #4299e1 !important;
@@ -509,7 +532,8 @@
   border: 1px solid rgba(210, 201, 197, 0.3);
   box-sizing: border-box;
   border-radius: 12px;
-
+  width: 100%;
+  height: 100%;
   font-family: Poppins;
   font-style: normal;
   font-weight: 600;
@@ -525,5 +549,8 @@
 }
 
 .pieChartResponsiveFold {
+  display: none;
+}
+.displayMedium {
   display: none;
 }
