@@ -180,7 +180,7 @@ const DashboardBeasiswa = () => {
               <div className="card-body py-4">
                 <StatistikWrapper
                   title={"Statistik Beasiswa Dalam Negeri"}
-                  funcFilterYear={(value) => console.log(value)}
+                  funcFilterYear={(value) => {}}
                 />
 
                 <div className="chard-bar mt-5">
@@ -211,7 +211,7 @@ const DashboardBeasiswa = () => {
               <div className="card-body py-4">
                 <StatistikWrapper
                   title={"Statistik Beasiswa Luar Negeri"}
-                  funcFilterYear={(value) => console.log(value)}
+                  funcFilterYear={(value) => {}}
                 />
 
                 <div className="chard-bar mt-5">

@@ -187,7 +187,7 @@ const DashboardDigitalent = () => {
               <div className="card-body py-4">
                 <StatistikWrapper
                   title={"Pesebaran Pendaftar Akademi"}
-                  funcFilterYear={(value) => console.log(value)}
+                  funcFilterYear={(value) => {}}
                 />
 
                 <div className="chard-bar text-center mt-5">
@@ -216,7 +216,7 @@ const DashboardDigitalent = () => {
               <div className="card-body py-4">
                 <StatistikWrapper
                   title={"Pesebaran Peserta Akademi"}
-                  funcFilterYear={(value) => console.log(value)}
+                  funcFilterYear={(value) => {}}
                 />
 
                 <div className="chard-bar mt-5">

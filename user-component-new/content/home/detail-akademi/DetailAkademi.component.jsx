@@ -156,6 +156,10 @@ const DetailAkademi = ({ session }) => {
       }
     }
     setShow(arrShow);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   };
 
   const handleCloseQuickView = (index) => {

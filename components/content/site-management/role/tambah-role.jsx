@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Pagination from "react-js-pagination";
@@ -13,17 +13,21 @@ import IconSearch from "../../../assets/icon/Search";
 import IconPlus from "../../../../public/assets/icon/Plus.svg";
 import IconMinus from "../../../../public/assets/icon/Minus.svg";
 import Image from "next/image";
+import { postRoles } from "../../../../redux/actions/site-management/role.actions";
+import SimpleReactValidator from "simple-react-validator";
 
 const TambahRole = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
 
-  const [status, setStatus] = useState("")
-  const [editTable, setEditTable] = useState("")
-  const [nameRole, setNameRole] = useState("")
+  const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
 
+  const [status, setStatus] = useState("");
+  const [editTable, setEditTable] = useState("");
+  const [nameRole, setNameRole] = useState("");
+  const [allCheck, setAllCheck] = useState(false);
 
-
+  const allPermission = useSelector((state) => state.allPermission);
 
   const btnIconPlus = {
     display: "flex",
@@ -41,19 +45,277 @@ const TambahRole = ({ token }) => {
     width: "19px",
     height: "19px",
     borderRadius: "5px",
-    backgroundColor: "#4299E1",
+    backgroundColor: "#203E80",
   };
 
-  
+  let list = allPermission.data.data;
+
+  let permission = [];
+
+  for (let i = 0; i < allPermission.data.data.length; i++) {
+    permission.push(allPermission.data.data[i]);
+    if (allPermission.data.data[i].list_sub_menu.length > 0) {
+      allPermission.data.data[i].list_sub_menu.forEach((item) => {
+        permission.push(item);
+      });
+    }
+  }
+
+  const menu = list.map((item, index) => {
+    if (item.list_sub_menu.length > 0) {
+      return (
+        <>
+          <tr>
+            <td className="text-left">
+              <div className="d-flex align-items-center">
+                <div style={btnIconPlus} className="cursor-pointer mr-3">
+                  <Image
+                    src={IconPlus}
+                    width={12}
+                    height={12}
+                    alt="plus-icon"
+                  />
+                </div>
+                <p className="mb-0">{item.name}</p>
+              </div>
+            </td>
+            <td></td>
+
+            <td
+              className="text-right child-permission align-middle"
+              style={{ width: "10rem" }}
+            >
+              <label className="checkbox">
+                <input
+                  type="checkbox"
+                  name="Checkboxes1"
+                  onClick={() => {
+                    permission.filter((filter) => {
+                      if (item.id === filter.id) {
+                        filter.view = !(
+                          filter.view === true || filter.view === 1
+                        );
+                      }
+                      return filter;
+                    });
+                  }}
+                />
+                <span></span>
+              </label>
+            </td>
+            <td
+              className="text-right child-permission align-middle"
+              style={{ width: "0" }}
+            >
+              <label className="checkbox">
+                <input
+                  type="checkbox"
+                  name="Checkboxes1"
+                  onClick={() => {
+                    permission.filter((filter) => {
+                      if (item.id === filter.id) {
+                        filter.manage = !(
+                          filter.manage === true || filter.manage === 1
+                        );
+                      }
+                      return filter;
+                    });
+                  }}
+                />
+                <span></span>
+              </label>
+            </td>
+          </tr>
+
+          {item.list_sub_menu.map((sub) => {
+            return (
+              <tr className="" key={sub.id}>
+                <td className="text-left">
+                  <div className="d-flex align-items-center ml-6">
+                    <div style={btnMin} className="cursor-pointer mr-3">
+                      <Image
+                        src={IconMinus}
+                        width={12}
+                        height={12}
+                        alt="plus-icon"
+                      />
+                    </div>
+                    <p className="mb-0">{sub.name}</p>
+                  </div>
+                </td>
+                {sub.name === "Artikel" && (
+                  <td
+                    className="text-right child-permission align-middle"
+                    style={{ width: "10rem" }}
+                  >
+                    <label className="checkbox">
+                      <input
+                        type="checkbox"
+                        name="Checkboxes1"
+                        onClick={() => {
+                          permission.filter((filter) => {
+                            if (sub.id === filter.id) {
+                              filter.publish = !(
+                                filter.publish === true || filter.publish === 1
+                              );
+                            }
+                            return filter;
+                          });
+                        }}
+                      />
+                      <span></span>
+                    </label>
+                  </td>
+                )}
+                {sub.name !== "Artikel" && (
+                  <td
+                    className="text-right child-permission align-middle"
+                    style={{ width: "10rem" }}
+                  ></td>
+                )}
+                <td
+                  className="text-right child-permission align-middle"
+                  style={{ width: "10rem" }}
+                >
+                  <label className="checkbox">
+                    <input
+                      type="checkbox"
+                      name="Checkboxes1"
+                      onClick={() => {
+                        permission.filter((filter) => {
+                          if (sub.id === filter.id) {
+                            filter.view = !(
+                              filter.view === true || filter.view === 1
+                            );
+                          }
+                          return filter;
+                        });
+                      }}
+                    />
+                    <span></span>
+                  </label>
+                </td>
+                <td
+                  className="text-right child-permission align-middle"
+                  style={{ width: "0" }}
+                >
+                  <label className="checkbox">
+                    <input
+                      type="checkbox"
+                      name="Checkboxes1"
+                      onClick={() => {
+                        permission.filter((filter) => {
+                          if (sub.id === filter.id) {
+                            filter.manage = !(
+                              filter.manage === true || filter.manage === 1
+                            );
+                          }
+                          return filter;
+                        });
+                      }}
+                    />
+                    <span></span>
+                  </label>
+                </td>
+              </tr>
+            );
+          })}
+        </>
+      );
+    } else {
+      return (
+        <tr>
+          <td className="text-left">
+            <div className="d-flex align-items-center">
+              <div style={btnIconPlus} className="cursor-pointer mr-3">
+                <Image src={IconPlus} width={12} height={12} alt="plus-icon" />
+              </div>
+              <p className="mb-0">{item.name}</p>
+            </div>
+          </td>
+          <td></td>
+          <td
+            className="text-right child-permission align-middle"
+            style={{ width: "10rem" }}
+          >
+            <label className="checkbox">
+              <input
+                type="checkbox"
+                name="Checkboxes1"
+                onClick={() => {
+                  permission.filter((filter) => {
+                    if (item.id === filter.id) {
+                      filter.view = !(
+                        filter.view === true || filter.view === 1
+                      );
+                    }
+                    return filter;
+                  });
+                }}
+              />
+              <span></span>
+            </label>
+          </td>
+          <td
+            className="text-right child-permission align-middle"
+            style={{ width: "0" }}
+          >
+            <label className="checkbox">
+              <input
+                type="checkbox"
+                name="Checkboxes1"
+                onClick={() => {
+                  permission.filter((filter) => {
+                    if (item.id === filter.id) {
+                      filter.manage = !(
+                        filter.manage === true || filter.manage === 1
+                      );
+                    }
+                    return filter;
+                  });
+                }}
+              />
+              <span></span>
+            </label>
+          </td>
+        </tr>
+      );
+    }
+  });
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    const data = {
+      name: nameRole,
+      status: status,
+      type: editTable,
+      permissions_id: permission.map((item) => {
+        return {
+          id: item.id,
+          view: item.view === true ? 1 : 0,
+          manage: item.manage === true ? 1 : 0,
+          publish: item.publish === true ? 1 : 0,
+        };
+      }),
+    };
+    if (simpleValidator.current.allValid()) {
+      dispatch(postRoles(data, token));
+    } else {
+      simpleValidator.current.showMessages();
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Isi data dengan benar !",
+      });
+    }
+  };
+
   return (
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3
-              className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 mb-5 mt-5 titles-1"
-  
-            >
+            <h3 className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 mb-5 mt-5 titles-1">
               Tambah Role
             </h3>
           </div>
@@ -62,36 +324,69 @@ const TambahRole = ({ token }) => {
               <div className="form-group">
                 <label>Nama Role</label>
                 <input
-                onChange={(e)=>setNameRole(e.target.value)}
+                  onChange={(e) => setNameRole(e.target.value)}
                   type="text"
                   className="form-control"
-                  placeholder="Masukan nama role"
+                  value={nameRole}
+                  placeholder="Masukkan nama role"
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("Nama Role")
+                  }
                 />
-                
+                {simpleValidator.current.message(
+                  "Nama Role",
+                  nameRole,
+                  "required",
+                  { className: "text-danger" }
+                )}
               </div>
               <div className="form-group">
                 <label>Status</label>
-                <select onChange={(e)=>setStatus(e.target.value)} className="form-control">
-                  <option value="">Pilih status</option>
+                <select
+                  value={status}
+                  onChange={(e) => setStatus(e.target.value)}
+                  className="form-control"
+                  required
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("status")
+                  }
+                >
+                  <option value="" disabled selected hidden>
+                    Pilih Status
+                  </option>
                   <option value="1">Aktif</option>
                   <option value="0">Tidak Aktif</option>
                 </select>
-                
+                {simpleValidator.current.message("Status", status, "required", {
+                  className: "text-danger",
+                })}
               </div>
               <div className="form-group">
                 <label>Editable</label>
-                <select onChange={(e)=>setEditTable(e.target.value)} className="form-control">
-                  <option value="">Pilih Editable</option>
+                <select
+                  onChange={(e) => setEditTable(e.target.value)}
+                  className="form-control"
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("editable")
+                  }
+                >
+                  <option value="" disabled selected hidden>
+                    Pilih Editable
+                  </option>
                   <option value="1">Yes</option>
                   <option value="0">No</option>
                 </select>
+                {simpleValidator.current.message(
+                  "editable",
+                  editTable,
+                  "required",
+                  { className: "text-danger" }
+                )}
               </div>
             </form>
 
             <div>
-              <h3
-                className="card-title font-weight-bolder text-dark w-100 pb-5 mb-5 mt-5 titles-1"
-              >
+              <h3 className="card-title font-weight-bolder text-dark w-100 pb-5 mb-5 mt-5 titles-1">
                 Access Role
               </h3>
 
@@ -100,6 +395,9 @@ const TambahRole = ({ token }) => {
                   <table className="table table-separate table-head-custom table-checkable">
                     <thead style={{ background: "#F3F6F9" }}>
                       <tr>
+                        <th rowSpan="2" className="align-middle">
+                          Menu
+                        </th>
                         <th
                           colSpan="3"
                           className="text-left permision"
@@ -107,14 +405,40 @@ const TambahRole = ({ token }) => {
                         >
                           Permission
                         </th>
+                        {/* <th className="border-0">
+                          <label className="checkbox">
+                            Pilih Semua
+                            <input
+                              type="checkbox"
+                              name="Checkboxes1"
+                              onClick={() => {
+                                setAllCheck(!allCheck);
+                                permission.filter((filter) => {
+                                  filter.view = !(
+                                    filter.view === true || filter.view === 1
+                                  );
+                                  filter.manage = !(
+                                    filter.manage === true ||
+                                    filter.manage === 1
+                                  );
+                                  filter.publish = !(
+                                    filter.publish === true ||
+                                    filter.publish === 1
+                                  );
+                                  return filter;
+                                });
+                              }}
+                            />
+                            <span></span>
+                          </label>
+                        </th> */}
                       </tr>
                       <tr>
-                        <th className="text-left">Menu</th>
                         <th
                           className="text-right child-permission align-middle"
                           style={{ width: "10rem" }}
                         >
-                          Manage
+                          Publish
                         </th>
                         <th
                           className="text-right child-permission align-middle"
@@ -122,98 +446,15 @@ const TambahRole = ({ token }) => {
                         >
                           View
                         </th>
+                        <th
+                          className="text-right child-permission align-middle"
+                          style={{ width: "10rem" }}
+                        >
+                          Manage
+                        </th>
                       </tr>
                     </thead>
-                    <tbody>
-                      <tr>
-                        <td className="text-left">
-                          <div className="d-flex align-items-center">
-                            <div
-                              style={btnIconPlus}
-                              className="cursor-pointer mr-3"
-                            >
-                              <Image
-                                src={IconPlus}
-                                width={12}
-                                height={12}
-                                alt="plus-icon"
-                              />
-                            </div>
-                            <p className="mb-0">Dashboard</p>
-                          </div>
-                        </td>
-                        <td
-                          className="text-right child-permission align-middle"
-                          style={{ width: "10rem" }}
-                        >
-                          <label className="checkbox">
-                            <input
-                              type="checkbox"
-                              checked="checked"
-                              name="Checkboxes1"
-                            />
-                            <span></span>
-                          </label>
-                        </td>
-                        <td
-                          className="text-right child-permission align-middle"
-                          style={{ width: "0" }}
-                        >
-                          <label className="checkbox">
-                            <input
-                              type="checkbox"
-                              checked="checked"
-                              name="Checkboxes1"
-                            />
-                            <span></span>
-                          </label>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="text-left">
-                          <div className="d-flex align-items-center">
-                            <div
-                              style={btnMin}
-                              className="cursor-pointer mr-3"
-                            >
-                              <Image
-                                src={IconMinus}
-                                width={12}
-                                height={12}
-                                alt="plus-icon"
-                              />
-                            </div>
-                            <p className="mb-0">Dashboard</p>
-                          </div>
-                        </td>
-                        <td
-                          className="text-right child-permission align-middle"
-                          style={{ width: "10rem" }}
-                        >
-                          <label className="checkbox">
-                            <input
-                              type="checkbox"
-                              checked="checked"
-                              name="Checkboxes1"
-                            />
-                            <span></span>
-                          </label>
-                        </td>
-                        <td
-                          className="text-right child-permission align-middle"
-                          style={{ width: "0" }}
-                        >
-                          <label className="checkbox">
-                            <input
-                              type="checkbox"
-                              checked="checked"
-                              name="Checkboxes1"
-                            />
-                            <span></span>
-                          </label>
-                        </td>
-                      </tr>
-                    </tbody>
+                    <tbody>{menu}</tbody>
                   </table>
                 </div>
               </div>
@@ -230,6 +471,7 @@ const TambahRole = ({ token }) => {
                 <button
                   type="button"
                   className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
+                  onClick={onSubmit}
                 >
                   Simpan
                 </button>
