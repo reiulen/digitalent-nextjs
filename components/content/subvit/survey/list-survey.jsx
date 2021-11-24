@@ -26,6 +26,7 @@ const ListSurvey = ({ token }) => {
   const { loading, error, survey } = useSelector(
     (state) => state.allSurveyQuestionBanks
   );
+
   const {
     loading: deleteLoading,
     error: deleteError,

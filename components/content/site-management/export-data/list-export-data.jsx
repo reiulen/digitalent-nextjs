@@ -11,8 +11,8 @@ import IconDelete from "../../../assets/icon/Delete";
 import IconAdd from "../../../assets/icon/Add";
 import IconSearch from "../../../assets/icon/Search";
 import AlertBar from "../../partnership/components/BarAlert";
-import Image from 'next/image'
-import moment from 'moment'
+import Image from "next/image";
+import moment from "moment";
 
 import {
   getAllExportData,
@@ -20,16 +20,15 @@ import {
   limitCooporation,
   searchCooporation,
   exportFileCSV,
-  deleteExportDataAction
+  deleteExportDataAction,
 } from "../../../../redux/actions/site-management/export-data.actions";
 
 const Table = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
 
-  const allExportData = useSelector(state => state.allExportData)
-  const deleteExportData = useSelector(state => state.deleteExportData)
- 
+  const allExportData = useSelector((state) => state.allExportData);
+  const deleteExportData = useSelector((state) => state.deleteExportData);
 
   const [valueSearch, setValueSearch] = useState("");
   const handleChangeValueSearch = (value) => {
@@ -43,16 +42,20 @@ const Table = ({ token }) => {
 
   useEffect(() => {
     dispatch(getAllExportData(token));
-  }, [dispatch, allExportData.cari, allExportData.page, allExportData.limit, token]);
+  }, [
+    dispatch,
+    allExportData.cari,
+    allExportData.page,
+    allExportData.limit,
+    token,
+  ]);
 
   return (
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3
-              className="card-title font-weight-bolder text-dark titles-1"
-            >
+            <h3 className="card-title font-weight-bolder text-dark titles-1">
               Export Data
             </h3>
           </div>
@@ -60,9 +63,7 @@ const Table = ({ token }) => {
             <div className="table-filter">
               <div className="row">
                 <div className="col-12 col-sm-6">
-                  <div
-                    className="d-flex align-items-center w-100 mt-4"
-                  >
+                  <div className="d-flex align-items-center w-100 mt-4">
                     <div className="position-relative overflow-hidden w-100">
                       <IconSearch
                         style={{ left: "10" }}
@@ -78,7 +79,7 @@ const Table = ({ token }) => {
                       />
                       <button
                         type="button"
-                        onClick={(e)=>handleSubmit(e)}
+                        onClick={(e) => handleSubmit(e)}
                         className="btn bg-blue-primary text-white right-center-absolute"
                         style={{
                           borderTopLeftRadius: "0",
@@ -92,11 +93,13 @@ const Table = ({ token }) => {
                 </div>
                 <div className="col-12 col-sm-6">
                   <div className="d-flex justify-content-end mt-4">
-                    <Link href="/site-management/export-data/filter-export-data" passHref>
-
-                    <a className="btn btn-rounded-full bg-blue-secondary text-white">
-                      Filter Data
-                    </a>
+                    <Link
+                      href="/site-management/export-data/filter-export-data"
+                      passHref
+                    >
+                      <a className="btn btn-rounded-full bg-blue-secondary text-white">
+                        Filter Data
+                      </a>
                     </Link>
                   </div>
                 </div>
@@ -107,60 +110,65 @@ const Table = ({ token }) => {
                 {allExportData.status === "process" ? (
                   <LoadingTable />
                 ) : (
-                <table className="table table-separate table-head-custom table-checkable">
-                  <thead style={{ background: "#F3F6F9" }}>
-                    <tr>
-                      <th className="text-left">No</th>
-                      <th className="text-left align-middle">
-                        Histori Filter Data
-                      </th>
-                      <th className="text-left align-middle">
-                        Tanggal Filter Data
-                      </th>
-                      <th className="text-left align-middle">Aksi</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {allExportData.data.exports.length === 0 ? (
+                  <table className="table table-separate table-head-custom table-checkable">
+                    <thead style={{ background: "#F3F6F9" }}>
                       <tr>
-                        <td colSpan="8" className="text-center">
-                          <h4>Data tidak ditemukan</h4>
-                        </td>
+                        <th className="text-left">No</th>
+                        <th className="text-left align-middle">
+                          Histori Filter Data
+                        </th>
+                        <th className="text-left align-middle">
+                          Tanggal Filter Data
+                        </th>
+                        <th className="text-left align-middle">Aksi</th>
                       </tr>
-                    ) : (
-                      allExportData.data.exports.map((items, index) => {
-                        return (
+                    </thead>
+                    <tbody>
+                      {allExportData.data.exports.length === 0 ? (
+                        <tr>
+                          <td colSpan="8" className="text-center">
+                            <h4>Data tidak ditemukan</h4>
+                          </td>
+                        </tr>
+                      ) : (
+                        allExportData.data.exports.map((items, index) => {
+                          return (
+                            <tr key={index}>
+                              <td className="align-middle text-left">
+                                {allExportData.page === 1
+                                  ? index + 1
+                                  : (allExportData.page - 1) *
+                                      allExportData.limit +
+                                    (index + 1)}
+                              </td>
+                              <td className="align-middle text-left">
+                                {items.user.name}
+                              </td>
+                              <td className="align-middle text-left">
+                                {moment(items.filtered_at).format(
+                                  "DD MMMM YYYY"
+                                )}
+                              </td>
+                              <td className="align-middle text-left">
+                                <div className="d-flex align-items-center">
+                                  {/* <button
+                                    className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                    onClick={() =>
+                                      dispatch(exportFileCSV(items.id, token))
+                                    }
+                                  >
+                                    <Image
+                                      src="/assets/icon/download.svg"
+                                      width={16}
+                                      height={16}
+                                      alt="download"
+                                    />
+                                    <div className="text-hover-show-hapus">
+                                      Unduh
+                                    </div>
+                                  </button> */}
 
-                    <tr key={index}>
-                      <td className="align-middle text-left">
-                        {allExportData.page === 1
-                                ? index + 1
-                                : (allExportData.page - 1) * allExportData.limit +
-                                  (index + 1)}
-                      </td>
-                      <td className="align-middle text-left">{items.user.name}</td>
-                      <td className="align-middle text-left">
-                        {moment(items.filtered_at).format("DD MMMM YYYY")}
-                        </td>
-                      <td className="align-middle text-left">
-                        <div className="d-flex align-items-center">
-
-
-                          <button
-                            className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                            onClick={() => dispatch(exportFileCSV(items.id,token))
-                            }
-                          >
-                            <Image src="/assets/icon/download.svg" width={16} height={16} alt="download" />
-                            <div className="text-hover-show-hapus">Unduh</div>
-                          </button>
-
-
-                          
-
-
-
-                          {/* <button
+                                  {/* <button
                             className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete"
                             onClick={() =>
                               router.push(
@@ -172,62 +180,56 @@ const Table = ({ token }) => {
                             <div className="text-hover-show-hapus">Detail</div>
                           </button> */}
 
+                                  <Link
+                                    href={`/site-management/export-data/detail-data/${items.id}`}
+                                  >
+                                    <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete mx-3">
+                                      <IconEye width="16" height="16" />
+                                      <div className="text-hover-show-hapus">
+                                        Detail
+                                      </div>
+                                    </a>
+                                  </Link>
 
-                          <Link
-                                        href={`/site-management/export-data/detail-data/${items.id}`}
-                                      >
-                                        <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete mx-3">
-                                          <IconEye width="16" height="16" />
-                                          <div className="text-hover-show-hapus">
-                                            Detail
-                                          </div>
-                                        </a>
-                                      </Link>
-
-
-
-
-
-
-
-
-
-
-                          <button
-                            className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                            onClick={() =>
-                              dispatch(deleteExportDataAction(items.id,token))
-                            }
-                          >
-                            <IconDelete width="16" height="16" />
-                            <div className="text-hover-show-hapus">Hapus</div>
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                     );
-                      })
-                    )}
-                  </tbody>
-                </table>
+                                  <button
+                                    className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                    onClick={() =>
+                                      dispatch(
+                                        deleteExportDataAction(items.id, token)
+                                      )
+                                    }
+                                  >
+                                    <IconDelete width="16" height="16" />
+                                    <div className="text-hover-show-hapus">
+                                      Hapus
+                                    </div>
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          );
+                        })
+                      )}
+                    </tbody>
+                  </table>
                 )}
               </div>
 
               <div className="row px-4">
                 <div className="table-pagination">
-                      <Pagination
-                        activePage={allExportData.page}
-                        itemsCountPerPage={allExportData.data.perPage}
-                        totalItemsCount={allExportData.data.total}
-                        pageRangeDisplayed={3}
-                        onChange={(page) => dispatch(setPage(page))}
-                        nextPageText={">"}
-                        prevPageText={"<"}
-                        firstPageText={"<<"}
-                        lastPageText={">>"}
-                        itemClass="page-item"
-                        linkClass="page-link"
-                      />
+                  <Pagination
+                    activePage={allExportData.page}
+                    itemsCountPerPage={allExportData.data.perPage}
+                    totalItemsCount={allExportData.data.total}
+                    pageRangeDisplayed={3}
+                    onChange={(page) => dispatch(setPage(page))}
+                    nextPageText={">"}
+                    prevPageText={"<"}
+                    firstPageText={"<<"}
+                    lastPageText={">>"}
+                    itemClass="page-item"
+                    linkClass="page-link"
+                  />
                 </div>
 
                 <div className="table-total ml-auto mr-4">
@@ -259,8 +261,9 @@ const Table = ({ token }) => {
                         className="align-middle mt-3"
                         style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}
                       >
-                        Total Data {allExportData.data &&
-                          allExportData.data.total} List Data
+                        Total Data{" "}
+                        {allExportData.data && allExportData.data.total} List
+                        Data
                       </p>
                     </div>
                   </div>

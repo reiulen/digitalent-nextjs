@@ -3,6 +3,7 @@ import { getSession } from "next-auth/client";
 // import { getAllArtikel } from "../../../redux/actions/publikasi/artikel.actions";
 import { wrapper } from "../../../../redux/store";
 import LoadingPage from "../../../../components/LoadingPage";
+import { dropdownAkademi, dropdownPenyelenggara, dropdownProvinsi, getDropdownYear } from '../../../../redux/actions/pelatihan/function.actions'
 
 const UbahRole = dynamic(
   () =>
@@ -52,6 +53,13 @@ export const getServerSideProps = wrapper.getServerSideProps(
       //     session.user.user.data.token
       //   )
       // );
+
+      await store.dispatch(getDropdownYear(session.user.user.data.token))
+      await store.dispatch(dropdownAkademi(session.user.user.data.token))
+      await store.dispatch(dropdownPenyelenggara(session.user.user.data.token))
+      await store.dispatch(dropdownProvinsi(session.user.user.data.token))
+      
+
       return {
         props: {
           session,
