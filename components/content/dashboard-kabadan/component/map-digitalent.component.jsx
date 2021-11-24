@@ -26,6 +26,9 @@ const MapDigitalent = () => {
           <Marker key={i} position={row.position} animate={true}>
             <Popup>
               <div className="row">
+                <div className="col-md-12 text-left">
+                  <p className="fw-600 fz-12 m-0 p-0">{row.kota}</p>
+                </div>
                 <div className="col-md-6 text-left">
                   <p className="text-dashboard-neutral">Pendaftar</p>
                   <p className="text-dashboard-neutral">Peserta</p>

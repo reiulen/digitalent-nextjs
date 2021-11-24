@@ -144,9 +144,9 @@ const DetailTrivia = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h2 className="card-title h2 text-dark">
-              TRIVIA {trivia.academy ? trivia.academy.name : ""}{" "}
-              {trivia.academy && trivia.theme && "-"}{" "}
-              {trivia.theme ? trivia.theme.name : ""}
+              TRIVIA {trivia && trivia.academy ? trivia.academy.name : ""}{" "}
+              {trivia && trivia.theme && "-"}{" "}
+              {trivia && trivia.theme ? trivia.theme.name : ""}
             </h2>
             <div className="card-toolbar">
               <Link href={`/subvit/trivia/edit?id=${id}`}>
@@ -171,10 +171,14 @@ const DetailTrivia = ({ token }) => {
                     <p>Pelatihan</p>
                   </div>
                   <div className="col-md-9 value-1">
-                    <p>{trivia.academy ? trivia.academy.name : "-"}</p>
-                    <p>{trivia.theme ? trivia.theme.name : "-"}</p>
                     <p>
-                      {trivia.training != null ? trivia.training.name : "-"}
+                      {trivia && trivia.academy ? trivia.academy.name : "-"}
+                    </p>
+                    <p>{trivia && trivia.theme ? trivia.theme.name : "-"}</p>
+                    <p>
+                      {trivia && trivia.training != null
+                        ? trivia.training.name
+                        : "-"}
                     </p>
                   </div>
                 </div>
@@ -192,20 +196,24 @@ const DetailTrivia = ({ token }) => {
                   </div>
                   <div className="col value-1">
                     <p>
-                      {trivia.start_at
+                      {trivia && trivia.start_at
                         ? moment(trivia.start_at).format("ll")
                         : ""}{" "}
                       -{" "}
-                      {trivia.end_at ? moment(trivia.end_at).format("ll") : ""}
+                      {trivia && trivia.end_at
+                        ? moment(trivia.end_at).format("ll")
+                        : ""}
                     </p>
                     <p>
-                      {trivia.questions_to_share
+                      {trivia && trivia.questions_to_share
                         ? trivia.questions_to_share
                         : "Belum Ada"}{" "}
                       Soal
                     </p>
-                    <p>{trivia.duration ? trivia.duration : 0} Menit</p>
-                    <p>{trivia.status === 1 ? "Publish" : "Draft"}</p>
+                    <p>
+                      {trivia && trivia.duration ? trivia.duration : 0} Menit
+                    </p>
+                    <p>{trivia && trivia.status === 1 ? "Publish" : "Draft"}</p>
                   </div>
                 </div>
               </div>

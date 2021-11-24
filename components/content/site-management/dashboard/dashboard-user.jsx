@@ -20,7 +20,7 @@ const DashboardUser = () => {
               icon="/assets/icon/user-light.svg"
               color="text-white"
               title="Peserta"
-              link="/site-management"
+              link="/site-management/user/peserta-dts"
             ></CardDashboardSiteManagement>
           </div>
           <div className="col-6 col-md">
@@ -30,7 +30,7 @@ const DashboardUser = () => {
               icon="/assets/icon/user-star-grey.svg"
               color="text-muted"
               title="Administrator"
-              link="/site-management"
+              link="/site-management/user/administrator"
             ></CardDashboardSiteManagement>
           </div>
           <div className="col-6 col-md">
@@ -40,7 +40,7 @@ const DashboardUser = () => {
               icon="/assets/icon/user-plus-grey.svg"
               color="text-muted"
               title="Mitra"
-              link="/site-management"
+              link="/site-management/user/mitra"
             ></CardDashboardSiteManagement>
           </div>
           <div className="col-6 col-md"></div>

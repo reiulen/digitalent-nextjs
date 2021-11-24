@@ -47,10 +47,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
-      // await store.dispatch(getListRoles(session.user.user.data.token));
-      // await store.dispatch(getAllListPelatihan(session.user.user.data.token));
-      // await store.dispatch(getListUnitWorks(session.user.user.data.token));
-      // await store.dispatch(getListAcademy(session.user.user.data.token));
+      await store.dispatch(getListRoles(session.user.user.data.token));
+      await store.dispatch(getAllListPelatihan(session.user.user.data.token));
+      await store.dispatch(getListUnitWorks(session.user.user.data.token));
+      await store.dispatch(getListAcademy(session.user.user.data.token));
       await store.dispatch(
         getDetailAdminSite(query.id, session.user.user.data.token)
       );

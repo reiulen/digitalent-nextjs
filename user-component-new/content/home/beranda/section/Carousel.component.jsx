@@ -54,6 +54,7 @@ export default function Carousel({ data }) {
     autoplay: true,
     speed: 2000,
     autoplaySpeed: 2000,
+    adaptiveHeight: true,
     cssEase: "linear",
     speed: 500,
     slidesToScroll: 1,
@@ -62,9 +63,28 @@ export default function Carousel({ data }) {
     centerPadding: "40px",
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
+    customPaging: (i) => (
+      <div
+        style={{
+          width: "8px",
+          height: "8px",
+          background: "#D7E1EA",
+          borderRadius: "16px",
+        }}
+        className="mt-2 dot"
+      />
+    ),
     responsive: [
       {
         breakpoint: 1700,
+        settings: {
+          variableWidth: false,
+          centerMode: true,
+          centerPadding: "40px",
+        },
+      },
+      {
+        breakpoint: 790,
         settings: {
           variableWidth: false,
           centerMode: true,
@@ -87,7 +107,7 @@ export default function Carousel({ data }) {
                   row.gambar
                 }
                 width={1650}
-                height={windowDimensions.width < 800 ? 800 : 500}
+                height={windowDimensions.width < 800 ? 500 : 500}
                 objectFit="cover"
                 className="img-carousel"
               />

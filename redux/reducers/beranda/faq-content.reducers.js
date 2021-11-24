@@ -1,24 +1,29 @@
 import {
-    FAQ_REQUEST,
-    FAQ_SUCCESS,
-    FAQ_FAIL,
-    CLEAR_ERRORS
-} from "../../types/publikasi/faq.type"
+    BERANDA_FAQ_REQUEST,
+    BERANDA_FAQ_SUCCESS,
+    BERANDA_FAQ_FAIL,
 
-export const allFaqReducer = (state = { data: {} }, action) => {
+    KATEGORI_BERANDA_FAQ_REQUEST,
+    KATEGORI_BERANDA_FAQ_SUCCESS,
+    KATEGORI_BERANDA_FAQ_FAIL,
+
+    CLEAR_ERRORS
+} from "../../types/beranda/faq-content.type"
+
+export const allFaqContentReducer = (state = { data: {} }, action) => {
     switch (action.type) {
-        case FAQ_REQUEST:
+        case BERANDA_FAQ_REQUEST:
             return {
                 loading: true
             }
 
-        case FAQ_SUCCESS:
+        case BERANDA_FAQ_SUCCESS:
             return {
                 loading: false,
                 faq: action.payload.data
             }
 
-        case FAQ_FAIL:
+        case BERANDA_FAQ_FAIL:
             return {
                 loading: false,
                 error: action.payload
@@ -31,5 +36,42 @@ export const allFaqReducer = (state = { data: {} }, action) => {
 
         default:
             return state
+    }
+}
+
+export const kategoriBerandaFaqReducer = (state = {kategori: [] }, action) => {
+    switch (action.type) {
+        case KATEGORI_BERANDA_FAQ_REQUEST:
+            return {
+                loading: true
+            }
+
+        case KATEGORI_BERANDA_FAQ_SUCCESS:
+            let result = []
+
+            for (let i = 0; i < action.payload.data.kategori.length; i++){
+                if (action.payload.data.kategori[i].jenis_kategori == "Faq"){
+                    result.push (action.payload.data.kategori[i])
+                }
+            }
+
+            return {
+                loading: false,
+                kategori: result
+            }
+
+        case KATEGORI_BERANDA_FAQ_FAIL:
+            return {
+                loading: false,
+                error: action.payload
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                error: null,
+            };
+        
+        default:
+            return state;
     }
 }

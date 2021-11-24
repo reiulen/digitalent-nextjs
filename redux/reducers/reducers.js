@@ -272,6 +272,7 @@ import {
   detailRolesReducer,
   updateRolesReducer,
   deleteRolesReducer,
+  allPermissionReducer,
 } from "./site-management/role.reducers";
 
 // ============== unit work ===============
@@ -409,6 +410,7 @@ import {
   drowpdownPenyelenggaraReducers,
   drowpdownFormBuilderReducers,
   drowpdownTempatLahirReducers,
+  drowpdownYearReducers,
 } from "./pelatihan/admin/function.reducers";
 import { allProvinsiReducer, allKotaReducer } from "./utils/utils.reducers";
 import { reducerFunctionals } from "./utils/functionals.reducer";
@@ -471,6 +473,13 @@ import {
   allTagVideoContentReducer,
   playVideoContentReducer,
 } from "../reducers/beranda/video-content.reducer";
+
+// ========== faq ========
+
+import {
+  allFaqContentReducer,
+  kategoriBerandaFaqReducer,
+} from "../reducers/beranda/faq-content.reducers";
 
 //END BERANDA
 
@@ -723,6 +732,7 @@ const reducer = combineReducers({
   detailRoles: detailRolesReducer,
   updateRoles: updateRolesReducer,
   deleteRoles: deleteRolesReducer,
+  allPermission: allPermissionReducer,
   // ============ PELATIHAN =======
   allPrompt: allPromptReducer,
   // ============ Dashboatd =======
@@ -824,6 +834,7 @@ const reducer = combineReducers({
   drowpdownPenyelenggara: drowpdownPenyelenggaraReducers,
   drowpdownFormBuilder: drowpdownFormBuilderReducers,
   updateStatus: updateStatusReducer,
+  drowpdownYear:drowpdownYearReducers,
 
   // ========== profile peserta ========
   dataAlamat: dataAlamatReducer,
@@ -882,6 +893,10 @@ const reducer = combineReducers({
   kategoriVideoContent: kategoriVideoContentReducer,
   allTagVideoContent: allTagVideoContentReducer,
   playVideoContent: playVideoContentReducer,
+
+  // ========== faq ========
+  allFaqContent:allFaqContentReducer,
+  kategoriBerandaFaq:kategoriBerandaFaqReducer,
   //END BERANDA
 
   // ========== Riwayat Pelatihan ========

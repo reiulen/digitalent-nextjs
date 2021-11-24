@@ -17,7 +17,7 @@ import {
   setPage,
   limitCooporation,
   deleteRoles,
-  searchCooporation
+  searchCooporation,
 } from "../../../../redux/actions/site-management/role.actions";
 import axios from "axios";
 
@@ -82,9 +82,7 @@ const Table = ({ token }) => {
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3
-              className="card-title font-weight-bolder text-dark titles-1"
-            >
+            <h3 className="card-title font-weight-bolder text-dark titles-1">
               List Role
             </h3>
             <div className="card-toolbar">
@@ -100,42 +98,36 @@ const Table = ({ token }) => {
             <div className="table-filter">
               <div className="row align-items-center">
                 <div className="col-lg-12 col-xl-12">
-
                   <div className="row w-100 ml-0 ml-sm-0">
-
-
-                  <div
-                    className="col-12 col-xl-4"
-                  >
-                    <div className="position-relative overflow-hidden w-100">
-                          <IconSearch
-                            style={{ left: "10" }}
-                            className="left-center-absolute"
-                          />
-                          <input
-                            id="kt_datatable_search_query"
-                            type="text"
-                            className="form-control pl-10"
-                            placeholder="Ketik disini untuk Pencarian..."
-                            onChange={(e) =>
-                              handleChangeValueSearch(e.target.value)
-                            }
-                          />
-                          <button
-                            type="button"
-                            onClick={(e)=>handleSubmit(e)}
-                            className="btn bg-blue-primary text-white right-center-absolute"
-                            style={{
-                              borderTopLeftRadius: "0",
-                              borderBottomLeftRadius: "0",
-                            }}
-                          >
-                            Cari
-                          </button>
-                        </div>
+                    <div className="col-12 col-xl-4">
+                      <div className="position-relative overflow-hidden w-100">
+                        <IconSearch
+                          style={{ left: "10" }}
+                          className="left-center-absolute"
+                        />
+                        <input
+                          id="kt_datatable_search_query"
+                          type="text"
+                          className="form-control pl-10"
+                          placeholder="Ketik disini untuk Pencarian..."
+                          onChange={(e) =>
+                            handleChangeValueSearch(e.target.value)
+                          }
+                        />
+                        <button
+                          type="button"
+                          onClick={(e) => handleSubmit(e)}
+                          className="btn bg-blue-primary text-white right-center-absolute"
+                          style={{
+                            borderTopLeftRadius: "0",
+                            borderBottomLeftRadius: "0",
+                          }}
+                        >
+                          Cari
+                        </button>
+                      </div>
+                    </div>
                   </div>
-                  </div>
-
                 </div>
               </div>
             </div>
@@ -156,7 +148,9 @@ const Table = ({ token }) => {
                     </thead>
                     <tbody>
                       {allRoles.data.list_role.length === 0 ? (
-                        <td className="align-middle text-center" colSpan="5">Data Masih Kosong</td>
+                        <td className="align-middle text-center" colSpan="5">
+                          Data Masih Kosong
+                        </td>
                       ) : (
                         allRoles.data.list_role.map((items, index) => {
                           return (
@@ -174,38 +168,34 @@ const Table = ({ token }) => {
                                 {items.type == 1 ? "Yes" : "No"}
                               </td>
                               <td className="align-middle text-left">
-                                 {items.status == 1 ?
-                        <p
-                        className="status-div-green mb-0"
-                        style={{ width: "max-content" }}
-                        >
-                          Aktif
-                        </p>
-                        :
-
-                        <p
-                        className="status-div-red mb-0"
-                        style={{ width: "max-content" }}
-                        >
-                          Tidak Aktif
-                        </p>
-                        }
+                                {items.status == 1 ? (
+                                  <p
+                                    className="status-div-green mb-0"
+                                    style={{ width: "max-content" }}
+                                  >
+                                    Aktif
+                                  </p>
+                                ) : (
+                                  <p
+                                    className="status-div-red mb-0"
+                                    style={{ width: "max-content" }}
+                                  >
+                                    Tidak Aktif
+                                  </p>
+                                )}
                               </td>
                               <td className="align-middle text-left">
                                 <div className="d-flex align-items-center">
-                                  <button
-                                    className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                                    onClick={() =>
-                                      router.push(
-                                        `/site-management/role/ubah-role`
-                                      )
-                                    }
+                                  <Link
+                                    href={`/site-management/role/ubah-role/${items.id}`}
                                   >
-                                    <IconPencil width="16" height="16" />
-                                    <div className="text-hover-show-hapus">
-                                      Ubah
-                                    </div>
-                                  </button>
+                                    <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
+                                      <IconPencil width="16" height="16" />
+                                      <div className="text-hover-show-hapus">
+                                        Ubah
+                                      </div>
+                                    </a>
+                                  </Link>
                                   <button
                                     className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete"
                                     onClick={() =>
