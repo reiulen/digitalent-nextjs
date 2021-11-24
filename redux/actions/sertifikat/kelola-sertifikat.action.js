@@ -209,7 +209,6 @@ export const getPublishedSertifikat = (id, token) => async (dispatch) => {
     };
 
     const { data } = await axios.get(link, config);
-    console.log(data, "ini data");
     if (data) {
       dispatch({
         type: PUBLISHED_SERTIFIKAT_SUCCESS,
