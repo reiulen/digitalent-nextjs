@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import PageWrapper from "../../../wrapper/page.wrapper";
-import { Card, Form, Col, Row } from "react-bootstrap";
+import { Card, Form, Col, Row, Button } from "react-bootstrap";
 import SimpleReactValidator from "simple-react-validator";
-
+import { SweatAlert } from "../../../../utils/middleware/helper/index";
 export default function TTEP12({ token }) {
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [name, setName] = useState("");
@@ -36,7 +36,7 @@ export default function TTEP12({ token }) {
       } else {
         e.target.value = null;
         Swal.fire(
-          "Oops !",
+          "Gagal !",
           "Data yang bisa dimasukkan hanya berupa data P12",
           "error"
         );
@@ -44,16 +44,22 @@ export default function TTEP12({ token }) {
     }
   };
 
-  //   useEffect(() => {
-  //     console.log(fileUpload, "ini file uplaod");
-  //   }, [fileUpload]);
+  const handleSubmit = () => {
+    if (true) {
+      SweatAlert(
+        "File p12 Tidak Sesuai",
+        "Maaf, file yang diunggah terdapat perbedaan. Pastikan file yang Anda unggah sudah sesuai dengan ketentuan",
+        "error"
+      );
+    }
+  };
 
   return (
     <PageWrapper>
       <Card>
         <Card.Title className="mx-10 my-8">
           <p>
-            <h1 className="fz-24">Card Title</h1>
+            <h1 className="fz-24">TTE P12</h1>
           </p>
           <p style={{ color: "#6C6C6C" }}>
             Anda belum memiliki file p12, silahkan unggah file sesuai dengan
@@ -165,6 +171,63 @@ export default function TTEP12({ token }) {
               </Form>
             </Col>
           </Row>
+          <div className="d-flex justify-content-end">
+            <Button
+              className="rounded-full px-10 py-4"
+              variant="primary"
+              onClick={handleSubmit}
+            >
+              Simpan
+            </Button>
+          </div>
+        </Card.Body>
+      </Card>
+      <Card>
+        <Card.Title className="mx-10 my-8">
+          <p>
+            <h1 className="fz-24">TTE P12</h1>
+          </p>
+        </Card.Title>
+        <Card.Body>
+          <Row className=" fz-14">
+            <Col>
+              <Form>
+                <Form.Group className="mb-8 text-capitalize">
+                  <Form.Label>Nama</Form.Label>
+                  <p className="fz-16">Ahmad Firaz</p>
+                </Form.Group>
+              </Form>
+            </Col>
+            <Col>
+              <Form>
+                <Form.Group className="mb-8 text-capitalize">
+                  <Form.Label>Jabatan</Form.Label>
+                  <p className="fz-16">Direktur</p>
+                </Form.Group>
+              </Form>
+            </Col>
+          </Row>
+          <Form>
+            <Form.Group className="mb-8 text-capitalize">
+              <Form.Label className="fz-14">File p12</Form.Label>
+              <p className="fz-16">fileKominfo.p12</p>
+            </Form.Group>
+          </Form>
+          <Form>
+            <Form.Group className="mb-8 text-capitalize">
+              <Form.Label className="fz-16">Tasnggal Unggah File</Form.Label>
+              <p className="fz-14">22 November 2012</p>
+            </Form.Group>
+          </Form>
+          <div className="d-flex justify-content-end">
+            <Button
+              className="rounded-full px-10 py-4"
+              variant="outline-primary"
+              onClick={handleSubmit}
+            >
+              Ubah File
+            </Button>
+          </div>
         </Card.Body>
       </Card>
     </PageWrapper>

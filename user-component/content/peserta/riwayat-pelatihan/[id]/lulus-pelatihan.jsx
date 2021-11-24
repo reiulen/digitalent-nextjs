@@ -247,7 +247,9 @@ export default function RiwayatPelatihanDetail(props) {
                       >
                         {data?.mitra || "-"}
                       </div>
-                      <div style={{ fontSize: "12px" }}>Indonesia</div>
+                      <div style={{ fontSize: "12px" }}>
+                        {data?.lokasi_mitra || "-"}
+                      </div>
                     </div>
                   </div>
                 </Col>
