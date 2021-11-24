@@ -17,7 +17,7 @@ const Dashboard = ({ session, success }) => {
   const router = useRouter();
 
   const { error: errorDashboard, dataDashboard } = useSelector(
-    state => state.dashboardPeserta
+    (state) => state.dashboardPeserta
   );
   const { count, pelatihan, subvit } = dataDashboard;
   // useEffect(() => {
@@ -406,7 +406,7 @@ const Dashboard = ({ session, success }) => {
                     <p className={style.card_title}>Pelatihan Sebelumnya</p>
                   </Card.Title>
 
-                  <Card className="shadow rounded-md">
+                  <Card className="shadow rounded-md mt-20">
                     <Image
                       className={`${style.image_dashboard}`}
                       src="/assets/media/default-card.png"

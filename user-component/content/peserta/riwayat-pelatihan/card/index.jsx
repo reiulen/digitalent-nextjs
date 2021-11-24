@@ -251,7 +251,7 @@ export default function CardTemplateOriginal({ data, session }) {
                       <div className="font-weight-bolder text-truncate text-left">
                         {data.mitra}
                       </div>
-                      <div className="text-muted pl-2 justify-content-center ">
+                      <div className="text-muted pl-2 justify-content-center text-left text-truncate">
                         &bull; {data.akademi}
                       </div>
                     </div>
