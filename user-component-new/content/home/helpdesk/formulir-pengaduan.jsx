@@ -5,6 +5,7 @@ import { Container, Row, Col, InputGroup, Form, Button } from "react-bootstrap";
 import ReCAPTCHA from "react-google-recaptcha";
 import SimpleReactValidator from "simple-react-validator";
 import style from "./helpdesk.module.css";
+
 export default function FormPengaduan() {
   const router = useRouter();
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));

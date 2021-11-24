@@ -31,14 +31,9 @@ export default function NamaPelatihan({ token }) {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const {
-    loading,
-    error,
-    certificate,
-    academyOptions = {},
-    themeOptions = {},
-  } = useSelector(state => state.allCertificates);
-  const allCertificates = useSelector(state => state.allCertificates);
+  const { loading, error, certificate, academyOptions, themeOptions } =
+    useSelector((state) => state.allCertificates);
+  const allCertificates = useSelector((state) => state.allCertificates);
   const [academy, setAcademy] = useState("");
   const [temaPelatihan, setTemaPelatihan] = useState("");
   const [disable, setDisable] = useState(true);
@@ -50,42 +45,43 @@ export default function NamaPelatihan({ token }) {
   let selectRefAkademi = null;
   let temaRef = null;
 
-  const resetValueSort = e => {
+  const resetValueSort = (e) => {
     e.preventDefault();
-    temaRef.select.clearValue();
-    selectRefAkademi.select.clearValue();
+    setAcademy(null);
+    setTemaPelatihan(null);
+    // temaRef.select.clearValue();
+    // selectRefAkademi.select.clearValue();
     setDisable(true);
     dispatch({ type: RESET_VALUE_FILTER });
   };
 
   useEffect(() => {
-    let arr = [];
-    academyOptions.forEach(el => {
-      arr.push({ id: el.id, value: el.name, label: el.name });
-    });
-    setDataAcademy(arr);
-  }, [academyOptions]);
-
-  useEffect(() => {
-    const filteredTheme = themeOptions.filter(items => items.id == academy?.id);
-    const data = filteredTheme.map(el => {
+    const filteredTheme = themeOptions.filter(
+      (items) => items.id == academy?.id
+    );
+    const data = filteredTheme.map((el) => {
       return { ...el, value: el.name, label: el.name };
     });
     setDataTemaPelatihan(data);
   }, [academy, themeOptions]);
 
-  const handleSearch = e => {
+  const handleSearch = (e) => {
     e.preventDefault();
     dispatch(searchKeyword(search));
   };
 
-  const handleSelectAcademy = e => {
-    setAcademy(e);
+  const handleSelectAcademy = (e) => {
+    setAcademy(e.label);
+    setTemaPelatihan(null);
     setDisable(false);
-    temaRef.select.clearValue();
+    // temaRef.select.clearValue();
   };
 
-  const handleFilter = e => {
+  useEffect(() => {
+    console.log("ini academy", academy);
+  }, [academy]);
+
+  const handleFilter = (e) => {
     e.preventDefault();
     if (!academy && !temaPelatihan) {
       Swal.fire(
@@ -172,7 +168,7 @@ export default function NamaPelatihan({ token }) {
                       type="text"
                       className="form-control pl-10"
                       placeholder="Ketik disini untuk Pencarian..."
-                      onChange={e => setSearch(e.target.value)}
+                      onChange={(e) => setSearch(e.target.value)}
                     />
                     <button
                       className="btn bg-blue-primary text-white right-center-absolute"
@@ -180,7 +176,7 @@ export default function NamaPelatihan({ token }) {
                         borderTopLeftRadius: "0",
                         borderBottomLeftRadius: "0",
                       }}
-                      onClick={e => {
+                      onClick={(e) => {
                         handleSearch(e);
                       }}
                     >
@@ -244,20 +240,21 @@ export default function NamaPelatihan({ token }) {
                                   Akademi
                                 </label>
                                 <Select
-                                  ref={ref => (selectRefAkademi = ref)}
+                                  ref={(ref) => (selectRefAkademi = ref)}
                                   className="basic-single"
                                   classNamePrefix="select"
-                                  placeholder="Semua"
+                                  placeholder={(academy && academy) || "Semua"}
                                   isDisabled={false}
                                   isLoading={false}
                                   isClearable={false}
                                   isRtl={false}
                                   isSearchable={true}
                                   name="color"
-                                  onChange={e => {
+                                  onChange={(e) => {
                                     handleSelectAcademy(e);
                                   }}
-                                  options={dataAcademy}
+                                  value={academy}
+                                  options={academyOptions}
                                 />
                               </div>
                               <div className="fv-row mb-10">
@@ -265,7 +262,7 @@ export default function NamaPelatihan({ token }) {
                                   Tema Pelatihan
                                 </label>
                                 <Select
-                                  ref={ref => (temaRef = ref)}
+                                  ref={(ref) => (temaRef = ref)}
                                   className="basic-single"
                                   classNamePrefix="select"
                                   placeholder={
@@ -277,8 +274,9 @@ export default function NamaPelatihan({ token }) {
                                   isRtl={false}
                                   isSearchable={true}
                                   name="color"
-                                  onChange={e => setTemaPelatihan(e?.value)}
-                                  options={dataTemaPelatihan}
+                                  onChange={(e) => setTemaPelatihan(e?.label)}
+                                  value={temaPelatihan}
+                                  options={themeOptions}
                                 />
                               </div>
                             </div>
@@ -289,14 +287,14 @@ export default function NamaPelatihan({ token }) {
                                   type="button"
                                   data-dismiss="modal"
                                   aria-label="Close"
-                                  onClick={e => resetValueSort(e)}
+                                  onClick={(e) => resetValueSort(e)}
                                 >
                                   Reset
                                 </button>
                                 <button
                                   className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
                                   type="button"
-                                  onClick={e => handleFilter(e)}
+                                  onClick={(e) => handleFilter(e)}
                                 >
                                   Terapkan
                                 </button>
@@ -401,7 +399,7 @@ export default function NamaPelatihan({ token }) {
                       itemsCountPerPage={certificate.perPage}
                       totalItemsCount={certificate.total}
                       pageRangeDisplayed={3}
-                      onChange={page => dispatch(setValuePage(page))}
+                      onChange={(page) => dispatch(setValuePage(page))}
                       nextPageText={">"}
                       prevPageText={"<"}
                       firstPageText={"<<"}
@@ -423,7 +421,9 @@ export default function NamaPelatihan({ token }) {
                           borderColor: "#F3F6F9",
                           color: "#9E9E9E",
                         }}
-                        onChange={e => dispatch(setValueLimit(e.target.value))}
+                        onChange={(e) =>
+                          dispatch(setValueLimit(e.target.value))
+                        }
                       >
                         <option>5</option>
                         <option>10</option>
