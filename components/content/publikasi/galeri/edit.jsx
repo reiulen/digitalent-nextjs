@@ -455,7 +455,7 @@ const EditGaleri = ({ token }) => {
                                                                     alt="image"
                                                                     width={160}
                                                                     height={160}
-                                                                    objectFit="fill"
+                                                                    objectFit="cover"
                                                                     id={row.imagePreview}
                                                                 />
 

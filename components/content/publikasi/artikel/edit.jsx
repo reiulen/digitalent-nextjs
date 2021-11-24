@@ -9,6 +9,7 @@ import { TagsInput } from "react-tag-input-component";
 import Swal from "sweetalert2";
 import SimpleReactValidator from "simple-react-validator";
 import DatePicker from "react-datepicker";
+import { useQuill } from "react-quilljs";
 
 import styles from "../../../../styles/previewGaleri.module.css";
 
@@ -30,8 +31,10 @@ const EditArtikel = ({ token, idUser }) => {
 
   const importSwitch = () => import("bootstrap-switch-button-react");
   const [editorLoaded, setEditorLoaded] = useState(false);
-  const { CKEditor, ClassicEditor, Base64UploadAdapter } =
-    editorRef.current || {};
+  // const { CKEditor, ClassicEditor, Base64UploadAdapter } =
+  //   editorRef.current || {};
+
+  const { quill, quillRef } = useQuill();
   const SwitchButton = dynamic(importSwitch, {
     ssr: false,
   });
@@ -49,12 +52,27 @@ const EditArtikel = ({ token, idUser }) => {
   } = useSelector(state => state.allKategori);
   const { setting } = useSelector(state => state.allSettingPublikasi)
   const { akademi } = useSelector(state => state.allAkademi);
+  const limit = 12000
 
   useEffect(() => {
 
-    editorRef.current = {
-      CKEditor: require('@ckeditor/ckeditor5-react').CKEditor,
-      ClassicEditor: require('@ckeditor/ckeditor5-build-classic'),
+    if (quill) {
+      quill.clipboard.dangerouslyPasteHTML(isi_artikel);
+      quill.on('text-change', (delta, oldDelta, source) => {
+        setIsiArtikel(quill.root.innerHTML); // Get innerHTML using quill
+
+        if (quill.root.innerText.length <= limit) {
+          return;
+        }
+        const { ops } = delta;
+        let updatedOps;
+        if (ops.length === 1) {
+          updatedOps = [{ delete: ops[0].insert.length }];
+        } else {
+          updatedOps = [ops[0], { delete: ops[1].insert.length }];
+        }
+        quill.updateContents({ ops: updatedOps });
+      });
     }
 
     setEditorLoaded(true);
@@ -64,7 +82,7 @@ const EditArtikel = ({ token, idUser }) => {
         query: { success: true },
       });
     }
-  }, [dispatch, error, success, router]);
+  }, [dispatch, error, success, router, quill]);
 
   const [id, setId] = useState(artikel.id);
   const [judul_artikel, setJudulArtikel] = useState(artikel.judul_artikel);
@@ -158,6 +176,11 @@ const EditArtikel = ({ token, idUser }) => {
     }
     setTag(data)
 
+  }
+
+  const handleSave = () => {
+    const text = quill.getText()
+    setIsiArtikel(text)
   }
 
   const onSubmit = e => {
@@ -398,31 +421,20 @@ const EditArtikel = ({ token, idUser }) => {
                   <div className={`${styles.deskripsiTambah} col-sm-12`}>
                     <div className="ckeditor">
                       {editorLoaded ? (
-                        <CKEditor
-                          ck-editor__editable
-                          editor={ClassicEditor}
-                          data={isi_artikel}
-                          onReady={editor => {
-                          }}
-                          onChange={(event, editor) => {
-                            const data = editor.getData();
-                            setIsiArtikel(data);
-                          }}
-                          onBlur={() =>
-                            simpleValidator.current.showMessageFor(
-                              "isi_artikel"
-                            )
-                          }
-                        />
+                        <div style={{ width: "100%", height: "300px" }}>
+                          <div
+                            ref={quillRef}
+                          />
+                        </div>
                       ) : (
                         <p>Tunggu Sebentar</p>
                       )}
-                      {simpleValidator.current.message(
+                      {/* {simpleValidator.current.message(
                         "isi_artikel",
                         isi_artikel,
-                        "required|min:100|max:12000",
+                        "required|max:12000",
                         { className: "text-danger" }
-                      )}
+                      )} */}
                     </div>
                   </div>
                 </div>
@@ -445,7 +457,7 @@ const EditArtikel = ({ token, idUser }) => {
                         alt="image"
                         width={160}
                         height={160}
-                        objectFit="fill"
+                        objectFit="cover"
                       />
                     </figure>
                     <div className="position-relative">

@@ -20,7 +20,7 @@ const FaqPage = () => {
 
     const [title, setTitle] = useState("Pertanyaan Populer");
     const [keyword, setKeyword] = useState("");
-    const [ showCategoryMobile, setShowCategoryMobile ] = useState(false)
+    const [showCategoryMobile, setShowCategoryMobile] = useState(false)
 
     const [content, setContent] = useState(
         faq?.faq.map((row, i) => {
@@ -36,8 +36,8 @@ const FaqPage = () => {
         dispatch(getAllFaq(null, null, keyword));
         setTitle(`Hasil Pencarian "${keyword}"`)
 
-        if (keyword === ""){
-           handlePinnedFaq() 
+        if (keyword === "") {
+            handlePinnedFaq()
         }
     };
 
@@ -59,21 +59,21 @@ const FaqPage = () => {
                 data={[{ link: router.asPath, name: "Frequently Asked Questions" }]}
             />
             <div className="row">
-                <div className="col-12 col-md-4"> 
+                <div className="col-12 col-md-4">
                     <h1 style={{ fontWeight: "800" }}>
                         Tanya Jawab
                     </h1>
-                    <p 
+                    <p
                         className="my-5"
-                        style={{color:"#6C6C6C"}}
+                        style={{ color: "#6C6C6C" }}
                     >
                         Ada yang bisa Kami Bantu ?
                     </p>
                 </div>
                 <div className="d-none d-md-block col-md-8">
-                    <div 
-                        className="rounded-lg p-5 text-wrap ml-2" 
-                        style={{backgroundColor:"#E6F2FF", fontSize:"14px"}}
+                    <div
+                        className="rounded-lg p-5 text-wrap ml-2"
+                        style={{ backgroundColor: "#E6F2FF", fontSize: "14px" }}
                     >
                         <div className="font-weight-bold">
                             "Budayakan membaca. Calon peserta/peserta harus membaca setiap informasi dengan lengkap dan teliti, agar terhindar dari kesalahan informasi dan mengurangi pertanyaan berulang yang tidak perlu."
@@ -81,7 +81,7 @@ const FaqPage = () => {
                     </div>
                 </div>
             </div>
-            
+
             <div className="row">
                 <div className="col-md-4">
                     <div className="position-relative overflow-hidden my-5">
@@ -111,59 +111,59 @@ const FaqPage = () => {
                         <h4 style={{ fontWeight: "600", marginTop: "50px" }}>
                             Kategori Pertanyaan
                         </h4>
-                            <div>
-                                <div className="d-flex flex-row">
-                                    <div 
-                                        className="d-flex align-items-center my-5 font-weight-bolder"
-                                       
+                        <div>
+                            <div className="d-flex flex-row">
+                                <div
+                                    className="d-flex align-items-center my-5 font-weight-bolder"
+
+                                    style=
+                                    {title === "Pertanyaan Populer" ?
+                                        { cursor: "pointer", color: "#007CFF" }
+                                        :
+                                        { cursor: "pointer", color: "#6C6C6C" }
+                                    }
+                                    onClick={() => handlePinnedFaq()}
+                                >
+                                    <i
+                                        className="fas fa-arrow-right mr-3"
                                         style=
-                                        {   title === "Pertanyaan Populer" ?
-                                                {cursor:"pointer", color:"#007CFF"}
+                                        {title === "Pertanyaan Populer" ?
+                                            { cursor: "pointer", color: "#007CFF" }
                                             :
-                                                {cursor:"pointer", color:"#6C6C6C"}
+                                            { cursor: "pointer", color: "#6C6C6C" }
                                         }
-                                        onClick={() => handlePinnedFaq()}
-                                    >
-                                        <i 
-                                            className="fas fa-arrow-right mr-3" 
-                                            style=
-                                            {   title === "Pertanyaan Populer" ?
-                                                    {cursor:"pointer", color:"#007CFF"}
-                                                :
-                                                    {cursor:"pointer", color:"#6C6C6C"}
-                                            }
-                                        />
-                                        <td>Pertanyaan Populer</td>
-                                    </div>
+                                    />
+                                    <td>Pertanyaan Populer</td>
                                 </div>
                             </div>
+                        </div>
 
                         {
                             kategori && kategori.length !== 0 ?
-                                kategori.map ((el, i) => {
+                                kategori.map((el, i) => {
                                     return (
                                         <div
                                             key={i}
                                         >
                                             <div className="d-flex flex-row">
-                                                <div 
-                                                   className="d-flex align-items-center my-5 font-weight-bolder"
-                                                   style=
-                                                    {   title === el.nama_kategori ?
-                                                            {cursor:"pointer", color:"#007CFF"}
+                                                <div
+                                                    className="d-flex align-items-center my-5 font-weight-bolder"
+                                                    style=
+                                                    {title === el.nama_kategori ?
+                                                        { cursor: "pointer", color: "#007CFF" }
                                                         :
-                                                            {cursor:"pointer", color:"#6C6C6C"}
+                                                        { cursor: "pointer", color: "#6C6C6C" }
                                                     }
                                                     onClick={() => handleCategoryFaq(el.nama_kategori)}
 
                                                 >
-                                                     <i 
+                                                    <i
                                                         className="fas fa-arrow-right mr-3"
                                                         style=
-                                                        {   title === el.nama_kategori ?
-                                                                {cursor:"pointer", color:"#007CFF"}
+                                                        {title === el.nama_kategori ?
+                                                            { cursor: "pointer", color: "#007CFF" }
                                                             :
-                                                                {cursor:"pointer", color:"#6C6C6C"}
+                                                            { cursor: "pointer", color: "#6C6C6C" }
                                                         }
                                                     />
                                                     <td>{el.nama_kategori}</td>
@@ -172,13 +172,13 @@ const FaqPage = () => {
                                         </div>
                                     )
                                 })
-                            :
+                                :
                                 null
                         }
                     </div>
 
                     {/* Filter on Mobile */}
-                    <div 
+                    <div
                         className="mb-5 d-block d-md-none"
                         style={{
                             marginTop: "30px",
@@ -188,7 +188,7 @@ const FaqPage = () => {
                     >
                         <div className="row d-flex justify-content-between align-items-center mx-5 py-5">
                             <div className="d-flex align-items-center">
-                                <Image 
+                                <Image
                                     src={`/assets/media/logo-kategori.svg`}
                                     width={32}
                                     height={32}
@@ -199,14 +199,14 @@ const FaqPage = () => {
                                 </span>
                             </div>
                             <div
-                                style={{cursor:"pointer"}}
-                                onClick={() => setShowCategoryMobile (!showCategoryMobile)}
+                                style={{ cursor: "pointer" }}
+                                onClick={() => setShowCategoryMobile(!showCategoryMobile)}
                             >
                                 <i className=
                                     {
                                         showCategoryMobile === false ?
                                             "ri-arrow-down-s-line"
-                                        :
+                                            :
                                             "ri-arrow-right-s-line"
                                     }
                                 />
@@ -218,24 +218,24 @@ const FaqPage = () => {
                                 <div>
                                     <div className="ml-7">
                                         <div className="d-flex flex-row">
-                                            <div 
+                                            <div
                                                 className="d-flex align-items-center my-5 font-weight-bolder"
-                                            
+
                                                 style=
-                                                {   title === "Pertanyaan Populer" ?
-                                                        {cursor:"pointer", color:"#007CFF"}
+                                                {title === "Pertanyaan Populer" ?
+                                                    { cursor: "pointer", color: "#007CFF" }
                                                     :
-                                                        {cursor:"pointer", color:"#6C6C6C"}
+                                                    { cursor: "pointer", color: "#6C6C6C" }
                                                 }
                                                 onClick={() => handlePinnedFaq()}
                                             >
-                                                <i 
-                                                    className="fas fa-arrow-right mr-3" 
+                                                <i
+                                                    className="fas fa-arrow-right mr-3"
                                                     style=
-                                                    {   title === "Pertanyaan Populer" ?
-                                                            {cursor:"pointer", color:"#007CFF"}
+                                                    {title === "Pertanyaan Populer" ?
+                                                        { cursor: "pointer", color: "#007CFF" }
                                                         :
-                                                            {cursor:"pointer", color:"#6C6C6C"}
+                                                        { cursor: "pointer", color: "#6C6C6C" }
                                                     }
                                                 />
                                                 <td>Pertanyaan Populer</td>
@@ -244,30 +244,30 @@ const FaqPage = () => {
 
                                         {
                                             kategori && kategori.length !== 0 ?
-                                                kategori.map ((el, i) => {
+                                                kategori.map((el, i) => {
                                                     return (
                                                         <div
                                                             key={i}
                                                         >
                                                             <div className="d-flex flex-row">
-                                                                <div 
-                                                                className="d-flex align-items-center my-5 font-weight-bolder"
-                                                                style=
-                                                                    {   title === el.nama_kategori ?
-                                                                            {cursor:"pointer", color:"#007CFF"}
+                                                                <div
+                                                                    className="d-flex align-items-center my-5 font-weight-bolder"
+                                                                    style=
+                                                                    {title === el.nama_kategori ?
+                                                                        { cursor: "pointer", color: "#007CFF" }
                                                                         :
-                                                                            {cursor:"pointer", color:"#6C6C6C"}
+                                                                        { cursor: "pointer", color: "#6C6C6C" }
                                                                     }
                                                                     onClick={() => handleCategoryFaq(el.nama_kategori)}
 
                                                                 >
-                                                                    <i 
+                                                                    <i
                                                                         className="fas fa-arrow-right mr-3"
                                                                         style=
-                                                                        {   title === el.nama_kategori ?
-                                                                                {cursor:"pointer", color:"#007CFF"}
+                                                                        {title === el.nama_kategori ?
+                                                                            { cursor: "pointer", color: "#007CFF" }
                                                                             :
-                                                                                {cursor:"pointer", color:"#6C6C6C"}
+                                                                            { cursor: "pointer", color: "#6C6C6C" }
                                                                         }
                                                                     />
                                                                     <td>{el.nama_kategori}</td>
@@ -276,21 +276,21 @@ const FaqPage = () => {
                                                         </div>
                                                     )
                                                 })
-                                            :
+                                                :
                                                 null
                                         }
                                     </div>
 
                                 </div>
-                            :
+                                :
                                 null
                         }
-                        
+
 
                     </div>
                     {/* End Filter on Mobile */}
                 </div>
-                
+
                 {/* Content */}
                 <div className="col-md-8">
                     <div className="ml-3">
@@ -310,13 +310,13 @@ const FaqPage = () => {
                                 </div>
                             </div>
                         ) :
-                            <div 
+                            <div
                                 className="my-2 my-md-17"
                             >
                                 {faq?.faq.length > 0 ? (
                                     faq?.faq.map((row, i) => {
                                         return (
-                                    
+
                                             <div className="accordion" id="selector" key={i}>
                                                 <div
                                                     className="accordion-item"
@@ -328,9 +328,9 @@ const FaqPage = () => {
                                                 >
                                                     <div
                                                         className={
-                                                            row.isShow === true ? 
+                                                            row.isShow === true ?
                                                                 "accordion-header d-flex justify-content-between align-items-center pt-5 "
-                                                            :
+                                                                :
                                                                 "accordion-header d-flex justify-content-between align-items-center py-5"
                                                         }
                                                         style={{ marginLeft: "30px" }}
@@ -379,8 +379,7 @@ const FaqPage = () => {
                                                         }
                                                         key={i}
                                                     >
-                                                        <div className="accordion-body mx-9 border-0 mb-5 text-justify">
-                                                            {row.jawaban}
+                                                        <div className="accordion-body mx-9 border-0 mb-5 text-justify" dangerouslySetInnerHTML={{ __html: row.jawaban }}>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -395,7 +394,7 @@ const FaqPage = () => {
                                     </div>
                                 )}
                             </div>
-                            }
+                        }
                     </div>
                 </div>
                 {/* End of Content */}
