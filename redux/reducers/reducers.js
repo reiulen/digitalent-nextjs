@@ -473,6 +473,13 @@ import {
   playVideoContentReducer,
 } from "../reducers/beranda/video-content.reducer";
 
+// ========== faq ========
+
+import {
+  allFaqContentReducer,
+  kategoriBerandaFaqReducer,
+} from "../reducers/beranda/faq-content.reducers";
+
 //END BERANDA
 
 import {
@@ -884,6 +891,10 @@ const reducer = combineReducers({
   kategoriVideoContent: kategoriVideoContentReducer,
   allTagVideoContent: allTagVideoContentReducer,
   playVideoContent: playVideoContentReducer,
+
+  // ========== faq ========
+  allFaqContent:allFaqContentReducer,
+  kategoriBerandaFaq:kategoriBerandaFaqReducer,
   //END BERANDA
 
   // ========== Riwayat Pelatihan ========

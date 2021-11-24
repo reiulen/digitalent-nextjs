@@ -62,34 +62,52 @@ const SubHeader = () => {
       <div className="subheader py-2 py-lg-4 subheader-solid" id="kt_subheader">
         <div className="container-fluid d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
           <div className="d-flex align-items-center flex-wrap mr-2 bread-crumb">
-            {breadcrumbs.map((breadcrumb, i) => {
-              return (
-                <Link href={breadcrumb.href} key={i}>
-                  {/* <Link href="/" key={i}> */}
-                  <a
-                    style={{
-                      cursor: i !== 1 ? "default" : "",
-                      pointerEvents: i !== 1 ? "none" : "",
-                    }}
-                  >
-                    <p className="text-default mt-2 mb-2">
-                      &nbsp;
-                      {/* {
+            {breadcrumbs[0].breadcrumb.includes("subvit?page")
+              ? breadcrumbs.map((breadcrumb, i) => {
+                  return (
+                    <Link href={breadcrumb.href} key={i}>
+                      {/* <Link href="/" key={i}> */}
+                      <a
+                        style={{
+                          cursor: i !== 1 ? "default" : "",
+                          pointerEvents: i !== 1 ? "none" : "",
+                        }}
+                      >
+                        <p className="text-default mt-2 mb-2">
+                          &nbsp; Dashboard Subvit
+                        </p>
+                      </a>
+                    </Link>
+                  );
+                })
+              : breadcrumbs.map((breadcrumb, i) => {
+                  return (
+                    <Link href={breadcrumb.href} key={i}>
+                      {/* <Link href="/" key={i}> */}
+                      <a
+                        style={{
+                          cursor: i !== 1 ? "default" : "",
+                          pointerEvents: i !== 1 ? "none" : "",
+                        }}
+                      >
+                        <p className="text-default mt-2 mb-2">
+                          &nbsp;
+                          {/* {
                         (convertBreadcrumb(breadcrumb.breadcrumb))
                       } */}
-                      {i !== 0
-                        ? i == breadcrumbs.length - 1
-                          ? convertBreadcrumb(breadcrumb.breadcrumb).slice(
-                              0,
-                              -1
-                            )
-                          : convertBreadcrumb(breadcrumb.breadcrumb)
-                        : null}
-                    </p>
-                  </a>
-                </Link>
-              );
-            })}
+                          {i !== 0
+                            ? i == breadcrumbs.length - 1
+                              ? convertBreadcrumb(breadcrumb.breadcrumb).slice(
+                                  0,
+                                  -1
+                                )
+                              : convertBreadcrumb(breadcrumb.breadcrumb)
+                            : null}
+                        </p>
+                      </a>
+                    </Link>
+                  );
+                })}
           </div>
           <div className="d-flex align-items-center">
             <i className="flaticon2-crisp-icons-1 mr-2"></i>

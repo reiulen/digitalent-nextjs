@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function GaleriUpdate({ gambar }) {
   return (
-    <div className="galery-update py-20">
+    <div className="galery-update pt-20 pb-10">
       <Row className="my-auto">
         <Col md={4} className="mb-10 mb-0">
           <h1 className="fw-600" style={{ color: "#1F1F1F" }}>
@@ -16,8 +16,8 @@ export default function GaleriUpdate({ gambar }) {
           </p>
           <Link href="/galeri">
             <a>
-              <button className="btn btn-outline-primary-new rounded-pill font-weight-bolder py-3 px-12 mt-20">
-                Lihat Selengkapnya &rarr;
+              <button className="btn btn-outline-primary-new rounded-pill font-weight-bolder py-3 px-12 mt-10">
+                Lihat Selengkapnya >
               </button>
             </a>
           </Link>
