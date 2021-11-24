@@ -3,7 +3,16 @@
   font-weight: bolder;
 }
 
-.helpdesk_sidebar_active i {
+.helpdesk_sidebar_active div {
   color: #007cff;
   font-weight: bolder;
+}
+
+.helpdesk_sidebar_active:hover div {
+  color: #007cff;
+  font-weight: bolder;
+}
+
+.helpdesk_sidebar_inactive {
+  color: #6c6c6c;
 }

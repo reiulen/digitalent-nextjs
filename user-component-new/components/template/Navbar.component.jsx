@@ -268,22 +268,22 @@ const Navigationbar = ({ session }) => {
                   </a>
                   <div className="dropdown-menu ml-3">
                     <Link href="/berita">
-                      <a className="dropdown-item navdropdown-child" href="#">
+                      <a className="dropdown-item navdropdown-child">
                         Berita
                       </a>
                     </Link>
                     <Link href="/artikel">
-                      <a className="dropdown-item navdropdown-child" href="#">
+                      <a className="dropdown-item navdropdown-child">
                         Artikel
                       </a>
                     </Link>
                     <Link href="/galeri">
-                      <a className="dropdown-item navdropdown-child" href="#">
+                      <a className="dropdown-item navdropdown-child">
                         Galeri
                       </a>
                     </Link>
                     <Link href="/video">
-                      <a className="dropdown-item navdropdown-child" href="#">
+                      <a className="dropdown-item navdropdown-child">
                         Video
                       </a>
                     </Link>
@@ -327,7 +327,7 @@ const Navigationbar = ({ session }) => {
           {session && session.roles[0] === "user" && (
             <div className="row mr-3 d-lg-block d-none">
               <a
-                href="#"
+                href="/helpdesk/live-chat"
                 className="col-4 col-sm-4 col-md-4 col-xl-4 text-center"
               >
                 <i className="ri-customer-service-2-line ri-2x  text-gray"></i>

@@ -1,23 +1,12 @@
-// import {
-//     VIDEO_REQUEST,
-//     VIDEO_SUCCESS,
-//     VIDEO_FAIL,
-//     TAG_REQUEST,
-//     TAG_SUCCESS,
-//     TAG_FAIL,
-//     PLAY_REQUEST,
-//     PLAY_SUCCESS,
-//     PLAY_FAIL,
-//     KATEGORI_VIDEO_CONTENT_REQUEST,
-//     KATEGORI_VIDEO_CONTENT_SUCCESS,
-//     KATEGORI_VIDEO_CONTENT_FAIL,
-//     CLEAR_ERRORS
-// } from "../../types/publikasi/video.type"
 
 import {
     BERANDA_VIDEO_REQUEST,
     BERANDA_VIDEO_SUCCESS,
     BERANDA_VIDEO_FAIL,
+
+    DETAIL_BERANDA_VIDEO_REQUEST,
+    DETAIL_BERANDA_VIDEO_SUCCESS,
+    DETAIL_BERANDA_VIDEO_FAIL,
 
     KATEGORI_BERANDA_VIDEO_REQUEST,
     KATEGORI_BERANDA_VIDEO_SUCCESS,
@@ -60,6 +49,35 @@ export const allVideoContentReducer = (state = { video: [] }, action) => {
 
         default:
             return state
+    }
+}
+
+export const detailBerandaVideoReducer = (state = {detail: {} }, action) => {
+    switch (action.type) {
+        case DETAIL_BERANDA_VIDEO_REQUEST:
+            return {
+                loading: true
+            }
+
+        case DETAIL_BERANDA_VIDEO_SUCCESS:
+            return {
+                detail: action.payload,
+                loading: false,
+            }
+
+        case DETAIL_BERANDA_VIDEO_FAIL:
+            return {
+                error: action.payload,
+                loading: false,
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                error: null,
+            };
+        
+        default:
+            return state;
     }
 }
 
