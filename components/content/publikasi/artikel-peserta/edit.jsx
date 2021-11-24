@@ -23,7 +23,7 @@ import { getAllKategori } from '../../../../redux/actions/publikasi/kategori.act
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingPage from "../../../LoadingPage";
 
-const EditArtikel = ({token}) => {
+const EditArtikel = ({ token }) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -70,19 +70,19 @@ const EditArtikel = ({token}) => {
     "/assets/icon/Add.svg"
   );
   const [gambarPreview, setGambarPreview] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + artikel_peserta.gambar);
-  const [gambarName, setGambarName] = useState (artikel_peserta.gambar)
+  const [gambarName, setGambarName] = useState(artikel_peserta.gambar)
   const [kategori_id, setKategoriId] = useState(artikel_peserta.kategori_id); //belum
   const [users_id, setUserId] = useState(artikel_peserta.users_id);
   const [tag, setTag] = useState(artikel_peserta.tag);
   const [publish, setPublish] = useState(artikel_peserta.publish === 1 ? true : false);
-  const [publishDate, setPublishDate] = useState(artikel_peserta.tanggal_publish ? new Date (artikel_peserta.tanggal_publish) : null);
+  const [publishDate, setPublishDate] = useState(artikel_peserta.tanggal_publish ? new Date(artikel_peserta.tanggal_publish) : null);
   const [disablePublishDate, setDisablePublishDate] = useState(artikel_peserta.publish === 0 ? true : false)
   const [_method, setMethod] = useState("put");
 
   const onChangeGambar = (e) => {
     const type = ["image/jpg", "image/png", "image/jpeg"]
 
-    if (type.includes (e.target.files[0].type)){
+    if (type.includes(e.target.files[0].type)) {
       const reader = new FileReader();
       reader.onload = () => {
         if (reader.readyState === 2) {
@@ -92,7 +92,7 @@ const EditArtikel = ({token}) => {
       };
       reader.readAsDataURL(e.target.files[0])
       setGambarName(e.target.files[0].name)
-    } 
+    }
     else {
       e.target.value = null
       Swal.fire(
@@ -104,13 +104,13 @@ const EditArtikel = ({token}) => {
   };
 
   const handleChangePublish = (e) => {
-    setDisablePublishDate(!disablePublishDate)    
-    setPublishDate (null)
-    if (e.target.checked === false){
-        setPublishDate (null)
-        setPublish (0)
+    setDisablePublishDate(!disablePublishDate)
+    setPublishDate(null)
+    if (e.target.checked === false) {
+      setPublishDate(null)
+      setPublish(0)
     } else {
-        setPublish (1)
+      setPublish(1)
     }
   };
 
@@ -125,7 +125,7 @@ const EditArtikel = ({token}) => {
   }
 
   const handleTag = (data) => {
-    
+
     for (let i = 0; i < data.length; i++) {
       if (hasWhiteSpace(data[i])) {
         data.splice([i], 1);
@@ -142,7 +142,7 @@ const EditArtikel = ({token}) => {
       if (error) {
         dispatch(clearErrors());
       }
-  
+
       if (success) {
         dispatch({
           type: UPDATE_ARTIKEL_PESERTA_RESET,
@@ -151,7 +151,7 @@ const EditArtikel = ({token}) => {
 
       if (publish === true) {
         setPublish(1)
-      
+
       } else if (publish === false) {
         setPublish(0)
       }
@@ -171,7 +171,7 @@ const EditArtikel = ({token}) => {
             publish,
             id,
             _method,
-            tanggal_publish : moment(today).format("YYYY-MM-DD")
+            tanggal_publish: moment(today).format("YYYY-MM-DD")
           };
 
           Swal.fire({
@@ -188,7 +188,7 @@ const EditArtikel = ({token}) => {
               if (result.isConfirmed) {
                 dispatch(updateArtikelPeserta(data, token));
               }
-          });
+            });
 
         } else {
           const data = {
@@ -201,7 +201,7 @@ const EditArtikel = ({token}) => {
             publish,
             id,
             _method,
-            tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
+            tanggal_publish: moment(publishDate).format("YYYY-MM-DD")
           };
 
           Swal.fire({
@@ -218,7 +218,7 @@ const EditArtikel = ({token}) => {
               if (result.isConfirmed) {
                 dispatch(updateArtikelPeserta(data, token));
               }
-          });
+            });
         }
 
       } else {
@@ -228,16 +228,16 @@ const EditArtikel = ({token}) => {
           const data = {
             judul_artikel,
             isi_artikel,
-            gambar : "",
+            gambar: "",
             kategori_id,
             users_id,
             tag,
             publish,
             id,
             _method,
-            tanggal_publish : moment(today).format("YYYY-MM-DD")
+            tanggal_publish: moment(today).format("YYYY-MM-DD")
           };
-          
+
           Swal.fire({
             title: "Apakah anda yakin ?",
             text: "Data ini akan diedit !",
@@ -252,21 +252,21 @@ const EditArtikel = ({token}) => {
               if (result.isConfirmed) {
                 dispatch(updateArtikelPeserta(data, token));
               }
-          });
+            });
         } else {
           const data = {
             judul_artikel,
             isi_artikel,
-            gambar : "",
+            gambar: "",
             kategori_id,
             users_id,
             tag,
             publish,
             id,
             _method,
-            tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
+            tanggal_publish: moment(publishDate).format("YYYY-MM-DD")
           };
-          
+
           Swal.fire({
             title: "Apakah anda yakin ?",
             text: "Data ini akan diedit !",
@@ -281,10 +281,10 @@ const EditArtikel = ({token}) => {
               if (result.isConfirmed) {
                 dispatch(updateArtikelPeserta(data, token));
               }
-          });
+            });
         }
       }
-      
+
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -294,7 +294,7 @@ const EditArtikel = ({token}) => {
         text: "Isi data dengan benar !",
       });
     }
-    
+
   };
 
   const onNewReset = () => {
@@ -432,10 +432,10 @@ const EditArtikel = ({token}) => {
                           src={iconPlus}
                           alt="plus"
                           width={60}
-                          height={60} 
+                          height={60}
                         />
                       </label>
-                      
+
                       <input
                         type="file"
                         name="gambar"
@@ -446,10 +446,10 @@ const EditArtikel = ({token}) => {
                         onBlur={() =>
                           simpleValidator.current.showMessageFor("gambar")
                         }
-                        style={{display: "none"}}
+                        style={{ display: "none" }}
                       />
                     </div>
-                    
+
                   </div>
 
                   <div className="ml-3">
@@ -462,7 +462,7 @@ const EditArtikel = ({token}) => {
                     {
                       gambarName !== null ?
                         <small className="text-danger">{gambarName}</small>
-                      :
+                        :
                         null
                     }
                   </div>
@@ -471,31 +471,31 @@ const EditArtikel = ({token}) => {
                     <p>
                       Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar
                     </p>
-                  </div>                  
+                  </div>
                 </div>
 
                 <div className="form-group">
                   <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Kategori</label>
                   <div className="col-sm-12">
-                      <select name="" id="" className='form-control' value={kategori_id} onChange={e => setKategoriId(e.target.value)} onBlur={e => { setKategoriId(e.target.value); simpleValidator.current.showMessageFor('kategori') }} >
-                          <option selected disabled value=''>-- Artikel --</option>
-                          {!kategori || (kategori && kategori.length === 0) ? (
-                              <option value="">Data kosong</option>
-                          ) : (
-                              kategori && kategori.kategori && kategori.kategori.map((row) => {
-                                  return (
-                                    row.jenis_kategori == "Artikel" ?
-                                      <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>
-                                        {row.nama_kategori}
-                                      </option>
-                                    :
-                                      null
-                                  )
-                              })
-                          )}
+                    <select name="" id="" className='form-control' value={kategori_id} onChange={e => setKategoriId(e.target.value)} onBlur={e => { setKategoriId(e.target.value); simpleValidator.current.showMessageFor('kategori') }} >
+                      <option selected disabled value=''>-- Artikel --</option>
+                      {!kategori || (kategori && kategori.length === 0) ? (
+                        <option value="">Data kosong</option>
+                      ) : (
+                        kategori && kategori.kategori && kategori.kategori.map((row) => {
+                          return (
+                            row.jenis_kategori == "Artikel" ?
+                              <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>
+                                {row.nama_kategori}
+                              </option>
+                              :
+                              null
+                          )
+                        })
+                      )}
 
-                      </select>
-                      {simpleValidator.current.message('kategori', kategori_id, 'required', { className: 'text-danger' })}
+                    </select>
+                    {simpleValidator.current.message('kategori', kategori_id, 'required', { className: 'text-danger' })}
                   </div>
                 </div>
 
@@ -513,7 +513,7 @@ const EditArtikel = ({token}) => {
                       name="fruits"
                       placeHolder="Isi Tag disini"
                       seprators={["Enter", "Tab"]}
-                      // onBlur={() => simpleValidator.current.showMessageFor('tag')}
+                    // onBlur={() => simpleValidator.current.showMessageFor('tag')}
                     />
                     {/* <input type="text" className="form-control" placeholder="Isi Tag disini" value={tag} onChange={e => setTag(e.target.value)} /> */}
                   </div>
@@ -524,7 +524,7 @@ const EditArtikel = ({token}) => {
                     htmlFor="staticEmail"
                     className="ml-5 pl-4 font-weight-bolder"
                   >
-                    Publish 
+                    Publish
                   </label>
                   <div className="col-sm-1 ml-4">
                     <div className="">
@@ -537,9 +537,8 @@ const EditArtikel = ({token}) => {
                           onChange={(e) => handleChangePublish(e)}
                         />
                         <span
-                          className={`sliders round ${
-                            publish ? "text-white" : "pl-2"
-                          }`}
+                          className={`sliders round ${publish ? "text-white" : "pl-2"
+                            }`}
                         >
                         </span>
                       </label>
@@ -562,23 +561,23 @@ const EditArtikel = ({token}) => {
                             dateFormat="dd/MM/yyyy"
                             placeholderText="Silahkan Isi Tanggal Publish"
                             wrapperClassName="col-12 col-lg-12 col-xl-12"
-                            disabled = {disablePublishDate === true || disablePublishDate === null}
+                            disabled={disablePublishDate === true || disablePublishDate === null}
                           />
                         </div>
                         {
                           disablePublishDate === true ?
                             <small className="text-muted">Harap ubah status publikasi menjadi aktif untuk mengisi Tanggal Publish</small>
-                          :
+                            :
                             null
                         }
                       </div>
                     </div>
-                  :
+                    :
                     null
 
                 }
 
-                
+
 
                 <div className="form-group row">
                   <div className="col-sm-2"></div>
@@ -620,14 +619,13 @@ const EditArtikel = ({token}) => {
                 </button>
               </div>
               <div
-                className="modal-body text-center"
-                style={{ height: "400px" }}
+                className={`${styles.modalsPrevImage} modal-body text-center`}
               >
                 <Image
                   src={gambarPreview}
                   alt="image"
                   layout="fill"
-                  objectFit="cover"
+                  objectFit="fill"
                 />
               </div>
               <div className="modal-footer">

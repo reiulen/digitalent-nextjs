@@ -17,6 +17,7 @@ import { NEW_BERITA_RESET, UPDATE_BERITA_RESET } from '../../../../redux/types/p
 // import { getAllKategori } from '../../../../redux/actions/publikasi/kategori.actions'
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingPage from '../../../LoadingPage';
+import { useQuill } from "react-quilljs";
 
 const EditBerita = ({ token, idUser }) => {
     const editorRef = useRef()
@@ -25,7 +26,7 @@ const EditBerita = ({ token, idUser }) => {
 
     const importSwitch = () => import('bootstrap-switch-button-react')
     const [editorLoaded, setEditorLoaded] = useState(false)
-    const { CKEditor, ClassicEditor, Base64UploadAdapter } = editorRef.current || {}
+    
     const SwitchButton = dynamic(importSwitch, {
         ssr: false
     })
@@ -37,34 +38,37 @@ const EditBerita = ({ token, idUser }) => {
     const { loading: allLoading, error: allError, kategori } = useSelector((state) => state.allKategori);
     const { setting } = useSelector(state => state.allSettingPublikasi)
     const { akademi } = useSelector(state => state.allAkademi);
-    // const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(state => state.drowpdownAkademi);
+    const { quill, quillRef } = useQuill();
+    const limit = 12000
 
     useEffect(() => {
+        if (quill) {
+            quill.on('text-change', (delta, oldDelta, source) => {
+                setIsiBerita(quill.root.innerHTML); // Get innerHTML using quill
 
-        // dispatch(getAllKategori())
-
-        editorRef.current = {
-            CKEditor: require('@ckeditor/ckeditor5-react').CKEditor, //Added .CKEditor
-            ClassicEditor: require('@ckeditor/ckeditor5-build-classic'),
-            // Base64UploadAdapter: require('@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter')
+                if (quill.root.innerText.length <= limit) {
+                    return;
+                }
+                const { ops } = delta;
+                let updatedOps;
+                if (ops.length === 1) {
+                    updatedOps = [{ delete: ops[0].insert.length }];
+                } else {
+                    updatedOps = [ops[0], { delete: ops[1].insert.length }];
+                }
+                quill.updateContents({ ops: updatedOps });
+            });
         }
 
         setEditorLoaded(true)
         if (success) {
-            // setJudulBerita('')
-            // setIsiBerita('')
-            // setGambar('')
-            // setGambarPreview('/assets/media/default.jpg')
-            // setKategoriId('')
-            // setTag([])
-
             router.push({
                 pathname: `/publikasi/berita`,
                 query: { success: true }
             })
         }
 
-    }, [dispatch, error, success, loading, router]);
+    }, [dispatch, error, success, loading, router, quill]);
 
     const [id, setId] = useState(berita.id)
     const [judul_berita, setJudulBerita] = useState(berita.judul_berita)
@@ -81,9 +85,7 @@ const EditBerita = ({ token, idUser }) => {
     const [kategori_akademi, setKategoriAkademi] = useState(berita.kategori_akademi);
     const [tag, setTag] = useState(berita.tag)
     const [publish, setPublish] = useState(berita.publish)
-    // const [publish, setPublish] = useState(berita.publish === 1 ? true : false)
     const [_method, setMethod] = useState("put")
-    // const [publishDate, setPublishDate] = useState(null);
     const [publishDate, setPublishDate] = useState(berita.tanggal_publish ? (new Date(berita.tanggal_publish)) : null);
     const [disablePublishDate, setDisablePublishDate] = useState(berita.publish === 0 ? true : false)
     const [disableTag, setDisableTag] = useState(false)
@@ -370,24 +372,36 @@ const EditBerita = ({ token, idUser }) => {
                                     <label htmlFor="staticEmail" className="col-sm-4 col-form-label font-weight-bolder">Isi Berita</label>
                                     <div className={`${styles.deskripsiTambah} col-sm-12`}>
                                         <div className="ckeditor">
-                                            {editorLoaded ? <CKEditor
-                                                ck-editor__editable
-                                                editor={ClassicEditor}
-                                                data={isi_berita}
-                                                onReady={editor => {
-                                                    // You can store the "editor" and use when it is needed.
-                                                }}
-                                                onChange={(event, editor) => {
-                                                    const data = editor.getData()
-                                                    setIsiBerita(data);
-                                                }}
-                                                onBlur={() =>
-                                                    simpleValidator.current.showMessageFor(
-                                                        "isi_berita"
-                                                    )
-                                                }
-                                                config={{ placeholder: "Tulis Deskripsi" }}
-                                            /> : <p>Tunggu Sebentar</p>}
+                                            {editorLoaded ?
+                                                <div style={{ width: "100%", height: "300px" }}>
+                                                    <div
+                                                        ref={quillRef}
+                                                        onChange={(event) => {
+                                                            // const data = editor.getData();
+                                                            // setIsiBerita(data);
+                                                        }}
+                                                    />
+                                                </div>
+                                                // <CKEditor
+                                                //     ck-editor__editable
+                                                //     editor={ClassicEditor}
+                                                //     data={isi_berita}
+                                                //     onReady={editor => {
+                                                //         // You can store the "editor" and use when it is needed.
+                                                //     }}
+                                                //     onChange={(event, editor) => {
+                                                //         const data = editor.getData()
+                                                //         setIsiBerita(data);
+                                                //     }}
+                                                //     onBlur={() =>
+                                                //         simpleValidator.current.showMessageFor(
+                                                //             "isi_berita"
+                                                //         )
+                                                //     }
+                                                //     config={{ placeholder: "Tulis Deskripsi" }}
+                                                // /> 
+                                                :
+                                                <p>Tunggu Sebentar</p>}
                                             {simpleValidator.current.message(
                                                 "isi_berita",
                                                 isi_berita,
@@ -416,7 +430,7 @@ const EditBerita = ({ token, idUser }) => {
                                                 alt="image"
                                                 width={160}
                                                 height={160}
-                                                objectFit="fill"
+                                                objectFit="cover"
                                             />
                                         </figure>
                                         <div>
