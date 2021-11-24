@@ -358,13 +358,9 @@ export default function EditSertifikat({ token }) {
         }
 
         for (let i = 0; i < number_of_signatures; i++) {
-          if (signature[i].localSignature) {
-            formData.append(
-              `signature_certificate_image[${i}]`,
-              signature[i].localSignature
-            );
+          if (signature[i].signature) {
+            formData.append(`signature_certificate_image[${i}]`, "");
           }
-
           formData.append(
             `signature_certificate_position[${i}]`,
             signature[i].position

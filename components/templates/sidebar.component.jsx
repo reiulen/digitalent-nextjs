@@ -295,6 +295,13 @@ const Sidebar = ({ session }) => {
           selected: false,
           child: [],
         },
+        {
+          id: 2,
+          name: "TTE P12",
+          href: "/sertifikat/tte-p12",
+          selected: false,
+          child: [],
+        },
       ],
     },
     {
