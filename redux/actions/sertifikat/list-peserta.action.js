@@ -13,7 +13,9 @@ export const getAllParticipant =
   async (dispatch) => {
     try {
       dispatch({ type: LIST_PESERTA_REQUEST });
-      let link = process.env.END_POINT_API_SERTIFIKAT + `api/manage_certificates/detail-mitra/${id}?page=${page}`;
+      let link =
+        process.env.END_POINT_API_SERTIFIKAT +
+        `api/manage_certificates/detail-mitra/${id}?page=${page}`;
       if (keyword) link = link.concat(`&keyword=${keyword}`);
       if (limit) link = link.concat(`&limit=${limit}`);
       const config = {
@@ -35,22 +37,25 @@ export const getAllParticipant =
   };
 
 export const getDetailParticipant =
-  (id, page = 1, keyword = "", limit = 5, token) =>
-  async (dispatch) => {
+  (id, id_pelatihan, token) => async (dispatch) => {
     try {
       dispatch({ type: DETAIL_LIST_PESERTA_REQUEST });
-      let link = process.env.END_POINT_API_SERTIFIKAT + `api/manage_certificates/detail-mitra/${id}?page=${page}`;
-      if (keyword) link = link.concat(`&keyword=${keyword}`);
-      if (limit) link = link.concat(`&limit=${limit}`);
+
+      let link =
+        process.env.END_POINT_API_SERTIFIKAT +
+        `api/manage_certificates/detail-mitra-certificate/${id_pelatihan}/${id}`;
 
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       };
+
       const { data } = await axios.get(link, config);
+
       if (data) {
         dispatch({ type: DETAIL_LIST_PESERTA_SUCCESS, payload: data });
+        return data;
       }
     } catch (error) {
       dispatch({

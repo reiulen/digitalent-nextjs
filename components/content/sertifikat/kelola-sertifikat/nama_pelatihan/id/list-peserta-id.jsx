@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import PageWrapper from "../../../../../wrapper/page.wrapper";
 import { clearErrors } from "../../../../../../redux/actions/sertifikat/kelola-sertifikat.action";
 import { toPng } from "html-to-image";
+import moment from "moment";
 // #Icon
 
 export default function ListPesertaID({ token }) {
@@ -23,10 +24,10 @@ export default function ListPesertaID({ token }) {
     certificate?.data?.certificate?.certificate_type
   );
   const [currentUser, setCurrentUser] = useState([]);
+
+  console.log(participant, "ini participant");
   useEffect(() => {
-    const data = participant.data.list_certificate.filter(
-      (el) => el.name == query.name
-    );
+    const data = participant?.data?.list?.filter((el) => el.user == query.name);
     setCurrentUser(data);
   }, [participant, query.name]);
 
@@ -130,7 +131,7 @@ export default function ListPesertaID({ token }) {
               >
                 <div className="position-relative">
                   <div className="position-absolute p-6 font-weight-boldest p-10 responsive-normal-font-size zindex-1">
-                    {currentUser[0]?.registration_number}
+                    {participant?.data?.nomor_registrasi}
                   </div>
                   <div
                     className={`position-absolute ${
@@ -139,8 +140,13 @@ export default function ListPesertaID({ token }) {
                         : "responsive-date-from-without-background"
                     } font-weight-boldest zindex-1 responsive-date-text`}
                   >
-                    {currentUser[0]?.date_from.split("-").reverse().join("-")} -{" "}
-                    {currentUser[0]?.date_to.split("-").reverse().join("-")}
+                    {moment(participant?.data?.pelatihan_mulai).format(
+                      "DD MMMM"
+                    )}{" "}
+                    -{" "}
+                    {moment(participant?.data?.pelatihan_selesai).format(
+                      "DD MMMM YYYY"
+                    )}
                   </div>
                   <div
                     className={`position-absolute ${
@@ -149,7 +155,7 @@ export default function ListPesertaID({ token }) {
                         : "responsive-year-without-background"
                     } font-weight-boldest zindex-1 responsive-date-text`}
                   >
-                    {currentUser[0]?.year}
+                    {participant.data.tahun}
                   </div>
                   <Image
                     src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-images/${certificate.data.certificate.certificate_result}`}
@@ -178,8 +184,8 @@ export default function ListPesertaID({ token }) {
               <div className="row mx-0 mt-10 col-12">
                 <div className="position-relative text-center col-12 col-md-2 btn bg-blue-secondary text-white rounded-full font-weight-bolder px-10 py-4">
                   <a
-                    onClick={(e) => {
-                      handleDownload(e);
+                    onClick={() => {
+                      handleDownload();
                     }}
                   >
                     Unduh
