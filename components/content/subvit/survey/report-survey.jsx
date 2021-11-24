@@ -319,19 +319,6 @@ const ReportSurvey = ({ token }) => {
                                   </p>
                                 </div>
                               </td>
-                              {/* {row.status ? (
-                                <td className="align-middle">
-                                  <span className="label label-inline label-light-success font-weight-bold">
-                                    Diterima
-                                  </span>
-                                </td>
-                              ) : (
-                                <td className="align-middle">
-                                  <span className="label label-inline label-light-danger font-weight-bold">
-                                    Ditolak
-                                  </span>
-                                </td>
-                              )} */}
 
                               {/* Buat Tampilan  */}
 

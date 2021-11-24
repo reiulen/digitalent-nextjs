@@ -377,25 +377,6 @@ const StepOne = ({ token }) => {
                   </div>
                 </div>
               </div>
-
-              {/* <div className="form-group mb-3">
-                <div className=""></div>
-                <div className=" col-md-12 text-right">
-                  <button
-                    type="submit"
-                    className={`${styleBtn.btnNext} btn btn-light-ghost-rounded-full mr-2`}
-                  >
-                    Simpan & Lanjut
-                  </button>
-                  <button
-                    onClick={saveDraft}
-                    className="btn btn-primary-rounded-full text-white "
-                    type="button"
-                  >
-                    Simpan Draft
-                  </button>
-                </div>
-              </div> */}
             </form>
           </div>
         </div>
