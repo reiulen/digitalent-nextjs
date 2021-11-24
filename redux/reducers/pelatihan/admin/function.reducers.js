@@ -50,6 +50,7 @@ import {
   GET_DATA_PRIBADI_SUCCESS,
   GET_DATA_PRIBADI_FAIL,
   CLEAR_ERRORS,
+  GET_DROPDOWN_YEAR
 } from "../../../types/pelatihan/function.type";
 
 export const getDataPribadiReducer = (state = { dataPribadi: {} }, action) => {
@@ -239,6 +240,22 @@ export const drowpdownPelatihanReducers = (state = { data: [] }, action) => {
     case ERROR_DROPDOWN_PELATIHAN:
       return {
         error: action.payload,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};
+
+export const drowpdownYearReducers = (state = {}, action) => {
+  switch (action.type) {
+    case GET_DROPDOWN_YEAR:
+      return {
+        data: action.payload,
       };
     case CLEAR_ERRORS:
       return {
