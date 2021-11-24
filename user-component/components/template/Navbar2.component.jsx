@@ -47,7 +47,7 @@ const Navigationbar = ({ session }) => {
   const router = useRouter();
   const [isShowDropdown, setIsShowDropdown] = useState(false);
   const { error: errorDataPribadi, dataPribadi } = useSelector(
-    state => state.getDataPribadi
+    (state) => state.getDataPribadi
   );
 
   useEffect(() => {
@@ -157,7 +157,7 @@ const Navigationbar = ({ session }) => {
             )}
             <Navbar.Toggle
               aria-controls="basic-navbar-nav"
-              onClick={e => {
+              onClick={(e) => {
                 setIsNavOpen(!isNavOpen);
               }}
               className="p-3"
@@ -440,12 +440,12 @@ const Navigationbar = ({ session }) => {
                         <i className="ri-settings-4-line mr-2"></i>
                         PENGATURAN
                       </li>
-                      <li className={`items-lists `}>
+                      <li className={`items-lists p-0 p-3`}>
                         <button
-                          className="btn btn-sm btn-login-peserta w-100 d-flex align-items-center justify-content-center"
+                          className={`btn rounded-full ${style.navbar_btnPrimary} d-flex align-items-center justify-content-center`}
                           onClick={() => handlerLogout()}
                         >
-                          <IconLogin className="mr-2" />
+                          <i className="ri-logout-box-r-line"> </i>
                           KELUAR
                         </button>
                       </li>

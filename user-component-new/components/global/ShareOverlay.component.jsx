@@ -7,8 +7,6 @@ import {
   FacebookShareButton,
   LineShareButton,
   TelegramShareButton,
-} from "react-share";
-import {
   FacebookIcon,
   WhatsappIcon,
   LineIcon,

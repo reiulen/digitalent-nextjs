@@ -43,6 +43,14 @@
   margin-right: 10px;
 }
 
+.btn-login-peserta i {
+  color: #007cff;
+}
+
+.btn-login-peserta:hover i {
+  color: white;
+}
+
 .btn-register-peserta {
   background-color: #007cff;
   display: flex;
@@ -53,6 +61,29 @@
   border: 1px solid #007cff;
   border-radius: 19px;
   color: white;
+  margin-right: 10px;
+}
+
+.btn-register-peserta:hover {
+  background-color: white;
+  display: flex;
+  align-items: center;
+  padding: 8px 15px;
+  font-weight: 600;
+  font-size: 13px;
+  border: 1px solid #007cff;
+  border-radius: 19px;
+  color: #007cff;
+  margin-right: 10px;
+}
+
+.btn-register-peserta i {
+  color: white;
+  margin-right: 10px;
+}
+
+.btn-register-peserta:hover i {
+  color: #007cff;
   margin-right: 10px;
 }
 

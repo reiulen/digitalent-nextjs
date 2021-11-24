@@ -288,7 +288,7 @@ const EditDokumentKerjasamaById = ({ token }) => {
                     href={{
                       pathname:
                         "/partnership/mitra/detail-data-kerjasama-mitra",
-                      query: { id: router.query.id },
+                      query: { id: router.query.idDetail },
                     }}
                     className="mr-2"
                   >
