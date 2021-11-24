@@ -47,7 +47,6 @@ const TentangKami = ({ token }) => {
     });
   };
 
-  console.log(pages);
   return (
     <PageWrapper>
       <div className="row">
