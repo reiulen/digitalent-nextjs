@@ -44,7 +44,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
             await store.dispatch(getDataPribadi(sessionToken));
 
-            await store.dispatch(getAllFaq(query.pinned));
+            await store.dispatch(getAllFaq(query.pinned, query.category_name, query.keyword));
 
             await store.dispatch(getKategoriBerandaFaq());
 

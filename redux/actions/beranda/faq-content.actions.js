@@ -13,7 +13,9 @@ import {
 
 
 export const getAllFaq = (
-    pinned = ""
+    pinned = 1,
+    category_name = "",
+    keyword = ""
 ) => async (dispatch) => {
     try {
 
@@ -21,7 +23,9 @@ export const getAllFaq = (
 
         let link = process.env.END_POINT_API_PUBLIKASI_1 + `api/home/faq`;
 
-        if (pinned) link = link.concat(`&pinned=${pinned}`);
+        if (pinned) link = link.concat(`?pinned=${pinned}`);
+        if (category_name) link = link.concat(`?category_name=${category_name}`);
+        if (keyword) link = link.concat(`?keyword=${keyword}`);
 
         const { data } = await axios.get(link)
 
