@@ -44,7 +44,11 @@ const StepOne = ({ token }) => {
   const [academy_id, setAcademyId] = useState("");
   const [theme_id, setThemeId] = useState("");
   const [training_id, setTrainingId] = useState("");
-  const [academyLabel, setAcademyLabel] = useState("");
+  const [academyLabel, setAcademyLabel] = useState("Silahkan Pilih Akademi");
+  const [themeLabel, setThemeLabel] = useState("Silahkan Pilih Tema");
+  const [trainingLabel, setTrainingLabel] = useState(
+    "Silahkan Pilih Pelatihan"
+  );
   const [category, setCategory] = useState("");
 
   useEffect(() => {
@@ -81,11 +85,23 @@ const StepOne = ({ token }) => {
 
   const handleChangePelatihan = (e) => {
     setThemeId(e.value);
+    setThemeLabel(e.label);
+    setTrainingId("");
+    setTrainingLabel("Silahkan Pilih Pelatihan");
   };
 
   const handleChangeTema = (e) => {
     setAcademyId(e.value);
     setAcademyLabel(e.label);
+    setThemeId("");
+    setThemeLabel("Silahkan Pilih Tema");
+    setTrainingId("");
+    setTrainingLabel("Silahkan Pilih Pelatihan");
+  };
+
+  const handleTraining = (e) => {
+    setTrainingId(parseInt(e.value));
+    setTrainingLabel(e.label);
   };
 
   const saveDraft = () => {
@@ -217,8 +233,10 @@ const StepOne = ({ token }) => {
                   Akademi
                 </Form.Label>
                 <Select
-                  placeholder={"Silahkan Pilih Akademi"}
+                  placeholder={academyLabel || "Silahkan Pilih Akademi"}
+                  className={styles.selectForm}
                   options={dataAkademi.data}
+                  value={academyLabel}
                   onChange={(event) => handleChangeTema(event)}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("akademi")
@@ -239,8 +257,10 @@ const StepOne = ({ token }) => {
                   Tema
                 </Form.Label>
                 <Select
-                  placeholder={"Silahkan Pilih Tema"}
+                  placeholder={themeLabel || "Silahkan Pilih Tema"}
                   options={optionsTema}
+                  value={themeLabel}
+                  className={styles.selectForm}
                   onChange={(event) => handleChangePelatihan(event)}
                   onBlur={() => simpleValidator.current.showMessageFor("tema")}
                 />
@@ -254,8 +274,10 @@ const StepOne = ({ token }) => {
                   Pelatihan
                 </Form.Label>
                 <Select
-                  placeholder={"Silahkan Pilih Pelatihan"}
+                  placeholder={trainingLabel || "Silahkan Pilih Pelatihan"}
                   options={dataPelatihan2}
+                  value={trainingLabel}
+                  className={styles.selectForm}
                   onChange={(e) => handleTraining(e)}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("training")
@@ -278,6 +300,7 @@ const StepOne = ({ token }) => {
                 <Select
                   placeholder={"Silahkan Pilih Kategori"}
                   options={optionsKategori}
+                  className={styles.selectForm}
                   onChange={(e) => setCategory(e.value)}
                 />
               </Form.Group>

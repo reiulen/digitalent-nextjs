@@ -38,15 +38,23 @@ const StepOne = ({ token }) => {
   const { loading, error, isUpdated } = useSelector(
     (state) => state.updateSubtanceQuestion
   );
-
+  const [, forceUpdate] = useState();
   const [typeSave, setTypeSave] = useState("lanjut");
   const [academy_id, setAcademyId] = useState(subtance.academy_id);
-  const [academyLabel, setAcademyLabel] = useState("");
-  const [themeLabel, setThemeLabel] = useState("");
-  const [trainingLabel, setTrainingLabel] = useState("");
-  const [theme_id, setThemeId] = useState(subtance.theme_id);
-  const [training_id, setTrainingId] = useState(subtance.training_id);
-  const [category, setCategory] = useState(subtance.category);
+  const [academyLabel, setAcademyLabel] = useState(
+    (subtance.academy && subtance.academy.name) || "Silahkan Pilih Akademi"
+  );
+  const [themeLabel, setThemeLabel] = useState(
+    (subtance.theme && subtance.theme.name) || "Silahkan Pilih Tema"
+  );
+  const [trainingLabel, setTrainingLabel] = useState(
+    (subtance.training && subtance.training.name) || "Silahkan Pilih Pelatihan"
+  );
+  const [theme_id, setThemeId] = useState(subtance && subtance.theme_id);
+  const [training_id, setTrainingId] = useState(
+    subtance && subtance.training_id
+  );
+  const [category, setCategory] = useState(subtance && subtance.category);
 
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
 
@@ -83,29 +91,48 @@ const StepOne = ({ token }) => {
 
   const saveDraft = () => {
     setTypeSave("draft");
-    const data = {
-      academy_id,
-      theme_id,
-      training_id,
-      category,
-      _method: "put",
-    };
+    if (simpleValidator.current.allValid()) {
+      const data = {
+        academy_id,
+        theme_id,
+        training_id,
+        category,
+        _method: "put",
+      };
 
-    dispatch(updatewSubtanceQuestionBanks(id, data, token));
+      dispatch(updatewSubtanceQuestionBanks(id, data, token));
+    } else {
+      simpleValidator.current.showMessages();
+      forceUpdate(1);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Isi data dengan benar !",
+      });
+    }
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
     setTypeSave("lanjut");
-
-    const data = {
-      academy_id,
-      theme_id,
-      training_id,
-      category,
-      _method: "put",
-    };
-    dispatch(updatewSubtanceQuestionBanks(id, data, token));
+    if (simpleValidator.current.allValid()) {
+      const data = {
+        academy_id,
+        theme_id,
+        training_id,
+        category,
+        _method: "put",
+      };
+      dispatch(updatewSubtanceQuestionBanks(id, data, token));
+    } else {
+      simpleValidator.current.showMessages();
+      forceUpdate(1);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Isi data dengan benar !",
+      });
+    }
   };
 
   const { data } = useSelector((state) => state.drowpdownTemabyAkademi);
@@ -117,13 +144,17 @@ const StepOne = ({ token }) => {
   const handleChangePelatihan = (e) => {
     setThemeId(e.value);
     setThemeLabel(e.label);
+    setTrainingId("");
+    setTrainingLabel("Silahkan Pilih Pelatihan");
   };
 
   const handleChangeTema = (e) => {
     setAcademyId(e.value);
     setAcademyLabel(e.label);
-    setTrainingLabel("");
-    setThemeLabel("");
+    setThemeId("");
+    setThemeLabel("Silahkan Pilih Tema");
+    setTrainingId("");
+    setTrainingLabel("Silahkan Pilih Pelatihan");
   };
 
   const handleTraining = (e) => {
@@ -187,6 +218,7 @@ const StepOne = ({ token }) => {
                   placeholder={
                     subtance ? academyLabel : "Silahkan Pilih Akademi"
                   }
+                  className={styles.selectForm}
                   options={dataAkademi.data}
                   value={academyLabel}
                   onChange={(event) => handleChangeTema(event)}
@@ -212,6 +244,7 @@ const StepOne = ({ token }) => {
                   placeholder={subtance ? themeLabel : "Silahkan Pilih Tema"}
                   options={optionsTema}
                   value={themeLabel}
+                  className={styles.selectForm}
                   onChange={(event) => handleChangePelatihan(event)}
                   onBlur={() => simpleValidator.current.showMessageFor("tema")}
                 />
@@ -230,6 +263,7 @@ const StepOne = ({ token }) => {
                   }
                   options={dataPelatihan2}
                   value={trainingLabel}
+                  className={styles.selectForm}
                   onChange={(e) => handleTraining(e)}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("training")
@@ -237,7 +271,7 @@ const StepOne = ({ token }) => {
                 />
                 {simpleValidator.current.message(
                   "pelatihan",
-                  trainingLabel,
+                  training_id,
                   "required",
                   {
                     className: "text-danger",

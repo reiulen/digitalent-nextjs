@@ -42,7 +42,12 @@ const StepOne = ({ token }) => {
   const [academy_id, setAcademyId] = useState("");
   const [theme_id, setThemeId] = useState("");
   const [training_id, setTrainingId] = useState("");
-  const [academyLabel, setAcademyLabel] = useState("");
+  const [academyLabel, setAcademyLabel] = useState("Silahkan Pilih Akademi");
+  const [themeLabel, setThemeLabel] = useState("Silahkan Pilih Tema");
+  const [trainingLabel, setTrainingLabel] = useState(
+    "Silahkan Pilih Pelatihan"
+  );
+
   const [category, setCategory] = useState("");
   const [metode, setMetode] = useState("entry");
 
@@ -145,15 +150,23 @@ const StepOne = ({ token }) => {
 
   const handleChangePelatihan = (e) => {
     setThemeId(e.value);
+    setThemeLabel(e.label);
+    setTrainingId("");
+    setTrainingLabel("Silahkan Pilih Pelatihan");
   };
 
   const handleChangeTema = (e) => {
     setAcademyId(e.value);
     setAcademyLabel(e.label);
+    setThemeId("");
+    setThemeLabel("Silahkan Pilih Tema");
+    setTrainingId("");
+    setTrainingLabel("Silahkan Pilih Pelatihan");
   };
 
   const handleTraining = (e) => {
     setTrainingId(parseInt(e.value));
+    setTrainingLabel(e.label);
   };
 
   const handleResetError = () => {
@@ -217,8 +230,10 @@ const StepOne = ({ token }) => {
                   Akademi
                 </Form.Label>
                 <Select
-                  placeholder={"Silahkan Pilih Akademi"}
+                  placeholder={academyLabel || "Silahkan Pilih Akademi"}
+                  className={styles.selectForm}
                   options={dataAkademi.data}
+                  value={academyLabel}
                   onChange={(event) => handleChangeTema(event)}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("akademi")
@@ -239,8 +254,10 @@ const StepOne = ({ token }) => {
                   Tema
                 </Form.Label>
                 <Select
-                  placeholder={"Silahkan Pilih Tema"}
+                  placeholder={themeLabel || "Silahkan Pilih Tema"}
                   options={optionsTema}
+                  value={themeLabel}
+                  className={styles.selectForm}
                   onChange={(event) => handleChangePelatihan(event)}
                   onBlur={() => simpleValidator.current.showMessageFor("tema")}
                 />
@@ -254,8 +271,10 @@ const StepOne = ({ token }) => {
                   Pelatihan
                 </Form.Label>
                 <Select
-                  placeholder={"Silahkan Pilih Pelatihan"}
+                  placeholder={trainingLabel || "Silahkan Pilih Pelatihan"}
                   options={dataPelatihan2}
+                  value={trainingLabel}
+                  className={styles.selectForm}
                   onChange={(e) => handleTraining(e)}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("training")
@@ -278,10 +297,44 @@ const StepOne = ({ token }) => {
                 <Select
                   placeholder={"Silahkan Pilih Kategori"}
                   options={optionsKategori}
+                  className={styles.selectForm}
                   onChange={(e) => setCategory(e.value)}
                 />
               </Form.Group>
             </Form>
+
+            <div className="form-group ">
+              <label
+                htmlFor="staticEmail"
+                className=" col-form-label font-weight-bold"
+              >
+                Metode
+              </label>
+              <div className="">
+                <div className="form-check form-check-inline">
+                  <input
+                    className="form-check-input"
+                    type="radio"
+                    name="method"
+                    value="entry"
+                    checked={metode === "entry"}
+                    onClick={() => setMetode("entry")}
+                  />
+                  <label className="form-check-label">Entry Soal</label>
+                </div>
+                <div className="form-check form-check-inline">
+                  <input
+                    className="form-check-input"
+                    type="radio"
+                    name="method"
+                    value="import"
+                    checked={metode === "import"}
+                    onClick={() => setMetode("import")}
+                  />
+                  <label className="form-check-label">Import .csv/.xls</label>
+                </div>
+              </div>
+            </div>
 
             <div className="form-group mt-10">
               <div className=""></div>
