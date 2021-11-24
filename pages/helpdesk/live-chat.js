@@ -5,7 +5,7 @@ import { wrapper } from "../../redux/store";
 import { getDataPribadi } from "../../redux/actions/pelatihan/function.actions";
 
 const FormPengaduan = dynamic(() =>
-  import("../../user-component-new/content/home/helpdesk/formulir-pengaduan")
+  import("../../user-component-new/content/home/helpdesk/live-chat")
 );
 
 const Layout = dynamic(

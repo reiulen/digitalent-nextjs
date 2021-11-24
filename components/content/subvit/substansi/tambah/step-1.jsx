@@ -2,8 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
-import SimpleReactValidator from "simple-react-validator";
-import Swal from "sweetalert2";
 
 import {
   newSubtanceQuestionBanks,
@@ -15,10 +13,15 @@ import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInput from "/components/StepInput";
 import LoadingPage from "../../../../LoadingPage";
 import styles from "../../trivia/edit/step.module.css";
+import SimpleReactValidator from "simple-react-validator";
+import Swal from "sweetalert2";
+import Select from "react-select";
+
 import {
   dropdownPelatihanbyTema,
   dropdownTemabyAkademi,
 } from "../../../../../redux/actions/pelatihan/function.actions";
+import { Form } from "react-bootstrap";
 
 const StepOne = ({ token }) => {
   const dispatch = useDispatch();
@@ -39,10 +42,18 @@ const StepOne = ({ token }) => {
   const [academy_id, setAcademyId] = useState("");
   const [theme_id, setThemeId] = useState("");
   const [training_id, setTrainingId] = useState("");
+  const [academyLabel, setAcademyLabel] = useState("Silahkan Pilih Akademi");
+  const [themeLabel, setThemeLabel] = useState("Silahkan Pilih Tema");
+  const [trainingLabel, setTrainingLabel] = useState(
+    "Silahkan Pilih Pelatihan"
+  );
+
   const [category, setCategory] = useState("");
   const [metode, setMetode] = useState("entry");
 
   useEffect(() => {
+    dispatch(dropdownTemabyAkademi(academy_id, token));
+    dispatch(dropdownPelatihanbyTema(theme_id, token));
     if (success) {
       const id = subtance.id;
       if (typeSave === "lanjut") {
@@ -57,21 +68,17 @@ const StepOne = ({ token }) => {
         });
       }
     }
-  }, [dispatch, success, typeSave, metode, subtance, router]);
-
-  const handleChangeTema = (e) => {
-    setAcademyId(e.target.value);
-    e.target.value && dispatch(dropdownTemabyAkademi(e.target.value, token));
-  };
-
-  const handleChangePelatihan = (e) => {
-    setThemeId(e.target.value);
-    e.target.value && dispatch(dropdownPelatihanbyTema(e.target.value, token));
-  };
-
-  const { data } = useSelector((state) => state.drowpdownTemabyAkademi);
-
-  const { drowpdownPelatihanbyTema } = useSelector((state) => state);
+  }, [
+    dispatch,
+    success,
+    typeSave,
+    metode,
+    subtance,
+    router,
+    academy_id,
+    token,
+    theme_id,
+  ]);
 
   const saveDraft = () => {
     setTypeSave("draft");
@@ -135,11 +142,50 @@ const StepOne = ({ token }) => {
     }
   };
 
+  const { data } = useSelector((state) => state.drowpdownTemabyAkademi);
+
+  const { data: dataPelatihan2 } = useSelector(
+    (state) => state.drowpdownPelatihanbyTema.data
+  );
+
+  const handleChangePelatihan = (e) => {
+    setThemeId(e.value);
+    setThemeLabel(e.label);
+    setTrainingId("");
+    setTrainingLabel("Silahkan Pilih Pelatihan");
+  };
+
+  const handleChangeTema = (e) => {
+    setAcademyId(e.value);
+    setAcademyLabel(e.label);
+    setThemeId("");
+    setThemeLabel("Silahkan Pilih Tema");
+    setTrainingId("");
+    setTrainingLabel("Silahkan Pilih Pelatihan");
+  };
+
+  const handleTraining = (e) => {
+    setTrainingId(parseInt(e.value));
+    setTrainingLabel(e.label);
+  };
+
   const handleResetError = () => {
     if (error) {
       dispatch(clearErrors());
     }
   };
+
+  const optionsKategori = [
+    { value: "Test Substansi", label: "Test Substansi" },
+    { value: "Mid Test", label: "Mid Test" },
+  ];
+
+  let optionsTema = [];
+
+  data.data &&
+    data.data.map((item) => {
+      return optionsTema.push({ label: item.label, value: item.value });
+    });
 
   return (
     <PageWrapper>
@@ -178,206 +224,136 @@ const StepOne = ({ token }) => {
             <h2 className="card-title text-dark h2">Tambah Test Subtansi</h2>
           </div>
           <div className="card-body pt-0">
-            <form onSubmit={onSubmit}>
-              <div className="form-group mb-2">
-                <label
-                  htmlFor="staticEmail"
-                  className=" col-form-label font-weight-bold"
-                >
+            <Form>
+              <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label className=" col-form-label font-weight-bold">
                   Akademi
-                </label>
-                <select
-                  defaultValue={academy_id}
-                  name="academy_id"
-                  id=""
-                  value={academy_id}
+                </Form.Label>
+                <Select
+                  placeholder={academyLabel || "Silahkan Pilih Akademi"}
+                  className={styles.selectForm}
+                  options={dataAkademi.data}
+                  value={academyLabel}
                   onChange={(event) => handleChangeTema(event)}
-                  onBlur={(event) => {
-                    handleChangeTema(event);
-                    simpleValidator.current.showMessageFor("academy_id");
-                  }}
-                  className="form-control"
-                >
-                  <option selected disabled value="">
-                    {" "}
-                    -Pilih Akademi -
-                  </option>
-                  {dataAkademi.data.map((item, index) => {
-                    return (
-                      <>
-                        <option value={item.value} key={index}>
-                          {" "}
-                          {item.label}{" "}
-                        </option>
-                      </>
-                    );
-                  })}
-                </select>
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("akademi")
+                  }
+                />
                 {simpleValidator.current.message(
-                  "academy_id",
+                  "akademi",
                   academy_id,
                   "required",
-                  { className: "text-danger" }
+                  {
+                    className: "text-danger",
+                  }
                 )}
-              </div>
+              </Form.Group>
 
-              <div className="form-group mb-2">
-                <label
-                  htmlFor="staticEmail"
-                  className=" col-form-label font-weight-bold"
-                >
+              <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label className=" col-form-label font-weight-bold">
                   Tema
-                </label>
-                <select
-                  name="the_id"
-                  id=""
+                </Form.Label>
+                <Select
+                  placeholder={themeLabel || "Silahkan Pilih Tema"}
+                  options={optionsTema}
+                  value={themeLabel}
+                  className={styles.selectForm}
                   onChange={(event) => handleChangePelatihan(event)}
-                  onBlur={(event) => {
-                    handleChangePelatihan(event);
-                    simpleValidator.current.showMessageFor("theme_id");
-                  }}
-                  className="form-control"
-                  defaultValue={theme_id}
-                >
-                  <option selected disabled value="">
-                    {" "}
-                    -Pilih Tema-
-                  </option>
-                  {data.data &&
-                    data.data.map((item, index) => {
-                      return (
-                        <>
-                          <option value={item.value} key={index}>
-                            {item.label}
-                          </option>
-                        </>
-                      );
-                    })}
-                </select>
-                {simpleValidator.current.message(
-                  "theme_id",
-                  theme_id,
-                  "required",
-                  { className: "text-danger" }
-                )}
-              </div>
+                  onBlur={() => simpleValidator.current.showMessageFor("tema")}
+                />
+                {simpleValidator.current.message("tema", theme_id, "required", {
+                  className: "text-danger",
+                })}
+              </Form.Group>
 
-              <div className="form-group mb-2">
-                <label
-                  htmlFor="staticEmail"
-                  className=" col-form-label font-weight-bold"
-                >
+              <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label className=" col-form-label font-weight-bold">
                   Pelatihan
-                </label>
-                <select
-                  name="training_id"
-                  id=""
-                  onChange={(e) => setTrainingId(e.target.value)}
-                  onBlur={(e) => setTrainingId(e.target.value)}
-                  className="form-control"
-                >
-                  <option selected disabled value="">
-                    {" "}
-                    -Pilih Pelatihan-
-                  </option>
-                  {drowpdownPelatihanbyTema.data.data &&
-                    drowpdownPelatihanbyTema.data.data.map((item, index) => {
-                      return (
-                        <>
-                          <option value={item.value} key={index}>
-                            {" "}
-                            {item.label}
-                          </option>
-                        </>
-                      );
-                    })}
-                </select>
-              </div>
-
-              <div className="form-group mb-2">
-                <label
-                  htmlFor="staticEmail"
-                  className=" col-form-label font-weight-bold"
-                >
-                  Kategori
-                </label>
-                <select
-                  name="category"
-                  id=""
-                  onChange={(e) => setCategory(e.target.value)}
-                  onBlur={(e) => {
-                    setCategory(e.target.value);
-                    simpleValidator.current.showMessageFor("category");
-                  }}
-                  className="form-control"
-                >
-                  <option selected disabled>
-                    {" "}
-                    -Pilih Kategori-
-                  </option>
-                  <option value="Test Substansi"> Test Substansi </option>
-                  <option value="Mid Test"> Mid Test </option>
-                </select>
+                </Form.Label>
+                <Select
+                  placeholder={trainingLabel || "Silahkan Pilih Pelatihan"}
+                  options={dataPelatihan2}
+                  value={trainingLabel}
+                  className={styles.selectForm}
+                  onChange={(e) => handleTraining(e)}
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("training")
+                  }
+                />
                 {simpleValidator.current.message(
-                  "category",
-                  category,
+                  "pelatihan",
+                  training_id,
                   "required",
-                  { className: "text-danger" }
+                  {
+                    className: "text-danger",
+                  }
                 )}
-              </div>
+              </Form.Group>
 
-              <div className="form-group">
-                <label
-                  htmlFor="staticEmail"
-                  className=" col-form-label font-weight-bold"
+              <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label className=" col-form-label font-weight-bold">
+                  Kategori
+                </Form.Label>
+                <Select
+                  placeholder={"Silahkan Pilih Kategori"}
+                  options={optionsKategori}
+                  className={styles.selectForm}
+                  onChange={(e) => setCategory(e.value)}
+                />
+              </Form.Group>
+            </Form>
+
+            <div className="form-group ">
+              <label
+                htmlFor="staticEmail"
+                className=" col-form-label font-weight-bold"
+              >
+                Metode
+              </label>
+              <div className="">
+                <div className="form-check form-check-inline">
+                  <input
+                    className="form-check-input"
+                    type="radio"
+                    name="method"
+                    value="entry"
+                    checked={metode === "entry"}
+                    onClick={() => setMetode("entry")}
+                  />
+                  <label className="form-check-label">Entry Soal</label>
+                </div>
+                <div className="form-check form-check-inline">
+                  <input
+                    className="form-check-input"
+                    type="radio"
+                    name="method"
+                    value="import"
+                    checked={metode === "import"}
+                    onClick={() => setMetode("import")}
+                  />
+                  <label className="form-check-label">Import .csv/.xls</label>
+                </div>
+              </div>
+            </div>
+
+            <div className="form-group mt-10">
+              <div className=""></div>
+              <div className=" text-right">
+                <button
+                  className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
+                  onClick={onSubmit}
                 >
-                  Metode
-                </label>
-                <div className="">
-                  <div className="form-check form-check-inline">
-                    <input
-                      className="form-check-input"
-                      type="radio"
-                      name="method"
-                      value="entry"
-                      checked={metode === "entry"}
-                      onClick={() => setMetode("entry")}
-                    />
-                    <label className="form-check-label">Entry Soal</label>
-                  </div>
-                  <div className="form-check form-check-inline">
-                    <input
-                      className="form-check-input"
-                      type="radio"
-                      name="method"
-                      value="import"
-                      checked={metode === "import"}
-                      onClick={() => setMetode("import")}
-                    />
-                    <label className="form-check-label">Import .csv/.xls</label>
-                  </div>
-                </div>
+                  Simpan & Lanjut
+                </button>
+                <button
+                  className="btn btn-primary-rounded-full"
+                  onClick={saveDraft}
+                  type="button"
+                >
+                  Simpan Draft
+                </button>
               </div>
-
-              <div className="form-group">
-                <div className=""></div>
-                <div className=" text-right">
-                  <button
-                    type="submit"
-                    className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
-                  >
-                    Simpan & Lanjut
-                  </button>
-                  <button
-                    onClick={saveDraft}
-                    className="btn btn-primary-rounded-full text-white "
-                    type="button"
-                  >
-                    Simpan Draft
-                  </button>
-                </div>
-              </div>
-            </form>
+            </div>
           </div>
         </div>
       </div>

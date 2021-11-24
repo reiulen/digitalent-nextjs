@@ -15,10 +15,13 @@ import { toPng } from "html-to-image";
 import { useDispatch } from "react-redux";
 import {
   clearErrors,
+  newSertifikat,
   updateSertifikat,
 } from "../../../../../../redux/actions/sertifikat/kelola-sertifikat.action";
 import * as moment from "moment";
 import { Modal } from "react-bootstrap";
+import { SweatAlert } from "../../../../../../utils/middleware/helper/index";
+import axios from "axios";
 
 export default function EditSertifikat({ token }) {
   const router = useRouter();
@@ -339,7 +342,6 @@ export default function EditSertifikat({ token }) {
           const data = await convertDivToPng(divReference.current); // convert bg 1
           formData.append("certificate_result", data);
         }
-        formData.append("_method", "put");
         formData.append("name", certificate_name);
         formData.append("certificate_type", certificate_type);
         formData.append("number_of_signatures", number_of_signatures);
@@ -358,11 +360,16 @@ export default function EditSertifikat({ token }) {
         }
 
         for (let i = 0; i < number_of_signatures; i++) {
+          // if (signature[i].signature) {
+          // }
+
           if (signature[i].localSignature) {
             formData.append(
               `signature_certificate_image[${i}]`,
               signature[i].localSignature
             );
+          } else {
+            formData.append(`signature_certificate_image[${i}]`, "");
           }
 
           formData.append(
@@ -380,6 +387,8 @@ export default function EditSertifikat({ token }) {
             signature[i].name
           );
         }
+
+        console.log(signature);
 
         if (certificate_type == "2 lembar") {
           if (status == 1) {
@@ -407,6 +416,8 @@ export default function EditSertifikat({ token }) {
                 `signature_certificate_image_syllabus[${i}]`,
                 signatureSyllabus[i].localSignature
               );
+            } else {
+              formData.append(`signature_certificate_image_syllabus[${i}]`, "");
             }
           }
 
@@ -414,17 +425,16 @@ export default function EditSertifikat({ token }) {
             formData.append(`syllabus[${i}]`, item);
           });
         }
-
+        formData.append("_method", "put");
         formData.append("status_migrate_id", status);
-
         dispatch(updateSertifikat(id, formData, token));
       } else {
         simpleValidator.current.showMessages();
         forceUpdate(1);
-        Swal.fire("Oops !", "Isi data dengan benar.", "error");
+        SweatAlert("Gagal", "Isi data dengan benar.", "error");
       }
     } catch (e) {
-      notify(error.response.data.message);
+      SweatAlert("Gagal", error.response.data.message, "error");
     }
   };
 
@@ -449,6 +459,60 @@ export default function EditSertifikat({ token }) {
   const handleAddInput = () => {
     setSyllabus([...syllabus, ""]);
   };
+
+  const toDataURL = (url, callback) => {
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+      const reader = new FileReader();
+      reader.onloadend = function () {
+        callback(reader.result);
+      };
+      reader.readAsDataURL(xhr.response);
+    };
+    xhr.open("GET", url);
+    xhr.responseType = "blob";
+    xhr.send();
+  };
+
+  const url = `${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/signature-certificate-images/${signature[0].signature}`;
+  // console.log(signature, "ini signature");
+
+  const toBase64 = async () => {
+    try {
+      // const data = await axios.get(encodeURI(url), {
+      //   responseType: "document",
+      // });
+      const data = await axios.get(url, {
+        headers: {
+          accept: "application/json",
+          "Access-Control-Allow-Origin": "true",
+          "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        },
+      });
+      // console.log("masuk sin");
+      // console.log(data);
+    } catch (e) {
+      // console.log(e);
+      // console.log("masuk error");
+    }
+  };
+
+  const [test, setTest] = useState();
+
+  useEffect(() => {
+    // console.log(signature, "ini signature");
+    // for (let i = 0; i < signature.length; i++) {
+    //   toDataURL(
+    //     `${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/signature-certificate-images/${signature[i].signature}`,
+    //     (data) => {
+    //       console.log(data, "ini result");
+    //     }
+    //   );
+    // }
+    // `${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/signature-certificate-images/${signature[i].signature}`
+    toBase64();
+  }),
+    [];
 
   return (
     <PageWrapper>

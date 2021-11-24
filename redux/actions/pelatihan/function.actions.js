@@ -47,6 +47,8 @@ import {
   ERROR_DROPDOWN_PELATIHAN_BY_TEMA,
   GET_DROPDOWN_FORM_BUILDER,
   ERROR_DROPDOWN_FORM_BUILDER,
+  GET_DROPDOWN_YEAR,
+  ERROR_DROPDOWN_YEAR
 } from "../../types/pelatihan/function.type";
 
 import axios from "axios";
@@ -626,6 +628,29 @@ export const dropdownPenyelenggara = (token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ERROR_DROPDOWN_PENYELENGGARA,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const getDropdownYear = (token) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    const { data } = await axios.get(
+      process.env.END_POINT_API_SITE_MANAGEMENT + `api/option/year`,
+      config
+    );
+    dispatch({
+      type: GET_DROPDOWN_YEAR,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ERROR_DROPDOWN_YEAR,
       payload: error.response.data.message,
     });
   }

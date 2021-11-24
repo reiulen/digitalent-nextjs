@@ -70,13 +70,6 @@ import {
   updateSettingPublikasiReducer,
 } from "./publikasi/setting.reducers";
 
-// import {
-//   allVideoContentReducer,
-//   allTagReducer,
-//   playVideoContentReducer,
-//   kategoriVideoContentReducer,
-// } from "./beranda/video-content.reducer";
-
 import { allDashboardPublikasiReducer } from "./publikasi/dashboard-publikasi.reducers";
 
 // Subvit
@@ -410,6 +403,7 @@ import {
   drowpdownPenyelenggaraReducers,
   drowpdownFormBuilderReducers,
   drowpdownTempatLahirReducers,
+  drowpdownYearReducers,
 } from "./pelatihan/admin/function.reducers";
 import { allProvinsiReducer, allKotaReducer } from "./utils/utils.reducers";
 import { reducerFunctionals } from "./utils/functionals.reducer";
@@ -468,6 +462,7 @@ import {
 // ========== video ========
 import {
   allVideoContentReducer,
+  detailBerandaVideoReducer,
   kategoriVideoContentReducer,
   allTagVideoContentReducer,
   playVideoContentReducer,
@@ -833,6 +828,7 @@ const reducer = combineReducers({
   drowpdownPenyelenggara: drowpdownPenyelenggaraReducers,
   drowpdownFormBuilder: drowpdownFormBuilderReducers,
   updateStatus: updateStatusReducer,
+  drowpdownYear:drowpdownYearReducers,
 
   // ========== profile peserta ========
   dataAlamat: dataAlamatReducer,
@@ -888,6 +884,7 @@ const reducer = combineReducers({
 
   // ========== video ========
   allVideoContent: allVideoContentReducer,
+  detailBerandaVideo: detailBerandaVideoReducer,
   kategoriVideoContent: kategoriVideoContentReducer,
   allTagVideoContent: allTagVideoContentReducer,
   playVideoContent: playVideoContentReducer,

@@ -17,7 +17,7 @@ export const allPesertaReducers = (state = { participant: [] }, action) => {
     case LIST_PESERTA_SUCCESS:
       return {
         loading: false,
-        participant: action.payload.data,
+        participant: action.payload,
       };
     case LIST_PESERTA_FAIL:
       return {

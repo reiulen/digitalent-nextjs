@@ -107,13 +107,14 @@ export const getAllListPelatihan = (token) => async (dispatch, getState) => {
   }
 };
 
-export const getListRoles = (token) => async (dispatch) => {
+export const getListRoles = (token, search = "") => async (dispatch) => {
   try {
     dispatch({ type: ROLES_LIST_REQUEST });
 
     const { data } = await axios.get(
       `${process.env.END_POINT_API_SITE_MANAGEMENT}api/role/all`,
       {
+        params: {cari: search},
         headers: {
           authorization: `Bearer ${token}`,
         },

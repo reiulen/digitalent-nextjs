@@ -37,7 +37,12 @@ export default function SeleksiAdministrasi() {
           >
             Silahkan lakukan Test Substansi terlebih dahulu...
           </p>
-          <div className="d-flex justify-content-center">
+          <div
+            className="d-flex justify-content-center"
+            onClick={() => {
+              router.push(`/peserta/riwayat-pelatihan`);
+            }}
+          >
             <Button
               className="btn-rounded-full font-weight-bold btn-block d-flex justify-content-center mt-5 w-50"
               style={{
@@ -46,7 +51,7 @@ export default function SeleksiAdministrasi() {
                 fontSize: "14px",
               }}
             >
-              Kerjakan Tes Substansi
+              Cek Status
               <i
                 className="ri-arrow-right-s-line mr-2"
                 style={{ color: "white" }}

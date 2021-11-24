@@ -30,7 +30,7 @@ export default function KelokaSertifikatPage(props) {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  store =>
+  (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
       if (!session) {
@@ -43,22 +43,13 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       await store.dispatch(
-        getPublishedSertifikat(
-          //   query.nama_pelatihan_id,
-          query.id,
-          session.user.user.data.token
-        )
+        getPublishedSertifikat(query.id_pelatihan, session.user.user.data.token)
       );
       await store.dispatch(
         getDetailParticipant(
           //   query.nama_pelatihan_id,
           query.id,
-          query.page,
-          query.keyword,
-          query.limit,
-          query.publish,
-          query.startdate,
-          query.enddate,
+          query.id_pelatihan,
           session.user.user.data.token
         )
       );

@@ -84,7 +84,7 @@ const StepTwo = ({ token }) => {
   useEffect(() => {
     dispatch(getAllSurveyQuestionDetail(id, token));
     // if (error) {
-    //     dispatch(clearErrors())
+    //   dispatch(clearErrors());
     // }
     if (successFile) {
       dispatch(getAllSurveyQuestionDetail(id, token));

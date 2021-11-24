@@ -163,9 +163,16 @@ export default function CardTemplateOriginal({ data, session }) {
                     .join("-")
                     .toLowerCase()}`
                 );
-
               if (data.status.includes("tes substansi"))
                 return router.push("/peserta/test-substansi");
+              else {
+                return router.push(
+                  `/peserta/riwayat-pelatihan/${data.name
+                    .split(" ")
+                    .join("-")
+                    .toLowerCase()}`
+                );
+              }
               // switch (data.status) {
               //   case "menunggu":
               //     Cookies.set("id_pelatihan", data.id);
@@ -258,7 +265,7 @@ export default function CardTemplateOriginal({ data, session }) {
                       <div className="font-weight-bolder text-truncate text-left">
                         {data.mitra}
                       </div>
-                      <div className="text-muted pl-2 justify-content-center ">
+                      <div className="text-muted pl-2 justify-content-center text-left text-truncate">
                         &bull; {data.akademi}
                       </div>
                     </div>

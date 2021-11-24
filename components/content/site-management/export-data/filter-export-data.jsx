@@ -13,11 +13,40 @@ import IconSearch from "../../../assets/icon/Search";
 import IconPlus from "../../../../public/assets/icon/Plus.svg";
 import IconMinus from "../../../../public/assets/icon/Minus.svg";
 import Image from "next/image";
-
+import Select from "react-select";
+import {
+  dropdownKabupaten,
+  dropdownPelatihanbyTema,
+  dropdownTemabyAkademi,
+} from "../../../../redux/actions/pelatihan/function.actions";
 
 const UbahRole = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
+
+  const [tahun, setTahun] = useState(null);
+  const [akademi, setAkademi] = useState(null);
+  const [tema, setTema] = useState(null);
+  const [penyelenggara, setPenyelenggara] = useState(null);
+  const [pelatihan, setPelatihan] = useState(null);
+  const [provinsi, setProvinsi] = useState(null);
+  const [kota, setKota] = useState(null);
+
+  const drowpdownYear = useSelector((state) => state.drowpdownYear);
+  const drowpdownAkademi = useSelector((state) => state.drowpdownAkademi);
+  const drowpdownTemabyAkademi = useSelector(
+    (state) => state.drowpdownTemabyAkademi
+  );
+  const drowpdownPenyelenggara = useSelector(
+    (state) => state.drowpdownPenyelenggara
+  );
+  const drowpdownPelatihanbyTema = useSelector(
+    (state) => state.drowpdownPelatihanbyTema
+  );
+  const drowpdownProvinsi = useSelector((state) => state.drowpdownProvinsi);
+  const drowpdownKabupaten = useSelector((state) => state.drowpdownKabupaten);
+
+  console.log(drowpdownKabupaten);
 
   const btnIconPlus = {
     display: "flex",
@@ -48,9 +77,7 @@ const UbahRole = ({ token }) => {
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3
-              className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 mb-5 mt-5 titles-1"
-            >
+            <h3 className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 mb-5 mt-5 titles-1">
               Filter Export Data
             </h3>
           </div>
@@ -58,66 +85,105 @@ const UbahRole = ({ token }) => {
             <form>
               <div className="form-group">
                 <label htmlFor="exampleSelect1">Tahun</label>
-                <select className="form-control" id="exampleSelect1">
-                  <option>Placeholder</option>
-                </select>
-                <span className="form-text text-muted">
-                  Please enter your full name
-                </span>
+                <Select
+                  placeholder="Silahkan Pilih Tahun"
+                  options={drowpdownYear.data.data.map((item) => {
+                    return {
+                      label: item.value,
+                      value: item.id,
+                    };
+                  })}
+                  onChange={(e) =>
+                    setTahun({ value: e?.value, label: e?.label })
+                  }
+                />
               </div>
               <div className="form-group">
                 <label htmlFor="exampleSelect1">Akademi</label>
-                <select className="form-control" id="exampleSelect1">
-                  <option>Placeholder</option>
-                </select>
-                <span className="form-text text-muted">
-                  Please enter your full name
-                </span>
+                <Select
+                  placeholder="Silahkan Pilih Akademi"
+                  options={drowpdownAkademi.data.data}
+                  onChange={(e) => {
+                    setTema(null);
+                    setAkademi({ value: e?.value, label: e?.label });
+                    dispatch(dropdownTemabyAkademi(e?.value, token));
+                  }}
+                />
               </div>
               <div className="form-group">
                 <label htmlFor="exampleSelect1">Tema</label>
-                <select className="form-control" id="exampleSelect1">
-                  <option>Placeholder</option>
-                </select>
-                <span className="form-text text-muted">
-                  Please enter your full name
-                </span>
+                <Select
+                  placeholder="Silahkan Pilih Tema"
+                  value={tema}
+                  isDisabled={akademi === null}
+                  options={drowpdownTemabyAkademi.data.data}
+                  onChange={(e) => {
+                    setPelatihan(null);
+                    dispatch(dropdownPelatihanbyTema(e?.value, token));
+                    setTema({ value: e?.value, label: e?.label });
+                  }}
+                />
               </div>
               <div className="form-group">
                 <label htmlFor="exampleSelect1">Penyelenggara</label>
-                <select className="form-control" id="exampleSelect1">
-                  <option>Placeholder</option>
-                </select>
-                <span className="form-text text-muted">
-                  Please enter your full name
-                </span>
+                <Select
+                  placeholder="Silahkan Pilih Penyelenggara"
+                  options={drowpdownPenyelenggara.data.data.map((item) => {
+                    return {
+                      label: item.label,
+                      value: item.id,
+                    };
+                  })}
+                  onChange={(e) =>
+                    setPenyelenggara({ value: e?.value, label: e?.label })
+                  }
+                />
               </div>
               <div className="form-group">
                 <label htmlFor="exampleSelect1">Pelatihan</label>
-                <select className="form-control" id="exampleSelect1">
-                  <option>Placeholder</option>
-                </select>
-                <span className="form-text text-muted">
-                  Please enter your full name
-                </span>
+                <Select
+                  placeholder="Silahkan Pilih Pelatihan"
+                  isDisabled={tema === null}
+                  value={pelatihan}
+                  options={drowpdownPelatihanbyTema.data.data}
+                  onChange={(e) =>
+                    setPelatihan({ value: e?.value, label: e?.label })
+                  }
+                />
               </div>
               <div className="form-group">
                 <label htmlFor="exampleSelect1">Provinsi</label>
-                <select className="form-control" id="exampleSelect1">
-                  <option>Placeholder</option>
-                </select>
-                <span className="form-text text-muted">
-                  Please enter your full name
-                </span>
+                <Select
+                  placeholder="Silahkan Pilih Tahun"
+                  options={drowpdownProvinsi.data.data.map((item) => {
+                    return {
+                      label: item.label,
+                      value: item.id,
+                    };
+                  })}
+                  onChange={(e) => {
+                    setKota(null)
+                    setProvinsi({ value: e?.value, label: e?.label });
+                    dispatch(dropdownKabupaten(token, e?.value));
+                  }}
+                />
               </div>
               <div className="form-group">
                 <label htmlFor="exampleSelect1">Kota/Kabupaten</label>
-                <select className="form-control" id="exampleSelect1">
-                  <option>Placeholder</option>
-                </select>
-                <span className="form-text text-muted">
-                  Please enter your full name
-                </span>
+                <Select
+                  placeholder="Silahkan Pilih Tahun"
+                  value={kota}
+                  isDisabled={provinsi === null}
+                  options={drowpdownKabupaten?.data?.data?.map((item) => {
+                    return {
+                      label: item.value,
+                      value: item.id,
+                    };
+                  })}
+                  onChange={(e) =>
+                    setKota({ value: e?.value, label: e?.label })
+                  }
+                />
               </div>
               <div className="d-flex align-items-center justify-content-end">
                 <div className="form-group">
@@ -135,37 +201,33 @@ const UbahRole = ({ token }) => {
                     }}
                     // onClick={() => handleAddInput()}
                   >
-                   <IconSearch className="mr-4" />
+                    <IconSearch className="mr-4" />
                     Search
                   </p>
                 </div>
               </div>
             </form>
 
-            <div className="table-page mt-5">
+            {/* <div className="table-page mt-5">
               <h3
-              className="card-title font-weight-bolder  w-100  mt-5 mb-0"
-              style={{ fontSize: "24px",color:"#04AA77" }}
-            >
-              Pencarian Sukses
-            </h3>
-              <p
-              className="mb-0" style={{color:"#6C6C6C"}}
-            >
-              200 Total Data
-            </p>
+                className="card-title font-weight-bolder  w-100  mt-5 mb-0"
+                style={{ fontSize: "24px", color: "#04AA77" }}
+              >
+                Pencarian Sukses
+              </h3>
+              <p className="mb-0" style={{ color: "#6C6C6C" }}>
+                200 Total Data
+              </p>
               <div className="table-responsive mt-10">
                 <table className="table table-separate table-head-custom table-checkable">
                   <thead style={{ background: "#F3F6F9" }}>
                     <tr>
                       <th className="text-left">No</th>
+                      <th className="text-left align-middle">Nama Peserta</th>
+                      <th className="text-left align-middle">Pelatihan</th>
                       <th className="text-left align-middle">
-                        Nama Peserta
+                        Tanggal Pelatihan
                       </th>
-                      <th className="text-left align-middle">
-                        Pelatihan
-                      </th>
-                      <th className="text-left align-middle">Tanggal Pelatihan</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -173,8 +235,7 @@ const UbahRole = ({ token }) => {
                       <td className="align-middle text-left">1</td>
                       <td className="align-middle text-left">email</td>
                       <td className="align-middle text-left">08973383733</td>
-                      <td className="align-middle text-left">
-                        tgl </td>
+                      <td className="align-middle text-left">tgl </td>
                     </tr>
                   </tbody>
                 </table>
@@ -183,23 +244,7 @@ const UbahRole = ({ token }) => {
               <div className="row px-4">
                 <div className="table-pagination">
                   pagination
-                  {/* <Pagination
-                    activePage={allMKCooporation.page}
-                    itemsCountPerPage={
-                      allMKCooporation?.mk_cooporation?.data?.perPage
-                    }
-                    totalItemsCount={
-                      allMKCooporation?.mk_cooporation?.data?.total
-                    }
-                    pageRangeDisplayed={3}
-                    onChange={(page) => dispatch(setPage(page))}
-                    nextPageText={">"}
-                    prevPageText={"<"}
-                    firstPageText={"<<"}
-                    lastPageText={">>"}
-                    itemclassName="page-item"
-                    linkclassName="page-link"
-                  /> */}
+                
                 </div>
 
                 <div className="table-total ml-auto mr-4">
@@ -234,14 +279,17 @@ const UbahRole = ({ token }) => {
                   </div>
                 </div>
               </div>
-            </div>
-        
+            </div> */}
+
             {/* start footer btn */}
             <div className="form-group row mt-10">
               <div className="col-sm-12 d-flex justify-content-end">
                 <button
                   type="button"
                   className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
+                  onClick={() => {
+                    router.push("/site-management/export-data")
+                  }}
                 >
                   Simpan
                 </button>
