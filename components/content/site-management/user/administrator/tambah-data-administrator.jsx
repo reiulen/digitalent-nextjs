@@ -268,7 +268,7 @@ const TambahApi = ({ token }) => {
                 <label>Email</label>
                 <input
                   value={email}
-                  onChange={(e) => setEmail(e.target.value.replace(/[^A-Za-z0-9 ]/g, ""))}
+                  onChange={(e) => setEmail(e.target.value.replace(/[^A-Za-z0-9@._ ]/g, ""))}
                   type="email"
                   className="form-control"
                   placeholder="Masukkan email"
@@ -281,7 +281,7 @@ const TambahApi = ({ token }) => {
                   className="form-control"
                   onChange={(e) => setStatus(e.target.value)}
                 >
-                  <option value="">Pilih status</option>
+                  <option value="" selected disabled hidden>Pilih status</option>
                   <option value="1">Aktif</option>
                   <option value="0">Tidak Aktif</option>
                 </select>

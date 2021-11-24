@@ -410,6 +410,7 @@ import {
   drowpdownPenyelenggaraReducers,
   drowpdownFormBuilderReducers,
   drowpdownTempatLahirReducers,
+  drowpdownYearReducers,
 } from "./pelatihan/admin/function.reducers";
 import { allProvinsiReducer, allKotaReducer } from "./utils/utils.reducers";
 import { reducerFunctionals } from "./utils/functionals.reducer";
@@ -833,6 +834,7 @@ const reducer = combineReducers({
   drowpdownPenyelenggara: drowpdownPenyelenggaraReducers,
   drowpdownFormBuilder: drowpdownFormBuilderReducers,
   updateStatus: updateStatusReducer,
+  drowpdownYear:drowpdownYearReducers,
 
   // ========== profile peserta ========
   dataAlamat: dataAlamatReducer,

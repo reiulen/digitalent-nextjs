@@ -14,7 +14,7 @@ const StatistikProgres = ({ user, value, percent, total }) => {
             <div className="progress">
               <div
                 style={{ width: value + "%" }}
-                className={`progress-bar`}
+                className={`progress-bar bg-dashboard-primary-shade`}
                 role="progressbar"
                 aria-valuenow={value}
                 aria-valuemin="0"

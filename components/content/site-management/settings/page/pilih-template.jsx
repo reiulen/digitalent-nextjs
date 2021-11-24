@@ -76,9 +76,12 @@ const PilihTemplate = ({ token }) => {
                     <h3 className="my-7 text-center">Template 1</h3>
                     <div className="text-center">
                       <Link href="/site-management/setting/tambah-page">
-                        <a className="btn btn-rounded-full bg-blue-primary text-white d-block" onClick={() => {
-                            localStorage.setItem("template", 0)
-                        }}>
+                        <a
+                          className="btn btn-rounded-full bg-blue-primary text-white d-block"
+                          onClick={() => {
+                            localStorage.setItem("template", 0);
+                          }}
+                        >
                           Pilih Template
                         </a>
                       </Link>
@@ -122,9 +125,12 @@ const PilihTemplate = ({ token }) => {
                     <h3 className="my-7 text-center">Template 2</h3>
                     <div className="text-center">
                       <Link href="/site-management/setting/tambah-page">
-                        <a className="btn btn-rounded-full bg-blue-primary text-white d-block" onClick={() => {
-                            localStorage.setItem("template", 1)
-                        }}>
+                        <a
+                          className="btn btn-rounded-full bg-blue-primary text-white d-block"
+                          onClick={() => {
+                            localStorage.setItem("template", 1);
+                          }}
+                        >
                           Pilih Template
                         </a>
                       </Link>
@@ -154,7 +160,7 @@ const PilihTemplate = ({ token }) => {
                         style={{
                           backgroundColor: "#F2F7FC",
                           border: "dashed #ADB5BD",
-                          height: "100px"
+                          height: "100px",
                         }}
                       >
                         <h3 className="py-10 text-gray font-weight-bolder">
@@ -167,7 +173,7 @@ const PilihTemplate = ({ token }) => {
                         style={{
                           backgroundColor: "#F2F7FC",
                           border: "dashed #ADB5BD",
-                            paddingTop: "66px",
+                          paddingTop: "66px",
                           height: "215px",
                           lineHeight: "215px",
                         }}
@@ -181,9 +187,12 @@ const PilihTemplate = ({ token }) => {
                     <h3 className="my-7 text-center">Template 3</h3>
                     <div className="text-center">
                       <Link href="/site-management/setting/tambah-page">
-                        <a className="btn btn-rounded-full bg-blue-primary text-white d-block" onClick={() => {
-                            localStorage.setItem("template", 2)
-                        }}>
+                        <a
+                          className="btn btn-rounded-full bg-blue-primary text-white d-block"
+                          onClick={() => {
+                            localStorage.setItem("template", 2);
+                          }}
+                        >
                           Pilih Template
                         </a>
                       </Link>

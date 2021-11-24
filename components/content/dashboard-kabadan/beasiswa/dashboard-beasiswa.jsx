@@ -27,50 +27,50 @@ const DashboardBeasiswa = () => {
   const dataBeasiwaDalamNegeri = [
     {
       name: "Khusus",
-      laki_laki: 2400,
-      perempuan: 2000,
+      awardee: 2400,
+      pendaftar: 2000,
     },
     {
       name: "S2 ASN",
-      laki_laki: 2210,
-      perempuan: 2100,
+      awardee: 2210,
+      pendaftar: 2100,
     },
     {
       name: "S2 Umum",
-      laki_laki: 2290,
-      perempuan: 2200,
+      awardee: 2290,
+      pendaftar: 2200,
     },
     {
       name: "S3 ASN",
-      laki_laki: 2000,
-      perempuan: 2300,
+      awardee: 2000,
+      pendaftar: 2300,
     },
     {
       name: "S3 Umum",
-      laki_laki: 2181,
-      perempuan: 2500,
+      awardee: 2181,
+      pendaftar: 2500,
     },
     {
       name: "S2 Internal",
-      laki_laki: 2500,
-      perempuan: 2400,
+      awardee: 2500,
+      pendaftar: 2400,
     },
     {
       name: "s3 Internal",
-      laki_laki: 2100,
-      perempuan: 2300,
+      awardee: 2100,
+      pendaftar: 2300,
     },
   ];
   const dataBeasiwaLuarNegeri = [
     {
       name: "Skema Reguler",
-      laki_laki: 2400,
-      perempuan: 2000,
+      awardee: 2400,
+      pendaftar: 2000,
     },
     {
       name: "Skema StuNed",
-      laki_laki: 2210,
-      perempuan: 2100,
+      awardee: 2210,
+      pendaftar: 2100,
     },
   ];
   const dataProvinsi = [
@@ -158,16 +158,16 @@ const DashboardBeasiswa = () => {
             <CardTotal
               title={"Total Seluruh Pendaftar Beasiswa Dalam Negeri"}
               value={252.329}
-              dailyAdd={"23.21%"}
-              statisticDay={"+20.220 (24H)"}
+              dailyAdd={"23.21"}
+              statisticDay={"+20.220 "}
             />
           </div>
           <div className="col-md-6 mb-5">
             <CardTotal
               title={"Total Seluruh Pendaftar Beasiswa Luar Negeri"}
               value={252.329}
-              dailyAdd={"23.21%"}
-              statisticDay={"+20.220 (24H)"}
+              dailyAdd={"23.21"}
+              statisticDay={"+20.220 "}
             />
           </div>
         </div>
@@ -198,8 +198,8 @@ const DashboardBeasiswa = () => {
                       <YAxis />
                       <Tooltip cursor={{ fill: "transparent" }} />
 
-                      <Bar dataKey="laki_laki" fill="#0063CC" />
-                      <Bar dataKey="perempuan" fill="#1A3266" />
+                      <Bar dataKey="awardee" fill="#0063CC" />
+                      <Bar dataKey="pendaftar" fill="#1A3266" />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>
@@ -229,8 +229,8 @@ const DashboardBeasiswa = () => {
                       <YAxis />
                       <Tooltip cursor={{ fill: "transparent" }} />
 
-                      <Bar dataKey="laki_laki" fill="#0063CC" />
-                      <Bar dataKey="perempuan" fill="#1A3266" />
+                      <Bar dataKey="awardee" fill="#0063CC" />
+                      <Bar dataKey="pendaftar" fill="#1A3266" />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>
@@ -246,7 +246,7 @@ const DashboardBeasiswa = () => {
             <div className="head-filter">
               <div className="d-flex justify-content-between align-items-center flex-wrap">
                 <p className="text-dashboard-gray fz-16 fw-500 mt-3">
-                  Penyebaran Peserta berdasarkan wilayah
+                  Asal Provinsi Pendaftar Beasiswa
                 </p>
                 <div className="list-filter d-flex">
                   <div className="d-flex align-items-center">
@@ -325,16 +325,58 @@ const DashboardBeasiswa = () => {
             </div>
             <div className="row mt-5">
               <div className="col-md-6 mb-5">
-                <CardInfo
-                  title={"Top 5 Perguruan Tinggi Dalam Negeri Tujuan Beasiswa"}
-                  data={dataUniversitasDalam}
-                />
+                <div className="card">
+                  <div className="card-body pb-3">
+                    <StatistikWrapper
+                      title={"Perguruan Tinggi Dalam Negeri Tujuan Beasiswa"}
+                      funcFilterYear={(value) => {}}
+                    />
+                    <ListCardInfo data={dataUniversitasDalam} />
+                    <div className="d-flex justify-content-end mt-2">
+                      <div className="table-pagination">
+                        <Pagination
+                          activePage={1}
+                          itemsCountPerPage={3}
+                          totalItemsCount={5}
+                          pageRangeDisplayed={3}
+                          nextPageText={">"}
+                          prevPageText={"<"}
+                          firstPageText={"<<"}
+                          lastPageText={">>"}
+                          itemClass="page-item"
+                          linkClass="page-link"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div className="col-md-6 mb-5">
-                <CardInfo
-                  title={"Top 5 Universitas Luar Negeri Tujuan Beasiswa"}
-                  data={dataUniversitasLuarNegeri}
-                />
+                <div className="card">
+                  <div className="card-body pb-3">
+                    <StatistikWrapper
+                      title={"Universitas Luar Negeri Tujuan Beasiswa"}
+                      funcFilterYear={(value) => {}}
+                    />
+                    <ListCardInfo data={dataUniversitasDalam} />
+                    <div className="d-flex justify-content-end mt-2">
+                      <div className="table-pagination">
+                        <Pagination
+                          activePage={1}
+                          itemsCountPerPage={3}
+                          totalItemsCount={5}
+                          pageRangeDisplayed={3}
+                          nextPageText={">"}
+                          prevPageText={"<"}
+                          firstPageText={"<<"}
+                          lastPageText={">>"}
+                          itemClass="page-item"
+                          linkClass="page-link"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
             <div className="row mt-5">

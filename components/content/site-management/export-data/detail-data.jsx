@@ -158,7 +158,7 @@ const Table = ({ token }) => {
                       Kembali
                     </a>
                   </Link>
-                  <button
+                  {/* <button
                     type="button"
                     className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
                     onClick={() =>
@@ -166,7 +166,7 @@ const Table = ({ token }) => {
                     }
                   >
                     Export Data
-                  </button>
+                  </button> */}
                 </div>
               </div>
               {/* end footer btn */}
