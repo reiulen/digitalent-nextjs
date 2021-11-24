@@ -16,6 +16,7 @@ import {
 import moment from "moment";
 import Select from "react-select";
 import FormSubmit from "./submitKerjasama";
+import {helperRemoveZeroFromIndex0} from '../../../../utils/middleware/helper/index'
 
 const Tambah = ({ token }) => {
   const dispatch = useDispatch();
@@ -137,7 +138,10 @@ const Tambah = ({ token }) => {
     if (val.match(regex)) {
       setError({ ...error, period: "Masukkan angka" });
       setPeriod("");
-    } else {
+    }else if(e.target.value.toString().charAt(0) === "0"){
+      setError({ ...error, period: "Lama Periode tidak boleh kosong atau angka nol" });
+      setPeriod("");
+    }else {
       setPeriod(e.target.value);
     }
   };
