@@ -129,11 +129,6 @@ const DetailSubstansi = ({ token }) => {
       )
     );
     setShowModal(false);
-    // let link = `${router.pathname}?id=${id}&page=${1}`;
-    // if (status) link = link.concat(`&status=${status}`);
-    // if (kategori) link = link.concat(`&kategori=${kategori}`);
-    // if (pelatihan) link = link.concat(`&pelatihan=${pelatihan}`);
-    // router.push(link);
   };
 
   const handleSearch = () => {
