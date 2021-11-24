@@ -20,7 +20,6 @@ export default function ListPeserta() {
     (state) => state.detailParticipant
   );
 
-  console.log(participant, "ini participant");
   // #Pagination
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(null);

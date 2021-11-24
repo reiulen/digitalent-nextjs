@@ -684,7 +684,6 @@ const EditTrainingStep1 = ({ propsStep, token }) => {
                     }
                   />
                   <label className="custom-file-label" htmlFor="customFile">
-                    {console.log(thumbnailName)}
                     {thumbnailName.includes("thumbnail")
                       ? thumbnailName.split("/")[2]
                       : thumbnailName}
