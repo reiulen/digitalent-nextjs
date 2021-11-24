@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 
-import Link from "next/link";
 import Select from "react-select";
-import dynamic from "next/dynamic";
+import SimpleReactValidator from "simple-react-validator";
+
 import { useDispatch, useSelector } from "react-redux";
 import {
   updatewSubtanceQuestionBanks,
@@ -20,9 +20,8 @@ import {
   dropdownPelatihanbyTema,
   dropdownTemabyAkademi,
 } from "../../../../../redux/actions/pelatihan/function.actions";
-import axios from "axios";
+
 import { Form } from "react-bootstrap";
-import SimpleReactValidator from "simple-react-validator";
 
 const StepOne = ({ token }) => {
   const dispatch = useDispatch();
@@ -30,12 +29,6 @@ const StepOne = ({ token }) => {
 
   const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(
     (state) => state.drowpdownAkademi
-  );
-
-  const { data: dataTema } = useSelector((state) => state.drowpdownTema.data);
-
-  const { data: dataPelatihan } = useSelector(
-    (state) => state.drowpdownPelatihan.data
   );
 
   let { id } = router.query;
@@ -49,10 +42,11 @@ const StepOne = ({ token }) => {
   const [typeSave, setTypeSave] = useState("lanjut");
   const [academy_id, setAcademyId] = useState(subtance.academy_id);
   const [academyLabel, setAcademyLabel] = useState("");
+  const [themeLabel, setThemeLabel] = useState("");
+  const [trainingLabel, setTrainingLabel] = useState("");
   const [theme_id, setThemeId] = useState(subtance.theme_id);
   const [training_id, setTrainingId] = useState(subtance.training_id);
   const [category, setCategory] = useState(subtance.category);
-  const [optionTema, setOptionTema] = useState(null);
 
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
 
@@ -85,7 +79,6 @@ const StepOne = ({ token }) => {
     token,
     theme_id,
     subtance,
-    optionPelatihan,
   ]);
 
   const saveDraft = () => {
@@ -121,47 +114,21 @@ const StepOne = ({ token }) => {
     (state) => state.drowpdownPelatihanbyTema.data
   );
 
-  const [optionPelatihan, setOptionPelatihan] = useState([]);
-
   const handleChangePelatihan = (e) => {
     setThemeId(e.value);
+    setThemeLabel(e.label);
   };
 
   const handleChangeTema = (e) => {
     setAcademyId(e.value);
     setAcademyLabel(e.label);
-    // MASIH DIPAKE
-    // const config = {
-    //   headers: {
-    //     Authorization: "Bearer " + token,
-    //   },
-    // };
-    // axios
-    //   .get(
-    //     process.env.END_POINT_API_PELATIHAN +
-    //       `api/v1/tema/dropdown-tema-by-akademi?akademi_id=${e.value}`,
-    //     config
-    //   )
-    //   .then((res) => {
-    //     setOptionTema(res.data.data);
-    //     const id = res.data.data.map((item) => {
-    //       return item.value;
-    //     });
-
-    //     axios
-    //       .get(
-    //         process.env.END_POINT_API_PELATIHAN +
-    //           `api/v1/pelatihan/dropdown-pelatihan-tema?id=${theme_id}`,
-    //         config
-    //       )
-    //       .then((res) => {
-    //         setOptionPelatihan(res.data.data);
-    //       });
-    //   });
+    setTrainingLabel("");
+    setThemeLabel("");
   };
 
   const handleTraining = (e) => {
     setTrainingId(parseInt(e.value));
+    setTrainingLabel(e.label);
   };
 
   const optionsKategori = [
@@ -218,11 +185,10 @@ const StepOne = ({ token }) => {
                 </Form.Label>
                 <Select
                   placeholder={
-                    subtance.academy
-                      ? subtance.academy.name
-                      : "Silahkan Pilih Akademi"
+                    subtance ? academyLabel : "Silahkan Pilih Akademi"
                   }
                   options={dataAkademi.data}
+                  value={academyLabel}
                   onChange={(event) => handleChangeTema(event)}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("akademi")
@@ -230,7 +196,7 @@ const StepOne = ({ token }) => {
                 />
                 {simpleValidator.current.message(
                   "akademi",
-                  academy_id,
+                  academyLabel,
                   "required",
                   {
                     className: "text-danger",
@@ -243,10 +209,9 @@ const StepOne = ({ token }) => {
                   Tema
                 </Form.Label>
                 <Select
-                  placeholder={
-                    subtance.theme ? subtance.theme.name : "Silahkan Pilih Tema"
-                  }
+                  placeholder={subtance ? themeLabel : "Silahkan Pilih Tema"}
                   options={optionsTema}
+                  value={themeLabel}
                   onChange={(event) => handleChangePelatihan(event)}
                   onBlur={() => simpleValidator.current.showMessageFor("tema")}
                 />
@@ -261,13 +226,23 @@ const StepOne = ({ token }) => {
                 </Form.Label>
                 <Select
                   placeholder={
-                    subtance.training
-                      ? subtance.training.name
-                      : "Silahkan Pilih Pelatihan"
+                    subtance ? trainingLabel : "Silahkan Pilih Pelatihan"
                   }
                   options={dataPelatihan2}
+                  value={trainingLabel}
                   onChange={(e) => handleTraining(e)}
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("training")
+                  }
                 />
+                {simpleValidator.current.message(
+                  "pelatihan",
+                  trainingLabel,
+                  "required",
+                  {
+                    className: "text-danger",
+                  }
+                )}
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -286,166 +261,6 @@ const StepOne = ({ token }) => {
               </Form.Group>
             </Form>
 
-            {/* MASIH DIPAKE UNTUK BACKUP */}
-            {/* <form onSubmit={onSubmit}>
-              <div className="form-group mb-2">
-                <label
-                  htmlFor="staticEmail"
-                  className=" col-form-label font-weight-bold"
-                >
-                  Akademi
-                </label>
-                <div className="">
-                  <select
-                    name="academy_id"
-                    id=""
-                    onChange={(event) => handleChangeTema(event)}
-                    className="form-control"
-                    defaultValue={academy_id}
-                  >
-                    <option selected disabled value="">
-                      {" "}
-                      -Pilih Akademi -
-                    </option>
-                    {dataAkademi.data.map((item, index) => {
-                      return (
-                        <>
-                          <option value={item.value} key={index}>
-                            {" "}
-                            {item.label}{" "}
-                          </option>
-                        </>
-                      );
-                    })}
-                  </select>
-                </div>
-              </div>
-
-              <div className="form-group mb-2">
-                <label
-                  htmlFor="staticEmail"
-                  className=" col-form-label font-weight-bold"
-                >
-                  Tema
-                </label>
-                <div className="">
-                  <select
-                    name="the_id"
-                    id=""
-                    onChange={(event) => handleChangePelatihan(event)}
-                    className="form-control"
-                    defaultValue={theme_id}
-                  >
-                    {subtance.academy_id !== parseInt(academy_id) && (
-                      <option selected value="">
-                        {" "}
-                        -Pilih Tema-
-                      </option>
-                    )}
-                    )
-                    {data.data &&
-                      data.data.map((item, index) => {
-                        return (
-                          <>
-                            <option
-                              value={item.value}
-                              key={index}
-                              defaultValue={item.value}
-                            >
-                              {item.label}
-                            </option>
-                          </>
-                        );
-                      })}
-                  </select>
-                </div>
-              </div>
-
-              <div className="form-group mb-2">
-                <label
-                  htmlFor="staticEmail"
-                  className=" col-form-label font-weight-bold"
-                >
-                  Pelatihan
-                </label>
-                <div className="">
-                  <select
-                    name="training_id"
-                    id=""
-                    onChange={(e) => handleTraining(e)}
-                    className="form-control"
-                    defaultValue={
-                      dataPelatihan2 &&
-                      dataPelatihan2
-                        .filter((res) => res.value === training_id)
-                        .map((item) => {
-                          return item.value;
-                        })
-                    }
-                  >
-                    {subtance.academy_id !== parseInt(academy_id) && (
-                      <option selected value="">
-                        {" "}
-                        -Pilih Pelatihan-
-                      </option>
-                    )}
-                    {dataPelatihan2 &&
-                      dataPelatihan2.map((item, index) => {
-                        return (
-                          <>
-                            <option value={item.value} key={index} selected>
-                              {item.label}
-                            </option>
-                          </>
-                        );
-                      })}
-                  </select>
-                </div>
-              </div>
-
-              <div className="form-group ">
-                <label
-                  htmlFor="staticEmail"
-                  className=" col-form-label font-weight-bold"
-                >
-                  Kategori
-                </label>
-                <div className="">
-                  <select
-                    name="category"
-                    id=""
-                    onChange={(e) => setCategory(e.target.value)}
-                    className="form-control"
-                    defaultValue={category}
-                  >
-                    <option value="" disabled>
-                      {" "}
-                      -Pilih Kategori-
-                    </option>
-                    <option value="Test Substansi"> Tes Substansi </option>
-                    <option value="Mid Test"> Mid Tes </option>
-                  </select>
-                </div>
-              </div>
-
-              <div className="form-group ">
-                <div className=""></div>
-                <div className=" text-right">
-                  <button
-                    className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
-                  >
-                    Simpan & Lanjut
-                  </button>
-                  <button
-                    className="btn btn-primary-rounded-full"
-                    onClick={saveDraft}
-                    type="button"
-                  >
-                    Simpan Draft
-                  </button>
-                </div>
-              </div>
-            </form> */}
             <div className="form-group mt-10">
               <div className=""></div>
               <div className=" text-right">
