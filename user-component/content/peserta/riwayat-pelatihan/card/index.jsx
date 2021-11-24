@@ -80,7 +80,6 @@ export default function CardTemplateOriginal({ data, session }) {
     }
   };
 
-<<<<<<< HEAD
   const handleClick = async (name, id) => {
     if (name == "download") {
       try {
@@ -110,9 +109,6 @@ export default function CardTemplateOriginal({ data, session }) {
       // anchor.href = data.
     }
   };
-=======
-  const handleClick = () => {};
->>>>>>> 9b2ff7f3987fb86b48c48a39c11d67e6c88b9a2d
 
   const [fileName, setFileName] = useState();
   const onChangeFile = (e) => {
@@ -141,10 +137,7 @@ export default function CardTemplateOriginal({ data, session }) {
     }
   };
 
-<<<<<<< HEAD
   // console.log(data, " <============ini status"); // ID 305 fajar
-=======
->>>>>>> 9b2ff7f3987fb86b48c48a39c11d67e6c88b9a2d
   return (
     <Fragment>
       <Card className="position-relative">
@@ -171,12 +164,8 @@ export default function CardTemplateOriginal({ data, session }) {
                     .toLowerCase()}`
                 );
 
-<<<<<<< HEAD
               if (data.status.includes("tes substansi"))
                 return router.push("/peserta/test-substansi");
-=======
-              // if (data.status.includes("tes substansi"))
->>>>>>> 9b2ff7f3987fb86b48c48a39c11d67e6c88b9a2d
               // switch (data.status) {
               //   case "menunggu":
               //     Cookies.set("id_pelatihan", data.id);
@@ -232,11 +221,7 @@ export default function CardTemplateOriginal({ data, session }) {
             }}
           >
             <Row>
-<<<<<<< HEAD
               <Col lg={3}>
-=======
-              <Col md={3}>
->>>>>>> 9b2ff7f3987fb86b48c48a39c11d67e6c88b9a2d
                 <img
                   className="rounded-xl img-fluid d-block w-100"
                   src={`${process.env.END_POINT_API_IMAGE_BEASISWA}${data.gambar}`}
@@ -248,11 +233,7 @@ export default function CardTemplateOriginal({ data, session }) {
                 <Row className="h-100">
                   <Col
                     lg={2}
-<<<<<<< HEAD
                     className="d-flex justify-content-start align-items-center my-10 my-lg-0 order-2 order-lg-1"
-=======
-                    className="d-flex justify-content-center align-items-center my-10 my-lg-0 order-2 order-md-1"
->>>>>>> 9b2ff7f3987fb86b48c48a39c11d67e6c88b9a2d
                   >
                     <img
                       src={
@@ -266,7 +247,6 @@ export default function CardTemplateOriginal({ data, session }) {
                       style={{ borderRadius: "50%", objectFit: "cover" }}
                     />
                   </Col>
-<<<<<<< HEAD
                   <Col lg={7} className="my-auto order-3 order-lg-2 row p-0 ">
                     <h4 className="font-weight-bolder d-flex justify-content-start justify-content-lg-start my-0 p-0 col-12 order-1 order-lg-1">
                       {data.name}
@@ -279,18 +259,6 @@ export default function CardTemplateOriginal({ data, session }) {
                         {data.mitra}
                       </div>
                       <div className="text-muted pl-2 justify-content-center ">
-=======
-                  <Col md={7} className="my-auto order-3 order-md-2 row">
-                    <h4 className="font-weight-bolder d-flex justify-content-center justify-content-md-start my-0 p-0 col-12 order-1 order-md-1">
-                      {data.name}
-                    </h4>
-                    <div
-                      className="d-flex align-items-center justify-content-md-start justify-content-center order-1 order-md-2"
-                      style={{ color: "#203E80" }}
-                    >
-                      <div className="font-weight-bolder">Bukalapak</div>
-                      <div className="text-muted pl-2 justify-content-center">
->>>>>>> 9b2ff7f3987fb86b48c48a39c11d67e6c88b9a2d
                         &bull; {data.akademi}
                       </div>
                     </div>
@@ -312,11 +280,7 @@ export default function CardTemplateOriginal({ data, session }) {
                       style={{ borderRadius: "50px" }}
                       className={`label label-inline label-light-${
                         data.survei ? "primary" : label
-<<<<<<< HEAD
                       } font-weight-bolder p-0 px-4  text-capitalize`}
-=======
-                      } font-weight-bolder p-0 px-4 text-capitalize`}
->>>>>>> 9b2ff7f3987fb86b48c48a39c11d67e6c88b9a2d
                     >
                       {data.lpj
                         ? "Kerjakan LPJ"
@@ -355,13 +319,8 @@ export default function CardTemplateOriginal({ data, session }) {
                     </div>
                   </Col>
                   <Col
-<<<<<<< HEAD
                     lg={12}
                     className="my-auto order-5 pb-40 pb-lg-30 pb-lg-20"
-=======
-                    md={12}
-                    className="my-auto order-5 pb-40 pb-md-30 pb-lg-20"
->>>>>>> 9b2ff7f3987fb86b48c48a39c11d67e6c88b9a2d
                   >
                     <div className="d-flex align-items-center align-middle ">
                       <i className="ri-map-pin-line"></i>
@@ -375,27 +334,13 @@ export default function CardTemplateOriginal({ data, session }) {
         </Button>
 
         <div
-<<<<<<< HEAD
           className="position-absolute w-100 d-lg-flex pb-10 pb-lg-0 pb-lg-10"
-=======
-          className="position-absolute w-100 d-lg-flex pb-10 pb-md-0 pb-lg-10"
->>>>>>> 9b2ff7f3987fb86b48c48a39c11d67e6c88b9a2d
           style={{ bottom: 0 }}
         >
           <Col lg={3} />
           {data.lpj ? (
             <Fragment>
-<<<<<<< HEAD
               <CustomButton click={() => router.push(`/peserta/form-lpj`)}>
-=======
-              <CustomButton
-                click={() =>
-                  router.push(
-                    `/peserta/subvit/substansi/panduan-test-substansi`
-                  )
-                }
-              >
->>>>>>> 9b2ff7f3987fb86b48c48a39c11d67e6c88b9a2d
                 <i className="ri-file-text-line mr-2"></i>
                 Isi Laporan Pertangungjawaban
               </CustomButton>
@@ -411,15 +356,11 @@ export default function CardTemplateOriginal({ data, session }) {
               </CustomButton>
               <CustomButton
                 disabled={!data.survei}
-<<<<<<< HEAD
                 click={() => {
                   router.push("/peserta/survey");
                   Cookies.set("id_pelatihan", data.id);
                   Cookies.set("id_tema", data.tema_id);
                 }}
-=======
-                click={() => handleClick("download")}
->>>>>>> 9b2ff7f3987fb86b48c48a39c11d67e6c88b9a2d
               >
                 Isi Survei
                 <i className="ri-arrow-right-s-line mr-2"></i>
@@ -436,11 +377,7 @@ export default function CardTemplateOriginal({ data, session }) {
               </CustomButton>
               <CustomButton
                 disabled={!data.lpj}
-<<<<<<< HEAD
                 click={() => handleClick("download", data.id_pendaftaran)}
-=======
-                click={() => handleClick("download")}
->>>>>>> 9b2ff7f3987fb86b48c48a39c11d67e6c88b9a2d
               >
                 Isi Laporan Pertangung Jawaban
                 <i className="ri-arrow-right-s-line mr-2"></i>
@@ -449,37 +386,21 @@ export default function CardTemplateOriginal({ data, session }) {
           ) : data.status == "pelatihan" && data.trivia && data.midtest ? (
             <Fragment>
               <CustomButton
-<<<<<<< HEAD
                 click={() => {
                   router.push(`/peserta/test-substansi`);
                   Cookies.set("id_pelatihan", data.id);
                   Cookies.set("id_tema", data.tema_id);
                 }}
-=======
-                click={() =>
-                  router.push(
-                    `/peserta/subvit/substansi/panduan-test-substansi`
-                  )
-                }
->>>>>>> 9b2ff7f3987fb86b48c48a39c11d67e6c88b9a2d
               >
                 Kerjakan Mid Test
                 <i className="ri-arrow-right-s-line mr-2"></i>
               </CustomButton>
               <CustomButton
-<<<<<<< HEAD
                 click={() => {
                   router.push(`/peserta/trivia`);
                   Cookies.set("id_pelatihan", data.id);
                   Cookies.set("id_tema", data.tema_id);
                 }}
-=======
-                click={() =>
-                  router.push(
-                    `/peserta/subvit/substansi/panduan-test-substansi`
-                  )
-                }
->>>>>>> 9b2ff7f3987fb86b48c48a39c11d67e6c88b9a2d
               >
                 Kerjakan Trivia <i className="ri-arrow-right-s-line mr-2"></i>
               </CustomButton>
@@ -487,19 +408,11 @@ export default function CardTemplateOriginal({ data, session }) {
           ) : data.status == "pelatihan" && data.trivia ? (
             <Fragment>
               <CustomButton
-<<<<<<< HEAD
                 click={() => {
                   router.push(`/peserta/trivia`);
                   Cookies.set("id_pelatihan", data.id);
                   Cookies.set("id_tema", data.tema_id);
                 }}
-=======
-                click={() =>
-                  router.push(
-                    `/peserta/subvit/substansi/panduan-test-substansi`
-                  )
-                }
->>>>>>> 9b2ff7f3987fb86b48c48a39c11d67e6c88b9a2d
               >
                 Kerjakan Trivia <i className="ri-arrow-right-s-line mr-2"></i>
               </CustomButton>
