@@ -327,7 +327,7 @@ const Navigationbar = ({ session }) => {
           {session && session.roles[0] === "user" && (
             <div className="row mr-3 d-lg-block d-none">
               <a
-                href="#"
+                href="/helpdesk/live-chat"
                 className="col-4 col-sm-4 col-md-4 col-xl-4 text-center"
               >
                 <i className="ri-customer-service-2-line ri-2x  text-gray"></i>

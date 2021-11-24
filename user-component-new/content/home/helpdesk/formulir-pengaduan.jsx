@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import SubHeaderComponent from "../../../components/global/Breadcrumb.component";
 import { useRouter } from "next/router";
-import { Container, Row, Col, InputGroup, Form, Button } from "react-bootstrap";
+import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import ReCAPTCHA from "react-google-recaptcha";
 import SimpleReactValidator from "simple-react-validator";
-import style from "./helpdesk.module.css";
+
+import Sidebar from "../../../components/template/helpdesk/index";
+
 export default function FormPengaduan() {
   const router = useRouter();
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
@@ -17,6 +19,7 @@ export default function FormPengaduan() {
   const [, forceUpdate] = useState();
   const [deskripsi, setDeskripsi] = useState("");
   const [options, setOptions] = useState([]);
+
   useEffect(() => {
     setOptions([
       { value: "dts", label: "Digital Talent Scholarship" },
@@ -34,158 +37,104 @@ export default function FormPengaduan() {
     }
   };
 
-  const [active, setActive] = useState(
-    router.asPath.includes("formulir-pengaduan")
-  );
-
-  const sidebar = ["live-chat", "formulir-pengaduan", "hubungi-kami"];
-  const [index, setIndex] = useState(null);
-
-  useEffect(() => {
-    const arr = router.asPath.split("/");
-    const current = arr[arr.length - 1];
-    setIndex(sidebar.indexOf(current));
-  }, [router]);
-
   return (
     <Container fluid className="px-md-30 px-10 py-10 bg-white">
       <SubHeaderComponent data={[{ link: router.asPath, name: "Helpdesk" }]} />
-      <Row>
-        <Col md={4}>
-          <h1 style={{ fontSize: "40px", fontWeight: 700 }}>BANTUAN</h1>
-          <p className="fz-18 mb-18" style={{ color: "#6C6C6C" }}>
-            Ada yang bisa kami bantu?
-          </p>
-          {sidebar &&
-            sidebar.map((el, i) => (
-              <a
-                className={`d-flex align-items-center mb-8 text-capitalize ${
-                  i === index ? style.helpdesk_sidebar_active : ""
-                }`}
-              >
-                <i className="ri-arrow-right-line mr-4" />
-                {el.split("-").join(" ")}
-              </a>
-            ))}
-          <div
-            className={`d-flex align-items-center mb-8 ${
-              active ? style.helpdesk_sidebar_active : ""
-            }`}
-          >
-            <i className="ri-arrow-right-line mr-4" />
-            Formulir Pengaduan
-          </div>
-          <div className="d-flex align-items-center">
-            <i className="ri-arrow-right-line mr-4" />
-            Hubungi Kami
-          </div>
-        </Col>
-        <Col>
-          <h1 className={`font-weight-boldest text-blue-primary mb-15 `}>
-            Formulir Pengaduan
-          </h1>
-          <Form className="fz-14">
-            <Form.Group className="mb-8 text-capitalize">
-              <Form.Label>Nama</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Nama Lengkap"
-                className="rounded-full"
-                onChange={(e) => setName(e.target.value)}
-              />
-              {simpleValidator.current.message("nama", name, "required", {
-                className: "text-danger",
-              })}
-            </Form.Group>
+      <Sidebar>
+        <h1 className={`font-weight-boldest text-blue-primary mb-15 `}>
+          Formulir Pengaduan
+        </h1>
+        <Form className="fz-14">
+          <Form.Group className="mb-8 text-capitalize">
+            <Form.Label>Nama</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Nama Lengkap"
+              className="rounded-full"
+              onChange={(e) => setName(e.target.value)}
+            />
+            {simpleValidator.current.message("nama", name, "required", {
+              className: "text-danger",
+            })}
+          </Form.Group>
 
-            <Form.Group className="mb-8 text-capitalize">
-              <Form.Label>Nomor Handphone</Form.Label>
-              <Form.Control
-                onChange={(e) => setHandphone(e.target.value)}
-                type="text"
-                placeholder="08xxxxxxxxxxxx"
-                className="rounded-full"
-              />
-              {simpleValidator.current.message(
-                "nomor handphone",
-                handphone,
-                "required",
-                {
-                  className: "text-danger",
-                }
-              )}
-            </Form.Group>
-            <Form.Group className="mb-8 text-capitalize">
-              <Form.Label>Email</Form.Label>
-              <Form.Control
-                onChange={(e) => setEmail(e.target.value)}
-                type="email"
-                placeholder="ini@contoh.com"
-                className="rounded-full"
-              />
-              {simpleValidator.current.message(
-                "Email",
-                email,
-                "required|email",
-                {
-                  className: "text-danger",
-                }
-              )}
-            </Form.Group>
-
-            <Form.Group className="mb-8 text-capitalize">
-              <Form.Label>Platform</Form.Label>
-              <Form.Select
-                className="rounded-full form-control"
-                aria-label="Default select example"
-                onChange={(e) => setPlatform(e.target.value)}
-              >
-                <option>Silahkan Pilih</option>
-                {options.map((option, i) => (
-                  <option value={option.value}>{option.label}</option>
-                ))}
-              </Form.Select>
-              {simpleValidator.current.message(
-                "platform",
-                platform,
-                "required",
-                {
-                  className: "text-danger",
-                }
-              )}
-            </Form.Group>
-            <Form.Group className="mb-8">
-              <Form.Label>Deskripsikan Kendala atau Pertanyaanmu</Form.Label>
-              <Form.Control
-                type="text"
-                as="textarea"
-                placeholder="Jelaskan secara detail dan terperinci"
-                className="rounded-full p-5 d-flex justify-content-start align-items-start"
-                style={{ height: "120px" }}
-                onChange={(e) => setDeskripsi(e.target.value)}
-              />
-            </Form.Group>
-            <div className="g-recaptcha mb-8">
-              <ReCAPTCHA
-                sitekey={process.env.CAPTCHA_SITE_KEY}
-                onChange={setCaptcha}
-                onBlur={() => simpleValidator.current.showMessageFor("Captcha")}
-              />
-              {simpleValidator.current.message("Captcha", captcha, "required", {
+          <Form.Group className="mb-8 text-capitalize">
+            <Form.Label>Nomor Handphone</Form.Label>
+            <Form.Control
+              onChange={(e) => setHandphone(e.target.value)}
+              type="text"
+              placeholder="08xxxxxxxxxxxx"
+              className="rounded-full"
+            />
+            {simpleValidator.current.message(
+              "nomor handphone",
+              handphone,
+              "required",
+              {
                 className: "text-danger",
-              })}
-            </div>
-            <Button
-              variant="primary"
-              className="btn btn-block rounded-full"
-              type="submit"
-              onClick={(e) => handleSubmit(e)}
+              }
+            )}
+          </Form.Group>
+          <Form.Group className="mb-8 text-capitalize">
+            <Form.Label>Email</Form.Label>
+            <Form.Control
+              onChange={(e) => setEmail(e.target.value)}
+              type="email"
+              placeholder="ini@contoh.com"
+              className="rounded-full"
+            />
+            {simpleValidator.current.message("Email", email, "required|email", {
+              className: "text-danger",
+            })}
+          </Form.Group>
+
+          <Form.Group className="mb-8 text-capitalize">
+            <Form.Label>Platform</Form.Label>
+            <Form.Select
+              className="rounded-full form-control"
+              aria-label="Default select example"
+              onChange={(e) => setPlatform(e.target.value)}
             >
-              Kirim Pengaduan
-            </Button>
-          </Form>
-        </Col>
-      </Row>
+              <option>Silahkan Pilih</option>
+              {options.map((option, i) => (
+                <option value={option.value}>{option.label}</option>
+              ))}
+            </Form.Select>
+            {simpleValidator.current.message("platform", platform, "required", {
+              className: "text-danger",
+            })}
+          </Form.Group>
+          <Form.Group className="mb-8">
+            <Form.Label>Deskripsikan Kendala atau Pertanyaanmu</Form.Label>
+            <Form.Control
+              type="text"
+              as="textarea"
+              placeholder="Jelaskan secara detail dan terperinci"
+              className="rounded-full p-5 d-flex justify-content-start align-items-start"
+              style={{ height: "120px" }}
+              onChange={(e) => setDeskripsi(e.target.value)}
+            />
+          </Form.Group>
+          <div className="g-recaptcha mb-8">
+            <ReCAPTCHA
+              sitekey={process.env.CAPTCHA_SITE_KEY}
+              onChange={setCaptcha}
+              onBlur={() => simpleValidator.current.showMessageFor("Captcha")}
+            />
+            {simpleValidator.current.message("Captcha", captcha, "required", {
+              className: "text-danger",
+            })}
+          </div>
+          <Button
+            variant="primary"
+            className="btn btn-block rounded-full"
+            type="submit"
+            onClick={(e) => handleSubmit(e)}
+          >
+            Kirim Pengaduan
+          </Button>
+        </Form>
+      </Sidebar>
     </Container>
   );
 }

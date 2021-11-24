@@ -10,7 +10,7 @@ import Cookies from "js-cookie";
 
 export default function SeleksiAdministrasi() {
   const { state: data } = useSelector(
-    state => state.getDetailRiwayatPelatihanPeserta
+    (state) => state.getDetailRiwayatPelatihanPeserta
   );
   const router = useRouter();
   const [description, setDescription] = useState(data?.deskripsi || "-");
@@ -206,9 +206,11 @@ export default function SeleksiAdministrasi() {
                         className="font-weight-bolder"
                         style={{ fontSize: "14px" }}
                       >
-                        Bukalapak
+                        {data?.mitra || "-"}
                       </div>
-                      <div style={{ fontSize: "12px" }}>Indonesia</div>
+                      <div style={{ fontSize: "12px" }}>
+                        {data?.lokasi_mitra || "-"}
+                      </div>
                     </div>
                   </div>
                 </Col>

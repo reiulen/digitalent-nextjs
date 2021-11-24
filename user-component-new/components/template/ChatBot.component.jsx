@@ -33,11 +33,12 @@ export default function ChatBot() {
           >
             {clicked && (
               <div>
-                <div
+                <a
+                  href="/helpdesk/live-chat"
                   className={`${style.chatbot_options} btn-primary btn btn-block rounded-full `}
                 >
                   <i className="ri-question-answer-fill" /> Live Chat
-                </div>
+                </a>
                 <Link href="/helpdesk/formulir-pengaduan">
                   <div
                     className={`${style.chatbot_options} btn-primary btn btn-block rounded-full `}
