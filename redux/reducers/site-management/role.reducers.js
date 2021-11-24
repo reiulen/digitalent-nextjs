@@ -23,6 +23,7 @@ import {
   SEARCH_COORPORATION,
   CLEAR_ERRORS,
   RELOAD_TABLE,
+  PERMISSION_BY_PARENT,
 } from "../../types/site-management/role.type";
 
 const statuslist = {
@@ -155,6 +156,19 @@ export const detailRolesReducer = (state = { role: {} }, action) => {
       return {
         ...state,
         error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const allPermissionReducer = (state = {}, action) => {
+  switch (action.type) {
+    case PERMISSION_BY_PARENT:
+      return {
+        loading: false,
+        data: action.payload
       };
 
     default:
