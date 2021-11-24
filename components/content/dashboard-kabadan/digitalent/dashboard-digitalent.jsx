@@ -190,7 +190,7 @@ const DashboardDigitalent = () => {
                   funcFilterYear={(value) => {}}
                 />
 
-                <div className="chard-bar text-center mt-5">
+                <div className="chard-bar mt-5">
                   <ResponsiveContainer width={"100%"} height={300}>
                     <BarChart
                       data={dataPendaftarAkademi}

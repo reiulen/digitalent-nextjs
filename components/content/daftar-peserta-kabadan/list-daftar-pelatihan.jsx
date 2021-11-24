@@ -306,7 +306,7 @@ const ListDaftarPelatihan = ({ token }) => {
                   >
                     <div className="d-flex align-items-center">
                       <i className="ri-filter-fill mr-3"></i>
-                      Pilih Filter
+                      Filter
                     </div>
                     <i className="ri-arrow-down-s-line"></i>
                   </button>
