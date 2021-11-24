@@ -128,11 +128,7 @@ const DetailSubstansi = ({ token }) => {
         token
       )
     );
-    // let link = `${router.pathname}?id=${id}&page=${1}`;
-    // if (status) link = link.concat(`&status=${status}`);
-    // if (kategori) link = link.concat(`&kategori=${kategori}`);
-    // if (pelatihan) link = link.concat(`&pelatihan=${pelatihan}`);
-    // router.push(link);
+    setShowModal(false);
   };
 
   const handleSearch = () => {
@@ -715,8 +711,15 @@ const DetailSubstansi = ({ token }) => {
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
-        <Modal.Header closeButton>
+        <Modal.Header>
           <Modal.Title>Filter</Modal.Title>
+          <button
+            type="button"
+            className="close"
+            onClick={() => setShowModal(false)}
+          >
+            <i className="ri-close-fill" style={{ fontSize: "25px" }}></i>
+          </button>
         </Modal.Header>
         <Modal.Body>
           <div className="form-group mb-5">
