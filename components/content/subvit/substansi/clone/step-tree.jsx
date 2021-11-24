@@ -101,7 +101,7 @@ const StepTwo = ({ token }) => {
         end_at,
         duration,
         passing_grade,
-        status: 1,
+        status: status,
         questions_to_share: jumlah_soal,
       };
 

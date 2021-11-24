@@ -271,6 +271,34 @@ const EditDokumentKerjasama = ({ token }) => {
     }
     periodCheck();
   }, [period, date, periodUnit, periodDateStart]);
+
+  const [error, setError] = useState({
+    institution_name: "",
+    date: "",
+    title: "",
+    period: "",
+    periodUnit: "",
+    cooperationC_id: "",
+    AllCooperation: "",
+  });
+
+  const onChangePeriod = (e) => {
+    setError({ ...error, period: "" });
+    const regex = new RegExp(/[^0-9]/, "g");
+    const val = e.target.value;
+    if (val.match(regex)) {
+      setError({ ...error, period: "Masukkan angka" });
+      setPeriod("");
+    }else if(e.target.value.toString().charAt(0) === "0"){
+      setError({ ...error, period: "Lama Periode tidak boleh kosong atau angka nol" });
+      setPeriod("");
+    }else if(e.target.value.length >= 5){
+      setError({ ...error, period: "Lama Periode tidak boleh lebih 5 karakter" });
+    }
+    else {
+      setPeriod(e.target.value);
+    }
+  };
   return (
     <PageWrapper>
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
@@ -394,12 +422,15 @@ const EditDokumentKerjasama = ({ token }) => {
                   <div className="col-12 col-sm-6">
                     <input
                       required
-                      type="number"
+                      onFocus={() => setError({ ...error, period: "" })}
+                      type="text"
+                      maxLength="5"
                       className="form-control"
-                      onChange={(e) => setPeriod(e.target.value)}
+                      onChange={(e) => onChangePeriod(e)}
                       value={period}
                     />
                   </div>
+                  
                   <div className="col-12 col-sm-6">
                     <input
                       disabled
@@ -411,7 +442,11 @@ const EditDokumentKerjasama = ({ token }) => {
                   </div>
                 </div>
               </div>
-
+              {error.period ? (
+                  <p className="error-text mb-4 mt-0">{error.period}</p>
+                ) : (
+                  ""
+                )} 
               <div className="form-group">
                 <label htmlFor="staticEmail" className="col-form-label">
                   Periode Kerjasama

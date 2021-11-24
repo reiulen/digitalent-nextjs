@@ -128,11 +128,7 @@ const DetailSubstansi = ({ token }) => {
         token
       )
     );
-    // let link = `${router.pathname}?id=${id}&page=${1}`;
-    // if (status) link = link.concat(`&status=${status}`);
-    // if (kategori) link = link.concat(`&kategori=${kategori}`);
-    // if (pelatihan) link = link.concat(`&pelatihan=${pelatihan}`);
-    // router.push(link);
+    setShowModal(false);
   };
 
   const handleSearch = () => {
@@ -287,8 +283,9 @@ const DetailSubstansi = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h2 className="card-title h2 text-dark">
-              Substansi {subtance.academy ? subtance.academy.name : ""} -{" "}
-              {subtance.theme ? subtance.theme.name : ""}
+              Substansi{" "}
+              {subtance && subtance.academy ? subtance.academy.name : ""} -{" "}
+              {subtance && subtance.theme ? subtance.theme.name : ""}
             </h2>
             <div className="card-toolbar">
               <Link href={`/subvit/substansi/edit?id=${id}`}>
@@ -317,7 +314,9 @@ const DetailSubstansi = ({ token }) => {
                     </td>
                     <td>
                       <p className={`${styles.columnText} pl-5`}>
-                        {subtance.academy != null ? subtance.academy.name : "-"}
+                        {subtance && subtance.academy != null
+                          ? subtance.academy.name
+                          : "-"}
                       </p>
                     </td>
                   </tr>
@@ -334,7 +333,7 @@ const DetailSubstansi = ({ token }) => {
                     </td>
                     <td>
                       <p className={`${styles.columnText} pl-5`}>
-                        {subtance.theme ? subtance.theme.name : "-"}
+                        {subtance && subtance.theme ? subtance.theme.name : "-"}
                       </p>
                     </td>
                   </tr>
@@ -351,7 +350,7 @@ const DetailSubstansi = ({ token }) => {
                     </td>
                     <td>
                       <p className={`${styles.columnText} pl-5`}>
-                        {subtance.training != null
+                        {subtance && subtance.training != null
                           ? subtance.training.name
                           : "-"}
                       </p>
@@ -370,7 +369,7 @@ const DetailSubstansi = ({ token }) => {
                     </td>
                     <td>
                       <p className={`${styles.columnText} pl-5`}>
-                        {subtance.category || "-"}
+                        {(subtance && subtance.category) || "-"}
                       </p>
                     </td>
                   </tr>
@@ -392,7 +391,10 @@ const DetailSubstansi = ({ token }) => {
 
                     <td>
                       <p className={`${styles.columnText} pl-5`}>
-                        {getStartEndAt(subtance.start_at, subtance.end_at)}
+                        {getStartEndAt(
+                          subtance && subtance.start_at,
+                          subtance && subtance.end_at
+                        )}
                       </p>
                     </td>
                   </tr>
@@ -409,7 +411,7 @@ const DetailSubstansi = ({ token }) => {
                     </td>
                     <td>
                       <p className={`${styles.columnText} pl-5`}>
-                        {subtance.bank_soal} Soal
+                        {subtance && subtance.bank_soal} Soal
                       </p>
                     </td>
                   </tr>
@@ -426,7 +428,7 @@ const DetailSubstansi = ({ token }) => {
                     </td>
                     <td>
                       <p className={`${styles.columnText} pl-5`}>
-                        {subtance.passing_grade || "-"}
+                        {(subtance && subtance.passing_grade) || "-"}
                       </p>
                     </td>
                   </tr>
@@ -443,7 +445,7 @@ const DetailSubstansi = ({ token }) => {
                     </td>
                     <td>
                       <p className={`${styles.columnText} pl-5`}>
-                        {subtance.duration} Menit
+                        {subtance && subtance.duration} Menit
                       </p>
                     </td>
                   </tr>
@@ -460,7 +462,7 @@ const DetailSubstansi = ({ token }) => {
                     </td>
                     <td>
                       <p className={`${styles.columnText} pl-5`}>
-                        {subtance.status ? "Publish" : "Draft"}
+                        {subtance && subtance.status ? "Publish" : "Draft"}
                       </p>
                     </td>
                   </tr>
@@ -715,16 +717,17 @@ const DetailSubstansi = ({ token }) => {
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
-        <Modal.Header closeButton>
+        <Modal.Header>
           <Modal.Title>Filter</Modal.Title>
+          <button
+            type="button"
+            className="close"
+            onClick={() => setShowModal(false)}
+          >
+            <i className="ri-close-fill" style={{ fontSize: "25px" }}></i>
+          </button>
         </Modal.Header>
         <Modal.Body>
-          {/* <div className="form-group mb-5">
-            <label className="p-0">Pelatihan</label>
-            <select className="form-control">
-              <option>Semua</option>
-            </select>
-          </div> */}
           <div className="form-group mb-5">
             <label className="p-0">Status</label>
             <select

@@ -65,7 +65,7 @@ const StepThree = ({ token }) => {
         end_at,
         duration,
         passing_grade,
-        status: status,
+        status: 0,
         questions_to_share: jumlah_soal,
       };
 

@@ -114,7 +114,9 @@ export const getDetailSertifikat =
   async (dispatch) => {
     try {
       dispatch({ type: DETAIL_SERTIFIKAT_REQUEST });
-      let link = process.env.END_POINT_API_SERTIFIKAT + `api/manage_certificates/detail/${id}?page=${page}`;
+      let link =
+        process.env.END_POINT_API_SERTIFIKAT +
+        `api/manage_certificates/detail/${id}?page=${page}`;
       if (keyword) link = link.concat(`&keyword=${keyword}`);
       if (limit) link = link.concat(`&limit=${limit}`);
       if (status) link = link.concat(`&status=${status}`);
@@ -138,7 +140,9 @@ export const getDetailSertifikat =
 export const newSertifikat = (id, formData, token) => async (dispatch) => {
   try {
     dispatch({ type: NEW_SERTIFIKAT_REQUEST });
-    let link = process.env.END_POINT_API_SERTIFIKAT + `api/manage_certificates/store/${id.academy_id}/${id.theme_id}/${id.training_id}`;
+    let link =
+      process.env.END_POINT_API_SERTIFIKAT +
+      `api/manage_certificates/store/${id.academy_id}/${id.theme_id}/${id.training_id}`;
 
     const config = {
       headers: {
@@ -168,7 +172,8 @@ export const clearErrors = () => async (dispatch) => {
 export const getSingleSertifikat = (id, token) => async (dispatch) => {
   try {
     dispatch({ type: SINGLE_SERTIFIKAT_REQUEST });
-    let link = process.env.END_POINT_API_SERTIFIKAT + `api/manage_certificates/${id}`;
+    let link =
+      process.env.END_POINT_API_SERTIFIKAT + `api/manage_certificates/${id}`;
 
     const config = {
       headers: {
@@ -195,7 +200,8 @@ export const getPublishedSertifikat = (id, token) => async (dispatch) => {
   try {
     dispatch({ type: PUBLISHED_SERTIFIKAT_REQUEST });
 
-    let link = process.env.END_POINT_API_SERTIFIKAT + `api/manage_certificates/${id}`;
+    let link =
+      process.env.END_POINT_API_SERTIFIKAT + `api/manage_certificates/${id}`;
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -203,7 +209,6 @@ export const getPublishedSertifikat = (id, token) => async (dispatch) => {
     };
 
     const { data } = await axios.get(link, config);
-    console.log(data, "ini data");
     if (data) {
       dispatch({
         type: PUBLISHED_SERTIFIKAT_SUCCESS,
@@ -222,7 +227,9 @@ export const updateSertifikat = (id, formData, token) => async (dispatch) => {
   try {
     dispatch({ type: UPDATE_SERTIFIKAT_REQUEST });
 
-    let link = process.env.END_POINT_API_SERTIFIKAT + `api/manage_certificates/update/${id}`;
+    let link =
+      process.env.END_POINT_API_SERTIFIKAT +
+      `api/manage_certificates/update/${id}`;
 
     const config = {
       headers: {
@@ -231,7 +238,6 @@ export const updateSertifikat = (id, formData, token) => async (dispatch) => {
     };
 
     const { data } = await axios.post(link, formData, config);
-
     if (data) {
       dispatch({ type: UPDATE_SERTIFIKAT_SUCCESS, payload: data });
     }
@@ -255,7 +261,6 @@ export const getOptionsAcademy = (token) => async (dispatch) => {
     };
 
     const { data } = await axios.get(link, config);
-
     if (data) {
       dispatch({ type: OPTIONS_ACADEMY_SUCCESS, payload: data });
     }

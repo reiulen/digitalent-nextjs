@@ -2,10 +2,12 @@ import React, { useState, useEffect, useRef } from "react";
 
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
+
 import SimpleReactValidator from "simple-react-validator";
 import Swal from "sweetalert2";
 import styleBtn from "../../trivia/edit/step.module.css";
 import styles from "../../../../../styles/stepInput.module.css";
+import Select from "react-select";
 
 import {
   newCloneSubtanceQuestionBanks,
@@ -16,10 +18,12 @@ import { NEW_CLONE_SUBTANCE_QUESTION_BANKS_RESET } from "../../../../../redux/ty
 import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInput from "/components/StepInputClone";
 import LoadingPage from "../../../../LoadingPage";
+
 import {
   dropdownPelatihanbyTema,
   dropdownTemabyAkademi,
 } from "../../../../../redux/actions/pelatihan/function.actions";
+import { Form } from "react-bootstrap";
 
 const StepOne = ({ token }) => {
   const dispatch = useDispatch();
@@ -33,29 +37,26 @@ const StepOne = ({ token }) => {
     (state) => state.drowpdownAkademi
   );
 
-  const handleChangeTema = (e) => {
-    setAcademyId(e.target.value);
-    e.target.value && dispatch(dropdownTemabyAkademi(e.target.value, token));
-  };
-
-  const handleChangePelatihan = (e) => {
-    setThemeId(e.target.value);
-    e.target.value && dispatch(dropdownPelatihanbyTema(e.target.value, token));
-  };
-
-  const { data } = useSelector((state) => state.drowpdownTemabyAkademi);
-
-  const { drowpdownPelatihanbyTema } = useSelector((state) => state);
-
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
   const [typeSave, setTypeSave] = useState("lanjut");
+
+  const [academy_id, setAcademyId] = useState("");
+  const [theme_id, setThemeId] = useState("");
+  const [training_id, setTrainingId] = useState("");
+  const [academyLabel, setAcademyLabel] = useState("Silahkan Pilih Akademi");
+  const [themeLabel, setThemeLabel] = useState("Silahkan Pilih Tema");
+  const [trainingLabel, setTrainingLabel] = useState(
+    "Silahkan Pilih Pelatihan"
+  );
+  const [category, setCategory] = useState("");
 
   useEffect(() => {
     // if (error) {
     //     dispatch(clearErrors())
     // }
-
+    dispatch(dropdownTemabyAkademi(academy_id, token));
+    dispatch(dropdownPelatihanbyTema(theme_id, token));
     if (success) {
       const id = subtance.id;
       if (typeSave === "lanjut") {
@@ -70,12 +71,38 @@ const StepOne = ({ token }) => {
         });
       }
     }
-  }, [dispatch, error, success, typeSave, router, subtance]);
+  }, [
+    dispatch,
+    error,
+    success,
+    typeSave,
+    router,
+    subtance,
+    academy_id,
+    token,
+    theme_id,
+  ]);
 
-  const [academy_id, setAcademyId] = useState("");
-  const [theme_id, setThemeId] = useState("");
-  const [training_id, setTrainingId] = useState("");
-  const [category, setCategory] = useState("");
+  const handleChangePelatihan = (e) => {
+    setThemeId(e.value);
+    setThemeLabel(e.label);
+    setTrainingId("");
+    setTrainingLabel("Silahkan Pilih Pelatihan");
+  };
+
+  const handleChangeTema = (e) => {
+    setAcademyId(e.value);
+    setAcademyLabel(e.label);
+    setThemeId("");
+    setThemeLabel("Silahkan Pilih Tema");
+    setTrainingId("");
+    setTrainingLabel("Silahkan Pilih Pelatihan");
+  };
+
+  const handleTraining = (e) => {
+    setTrainingId(parseInt(e.value));
+    setTrainingLabel(e.label);
+  };
 
   const saveDraft = () => {
     setTypeSave("draft");
@@ -139,11 +166,29 @@ const StepOne = ({ token }) => {
     }
   };
 
+  const { data } = useSelector((state) => state.drowpdownTemabyAkademi);
+
+  const { data: dataPelatihan2 } = useSelector(
+    (state) => state.drowpdownPelatihanbyTema.data
+  );
+
   const handleResetError = () => {
     if (error) {
       dispatch(clearErrors());
     }
   };
+
+  const optionsKategori = [
+    { value: "Test Substansi", label: "Test Substansi" },
+    { value: "Mid Test", label: "Mid Test" },
+  ];
+
+  let optionsTema = [];
+
+  data.data &&
+    data.data.map((item) => {
+      return optionsTema.push({ label: item.label, value: item.value });
+    });
 
   return (
     <PageWrapper>
@@ -182,221 +227,126 @@ const StepOne = ({ token }) => {
             <h2 className="card-title h2 text-dark">Clone Test Subtansi</h2>
           </div>
           <div className="card-body pt-0">
-            <form onSubmit={onSubmit}>
-              <div className="form-group mb-3">
-                <label
-                  htmlFor="staticEmail"
-                  className=" col-form-label font-weight-bold pb-0"
-                >
+            <Form>
+              <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label className=" col-form-label font-weight-bold">
                   Akademi
-                </label>
-                <div className="">
-                  <select
-                    name="academy_id"
-                    id=""
-                    value={academy_id}
-                    onChange={(event) => handleChangeTema(event)}
-                    onBlur={(event) => {
-                      handleChangeTema(event);
-                      simpleValidator.current.showMessageFor("academy_id");
-                    }}
-                    className="form-control"
-                  >
-                    <option selected disabled value="">
-                      {" "}
-                      -Pilih Akademi -
-                    </option>
-                    {dataAkademi.data.map((item, index) => {
-                      return (
-                        <>
-                          <option value={item.value} key={index}>
-                            {item.label}
-                          </option>
-                        </>
-                      );
-                    })}
-                  </select>
-                  {simpleValidator.current.message(
-                    "academy_id",
-                    academy_id,
-                    "required",
-                    { className: "text-danger" }
-                  )}
-                </div>
-              </div>
+                </Form.Label>
+                <Select
+                  placeholder={academyLabel || "Silahkan Pilih Akademi"}
+                  className={styles.selectForm}
+                  options={dataAkademi.data}
+                  value={academyLabel}
+                  onChange={(event) => handleChangeTema(event)}
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("akademi")
+                  }
+                />
+                {simpleValidator.current.message(
+                  "akademi",
+                  academy_id,
+                  "required",
+                  {
+                    className: "text-danger",
+                  }
+                )}
+              </Form.Group>
 
-              <div className="form-group mb-3">
-                <label
-                  htmlFor="staticEmail"
-                  className=" col-form-label font-weight-bold pb-0"
-                >
+              <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label className=" col-form-label font-weight-bold">
                   Tema
-                </label>
-                <div className="">
-                  <select
-                    name="the_id"
-                    id=""
-                    onChange={(event) => handleChangePelatihan(event)}
-                    onBlur={(event) => {
-                      handleChangePelatihan(event);
-                      simpleValidator.current.showMessageFor("theme_id");
-                    }}
-                    className="form-control"
-                  >
-                    <option selected disabled value="">
-                      {" "}
-                      -Pilih Tema-
-                    </option>
-                    {data.data &&
-                      data.data.map((item, index) => {
-                        return (
-                          <>
-                            <option value={item.value} key={index}>
-                              {item.label}
-                            </option>
-                          </>
-                        );
-                      })}
-                  </select>
-                  {simpleValidator.current.message(
-                    "theme_id",
-                    theme_id,
-                    "required",
-                    { className: "text-danger" }
-                  )}
-                </div>
-              </div>
+                </Form.Label>
+                <Select
+                  placeholder={themeLabel || "Silahkan Pilih Tema"}
+                  options={optionsTema}
+                  value={themeLabel}
+                  className={styles.selectForm}
+                  onChange={(event) => handleChangePelatihan(event)}
+                  onBlur={() => simpleValidator.current.showMessageFor("tema")}
+                />
+                {simpleValidator.current.message("tema", theme_id, "required", {
+                  className: "text-danger",
+                })}
+              </Form.Group>
 
-              <div className="form-group mb-3">
-                <label
-                  htmlFor="staticEmail"
-                  className=" col-form-label font-weight-bold pb-0"
-                >
+              <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label className=" col-form-label font-weight-bold">
                   Pelatihan
-                </label>
-                <div className="">
-                  <select
-                    name="training_id"
-                    id=""
-                    onChange={(e) => setTrainingId(e.target.value)}
-                    onBlur={(e) => setTrainingId(e.target.value)}
-                    className="form-control"
-                  >
-                    <option selected disabled value="">
-                      {" "}
-                      -Pilih Pelatihan-
-                    </option>
-                    {drowpdownPelatihanbyTema.data.data &&
-                      drowpdownPelatihanbyTema.data.data.map((item, index) => {
-                        return (
-                          <>
-                            <option value={item.value} key={index}>
-                              {" "}
-                              {item.label}
-                            </option>
-                          </>
-                        );
-                      })}
-                  </select>
-                </div>
-              </div>
+                </Form.Label>
+                <Select
+                  placeholder={trainingLabel || "Silahkan Pilih Pelatihan"}
+                  options={dataPelatihan2}
+                  value={trainingLabel}
+                  className={styles.selectForm}
+                  onChange={(e) => handleTraining(e)}
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("training")
+                  }
+                />
+                {simpleValidator.current.message(
+                  "pelatihan",
+                  training_id,
+                  "required",
+                  {
+                    className: "text-danger",
+                  }
+                )}
+              </Form.Group>
 
-              <div className="form-group mb-3">
-                <label
-                  htmlFor="staticEmail"
-                  className=" col-form-label font-weight-bold pb-0"
-                >
+              <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label className=" col-form-label font-weight-bold">
                   Kategori
-                </label>
-                <div className="">
-                  <select
-                    name="category"
-                    id=""
-                    onChange={(e) => setCategory(e.target.value)}
-                    onBlur={(e) => {
-                      setCategory(e.target.value);
-                      simpleValidator.current.showMessageFor("category");
-                    }}
-                    className="form-control"
-                  >
-                    <option selected disabled>
-                      {" "}
-                      -Pilih Kategori-
-                    </option>
-                    <option value="Test Substansi"> Tes Substansi </option>
-                    <option value="Mid Test"> Mid Tes </option>
-                  </select>
-                  {simpleValidator.current.message(
-                    "category",
-                    category,
-                    "required",
-                    { className: "text-danger" }
-                  )}
-                </div>
-              </div>
-
-              <div className="row mt-7">
-                <div className=" col-xs-12 col-sm-12 col-md-12 pt-0">
-                  <div className="float-right ">
-                    <div className={styles.foldResponsive}>
+                </Form.Label>
+                <Select
+                  placeholder={"Silahkan Pilih Kategori"}
+                  options={optionsKategori}
+                  className={styles.selectForm}
+                  onChange={(e) => setCategory(e.value)}
+                />
+              </Form.Group>
+            </Form>
+            <div className="row mt-7">
+              <div className=" col-xs-12 col-sm-12 col-md-12 pt-0">
+                <div className="float-right ">
+                  <div className={styles.foldResponsive}>
+                    <button
+                      className={`${styles.btnNextFold} btn btn-light-ghost-rounded-full mr-2`}
+                      type="button"
+                      onClick={onSubmit}
+                    >
+                      Simpan & Lanjut
+                    </button>
+                    <button
+                      className={`${styles.btnDraftFold} btn btn-primary-rounded-full`}
+                      onClick={saveDraft}
+                      type="button"
+                    >
+                      Simpan Draft
+                    </button>
+                  </div>
+                  <div className={`${styles.normalBtn} row`}>
+                    <div className="col-xs-6">
                       <button
-                        className={`${styles.btnNextFold} btn btn-light-ghost-rounded-full mr-2`}
+                        className={`${styleBtn.btnNext} btn btn-light-ghost-rounded-full mr-2`}
                         type="button"
                         onClick={onSubmit}
                       >
                         Simpan & Lanjut
                       </button>
+                    </div>
+                    <div className="col-xs-6">
                       <button
-                        className={`${styles.btnDraftFold} btn btn-primary-rounded-full`}
+                        className={` btn btn-primary-rounded-full`}
                         onClick={saveDraft}
                         type="button"
                       >
                         Simpan Draft
                       </button>
                     </div>
-                    <div className={`${styles.normalBtn} row`}>
-                      <div className="col-xs-6">
-                        <button
-                          className={`${styleBtn.btnNext} btn btn-light-ghost-rounded-full mr-2`}
-                          type="button"
-                          onClick={onSubmit}
-                        >
-                          Simpan & Lanjut
-                        </button>
-                      </div>
-                      <div className="col-xs-6">
-                        <button
-                          className={` btn btn-primary-rounded-full`}
-                          onClick={saveDraft}
-                          type="button"
-                        >
-                          Simpan Draft
-                        </button>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </div>
-
-              {/* <div className="form-group mb-3">
-                <div className=""></div>
-                <div className=" col-md-12 text-right">
-                  <button
-                    type="submit"
-                    className={`${styleBtn.btnNext} btn btn-light-ghost-rounded-full mr-2`}
-                  >
-                    Simpan & Lanjut
-                  </button>
-                  <button
-                    onClick={saveDraft}
-                    className="btn btn-primary-rounded-full text-white "
-                    type="button"
-                  >
-                    Simpan Draft
-                  </button>
-                </div>
-              </div> */}
-            </form>
+            </div>
           </div>
         </div>
       </div>

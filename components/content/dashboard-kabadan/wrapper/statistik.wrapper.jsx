@@ -6,7 +6,7 @@ const StatistikWrapper = ({ title, funcFilterYear }) => {
       <div className="d-flex justify-content-between align-items-center flex-wrap">
         <p className="text-dashboard-gray fz-16 fw-500 mt-3">{title}</p>
         <div className="d-flex align-items-center">
-          <p className="mt-3 mr-3 text-dashboard-gray-caption">Filter By:</p>
+          <p className="mt-3 mr-3 text-dashboard-gray-caption">Tahun:</p>
           <select
             onChange={(e) => funcFilterYear(e.target.value)}
             className="border-0 p-0"

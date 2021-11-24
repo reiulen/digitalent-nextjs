@@ -385,7 +385,7 @@ const EditImagetron = ({ token,idUser }) => {
                                             alt="image"
                                             width={160}
                                             height={160}
-                                            objectFit="fill"
+                                            objectFit="cover"
                                         />
                                     </figure>
                                     <div>

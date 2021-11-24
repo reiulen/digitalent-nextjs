@@ -86,6 +86,36 @@ const ArtikelPeserta = ({ token }) => {
         });
     };
 
+    const getWindowDimensions = () => {
+        // if (typeof window === 'undefined') {
+        //     global.window = {}
+        // }
+
+        const { innerWidth: width, innerHeight: height } = window;
+        return {
+            width,
+            height,
+        };
+    };
+
+    const [windowDimensions, setWindowDimensions] = useState(
+        // getWindowDimensions()
+        {}
+    );
+
+    useEffect(() => {
+        function handleResize() {
+            setWindowDimensions(getWindowDimensions());
+        }
+        setWindowDimensions(getWindowDimensions());
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, [artikel_peserta])
+
+    useEffect(() => {
+
+    }, [windowDimensions])
+
     const onNewReset = () => {
         router.replace("/publikasi/artikel-peserta", undefined, { shallow: true });
     };
@@ -331,7 +361,8 @@ const ArtikelPeserta = ({ token }) => {
                         background="bg-light-info"
                         icon="new/open-book.svg"
                         color='#ffffff'
-                        value={0}
+                        value={artikel_peserta && artikel_peserta.publish != "" ? artikel_peserta.publish : 0}
+                        // value={0}
                         titleValue="Artikel"
                         title="Total Publish"
                         publishedVal="1"
@@ -342,9 +373,10 @@ const ArtikelPeserta = ({ token }) => {
                         background="bg-light-danger"
                         icon="Library.svg"
                         color='#ffffff'
-                        value={0}
+                        // value={0}
+                        value={artikel_peserta && artikel_peserta.publish != "" ? artikel_peserta.unpublish : 0}
                         titleValue="Artikel"
-                        title="Total Belum Publish"
+                        title="Total Belum Dipublish"
                         publishedVal="0"
                         routePublish={() => handlePublish("0")}
                     />
@@ -354,8 +386,8 @@ const ArtikelPeserta = ({ token }) => {
 
             <div className="col-lg-12 order-1 px-0">
                 <div className="card card-custom card-stretch gutter-b">
-                    <div className="card-header border-0">
-                        <h3 className={`${styles.headTitle}`}>Artikel Peserta</h3>
+                    <div className="card-header row border-0">
+                        <h3 className={`${styles.headTitle} col-12 col-sm-8 col-md-8 col-lg-8 col-xl-9`}>Artikel Peserta</h3>
                         <div className="card-toolbar">
                         </div>
                     </div>
@@ -541,7 +573,7 @@ const ArtikelPeserta = ({ token }) => {
                                                 <th>Dibuat</th>
                                                 <th>Status</th>
                                                 <th>Role</th>
-                                                <th style={{ width: '9.7vw' }}>Aksi</th>
+                                                <th style={{ width: '9.5vw' }}>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -558,48 +590,65 @@ const ArtikelPeserta = ({ token }) => {
                             <div className="row">
                                 {artikel_peserta && artikel_peserta.perPage < artikel_peserta.total &&
                                     null
+                                    // <>
+                                    // <div className={`${stylesPag.pagination} table-pagination`}>
+                                    //     <Pagination
+                                    //         activePage={page}
+                                    //         itemsCountPerPage={artikel.perPage}
+                                    //         totalItemsCount={artikel.total}
+                                    //         pageRangeDisplayed={windowDimensions.width > 320 ? 3 : 1}
+                                    //         onChange={handlePagination}
+                                    //         nextPageText={">"}
+                                    //         prevPageText={"<"}
+                                    //         firstPageText={"<<"}
+                                    //         lastPageText={">>"}
+                                    //         itemClass="page-item"
+                                    //         linkClass="page-link"
+                                    //     />
+                                    // </div>
+                                    // </>
                                 }
-                                {artikel_peserta ?
-                                    <div className={`${stylesPag.rightPag} table-total ml-auto`}>
-                                        <div className="row">
-                                            <div className="col-4 mr-0 mt-3">
-                                                <select
-                                                    className="form-control"
-                                                    id="exampleFormControlSelect2"
-                                                    style={{
-                                                        width: "70px",
-                                                        background: "#F3F6F9",
-                                                        borderColor: "#F3F6F9",
-                                                        color: "#9E9E9E",
-                                                    }}
-                                                    onChange={(e) => handleLimit(e.target.value)}
-                                                    onBlur={(e) => handleLimit(e.target.value)}
-                                                >
-                                                    <option value='5' selected={limit == "5" ? true : false}>5</option>
-                                                    <option value='10' selected={limit == "10" ? true : false}>10</option>
-                                                    <option value='30' selected={limit == "30" ? true : false}>30</option>
-                                                    <option value='40' selected={limit == "40" ? true : false}>40</option>
-                                                    <option value='50' selected={limit == "50" ? true : false}>50</option>
-                                                </select>
-                                            </div>
-                                            <div className="col-8 my-auto">
-                                                <p
-                                                    className="align-middle mt-5 pt-1"
-                                                    style={{ color: "#B5B5C3" }}
-                                                >
-                                                    Total Data 0 List Data
-                                                    {/* Total Data {artikel_peserta.total} List Data */}
-                                                </p>
-                                            </div>
+                            {artikel_peserta ?
+                                <div className={`${stylesPag.rightPag} table-total ml-auto`}>
+                                    <div className="row">
+                                        <div className="col-4 mr-0 mt-3">
+                                            <select
+                                                className="form-control"
+                                                id="exampleFormControlSelect2"
+                                                style={{
+                                                    width: "70px",
+                                                    background: "#F3F6F9",
+                                                    borderColor: "#F3F6F9",
+                                                    color: "#9E9E9E",
+                                                }}
+                                                onChange={(e) => handleLimit(e.target.value)}
+                                                onBlur={(e) => handleLimit(e.target.value)}
+                                            >
+                                                <option value='5' selected={limit == "5" ? true : false}>5</option>
+                                                <option value='10' selected={limit == "10" ? true : false}>10</option>
+                                                <option value='30' selected={limit == "30" ? true : false}>30</option>
+                                                <option value='40' selected={limit == "40" ? true : false}>40</option>
+                                                <option value='50' selected={limit == "50" ? true : false}>50</option>
+                                            </select>
                                         </div>
-                                    </div> : ''
-                                }
-                            </div>
+                                        <div className="col-8 my-auto">
+                                            <p
+                                                className="align-middle mt-5 pt-1"
+                                                style={{ color: "#B5B5C3" }}
+                                            >
+                                                Total Data 0 List Data
+                                                {/* Total Data {artikel_peserta.total} List Data */}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div> : ''
+                            }
                         </div>
                     </div>
                 </div>
             </div>
-        </PageWrapper>
+        </div>
+        </PageWrapper >
     )
 }
 

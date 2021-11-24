@@ -107,13 +107,14 @@ export const getAllListPelatihan = (token) => async (dispatch, getState) => {
   }
 };
 
-export const getListRoles = (token) => async (dispatch) => {
+export const getListRoles = (token, search = "") => async (dispatch) => {
   try {
     dispatch({ type: ROLES_LIST_REQUEST });
 
     const { data } = await axios.get(
       `${process.env.END_POINT_API_SITE_MANAGEMENT}api/role/all`,
       {
+        params: {cari: search},
         headers: {
           authorization: `Bearer ${token}`,
         },
@@ -244,7 +245,6 @@ export const getDetailAdminSite = (id, token) => async (dispatch) => {
       process.env.END_POINT_API_SITE_MANAGEMENT + `api/user/detail/${id}`;
 
     const { data } = await axios.get(link, config);
-    console.log("data terhasilll", data);
 
     dispatch({
       type: DETAIL_ADMIN_SITE_SUCCESS,

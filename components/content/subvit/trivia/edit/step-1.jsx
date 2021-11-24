@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
-import Link from "next/link";
-import dynamic from "next/dynamic";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import {
@@ -14,12 +12,15 @@ import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInputPublish from "/components/StepInputPublish";
 import LoadingPage from "../../../../LoadingPage";
 import styles from "./step.module.css";
+import Select from "react-select";
+import SimpleReactValidator from "simple-react-validator";
 
 import {
   dropdownPelatihanbyTema,
   dropdownTemabyAkademi,
 } from "../../../../../redux/actions/pelatihan/function.actions";
-import axios from "axios";
+
+import { Form } from "react-bootstrap";
 
 const StepOne = ({ token }) => {
   const dispatch = useDispatch();
@@ -27,12 +28,6 @@ const StepOne = ({ token }) => {
 
   const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(
     (state) => state.drowpdownAkademi
-  );
-
-  const { data: dataTema } = useSelector((state) => state.drowpdownTema.data);
-
-  const { data: dataPelatihan } = useSelector(
-    (state) => state.drowpdownPelatihan.data
   );
 
   let { id } = router.query;
@@ -45,17 +40,28 @@ const StepOne = ({ token }) => {
   );
 
   const [typeSave, setTypeSave] = useState("lanjut");
-  const [academy_id, setAcademyId] = useState(trivia.academy_id);
-  const [theme_id, setThemeId] = useState(trivia.theme_id);
-  const [training_id, setTrainingId] = useState(trivia.training_id);
+  const [academy_id, setAcademyId] = useState(trivia && trivia.academy_id);
+  const [theme_id, setThemeId] = useState(trivia && trivia.theme_id);
+  const [training_id, setTrainingId] = useState(trivia && trivia.training_id);
+  const [academyLabel, setAcademyLabel] = useState(
+    (trivia && trivia.academy.name) || "Silahkan Pilih Akademi"
+  );
+  const [themeLabel, setThemeLabel] = useState(
+    (trivia && trivia.theme.name) || "Silahkan Pilih Tema"
+  );
+  const [trainingLabel, setTrainingLabel] = useState(
+    (trivia && trivia.training.name) || "Silahkan Pilih Pelatihan"
+  );
+
+  const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
 
   useEffect(() => {
+    dispatch(dropdownTemabyAkademi(academy_id, token));
+    dispatch(dropdownPelatihanbyTema(theme_id, token));
     // if (error) {
     //     dispatch(clearErrors())
     // }
-    optionPelatihan;
-    dispatch(dropdownTemabyAkademi(academy_id, token));
-    dispatch(dropdownPelatihanbyTema(theme_id, token));
+
     if (isUpdated) {
       dispatch({
         type: UPDATE_TRIVIA_QUESTION_BANKS_PUBLISH_RESET,
@@ -72,8 +78,18 @@ const StepOne = ({ token }) => {
         });
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, error, isUpdated, id, router, typeSave]);
+  }, [
+    dispatch,
+    error,
+    isUpdated,
+    id,
+    router,
+    typeSave,
+    academy_id,
+    token,
+    theme_id,
+    trivia,
+  ]);
 
   // const saveAndContinue = () => {
   //   router.push("/subvit/substansi/edit/step-2");
@@ -81,26 +97,46 @@ const StepOne = ({ token }) => {
 
   const saveDraft = () => {
     setTypeSave("draft");
-    const data = {
-      academy_id,
-      theme_id,
-      training_id,
-      _method: "put",
-    };
-    dispatch(updatewTriviaQuestionBanks(id, data, token));
+    if (simpleValidator.current.allValid()) {
+      const data = {
+        academy_id,
+        theme_id,
+        training_id,
+        _method: "put",
+      };
+      dispatch(updatewTriviaQuestionBanks(id, data, token));
+    } else {
+      simpleValidator.current.showMessages();
+      forceUpdate(1);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Isi data dengan benar !",
+      });
+    }
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
     setTypeSave("lanjut");
 
-    const data = {
-      academy_id,
-      theme_id,
-      training_id,
-      _method: "put",
-    };
-    dispatch(updatewTriviaQuestionBanks(id, data, token));
+    if (simpleValidator.current.allValid()) {
+      const data = {
+        academy_id,
+        theme_id,
+        training_id,
+        _method: "put",
+      };
+      dispatch(updatewTriviaQuestionBanks(id, data, token));
+    } else {
+      simpleValidator.current.showMessages();
+      forceUpdate(1);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Isi data dengan benar !",
+      });
+    }
   };
 
   const handleResetError = () => {
@@ -115,46 +151,34 @@ const StepOne = ({ token }) => {
     (state) => state.drowpdownPelatihanbyTema.data
   );
 
-  const [optionPelatihan, setOptionPelatihan] = useState([]);
-
   const handleChangePelatihan = (e) => {
-    setThemeId(e.target.value);
+    setThemeId(e.value);
+    setThemeLabel(e.label);
+    setTrainingId("");
+    setTrainingLabel("Silahkan Pilih Pelatihan");
   };
 
   const handleChangeTema = (e) => {
-    setAcademyId(e.target.value);
-
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
-    axios
-      .get(
-        process.env.END_POINT_API_PELATIHAN +
-          `api/v1/tema/dropdown-tema-by-akademi?akademi_id=${e.target.value}`,
-        config
-      )
-      .then((res) => {
-        const id = res.data.data.map((item) => {
-          return item.value;
-        });
-
-        axios
-          .get(
-            process.env.END_POINT_API_PELATIHAN +
-              `api/v1/pelatihan/dropdown-pelatihan-tema?id=${theme_id}`,
-            config
-          )
-          .then((res) => {
-            setOptionPelatihan(res.data.data);
-          });
-      });
+    setAcademyId(e.value);
+    setAcademyLabel(e.label);
+    setThemeId("");
+    setThemeLabel("Silahkan Pilih Tema");
+    setTrainingId("");
+    setTrainingLabel("Silahkan Pilih Pelatihan");
   };
 
   const handleTraining = (e) => {
-    setTrainingId(parseInt(e.target.value));
+    setTrainingId(parseInt(e.value));
+    setTrainingLabel(e.label);
   };
+
+  let optionsTema = [];
+
+  data.data &&
+    data.data.map((item) => {
+      return optionsTema.push({ label: item.label, value: item.value });
+    });
+
   return (
     <PageWrapper>
       {error ? (
@@ -191,139 +215,93 @@ const StepOne = ({ token }) => {
             <h2 className="card-title h2 text-dark">Publish Soal</h2>
           </div>
           <div className="card-body pt-0">
-            <form onSubmit={onSubmit}>
-              <div className="form-group mb-2">
-                <label
-                  htmlFor="staticEmail"
-                  className=" col-form-label font-weight-bold"
-                >
+            <Form>
+              <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label className=" col-form-label font-weight-bold">
                   Akademi
-                </label>
-                <div className="">
-                  <select
-                    name="academy_id"
-                    id=""
-                    onChange={(event) => handleChangeTema(event)}
-                    className="form-control"
-                    defaultValue={academy_id}
-                  >
-                    <option selected disabled value="">
-                      {" "}
-                      -Pilih Akademi -
-                    </option>
-                    {dataAkademi.data.map((item, index) => {
-                      return (
-                        <>
-                          <option value={item.value} key={index}>
-                            {" "}
-                            {item.label}{" "}
-                          </option>
-                        </>
-                      );
-                    })}
-                  </select>
-                </div>
-              </div>
+                </Form.Label>
+                <Select
+                  placeholder={trivia ? academyLabel : "Silahkan Pilih Akademi"}
+                  className={styles.selectForm}
+                  options={dataAkademi.data}
+                  value={academyLabel}
+                  onChange={(event) => handleChangeTema(event)}
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("akademi")
+                  }
+                />
+                {simpleValidator.current.message(
+                  "akademi",
+                  academyLabel,
+                  "required",
+                  {
+                    className: "text-danger",
+                  }
+                )}
+              </Form.Group>
 
-              <div className="form-group mb-2">
-                <label
-                  htmlFor="staticEmail"
-                  className=" col-form-label font-weight-bold"
-                >
+              <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label className=" col-form-label font-weight-bold">
                   Tema
-                </label>
-                <div className="">
-                  <select
-                    name="the_id"
-                    id=""
-                    onChange={(event) => handleChangePelatihan(event)}
-                    className="form-control"
-                    defaultValue={theme_id}
-                  >
-                    {trivia.academy &&
-                      trivia.academy_id !== parseInt(academy_id) && (
-                        <option selected value="">
-                          {" "}
-                          -Pilih Tema-
-                        </option>
-                      )}
-                    )
-                    {data.data &&
-                      data.data.map((item, index) => {
-                        return (
-                          <>
-                            <option
-                              value={item.value}
-                              key={index}
-                              defaultValue={item.value}
-                            >
-                              {item.label}
-                            </option>
-                          </>
-                        );
-                      })}
-                  </select>
-                </div>
-              </div>
+                </Form.Label>
+                <Select
+                  placeholder={trivia ? themeLabel : "Silahkan Pilih Tema"}
+                  options={optionsTema}
+                  value={themeLabel}
+                  className={styles.selectForm}
+                  onChange={(event) => handleChangePelatihan(event)}
+                  onBlur={() => simpleValidator.current.showMessageFor("tema")}
+                />
+                {simpleValidator.current.message("tema", theme_id, "required", {
+                  className: "text-danger",
+                })}
+              </Form.Group>
 
-              <div className="form-group">
-                <label
-                  htmlFor="staticEmail"
-                  className=" col-form-label font-weight-bold"
-                >
+              <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label className=" col-form-label font-weight-bold">
                   Pelatihan
-                </label>
-                <div className="">
-                  <select
-                    name="training_id"
-                    id=""
-                    onChange={(event) => handleTraining(event)}
-                    className="form-control"
-                    defaultValue={training_id}
-                  >
-                    {trivia.academy_id !== parseInt(academy_id) && (
-                      <option selected value="">
-                        {" "}
-                        -Pilih Pelatihan-
-                      </option>
-                    )}
-                    {dataPelatihan2 &&
-                      dataPelatihan2.map((item, index) => {
-                        return (
-                          <>
-                            <option value={item.value} key={index} selected>
-                              {item.label}
-                            </option>
-                          </>
-                        );
-                      })}
-                    {/* <option value={1} selected>
-                      {" "}
-                      Google Cloud Computing{" "}
-                    </option>
-                    <option value={2}> Adobe UI/UX Designer </option> */}
-                  </select>
-                </div>
-              </div>
+                </Form.Label>
+                <Select
+                  placeholder={
+                    trivia ? trainingLabel : "Silahkan Pilih Pelatihan"
+                  }
+                  options={dataPelatihan2}
+                  value={trainingLabel}
+                  className={styles.selectForm}
+                  onChange={(e) => handleTraining(e)}
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("training")
+                  }
+                />
+                {simpleValidator.current.message(
+                  "pelatihan",
+                  training_id,
+                  "required",
+                  {
+                    className: "text-danger",
+                  }
+                )}
+              </Form.Group>
+            </Form>
 
-              <div className="form-group">
-                <div className=""></div>
-                <div className=" text-right">
-                  <button
-                    className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
-                  >
-                    Simpan & Lanjut
-                  </button>
-                  <button
-                    className="btn btn-primary-rounded-full text-white"
-                    onClick={saveDraft}
-                    type="button"
-                  >
-                    Simpan Draft
-                  </button>
-                </div>
+            <div className="form-group mt-10">
+              <div className=""></div>
+              <div className=" text-right">
+                <button
+                  className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
+                  onClick={onSubmit}
+                >
+                  Simpan & Lanjut
+                </button>
+                <button
+                  className="btn btn-primary-rounded-full"
+                  onClick={saveDraft}
+                  type="button"
+                >
+                  Simpan Draft
+                </button>
               </div>
-            </form>
+            </div>
           </div>
         </div>
       </div>

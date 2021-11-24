@@ -2,7 +2,6 @@ import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../../../components/LoadingSkeleton";
 import { wrapper } from "../../../../../redux/store";
 import { getSession } from "next-auth/client";
-import { getDetailParticipant } from "../../../../../redux/actions/sertifikat/list-peserta.action";
 import {
   getDetailSertifikat,
   getPublishedSertifikat,

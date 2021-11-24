@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import SubHeaderComponent from "../../../components/global/Breadcrumb.component";
 import { useRouter } from "next/router";
-import { Container, Row, Col, InputGroup, Form, Button } from "react-bootstrap";
+import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import ReCAPTCHA from "react-google-recaptcha";
 import SimpleReactValidator from "simple-react-validator";
+
+import Sidebar from "../../../components/template/helpdesk/index";
 
 export default function FormPengaduan() {
   const router = useRouter();
@@ -17,6 +19,7 @@ export default function FormPengaduan() {
   const [, forceUpdate] = useState();
   const [deskripsi, setDeskripsi] = useState("");
   const [options, setOptions] = useState([]);
+
   useEffect(() => {
     setOptions([
       { value: "dts", label: "Digital Talent Scholarship" },
@@ -28,7 +31,6 @@ export default function FormPengaduan() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
-      console.log("masuk");
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -37,82 +39,102 @@ export default function FormPengaduan() {
 
   return (
     <Container fluid className="px-md-30 px-10 py-10 bg-white">
-      <SubHeaderComponent data={[{ link: router.asPath, name: "Artikel" }]} />
-      <Row>
-        <Col md={4}>
-          <div className="d-flex align-items-center">
-            <i className="ri-arrow-right-line" /> Live Chat
-          </div>
-          <div className="d-flex align-items-center">
-            <i className="ri-arrow-right-line" />
-            Formulir Pengaduan
-          </div>
-          <div className="d-flex align-items-center">
-            <i className="ri-arrow-right-line" />
-            Hubungi Kami
-          </div>
-        </Col>
-        <Col>
-          <h1 className={`font-weight-boldest text-blue-primary mb-15 `}>Formulir Pengaduan</h1>
-          <Form className="fz-14">
-            <Form.Group className="mb-8 text-capitalize">
-              <Form.Label>Nama</Form.Label>
-              <Form.Control type="text" placeholder="Nama Lengkap" className="rounded-full" onChange={(e) => setName(e.target.value)} />
-              {simpleValidator.current.message("nama", name, "required", {
-                className: "text-danger",
-              })}
-            </Form.Group>
+      <SubHeaderComponent data={[{ link: router.asPath, name: "Helpdesk" }]} />
+      <Sidebar>
+        <h1 className={`font-weight-boldest text-blue-primary mb-15 `}>
+          Formulir Pengaduan
+        </h1>
+        <Form className="fz-14">
+          <Form.Group className="mb-8 text-capitalize">
+            <Form.Label>Nama</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Nama Lengkap"
+              className="rounded-full"
+              onChange={(e) => setName(e.target.value)}
+            />
+            {simpleValidator.current.message("nama", name, "required", {
+              className: "text-danger",
+            })}
+          </Form.Group>
 
-            <Form.Group className="mb-8 text-capitalize">
-              <Form.Label>Nomor Handphone</Form.Label>
-              <Form.Control onChange={(e) => setHandphone(e.target.value)} type="text" placeholder="08xxxxxxxxxxxx" className="rounded-full" />
-              {simpleValidator.current.message("nomor handphone", handphone, "required", {
+          <Form.Group className="mb-8 text-capitalize">
+            <Form.Label>Nomor Handphone</Form.Label>
+            <Form.Control
+              onChange={(e) => setHandphone(e.target.value)}
+              type="text"
+              placeholder="08xxxxxxxxxxxx"
+              className="rounded-full"
+            />
+            {simpleValidator.current.message(
+              "nomor handphone",
+              handphone,
+              "required",
+              {
                 className: "text-danger",
-              })}
-            </Form.Group>
-            <Form.Group className="mb-8 text-capitalize">
-              <Form.Label>Email</Form.Label>
-              <Form.Control onChange={(e) => setEmail(e.target.value)} type="email" placeholder="ini@contoh.com" className="rounded-full" />
-              {simpleValidator.current.message("Email", email, "required|email", {
-                className: "text-danger",
-              })}
-            </Form.Group>
+              }
+            )}
+          </Form.Group>
+          <Form.Group className="mb-8 text-capitalize">
+            <Form.Label>Email</Form.Label>
+            <Form.Control
+              onChange={(e) => setEmail(e.target.value)}
+              type="email"
+              placeholder="ini@contoh.com"
+              className="rounded-full"
+            />
+            {simpleValidator.current.message("Email", email, "required|email", {
+              className: "text-danger",
+            })}
+          </Form.Group>
 
-            <Form.Group className="mb-8 text-capitalize">
-              <Form.Label>Platform</Form.Label>
-              <Form.Select className="rounded-full form-control" aria-label="Default select example" onChange={(e) => setPlatform(e.target.value)}>
-                <option>Silahkan Pilih</option>
-                {options.map((option, i) => (
-                  <option value={option.value}>{option.label}</option>
-                ))}
-              </Form.Select>
-              {simpleValidator.current.message("platform", platform, "required", {
-                className: "text-danger",
-              })}
-            </Form.Group>
-            <Form.Group className="mb-8">
-              <Form.Label>Deskripsikan Kendala atau Pertanyaanmu</Form.Label>
-              <Form.Control
-                type="text"
-                as="textarea"
-                placeholder="Jelaskan secara detail dan terperinci"
-                className="rounded-full p-5 d-flex justify-content-start align-items-start"
-                style={{ height: "120px" }}
-                onChange={(e) => setDeskripsi(e.target.value)}
-              />
-            </Form.Group>
-            <div className="g-recaptcha mb-8">
-              <ReCAPTCHA sitekey={process.env.CAPTCHA_SITE_KEY} onChange={setCaptcha} onBlur={() => simpleValidator.current.showMessageFor("Captcha")} />
-              {simpleValidator.current.message("Captcha", captcha, "required", {
-                className: "text-danger",
-              })}
-            </div>
-            <Button variant="primary" className="btn btn-block rounded-full" type="submit" onClick={(e) => handleSubmit(e)}>
-              Kirim Pengaduan
-            </Button>
-          </Form>
-        </Col>
-      </Row>
+          <Form.Group className="mb-8 text-capitalize">
+            <Form.Label>Platform</Form.Label>
+            <Form.Select
+              className="rounded-full form-control"
+              aria-label="Default select example"
+              onChange={(e) => setPlatform(e.target.value)}
+            >
+              <option>Silahkan Pilih</option>
+              {options.map((option, i) => (
+                <option value={option.value}>{option.label}</option>
+              ))}
+            </Form.Select>
+            {simpleValidator.current.message("platform", platform, "required", {
+              className: "text-danger",
+            })}
+          </Form.Group>
+          <Form.Group className="mb-8">
+            <Form.Label>Deskripsikan Kendala atau Pertanyaanmu</Form.Label>
+            <Form.Control
+              type="text"
+              as="textarea"
+              placeholder="Jelaskan secara detail dan terperinci"
+              className="rounded-full p-5 d-flex justify-content-start align-items-start"
+              style={{ height: "120px" }}
+              onChange={(e) => setDeskripsi(e.target.value)}
+            />
+          </Form.Group>
+          <div className="g-recaptcha mb-8">
+            <ReCAPTCHA
+              sitekey={process.env.CAPTCHA_SITE_KEY}
+              onChange={setCaptcha}
+              onBlur={() => simpleValidator.current.showMessageFor("Captcha")}
+            />
+            {simpleValidator.current.message("Captcha", captcha, "required", {
+              className: "text-danger",
+            })}
+          </div>
+          <Button
+            variant="primary"
+            className="btn btn-block rounded-full"
+            type="submit"
+            onClick={(e) => handleSubmit(e)}
+          >
+            Kirim Pengaduan
+          </Button>
+        </Form>
+      </Sidebar>
     </Container>
   );
 }

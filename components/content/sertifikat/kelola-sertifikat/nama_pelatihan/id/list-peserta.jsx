@@ -17,10 +17,9 @@ export default function ListPeserta() {
   const { query } = router;
   // #DatePicker
   const { loading, error, participant } = useSelector(
-    (state) => state.detailParticipant
+    (state) => state.allParticipant
   );
 
-  console.log(participant, "ini participant");
   // #Pagination
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(null);
@@ -100,7 +99,7 @@ export default function ListPeserta() {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark">
-              Sertifikat Peserta {participant?.training}
+              Sertifikat Peserta {participant?.data?.list[0]?.pelatihan}
             </h3>
           </div>
 
@@ -153,7 +152,8 @@ export default function ListPeserta() {
                       </tr>
                     </thead>
                     <tbody>
-                      {!participant.status ? (
+                      {!participant.status ||
+                      participant?.data?.list?.length == 0 ? (
                         <tr>
                           <td className="text-center" colSpan={6}>
                             Data Tidak Ditemukan
@@ -161,75 +161,63 @@ export default function ListPeserta() {
                         </tr>
                       ) : (
                         participant &&
-                        participant?.data?.list_certificate.map(
-                          (participant, i) => {
-                            return (
-                              <tr key={i}>
-                                <td className="align-middle text-center">
-                                  {limit === null ? (
-                                    <span className="badge badge-secondary text-muted">
-                                      {i + 1 * (page * 5) - (5 - 1)}
-                                    </span>
-                                  ) : (
-                                    <span className="badge badge-secondary text-muted">
-                                      {i + 1 * (page * limit) - (limit - 1)}
-                                    </span>
-                                  )}
-                                </td>
-                                {/* START TABLE DATA */}
-                                <td className="align-middle">
-                                  {participant.name}
-                                </td>
-                                <td className="align-middle">
-                                  {participant.training.theme.academy.name}
-                                </td>
-                                <td className="align-middle">
-                                  {participant.training.name}
-                                </td>
+                        participant?.data?.list?.map((participant, i) => {
+                          return (
+                            <tr key={i}>
+                              <td className="align-middle text-center">
+                                {limit === null ? (
+                                  <span className="badge badge-secondary text-muted">
+                                    {i + 1 * (page * 5) - (5 - 1)}
+                                  </span>
+                                ) : (
+                                  <span className="badge badge-secondary text-muted">
+                                    {i + 1 * (page * limit) - (limit - 1)}
+                                  </span>
+                                )}
+                              </td>
+                              {/* START TABLE DATA */}
+                              <td className="align-middle">
+                                {participant.user}
+                              </td>
+                              <td className="align-middle">
+                                {participant.akademi}
+                              </td>
+                              <td className="align-middle">
+                                {participant.pelatihan}
+                              </td>
 
-                                <td className="align-middle text-capitalize">
-                                  {participant.status == 1 ? (
-                                    <span className="label label-inline label-light-success font-weight-bold">
-                                      tersedia
-                                    </span>
-                                  ) : (
-                                    <span className="label label-inline label-light-danger font-weight-bold">
-                                      belum tersedia
-                                    </span>
-                                  )}
-                                </td>
-                                {/* START AKSI sertifikat */}
-                                <td className="align-middle d-flex">
-                                  {participant.status == 1 ? (
-                                    <>
-                                      {/* <Link
-                                        href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/sertifikat-peserta/${participant.name}?id=${query.id}`}
-                                      >
-                                        <a
-                                          className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                                          data-toggle="tooltip"
-                                          data-placement="bottom"
-                                          title="Detail"
-                                          onClick={() => {
-                                            Cookies.set(
-                                              "nama_pelatihan_id",
-                                              query.id
-                                            );
-                                          }}
-                                        >
-                                          <i className="ri-eye-fill p-0 text-white"></i>
-                                        </a>
-                                      </Link> */}
-                                    </>
-                                  ) : (
-                                    ""
-                                  )}
-                                </td>
-                                {/* END TABLE DATA */}
-                              </tr>
-                            );
-                          }
-                        )
+                              <td className="align-middle text-capitalize">
+                                <span className="label label-inline label-light-success font-weight-bold">
+                                  tersedia
+                                </span>
+                              </td>
+                              {/* START AKSI sertifikat */}
+                              <td className="align-middle text-capitalize ">
+                                <>
+                                  <Link
+                                    href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/sertifikat-peserta/${participant.user}?id=${participant.user_id}&id_pelatihan=${query.id}`}
+                                  >
+                                    <a
+                                      className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                      data-toggle="tooltip"
+                                      data-placement="bottom"
+                                      title="Detail"
+                                      onClick={() => {
+                                        Cookies.set(
+                                          "nama_pelatihan_id",
+                                          query.id
+                                        );
+                                      }}
+                                    >
+                                      <i className="ri-eye-fill p-0 text-white"></i>
+                                    </a>
+                                  </Link>
+                                </>
+                              </td>
+                              {/* END TABLE DATA */}
+                            </tr>
+                          );
+                        })
                       )}
                     </tbody>
                   </table>
@@ -284,7 +272,7 @@ export default function ListPeserta() {
                           style={{ color: "#B5B5C3" }}
                         >
                           Total Data{" "}
-                          {participant?.data?.list_certificate.length || "-"}
+                          {participant?.data?.list_certificate?.length || "-"}
                         </p>
                       </div>
                     </div>

@@ -7,8 +7,6 @@ import {
   FacebookShareButton,
   LineShareButton,
   TelegramShareButton,
-} from "react-share";
-import {
   FacebookIcon,
   WhatsappIcon,
   LineIcon,
@@ -23,7 +21,6 @@ const ShareOverlay = ({ children, quote, url }) => {
       placement="top"
       overlay={
         <Popover id={`popover-positioned-top`}>
-          {console.log(url)}
           <Popover.Body>
             <FacebookShareButton url={url} quote={quote} className="mr-3">
               <FacebookIcon size={32} round />

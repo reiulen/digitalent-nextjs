@@ -55,7 +55,7 @@ const TambahTipeSoal = ({ token }) => {
       const data = {
         name,
         value,
-        status: status_,
+        status: 0,
       };
 
       dispatch(newSubtanceQuestionBanksType(data, token));
@@ -81,7 +81,7 @@ const TambahTipeSoal = ({ token }) => {
         value,
         status: status_,
       };
-
+      console.log(data);
       dispatch(newSubtanceQuestionBanksType(data, token));
     } else {
       simpleValidator.current.showMessages();
@@ -208,6 +208,7 @@ const TambahTipeSoal = ({ token }) => {
                 <div className="col-sm-12 text-right">
                   <button
                     className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
+                    onClick={onSubmit}
                   >
                     Simpan & Lanjut
                   </button>

@@ -312,7 +312,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
 
           <Row className="mb-3">
             {wizzard && (
-              <>
+              <Col md={12}>
                 <Form.Group as={Col} md={12}>
                   <Form.Label className={style.label}>Foto Profil</Form.Label>
                   <div>
@@ -449,7 +449,11 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
                     </Button>
                   </Modal.Footer>
                 </Modal>
-              </>
+                {!dataPribadi.foto &&
+                  simpleValidator.current.message("foto", upImg, "required", {
+                    className: "text-danger",
+                  })}
+              </Col>
             )}
             <Form.Group as={Col} md={6}>
               <Form.Label className={style.label}>Nama Lengkap</Form.Label>
@@ -574,16 +578,7 @@ const InformasiEdit = ({ funcViewEdit, token, wizzard, setIndex }) => {
           <Row className="mb-3">
             <Form.Group as={Col} md={6}>
               <Form.Label className={style.label}>Tempat Lahir</Form.Label>
-              {/* <Form.Control
-                className={style.formControl}
-                type="text"
-                placeholder="Masukan Tempat Lahir"
-                value={tempatLahir}
-                onChange={(e) => setTempatLahir(e.target.value)}
-                onBlur={() =>
-                  simpleValidator.current.showMessageFor("tempat lahir")
-                }
-              /> */}
+
               <Select
                 placeholder={
                   (dataPribadi && dataPribadi.tempat_lahir) === ""

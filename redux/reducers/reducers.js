@@ -70,13 +70,6 @@ import {
   updateSettingPublikasiReducer,
 } from "./publikasi/setting.reducers";
 
-// import {
-//   allVideoContentReducer,
-//   allTagReducer,
-//   playVideoContentReducer,
-//   kategoriVideoContentReducer,
-// } from "./beranda/video-content.reducer";
-
 import { allDashboardPublikasiReducer } from "./publikasi/dashboard-publikasi.reducers";
 
 // Subvit
@@ -272,6 +265,7 @@ import {
   detailRolesReducer,
   updateRolesReducer,
   deleteRolesReducer,
+  allPermissionReducer,
 } from "./site-management/role.reducers";
 
 // ============== unit work ===============
@@ -409,6 +403,7 @@ import {
   drowpdownPenyelenggaraReducers,
   drowpdownFormBuilderReducers,
   drowpdownTempatLahirReducers,
+  drowpdownYearReducers,
 } from "./pelatihan/admin/function.reducers";
 import { allProvinsiReducer, allKotaReducer } from "./utils/utils.reducers";
 import { reducerFunctionals } from "./utils/functionals.reducer";
@@ -467,10 +462,18 @@ import {
 // ========== video ========
 import {
   allVideoContentReducer,
+  detailBerandaVideoReducer,
   kategoriVideoContentReducer,
   allTagVideoContentReducer,
   playVideoContentReducer,
 } from "../reducers/beranda/video-content.reducer";
+
+// ========== faq ========
+
+import {
+  allFaqContentReducer,
+  kategoriBerandaFaqReducer,
+} from "../reducers/beranda/faq-content.reducers";
 
 //END BERANDA
 
@@ -723,6 +726,7 @@ const reducer = combineReducers({
   detailRoles: detailRolesReducer,
   updateRoles: updateRolesReducer,
   deleteRoles: deleteRolesReducer,
+  allPermission: allPermissionReducer,
   // ============ PELATIHAN =======
   allPrompt: allPromptReducer,
   // ============ Dashboatd =======
@@ -824,6 +828,7 @@ const reducer = combineReducers({
   drowpdownPenyelenggara: drowpdownPenyelenggaraReducers,
   drowpdownFormBuilder: drowpdownFormBuilderReducers,
   updateStatus: updateStatusReducer,
+  drowpdownYear:drowpdownYearReducers,
 
   // ========== profile peserta ========
   dataAlamat: dataAlamatReducer,
@@ -879,9 +884,14 @@ const reducer = combineReducers({
 
   // ========== video ========
   allVideoContent: allVideoContentReducer,
+  detailBerandaVideo: detailBerandaVideoReducer,
   kategoriVideoContent: kategoriVideoContentReducer,
   allTagVideoContent: allTagVideoContentReducer,
   playVideoContent: playVideoContentReducer,
+
+  // ========== faq ========
+  allFaqContent:allFaqContentReducer,
+  kategoriBerandaFaq:kategoriBerandaFaqReducer,
   //END BERANDA
 
   // ========== Riwayat Pelatihan ========
