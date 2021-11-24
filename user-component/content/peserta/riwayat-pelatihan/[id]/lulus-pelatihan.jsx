@@ -4,43 +4,26 @@ import style from "../style.module.css";
 import { useSelector } from "react-redux";
 import PesertaWrapper from "../../../../components/wrapper/Peserta.wrapper";
 import axios from "axios";
+import Swal from "sweetalert2";
 
-export default function SeleksiAdministrasi(props) {
+export default function RiwayatPelatihanDetail(props) {
   const { state: data } = useSelector(
     (state) => state.getDetailRiwayatPelatihanPeserta
   );
-  const [description, setDescription] = useState(data.deskripsi);
-  const [finalDescription, setFinalDescription] = useState();
-  const dateFrom = moment(data.pendaftaran_mulai).format("LL");
-  const dateTo = moment(data.pendaftaran_selesai).format("LL");
+  console.log(data);
+  const [description, setDescription] = useState(data?.deskripsi || "-");
+  const dateFrom = moment(data?.pendaftaran_mulai).format("LL");
+  const dateTo = moment(data?.pendaftaran_selesai).format("LL");
   const [showModalSertifikasi, setShowModalSertifikasi] = useState(false);
   const [fileName, setFileName] = useState();
-
-  useEffect(() => {
-    let newText = description.split(" ");
-    let test = [];
-    if (newText.length > 100) {
-      for (let i = 0; i < newText.length; i++) {
-        test.push(newText[i]);
-        if (i == 100) {
-          test.push("...");
-          break;
-        }
-      }
-      const result = test.join(" ");
-      setFinalDescription(result);
-    } else {
-      setFinalDescription(description);
-    }
-  }, []);
 
   const [truncate, setTruncate] = useState(true);
   const [label, setLabel] = useState();
 
   useEffect(() => {
-    if (data.status.includes("menunggu")) {
+    if (data?.status.includes("menunggu")) {
       setLabel("warning");
-    } else if (data.status == "pelatihan") {
+    } else if (data?.status == "pelatihan") {
       setLabel("primary");
     } else {
       setLabel("success");
@@ -48,7 +31,11 @@ export default function SeleksiAdministrasi(props) {
   }, []);
   const [imageSertifikasi, setImageSertifikasi] = useState();
   const [statusSertifikasi, setStatusSertifikasi] = useState(1);
-
+  const config = {
+    headers: {
+      authorization: "Bearer " + props.session.token,
+    },
+  };
   const onChangeFile = (e) => {
     setFileName(e.target.files[0].name);
     if (e.target.files[0].size > 5000000) {
@@ -75,23 +62,21 @@ export default function SeleksiAdministrasi(props) {
     }
   };
 
-  const uploadSertifikasi = async (data, id) => {
-    const link = `${process.env.END_POINT_API_PELATIHAN}api/v1/formPendaftaran/update-sertifikat`;
-
-    const config = {
-      headers: {
-        Authorization: "Bearer " + props.session.token,
-      },
-    };
-
-    const body = {
-      id: +id,
-      sertifikasi: statusSertifikasi.toString(),
-      file_sertifikat: data,
-    };
+  const uploadSertifikasi = async (sertifikasi, id) => {
     try {
-      const data = await axios.post(link, body, config);
+      const link = `${process.env.END_POINT_API_PELATIHAN}api/v1/formPendaftaran/update-sertifikat`;
+      const body = {
+        id: +id,
+        sertifikasi: statusSertifikasi.toString(),
+        file_sertifikat: sertifikasi,
+      };
+
+      const { data } = await axios.post(link, body, config);
+      if (data) {
+        Swal.fire(data.message, "Berhasil upload sertifikasi", "success");
+      }
     } catch (error) {
+      console.log(error);
       Swal.fire("Gagal", `${error.response.data.message}`, "error");
     }
   };
@@ -106,7 +91,7 @@ export default function SeleksiAdministrasi(props) {
                 className="font-weight-bolder my-0"
                 style={{ fontSize: "32px" }}
               >
-                {data.name}
+                {data?.name}
               </h1>
               <div className="text-muted "></div>
             </Col>
@@ -115,7 +100,7 @@ export default function SeleksiAdministrasi(props) {
                 className={`label label-inline label-light-${label} font-weight-bold text-capitalize`}
                 style={{ borderRadius: "25px" }}
               >
-                {data.status == "diterima" ? "lulus pelatihan" : data.status}
+                {data?.status == "diterima" ? "lulus pelatihan" : data?.status}
               </span>
             </Col>
             <Col lg={12} className=" my-5">
@@ -123,12 +108,12 @@ export default function SeleksiAdministrasi(props) {
                 className="p-0 font-weight-bolder"
                 style={{ fontSize: "18px", color: "#6C6C6C" }}
               >
-                {data.akademi}
+                {data?.akademi}
               </span>
             </Col>
             <Col lg={12} className="mt-12">
               <p style={{ fontSize: "14px" }}>Lokasi Pelatihan</p>
-              <p style={{ fontSize: "16px" }}>{data.alamat}</p>
+              <p style={{ fontSize: "16px" }}>{data?.alamat}</p>
             </Col>
             <Col lg={6}>
               <p style={{ fontSize: "14px" }}>Jadwal Pelatihan</p>
@@ -138,34 +123,33 @@ export default function SeleksiAdministrasi(props) {
             </Col>
             <Col lg={6}>
               <p style={{ fontSize: "14px" }}>Kuota</p>
-              <p style={{ fontSize: "16px" }}>{data.kuota_peserta} Peserta</p>
+              <p style={{ fontSize: "16px" }}>{data?.kuota_peserta} Peserta</p>
             </Col>
             <Col md={12} className="py-10 ">
               <Row>
-                {data.status.includes("tidak") ? (
+                {data?.status.includes("tidak") ? (
                   ""
-                ) : data.status.includes("lulus") ? (
+                ) : data?.status.includes("lulus") ? (
                   <Fragment>
                     <Col className="d-flex justify-content-center ">
                       <Button
                         className={`btn-rounded-full font-weight-bold btn-block justify-content-center mt-5 ${style.background_outline_primary}`}
                         style={{ height: "40px", fontSize: "14px" }}
-                        onClick={() => {
-                          setShowModalSertifikasi(true);
-                        }}
-                        type=""
                       >
-                        <i className="ri-upload-2-fill mr-2"></i>
-                        Upload Sertifikasi
+                        <i className="ri-download-2-fill mr-2"></i>
+                        Download Sertifikat
                       </Button>
                     </Col>
                     <Col className="d-flex justify-content-center ">
                       <Button
                         className={`btn-rounded-full font-weight-bold btn-block justify-content-center mt-5 `}
                         style={{ height: "40px", fontSize: "14px" }}
+                        onClick={() => {
+                          setShowModalSertifikasi(true);
+                        }}
                       >
-                        <i className="ri-download-2-fill mr-2"></i>
-                        Bukti Pendaftaran
+                        <i className="ri-upload-2-fill mr-2"></i>
+                        Unggah Sertifikasi
                       </Button>
                     </Col>
                   </Fragment>
@@ -180,8 +164,8 @@ export default function SeleksiAdministrasi(props) {
                 width={"100%"}
                 // layout="fill"
                 src={
-                  data.gambar
-                    ? `${process.env.END_POINT_API_IMAGE_BEASISWA}${data.gambar}`
+                  data?.gambar
+                    ? `${process.env.END_POINT_API_IMAGE_BEASISWA}${data?.gambar}`
                     : "/assets/media/default-card.png"
                 }
                 // objectFit="cover"
@@ -193,23 +177,24 @@ export default function SeleksiAdministrasi(props) {
               <Card className="my-12">
                 <Card.Body style={{ fontSize: "14px" }} className="p-7">
                   <div
-                    dangerouslySetInnerHTML={{ __html: finalDescription }}
+                    className="text-truncate"
+                    style={
+                      truncate ? { height: "260px" } : { height: "max-content" }
+                    }
+                    dangerouslySetInnerHTML={{ __html: description }}
                   ></div>
-                  {truncate ? (
-                    <div className="mt-5">
-                      <a
-                        style={{ color: "#0063CC" }}
+                  {truncate && (
+                    <a className="btn p-0 text-left text-primary">
+                      <div
+                        className="my-5"
+                        style={{ cursor: "pointer" }}
                         onClick={() => {
-                          setFinalDescription(description);
-                          setTruncate(false);
+                          setTruncate(!truncate);
                         }}
                       >
-                        {description.split(" ").length > 100 &&
-                          "Baca Selengkapnya"}
-                      </a>
-                    </div>
-                  ) : (
-                    ""
+                        Baca Selengkapnya
+                      </div>
+                    </a>
                   )}
                 </Card.Body>
               </Card>
@@ -246,8 +231,8 @@ export default function SeleksiAdministrasi(props) {
                   <div className="d-flex">
                     <img
                       src={
-                        data.gambar_mitra
-                          ? `${process.env.END_POINT_API_IMAGE_LOGO_MITRA}${data.gambar_mitra}`
+                        data?.gambar_mitra
+                          ? `${process.env.END_POINT_API_IMAGE_LOGO_MITRA}${data?.gambar_mitra}`
                           : "/assets/media/default-card.png"
                       }
                       width={58}
@@ -260,7 +245,7 @@ export default function SeleksiAdministrasi(props) {
                         className="font-weight-bolder"
                         style={{ fontSize: "14px" }}
                       >
-                        Bukalapak
+                        {data?.mitra || "-"}
                       </div>
                       <div style={{ fontSize: "12px" }}>Indonesia</div>
                     </div>
@@ -356,7 +341,7 @@ export default function SeleksiAdministrasi(props) {
             className="btn btn-primary-rounded-full"
             type="button"
             onClick={() => {
-              uploadSertifikasi(imageSertifikasi, data.id_pendaftaran);
+              uploadSertifikasi(imageSertifikasi, data?.id_pendaftaran);
             }}
           >
             Upload

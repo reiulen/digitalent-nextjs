@@ -163,9 +163,16 @@ export default function CardTemplateOriginal({ data, session }) {
                     .join("-")
                     .toLowerCase()}`
                 );
-
               if (data.status.includes("tes substansi"))
                 return router.push("/peserta/test-substansi");
+              else {
+                return router.push(
+                  `/peserta/riwayat-pelatihan/${data.name
+                    .split(" ")
+                    .join("-")
+                    .toLowerCase()}`
+                );
+              }
               // switch (data.status) {
               //   case "menunggu":
               //     Cookies.set("id_pelatihan", data.id);

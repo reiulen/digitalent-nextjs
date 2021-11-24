@@ -29,11 +29,12 @@ export default function Index({ children }) {
           {sidebar &&
             sidebar.map((el, i) => (
               <a
-                href={
-                  !el.includes("hubungi-kami")
-                    ? `/helpdesk/${sidebar[i]}`
-                    : 'tel:0213452841"'
+                href={el.includes("hubungi-kami") && "tel:0213452841"}
+                onClick={() =>
+                  !el.includes("hubungi-kami") &&
+                  router.push(`/helpdesk/${sidebar[i]}`)
                 }
+                style={{ cursor: "pointer" }}
                 className={`d-flex align-items-center mb-8 text-capitalize ${
                   i === index
                     ? style.helpdesk_sidebar_active

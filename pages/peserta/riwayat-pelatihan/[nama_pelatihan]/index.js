@@ -1,17 +1,14 @@
 import dynamic from "next/dynamic";
 import { getSession } from "next-auth/client";
 
-import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 import { wrapper } from "../../../../redux/store";
 import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 import { getDataPribadi } from "../../../../redux/actions/pelatihan/function.actions";
 import { middlewareAuthPesertaSession } from "../../../../utils/middleware/authMiddleware";
-import {
-  getAllRiwayatPelatihanPeserta,
-  getDetailRiwayatPelatihan,
-} from "../../../../redux/actions/pelatihan/riwayat-pelatihan.actions";
+import { getDetailRiwayatPelatihan } from "../../../../redux/actions/pelatihan/riwayat-pelatihan.actions";
 import { getAllAkademi } from "../../../../redux/actions/beranda/beranda.actions";
+import { getDashboardPeserta } from "../../../../redux/actions/pelatihan/dashboard-peserta.actions";
 
 const RiwayatPelatihanDetail = dynamic(
   () =>
@@ -49,8 +46,11 @@ export default function RiwayatPelatihanPage(props) {
   return (
     <>
       <Layout title="Administrasi" session={session}>
-        {/* {id ? <SeleksiAdministrasi /> : <BelumTersedia />} */}
-        <RiwayatPelatihanDetail session={session} />
+        {props.success ? (
+          <RiwayatPelatihanDetail session={session} />
+        ) : (
+          <BelumTersedia />
+        )}
       </Layout>
     </>
   );
@@ -73,46 +73,67 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       let success = false;
-      if (req.cookies.id_pelatihan) {
+      // if (req.cookies.id_pelatihan) {
+      //   await store.dispatch(
+      //     getDetailRiwayatPelatihan(
+      //       req.cookies.id_pelatihan,
+      //       session.user.user.data.user.token
+      //     )
+      //   );
+      //   success = true;
+      // } else {
+      //   const { data } = await store.dispatch(
+      //     getAllRiwayatPelatihanPeserta(session.user.user.data.user.token)
+      //   );
+      //   if (data) {
+      //     const test_substansi = data.list.filter(
+      //       (item) => item.status == "tes substansi"
+      //     );
+      //     if (test_substansi.length > 0) {
+      //       await store.dispatch(
+      //         getDetailRiwayatPelatihan(
+      //           test_substansi[0].id,
+      //           session.user.user.data.user.token
+      //         )
+      //       );
+      //       success = true;
+      //     } else {
+      //       success = false;
+      //     }
+      //   } else {
+      //     success = false;
+      //   }
+      // }
+      await store.dispatch(getDataPribadi(session.user.user.data.user.token));
+      await store.dispatch(getAllAkademi());
+
+      const { data } = await store.dispatch(
+        getDashboardPeserta(session?.user.user.data.user.token)
+      );
+      const status = data.pelatihan.pelatihan_selesi.status || "";
+      console.log(data);
+      if (!status || status == "") {
+        success = false;
+      } else if (
+        !status.includes("substansi" || "belum tersedia" || "belum mengerjakan")
+      ) {
         await store.dispatch(
           getDetailRiwayatPelatihan(
-            req.cookies.id_pelatihan,
+            data.pelatihan.pelatihan_selesi.id,
             session.user.user.data.user.token
           )
         );
         success = true;
       } else {
-        const { data } = await store.dispatch(
-          getAllRiwayatPelatihanPeserta(session.user.user.data.user.token)
-        );
-        if (data) {
-          const test_substansi = data.list.filter(
-            (item) => item.status == "tes substansi"
-          );
-          if (test_substansi.length > 0) {
-            await store.dispatch(
-              getDetailRiwayatPelatihan(
-                test_substansi[0].id,
-                session.user.user.data.user.token
-              )
-            );
-            success = true;
-          } else {
-            success = false;
-          }
-        } else {
-          success = false;
-        }
+        success = false;
       }
-
-      await store.dispatch(getDataPribadi(session.user.user.data.user.token));
-      await store.dispatch(getAllAkademi());
 
       return {
         props: {
           data: "auth",
           session,
           title: "Administrasi Pelatihan - Peserta",
+          success,
         },
       };
     }
