@@ -322,7 +322,6 @@ const TambahPage = ({ token }) => {
                             data={isi_artikel}
                             onReady={(editor) => {
                               // You can store the "editor" and use when it is needed.
-                              // console.log("Editor is ready to use!", editor);
                             }}
                             onChange={(event, editor) => {
                               const data = editor.getData();
@@ -410,8 +409,7 @@ const TambahPage = ({ token }) => {
                           <CKEditor
                             editor={ClassicEditor}
                             data={isi_artikel}
-                            onReady={(editor) => {
-                            }}
+                            onReady={(editor) => {}}
                             onChange={(event, editor) => {
                               const data = editor.getData();
                               setIsiArtikel(data);
@@ -545,7 +543,6 @@ const TambahPage = ({ token }) => {
                             data={isi_artikel}
                             onReady={(editor) => {
                               // You can store the "editor" and use when it is needed.
-                              // console.log("Editor is ready to use!", editor);
                             }}
                             onChange={(event, editor) => {
                               const data = editor.getData();

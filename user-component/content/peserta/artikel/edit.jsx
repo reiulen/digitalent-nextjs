@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import SimpleReactValidator from "simple-react-validator";
 import Swal from "sweetalert2";
 import { TagsInput } from "react-tag-input-component";
-import { updateArtikelPeserta } from '../../../../redux/actions/publikasi/artikel.actions'
+import { updateArtikelPeserta } from "../../../../redux/actions/publikasi/artikel.actions";
 import DatePicker from "react-datepicker";
 
 import PesertaWrapper from "../../../components/wrapper/Peserta.wrapper";
@@ -16,7 +16,7 @@ import { Container } from "react-bootstrap";
 
 import styles from "../../../../styles/previewGaleri.module.css";
 
-const EditArtikelPeserta = ({session}) => {
+const EditArtikelPeserta = ({ session }) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -42,12 +42,11 @@ const EditArtikelPeserta = ({session}) => {
   const [disablePublishDate, setDisablePublishDate] = useState(true);
   const [gambarPreview, setGambarPreview] = useState(
     process.env.END_POINT_API_IMAGE_PUBLIKASI +
-    "publikasi/images/" +
-    detailArtikelsPeserta.artikel.data.gambar
+      "publikasi/images/" +
+      detailArtikelsPeserta.artikel.data.gambar
   );
 
-  const [gambar, setGambar] = useState(""
-  );
+  const [gambar, setGambar] = useState("");
   const [judul, setJudul] = useState(
     detailArtikelsPeserta.artikel.data.judul_artikel
   );
@@ -70,11 +69,11 @@ const EditArtikelPeserta = ({session}) => {
     };
   });
 
-  const onChangeGambar = e => {
+  const onChangeGambar = (e) => {
     const type = ["image/jpg", "image/png", "image/jpeg"];
 
     if (type.includes(e.target.files[0].type)) {
-      if (e.target.files[0].size > '2000000') {
+      if (e.target.files[0].size > "2000000") {
         e.target.value = null;
         Swal.fire("Oops !", "Data Image Melebihi Ketentuan", "error");
       } else {
@@ -119,11 +118,10 @@ const EditArtikelPeserta = ({session}) => {
       kategori_akademi: akademi,
       kategori_id: kategori,
       tag: tag,
-      _method: "put"
-    }
-    dispatch(updateArtikelPeserta(data, session.token, router.query.id))
+      _method: "put",
+    };
+    dispatch(updateArtikelPeserta(data, session.token, router.query.id));
   };
-
 
   useEffect(() => {
     editorRef.current = {
@@ -277,22 +275,21 @@ const EditArtikelPeserta = ({session}) => {
                 </label>
                 <div className={`${styles.selectKategori} col-sm-12`}>
                   <select
-                    onChange={e => {
-                        setKategori(e.target.value)
+                    onChange={(e) => {
+                      setKategori(e.target.value);
                     }}
                     value={kategori}
                     className={`${styles.selectKategori} form-control dropdownArt`}
                     required
                   >
-                    {console.log(allKategori)}
                     {allKategori.kategori.kategori.map((item) => {
-                        if (item.jenis_kategori === "Artikel")
-                          return (
-                            <option value={item.id} key={item.id}>
-                              {item.nama_kategori}
-                            </option>
-                          );
-                      })}
+                      if (item.jenis_kategori === "Artikel")
+                        return (
+                          <option value={item.id} key={item.id}>
+                            {item.nama_kategori}
+                          </option>
+                        );
+                    })}
                   </select>
                 </div>
               </div>
@@ -321,9 +318,9 @@ const EditArtikelPeserta = ({session}) => {
                       handleTag(data);
                     }}
                   />
-                   {checkTag && (
-                      <span className="text-danger">Tag tidak boleh sama</span>
-                    )}
+                  {checkTag && (
+                    <span className="text-danger">Tag tidak boleh sama</span>
+                  )}
                 </div>
               </div>
 
