@@ -49,7 +49,6 @@ export default function TambahMasterSertifikat({ token }) {
     }
   }, [newCertificate, query.theme_name, query.theme_id, router]);
 
-  // console.log(certificate)
   // #Redux state
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
 

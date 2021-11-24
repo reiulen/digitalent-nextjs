@@ -12,7 +12,7 @@ export default function ComeJoin() {
             </h1>
             <Link href="/register">
               <a>
-                <button className="btn btn-beranda-primary mt-10 mt-sm-20 mb-10 sm-mb-0 fw-500 rounded-xl">
+                <button className="btn btn-beranda-primary mt-5 mb-10 sm-mb-0 fw-500 rounded-xl">
                   {/* <IconRegister className="mr-2" /> */}
                   Daftar Sekarang!
                 </button>
@@ -31,7 +31,7 @@ export default function ComeJoin() {
                   260K+
                 </p>
                 <p className="fz-14" style={{ color: "#6C6C6C" }}>
-                  Pendaftar
+                  Pelatihan
                 </p>
               </div>
             </Col>
@@ -57,7 +57,7 @@ export default function ComeJoin() {
                   260K+
                 </p>
                 <p className="fz-14" style={{ color: "#6C6C6C" }}>
-                  Pendaftar
+                  Peserta
                 </p>
               </div>
             </Col>
@@ -70,7 +70,7 @@ export default function ComeJoin() {
                   260K+
                 </p>
                 <p className="fz-14" style={{ color: "#6C6C6C" }}>
-                  Pendaftar
+                  Peserta Lulus
                 </p>
               </div>
             </Col>
