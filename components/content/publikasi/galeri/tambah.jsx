@@ -479,7 +479,7 @@ const TambahGaleri = ({ token, id }) => {
                                                             alt="image"
                                                             width={160}
                                                             height={160}
-                                                            objectFit="fill"
+                                                            objectFit="cover"
                                                         />
                                                         <label className={`${styles.circleTop} circle-top`} htmlFor={`inputGroupFile${i}`}>
                                                             {

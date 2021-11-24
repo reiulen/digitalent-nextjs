@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
+import { useRouter } from "next/router";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import IconDelete from "../../../assets/icon/Delete";
 import IconAdd from "../../../assets/icon/Add";
@@ -18,6 +19,7 @@ const Table = ({ token }) => {
   const [array, setArray] = useState([]);
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
+  const router = useRouter();
 
   const firstPush = () => {
     let _temp = [...array];
@@ -215,17 +217,27 @@ const Table = ({ token }) => {
     }
 
     const sendData = { menu: array };
-    // try {
-    let { data } = await axios.post(
-      `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-menu/store`,
-      sendData,
-      {
-        headers: {
-          authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    Swal.fire("Berhasil", "Data berhasil disimpan", "success");
+    if (simpleValidator.current.allValid()) {
+      // try {
+      let { data } = await axios.post(
+        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-menu/store`,
+        sendData,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      Swal.fire("Berhasil", "Data berhasil disimpan", "success");
+    } else {
+      simpleValidator.current.showMessages();
+      forceUpdate(1);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Isi data dengan benar !",
+      });
+    }
     // } catch (error) {
     //   // Swal.fire("Gagal", `${error.response.data.message}`, "error")
     //   Swal.fire("Oops...", `Isi data dengan benar !`, "error");
@@ -337,7 +349,7 @@ const Table = ({ token }) => {
                             {simpleValidator.current.message(
                               "link",
                               parrent.link,
-                              "required",
+                              "required|url",
                               { className: "text-danger" }
                             )}
                           </div>

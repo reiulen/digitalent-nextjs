@@ -18,6 +18,7 @@ import { NEW_BERITA_RESET } from '../../../../redux/types/publikasi/berita.type'
 
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingPage from '../../../LoadingPage';
+import { useQuill } from "react-quilljs";
 
 const TambahBerita = ({ token, id }) => {
     const editorRef = useRef()
@@ -26,25 +27,40 @@ const TambahBerita = ({ token, id }) => {
 
     const importSwitch = () => import('bootstrap-switch-button-react')
     const [editorLoaded, setEditorLoaded] = useState(false)
-    const { CKEditor, ClassicEditor, Base64UploadAdapter } = editorRef.current || {}
+    
     const SwitchButton = dynamic(importSwitch, {
         ssr: false
     })
     const simpleValidator = useRef(new SimpleReactValidator({ locale: 'id' }))
     const [, forceUpdate] = useState();
 
+    const { quill, quillRef } = useQuill();
+
     const { loading, error, success } = useSelector(state => state.newBerita)
     const { loading: allLoading, error: allError, kategori } = useSelector((state) => state.allKategori);
     const { setting } = useSelector(state => state.allSettingPublikasi)
     const { akademi } = useSelector(state => state.allAkademi);
-    // const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(state => state.drowpdownAkademi);
+
+    const limit = 12000
 
     useEffect(() => {
 
-        editorRef.current = {
-            CKEditor: require('@ckeditor/ckeditor5-react').CKEditor, //Added .CKEditor
-            ClassicEditor: require('@ckeditor/ckeditor5-build-classic'),
-            // Base64UploadAdapter: require('@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter')
+        if (quill) {
+            quill.on('text-change', (delta, oldDelta, source) => {
+                setIsiBerita(quill.root.innerHTML); // Get innerHTML using quill
+
+                if (quill.root.innerText.length <= limit) {
+                    return;
+                }
+                const { ops } = delta;
+                let updatedOps;
+                if (ops.length === 1) {
+                    updatedOps = [{ delete: ops[0].insert.length }];
+                } else {
+                    updatedOps = [ops[0], { delete: ops[1].insert.length }];
+                }
+                quill.updateContents({ ops: updatedOps });
+            });
         }
 
         setEditorLoaded(true)
@@ -55,7 +71,7 @@ const TambahBerita = ({ token, id }) => {
             })
         }
 
-    }, [dispatch, error, success, router]);
+    }, [dispatch, error, success, router, quill]);
 
 
     const [kategori_id, setKategoriId] = useState('')
@@ -277,29 +293,41 @@ const TambahBerita = ({ token, id }) => {
                                 <label htmlFor="staticEmail" className="col-sm-4 col-form-label font-weight-bolder">Isi Berita</label>
                                 <div className={`${styles.deskripsiTambah} col-sm-12`}>
                                     <div className="ckeditor">
-                                        {editorLoaded ? <CKEditor
-                                            ck-editor__editable
-                                            editor={ClassicEditor}
-                                            data={isi_berita}
-                                            onReady={editor => {
-                                                // You can store the "editor" and use when it is needed.
+                                        {editorLoaded ?
+                                            <div style={{ width: "100%", height: "300px" }}>
+                                                <div
+                                                    ref={quillRef}
+                                                    onChange={(event) => {
+                                                        // const data = editor.getData();
+                                                        // setIsiBerita(data);
+                                                    }}
+                                                />
+                                            </div>
+                                            // <CKEditor
+                                            //     ck-editor__editable
+                                            //     editor={ClassicEditor}
+                                            //     data={isi_berita}
+                                            //     onReady={editor => {
+                                            //         // You can store the "editor" and use when it is needed.
 
-                                            }}
-                                            onChange={(event, editor) => {
-                                                const data = editor.getData()
-                                                setIsiBerita(data);
-                                            }}
-                                            onBlur={() =>
-                                                simpleValidator.current.showMessageFor(
-                                                    "isi_berita"
-                                                )
-                                            }
-                                            config={{ placeholder: "Tulis Deskripsi" }}
-                                        /> : <p>Tunggu Sebentar</p>}
+                                            //     }}
+                                            //     onChange={(event, editor) => {
+                                            //         const data = editor.getData()
+                                            //         setIsiBerita(data);
+                                            //     }}
+                                            //     onBlur={() =>
+                                            //         simpleValidator.current.showMessageFor(
+                                            //             "isi_berita"
+                                            //         )
+                                            //     }
+                                            //     config={{ placeholder: "Tulis Deskripsi" }}
+                                            // /> 
+                                            :
+                                            <p>Tunggu Sebentar</p>}
                                         {simpleValidator.current.message(
                                             "isi_berita",
                                             isi_berita,
-                                            "required|min:100|max:12000",
+                                            "required",
                                             { className: "text-danger" }
                                         )}
                                     </div>

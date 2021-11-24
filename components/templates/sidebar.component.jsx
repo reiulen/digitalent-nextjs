@@ -101,6 +101,36 @@ const Sidebar = ({ session }) => {
       ],
     },
     {
+      id: 2,
+      name: "Daftar Peserta",
+      href: "/daftar-peserta",
+      selected: false,
+      icon: "assets/icon/sidebar_temp/Partnership.svg",
+      child: [
+        {
+          id: 1,
+          name: "Digitalent",
+          href: "/daftar-peserta/digitalent",
+          selected: false,
+          child: [],
+        },
+        {
+          id: 2,
+          name: "Beasiswa",
+          href: "/daftar-peserta/beasiswa",
+          selected: false,
+          child: [],
+        },
+        {
+          id: 3,
+          name: "Simonas",
+          href: "/daftar-peserta/simonas",
+          selected: false,
+          child: [],
+        },
+      ],
+    },
+    {
       id: 3,
       name: "Pelatihan",
       href: "",
@@ -159,7 +189,7 @@ const Sidebar = ({ session }) => {
       ],
     },
     {
-      id: 2,
+      id: 4,
       name: "Publikasi",
       href: "",
       icon: "assets/icon/sidebar_temp/Publikasi.svg",
@@ -238,7 +268,7 @@ const Sidebar = ({ session }) => {
       ],
     },
     {
-      id: 2,
+      id: 5,
       name: "Partnership",
       href: "",
       icon: "assets/icon/sidebar_temp/Partnership.svg",
@@ -282,7 +312,7 @@ const Sidebar = ({ session }) => {
       ],
     },
     {
-      id: 2,
+      id: 6,
       name: "Sertifikat",
       href: "",
       icon: "assets/icon/sidebar_temp/Sertifikat.svg",
@@ -305,7 +335,7 @@ const Sidebar = ({ session }) => {
       ],
     },
     {
-      id: 2,
+      id: 7,
       name: "Subvit",
       href: "",
       icon: "assets/icon/sidebar_temp/Subvit.svg",
@@ -342,7 +372,7 @@ const Sidebar = ({ session }) => {
       ],
     },
     {
-      id: 2,
+      id: 8,
       name: "Site Management",
       href: "",
       icon: "assets/icon/sidebar_temp/SiteManagement.svg",

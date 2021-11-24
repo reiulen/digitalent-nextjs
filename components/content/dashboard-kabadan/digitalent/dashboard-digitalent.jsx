@@ -164,16 +164,16 @@ const DashboardDigitalent = () => {
             <CardTotal
               title={"Total Seluruh Pendaftar"}
               value={252.329}
-              dailyAdd={"23.21%"}
-              statisticDay={"+20.220 (24H)"}
+              dailyAdd={"23.21"}
+              statisticDay={"+20.220 "}
             />
           </div>
           <div className="col-md-6 mb-5">
             <CardTotal
               title={"Total Seluruh Peserta"}
               value={252.329}
-              dailyAdd={"23.21%"}
-              statisticDay={"+20.220 (24H)"}
+              dailyAdd={"23.21"}
+              statisticDay={"+20.220 "}
             />
           </div>
         </div>
@@ -190,7 +190,7 @@ const DashboardDigitalent = () => {
                   funcFilterYear={(value) => {}}
                 />
 
-                <div className="chard-bar text-center mt-5">
+                <div className="chard-bar mt-5">
                   <ResponsiveContainer width={"100%"} height={300}>
                     <BarChart
                       data={dataPendaftarAkademi}
@@ -204,7 +204,7 @@ const DashboardDigitalent = () => {
                       <XAxis dataKey="name" />
                       <YAxis />
                       <Tooltip cursor={{ fill: "transparent" }} />
-                      <Bar dataKey="data" fill="#4CBDE2" />
+                      <Bar dataKey="data" fill="#0063CC" />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>
@@ -373,29 +373,28 @@ const DashboardDigitalent = () => {
                 <div className="list-filter d-flex">
                   <div className="d-flex flex-wrap align-items-center mr-3">
                     <p className="mt-3 mr-3 text-dashboard-gray-caption">
-                      Filter By:
+                      Akademi:
                     </p>
                     <select className="border-0 p-0">
-                      <option value="2021">Akademi</option>
-                      <option value="2020">2020</option>
+                      <option value="Semua">Semua</option>
                     </select>
                   </div>
                   <div className="d-flex flex-wrap align-items-center mr-3">
                     <p className="mt-3 mr-3 text-dashboard-gray-caption">
-                      Filter By:
+                      Tema:
                     </p>
                     <select className="border-0 p-0">
-                      <option value="2021">Tema</option>
-                      <option value="2020">2020</option>
+                      <option value="Semua">Semua</option>
                     </select>
                   </div>
                   <div className="d-flex flex-wrap align-items-center">
                     <p className="mt-3 mr-3 text-dashboard-gray-caption">
-                      Filter By:
+                      Tahun:
                     </p>
                     <select className="border-0 p-0">
-                      <option value="2021">Tahun</option>
-                      <option value="2020">2020</option>
+                      <option value="Semua">Semua</option>
+                      <option value="2021">2021</option>
+                      <option value="2022">2022</option>
                     </select>
                   </div>
                 </div>
@@ -485,20 +484,7 @@ const DashboardDigitalent = () => {
                 />
               </div>
             </div>
-            <div className="row mt-5">
-              <div className="col-md-6 mb-5">
-                <CardInfo
-                  title={"TTotal Pendaftar berdasarkan Difabel"}
-                  data={dataDifabel}
-                />
-              </div>
-              <div className="col-md-6 mb-5">
-                <CardInfo
-                  title={"Total Peserta berdasarkan Difabel"}
-                  data={dataDifabel}
-                />
-              </div>
-            </div>
+
             <div className="row mt-5">
               <div className="col-md-6 mb-5">
                 <CardInfo
