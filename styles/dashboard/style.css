@@ -17,6 +17,9 @@
 .bg-dashboard-primary {
   background-color: #007cff !important;
 }
+.bg-dashboard-primary-shade {
+  background-color: #0063cc !important;
+}
 .bg-dashboard-secondary {
   background-color: #203e80 !important;
 }

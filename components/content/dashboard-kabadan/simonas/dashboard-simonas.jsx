@@ -50,6 +50,15 @@ const DashboardSimonas = () => {
     { id: 1, title: "Pria", percent: 80, total: "3.000" },
     { id: 2, title: "Wanita", percent: 30, total: "2.000" },
   ];
+  const dataPendidikan = [
+    { id: 1, title: "D3", percent: 50, total: "3.000" },
+    { id: 2, title: "S1", percent: 40, total: "2.000" },
+    { id: 3, title: "SMA", percent: 40, total: "1.000" },
+    { id: 4, title: "SMK", percent: 30, total: "1.000" },
+    { id: 5, title: "S2", percent: 20, total: "1.000" },
+    { id: 6, title: "D4", percent: 10, total: "500" },
+    { id: 7, title: "Other", percent: 5, total: "100" },
+  ];
 
   return (
     <PageWrapper>
@@ -67,16 +76,16 @@ const DashboardSimonas = () => {
             <CardTotal
               title={"Total Lowongan Pekerjaan"}
               value={252.329}
-              dailyAdd={"23.21%"}
-              statisticDay={"+20.220 (24H)"}
+              dailyAdd={"23.21"}
+              statisticDay={"+20.220"}
             />
           </div>
           <div className="col-md-6 mb-5">
             <CardTotal
               title={"Total Proyek"}
               value={252.329}
-              dailyAdd={"23.21%"}
-              statisticDay={"+20.220 (24H)"}
+              dailyAdd={"23.21"}
+              statisticDay={"+20.220"}
             />
           </div>
         </div>
@@ -145,16 +154,16 @@ const DashboardSimonas = () => {
             <CardTotal
               title={"Total Seluruh Lamaran"}
               value={252.329}
-              dailyAdd={"23.21%"}
-              statisticDay={"+20.220 (24H)"}
+              dailyAdd={"23.21"}
+              statisticDay={"+20.220"}
             />
           </div>
           <div className="col-md-6 mb-5">
             <CardTotal
               title={"Total Lamaran Aktif"}
               value={252.329}
-              dailyAdd={"23.21%"}
-              statisticDay={"+20.220 (24H)"}
+              dailyAdd={"23.21"}
+              statisticDay={"+20.220"}
             />
           </div>
         </div>
@@ -222,33 +231,27 @@ const DashboardSimonas = () => {
             <div className="head-filter">
               <div className="d-flex justify-content-between align-items-center flex-wrap">
                 <p className="text-dashboard-gray fz-16 fw-500 mt-3">
-                  Penyebaran Peserta berdasarkan wilayah
+                  Penyebaran Pelamar berdasarkan wilayah
                 </p>
                 <div className="list-filter d-flex flex-wrap">
-                  <div className="d-flex align-items-center mr-3">
+                  <div className="d-flex align-items-center mr-5">
                     <p className="mt-3 mr-3 text-dashboard-gray-caption">
-                      Filter By:
+                      Status
                     </p>
                     <select className="border-0 p-0">
-                      <option value="2021">Akademi</option>
-                      <option value="2020">2020</option>
-                    </select>
-                  </div>
-                  <div className="d-flex align-items-center mr-3">
-                    <p className="mt-3 mr-3 text-dashboard-gray-caption">
-                      Filter By:
-                    </p>
-                    <select className="border-0 p-0">
-                      <option value="2021">Tema</option>
-                      <option value="2020">2020</option>
+                      <option value="Semua">Semua</option>
+                      <option value="Submitted">Submitted</option>
+                      <option value="Selection">Selection</option>
+                      <option value="Rejected">Rejected</option>
+                      <option value="Hired">Hired</option>
                     </select>
                   </div>
                   <div className="d-flex align-items-center">
                     <p className="mt-3 mr-3 text-dashboard-gray-caption">
-                      Filter By:
+                      Tahun
                     </p>
                     <select className="border-0 p-0">
-                      <option value="2021">Tahun</option>
+                      <option value="2021">2021</option>
                       <option value="2020">2020</option>
                     </select>
                   </div>
@@ -328,6 +331,20 @@ const DashboardSimonas = () => {
                 <CardInfo
                   title={"Pelamar Kerja berdasarkan Jenis Kelamin"}
                   data={dataJenisKelamin}
+                />
+              </div>
+            </div>
+            <div className="row mt-5">
+              <div className="col-md-6 mb-5">
+                <CardInfo
+                  title={"Pendidikan Pelamar Kerja"}
+                  data={dataPendidikan}
+                />
+              </div>
+              <div className="col-md-6 mb-5">
+                <CardInfo
+                  title={"Pendidikan Pelamar Proyek"}
+                  data={dataPendidikan}
                 />
               </div>
             </div>
