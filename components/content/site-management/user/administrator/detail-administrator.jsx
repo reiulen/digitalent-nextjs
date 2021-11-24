@@ -1,9 +1,11 @@
 import React from "react";
 import Link from "next/link";
 import PageWrapper from "../../../../wrapper/page.wrapper";
+import { useDispatch, useSelector } from "react-redux";
 import IconSearch from "../../../../assets/icon/Search";
 
 const DetailRole = ({ token }) => {
+
   const detailAdminSite = useSelector((state) => state.detailAdminSite);
 
   return (
