@@ -10,7 +10,6 @@ export default function RiwayatPelatihanDetail(props) {
   const { state: data } = useSelector(
     (state) => state.getDetailRiwayatPelatihanPeserta
   );
-  console.log(data);
   const [description, setDescription] = useState(data?.deskripsi || "-");
   const dateFrom = moment(data?.pendaftaran_mulai).format("LL");
   const dateTo = moment(data?.pendaftaran_selesai).format("LL");
@@ -76,7 +75,6 @@ export default function RiwayatPelatihanDetail(props) {
         Swal.fire(data.message, "Berhasil upload sertifikasi", "success");
       }
     } catch (error) {
-      console.log(error);
       Swal.fire("Gagal", `${error.response.data.message}`, "error");
     }
   };

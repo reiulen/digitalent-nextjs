@@ -81,7 +81,6 @@ const TambahTipeSoal = ({ token }) => {
         value,
         status: status_,
       };
-      console.log(data);
       dispatch(newSubtanceQuestionBanksType(data, token));
     } else {
       simpleValidator.current.showMessages();
