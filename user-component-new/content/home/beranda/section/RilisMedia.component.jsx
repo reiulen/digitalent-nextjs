@@ -72,7 +72,7 @@ export default function RilisMedia({ berita }) {
           <Link href="/login">
             <a>
               <button className="btn btn-outline-primary-new font-weight-bolder rounded-pill py-3 px-12">
-                Lihat Selengkapnya &rarr;
+                Lihat Selengkapnya >
               </button>
             </a>
           </Link>
