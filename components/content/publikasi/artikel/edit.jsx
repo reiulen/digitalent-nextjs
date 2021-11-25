@@ -31,8 +31,6 @@ const EditArtikel = ({ token, idUser }) => {
 
   const importSwitch = () => import("bootstrap-switch-button-react");
   const [editorLoaded, setEditorLoaded] = useState(false);
-  // const { CKEditor, ClassicEditor, Base64UploadAdapter } =
-  //   editorRef.current || {};
 
   const { quill, quillRef } = useQuill();
   const SwitchButton = dynamic(importSwitch, {
@@ -429,12 +427,12 @@ const EditArtikel = ({ token, idUser }) => {
                       ) : (
                         <p>Tunggu Sebentar</p>
                       )}
-                      {/* {simpleValidator.current.message(
+                      {simpleValidator.current.message(
                         "isi_artikel",
                         isi_artikel,
-                        "required|max:12000",
+                        "required",
                         { className: "text-danger" }
-                      )} */}
+                      )}
                     </div>
                   </div>
                 </div>

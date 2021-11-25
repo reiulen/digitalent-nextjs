@@ -338,12 +338,12 @@ const TambahArtikel = ({ token, id }) => {
                       ) : (
                         <p>Tunggu Sebentar</p>
                       )}
-                      {/* {simpleValidator.current.message(
+                      {simpleValidator.current.message(
                         "isi_artikel",
                         isi_artikel,
-                        "required|min:100|max:12000",
+                        "required",
                         { className: "text-danger" }
-                      )} */}
+                      )}
                     </div>
                   </div>
                 </div>
