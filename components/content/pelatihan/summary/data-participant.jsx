@@ -98,7 +98,7 @@ const DataParticipant = ({ token }) => {
   });
 
   let optionsPeserta = [
-    { value: "sleksi administrasi", label: "Seleksi Administrasi" },
+    { value: "seleksi administrasi", label: "Seleksi Administrasi" },
     { value: "tidak lulus administrasi", label: "Tidak Lulus Administrasi" },
     { value: "tes substansi", label: "Tes Substansi" },
     { value: "tidak lulus tes substansi", label: "Tidak Lulus Tes Substansi" },
@@ -294,6 +294,19 @@ const DataParticipant = ({ token }) => {
     dispatch(updateReminder(data, token));
   };
 
+  const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  };
+
+  const capitalize = (s) => {
+    let a = s.split(" ");
+    let result = [];
+    for (let i = 0; i < a.length; i++) {
+      result.push(a[i].charAt(0).toUpperCase() + a[i].slice(1, a[i].length));
+    }
+    return result.join(" ");
+  };
+
   return (
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">
@@ -353,7 +366,9 @@ const DataParticipant = ({ token }) => {
                     </label>
                     <Select
                       options={optionsAdministrasi}
-                      placeholder={peserta.list[0].administrasi || "-"}
+                      placeholder={
+                        capitalize(peserta.list[0].administrasi) || "-"
+                      }
                       onChange={(e) =>
                         setStatusAdministrasi({
                           label: e.label,
@@ -376,7 +391,10 @@ const DataParticipant = ({ token }) => {
                     </label>
                     <Select
                       options={optionsPeserta}
-                      placeholder={peserta.list[0].status || "-"}
+                      placeholder={
+                        capitalize(peserta.list[0].status)
+                         || "-"
+                      }
                       onChange={(e) =>
                         setStatusPeserta({ label: e.label, value: e.value })
                       }
@@ -399,7 +417,10 @@ const DataParticipant = ({ token }) => {
                     </label>
                     <Select
                       options={optionsAdministrasi}
-                      placeholder={peserta.list[0].administrasi || "-"}
+                      placeholder={
+                        capitalize(peserta.list[0].administrasi)
+                        || "-"
+                      }
                       onChange={(e) =>
                         setStatusAdministrasi({
                           label: e.label,
@@ -424,7 +445,9 @@ const DataParticipant = ({ token }) => {
                     </label>
                     <Select
                       options={optionsPeserta}
-                      placeholder={peserta.list[0].status || "-"}
+                      placeholder={
+                        capitalize(peserta.list[0].status)|| "-"
+                      }
                       onChange={(e) =>
                         setStatusPeserta({ label: e.label, value: e.value })
                       }
@@ -450,7 +473,9 @@ const DataParticipant = ({ token }) => {
                     </label>
                     <Select
                       options={optionsAdministrasi}
-                      placeholder={peserta.list[0].administrasi || "-"}
+                      placeholder={
+                        capitalize(peserta.list[0].administrasi) || "-"
+                      }
                       onChange={(e) =>
                         setStatusAdministrasi({
                           label: e.label,
@@ -466,7 +491,9 @@ const DataParticipant = ({ token }) => {
                     </label>
                     <Select
                       options={optionsPeserta}
-                      placeholder={peserta.list[0].status || "-"}
+                      placeholder={
+                        capitalize(peserta.list[0].status) || "-"
+                      }
                       onChange={(e) =>
                         setStatusPeserta({ label: e.label, value: e.value })
                       }

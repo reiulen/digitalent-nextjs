@@ -1,20 +1,21 @@
 import dynamic from "next/dynamic";
 import { getSession } from "next-auth/client";
-import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
+import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
 
 // import Layout from "../../../components/templates/layout.component";
-// import Tambah from "../../../components/content/publikasi/artikel/tambah";
+// import EditArtikel from "../../../components/content/publikasi/artikel/edit";
 
-import { getAllKategori } from "../../../redux/actions/publikasi/kategori.actions";
-import { wrapper } from "../../../redux/store";
+import { getDetailArtikel } from "../../../../redux/actions/publikasi/artikel.actions";
+import { getAllKategori } from "../../../../redux/actions/publikasi/kategori.actions";
+import { wrapper } from "../../../../redux/store";
 
-import LoadingPage from "../../../components/LoadingPage";
-import { getSettingPublikasi } from "../../../redux/actions/publikasi/setting.actions";
-import { getAllAkademi } from "../../../redux/actions/beranda/beranda.actions";
+import LoadingPage from "../../../../components/LoadingPage";
+import { getSettingPublikasi } from "../../../../redux/actions/publikasi/setting.actions";
 // import { dropdownAkademi } from "../../../redux/actions/pelatihan/function.actions";
+import { getAllAkademi } from "../../../../redux/actions/beranda/beranda.actions";
 
-const Tambah = dynamic(
-  () => import("../../../components/content/publikasi/artikel/tambah"),
+const EditArtikel = dynamic(
+  () => import("../../../../components/content/publikasi/artikel/edit"),
   {
     loading: function loadingNow() {
       return <LoadingPage />;
@@ -23,12 +24,12 @@ const Tambah = dynamic(
   }
 );
 
-export default function TambahPage(props) {
+export default function EditArtikelPage(props) {
   const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <Tambah token={session.token} id={session.user.id} />
+        <EditArtikel token={session.token} idUser={session.user.id} />
       </div>
     </>
   );
@@ -36,7 +37,7 @@ export default function TambahPage(props) {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
-    async ({ params, req }) => {
+    async ({ query, req }) => {
       const session = await getSession({ req });
       const middleware = middlewareAuthAdminSession(session);
       if (!middleware.status) {
@@ -47,13 +48,15 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
-
+      await store.dispatch(
+        getDetailArtikel(query.id, session.user.user.data.token)
+      );
       await store.dispatch(getAllKategori(session.user.user.data.token));
       await store.dispatch(getSettingPublikasi(session.user.user.data.token));
       await store.dispatch(getAllAkademi(session.user.user.data.token));
 
       return {
-        props: { session, title: "Tambah Artikel - Publikasi" },
+        props: { session, title: "Ubah Artikel - Publikasi" },
       };
     }
 );

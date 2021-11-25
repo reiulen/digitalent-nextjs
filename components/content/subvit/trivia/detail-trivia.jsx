@@ -1,22 +1,17 @@
 import React, { useEffect, useState } from "react";
-
-import Link from "next/link";
-import Image from "next/image";
 import { useRouter } from "next/router";
-import moment from "moment";
-import "moment/locale/id";
 
 import Pagination from "react-js-pagination";
-import { css } from "@emotion/react";
-import BeatLoader from "react-spinners/BeatLoader";
-
 import PageWrapper from "../../../wrapper/page.wrapper";
-import ButtonAction from "../../../ButtonAction";
+import moment from "moment";
+import "moment/locale/id";
+import Link from "next/link";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
   deleteTriviaQuestionDetail,
   clearErrors,
+  getAllTriviaQuestionDetail,
 } from "../../../../redux/actions/subvit/trivia-question-detail.action";
 
 const DetailTrivia = ({ token }) => {
@@ -39,15 +34,10 @@ const DetailTrivia = ({ token }) => {
 
   useEffect(() => {
     if (isDeleted) {
-      Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
-        (result) => {
-          if (result.isConfirmed) {
-            window.location.reload();
-          }
-        }
-      );
+      dispatch(getAllTriviaQuestionDetail(id, token));
+      Swal.fire("Berhasil ", "Data berhasil dihapus.", "success");
     }
-  }, [isDeleted, trivia]);
+  }, [isDeleted, trivia, id, token, dispatch]);
 
   const handlePagination = (pageNumber) => {
     router.push(

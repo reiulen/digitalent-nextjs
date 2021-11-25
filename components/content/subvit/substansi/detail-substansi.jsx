@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from "react";
-
-import Link from "next/link";
-import Image from "next/image";
-import styles from "./substansi.module.css";
 import { useRouter } from "next/router";
-
-import Pagination from "react-js-pagination";
 import { Modal } from "react-bootstrap";
 
+import Link from "next/link";
+import styles from "./substansi.module.css";
+import Pagination from "react-js-pagination";
 import PageWrapper from "../../../wrapper/page.wrapper";
-import ButtonAction from "../../../ButtonAction";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -17,8 +13,6 @@ import {
   clearErrors,
   getAllSubtanceQuestionDetail,
 } from "../../../../redux/actions/subvit/subtance-question-detail.action";
-import axios from "axios";
-import { get } from "js-cookie";
 
 const DetailSubstansi = ({ token }) => {
   const dispatch = useDispatch();
@@ -42,16 +36,10 @@ const DetailSubstansi = ({ token }) => {
 
   useEffect(() => {
     if (isDeleted) {
-      Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
-        (result) => {
-          if (result.isConfirmed) {
-            window.location.reload();
-          }
-        }
-      );
+      dispatch(getAllSubtanceQuestionDetail(id, token));
+      Swal.fire("Berhasil ", "Data berhasil dihapus.", "success");
     }
-    dispatch(getAllSubtanceQuestionDetail(id));
-  }, [isDeleted, dispatch, id]);
+  }, [isDeleted, dispatch, id, token]);
 
   const [status, setStatus] = useState("");
   const [kategori, setKategori] = useState(null);

@@ -475,9 +475,9 @@ export default function EditSertifikat({ token }) {
   };
 
   const url = `${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/signature-certificate-images/${signature[0].signature}`;
-  // console.log(signature, "ini signature");
 
   const toBase64 = async () => {
+    // belom berhasil coba
     try {
       // const data = await axios.get(encodeURI(url), {
       //   responseType: "document",
@@ -489,23 +489,19 @@ export default function EditSertifikat({ token }) {
           "Access-Control-Allow-Headers": "Content-Type, Authorization",
         },
       });
-      // console.log("masuk sin");
-      // console.log(data);
     } catch (e) {
-      // console.log(e);
-      // console.log("masuk error");
+      throw e;
     }
   };
 
   const [test, setTest] = useState();
 
   useEffect(() => {
-    // console.log(signature, "ini signature");
     // for (let i = 0; i < signature.length; i++) {
     //   toDataURL(
     //     `${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/signature-certificate-images/${signature[i].signature}`,
     //     (data) => {
-    //       console.log(data, "ini result");
+    // return data/
     //     }
     //   );
     // }

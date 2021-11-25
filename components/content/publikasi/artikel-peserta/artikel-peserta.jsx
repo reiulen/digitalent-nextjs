@@ -18,7 +18,6 @@ import LoadingTable from "../../../LoadingTable"
 import IconArrow from "../../../assets/icon/Arrow";
 import IconClose from "../../../assets/icon/Close";
 import IconFilter from "../../../assets/icon/Filter";
-import ButtonAction from '../../../ButtonAction'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteArtikelPeserta, clearErrors } from '../../../../redux/actions/publikasi/artikel-peserta.actions'
@@ -86,12 +85,7 @@ const ArtikelPeserta = ({ token }) => {
         });
     };
 
-    const getWindowDimensions = () => {
-        // if (typeof window === 'undefined') {
-        //     global.window = {}
-        // }
-
-        const { innerWidth: width, innerHeight: height } = window;
+    const getWindowDimensions = () => {        const { innerWidth: width, innerHeight: height } = window;
         return {
             width,
             height,
@@ -99,7 +93,6 @@ const ArtikelPeserta = ({ token }) => {
     };
 
     const [windowDimensions, setWindowDimensions] = useState(
-        // getWindowDimensions()
         {}
     );
 
@@ -362,7 +355,6 @@ const ArtikelPeserta = ({ token }) => {
                         icon="new/open-book.svg"
                         color='#ffffff'
                         value={artikel_peserta && artikel_peserta.publish != "" ? artikel_peserta.publish : 0}
-                        // value={0}
                         titleValue="Artikel"
                         title="Total Publish"
                         publishedVal="1"
@@ -373,8 +365,7 @@ const ArtikelPeserta = ({ token }) => {
                         background="bg-light-danger"
                         icon="Library.svg"
                         color='#ffffff'
-                        // value={0}
-                        value={artikel_peserta && artikel_peserta.publish != "" ? artikel_peserta.unpublish : 0}
+                        value={artikel_peserta && artikel_peserta.unpublish != "" ? artikel_peserta.unpublish : 0}
                         titleValue="Artikel"
                         title="Total Belum Dipublish"
                         publishedVal="0"
@@ -393,7 +384,6 @@ const ArtikelPeserta = ({ token }) => {
                     </div>
 
                     <div className="card-body pt-0">
-
                         <div className="table-filter">
                             <div className="row align-items-center">
                                 <div className="col-sm-6 col-md-6 col-lg-6 col-xl-6">
@@ -566,7 +556,7 @@ const ArtikelPeserta = ({ token }) => {
                                         <thead style={{ background: '#F3F6F9' }}>
                                             <tr>
                                                 <th className="text-center">No</th>
-                                                <th className='text-center'>Thumbnail</th>
+                                                <th>Thumbnail</th>
                                                 <th>Kategori</th>
                                                 <th>Judul</th>
                                                 <th>Tanggal Publish</th>
@@ -578,9 +568,114 @@ const ArtikelPeserta = ({ token }) => {
                                         </thead>
                                         <tbody>
                                             {
-                                                !artikel_peserta || artikel_peserta && artikel_peserta.artikel.length === 0 ?
-                                                    <td className='align-middle text-center' colSpan={9}>Data Kosong</td> :
+                                                !artikel_peserta || artikel_peserta && artikel_peserta.artikel.length === 0 ? (
                                                     <td className='align-middle text-center' colSpan={9}>Data Kosong</td>
+                                                ) : (
+                                                    artikel_peserta && artikel_peserta.artikel.map((artikel_peserta, i) => {
+                                                        return (
+                                                            <tr key={artikel_peserta.id}>
+                                                                <td className='align-middle text-center'>
+                                                                    {
+                                                                        limit === null ?
+                                                                            <span>
+                                                                                {i + 1 * (page * 5) - (5 - 1)}
+                                                                            </span>
+                                                                            :
+                                                                            <span>
+                                                                                {i + 1 * (page * limit) - (limit - 1)}
+                                                                            </span>
+                                                                    }
+                                                                </td>
+
+                                                                <td>
+                                                                    <Image
+                                                                        alt={artikel_peserta.judul_artikel}
+                                                                        unoptimized={
+                                                                            process.env.ENVIRONMENT !== "PRODUCTION"
+                                                                        }
+                                                                        loader={process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                                                            "publikasi/images/" +
+                                                                            artikel_peserta.gambar
+                                                                        }
+                                                                        src={
+                                                                            process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                                                            "publikasi/images/" +
+                                                                            artikel_peserta.gambar
+                                                                        }
+                                                                        width={80}
+                                                                        height={50}
+                                                                    />
+                                                                </td>
+                                                                <td className="align-middle" style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '11rem' }}>
+                                                                    {artikel_peserta.nama_kategori}
+                                                                </td>
+                                                                <td className="align-middle" style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '11rem' }}>
+                                                                    {artikel_peserta.judul_artikel}
+                                                                </td>
+                                                                <td className="align-middle">
+                                                                    {artikel_peserta.publish === 1 ? (
+                                                                        artikel_peserta.tanggal_publish
+                                                                    ) : (
+                                                                        <span className="label label-inline label-light-danger font-weight-bold">
+                                                                            Belum dipublish
+                                                                        </span>
+                                                                    )}
+                                                                </td>
+                                                                <td className="align-middle">
+                                                                    {artikel_peserta.name}
+                                                                </td>
+                                                                <td className="align-middle">
+                                                                    {artikel_peserta.publish === 1 ? (
+                                                                        <span className="label label-inline label-light-success font-weight-bold">
+                                                                            Publish
+                                                                        </span>
+                                                                    ) : (
+                                                                        <span className="label label-inline label-light-warning font-weight-bold">
+                                                                            Belum dipublish
+                                                                        </span>
+                                                                    )}
+                                                                </td>
+                                                                <td className="align-middle">
+                                                                    {artikel_peserta.role}
+                                                                </td>
+                                                                <td className="align-middle d-flex">
+
+                                                                    <Link
+                                                                        href={`/publikasi/artikel-peserta/preview/${artikel_peserta.id}`}
+                                                                    >
+                                                                        <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete" target="_blank">
+                                                                            <i className="ri-todo-fill p-0 text-white"></i>
+                                                                            <div className="text-hover-show-hapus">
+                                                                                Pratinjau
+                                                                            </div>
+                                                                        </a>
+                                                                    </Link>
+
+                                                                    <Link
+                                                                        href={`/publikasi/artikel-peserta/ubah-artikel-peserta?id=${artikel_peserta.id}`}
+                                                                    >
+                                                                        <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete">
+                                                                            <i className="ri-pencil-fill p-0 text-white"></i>
+                                                                            <div className="text-hover-show-hapus">
+                                                                                Ubah
+                                                                            </div>
+                                                                        </a>
+                                                                    </Link>
+
+                                                                    <button
+                                                                        className="btn btn-link-action bg-blue-secondary text-white my-5 position-relative btn-delete"
+                                                                        onClick={() => handleDelete(artikel_peserta.id)}
+                                                                    >
+                                                                        <i className="ri-delete-bin-fill p-0 text-white"></i>
+                                                                        <div className="text-hover-show-hapus">
+                                                                            Hapus
+                                                                        </div>
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        );
+                                                    })
+                                                )
                                             }
                                         </tbody>
                                     </table> : ''
@@ -589,65 +684,63 @@ const ArtikelPeserta = ({ token }) => {
 
                             <div className="row">
                                 {artikel_peserta && artikel_peserta.perPage < artikel_peserta.total &&
-                                    null
-                                    // <>
-                                    // <div className={`${stylesPag.pagination} table-pagination`}>
-                                    //     <Pagination
-                                    //         activePage={page}
-                                    //         itemsCountPerPage={artikel.perPage}
-                                    //         totalItemsCount={artikel.total}
-                                    //         pageRangeDisplayed={windowDimensions.width > 320 ? 3 : 1}
-                                    //         onChange={handlePagination}
-                                    //         nextPageText={">"}
-                                    //         prevPageText={"<"}
-                                    //         firstPageText={"<<"}
-                                    //         lastPageText={">>"}
-                                    //         itemClass="page-item"
-                                    //         linkClass="page-link"
-                                    //     />
-                                    // </div>
-                                    // </>
+                                    <>
+                                        <div className={`${stylesPag.pagination} table-pagination`}>
+                                            <Pagination
+                                                activePage={page}
+                                                itemsCountPerPage={artikel_peserta.perPage}
+                                                totalItemsCount={artikel_peserta.total}
+                                                pageRangeDisplayed={windowDimensions.width > 320 ? 3 : 1}
+                                                onChange={handlePagination}
+                                                nextPageText={">"}
+                                                prevPageText={"<"}
+                                                firstPageText={"<<"}
+                                                lastPageText={">>"}
+                                                itemClass="page-item"
+                                                linkClass="page-link"
+                                            />
+                                        </div>
+                                    </>
                                 }
-                            {artikel_peserta ?
-                                <div className={`${stylesPag.rightPag} table-total ml-auto`}>
-                                    <div className="row">
-                                        <div className="col-4 mr-0 mt-3">
-                                            <select
-                                                className="form-control"
-                                                id="exampleFormControlSelect2"
-                                                style={{
-                                                    width: "70px",
-                                                    background: "#F3F6F9",
-                                                    borderColor: "#F3F6F9",
-                                                    color: "#9E9E9E",
-                                                }}
-                                                onChange={(e) => handleLimit(e.target.value)}
-                                                onBlur={(e) => handleLimit(e.target.value)}
-                                            >
-                                                <option value='5' selected={limit == "5" ? true : false}>5</option>
-                                                <option value='10' selected={limit == "10" ? true : false}>10</option>
-                                                <option value='30' selected={limit == "30" ? true : false}>30</option>
-                                                <option value='40' selected={limit == "40" ? true : false}>40</option>
-                                                <option value='50' selected={limit == "50" ? true : false}>50</option>
-                                            </select>
+                                {artikel_peserta ?
+                                    <div className={`${stylesPag.rightPag} table-total ml-auto`}>
+                                        <div className="row">
+                                            <div className="col-4 mr-0 mt-3">
+                                                <select
+                                                    className="form-control"
+                                                    id="exampleFormControlSelect2"
+                                                    style={{
+                                                        width: "70px",
+                                                        background: "#F3F6F9",
+                                                        borderColor: "#F3F6F9",
+                                                        color: "#9E9E9E",
+                                                    }}
+                                                    onChange={(e) => handleLimit(e.target.value)}
+                                                    onBlur={(e) => handleLimit(e.target.value)}
+                                                >
+                                                    <option value='5' selected={limit == "5" ? true : false}>5</option>
+                                                    <option value='10' selected={limit == "10" ? true : false}>10</option>
+                                                    <option value='30' selected={limit == "30" ? true : false}>30</option>
+                                                    <option value='40' selected={limit == "40" ? true : false}>40</option>
+                                                    <option value='50' selected={limit == "50" ? true : false}>50</option>
+                                                </select>
+                                            </div>
+                                            <div className="col-8 my-auto">
+                                                <p
+                                                    className="align-middle mt-5 pt-1"
+                                                    style={{ color: "#B5B5C3" }}
+                                                >
+                                                    Total Data {artikel_peserta.total} List Data
+                                                </p>
+                                            </div>
                                         </div>
-                                        <div className="col-8 my-auto">
-                                            <p
-                                                className="align-middle mt-5 pt-1"
-                                                style={{ color: "#B5B5C3" }}
-                                            >
-                                                Total Data 0 List Data
-                                                {/* Total Data {artikel_peserta.total} List Data */}
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div> : ''
-                            }
+                                    </div> : ''
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
         </PageWrapper >
     )
 }

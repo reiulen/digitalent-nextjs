@@ -1,21 +1,20 @@
 import dynamic from "next/dynamic";
 import { getSession } from "next-auth/client";
-import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
+import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
 
-import Layout from "../../../components/templates/layout.component";
-// import EditBerita from "../../../components/content/publikasi/berita/edit"
+// import Layout from "../../../components/templates/layout.component";
+// import Tambah from "../../../components/content/publikasi/artikel/tambah";
 
-import { getDetailBerita } from "../../../redux/actions/publikasi/berita.actions";
-import { getAllKategori } from "../../../redux/actions/publikasi/kategori.actions";
-import { wrapper } from "../../../redux/store";
+import { getAllKategori } from "../../../../redux/actions/publikasi/kategori.actions";
+import { wrapper } from "../../../../redux/store";
 
-import LoadingPage from "../../../components/LoadingPage";
-import { getSettingPublikasi } from "../../../redux/actions/publikasi/setting.actions";
-import { getAllAkademi } from "../../../redux/actions/beranda/beranda.actions";
+import LoadingPage from "../../../../components/LoadingPage";
+import { getSettingPublikasi } from "../../../../redux/actions/publikasi/setting.actions";
+import { getAllAkademi } from "../../../../redux/actions/beranda/beranda.actions";
 // import { dropdownAkademi } from "../../../redux/actions/pelatihan/function.actions";
 
-const EditBerita = dynamic(
-  () => import("../../../components/content/publikasi/berita/edit"),
+const Tambah = dynamic(
+  () => import("../../../../components/content/publikasi/artikel/tambah"),
   {
     loading: function loadingNow() {
       return <LoadingPage />;
@@ -24,12 +23,12 @@ const EditBerita = dynamic(
   }
 );
 
-export default function EditBeritaPage(props) {
+export default function TambahPage(props) {
   const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <EditBerita token={session.token} idUser={session.user.id} />
+        <Tambah token={session.token} id={session.user.id} />
       </div>
     </>
   );
@@ -48,15 +47,13 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
-      await store.dispatch(
-        getDetailBerita(params.id, session.user.user.data.token)
-      );
+
       await store.dispatch(getAllKategori(session.user.user.data.token));
       await store.dispatch(getSettingPublikasi(session.user.user.data.token));
       await store.dispatch(getAllAkademi(session.user.user.data.token));
 
       return {
-        props: { session, title: "Ubah Berita - Publikasi" },
+        props: { session, title: "Tambah Artikel - Publikasi" },
       };
     }
 );
