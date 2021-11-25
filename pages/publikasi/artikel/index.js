@@ -2,14 +2,8 @@ import dynamic from "next/dynamic";
 import { getSession } from "next-auth/client";
 import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
 
-// import Layout from "../../../components/templates/layout.component";
-// import Artikel from "../../../components/content/publikasi/artikel/artikel";
-// import ContentLoader from "react-content-loader"
-
 import { getAllArtikel } from "../../../redux/actions/publikasi/artikel.actions";
 import { wrapper } from "../../../redux/store";
-
-// import LoadingPage from "../../../components/LoadingPage";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
 
 
@@ -44,7 +38,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
         return {
           redirect: {
             destination: middleware.redirect,
-            // destination: "http://dts-dev.majapahit.id/login/admin",
             permanent: false,
           },
         };
@@ -61,7 +54,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
           session.user.user.data.token
         )
       );
-      // await store.dispatch(getAllKategori(session.user.user.data.token))
       return {
         props: { session, title: "Artikel - Publikasi" },
       };

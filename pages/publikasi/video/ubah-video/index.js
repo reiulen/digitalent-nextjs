@@ -1,19 +1,19 @@
 import dynamic from "next/dynamic";
 import { getSession } from "next-auth/client";
-import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
+import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
 
 // import Layout from "../../../components/templates/layout.component";
 // import EditVideo from "../../../components/content/publikasi/vidio/edit";
 
-import { getDetailVideo } from "../../../redux/actions/publikasi/video.actions";
-import { getAllKategori } from "../../../redux/actions/publikasi/kategori.actions";
-import { wrapper } from "../../../redux/store";
+import { getDetailVideo } from "../../../../redux/actions/publikasi/video.actions";
+import { getAllKategori } from "../../../../redux/actions/publikasi/kategori.actions";
+import { wrapper } from "../../../../redux/store";
 
-import LoadingPage from "../../../components/LoadingPage";
-import { getSettingPublikasi } from "../../../redux/actions/publikasi/setting.actions";
+import LoadingPage from "../../../../components/LoadingPage";
+import { getSettingPublikasi } from "../../../../redux/actions/publikasi/setting.actions";
 
 const EditVideo = dynamic(
-  () => import("../../../components/content/publikasi/vidio/edit"),
+  () => import("../../../../components/content/publikasi/vidio/edit"),
   {
     // suspense: true,
     // loading: () => <LoadingSkeleton />,
@@ -40,7 +40,7 @@ export default function EditArtikelPage(props) {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
-    async ({ params, req }) => {
+    async ({ query, req }) => {
       const session = await getSession({ req });
       const middleware = middlewareAuthAdminSession(session);
       if (!middleware.status) {
@@ -53,7 +53,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       await store.dispatch(
-        getDetailVideo(params.id, session.user.user.data.token)
+        getDetailVideo(query.id, session.user.user.data.token)
       );
       await store.dispatch(getAllKategori(session.user.user.data.token));
       await store.dispatch(getSettingPublikasi(session.user.user.data.token));

@@ -1,17 +1,17 @@
 import dynamic from "next/dynamic";
 import { getSession } from "next-auth/client";
-import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
+import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
 
-import Layout from "../../../components/templates/layout.component";
+import Layout from "../../../../components/templates/layout.component";
 // import EditKategori from "../../../components/content/publikasi/kategori/edit";
 
-import { getDetailKategori } from "../../../redux/actions/publikasi/kategori.actions";
-import { wrapper } from "../../../redux/store";
+import { getDetailKategori } from "../../../../redux/actions/publikasi/kategori.actions";
+import { wrapper } from "../../../../redux/store";
 
-import LoadingPage from "../../../components/LoadingPage";
+import LoadingPage from "../../../../components/LoadingPage";
 
 const EditKategori = dynamic(
-  () => import("../../../components/content/publikasi/kategori/edit"),
+  () => import("../../../../components/content/publikasi/kategori/edit"),
   {
     // suspense: true,
     // loading: () => <LoadingSkeleton />,
@@ -35,7 +35,7 @@ export default function EditKategoriPage(props) {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
-    async ({ params, req }) => {
+    async ({ query, req }) => {
       const session = await getSession({ req });
       const middleware = middlewareAuthAdminSession(session);
       if (!middleware.status) {
@@ -48,7 +48,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       await store.dispatch(
-        getDetailKategori(params.id, session.user.user.data.token)
+        getDetailKategori(query.id, session.user.user.data.token)
       );
       return {
         props: { session, title: "Ubah Kategori - Publikasi" },

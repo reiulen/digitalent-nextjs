@@ -1,18 +1,18 @@
 import dynamic from "next/dynamic";
 import { getSession } from "next-auth/client";
-import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
+import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
 
 // import Layout from "../../../components/templates/layout.component";
 // import EditFaq from "../../../components/content/publikasi/faq/edit";
 
-import { getDetailFaq } from "../../../redux/actions/publikasi/faq.actions";
-import { getAllKategoriInput } from "../../../redux/actions/publikasi/kategori.actions";
-import { wrapper } from "../../../redux/store";
+import { getDetailFaq } from "../../../../redux/actions/publikasi/faq.actions";
+import { getAllKategoriInput } from "../../../../redux/actions/publikasi/kategori.actions";
+import { wrapper } from "../../../../redux/store";
 
-import LoadingPage from "../../../components/LoadingPage";
+import LoadingPage from "../../../../components/LoadingPage";
 
 const EditFaq = dynamic(
-  () => import("../../../components/content/publikasi/faq/edit"),
+  () => import("../../../../components/content/publikasi/faq/edit"),
   {
     loading: function loadingNow() {
       return <LoadingPage />;
@@ -34,7 +34,7 @@ export default function EditFaqPage(props) {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
-    async ({ params, req }) => {
+    async ({ query, req }) => {
       const session = await getSession({ req });
       const middleware = middlewareAuthAdminSession(session);
       if (!middleware.status) {
@@ -47,7 +47,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       await store.dispatch(
-        getDetailFaq(params.id, session.user.user.data.token)
+        getDetailFaq(query.id, session.user.user.data.token)
       );
       await store.dispatch(
         getAllKategoriInput("Faq", session.user.user.data.token)
