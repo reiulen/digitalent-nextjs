@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from "react";
-
-import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/router";
 
+import Link from "next/link";
 import Pagination from "react-js-pagination";
 import Swal from "sweetalert2";
-
 import PageWrapper from "../../../wrapper/page.wrapper";
-import ButtonAction from "../../../ButtonAction";
 import LoadingTable from "../../../LoadingTable";
 import styles from "./listSubstansi.module.css";
 import stylesPag from "../../../../styles/pagination.module.css";
@@ -17,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   clearErrors,
   deleteSubtanceQuestionBanks,
+  getAllSubtanceQuestionBanks,
 } from "../../../../redux/actions/subvit/subtance.actions";
 import { DELETE_SUBTANCE_QUESTION_BANKS_RESET } from "../../../../redux/types/subvit/subtance.type";
 
@@ -42,18 +39,13 @@ const ListSubstansi = ({ token }) => {
 
   useEffect(() => {
     if (isDeleted) {
-      Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
-        (result) => {
-          if (result.isConfirmed) {
-            window.location.reload();
-          }
-        }
-      );
       dispatch({
         type: DELETE_SUBTANCE_QUESTION_BANKS_RESET,
       });
+      dispatch(getAllSubtanceQuestionBanks(1, "", limit, token));
+      Swal.fire("Berhasil ", "Data berhasil dihapus.", "success");
     }
-  }, [dispatch, isDeleted]);
+  }, [dispatch, isDeleted, limit, token]);
 
   const handlePagination = (pageNumber) => {
     let link = `${router.pathname}?page=${pageNumber}`;

@@ -6,9 +6,14 @@ import { getDataPribadi } from "../../redux/actions/pelatihan/function.actions";
 import { getTagBerandaBerita } from "../../redux/actions/beranda/berita.actions";
 import { getAllAkademi } from "../../redux/actions/beranda/beranda.actions";
 
-const FormPengaduan = dynamic(() => import("../../user-component-new/content/home/helpdesk/formulir-pengaduan"));
+const FormPengaduan = dynamic(() =>
+  import("../../user-component-new/content/home/helpdesk/formulir-pengaduan")
+);
 
-const Layout = dynamic(() => import("../../user-component-new/components/template/Layout.component"), { ssr: false });
+const Layout = dynamic(
+  () => import("../../user-component-new/components/template/Layout.component"),
+  { ssr: false }
+);
 
 export default function BerandaKontak(props) {
   let session = null;
@@ -28,18 +33,21 @@ export default function BerandaKontak(props) {
   );
 }
 
-export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ query, req }) => {
-  const session = await getSession({ req });
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) =>
+    async ({ query, req }) => {
+      const session = await getSession({ req });
 
-  let sessionToken = session?.user.user.data.user.token;
+      let sessionToken = session?.user.user.data.user.token;
 
-  await store.dispatch(getDataPribadi(sessionToken));
+      await store.dispatch(getDataPribadi(sessionToken));
 
-  return {
-    props: {
-      title: "Berita",
-      data: "auth",
-      session,
-    },
-  };
-});
+      return {
+        props: {
+          title: "Berita",
+          data: "auth",
+          session,
+        },
+      };
+    }
+);

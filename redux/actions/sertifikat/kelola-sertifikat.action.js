@@ -261,7 +261,6 @@ export const getOptionsAcademy = (token) => async (dispatch) => {
     };
 
     const { data } = await axios.get(link, config);
-
     if (data) {
       dispatch({ type: OPTIONS_ACADEMY_SUCCESS, payload: data });
     }

@@ -4,7 +4,7 @@ import { getSession } from "next-auth/client";
 
 import LoadingSkeleton from "../../../../../components/LoadingSkeleton";
 import { wrapper } from "../../../../../redux/store";
-import { getDetailParticipant } from "../../../../../redux/actions/sertifikat/list-peserta.action";
+import { getAllParticipant } from "../../../../../redux/actions/sertifikat/list-peserta.action";
 
 const ListPeserta = dynamic(
   () =>
@@ -43,15 +43,12 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
       query.id ? query.id : (query.id = req.cookies.nama_pelatihan_id);
       await store.dispatch(
-        getDetailParticipant(
+        getAllParticipant(
           query.id ? query.id : req.cookies.nama_pelatihan_id,
           query.page,
           query.keyword,
           query.limit,
-          session.user.user.data.token,
-          query.publish,
-          query.startdate,
-          query.enddate
+          session.user.user.data.token
         )
       );
 

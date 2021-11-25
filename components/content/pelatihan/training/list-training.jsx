@@ -145,12 +145,12 @@ const ListTraining = ({ token }) => {
 
   const optionsStatusPelatihan = [
     { value: "review substansi", label: "Review Substansi" },
-    { value: "menunggu", label: "Menunggu" },
+    { value: "menunggu pendaftaran", label: "Menunggu Pendaftaran" },
     { value: "pendaftaran", label: "Pendaftaran" },
-    { value: "seleksi administrasi", label: "Seleksi Administrasi" },
-    { value: "seleksi substansi", label: "Seleksi Substansi" },
+    { value: "seleksi", label: "Seleksi" },
     { value: "pelatihan", label: "Pelatihan" },
     { value: "selesai", label: "Selesai" },
+    { value: "dibatalkan", label: "Dibatalkan" },
   ];
 
   const optionsStatusSubstansi = [
@@ -916,7 +916,12 @@ const ListTraining = ({ token }) => {
                                     </option>
                                   )}
                                   {row.status_pelatihan === "seleksi" && (
-                                    <option value="seleksi">Seleksi</option>
+                                    <>
+                                      <option value="seleksi">Seleksi</option>
+                                      <option value="pelatihan">
+                                        Pelatihan
+                                      </option>
+                                    </>
                                   )}
                                   {row.status_pelatihan === "pelatihan" && (
                                     <>
@@ -939,7 +944,10 @@ const ListTraining = ({ token }) => {
                             </td>
                             <td className="align-middle">
                               <div className="d-flex flex-row">
-                                {row.status_pelatihan !== "pelatihan" && (
+                                {!(
+                                  row.status_pelatihan === "pelatihan" ||
+                                  row.status_substansi === "ditolak"
+                                ) && (
                                   <Link
                                     href={`/pelatihan/pelatihan/edit-pelatihan/${row.id}`}
                                   >
@@ -992,24 +1000,26 @@ const ListTraining = ({ token }) => {
                                       </a>
                                     </Link>
                                   )}
-                                {row.status_substansi !== "ditolak" ||
-                                  row.status_pelatihan !== "review substansi" ||
-                                  row.status_pelatihan !==
+                                {!(
+                                  row.status_substansi === "ditolak" ||
+                                  row.status_pelatihan === "review substansi" ||
+                                  row.status_pelatihan ===
                                     "menunggu pendaftaran" ||
-                                  (row.status_substansi !== "revisi" && (
-                                    <Link
-                                      href={`/pelatihan/pelatihan/view-list-peserta/${row.id}`}
+                                  row.status_substansi === "revisi"
+                                ) && (
+                                  <Link
+                                    href={`/pelatihan/pelatihan/view-list-peserta/${row.id}`}
+                                  >
+                                    <a
+                                      className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                      data-toggle="tooltip"
+                                      data-placement="bottom"
+                                      title="User"
                                     >
-                                      <a
-                                        className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                                        data-toggle="tooltip"
-                                        data-placement="bottom"
-                                        title="User"
-                                      >
-                                        <i className="ri-user-3-fill p-0 text-white"></i>
-                                      </a>
-                                    </Link>
-                                  ))}
+                                      <i className="ri-user-3-fill p-0 text-white"></i>
+                                    </a>
+                                  </Link>
+                                )}
                                 {row.status_pelatihan === "selesai" && (
                                   <Link
                                     href={`/pelatihan/pelatihan/upload-evidence/${row.id}`}
@@ -1024,15 +1034,16 @@ const ListTraining = ({ token }) => {
                                     </a>
                                   </Link>
                                 )}
-                                <button
-                                  className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                                  data-toggle="tooltip"
-                                  data-placement="bottom"
-                                  onClick={() => handleClone(row.id)}
-                                  title="Clone"
-                                >
-                                  <i className="ri-send-backward p-0 text-white"></i>
-                                </button>
+                                <Link href={`/pelatihan/pelatihan/clone-pelatihan/${row.id}`}>
+                                  <a
+                                    className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                    data-toggle="tooltip"
+                                    data-placement="bottom"
+                                    title="Clone"
+                                  >
+                                    <i className="ri-send-backward p-0 text-white"></i>
+                                  </a>
+                                </Link>
                                 <button
                                   className="btn btn-link-action bg-blue-secondary text-white"
                                   onClick={() => handleDelete(row.id)}

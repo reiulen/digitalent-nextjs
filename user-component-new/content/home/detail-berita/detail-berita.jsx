@@ -153,12 +153,6 @@ const DetailBerita = () => {
                                     </button>
                                 </div>
                                 
-                                {/* <div className="mr-3">
-                                    <button className="btn btn-sm btn-outline-light rounded-circle">
-                                        <i className="ri-heart-line px-0 py-1"></i>
-                                    </button>
-                                </div> */}
-                                
                             </div>
                         </div>
                     </div>
@@ -287,7 +281,7 @@ const DetailBerita = () => {
                                                 <div>
                                                     <button 
                                                         className="btn btn-primary-dashboard" 
-                                                        onClick={(e) => handleHighlightWords(e, detail.isi_berita)}
+                                                        // onClick={(e) => handleHighlightWords(e, detail.isi_berita)}
                                                         style={{borderTopRightRadius:"150px", borderBottomRightRadius:"150px"}}
                                                     >
                                                         Cari

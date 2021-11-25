@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react"
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -15,11 +14,11 @@ import {
 
 import SubHeaderComponent from "../../../components/global/Breadcrumb.component";
 import PulseLoaderRender from "../../../components/loader/PulseLoader";
-import { playVideo } from "../../../../redux/actions/publikasi/video.actions";
 
 import {
   playVideoContent,
   getAllVideoContent,
+  getDetailBerandaVideo,
 } from "../../../../redux/actions/beranda/video-content.actions";
 
 const VideoPage = () => {
@@ -28,33 +27,24 @@ const VideoPage = () => {
 
   const {
     loading: allLoading,
-    error,
     video,
   } = useSelector((state) => state.allVideoContent);
 
+  const { detail } = useSelector((state) => state.detailBerandaVideo);
   const { dataTag } = useSelector((state) => state.allTagVideoContent);
   const { kategori } = useSelector((state) => state.kategoriVideoContent);
+  const { loading: playLoading } = useSelector((state) => state.playVideoContent)
 
-  const titleToTrim = 30;
   const descToTrim = 100;
   
-  const [url_video, setUrlVideo] = useState("");
   const [video_playing, setVideoPlaying] = useState(false);
-  const [idVideo, setIdVideo] = useState(null);
-  const [judul_video, setJudulVideo] = useState(null);
-  const [tanggal_publish, setTanggalPublish] = useState(null);
-  const [dataKategori, setDataKategori] = useState(null);
   const [kategoriVideo, setKategoriVideo] = useState("");
-  const [isiVideo, setIsiVideo] = useState(null);
-  const [tonton, setTonton] = useState(null);
   const [tag, setTag] = useState("");
-  const [tags, setTags] = useState([]);
   const [filterPublish, setFilterPublish] = useState("");
   const [activePage, setActivePage] = useState(1);
   const [keyword, setKeyword] = useState("");
   const [sort, setSort] = useState("");
   const [category_id, setCategoryId] = useState("");
-  const [category_academy, setCategoryAcademy] = useState("");
   const [ limit, setLimit ] = useState("");
   const [ activeTitle, setActiveTitle ] = useState("Video Terupdate dan Terkini")
   const [ show, setShow ] = useState (false)
@@ -70,7 +60,6 @@ const VideoPage = () => {
 };
 
 const [windowDimensions, setWindowDimensions] = useState(
-    // getWindowDimensions()
     {}
 );
 
@@ -92,7 +81,6 @@ useEffect(()=> {
     dispatch(
       getAllVideoContent(
         pageNumber,
-        activePage,
         keyword,
         limit,
         filterPublish,
@@ -102,18 +90,6 @@ useEffect(()=> {
         tag
       )
     );
-  };
-
-  const handleTitleToTrim = (str) => {
-    let result = null;
-
-    if (str.length > titleToTrim) {
-      result = str.slice(0, titleToTrim) + "...";
-    } else {
-      result = str;
-    }
-
-    return result;
   };
 
   const handleDescToTrim = (str) => {
@@ -207,30 +183,17 @@ useEffect(()=> {
   };
 
   const handlePreview = (
-    url_video,
     id,
-    judul,
-    tanggal_publish,
-    dataKategori,
-    isi_video,
-    tag,
-    ditonton
   ) => {
-    setIdVideo(id);
     setVideoPlaying(true);
-    setUrlVideo(url_video);
-    setJudulVideo(judul);
-    setTanggalPublish(tanggal_publish);
-    setDataKategori(dataKategori);
-    setIsiVideo(isi_video);
-    setTags(tag);
-    setTonton(ditonton);
     setShow (true)
+    dispatch(getDetailBerandaVideo(id))
+    handleIsPlayed(id)
   };
 
-  const handleIsPlayed = () => {
+  const handleIsPlayed = (id_video) => {
     const data = {
-      id: idVideo,
+      id: id_video,
       _method: "PUT",
       isplay: "1",
     };
@@ -245,7 +208,7 @@ useEffect(()=> {
 
   return (
     <>
-      <Container fluid className="px-md-30 px-10 py-10 bg-white">
+      <Container fluid className="px-md-30 px-10 pt-10 bg-white">
         {/* BreadCrumb */}
         <SubHeaderComponent 
           data={[{ link: router.asPath, name: "Video" }]}
@@ -264,17 +227,11 @@ useEffect(()=> {
 
         {/* Filter Button */}
         <div 
-          className=
-          {
-            windowDimensions && windowDimensions.width && windowDimensions.width <= 770 ?
-              "col-lg-8 col-12 pl-0 ml-0 mt-10 mb-5"
-            :
-              "col-lg-8 col-12 pl-0 ml-0 mt-10 mb-5 pr-12"
-          }
+          className= "col-xl-8 col-12 pl-0 ml-0 mt-10 mb-5 pr-0 pr-xxl-11"
         >
           <Splide
             options={{
-              arrows: false,
+              arrows: true,
               pagination: false,
               gap: "1rem",
               drag: "free",
@@ -283,8 +240,12 @@ useEffect(()=> {
                   830: {
                       perPage: 2,
                     },
+                  450: {
+                    perPage: 1,
+                  },
               }
-          }}
+            }}
+            className="px-20"
           >
            
               {kategoriVideo === "" ? (
@@ -356,17 +317,17 @@ useEffect(()=> {
           <div 
             className={
               windowDimensions && windowDimensions.width && windowDimensions.width <= 770 ?
-                "col-lg-8 mt-5 mb-3 pr-10"
+                "col-xl-8 col-12 mt-5 mb-3 pr-10"
               :
-                "col-lg-8 mt-5 mb-3 pr-15"
+                "col-xl-8 col-12 mt-5 mb-3"
             }
           >
 
             {/* Filter at mobile screen */}
 
             {
-              windowDimensions && windowDimensions.width && windowDimensions.width <= 770 ?
-                <div className="card mb-15 p-5">
+              windowDimensions && windowDimensions.width && windowDimensions.width <= 1024 ?
+                <div className="card mb-15 p-5 ml-4">
                   <div className="row  mt-3">
                     <div className="col-10 d-flex flex-row">
                       <Image
@@ -491,7 +452,7 @@ useEffect(()=> {
             }
 
             {/* Search Field */}
-            <form className="mb-10">
+            <form className="mb-10 pr-0 pr-xl-13 ml-4">
               <div className="input-group">
                   <div className="input-group-prepend">
                       <div 
@@ -532,7 +493,7 @@ useEffect(()=> {
                   </div>
                 </div>
               :
-                <div className="mt-5">
+                <div className="mt-5 ml-4">
                   <div
                     className="row d-flex justify-content-between flex-wrap"
                   >
@@ -551,11 +512,11 @@ useEffect(()=> {
                       video.video.map((row, i) => {
                         return (
                           <div 
-                            className="col-12 col-md-6 my-5"
+                            className="col-12 col-md-5 col-lg-6 my-5 py-0 pr-lg-20 pr-3 pr-md-0"
+                            key={i}
                           >
                             <div 
                               className="card mb-4 border-0" 
-                              key={i}
                             >
                               <Image
                                 alt={row.judul}
@@ -570,28 +531,30 @@ useEffect(()=> {
                                   "publikasi/images/" +
                                   row.gambar
                                 }
-                                width={70}
-                                height={180}
+                                width={180}
+                                height={260}
                                 objectFit="cover"
                                 className="rounded"
                                 data-target="#videoPlayerModal"
                                 data-toggle="modal"
                                 onClick={() =>
                                   handlePreview(
-                                    row.url_video,
                                     row.id,
-                                    row.judul,
-                                    row.tanggal_publish,
-                                    row.nama_kategori,
-                                    row.isi_video,
-                                    row.tag,
-                                    row.ditonton
                                   )
                                 }
                               />
                               <div className="card-body px-0">
                                 <div>
-                                  <h5 className="card-title text-truncate" style={{ width: "96%" }}>
+                                  <h5 className="card-title" 
+                                  style=
+                                    {{
+                                      display:"-webkit-box", 
+                                      overflow: 'hidden', 
+                                      textOverflow: 'ellipsis', 
+                                      WebkitLineClamp: "2",
+                                      WebkitBoxOrient:"vertical"
+                                    }}
+                                  >
                                     {row.judul}
                                   </h5>
                                   <div className="d-flex justify-content-between align-items-center">
@@ -633,7 +596,7 @@ useEffect(()=> {
 
             {/* PAGINATION */}
             <div className="d-flex justify-content-center">
-              {video && video.total !== 0? (
+              {video && video.total !== 0 && video.total >= 0 ? (
                 <div 
                   className={
                     windowDimensions && windowDimensions.width && windowDimensions.width <= 770 ?
@@ -644,7 +607,7 @@ useEffect(()=> {
                 >
                   <Pagination
                     activePage={activePage}
-                    itemsCountPerPage={video.perPage}
+                    itemsCountPerPage={6}
                     totalItemsCount={video.total}
                     pageRangeDisplayed={3}
                     onChange={handlePagination}
@@ -663,11 +626,11 @@ useEffect(()=> {
           </div>
           
           {/* Right Side */}
-          <div className="col-lg-4 my-5">
+          <div className="col-xl-4 col-12 my-5">
 
             {/* Sort Filter Button */}
             {
-              windowDimensions && windowDimensions.width && windowDimensions.width <= 770 ?
+              windowDimensions && windowDimensions.width && windowDimensions.width <= 1024 ?
                 null
               :
                 <div className="card mb-15 p-5">
@@ -775,7 +738,7 @@ useEffect(()=> {
             {/* Tag */}
             <div 
             className={
-                windowDimensions && windowDimensions.width && windowDimensions.width <= 770 ?
+                windowDimensions && windowDimensions.width && windowDimensions.width <= 1024 ?
                   "row mt-5 d-flex flex-column mx-auto"
                 :
                   "row mt-5 d-flex flex-column mx-auto px-10"
@@ -816,81 +779,138 @@ useEffect(()=> {
         {/* End of Content */}
 
         {/* Modal */}
-        <Modal
-          size="lg"
-          onHide={() => handleToggleModal()}
-          show={show}
-          className={
-            windowDimensions && windowDimensions.width && windowDimensions.width <= 770 ?
-              "rounded-lg mx-auto"
-            :
-              "rounded-lg"
-          }
-          centered
-        >
-          <Modal.Header>
-            <div 
-              className="col-12 d-flex justify-content-end"
-            >
-              <i 
-                className="ri-close-line text-dark" 
-                style={{cursor:"pointer"}}
-                onClick={() => handleToggleModal()}
-              />
-            </div>
-          </Modal.Header>
-          <Modal.Body className="p-0">
-            <ReactPlayer
-              url={url_video}
-              controls
-              width="100%"
-              height={
+        {
+          detail ?
+            <Modal
+              size="lg"
+              onHide={() => handleToggleModal()}
+              show={show}
+              className={
                 windowDimensions && windowDimensions.width && windowDimensions.width <= 770 ?
-                  "25vh"
+                  "rounded-lg mx-auto"
                 :
-                  "50vh"
+                  "rounded-lg"
               }
-              playing={video_playing}
-              onPlay={handleIsPlayed}
-            />
-          </Modal.Body>
-          <Modal.Footer>
-            <div className="col-12">
+              centered
+            >
+              <Modal.Header>
+                <div 
+                  className="col-12 d-flex justify-content-end"
+                >
+                  <i 
+                    className="ri-close-line text-dark" 
+                    style={{cursor:"pointer"}}
+                    onClick={() => handleToggleModal()}
+                  />
+                </div>
+              </Modal.Header>
+              <Modal.Body className="p-0">
+                <ReactPlayer
+                url={detail.url_video}
+                  controls
+                  width="100%"
+                  height={
+                    windowDimensions && windowDimensions.width && windowDimensions.width <= 770 ?
+                      "25vh"
+                    :
+                      "50vh"
+                  }
+                  playing={video_playing}
+                  // onPlay={() => handleIsPlayed(idVideo)}
+                />
+              </Modal.Body>
+              <Modal.Footer>
+                <div className="col-12">
 
-              {
-                windowDimensions && windowDimensions.width && windowDimensions.width <= 770 && dataKategori ?
-                    <div className="p-2 badge badge-pill badge-light font-weight-bold text-primary mb-3">
-                      {dataKategori}
-                    </div>
-                  :
-                    null
-              }
+                  {
+                    windowDimensions && windowDimensions.width && windowDimensions.width <= 770 && detail.nama_kategori ?
+                        <div className="p-2 badge badge-pill badge-light font-weight-bold text-primary mb-3">
+                          {detail.nama_kategori}
+                        </div>
+                      :
+                        null
+                  }
 
-              {/* Insert Title Here */}
-              <h2 className="font-weight-bolder">
-                {judul_video}
-              </h2>
+                  {/* Insert Title Here */}
+                  <h2 className="font-weight-bolder">
+                    {detail.judul}
+                  </h2>
+                  
+                  {
+                    windowDimensions && windowDimensions.width && windowDimensions.width <= 450 ? 
+                      <div className="mr-3">
+                        {
+                          detail.tanggal_publish !== null && playLoading === false ? 
+                            `${moment(detail.tanggal_publish).format("MMMM DD")} | ${detail.ditonton} Ditonton`
+                          : 
+                            ""
+                        }
+                      </div>
+                    :
+                      null
+                  }
+                  
 
-              <div className="mt-5 mb-5 row d-flex justify-content-between">
-                <div className="d-flex align-self-center ml-4">
-                   {/* Insert Date Here */}
-                  <div className="mr-3">
+                  <div 
+                    className="mt-5 d-flex text-wrap" 
+                    style={{maxHeight:"40vh"}}
+                  >
+                    
+                    {/*Isi Video */}
                     {
-                      tanggal_publish !== null ? 
-                        `${moment(tanggal_publish).format("MMMM DD")} | ${tonton} Ditonton`
-                      : 
-                      ""
+                      showDesc === false && detail.isi_video ?
+                        <div className="mx-0 px-0">
+                          { handleDescToTrim(detail.isi_video) }
+
+                          <div 
+                            className="mt-1 mb-3 text-primary"
+                            style={{cursor:"pointer"}}
+                            onClick={() => setShowDesc(true)}
+                          >
+                            Lihat Selengkapnya...
+                          </div>
+                        </div>
+                      :
+                        <div className="overflow-auto">
+                          {detail.isi_video}
+
+                          <div 
+                            className="mt-1 mb-3 text-primary"
+                            style={{cursor:"pointer"}}
+                            onClick={() => setShowDesc(false)}
+                          >
+                            Lihat Lebih Sedikit...
+                          </div>
+                        </div>
+                        
                     }
                   </div>
 
-                  {/* Insert Tag Here */}
-                  {
-                    windowDimensions && windowDimensions.width && windowDimensions.width >= 770 ?
+                  <div className="mt-5 mb-5 row d-flex justify-content-between">
+                    <div className="d-flex align-self-center ml-4">
+                      {/* Insert Date Here */}
+                      {
+                        windowDimensions && windowDimensions.width && windowDimensions.width >= 450 ? 
+                          <div className="mr-3">
+                            {
+                              detail.tanggal_publish !== null && playLoading === false ? 
+                                `${moment(detail.tanggal_publish).format("MMMM DD")} | ${detail.ditonton} Ditonton`
+                              : 
+                                ""
+                            }
+                          </div>
+                        :
+                          null
+                      }
+                      
+
+                      {/* Insert Tag Here */}
                       <div className="d-flex flex-row flex-wrap">
                         {
-                          tags === null ? 
+                          detail.tag && detail.tag.length === 0 && detail.tag == undefined ? 
                             null
-                            : tags.map((el, i) => {
+                            : 
+                            detail?.tag?.map((el, i) => {
                                 return (
                                   <div
                                     style={{
@@ -912,64 +932,39 @@ useEffect(()=> {
                               })
                           }
                       </div>
-                    :
-                      null
-                  }
-                  
-                </div>
-                
-                {
-                  windowDimensions && windowDimensions.width && windowDimensions.width >= 770 ?
-                    <div>
-                      {dataKategori === null ? null : (
-                          <span className="p-2 badge  badge-light font-weight-bold text-primary">
-                            {dataKategori}
-                          </span>
-                        )}
-                    </div>
-                  :
-                    null
-                }
-                
-              </div>
-
-              <div 
-                className="my-3 d-flex text-wrap" 
-                style={{maxHeight:"40vh"}}
-              >
-                {/*Isi Video */}
-                {
-                  showDesc === false && isiVideo ?
-                    <div className="mx-0 px-0">
-                      { handleDescToTrim(isiVideo) }
-
-                      <div 
-                        className="mt-1 mb-3 text-primary"
-                        style={{cursor:"pointer"}}
-                        onClick={() => setShowDesc(true)}
-                      >
-                        Lihat Selengkapnya...
-                      </div>
-                    </div>
-                  :
-                    <div className="overflow-auto">
-                      {isiVideo}
-
-                      <div 
-                        className="mt-1 mb-3 text-primary"
-                        style={{cursor:"pointer"}}
-                        onClick={() => setShowDesc(false)}
-                      >
-                        Lihat Lebih Sedikit...
-                      </div>
+                      
                     </div>
                     
-                }
-              </div>
-            </div>
-            
-          </Modal.Footer>
-        </Modal>
+                    {
+                      windowDimensions && windowDimensions.width && windowDimensions.width >= 770 ?
+                        <div>
+                          {detail.nama_kategori === null ? null : (
+                              <span className="p-2 badge  badge-light font-weight-bold text-primary">
+                                {detail.nama_kategori}
+                              </span>
+                            )}
+                        </div>
+                      :
+                        null
+                    }
+                    
+                  </div>
+                </div>
+                
+              </Modal.Footer>
+            </Modal>
+          :
+            <Modal>
+              <Modal.Body>
+                <div className="row my-20 ml-5">
+                  <div className="col col-12">
+                      <PulseLoaderRender />
+                  </div>
+                </div>
+              </Modal.Body>
+            </Modal>
+        }
+        
         {/* End of Modal */}
       </Container>
     </>

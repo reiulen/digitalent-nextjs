@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   deleteSurveyQuestionDetail,
   clearErrors,
+  getAllSurveyQuestionDetail,
 } from "../../../../redux/actions/subvit/survey-question-detail.action";
 
 const DetailSurvey = ({ token }) => {
@@ -35,15 +36,10 @@ const DetailSurvey = ({ token }) => {
 
   useEffect(() => {
     if (isDeleted) {
-      Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
-        (result) => {
-          if (result.isConfirmed) {
-            window.location.reload();
-          }
-        }
-      );
+      dispatch(getAllSurveyQuestionDetail(id, token));
+      Swal.fire("Berhasil ", "Data berhasil dihapus.", "success");
     }
-  }, [isDeleted]);
+  }, [isDeleted, id, token, dispatch]);
 
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(null);

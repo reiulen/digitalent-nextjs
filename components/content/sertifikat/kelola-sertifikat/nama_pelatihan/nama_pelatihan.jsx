@@ -23,7 +23,7 @@ export default function NamaPelatihanID({ token }) {
     loading,
     error,
     certificate: certificates,
-  } = useSelector(state => state.detailCertificates);
+  } = useSelector((state) => state.detailCertificates);
   // #Pagination
   const [limit, setLimit] = useState(null);
   const [search, setSearch] = useState("");
@@ -33,7 +33,7 @@ export default function NamaPelatihanID({ token }) {
 
   let { page = 1 } = router.query;
 
-  const handleLimit = val => {
+  const handleLimit = (val) => {
     setLimit(val);
     router.push(
       `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}?id=${
@@ -58,7 +58,7 @@ export default function NamaPelatihanID({ token }) {
     { value: "publish", label: "Publish" },
   ];
 
-  const handleFilter = e => {
+  const handleFilter = (e) => {
     if (!status) {
       Swal.fire("Oops !", "Harap memilih Status terlebih dahulu.", "error");
     } else {
@@ -73,7 +73,7 @@ export default function NamaPelatihanID({ token }) {
     }
   };
 
-  const handlePagination = pageNumber => {
+  const handlePagination = (pageNumber) => {
     let link = `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}?page=${pageNumber}`;
     if (search) link = link.concat(`&keyword=${search}`);
     if (limit) link = link.concat(`&limit=${limit}`);
@@ -286,7 +286,7 @@ export default function NamaPelatihanID({ token }) {
                                   Status
                                 </label>
                                 <Select
-                                  ref={ref => (refSelect = ref)}
+                                  ref={(ref) => (refSelect = ref)}
                                   className="basic-single"
                                   classNamePrefix="select"
                                   placeholder="Semua"
@@ -296,7 +296,7 @@ export default function NamaPelatihanID({ token }) {
                                   isRtl={false}
                                   isSearchable={true}
                                   name="color"
-                                  onChange={e => {
+                                  onChange={(e) => {
                                     setStatus(e?.value);
                                   }}
                                   options={options}
@@ -525,8 +525,8 @@ export default function NamaPelatihanID({ token }) {
                             borderColor: "#F3F6F9",
                             color: "#9E9E9E",
                           }}
-                          onChange={e => handleLimit(e.target.value)}
-                          onBlur={e => handleLimit(e.target.value)}
+                          onChange={(e) => handleLimit(e.target.value)}
+                          onBlur={(e) => handleLimit(e.target.value)}
                         >
                           <option value="5">5</option>
                           <option value="10">10</option>

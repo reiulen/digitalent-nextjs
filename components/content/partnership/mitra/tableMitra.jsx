@@ -162,7 +162,7 @@ const Table = ({ token }) => {
                     height="16"
                     fill="rgba(255,255,255,1)"
                   />
-                  Tambah Mitra Baru
+                  Tambah Mitra Baru 
                 </a>
               </Link>
             </div>

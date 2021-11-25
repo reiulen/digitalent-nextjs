@@ -2,21 +2,22 @@ import React, { useState, useEffect, useRef } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
-import DatePicker from "react-datepicker";
-import SimpleReactValidator from "simple-react-validator";
-import Swal from "sweetalert2";
-import moment from "moment";
-
 import {
   updateTriviaQuestionBanksPublish,
   clearErrors,
 } from "../../../../../redux/actions/subvit/trivia-question.actions";
 import { UPDATE_TRIVIA_QUESTION_BANKS_PUBLISH_RESET } from "../../../../../redux/types/subvit/trivia-question.type";
+import { helperRegexNumber } from "../../../../../utils/middleware/helper";
 
 import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInput from "/components/StepInput";
 import LoadingPage from "../../../../LoadingPage";
 import styles from "../edit/step.module.css";
+import DatePicker from "react-datepicker";
+import SimpleReactValidator from "simple-react-validator";
+import Swal from "sweetalert2";
+import moment from "moment";
+import Select from "react-select";
 
 const StepThree = ({ token }) => {
   const dispatch = useDispatch();
@@ -30,7 +31,7 @@ const StepThree = ({ token }) => {
 
   useEffect(() => {
     // if (error) {
-    //     dispatch(clearErrors())
+    //   dispatch(clearErrors());
     // }
 
     if (success) {
@@ -48,8 +49,8 @@ const StepThree = ({ token }) => {
 
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-  const [duration, setDuration] = useState(null);
-  const [jumlah_soal, setJumlahSoal] = useState(null);
+  const [duration, setDuration] = useState("");
+  const [jumlah_soal, setJumlahSoal] = useState("");
   const [status, setStatus] = useState("");
 
   const saveDraft = () => {
@@ -74,7 +75,7 @@ const StepThree = ({ token }) => {
           start_at,
           end_at,
           duration,
-          status: status,
+          status: 0,
           questions_to_share: jumlah_soal,
         };
 
@@ -139,6 +140,19 @@ const StepThree = ({ token }) => {
   const handleStatus = (e) => {
     setStatus(e.target.value);
   };
+
+  const handleTotalSoal = (e) => {
+    if (e === "" || helperRegexNumber.test(e)) {
+      setJumlahSoal(e);
+    }
+  };
+
+  const handleDuration = (e) => {
+    if (e === "" || helperRegexNumber.test(e)) {
+      setDuration(e);
+    }
+  };
+
   return (
     <PageWrapper>
       {error ? (
@@ -252,16 +266,16 @@ const StepThree = ({ token }) => {
                   </p>
                   <div className="input-group">
                     <input
-                      type="number"
+                      type="text"
                       className="form-control"
                       aria-describedby="basic-addon2"
                       value={jumlah_soal}
-                      onChange={(e) => setJumlahSoal(e.target.value)}
+                      placeholder="20"
+                      onChange={(e) => handleTotalSoal(e.target.value)}
                       onBlur={() =>
                         simpleValidator.current.showMessageFor("jumlah soal")
                       }
                       min={1}
-                      placeholder="0"
                     />
                     <div className="input-group-append">
                       <span
@@ -289,16 +303,16 @@ const StepThree = ({ token }) => {
                   </p>
                   <div className="input-group">
                     <input
-                      type="number"
+                      type="text"
                       className="form-control"
                       aria-describedby="basic-addon2"
                       value={duration}
-                      onChange={(e) => setDuration(e.target.value)}
+                      placeholder="123 "
+                      onChange={(e) => handleDuration(e.target.value)}
                       onBlur={() =>
                         simpleValidator.current.showMessageFor("durasi")
                       }
                       min={1}
-                      placeholder="0"
                     />
                     <div className="input-group-append bg-sedondary">
                       <span
