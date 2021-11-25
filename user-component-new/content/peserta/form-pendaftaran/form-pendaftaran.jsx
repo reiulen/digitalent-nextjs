@@ -5,9 +5,12 @@ import Swal from "sweetalert2";
 import { useRouter } from "next/router";
 import style from "./style.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { storeFormRegister } from "../../../../redux/actions/pelatihan/register-training.actions";
+import {
+  newPendaftaranPelatihan,
+  storeFormRegister,
+} from "../../../../redux/actions/pelatihan/register-training.actions";
 
-const FormPendaftaran = ({ propsTitle, funcView }) => {
+const FormPendaftaran = ({ propsTitle, funcView, token }) => {
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -305,21 +308,31 @@ const FormPendaftaran = ({ propsTitle, funcView }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (simpleValidator.current.allValid()) {
-      const data = {
-        komitmen: dataForm.komitmen,
-        form_pendaftaran: dataPendaftaran,
-      };
-      dispatch(storeFormRegister(data));
-      funcView(2);
+    if (dataForm?.komitmen) {
+      if (simpleValidator.current.allValid()) {
+        const data = {
+          komitmen: dataForm.komitmen,
+          form_pendaftaran: dataPendaftaran,
+        };
+        dispatch(storeFormRegister(data));
+        funcView(2);
+      } else {
+        simpleValidator.current.showMessages();
+        forceUpdate(1);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Isi data dengan benar !",
+        });
+      }
     } else {
-      simpleValidator.current.showMessages();
-      forceUpdate(1);
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Isi data dengan benar !",
-      });
+      const data = {
+        komitmen: `${dataForm.komitmen}`,
+        form_pendaftaran: dataPendaftaran,
+        pelatian_id: +router.query.id,
+      };
+      // console.log(token);
+      dispatch(newPendaftaranPelatihan(data, token));
     }
   };
 
@@ -347,7 +360,7 @@ const FormPendaftaran = ({ propsTitle, funcView }) => {
               className={`${style.button_profile_simpan} rounded-xl`}
               type="submit"
             >
-              Lanjut
+              {dataForm?.komitmen ? "Lanjut" : "Daftar"}
             </Button>
           </div>
         </form>

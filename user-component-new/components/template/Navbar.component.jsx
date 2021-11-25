@@ -110,7 +110,7 @@ const Navigationbar = ({ session }) => {
   if (router.pathname === "/peserta/form-lpj") routerPath = "/peserta/form-lpj";
   if (router.pathname == "/peserta/wizzard") routerPath = "/peserta/wizzard";
   if (router.pathname == "/") routerPath = "/";
-
+  console.log(session, "ini session");
   return (
     <>
       <Navbar
