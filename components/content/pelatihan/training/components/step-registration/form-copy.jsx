@@ -48,12 +48,11 @@ const FormCopy = ({
     <>
       <div className="form-group mb-4">
         <label className="col-form-label font-weight-bold">Judul Form</label>
+        {console.log([{id: title, label: title}])}
 
         <Select
           options={optionsForm}
-          placeholder={
-            title !== "" ? title : `Silahkan Pilih Nama Form Pendaftaran`
-          }
+          value={{value: title, label: title}}
           onChange={(e) => {
             funcTitle(e.label);
             dispatch(getDetailMasterPelatihan(e.value, token));
