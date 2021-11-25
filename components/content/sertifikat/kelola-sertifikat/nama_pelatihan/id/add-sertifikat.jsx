@@ -485,7 +485,7 @@ export default function TambahMasterSertifikat({ token }) {
                   >
                     <div className="position-relative">
                       <div
-                        className="m-6 text-center d-flex align-items-center px-4 border-2"
+                        className="mt-10 mx-8 text-center d-flex align-items-center px-4 border-2"
                         style={{ height: "20px" }}
                       >
                         {nomerSertifikat}
@@ -578,7 +578,7 @@ export default function TambahMasterSertifikat({ token }) {
                                     borderStyle: signature_certificate_image[i]
                                       ? ""
                                       : "dashed",
-                                    height: "100px",
+                                    height: "80px",
                                   }}
                                 >
                                   {signature_certificate_image[i] ? (
@@ -1210,7 +1210,7 @@ export default function TambahMasterSertifikat({ token }) {
                                           ]
                                             ? ""
                                             : "dashed",
-                                        height: "100px",
+                                        height: "80px",
                                       }}
                                     >
                                       {signature_certificate_image_syllabus[
