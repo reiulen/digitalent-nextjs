@@ -48,12 +48,18 @@ const StepTwo = ({ token }) => {
     }
   }, [dispatch, error, success, router]);
 
-  const [startDate, setStartDate] = useState();
-  const [endDate, setEndDate] = useState();
+  const [startDate, setStartDate] = useState(
+    survey.start_at ? new Date(survey.start_at) : null
+  );
+  const [endDate, setEndDate] = useState(
+    survey.end_at ? new Date(survey.end_at) : null
+  );
   const [duration, setDuration] = useState(survey.duration);
   const [jumlah_soal, setJumlahSoal] = useState(survey.questions_to_share);
   const [status, setStatus] = useState(survey.status);
   const [, forceUpdate] = useState();
+
+  console.log(survey);
 
   const saveDraft = () => {
     if (simpleValidator.current.allValid()) {
