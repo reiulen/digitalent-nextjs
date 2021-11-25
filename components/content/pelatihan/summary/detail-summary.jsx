@@ -146,7 +146,7 @@ const DetailSummary = ({ token }) => {
             color="#FFFFFF"
             value={statusPendaftar[2].count}
             titleValue=""
-            title="Verivied Administrasi"
+            title="Verified Administrasi"
             publishedVal="verified"
             routePublish={(e) => {}}
             search={(e) => {
@@ -182,8 +182,8 @@ const DetailSummary = ({ token }) => {
                   1,
                   null,
                   statusPeserta === null ? "" : statusPeserta.value,
-         
-         "lulus tes"
+
+                  "lulus"
                 )
               );
             }}
@@ -193,7 +193,7 @@ const DetailSummary = ({ token }) => {
             background="bg-warning"
             icon="new/mail-white.svg"
             color="#FFFFFF"
-            value={statusPendaftar[4].count}
+            value={statusPendaftar[1].count}
             titleValue=""
             title="Verified Administrasi Lulus Tes Substansi"
             publishedVal="belum-mengerjakan"
@@ -207,7 +207,7 @@ const DetailSummary = ({ token }) => {
                   1,
                   "verified",
                   statusPeserta === null ? "" : statusPeserta.value,
-                  "lulus tes"
+                  "lulus"
                 )
               )
             }
