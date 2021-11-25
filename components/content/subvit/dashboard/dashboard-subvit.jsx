@@ -46,23 +46,6 @@ const DashbardSubvit = ({ token }) => {
     );
   });
 
-  useEffect(() => {
-    dispatch(
-      getDashboardSubvit(
-        router.query.page_substansi,
-        router.query.page_survey,
-        router.query.page_trivia,
-        token
-      )
-    );
-  }, [
-    token,
-    router.query.page_substansi,
-    router.query.page_survey,
-    router.query.page_trivia,
-    dispatch,
-  ]);
-
   const handleNextPagination = () => {
     const page = parseInt(router.query.page_substansi) + 1;
     router.push(
