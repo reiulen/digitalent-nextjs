@@ -431,25 +431,10 @@ const EditImagetron = ({ token,idUser }) => {
 
                                 <div className={`${styles.resolusiTambah} mt-3 col-sm-6 col-md-6 col-lg-7 col-xl-3 text-muted`}>
                                     <p>
-                                        Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar
+                                        Resolusi yang direkomendasikan adalah 1280 * 360. Fokus visual pada bagian tengah gambar
                                     </p>
-
                                 </div>
-
                             </div>
-
-                            {/* <div className="form-group">
-                                <label className='col-sm-2 col-form-label font-weight-bolder'>URL Link</label>
-                                <div className="col-sm-12">
-                                    <div className="input-group">
-                                        <div className="input-group-prepend">
-                                            <div className="input-group-text">https://</div>
-                                        </div>
-                                        <input type="text" className="form-control" value={url_link} onChange={e => setUrlRedirect(e.target.value)} placeholder="Isi Link Disini" />
-                                    </div>
-                                </div>
-                            </div> */}
-
 
                             <div className="form-group row">
                                 <label

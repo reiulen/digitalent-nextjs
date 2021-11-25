@@ -1,19 +1,19 @@
 import dynamic from "next/dynamic";
 import { getSession } from "next-auth/client";
-import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
+import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
 
-import Layout from "../../../components/templates/layout.component";
-// import Tambah from "../../../components/content/publikasi/galeri/tambah";
+// import Layout from "../../../components/templates/layout.component";
+// import Tambah from "../../../components/content/publikasi/kategori/tambah";
 
-import { getAllKategori } from "../../../redux/actions/publikasi/kategori.actions";
-import { wrapper } from "../../../redux/store";
-
-import LoadingPage from "../../../components/LoadingPage";
-import { getSettingPublikasi } from "../../../redux/actions/publikasi/setting.actions";
+import LoadingPage from "../../../../components/LoadingPage";
+import { wrapper } from "../../../../redux/store";
+import { getAllKategori } from "../../../../redux/actions/publikasi/kategori.actions";
 
 const Tambah = dynamic(
-  () => import("../../../components/content/publikasi/galeri/tambah"),
+  () => import("../../../../components/content/publikasi/kategori/tambah"),
   {
+    // suspense: true,
+    // loading: () => <LoadingSkeleton />,
     loading: function loadingNow() {
       return <LoadingPage />;
     },
@@ -26,7 +26,7 @@ export default function TambahPage(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <Tambah token={session.token} id={session.user.id} />
+        <Tambah token={session.token} />
       </div>
     </>
   );
@@ -47,10 +47,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       await store.dispatch(getAllKategori(session.user.user.data.token));
-      await store.dispatch(getSettingPublikasi(session.user.user.data.token));
 
       return {
-        props: { session, title: "Tambah Galeri - Publikasi" },
+        props: { session, title: "Tambah Kategori - Publikasi" },
       };
     }
 );

@@ -1,9 +1,10 @@
 import dynamic from "next/dynamic";
 import { getSession } from "next-auth/client";
-// import { getAllArtikel } from "../../../redux/actions/publikasi/artikel.actions";
+import { middlewareAuthAdminSession } from "../../../../../utils/middleware/authMiddleware";
 import { wrapper } from "../../../../../redux/store";
 import LoadingPage from "../../../../../components/LoadingPage";
 import { getAllOptionProvinces } from "../../../../../redux/actions/site-management/option/option-provinces.actions";
+
 const DetailRole = dynamic(
   () =>
     import(
@@ -32,10 +33,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
-      if (!session) {
+      const middleware = middlewareAuthAdminSession(session);
+      if (!middleware.status) {
         return {
           redirect: {
-            destination: "/",
+            destination: middleware.redirect,
             permanent: false,
           },
         };

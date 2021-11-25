@@ -307,7 +307,7 @@ const Tambah = ({ token }) => {
 
                         {simpleValidator.current.message(
                           "province",
-                          provincesOption,
+                          items.value,
                           "required",
                           { className: "text-danger" }
                         )}

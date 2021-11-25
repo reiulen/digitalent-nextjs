@@ -93,6 +93,10 @@
   margin-right: 25px;
 }
 
+.deskripsiTambah{
+  margin-bottom: 70px;
+}
+
 @media only screen and (max-width: 1024px) {
   .modal-body {
     height: 400px;
@@ -106,6 +110,9 @@
   .strip {
     width: 117%;
     margin-left: -42px;
+  }
+  .deskripsiTambah{
+    margin-bottom: 90px;
   }
 }
 
@@ -184,6 +191,9 @@
   .modalsPrevImage{
     height: 200px;
   }
+  .deskripsiTambah{
+    margin-bottom: 140px;
+  }
 }
 
 @media only screen and (max-width: 320px){
@@ -198,6 +208,7 @@
   }
   .deskripsiTambah{
     font-size: 8.5px;
+    margin-bottom: 190px;
   }
   .tagStyle{
     font-size: 8.5px;
@@ -241,5 +252,6 @@
   }
   .deskripsiTambah{
     font-size: 6.7px;
+    margin-bottom: 210px;
   }
 }
