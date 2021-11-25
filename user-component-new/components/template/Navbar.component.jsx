@@ -344,7 +344,7 @@ const Navigationbar = ({ session }) => {
               <div>
                 <div className="d-lg-none d-block">
                   <div
-                    className={`wrap-accouts ${style.wrapAccounts}`}
+                    className={`wrap-accouts ${style.wrapAccounts} `}
                     style={{ borderRadius: "20px" }}
                     onClick={() => router.push("/peserta/profile")}
                   >
@@ -374,8 +374,12 @@ const Navigationbar = ({ session }) => {
                 </div>
                 <div className="position-relative d-none d-lg-block">
                   <div
-                    className={`wrap-accouts ${style.wrapAccounts}`}
-                    style={!isShowDropdown ? { borderRadius: "20px" } : {}}
+                    className={`wrap-accouts ${style.wrapAccounts} d-flex justify-content-between`}
+                    style={
+                      !isShowDropdown
+                        ? { borderRadius: "20px", maxWidth: "max-content" }
+                        : {}
+                    }
                     onClick={() =>
                       setIsShowDropdown(isShowDropdown ? false : true)
                     }

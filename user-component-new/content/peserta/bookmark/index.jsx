@@ -7,10 +7,10 @@ import style from "../../../../styles/peserta/dashboard.module.css";
 
 export default function Bookmark() {
   const { pelatihan, loading: loadingPelatihan } = useSelector(
-    state => state.allPelatihan
+    (state) => state.allPelatihan
   );
   const { loading: loadingPenyeleggara, penyelenggara: allPenyelenggara } =
-    useSelector(state => state.allPenyelenggaraPeserta);
+    useSelector((state) => state.allPenyelenggaraPeserta);
 
   const i = 1;
 

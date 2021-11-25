@@ -43,7 +43,7 @@ export default function BookmarkPage(props) {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  store =>
+  (store) =>
     async ({ query, req, params }) => {
       const session = await getSession({ req });
 
