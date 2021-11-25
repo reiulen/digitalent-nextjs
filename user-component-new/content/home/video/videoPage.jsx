@@ -27,15 +27,14 @@ const VideoPage = () => {
 
   const {
     loading: allLoading,
-    error,
     video,
   } = useSelector((state) => state.allVideoContent);
-  const { loading: loadingDetail, detail } = useSelector((state) => state.detailBerandaVideo);
+
+  const { detail } = useSelector((state) => state.detailBerandaVideo);
   const { dataTag } = useSelector((state) => state.allTagVideoContent);
   const { kategori } = useSelector((state) => state.kategoriVideoContent);
   const { loading: playLoading } = useSelector((state) => state.playVideoContent)
 
-  const titleToTrim = 30;
   const descToTrim = 100;
   
   const [video_playing, setVideoPlaying] = useState(false);
