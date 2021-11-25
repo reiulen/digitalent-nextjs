@@ -1034,15 +1034,16 @@ const ListTraining = ({ token }) => {
                                     </a>
                                   </Link>
                                 )}
-                                <button
-                                  className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                                  data-toggle="tooltip"
-                                  data-placement="bottom"
-                                  onClick={() => handleClone(row.id)}
-                                  title="Clone"
-                                >
-                                  <i className="ri-send-backward p-0 text-white"></i>
-                                </button>
+                                <Link href={`/pelatihan/pelatihan/clone-pelatihan/${row.id}`}>
+                                  <a
+                                    className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                    data-toggle="tooltip"
+                                    data-placement="bottom"
+                                    title="Clone"
+                                  >
+                                    <i className="ri-send-backward p-0 text-white"></i>
+                                  </a>
+                                </Link>
                                 <button
                                   className="btn btn-link-action bg-blue-secondary text-white"
                                   onClick={() => handleDelete(row.id)}

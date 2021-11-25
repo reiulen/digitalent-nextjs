@@ -27,15 +27,14 @@ const VideoPage = () => {
 
   const {
     loading: allLoading,
-    error,
     video,
   } = useSelector((state) => state.allVideoContent);
-  const { loading: loadingDetail, detail } = useSelector((state) => state.detailBerandaVideo);
+
+  const { detail } = useSelector((state) => state.detailBerandaVideo);
   const { dataTag } = useSelector((state) => state.allTagVideoContent);
   const { kategori } = useSelector((state) => state.kategoriVideoContent);
   const { loading: playLoading } = useSelector((state) => state.playVideoContent)
 
-  const titleToTrim = 30;
   const descToTrim = 100;
   
   const [video_playing, setVideoPlaying] = useState(false);
@@ -82,7 +81,6 @@ useEffect(()=> {
     dispatch(
       getAllVideoContent(
         pageNumber,
-        activePage,
         keyword,
         limit,
         filterPublish,
@@ -598,7 +596,7 @@ useEffect(()=> {
 
             {/* PAGINATION */}
             <div className="d-flex justify-content-center">
-              {video && video.total !== 0? (
+              {video && video.total !== 0 && video.total >= 0 ? (
                 <div 
                   className={
                     windowDimensions && windowDimensions.width && windowDimensions.width <= 770 ?
@@ -609,7 +607,7 @@ useEffect(()=> {
                 >
                   <Pagination
                     activePage={activePage}
-                    itemsCountPerPage={video.perPage}
+                    itemsCountPerPage={6}
                     totalItemsCount={video.total}
                     pageRangeDisplayed={3}
                     onChange={handlePagination}
