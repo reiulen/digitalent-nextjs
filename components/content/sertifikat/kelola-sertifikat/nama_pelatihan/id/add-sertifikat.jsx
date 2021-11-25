@@ -466,7 +466,7 @@ export default function TambahMasterSertifikat({ token }) {
             <div className="row p-0 ">
               {/* START COL */}
               <div
-                className="border-primary border col-lg-8 col-12 position-relative"
+                className="border-primary border col-lg-8 col-12 position-relative p-0"
                 style={{ fontSize: "100%" }}
               >
                 <div className="p-0 col-12" ref={divReference}>
