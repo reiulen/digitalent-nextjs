@@ -1,3 +1,5 @@
+import dynamic from "next/dynamic";
+
 import Preview from "../../../../components/content/publikasi/artikel-peserta/preview";
 import Footer from "../../../../components/templates/footer.component";
 import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
@@ -5,18 +7,19 @@ import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMid
 import { getDetailArtikelPeserta } from "../../../../redux/actions/publikasi/artikel-peserta.actions";
 import { wrapper } from "../../../../redux/store";
 import { getSession } from "next-auth/client";
+import { getTagBerandaArtikel } from "../../../../redux/actions/beranda/artikel.actions"
+
+const Layout = dynamic(
+  () => import("../../../../user-component-new/components/template/Layout.component")
+)
 
 export default function PreviewArtikel(props) {
   const session = props.session.user.user.data;
   return (
-    <div className="wrapper-preview">
-      <div className="d-flex flex-column flex-root content-preview">
-        <Preview token={session.token} />
-      </div>
-
-      <div className="footer-preview">
-        <Footer />
-      </div>
+    <div className="wrapper-preview" style={{ background: '#fff' }}>
+      <Layout title="Pratinjau Artikel Peserta - Publikasi" token={session.token}>
+        <Preview />
+      </Layout>
     </div>
   );
 }
@@ -38,6 +41,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
       await store.dispatch(
         getDetailArtikelPeserta(params.id, session.user.user.data.token)
       );
+      
+      await store.dispatch(
+        getTagBerandaArtikel(session.user.user.data.token)
+      )
 
       return {
         props: {

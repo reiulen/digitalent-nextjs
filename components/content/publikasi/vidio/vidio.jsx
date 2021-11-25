@@ -441,7 +441,7 @@ const Vidio = ({ token }) => {
                     <div className="card-header row border-0">
                         <h3 className={`${styles2.headTitle} col-12 col-sm-8 col-md-8 col-lg-8 col-xl-9`}>Video</h3>
                         <div className="card-toolbar col-12 col-sm-4 col-md-4 col-lg-4 col-xl-3">
-                            <Link href='/publikasi/video/tambah'>
+                            <Link href='/publikasi/video/tambah-video'>
                                 <a className={`${styles2.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bold btn-block`}>
                                     <i className="ri-add-fill pb-1 text-white mr-2 "></i>
                                     Tambah Video
@@ -714,7 +714,7 @@ const Vidio = ({ token }) => {
                                                                 </button>
 
                                                                 <Link
-                                                                    href={`/publikasi/video/${row.id}`}
+                                                                    href={`/publikasi/video/ubah-video?id=${row.id}`}
                                                                 >
                                                                     <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete">
                                                                         <i className="ri-pencil-fill p-0 text-white"></i>

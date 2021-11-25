@@ -1,19 +1,19 @@
 import dynamic from "next/dynamic";
 import { getSession } from "next-auth/client";
-import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
+import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
 
 // import Layout from "../../../components/templates/layout.component";
 // import EditImagetron from "../../../components/content/publikasi/imagetron/edit";
 
-import { getDetailImagetron } from "../../../redux/actions/publikasi/imagetron.actions";
-import { wrapper } from "../../../redux/store";
+import { getDetailImagetron } from "../../../../redux/actions/publikasi/imagetron.actions";
+import { wrapper } from "../../../../redux/store";
 
-import LoadingPage from "../../../components/LoadingPage";
-import { getAllKategori } from "../../../redux/actions/publikasi/kategori.actions";
-import { getSettingPublikasi } from "../../../redux/actions/publikasi/setting.actions";
+import LoadingPage from "../../../../components/LoadingPage";
+import { getAllKategori } from "../../../../redux/actions/publikasi/kategori.actions";
+import { getSettingPublikasi } from "../../../../redux/actions/publikasi/setting.actions";
 
 const EditImagetron = dynamic(
-  () => import("../../../components/content/publikasi/imagetron/edit"),
+  () => import("../../../../components/content/publikasi/imagetron/edit"),
   {
     // suspense: true,
     // loading: () => <LoadingSkeleton />,
@@ -37,7 +37,7 @@ export default function EditImagetronPage(props) {
   );
 }
 
-export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ params, req }) => {
+export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ query, req }) => {
   const session = await getSession({ req });
   const middleware = middlewareAuthAdminSession(session);
   if (!middleware.status) {
@@ -50,7 +50,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   }
 
   await store.dispatch(getAllKategori(session.user.user.data.token))
-  await store.dispatch(getDetailImagetron(params.id, session.user.user.data.token));
+  await store.dispatch(getDetailImagetron(query.id, session.user.user.data.token));
   await store.dispatch(getSettingPublikasi(session.user.user.data.token));
   return {
     props: { session, title: "Ubah Imagetron - Publikasi" },

@@ -411,7 +411,7 @@ const Berita = ({ token }) => {
                     <div className="card-header row border-0">
                         <h3 className={`${styles.headTitle} col-12 col-sm-8 col-md-8 col-lg-8 col-xl-9`}>Berita</h3>
                         <div className="card-toolbar col-12 col-sm-4 col-md-4 col-lg-4 col-xl-3">
-                            <Link href='/publikasi/berita/tambah'>
+                            <Link href='/publikasi/berita/tambah-berita'>
                                 <a className={`${styles.btnTambah} btn btn-primary-rounded-full px-6 font-weight-bold btn-block`}>
                                     <i className="ri-add-line pb-1 text-white mr-2 "></i>
                                     Tambah Berita
@@ -677,7 +677,7 @@ const Berita = ({ token }) => {
                                                                 </Link>
 
                                                                 <Link
-                                                                    href={`/publikasi/berita/${row.id}`}
+                                                                    href={`/publikasi/berita/ubah-berita?id=${row.id}`}
                                                                 >
                                                                     <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete">
                                                                         <i className="ri-pencil-fill p-0 text-white"></i>

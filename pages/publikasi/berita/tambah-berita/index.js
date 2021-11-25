@@ -1,19 +1,19 @@
 import dynamic from "next/dynamic";
-import { middlewareAuthAdminSession } from "../../../utils/middleware/authMiddleware";
+import { middlewareAuthAdminSession } from "../../../../utils/middleware/authMiddleware";
 
 // import Layout from "../../../components/templates/layout.component";
 // import Tambah from "../../../components/content/publikasi/berita/tambah";
 
-import LoadingPage from "../../../components/LoadingPage";
+import LoadingPage from "../../../../components/LoadingPage";
 import { getSession } from "next-auth/client";
-import { getAllKategori } from "../../../redux/actions/publikasi/kategori.actions";
-import { wrapper } from "../../../redux/store";
-import { getSettingPublikasi } from "../../../redux/actions/publikasi/setting.actions";
-import { getAllAkademi } from "../../../redux/actions/beranda/beranda.actions";
+import { getAllKategori } from "../../../../redux/actions/publikasi/kategori.actions";
+import { wrapper } from "../../../../redux/store";
+import { getSettingPublikasi } from "../../../../redux/actions/publikasi/setting.actions";
+import { getAllAkademi } from "../../../../redux/actions/beranda/beranda.actions";
 // import { dropdownAkademi } from "../../../redux/actions/pelatihan/function.actions";
 
 const Tambah = dynamic(
-  () => import("../../../components/content/publikasi/berita/tambah"),
+  () => import("../../../../components/content/publikasi/berita/tambah"),
   {
     loading: function loadingNow() {
       return <LoadingPage />;

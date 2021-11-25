@@ -64,8 +64,8 @@ const DetailSummary = ({ token }) => {
   const optionsSubstansi = [
     { value: "belum tersedia", label: "Belum Tersedia" },
     { value: "belum mengerjakan", label: "Belum Mengerjakan" },
-    { value: "gagal tes", label: "Gagal Tes" },
-    { value: "lulus tes", label: "Lulus Tes" },
+    { value: "tidak lulus", label: "Gagal Tes" },
+    { value: "lulus", label: "Lulus Tes" },
   ];
 
   const handlePagination = (pageNumber) => {
