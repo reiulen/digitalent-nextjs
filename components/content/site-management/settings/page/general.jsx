@@ -478,7 +478,7 @@ const GeneralPage = ({ token }) => {
 
                         {simpleValidator.current.message(
                           "logoHeader",
-                          imageLogoApi,
+                          imageLogo,
                           "required",
                           { className: "text-danger" }
                         )}
@@ -558,7 +558,7 @@ const GeneralPage = ({ token }) => {
 
                         {simpleValidator.current.message(
                           "logoFooter",
-                          imageLogoApi2,
+                          imageLogo2,
                           "required",
                           { className: "text-danger" }
                         )}

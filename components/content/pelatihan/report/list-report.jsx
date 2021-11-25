@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import moment from 'moment'
+import moment from "moment";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -14,12 +14,13 @@ import { Modal } from "react-bootstrap";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingTable from "../../../LoadingTable";
-import { listsReportTraining } from '../../../../redux/actions/pelatihan/report-training.actions'
+import { dropdownTemabyAkademi } from "../../../../redux/actions/pelatihan/function.actions";
+import { listsReportTraining } from "../../../../redux/actions/pelatihan/report-training.actions";
+import { set } from "js-cookie";
 
-const ListReport = ({token}) => {
-  
-    const dispatch = useDispatch();
-    const router = useRouter();
+const ListReport = ({ token }) => {
+  const dispatch = useDispatch();
+  const router = useRouter();
 
   const { data: getDataReportTraining } = useSelector(
     (state) => state.getDataReportTraining
@@ -32,25 +33,26 @@ const ListReport = ({token}) => {
   );
   const { error: dropdownErrorPenyelenggara, data: dataPenyelenggara } =
     useSelector((state) => state.drowpdownPenyelenggara);
-  
-  
+
+  const drowpdownTemabyAkademi = useSelector(state => state.drowpdownTemabyAkademi)
+
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(5);
   const [showModal, setShowModal] = useState(false);
   const [showModalRevisi, setShowModalRevisi] = useState(false);
   const [publishValue, setPublishValue] = useState(null);
-  const [page, setPage] = useState(1)
+  const [page, setPage] = useState(1);
   const [dateRegister, setDateRegister] = useState([null, null]);
   const [dateRegisterStart, dateRegisterEnd] = dateRegister;
 
   const [datePelaksanaan, setDatePelaksanaan] = useState([null, null]);
   const [datePelaksanaanStart, datePelaksanaanEnd] = datePelaksanaan;
-  const [penyelenggara, setPenyelenggara] = useState({label: "", value: ""});
-  const [academy, setAcademy] = useState({label: "", value: ""});
-  const [theme, setTheme] = useState({label: "", value: ""});
+  const [penyelenggara, setPenyelenggara] = useState({ label: "", value: "" });
+  const [academy, setAcademy] = useState({ label: "", value: "" });
+  const [theme, setTheme] = useState({ label: "", value: "" });
 
-  const optionsAkademi =dataAkademi.data || [] ;
-  const optionsTema = dataTema.data || [] ;
+  const optionsAkademi = dataAkademi.data || [];
+  const optionsTema = dataTema.data || [];
   const optionsPenyelenggara = [];
   if (dataPenyelenggara) {
     for (let index = 0; index < dataPenyelenggara.data.length; index++) {
@@ -61,74 +63,119 @@ const ListReport = ({token}) => {
       optionsPenyelenggara.push(val);
     }
   }
-  
-  const listReportTraining = getDataReportTraining.list?.length > 0 ? getDataReportTraining.list.map((item, index) => {
-    return (
-      <tr key={index}>
-        <td className="text-center">{index + limit * (page - 1) + 1}</td>
-        <td>CC{item.id}</td>
-        <td >
-          <p className="font-weight-bolder my-0" style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '11rem' }}>{item.name}</p>
-          <p className="my-0" style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '11rem' }}>{item.penyelenggara}</p>
-          <p className="my-0" style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '11rem' }}>{item.provinsi}</p>
-        </td>
-        <td>
-          <p className="my-0">{moment(item.pendaftaran_mulai).format("DD MMM YYYY")} - {moment(item.pendaftaran_selesai).format("DD MMM YYYY")} </p>
-          <p className="my-0">{moment(item.pelatihan_mulai).format("DD MMM YYYY")} - {moment(item.pelatihan_selesai).format("DD MMM YYYY")}</p>
-        </td>
-        <td>
-          <p className="my-0">300 Pendaftar </p>
-          <p className="my-0">100 Peserta </p>
-        </td>
-        <td>
-          <span className="label label-inline label-light-success font-weight-bold">
-            {item.status_pelatihan}
-          </span>
-        </td>
-        <td>
-          <div className="d-flex">
-            <Link
-              href={`/pelatihan/report-pelatihan/detail-report-pelatihan/${item.id}`}
-            >
-              <a
-                className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                data-toggle="tooltip"
-                data-placement="bottom"
-                title="Detail"
+
+  const listReportTraining =
+    getDataReportTraining.list?.length > 0 ? (
+      getDataReportTraining.list.map((item, index) => {
+        return (
+          <tr key={index}>
+            <td className="text-center">{index + limit * (page - 1) + 1}</td>
+            <td>
+              {item.slug}
+              {item.id}
+            </td>
+            <td>
+              <p
+                className="font-weight-bolder my-0"
+                style={{
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                  maxWidth: "11rem",
+                }}
               >
-                <i className="ri-eye-fill text-white p-0"></i>
-              </a>
-            </Link>
-            <Link href={`/pelatihan/pelatihan/view-pelatihan/${1}`}>
-              <a
-                className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                data-toggle="tooltip"
-                data-placement="bottom"
-                title="Download As Word"
+                {item.name}
+              </p>
+              <p
+                className="my-0"
+                style={{
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                  maxWidth: "11rem",
+                }}
               >
-                <i className="ri-file-word-fill text-white p-0"></i>
-              </a>
-            </Link>
-            <Link href={`/pelatihan/pelatihan/view-pelatihan/${1}`}>
-              <a
-                className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                data-toggle="tooltip"
-                data-placement="bottom"
-                title="Download As PDF"
+                {item.penyelenggara}
+              </p>
+              <p
+                className="my-0"
+                style={{
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                  maxWidth: "11rem",
+                }}
               >
-                <i className="ri-file-ppt-fill text-white p-0"></i>
-              </a>
-            </Link>
-          </div>
-        </td>
-      </tr>
+                {item.provinsi}
+              </p>
+            </td>
+            <td>
+              <p className="my-0">
+                {moment(item.pendaftaran_mulai).format("DD MMM YYYY")} -{" "}
+                {moment(item.pendaftaran_selesai).format("DD MMM YYYY")}{" "}
+              </p>
+              <p className="my-0">
+                {moment(item.pelatihan_mulai).format("DD MMM YYYY")} -{" "}
+                {moment(item.pelatihan_selesai).format("DD MMM YYYY")}
+              </p>
+            </td>
+            <td>
+              <p className="my-0">{item.kuota_pendaftar} Pendaftar </p>
+              <p className="my-0">{item.kuota_peserta} Peserta </p>
+            </td>
+            <td>
+              <span className="label label-inline label-light-success font-weight-bold">
+                {item.status_pelatihan}
+              </span>
+            </td>
+            <td>
+              <div className="d-flex">
+                <Link
+                  href={`/pelatihan/report-pelatihan/detail-report-pelatihan/${item.id}`}
+                >
+                  <a
+                    className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                    data-toggle="tooltip"
+                    data-placement="bottom"
+                    title="Detail"
+                    onClick={() => {
+                      localStorage.setItem("slug", item.slug);
+                      localStorage.setItem("slug", item.slug);
+                    }}
+                  >
+                    <i className="ri-eye-fill text-white p-0"></i>
+                  </a>
+                </Link>
+                <Link href={`/pelatihan/pelatihan/view-pelatihan/${1}`}>
+                  <a
+                    className={`btn btn-link-action bg-blue-secondary text-white mr-2 ${item.status_pelatihan === "selesai" ? "" : "disabled"}`}
+                    data-toggle="tooltip"
+                    data-placement="bottom"
+                    title="Download As Word"
+                  >
+                    <i className="ri-file-word-fill text-white p-0"></i>
+                  </a>
+                </Link>
+                <Link href={`/pelatihan/pelatihan/view-pelatihan/${1}`}>
+                  <a
+                    className={`btn btn-link-action bg-blue-secondary text-white mr-2 ${item.status_pelatihan === "selesai" ? "" : "disabled"}`}
+                    data-toggle="tooltip"
+                    data-placement="bottom"
+                    title="Download As PDF"
+                  >
+                    <i className="ri-file-ppt-fill text-white p-0"></i>
+                  </a>
+                </Link>
+              </div>
+            </td>
+          </tr>
+        );
+      })
+    ) : (
+      <td className="align-middle text-center" colSpan={8}>
+        Data Kosong
+      </td>
     );
-  }) : <td className="align-middle text-center" colSpan={8}>
-  Data Kosong
-</td>;
-
-
-
 
   const onNewReset = () => {
     router.replace("/subvit/substansi", undefined, { shallow: true });
@@ -194,11 +241,9 @@ const ListReport = ({token}) => {
 
           <div className="card-body pt-0">
             <div className="table-filter">
-              <div className="row align-items-center">
-                <div className="col-lg-8 col-xl-8">
-                  <div
-                    className="position-relative overflow-hidden mt-3"
-                  >
+              <div className="row align-items-center d-flex">
+                <div className="col-lg-8 col-xl-4">
+                  <div className="position-relative overflow-hidden mt-3">
                     <i className="ri-search-line left-center-absolute ml-2"></i>
                     <input
                       type="text"
@@ -213,7 +258,17 @@ const ListReport = ({token}) => {
                         borderBottomLeftRadius: "0",
                       }}
                       onClick={(e) => {
-                        dispatch(listsReportTraining(token, page, limit, search, penyelenggara.label, academy.label, theme.label))
+                        dispatch(
+                          listsReportTraining(
+                            token,
+                            page,
+                            limit,
+                            search,
+                            penyelenggara.label,
+                            academy.label,
+                            theme.label
+                          )
+                        );
                       }}
                     >
                       Cari
@@ -221,11 +276,10 @@ const ListReport = ({token}) => {
                   </div>
                 </div>
 
-                <div className="col-lg-4 col-xl-4 justify-content-end d-flex">
+                <div className="col-lg-3 col-xl-3 justify-content-end d-flex ml-auto">
                   <button
-                    className="btn border d-flex align-items-center justify-content-between mt-1"
+                    className="btn border d-flex align-items-center justify-content-between mt-1 w-100"
                     style={{
-                      minWidth: "236px",
                       color: "#bdbdbd",
                       float: "right",
                     }}
@@ -255,64 +309,83 @@ const ListReport = ({token}) => {
                       <th>Aksi</th>
                     </tr>
                   </thead>
-                  <tbody>
-                  {listReportTraining}
-                  </tbody>
+                  <tbody>{listReportTraining}</tbody>
                 </table>
               </div>
               <div className="row">
-                  <div className="table-pagination table-pagination pagination-custom col-12 col-md-6">
-                    <Pagination
-                      activePage={page}
-                      itemsCountPerPage={getDataReportTraining.perPage}
-                      totalItemsCount={getDataReportTraining.total}
-                      pageRangeDisplayed={3}
-                      onChange={(e) => {setPage(e)
-                      dispatch(listsReportTraining(token, e, limit, search, penyelenggara.label, academy.label, theme.label))
-                      }}
-                      nextPageText={">"}
-                      prevPageText={"<"}
-                      firstPageText={"<<"}
-                      lastPageText={">>"}
-                      itemClass="page-item"
-                      linkClass="page-link"
-                    />
-                  </div>
-                  <div className="table-total ml-auto">
-                    <div className="row">
-                      <div className="col-4 mr-0 p-0 mt-3">
-                        <select
-                          className="form-control"
-                          id="exampleFormControlSelect2"
-                          style={{
-                            width: "65px",
-                            background: "#F3F6F9",
-                            borderColor: "#F3F6F9",
-                            color: "#9E9E9E",
-                          }}
-                          value={limit}
-                          onChange={(e) => {
-                            setLimit(e.target.value)
-                            dispatch(listsReportTraining(token, page, e.target.value, search, penyelenggara.label, academy.label, theme.label))
-                          }}
-                        >
-                          <option value="5">5</option>
-                          <option value="10">10</option>
-                          <option value="30">30</option>
-                          <option value="40">40</option>
-                          <option value="50">50</option>
-                        </select>
-                      </div>
-                      <div className="col-8 my-auto pt-3">
-                        <p
-                          className="align-middle mt-3"
-                          style={{ color: "#B5B5C3" }}
-                        >
-                          Total Data {getDataReportTraining.total}
-                        </p>
-                      </div>
+                <div className="table-pagination table-pagination pagination-custom col-12 col-md-6">
+                  <Pagination
+                    activePage={page}
+                    itemsCountPerPage={getDataReportTraining.perPage}
+                    totalItemsCount={getDataReportTraining.total}
+                    pageRangeDisplayed={2}
+                    onChange={(e) => {
+                      setPage(e);
+                      dispatch(
+                        listsReportTraining(
+                          token,
+                          e,
+                          limit,
+                          search,
+                          penyelenggara.label,
+                          academy.label,
+                          theme.label
+                        )
+                      );
+                    }}
+                    nextPageText={">"}
+                    prevPageText={"<"}
+                    firstPageText={"<<"}
+                    lastPageText={">>"}
+                    itemClass="page-item"
+                    linkClass="page-link"
+                  />
+                </div>
+                <div className="table-total ml-auto">
+                  <div className="row">
+                    <div className="col-4 mr-0 p-0 mt-3">
+                      <select
+                        className="form-control"
+                        id="exampleFormControlSelect2"
+                        style={{
+                          width: "65px",
+                          background: "#F3F6F9",
+                          borderColor: "#F3F6F9",
+                          color: "#9E9E9E",
+                        }}
+                        value={limit}
+                        onChange={(e) => {
+                          setLimit(e.target.value);
+                          dispatch(
+                            listsReportTraining(
+                              token,
+                              page,
+                              e.target.value,
+                              search,
+                              penyelenggara.label,
+                              academy.label,
+                              theme.label
+                            )
+                          );
+                        }}
+                      >
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="30">30</option>
+                        <option value="40">40</option>
+                        <option value="50">50</option>
+                      </select>
+                    </div>
+                    <div className="col-8 my-auto pt-3">
+                      <p
+                        className="align-middle mt-3"
+                        style={{ color: "#B5B5C3" }}
+                      >
+                        Total Data {getDataReportTraining.total}
+                      </p>
                     </div>
                   </div>
+                </div>
               </div>
             </div>
           </div>
@@ -340,7 +413,7 @@ const ListReport = ({token}) => {
             <label className="p-0">Penyelenggara</label>
             <Select
               options={optionsPenyelenggara}
-              defaultValue={penyelenggara}
+              value={penyelenggara}
               onChange={(e) =>
                 setPenyelenggara({ value: e.value, label: e.label })
               }
@@ -350,15 +423,21 @@ const ListReport = ({token}) => {
             <label className="p-0">Akademi</label>
             <Select
               options={optionsAkademi}
-              defaultValue={academy}
-              onChange={(e) => setAcademy({ value: e.value, label: e.label })}
+              value={academy}
+              onChange={(e) => {
+                setAcademy({ value: e.value, label: e.label });
+                setTheme({ label: "", value: "" });
+                dispatch(dropdownTemabyAkademi(e?.value, token));
+              }}
             />
           </div>
           <div className="form-group mb-5">
             <label className="p-0">Tema</label>
             <Select
-              options={optionsTema}
+              isDisabled={academy.value === ""}
+              options={drowpdownTemabyAkademi.data.data}
               defaultValue={theme}
+              value={theme}
               onChange={(e) => setTheme({ value: e.value, label: e.label })}
             />
           </div>
@@ -376,7 +455,8 @@ const ListReport = ({token}) => {
                 className="form-control"
                 name="start_date"
                 selectsRange={true}
-                onChange={(date) => {setDateRegister(date)
+                onChange={(date) => {
+                  setDateRegister(date);
                 }}
                 startDate={dateRegisterStart}
                 endDate={dateRegisterEnd}
@@ -403,20 +483,43 @@ const ListReport = ({token}) => {
         <Modal.Footer>
           <button
             className="btn btn-light-ghost-rounded-full mr-2"
-            type="reset"
+            type="button"
+            onClick={() => {
+              setPenyelenggara({ label: "", value: "" })
+              setAcademy({ label: "", value: "" })
+              setTheme({ label: "", value: "" })
+              setDateRegister([null, null])
+              setDatePelaksanaan([null, null])
+            }}
           >
             Reset
           </button>
-          <button className="btn btn-primary-rounded-full" type="button" onClick={() => {
-             setShowModal(false);
-             let register = dateRegister.map(item => {
-               return moment(item).format("YYYY/MM/DD")
-             })
-             let pelaksanaan = datePelaksanaan.map(item => {
-              return moment(item).format("YYYY/MM/DD")
-            })
-            dispatch(listsReportTraining(token, page, limit, search, penyelenggara.label, academy.label, theme.label, register[0] === "Invalid date" ? "" : register.join(","), pelaksanaan[0] === "Invalid date" ? "" : pelaksanaan.join(",")))
-          }}>
+          <button
+            className="btn btn-primary-rounded-full"
+            type="button"
+            onClick={() => {
+              setShowModal(false);
+              let register = dateRegister.map((item) => {
+                return moment(item).format("YYYY/MM/DD");
+              });
+              let pelaksanaan = datePelaksanaan.map((item) => {
+                return moment(item).format("YYYY/MM/DD");
+              });
+              dispatch(
+                listsReportTraining(
+                  token,
+                  page,
+                  limit,
+                  search,
+                  penyelenggara.label,
+                  academy.label,
+                  theme.label,
+                  register[0] === "Invalid date" ? "" : register.join(","),
+                  pelaksanaan[0] === "Invalid date" ? "" : pelaksanaan.join(",")
+                )
+              );
+            }}
+          >
             Terapkan
           </button>
         </Modal.Footer>

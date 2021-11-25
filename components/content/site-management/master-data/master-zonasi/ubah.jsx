@@ -267,24 +267,15 @@ const Tambah = ({ token }) => {
               {/*  */}
               <div className="form-group">
                 <label>Status</label>
-                {status == "0" ? (
-                  <select
-                    className="form-control"
-                    onChange={(e) => setStatus(e.target.value)}
-                    onBlur={() => simpleValidator.current.showMessageFor("status")}
-                  >
-                    <option value="0">Tidak aktif</option>
-                    <option value="1">Aktif</option>
-                  </select>
-                ) : (
-                  <select
-                    className="form-control"
-                    onChange={(e) => setStatus(e.target.value)}
-                  >
-                    <option value="1">Aktif</option>
-                    <option value="0">Tidak aktif</option>
-                  </select>
-                )}
+                <select
+                  className="form-control"
+                  value={status}
+                  onChange={(e) => setStatus(e.target.value)}
+                  onBlur={() => simpleValidator.current.showMessageFor("status")}
+                >
+                  <option value="1">Aktif</option>
+                  <option value="0">Tidak aktif</option>
+                </select>
 
                 {simpleValidator.current.message(
                   "status",

@@ -34,7 +34,8 @@ export const getAllArtikelPeserta =
       try {
         dispatch({ type: ARTIKEL_PESERTA_REQUEST });
 
-        let link = process.env.END_POINT_API_PUBLIKASI + `api/artikel?role=${role}&page=${page}`;
+        // let link = process.env.END_POINT_API_PUBLIKASI + `api/artikel?role=${role}&page=${page}`;
+        let link = process.env.END_POINT_API_PUBLIKASI + `api/artikel?role=0&page=${page}`;
         if (keyword) link = link.concat(`&keyword=${keyword}`);
         if (limit) link = link.concat(`&limit=${limit}`);
         if (publish) link = link.concat(`&publish=${publish}`);
