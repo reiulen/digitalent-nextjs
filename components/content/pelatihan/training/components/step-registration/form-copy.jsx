@@ -48,8 +48,6 @@ const FormCopy = ({
     <>
       <div className="form-group mb-4">
         <label className="col-form-label font-weight-bold">Judul Form</label>
-        {console.log([{id: title, label: title}])}
-
         <Select
           options={optionsForm}
           value={{value: title, label: title}}
