@@ -88,7 +88,6 @@ export default function CardTemplateOriginal({ data, session }) {
           config
         );
         if (data) {
-          // console.log(data);
           // const a = document.createElement("a");
           // a.href = data.data;
           // a.download = "Bukti Pendaftaran.pdf";
@@ -137,7 +136,6 @@ export default function CardTemplateOriginal({ data, session }) {
     }
   };
 
-  // console.log(data, " <============ini status"); // ID 305 fajar
   return (
     <Fragment>
       <Card className="position-relative">
