@@ -71,8 +71,6 @@ const Preview = () => {
         let result = "";
         let splitWords = keyword.split(" ");
         let splitText = text.split(" ");
-        // let splitWords = keyword
-        // setSearchWords(splitWords)
 
         for (let i = 0; i < splitWords.length; i++) {
             for (let j = 0; j < splitText.length; j++) {
@@ -173,7 +171,10 @@ const Preview = () => {
 
                                 {/* Artikel */}
                                 <div className="border rounded-lg mb-5 mt-15">
-                                    <div className="row my-5 mx-5 text-justify" style={{ overflowX: "hidden" }}>
+                                    <div className="my-5 mx-5 text-justify"
+                                        style={{
+                                            width: '96%'
+                                        }}>
                                         {
                                             resultText ?
                                                 <div dangerouslySetInnerHTML={{ __html: resultText }}></div>
