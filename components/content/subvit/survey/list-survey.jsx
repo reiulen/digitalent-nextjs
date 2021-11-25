@@ -1,21 +1,18 @@
 import React, { useEffect, useState } from "react";
-
-import Link from "next/link";
-import Image from "next/image";
 import { useRouter } from "next/router";
 
 import Pagination from "react-js-pagination";
 import styles from "../../../../styles/subvit.module.css";
 import stylesPag from "../../../../styles/pagination.module.css";
-
+import Link from "next/link";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingTable from "../../../LoadingTable";
-import ButtonAction from "../../../ButtonAction";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
   deleteSurveyQuestionBanks,
   clearErrors,
+  getAllSurveyQuestionBanks,
 } from "../../../../redux/actions/subvit/survey-question.actions";
 import { DELETE_SURVEY_QUESTION_BANKS_RESET } from "../../../../redux/types/subvit/survey-question.type";
 
@@ -41,18 +38,13 @@ const ListSurvey = ({ token }) => {
 
   useEffect(() => {
     if (isDeleted) {
-      Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
-        (result) => {
-          if (result.isConfirmed) {
-            window.location.reload();
-          }
-        }
-      );
       dispatch({
         type: DELETE_SURVEY_QUESTION_BANKS_RESET,
       });
+      dispatch(getAllSurveyQuestionBanks(page, "", limit, token));
+      Swal.fire("Berhasil ", "Data berhasil dihapus.", "success");
     }
-  }, [isDeleted, dispatch]);
+  }, [isDeleted, dispatch, page, limit, token]);
 
   const handlePagination = (pageNumber) => {
     if (limit != null) {

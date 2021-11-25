@@ -49,9 +49,9 @@ const StepThree = ({ token }) => {
 
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-  const [duration, setDuration] = useState(null);
-  const [jumlah_soal, setJumlahSoal] = useState(null);
-  const [passing_grade, setPassingGrade] = useState(null);
+  const [duration, setDuration] = useState("");
+  const [jumlah_soal, setJumlahSoal] = useState("");
+  const [passing_grade, setPassingGrade] = useState("");
   const [status, setStatus] = useState("");
 
   const saveDraft = () => {
