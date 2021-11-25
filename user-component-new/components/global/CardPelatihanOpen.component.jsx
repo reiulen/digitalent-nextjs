@@ -19,7 +19,7 @@ const CardPelatihanOpen = ({
       >
         <div
           className={
-            show[i] !== true && row.status === "Open"
+            show[i] !== true && row.status === "Dibuka"
               ? `parent-image-pelatihan-new`
               : `parent-image-pelatihan-new-hover`
           }
@@ -105,7 +105,7 @@ const CardPelatihanOpen = ({
             <div className="status align-self-center">
               <p
                 className={`${
-                  row.status === "Open"
+                  row.status === "Dibuka"
                     ? "status-mitra-open-new"
                     : "status-mitra-close-new"
                 } text-uppercase my-0`}

@@ -323,16 +323,22 @@ const DataParticipant = ({ token }) => {
 
           <div className="card-body pb-0">
             <div className="row">
-              <div className="col-md-6">
+              <div className="col-md-4">
                 <p className="text-neutral-body my-0">Test Substansi</p>
                 <p className="text-success">
-                  {peserta.list[0].subtansi_status || "-"}
+                  {peserta.list[0].subtansi_status || "Belum Tersedia"}
                 </p>
               </div>
-              <div className="col-md-6">
+              <div className="col-md-4">
+                <p className="text-neutral-body my-0">Mid Test</p>
+                <p className="text-success">
+                  {peserta.list[0].status_midtes || "Belum Tersedia"}
+                </p>
+              </div>
+              <div className="col-md-4">
                 <p className="text-neutral-body my-0">Survey</p>
                 <p className="text-success">
-                  {peserta.list[0].survey_status || "Belum Tersedia"}
+                  {peserta.list[0].status_survei || "Belum Tersedia"}
                 </p>
               </div>
             </div>
@@ -355,10 +361,12 @@ const DataParticipant = ({ token }) => {
                         })
                       }
                       isDisabled={
-                        peserta.list[0].status !== "seleksi administrasi" ||
-                        (peserta.list[0].status !== "tidak lulus administrasi"
+                        !(
+                          peserta.list[0].status === "seleksi administrasi" ||
+                          peserta.list[0].status === "tidak lulus administrasi"
+                        )
                           ? true
-                          : false)
+                          : false
                       }
                     />
                   </div>
@@ -399,12 +407,14 @@ const DataParticipant = ({ token }) => {
                         })
                       }
                       isDisabled={
-                        peserta.list[0].status !== "tes substansi" ||
-                        peserta.list[0].status !==
-                          "tidak lulus tes substansi" ||
-                        (peserta.list[0].status !== "seleksi akhir"
+                        !(
+                          peserta.list[0].status === "tes substansi" ||
+                          peserta.list[0].status ===
+                            "tidak lulus tes substansi" ||
+                          peserta.list[0].status === "seleksi akhir"
+                        )
                           ? false
-                          : true)
+                          : true
                       }
                     />
                   </div>

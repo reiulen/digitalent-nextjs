@@ -984,22 +984,23 @@ const ListTraining = ({ token }) => {
                                     <i className="ri-draft-line p-0 text-white"></i>
                                   </button>
                                 )}
-                                {row.program_dts === "1" &&
-                                  row.status_pelatihan !== "review substansi" &&
-                                  row.status_publish !== "0" && (
-                                    <Link
-                                      href={`/pelatihan/pelatihan/tambah-form-lpj/${row.id}`}
+                                {!(
+                                  row.status_pelatihan === "review substansi" ||
+                                  row.status_substansi === "ditolak"
+                                ) && (
+                                  <Link
+                                    href={`/pelatihan/pelatihan/tambah-form-lpj/${row.id}`}
+                                  >
+                                    <a
+                                      className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                      data-toggle="tooltip"
+                                      data-placement="bottom"
+                                      title="Upload LPJ"
                                     >
-                                      <a
-                                        className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                                        data-toggle="tooltip"
-                                        data-placement="bottom"
-                                        title="Upload LPJ"
-                                      >
-                                        <i className="ri-file-text-fill p-0 text-white"></i>
-                                      </a>
-                                    </Link>
-                                  )}
+                                      <i className="ri-file-text-fill p-0 text-white"></i>
+                                    </a>
+                                  </Link>
+                                )}
                                 {!(
                                   row.status_substansi === "ditolak" ||
                                   row.status_pelatihan === "review substansi" ||
