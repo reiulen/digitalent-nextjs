@@ -495,6 +495,8 @@ import {
   updateStatusMasterReducer,
 } from "./pelatihan/admin/master-pendaftaran.reducer";
 
+import { getAllBookmarkPesertaReducer } from "../reducers/pelatihan/peserta/bookmark.reducer";
+
 const reducer = combineReducers({
   // PUBLIKASI
   allArtikel: allArtikelReducer,
@@ -828,7 +830,7 @@ const reducer = combineReducers({
   drowpdownPenyelenggara: drowpdownPenyelenggaraReducers,
   drowpdownFormBuilder: drowpdownFormBuilderReducers,
   updateStatus: updateStatusReducer,
-  drowpdownYear:drowpdownYearReducers,
+  drowpdownYear: drowpdownYearReducers,
 
   // ========== profile peserta ========
   dataAlamat: dataAlamatReducer,
@@ -890,8 +892,8 @@ const reducer = combineReducers({
   playVideoContent: playVideoContentReducer,
 
   // ========== faq ========
-  allFaqContent:allFaqContentReducer,
-  kategoriBerandaFaq:kategoriBerandaFaqReducer,
+  allFaqContent: allFaqContentReducer,
+  kategoriBerandaFaq: kategoriBerandaFaqReducer,
   //END BERANDA
 
   // ========== Riwayat Pelatihan ========
@@ -907,6 +909,8 @@ const reducer = combineReducers({
   newMasterPelatihan: newMasterTrainingReducer,
   updateMasterPelatihan: updateMasterPelatihanReducer,
   updateStatusMaster: updateStatusMasterReducer,
+
+  allBookmark: getAllBookmarkPesertaReducer,
 });
 
 export default reducer;
